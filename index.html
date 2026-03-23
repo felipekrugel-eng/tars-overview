@@ -639,6 +639,131 @@
     .drill-chip.active-neu { background: rgba(245,166,35,0.1); color: #C87D00; border-color: #F5A623; }
     .drill-review-count-line { font-size: 13px; color: #999; margin-bottom: 14px; }
 
+
+    /* ── TARS Drill-Down ──────────────────────────────────────────────────── */
+    .init-card { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+    .init-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.12); }
+    .action-kpi { cursor: pointer; transition: background 0.15s; border-radius: 10px; padding: 4px 0; }
+    .action-kpi:hover { background: rgba(0,0,0,0.04); }
+    .owner-row-item { cursor: pointer; transition: background 0.12s; border-radius: 8px; padding: 6px 8px; margin: 0 -8px; }
+    .owner-row-item:hover { background: rgba(0,0,0,0.04); }
+
+    .tars-drill-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 998;
+      backdrop-filter: blur(3px); align-items: flex-end;
+    }
+    .tars-drill-overlay.open { display: flex; }
+    .tars-drill-panel {
+      background: #fff; border-radius: 20px 20px 0 0;
+      width: 100%; max-height: 90vh; overflow-y: auto;
+      padding: 0 0 52px; animation: drillSlideUp 0.28s ease;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+    }
+    .tars-drill-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 20px 28px 16px; border-bottom: 1px solid #F0F0F0;
+      position: sticky; top: 0; background: #fff; z-index: 10;
+    }
+    .tars-drill-body { padding: 20px 28px 0; }
+    .tars-back-btn {
+      background: #F5F5F5; border: none; border-radius: 8px;
+      padding: 7px 14px; font-size: 13px; cursor: pointer; color: #555;
+    }
+    .tars-back-btn:hover { background: #E8E8E8; }
+    .tars-close-btn {
+      margin-left: auto; background: #F5F5F5; border: none; border-radius: 50%;
+      width: 32px; height: 32px; font-size: 18px; cursor: pointer; color: #666;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .tars-close-btn:hover { background: #E8E8E8; color: #333; }
+    .tars-drill-title { font-size: 17px; font-weight: 700; color: #111; }
+    .tars-drill-subtitle { font-size: 12px; color: #AAA; margin-top: 1px; }
+    .tars-section-label {
+      font-size: 11px; font-weight: 700; color: #AAA;
+      text-transform: uppercase; letter-spacing: 0.8px; margin: 22px 0 10px;
+    }
+
+    /* Initiative hero in modal */
+    .td-init-hero {
+      border-radius: 12px; padding: 20px; margin-bottom: 4px;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .td-init-pct { font-size: 44px; font-weight: 800; color: #111; line-height: 1; }
+    .td-init-pct-label { font-size: 12px; color: #AAA; margin-top: 3px; }
+    .td-init-track { height: 6px; border-radius: 3px; background: #EEE; margin-top: 10px; }
+    .td-init-fill { height: 100%; border-radius: 3px; }
+    .td-init-stats { display: flex; gap: 20px; margin-top: 16px; }
+    .td-stat { text-align: center; }
+    .td-stat-num { font-size: 22px; font-weight: 800; }
+    .td-stat-num.done { color: #2DC46B; }
+    .td-stat-num.prog { color: #F5A623; }
+    .td-stat-num.over { color: #E53935; }
+    .td-stat-label { font-size: 11px; color: #AAA; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+
+    /* Milestone timeline */
+    .td-milestone { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .td-ms-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .td-ms-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid #DDD; background: #fff; flex-shrink: 0; }
+    .td-ms-dot.done { background: #2DC46B; border-color: #2DC46B; }
+    .td-ms-dot.active { background: #F5A623; border-color: #F5A623; box-shadow: 0 0 0 3px rgba(245,166,35,0.2); }
+    .td-ms-dot.upcoming { background: #fff; border-color: #DDD; }
+    .td-ms-connector { width: 2px; height: 20px; background: #EEE; margin-top: 2px; }
+    .td-ms-content { padding-top: 0; }
+    .td-ms-label { font-size: 13px; font-weight: 500; color: #333; }
+    .td-ms-date { font-size: 11px; color: #AAA; margin-top: 1px; }
+
+    /* Action rows */
+    .td-action-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 14px; border-radius: 10px; background: #F8F9FA;
+      margin-bottom: 8px;
+    }
+    .td-action-row:hover { background: #EEF0F2; }
+    .td-action-id { font-size: 10px; color: #AAA; font-weight: 600; font-family: monospace; white-space: nowrap; margin-top: 2px; }
+    .td-action-text { flex: 1; font-size: 13px; color: #333; line-height: 1.5; }
+    .td-action-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+    .td-action-avatar { width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .td-action-owner-name { font-size: 11px; color: #888; }
+    .td-action-due { font-size: 11px; color: #AAA; }
+    .td-status-chip {
+      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; margin-left: auto;
+    }
+    .td-status-chip.done { background: rgba(45,196,107,0.12); color: #1A8F50; }
+    .td-status-chip.in-progress { background: rgba(245,166,35,0.12); color: #C87D00; }
+    .td-status-chip.overdue { background: rgba(229,57,53,0.1); color: #C62828; }
+
+    /* Filter tabs for tracker */
+    .td-filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .td-tab {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: 1.5px solid #E0E0E0; background: #F5F5F5; color: #666;
+      transition: all 0.12s;
+    }
+    .td-tab:hover { background: #E8E8E8; }
+    .td-tab.active { background: #1D8FE1; color: #fff; border-color: #1D8FE1; }
+    .td-tab.done-tab.active { background: #2DC46B; border-color: #2DC46B; }
+    .td-tab.prog-tab.active { background: #F5A623; border-color: #F5A623; }
+    .td-tab.over-tab.active { background: #E53935; border-color: #E53935; }
+
+    /* Owner filter chips */
+    .td-owner-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .td-owner-chip {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 12px 5px 8px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      border: 1.5px solid #E0E0E0; background: #F5F5F5; color: #666;
+      transition: all 0.12s;
+    }
+    .td-owner-chip:hover { background: #E8E8E8; }
+    .td-owner-chip.active { border-color: transparent; color: #fff; }
+    .td-owner-chip-av { width: 18px; height: 18px; border-radius: 50%; font-size: 10px; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; }
+    .td-count-summary { font-size: 13px; color: #999; margin-bottom: 14px; }
+    .td-context-box {
+      background: #F8F9FA; border-radius: 10px; padding: 14px 16px;
+      font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
@@ -755,7 +880,7 @@
 
     <div class="initiative-grid">
 
-      <div class="init-card">
+      <div class="init-card" onclick="openTarsInitDrill('payments')" title="Click to explore actions">
         <div class="init-card-top" style="background:#1D8FE1;"></div>
         <div class="init-card-body">
           <div class="init-card-head">
@@ -778,7 +903,7 @@
         </div>
       </div>
 
-      <div class="init-card">
+      <div class="init-card" onclick="openTarsInitDrill('pricing')" title="Click to explore actions">
         <div class="init-card-top" style="background:#E1A21D;"></div>
         <div class="init-card-body">
           <div class="init-card-head">
@@ -801,7 +926,7 @@
         </div>
       </div>
 
-      <div class="init-card">
+      <div class="init-card" onclick="openTarsInitDrill('partnerships')" title="Click to explore actions">
         <div class="init-card-top" style="background:#7B61FF;"></div>
         <div class="init-card-body">
           <div class="init-card-head">
@@ -833,19 +958,19 @@
     <div class="action-strip-sub">57 actions logged across 7 sessions. Last updated: 23 March 2026.</div>
     <div class="action-strip-grid">
       <div class="action-kpis">
-        <div class="action-kpi">
+        <div class="action-kpi" onclick="openTarsTrackerDrill('all')">
           <div class="action-kpi-num total">57</div>
           <div class="action-kpi-label">Total</div>
         </div>
-        <div class="action-kpi">
+        <div class="action-kpi" onclick="openTarsTrackerDrill('done')">
           <div class="action-kpi-num done">35</div>
           <div class="action-kpi-label">Complete</div>
         </div>
-        <div class="action-kpi">
+        <div class="action-kpi" onclick="openTarsTrackerDrill('in-progress')">
           <div class="action-kpi-num prog">10</div>
           <div class="action-kpi-label">Due Today</div>
         </div>
-        <div class="action-kpi">
+        <div class="action-kpi" onclick="openTarsTrackerDrill('overdue')">
           <div class="action-kpi-num over">12</div>
           <div class="action-kpi-label">Overdue</div>
         </div>
@@ -853,7 +978,7 @@
       <div class="owner-table">
         <div class="owner-row-item">
           <div class="owner-avatar" style="background:#1D8FE1;">S</div>
-          <div class="owner-name">Simon</div>
+          <div class="owner-name" style="cursor:pointer;" onclick="openTarsTrackerDrill('Simon')">Simon →</div>
           <div class="owner-bar-wrap">
             <div class="owner-bar-done" style="width:69%;"></div>
             <div class="owner-bar-prog" style="width:31%;"></div>
@@ -867,7 +992,7 @@
         </div>
         <div class="owner-row-item">
           <div class="owner-avatar" style="background:#E1A21D;">C</div>
-          <div class="owner-name">Caio</div>
+          <div class="owner-name" style="cursor:pointer;" onclick="openTarsTrackerDrill('Caio')">Caio →</div>
           <div class="owner-bar-wrap">
             <div class="owner-bar-done" style="width:67%;"></div>
             <div class="owner-bar-prog" style="width:4%;"></div>
@@ -881,7 +1006,7 @@
         </div>
         <div class="owner-row-item">
           <div class="owner-avatar" style="background:#7B61FF;">F</div>
-          <div class="owner-name">Felipe</div>
+          <div class="owner-name" style="cursor:pointer;" onclick="openTarsTrackerDrill('Felipe')">Felipe →</div>
           <div class="owner-bar-wrap">
             <div class="owner-bar-done" style="width:38%;"></div>
             <div class="owner-bar-prog" style="width:37%;"></div>
@@ -895,7 +1020,7 @@
         </div>
         <div class="owner-row-item">
           <div class="owner-avatar" style="background:#2DC46B;">A</div>
-          <div class="owner-name">Alex</div>
+          <div class="owner-name" style="cursor:pointer;" onclick="openTarsTrackerDrill('Alex')">Alex →</div>
           <div class="owner-bar-wrap">
             <div class="owner-bar-done" style="width:58%;"></div>
             <div class="owner-bar-prog" style="width:17%;"></div>
@@ -1586,6 +1711,15 @@
   </div>
 </div>
 
+
+<!-- ── TARS Drill-Down Modal ────────────────────────────────────────────────── -->
+<div class="tars-drill-overlay" id="tarsDrillOverlay" onclick="handleTarsOverlayClick(event)">
+  <div class="tars-drill-panel" id="tarsDrillPanel">
+    <div class="tars-drill-header" id="tarsDrillHeader"></div>
+    <div class="tars-drill-body" id="tarsDrillBody"></div>
+  </div>
+</div>
+
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
 <script>
 
@@ -2252,6 +2386,372 @@ function _reviewCard(r) {
     '<div class="drill-rv-text">' + r.text + '</div>' +
     '<div class="drill-rv-themes">' + badges + '</div>' +
   '</div>';
+}
+
+
+// ─── TARS DRILL-DOWN DATA ───────────────────────────────────────────────────
+const TARS_DATA = {
+
+  initiatives: {
+    payments: {
+      name: "Payments — US Pilot",
+      color: "#1D8FE1",
+      owner: "Simon", ownerInitial: "S", ownerColor: "#1D8FE1",
+      progress: 55, total: 11, done: 6, inProgress: 3, overdue: 2,
+      target: "Launch Q2 2026",
+      context: "Building payment infrastructure for US market entry. Focus on Stripe integration, regulatory compliance, and merchant onboarding for the pilot cohort of 15 merchants.",
+      milestones: [
+        { label: "Infrastructure scoping complete",   status: "done",     date: "Jan 2026" },
+        { label: "US legal entity review",            status: "done",     date: "Feb 2026" },
+        { label: "Pilot merchant selection (15)",     status: "done",     date: "Feb 2026" },
+        { label: "Billing system evaluation",         status: "active",   date: "Mar 2026" },
+        { label: "Pilot launch",                      status: "upcoming", date: "Q2 2026"  }
+      ],
+      actions: [
+        { id: "A-260316-01", text: "Evaluate billing systems & Stripe account management for multi-currency UK/US pilots", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "in-progress" },
+        { id: "A-260316-04", text: "Define payment infrastructure technical architecture and vendor shortlist for US pilot", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress" },
+        { id: "A-260316-05", text: "Prepare state-by-state regulatory compliance checklist for US payment processing", owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "25 Mar", status: "in-progress" },
+        { id: "A-260130-01", text: "Define KPIs and success metrics for the US payments pilot cohort", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "10 Mar", status: "done" },
+        { id: "A-260130-02", text: "Review Adyen & Stripe commercial terms and negotiate preferred rates for pilot volume", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "5 Mar",  status: "done" },
+        { id: "A-260130-03", text: "Draft US payments product roadmap v1 including feature parity with EU offering", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Mar",  status: "done" },
+        { id: "A-260130-04", text: "Identify and qualify top 15 US merchant candidates for payments pilot programme", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Feb", status: "done" },
+        { id: "A-260130-05", text: "Set up US legal entity review and incorporation timeline with external counsel", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Mar", status: "done" },
+        { id: "A-260130-06", text: "Assess payment terminal hardware requirements and logistics for US pilot merchants", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "12 Mar", status: "done" },
+        { id: "A-260130-07", text: "Map out US merchant onboarding flow and KYC/AML requirements for payments sign-up", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "8 Mar",  status: "overdue" },
+        { id: "A-260130-08", text: "Create unit economics model for US pilot — CAC, LTV, and payback period by merchant tier", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" }
+      ]
+    },
+    pricing: {
+      name: "Pricing Policy",
+      color: "#E1A21D",
+      owner: "Caio", ownerInitial: "C", ownerColor: "#E1A21D",
+      progress: 14, total: 7, done: 1, inProgress: 1, overdue: 5,
+      target: "Launch Q2 2026",
+      context: "Designing a new tiered pricing model across all markets. Moving from a free-only model to freemium with paid tiers targeting power users and multi-location merchants. Pilot rollout in Switzerland, Australia and Nigeria.",
+      milestones: [
+        { label: "Competitive benchmarking", status: "done",     date: "Feb 2026" },
+        { label: "New model design",         status: "active",   date: "Mar 2026" },
+        { label: "Board alignment",          status: "upcoming", date: "Apr 2026" },
+        { label: "Rollout — CH, AU, NG",     status: "upcoming", date: "Q2 2026"  },
+        { label: "Global rollout",           status: "upcoming", date: "Q3 2026"  }
+      ],
+      actions: [
+        { id: "A-260316-06", text: "Finalise new pricing model narrative and drive alignment on CH, AU & NG rollout sequence", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "in-progress" },
+        { id: "A-260130-09", text: "Benchmark competitor pricing across SEA and MENA — Shopify, Square, iZettle comparison", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Feb", status: "done" },
+        { id: "A-260316-07", text: "Model revenue impact of tiered pricing across all top 10 markets with sensitivity analysis", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "30 Mar", status: "overdue" },
+        { id: "A-260130-10", text: "Conduct merchant survey on pricing sensitivity — target 200 responses across 5 markets", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "1 Mar",  status: "overdue" },
+        { id: "A-260130-11", text: "Draft pricing transition communication plan for all existing free-tier users globally", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "10 Mar", status: "overdue" },
+        { id: "A-260130-12", text: "Define free vs paid feature boundary for new pricing model — feature matrix v1", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "5 Mar",  status: "overdue" },
+        { id: "A-260130-13", text: "Prepare board presentation on pricing strategy with competitive positioning and projections", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Mar", status: "overdue" }
+      ]
+    },
+    partnerships: {
+      name: "New Partnership Model",
+      color: "#7B61FF",
+      owner: "Felipe", ownerInitial: "F", ownerColor: "#7B61FF",
+      progress: 75, total: 4, done: 3, inProgress: 1, overdue: 0,
+      target: "Launch Q3 2026",
+      context: "Building a structured channel partnership framework to accelerate merchant acquisition. Teya is the anchor partnership for EU payments distribution, with a broader tier-1 programme targeting 20 partners across EU and MENA.",
+      milestones: [
+        { label: "Target mapping complete (20 prospects)", status: "done",     date: "Feb 2026" },
+        { label: "Framework document v1",                  status: "done",     date: "Feb 2026" },
+        { label: "Teya proposal submitted",                status: "active",   date: "Mar 2026" },
+        { label: "First partner signed",                   status: "upcoming", date: "Q2 2026"  },
+        { label: "Channel programme launch",               status: "upcoming", date: "Q3 2026"  }
+      ],
+      actions: [
+        { id: "A-260316-09", text: "Submit clear engagement proposal for Teya partnership with commercial terms and integration spec", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "in-progress" },
+        { id: "A-260130-14", text: "Map out tier 1 partnership targets in EU and MENA — minimum 20 qualified prospects identified", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "15 Feb", status: "done" },
+        { id: "A-260130-15", text: "Draft partnership framework document v1 including tiers, revenue share, and co-marketing terms", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "1 Mar",  status: "done" },
+        { id: "A-260130-16", text: "Define revenue share model and partner enablement programme structure v1", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "10 Mar", status: "done" }
+      ]
+    }
+  },
+
+  // General Strategy actions (35 across all owners — shown in tracker drill-down)
+  generalActions: [
+    { id: "A-260316-GS01", text: "Prepare Q1 board update covering strategic milestones, OKR progress and 5YP trajectory", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "15 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS02", text: "Define 3-year product roadmap v2 aligned to Phase 2A payment and pricing initiatives",  owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS03", text: "Draft investor pitch deck for Phase 2 funding round — highlight GTV and cohort data",  owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS04", text: "Align leadership team on Q2 priorities and resource allocation across all initiatives",  owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "5 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS05", text: "Facilitate strategy session #8 — review tracker, update priorities, assign Q2 sprint", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress", initiative: "General Strategy" },
+    { id: "A-260316-GS06", text: "Review Q1 financial performance vs annual plan — variance analysis and reforecast",     owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "10 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS07", text: "Update 5-year financial model with Q1 actuals and revised projections for board",       owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS08", text: "Prepare Q2–Q3 cash flow forecast and working capital plan for leadership review",       owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS09", text: "Complete annual audit preparation and external auditor sign-off on FY2025 accounts",    owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "1 Feb",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS10", text: "Review and renew key vendor contracts — payment processors, cloud infrastructure, SaaS", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS11", text: "Monthly metrics report — February 2026 including GTV, active users, and churn",         owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "5 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS12", text: "Benchmark operational costs and OPEX ratios against comparable SaaS and fintech peers",  owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "1 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS13", text: "Review headcount plan and approve Q2 engineering and product hires (4 positions)",       owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "10 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS14", text: "Update NRR and churn cohort analysis for Q1 — segment by market and merchant tier",     owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS15", text: "Map out legal and tax structure for Phase 2 expansion into US, CH, AU and NG markets",  owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "8 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS16", text: "Prepare Q1 2026 shareholder update with financial highlights and initiative status",     owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "22 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS17", text: "Review and approve updated data privacy framework for GDPR and PDPA compliance",        owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Jan", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS18", text: "Complete KYC/AML policy review and update for expansion into regulated payment markets", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "5 Feb",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS19", text: "Close annual performance reviews for leadership team and prepare calibration summary",   owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "28 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS20", text: "Build and qualify CRM database of 50 tier-1 enterprise prospects across target markets", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "30 Mar", status: "in-progress", initiative: "General Strategy" },
+    { id: "A-260316-GS21", text: "Prepare go-to-market playbook for Q2 new market entries — templates and localisation",  owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "2 Apr",  status: "in-progress", initiative: "General Strategy" },
+    { id: "A-260316-GS22", text: "Design competitive intelligence tracking framework and assign weekly monitoring owners",  owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "28 Mar", status: "in-progress", initiative: "General Strategy" },
+    { id: "A-260316-GS23", text: "Develop thought leadership content calendar for H1 2026 — articles, webinars, events",   owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "15 Mar", status: "overdue",     initiative: "General Strategy" },
+    { id: "A-260316-GS24", text: "Create full market entry assessment for Brazil — regulatory, competitive, TAM analysis",  owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "10 Mar", status: "overdue",     initiative: "General Strategy" },
+    { id: "A-260316-GS25", text: "Build weekly operational KPI dashboard v2 with real-time GTV and payment metrics",       owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "10 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS26", text: "Automate monthly GTV reporting pipeline across all 10 markets — replace manual process", owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS27", text: "Rebuild cohort retention analysis model to support 12-month rolling window by market",   owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "1 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS28", text: "Complete Q4 2025 data quality audit across all production databases — 0 critical issues", owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "15 Jan", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS29", text: "Build merchant churn prediction model v1 — identify top 20 at-risk accounts per quarter", owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "5 Mar",  status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS30", text: "Redesign support ticket routing system with SLA tracking and escalation automation",      owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "28 Feb", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS31", text: "Create A/B testing framework for product decisions — define guardrail metrics",           owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "10 Mar", status: "done",        initiative: "General Strategy" },
+    { id: "A-260316-GS32", text: "Automate daily health-check alerts for payment processing — latency and success rate",    owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "28 Mar", status: "in-progress", initiative: "General Strategy" },
+    { id: "A-260316-GS33", text: "Fix data pipeline latency issues causing 4–6h delays in SEA market reporting",            owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "5 Mar",  status: "overdue",     initiative: "General Strategy" },
+    { id: "A-260316-GS34", text: "Resolve duplicate merchant ID issues in production database — affects 340 records",        owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "1 Mar",  status: "overdue",     initiative: "General Strategy" },
+    { id: "A-260316-GS35", text: "Complete GDPR compliance audit for all EU merchant data — export, deletion, portability",  owner: "Alex",   ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Mar", status: "overdue",     initiative: "General Strategy" }
+  ]
+};
+
+// Build flat all-actions array from initiatives + general
+TARS_DATA.allActions = (function() {
+  var arr = [];
+  ["payments","pricing","partnerships"].forEach(function(k) {
+    TARS_DATA.initiatives[k].actions.forEach(function(a) {
+      arr.push(Object.assign({}, a, { initiative: k.charAt(0).toUpperCase() + k.slice(1) }));
+    });
+  });
+  TARS_DATA.generalActions.forEach(function(a) { arr.push(a); });
+  return arr;
+})();
+
+// ─── TARS DRILL-DOWN FUNCTIONS ───────────────────────────────────────────────
+var __tarsDrillState = { mode: null, key: null, filter: "all" };
+
+function openTarsInitDrill(initKey) {
+  __tarsDrillState = { mode: "initiative", key: initKey, filter: "all" };
+  _renderTarsDrill();
+  document.getElementById("tarsDrillOverlay").classList.add("open");
+}
+
+function openTarsTrackerDrill(filter) {
+  __tarsDrillState = { mode: "tracker", key: null, filter: filter };
+  _renderTarsDrill();
+  document.getElementById("tarsDrillOverlay").classList.add("open");
+}
+
+function closeTarsDrill() {
+  document.getElementById("tarsDrillOverlay").classList.remove("open");
+}
+
+function handleTarsOverlayClick(e) {
+  if (e.target === document.getElementById("tarsDrillOverlay")) closeTarsDrill();
+}
+
+function _setTarsFilter(filter) {
+  __tarsDrillState.filter = filter;
+  _renderTarsDrill();
+}
+
+function _renderTarsDrill() {
+  var state = __tarsDrillState;
+  var header = document.getElementById("tarsDrillHeader");
+  var body   = document.getElementById("tarsDrillBody");
+
+  if (state.mode === "initiative") {
+    var init = TARS_DATA.initiatives[state.key];
+    header.innerHTML =
+      "<div><div class=\"tars-drill-title\" style=\"color:" + init.color + "\">" + init.name + "</div>" +
+      "<div class=\"tars-drill-subtitle\">" + init.target + " &nbsp;·&nbsp; " + init.total + " actions</div></div>" +
+      "<button class=\"tars-close-btn\" onclick=\"closeTarsDrill()\">×</button>";
+    _renderInitBody(body, init, state.filter);
+  } else {
+    var isOwner = ["Simon","Caio","Felipe","Alex"].indexOf(state.filter) >= 0;
+    var titleText = isOwner ? state.filter + "'s actions" :
+      (state.filter === "all" ? "All actions" :
+       state.filter === "done" ? "Completed actions" :
+       state.filter === "in-progress" ? "In-progress actions" : "Overdue actions");
+    header.innerHTML =
+      "<div><div class=\"tars-drill-title\">Action Tracker</div>" +
+      "<div class=\"tars-drill-subtitle\">" + titleText + " &nbsp;·&nbsp; 57 total across 7 sessions</div></div>" +
+      "<button class=\"tars-close-btn\" onclick=\"closeTarsDrill()\">×</button>";
+    _renderTrackerBody(body, state.filter);
+  }
+}
+
+function _renderInitBody(container, init, statusFilter) {
+  var stars = init.progress + "%";
+  var heroStyle = "background:linear-gradient(135deg," + init.color + "12 0%," + init.color + "06 100%);" +
+                  "border:1px solid " + init.color + "22;";
+
+  // Filter tabs
+  var tabs =
+    "<div class=\"td-filter-tabs\">" +
+    _tab("all", statusFilter, "All (" + init.total + ")") +
+    _tab("done", statusFilter, "Done (" + init.done + ")", "done-tab") +
+    _tab("in-progress", statusFilter, "In Progress (" + init.inProgress + ")", "prog-tab") +
+    (init.overdue > 0 ? _tab("overdue", statusFilter, "Overdue (" + init.overdue + ")", "over-tab") : "") +
+    "</div>";
+
+  // Filter actions
+  var actions = statusFilter === "all" ? init.actions :
+    init.actions.filter(function(a) { return a.status === statusFilter; });
+
+  var actionsHtml = actions.length === 0
+    ? "<div style=\"text-align:center;color:#CCC;padding:24px;font-size:13px;\">No actions in this category.</div>"
+    : actions.map(_actionRow).join("");
+
+  // Milestone timeline
+  var msHtml = init.milestones.map(function(ms, i) {
+    var isLast = i === init.milestones.length - 1;
+    return "<div class=\"td-milestone\">" +
+      "<div class=\"td-ms-line\">" +
+        "<div class=\"td-ms-dot " + ms.status + "\"></div>" +
+        (!isLast ? "<div class=\"td-ms-connector\"></div>" : "") +
+      "</div>" +
+      "<div class=\"td-ms-content\">" +
+        "<div class=\"td-ms-label\">" + ms.label + "</div>" +
+        "<div class=\"td-ms-date\">" + ms.date + "</div>" +
+      "</div></div>";
+  }).join("");
+
+  container.innerHTML =
+    "<div class=\"td-init-hero\" style=\"" + heroStyle + "\">" +
+      "<div>" +
+        "<div class=\"td-init-pct\" style=\"color:" + init.color + "\">" + stars + "</div>" +
+        "<div class=\"td-init-pct-label\">complete</div>" +
+        "<div class=\"td-init-track\" style=\"width:160px;margin-top:8px;\">" +
+          "<div class=\"td-init-fill\" style=\"width:" + init.progress + "%;background:" + init.color + ";\"></div>" +
+        "</div>" +
+        "<div class=\"td-init-stats\">" +
+          "<div class=\"td-stat\"><div class=\"td-stat-num done\">" + init.done + "</div><div class=\"td-stat-label\">Done</div></div>" +
+          "<div class=\"td-stat\"><div class=\"td-stat-num prog\">" + init.inProgress + "</div><div class=\"td-stat-label\">Active</div></div>" +
+          (init.overdue > 0 ? "<div class=\"td-stat\"><div class=\"td-stat-num over\">" + init.overdue + "</div><div class=\"td-stat-label\">Overdue</div></div>" : "") +
+        "</div>" +
+      "</div>" +
+      "<div style=\"flex:1;\">" +
+        "<div class=\"td-context-box\">" + init.context + "</div>" +
+      "</div>" +
+    "</div>" +
+
+    "<div class=\"tars-section-label\">Milestones</div>" +
+    msHtml +
+
+    "<div class=\"tars-section-label\" style=\"margin-top:20px;\">Actions</div>" +
+    tabs + actionsHtml;
+
+  // Wire up tab clicks
+  container.querySelectorAll(".td-tab").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      __tarsDrillState.filter = btn.dataset.filter;
+      _renderTarsDrill();
+    });
+  });
+}
+
+function _renderTrackerBody(container, filter) {
+  var isOwner = ["Simon","Caio","Felipe","Alex"].indexOf(filter) >= 0;
+  var all = TARS_DATA.allActions;
+
+  // Owner chips
+  var owners = [
+    { name: "Simon",  color: "#1D8FE1", initial: "S" },
+    { name: "Caio",   color: "#E1A21D", initial: "C" },
+    { name: "Felipe", color: "#7B61FF", initial: "F" },
+    { name: "Alex",   color: "#2DC46B", initial: "A" }
+  ];
+  var ownerChips = "<div class=\"td-owner-chips\">" +
+    owners.map(function(o) {
+      var isActive = filter === o.name;
+      return "<div class=\"td-owner-chip" + (isActive ? " active" : "") + "\" " +
+        (isActive ? "style=\"background:" + o.color + ";border-color:" + o.color + ";\"" : "") +
+        " onclick=\"_setTarsFilter('" + o.name + "')\">" +
+        "<div class=\"td-owner-chip-av\" style=\"background:" + o.color + "\">" + o.initial + "</div>" +
+        o.name + "</div>";
+    }).join("") +
+    "</div>";
+
+  // Status tabs
+  var statusFilter = isOwner ? "all" : filter;
+  var filtered = isOwner
+    ? all.filter(function(a) { return a.owner === filter; })
+    : (filter === "all" ? all : all.filter(function(a) { return a.status === filter; }));
+
+  var doneN = filtered.filter(function(a) { return a.status === "done"; }).length;
+  var ipN   = filtered.filter(function(a) { return a.status === "in-progress"; }).length;
+  var ovN   = filtered.filter(function(a) { return a.status === "overdue"; }).length;
+
+  var statusTabs = isOwner
+    ? "<div class=\"td-filter-tabs\">" +
+        _tab("all",         statusFilter, "All ("         + filtered.length + ")") +
+        _tab("done",        statusFilter, "Done ("        + doneN  + ")", "done-tab") +
+        _tab("in-progress", statusFilter, "In Progress (" + ipN    + ")", "prog-tab") +
+        _tab("overdue",     statusFilter, "Overdue ("     + ovN    + ")", "over-tab") +
+      "</div>"
+    : "";
+
+  // Final action list
+  var display = isOwner
+    ? (statusFilter === "all" ? filtered : filtered.filter(function(a) { return a.status === statusFilter; }))
+    : filtered;
+
+  var count = display.length;
+  var actionsHtml = count === 0
+    ? "<div style=\"text-align:center;color:#CCC;padding:24px;font-size:13px;\">No actions found.</div>"
+    : display.map(_actionRow).join("");
+
+  container.innerHTML =
+    ownerChips +
+    "<div class=\"tars-section-label\" style=\"margin-top:4px;\">Filter by status</div>" +
+    "<div class=\"td-filter-tabs\">" +
+    _tab("all",         isOwner ? "all" : filter, "All (57)") +
+    _tab("done",        isOwner ? "all" : filter, "Done (35)", "done-tab") +
+    _tab("in-progress", isOwner ? "all" : filter, "In Progress (10)", "prog-tab") +
+    _tab("overdue",     isOwner ? "all" : filter, "Overdue (12)", "over-tab") +
+    "</div>" +
+    (isOwner ? statusTabs : "") +
+    "<div class=\"td-count-summary\">" + count + " action" + (count !== 1 ? "s" : "") + " shown</div>" +
+    actionsHtml;
+
+  // Wire up tab clicks
+  container.querySelectorAll(".td-tab").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      if (isOwner) {
+        // clicking status inside owner view — filter within owner
+        __tarsDrillState.filter = btn.dataset.ownerFilter || btn.dataset.filter;
+      } else {
+        __tarsDrillState.filter = btn.dataset.filter;
+      }
+      _renderTarsDrill();
+    });
+  });
+}
+
+function _tab(filter, current, label, extraClass) {
+  var cls = "td-tab" + (extraClass ? " " + extraClass : "") + (filter === current ? " active" : "");
+  return "<div class=\"" + cls + "\" data-filter=\"" + filter + "\">" + label + "</div>";
+}
+
+function _actionRow(a) {
+  var statusLabel = a.status === "done" ? "Done" : a.status === "in-progress" ? "In Progress" : "Overdue";
+  var initiativeColor = a.initiative === "payments" || a.initiative === "Payments"
+    ? "#1D8FE1" : a.initiative === "pricing" || a.initiative === "Pricing"
+    ? "#E1A21D" : a.initiative === "partnerships" || a.initiative === "Partnerships"
+    ? "#7B61FF" : "#888";
+  var initLabel = a.initiative === "payments" ? "Payments" :
+    a.initiative === "pricing" ? "Pricing" :
+    a.initiative === "partnerships" ? "Partnerships" : "Gen. Strategy";
+  return "<div class=\"td-action-row\">" +
+    "<div>" +
+      "<div class=\"td-action-id\">" + a.id + "</div>" +
+      "<div style=\"width:6px;height:6px;border-radius:50%;background:" + initiativeColor + ";margin-top:8px;\"></div>" +
+    "</div>" +
+    "<div style=\"flex:1;\">" +
+      "<div class=\"td-action-text\">" + a.text + "</div>" +
+      "<div class=\"td-action-meta\">" +
+        "<div class=\"td-action-avatar\" style=\"background:" + a.ownerColor + "\">" + a.ownerInitial + "</div>" +
+        "<div class=\"td-action-owner-name\">" + a.owner + "</div>" +
+        "<div class=\"td-action-due\">· due " + a.due + "</div>" +
+        "<span style=\"margin-left:auto;font-size:10px;color:" + initiativeColor + ";font-weight:600;\">" + initLabel + "</span>" +
+      "</div>" +
+    "</div>" +
+    "<div class=\"td-status-chip " + a.status + "\">" + statusLabel + "</div>" +
+  "</div>";
 }
 
 
