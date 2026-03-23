@@ -875,7 +875,7 @@
     <div class="tars-live-header">
       <div class="tars-live-badge"><span class="dot-green"></span> Live now</div>
       <div class="tars-live-title">Current state.</div>
-      <div class="tars-live-sub">Three active initiatives running in parallel. Progress reflects live data from the Action Tracker (57 actions across 7 sessions). Last sync: 23 Mar 2026.</div>
+      <div class="tars-live-sub">Three active initiatives running in parallel. Progress reflects live data from the Action Tracker (58 actions across 7 sessions). Last sync: 23 Mar 2026.</div>
     </div>
 
     <div class="initiative-grid">
@@ -893,8 +893,8 @@
             <div class="init-owner-name">Simon</div>
           </div>
           <div class="init-progress-wrap">
-            <div class="init-progress-label"><span>Progress</span><strong id="init-prog-1">55%</strong></div>
-            <div class="init-progress-track"><div class="init-progress-fill" style="width:55%; background:#1D8FE1;"></div></div>
+            <div class="init-progress-label"><span>Progress</span><strong id="init-prog-1">50%</strong></div>
+            <div class="init-progress-track"><div class="init-progress-fill" style="width:50%; background:#1D8FE1;"></div></div>
           </div>
           <div class="init-next">
             <div class="init-next-label">Next action</div>
@@ -955,11 +955,11 @@
   <!-- ─── ACTION TRACKER ────────────────────────────────────── -->
   <div class="action-strip">
     <div class="action-strip-title">Action tracker</div>
-    <div class="action-strip-sub">57 actions logged across 7 sessions. Last updated: 23 March 2026.</div>
+    <div class="action-strip-sub">58 actions logged across 7 sessions. Last updated: 23 March 2026.</div>
     <div class="action-strip-grid">
       <div class="action-kpis">
         <div class="action-kpi" onclick="openTarsTrackerDrill('all')">
-          <div class="action-kpi-num total">57</div>
+          <div class="action-kpi-num total">58</div>
           <div class="action-kpi-label">Total</div>
         </div>
         <div class="action-kpi" onclick="openTarsTrackerDrill('done')">
@@ -967,7 +967,7 @@
           <div class="action-kpi-label">Complete</div>
         </div>
         <div class="action-kpi" onclick="openTarsTrackerDrill('in-progress')">
-          <div class="action-kpi-num prog">10</div>
+          <div class="action-kpi-num prog">11</div>
           <div class="action-kpi-label">Due Today</div>
         </div>
         <div class="action-kpi" onclick="openTarsTrackerDrill('overdue')">
@@ -1008,13 +1008,13 @@
           <div class="owner-avatar" style="background:#7B61FF;">F</div>
           <div class="owner-name" style="cursor:pointer;" onclick="openTarsTrackerDrill('Felipe')">Felipe →</div>
           <div class="owner-bar-wrap">
-            <div class="owner-bar-done" style="width:38%;"></div>
-            <div class="owner-bar-prog" style="width:37%;"></div>
-            <div class="owner-bar-over" style="width:25%;"></div>
+            <div class="owner-bar-done" style="width:33%;"></div>
+            <div class="owner-bar-prog" style="width:45%;"></div>
+            <div class="owner-bar-over" style="width:22%;"></div>
           </div>
           <div class="owner-counts">
             <span class="c-done">3✓</span>
-            <span class="c-prog">3●</span>
+            <span class="c-prog">4●</span>
             <span class="c-over">2!</span>
           </div>
         </div>
@@ -2397,7 +2397,7 @@ const TARS_DATA = {
       name: "Payments — US Pilot",
       color: "#1D8FE1",
       owner: "Simon", ownerInitial: "S", ownerColor: "#1D8FE1",
-      progress: 55, total: 11, done: 6, inProgress: 3, overdue: 2,
+      progress: 50, total: 12, done: 6, inProgress: 4, overdue: 2,
       target: "Launch Q2 2026",
       context: "Building payment infrastructure for US market entry. Focus on Stripe integration, regulatory compliance, and merchant onboarding for the pilot cohort of 15 merchants.",
       milestones: [
@@ -2418,7 +2418,8 @@ const TARS_DATA = {
         { id: "A-260130-05", text: "Set up US legal entity review and incorporation timeline with external counsel", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "15 Mar", status: "done" },
         { id: "A-260130-06", text: "Assess payment terminal hardware requirements and logistics for US pilot merchants", owner: "Simon",  ownerColor: "#1D8FE1", ownerInitial: "S", due: "12 Mar", status: "done" },
         { id: "A-260130-07", text: "Map out US merchant onboarding flow and KYC/AML requirements for payments sign-up", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "8 Mar",  status: "overdue" },
-        { id: "A-260130-08", text: "Create unit economics model for US pilot — CAC, LTV, and payback period by merchant tier", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" }
+        { id: "A-260130-08", text: "Create unit economics model for US pilot — CAC, LTV, and payback period by merchant tier", owner: "Caio",   ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
+        { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup: Company name, address, Signer Name, Title, Email, and Phone number. UK entity to be used for pilot — no US bank account established yet. Stripe UK account has KYC complete and will be the live account for pilot due to US entity issues on Teya side.", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "in-progress" },
       ]
     },
     pricing: {
@@ -2699,9 +2700,9 @@ function _renderTrackerBody(container, filter) {
     ownerChips +
     "<div class=\"tars-section-label\" style=\"margin-top:4px;\">Filter by status</div>" +
     "<div class=\"td-filter-tabs\">" +
-    _tab("all",         isOwner ? "all" : filter, "All (57)") +
+    _tab("all",         isOwner ? "all" : filter, "All (58)") +
     _tab("done",        isOwner ? "all" : filter, "Done (35)", "done-tab") +
-    _tab("in-progress", isOwner ? "all" : filter, "In Progress (10)", "prog-tab") +
+    _tab("in-progress", isOwner ? "all" : filter, "In Progress (11)", "prog-tab") +
     _tab("overdue",     isOwner ? "all" : filter, "Overdue (12)", "over-tab") +
     "</div>" +
     (isOwner ? statusTabs : "") +
