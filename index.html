@@ -523,6 +523,122 @@
       .timeline::before { left: 64px; }
       .tl-day { width: 64px; }
     }
+
+    /* ── App Store Drill-down Modal ─────────────────────────────────────── */
+    .store-card { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+    .store-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .theme-row { cursor: pointer; transition: background 0.12s; border-radius: 8px; padding: 4px 8px; margin: 0 -8px; }
+    .theme-row:hover { background: #F0F0F0; }
+
+    .store-drill-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 999;
+      backdrop-filter: blur(3px); align-items: flex-end;
+    }
+    .store-drill-overlay.open { display: flex; }
+    .store-drill-panel {
+      background: #fff; border-radius: 20px 20px 0 0;
+      width: 100%; max-height: 88vh; overflow-y: auto;
+      padding: 0 0 48px; animation: drillSlideUp 0.28s ease;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+    }
+    @keyframes drillSlideUp { from { transform: translateY(60px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+    .drill-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 20px 28px 16px; border-bottom: 1px solid #F0F0F0;
+      position: sticky; top: 0; background: #fff; z-index: 10;
+    }
+    .drill-back-btn {
+      background: #F5F5F5; border: none; border-radius: 8px;
+      padding: 7px 14px; font-size: 13px; cursor: pointer;
+      color: #555; white-space: nowrap;
+    }
+    .drill-back-btn:hover { background: #E8E8E8; }
+    .drill-close-btn {
+      margin-left: auto; background: #F5F5F5; border: none;
+      border-radius: 50%; width: 32px; height: 32px; font-size: 18px;
+      cursor: pointer; color: #666; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; line-height: 1;
+    }
+    .drill-close-btn:hover { background: #E8E8E8; color: #333; }
+    .drill-title { font-size: 17px; font-weight: 700; color: #111; }
+    .drill-subtitle { font-size: 12px; color: #AAA; margin-top: 1px; }
+    .drill-body { padding: 20px 28px 0; }
+    .drill-section-title {
+      font-size: 11px; font-weight: 700; color: #AAA;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin: 24px 0 10px;
+    }
+    .drill-store-hero {
+      display: flex; gap: 24px; padding: 18px;
+      background: #F8F9FA; border-radius: 12px; margin-bottom: 4px;
+    }
+    .drill-rating-big { font-size: 44px; font-weight: 800; color: #111; line-height: 1; }
+    .drill-stars-row { font-size: 17px; color: #F5A623; margin-top: 5px; }
+    .drill-review-count { font-size: 12px; color: #999; margin-top: 4px; }
+    .drill-dl-total { font-size: 22px; font-weight: 800; color: #111; }
+    .drill-dl-label { font-size: 12px; color: #AAA; margin-bottom: 6px; }
+    .dl-trend { display: flex; align-items: flex-end; gap: 3px; height: 36px; }
+    .dl-bar { flex:1; background: #1D8FE1; border-radius: 3px 3px 0 0; opacity: 0.65; min-height: 3px; }
+    .drill-sent-bars { display: flex; flex-direction: column; gap: 8px; }
+    .drill-sent-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 14px; border-radius: 10px; cursor: pointer;
+      background: #F8F9FA; transition: background 0.12s;
+    }
+    .drill-sent-row:hover { background: #EEF0F2; }
+    .dsent-label { width: 68px; font-size: 13px; font-weight: 600; }
+    .dsent-wrap { flex:1; height: 7px; background: #E5E5E5; border-radius: 4px; overflow: hidden; }
+    .dsent-fill { height: 100%; border-radius: 4px; }
+    .dsent-fill.pos { background: #2DC46B; }
+    .dsent-fill.neu { background: #F5A623; }
+    .dsent-fill.neg { background: #E53935; }
+    .dsent-pct { width: 36px; text-align: right; font-size: 13px; font-weight: 700; color: #333; }
+    .dsent-arr { color: #CCC; font-size: 14px; }
+    .drill-theme-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px; cursor: pointer;
+      background: #F8F9FA; margin-bottom: 7px; transition: background 0.12s;
+    }
+    .drill-theme-row:hover { background: #EEF0F2; }
+    .dtheme-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dtheme-dot.pos { background: #2DC46B; }
+    .dtheme-dot.neg { background: #E53935; }
+    .dtheme-name { flex:1; font-size: 13px; font-weight: 500; color: #222; }
+    .dtheme-count { font-size: 12px; color: #AAA; }
+    .dtheme-arr { color: #CCC; font-size: 14px; }
+    .drill-review-card {
+      background: #F8F9FA; border-radius: 10px; padding: 15px;
+      margin-bottom: 10px;
+    }
+    .drill-rv-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .drill-rv-avatar {
+      width: 30px; height: 30px; border-radius: 50%; color: #fff;
+      font-size: 13px; font-weight: 700; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .drill-rv-author { font-size: 13px; font-weight: 600; color: #111; }
+    .drill-rv-date { font-size: 11px; color: #BBB; }
+    .drill-rv-stars { margin-left: auto; font-size: 13px; }
+    .drill-rv-text { font-size: 13px; color: #444; line-height: 1.55; }
+    .drill-rv-themes { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+    .drill-theme-badge {
+      font-size: 11px; padding: 2px 8px; border-radius: 4px;
+      background: #E8F4FD; color: #1D8FE1; font-weight: 500; cursor: pointer;
+    }
+    .drill-theme-badge.neg-badge { background: #FDE8E8; color: #C62828; }
+    .drill-filter-chips { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+    .drill-chip {
+      padding: 5px 11px; border-radius: 20px; font-size: 12px;
+      font-weight: 600; cursor: pointer; border: 1.5px solid #E0E0E0;
+      background: #F5F5F5; color: #666; transition: all 0.12s;
+    }
+    .drill-chip:hover { background: #E8E8E8; }
+    .drill-chip.active-pos { background: rgba(45,196,107,0.12); color: #1A8F50; border-color: #2DC46B; }
+    .drill-chip.active-neg { background: rgba(229,57,53,0.1); color: #C62828; border-color: #E53935; }
+    .drill-chip.active-neu { background: rgba(245,166,35,0.1); color: #C87D00; border-color: #F5A623; }
+    .drill-review-count-line { font-size: 13px; color: #999; margin-bottom: 14px; }
+
   </style>
 </head>
 <body>
@@ -1374,7 +1490,7 @@
     <div class="case-section-sub">Ratings and review sentiment pulled from Google Play and Apple App Store. Updated weekly. Reflects real customer perception of the product across all markets.</div>
 
     <div class="store-cards">
-      <div class="store-card">
+      <div class="store-card" onclick="openStoreDrilldown('googlePlay')" title="Click to explore reviews">
         <div class="store-card-header">
           <div class="store-icon">▶</div>
           <div>
@@ -1404,7 +1520,7 @@
         <div class="store-tags" id="gp-tags"></div>
       </div>
 
-      <div class="store-card">
+      <div class="store-card" onclick="openStoreDrilldown('appStore')" title="Click to explore reviews">
         <div class="store-card-header">
           <div class="store-icon">🍎</div>
           <div>
@@ -1459,6 +1575,15 @@
     </div>
   </div>
 
+</div>
+
+
+<!-- ── App Store Drill-Down Modal ──────────────────────────────────────────── -->
+<div class="store-drill-overlay" id="storeDrillOverlay" onclick="handleOverlayClick(event)">
+  <div class="store-drill-panel" id="storeDrillPanel">
+    <div class="drill-header" id="drillHeader"></div>
+    <div class="drill-body" id="drillBody"></div>
+  </div>
 </div>
 
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
@@ -1609,14 +1734,53 @@ const CASE_DATA = {
 
   // ── Top review themes ─────────────────────────────────────────────────────
   reviewThemes: [
-    { name: "Ease of use",         mentions: 2840, type: "pos" },
-    { name: "Free / value",        mentions: 1920, type: "pos" },
-    { name: "Inventory features",  mentions: 1540, type: "pos" },
-    { name: "Reporting",           mentions: 1210, type: "pos" },
-    { name: "Customer support",    mentions: 890,  type: "neg" },
-    { name: "Payment integration", mentions: 640,  type: "neg" },
-    { name: "Sync / connectivity", mentions: 480,  type: "neg" }
-  ]
+    { name: "Ease of use",         mentions: 2840, type: "pos", key: "ease-of-use" },
+    { name: "Free / value",        mentions: 1920, type: "pos", key: "free-value" },
+    { name: "Inventory features",  mentions: 1540, type: "pos", key: "inventory" },
+    { name: "Reporting",           mentions: 1210, type: "pos", key: "reporting" },
+    { name: "Customer support",    mentions: 890,  type: "neg", key: "customer-support" },
+    { name: "Payment integration", mentions: 640,  type: "neg", key: "payment-integration" },
+    { name: "Sync / connectivity", mentions: 480,  type: "neg", key: "sync" }
+  ],
+
+  // ── App Store Downloads (monthly installs trend) ──────────────────────────
+  downloads: {
+    googlePlay: { total: "10M+", trend: [820000, 850000, 890000, 920000, 960000, 1010000] },
+    appStore:   { total: "2M+",  trend: [180000, 185000, 192000, 198000, 205000, 215000] }
+  },
+
+  // ── Individual Reviews (representative sample · last 30 days) ──────────────
+  reviews: {
+    googlePlay: [
+      { author: "MarketOwner_TH", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],           text: "Been using Loyverse for 3 years. Free, easy to set up, works perfectly for my market stall. The inventory system is exactly what I need." },
+      { author: "CafePOS_PH",     rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Best POS for small businesses. Setup took 10 minutes and my staff learned it in an afternoon. Inventory tracking is spot on." },
+      { author: "FreshMktUS",     rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["free-value","reporting"],              text: "Tried 4 different POS systems. Loyverse is the only one that is actually free and has real reporting. Daily sales summaries are fantastic." },
+      { author: "RetailMY",       rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Very easy to use. Set up 200+ items in one hour. The barcode scanner integration works flawlessly." },
+      { author: "SmallBizSA",     rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["reporting","free-value"],              text: "The reports are incredibly detailed for a free app. Best-selling items, peak hours, and profit margins all in one place." },
+      { author: "QuickServeUK",   rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["ease-of-use"],                        text: "Works well for basic needs. Interface is clean and intuitive. Would love more receipt customization options." },
+      { author: "ShopMX",         rating: 4, date: "Feb 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good inventory system but I wish low-stock alerts were more configurable. Overall a solid app." },
+      { author: "BistroSG",       rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "App works fine when connected. Had some sync issues between devices during busy hours but support eventually sorted it out." },
+      { author: "FoodTruckDE",    rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "Sent 3 support tickets over 2 weeks. Still waiting. The app works but when you have a problem you are completely on your own." },
+      { author: "CornerStoreMM",  rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["customer-support","sync"],             text: "Customer support is non-existent. Data stopped syncing across two devices and no one has responded to my emails in 10 days." },
+      { author: "CafeOwnerES",    rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment integration is a nightmare. Been trying to set up card payments for a month. No documentation and support just sent a generic FAQ." },
+      { author: "RetailUSA",      rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment fees are not clearly explained. Asked support for a breakdown, took 8 days to respond with an incomplete answer." },
+      { author: "KioskTH",        rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "App crashes during peak hours syncing with the kitchen display. Lost 2 hours of sales data. Support acknowledged the issue but still no fix after 3 weeks." }
+    ],
+    appStore: [
+      { author: "BoutiqueNYC",   rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","reporting"],             text: "Switched from Square and never looked back. Interface is so much cleaner and reports make sense. My accountant loves the CSV exports." },
+      { author: "CoffeeMelb",    rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["free-value","ease-of-use"],            text: "For a free app this is absolutely incredible. Been running my coffee shop on Loyverse for 2 years. Zero complaints." },
+      { author: "MultiLocMY",    rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["inventory","reporting"],               text: "Managing 3 locations from one account is seamless. Multi-location inventory tracking just works. Reports per location are brilliant." },
+      { author: "OrganicShopCA", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],            text: "Simple, clean, and free. Do not understand why anyone would use anything else for a small shop. Highly recommend." },
+      { author: "DinerTX",       rating: 4, date: "Feb 2026", sentiment: "positive", themes: ["reporting"],                          text: "Great reports and easy to train staff on. Would give 5 stars but some advanced features need a subscription." },
+      { author: "GroceryPH",     rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good product overall. The inventory system could use bulk import from Excel. Entering products one by one is slow." },
+      { author: "SalonUK",       rating: 3, date: "Feb 2026", sentiment: "neutral",  themes: ["payment-integration"],                text: "Works great for tracking sales. Payment integration took a while to figure out — the setup steps could be clearer in the app." },
+      { author: "FoodHallTH",    rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "Decent app. Occasionally items do not sync to all devices immediately, causing confusion at the register." },
+      { author: "CafeParis",     rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "No phone support at all. Email takes 5 to 7 business days which is unacceptable for urgent issues during operating hours." },
+      { author: "MarketUS",      rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment terminal stopped working on a Saturday. Could not reach anyone. Lost an entire day of card sales. Completely unacceptable." },
+      { author: "RestaurantSG",  rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "Menu changes do not always sync to the kitchen screen. Had to restart twice this week. Ticket opened 2 weeks ago still pending." },
+      { author: "SnackBarMX",    rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment setup documentation is outdated and confusing. Support pointed me to a 2023 guide. Gave up on integrated payments entirely." }
+    ]
+  }
 };
 
 // ─── RENDER CASE ─────────────────────────────────────────────────────────────
@@ -1867,12 +2031,229 @@ function renderCase() {
     const pct = Math.round((t.mentions / maxMentions) * 100);
     const div = document.createElement("div");
     div.className = "theme-row";
+    div.setAttribute("onclick", "openThemeDrilldown('" + t.key + "', 'all')");
+    div.title = "Click to view " + t.name + " reviews";
     div.innerHTML = '<span class="theme-name">' + t.name + '</span>' +
       '<div class="theme-bar-wrap"><div class="theme-bar-fill ' + t.type + '" style="width:' + pct + '%"></div></div>' +
       '<span class="theme-count">' + t.mentions.toLocaleString() + '</span>';
     themesEl.appendChild(div);
   });
 }
+
+// ─── APP STORE DRILL-DOWN ────────────────────────────────────────────────────
+const THEME_LABELS = {
+  'ease-of-use':        'Ease of use',
+  'free-value':         'Free / value',
+  'inventory':          'Inventory features',
+  'reporting':          'Reporting',
+  'customer-support':   'Customer support',
+  'payment-integration':'Payment integration',
+  'sync':               'Sync / connectivity'
+};
+
+let __drill = { store: null, level: 'store', filter: null };
+
+function openStoreDrilldown(storeKey) {
+  __drill = { store: storeKey, level: 'store', filter: null };
+  _renderDrill();
+  document.getElementById('storeDrillOverlay').classList.add('open');
+}
+
+function openSentimentDrilldown(storeKey, sentiment) {
+  __drill = { store: storeKey, level: 'sentiment', filter: sentiment };
+  _renderDrill();
+  document.getElementById('storeDrillOverlay').classList.add('open');
+}
+
+function openThemeDrilldown(themeKey, storeKey) {
+  const st = storeKey || __drill.store || 'all';
+  __drill = { store: st, level: 'theme', filter: themeKey };
+  _renderDrill();
+  document.getElementById('storeDrillOverlay').classList.add('open');
+}
+
+function closeDrilldown() {
+  document.getElementById('storeDrillOverlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('storeDrillOverlay')) closeDrilldown();
+}
+
+function drillBack() {
+  if (__drill.level === 'sentiment') {
+    __drill = { store: __drill.store, level: 'store', filter: null };
+  } else if (__drill.level === 'theme' && __drill.store !== 'all') {
+    __drill = { store: __drill.store, level: 'store', filter: null };
+  } else {
+    closeDrilldown(); return;
+  }
+  _renderDrill();
+}
+
+function _renderDrill() {
+  const D = CASE_DATA;
+  const st = __drill;
+  const header = document.getElementById('drillHeader');
+  const body   = document.getElementById('drillBody');
+
+  const storeName = st.store === 'googlePlay' ? 'Google Play' : st.store === 'appStore' ? 'Apple App Store' : 'All Stores';
+  const storeIcon = st.store === 'googlePlay' ? '▶' : st.store === 'appStore' ? '🍎' : '⭐';
+  const isTop = st.level === 'store';
+
+  let levelTitle = storeName;
+  if (st.level === 'sentiment') levelTitle = st.filter.charAt(0).toUpperCase() + st.filter.slice(1) + ' reviews';
+  else if (st.level === 'theme') levelTitle = THEME_LABELS[st.filter] || st.filter;
+
+  header.innerHTML =
+    (!isTop ? '<button class="drill-back-btn" onclick="drillBack()">← Back</button>' : '') +
+    '<div><div class="drill-title">' + storeIcon + ' ' + levelTitle + '</div>' +
+    (st.level !== 'store' ? '<div class="drill-subtitle">' + storeName + '</div>' : '') + '</div>' +
+    '<button class="drill-close-btn" onclick="closeDrilldown()">×</button>';
+
+  if (st.level === 'store') {
+    const store   = st.store === 'googlePlay' ? D.appStores.googlePlay : D.appStores.appStore;
+    const reviews = st.store === 'googlePlay' ? D.reviews.googlePlay   : D.reviews.appStore;
+    const dlData  = st.store === 'googlePlay' ? D.downloads.googlePlay : D.downloads.appStore;
+    _renderStoreOverview(body, store, reviews, st.store, dlData, storeName);
+  } else if (st.level === 'sentiment') {
+    const reviews = (st.store === 'googlePlay' ? D.reviews.googlePlay : D.reviews.appStore)
+                    .filter(r => r.sentiment === st.filter);
+    _renderReviews(body, reviews, st.filter, null);
+  } else if (st.level === 'theme') {
+    const pool = st.store === 'all'
+      ? D.reviews.googlePlay.concat(D.reviews.appStore)
+      : (st.store === 'googlePlay' ? D.reviews.googlePlay : D.reviews.appStore);
+    const reviews = pool.filter(r => r.themes.includes(st.filter));
+    _renderReviews(body, reviews, null, st.filter);
+  }
+}
+
+function _renderStoreOverview(container, store, reviews, storeKey, dlData, storeName) {
+  const D = CASE_DATA;
+  const stars = '★'.repeat(Math.round(store.rating)) + '☆'.repeat(5 - Math.round(store.rating));
+  const maxDl = Math.max(...dlData.trend);
+  const dlBars = dlData.trend.map(v =>
+    '<div class="dl-bar" style="height:' + Math.round((v/maxDl)*100) + '%" title="' + (v/1000).toFixed(0) + 'K installs"></div>'
+  ).join('');
+
+  // Per-store theme counts from reviews
+  const themeMap = {};
+  reviews.forEach(r => r.themes.forEach(th => { themeMap[th] = (themeMap[th] || 0) + 1; }));
+  const sortedThemes = Object.entries(themeMap).sort((a,b) => b[1]-a[1]);
+
+  let themesHtml = '';
+  sortedThemes.forEach(([key, cnt]) => {
+    const td = D.reviewThemes.find(t => t.key === key);
+    const type = td ? td.type : 'pos';
+    themesHtml +=
+      '<div class="drill-theme-row" onclick="openThemeDrilldown('' + key + '','' + storeKey + '')">' +
+      '<div class="dtheme-dot ' + type + '"></div>' +
+      '<span class="dtheme-name">' + (THEME_LABELS[key] || key) + '</span>' +
+      '<span class="dtheme-count">' + cnt + ' mention' + (cnt !== 1 ? 's' : '') + '</span>' +
+      '<span class="dtheme-arr">›</span></div>';
+  });
+
+  let recentHtml = '';
+  reviews.slice(0, 5).forEach(r => { recentHtml += _reviewCard(r); });
+
+  container.innerHTML =
+    '<div class="drill-store-hero">' +
+      '<div>' +
+        '<div class="drill-rating-big">' + store.rating.toFixed(1) + '</div>' +
+        '<div class="drill-stars-row">' + stars + '</div>' +
+        '<div class="drill-review-count">' + store.reviewCount + ' total reviews</div>' +
+      '</div>' +
+      '<div style="flex:1;">' +
+        '<div class="drill-dl-label">Downloads</div>' +
+        '<div class="drill-dl-total">' + dlData.total + '</div>' +
+        '<div style="font-size:11px;color:#CCC;margin-bottom:5px;">6-month trend</div>' +
+        '<div class="dl-trend">' + dlBars + '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="drill-section-title">Sentiment breakdown — click to see reviews</div>' +
+    '<div class="drill-sent-bars">' +
+      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','positive')">' +
+        '<span class="dsent-label" style="color:#2DC46B;">Positive</span>' +
+        '<div class="dsent-wrap"><div class="dsent-fill pos" style="width:' + store.positive + '%"></div></div>' +
+        '<span class="dsent-pct">' + store.positive + '%</span><span class="dsent-arr">›</span>' +
+      '</div>' +
+      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','neutral')">' +
+        '<span class="dsent-label" style="color:#F5A623;">Neutral</span>' +
+        '<div class="dsent-wrap"><div class="dsent-fill neu" style="width:' + store.neutral + '%"></div></div>' +
+        '<span class="dsent-pct">' + store.neutral + '%</span><span class="dsent-arr">›</span>' +
+      '</div>' +
+      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','negative')">' +
+        '<span class="dsent-label" style="color:#E53935;">Negative</span>' +
+        '<div class="dsent-wrap"><div class="dsent-fill neg" style="width:' + store.negative + '%"></div></div>' +
+        '<span class="dsent-pct">' + store.negative + '%</span><span class="dsent-arr">›</span>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="drill-section-title">Top themes — click to see matching reviews</div>' +
+    themesHtml +
+
+    '<div class="drill-section-title">Recent reviews</div>' +
+    recentHtml;
+}
+
+function _renderReviews(container, reviews, sentimentFilter, themeFilter) {
+  const D = CASE_DATA;
+  const total = reviews.length;
+  let html = '<div class="drill-review-count-line">' + total + ' review' + (total !== 1 ? 's' : '') + ' found</div>';
+
+  if (sentimentFilter && !themeFilter) {
+    const themeMap = {};
+    reviews.forEach(r => r.themes.forEach(th => { themeMap[th] = (themeMap[th] || 0) + 1; }));
+    const topThemes = Object.entries(themeMap).sort((a,b) => b[1]-a[1]).slice(0, 6);
+    if (topThemes.length > 0) {
+      html += '<div style="font-size:11px;color:#AAA;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">Common themes in these reviews</div>';
+      html += '<div class="drill-filter-chips">';
+      topThemes.forEach(([key, cnt]) => {
+        const td = D.reviewThemes.find(t => t.key === key);
+        const cls = td && td.type === 'neg' ? 'active-neg' : 'active-pos';
+        html += '<span class="drill-chip ' + cls + '" onclick="openThemeDrilldown('' + key + '','' + __drill.store + '')">' +
+          (THEME_LABELS[key] || key) + ' (' + cnt + ')</span>';
+      });
+      html += '</div>';
+    }
+  }
+
+  if (total === 0) {
+    html += '<div style="text-align:center;color:#CCC;padding:32px;font-size:14px;">No reviews found for this filter.</div>';
+  } else {
+    reviews.forEach(r => { html += _reviewCard(r); });
+  }
+
+  container.innerHTML = html;
+}
+
+function _reviewCard(r) {
+  const D = CASE_DATA;
+  const avatarColors = ['#1D8FE1','#2DC46B','#E1A21D','#7B61FF','#E53935','#1578C4'];
+  const ac = avatarColors[r.author.charCodeAt(0) % avatarColors.length];
+  const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+  const starColor = r.rating >= 4 ? '#F5A623' : r.rating === 3 ? '#F5A623' : '#E53935';
+  const badges = r.themes.map(th => {
+    const td = D.reviewThemes.find(t => t.key === th);
+    const isNeg = td && td.type === 'neg';
+    return '<span class="drill-theme-badge' + (isNeg ? ' neg-badge' : '') +
+      '" onclick="event.stopPropagation(); openThemeDrilldown('' + th + '','' + (__drill.store || 'all') + '')">' +
+      (THEME_LABELS[th] || th) + '</span>';
+  }).join('');
+  return '<div class="drill-review-card">' +
+    '<div class="drill-rv-header">' +
+      '<div class="drill-rv-avatar" style="background:' + ac + '">' + r.author.charAt(0).toUpperCase() + '</div>' +
+      '<div><div class="drill-rv-author">' + r.author + '</div>' +
+      '<div class="drill-rv-date">' + r.date + '</div></div>' +
+      '<div class="drill-rv-stars" style="color:' + starColor + '">' + stars + '</div>' +
+    '</div>' +
+    '<div class="drill-rv-text">' + r.text + '</div>' +
+    '<div class="drill-rv-themes">' + badges + '</div>' +
+  '</div>';
+}
+
 
 </script>
 </body>
