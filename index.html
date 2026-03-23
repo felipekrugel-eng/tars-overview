@@ -2147,7 +2147,7 @@ function _renderStoreOverview(container, store, reviews, storeKey, dlData, store
     const td = D.reviewThemes.find(t => t.key === key);
     const type = td ? td.type : 'pos';
     themesHtml +=
-      '<div class="drill-theme-row" onclick="openThemeDrilldown('' + key + '','' + storeKey + '')">' +
+      '<div class="drill-theme-row" onclick="openThemeDrilldown(\''+key+'\',\''+storeKey+'\')">' +
       '<div class="dtheme-dot ' + type + '"></div>' +
       '<span class="dtheme-name">' + (THEME_LABELS[key] || key) + '</span>' +
       '<span class="dtheme-count">' + cnt + ' mention' + (cnt !== 1 ? 's' : '') + '</span>' +
@@ -2174,17 +2174,17 @@ function _renderStoreOverview(container, store, reviews, storeKey, dlData, store
 
     '<div class="drill-section-title">Sentiment breakdown — click to see reviews</div>' +
     '<div class="drill-sent-bars">' +
-      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','positive')">' +
+      '<div class="drill-sent-row" data-store="' + storeKey + '" data-sent="positive" onclick="openSentimentDrilldown(this.dataset.store,this.dataset.sent)">' +
         '<span class="dsent-label" style="color:#2DC46B;">Positive</span>' +
         '<div class="dsent-wrap"><div class="dsent-fill pos" style="width:' + store.positive + '%"></div></div>' +
         '<span class="dsent-pct">' + store.positive + '%</span><span class="dsent-arr">›</span>' +
       '</div>' +
-      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','neutral')">' +
+      '<div class="drill-sent-row" data-store="' + storeKey + '" data-sent="neutral" onclick="openSentimentDrilldown(this.dataset.store,this.dataset.sent)">' +
         '<span class="dsent-label" style="color:#F5A623;">Neutral</span>' +
         '<div class="dsent-wrap"><div class="dsent-fill neu" style="width:' + store.neutral + '%"></div></div>' +
         '<span class="dsent-pct">' + store.neutral + '%</span><span class="dsent-arr">›</span>' +
       '</div>' +
-      '<div class="drill-sent-row" onclick="openSentimentDrilldown('' + storeKey + '','negative')">' +
+      '<div class="drill-sent-row" data-store="' + storeKey + '" data-sent="negative" onclick="openSentimentDrilldown(this.dataset.store,this.dataset.sent)">' +
         '<span class="dsent-label" style="color:#E53935;">Negative</span>' +
         '<div class="dsent-wrap"><div class="dsent-fill neg" style="width:' + store.negative + '%"></div></div>' +
         '<span class="dsent-pct">' + store.negative + '%</span><span class="dsent-arr">›</span>' +
@@ -2213,7 +2213,7 @@ function _renderReviews(container, reviews, sentimentFilter, themeFilter) {
       topThemes.forEach(([key, cnt]) => {
         const td = D.reviewThemes.find(t => t.key === key);
         const cls = td && td.type === 'neg' ? 'active-neg' : 'active-pos';
-        html += '<span class="drill-chip ' + cls + '" onclick="openThemeDrilldown('' + key + '','' + __drill.store + '')">' +
+        html += '<span class="drill-chip ' + cls + '" data-key="' + key + '" data-store="' + __drill.store + '" onclick="openThemeDrilldown(this.dataset.key,this.dataset.store)">' +
           (THEME_LABELS[key] || key) + ' (' + cnt + ')</span>';
       });
       html += '</div>';
@@ -2239,7 +2239,7 @@ function _reviewCard(r) {
     const td = D.reviewThemes.find(t => t.key === th);
     const isNeg = td && td.type === 'neg';
     return '<span class="drill-theme-badge' + (isNeg ? ' neg-badge' : '') +
-      '" onclick="event.stopPropagation(); openThemeDrilldown('' + th + '','' + (__drill.store || 'all') + '')">' +
+  '" data-key="' + th + '" data-store="' + (__drill.store || 'all') + '" onclick="event.stopPropagation(); openThemeDrilldown(this.dataset.key,this.dataset.store)">' +
       (THEME_LABELS[th] || th) + '</span>';
   }).join('');
   return '<div class="drill-review-card">' +
