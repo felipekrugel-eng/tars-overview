@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TARS — Strategic Intelligence Agent</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #F7F7F7;
+      color: #1A1A1A;
+      line-height: 1.6;
+    }
+
+    /* ─── Brand Tokens ─── */
+    :root {
+      --blue: #1D8FE1;
+      --blue-deep: #1578C4;
+      --black: #1A1A1A;
+      --deep-black: #0D0D0D;
+      --off-white: #F7F7F7;
+      --silver: #E0E0E0;
+      --warm-gray: #AAAAAA;
+      --dark-gray: #555555;
+      --mid-gray: #888888;
+      --ice-blue: #CCE8FF;
+      --sky-blue: #AADDFF;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: var(--blue);
+      color: #fff;
+      padding: 64px 48px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: \'\';
+      position: absolute;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+    }
+    .hero::before { width: 160px; height: 160px; top: -40px; right: 80px; transform: rotate(18deg); }
+    .hero::after  { width: 90px;  height: 90px;  bottom: 20px; right: 260px; transform: rotate(-12deg); }
+    .hero-deco {
+      position: absolute;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    .hero-deco-1 { width: 60px; height: 60px; top: 30px; right: 200px; transform: rotate(30deg); }
+    .hero-deco-2 { width: 120px; height: 120px; bottom: -20px; right: 40px; transform: rotate(-5deg); }
+
+    .hero-logo {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      width: 38px;
+      height: 44px;
+      object-fit: contain;
+      z-index: 10;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.88);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 24px;
+      padding: 8px 18px;
+      font-size: 13px;
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: #6FE06F;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    /* ─── Strategy Feed CTA bar ─── */
+    .feed-bar {
+      background: var(--deep-black);
+      color: #fff;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .feed-bar-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .feed-bar-channel {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 18px;
+      color: var(--blue);
+    }
+    .feed-bar p {
+      font-size: 14px;
+      color: var(--warm-gray);
+      flex: 1;
+    }
+
+    /* ─── Section layout ─── */
+    .section {
+      padding: 64px 48px;
+    }
+    .section.dark {
+      background: var(--black);
+      color: #fff;
+    }
+    .section-number {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 13px;
+      color: var(--blue);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: inherit;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--dark-gray);
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .section.dark .section-sub { color: var(--warm-gray); }
+
+    /* ─── Task Grid ─── */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .task-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .task-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .task-card-top {
+      height: 5px;
+      background: var(--blue);
+    }
+    .task-card-top.amber  { background: #E1A21D; }
+    .task-card-top.teal   { background: #1DC4A2; }
+    .task-card-top.violet { background: #7B61FF; }
+    .task-card-top.coral  { background: #E14B1D; }
+    .task-card-top.green  { background: #2DC46B; }
+
+    .task-card-body { padding: 24px; }
+    .task-schedule {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 10px;
+    }
+    .task-name {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--black);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .task-desc {
+      font-size: 14px;
+      color: var(--dark-gray);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+
+    .task-outputs {
+      border-top: 1px solid var(--silver);
+      padding-top: 14px;
+      margin-top: 4px;
+    }
+    .task-outputs-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid-gray);
+      margin-bottom: 8px;
+    }
+    .output-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--off-white);
+      border: 1px solid var(--silver);
+      border-radius: 12px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--dark-gray);
+      margin: 2px 3px 2px 0;
+    }
+    .output-pill .icon { font-size: 10px; }
+
+    /* Expandable detail */
+    .task-detail {
+      display: none;
+      padding: 0 24px 24px;
+      border-top: 1px solid var(--silver);
+      margin-top: 0;
+    }
+    .task-detail.open { display: block; }
+    .task-detail-title {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 16px 0 8px;
+    }
+    .task-detail ul {
+      padding-left: 0;
+      list-style: none;
+    }
+    .task-detail ul li {
+      font-size: 13px;
+      color: var(--dark-gray);
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .task-detail ul li::before {
+      content: \'→\';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+    }
+    .expand-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--blue);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px 24px;
+      font-family: Arial, sans-serif;
+      transition: opacity 0.15s;
+    }
+    .expand-btn:hover { opacity: 0.75; }
+    .expand-btn .arrow { transition: transform 0.2s; }
+    .expand-btn.open .arrow { transform: rotate(180deg); }
+
+    /* ─── Timeline ─── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      max-width: 700px;
+    }
+    .timeline::before {
+      content: \'\';
+      position: absolute;
+      left: 80px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue) 0%, var(--blue-deep) 100%);
+      opacity: 0.3;
+    }
+    .tl-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 18px 0;
+    }
+    .tl-day {
+      width: 80px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .tl-day-name {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .tl-day-time {
+      font-size: 11px;
+      color: var(--warm-gray);
+    }
+    .tl-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 5px;
+      position: relative;
+      z-index: 1;
+    }
+    .tl-dot.amber  { background: #E1A21D; }
+    .tl-dot.teal   { background: #1DC4A2; }
+    .tl-dot.violet { background: #7B61FF; }
+    .tl-dot.coral  { background: #E14B1D; }
+    .tl-dot.green  { background: #2DC46B; }
+    .tl-content {}
+    .tl-name {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .tl-desc {
+      font-size: 13px;
+      color: var(--warm-gray);
+    }
+
+    /* ─── Strategy Feed Guide ─── */
+    .feed-guide {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 700px) { .feed-guide { grid-template-columns: 1fr; } }
+
+    .feed-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .feed-card-header {
+      background: var(--blue);
+      padding: 16px 20px;
+    }
+    .feed-card-header.dark-header { background: var(--black); border-bottom: 1px solid #333; }
+    .feed-card-title {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .feed-card-body { padding: 20px; }
+
+    .command-block {
+      background: #F0F7FF;
+      border-left: 3px solid var(--blue);
+      border-radius: 4px;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-family: \'Courier New\', monospace;
+      font-size: 13px;
+      color: var(--black);
+    }
+    .command-note {
+      font-size: 12px;
+      color: var(--mid-gray);
+      margin-top: 4px;
+    }
+
+    /* ─── How TARS Responds ─── */
+    .response-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .response-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .response-num {
+      width: 28px; height: 28px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .response-text {
+      font-size: 14px;
+      color: var(--dark-gray);
+      padding-top: 4px;
+      line-height: 1.5;
+    }
+    .response-text strong { color: var(--black); }
+
+    /* ─── Footer ─── */
+    .footer {
+      background: var(--deep-black);
+      color: var(--warm-gray);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-tars {
+      font-family: \'Arial Black\', Arial, sans-serif;
+      font-size: 20px;
+      color: var(--blue);
+    }
+    .footer-sub {
+      font-size: 12px;
+      color: var(--mid-gray);
+      margin-top: 2px;
+    }
+    .footer-right { font-size: 12px; text-align: right; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 24px 48px; }
+      .hero h1 { font-size: 36px; }
+      .section { padding: 40px 24px; }
+      .feed-bar { padding: 16px 24px; }
+      .footer { padding: 24px; }
+      .timeline::before { left: 64px; }
+      .tl-day { width: 64px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ─────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <img src="data:image/png;base64,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" class="hero-logo" alt="Loyverse" />
+
+  <div class="hero-label">Loyverse · Strategic Intelligence</div>
+  <h1>Meet TARS.</h1>
+  <p>Your AI chief of staff. TARS runs continuously in the background — reading sessions, tracking actions, monitoring progress, and keeping the leadership team aligned without extra overhead.</p>
+  <div class="hero-badge">
+    <span class="dot"></span>
+    <span>6 active tasks running</span>
+  </div>
+</div>
+
+<!-- ─── FEED BAR ───────────────────────────────── -->
+<div class="feed-bar">
+  <div>
+    <div class="feed-bar-label">Primary interaction channel</div>
+    <div class="feed-bar-channel">#strategy-feed</div>
+  </div>
+  <p>Post updates, completions, and context here. TARS reads this channel every day at 5 PM and responds automatically — no commands needed, just natural language.</p>
+</div>
+
+<!-- ─── TASKS ─────────────────────────────────── -->
+<div class="section">
+  <div class="section-number">01</div>
+  <h2 class="section-title">What TARS does.</h2>
+  <p class="section-sub">Six scheduled tasks covering the full weekly strategy cycle — from session briefings to action tracking. Click any card to see details.</p>
+
+  <div class="task-grid">
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Every Friday · 4:39 PM</div>
+        <div class="task-name">Friday Meeting Briefing</div>
+        <div class="task-desc">Processes the Fireflies transcript from your weekly strategy session and delivers a full executive briefing — decisions, actions, themes, watch list, and a strategic narrative — within minutes of the session ending.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">💬</span> #strategy-feed post</span>
+          <span class="output-pill"><span class="icon">📧</span> Gmail briefing draft</span>
+          <span class="output-pill"><span class="icon">📁</span> Drive session folder</span>
+          <span class="output-pill"><span class="icon">📄</span> Briefing doc + JSON archive</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">What it produces</div>
+        <ul>
+          <li>Key Highlights — 3–5 sentence strategic narrative</li>
+          <li>Key Decisions made in the session</li>
+          <li>All actions with owners and due dates</li>
+          <li>Emerging themes across sessions</li>
+          <li>Watch list — risks and gaps with owners</li>
+        </ul>
+        <div class="task-detail-title">How it stores data</div>
+        <ul>
+          <li>Creates a dated folder in the Strategic Sessions Drive</li>
+          <li>Saves briefing as a Google Doc inside that folder</li>
+          <li>Saves a structured JSON archive for machine-readable recall</li>
+          <li>Writes session memory to #cowork-memory for downstream tasks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top amber"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Every Thursday · 4:04 PM</div>
+        <div class="task-name">Thursday Meeting Preview</div>
+        <div class="task-desc">The pre-read for tomorrow\'s strategy session. Surfaces unresolved tensions, open actions, patterns from past sessions, and the questions worth putting on the agenda — so Friday\'s conversation starts with context.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">💬</span> #strategy-feed post</span>
+          <span class="output-pill"><span class="icon">📋</span> Agenda suggestions</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">What it covers</div>
+        <ul>
+          <li>Open actions from previous sessions</li>
+          <li>Unresolved decisions and tensions</li>
+          <li>Watch list items requiring attention</li>
+          <li>Patterns and themes across the last 3–4 sessions</li>
+          <li>Suggested agenda priorities for Friday</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top teal"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Every Monday · 10:06 AM</div>
+        <div class="task-name">Monday Action Reminder</div>
+        <div class="task-desc">Kicks off the week by DM-ing each person their open actions — connected to the bigger strategic picture, not just a task list. Also creates a weekly team email draft for Felipe with curated key actions grouped by owner.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">💬</span> Personal DMs to each owner</span>
+          <span class="output-pill"><span class="icon">📧</span> Weekly actions email draft</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">How it works</div>
+        <ul>
+          <li>Reads open actions from the Action Tracker and session memory</li>
+          <li>DMs each person their specific actions with strategic context</li>
+          <li>Flags anything overdue or at risk</li>
+          <li>Creates a Gmail draft to the full team with prioritised weekly actions</li>
+          <li>Links to the full tracker in Google Drive</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top violet"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Mon–Fri · 5:07 PM</div>
+        <div class="task-name">Daily Completion Check</div>
+        <div class="task-desc">Reads #strategy-feed every day at 5 PM looking for completion signals. When someone marks something done, TARS confirms it, updates the tracker immediately, and stores it in memory for Friday\'s full sync. If a message is unclear, TARS DMs you to clarify.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">✅</span> DM confirmation to owner</span>
+          <span class="output-pill"><span class="icon">📊</span> Tracker updated same day</span>
+          <span class="output-pill"><span class="icon">💬</span> #strategy-feed acknowledgement</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">Completion keywords it detects</div>
+        <ul>
+          <li>done, completed, finished, closed, delivered</li>
+          <li>sorted, wrapped up, shipped, sent, confirmed, resolved</li>
+        </ul>
+        <div class="task-detail-title">What happens next</div>
+        <ul>
+          <li>Matched to an action ID → confirmation DM sent to you</li>
+          <li>Action Tracker xlsx updated in Google Drive immediately</li>
+          <li>Completion stored in memory for Friday\'s tracker sync</li>
+          <li>If ambiguous → TARS DMs you asking which action you mean</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top coral"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Every Friday · 7:05 PM</div>
+        <div class="task-name">Weekly Tracker Update</div>
+        <div class="task-desc">After the Friday briefing, TARS does a full reconciliation of the Action Tracker — syncing all completions captured during the week, updating statuses, and flagging anything overdue that didn\'t move.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">📊</span> Action_Tracker.xlsx updated</span>
+          <span class="output-pill"><span class="icon">📁</span> Drive sync complete</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">What it updates</div>
+        <ul>
+          <li>Pulls completions from weekly memory (daily-completion-check)</li>
+          <li>Updates Action_Tracker.xlsx with new statuses and dates</li>
+          <li>Adds newly created actions from the Friday session</li>
+          <li>Flags overdue items for Monday\'s reminder</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-card" onclick="toggleCard(this)">
+      <div class="task-card-top green"></div>
+      <div class="task-card-body">
+        <div class="task-schedule">Every Monday · 9:06 AM</div>
+        <div class="task-name">Drive Session Audit</div>
+        <div class="task-desc">Audits the Strategic Sessions folder in Google Drive every Monday morning, checking that session folders follow the correct naming convention and that no sessions are missing archives or briefing docs.</div>
+        <div class="task-outputs">
+          <div class="task-outputs-label">Delivers</div>
+          <span class="output-pill"><span class="icon">🔍</span> Drive audit report</span>
+          <span class="output-pill"><span class="icon">⚠️</span> Naming violations flagged</span>
+        </div>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest(\'.task-card\'))">
+        <span>See details</span><span class="arrow">▾</span>
+      </button>
+      <div class="task-detail">
+        <div class="task-detail-title">What it checks</div>
+        <ul>
+          <li>Folder names match: YYYY-MM-DD - Session NN</li>
+          <li>Each session has a briefing doc</li>
+          <li>Each session has a JSON archive</li>
+          <li>Recurring violations tracked in memory</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── WEEKLY RHYTHM ─────────────────────────── -->
+<div class="section dark">
+  <div class="section-number">02</div>
+  <h2 class="section-title">The weekly rhythm.</h2>
+  <p class="section-sub">TARS operates on a predictable weekly cycle. Here\'s what runs when.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Mon</div><div class="tl-day-time">9:06 AM</div></div>
+      <div class="tl-dot green"></div>
+      <div class="tl-content"><div class="tl-name">Drive Session Audit</div><div class="tl-desc">Checks that last week\'s session folder is properly named and archived.</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Mon</div><div class="tl-day-time">10:06 AM</div></div>
+      <div class="tl-dot teal"></div>
+      <div class="tl-content"><div class="tl-name">Monday Action Reminder</div><div class="tl-desc">DMs each person their open actions. Creates the weekly team email draft.</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Daily</div><div class="tl-day-time">5:07 PM</div></div>
+      <div class="tl-dot violet"></div>
+      <div class="tl-content"><div class="tl-name">Daily Completion Check</div><div class="tl-desc">Scans #strategy-feed for updates. Confirms completions, updates tracker, DMs if unclear.</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Thu</div><div class="tl-day-time">4:04 PM</div></div>
+      <div class="tl-dot amber"></div>
+      <div class="tl-content"><div class="tl-name">Thursday Meeting Preview</div><div class="tl-desc">Pre-read for Friday — unresolved items, open actions, agenda suggestions.</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Fri</div><div class="tl-day-time">4:39 PM</div></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content"><div class="tl-name">Friday Meeting Briefing</div><div class="tl-desc">Full session briefing — decisions, actions, themes, Drive folder, Gmail draft.</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-day"><div class="tl-day-name">Fri</div><div class="tl-day-time">7:05 PM</div></div>
+      <div class="tl-dot coral"></div>
+      <div class="tl-content"><div class="tl-name">Weekly Tracker Update</div><div class="tl-desc">Full reconciliation of the Action Tracker. Syncs all completions from the week.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STRATEGY FEED GUIDE ───────────────────── -->
+<div class="section">
+  <div class="section-number">03</div>
+  <h2 class="section-title">How to use #strategy-feed.</h2>
+  <p class="section-sub">You don\'t need commands or special syntax. Just post naturally — TARS reads the channel every day at 5 PM and figures out the rest.</p>
+
+  <div class="feed-guide">
+
+    <div class="feed-card">
+      <div class="feed-card-header">
+        <div class="feed-card-title">✅ Marking an action complete</div>
+      </div>
+      <div class="feed-card-body">
+        <p style="font-size:13px; color:#555; margin-bottom:12px;">Post naturally in the channel. TARS recognises completion language and matches it to your open actions.</p>
+        <div class="command-block">Billing integration is done ✅</div>
+        <div class="command-note">→ TARS matches to your open action and confirms via DM</div>
+        <div class="command-block">Finished the Google/Apple compliance review</div>
+        <div class="command-note">→ TARS sends confirmation + updates the tracker</div>
+        <div class="command-block">Sorted — contract sent to Teya</div>
+        <div class="command-note">→ Matched, confirmed, tracker updated same day</div>
+        <p style="font-size:12px; color:#888; margin-top:14px;"><strong>Keywords TARS listens for:</strong> done · completed · finished · closed · delivered · sorted · wrapped up · shipped · sent · confirmed · resolved · handled</p>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-card-header dark-header">
+        <div class="feed-card-title">💬 What TARS does next</div>
+      </div>
+      <div class="feed-card-body">
+        <div class="response-flow">
+          <div class="response-step">
+            <div class="response-num">1</div>
+            <div class="response-text"><strong>Clear match found</strong> — TARS DMs you: <em>"✅ Got it Simon — S08-A03 marked complete. Nice work."</em></div>
+          </div>
+          <div class="response-step">
+            <div class="response-num">2</div>
+            <div class="response-text"><strong>Tracker updated</strong> — Action_Tracker.xlsx is updated in Google Drive that same evening.</div>
+          </div>
+          <div class="response-step">
+            <div class="response-num">3</div>
+            <div class="response-text"><strong>Channel acknowledgement</strong> — TARS posts once to #strategy-feed if completions were found (no noise if nothing to report).</div>
+          </div>
+          <div class="response-step">
+            <div class="response-num">4</div>
+            <div class="response-text"><strong>If unclear</strong> — TARS DMs you asking which action you mean. No guessing, no flagging to others.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-card-header" style="background:#1578C4;">
+        <div class="feed-card-title">📌 Posting context or updates</div>
+      </div>
+      <div class="feed-card-body">
+        <p style="font-size:13px; color:#555; margin-bottom:12px;">Use #strategy-feed to share blockers, progress, or context mid-week. TARS reads all of it and surfaces relevant updates in Thursday\'s preview and Friday\'s briefing.</p>
+        <div class="command-block">FYI — Snowflake migration pushed to April</div>
+        <div class="command-note">→ Picked up in Thursday preview as a potential blocker</div>
+        <div class="command-block">Pilot launch date confirmed with Teya: April 14</div>
+        <div class="command-note">→ Noted as progress in Friday\'s session briefing</div>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-card-header" style="background:#2DC46B;">
+        <div class="feed-card-title">🔒 Privacy &amp; personal comms</div>
+      </div>
+      <div class="feed-card-body">
+        <p style="font-size:13px; color:#555; margin-bottom:12px;">Any wellbeing or personal observations are handled privately — TARS sends those directly to Felipe via DM, never in group channels.</p>
+        <p style="font-size:13px; color:#555; margin-bottom:10px;">#strategy-feed is for business context only. Personal or sensitive matters go via DM with Felipe.</p>
+        <p style="font-size:12px; color:#888; margin-top:10px;">TARS never posts personal or sensitive information into group channels. It reads the room.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── FOOTER ────────────────────────────────── -->
+<div class="footer">
+  <div>
+    <div class="footer-tars">— TARS</div>
+    <div class="footer-sub">Strategic Intelligence Agent · Loyverse Leadership Team</div>
+  </div>
+  <div class="footer-right">
+    <div>Running since Session 07</div>
+    <div style="color:#555555; margin-top:2px;">Current session: 08 · 6 active tasks</div>
+  </div>
+</div>
+
+<script>
+  function toggleCard(card) {
+    const detail = card.querySelector(\'.task-detail\');
+    const btn = card.querySelector(\'.expand-btn\');
+    if (!detail) return;
+    const isOpen = detail.classList.contains(\'open\');
+    detail.classList.toggle(\'open\', !isOpen);
+    if (btn) {
+      btn.classList.toggle(\'open\', !isOpen);
+      btn.querySelector(\'span:first-child\').textContent = isOpen ? \'See details\' : \'Hide details\';
+    }
+  }
+</script>
+
+</body>
+</html>
