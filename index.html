@@ -440,6 +440,74 @@
     .theme-bar-fill.neg { background: #E14B1D; }
     .theme-count { font-size: 12px; color: var(--mid-gray); white-space: nowrap; }
 
+
+    /* ── TARS Current State ───────────────────────────────────── */
+    .tars-live-section { background: #F7F7F7; padding: 56px 48px 48px; }
+    .tars-live-header { margin-bottom: 32px; }
+    .tars-live-badge { display: inline-flex; align-items: center; gap: 7px; background: #EDF8F1; border: 1px solid #A8DDB8; border-radius: 20px; padding: 5px 14px; font-size: 11px; font-family: "Arial Black", Arial, sans-serif; font-weight: 900; color: #2A6B42; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+    .tars-live-badge .dot-green { width: 7px; height: 7px; background: #2DC46B; border-radius: 50%; animation: pulse 2s infinite; }
+    .tars-live-title { font-family: "Arial Black", Arial, sans-serif; font-size: 30px; font-weight: 900; color: var(--black); margin-bottom: 6px; }
+    .tars-live-sub { font-size: 14px; color: var(--dark-gray); max-width: 560px; }
+
+    .initiative-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 0; }
+    @media (max-width: 900px) { .initiative-grid { grid-template-columns: 1fr; } }
+
+    .init-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .init-card-top { height: 5px; }
+    .init-card-body { padding: 24px 24px 20px; }
+    .init-card-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 8px; }
+    .init-status { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-family: "Arial Black", Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+    .init-status.active { background: #EDF8F1; color: #2A6B42; }
+    .init-status .sdot { width: 6px; height: 6px; border-radius: 50%; background: #2DC46B; animation: pulse 2s infinite; }
+    .init-target { font-size: 11px; font-family: "Arial Black", Arial, sans-serif; font-weight: 900; color: #fff; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+    .init-target.q2 { background: var(--blue); }
+    .init-target.q3 { background: #7B61FF; }
+    .init-name { font-family: "Arial Black", Arial, sans-serif; font-size: 18px; font-weight: 900; color: var(--black); line-height: 1.2; margin-bottom: 6px; }
+    .init-owner { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+    .init-owner-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Arial Black", Arial, sans-serif; font-size: 11px; font-weight: 900; color: #fff; flex-shrink: 0; }
+    .init-owner-name { font-size: 13px; color: var(--dark-gray); font-weight: 700; }
+
+    .init-progress-wrap { margin-bottom: 16px; }
+    .init-progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--mid-gray); margin-bottom: 6px; }
+    .init-progress-label strong { color: var(--black); font-size: 13px; }
+    .init-progress-track { background: #F0F0F0; border-radius: 6px; height: 8px; overflow: hidden; }
+    .init-progress-fill { height: 100%; border-radius: 6px; }
+
+    .init-next { border-top: 1px solid var(--silver); padding-top: 14px; }
+    .init-next-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 6px; }
+    .init-next-text { font-size: 13px; color: var(--dark-gray); line-height: 1.5; }
+
+    /* Action tracker strip */
+    .action-strip { background: var(--black); padding: 40px 48px; }
+    .action-strip-title { font-family: "Arial Black", Arial, sans-serif; font-size: 13px; color: var(--blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+    .action-strip-sub { font-size: 13px; color: var(--warm-gray); margin-bottom: 32px; max-width: 480px; }
+    .action-strip-grid { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
+    @media (max-width: 900px) { .action-strip-grid { grid-template-columns: 1fr; } }
+
+    .action-kpis { display: flex; gap: 32px; flex-wrap: wrap; }
+    .action-kpi { text-align: center; min-width: 72px; }
+    .action-kpi-num { font-family: "Arial Black", Arial, sans-serif; font-size: 40px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .action-kpi-num.total { color: #fff; }
+    .action-kpi-num.done  { color: #2DC46B; }
+    .action-kpi-num.prog  { color: #1D8FE1; }
+    .action-kpi-num.over  { color: #E14B1D; }
+    .action-kpi-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray); }
+
+    .owner-table { width: 100%; }
+    .owner-row-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .owner-row-item:last-child { border-bottom: none; }
+    .owner-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Arial Black", Arial, sans-serif; font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0; }
+    .owner-name { font-size: 13px; color: #fff; font-weight: 700; width: 70px; flex-shrink: 0; }
+    .owner-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; display: flex; gap: 1px; }
+    .owner-bar-done { background: #2DC46B; height: 100%; }
+    .owner-bar-prog { background: #1D8FE1; height: 100%; }
+    .owner-bar-over { background: #E14B1D; height: 100%; }
+    .owner-counts { font-size: 11px; color: var(--warm-gray); white-space: nowrap; width: 100px; text-align: right; flex-shrink: 0; }
+    .owner-counts span { margin-left: 6px; }
+    .owner-counts .c-done { color: #2DC46B; }
+    .owner-counts .c-prog { color: #1D8FE1; }
+    .owner-counts .c-over { color: #E14B1D; }
+
     @media (max-width: 768px) {
       .hub-hero { padding: 48px 24px 56px; }
       .hub-hero h1 { font-size: 40px; }
@@ -559,6 +627,172 @@
       <div class="feed-bar-channel">#strategy-feed</div>
     </div>
     <p>Post updates, completions, and context here. TARS reads this channel every day at 5 PM and responds automatically — no commands needed, just natural language.</p>
+  </div>
+
+  <!-- ─── CURRENT STATE ───────────────────────────────────── -->
+  <div class="tars-live-section">
+    <div class="tars-live-header">
+      <div class="tars-live-badge"><span class="dot-green"></span> Live now</div>
+      <div class="tars-live-title">Current state.</div>
+      <div class="tars-live-sub">Three active initiatives running in parallel. Progress and actions updated by TARS after every Friday session.</div>
+    </div>
+
+    <div class="initiative-grid">
+
+      <div class="init-card">
+        <div class="init-card-top" style="background:#1D8FE1;"></div>
+        <div class="init-card-body">
+          <div class="init-card-head">
+            <div class="init-status active"><span class="sdot"></span> Active</div>
+            <div class="init-target q2">Launch Q2</div>
+          </div>
+          <div class="init-name">Payments —<br>US Pilot</div>
+          <div class="init-owner">
+            <div class="init-owner-avatar" style="background:#1D8FE1;">S</div>
+            <div class="init-owner-name">Simon</div>
+          </div>
+          <div class="init-progress-wrap">
+            <div class="init-progress-label"><span>Progress</span><strong id="init-prog-1">35%</strong></div>
+            <div class="init-progress-track"><div class="init-progress-fill" style="width:35%; background:#1D8FE1;"></div></div>
+          </div>
+          <div class="init-next">
+            <div class="init-next-label">Next action</div>
+            <div class="init-next-text">Finalise merchant onboarding flow and select first cohort for US launch.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="init-card">
+        <div class="init-card-top" style="background:#E1A21D;"></div>
+        <div class="init-card-body">
+          <div class="init-card-head">
+            <div class="init-status active"><span class="sdot"></span> Active</div>
+            <div class="init-target q2">Launch Q2</div>
+          </div>
+          <div class="init-name">Pricing<br>Policy</div>
+          <div class="init-owner">
+            <div class="init-owner-avatar" style="background:#E1A21D;">C</div>
+            <div class="init-owner-name">Caio</div>
+          </div>
+          <div class="init-progress-wrap">
+            <div class="init-progress-label"><span>Progress</span><strong id="init-prog-2">42%</strong></div>
+            <div class="init-progress-track"><div class="init-progress-fill" style="width:42%; background:#E1A21D;"></div></div>
+          </div>
+          <div class="init-next">
+            <div class="init-next-label">Next action</div>
+            <div class="init-next-text">Complete Swiss market pricing validation and confirm GTV threshold with finance.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="init-card">
+        <div class="init-card-top" style="background:#7B61FF;"></div>
+        <div class="init-card-body">
+          <div class="init-card-head">
+            <div class="init-status active"><span class="sdot"></span> Active</div>
+            <div class="init-target q3">Launch Q3</div>
+          </div>
+          <div class="init-name">New Partnership<br>Model</div>
+          <div class="init-owner">
+            <div class="init-owner-avatar" style="background:#7B61FF;">F</div>
+            <div class="init-owner-name">Felipe</div>
+          </div>
+          <div class="init-progress-wrap">
+            <div class="init-progress-label"><span>Progress</span><strong id="init-prog-3">20%</strong></div>
+            <div class="init-progress-track"><div class="init-progress-fill" style="width:20%; background:#7B61FF;"></div></div>
+          </div>
+          <div class="init-next">
+            <div class="init-next-label">Next action</div>
+            <div class="init-next-text">Define partnership tier structure and draft revenue share model for review.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── ACTION TRACKER ────────────────────────────────────── -->
+  <div class="action-strip">
+    <div class="action-strip-title">Action tracker</div>
+    <div class="action-strip-sub">Open actions across all initiatives. Updated every Friday by TARS after the weekly session.</div>
+    <div class="action-strip-grid">
+      <div class="action-kpis">
+        <div class="action-kpi">
+          <div class="action-kpi-num total">28</div>
+          <div class="action-kpi-label">Total</div>
+        </div>
+        <div class="action-kpi">
+          <div class="action-kpi-num done">9</div>
+          <div class="action-kpi-label">Complete</div>
+        </div>
+        <div class="action-kpi">
+          <div class="action-kpi-num prog">14</div>
+          <div class="action-kpi-label">In Progress</div>
+        </div>
+        <div class="action-kpi">
+          <div class="action-kpi-num over">5</div>
+          <div class="action-kpi-label">Overdue</div>
+        </div>
+      </div>
+      <div class="owner-table">
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#1D8FE1;">S</div>
+          <div class="owner-name">Simon</div>
+          <div class="owner-bar-wrap">
+            <div class="owner-bar-done" style="width:30%;"></div>
+            <div class="owner-bar-prog" style="width:50%;"></div>
+            <div class="owner-bar-over" style="width:20%;"></div>
+          </div>
+          <div class="owner-counts">
+            <span class="c-done">3✓</span>
+            <span class="c-prog">5●</span>
+            <span class="c-over">2!</span>
+          </div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#E1A21D;">C</div>
+          <div class="owner-name">Caio</div>
+          <div class="owner-bar-wrap">
+            <div class="owner-bar-done" style="width:44%;"></div>
+            <div class="owner-bar-prog" style="width:45%;"></div>
+            <div class="owner-bar-over" style="width:11%;"></div>
+          </div>
+          <div class="owner-counts">
+            <span class="c-done">4✓</span>
+            <span class="c-prog">4●</span>
+            <span class="c-over">1!</span>
+          </div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#7B61FF;">F</div>
+          <div class="owner-name">Felipe</div>
+          <div class="owner-bar-wrap">
+            <div class="owner-bar-done" style="width:33%;"></div>
+            <div class="owner-bar-prog" style="width:67%;"></div>
+            <div class="owner-bar-over" style="width:0%;"></div>
+          </div>
+          <div class="owner-counts">
+            <span class="c-done">2✓</span>
+            <span class="c-prog">4●</span>
+            <span class="c-over">—</span>
+          </div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#555;">T</div>
+          <div class="owner-name">Team</div>
+          <div class="owner-bar-wrap">
+            <div class="owner-bar-done" style="width:0%;"></div>
+            <div class="owner-bar-prog" style="width:83%;"></div>
+            <div class="owner-bar-over" style="width:17%;"></div>
+          </div>
+          <div class="owner-counts">
+            <span class="c-done">—</span>
+            <span class="c-prog">5●</span>
+            <span class="c-over">2!</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="section">
