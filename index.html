@@ -263,102 +263,128 @@
        CASE DASHBOARD
     ═══════════════════════════════════════ */
     .case-hero {
-      background: #1A1A1A;
+      background: #0D0D0D;
       color: #fff;
       padding: 52px 48px 60px;
       position: relative;
       overflow: hidden;
     }
-    .case-hero::before { content: ""; position: absolute; width: 140px; height: 140px; border: 2px solid rgba(45,196,107,0.15); border-radius: 4px; top: -30px; right: 80px; transform: rotate(15deg); }
-    .case-hero::after { content: ""; position: absolute; width: 80px; height: 80px; border: 2px solid rgba(45,196,107,0.1); border-radius: 4px; bottom: 15px; right: 250px; transform: rotate(-10deg); }
+    .case-hero::before { content: ""; position: absolute; width: 160px; height: 160px; border: 2px solid rgba(45,196,107,0.12); border-radius: 4px; top: -40px; right: 90px; transform: rotate(15deg); }
+    .case-hero::after  { content: ""; position: absolute; width: 90px; height: 90px; border: 2px solid rgba(45,196,107,0.08); border-radius: 4px; bottom: 18px; right: 260px; transform: rotate(-10deg); }
     .case-hero-logo { position: absolute; top: 20px; right: 28px; width: 38px; height: 44px; object-fit: contain; z-index: 10; }
-    .case-hero-label { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
-    .case-hero h1 { font-family: "Arial Black", Arial, sans-serif; font-size: 48px; font-weight: 900; color: #fff; margin-bottom: 14px; }
+    .case-hero-label { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+    .case-hero h1 { font-family: "Arial Black", Arial, sans-serif; font-size: 48px; font-weight: 900; color: #fff; margin-bottom: 14px; line-height: 1.1; }
     .case-hero h1 span { color: #2DC46B; }
-    .case-hero p { font-size: 15px; color: var(--warm-gray); max-width: 480px; line-height: 1.65; margin-bottom: 20px; }
-    .case-updated { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 6px 16px; font-size: 12px; color: var(--mid-gray); }
-    .case-updated .dot-green { width: 7px; height: 7px; background: #2DC46B; border-radius: 50%; }
+    .case-hero p { font-size: 15px; color: var(--warm-gray); max-width: 520px; line-height: 1.65; margin-bottom: 24px; }
+    .case-updated { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 16px; font-size: 12px; color: var(--mid-gray); }
+    .case-updated .dot-green { width: 7px; height: 7px; background: #2DC46B; border-radius: 50%; animation: pulse 2s infinite; }
+    .case-hero-metas { display: flex; gap: 32px; margin-top: 20px; flex-wrap: wrap; }
+    .case-hero-meta { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .case-hero-meta strong { color: rgba(255,255,255,0.75); display: block; font-size: 14px; margin-bottom: 2px; }
 
     .case-body { background: #F7F7F7; padding: 48px 48px 64px; }
 
-    /* KPI cards */
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
-    @media (max-width: 1000px) { .kpi-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { .kpi-grid { grid-template-columns: 1fr; } }
-    .kpi-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
-    .kpi-bar { height: 4px; background: var(--blue); }
-    .kpi-bar.green { background: #2DC46B; }
-    .kpi-bar.amber { background: #E1A21D; }
-    .kpi-bar.coral { background: #E14B1D; }
-    .kpi-inner { padding: 22px 24px 20px; }
-    .kpi-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 10px; }
-    .kpi-value { font-family: "Arial Black", Arial, sans-serif; font-size: 38px; font-weight: 900; color: #1A1A1A; line-height: 1; margin-bottom: 8px; }
-    .kpi-delta { font-size: 12px; display: flex; align-items: center; gap: 5px; }
-    .kpi-delta .up { color: #2DC46B; }
-    .kpi-delta .down { color: #E14B1D; }
-    .kpi-delta .neutral { color: var(--mid-gray); }
-    .kpi-delta-label { color: var(--mid-gray); }
+    /* Data note */
+    .data-note { background: #EDF8F1; border: 1px solid #A8DDB8; border-radius: 8px; padding: 14px 20px; margin-bottom: 36px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #2A6B42; }
+    .data-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .data-note strong { color: #1A4A2E; }
 
-    /* Charts row */
-    .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; }
+    /* Section headings */
+    .case-section-label { font-family: "Arial Black", Arial, sans-serif; font-size: 12px; color: #2DC46B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+    .case-section-title { font-family: "Arial Black", Arial, sans-serif; font-size: 26px; font-weight: 900; color: var(--black); margin-bottom: 6px; }
+    .case-section-sub { font-size: 14px; color: var(--dark-gray); margin-bottom: 28px; max-width: 600px; }
+
+    /* Metric group cards */
+    .metric-group { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); overflow: hidden; margin-bottom: 24px; }
+    .metric-group-header { display: flex; align-items: center; gap: 12px; padding: 18px 28px 14px; border-bottom: 1px solid #F0F0F0; }
+    .metric-group-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .metric-group-icon.blue { background: #E8F4FD; }
+    .metric-group-icon.green { background: #E8F8EF; }
+    .metric-group-icon.amber { background: #FDF6E8; }
+    .metric-group-title { font-family: "Arial Black", Arial, sans-serif; font-size: 14px; font-weight: 900; color: var(--black); }
+    .metric-group-sub { font-size: 12px; color: var(--mid-gray); margin-top: 1px; }
+    .metric-group-phase { margin-left: auto; background: var(--blue); color: #fff; font-size: 10px; font-family: "Arial Black", Arial, sans-serif; letter-spacing: 2px; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+    .metric-group-phase.green-badge { background: #2DC46B; }
+
+    /* KPI grid inside groups */
+    .kpi-row { display: grid; gap: 1px; background: #F0F0F0; }
+    .kpi-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .kpi-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .kpi-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 900px) { .kpi-row.cols-3, .kpi-row.cols-4 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .kpi-row.cols-3, .kpi-row.cols-4, .kpi-row.cols-2 { grid-template-columns: 1fr; } }
+
+    .kpi-cell { background: #fff; padding: 22px 24px 18px; }
+    .kpi-cell-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 8px; }
+    .kpi-cell-value { font-family: "Arial Black", Arial, sans-serif; font-size: 34px; font-weight: 900; color: var(--black); line-height: 1; margin-bottom: 6px; }
+    .kpi-cell-value.green { color: #2DC46B; }
+    .kpi-cell-value.blue { color: var(--blue); }
+    .kpi-cell-value.amber { color: #E1A21D; }
+    .kpi-cell-delta { font-size: 12px; color: var(--mid-gray); margin-bottom: 10px; }
+    .kpi-cell-delta .up { color: #2DC46B; font-weight: 700; }
+    .kpi-cell-delta .down { color: #E14B1D; font-weight: 700; }
+
+    /* Progress bar toward target */
+    .kpi-progress { margin-top: 10px; }
+    .kpi-progress-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--mid-gray); margin-bottom: 5px; }
+    .kpi-progress-label .target { color: var(--blue); font-weight: 700; }
+    .kpi-progress-label .target.green { color: #2DC46B; }
+    .kpi-progress-track { background: #F0F0F0; border-radius: 4px; height: 5px; overflow: hidden; }
+    .kpi-progress-fill { height: 100%; border-radius: 4px; background: var(--blue); }
+    .kpi-progress-fill.green { background: #2DC46B; }
+    .kpi-progress-fill.amber { background: #E1A21D; }
+
+    /* Charts */
+    .charts-row { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; margin-top: 24px; }
     @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
-    .chart-card { background: #fff; border-radius: 8px; padding: 28px 28px 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
-    .chart-card-title { font-family: "Arial Black", Arial, sans-serif; font-size: 15px; font-weight: 900; color: #1A1A1A; margin-bottom: 4px; }
-    .chart-card-sub { font-size: 12px; color: var(--mid-gray); margin-bottom: 20px; }
-    .chart-wrap { position: relative; }
-    .chart-wrap canvas { max-height: 220px; }
+    .chart-card { background: #fff; border-radius: 10px; padding: 24px 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .chart-card-title { font-family: "Arial Black", Arial, sans-serif; font-size: 14px; font-weight: 900; color: var(--black); margin-bottom: 3px; }
+    .chart-card-sub { font-size: 12px; color: var(--mid-gray); margin-bottom: 18px; }
+    .chart-wrap canvas { max-height: 200px; }
 
-    /* Country section */
-    .country-section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-    @media (max-width: 900px) { .country-section { grid-template-columns: 1fr; } }
-
-    /* Country table */
+    /* Markets table */
     .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .data-table thead th { text-align: left; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); padding: 10px 12px; border-bottom: 1px solid var(--silver); font-weight: normal; font-family: Arial, sans-serif; }
+    .data-table thead th { text-align: left; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); padding: 10px 12px; border-bottom: 1px solid var(--silver); font-weight: normal; }
     .data-table tbody tr { border-bottom: 1px solid #F0F0F0; transition: background 0.1s; }
     .data-table tbody tr:hover { background: #FAFAFA; }
     .data-table tbody td { padding: 10px 12px; color: var(--dark-gray); }
-    .data-table tbody td:first-child { font-weight: 700; color: var(--black); }
-    .country-flag { font-size: 16px; margin-right: 6px; }
-    .rank-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--off-white); border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--mid-gray); margin-right: 8px; }
-    .rank-num.top { background: var(--blue); color: #fff; }
+    .data-table tbody td:first-child { font-weight: 700; color: var(--black); font-family: "Arial Black", Arial, sans-serif; font-size: 12px; }
+    .rank-chip { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 5px; font-size: 11px; font-weight: 900; background: #F0F0F0; color: var(--mid-gray); margin-right: 6px; }
+    .rank-chip.top { background: var(--blue); color: #fff; }
 
-    /* Support tickets */
-    .tickets-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-    @media (max-width: 900px) { .tickets-row { grid-template-columns: 1fr; } }
-    .ticket-stat-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); overflow: hidden; }
-    .ticket-stat-inner { padding: 24px; }
-    .ticket-stat-num { font-family: "Arial Black", Arial, sans-serif; font-size: 44px; font-weight: 900; line-height: 1; }
-    .ticket-stat-num.open { color: #E14B1D; }
-    .ticket-stat-num.progress { color: #E1A21D; }
-    .ticket-stat-num.resolved { color: #2DC46B; }
-    .ticket-stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); margin-top: 6px; }
+    /* Phase 2A gauge */
+    .phase-gauge-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+    @media (max-width: 700px) { .phase-gauge-row { grid-template-columns: 1fr; } }
+    .gauge-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .gauge-title { font-family: "Arial Black", Arial, sans-serif; font-size: 14px; font-weight: 900; color: var(--black); margin-bottom: 4px; }
+    .gauge-sub { font-size: 12px; color: var(--mid-gray); margin-bottom: 20px; }
+    .gauge-bar-row { margin-bottom: 16px; }
+    .gauge-bar-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+    .gauge-bar-name { font-size: 13px; color: var(--dark-gray); font-weight: 700; }
+    .gauge-bar-vals { font-size: 12px; color: var(--mid-gray); }
+    .gauge-bar-vals strong { color: var(--black); }
+    .gauge-track { background: #F0F0F0; border-radius: 6px; height: 10px; overflow: hidden; position: relative; }
+    .gauge-fill { height: 100%; border-radius: 6px; position: relative; }
+    .gauge-fill::after { content: attr(data-pct); position: absolute; right: 0; top: -18px; font-size: 10px; color: var(--mid-gray); }
 
-    /* Case section label */
-    .case-section-label { font-family: "Arial Black", Arial, sans-serif; font-size: 13px; color: #2DC46B; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-    .case-section-title { font-family: "Arial Black", Arial, sans-serif; font-size: 26px; font-weight: 900; color: var(--black); margin-bottom: 6px; }
-    .case-section-sub { font-size: 14px; color: var(--dark-gray); margin-bottom: 28px; max-width: 540px; }
+    /* Cohort NPV card */
+    .cohort-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 8px; }
+    @media (max-width: 700px) { .cohort-cards { grid-template-columns: 1fr; } }
+    .cohort-card { background: #fff; border-radius: 10px; padding: 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-top: 4px solid; }
+    .cohort-card.software { border-color: var(--silver); }
+    .cohort-card.payments { border-color: var(--blue); }
+    .cohort-card.target { border-color: #2DC46B; }
+    .cohort-card-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 10px; }
+    .cohort-card-value { font-family: "Arial Black", Arial, sans-serif; font-size: 32px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .cohort-card-value.gray { color: var(--warm-gray); }
+    .cohort-card-value.blue { color: var(--blue); }
+    .cohort-card-value.green { color: #2DC46B; }
+    .cohort-card-desc { font-size: 12px; color: var(--mid-gray); line-height: 1.5; }
 
     .case-footer { background: #0D0D0D; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .case-footer-name { font-family: "Arial Black", Arial, sans-serif; font-size: 20px; color: #2DC46B; }
     .case-footer-sub { font-size: 12px; color: var(--mid-gray); margin-top: 2px; }
     .case-footer-right { font-size: 12px; color: var(--warm-gray); text-align: right; }
-
-    /* Data note banner */
-    .data-note {
-      background: #EDF8F1;
-      border: 1px solid #A8DDB8;
-      border-radius: 8px;
-      padding: 14px 20px;
-      margin-bottom: 32px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      font-size: 13px;
-      color: #2A6B42;
-    }
-    .data-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-    .data-note strong { color: #1A4A2E; }
 
     @media (max-width: 768px) {
       .hub-hero { padding: 48px 24px 56px; }
@@ -770,154 +796,265 @@
 ═══════════════════════════════════════════════ -->
 <div id="panel-case" class="cc-panel">
 
+  <!-- HERO -->
   <div class="case-hero">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdsAAAJ4CAYAAAAtGknpAAAi10lEQVR4nO3debiu93zv8c8v0hBBlRaHSGIeQqnEkNCexDFFOSiJaGlqPuiAo+cQdfbahpY6peWUirkSITGWiqFt0JoTQxOkZklIKUnILInv+eN5FMneSfba6/f87met1+u61uXq1ax9f9f9DO913+u5f3cCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAk9BGD8DyqZX9dsymY3dPcpMkN0yyS5Kdk1wzyZXn//c1klyU5Nz5t52X5Iwkp8+/TktySl5635PbHx5zwUJ/ADakWtlzp2w68YaZPWdvkOSXklxr/r9Xnf9nOyfZKckPMnvuXpDZ8/b8JOckOTXJV3PY3t9ojz/+wsX+BCwzsWWr5lHdM8mdk9wuyU0zC+zuSXZcw019K8kXkpw4//pkNrcvtJX8eA23wQZRlZbULZPcKcltktw2ya2T7Jq1e8+7KMnJSb46//rXJB/P5v1PaCsfvGiNtsE6Irb8nKq6XZJ7JrlHkrtldpQ6wg+SfCzJsUmOaa2dMGgOlkBV3TLJfZPcPck+mR2xjnBuko8m+YckH0jaZ1pLDZqFCRFbUlX7JHlIkt9KssfYabbqlCTvTHJk0j7mDYyqumOShyV5YJIbjZ1mq05J8rYkb03av3jeblxiu0FV1XWTHJLkkUluOXicbfWNJK9Pclhr7duDZ2GBqupXkjwms+ftzQaPs62+kuR1SV7reQvrXFXdrqpeW1Xn1/L7UVW9uaruNHq/0lfNnrevr/XzvD28qvYavV+BNVZVe1XVu8e+x3R1TFXtO3o/s7aq6g5V9faq+vHQZ1c/76+qu4zez/TnNPI6V1U3S/KCzP6utREe73cmeVpr7SujB2H1qmq3zJ63D83GeN7+fZL/1Vr7wuhB6GOH0QPQR1X9YlX938wupXlQNsYbVpI8IMnnq+rPa2Wvq17uf82k1EsOuHJVrST5YpKDs3Get7+Z5HNV9ZKqGvVJajraKE/kDaWqfjPJyzO7eH8j+3qSx7bW/nH0IFy+qrp9ktcmuf3YSYb7bpI/bq397ehBWDuObNeRqrp2Vb0pybsjtMnscpAPVNWLa2XPnUYPw5bVyn47VtVzkxwXoU2S6yR5fVW9o2afvmYdcGS7TlTV/kn+NrNVcri045M8tLX21dGD8FNVdZ0kR2S2iAqX9q0kB7fW/mX0IGwfR7ZLrlayQ1U9O7MVa4R26/ZKclxV3XP0IMxU1V2TnBChvSw3SHJsVf3xbBlKlpUHb4lV1TUyW9zhgYNHWSYXJ/mj1tpfjx5kI6uqgzJb4GHnwaMsk3cnOaS1dvroQdh2YrukqupGSd6b5OajZ1lSz2+tPWP0EBtRVR2a5Lnx/rMaX09yQGvt30YPwrZxGnkJVdWtk3w4Qrs9nl5VL68Vr4FFml/W87wI7WrdKMlHLYSxfDzhl8z871zvyuwenGy/VyftsRaI76+qXpzkyaPnWCfOSvIgl7UtD7/VL5H59bPvj9CupUcn9dLRQ6x380t7njx6jnXk6kneM//bN0tAbJdEVR2c5O1JrIq09p40P71JB1X11CTPHD3HOrRTkjdW1SNGD8Llcxp5CVTVPTJbO9XCDH09vrV22Ogh1pOqenCSo+O9pqcLkzywtfae0YOwdV4AE1dVd07yj0l2GT3LBnBhknu31o4dPch6UFW/luSf47m7COcluZfFL6ZLbCesqm6T5ENJLEy+ON9LcqfW2tdHD7LMquq/JPlUZosysBinJ/mN1trnRw/Cpfmb7URV1Q2TvCdCu2i/nOTt9aJ9LLawSrWy345J3hShXbRrJXl/Ve0xehAuzZHtBM1XhvpEkluOnmUDe3Vr7TGjh1hGVfWiJE8ZPccG9sUkd2mt/XD0IPyUI9uJma9/+poI7WiPrqpHjx5i2VTVA+MSn9FuleQNFmyZFke2E1NVf5LkOaPnIElyfpK7ttY+PXqQZVBVt8rsjMzVR89CkuRPWmvPGz0EM2I7IfPVoT6U5EqjZ+E/fTPJXq21748eZMqq6mqZhfbWo2fhP/04yd1bax8aPQhOI09GVf1iksMjtFOze5Ij66gDPS6X7dUR2qnZIckbqsqKcxMgttPxV0n2GD0EW3TPHHjUoaOHmKqqenISywZO0w2TvGj0EDiNPAlV9d+SfCAejyn7cZLfbK29d/QgU1JV+yT5YKxuNnX3bq29f/QQG5k398Gqapckn8/sdOWyOTfJ55J8OclXMrvX5nlJfpDZh4uuktnqQVdNcp0kN5t/3TLJbgPm3V7fy+zvtyePHmQKqup6SY5Pcv3Rs6zCaZldIvOlzJ6/38ns+XxWfvrcvcb8f/dIcpMkN03ya1nOD4B9LZv3vm1bOf7c0YPAEFX17FouH6uqp1fVvvWKvX5hO37uParqUVX1xqo6a+QPtI0+US854Mpr+RxYRrWy345V9cHRD8Y2OK+q3lpVT6iqW6z65z7qwCtV1V5V9ZSqOraqLh73I22zTWv5HGDbOLIdqKp2S3JSkqmvVvTvSf4myRGtta+s9T9es0+yPjTJo5Pss9b/fgd/01p7wughRqqqFyZ52ug5roDPJnlVkje21s5Y63+8qnZNcnCSJ2Z2Y/cpOzfJLVtrp4weBBaqqt4w9Pfcy/fVqnp8rex3lQXuk7vX7Oh56n53UftkaqrqwVX149EPwOX4bFXdf2H7ZHak/ztVdcLgn/vyvH5R+wQmoapuVVUXjX7lbcU5VfWMWtlz2IdequpBVfWtwfvhspxTVb86av+MUlW3qKofDN73l+V7VfWIUasn1Up2qNmp6tMH74etuai24zQ6LJ2qetPoV91WvLeqJvFhraq6Vs3+pjtVX66qa47eT4tSVbtU1YmD9/lleXfN7jY0XFVdp6qOHLw/tuaNo/cPLERV3aSmd1R7YVU9Y4rrqVbVIVV1wdjds1XvmK9nve7VdH/xubiqJnnjg6p6bFWdO3j/XNJFVTX1vy/D9quqvxz9aruE71fVb4zeL5elqvav6Z6ae/ro/dNbVf3B6J28FWdX1QNG75/LUlW3q6qTx+6mS/nL0ftlo9kQv5FPSc1un3dqpnOt3qmZXfD+hdGDXJ6qunWSf0py3dGzXMLFSe7VWvun0YP0UFX7ZrZwxaov9erkrCT3bK19YvQgl6dm96d+X2Z35JmCs5Ls6jZ8izO5U4YbwEMzndB+JcndliG0STKf8z5Jzhw8yiVdKcmRNbsMZF2pqusmOSrTC+35SR6wDKFNkvnlNr+e5LjRs8xdPbP3IhZEbBfvUaMHmPt2ZkcF3xw9yLZorX02yf0zu2ZwSq6T5KiRn+Bea7Wy345Jjkxyg9GzXMLFSQ5urR07epBtMb9z1AGZXVs/BY8cPQB0UbPLJqbg9Kq6zej9sT1qdk3jFL1k9L5ZK1X1/NE7cyueMXrfbI+q2q2qThm9E+duPnp/bBSObBfrIaMHyGxB/Ye21k4cPcj2aK0dkeSlo+fYgj+oqoeNHmJ7VdUDk/yv0XNswd8l7fmjh9ge87W1H5DkgtGzZBrvSRuC2C7Wg0cPkOR5rbUPjB5iTRy29/9M8s+jx9iCV1bVnqOHWK2qulmS12V6H6D8SpJDWkuNHmR7tdY+neSpo+fINN6TYO1U1a5DTxbNfHi93QS9qq5fVaeN3rFbcFLNPnm+VGplr6tW1b+O3nlbcG5V3W70/llrVfWW0Tu21uEH+9jAquqRg19QF1bVbUfvhx6qat+a5qIXS7fgRVW9bvRO24rfG71veqiq61XVmYP37SGj98NG4DTy4txj8PZf1Fo7YfAMXbTWPppkigtLPCCpKZwqvEKq6veTTPGN929aa68bPUQPrbV/T7J58Bj3HLx9WDs19tOH/1Gz29itazXN9aYvrImvzpUkVXWXmubZgU+u9/sHz+8Y9KWB+9gt9xZgqU5xLauaLY7+7YEjPKu19tyB21+IqtolySeSTO3DSd9Jsldr7VujB9mSqrp2Zost7DF4lEs6PcnerbWvjx6kt6p6TJJXDhxh16k+P9cLp5EX4y4Dt31OkpcP3P7CtNbOSfKgJD8YPcslXDfJ0VNc8GJ+44k3Znqh/XGS39kIoU2SHLb365OcPHCCOw3c9oYgtosxcgGJw+cr12wIrbUvZ7YyztQuD9knm078s9FDXMqmem6Se40eYwtWWmvvHT3EorTHH39hklcPHGFdfnhySsR2MW46cNuHD9z2EK21tyd5weg5tuCpVXXQ6CF+oqrul2l+sOzvs7k9b/QQAxyRcb8k3mTQdjcMsV2MUU/kk5P2kUHbHmtze2Zmd1mZmlfX7O5FQ1XVTZO8IdP73MY3kxzSVvLj0YMsWmvtq0k+NWjzYtuZ2C7GqCPbd62H1XZWY/5m/dtJpvY3v6sleVsNXPCiVva7SpI3J7nmqBm24vwkD95If/bYgr8ftN2RZ982BLHtrGaX3Fxn0OanuJThwrTWTk9ycKaxBu3PukWSw4ZtfdOxL09yh2Hb37ontdaOHz3EYB8etN3rVtVUbv25LoltfzfJuFN1Gzq2SdJa+2SSPxo9xxY8tKoWPldVPSHJ7y16u1fAK1trrxk9xHCb9/94Zkf4I9x40HZh+1XVfUZcpV5VI6/rnZyqes2gx+Gy/Kiq9l3gPrhTVZ0/+GfekuPmp7ZJUlWfHvQ43Hf0z76eObLtb9TKTV8ZtN1p2rz/EzNbuGFKfiHJW2u26ElXVXWtzP5OO7XVmM5IcmBb+eCoo7kp+uqg7e4yaLsbgtj2N+oJLLY/Y/5m/uAk3xs9yyVcL8kba2W/HXttYL5wxRGxcMWyGPXaFduOxLa/UU/gUwdtd7LmN+1+RDK5y0r2y6Zj+11Xuqk2J7lPt39/9Z7TWjtm9BATNGqtYrHtSGz7G/UEPnvQdidtvirR6LusbMkfV9Wa38i7ZgtXHLrW/+4a+IccfdBzRg8xUaNeu2Lbkdj2N+oJfM6g7S6B9pwkbx89xSW0JK+tqlut1T9YVbsneV2m9zo/OcnD2kFHXzx6kIkS23Voai/C9WjUpyzPG7TdyZsv9PGojPsgytZcPcmba2Wvq27vP1Qv2mfnzH6huPZ2T7W2frJwxdT+dj4lo1672/28Y+vEtr9Rn7J0KcVlaK2dmdkdgs4dPMol3TabjnvVdv8rT/no/0vya9s/zpr7g9ba1D4VPjU7D9quX9A7Etv+Rp3OdUrocrTWTkjy2NFzbMHDquqJq/3mqnpcZkfuU3N4a237f5FY/0ZdLuhPTx2JbX+jnsCWXrsCWmtvTPLXo+fYghdX1Z239Zuqau8kf9Vhnu31mbx438eNHmJJiO06JLb9jXoC32DQdpfPYXs/JdNb2nKnJEdX1a9c0W+YL1xxVKb3J4QzkjykPfVjTlNeMbsO2q4rGDoS2/5GxdZdPK6g+Y27D0py2uhZLuGGSd5URx14pcv7D+cLVxye5Ebdp9o2leRRrbWvjR5kiYx67Tqy7Uhs+xPbJdBa+/ckD0ty0ehZLuHuOfCoy78ueFP9nyQH9B9nmz2vtfaO0UMsmVH3lhXbjsS2v1FHS9dfxJq760lr7UNJnj56ji04tKoetLX/Z1XdM8mfLHCeK+ofc/RBK6OHWCb1kgOunOTWgzb/rUHb3RBG3fptw6jZ/WzPGrT5g1prRw/a9tKqqjdndlp5Ss5Msndr7eeuDZ4vXHFckl8eMdRlOCXJHVxPu22q6r8m+eCgzV+jtTbqvWrdc2TbWWvt7CTfGbT5Xx+03WX36CSfHz3EJVwzydt+dsGL+W3p3prphfbCJAcL7ar8xqDtfkdoWXpV9ZFF3pTyZ3yjytmL1aiqm1fVmYMet8vyhp+Z8VWjh9mKx4987JZZVX180GP2kdE/+3rnyHYxRi0LuHtSdxm07aXWWvtSkkMy+zTtlDy8qh5bVY/I7Ah8ao5orb1i9BDLqKpukuROgzY/taVL1x2xXYyR95b9nYHbXmqttXcmeeHoObbgJUkOGz3EFnwum/e2cMXqHZxxn6MR287EdjFOGLjtR1TVNQduf7kdfdChSd4/eoxLuEqmt3DFmUke0laOn9pa00uhXrHXL2Ts0qH/OnDbG4K/5y1AzS7B+fbAEQ5trf3ZwO0vtaq6dmaf+N1j8ChTVUke0lp72+hBllVVPTLJawaOsGtrzaU/HTmyXYDW2mkZew3bk9fitm0bVWvt+5md4rtg9CwT9XyhXb35CmH/e+AIpwptf2K7OB8euO3rZNNxhw7c/tJrrX0iyZNHzzFBx+bog541eoilduBRT0xyi4ETjHxv2jCcRl6QqnpUklcPHOFHSW7XWjtp4AxLr6penWnevm6EUzNbuOI/Rg+yrKrquklOyuw66lEe1Vp77cDtbwiObBfnA4O3v1OSl80XrGe1Xrzv7yf5zOgxJuBHSQ4U2u32Vxkb2iT5h8Hb3xAc2S5QVX0mye0Hj7GptfbswTMstZruEomL9KTW2stGD7HMqupxSUZfk/zp1tpeg2fYEBzlLNZbRw+QZFNV3WP0EMustfbNJL+d5OLRswxypNBun6q6bZIXj54j03hP2hDEdrGm8MTeIcmRVXXL0YMss9baB5I8Z/QcA5yYsdeDLr2qukGSdyWZwhUCPkW+IE4jL1hVfTLJHUfPkdmHW+42P0pjFWbrTtfbkjxw9CwLclaSO7fWvjh6kGVVVb+Y5ENJbjd6liSfaK1ZznVBHNku3sgL13/WrkneU1XXHz3Ismotldknk782epYFqCSHCO3qzVdye0+mEdoked3oATYSR7YLNv/N9tQkVxs9y9w3ktx7vvA+q1BVt0/y0SQ7Dx6lpz9vrY1ceGGpzVeRe2+SXx09y9zZSW7YWjtz9CAbhSPbBWut/SDT+o1yjyT/XFX7jB5kWbXWPpvkf4yeo6MPZvP+zxw9xLKqqj2TfCTTCW2SvFZoWfeq6kZVddFC7lJ5xV1YVSuuw129qvrr0Q9iB6fV7KiMVaiq362qswc/hpd0cc1u5wfrX1W9efQrbiv+rmaflmQb1cqeO1XVx0Y/gGvoR1V119H7dRlV1bWr6m8HP35b86bR+wcWpqpuXbPfMKfonKpaqZU9dxq9n5ZNVV2vqr49+PFbK384en8um6q0mh3Nfnf0g7cVF1XVrUbvJ1ioqjpi9CvvcpxUVb83v9cmV1BV7V+z0/LL7MjR+3GZ1Ep2qKoDq+ozgx+3y3P46H21Ufk08kBVtUeSL2T6n2I9OcnLkryxtXbK6GGWQVU9LckLR8+xSl/I7Hras0cPMnU1u5HAQUmelLF37rkizktyK9fWsyFV1XPG/qK7TS6uqg9V1VOq6g7z+3CyBfPTiUePfbhW5YdldbGtmj+ut6mqJ1XVe2t6H3S8LNZEH8iR7WBVtUtmRxK7jZ5lFX6Y2YL8X5l/nZLkjCTnzr82uqsneUuSa48eZBv8WaaxrOhoV8lsOcVfymwBmJsmuUmSvbJcj+dPfCOb996zrRzvdTmI2E5AVR2Q2coyAD3cv7X27tFDbGSuqZyA1toxSXxwAejhcKEdz5HtRNRs3dTjk9x48CjA+nFqktu11k4fPchG58h2IuZLp/1WZp8YBNheP07yu0I7DWI7Ia21zyV52ug5gHXh2a21Y0cPwYzYTkxr7WVJjhg9B7DU3p3N7Tmjh+Cn/M12gqrq6kk+lelfJA9Mz5cyW5TkzNGD8FOObCeotXZWkvsmOW30LMBS+W5ml/mcOXoQfp7YTlRr7WtJ7p3ZIhEAl+eHSe7TWvvS6EG4NLGdsNbaCZkd4Z4zehZg0s7P7Ij2M6MHYcvEduJaax9P8rAkF42eBZiki5M8vLX24dGDsHViuwRaa+9K8ujMXlQAP3Fxkse01qxnPXE+jbxEquoBSd6U2SLpwMb2oySPaK0dNXoQLp/YLpmq2j/JOzO7owywMZ2T5MGttfeNHoQrRmyXUFXtneSYJL88ehZg4c5Icr/W2kdHD8IV52+2S6i1dlySX0/yb6NnARbqpCT7Cu3yEdsl1Vo7Kckd40bfsFG8O8k+89c+S0Zsl9hspal2YJKnxyeVYb2qJC/I5vYAK0MtL3+zXSeq6l5JXpvk+qNnAdbMt5M8srX2/tGDsH0c2a4T8xfjrZMcltlvwsByOzrJrwrt+uDIdh2qqntnFt3dRs8CbLPTkjyhtfbO0YOwdhzZrkPza+9um+QvklwweBzgirkgyYuT3Epo1x9HtutcVe2a5FmZLfd4pcHjAJdWSd6S5Bmtta+OHoY+xHaDqKrbJnlekvvF4w5TUEnel+RQd+tZ/7zpbjBVddMkj0nyuCS/NHgc2IjOz+zDTy+c30aTDUBsN6iqukaSQ5I8Psmeg8eBjeDLSV6Z5FWttTNGD8NiiS2pqhsnuX+SA5PsG88LWCtfT/KuJEcn7SOtuSxvo/Kmys+pqptk9nfdu86/LJIBV9z3k3wkyb8kOaa1duLgeZgIseUyVdWNMovuHZPcIsnNkuwen2yGUzI7NfzlJMcn+UjSvujolS0RW7ZZrey5UzadeKPMwrvz6HlggS5M8o1s3vtLbeX4c0cPAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFvQVvuNVXW3JA9fw1lgmTyjtXbG6CFGqJU9d8qmE18yeg4Y5B2ttfdu6zdtT2wfl+QVq/1+WHK7t9ZOHj3ECFW1S5KzR88Bgzyztfan2/pNO/SYBAD4KbEFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAznYcPcB2eFuSI0cPwTAvSHLjgdt/eVWdN3D7I11p8Pa/l+QJg2dgnPslOWT0ENtqmWN7UmvtLaOHYIyqesbgEe47ePsb2ble+xtXVe02eobVcBoZADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhsx9EDwJI6KMl3Rw8xyFWSvHf0ELBMxBZW5xOttZNHDzFCVe0yegZYNk4jA0BnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ3tOHqA7XBoVR06eghg4Xarqho9BGwLR7YA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGc7bsf3np/k9LUaZBV2nn+Ncm5m+4CN6eLRAwyzee/KpuNGvvYZa6ckVxu4/fMze/8dZeS2F6+qnlljPXn0PgBYtKp6xOD33heN3ger4TQyAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQ2Y6r/caqum6Sm63hLNtq94HbTpIbVdXdBs/AKC+976faHx5zwegxRqiV7JBNte/oORjm5oO3f/3B773faK2duq3f1Fa7tap6XJJXrPb7Ycnt3lo7efQQI1TVLknOHj0HDPLM1tqfbus3OY0MAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHS24+gBtsOXknxh9BAMs1+Saw6egTHOS/K+0UMwzE2T3Gb0ENtqmWP7ltbaM0cPwRhVdXySO4yegyH+o7X2oNFDMEZVPTXJX4yeY1s5jQwAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0tuPoAWBJPauqzho9xCDeN2AbedHA6jxm9ADA8nAaGQA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDoTGwBoDOxBYDOxBYAOhNbAOhMbAGgM7EFgM7EFgA6E1sA6ExsAaAzsQWAzsQWADoTWwDobMfRA2yH/15Vu40egmH2GLz9pyT5/uAZRrlyklcO3P61q+oNA7fPWLcaPcBqLHNsbzP/ghHe1lo7efQQI1TVLhkb212SPHzg9mGbOY0MAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHQmtgDQmdgCQGdiCwCdiS0AdCa2ANCZ2AJAZ2ILAJ2JLQB0JrYA0JnYAkBnYgsAnYktAHS243Z873uSHLBWg8BS2bz/d0ePMMzRB52fA4/y2mej+tLoAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgMH+P9VSgE+ziuBqAAAAAElFTkSuQmCC" class="case-hero-logo" alt="Loyverse" />
-    <div class="case-hero-label">Loyverse · Operational Insights</div>
+    <div class="case-hero-label">Loyverse · Operational Intelligence</div>
     <h1>Meet <span>CASE.</span></h1>
-    <p>Your weekly operational dashboard. CASE tracks users, registrations, and support tickets across all markets — and delivers a full report to Slack, email, and this page every Monday morning.</p>
+    <p>Weekly operational dashboard for Loyverse leadership. Tracks revenue, GTV, payments penetration, and cohort economics — updated every Monday and delivered to Slack and email.</p>
     <div class="case-updated">
       <span class="dot-green"></span>
-      <span id="last-updated-label">Last updated: loading…</span>
+      <span id="last-updated-label">Last updated: —</span>
+    </div>
+    <div class="case-hero-metas">
+      <div class="case-hero-meta"><strong id="hero-period">—</strong>Reporting period</div>
+      <div class="case-hero-meta"><strong>5YP v3.1</strong>Model reference</div>
+      <div class="case-hero-meta"><strong>PROJECTED</strong>Data status</div>
     </div>
   </div>
 
+  <!-- BODY -->
   <div class="case-body">
 
     <div class="data-note">
-      <span class="data-note-icon">ℹ️</span>
-      <div><strong>Sample data — </strong>The numbers below are illustrative. Connect CASE to your data source and it will push real metrics here every Monday. <a href="#" style="color:#2DC46B;">See setup guide below →</a></div>
+      <span class="data-note-icon">📊</span>
+      <div><strong>5-Year Plan projections (v3.1, March 2026). </strong>Numbers are model-based. Snowflake actuals pipeline in progress — once live, this dashboard switches to real data with actuals vs. projected comparisons. <span id="case-data-note-period"></span></div>
     </div>
 
-    <!-- KPI CARDS -->
+    <!-- ── GROUP 1: REVENUE ── -->
     <div class="case-section-label">01</div>
-    <div class="case-section-title">Key metrics this week.</div>
-    <div class="case-section-sub">Snapshot as of the current reporting period. Deltas are vs. the previous week.</div>
+    <div class="case-section-title">Revenue health.</div>
+    <div class="case-section-sub">Core revenue metrics with 2030 targets. Progress bars show current position vs Phase 2 end-state.</div>
 
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-bar"></div>
-        <div class="kpi-inner">
-          <div class="kpi-label">Total Users</div>
-          <div class="kpi-value" id="kpi-total-users">—</div>
-          <div class="kpi-delta"><span class="up" id="kpi-users-delta">—</span><span class="kpi-delta-label" id="kpi-users-delta-label"></span></div>
+    <div class="metric-group">
+      <div class="metric-group-header">
+        <div class="metric-group-icon blue">💰</div>
+        <div>
+          <div class="metric-group-title">Revenue Metrics</div>
+          <div class="metric-group-sub">Add-on + Payments + New Pricing</div>
         </div>
+        <div class="metric-group-phase">Phase 2A Active</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-bar green"></div>
-        <div class="kpi-inner">
-          <div class="kpi-label">Active Customers</div>
-          <div class="kpi-value" id="kpi-active-customers">—</div>
-          <div class="kpi-delta"><span class="up" id="kpi-customers-delta">—</span><span class="kpi-delta-label" id="kpi-customers-delta-label"></span></div>
+      <div class="kpi-row cols-3">
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Total Revenue (Annual)</div>
+          <div class="kpi-cell-value blue" id="m-total-revenue">—</div>
+          <div class="kpi-cell-delta"><span class="up" id="m-total-revenue-delta">—</span> <span id="m-total-revenue-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €78.4M</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-total-revenue" style="width:0%"></div></div>
+          </div>
         </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-bar amber"></div>
-        <div class="kpi-inner">
-          <div class="kpi-label">New Registrations</div>
-          <div class="kpi-value" id="kpi-registrations">—</div>
-          <div class="kpi-delta"><span id="kpi-reg-delta">—</span><span class="kpi-delta-label" id="kpi-reg-delta-label"></span></div>
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Payment Revenue (Annual)</div>
+          <div class="kpi-cell-value green" id="m-payment-revenue">—</div>
+          <div class="kpi-cell-delta"><span class="up" id="m-payment-revenue-delta">—</span> <span id="m-payment-revenue-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target green">Target 2030: €14.5M</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill green" id="prog-payment-revenue" style="width:0%"></div></div>
+          </div>
         </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-bar coral"></div>
-        <div class="kpi-inner">
-          <div class="kpi-label">Open Support Tickets</div>
-          <div class="kpi-value" id="kpi-tickets">—</div>
-          <div class="kpi-delta"><span id="kpi-tickets-delta">—</span><span class="kpi-delta-label" id="kpi-tickets-delta-label"></span></div>
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">ARPC (Paying Merchants)</div>
+          <div class="kpi-cell-value" id="m-arpc">—</div>
+          <div class="kpi-cell-delta"><span id="m-arpc-delta" class="up">—</span> <span id="m-arpc-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €85/mo</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-arpc" style="width:0%"></div></div>
+          </div>
         </div>
+
       </div>
     </div>
 
-    <!-- CHARTS ROW -->
-    <div class="case-section-label" style="margin-top:40px;">02</div>
-    <div class="case-section-title">Registration trend.</div>
-    <div class="case-section-sub">Weekly new registrations over the past 12 weeks.</div>
+    <!-- ── GROUP 2: SCALE ── -->
+    <div class="case-section-label" style="margin-top:36px;">02</div>
+    <div class="case-section-title">Platform scale.</div>
+    <div class="case-section-sub">How large is the Loyverse ecosystem today, and how does GTV trend month over month.</div>
+
+    <div class="metric-group">
+      <div class="metric-group-header">
+        <div class="metric-group-icon blue">🌍</div>
+        <div>
+          <div class="metric-group-title">Scale Metrics</div>
+          <div class="metric-group-sub">Active users · Total GTV across all markets</div>
+        </div>
+      </div>
+      <div class="kpi-row cols-2">
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Active Users (last 30 days)</div>
+          <div class="kpi-cell-value blue" id="m-active-users">—</div>
+          <div class="kpi-cell-delta"><span class="up" id="m-users-delta">—</span> <span id="m-users-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: 1,059,000</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-active-users" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Total GTV (Annual)</div>
+          <div class="kpi-cell-value blue" id="m-total-gtv">—</div>
+          <div class="kpi-cell-delta"><span class="up" id="m-gtv-delta">—</span> <span id="m-gtv-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €59.9B</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-total-gtv" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="charts-row">
       <div class="chart-card">
-        <div class="chart-card-title">Weekly registrations</div>
-        <div class="chart-card-sub">New signups per week · last 12 weeks</div>
-        <div class="chart-wrap"><canvas id="chartRegistrations"></canvas></div>
+        <div class="chart-card-title">Revenue trajectory</div>
+        <div class="chart-card-sub">Annual revenue by stream 2025–2030 · €M</div>
+        <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-card-title">Support tickets by status</div>
-        <div class="chart-card-sub">Current snapshot</div>
-        <div class="chart-wrap" style="max-width:260px;margin:0 auto;"><canvas id="chartTickets"></canvas></div>
+        <div class="chart-card-title">GTV growth</div>
+        <div class="chart-card-sub">Annual gross transaction volume · €B</div>
+        <div class="chart-wrap"><canvas id="chartGTV"></canvas></div>
       </div>
     </div>
 
-    <!-- COUNTRY BREAKDOWN -->
-    <div class="case-section-label" style="margin-top:8px;">03</div>
-    <div class="case-section-title">Country breakdown.</div>
-    <div class="case-section-sub">Top markets by new registrations this week. Click any row to see details.</div>
+    <!-- ── GROUP 3: PAYMENTS ── -->
+    <div class="case-section-label" style="margin-top:36px;">03</div>
+    <div class="case-section-title">Payments health.</div>
+    <div class="case-section-sub">Phase 2A focus. These four metrics define whether the payments thesis is working. Target: attach rate >20% in selected markets by end of 2026.</div>
 
-    <div class="country-section">
-      <div class="chart-card">
-        <div class="chart-card-title">Registrations by country</div>
-        <div class="chart-card-sub">Top 9 markets this week</div>
-        <div class="chart-wrap"><canvas id="chartCountries"></canvas></div>
+    <div class="metric-group">
+      <div class="metric-group-header">
+        <div class="metric-group-icon green">💳</div>
+        <div>
+          <div class="metric-group-title">Payments Metrics</div>
+          <div class="metric-group-sub">Penetration · GTV processed · Take rate</div>
+        </div>
+        <div class="metric-group-phase green-badge">2A KPIs</div>
       </div>
-      <div class="chart-card">
-        <div class="chart-card-title">Market details</div>
-        <div class="chart-card-sub">Registrations · active users · open tickets</div>
-        <table class="data-table">
-          <thead><tr><th>#</th><th>Country</th><th>Reg.</th><th>Users</th><th>Tickets</th></tr></thead>
-          <tbody id="country-table-body"></tbody>
-        </table>
-      </div>
-    </div>
+      <div class="kpi-row cols-4">
 
-    <!-- SUPPORT TICKETS -->
-    <div class="case-section-label" style="margin-top:8px;">04</div>
-    <div class="case-section-title">Support ticket health.</div>
-    <div class="case-section-sub">Current volume across all statuses.</div>
-
-    <div class="tickets-row">
-      <div class="ticket-stat-card">
-        <div class="kpi-bar coral"></div>
-        <div class="ticket-stat-inner">
-          <div class="ticket-stat-num open" id="tickets-open">—</div>
-          <div class="ticket-stat-label">Open</div>
-        </div>
-      </div>
-      <div class="ticket-stat-card">
-        <div class="kpi-bar amber"></div>
-        <div class="ticket-stat-inner">
-          <div class="ticket-stat-num progress" id="tickets-progress">—</div>
-          <div class="ticket-stat-label">In Progress</div>
-        </div>
-      </div>
-      <div class="ticket-stat-card">
-        <div class="kpi-bar green"></div>
-        <div class="ticket-stat-inner">
-          <div class="ticket-stat-num resolved" id="tickets-resolved">—</div>
-          <div class="ticket-stat-label">Resolved This Week</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SETUP GUIDE -->
-    <div style="margin-top:56px;">
-      <div class="case-section-label" id="setup-guide">05</div>
-      <div class="case-section-title">How CASE updates this page.</div>
-      <div class="case-section-sub">CASE runs every Monday morning. Here is the workflow for connecting real data.</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-        <div class="chart-card">
-          <div class="chart-card-title">Step 1 — Data input</div>
-          <div class="chart-card-sub">Prepare a weekly metrics file</div>
-          <p style="font-size:13px;color:#555;line-height:1.65;margin-bottom:12px;">Each week, CASE reads a <code style="background:#F0F7FF;padding:2px 6px;border-radius:3px;font-size:12px;">case_data.json</code> file in the GitHub repo. This file contains all the metrics in a structured format.</p>
-          <div class="command-block" style="font-size:11px;overflow-x:auto;">{ "lastUpdated": "2026-03-23",<br>&nbsp; "summary": { "totalUsers": 45230, ... },<br>&nbsp; "weeklyRegistrations": [...],<br>&nbsp; "topCountries": [...],<br>&nbsp; "supportTickets": {...} }</div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-card-title">Step 2 — CASE pushes the update</div>
-          <div class="chart-card-sub">Automatic weekly deployment</div>
-          <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
-            <div class="response-step"><div class="response-num" style="background:#2DC46B;">1</div><div class="response-text"><strong>Monday AM</strong> — CASE pulls data from your source (DB, Sheets, CSV export)</div></div>
-            <div class="response-step"><div class="response-num" style="background:#2DC46B;">2</div><div class="response-text"><strong>Formats JSON</strong> — Writes <code style="font-size:11px;background:#F0F7FF;padding:1px 4px;border-radius:2px;">case_data.json</code> and pushes to GitHub</div></div>
-            <div class="response-step"><div class="response-num" style="background:#2DC46B;">3</div><div class="response-text"><strong>Netlify redeploys</strong> — Page is live within 30 seconds of the push</div></div>
-            <div class="response-step"><div class="response-num" style="background:#2DC46B;">4</div><div class="response-text"><strong>Sends summary</strong> — Slack message + email with key numbers to leadership</div></div>
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Payments Attach Rate</div>
+          <div class="kpi-cell-value green" id="m-attach-rate">—</div>
+          <div class="kpi-cell-delta"><span id="m-attach-delta" class="up">—</span> <span id="m-attach-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target green">2A Target: 20%</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill green" id="prog-attach-rate" style="width:0%"></div></div>
           </div>
         </div>
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">GTV Processed via Payments</div>
+          <div class="kpi-cell-value" id="m-gtv-processed">—</div>
+          <div class="kpi-cell-delta"><span id="m-gtv-proc-delta" class="up">—</span> <span id="m-gtv-proc-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Growing</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-gtv-processed" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Net Take Rate</div>
+          <div class="kpi-cell-value amber" id="m-take-rate">—</div>
+          <div class="kpi-cell-delta"><span id="m-take-delta" class="up">—</span> <span id="m-take-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target: 0.14%</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill amber" id="prog-take-rate" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="kpi-cell">
+          <div class="kpi-cell-label">Cohort NPV</div>
+          <div class="kpi-cell-value blue" id="m-cohort-npv">—</div>
+          <div class="kpi-cell-delta"><span id="m-npv-delta" class="up">—</span> <span id="m-npv-delta-label"></span></div>
+          <div class="kpi-progress">
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target: 2× software-only</span></div>
+            <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-cohort-npv" style="width:0%"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Phase 2A progress gauges -->
+    <div class="phase-gauge-row">
+      <div class="gauge-card">
+        <div class="gauge-title">Phase 2A milestones</div>
+        <div class="gauge-sub">Proving the thesis in 2026 · US, Mexico, Malaysia</div>
+        <div class="gauge-bar-row">
+          <div class="gauge-bar-label">
+            <span class="gauge-bar-name">Attach rate (selected markets)</span>
+            <span class="gauge-bar-vals"><strong id="g-attach">3%</strong> / 20% target</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill" id="gf-attach" style="width:15%; background:#2DC46B;"></div></div>
+        </div>
+        <div class="gauge-bar-row">
+          <div class="gauge-bar-label">
+            <span class="gauge-bar-name">Net take rate</span>
+            <span class="gauge-bar-vals"><strong id="g-take">0.03%</strong> / 0.14% target</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill" id="gf-take" style="width:21%; background:#1D8FE1;"></div></div>
+        </div>
+        <div class="gauge-bar-row">
+          <div class="gauge-bar-label">
+            <span class="gauge-bar-name">Cohort NPV vs software-only</span>
+            <span class="gauge-bar-vals"><strong id="g-npv">1.2×</strong> / 2× target</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill" id="gf-npv" style="width:60%; background:#E1A21D;"></div></div>
+        </div>
+      </div>
+
+      <div class="gauge-card">
+        <div class="gauge-title">Cohort payment penetration</div>
+        <div class="gauge-sub">How payment adoption evolves over merchant lifetime</div>
+        <div class="chart-wrap"><canvas id="chartCohort" style="max-height:160px;"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ── TOP MARKETS ── -->
+    <div class="case-section-label" style="margin-top:36px;">04</div>
+    <div class="case-section-title">Top 10 markets by GTV.</div>
+    <div class="case-section-sub">Monthly GTV, merchant count, and average GTV per merchant. USA leads on value; SEA leads on volume.</div>
+
+    <div class="chart-card" style="padding:0; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#F0F0F0;">
+        <div style="background:#fff; padding:24px;">
+          <div class="chart-card-title" style="padding:0 0 4px;">Monthly GTV by market</div>
+          <div class="chart-card-sub">Top 10 · €M/month</div>
+          <div class="chart-wrap"><canvas id="chartMarkets"></canvas></div>
+        </div>
+        <div style="background:#fff; padding:24px;">
+          <div class="chart-card-title" style="padding:0 0 4px;">Market details</div>
+          <div class="chart-card-sub">Monthly GTV · merchants · avg GTV/merchant</div>
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Market</th><th>GTV/mo</th><th>Merchants</th><th>Avg GTV</th></tr></thead>
+            <tbody id="markets-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── COHORT NPV ── -->
+    <div class="case-section-label" style="margin-top:36px;">05</div>
+    <div class="case-section-title">Cohort economics.</div>
+    <div class="case-section-sub">The value difference between software-only and payments-enabled cohorts. This is the core business case for Phase 2.</div>
+
+    <div class="cohort-cards">
+      <div class="cohort-card software">
+        <div class="cohort-card-label">Software-only cohort NPV</div>
+        <div class="cohort-card-value gray" id="cohort-software">—</div>
+        <div class="cohort-card-desc">Add-on subscription revenue only. Decelerating growth, no GTV leverage.</div>
+      </div>
+      <div class="cohort-card payments">
+        <div class="cohort-card-label">Payments-enabled cohort NPV</div>
+        <div class="cohort-card-value blue" id="cohort-payments">—</div>
+        <div class="cohort-card-desc">Software + payment processing revenue. GTV-linked, scales with merchant growth.</div>
+      </div>
+      <div class="cohort-card target">
+        <div class="cohort-card-label">2030 target (mature cohort)</div>
+        <div class="cohort-card-value green" id="cohort-target">—</div>
+        <div class="cohort-card-desc">20% payment penetration · 0.14% net take rate · Full Phase 2C model.</div>
       </div>
     </div>
 
@@ -929,8 +1066,8 @@
       <div class="case-footer-sub">Operational Intelligence · Loyverse Leadership Team</div>
     </div>
     <div class="case-footer-right">
-      <div id="footer-period">Week of —</div>
-      <div style="color:#555;margin-top:2px;">4 core metrics · 10 markets tracked</div>
+      <div id="footer-period">—</div>
+      <div style="color:#444; margin-top:2px;">9 metrics · 10 markets · 5-year trajectory</div>
     </div>
   </div>
 
@@ -939,20 +1076,15 @@
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
 <script>
 
-// ─── TAB NAVIGATION ────────────────────────────────
 function showPanel(name) {
   document.querySelectorAll(".cc-panel").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".cc-tab").forEach(t => t.classList.remove("active"));
   document.getElementById("panel-" + name).classList.add("active");
   document.getElementById("tab-" + name).classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
-  if (name === "case" && !window.__caseRendered) {
-    renderCase();
-    window.__caseRendered = true;
-  }
+  if (name === "case" && !window.__caseRendered) { renderCase(); window.__caseRendered = true; }
 }
 
-// ─── TARS CARD EXPAND ──────────────────────────────
 function toggleCard(card) {
   const detail = card.querySelector(".task-detail");
   const btn = card.querySelector(".expand-btn");
@@ -965,183 +1097,247 @@ function toggleCard(card) {
   }
 }
 
-// ─── CASE DATA ─────────────────────────────────────
-// This block is updated weekly by CASE.
-// To update: modify the values below and push to GitHub.
-// Netlify will redeploy automatically within ~30 seconds.
+// ─── CASE DATA BLOCK ────────────────────────────────────────────────────────
+// Updated weekly by CASE. Single source of truth for all dashboard numbers.
+// To update: replace values below and push to GitHub. Netlify redeploys in ~30s.
 const CASE_DATA = {
   lastUpdated: "2026-03-23",
-  period: "Week of March 17–23, 2026",
-  summary: {
-    totalUsers:       { value: 45230, delta: +1840, label: "new this month" },
-    activeCustomers:  { value: 12847, delta: +89,   label: "vs last week" },
-    newRegistrations: { value: 342,   delta: -18,   label: "vs last week" },
-    openTickets:      { value: 89,    delta: -12,   label: "vs last week" }
+  period: "Q1 2026 · 5YP v3.1 Projections",
+  dataStatus: "PROJECTED",
+
+  // ── Revenue ─────────────────────────────────────────────────────────────
+  totalRevenue:    { value: 7.6,  unit: "€M/yr",   delta: "+26.0%",  deltaClass: "up",   label: "YoY growth" },
+  paymentRevenue:  { value: 0.2,  unit: "€M/yr",   delta: "→ €14.5M", deltaClass: "up",  label: "by 2030" },
+  arpc:            { value: 17,   unit: "€/mo",    delta: "→ €85/mo", deltaClass: "up",  label: "target" },
+
+  // ── Scale ───────────────────────────────────────────────────────────────
+  activeUsers:     { value: 350000, unit: "",       delta: "+26%",    deltaClass: "up",   label: "YoY" },
+  totalGTV:        { value: 26.9,  unit: "€B/yr",  delta: "+15%",    deltaClass: "up",   label: "YoY" },
+
+  // ── Payments ────────────────────────────────────────────────────────────
+  attachRate:      { value: 3,    unit: "%",       delta: "→ 20%",   deltaClass: "up",   label: "Phase 2A target" },
+  gtvProcessed:    { value: 0.54, unit: "€B/yr",   delta: "+40%",    deltaClass: "up",   label: "via payments" },
+  takeRate:        { value: 0.03, unit: "%",       delta: "→ 0.14%", deltaClass: "up",   label: "target" },
+  cohortNPV:       { value: 1.2,  unit: "×",       delta: "→ 2×",    deltaClass: "up",   label: "vs software-only" },
+
+  // ── Cohort NPV detail ────────────────────────────────────────────────────
+  cohortSoftware:  "€180",
+  cohortPayments:  "€216",
+  cohortTarget:    "€360+",
+
+  // ── Revenue trend (2025–2030) ─────────────────────────────────────────
+  revenueProjection: {
+    years:      [2025, 2026, 2027, 2028, 2029, 2030],
+    addOn:      [7.6,  9.3,  11.3, 13.2, 14.8, 16.5],
+    payments:   [0.2,  0.1,  1.5,  4.8,  9.4,  14.5],
+    newPricing: [0.0,  0.3,  3.1,  11.0, 29.6, 47.4]
   },
-  weeklyRegistrations: [
-    { week: "Jan 6",  count: 287 },
-    { week: "Jan 13", count: 312 },
-    { week: "Jan 20", count: 298 },
-    { week: "Jan 27", count: 341 },
-    { week: "Feb 3",  count: 325 },
-    { week: "Feb 10", count: 360 },
-    { week: "Feb 17", count: 347 },
-    { week: "Feb 24", count: 382 },
-    { week: "Mar 3",  count: 395 },
-    { week: "Mar 10", count: 371 },
-    { week: "Mar 17", count: 360 },
-    { week: "Mar 23", count: 342 }
-  ],
-  topCountries: [
-    { country: "Mexico",    code: "MX", flag: "🇲🇽", registrations: 78,  activeUsers: 3420, tickets: 18 },
-    { country: "Brazil",    code: "BR", flag: "🇧🇷", registrations: 65,  activeUsers: 2180, tickets: 14 },
-    { country: "Colombia",  code: "CO", flag: "🇨🇴", registrations: 42,  activeUsers: 1560, tickets: 11 },
-    { country: "Argentina", code: "AR", flag: "🇦🇷", registrations: 38,  activeUsers: 1240, tickets: 9  },
-    { country: "Chile",     code: "CL", flag: "🇨🇱", registrations: 31,  activeUsers: 980,  tickets: 7  },
-    { country: "Peru",      code: "PE", flag: "🇵🇪", registrations: 28,  activeUsers: 870,  tickets: 6  },
-    { country: "Spain",     code: "ES", flag: "🇪🇸", registrations: 24,  activeUsers: 750,  tickets: 5  },
-    { country: "USA",       code: "US", flag: "🇺🇸", registrations: 18,  activeUsers: 620,  tickets: 4  },
-    { country: "Ecuador",   code: "EC", flag: "🇪🇨", registrations: 12,  activeUsers: 390,  tickets: 3  },
-    { country: "Other",     code: "--", flag: "🌍",  registrations: 6,   activeUsers: 837,  tickets: 12 }
-  ],
-  supportTickets: {
-    open: 89,
-    inProgress: 34,
-    resolved: 219
-  }
+
+  // ── GTV trend ──────────────────────────────────────────────────────────
+  gtvProjection: {
+    years: [2025, 2026, 2027, 2028, 2029, 2030],
+    values:[26.9, 30.9, 38.7, 45.9, 52.8, 59.9]
+  },
+
+  // ── Cohort penetration curve ────────────────────────────────────────────
+  cohortCurve: {
+    months: [0, 1, 6, 12, 24, 60],
+    pct:    [0, 0.5, 1.5, 6, 12, 20]
+  },
+
+  // ── Top 10 markets ─────────────────────────────────────────────────────
+  topMarkets: [
+    { country: "Thailand",     flag: "🇹🇭", gtv: 349, merchants: 53252, avgGTV: 6559 },
+    { country: "Philippines",  flag: "🇵🇭", gtv: 250, merchants: 50356, avgGTV: 4968 },
+    { country: "Mexico",       flag: "🇲🇽", gtv: 216, merchants: 38319, avgGTV: 5639 },
+    { country: "Malaysia",     flag: "🇲🇾", gtv: 158, merchants: 38006, avgGTV: 4153 },
+    { country: "Saudi Arabia", flag: "🇸🇦", gtv: 134, merchants: 10945, avgGTV: 12219 },
+    { country: "USA",          flag: "🇺🇸", gtv: 125, merchants: 3658,  avgGTV: 34062 },
+    { country: "Myanmar",      flag: "🇲🇲", gtv: 78,  merchants: 6469,  avgGTV: 12086 },
+    { country: "UK",           flag: "🇬🇧", gtv: 75,  merchants: 4890,  avgGTV: 15276 },
+    { country: "Spain",        flag: "🇪🇸", gtv: 66,  merchants: 7195,  avgGTV: 9152  },
+    { country: "Singapore",    flag: "🇸🇬", gtv: 36,  merchants: 1899,  avgGTV: 19063 }
+  ]
 };
 
-// ─── RENDER CASE DASHBOARD ─────────────────────────
+// ─── RENDER CASE ─────────────────────────────────────────────────────────────
 function renderCase() {
   const D = CASE_DATA;
-  const fmt = n => n.toLocaleString();
+  const fmt = n => typeof n === "number" && n >= 1000 ? n.toLocaleString() : n;
 
-  // Header
   document.getElementById("last-updated-label").textContent = "Last updated: " + D.lastUpdated;
+  document.getElementById("hero-period").textContent = D.period;
   document.getElementById("footer-period").textContent = D.period;
 
-  // KPI helpers
-  function setKpi(valId, deltaId, labelId, val, delta, label) {
-    document.getElementById(valId).textContent = fmt(val);
-    const sign = delta >= 0 ? "+" : "";
-    const el = document.getElementById(deltaId);
-    el.textContent = sign + fmt(delta);
-    el.className = delta >= 0 ? "up" : "down";
-    document.getElementById(labelId).textContent = " " + label;
+  function setCell(id, d) {
+    const el = document.getElementById("m-" + id);
+    if (!el) return;
+    let display = d.unit === "€M/yr" ? "€" + d.value + "M" :
+                  d.unit === "€B/yr" ? "€" + d.value + "B" :
+                  d.unit === "€/mo" ? "€" + d.value : 
+                  d.unit === "%" ? d.value + "%" :
+                  d.unit === "×" ? d.value + "×" :
+                  d.unit === "€B/yr" ? "€" + d.value + "B" :
+                  d.value.toLocaleString();
+    el.textContent = display;
+
+    const deltaEl = document.getElementById("m-" + id + "-delta");
+    const labelEl = document.getElementById("m-" + id + "-delta-label");
+    if (deltaEl) { deltaEl.textContent = d.delta; deltaEl.className = d.deltaClass; }
+    if (labelEl) { labelEl.textContent = d.label; }
   }
 
-  const s = D.summary;
-  setKpi("kpi-total-users",      "kpi-users-delta",    "kpi-users-delta-label",    s.totalUsers.value,       s.totalUsers.delta,       s.totalUsers.label);
-  setKpi("kpi-active-customers", "kpi-customers-delta","kpi-customers-delta-label",s.activeCustomers.value,  s.activeCustomers.delta,  s.activeCustomers.label);
+  setCell("total-revenue",   D.totalRevenue);
+  setCell("payment-revenue", D.paymentRevenue);
+  setCell("arpc",            D.arpc);
+  setCell("active-users",    { ...D.activeUsers, value: (D.activeUsers.value/1000).toFixed(0)+"K" });
+  document.getElementById("m-active-users").textContent = "350K";
+  setCell("total-gtv",       D.totalGTV);
+  setCell("attach-rate",     D.attachRate);
 
-  document.getElementById("kpi-registrations").textContent = fmt(s.newRegistrations.value);
-  const regEl = document.getElementById("kpi-reg-delta");
-  regEl.textContent = (s.newRegistrations.delta >= 0 ? "+" : "") + fmt(s.newRegistrations.delta);
-  regEl.className = s.newRegistrations.delta >= 0 ? "up" : "down";
-  document.getElementById("kpi-reg-delta-label").textContent = " " + s.newRegistrations.label;
+  document.getElementById("m-gtv-processed").textContent = "€" + D.gtvProcessed.value + "B";
+  document.getElementById("m-gtv-proc-delta").textContent = D.gtvProcessed.delta;
+  document.getElementById("m-gtv-proc-delta").className = D.gtvProcessed.deltaClass;
+  document.getElementById("m-gtv-proc-delta-label").textContent = D.gtvProcessed.label;
 
-  document.getElementById("kpi-tickets").textContent = fmt(s.openTickets.value);
-  const tkEl = document.getElementById("kpi-tickets-delta");
-  tkEl.textContent = (s.openTickets.delta >= 0 ? "+" : "") + fmt(s.openTickets.delta);
-  tkEl.className = s.openTickets.delta >= 0 ? "up" : "down";
-  document.getElementById("kpi-tickets-delta-label").textContent = " " + s.openTickets.label;
+  document.getElementById("m-take-rate").textContent = D.takeRate.value + "%";
+  document.getElementById("m-take-delta").textContent = D.takeRate.delta;
+  document.getElementById("m-take-delta-label").textContent = D.takeRate.label;
 
-  // Ticket stat cards
-  document.getElementById("tickets-open").textContent = fmt(D.supportTickets.open);
-  document.getElementById("tickets-progress").textContent = fmt(D.supportTickets.inProgress);
-  document.getElementById("tickets-resolved").textContent = fmt(D.supportTickets.resolved);
+  document.getElementById("m-cohort-npv").textContent = D.cohortNPV.value + "×";
+  document.getElementById("m-npv-delta").textContent = D.cohortNPV.delta;
+  document.getElementById("m-npv-delta-label").textContent = D.cohortNPV.label;
 
-  // Country table
-  const tbody = document.getElementById("country-table-body");
-  D.topCountries.forEach((c, i) => {
-    const tr = document.createElement("tr");
-    const isTop = i < 3;
-    tr.innerHTML = `
-      <td><span class="rank-num ${isTop ? "top" : ""}">${i+1}</span></td>
-      <td>${c.flag} ${c.country}</td>
-      <td><strong>${c.registrations}</strong></td>
-      <td>${fmt(c.activeUsers)}</td>
-      <td>${c.tickets}</td>`;
-    tbody.appendChild(tr);
-  });
+  // Progress bars
+  function setProg(id, pct, cap) {
+    const fill = document.getElementById("prog-" + id);
+    if (fill) fill.style.width = Math.min(pct, 100) + "%";
+  }
+  setProg("total-revenue",   (7.6 / 78.4) * 100);
+  setProg("payment-revenue", (0.2 / 14.5) * 100);
+  setProg("arpc",            (17 / 85) * 100);
+  setProg("active-users",    (350000 / 1059000) * 100);
+  setProg("total-gtv",       (26.9 / 59.9) * 100);
+  setProg("attach-rate",     (3 / 20) * 100);
+  setProg("gtv-processed",   (0.54 / 5) * 100);
+  setProg("take-rate",       (0.03 / 0.14) * 100);
+  setProg("cohort-npv",      (1.2 / 2) * 100);
 
-  // Chart: Weekly registrations
-  const regCtx = document.getElementById("chartRegistrations").getContext("2d");
-  new Chart(regCtx, {
-    type: "line",
-    data: {
-      labels: D.weeklyRegistrations.map(w => w.week),
-      datasets: [{
-        label: "Registrations",
-        data: D.weeklyRegistrations.map(w => w.count),
-        borderColor: "#1D8FE1",
-        backgroundColor: "rgba(29,143,225,0.08)",
-        borderWidth: 2.5,
-        pointBackgroundColor: "#1D8FE1",
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        tension: 0.35,
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: { beginAtZero: false, grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } } },
-        x: { grid: { display: false }, ticks: { color: "#888", font: { size: 11 } } }
-      }
-    }
-  });
+  // Gauge labels
+  document.getElementById("g-attach").textContent = "3%";
+  document.getElementById("g-take").textContent = "0.03%";
+  document.getElementById("g-npv").textContent = "1.2×";
+  document.getElementById("gf-attach").style.width = "15%";
+  document.getElementById("gf-take").style.width = "21%";
+  document.getElementById("gf-npv").style.width = "60%";
 
-  // Chart: Tickets donut
-  const tkCtx = document.getElementById("chartTickets").getContext("2d");
-  new Chart(tkCtx, {
-    type: "doughnut",
-    data: {
-      labels: ["Open", "In Progress", "Resolved"],
-      datasets: [{
-        data: [D.supportTickets.open, D.supportTickets.inProgress, D.supportTickets.resolved],
-        backgroundColor: ["#E14B1D", "#E1A21D", "#2DC46B"],
-        borderWidth: 0,
-        hoverOffset: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      cutout: "68%",
-      plugins: {
-        legend: { position: "bottom", labels: { color: "#555", font: { size: 11 }, padding: 12, boxWidth: 12 } }
-      }
-    }
-  });
+  // Cohort NPV cards
+  document.getElementById("cohort-software").textContent = D.cohortSoftware;
+  document.getElementById("cohort-payments").textContent = D.cohortPayments;
+  document.getElementById("cohort-target").textContent = D.cohortTarget;
 
-  // Chart: Country bar
-  const countries = D.topCountries.filter(c => c.code !== "--").slice(0, 9);
-  const ctryCtx = document.getElementById("chartCountries").getContext("2d");
-  new Chart(ctryCtx, {
+  // ── Chart: Revenue stacked bar ──────────────────────────────────────────
+  const revCtx = document.getElementById("chartRevenue").getContext("2d");
+  new Chart(revCtx, {
     type: "bar",
     data: {
-      labels: countries.map(c => c.flag + " " + c.country),
+      labels: D.revenueProjection.years,
+      datasets: [
+        { label: "Add-on",      data: D.revenueProjection.addOn,      backgroundColor: "#1D8FE1", stack: "rev" },
+        { label: "Payments",    data: D.revenueProjection.payments,    backgroundColor: "#2DC46B", stack: "rev" },
+        { label: "New Pricing", data: D.revenueProjection.newPricing,  backgroundColor: "#1578C4", stack: "rev" }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 11 }, padding: 10, boxWidth: 10 } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { color: "#888", font: { size: 11 } } },
+        y: { stacked: true, grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
+      }
+    }
+  });
+
+  // ── Chart: GTV line ─────────────────────────────────────────────────────
+  const gtvCtx = document.getElementById("chartGTV").getContext("2d");
+  new Chart(gtvCtx, {
+    type: "line",
+    data: {
+      labels: D.gtvProjection.years,
       datasets: [{
-        label: "Registrations",
-        data: countries.map(c => c.registrations),
-        backgroundColor: countries.map((c, i) => i < 3 ? "#1D8FE1" : "rgba(29,143,225,0.35)"),
-        borderRadius: 4,
-        borderSkipped: false
+        label: "GTV", data: D.gtvProjection.values,
+        borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.08)",
+        borderWidth: 2.5, pointBackgroundColor: "#1D8FE1", pointRadius: 4,
+        tension: 0.3, fill: true
       }]
     },
     options: {
-      indexAxis: "y",
-      responsive: true,
-      maintainAspectRatio: true,
+      responsive: true, maintainAspectRatio: true,
       plugins: { legend: { display: false } },
       scales: {
-        x: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } } },
-        y: { grid: { display: false }, ticks: { color: "#444", font: { size: 12 } } }
+        x: { grid: { display: false }, ticks: { color: "#888", font: { size: 11 } } },
+        y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
       }
     }
+  });
+
+  // ── Chart: Cohort penetration ────────────────────────────────────────────
+  const cohCtx = document.getElementById("chartCohort").getContext("2d");
+  new Chart(cohCtx, {
+    type: "line",
+    data: {
+      labels: D.cohortCurve.months.map(m => m === 0 ? "Reg." : "Mo " + m),
+      datasets: [{
+        label: "Payment penetration %", data: D.cohortCurve.pct,
+        borderColor: "#2DC46B", backgroundColor: "rgba(45,196,107,0.08)",
+        borderWidth: 2.5, pointBackgroundColor: "#2DC46B", pointRadius: 4,
+        tension: 0.4, fill: true
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+        y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 }, callback: v => v + "%" },
+             min: 0, max: 22, title: { display: false } }
+      }
+    }
+  });
+
+  // ── Chart: Markets horizontal bar ────────────────────────────────────────
+  const mktCtx = document.getElementById("chartMarkets").getContext("2d");
+  new Chart(mktCtx, {
+    type: "bar",
+    data: {
+      labels: D.topMarkets.map(m => m.flag + " " + m.country),
+      datasets: [{
+        label: "Monthly GTV (€M)", data: D.topMarkets.map(m => m.gtv),
+        backgroundColor: D.topMarkets.map((m,i) => i < 3 ? "#1D8FE1" : "rgba(29,143,225,0.3)"),
+        borderRadius: 4, borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } } },
+        y: { grid: { display: false }, ticks: { color: "#444", font: { size: 11 } } }
+      }
+    }
+  });
+
+  // ── Markets table ─────────────────────────────────────────────────────────
+  const tbody = document.getElementById("markets-table-body");
+  D.topMarkets.forEach((m, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="rank-chip ${i < 3 ? "top" : ""}">${i+1}</span></td>
+      <td>${m.flag} ${m.country}</td>
+      <td><strong>€${m.gtv}M</strong></td>
+      <td>${m.merchants.toLocaleString()}</td>
+      <td>€${m.avgGTV.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
   });
 }
 
