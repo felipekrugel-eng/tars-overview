@@ -2285,27 +2285,21 @@ const FYP_DATA = {
     }
   },
 
-  // Revenue projection across timeline
-  revenueProjection: [
-    { year: 2024, actual: 1200000 },
-    { year: 2025, actual: 2100000 },
-    { year: 2026, forecast: 3200000 },
-    { year: 2027, forecast: 5800000 },
-    { year: 2028, forecast: 9200000 },
-    { year: 2029, forecast: 13500000 },
-    { year: 2030, forecast: 18200000 }
-  ],
+  // Revenue projection across timeline (€M) — from financial_model.md
+  revenueProjection: {
+    years:      [2025, 2026, 2027, 2028, 2029, 2030],
+    addOn:      [7.6,  9.3,  11.3, 13.2, 14.8, 16.5],
+    payments:   [0.2,  0.1,  1.5,  4.8,  9.4,  14.5],
+    newPricing: [0.0,  0.3,  3.1,  11.0, 29.6, 47.4],
+    total:      [7.6,  9.7,  15.9, 29.0, 53.8, 78.4],
+    yoyGrowth:  ["26.0%","27.6%","63.9%","82.4%","85.5%","45.7%"]
+  },
 
-  // GTV projection across timeline
-  gtvProjection: [
-    { year: 2024, actual: 22000000 },
-    { year: 2025, actual: 32000000 },
-    { year: 2026, forecast: 45000000 },
-    { year: 2027, forecast: 68000000 },
-    { year: 2028, forecast: 95000000 },
-    { year: 2029, forecast: 128000000 },
-    { year: 2030, forecast: 165000000 }
-  ],
+  // GTV projection across timeline (€B) — from financial_model.md
+  gtvProjection: {
+    years:  [2025, 2026, 2027, 2028, 2029, 2030],
+    values: [26.9, 30.9, 38.7, 45.9, 52.8, 59.9]
+  },
 
   // Cohort maturity curve (% of peak cohort size)
   cohortCurve: [
@@ -2664,34 +2658,87 @@ function renderCase() {
 }
 
 // ─── RENDER 5YP ──────────────────────────────────────────────────────────────
+var __fypRevenueChart = null;
+
 function render5YP() {
   const D = FYP_DATA;
+  const R = D.revenueProjection;
 
-  // ── Revenue Projection Chart ──────────────────────────────────────────────
+  // ── Revenue Projection Chart (stacked bar — 3 streams) ──────────────────
   var ctx1 = document.getElementById("chartRevenueTrajectory");
   if (ctx1) {
-    new Chart(ctx1, {
+    __fypRevenueChart = new Chart(ctx1, {
       type: "bar",
       data: {
-        labels: D.revenueProjection.map(d => d.year),
+        labels: R.years,
+        datasets: [
+          { label: "Add-on",      data: R.addOn,      backgroundColor: "#1D8FE1", stack: "rev", borderRadius: 2 },
+          { label: "Payments",    data: R.payments,    backgroundColor: "#2DC46B", stack: "rev", borderRadius: 2 },
+          { label: "New Pricing", data: R.newPricing,  backgroundColor: "#1578C4", stack: "rev", borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        onClick: function(evt, elems) {
+          if (elems.length > 0) {
+            var idx = elems[0].index;
+            _showFypRevenueDrill(idx);
+          }
+        },
+        plugins: {
+          legend: { position: "bottom", labels: { color: "#555", font: { size: 11 }, padding: 10, boxWidth: 10 } },
+          tooltip: {
+            callbacks: {
+              afterBody: function(items) {
+                var idx = items[0].dataIndex;
+                return "Total: €" + R.total[idx] + "M · YoY " + R.yoyGrowth[idx] + "\nClick bar for breakdown";
+              }
+            }
+          }
+        },
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { color: "#666", font: { size: 12 } } },
+          y: { stacked: true, grid: { color: "#E8E8E8" }, ticks: { color: "#666", font: { size: 11 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
+        }
+      }
+    });
+  }
+
+  // ── GTV Trajectory Chart ────────────────────────────────────────────────
+  var ctx3 = document.getElementById("chartGTVTrajectory");
+  if (ctx3) {
+    new Chart(ctx3, {
+      type: "line",
+      data: {
+        labels: D.gtvProjection.years,
         datasets: [{
-          label: "Revenue (€M)",
-          data: D.revenueProjection.map(d => d.actual || d.forecast),
-          backgroundColor: D.revenueProjection.map((d,i) => d.actual ? "#1D8FE1" : "rgba(29,143,225,0.4)"),
+          label: "GTV (€B)",
+          data: D.gtvProjection.values,
           borderColor: "#1D8FE1",
-          borderWidth: 1,
-          borderRadius: 4
+          backgroundColor: "rgba(29,143,225,0.08)",
+          borderWidth: 2.5,
+          pointBackgroundColor: "#1D8FE1",
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.3,
+          fill: true
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
-          legend: { display: true, labels: { color: "#444", font: { size: 11 }, boxWidth: 12 } }
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) { return "€" + ctx.parsed.y + "B"; }
+            }
+          }
         },
         scales: {
-          y: { beginAtZero: true, grid: { color: "#E8E8E8" }, ticks: { color: "#666" } },
-          x: { grid: { display: false }, ticks: { color: "#666" } }
+          x: { grid: { display: false }, ticks: { color: "#666", font: { size: 12 } } },
+          y: { grid: { color: "#E8E8E8" }, ticks: { color: "#666", font: { size: 11 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
         }
       }
     });
@@ -2703,10 +2750,10 @@ function render5YP() {
     new Chart(ctx2, {
       type: "line",
       data: {
-        labels: D.cohortCurve.map(c => c.month === 0 ? "D0" : c.month + "m"),
+        labels: D.cohortCurve.map(function(c) { return c.month === 0 ? "D0" : c.month + "m"; }),
         datasets: [{
           label: "Retention %",
-          data: D.cohortCurve.map(c => c.retention),
+          data: D.cohortCurve.map(function(c) { return c.retention; }),
           borderColor: "#1578C4",
           backgroundColor: "rgba(21,120,196,0.05)",
           borderWidth: 2,
@@ -2715,7 +2762,7 @@ function render5YP() {
           pointRadius: 4
         }, {
           label: "Contribution %",
-          data: D.cohortCurve.map(c => c.contribution),
+          data: D.cohortCurve.map(function(c) { return c.contribution; }),
           borderColor: "#E1A21D",
           backgroundColor: "rgba(225,162,29,0.05)",
           borderWidth: 2,
@@ -2738,6 +2785,83 @@ function render5YP() {
       }
     });
   }
+}
+
+// ─── 5YP REVENUE DRILL-DOWN ──────────────────────────────────────────────────
+function _showFypRevenueDrill(yearIdx) {
+  var R = FYP_DATA.revenueProjection;
+  var year = R.years[yearIdx];
+  var addOn = R.addOn[yearIdx];
+  var payments = R.payments[yearIdx];
+  var newPricing = R.newPricing[yearIdx];
+  var total = R.total[yearIdx];
+  var growth = R.yoyGrowth[yearIdx];
+
+  var addOnPct  = (addOn / total * 100).toFixed(1);
+  var payPct    = (payments / total * 100).toFixed(1);
+  var newPct    = (newPricing / total * 100).toFixed(1);
+
+  var overlay = document.getElementById("fypRevDrillOverlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "fypRevDrillOverlay";
+    overlay.className = "store-drill-overlay";
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.classList.remove("open"); };
+    overlay.innerHTML = '<div class="store-drill-panel" id="fypRevDrillPanel"><div class="drill-header" id="fypRevDrillHeader"></div><div class="drill-body" id="fypRevDrillBody"></div></div>';
+    document.body.appendChild(overlay);
+  }
+
+  var header = document.getElementById("fypRevDrillHeader");
+  header.innerHTML =
+    '<div><div class="drill-title">📊 ' + year + ' Revenue Breakdown</div>' +
+    '<div class="drill-subtitle">5YP v4 Projection · €' + total + 'M total · ' + growth + ' YoY</div></div>' +
+    '<button class="drill-close-btn" onclick="document.getElementById(\'fypRevDrillOverlay\').classList.remove(\'open\')">×</button>';
+
+  var body = document.getElementById("fypRevDrillBody");
+
+  // Build revenue stream cards
+  var streams = [
+    { name: "Add-on Revenue",      value: addOn,      pct: addOnPct,  color: "#1D8FE1", desc: "Subscription + POS features", icon: "💳" },
+    { name: "Payments Revenue",     value: payments,   pct: payPct,    color: "#2DC46B", desc: "Take rate on GTV processed",  icon: "💰" },
+    { name: "New Pricing Revenue",  value: newPricing, pct: newPct,    color: "#1578C4", desc: "Tiered pricing model",        icon: "📈" }
+  ];
+
+  var html = '<div style="display:grid;gap:16px;margin-bottom:24px;">';
+  streams.forEach(function(s) {
+    html += '<div style="background:#1A1A1A;border-radius:10px;padding:20px;border-left:4px solid ' + s.color + ';">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
+        '<div style="font-size:13px;color:#AAA;">' + s.icon + ' ' + s.name + '</div>' +
+        '<div style="font-size:11px;color:#666;">' + s.pct + '% of total</div>' +
+      '</div>' +
+      '<div style="font-family:Arial Black,sans-serif;font-size:28px;color:' + s.color + ';margin-bottom:6px;">€' + s.value + 'M</div>' +
+      '<div style="font-size:12px;color:#666;">' + s.desc + '</div>' +
+      '<div style="margin-top:10px;background:#333;border-radius:4px;height:6px;overflow:hidden;">' +
+        '<div style="height:100%;width:' + s.pct + '%;background:' + s.color + ';border-radius:4px;"></div>' +
+      '</div>' +
+    '</div>';
+  });
+  html += '</div>';
+
+  // Composition donut via horizontal stacked bar
+  html += '<div style="font-size:11px;color:#AAA;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Revenue Composition</div>';
+  html += '<div style="display:flex;height:28px;border-radius:6px;overflow:hidden;margin-bottom:16px;">';
+  html += '<div style="width:' + addOnPct + '%;background:#1D8FE1;" title="Add-on ' + addOnPct + '%"></div>';
+  html += '<div style="width:' + payPct + '%;background:#2DC46B;" title="Payments ' + payPct + '%"></div>';
+  html += '<div style="width:' + newPct + '%;background:#1578C4;" title="New Pricing ' + newPct + '%"></div>';
+  html += '</div>';
+
+  // Year-over-year comparison
+  if (yearIdx > 0) {
+    var prevTotal = R.total[yearIdx - 1];
+    var delta = (total - prevTotal).toFixed(1);
+    html += '<div style="background:#1A1A1A;border-radius:10px;padding:16px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<div style="font-size:13px;color:#AAA;">vs ' + R.years[yearIdx - 1] + ' (€' + prevTotal + 'M)</div>' +
+      '<div style="font-family:Arial Black,sans-serif;font-size:18px;color:#2DC46B;">+€' + delta + 'M</div>' +
+    '</div>';
+  }
+
+  body.innerHTML = html;
+  overlay.classList.add("open");
 }
 
 // ─── APP STORE DRILL-DOWN ────────────────────────────────────────────────────
