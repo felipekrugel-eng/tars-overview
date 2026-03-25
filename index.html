@@ -71,6 +71,7 @@
     }
     .cc-tab:hover { color: #fff; background: #222; }
     .cc-tab.active { color: #fff; background: var(--blue); font-weight: 700; }
+    #tab-case.active { background: #2DC46B; }
     .cc-nav-spacer { flex: 1; }
     .cc-nav-badge {
       font-size: 11px;
@@ -1461,7 +1462,7 @@
     <!-- ── GROUP 1: REVENUE ── -->
     <div class="case-section-label">01</div>
     <div class="case-section-title">Revenue health.</div>
-    <div class="case-section-sub">Core revenue metrics with 2030 targets. Progress bars show current position vs Phase 2 end-state.</div>
+    <div class="case-section-sub">YTD 2026 performance vs targets. Real-time tracking of revenue streams and ARPC growth.</div>
 
     <div class="metric-group">
       <div class="metric-group-header">
@@ -1474,32 +1475,32 @@
       </div>
       <div class="kpi-row cols-3">
 
-        <div class="kpi-cell">
+        <div class="kpi-cell" onclick="_showCaseMonthlyDrill('revenue')" style="cursor:pointer;">
           <div class="kpi-cell-label">Total Revenue (Annual)</div>
           <div class="kpi-cell-value blue" id="m-total-revenue">—</div>
           <div class="kpi-cell-delta"><span class="up" id="m-total-revenue-delta">—</span> <span id="m-total-revenue-delta-label"></span></div>
           <div class="kpi-progress">
-            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €78.4M</span></div>
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2026: €9.7M</span></div>
             <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-total-revenue" style="width:0%"></div></div>
           </div>
         </div>
 
-        <div class="kpi-cell">
+        <div class="kpi-cell" onclick="_showCaseMonthlyDrill('paymentRevenue')" style="cursor:pointer;">
           <div class="kpi-cell-label">Payment Revenue (Annual)</div>
           <div class="kpi-cell-value green" id="m-payment-revenue">—</div>
           <div class="kpi-cell-delta"><span class="up" id="m-payment-revenue-delta">—</span> <span id="m-payment-revenue-delta-label"></span></div>
           <div class="kpi-progress">
-            <div class="kpi-progress-label"><span>Current</span><span class="target green">Target 2030: €14.5M</span></div>
+            <div class="kpi-progress-label"><span>Current</span><span class="target green">Target 2026: €0.1M</span></div>
             <div class="kpi-progress-track"><div class="kpi-progress-fill green" id="prog-payment-revenue" style="width:0%"></div></div>
           </div>
         </div>
 
-        <div class="kpi-cell">
+        <div class="kpi-cell" onclick="_showCaseMonthlyDrill('arpc')" style="cursor:pointer;">
           <div class="kpi-cell-label">ARPC (Paying Merchants)</div>
           <div class="kpi-cell-value" id="m-arpc">—</div>
           <div class="kpi-cell-delta"><span id="m-arpc-delta" class="up">—</span> <span id="m-arpc-delta-label"></span></div>
           <div class="kpi-progress">
-            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €85/mo</span></div>
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2026: €20/mo</span></div>
             <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-arpc" style="width:0%"></div></div>
           </div>
         </div>
@@ -1510,7 +1511,7 @@
     <!-- ── GROUP 2: SCALE ── -->
     <div class="case-section-label" style="margin-top:36px;">02</div>
     <div class="case-section-title">Platform scale.</div>
-    <div class="case-section-sub">How large is the Loyverse ecosystem today, and how does GTV trend month over month.</div>
+    <div class="case-section-sub">Active users and GTV tracking for 2026. Real-time merchant activity and transaction volume.</div>
 
     <div class="metric-group">
       <div class="metric-group-header">
@@ -1521,21 +1522,21 @@
         </div>
       </div>
       <div class="kpi-row cols-2">
-        <div class="kpi-cell">
+        <div class="kpi-cell" onclick="_showCaseMonthlyDrill('activeUsers')" style="cursor:pointer;">
           <div class="kpi-cell-label">Active Users (last 30 days)</div>
           <div class="kpi-cell-value blue" id="m-active-users">—</div>
           <div class="kpi-cell-delta"><span class="up" id="m-users-delta">—</span> <span id="m-users-delta-label"></span></div>
           <div class="kpi-progress">
-            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: 1,059,000</span></div>
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2026: 400,000</span></div>
             <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-active-users" style="width:0%"></div></div>
           </div>
         </div>
-        <div class="kpi-cell">
+        <div class="kpi-cell" onclick="_showCaseMonthlyDrill('gtv')" style="cursor:pointer;">
           <div class="kpi-cell-label">Total GTV (Annual)</div>
           <div class="kpi-cell-value blue" id="m-total-gtv">—</div>
           <div class="kpi-cell-delta"><span class="up" id="m-gtv-delta">—</span> <span id="m-gtv-delta-label"></span></div>
           <div class="kpi-progress">
-            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2030: €59.9B</span></div>
+            <div class="kpi-progress-label"><span>Current</span><span class="target">Target 2026: €30.9B</span></div>
             <div class="kpi-progress-track"><div class="kpi-progress-fill" id="prog-total-gtv" style="width:0%"></div></div>
           </div>
         </div>
@@ -1544,14 +1545,14 @@
 
     <div class="charts-row">
       <div class="chart-card">
-        <div class="chart-card-title">Revenue trajectory</div>
-        <div class="chart-card-sub">Annual revenue by stream 2025–2030 · €M</div>
-        <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
+        <div class="chart-card-title">Revenue YTD (Monthly)</div>
+        <div class="chart-card-sub">2026 monthly performance vs target · €M</div>
+        <div class="chart-wrap"><canvas id="chartRevenueYTD"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-card-title">GTV growth</div>
-        <div class="chart-card-sub">Annual gross transaction volume · €B</div>
-        <div class="chart-wrap"><canvas id="chartGTV"></canvas></div>
+        <div class="chart-card-title">GTV YTD (Monthly)</div>
+        <div class="chart-card-sub">2026 monthly transaction volume vs target · €B</div>
+        <div class="chart-wrap"><canvas id="chartGTVYTD"></canvas></div>
       </div>
     </div>
 
@@ -1649,49 +1650,40 @@
       </div>
     </div>
 
-    <!-- ── TOP MARKETS ── -->
+    <!-- ── CONVERSION FUNNEL ── -->
     <div class="case-section-label" style="margin-top:36px;">04</div>
-    <div class="case-section-title">Top 10 markets by GTV.</div>
-    <div class="case-section-sub">Monthly GTV, merchant count, and average GTV per merchant. USA leads on value; SEA leads on volume.</div>
+    <div class="case-section-title">Conversion funnel.</div>
+    <div class="case-section-sub">Merchant progression from registration to payments enablement. Bottleneck analysis and 2026 targets.</div>
 
-    <div class="chart-card" style="padding:0; overflow:hidden;">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#F0F0F0;">
-        <div style="background:#fff; padding:24px;">
-          <div class="chart-card-title" style="padding:0 0 4px;">Monthly GTV by market</div>
-          <div class="chart-card-sub">Top 10 · €M/month</div>
-          <div class="chart-wrap"><canvas id="chartMarkets"></canvas></div>
-        </div>
-        <div style="background:#fff; padding:24px;">
-          <div class="chart-card-title" style="padding:0 0 4px;">Market details</div>
-          <div class="chart-card-sub">Monthly GTV · merchants · avg GTV/merchant</div>
-          <table class="data-table">
-            <thead><tr><th>#</th><th>Market</th><th>GTV/mo</th><th>Merchants</th><th>Avg GTV</th></tr></thead>
-            <tbody id="markets-table-body"></tbody>
-          </table>
-        </div>
-      </div>
+    <div class="funnel-container" id="funnel-container" style="padding: 24px 0;">
+      <!-- Funnel will be rendered here by renderCase() -->
     </div>
 
-    <!-- ── COHORT NPV ── -->
+    <!-- ── UNIT ECONOMICS ── -->
     <div class="case-section-label" style="margin-top:36px;">05</div>
-    <div class="case-section-title">Cohort economics.</div>
-    <div class="case-section-sub">The value difference between software-only and payments-enabled cohorts. This is the core business case for Phase 2.</div>
+    <div class="case-section-title">Unit economics.</div>
+    <div class="case-section-sub">Core metrics defining path to profitability. CAC, LTV, payback period, and margin trajectory.</div>
 
     <div class="cohort-cards">
       <div class="cohort-card software">
-        <div class="cohort-card-label">Software-only cohort NPV</div>
-        <div class="cohort-card-value gray" id="cohort-software">—</div>
-        <div class="cohort-card-desc">Add-on subscription revenue only. Decelerating growth, no GTV leverage.</div>
+        <div class="cohort-card-label">CAC (Customer Acquisition Cost)</div>
+        <div class="cohort-card-value gray" id="unit-cac">—</div>
+        <div class="cohort-card-desc">Organic acquisition · Near-zero CAC. Target 2026: <€5</div>
       </div>
       <div class="cohort-card payments">
-        <div class="cohort-card-label">Payments-enabled cohort NPV</div>
-        <div class="cohort-card-value blue" id="cohort-payments">—</div>
-        <div class="cohort-card-desc">Software + payment processing revenue. GTV-linked, scales with merchant growth.</div>
+        <div class="cohort-card-label">LTV (Software Cohort)</div>
+        <div class="cohort-card-value blue" id="unit-ltv">—</div>
+        <div class="cohort-card-desc">Lifetime value per merchant. Target 2026: €216</div>
       </div>
       <div class="cohort-card target">
-        <div class="cohort-card-label">2030 target (mature cohort)</div>
-        <div class="cohort-card-value green" id="cohort-target">—</div>
-        <div class="cohort-card-desc">20% payment penetration · 0.14% net take rate · Full Phase 2C model.</div>
+        <div class="cohort-card-label">Payback Period</div>
+        <div class="cohort-card-value green" id="unit-payback">—</div>
+        <div class="cohort-card-desc">Months to recover acquisition cost. Target 2026: 14 months</div>
+      </div>
+      <div class="cohort-card">
+        <div class="cohort-card-label">Gross Margin</div>
+        <div class="cohort-card-value" id="unit-margin">—</div>
+        <div class="cohort-card-desc">Revenue minus COGS. Target 2026: 69%</div>
       </div>
     </div>
 
@@ -2095,6 +2087,54 @@ const CASE_DATA = {
     takeRate: 0.06,       // %
   },
 
+  // ── Monthly 2026 data (targets + simulated actuals Jan-Mar) ────────────────
+  monthly2026: {
+    months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    revenue: {
+      target:  [0.70, 0.72, 0.75, 0.78, 0.80, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.95],
+      actual:  [0.68, 0.71, 0.74, null, null, null, null, null, null, null, null, null]
+    },
+    paymentRevenue: {
+      target:  [0.005, 0.006, 0.007, 0.008, 0.008, 0.009, 0.009, 0.010, 0.010, 0.011, 0.011, 0.012],
+      actual:  [0.004, 0.005, 0.006, null, null, null, null, null, null, null, null, null]
+    },
+    arpc: {
+      target:  [17.5, 17.8, 18.0, 18.3, 18.5, 18.8, 19.0, 19.3, 19.5, 19.8, 20.0, 20.0],
+      actual:  [17.2, 17.4, 17.6, null, null, null, null, null, null, null, null, null]
+    },
+    activeUsers: {
+      target:  [355000, 360000, 365000, 370000, 375000, 380000, 385000, 390000, 393000, 396000, 398000, 400000],
+      actual:  [352000, 358000, 362000, null, null, null, null, null, null, null, null, null]
+    },
+    gtv: {
+      target:  [2.40, 2.45, 2.50, 2.55, 2.58, 2.60, 2.62, 2.64, 2.66, 2.68, 2.70, 2.72],
+      actual:  [2.38, 2.43, 2.48, null, null, null, null, null, null, null, null, null]
+    }
+  },
+
+  // ── Conversion funnel ───────────────────────────────────────────────────────
+  funnel: {
+    registered:       { value: 4350000, label: "Registered merchants" },
+    active:           { value: 350000,  label: "Active (last 30d)", convRate: "8.0%" },
+    paying:           { value: 10500,   label: "Paying customers", convRate: "3.0%" },
+    paymentsEnabled:  { value: 315,     label: "Payments-enabled", convRate: "3.0%" }
+  },
+  funnelTargets2026: {
+    registered: 5000000,
+    active: 400000,
+    paying: 20000,
+    paymentsEnabled: 1600
+  },
+
+  // ── Unit economics ──────────────────────────────────────────────────────────
+  unitEconomics: {
+    cac:          { value: "~€0", target: "<€5", note: "Organic acquisition — near-zero CAC" },
+    ltvSoftware:  { value: "€180", target: "€216", note: "Subscription + POS model LTV" },
+    ltvCacRatio:  { value: "N/A", target: ">40×", note: "Organic model — effectively infinite" },
+    payback:      { value: "18mo", target: "14mo", note: "Months to recover acquisition cost" },
+    grossMargin:  { value: "68%", target: "69%", note: "Revenue minus COGS" }
+  },
+
   // ── Revenue ─────────────────────────────────────────────────────────────
   totalRevenue:    { value: 7.6,  unit: "€M/yr",   delta: "+26.0%",  deltaClass: "up",   label: "YoY growth" },
   paymentRevenue:  { value: 0.2,  unit: "€M/yr",   delta: "→ €14.5M", deltaClass: "up",  label: "by 2030" },
@@ -2448,19 +2488,19 @@ function renderCase() {
   document.getElementById("m-npv-delta").textContent = D.cohortNPV.delta;
   document.getElementById("m-npv-delta-label").textContent = D.cohortNPV.label;
 
-  // Progress bars
+  // Progress bars (updated to 2026 targets)
   function setProg(id, pct, cap) {
     const fill = document.getElementById("prog-" + id);
     if (fill) fill.style.width = Math.min(pct, 100) + "%";
   }
-  setProg("total-revenue",   (7.6 / 78.4) * 100);
-  setProg("payment-revenue", (0.2 / 14.5) * 100);
-  setProg("arpc",            (17 / 85) * 100);
-  setProg("active-users",    (350000 / 1059000) * 100);
-  setProg("total-gtv",       (26.9 / 59.9) * 100);
-  setProg("attach-rate",     (3 / 20) * 100);
+  setProg("total-revenue",   (7.6 / 9.7) * 100);
+  setProg("payment-revenue", (0.2 / 0.1) * 100);
+  setProg("arpc",            (17 / 20) * 100);
+  setProg("active-users",    (350000 / 400000) * 100);
+  setProg("total-gtv",       (26.9 / 30.9) * 100);
+  setProg("attach-rate",     (3 / 8) * 100);
   setProg("gtv-processed",   (0.54 / 5) * 100);
-  setProg("take-rate",       (0.03 / 0.14) * 100);
+  setProg("take-rate",       (0.03 / 0.06) * 100);
   setProg("cohort-npv",      (1.2 / 2) * 100);
 
   // Gauge labels
@@ -2471,114 +2511,107 @@ function renderCase() {
   document.getElementById("gf-take").style.width = "21%";
   document.getElementById("gf-npv").style.width = "60%";
 
-  // Cohort NPV cards
-  document.getElementById("cohort-software").textContent = D.cohortSoftware;
-  document.getElementById("cohort-payments").textContent = D.cohortPayments;
-  document.getElementById("cohort-target").textContent = D.cohortTarget;
+  // Unit economics cards
+  document.getElementById("unit-cac").textContent = D.unitEconomics.cac.value;
+  document.getElementById("unit-ltv").textContent = D.unitEconomics.ltvSoftware.value;
+  document.getElementById("unit-payback").textContent = D.unitEconomics.payback.value;
+  document.getElementById("unit-margin").textContent = D.unitEconomics.grossMargin.value;
 
-  // ── Chart: Revenue stacked bar ──────────────────────────────────────────
-  const revCtx = document.getElementById("chartRevenue").getContext("2d");
-  new Chart(revCtx, {
-    type: "bar",
-    data: {
-      labels: D.revenueProjection.years,
-      datasets: [
-        { label: "Add-on",      data: D.revenueProjection.addOn,      backgroundColor: "#1D8FE1", stack: "rev" },
-        { label: "Payments",    data: D.revenueProjection.payments,    backgroundColor: "#2DC46B", stack: "rev" },
-        { label: "New Pricing", data: D.revenueProjection.newPricing,  backgroundColor: "#1578C4", stack: "rev" }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 11 }, padding: 10, boxWidth: 10 } } },
-      scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { color: "#888", font: { size: 11 } } },
-        y: { stacked: true, grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
+  // Render conversion funnel
+  function renderFunnel() {
+    const F = D.funnel;
+    const T = D.funnelTargets2026;
+    const container = document.getElementById("funnel-container");
+    if (!container) return;
+
+    const funnel = document.createElement("div");
+    funnel.style.cssText = "background:#fff; border-radius:8px; padding:24px; margin:12px 0;";
+
+    const stages = [
+      { key: "registered", label: F.registered.label, current: F.registered.value, target: T.registered, convRate: null },
+      { key: "active", label: F.active.label, current: F.active.value, target: T.active, convRate: F.active.convRate },
+      { key: "paying", label: F.paying.label, current: F.paying.value, target: T.paying, convRate: F.paying.convRate },
+      { key: "paymentsEnabled", label: F.paymentsEnabled.label, current: F.paymentsEnabled.value, target: T.paymentsEnabled, convRate: F.paymentsEnabled.convRate }
+    ];
+
+    stages.forEach((s, i) => {
+      const pct = (s.current / s.target) * 100;
+      const prevVal = i === 0 ? s.current : stages[i-1].current;
+      const funnelPct = (s.current / prevVal) * 100;
+
+      const stage = document.createElement("div");
+      stage.style.cssText = "margin:16px 0; padding:12px; border:1px solid #E0E0E0; border-radius:4px; background:#FAFAFA;";
+      stage.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="font-weight:600; font-size:14px;">${s.label}</div>
+          <div style="text-align:right; font-size:12px; color:#666;">
+            <div><strong>${s.current.toLocaleString()}</strong> / ${s.target.toLocaleString()} (${pct.toFixed(0)}%)</div>
+            ${s.convRate ? `<div>Conv: ${s.convRate}</div>` : ''}
+          </div>
+        </div>
+        <div style="background:#E0E0E0; height:6px; border-radius:3px; overflow:hidden;">
+          <div style="width:${Math.min(pct, 100)}%; height:100%; background:#1D8FE1;"></div>
+        </div>
+      `;
+      funnel.appendChild(stage);
+    });
+
+    container.appendChild(funnel);
+  }
+  renderFunnel();
+
+  // ── Chart: Revenue YTD (Monthly) ──────────────────────────────────────────
+  const revYTDCtx = document.getElementById("chartRevenueYTD");
+  if (revYTDCtx) {
+    new Chart(revYTDCtx.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels: D.monthly2026.months,
+        datasets: [
+          {
+            label: "Actual",
+            data: D.monthly2026.revenue.actual,
+            backgroundColor: "#2DC46B",
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
+        }
       }
-    }
-  });
+    });
+  }
 
-  // ── Chart: GTV line ─────────────────────────────────────────────────────
-  const gtvCtx = document.getElementById("chartGTV").getContext("2d");
-  new Chart(gtvCtx, {
-    type: "line",
-    data: {
-      labels: D.gtvProjection.years,
-      datasets: [{
-        label: "GTV", data: D.gtvProjection.values,
-        borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.08)",
-        borderWidth: 2.5, pointBackgroundColor: "#1D8FE1", pointRadius: 4,
-        tension: 0.3, fill: true
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: "#888", font: { size: 11 } } },
-        y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 11 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
+  // ── Chart: GTV YTD (Monthly) ────────────────────────────────────────────
+  const gtvYTDCtx = document.getElementById("chartGTVYTD");
+  if (gtvYTDCtx) {
+    new Chart(gtvYTDCtx.getContext("2d"), {
+      type: "line",
+      data: {
+        labels: D.monthly2026.months,
+        datasets: [{
+          label: "Actual", data: D.monthly2026.gtv.actual,
+          borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.08)",
+          borderWidth: 2.5, pointBackgroundColor: "#1D8FE1", pointRadius: 4,
+          tension: 0.3, fill: true
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
+        }
       }
-    }
-  });
+    });
+  }
 
-  // ── Chart: Cohort penetration ────────────────────────────────────────────
-  const cohCtx = document.getElementById("chartCohort").getContext("2d");
-  new Chart(cohCtx, {
-    type: "line",
-    data: {
-      labels: D.cohortCurve.months.map(m => m === 0 ? "Reg." : "Mo " + m),
-      datasets: [{
-        label: "Payment penetration %", data: D.cohortCurve.pct,
-        borderColor: "#2DC46B", backgroundColor: "rgba(45,196,107,0.08)",
-        borderWidth: 2.5, pointBackgroundColor: "#2DC46B", pointRadius: 4,
-        tension: 0.4, fill: true
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
-        y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 }, callback: v => v + "%" },
-             min: 0, max: 22, title: { display: false } }
-      }
-    }
-  });
-
-  // ── Chart: Markets horizontal bar ────────────────────────────────────────
-  const mktCtx = document.getElementById("chartMarkets").getContext("2d");
-  new Chart(mktCtx, {
-    type: "bar",
-    data: {
-      labels: D.topMarkets.map(m => m.flag + " " + m.country),
-      datasets: [{
-        label: "Monthly GTV (€M)", data: D.topMarkets.map(m => m.gtv),
-        backgroundColor: D.topMarkets.map((m,i) => i < 3 ? "#1D8FE1" : "rgba(29,143,225,0.3)"),
-        borderRadius: 4, borderSkipped: false
-      }]
-    },
-    options: {
-      indexAxis: "y", responsive: true, maintainAspectRatio: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } } },
-        y: { grid: { display: false }, ticks: { color: "#444", font: { size: 11 } } }
-      }
-    }
-  });
-
-  // ── Markets table ─────────────────────────────────────────────────────────
-  const tbody = document.getElementById("markets-table-body");
-  D.topMarkets.forEach((m, i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><span class="rank-chip ${i < 3 ? "top" : ""}">${i+1}</span></td>
-      <td>${m.flag} ${m.country}</td>
-      <td><strong>€${m.gtv}M</strong></td>
-      <td>${m.merchants.toLocaleString()}</td>
-      <td>€${m.avgGTV.toLocaleString()}</td>`;
-    tbody.appendChild(tr);
-  });
 
   // ── Churn & NRR ──────────────────────────────────────────────────────────
   const CH = D.churn;
@@ -2655,6 +2688,84 @@ function renderCase() {
       '<span class="theme-count">' + t.mentions.toLocaleString() + '</span>';
     themesEl.appendChild(div);
   });
+}
+
+// ─── CASE MONTHLY DRILL-DOWN ──────────────────────────────────────────────────
+function _showCaseMonthlyDrill(metric) {
+  const D = CASE_DATA;
+  const M = D.monthly2026;
+
+  const drillContent = document.createElement("div");
+  drillContent.className = "store-drill-overlay";
+  drillContent.style.cssText = "position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:9999;";
+
+  const panel = document.createElement("div");
+  panel.style.cssText = "background:#fff; border-radius:8px; padding:32px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; position:relative;";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "✕";
+  closeBtn.style.cssText = "position:absolute; top:12px; right:12px; border:none; background:none; font-size:24px; cursor:pointer; color:#888;";
+  closeBtn.onclick = () => drillContent.remove();
+  panel.appendChild(closeBtn);
+
+  let title = "", data = [], target = [];
+  const metricLabels = { revenue: "Total Revenue", paymentRevenue: "Payment Revenue", arpc: "ARPC", activeUsers: "Active Users", gtv: "GTV" };
+  const metricUnits = { revenue: "€M", paymentRevenue: "€M", arpc: "€/mo", activeUsers: "users", gtv: "€B" };
+
+  if (metric === "revenue") { data = M.revenue.actual; target = M.revenue.target; }
+  else if (metric === "paymentRevenue") { data = M.paymentRevenue.actual; target = M.paymentRevenue.target; }
+  else if (metric === "arpc") { data = M.arpc.actual; target = M.arpc.target; }
+  else if (metric === "activeUsers") { data = M.activeUsers.actual; target = M.activeUsers.target; }
+  else if (metric === "gtv") { data = M.gtv.actual; target = M.gtv.target; }
+
+  title = metricLabels[metric] || metric;
+  const unit = metricUnits[metric] || "";
+
+  const h2 = document.createElement("h2");
+  h2.textContent = title + " — Monthly 2026";
+  h2.style.cssText = "margin:0 0 24px 0; font-size:20px; color:#1A1A1A;";
+  panel.appendChild(h2);
+
+  const chartDiv = document.createElement("div");
+  chartDiv.id = "drill-chart-" + metric;
+  chartDiv.style.cssText = "position:relative; height:300px; margin-bottom:24px;";
+  const canvas = document.createElement("canvas");
+  canvas.id = "drill-canvas-" + metric;
+  chartDiv.appendChild(canvas);
+  panel.appendChild(chartDiv);
+
+  drillContent.appendChild(panel);
+  document.body.appendChild(drillContent);
+
+  // Render chart
+  setTimeout(() => {
+    const ctx = document.getElementById("drill-canvas-" + metric).getContext("2d");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: M.months,
+        datasets: [
+          {
+            label: "Target", data: target,
+            borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.2)",
+            borderWidth: 2, type: "line", tension: 0.3, fill: false, pointRadius: 3
+          },
+          {
+            label: "Actual", data: data,
+            backgroundColor: "#2DC46B", borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 11 }, padding: 10, boxWidth: 10 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: unit, color: "#AAA", font: { size: 10 } } }
+        }
+      }
+    });
+  }, 100);
 }
 
 // ─── RENDER 5YP ──────────────────────────────────────────────────────────────
