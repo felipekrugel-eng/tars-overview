@@ -293,6 +293,12 @@
     .filter-chip:hover { background: #E8F4FD; border-color: #1D8FE1; color: #1D8FE1; }
     .filter-chip.active { background: #2DC46B; color: #fff; border-color: #2DC46B; font-weight: 700; }
     .filter-divider { color: #E0E0E0; font-size: 14px; margin: 0 4px; }
+    .filter-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; width: 100%; }
+    .filter-row + .filter-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+    .filter-date-group { display: flex; align-items: center; gap: 8px; }
+    .filter-date-select { padding: 5px 10px; font-size: 12px; font-family: Arial, sans-serif; color: #555; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 8px; cursor: pointer; appearance: auto; }
+    .filter-date-select:focus { outline: none; border-color: #1D8FE1; box-shadow: 0 0 0 2px rgba(29,143,225,0.15); }
+    .filter-date-arrow { font-size: 14px; color: #aaa; }
 
     /* Data note */
     .data-note { background: #EDF8F1; border: 1px solid #A8DDB8; border-radius: 8px; padding: 14px 20px; margin-bottom: 36px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #2A6B42; }
@@ -1461,25 +1467,55 @@
 
     <!-- MARKET FILTER -->
     <div class="market-filter-bar">
-      <div class="filter-label">📍 Market view</div>
-      <div class="filter-chips" id="market-filters">
-        <button class="filter-chip active" onclick="setMarketFilter('all')">All Markets</button>
-        <span class="filter-divider">|</span>
-        <button class="filter-chip" onclick="setMarketFilter('sea')">SEA</button>
-        <button class="filter-chip" onclick="setMarketFilter('americas')">Americas</button>
-        <button class="filter-chip" onclick="setMarketFilter('europe')">Europe</button>
-        <button class="filter-chip" onclick="setMarketFilter('mena')">Middle East</button>
-        <span class="filter-divider">|</span>
-        <button class="filter-chip" onclick="setMarketFilter('TH')">🇹🇭 Thailand</button>
-        <button class="filter-chip" onclick="setMarketFilter('PH')">🇵🇭 Philippines</button>
-        <button class="filter-chip" onclick="setMarketFilter('MX')">🇲🇽 Mexico</button>
-        <button class="filter-chip" onclick="setMarketFilter('MY')">🇲🇾 Malaysia</button>
-        <button class="filter-chip" onclick="setMarketFilter('SA')">🇸🇦 Saudi Arabia</button>
-        <button class="filter-chip" onclick="setMarketFilter('US')">🇺🇸 USA</button>
-        <button class="filter-chip" onclick="setMarketFilter('MM')">🇲🇲 Myanmar</button>
-        <button class="filter-chip" onclick="setMarketFilter('GB')">🇬🇧 UK</button>
-        <button class="filter-chip" onclick="setMarketFilter('ES')">🇪🇸 Spain</button>
-        <button class="filter-chip" onclick="setMarketFilter('SG')">🇸🇬 Singapore</button>
+      <!-- Row 1: Date range -->
+      <div class="filter-row">
+        <div class="filter-label">📅 Period</div>
+        <div class="filter-date-group">
+          <select class="filter-date-select" id="dateFrom" onchange="setDateRange()">
+            <option value="2026-01">Jan 2026</option>
+            <option value="2026-02">Feb 2026</option>
+            <option value="2026-03">Mar 2026</option>
+            <option value="2026-04">Apr 2026</option>
+            <option value="2026-05">May 2026</option>
+            <option value="2026-06">Jun 2026</option>
+            <option value="2026-07">Jul 2026</option>
+            <option value="2026-08">Aug 2026</option>
+            <option value="2026-09">Sep 2026</option>
+            <option value="2026-10">Oct 2026</option>
+            <option value="2026-11">Nov 2026</option>
+            <option value="2026-12">Dec 2026</option>
+          </select>
+          <span class="filter-date-arrow">→</span>
+          <select class="filter-date-select" id="dateTo" onchange="setDateRange()">
+            <option value="2026-01">Jan 2026</option>
+            <option value="2026-02">Feb 2026</option>
+            <option value="2026-03">Mar 2026</option>
+            <option value="2026-04">Apr 2026</option>
+            <option value="2026-05">May 2026</option>
+            <option value="2026-06">Jun 2026</option>
+            <option value="2026-07">Jul 2026</option>
+            <option value="2026-08">Aug 2026</option>
+            <option value="2026-09">Sep 2026</option>
+            <option value="2026-10">Oct 2026</option>
+            <option value="2026-11">Nov 2026</option>
+            <option value="2026-12" selected>Dec 2026</option>
+          </select>
+        </div>
+      </div>
+      <!-- Row 2: Region/continent chips -->
+      <div class="filter-row">
+        <div class="filter-label">📍 Region</div>
+        <div class="filter-chips" id="market-filters">
+          <button class="filter-chip active" onclick="setMarketFilter('all')">All Markets</button>
+          <span class="filter-divider">|</span>
+          <button class="filter-chip" onclick="setMarketFilter('asia')">Asia</button>
+          <button class="filter-chip" onclick="setMarketFilter('europe')">Europe</button>
+          <button class="filter-chip" onclick="setMarketFilter('north_america')">North America</button>
+          <button class="filter-chip" onclick="setMarketFilter('south_america')">South America</button>
+          <button class="filter-chip" onclick="setMarketFilter('middle_east')">Middle East</button>
+          <button class="filter-chip" onclick="setMarketFilter('africa')">Africa</button>
+          <button class="filter-chip" onclick="setMarketFilter('oceania')">Oceania</button>
+        </div>
       </div>
     </div>
 
@@ -2068,26 +2104,33 @@ const WORDMARKS = {
 
 // ─── MARKET FILTER ──────────────────────────────────────────────────────────
 let __activeMarketFilter = 'all';
+let __dateFrom = '2026-01';
+let __dateTo = '2026-12';
+
 function setMarketFilter(market) {
   __activeMarketFilter = market;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('#market-filters .filter-chip').forEach(c => c.classList.remove('active'));
   event.target.classList.add('active');
-  // Future: update metrics per market when Snowflake is connected
-  // For now, show the active filter state visually
-  const filterLabel = document.querySelector('.filter-label');
-  if (filterLabel) {
-    const labels = {
-      all: '📍 All Markets',
-      sea: '📍 SEA (5 markets)',
-      americas: '📍 Americas (2 markets)',
-      europe: '📍 Europe (2 markets)',
-      mena: '📍 Middle East (1 market)',
-      TH: '📍 Thailand', PH: '📍 Philippines', MX: '📍 Mexico',
-      MY: '📍 Malaysia', SA: '📍 Saudi Arabia', US: '📍 USA',
-      MM: '📍 Myanmar', GB: '📍 UK', ES: '📍 Spain', SG: '📍 Singapore'
-    };
-    filterLabel.textContent = labels[market] || '📍 Market view';
+  // Future: re-render metrics per region when Snowflake is connected
+  // Region → country mapping for future data filtering:
+  // asia: TH, PH, MY, MM, SG, JP, KR, IN, ID, VN, CN
+  // europe: GB, ES, DE, FR, IT, PT, NL, PL
+  // north_america: US, CA, MX
+  // south_america: BR, AR, CO, CL, PE
+  // middle_east: SA, AE, QA, KW, BH
+  // africa: ZA, NG, KE, EG
+  // oceania: AU, NZ
+}
+
+function setDateRange() {
+  __dateFrom = document.getElementById('dateFrom').value;
+  __dateTo = document.getElementById('dateTo').value;
+  // Ensure from ≤ to
+  if (__dateFrom > __dateTo) {
+    document.getElementById('dateTo').value = __dateFrom;
+    __dateTo = __dateFrom;
   }
+  // Future: re-render charts/KPIs for the selected date range when Snowflake is connected
 }
 
 function showPanel(name) {
