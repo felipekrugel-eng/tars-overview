@@ -76,8 +76,18 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background 0.15s, color 0.15s;
       letter-spacing: 0.3px;
+      font-weight: 700;
+    }
+    .cc-tab:not(.active) { font-weight: 400; }
+    .cc-tab::after {
+      content: attr(data-text);
+      display: block;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      font-weight: 700;
     }
     .cc-tab:hover { color: #fff; background: #222; }
     .cc-tab.active { color: #fff; background: var(--blue); font-weight: 700; }
@@ -2359,12 +2369,12 @@
   </a>
   <div class="cc-nav-divider"></div>
   <div class="cc-nav-tabs">
-    <button class="cc-tab active" id="tab-hub" onclick="showPanel('hub')">Command Centre</button>
-    <button class="cc-tab" id="tab-tars" onclick="showPanel('tars')">TARS</button>
-    <button class="cc-tab" id="tab-case" onclick="showPanel('case')">CASE</button>
-    <button class="cc-tab" id="tab-5yp" onclick="showPanel('5yp')">5YP</button>
-    <button class="cc-tab" id="tab-intel" onclick="showPanel('intel')">Market Intel</button>
-    <button class="cc-tab" id="tab-hiagent" onclick="showPanel('hiagent')">HIAgent</button>
+    <button class="cc-tab active" id="tab-hub" data-text="Command Centre" onclick="showPanel('hub')">Command Centre</button>
+    <button class="cc-tab" id="tab-tars" data-text="TARS" onclick="showPanel('tars')">TARS</button>
+    <button class="cc-tab" id="tab-case" data-text="CASE" onclick="showPanel('case')">CASE</button>
+    <button class="cc-tab" id="tab-5yp" data-text="5YP" onclick="showPanel('5yp')">5YP</button>
+    <button class="cc-tab" id="tab-intel" data-text="Market Intel" onclick="showPanel('intel')">Market Intel</button>
+    <button class="cc-tab" id="tab-hiagent" data-text="HIAgent" onclick="showPanel('hiagent')">HIAgent</button>
   </div>
   <div class="cc-nav-spacer"></div>
   <div class="cc-nav-badge">Loyverse · Leadership</div>
