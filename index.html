@@ -286,23 +286,23 @@
     .case-body { background: #F7F7F7; padding: 48px 48px 64px; }
 
     /* Market filter bar */
-    .market-filter-bar { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 16px 24px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .market-filter-bar { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 16px 24px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; overflow: visible; position: relative; z-index: 10; }
     .filter-label { font-family: "Arial Black", Arial, sans-serif; font-size: 12px; color: #2DC46B; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
     .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
     .filter-chip { padding: 5px 12px; font-size: 12px; font-family: Arial, sans-serif; color: #888; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
     .filter-chip:hover { background: #E8F4FD; border-color: #1D8FE1; color: #1D8FE1; }
     .filter-chip.active { background: #2DC46B; color: #fff; border-color: #2DC46B; font-weight: 700; }
     .filter-divider { color: #E0E0E0; font-size: 14px; margin: 0 4px; }
-    .filter-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; width: 100%; }
+    .filter-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; width: 100%; overflow: visible; }
     .filter-row + .filter-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
-    .filter-date-group { display: flex; align-items: center; gap: 8px; }
+    .filter-date-group { display: flex; align-items: center; gap: 8px; overflow: visible; }
     .filter-date-arrow { font-size: 14px; color: #aaa; }
     .custom-dropdown { position: relative; display: inline-block; }
     .custom-dropdown-btn { padding: 5px 28px 5px 10px; font-size: 12px; font-family: Arial, sans-serif; color: #555; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 8px; cursor: pointer; white-space: nowrap; position: relative; user-select: none; }
     .custom-dropdown-btn::after { content: "▾"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; color: #999; pointer-events: none; }
     .custom-dropdown-btn:hover { border-color: #bbb; }
     .custom-dropdown-btn.open { border-color: #1D8FE1; box-shadow: 0 0 0 2px rgba(29,143,225,0.15); }
-    .custom-dropdown-list { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; background: #fff; border: 1px solid #E0E0E0; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); z-index: 100; max-height: 220px; overflow-y: auto; min-width: 120px; padding: 4px 0; }
+    .custom-dropdown-list { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; background: #fff; border: 1px solid #E0E0E0; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); z-index: 500; max-height: 220px; overflow-y: auto; min-width: 120px; padding: 4px 0; }
     .custom-dropdown-list.open { display: block; }
     .custom-dropdown-item { padding: 6px 14px; font-size: 12px; font-family: Arial, sans-serif; color: #555; cursor: pointer; white-space: nowrap; }
     .custom-dropdown-item:hover { background: #E8F4FD; color: #1D8FE1; }
