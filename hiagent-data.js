@@ -213,26 +213,40 @@ const HIAGENT_DATA = {
       type: "Netlify",
       status: "live",
       repo: "felipekrugel-eng/tars-overview",
-      owner: "TARS",
+      owner: "HIAgent",
       detail: {
-        purpose: "Loyverse's central operations dashboard — a single-page app hosting TARS action tracking, CASE business analytics, 5-Year Plan projections, Market Intel simulations, and HIAgent monitoring.",
+        purpose: "Loyverse's central operations hub — a single-page app hosting all five operational panels under one roof. Serves as the unified entry point for strategy tracking, business analytics, long-range planning, market intelligence, and agent monitoring.",
         stack: "Static HTML/CSS/JS with modular data files (tars-data.js, case-data.js, fyp-data.js, intel-data.js, hiagent-data.js). Deployed via GitHub push to Netlify with auto-deploy.",
-        panels: "TARS (action tracker), CASE (business case analytics), 5YP (five-year projections), Market Intel (market sizing & competitive landscape), HIAgent (agent ops monitoring)",
-        updatedBy: "sync-tracker-to-html (TARS data), hiagent-monitor (HIAgent data)"
+        panels: "Hub (portal), TARS, CASE, 5YP, Market Intel, HIAgent",
+        updatedBy: "sync-tracker-to-html (TARS data), hiagent-monitor (HIAgent data), manual deploys"
       }
     },
     {
-      name: "CASE Analytics Dashboard",
+      name: "TARS",
+      url: "https://tars-overview.netlify.app",
+      type: "Netlify",
+      status: "live",
+      repo: "felipekrugel-eng/tars-overview",
+      owner: "TARS",
+      detail: {
+        purpose: "Strategy action tracker — monitors leadership team actions from Friday strategy sessions, tracks ownership, status, due dates, and completion. Provides real-time visibility into what's open, overdue, and done.",
+        stack: "Panel within the Command Centre, powered by tars-data.js which is auto-generated from the Google Sheets Action Tracker. Data refreshed daily by the sync-tracker-to-html task.",
+        panels: "Action cards with owner badges, status filters, overdue alerts, completion metrics",
+        updatedBy: "sync-tracker-to-html (daily), daily-completion-check (status updates), weekly-strategy-tracker-update (new actions)"
+      }
+    },
+    {
+      name: "CASE",
       url: "https://tars-overview.netlify.app",
       type: "Netlify",
       status: "live",
       repo: "felipekrugel-eng/tars-overview",
       owner: "CASE",
       detail: {
-        purpose: "Business case analytics panel within the Command Centre — provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse.",
-        stack: "Integrated panel in the Command Centre app, powered by case-data.js which contains financial models, market data, and competitive intelligence.",
-        panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix",
-        updatedBy: "Manual updates via case-data.js; appstore-data-pull (ratings data)"
+        purpose: "Business case analytics — provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse. Powers data-driven decision making for the leadership team.",
+        stack: "Panel within the Command Centre, powered by case-data.js which contains the financial model, market data, and competitive intelligence.",
+        panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix, unit economics",
+        updatedBy: "Manual updates via case-data.js; appstore-data-pull (app ratings data)"
       }
     }
   ],
