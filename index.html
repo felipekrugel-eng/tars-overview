@@ -903,8 +903,8 @@
 .intel-tiles-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  padding: 40px 48px;
+  gap: 28px;
+  padding: 60px 48px 72px;
   background: #F7F7F7;
 }
 .intel-tile {
@@ -1405,8 +1405,8 @@
   line-height: 14px;
   text-align: center;
   border-radius: 3px;
-  margin-left: 6px;
-  vertical-align: middle;
+  float: right;
+  margin-top: 2px;
 }
 #intel-sizing .ld::after {
   content: 'L';
@@ -2142,7 +2142,7 @@
         <div class="portal-tag green">Market Intelligence</div>
         <div class="portal-name">Market Intel</div>
         <div class="portal-stat">
-          <div class="portal-stat-num">100+</div>
+          <div class="portal-stat-num green">100+</div>
           <div class="portal-stat-label">Countries analysed</div>
         </div>
         <div class="portal-subtitle">Market sizing simulator and competitive landscape. TAM/SAM/SOM modelling across 100+ countries with real-time sliders. Competitor mapping by region with local payment rail intelligence.</div>
@@ -2152,7 +2152,7 @@
           <span class="portal-pill">TAM/SAM/SOM</span>
           <span class="portal-pill">Payment Rails</span>
         </div>
-        <button class="portal-btn">Open Market Intel →</button>
+        <button class="portal-btn green-btn">Open Market Intel →</button>
       </div>
     </div>
 
@@ -3311,7 +3311,7 @@
 
   <!-- SUB-PANEL: MARKET SIZING -->
   <div id="intel-sizing" class="intel-subpanel" style="display:none;">
-    <div style="padding:12px 28px 0;"><button onclick="showIntelTiles()" style="background:none;border:1px solid #E0E0E0;border-radius:6px;padding:6px 16px;font-size:12px;color:#888;cursor:pointer;font-family:Arial,sans-serif;">← Back to Market Intel</button></div>
+    <div style="padding:14px 28px 0;"><button onclick="showIntelTiles()" style="background:#1A1A1A;border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:Arial,sans-serif;transition:background 0.15s;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#1A1A1A'">← Back to Market Intel</button></div>
     <div class="params">
       <label>GTV Platform Fee:</label><input id="gR" type="range" min="0" max="5" step="0.1" value="3.5" oninput="intelUa()"><span id="gRv">3.50%</span>
       <label>TPV Payments Fee:</label><input id="tR" type="range" min="0" max="5" step="0.1" value="2.0" oninput="intelUa()"><span id="tRv">2.00%</span>
@@ -3393,7 +3393,7 @@
     <!-- DRILL-DOWN BY REGION -->
     <div class="panel" id="pdr">
       <div class="stl">TAM Breakdown by Region &amp; Country</div>
-      <table class="tbl">
+      <table class="tbl drill">
         <thead><tr>
           <th style="text-align:left">Region / Country</th>
           <th class="num">Micro (M)</th>
@@ -3606,7 +3606,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 
   <!-- SUB-PANEL: COMPETITIVE LANDSCAPE -->
   <div id="intel-comp" class="intel-subpanel" style="display:none;">
-    <div style="padding:12px 28px 0;"><button onclick="showIntelTiles()" style="background:none;border:1px solid #E0E0E0;border-radius:6px;padding:6px 16px;font-size:12px;color:#888;cursor:pointer;font-family:Arial,sans-serif;">← Back to Market Intel</button></div>
+    <div style="padding:14px 28px 0;"><button onclick="showIntelTiles()" style="background:#1A1A1A;border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:Arial,sans-serif;transition:background 0.15s;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#1A1A1A'">← Back to Market Intel</button></div>
     <div class="tabs">
       <div class="tab active" onclick="intelCompTab('ov',this)">Overview</div>
       <div class="tab" onclick="intelCompTab('apac',this)">Asia-Pacific</div>

@@ -433,9 +433,12 @@ document.addEventListener("DOMContentLoaded", function() {
   if (typeof origShowPanel === "function") {
     window.showPanel = function(name) {
       origShowPanel(name);
-      if (name === "intel" && !_intelInit) {
-        _intelInit = true;
-        if (typeof intelUa === "function") intelUa();
+      if (name === "intel") {
+        // Always reset to tile view when clicking the Market Intel tab
+        showIntelTiles();
+        if (!_intelInit) {
+          _intelInit = true;
+        }
       }
     };
   }
