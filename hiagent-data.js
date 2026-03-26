@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-26T14:50:42Z
+// Last sync: 2026-03-26T17:00:00Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-26T14:50:42Z",
+  lastSync: "2026-03-26T17:00:00Z",
 
   tasks: [
     {
@@ -94,24 +94,6 @@ const HIAGENT_DATA = {
         process: "Reviews the Action Tracker for discussion-worthy items, checks recent Fireflies transcripts for unresolved threads, compiles CASE metrics context, and sends a structured preview email via Gmail to leadership.",
         outputs: "Email to leadership with Friday meeting preview; Slack notification.",
         dependencies: "Google Drive, Gmail, Fireflies, Slack"
-      }
-    },
-    {
-      id: "thursday-strategy-deck",
-      name: "Thursday Strategy Deck",
-      description: "Generate Friday Strategy Briefing deck (PPTX) with latest CASE data and 5YP context",
-      schedule: "Thursday 4:30 PM",
-      cron: "30 16 * * 4",
-      cadence: "weekly-thu",
-      owner: "TARS",
-      enabled: true,
-      lastRunAt: null,
-      nextRunAt: "2026-03-26T16:32:11Z",
-      detail: {
-        purpose: "Generates a polished PowerPoint briefing deck for Friday's strategy session with the latest business case data, five-year plan projections, and outstanding action items.",
-        process: "Pulls latest CASE data, 5YP context, discussion topics from the Action Tracker, and outstanding actions. Uses the pptx and loyverse-brand skills to create a professional strategy deck. Saves to Google Drive.",
-        outputs: "Friday Strategy Briefing PPTX in Google Drive.",
-        dependencies: "CASE skill, 5YP data, Action Tracker, Google Drive, pptx skill, loyverse-brand skill"
       }
     },
     {
@@ -213,49 +195,13 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-26T14:49:33Z",
-      nextRunAt: "2026-03-26T16:00:45Z",
+      lastRunAt: null,
+      nextRunAt: "2026-03-26T19:00:00Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
         outputs: "Updated hiagent-data.js on GitHub; Slack alert on failures (silent on success).",
         dependencies: "Scheduled Tasks API, GitHub (tars-overview repo), Slack"
-      }
-    },
-    {
-      id: "session-07-archive",
-      name: "Session 07 Archive",
-      description: "One-time task: generate Session 07 HTML archive and save to Shared Drive",
-      schedule: "One-time: 3/18/2026",
-      cron: "",
-      cadence: "daily",
-      owner: "TARS",
-      enabled: false,
-      lastRunAt: "2026-03-18T10:30:45Z",
-      nextRunAt: null,
-      detail: {
-        purpose: "One-time backfill task to generate an HTML archive of Session 07 and save it to the Shared Drive.",
-        process: "Read session transcript, generate formatted HTML, upload to Google Drive Strategic Sessions folder.",
-        outputs: "Session 07 HTML archive in Google Drive.",
-        dependencies: "Google Drive"
-      }
-    },
-    {
-      id: "session-07-archive-v2",
-      name: "Session 07 Archive V2",
-      description: "One-time backfill: save Session 07 HTML archive to correct Shared Drive path",
-      schedule: "One-time: 3/18/2026",
-      cron: "",
-      cadence: "daily",
-      owner: "TARS",
-      enabled: false,
-      lastRunAt: "2026-03-18T11:00:45Z",
-      nextRunAt: null,
-      detail: {
-        purpose: "Retry of Session 07 archive task to save to the correct Shared Drive path.",
-        process: "Read session transcript, generate formatted HTML, upload to correct Google Drive Strategic Sessions folder path.",
-        outputs: "Session 07 HTML archive in Google Drive (correct path).",
-        dependencies: "Google Drive"
       }
     }
   ],
