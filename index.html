@@ -82,6 +82,7 @@
     .cc-tab:hover { color: #fff; background: #222; }
     .cc-tab.active { color: #fff; background: var(--blue); font-weight: 700; }
     #tab-case.active { background: #2DC46B; }
+    #tab-intel.active { background: #2DC46B; }
     .cc-nav-spacer { flex: 1; }
     .cc-nav-badge {
       font-size: 11px;
@@ -898,6 +899,30 @@
     .intel-subpanel { display: none; }
     .intel-subpanel.active { display: block; }
 
+/* INTEL TILE CARDS */
+.intel-tiles-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 40px 48px;
+  background: #F7F7F7;
+}
+.intel-tile {
+  background: #1A1A1A;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.intel-tile:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.18); }
+.intel-tile-top { height: 5px; background: #2DC46B; }
+.intel-tile-inner { padding: 32px 28px; }
+.intel-tile-icon { font-size: 32px; margin-bottom: 16px; }
+.intel-tile-name { font-family: "Arial Black", Arial, sans-serif; font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+.intel-tile-desc { font-size: 13px; color: #AAAAAA; line-height: 1.55; }
+.intel-tile.active-tile { box-shadow: 0 0 0 2px #2DC46B, 0 4px 20px rgba(0,0,0,0.12); }
+
 /* INTEL PANEL - MARKET SIZING STYLES */
 /* Note: CSS variables (--blue, --tc, --sc, --oc, --lc etc.) inherited from main :root */
 
@@ -916,6 +941,23 @@
   gap: 28px;
   flex-wrap: wrap;
   align-items: center;
+}
+
+#intel-sizing .params label {
+  color: #AAAAAA;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+#intel-sizing .params span {
+  color: #1D8FE1;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  min-width: 55px;
+  display: inline-block;
 }
 
 #intel-sizing .pg {
@@ -1076,6 +1118,38 @@
   height: 14px;
   background: var(--blue);
   border-radius: 2px;
+}
+
+#intel-sizing .metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+#intel-sizing .metric {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #E0E0E0;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+#intel-sizing .metric .label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #888888;
+  margin-bottom: 6px;
+}
+
+#intel-sizing .metric .value {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #1A1A1A;
+  font-variant-numeric: tabular-nums;
 }
 
 #intel-sizing .cr {
@@ -1321,12 +1395,21 @@
 
 #intel-sizing .ld {
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--blue);
+  background: #2DC46B;
+  color: white;
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  border-radius: 3px;
   margin-left: 6px;
   vertical-align: middle;
+}
+#intel-sizing .ld::after {
+  content: 'L';
 }
 
 #intel-sizing .ex {
@@ -1776,11 +1859,18 @@
 }
 
 #intel-comp .tbl tbody td {
-  padding: 8px 10px;
+  padding: 10px 10px;
   border-bottom: 1px solid #F7F7F7;
   font-size: 12px;
   color: #555555;
-  vertical-align: top;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+#intel-comp .tbl tbody td:last-child {
+  max-width: 200px;
+  white-space: normal;
+  line-height: 1.4;
 }
 
 #intel-comp .tbl tbody tr:hover td {
@@ -1964,7 +2054,7 @@
     <button class="cc-tab" id="tab-tars" onclick="showPanel('tars')">TARS</button>
     <button class="cc-tab" id="tab-case" onclick="showPanel('case')">CASE</button>
     <button class="cc-tab" id="tab-5yp" onclick="showPanel('5yp')">5YP</button>
-    <button class="cc-tab" id="tab-intel" onclick="showPanel('intel')">INTEL</button>
+    <button class="cc-tab" id="tab-intel" onclick="showPanel('intel')">Market Intel</button>
   </div>
   <div class="cc-nav-spacer"></div>
   <div class="cc-nav-badge">Loyverse · Leadership</div>
@@ -2047,10 +2137,10 @@
     </div>
 
     <div class="portal-card" onclick="showPanel('intel')">
-      <div class="portal-card-top" style="background:#1D8FE1;"></div>
+      <div class="portal-card-top case-top"></div>
       <div class="portal-card-inner">
-        <div class="portal-tag">Market Intelligence</div>
-        <div class="portal-name">INTEL</div>
+        <div class="portal-tag green">Market Intelligence</div>
+        <div class="portal-name">Market Intel</div>
         <div class="portal-stat">
           <div class="portal-stat-num">100+</div>
           <div class="portal-stat-label">Countries analysed</div>
@@ -2062,7 +2152,7 @@
           <span class="portal-pill">TAM/SAM/SOM</span>
           <span class="portal-pill">Payment Rails</span>
         </div>
-        <button class="portal-btn">Open INTEL →</button>
+        <button class="portal-btn">Open Market Intel →</button>
       </div>
     </div>
 
@@ -3195,18 +3285,33 @@
   <!-- HERO (same style as other pages) -->
   <div class="case-hero" style="background: #0D0D0D;">
     <div class="case-hero-label">Loyverse · Market Intelligence</div>
-    <h1>Meet <span style="color:#1D8FE1;">INTEL.</span></h1>
+    <h1>Meet <span style="color:#2DC46B;">Market Intel.</span></h1>
     <p>Market sizing simulator and competitive landscape analysis. Model TAM/SAM/SOM across 100+ countries with interactive parameters. Map competitors and local payment rails by region.</p>
   </div>
 
-  <!-- SUB-TAB NAVIGATION -->
-  <div class="intel-subtabs">
-    <button class="intel-subtab active" data-tab="sizing" onclick="showIntelTab('sizing')">📊 Market Sizing</button>
-    <button class="intel-subtab" data-tab="comp" onclick="showIntelTab('comp')">🏆 Competitive Landscape</button>
+  <!-- INTEL TILE SELECTOR -->
+  <div id="intel-tile-selector" class="intel-tiles-container">
+    <div class="intel-tile" data-tab="sizing" onclick="showIntelTab('sizing')">
+      <div class="intel-tile-top"></div>
+      <div class="intel-tile-inner">
+        <div class="intel-tile-icon">📊</div>
+        <div class="intel-tile-name">Market Sizing</div>
+        <div class="intel-tile-desc">TAM/SAM/SOM modelling across 100+ countries with interactive parameters and real-time scenario analysis.</div>
+      </div>
+    </div>
+    <div class="intel-tile" data-tab="comp" onclick="showIntelTab('comp')">
+      <div class="intel-tile-top"></div>
+      <div class="intel-tile-inner">
+        <div class="intel-tile-icon">🏆</div>
+        <div class="intel-tile-name">Competitive Landscape</div>
+        <div class="intel-tile-desc">Competitor mapping by region with local payment rail intelligence and market share analysis.</div>
+      </div>
+    </div>
   </div>
 
   <!-- SUB-PANEL: MARKET SIZING -->
-  <div id="intel-sizing" class="intel-subpanel active">
+  <div id="intel-sizing" class="intel-subpanel" style="display:none;">
+    <div style="padding:12px 28px 0;"><button onclick="showIntelTiles()" style="background:none;border:1px solid #E0E0E0;border-radius:6px;padding:6px 16px;font-size:12px;color:#888;cursor:pointer;font-family:Arial,sans-serif;">← Back to Market Intel</button></div>
     <div class="params">
       <label>GTV Platform Fee:</label><input id="gR" type="range" min="0" max="5" step="0.1" value="3.5" oninput="intelUa()"><span id="gRv">3.50%</span>
       <label>TPV Payments Fee:</label><input id="tR" type="range" min="0" max="5" step="0.1" value="2.0" oninput="intelUa()"><span id="tRv">2.00%</span>
@@ -3260,19 +3365,27 @@
         </div>
         <div class="metric">
           <div class="label">TAM Revenue</div>
-          <div class="value" id="t-r">—</div>
+          <div class="value" style="color:var(--tc)" id="t-r">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">SAM GTV</div>
+          <div class="value" id="s-g">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">SAM TPV</div>
+          <div class="value" id="s-t">—</div>
         </div>
         <div class="metric">
           <div class="label">SAM Revenue</div>
-          <div class="value" id="s-r">—</div>
+          <div class="value" style="color:var(--sc)" id="s-r">—</div>
         </div>
         <div class="metric">
           <div class="label">SOM Revenue</div>
-          <div class="value" id="o-r">—</div>
+          <div class="value" style="color:var(--oc)" id="o-r">—</div>
         </div>
         <div class="metric">
           <div class="label">Loyverse Revenue @ <span id="lp-l">1.0%</span></div>
-          <div class="value" id="l-r">—</div>
+          <div class="value" style="color:var(--lc)" id="l-r">—</div>
         </div>
       </div>
     </div>
@@ -3493,6 +3606,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 
   <!-- SUB-PANEL: COMPETITIVE LANDSCAPE -->
   <div id="intel-comp" class="intel-subpanel" style="display:none;">
+    <div style="padding:12px 28px 0;"><button onclick="showIntelTiles()" style="background:none;border:1px solid #E0E0E0;border-radius:6px;padding:6px 16px;font-size:12px;color:#888;cursor:pointer;font-family:Arial,sans-serif;">← Back to Market Intel</button></div>
     <div class="tabs">
       <div class="tab active" onclick="intelCompTab('ov',this)">Overview</div>
       <div class="tab" onclick="intelCompTab('apac',this)">Asia-Pacific</div>
@@ -3506,7 +3620,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       <div class="tab" onclick="intelCompTab('ref',this)">References</div>
     </div>
 
-    <div class="panel active" id="pov" style="max-width:100%;overflow-x:auto;">
+    <div class="panel active" id="comp-pov" style="max-width:100%;overflow-x:auto;">
       <div class="stl">Competitive Landscape: Global Overview</div>
       <p>For full regional detail, select a tab above. This overview summarizes the competitive environment across Loyverse's largest SOM markets.</p>
       <div class="tbl-wrapper">
@@ -3522,7 +3636,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </div>
     </div>
 
-    <div class="panel" id="papac">
+    <div class="panel" id="comp-papac">
       <div class="stl">Asia-Pacific Region</div>
       <p><strong>Loyverse TPV:</strong> $7.4B (53% of global SOM). <strong>Digital penetration:</strong> 60-90% by country. <strong>Fragmentation:</strong> Highest local player concentration outside SSA.</p>
       <table class="tbl">
@@ -3540,7 +3654,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="peu">
+    <div class="panel" id="comp-peu">
       <div class="stl">Europe Region</div>
       <p><strong>Loyverse TPV:</strong> $2.8B (20% of global SOM). <strong>Digital penetration:</strong> 80-95%. <strong>Consolidation:</strong> Dominated by Square and SumUp; regulatory harmonization via PSD2.</p>
       <table class="tbl">
@@ -3558,7 +3672,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pna">
+    <div class="panel" id="comp-pna">
       <div class="stl">North America Region</div>
       <p><strong>Loyverse TPV:</strong> $3.5B (25% of global SOM). <strong>Digital penetration:</strong> 85%+ (USA), 75%+ (Canada), 50% (Mexico). <strong>Saturation:</strong> High competition in USA/Canada; Mexico emerging.</p>
       <table class="tbl">
@@ -3571,7 +3685,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pla">
+    <div class="panel" id="comp-pla">
       <div class="stl">Latin America Region</div>
       <p><strong>Loyverse TPV:</strong> $0.8B (6% of global SOM, excl. Mexico). <strong>Digital penetration:</strong> 45-65%. <strong>Local dominance:</strong> Linx (BR), regional acquirers.</p>
       <table class="tbl">
@@ -3585,7 +3699,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pmena">
+    <div class="panel" id="comp-pmena">
       <div class="stl">MENA Region</div>
       <p><strong>Loyverse TPV:</strong> $1.88B (13% of global SOM). <strong>Digital penetration:</strong> 30-85% (wide range: Bahrain vs. Egypt). <strong>Payment rails:</strong> Highly fragmented by country and payment method.</p>
       <table class="tbl">
@@ -3600,7 +3714,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pssa">
+    <div class="panel" id="comp-pssa">
       <div class="stl">Sub-Saharan Africa Region</div>
       <p><strong>Loyverse TPV:</strong> $0.2B (1.5% of global SOM but fast-growing). <strong>Digital penetration:</strong> 20-45%. <strong>Mobile money dominance:</strong> M-Pesa (Kenya), MTN MoMo (multi-country).</p>
       <table class="tbl">
@@ -3615,7 +3729,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pca">
+    <div class="panel" id="comp-pca">
       <div class="stl">Central Asia Region</div>
       <p><strong>Loyverse TPV:</strong> $110M (1% of global SOM). <strong>Digital penetration:</strong> 28-45%. <strong>Emerging markets:</strong> Kazakhstan largest; regulatory variation.</p>
       <table class="tbl">
@@ -3628,7 +3742,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       </table>
     </div>
 
-    <div class="panel" id="pcar">
+    <div class="panel" id="comp-pcar">
       <div class="stl">Caribbean Region</div>
       <p><strong>Loyverse TPV:</strong> $25M (0.2% of global SOM). <strong>Digital penetration:</strong> 50%. <strong>Small dispersed markets:</strong> Limited scale individually; tourism-dependent.</p>
       <table class="tbl">
@@ -3642,7 +3756,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
     </div>
 
     <!-- REFERENCES & DEFINITIONS -->
-    <div class="panel" id="pref">
+    <div class="panel" id="comp-pref">
       <div style="background:var(--white);border-radius:8px;border:1px solid var(--silver);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:20px">
         <div style="background:var(--near-black);padding:10px 16px"><span style="font-family:'Arial Black',Arial,sans-serif;font-size:12px;font-weight:900;color:#fff">Income Tiers & Regional Definitions</span></div>
         <div style="padding:16px">
@@ -3728,7 +3842,7 @@ const WORDMARKS = {
   tars: 'Loyverse <span style="color:#1D8FE1">TARS</span>',
   case: 'Loyverse <span style="color:#2DC46B">CASE</span>',
   '5yp': 'Loyverse <span style="color:#1D8FE1">5YP</span>',
-  intel: 'Loyverse <span style="color:#1D8FE1">INTEL</span>'
+  intel: 'Loyverse <span style="color:#2DC46B">Market Intel</span>'
 };
 
 // ─── MARKET FILTER (multi-select) ───────────────────────────────────────────

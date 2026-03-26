@@ -15,19 +15,32 @@ function intelCompTab(id, el) {
   comp.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   comp.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('p' + id).classList.add('active');
+  document.getElementById('comp-p' + id).classList.add('active');
 }
 
 function showIntelTab(tabName) {
-  document.querySelectorAll('.intel-subtab').forEach(function(b) { b.classList.remove('active'); });
+  // Hide tile selector when a sub-panel is shown
+  var tileSelector = document.getElementById('intel-tile-selector');
+  if (tileSelector) tileSelector.style.display = 'none';
+
   document.querySelectorAll('.intel-subpanel').forEach(function(p) { p.style.display = 'none'; });
   var panel = document.getElementById('intel-' + tabName);
   if (panel) panel.style.display = 'block';
-  // Activate the clicked button
-  var btn = document.querySelector('.intel-subtab[data-tab="' + tabName + '"]');
-  if (btn) btn.classList.add('active');
+
+  // Highlight active tile
+  document.querySelectorAll('.intel-tile').forEach(function(t) { t.classList.remove('active-tile'); });
+  var tile = document.querySelector('.intel-tile[data-tab="' + tabName + '"]');
+  if (tile) tile.classList.add('active-tile');
+
   // Init sizing on first show
   if (tabName === 'sizing' && typeof intelUa === 'function') intelUa();
+}
+
+function showIntelTiles() {
+  document.querySelectorAll('.intel-subpanel').forEach(function(p) { p.style.display = 'none'; });
+  var tileSelector = document.getElementById('intel-tile-selector');
+  if (tileSelector) tileSelector.style.display = '';
+  document.querySelectorAll('.intel-tile').forEach(function(t) { t.classList.remove('active-tile'); });
 }
 
 function intelGp2() {
