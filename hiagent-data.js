@@ -125,6 +125,18 @@ const HIAGENT_DATA = {
       enabled: true,
       lastRunAt: null,
       nextRunAt: "2026-03-30T08:00:58Z"
+    },
+    {
+      id: "hiagent-monitor",
+      name: "HIAgent Monitor",
+      description: "Monitor all scheduled tasks, update dashboard data, alert on failures",
+      schedule: "Every 2 hours",
+      cron: "0 */2 * * *",
+      cadence: "daily",
+      owner: "HIAgent",
+      enabled: true,
+      lastRunAt: null,
+      nextRunAt: "2026-03-26T19:00:00Z"
     }
   ],
 
@@ -250,7 +262,7 @@ function hiagentRender() {
   if (syncEl) syncEl.textContent = 'Last sync: ' + hiagentTimeAgo(HIAGENT_DATA.lastSync);
 
   // Render task cards
-  var ownerColors = { 'TARS': '#1D8FE1', 'CASE': '#2DC46B', 'Second Brain': '#7B3FA0' };
+  var ownerColors = { 'TARS': '#1D8FE1', 'CASE': '#2DC46B', 'Second Brain': '#7B3FA0', 'HIAgent': '#1D8FE1' };
   var html = '';
   HIAGENT_DATA.tasks.forEach(function(t) {
     var s = hiagentCalcStatus(t);
