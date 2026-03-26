@@ -1613,6 +1613,26 @@
       </div>
     </div>
 
+    <div class="chart-card" style="margin-top:24px;">
+      <div class="chart-card-title">Top Markets</div>
+      <div class="chart-card-sub">Active merchant base and transaction value by country</div>
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:32px;">#</th>
+              <th>Country</th>
+              <th style="text-align:right;">GTV (€M)</th>
+              <th style="text-align:right;">Merchants</th>
+              <th style="text-align:right;">Avg GTV</th>
+            </tr>
+          </thead>
+          <tbody id="top-markets-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- ── GROUP 3: PAYMENTS ── -->
     <div class="case-section-label" style="margin-top:36px;">03</div>
     <div class="case-section-title">Payments health.</div>
@@ -2135,6 +2155,7 @@ function setMarketFilter(market) {
     document.querySelector('#market-filters .filter-chip').classList.add('active'); // "All Markets" is first
     document.getElementById('country-filters').innerHTML = '';
     document.getElementById('country-filters').classList.remove('visible');
+    applyFilters();
     return;
   }
 
@@ -2164,6 +2185,7 @@ function setMarketFilter(market) {
 
   // Rebuild country row with all selected regions' countries
   _rebuildCountryRow();
+  applyFilters();
 }
 
 function _rebuildCountryRow() {
@@ -2206,7 +2228,7 @@ function setCountryFilter(code, btn) {
     __selectedCountries.push(code);
     btn.classList.add('active');
   }
-  // Future: re-render metrics for selected countries when Snowflake is connected
+  applyFilters();
 }
 
 // ─── CUSTOM DATE DROPDOWNS (always open downward) ───────────────────────────
@@ -2232,6 +2254,7 @@ function _initDateDropdowns() {
     }
     _closeAllDropdowns();
     _updateDropdownSelected('dateFromList', val);
+    applyFilters();
   });
   _buildDropdownList('dateToList', DATE_OPTIONS, __dateTo, function(val, label) {
     __dateTo = val;
@@ -2245,6 +2268,7 @@ function _initDateDropdowns() {
     }
     _closeAllDropdowns();
     _updateDropdownSelected('dateToList', val);
+    applyFilters();
   });
 }
 
@@ -2296,6 +2320,320 @@ document.addEventListener('click', function(e) {
 
 // Initialize dropdowns on load
 document.addEventListener('DOMContentLoaded', _initDateDropdowns);
+
+// ─── FILTER ENGINE ──────────────────────────────────────────────────────────
+var __chartRevenueYTD = null;
+var __chartGTVYTD = null;
+var __chartSentiment = null;
+var __chartCohortNpvTrend = null;
+
+function _getFilterWeight() {
+  var W = CASE_DATA.countryWeights;
+  var RC = CASE_DATA.regionCountries;
+  if (__selectedRegions.length === 0 && __selectedCountries.length === 0) return 1.0;
+  var activeCountries = _getActiveCountryCodes();
+  var weight = 0;
+  activeCountries.forEach(function(c) { weight += (W[c] || 0); });
+  return weight || 1.0;
+}
+
+function _getActiveCountryCodes() {
+  var RC = CASE_DATA.regionCountries;
+  if (__selectedRegions.length === 0) return null;
+  if (__selectedCountries.length > 0) return __selectedCountries.slice();
+  var countries = [];
+  __selectedRegions.forEach(function(r) {
+    (RC[r] || []).forEach(function(c) {
+      if (countries.indexOf(c) === -1) countries.push(c);
+    });
+  });
+  return countries;
+}
+
+function _getActiveRegionKeys() {
+  if (__selectedRegions.length === 0) return null;
+  return __selectedRegions.slice();
+}
+
+function _getMonthRange() {
+  var fromIdx = parseInt(__dateFrom.split('-')[1]) - 1;
+  var toIdx = parseInt(__dateTo.split('-')[1]) - 1;
+  return { from: fromIdx, to: toIdx };
+}
+
+// Country name → code map for top markets table
+var COUNTRY_CODE_MAP = {
+  "Thailand": "TH", "Philippines": "PH", "Mexico": "MX", "Malaysia": "MY",
+  "Saudi Arabia": "SA", "USA": "US", "Myanmar": "MM", "UK": "GB",
+  "Spain": "ES", "Singapore": "SG", "Indonesia": "ID", "Vietnam": "VN",
+  "India": "IN", "Germany": "DE", "France": "FR", "Italy": "IT",
+  "Portugal": "PT", "Netherlands": "NL", "Poland": "PL", "Canada": "CA",
+  "Brazil": "BR", "Argentina": "AR", "Colombia": "CO", "Chile": "CL",
+  "Peru": "PE", "UAE": "AE", "Qatar": "QA", "Kuwait": "KW", "Bahrain": "BH",
+  "South Africa": "ZA", "Nigeria": "NG", "Kenya": "KE", "Egypt": "EG",
+  "Australia": "AU", "New Zealand": "NZ"
+};
+
+function applyFilters() {
+  var D = CASE_DATA;
+  var weight = _getFilterWeight();
+  var countries = _getActiveCountryCodes();
+  var regions = _getActiveRegionKeys();
+  var range = _getMonthRange();
+  var isFiltered = (countries !== null);
+
+  // ── Helper: scale a value by weight ──
+  function w(val, decimals) {
+    if (!isFiltered) return val;
+    var result = val * weight;
+    if (decimals !== undefined) {
+      var f = Math.pow(10, decimals);
+      return Math.round(result * f) / f;
+    }
+    return result;
+  }
+
+  // ── 1. KPI TILES ──────────────────────────────────────────────────────────
+  var el;
+  el = document.getElementById("m-total-revenue");
+  if (el) el.textContent = "€" + w(D.totalRevenue.value, 1) + "M";
+
+  el = document.getElementById("m-payment-revenue");
+  if (el) el.textContent = "€" + w(D.paymentRevenue.value, 1) + "M";
+
+  // ARPC doesn't scale with weight (per-merchant metric)
+  el = document.getElementById("m-arpc");
+  if (el) el.textContent = "€" + D.arpc.value;
+
+  el = document.getElementById("m-active-users");
+  if (el) el.textContent = Math.round(w(350000) / 1000) + "K";
+
+  el = document.getElementById("m-total-gtv");
+  if (el) el.textContent = "€" + w(D.totalGTV.value, 1) + "B";
+
+  el = document.getElementById("m-gtv-processed");
+  if (el) el.textContent = "€" + w(D.gtvProcessed.value, 2) + "B";
+
+  // ── 2. MONTHLY CHARTS (date range + weight) ──────────────────────────────
+  var M = D.monthly2026;
+  var months = M.months.slice(range.from, range.to + 1);
+  var revActual = M.revenue.actual.slice(range.from, range.to + 1).map(function(v) { return v !== null ? w(v, 3) : null; });
+  var gtvActual = M.gtv.actual.slice(range.from, range.to + 1).map(function(v) { return v !== null ? w(v, 3) : null; });
+
+  if (__chartRevenueYTD) { __chartRevenueYTD.destroy(); __chartRevenueYTD = null; }
+  var revCtx = document.getElementById("chartRevenueYTD");
+  if (revCtx) {
+    __chartRevenueYTD = new Chart(revCtx.getContext("2d"), {
+      type: "bar",
+      data: { labels: months, datasets: [{ label: "Actual", data: revActual, backgroundColor: "#2DC46B", borderRadius: 4 }] },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
+        }
+      }
+    });
+  }
+
+  if (__chartGTVYTD) { __chartGTVYTD.destroy(); __chartGTVYTD = null; }
+  var gtvCtx = document.getElementById("chartGTVYTD");
+  if (gtvCtx) {
+    __chartGTVYTD = new Chart(gtvCtx.getContext("2d"), {
+      type: "line",
+      data: { labels: months, datasets: [{ label: "Actual", data: gtvActual, borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.08)", borderWidth: 2.5, pointBackgroundColor: "#1D8FE1", pointRadius: 4, tension: 0.3, fill: true }] },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
+          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
+        }
+      }
+    });
+  }
+
+  // ── 3. TOP MARKETS TABLE ──────────────────────────────────────────────────
+  var marketsBody = document.getElementById("top-markets-body");
+  if (marketsBody) {
+    var filteredMarkets = D.topMarkets;
+    if (countries) {
+      filteredMarkets = D.topMarkets.filter(function(m) {
+        var code = COUNTRY_CODE_MAP[m.country];
+        return code && countries.indexOf(code) > -1;
+      });
+    }
+    marketsBody.innerHTML = '';
+    if (filteredMarkets.length === 0) {
+      marketsBody.innerHTML = '<tr><td colspan="5" style="padding:24px; text-align:center; color:#999; font-size:13px;">No markets match the selected filters</td></tr>';
+    } else {
+      filteredMarkets.forEach(function(m, i) {
+        var tr = document.createElement("tr");
+        tr.style.cssText = "border-bottom:1px solid #f3f4f6;";
+        tr.innerHTML =
+          '<td style="padding:10px 14px; font-weight:600; color:#9ca3af; width:32px;">' + (i + 1) + '</td>' +
+          '<td style="padding:10px 14px; font-weight:600;">' + m.flag + '  ' + m.country + '</td>' +
+          '<td style="padding:10px 14px; text-align:right; font-weight:600; color:#1D8FE1;">€' + m.gtv + 'M</td>' +
+          '<td style="padding:10px 14px; text-align:right;">' + m.merchants.toLocaleString() + '</td>' +
+          '<td style="padding:10px 14px; text-align:right;">€' + m.avgGTV.toLocaleString() + '</td>';
+        marketsBody.appendChild(tr);
+      });
+    }
+  }
+
+  // ── 4. APP STORE REVIEWS (filter by region/country) ───────────────────────
+  _renderFilteredReviews(countries, regions);
+
+  // ── 5. REVIEW THEMES (recalculate from filtered reviews) ──────────────────
+  _renderFilteredThemes(countries, regions);
+
+  // ── 6. SENTIMENT BARS (recalculate from filtered reviews) ─────────────────
+  _renderFilteredSentiment(countries, regions);
+}
+
+// ── Filtered reviews renderer ───────────────────────────────────────────────
+function _filterReviewsByGeo(reviewsArr, countries, regions) {
+  if (!countries && !regions) return reviewsArr;
+  return reviewsArr.filter(function(r) {
+    if (countries && countries.indexOf(r.country) > -1) return true;
+    if (!countries && regions) {
+      return regions.indexOf(r.region) > -1;
+    }
+    return false;
+  });
+}
+
+function _renderFilteredReviews(countries, regions) {
+  var D = CASE_DATA;
+  // We don't re-render the full review cards here (they're in drill-downs),
+  // but we update the review count displays
+  var gpFiltered = _filterReviewsByGeo(D.reviews.googlePlay, countries, regions);
+  var asFiltered = _filterReviewsByGeo(D.reviews.appStore, countries, regions);
+
+  // Update review counts if filtered
+  var gpCountEl = document.getElementById("gp-review-count");
+  var asCountEl = document.getElementById("as-review-count");
+  if (gpCountEl) {
+    if (countries || regions) {
+      gpCountEl.textContent = gpFiltered.length + " of " + D.appStores.googlePlay.reviewCount + " reviews";
+    } else {
+      gpCountEl.textContent = D.appStores.googlePlay.reviewCount + " reviews";
+    }
+  }
+  if (asCountEl) {
+    if (countries || regions) {
+      asCountEl.textContent = asFiltered.length + " of " + D.appStores.appStore.reviewCount + " reviews";
+    } else {
+      asCountEl.textContent = D.appStores.appStore.reviewCount + " reviews";
+    }
+  }
+}
+
+function _renderFilteredSentiment(countries, regions) {
+  var D = CASE_DATA;
+  if (!countries && !regions) {
+    // Reset to original values
+    _setSentimentBars("gp", D.appStores.googlePlay);
+    _setSentimentBars("as", D.appStores.appStore);
+    return;
+  }
+
+  var gpFiltered = _filterReviewsByGeo(D.reviews.googlePlay, countries, regions);
+  var asFiltered = _filterReviewsByGeo(D.reviews.appStore, countries, regions);
+
+  _recalcSentiment("gp", gpFiltered, D.appStores.googlePlay);
+  _recalcSentiment("as", asFiltered, D.appStores.appStore);
+}
+
+function _recalcSentiment(prefix, filteredReviews, originalStore) {
+  if (filteredReviews.length === 0) {
+    _setSentimentBars(prefix, { positive: 0, neutral: 0, negative: 0 });
+    return;
+  }
+  var pos = 0, neu = 0, neg = 0;
+  filteredReviews.forEach(function(r) {
+    if (r.sentiment === "positive") pos++;
+    else if (r.sentiment === "neutral") neu++;
+    else neg++;
+  });
+  var total = filteredReviews.length;
+  _setSentimentBars(prefix, {
+    positive: Math.round((pos / total) * 100),
+    neutral: Math.round((neu / total) * 100),
+    negative: Math.round((neg / total) * 100)
+  });
+}
+
+function _setSentimentBars(prefix, data) {
+  var posEl = document.getElementById(prefix + "-pos-pct");
+  var neuEl = document.getElementById(prefix + "-neu-pct");
+  var negEl = document.getElementById(prefix + "-neg-pct");
+  if (posEl) posEl.textContent = data.positive + "%";
+  if (neuEl) neuEl.textContent = data.neutral + "%";
+  if (negEl) negEl.textContent = data.negative + "%";
+
+  var posBar = document.getElementById(prefix + "-pos-bar");
+  var neuBar = document.getElementById(prefix + "-neu-bar");
+  var negBar = document.getElementById(prefix + "-neg-bar");
+  if (posBar) posBar.style.width = data.positive + "%";
+  if (neuBar) neuBar.style.width = data.neutral + "%";
+  if (negBar) negBar.style.width = data.negative + "%";
+}
+
+function _renderFilteredThemes(countries, regions) {
+  var D = CASE_DATA;
+  var themesEl = document.getElementById("themes-container");
+  if (!themesEl) return;
+
+  if (!countries && !regions) {
+    // Reset to original
+    themesEl.innerHTML = '';
+    var maxMentions = Math.max.apply(null, D.reviewThemes.map(function(t) { return t.mentions; }));
+    D.reviewThemes.forEach(function(t) {
+      var pct = Math.round((t.mentions / maxMentions) * 100);
+      var div = document.createElement("div");
+      div.className = "theme-row";
+      div.setAttribute("onclick", "openThemeDrilldown('" + t.key + "', 'all')");
+      div.title = "Click to view " + t.name + " reviews";
+      div.innerHTML = '<span class="theme-name">' + t.name + '</span>' +
+        '<div class="theme-bar-wrap"><div class="theme-bar-fill ' + t.type + '" style="width:' + pct + '%"></div></div>' +
+        '<span class="theme-count">' + t.mentions.toLocaleString() + '</span>';
+      themesEl.appendChild(div);
+    });
+    return;
+  }
+
+  // Recalculate from filtered reviews
+  var allFiltered = _filterReviewsByGeo(D.reviews.googlePlay, countries, regions)
+    .concat(_filterReviewsByGeo(D.reviews.appStore, countries, regions));
+
+  // Count theme mentions from filtered reviews
+  var themeCounts = {};
+  D.reviewThemes.forEach(function(t) { themeCounts[t.key] = 0; });
+  allFiltered.forEach(function(r) {
+    (r.themes || []).forEach(function(themeKey) {
+      if (themeCounts[themeKey] !== undefined) themeCounts[themeKey]++;
+    });
+  });
+
+  themesEl.innerHTML = '';
+  var maxCount = Math.max.apply(null, Object.keys(themeCounts).map(function(k) { return themeCounts[k]; }));
+  if (maxCount === 0) maxCount = 1;
+
+  D.reviewThemes.forEach(function(t) {
+    var count = themeCounts[t.key];
+    var pct = Math.round((count / maxCount) * 100);
+    var div = document.createElement("div");
+    div.className = "theme-row";
+    div.setAttribute("onclick", "openThemeDrilldown('" + t.key + "', 'all')");
+    div.title = "Click to view " + t.name + " reviews";
+    div.innerHTML = '<span class="theme-name">' + t.name + '</span>' +
+      '<div class="theme-bar-wrap"><div class="theme-bar-fill ' + t.type + '" style="width:' + pct + '%"></div></div>' +
+      '<span class="theme-count">' + count + '</span>';
+    themesEl.appendChild(div);
+  });
+}
 
 function showPanel(name) {
   document.querySelectorAll(".cc-panel").forEach(p => p.classList.remove("active"));
@@ -2417,7 +2755,7 @@ function renderCase() {
 
   // Cohort NPV trend chart
   const vintages = UE.cohortVintages;
-  new Chart(document.getElementById("chartCohortNpvTrend"), {
+  __chartCohortNpvTrend = new Chart(document.getElementById("chartCohortNpvTrend"), {
     type: "bar",
     data: {
       labels: vintages.map(function(v){ return v.month; }),
@@ -2501,7 +2839,7 @@ function renderCase() {
   // ── Chart: Revenue YTD (Monthly) ──────────────────────────────────────────
   const revYTDCtx = document.getElementById("chartRevenueYTD");
   if (revYTDCtx) {
-    new Chart(revYTDCtx.getContext("2d"), {
+    __chartRevenueYTD = new Chart(revYTDCtx.getContext("2d"), {
       type: "bar",
       data: {
         labels: D.monthly2026.months,
@@ -2528,7 +2866,7 @@ function renderCase() {
   // ── Chart: GTV YTD (Monthly) ────────────────────────────────────────────
   const gtvYTDCtx = document.getElementById("chartGTVYTD");
   if (gtvYTDCtx) {
-    new Chart(gtvYTDCtx.getContext("2d"), {
+    __chartGTVYTD = new Chart(gtvYTDCtx.getContext("2d"), {
       type: "line",
       data: {
         labels: D.monthly2026.months,
@@ -2585,7 +2923,7 @@ function renderCase() {
 
   // ── Rating trend chart ────────────────────────────────────────────────────
   const sentCtx = document.getElementById("chartSentiment").getContext("2d");
-  new Chart(sentCtx, {
+  __chartSentiment = new Chart(sentCtx, {
     type: "line",
     data: {
       labels: D.ratingTrend.months,

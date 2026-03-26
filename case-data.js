@@ -202,33 +202,57 @@ const CASE_DATA = {
   // ── Individual Reviews (representative sample · last 30 days) ──────────────
   reviews: {
     googlePlay: [
-      { author: "MarketOwner_TH", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],           text: "Been using Loyverse for 3 years. Free, easy to set up, works perfectly for my market stall. The inventory system is exactly what I need." },
-      { author: "CafePOS_PH",     rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Best POS for small businesses. Setup took 10 minutes and my staff learned it in an afternoon. Inventory tracking is spot on." },
-      { author: "FreshMktUS",     rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["free-value","reporting"],              text: "Tried 4 different POS systems. Loyverse is the only one that is actually free and has real reporting. Daily sales summaries are fantastic." },
-      { author: "RetailMY",       rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Very easy to use. Set up 200+ items in one hour. The barcode scanner integration works flawlessly." },
-      { author: "SmallBizSA",     rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["reporting","free-value"],              text: "The reports are incredibly detailed for a free app. Best-selling items, peak hours, and profit margins all in one place." },
-      { author: "QuickServeUK",   rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["ease-of-use"],                        text: "Works well for basic needs. Interface is clean and intuitive. Would love more receipt customization options." },
-      { author: "ShopMX",         rating: 4, date: "Feb 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good inventory system but I wish low-stock alerts were more configurable. Overall a solid app." },
-      { author: "BistroSG",       rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "App works fine when connected. Had some sync issues between devices during busy hours but support eventually sorted it out." },
-      { author: "FoodTruckDE",    rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "Sent 3 support tickets over 2 weeks. Still waiting. The app works but when you have a problem you are completely on your own." },
-      { author: "CornerStoreMM",  rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["customer-support","sync"],             text: "Customer support is non-existent. Data stopped syncing across two devices and no one has responded to my emails in 10 days." },
-      { author: "CafeOwnerES",    rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment integration is a nightmare. Been trying to set up card payments for a month. No documentation and support just sent a generic FAQ." },
-      { author: "RetailUSA",      rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment fees are not clearly explained. Asked support for a breakdown, took 8 days to respond with an incomplete answer." },
-      { author: "KioskTH",        rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "App crashes during peak hours syncing with the kitchen display. Lost 2 hours of sales data. Support acknowledged the issue but still no fix after 3 weeks." }
+      { author: "MarketOwner_TH", country: "TH", region: "asia", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],           text: "Been using Loyverse for 3 years. Free, easy to set up, works perfectly for my market stall. The inventory system is exactly what I need." },
+      { author: "CafePOS_PH",     country: "PH", region: "asia", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Best POS for small businesses. Setup took 10 minutes and my staff learned it in an afternoon. Inventory tracking is spot on." },
+      { author: "FreshMktUS",     country: "US", region: "north_america", rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["free-value","reporting"],              text: "Tried 4 different POS systems. Loyverse is the only one that is actually free and has real reporting. Daily sales summaries are fantastic." },
+      { author: "RetailMY",       country: "MY", region: "asia", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","inventory"],             text: "Very easy to use. Set up 200+ items in one hour. The barcode scanner integration works flawlessly." },
+      { author: "SmallBizSA",     country: "SA", region: "middle_east", rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["reporting","free-value"],              text: "The reports are incredibly detailed for a free app. Best-selling items, peak hours, and profit margins all in one place." },
+      { author: "QuickServeUK",   country: "GB", region: "europe", rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["ease-of-use"],                        text: "Works well for basic needs. Interface is clean and intuitive. Would love more receipt customization options." },
+      { author: "ShopMX",         country: "MX", region: "north_america", rating: 4, date: "Feb 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good inventory system but I wish low-stock alerts were more configurable. Overall a solid app." },
+      { author: "BistroSG",       country: "SG", region: "asia", rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "App works fine when connected. Had some sync issues between devices during busy hours but support eventually sorted it out." },
+      { author: "FoodTruckDE",    country: "DE", region: "europe", rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "Sent 3 support tickets over 2 weeks. Still waiting. The app works but when you have a problem you are completely on your own." },
+      { author: "CornerStoreMM",  country: "MM", region: "asia", rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["customer-support","sync"],             text: "Customer support is non-existent. Data stopped syncing across two devices and no one has responded to my emails in 10 days." },
+      { author: "CafeOwnerES",    country: "ES", region: "europe", rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment integration is a nightmare. Been trying to set up card payments for a month. No documentation and support just sent a generic FAQ." },
+      { author: "RetailUSA",      country: "US", region: "north_america", rating: 2, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment fees are not clearly explained. Asked support for a breakdown, took 8 days to respond with an incomplete answer." },
+      { author: "KioskTH",        country: "TH", region: "asia", rating: 1, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "App crashes during peak hours syncing with the kitchen display. Lost 2 hours of sales data. Support acknowledged the issue but still no fix after 3 weeks." }
     ],
     appStore: [
-      { author: "BoutiqueNYC",   rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","reporting"],             text: "Switched from Square and never looked back. Interface is so much cleaner and reports make sense. My accountant loves the CSV exports." },
-      { author: "CoffeeMelb",    rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["free-value","ease-of-use"],            text: "For a free app this is absolutely incredible. Been running my coffee shop on Loyverse for 2 years. Zero complaints." },
-      { author: "MultiLocMY",    rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["inventory","reporting"],               text: "Managing 3 locations from one account is seamless. Multi-location inventory tracking just works. Reports per location are brilliant." },
-      { author: "OrganicShopCA", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],            text: "Simple, clean, and free. Do not understand why anyone would use anything else for a small shop. Highly recommend." },
-      { author: "DinerTX",       rating: 4, date: "Feb 2026", sentiment: "positive", themes: ["reporting"],                          text: "Great reports and easy to train staff on. Would give 5 stars but some advanced features need a subscription." },
-      { author: "GroceryPH",     rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good product overall. The inventory system could use bulk import from Excel. Entering products one by one is slow." },
-      { author: "SalonUK",       rating: 3, date: "Feb 2026", sentiment: "neutral",  themes: ["payment-integration"],                text: "Works great for tracking sales. Payment integration took a while to figure out — the setup steps could be clearer in the app." },
-      { author: "FoodHallTH",    rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "Decent app. Occasionally items do not sync to all devices immediately, causing confusion at the register." },
-      { author: "CafeParis",     rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "No phone support at all. Email takes 5 to 7 business days which is unacceptable for urgent issues during operating hours." },
-      { author: "MarketUS",      rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment terminal stopped working on a Saturday. Could not reach anyone. Lost an entire day of card sales. Completely unacceptable." },
-      { author: "RestaurantSG",  rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "Menu changes do not always sync to the kitchen screen. Had to restart twice this week. Ticket opened 2 weeks ago still pending." },
-      { author: "SnackBarMX",    rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment setup documentation is outdated and confusing. Support pointed me to a 2023 guide. Gave up on integrated payments entirely." }
+      { author: "BoutiqueNYC",   country: "US", region: "north_america", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","reporting"],             text: "Switched from Square and never looked back. Interface is so much cleaner and reports make sense. My accountant loves the CSV exports." },
+      { author: "CoffeeMelb",    country: "AU", region: "oceania", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["free-value","ease-of-use"],            text: "For a free app this is absolutely incredible. Been running my coffee shop on Loyverse for 2 years. Zero complaints." },
+      { author: "MultiLocMY",    country: "MY", region: "asia", rating: 5, date: "Feb 2026", sentiment: "positive", themes: ["inventory","reporting"],               text: "Managing 3 locations from one account is seamless. Multi-location inventory tracking just works. Reports per location are brilliant." },
+      { author: "OrganicShopCA", country: "CA", region: "north_america", rating: 5, date: "Mar 2026", sentiment: "positive", themes: ["ease-of-use","free-value"],            text: "Simple, clean, and free. Do not understand why anyone would use anything else for a small shop. Highly recommend." },
+      { author: "DinerTX",       country: "US", region: "north_america", rating: 4, date: "Feb 2026", sentiment: "positive", themes: ["reporting"],                          text: "Great reports and easy to train staff on. Would give 5 stars but some advanced features need a subscription." },
+      { author: "GroceryPH",     country: "PH", region: "asia", rating: 4, date: "Mar 2026", sentiment: "neutral",  themes: ["inventory"],                          text: "Good product overall. The inventory system could use bulk import from Excel. Entering products one by one is slow." },
+      { author: "SalonUK",       country: "GB", region: "europe", rating: 3, date: "Feb 2026", sentiment: "neutral",  themes: ["payment-integration"],                text: "Works great for tracking sales. Payment integration took a while to figure out — the setup steps could be clearer in the app." },
+      { author: "FoodHallTH",    country: "TH", region: "asia", rating: 3, date: "Mar 2026", sentiment: "neutral",  themes: ["sync"],                               text: "Decent app. Occasionally items do not sync to all devices immediately, causing confusion at the register." },
+      { author: "CafeParis",     country: "FR", region: "europe", rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["customer-support"],                   text: "No phone support at all. Email takes 5 to 7 business days which is unacceptable for urgent issues during operating hours." },
+      { author: "MarketUS",      country: "US", region: "north_america", rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration","customer-support"], text: "Payment terminal stopped working on a Saturday. Could not reach anyone. Lost an entire day of card sales. Completely unacceptable." },
+      { author: "RestaurantSG",  country: "SG", region: "asia", rating: 2, date: "Mar 2026", sentiment: "negative", themes: ["sync","customer-support"],             text: "Menu changes do not always sync to the kitchen screen. Had to restart twice this week. Ticket opened 2 weeks ago still pending." },
+      { author: "SnackBarMX",    country: "MX", region: "north_america", rating: 1, date: "Feb 2026", sentiment: "negative", themes: ["payment-integration"],                text: "Payment setup documentation is outdated and confusing. Support pointed me to a 2023 guide. Gave up on integrated payments entirely." }
     ]
+  },
+
+  // ── Country weights (% of total metrics attributable to each market) ────────
+  // Used by filters to approximate per-region metrics from aggregate data.
+  // Will be replaced by real per-country data when Snowflake is connected.
+  countryWeights: {
+    TH: 0.152, PH: 0.138, MX: 0.105, MY: 0.104, SA: 0.058, US: 0.054,
+    MM: 0.034, GB: 0.033, ES: 0.029, SG: 0.016, ID: 0.042, VN: 0.035,
+    IN: 0.038, DE: 0.022, FR: 0.018, IT: 0.015, PT: 0.008, NL: 0.007,
+    PL: 0.006, CA: 0.012, BR: 0.025, AR: 0.010, CO: 0.008, CL: 0.005,
+    PE: 0.004, AE: 0.012, QA: 0.004, KW: 0.003, BH: 0.002,
+    ZA: 0.008, NG: 0.006, KE: 0.004, EG: 0.005,
+    AU: 0.010, NZ: 0.003
+  },
+
+  // ── Region-to-country mapping (mirrors REGION_COUNTRIES in index.html) ──────
+  regionCountries: {
+    asia:          ["TH","PH","MY","MM","SG","ID","VN","IN"],
+    europe:        ["GB","ES","DE","FR","IT","PT","NL","PL"],
+    north_america: ["US","MX","CA"],
+    south_america: ["BR","AR","CO","CL","PE"],
+    middle_east:   ["SA","AE","QA","KW","BH"],
+    africa:        ["ZA","NG","KE","EG"],
+    oceania:       ["AU","NZ"]
   }
 };
