@@ -296,9 +296,17 @@
     .filter-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; width: 100%; }
     .filter-row + .filter-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
     .filter-date-group { display: flex; align-items: center; gap: 8px; }
-    .filter-date-select { padding: 5px 10px; font-size: 12px; font-family: Arial, sans-serif; color: #555; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 8px; cursor: pointer; appearance: auto; }
-    .filter-date-select:focus { outline: none; border-color: #1D8FE1; box-shadow: 0 0 0 2px rgba(29,143,225,0.15); }
     .filter-date-arrow { font-size: 14px; color: #aaa; }
+    .custom-dropdown { position: relative; display: inline-block; }
+    .custom-dropdown-btn { padding: 5px 28px 5px 10px; font-size: 12px; font-family: Arial, sans-serif; color: #555; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 8px; cursor: pointer; white-space: nowrap; position: relative; user-select: none; }
+    .custom-dropdown-btn::after { content: "▾"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 10px; color: #999; pointer-events: none; }
+    .custom-dropdown-btn:hover { border-color: #bbb; }
+    .custom-dropdown-btn.open { border-color: #1D8FE1; box-shadow: 0 0 0 2px rgba(29,143,225,0.15); }
+    .custom-dropdown-list { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; background: #fff; border: 1px solid #E0E0E0; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12); z-index: 100; max-height: 220px; overflow-y: auto; min-width: 120px; padding: 4px 0; }
+    .custom-dropdown-list.open { display: block; }
+    .custom-dropdown-item { padding: 6px 14px; font-size: 12px; font-family: Arial, sans-serif; color: #555; cursor: pointer; white-space: nowrap; }
+    .custom-dropdown-item:hover { background: #E8F4FD; color: #1D8FE1; }
+    .custom-dropdown-item.selected { background: #2DC46B; color: #fff; font-weight: 600; }
     .filter-countries-row { display: none; align-items: center; gap: 6px; flex-wrap: wrap; width: 100%; padding-top: 10px; margin-top: 10px; border-top: 1px dashed #e5e7eb; animation: filterFadeIn 0.2s ease; }
     .filter-countries-row.visible { display: flex; }
     .filter-country-chip { padding: 4px 10px; font-size: 11px; font-family: Arial, sans-serif; color: #666; background: #f0f7ff; border: 1px solid #d0e3f5; border-radius: 16px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
@@ -1478,35 +1486,15 @@
       <div class="filter-row">
         <div class="filter-label">📅 Period</div>
         <div class="filter-date-group">
-          <select class="filter-date-select" id="dateFrom" onchange="setDateRange()">
-            <option value="2026-01">Jan 2026</option>
-            <option value="2026-02">Feb 2026</option>
-            <option value="2026-03">Mar 2026</option>
-            <option value="2026-04">Apr 2026</option>
-            <option value="2026-05">May 2026</option>
-            <option value="2026-06">Jun 2026</option>
-            <option value="2026-07">Jul 2026</option>
-            <option value="2026-08">Aug 2026</option>
-            <option value="2026-09">Sep 2026</option>
-            <option value="2026-10">Oct 2026</option>
-            <option value="2026-11">Nov 2026</option>
-            <option value="2026-12">Dec 2026</option>
-          </select>
+          <div class="custom-dropdown" id="dateFromDropdown">
+            <div class="custom-dropdown-btn" onclick="_toggleDropdown('dateFromDropdown')">Jan 2026</div>
+            <div class="custom-dropdown-list" id="dateFromList"></div>
+          </div>
           <span class="filter-date-arrow">→</span>
-          <select class="filter-date-select" id="dateTo" onchange="setDateRange()">
-            <option value="2026-01">Jan 2026</option>
-            <option value="2026-02">Feb 2026</option>
-            <option value="2026-03">Mar 2026</option>
-            <option value="2026-04">Apr 2026</option>
-            <option value="2026-05">May 2026</option>
-            <option value="2026-06">Jun 2026</option>
-            <option value="2026-07">Jul 2026</option>
-            <option value="2026-08">Aug 2026</option>
-            <option value="2026-09">Sep 2026</option>
-            <option value="2026-10">Oct 2026</option>
-            <option value="2026-11">Nov 2026</option>
-            <option value="2026-12" selected>Dec 2026</option>
-          </select>
+          <div class="custom-dropdown" id="dateToDropdown">
+            <div class="custom-dropdown-btn" onclick="_toggleDropdown('dateToDropdown')">Dec 2026</div>
+            <div class="custom-dropdown-list" id="dateToList"></div>
+          </div>
         </div>
       </div>
       <!-- Row 2: Region/continent chips -->
@@ -2216,16 +2204,93 @@ function setCountryFilter(code, btn) {
   // Future: re-render metrics for selected countries when Snowflake is connected
 }
 
-function setDateRange() {
-  __dateFrom = document.getElementById('dateFrom').value;
-  __dateTo = document.getElementById('dateTo').value;
-  // Ensure from ≤ to
-  if (__dateFrom > __dateTo) {
-    document.getElementById('dateTo').value = __dateFrom;
-    __dateTo = __dateFrom;
-  }
-  // Future: re-render charts/KPIs for the selected date range when Snowflake is connected
+// ─── CUSTOM DATE DROPDOWNS (always open downward) ───────────────────────────
+var DATE_OPTIONS = [
+  {value:"2026-01", label:"Jan 2026"}, {value:"2026-02", label:"Feb 2026"},
+  {value:"2026-03", label:"Mar 2026"}, {value:"2026-04", label:"Apr 2026"},
+  {value:"2026-05", label:"May 2026"}, {value:"2026-06", label:"Jun 2026"},
+  {value:"2026-07", label:"Jul 2026"}, {value:"2026-08", label:"Aug 2026"},
+  {value:"2026-09", label:"Sep 2026"}, {value:"2026-10", label:"Oct 2026"},
+  {value:"2026-11", label:"Nov 2026"}, {value:"2026-12", label:"Dec 2026"}
+];
+
+function _initDateDropdowns() {
+  _buildDropdownList('dateFromList', DATE_OPTIONS, __dateFrom, function(val, label) {
+    __dateFrom = val;
+    document.querySelector('#dateFromDropdown .custom-dropdown-btn').textContent = label;
+    // Ensure from ≤ to
+    if (__dateFrom > __dateTo) {
+      __dateTo = __dateFrom;
+      var toLabel = DATE_OPTIONS.find(function(o){ return o.value === __dateTo; }).label;
+      document.querySelector('#dateToDropdown .custom-dropdown-btn').textContent = toLabel;
+      _buildDropdownList('dateToList', DATE_OPTIONS, __dateTo, arguments.callee);
+    }
+    _closeAllDropdowns();
+    _updateDropdownSelected('dateFromList', val);
+  });
+  _buildDropdownList('dateToList', DATE_OPTIONS, __dateTo, function(val, label) {
+    __dateTo = val;
+    document.querySelector('#dateToDropdown .custom-dropdown-btn').textContent = label;
+    // Ensure from ≤ to
+    if (__dateTo < __dateFrom) {
+      __dateFrom = __dateTo;
+      var fromLabel = DATE_OPTIONS.find(function(o){ return o.value === __dateFrom; }).label;
+      document.querySelector('#dateFromDropdown .custom-dropdown-btn').textContent = fromLabel;
+      _buildDropdownList('dateFromList', DATE_OPTIONS, __dateFrom, arguments.callee);
+    }
+    _closeAllDropdowns();
+    _updateDropdownSelected('dateToList', val);
+  });
 }
+
+function _buildDropdownList(listId, options, selectedVal, onSelect) {
+  var list = document.getElementById(listId);
+  list.innerHTML = '';
+  options.forEach(function(opt) {
+    var item = document.createElement('div');
+    item.className = 'custom-dropdown-item' + (opt.value === selectedVal ? ' selected' : '');
+    item.textContent = opt.label;
+    item.setAttribute('data-value', opt.value);
+    item.onclick = function(e) {
+      e.stopPropagation();
+      onSelect(opt.value, opt.label);
+    };
+    list.appendChild(item);
+  });
+}
+
+function _updateDropdownSelected(listId, val) {
+  document.querySelectorAll('#' + listId + ' .custom-dropdown-item').forEach(function(item) {
+    item.classList.toggle('selected', item.getAttribute('data-value') === val);
+  });
+}
+
+function _toggleDropdown(dropdownId) {
+  var dropdown = document.getElementById(dropdownId);
+  var btn = dropdown.querySelector('.custom-dropdown-btn');
+  var list = dropdown.querySelector('.custom-dropdown-list');
+  var isOpen = list.classList.contains('open');
+  _closeAllDropdowns();
+  if (!isOpen) {
+    list.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+function _closeAllDropdowns() {
+  document.querySelectorAll('.custom-dropdown-list').forEach(function(l) { l.classList.remove('open'); });
+  document.querySelectorAll('.custom-dropdown-btn').forEach(function(b) { b.classList.remove('open'); });
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.custom-dropdown')) {
+    _closeAllDropdowns();
+  }
+});
+
+// Initialize dropdowns on load
+document.addEventListener('DOMContentLoaded', _initDateDropdowns);
 
 function showPanel(name) {
   document.querySelectorAll(".cc-panel").forEach(p => p.classList.remove("active"));
