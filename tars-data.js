@@ -137,21 +137,22 @@ TARS_DATA.allActions = (function() {
   return arr;
 })();
 
-// ─── TILE SYNC: patch initiative cards from TARS_DATA ───────────────────────
-// Updates progress %, progress bar width, and "Next action" text on the
-// three initiative tiles so they always reflect the latest tracker data.
+// ─── DASHBOARD SYNC: patch all hardcoded values from TARS_DATA ──────────────
+// Overwrites stale HTML values on DOMContentLoaded so the dashboard always
+// reflects the latest tracker data — without ever touching index.html.
 document.addEventListener("DOMContentLoaded", function() {
+  var all = TARS_DATA.allActions;
+
+  // ── 1. Initiative tile progress bars ──────────────────────────────────────
   var map = { payments: 1, pricing: 2, partnerships: 3 };
   Object.keys(map).forEach(function(key) {
     var idx  = map[key];
     var init = TARS_DATA.initiatives[key];
     if (!init) return;
 
-    // 1. Progress label  (e.g. "50%")
     var progLabel = document.getElementById("init-prog-" + idx);
     if (progLabel) progLabel.textContent = init.progress + "%";
 
-    // 2. Progress bar fill width
     if (progLabel) {
       var track = progLabel.closest(".init-progress-wrap");
       if (track) {
@@ -160,7 +161,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
-    // 3. Next action text — first in-progress, then first overdue, then first upcoming
     var next = null;
     ["in-progress","overdue","upcoming"].forEach(function(s) {
       if (!next) next = init.actions.filter(function(a) { return a.status === s; })[0];
@@ -173,4 +173,138 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
   });
+
+  // ── 2. Action Tracker KPI tiles ───────────────────────────────────────────
+  var totalN   = all.length;
+  var doneN    = all.filter(function(a) { return a.status === "done"; }).length;
+  var ipN      = all.filter(function(a) { return a.status === "in-progress"; }).length;
+  var overdueN = all.filter(function(a) { return a.status === "overdue"; }).length;
+
+  var kpiNums = document.querySelectorAll(".action-kpi-num");
+  kpiNums.forEach(function(el) {
+    if (el.classList.contains("total")) el.textContent = totalN;
+    else if (el.classList.contains("done"))  el.textContent = doneN;
+    else if (el.classList.contains("prog"))  el.textContent = ipN;
+    else if (el.classList.contains("over"))  el.textContent = overdueN;
+  });
+
+  // ── 3. Action Tracker subtitle ────────────────────────────────────────────
+  var stripSub = document.querySelector(".action-strip-sub");
+  if (stripSub) {
+    var sessions = new Set(all.map(function(a) { return a.id.substring(0, 9); }));
+    var today = new Date();
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var dateStr = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
+    stripSub.textContent = totalN + " actions logged across " + sessions.size + " sessions. Last updated: " + dateStr;
+  }
+
+  // ── 4. Owner breakdown bars and counts ────────────────────────────────────
+  var owners = ["Simon", "Caio", "Felipe", "Alex"];
+  var ownerRows = document.querySelectorAll(".owner-row-item");
+  ownerRows.forEach(function(row, i) {
+    if (i >= owners.length) return;
+    var name = owners[i];
+    var mine = all.filter(function(a) { return a.owner === name; });
+    var t = mine.length || 1;
+    var d = mine.filter(function(a) { return a.status === "done"; }).length;
+    var p = mine.filter(function(a) { return a.status === "in-progress"; }).length;
+    var o = mine.filter(function(a) { return a.status === "overdue"; }).length;
+
+    var barDone = row.querySelector(".owner-bar-done");
+    var barProg = row.querySelector(".owner-bar-prog");
+    var barOver = row.querySelector(".owner-bar-over");
+    if (barDone) barDone.style.width = Math.round((d / t) * 100) + "%";
+    if (barProg) barProg.style.width = Math.round((p / t) * 100) + "%";
+    if (barOver) barOver.style.width = Math.round((o / t) * 100) + "%";
+
+    var cDone = row.querySelector(".c-done");
+    var cProg = row.querySelector(".c-prog");
+    var cOver = row.querySelector(".c-over");
+    if (cDone) cDone.textContent = d + "\u2713";
+    if (cProg) cProg.textContent = p + "\u25CF";
+    if (cOver) cOver.textContent = o > 0 ? o + "!" : "\u2014";
+  });
+
+  // ── 5. Override _renderTrackerBody to fix hardcoded drill-down tab counts ─
+  if (typeof _renderTrackerBody === "function") {
+    var _origActionRow = typeof _actionRow === "function" ? _actionRow : null;
+    var _origTab = typeof _tab === "function" ? _tab : null;
+
+    window._renderTrackerBody = function(container, filter) {
+      var isOwner = ["Simon","Caio","Felipe","Alex"].indexOf(filter) >= 0;
+
+      var ownersDef = [
+        { name: "Simon",  color: "#1D8FE1", initial: "S" },
+        { name: "Caio",   color: "#E1A21D", initial: "C" },
+        { name: "Felipe", color: "#7B61FF", initial: "F" },
+        { name: "Alex",   color: "#2DC46B", initial: "A" }
+      ];
+      var ownerChips = "<div class=\"td-owner-chips\">" +
+        ownersDef.map(function(o) {
+          var isActive = filter === o.name;
+          return "<div class=\"td-owner-chip" + (isActive ? " active" : "") + "\" " +
+            (isActive ? "style=\"background:" + o.color + ";border-color:" + o.color + ";\"" : "") +
+            " onclick=\"_setTarsFilter('" + o.name + "')\">" +
+            "<div class=\"td-owner-chip-av\" style=\"background:" + o.color + "\">" + o.initial + "</div>" +
+            o.name + "</div>";
+        }).join("") +
+        "</div>";
+
+      var statusFilter = isOwner ? "all" : filter;
+      var filtered = isOwner
+        ? all.filter(function(a) { return a.owner === filter; })
+        : (filter === "all" ? all : all.filter(function(a) { return a.status === filter; }));
+
+      var fDone = filtered.filter(function(a) { return a.status === "done"; }).length;
+      var fIp   = filtered.filter(function(a) { return a.status === "in-progress"; }).length;
+      var fOv   = filtered.filter(function(a) { return a.status === "overdue"; }).length;
+
+      var statusTabs = isOwner
+        ? "<div class=\"td-filter-tabs\">" +
+            _origTab("all",         statusFilter, "All ("         + filtered.length + ")") +
+            _origTab("done",        statusFilter, "Done ("        + fDone  + ")", "done-tab") +
+            _origTab("in-progress", statusFilter, "In Progress (" + fIp    + ")", "prog-tab") +
+            _origTab("overdue",     statusFilter, "Overdue ("     + fOv    + ")", "over-tab") +
+          "</div>"
+        : "";
+
+      var display = isOwner
+        ? (statusFilter === "all" ? filtered : filtered.filter(function(a) { return a.status === statusFilter; }))
+        : filtered;
+
+      var count = display.length;
+      var actionsHtml = count === 0
+        ? "<div style=\"text-align:center;color:#CCC;padding:24px;font-size:13px;\">No actions found.</div>"
+        : display.map(_origActionRow).join("");
+
+      // Top-level tabs with DYNAMIC counts (replaces hardcoded values)
+      var allDone = all.filter(function(a) { return a.status === "done"; }).length;
+      var allIp   = all.filter(function(a) { return a.status === "in-progress"; }).length;
+      var allOv   = all.filter(function(a) { return a.status === "overdue"; }).length;
+
+      container.innerHTML =
+        ownerChips +
+        "<div class=\"tars-section-label\" style=\"margin-top:4px;\">Filter by status</div>" +
+        "<div class=\"td-filter-tabs\">" +
+        _origTab("all",         isOwner ? "all" : filter, "All (" + all.length + ")") +
+        _origTab("done",        isOwner ? "all" : filter, "Done (" + allDone + ")", "done-tab") +
+        _origTab("in-progress", isOwner ? "all" : filter, "In Progress (" + allIp + ")", "prog-tab") +
+        _origTab("overdue",     isOwner ? "all" : filter, "Overdue (" + allOv + ")", "over-tab") +
+        "</div>" +
+        (isOwner ? statusTabs : "") +
+        "<div class=\"td-count-summary\">" + count + " action" + (count !== 1 ? "s" : "") + " shown</div>" +
+        actionsHtml;
+
+      container.querySelectorAll(".td-tab").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          if (isOwner) {
+            __tarsDrillState.filter = btn.dataset.ownerFilter || btn.dataset.filter;
+          } else {
+            __tarsDrillState.filter = btn.dataset.filter;
+          }
+          _renderTarsDrill();
+        });
+      });
+    };
+  }
 });
