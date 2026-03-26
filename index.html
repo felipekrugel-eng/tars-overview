@@ -299,6 +299,13 @@
     .filter-date-select { padding: 5px 10px; font-size: 12px; font-family: Arial, sans-serif; color: #555; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 8px; cursor: pointer; appearance: auto; }
     .filter-date-select:focus { outline: none; border-color: #1D8FE1; box-shadow: 0 0 0 2px rgba(29,143,225,0.15); }
     .filter-date-arrow { font-size: 14px; color: #aaa; }
+    .filter-countries-row { display: none; align-items: center; gap: 6px; flex-wrap: wrap; width: 100%; padding-top: 10px; margin-top: 10px; border-top: 1px dashed #e5e7eb; animation: filterFadeIn 0.2s ease; }
+    .filter-countries-row.visible { display: flex; }
+    .filter-country-chip { padding: 4px 10px; font-size: 11px; font-family: Arial, sans-serif; color: #666; background: #f0f7ff; border: 1px solid #d0e3f5; border-radius: 16px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .filter-country-chip:hover { background: #d0e3f5; border-color: #1D8FE1; color: #1D8FE1; }
+    .filter-country-chip.active { background: #1D8FE1; color: #fff; border-color: #1D8FE1; font-weight: 600; }
+    .filter-country-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; margin-right: 4px; }
+    @keyframes filterFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Data note */
     .data-note { background: #EDF8F1; border: 1px solid #A8DDB8; border-radius: 8px; padding: 14px 20px; margin-bottom: 36px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #2A6B42; }
@@ -1517,6 +1524,8 @@
           <button class="filter-chip" onclick="setMarketFilter('oceania')">Oceania</button>
         </div>
       </div>
+      <!-- Row 3: Country sub-filters (shown on continent click) -->
+      <div class="filter-countries-row" id="country-filters"></div>
     </div>
 
     <!-- ── GROUP 1: REVENUE ── -->
@@ -2104,22 +2113,57 @@ const WORDMARKS = {
 
 // ─── MARKET FILTER ──────────────────────────────────────────────────────────
 let __activeMarketFilter = 'all';
+let __activeCountryFilter = null;
 let __dateFrom = '2026-01';
 let __dateTo = '2026-12';
 
+// Top Loyverse markets per continent (up to 8 per region)
+var REGION_COUNTRIES = {
+  asia:           [ {code:"TH",flag:"🇹🇭",name:"Thailand"}, {code:"PH",flag:"🇵🇭",name:"Philippines"}, {code:"MY",flag:"🇲🇾",name:"Malaysia"}, {code:"MM",flag:"🇲🇲",name:"Myanmar"}, {code:"SG",flag:"🇸🇬",name:"Singapore"}, {code:"ID",flag:"🇮🇩",name:"Indonesia"}, {code:"VN",flag:"🇻🇳",name:"Vietnam"}, {code:"IN",flag:"🇮🇳",name:"India"} ],
+  europe:         [ {code:"GB",flag:"🇬🇧",name:"UK"}, {code:"ES",flag:"🇪🇸",name:"Spain"}, {code:"DE",flag:"🇩🇪",name:"Germany"}, {code:"FR",flag:"🇫🇷",name:"France"}, {code:"IT",flag:"🇮🇹",name:"Italy"}, {code:"PT",flag:"🇵🇹",name:"Portugal"}, {code:"NL",flag:"🇳🇱",name:"Netherlands"}, {code:"PL",flag:"🇵🇱",name:"Poland"} ],
+  north_america:  [ {code:"US",flag:"🇺🇸",name:"USA"}, {code:"MX",flag:"🇲🇽",name:"Mexico"}, {code:"CA",flag:"🇨🇦",name:"Canada"} ],
+  south_america:  [ {code:"BR",flag:"🇧🇷",name:"Brazil"}, {code:"AR",flag:"🇦🇷",name:"Argentina"}, {code:"CO",flag:"🇨🇴",name:"Colombia"}, {code:"CL",flag:"🇨🇱",name:"Chile"}, {code:"PE",flag:"🇵🇪",name:"Peru"} ],
+  middle_east:    [ {code:"SA",flag:"🇸🇦",name:"Saudi Arabia"}, {code:"AE",flag:"🇦🇪",name:"UAE"}, {code:"QA",flag:"🇶🇦",name:"Qatar"}, {code:"KW",flag:"🇰🇼",name:"Kuwait"}, {code:"BH",flag:"🇧🇭",name:"Bahrain"} ],
+  africa:         [ {code:"ZA",flag:"🇿🇦",name:"South Africa"}, {code:"NG",flag:"🇳🇬",name:"Nigeria"}, {code:"KE",flag:"🇰🇪",name:"Kenya"}, {code:"EG",flag:"🇪🇬",name:"Egypt"} ],
+  oceania:        [ {code:"AU",flag:"🇦🇺",name:"Australia"}, {code:"NZ",flag:"🇳🇿",name:"New Zealand"} ]
+};
+
 function setMarketFilter(market) {
   __activeMarketFilter = market;
-  document.querySelectorAll('#market-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  __activeCountryFilter = null;
+  document.querySelectorAll('#market-filters .filter-chip').forEach(function(c) { c.classList.remove('active'); });
   event.target.classList.add('active');
+
+  var countryRow = document.getElementById('country-filters');
+  var countries = REGION_COUNTRIES[market];
+
+  if (countries) {
+    // Build country chips
+    var html = '<span class="filter-country-label">' + event.target.textContent + ' markets:</span>';
+    countries.forEach(function(c) {
+      html += '<button class="filter-country-chip" onclick="setCountryFilter(\'' + c.code + '\', this)">' + c.flag + ' ' + c.name + '</button>';
+    });
+    countryRow.innerHTML = html;
+    countryRow.classList.add('visible');
+  } else {
+    // "All Markets" or unknown — hide country row
+    countryRow.innerHTML = '';
+    countryRow.classList.remove('visible');
+  }
   // Future: re-render metrics per region when Snowflake is connected
-  // Region → country mapping for future data filtering:
-  // asia: TH, PH, MY, MM, SG, JP, KR, IN, ID, VN, CN
-  // europe: GB, ES, DE, FR, IT, PT, NL, PL
-  // north_america: US, CA, MX
-  // south_america: BR, AR, CO, CL, PE
-  // middle_east: SA, AE, QA, KW, BH
-  // africa: ZA, NG, KE, EG
-  // oceania: AU, NZ
+}
+
+function setCountryFilter(code, btn) {
+  if (__activeCountryFilter === code) {
+    // Deselect — go back to full continent
+    __activeCountryFilter = null;
+    document.querySelectorAll('.filter-country-chip').forEach(function(c) { c.classList.remove('active'); });
+  } else {
+    __activeCountryFilter = code;
+    document.querySelectorAll('.filter-country-chip').forEach(function(c) { c.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  // Future: re-render metrics for specific country when Snowflake is connected
 }
 
 function setDateRange() {
