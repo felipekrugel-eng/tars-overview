@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-26T17:00:00Z
+// Last sync: 2026-03-26T16:02:10Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-26T17:00:00Z",
+  lastSync: "2026-03-26T16:02:10Z",
 
   tasks: [
     {
@@ -88,12 +88,30 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-19T16:04:12Z",
-      nextRunAt: "2026-03-26T16:03:32Z",
+      nextRunAt: "2026-04-02T15:03:32Z",
       detail: {
         purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
         process: "Reviews the Action Tracker for discussion-worthy items, checks recent Fireflies transcripts for unresolved threads, compiles CASE metrics context, and sends a structured preview email via Gmail to leadership.",
         outputs: "Email to leadership with Friday meeting preview; Slack notification.",
         dependencies: "Google Drive, Gmail, Fireflies, Slack"
+      }
+    },
+    {
+      id: "thursday-strategy-deck",
+      name: "Thursday Strategy Deck",
+      description: "Generate Friday Strategy Briefing deck (PPTX) with latest CASE data and context",
+      schedule: "Thursday 4:30 PM",
+      cron: "30 16 * * 4",
+      cadence: "weekly-thu",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: null,
+      nextRunAt: "2026-03-26T16:32:11Z",
+      detail: {
+        purpose: "Generates a polished PowerPoint briefing deck for Friday's strategy session, incorporating the latest business case data, 5-year plan context, and outstanding action items.",
+        process: "Reads CASE data, 5YP context, and the Action Tracker. Builds a branded PPTX with discussion topics, key metrics, and outstanding actions. Saves to Google Drive Strategic Sessions folder.",
+        outputs: "Friday Strategy Briefing deck (PPTX) in Google Drive.",
+        dependencies: "CASE skill, Google Drive, Action Tracker, pptx skill"
       }
     },
     {
@@ -195,8 +213,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: null,
-      nextRunAt: "2026-03-26T19:00:00Z",
+      lastRunAt: "2026-03-26T16:01:20Z",
+      nextRunAt: "2026-03-26T18:00:45Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
