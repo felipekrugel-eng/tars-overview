@@ -22,6 +22,16 @@
       --mid-gray: #888888;
       --ice-blue: #CCE8FF;
       --sky-blue: #AADDFF;
+      --red: #CC3333;
+      --white: #FFFFFF;
+      --near-black: #1A1A1A;
+      --tc: #1D8FE1;
+      --sc: #0F7A4C;
+      --oc: #7B3FA0;
+      --lc: #C47B10;
+      --green: #0F7A4C;
+      --amber: #C47B10;
+      --purple: #7B2D8B;
     }
 
     /* ─── TOP NAV ─── */
@@ -877,7 +887,1068 @@
     .fyp-footer-sub { font-size: 11px; color: var(--dark-gray); margin-top: 4px; }
     .fyp-footer-right { font-size: 11px; color: var(--warm-gray); text-align: right; }
 
-  </style>
+  
+
+    /* ═══ INTEL PAGE STYLES ═══ */
+/* ─── INTEL SUB-TAB NAVIGATION ─── */
+    .intel-subtabs { background: #F7F7F7; padding: 16px 48px; display: flex; gap: 12px; border-bottom: 1px solid #E0E0E0; }
+    .intel-subtab { padding: 10px 24px; font-size: 13px; font-weight: 700; font-family: Arial, sans-serif; border: 2px solid #E0E0E0; border-radius: 8px; background: #fff; color: #888; cursor: pointer; transition: all 0.2s; }
+    .intel-subtab:hover { border-color: #1D8FE1; color: #1D8FE1; }
+    .intel-subtab.active { background: #1D8FE1; color: #fff; border-color: #1D8FE1; }
+    .intel-subpanel { display: none; }
+    .intel-subpanel.active { display: block; }
+
+/* INTEL PANEL - MARKET SIZING STYLES */
+/* Note: CSS variables (--blue, --tc, --sc, --oc, --lc etc.) inherited from main :root */
+
+#intel-sizing {
+  font-family: Arial, sans-serif;
+  background: var(--off-white);
+  color: var(--near-black);
+  font-size: 13px;
+}
+
+#intel-sizing .params {
+  background: var(--deep-black);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 10px 28px;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#intel-sizing .pg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#intel-sizing .pl {
+  color: var(--warm-gray);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#intel-sizing .pv {
+  color: var(--blue);
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  min-width: 50px;
+  font-variant-numeric: tabular-nums;
+}
+
+#intel-sizing input[type=range] {
+  -webkit-appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(29,143,225,.3);
+  outline: none;
+  width: 110px;
+  cursor: pointer;
+}
+
+#intel-sizing input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(29,143,225,.25);
+}
+
+#intel-sizing .sc-bar {
+  background: #141414;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 8px 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#intel-sizing .sc-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  white-space: nowrap;
+}
+
+#intel-sizing .sc-btn {
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: Arial, sans-serif;
+  transition: all .2s;
+  letter-spacing: .3px;
+}
+
+#intel-sizing .sc-btn.off {
+  background: rgba(255,255,255,.08);
+  color: var(--warm-gray);
+}
+
+#intel-sizing .sc-btn.on-c {
+  background: var(--blue);
+  color: var(--white);
+}
+
+#intel-sizing .sc-btn.on-e {
+  background: var(--blue-deep);
+  color: var(--white);
+}
+
+#intel-sizing .sc-note {
+  font-size: 11px;
+  color: var(--mid-gray);
+  margin-left: 6px;
+}
+
+#intel-sizing .tabs {
+  background: var(--white);
+  border-bottom: 1px solid var(--silver);
+  padding: 0 28px;
+  display: flex;
+}
+
+#intel-sizing .tab {
+  padding: 12px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mid-gray);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+}
+
+#intel-sizing .tab:hover {
+  color: var(--blue);
+}
+
+#intel-sizing .tab.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+#intel-sizing .body {
+  padding: 20px 28px;
+  max-width: 1380px;
+}
+
+#intel-sizing .panel {
+  display: none;
+}
+
+#intel-sizing .panel.active {
+  display: block;
+}
+
+#intel-sizing .stl {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--mid-gray);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#intel-sizing .stl::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+#intel-sizing .cr {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+#intel-sizing .card {
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--silver);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+#intel-sizing .card-top {
+  height: 4px;
+  background: var(--blue);
+}
+
+#intel-sizing .card-body {
+  padding: 16px 18px;
+}
+
+#intel-sizing .clbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  margin-bottom: 10px;
+}
+
+#intel-sizing .cval {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.5px;
+  color: var(--near-black);
+}
+
+#intel-sizing .csub {
+  font-size: 10px;
+  color: var(--mid-gray);
+  margin-top: 3px;
+}
+
+#intel-sizing .cdiv {
+  border: none;
+  border-top: 1px solid var(--silver);
+  margin: 10px 0;
+}
+
+#intel-sizing .crow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+#intel-sizing .cm .val {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+#intel-sizing .cm .lbl {
+  font-size: 10px;
+  color: var(--mid-gray);
+}
+
+#intel-sizing .card.tam .card-top {
+  background: var(--tc);
+}
+
+#intel-sizing .card.tam .cval {
+  color: var(--tc);
+}
+
+#intel-sizing .card.sam .card-top {
+  background: var(--sc);
+}
+
+#intel-sizing .card.sam .cval {
+  color: var(--sc);
+}
+
+#intel-sizing .card.som .card-top {
+  background: var(--oc);
+}
+
+#intel-sizing .card.som .cval {
+  color: var(--oc);
+}
+
+#intel-sizing .card.lov .card-top {
+  background: var(--lc);
+}
+
+#intel-sizing .card.lov .cval {
+  color: var(--lc);
+}
+
+#intel-sizing .tbl {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--silver);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+#intel-sizing .tbl thead th {
+  background: var(--near-black);
+  color: var(--warm-gray);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  padding: 10px 11px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  font-family: Arial, sans-serif;
+}
+
+#intel-sizing .tbl thead th:hover,
+#intel-sizing .tbl thead th.sorted {
+  background: var(--blue);
+  color: var(--white);
+}
+
+#intel-sizing .tbl tbody td {
+  padding: 8px 11px;
+  border-bottom: 1px solid var(--off-white);
+  font-size: 12px;
+  color: var(--dark-gray);
+}
+
+#intel-sizing .tbl tbody tr:hover td {
+  background: #f0f7fd;
+}
+
+#intel-sizing .tbl tfoot td {
+  background: var(--near-black);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 9px 11px;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+#intel-sizing .tbl.drill tbody tr.crr {
+  background: #EEF7FD;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#intel-sizing .tbl.drill tbody tr.crr:hover {
+  background: #daeef9;
+}
+
+#intel-sizing .tbl.drill tbody tr.cyr {
+  display: none;
+}
+
+#intel-sizing .tbl.drill tbody tr.cyr.vis {
+  display: table-row;
+}
+
+#intel-sizing .tbl.drill tbody tr.loy td:first-child,
+#intel-sizing .tbl.ctry tbody tr.loy td:first-child {
+  border-left: 3px solid var(--blue);
+}
+
+#intel-sizing .tbl.ctry tbody tr.out {
+  opacity: .45;
+}
+
+#intel-sizing .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#intel-sizing .ti {
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#intel-sizing .ti-HI {
+  background: #D4EAF8;
+  color: #0A3F7A;
+}
+
+#intel-sizing .ti-UMI {
+  background: #D4F5E0;
+  color: #074D30;
+}
+
+#intel-sizing .ti-LMI {
+  background: #FDE8C0;
+  color: #7A4500;
+}
+
+#intel-sizing .ti-LI {
+  background: #F8D4D4;
+  color: #7A0A0A;
+}
+
+#intel-sizing .ps {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#intel-sizing .ps-S {
+  background: #EEF0FF;
+  color: #3B44B0;
+}
+
+#intel-sizing .ps-P {
+  background: #FFE8E8;
+  color: var(--red);
+}
+
+#intel-sizing .ps-B {
+  background: #F0E8FF;
+  color: #6B2D8B;
+}
+
+#intel-sizing .ps-N {
+  background: #EAEAEA;
+  color: var(--mid-gray);
+}
+
+#intel-sizing .ld {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+#intel-sizing .ex {
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  font-size: 9px;
+  color: var(--blue);
+  margin-right: 4px;
+  transition: transform .15s;
+}
+
+#intel-sizing .crr.open .ex {
+  transform: rotate(90deg);
+}
+
+#intel-sizing .ctrl {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#intel-sizing .ctrl select,
+#intel-sizing .ctrl input {
+  border: 1px solid var(--silver);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  background: var(--white);
+  color: var(--near-black);
+  outline: none;
+  font-family: Arial, sans-serif;
+}
+
+#intel-sizing .ctrl select:focus,
+#intel-sizing .ctrl input:focus {
+  border-color: var(--blue);
+}
+
+#intel-sizing .ctrl button {
+  padding: 6px 14px;
+  border: 1px solid var(--silver);
+  border-radius: 6px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  color: var(--dark-gray);
+  transition: all .15s;
+}
+
+#intel-sizing .ctrl button:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+#intel-sizing .cmp-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+#intel-sizing .cmp-box {
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--silver);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+#intel-sizing .cmp-box-hdr {
+  padding: 12px 18px;
+  background: var(--near-black);
+  color: var(--white);
+}
+
+#intel-sizing .cmp-box-hdr h4 {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+#intel-sizing .cmp-row2 {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--off-white);
+  font-size: 12px;
+}
+
+#intel-sizing .cmp-row2 .k {
+  color: var(--dark-gray);
+}
+
+#intel-sizing .cmp-row2 .v {
+  font-weight: 700;
+  color: var(--near-black);
+  font-variant-numeric: tabular-nums;
+}
+
+#intel-sizing .cmp-row2:last-child {
+  border-bottom: none;
+}
+
+#intel-sizing .cmp-footer {
+  padding: 8px 18px;
+  font-size: 10px;
+  color: var(--mid-gray);
+  background: var(--off-white);
+}
+
+#intel-sizing .delta-highlight {
+  background: linear-gradient(135deg, #EEF7FD 0%, #F7F7F7 100%);
+  border: 1px solid var(--ice-blue);
+  border-left: 4px solid var(--blue);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
+
+#intel-sizing .delta-highlight strong {
+  color: var(--blue);
+}
+
+#intel-sizing .ms {
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--silver);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+#intel-sizing .ms-hdr {
+  padding: 12px 20px;
+  background: var(--near-black);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#intel-sizing .ms-hdr .num-badge {
+  background: var(--blue);
+  color: var(--white);
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#intel-sizing .ms-hdr h3 {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+#intel-sizing .ms-body {
+  padding: 18px 20px;
+}
+
+#intel-sizing .ms-body p {
+  color: var(--dark-gray);
+  line-height: 1.6;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+#intel-sizing .fb {
+  background: var(--off-white);
+  border: 1px solid var(--silver);
+  border-left: 3px solid var(--blue);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  color: var(--near-black);
+  margin: 10px 0;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+#intel-sizing .st {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+#intel-sizing .st th {
+  background: var(--off-white);
+  font-weight: 700;
+  font-family: 'Arial Black', Arial, sans-serif;
+  padding: 8px 11px;
+  text-align: left;
+  border-bottom: 2px solid var(--blue);
+  font-size: 11px;
+  color: var(--near-black);
+}
+
+#intel-sizing .st td {
+  padding: 7px 11px;
+  border-bottom: 1px solid var(--off-white);
+  vertical-align: top;
+  color: var(--dark-gray);
+}
+
+#intel-sizing .st tr:last-child td {
+  border-bottom: none;
+}
+
+#intel-sizing .tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#intel-sizing .tg-c {
+  background: var(--ice-blue);
+  color: #0A3F7A;
+}
+
+#intel-sizing .tg-e {
+  background: #FDE8C0;
+  color: #7A4500;
+}
+
+#intel-sizing .tg-i {
+  background: #D4F5E0;
+  color: #074D30;
+}
+
+#intel-sizing .nt {
+  font-size: 11px;
+  color: var(--mid-gray);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* INTEL PANEL - COMPETITIVE LANDSCAPE STYLES */
+#intel-comp {
+  font-family: Arial, sans-serif;
+  background: var(--off-white);
+  color: #1A1A1A;
+  font-size: 13px;
+}
+
+/* INTEL PANEL - COMPETITIVE LANDSCAPE STYLES */
+/* Note: CSS variables inherited from main :root. Adding missing ones: */
+
+#intel-comp .tabs {
+  background: var(--white);
+  border-bottom: 1px solid #E0E0E0;
+  padding: 0 28px;
+  display: flex;
+  overflow-x: auto;
+}
+
+#intel-comp .tab {
+  padding: 11px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888888;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  transition: all .15s;
+  flex-shrink: 0;
+}
+
+#intel-comp .tab:hover {
+  color: #1D8FE1;
+}
+
+#intel-comp .tab.active {
+  color: #1D8FE1;
+  border-bottom-color: #1D8FE1;
+}
+
+#intel-comp .body {
+  padding: 18px 28px;
+  max-width: 1400px;
+}
+
+#intel-comp .panel {
+  display: none;
+}
+
+#intel-comp .panel.active {
+  display: block;
+}
+
+#intel-comp .stl {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: #888888;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#intel-comp .stl::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: #1D8FE1;
+  border-radius: 2px;
+}
+
+#intel-comp .insight {
+  background: linear-gradient(135deg, #EEF7FD 0%, #F7F7F7 100%);
+  border: 1px solid #CCE8FF;
+  border-left: 4px solid #1D8FE1;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #555555;
+  line-height: 1.6;
+}
+
+#intel-comp .insight strong {
+  color: #1D8FE1;
+}
+
+#intel-comp .sc-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+#intel-comp .sc {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #E0E0E0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+}
+
+#intel-comp .sc-top {
+  height: 4px;
+}
+
+#intel-comp .sc-body {
+  padding: 14px 16px;
+}
+
+#intel-comp .sc-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  color: #888888;
+  margin-bottom: 6px;
+}
+
+#intel-comp .sc-val {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+#intel-comp .sc-sub {
+  font-size: 10px;
+  color: #888888;
+  margin-top: 3px;
+}
+
+#intel-comp .region-block {
+  margin-bottom: 24px;
+}
+
+#intel-comp .region-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  cursor: pointer;
+}
+
+#intel-comp .region-hdr h3 {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+#intel-comp .region-hdr .meta {
+  font-size: 11px;
+  opacity: .8;
+  text-align: right;
+}
+
+#intel-comp .region-hdr .toggle {
+  font-size: 12px;
+  transition: transform .2s;
+}
+
+#intel-comp .region-hdr.open .toggle {
+  transform: rotate(90deg);
+}
+
+#intel-comp .tbl {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid #E0E0E0;
+  margin-bottom: 0;
+}
+
+#intel-comp .tbl thead th {
+  background: #2a2a2a;
+  color: #AAAAAA;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 9px 10px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+#intel-comp .tbl thead th.num {
+  text-align: right;
+}
+
+#intel-comp .tbl tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #F7F7F7;
+  font-size: 12px;
+  color: #555555;
+  vertical-align: top;
+}
+
+#intel-comp .tbl tbody tr:hover td {
+  background: #f0f7fd;
+}
+
+#intel-comp .tbl tfoot td {
+  background: #1A1A1A;
+  color: white;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 9px 10px;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+
+#intel-comp .tbl.summary thead th {
+  background: #1A1A1A;
+}
+
+#intel-comp .tp {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  margin: 1px;
+  white-space: nowrap;
+}
+
+#intel-comp .tp-g {
+  background: #1A1A1A;
+  color: white;
+}
+
+#intel-comp .tp-b {
+  background: #1D8FE1;
+  color: white;
+}
+
+#intel-comp .tp-r {
+  background: #D4202A;
+  color: white;
+}
+
+#intel-comp .tp-o {
+  background: #C47B10;
+  color: white;
+}
+
+#intel-comp .tp-p {
+  background: #7B2D8B;
+  color: white;
+}
+
+#intel-comp .tp-gr {
+  background: #0F7A4C;
+  color: white;
+}
+
+#intel-comp .tp-s {
+  background: #FF6B35;
+  color: white;
+}
+
+#intel-comp .tp-lo {
+  background: #0070C0;
+  color: white;
+}
+
+#intel-comp .tp-sh {
+  background: #96BF48;
+  color: white;
+}
+
+#intel-comp .tp-nc {
+  background: #555;
+  color: white;
+}
+
+#intel-comp .tp-local {
+  background: #E8E8E8;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+#intel-comp .local-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  margin: 1px;
+  background: #F7F7F7;
+  border: 1px solid #E0E0E0;
+  color: #1A1A1A;
+  white-space: nowrap;
+}
+
+#intel-comp .local-badge::before {
+  content: '🏠';
+  font-size: 9px;
+}
+
+#intel-comp .pct-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #E0E0E0;
+  overflow: hidden;
+  min-width: 80px;
+}
+
+#intel-comp .pct-fill {
+  height: 100%;
+  background: #1D8FE1;
+  border-radius: 4px;
+}
+
+#intel-comp .pct-fill-2 {
+  background: #D4202A;
+}
+
+#intel-comp .region-body {
+  display: none;
+}
+
+#intel-comp .region-body.open {
+  display: block;
+}
+
+#intel-comp .r-apac {
+  background: #0D5C8A;
+}
+
+#intel-comp .r-eu {
+  background: #1A1A1A;
+}
+
+#intel-comp .r-na {
+  background: #6B2D8B;
+}
+
+#intel-comp .r-la {
+  background: #A02020;
+}
+
+#intel-comp .r-mena {
+  background: #C47B10;
+}
+
+#intel-comp .r-ssa {
+  background: #0F7A4C;
+}
+
+#intel-comp .r-ca {
+  background: #444;
+}
+
+#intel-comp .r-car {
+  background: #0077aa;
+}
+
+#intel-comp .pills-wrap {
+  line-height: 1.8;
+}
+
+</style>
 </head>
 <body>
 
@@ -893,6 +1964,7 @@
     <button class="cc-tab" id="tab-tars" onclick="showPanel('tars')">TARS</button>
     <button class="cc-tab" id="tab-case" onclick="showPanel('case')">CASE</button>
     <button class="cc-tab" id="tab-5yp" onclick="showPanel('5yp')">5YP</button>
+    <button class="cc-tab" id="tab-intel" onclick="showPanel('intel')">INTEL</button>
   </div>
   <div class="cc-nav-spacer"></div>
   <div class="cc-nav-badge">Loyverse · Leadership</div>
@@ -971,6 +2043,26 @@
           <span class="portal-pill">GTV Growth</span>
         </div>
         <button class="portal-btn">Open 5YP →</button>
+      </div>
+    </div>
+
+    <div class="portal-card" onclick="showPanel('intel')">
+      <div class="portal-card-top" style="background:#1D8FE1;"></div>
+      <div class="portal-card-inner">
+        <div class="portal-tag">Market Intelligence</div>
+        <div class="portal-name">INTEL</div>
+        <div class="portal-stat">
+          <div class="portal-stat-num">100+</div>
+          <div class="portal-stat-label">Countries analysed</div>
+        </div>
+        <div class="portal-subtitle">Market sizing simulator and competitive landscape. TAM/SAM/SOM modelling across 100+ countries with real-time sliders. Competitor mapping by region with local payment rail intelligence.</div>
+        <div class="portal-pills">
+          <span class="portal-pill">Market Sizing</span>
+          <span class="portal-pill">Competitive Analysis</span>
+          <span class="portal-pill">TAM/SAM/SOM</span>
+          <span class="portal-pill">Payment Rails</span>
+        </div>
+        <button class="portal-btn">Open INTEL →</button>
       </div>
     </div>
 
@@ -2095,6 +3187,515 @@
 </div>
 
 
+<!-- ═══════════════════════════════════════════════════════════════════════
+     INTEL PANEL
+═══════════════════════════════════════════════════════════════════════ -->
+<div id="panel-intel" class="cc-panel">
+
+  <!-- HERO (same style as other pages) -->
+  <div class="case-hero" style="background: #0D0D0D;">
+    <div class="case-hero-label">Loyverse · Market Intelligence</div>
+    <h1>Meet <span style="color:#1D8FE1;">INTEL.</span></h1>
+    <p>Market sizing simulator and competitive landscape analysis. Model TAM/SAM/SOM across 100+ countries with interactive parameters. Map competitors and local payment rails by region.</p>
+  </div>
+
+  <!-- SUB-TAB NAVIGATION -->
+  <div class="intel-subtabs">
+    <button class="intel-subtab active" data-tab="sizing" onclick="showIntelTab('sizing')">📊 Market Sizing</button>
+    <button class="intel-subtab" data-tab="comp" onclick="showIntelTab('comp')">🏆 Competitive Landscape</button>
+  </div>
+
+  <!-- SUB-PANEL: MARKET SIZING -->
+  <div id="intel-sizing" class="intel-subpanel active">
+    <div class="params">
+      <label>GTV Platform Fee:</label><input id="gR" type="range" min="0" max="5" step="0.1" value="3.5" oninput="intelUa()"><span id="gRv">3.50%</span>
+      <label>TPV Payments Fee:</label><input id="tR" type="range" min="0" max="5" step="0.1" value="2.0" oninput="intelUa()"><span id="tRv">2.00%</span>
+      <label>SAM GTV Cap:</label><input id="sC" type="range" min="100" max="5000" step="50" value="1000" oninput="intelUa()"><span id="sCv">$1000K</span>
+      <label>Penetration Rate:</label><input id="pR" type="range" min="0" max="5" step="0.1" value="1.0" oninput="intelUa()"><span id="pRv">1.0%</span>
+    </div>
+
+    <div class="sc-bar">
+      <button class="sc-btn on-c" id="btn-c" onclick="intelSetSc('c')">Conservative (360M formal SMBs)</button>
+      <button class="sc-btn off" id="btn-e" onclick="intelSetSc('e')">Expanded (445M total w/ informal)</button>
+      <span id="sc-note">360M registered SMBs · official national counts</span>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="intelSizingTab('ov', this)">🌍 Overview</div>
+      <div class="tab" onclick="intelSizingTab('dr', this)">📈 Drill-down</div>
+      <div class="tab" onclick="intelSizingTab('cy', this)">🗺️ Countries</div>
+      <div class="tab" onclick="intelSizingTab('cm', this)">⚖️ Comparison</div>
+      <div class="tab" onclick="intelSizingTab('me', this)">📝 Methodology</div>
+    </div>
+
+    <!-- TAM/SAM/SOM OVERVIEW -->
+    <div class="panel active" id="pov">
+      <div class="stl">Total Addressable Market (TAM)</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Region</th><th class="num" id="th-inf">Formal (M)</th><th class="num" id="th-inf">Informal (M)</th><th class="num">GTV (B)</th><th class="num">TPV (B)</th><th class="num" style="color:var(--tc)">Revenue (B)</th><th class="num" style="color:var(--sc)">SAM Rev (B)</th><th class="num" style="color:var(--oc)">SOM Rev (B)</th></tr></thead>
+        <tbody id="ov-tb"></tbody>
+        <tfoot><tr>
+          <td><strong>GLOBAL</strong></td>
+          <td class="num" id="ov-ff">—</td><td class="num" id="dh-inf">—</td>
+          <td class="num" id="ov-fg">—</td><td class="num" id="ov-ft">—</td>
+          <td class="num" style="color:var(--tc);font-weight:700" id="ov-fr">—</td>
+          <td class="num" style="color:var(--sc);font-weight:700" id="ov-fs">—</td>
+          <td class="num" style="color:var(--oc);font-weight:700" id="ov-fo">—</td>
+        </tr></tfoot>
+      </table>
+
+      <div class="stl">Key Metrics</div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="label">Total SMBs</div>
+          <div class="value" id="t-s">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">TAM GTV</div>
+          <div class="value" id="t-g">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">TAM TPV</div>
+          <div class="value" id="t-t">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">TAM Revenue</div>
+          <div class="value" id="t-r">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">SAM Revenue</div>
+          <div class="value" id="s-r">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">SOM Revenue</div>
+          <div class="value" id="o-r">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">Loyverse Revenue @ <span id="lp-l">1.0%</span></div>
+          <div class="value" id="l-r">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRILL-DOWN BY REGION -->
+    <div class="panel" id="pdr">
+      <div class="stl">TAM Breakdown by Region &amp; Country</div>
+      <table class="tbl">
+        <thead><tr>
+          <th style="text-align:left">Region / Country</th>
+          <th class="num">Micro (M)</th>
+          <th class="num">Small (M)</th>
+          <th class="num">Medium (M)</th>
+          <th class="num" id="dh-inf">Informal (M)</th>
+          <th class="num">GTV (B)</th>
+          <th class="num">TPV (B)</th>
+          <th class="num" style="color:var(--tc);font-weight:700">TAM Rev (B)</th>
+          <th class="num">SAM GTV (B)</th>
+          <th class="num" style="color:var(--sc);font-weight:700">SAM Rev (B)</th>
+          <th class="num" style="color:var(--oc);font-weight:700">SOM Rev (B)</th>
+          <th></th>
+        </tr></thead>
+        <tbody id="ct-tb"></tbody>
+        <tfoot><tr>
+          <td>TOTAL</td>
+          <td class="num" id="cf-m">—</td><td class="num" id="cf-s">—</td>
+          <td class="num" id="cf-d">—</td><td class="num" id="cf-i">—</td>
+          <td class="num" id="cf-g">—</td><td class="num" id="cf-t">—</td>
+          <td class="num" id="cf-r">—</td>
+          <td class="num" id="cf-sg">—</td><td class="num" id="cf-sr">—</td>
+          <td class="num" id="cf-or">—</td><td></td>
+        </tr></tfoot>
+      </table>
+    </div>
+
+    <!-- COUNTRIES -->
+    <div class="panel" id="pcy">
+      <div class="ctrl">
+        <select id="cy-reg" onchange="intelRct()">
+          <option value="">All continents</option>
+          <option>Asia-Pacific</option><option>Europe</option>
+          <option>North America</option><option>Latin America</option>
+          <option>MENA</option><option>Sub-Saharan Africa</option>
+          <option>Central Asia</option><option>Caribbean</option>
+        </select>
+        <select id="cy-lov" onchange="intelRct()">
+          <option value="">All countries</option>
+          <option value="1">Loyverse countries</option>
+          <option value="0">Outside portfolio</option>
+        </select>
+        <input type="text" id="cy-q" placeholder="Search country..." oninput="intelRct()" style="width:150px">
+        <button onclick="document.getElementById('cy-reg').value='';document.getElementById('cy-lov').value='';document.getElementById('cy-q').value='';intelRct()">Clear</button>
+        <span id="cy-c" style="font-size:11px;color:var(--mid-gray);margin-left:4px"></span>
+      </div>
+      <table class="tbl ctry">
+        <thead><tr>
+          <th onclick="intelSc2(0)" style="text-align:left">Country</th>
+          <th onclick="intelSc2(1)" style="text-align:left">Continent</th>
+          <th onclick="intelSc2(2)">Tier</th>
+          <th onclick="intelSc2(3)" class="num">Formal</th>
+          <th onclick="intelSc2(4)" class="num" id="cyh-inf">Informal</th>
+          <th onclick="intelSc2(5)" class="num">GTV TAM</th>
+          <th onclick="intelSc2(6)" class="num">TPV TAM</th>
+          <th onclick="intelSc2(7)" class="num">Rev. TAM</th>
+          <th onclick="intelSc2(8)" class="num">Rev. SAM</th>
+          <th onclick="intelSc2(9)" class="num">Rev. SOM</th>
+          <th onclick="intelSc2(10)" class="num">Digital%</th>
+          <th>PSP</th>
+          <th style="text-align:left">SMB Source</th>
+        </tr></thead>
+        <tbody id="cy-tb"></tbody>
+      </table>
+    </div>
+
+    <!-- COMPARISON -->
+    <div class="panel" id="pcm">
+      <div class="delta-highlight">
+        <strong>Key insight:</strong> the revenue potential difference between both scenarios is only ~15-20%, because informal SMBs have a much lower unit GTV ($1.5K-$15K/year) vs. formal micro businesses ($30K-$80K). The conservative TAM alone is large enough to support the $1B narrative. The expanded scenario reinforces the low-penetration argument (&lt;1%) without materially changing revenue projections.
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-box">
+          <div class="cmp-box-hdr" style="border-top:3px solid var(--blue)">
+            <h4>Conservative Scenario &mdash; formal SMBs only</h4>
+          </div>
+          <div class="cmp-box-body">
+            <div class="cmp-row2"><span class="k">Total SMBs</span><span class="v" id="cc-smbs">—</span></div>
+            <div class="cmp-row2"><span class="k">Total GTV</span><span class="v" id="cc-gtv">—</span></div>
+            <div class="cmp-row2"><span class="k">Total TPV</span><span class="v" id="cc-tpv">—</span></div>
+            <div class="cmp-row2"><span class="k">TAM revenue potential</span><span class="v" style="color:var(--tc)" id="cc-tr">—</span></div>
+            <div class="cmp-row2"><span class="k">SAM revenue potential</span><span class="v" style="color:var(--sc)" id="cc-sr">—</span></div>
+            <div class="cmp-row2"><span class="k">SOM revenue potential</span><span class="v" style="color:var(--oc)" id="cc-or">—</span></div>
+            <div class="cmp-row2"><span class="k">Loyverse (<span id="ccp-lbl">1.0%</span>)</span><span class="v" style="color:var(--lc)" id="cc-lr">—</span></div>
+          </div>
+          <div class="cmp-footer">Source: official national counts per country</div>
+        </div>
+        <div class="cmp-box">
+          <div class="cmp-box-hdr" style="border-top:3px solid var(--blue-deep)">
+            <h4>Expanded Scenario &mdash; formal + informal (445M IFC cap)</h4>
+          </div>
+          <div class="cmp-box-body">
+            <div class="cmp-row2"><span class="k">Total SMBs</span><span class="v" id="ce-smbs">—</span></div>
+            <div class="cmp-row2"><span class="k">Total GTV</span><span class="v" id="ce-gtv">—</span></div>
+            <div class="cmp-row2"><span class="k">Total TPV</span><span class="v" id="ce-tpv">—</span></div>
+            <div class="cmp-row2"><span class="k">TAM revenue potential</span><span class="v" style="color:var(--tc)" id="ce-tr">—</span></div>
+            <div class="cmp-row2"><span class="k">SAM revenue potential</span><span class="v" style="color:var(--sc)" id="ce-sr">—</span></div>
+            <div class="cmp-row2"><span class="k">SOM revenue potential</span><span class="v" style="color:var(--oc)" id="ce-or">—</span></div>
+            <div class="cmp-row2"><span class="k">Loyverse (<span id="cep-lbl">1.0%</span>)</span><span class="v" style="color:var(--lc)" id="ce-lr">—</span></div>
+          </div>
+          <div class="cmp-footer">IFC MSME Finance Gap 2024 &mdash; 445M total cap; informal scaled proportionally (factor 0.1242)</div>
+        </div>
+      </div>
+      <div class="stl">Delta: expanded vs. conservative</div>
+      <table class="tbl">
+        <thead><tr>
+          <th style="text-align:left">Metric</th>
+          <th class="num">Conservative</th>
+          <th class="num">Expanded</th>
+          <th class="num">Absolute delta</th>
+          <th class="num">Delta %</th>
+        </tr></thead>
+        <tbody id="cmp-tb"></tbody>
+      </table>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <div class="panel" id="pme">
+
+      <div class="ms">
+        <div class="ms-hdr"><div class="num-badge">01</div><h3>Definitions: TAM, SAM and SOM</h3></div>
+        <div class="ms-body">
+          <p><strong>TAM (Total Addressable Market):</strong> the complete global universe of SMBs &mdash; formal and informal &mdash; and the GTV/TPV they generate. No geographic or size filters applied.</p>
+          <p><strong>SAM (Serviceable Addressable Market):</strong> SMBs with annual GTV up to the configured cap (default $1M). Includes all informal SMBs (100% sub-$1M by definition) and formal micro/small businesses within the threshold. Represents the segment BOSS can address with its current value proposition.</p>
+          <p><strong>SOM (Serviceable Obtainable Market):</strong> subset of the SAM in countries where Loyverse is already active (internal list from "Where is the payment volume available?", Dec 2025). Immediate opportunity without geographic expansion.</p>
+          <p><strong>Loyverse Revenue:</strong> SOM × configured penetration rate. Penetration represents the share of the SOM revenue potential captured by Loyverse.</p>
+          <p><strong>Two scenarios:</strong> Conservative uses only the ~360M formally registered SMBs. Expanded adds informal businesses up to the 445M total cap (IFC MSME Finance Gap 2024), with a scaling factor of 0.1242 applied to raw country-level estimates.</p>
+        </div>
+      </div>
+
+      <div class="ms">
+        <div class="ms-hdr"><div class="num-badge">02</div><h3>Calculation Formulas</h3></div>
+        <div class="ms-body">
+          <div class="fb">// Country-level inputs
+formal_micro_M, formal_small_M, formal_medium_M  // millions of SMBs
+informal_raw_M                                    // raw country estimate
+digital_pct                                       // % of GTV transacted electronically
+
+// Expanded scenario
+INF_SCALE = 0.1242  // (445M - 360.3M formal) / 681.7M raw informal
+informal_M = informal_raw_M x INF_SCALE  // expanded scenario
+informal_M = 0                           // conservative scenario
+
+// TAM (USD billions: M SMBs x K USD/SMB = B USD)
+TAM_GTV = micro x gp.micro + small x gp.small + medium x gp.medium + inf x gp.informal
+TAM_TPV = TAM_GTV x digital_pct
+TAM_Rev = TAM_GTV x gtvRate + TAM_TPV x tpvRate
+
+// SAM -- SMBs with GTV <= cap
+// Qualification by income tier (% of each size class within threshold):
+//   HI:  micro=100%, small=60%, medium=5%
+//   UMI: micro=100%, small=75%, medium=10%
+//   LMI: micro=100%, small=95%, medium=30%
+//   LI:  micro=100%, small=99%, medium=65%
+// Informal: 100% (all sub-$1M by definition)
+SAM_GTV = micro x q_m x avg_m + small x q_s x avg_s + medium x q_d x avg_d + inf x gp.informal
+SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
+
+// SOM = SAM restricted to countries where loyverse = true
+// Loyverse Revenue = SOM_Rev x penetration%
+// Total Revenue = GTV fee (platform) + TPV fee (payments processing)</div>
+          <p class="nt">GTV x gtvRate: platform fee (BOSS, all POS transactions recorded). TPV x tpvRate: payments processing revenue (Loyverse Payments). Estimated uncertainty: +/-20-25% developed markets, +/-40-50% emerging markets.</p>
+        </div>
+      </div>
+
+      <div class="ms">
+        <div class="ms-hdr"><div class="num-badge">03</div><h3>GTV Parameters by Income Tier (avg USD/SMB/year)</h3></div>
+        <div class="ms-body">
+          <table class="st">
+            <thead><tr><th>Tier</th><th>Example Countries</th><th>Micro</th><th>Small</th><th>Medium</th><th>Informal</th><th>Basis</th></tr></thead>
+            <tbody>
+              <tr><td><span class="ti ti-HI">HI</span></td><td>USA, UK, Germany, Japan, Australia</td><td>$80K</td><td>$700K</td><td>$6M</td><td>$15K</td><td><span class="tag tg-e">Estimate</span></td></tr>
+              <tr><td><span class="ti ti-UMI">UMI</span></td><td>Brazil, Mexico, Turkey, Thailand</td><td>$30K</td><td>$180K</td><td>$1.2M</td><td>$6K</td><td><span class="tag tg-e">Estimate</span></td></tr>
+              <tr><td><span class="ti ti-LMI">LMI</span></td><td>Philippines, Vietnam, Egypt, Nigeria</td><td>$7K</td><td>$35K</td><td>$250K</td><td>$2.5K</td><td><span class="tag tg-e">Estimate</span></td></tr>
+              <tr><td><span class="ti ti-LI">LI</span></td><td>Cambodia, Myanmar, Tanzania</td><td>$3K</td><td>$15K</td><td>$100K</td><td>$1.5K</td><td><span class="tag tg-e">Estimate</span></td></tr>
+            </tbody>
+          </table>
+          <p class="nt">Basis: World Bank Enterprise Survey 2023, US Census Bureau SMB Revenue, Eurostat SME Statistics, GDP per capita ratios by income tier. Covers POS transactions (retail, food & beverage, personal services). Excludes B2B, real estate, and financial services.</p>
+        </div>
+      </div>
+
+      <div class="ms">
+        <div class="ms-hdr"><div class="num-badge">04</div><h3>Primary Sources</h3></div>
+        <div class="ms-body">
+          <table class="st">
+            <thead><tr><th>Source</th><th>Data Point</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td>IFC / World Bank &mdash; MSME Finance Gap (2024)</td><td>445M global MSMEs incl. informal; cap for expanded scenario</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>Mastercard Strive / World Bank MSME Economic Indicators (2021)</td><td>196M formal micro + 11M formal small</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>European Commission SME Performance Review 2024/25</td><td>26.1M SMEs in the EU</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>UK BPE 2024 (Gov.UK)</td><td>5.5M SMEs in the United Kingdom</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>US SBA (2026)</td><td>36.2M small businesses in the US</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>SEBRAE Brazil (2023)</td><td>19M micro and small businesses</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>SME Corp Malaysia (2024)</td><td>1.09M MSMEs in Malaysia</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>SMEDAN Nigeria (2021)</td><td>~40M MSMEs in Nigeria</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>ADB Asia SME Monitor 2024/25</td><td>SMEs by country in Asia-Pacific</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>OECD SME Policy Index LAC 2024</td><td>99.5% of businesses in Latin America are SMBs</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>Worldpay Global Payments Report 2025</td><td>Digital penetration by country; $18.7T in digital payments</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>McKinsey Digital Payments Survey 2024</td><td>US and Europe penetration rates</td><td><span class="tag tg-c">Cited</span></td></tr>
+              <tr><td>Loyverse &mdash; "Where is the payment volume available?" (Dec 2025)</td><td>TPV by country, PSP by market</td><td><span class="tag tg-i">Internal</span></td></tr>
+              <tr><td>Loyverse &mdash; Strategic deck Thiago (Mar 2026)</td><td>GTV €26.9B, revenue €7.6M, 350K active merchants</td><td><span class="tag tg-i">Internal</span></td></tr>
+              <tr><td>World Bank GDP (2024)</td><td>GDP by country for order-of-magnitude validation</td><td><span class="tag tg-c">Cited</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUB-PANEL: COMPETITIVE LANDSCAPE -->
+  <div id="intel-comp" class="intel-subpanel" style="display:none;">
+    <div class="tabs">
+      <div class="tab active" onclick="intelCompTab('ov',this)">Overview</div>
+      <div class="tab" onclick="intelCompTab('apac',this)">Asia-Pacific</div>
+      <div class="tab" onclick="intelCompTab('eu',this)">Europe</div>
+      <div class="tab" onclick="intelCompTab('na',this)">North America</div>
+      <div class="tab" onclick="intelCompTab('la',this)">Latin America</div>
+      <div class="tab" onclick="intelCompTab('mena',this)">MENA</div>
+      <div class="tab" onclick="intelCompTab('ssa',this)">Sub-Saharan Africa</div>
+      <div class="tab" onclick="intelCompTab('ca',this)">Central Asia</div>
+      <div class="tab" onclick="intelCompTab('car',this)">Caribbean</div>
+      <div class="tab" onclick="intelCompTab('ref',this)">References</div>
+    </div>
+
+    <div class="panel active" id="pov" style="max-width:100%;overflow-x:auto;">
+      <div class="stl">Competitive Landscape: Global Overview</div>
+      <p>For full regional detail, select a tab above. This overview summarizes the competitive environment across Loyverse's largest SOM markets.</p>
+      <div class="tbl-wrapper">
+        <table class="tbl">
+          <thead><tr><th style="width:140px">Market / Region</th><th>Loyverse TPV</th><th>Key Competitors</th><th>Local Share</th><th>Primary PSP</th><th>Digital Penetration</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--blue)">APAC (Total)</strong></td><td>$7.4B</td><td>Square, Toast, SumUp, Lightspeed, Local players</td><td>45-70%</td><td>Stripe, Partner PSPs, Local</td><td>60-90%</td></tr>
+            <tr><td><strong style="color:var(--amber)">EMEA (Total)</strong></td><td>$2.8B</td><td>Square, SumUp, Toast, Lightspeed</td><td>25-45%</td><td>Stripe, Local acquirers</td><td>80-95%</td></tr>
+            <tr><td><strong style="color:var(--green)">LATAM (Total)</strong></td><td>$0.8B</td><td>Linx, Tone, Toast, Square</td><td>35-60%</td><td>Stripe, Partner networks</td><td>45-65%</td></tr>
+            <tr><td><strong style="color:var(--red)">SSA (Total)</strong></td><td>$0.2B</td><td>M-Pesa, mPharma, Jus, Local shops</td><td>70-90%</td><td>Mobile money, Local</td><td>20-40%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="papac">
+      <div class="stl">Asia-Pacific Region</div>
+      <p><strong>Loyverse TPV:</strong> $7.4B (53% of global SOM). <strong>Digital penetration:</strong> 60-90% by country. <strong>Fragmentation:</strong> Highest local player concentration outside SSA.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Indonesia</strong></td><td>$1.2B</td><td>Verifone, PAX, Local acquirers (60%)</td><td>Square, Toast</td><td>Stripe, BCA, Mandiri</td><td>Highest merchant density in SEA; strong local POS installed base.</td></tr>
+          <tr><td><strong>Thailand</strong></td><td>$520M</td><td>Aucnet, Sansiri, Local PSPs (55%)</td><td>Square, Toast</td><td>Stripe, Bangkok Bank, Kasikornbank</td><td>Growing digital food & beverage segment.</td></tr>
+          <tr><td><strong>Philippines</strong></td><td>$225M</td><td>BDO Unibank, Unionbank, Local (50%)</td><td>Toast</td><td>Stripe, BDO, Unionbank mobile money</td><td>High mobile money usage; Loyverse focus on formal SMBs.</td></tr>
+          <tr><td><strong>Singapore</strong></td><td>$50M</td><td>SumUp, iPaymy, Local (30%)</td><td>Square, Toast, SumUp</td><td>Stripe, DBS, OCBC</td><td>Highly competitive; mature market with high digital adoption.</td></tr>
+          <tr><td><strong>Vietnam</strong></td><td>$150M</td><td>Viettel, Mobifone, Local acquirers (65%)</td><td>Square</td><td>Stripe, Viettel, Mobifone</td><td>Emerging but fragmented; strong informal sector.</td></tr>
+          <tr><td><strong>Australia</strong></td><td>$75M</td><td>Square (AU), SumUp, mPOS (40%)</td><td>Toast, SumUp, Square</td><td>Stripe, Paymark, local banks</td><td>Mature market; Square strong in mPOS.</td></tr>
+          <tr><td><strong>Japan</strong></td><td>$180M</td><td>Rakuten Pay, GMO, Square Cash (50%)</td><td>Toast, Square</td><td>Stripe, Rakuten, local acquirers</td><td>Cash still 40%+ of retail; digital payment networks fragmented.</td></tr>
+          <tr><td><strong>India</strong></td><td>$800M</td><td>PhonePe, Paytm, BharatPe (70%)</td><td>Square, Toast (limited)</td><td>Partner networks, local fintechs</td><td>Loyverse presence limited; dominated by Indian fintechs (PhonePe, Paytm).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="peu">
+      <div class="stl">Europe Region</div>
+      <p><strong>Loyverse TPV:</strong> $2.8B (20% of global SOM). <strong>Digital penetration:</strong> 80-95%. <strong>Consolidation:</strong> Dominated by Square and SumUp; regulatory harmonization via PSD2.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>United Kingdom</strong></td><td>$400M</td><td>Epos Now, Lightspeed UK (35%)</td><td>Square, SumUp, Toast</td><td>Stripe, Wise, local acquiring</td><td>Post-Brexit: Strong SumUp presence; Square expanding. Fintech capital of Europe.</td></tr>
+          <tr><td><strong>Germany</strong></td><td>$280M</td><td>SumUp, Clover (40%)</td><td>Square, Toast</td><td>Stripe, SumUp, Wirecard-successor Payone</td><td>SumUp headquartered in Berlin; strong German fintech ecosystem.</td></tr>
+          <tr><td><strong>France</strong></td><td>$220M</td><td>SumUp, Lyra, Mollie (38%)</td><td>Square, Toast</td><td>Stripe, Atos WorldLine, local banks</td><td>Regulatory: French banks strong in acquiring; SumUp expansion.</td></tr>
+          <tr><td><strong>Spain</strong></td><td>$130M</td><td>Redsys, Ingenico (45%)</td><td>Square, SumUp</td><td>Stripe, Redsys, Banco Bilbao</td><td>Redsys (Spanish) still largest; consolidation ongoing.</td></tr>
+          <tr><td><strong>Italy</strong></td><td>$110M</td><td>SIA, Nexi (50%)</td><td>Square, SumUp</td><td>Stripe, Nexi, UBI Banca</td><td>Italian banking consolidation (Nexi-UBI); regulatory environment strict.</td></tr>
+          <tr><td><strong>Poland</strong></td><td>$75M</td><td>Ingenico, local banks (45%)</td><td>Square, SumUp</td><td>Stripe, Ingenico, PKO BP</td><td>Growing market; SumUp increasing presence.</td></tr>
+          <tr><td><strong>Netherlands</strong></td><td>$85M</td><td>SumUp, Mollie (35%)</td><td>Square, Toast</td><td>Stripe, Mollie (fintech), ING</td><td>Mollie (Dutch fintech) strong in online payments; mobile cash low.</td></tr>
+          <tr><td><strong>Other Europe</strong></td><td>$520M</td><td>Regional acquirers & fintechs (40%)</td><td>Square, SumUp, Toast</td><td>Stripe, regional banks</td><td>Nordic countries (SE, DK, NO) highly digital; Central Europe fragmented.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pna">
+      <div class="stl">North America Region</div>
+      <p><strong>Loyverse TPV:</strong> $3.5B (25% of global SOM). <strong>Digital penetration:</strong> 85%+ (USA), 75%+ (Canada), 50% (Mexico). <strong>Saturation:</strong> High competition in USA/Canada; Mexico emerging.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>USA</strong></td><td>$2.2B</td><td>Square (mPOS), Toast (SaaS), Lightspeed (20%)</td><td>Square, Toast, Lightspeed, Block ecosystem</td><td>Stripe, Square (Cash App), PayPal</td><td>Most mature market; Square & Toast duopoly in SMB POS. Loyverse positioned in mid-market/high-growth.</td></tr>
+          <tr><td><strong>Canada</strong></td><td>$350M</td><td>Square, Lightspeed (30%)</td><td>Toast, Square</td><td>Stripe, Square, Moneris</td><td>Smaller USA; similar dynamics. Lightspeed (Canadian) strong.</td></tr>
+          <tr><td><strong>Mexico</strong></td><td>$850M</td><td>MercadoPago, OXXO (local), mPOS (55%)</td><td>Square, Toast (limited)</td><td>Stripe, local banks, MercadoPago</td><td>Rapid digitization; MercadoPago largest; cash still 50%. High Loyverse growth potential.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pla">
+      <div class="stl">Latin America Region</div>
+      <p><strong>Loyverse TPV:</strong> $0.8B (6% of global SOM, excl. Mexico). <strong>Digital penetration:</strong> 45-65%. <strong>Local dominance:</strong> Linx (BR), regional acquirers.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Brazil</strong></td><td>$380M</td><td>Linx (40%), Tone, Stone Payments (50%)</td><td>Toast, Square</td><td>Stripe, local acquiring, Stone</td><td>Linx & Stone (local) control most POS market. Loyverse competing on multi-location merchants.</td></tr>
+          <tr><td><strong>Colombia</strong></td><td>$150M</td><td>Adquiriente local, MercadoPago (60%)</td><td>Square (emerging)</td><td>Stripe, local banks, MercadoPago</td><td>Smaller but growing; MercadoPago strong; Loyverse early market entry.</td></tr>
+          <tr><td><strong>Chile</strong></td><td>$80M</td><td>Transbank, local acquirers (50%)</td><td>Square (limited)</td><td>Stripe, Transbank</td><td>Mature but concentrated; regulatory tied to banking.</td></tr>
+          <tr><td><strong>Argentina</strong></td><td>$75M</td><td>Todo Pago, Mercado Pago (50%)</td><td>Square (minimal)</td><td>Stripe, local PSPs</td><td>Economic volatility; cash still used for micro-merchants. Peso depreciation risk.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pmena">
+      <div class="stl">MENA Region</div>
+      <p><strong>Loyverse TPV:</strong> $1.88B (13% of global SOM). <strong>Digital penetration:</strong> 30-85% (wide range: Bahrain vs. Egypt). <strong>Payment rails:</strong> Highly fragmented by country and payment method.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Saudi Arabia</strong></td><td>$632M</td><td>Foodics, Mada (national switch) (60%)</td><td>Square (limited)</td><td>Stripe, Mada, local banks</td><td>Rapidly digitalizing; Vision 2030 pushing digital payments. Foodics dominant in F&B.</td></tr>
+          <tr><td><strong>UAE</strong></td><td>$251M</td><td>Foodics, local acquirers (50%)</td><td>Square (early)</td><td>Stripe, local UAE banks, Mada</td><td>Dubai financial hub; highly digital. Rapid growth in fintech.</td></tr>
+          <tr><td><strong>Turkey</strong></td><td>$310M</td><td>Iyzico, local acquirers (55%)</td><td>Square (limited), Toast</td><td>Stripe, Iyzico (fintech), local banks</td><td>Iyzico (Turkish fintech) dominant; high local preference.</td></tr>
+          <tr><td><strong>Egypt</strong></td><td>$320M</td><td>Fawry, CIB (local), mobile money (70%)</td><td>Square (minimal)</td><td>Local PSPs, CBE regulation</td><td>Central Bank Egypt regulation strict; mobile money (Vodafone Cash) growing.</td></tr>
+          <tr><td><strong>Israel</strong></td><td>$75M</td><td>local acquirers, Payboxes (40%)</td><td>Square, SumUp</td><td>Stripe, local Israeli fintechs</td><td>Mature fintech hub; high digital adoption.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pssa">
+      <div class="stl">Sub-Saharan Africa Region</div>
+      <p><strong>Loyverse TPV:</strong> $0.2B (1.5% of global SOM but fast-growing). <strong>Digital penetration:</strong> 20-45%. <strong>Mobile money dominance:</strong> M-Pesa (Kenya), MTN MoMo (multi-country).</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nigeria</strong></td><td>$45M</td><td>Flutterwave, Interswitch (70%)</td><td>Square (very limited)</td><td>Flutterwave, Interswitch, CBN</td><td>Largest SSA market; high informal % but growing digital penetration. Regulation improving (CBN open banking).</td></tr>
+          <tr><td><strong>Kenya</strong></td><td>$28M</td><td>M-Pesa, Safaricom, local (75%)</td><td>Square (minimal)</td><td>M-Pesa, Equity Bank, local PSPs</td><td>M-Pesa pioneer; mobile money = 40%+ of formal transactions. Loyverse in early stage.</td></tr>
+          <tr><td><strong>South Africa</strong></td><td>$35M</td><td>local banks, Yoco (emerging) (50%)</td><td>Square (limited)</td><td>Stripe, Yoco, major SA banks</td><td>Most developed SSA economy; Yoco (fintech) growing.</td></tr>
+          <tr><td><strong>Ghana</strong></td><td>$12M</td><td>MTN MoMo, AirtelTigo Money (70%)</td><td>Square (minimal)</td><td>Mobile money operators, BoG</td><td>Mobile money critical; very limited traditional POS.</td></tr>
+          <tr><td><strong>Tanzania</strong></td><td>$8M</td><td>Vodacom, Airtel, local (75%)</td><td>Minimal</td><td>Mobile money, local operators</td><td>Emerging; mobile money dominant; limited formal POS market yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pca">
+      <div class="stl">Central Asia Region</div>
+      <p><strong>Loyverse TPV:</strong> $110M (1% of global SOM). <strong>Digital penetration:</strong> 28-45%. <strong>Emerging markets:</strong> Kazakhstan largest; regulatory variation.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:100px">Country</th><th>Loyverse TPV</th><th>Local Players (share)</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Kazakhstan</strong></td><td>$65M</td><td>Qiwi, Kaspi (local) (60%)</td><td>Square (emerging)</td><td>Stripe, Kaspi, National Bank</td><td>Largest CA market; Kaspi (local fintech) strong; oil-dependent economy.</td></tr>
+          <tr><td><strong>Uzbekistan</strong></td><td>$30M</td><td>Paycom, local (70%)</td><td>Minimal</td><td>Paycom, local operators</td><td>Rapid modernization post-independence; increasing openness to foreign tech. Regulation opening.</td></tr>
+          <tr><td><strong>Mongolia</strong></td><td>$12M</td><td>XacBank, local (65%)</td><td>Minimal</td><td>Local operators, XacBank</td><td>Small, emerging market; very limited formal POS.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="pcar">
+      <div class="stl">Caribbean Region</div>
+      <p><strong>Loyverse TPV:</strong> $25M (0.2% of global SOM). <strong>Digital penetration:</strong> 50%. <strong>Small dispersed markets:</strong> Limited scale individually; tourism-dependent.</p>
+      <table class="tbl">
+        <thead><tr><th style="width:120px">Country</th><th>Tourism reliance</th><th>Local Players</th><th>Global Players</th><th>Primary PSP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Jamaica</strong></td><td>High</td><td>NCNB Jamaica, NCB (60%)</td><td>Square (emerging)</td><td>Stripe, local banks</td><td>Tourism drives formal merchant base; remittances also important.</td></tr>
+          <tr><td><strong>Trinidad & Tobago</strong></td><td>Medium</td><td>First Caribbean Bank (local) (55%)</td><td>Minimal</td><td>Stripe, local banks</td><td>Oil-dependent; formal SMB base small but growing.</td></tr>
+          <tr><td><strong>Barbados</strong></td><td>High</td><td>local banks (70%)</td><td>Minimal</td><td>Stripe, Barbados banks</td><td>Small island; tourism 60%+ of economy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- REFERENCES & DEFINITIONS -->
+    <div class="panel" id="pref">
+      <div style="background:var(--white);border-radius:8px;border:1px solid var(--silver);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:20px">
+        <div style="background:var(--near-black);padding:10px 16px"><span style="font-family:'Arial Black',Arial,sans-serif;font-size:12px;font-weight:900;color:#fff">Income Tiers & Regional Definitions</span></div>
+        <div style="padding:16px">
+          <table class="tbl" style="border-radius:0;border:none;margin-bottom:0;box-shadow:none">
+            <thead><tr><th style="width:140px">Term</th><th>Definition</th></tr></thead>
+            <tbody>
+              <tr><td><strong><span style="background:#D4EAF8;color:#0A3F7A;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">HI</span></strong></td><td>High Income (World Bank classification, GNI per capita &gt;$13,845 in 2024). Loyverse HI countries: USA, UK, DE, FR, JP, AU, SG, HK, NZ, CH, SE, DK, FI, AT, NL, BE, IE, IL, SA, AE, OM, PR. Avg GTV per micro SMB: $80K/year. Highest TPV take rate feasibility.</td></tr>
+              <tr><td><strong><span style="background:#D4F5E0;color:#074D30;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">UMI</span></strong></td><td>Upper Middle Income (GNI per capita $4,516-$13,845). Loyverse UMI: BR, MX, MY, TH, TR, CO, CL, AR, CR, PA, DZ, LB, KZ, PL. Avg GTV per micro: $30K/year. Strong Loyverse base; medium PSP complexity.</td></tr>
+              <tr><td><strong><span style="background:#FDE8C0;color:#7A4500;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">LMI</span></strong></td><td>Lower Middle Income (GNI per capita $1,146-$4,515). Loyverse LMI: PH, VN, EG, NG, KE, GH, ID (borderline), MA, JO, MN, UZ. Avg GTV per micro: $7K/year. High merchant count, lower unit revenue. Mobile money critical.</td></tr>
+              <tr><td><strong><span style="background:#F8D4D4;color:#7A0A0A;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700">LI</span></strong></td><td>Low Income (GNI per capita &lt;$1,146). Loyverse LI: MM (Myanmar), KH (Cambodia), TZ (Tanzania). Avg GTV per micro: $3K/year. Mostly offline usage; Payments attach very low. Long-term potential as digitization increases.</td></tr>
+              <tr><td><strong>GCC</strong></td><td>Gulf Cooperation Council - Bahrain, Kuwait, Oman, Qatar, Saudi Arabia, UAE. United by common currency peg (USD), Arab language, shared economic policy. Foodics and Mada are GCC-specific. Key Loyverse markets: SA ($1.27B), UAE ($251M), OM ($93M).</td></tr>
+              <tr><td><strong>MENA</strong></td><td>Middle East and North Africa - broader region including GCC + Egypt, Turkey, Morocco, Algeria, Jordan, Lebanon, Israel, Iraq, Iran. Loyverse SOM MENA TPV: $1.88B. Most diverse region in Loyverse's portfolio by language, regulation, and digital maturity.</td></tr>
+              <tr><td><strong>SEA</strong></td><td>Southeast Asia - Indonesia, Thailand, Philippines, Malaysia, Vietnam, Singapore, Myanmar, Cambodia (and Brunei, Laos, Timor-Leste). Loyverse's highest-TPV region cluster ($7.4B). Characterized by high informal economy share and local payment rail fragmentation.</td></tr>
+              <tr><td><strong>SSA</strong></td><td>Sub-Saharan Africa - all African countries south of the Sahara. Loyverse SOM countries: NG, ZA, KE, GH, TZ, MU, SC. Mobile money dominant. Very high local share. Lowest ARPM potential in short term; highest long-term growth rate.</td></tr>
+              <tr><td><strong>LATAM</strong></td><td>Latin America - in this document: BR, MX (counted in North America for TPV), CO, CL, AR, CR, PA. Note: Mexico ($3B TPV) is treated separately as North America in Loyverse's internal TPV data. LATAM (excl. MX) Loyverse TPV: ~$0.8B.</td></tr>
+              <tr><td><strong>APAC</strong></td><td>Asia-Pacific - in this document covers all Asian and Pacific markets including SEA, EA (JP, KR, TW, HK), SG, AU, NZ. Loyverse APAC TPV: $7.4B. The largest single Loyverse TPV region.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:8px;border:1px solid var(--silver);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+        <div style="background:var(--near-black);padding:10px 16px"><span style="font-family:'Arial Black',Arial,sans-serif;font-size:12px;font-weight:900;color:#fff">Sources, Organizations &amp; Benchmarks</span></div>
+        <div style="padding:0">
+          <table class="tbl" style="border-radius:0;border:none;margin-bottom:0;box-shadow:none">
+            <thead><tr><th style="width:140px">Term</th><th>Definition</th></tr></thead>
+            <tbody>
+              <tr><td><strong>IFC</strong></td><td>International Finance Corporation (World Bank Group). Source for global MSME count (445M total including informal). Also publishes the MSME Finance Gap report ($5.7T financing gap for formal MSMEs).</td></tr>
+              <tr><td><strong>World Bank MSME EI</strong></td><td>World Bank MSME Economic Indicators Database. Provides formal MSME counts by country. 196M micro-enterprises + 11M small enterprises globally (formal registered). Used as basis for the Conservative TAM scenario.</td></tr>
+              <tr><td><strong>Worldpay GPR</strong></td><td>Worldpay Global Payments Report - published annually, covers 40 markets. Source for digital payment penetration % by country and payment method splits (card/wallet/A2A). 2025 edition used for TPV estimates.</td></tr>
+              <tr><td><strong>ADB Asia SME Monitor</strong></td><td>Asian Development Bank's annual SME data publication for 24-26 Asia-Pacific economies. Source for APAC SME counts (Indonesia 65.5M, Thailand 3.2M, Philippines 1.1M, etc.). Most authoritative APAC SME data source.</td></tr>
+              <tr><td><strong>EC SME Factsheet</strong></td><td>European Commission SME Performance Review, published annually. Source for EU-27 SME count (26.1M) and country-level breakdowns. Includes Austria, Belgium, Switzerland, Czech Republic, Denmark, Finland, Greece, etc.</td></tr>
+              <tr><td><strong>SEBRAE</strong></td><td>Serviço Brasileiro de Apoio às Micro e Pequenas Empresas - Brazil's SME support agency. Source for Brazilian SME count (19M micro and small businesses). The most authoritative BR SME data.</td></tr>
+              <tr><td><strong>US SBA</strong></td><td>US Small Business Administration. Published 36.2M small businesses in US (2026 data). Definition: &lt;500 employees. Source for US SME count and small business statistics.</td></tr>
+              <tr><td><strong>CAGR</strong></td><td>Compound Annual Growth Rate - annualized growth rate over a multi-year period. Global POS software market CAGR: ~14-15% through 2030. Loyverse APAC TPV growing at ~15-25% CAGR. Used to project market size forward.</td></tr>
+              <tr><td><strong>ARR / MRR</strong></td><td>Annual/Monthly Recurring Revenue - the subscription revenue base, excluding one-time payments. Lightspeed 97% recurring. Toast ~20% SaaS. Loyverse Phase 1: 100% ARR (add-on subscriptions). Phase 2 adds transaction-based revenue (not recurring by definition, but highly predictable).</td></tr>
+              <tr><td><strong>EBITDA</strong></td><td>Earnings Before Interest, Taxes, Depreciation and Amortization - proxy for operating profitability. SumUp EBITDA-positive since Q4 2022. Toast 35% adjusted EBITDA margins (Q3 2025). Loyverse Phase 2 profitability target not publicly stated.</td></tr>
+              <tr><td><strong>IDC</strong></td><td>International Data Corporation - technology market research firm. Source cited for Linx's 40.2% market share in Brazilian retail management software.</td></tr>
+              <tr><td><strong>Mordor Intelligence</strong></td><td>Market research firm. Source for global POS software market size (~$12B 2024) and SME segment share (61% of total POS market). Also source for CAGR projections and regional market shares.</td></tr>
+              <tr><td><strong>GSMA</strong></td><td>Global System for Mobile Communications Association - mobile industry trade body. Source for mobile money data in SSA (M-Pesa, MTN MoMo, Airtel Money subscriber counts and transaction volumes).</td></tr>
+              <tr><td><strong>McKinsey Digital Payments Survey</strong></td><td>Annual McKinsey survey on US and European consumer digital payment behavior. Source for US wallet penetration (43% in-store in 2024, up from 23% in 2019) and European payment method splits.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <!-- ── App Store Drill-Down Modal ──────────────────────────────────────────── -->
 <div class="store-drill-overlay" id="storeDrillOverlay" onclick="handleOverlayClick(event)">
   <div class="store-drill-panel" id="storeDrillPanel">
@@ -2116,6 +3717,8 @@
 <script src="case-data.js"></script>
 <script src="fyp-data.js"></script>
 <script src="tars-data.js"></script>
+<script src="intel-data.js"></script>
+<script src="intel-functions.js"></script>
 
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
 <script>
@@ -2124,7 +3727,8 @@ const WORDMARKS = {
   hub:  'Loyverse',
   tars: 'Loyverse <span style="color:#1D8FE1">TARS</span>',
   case: 'Loyverse <span style="color:#2DC46B">CASE</span>',
-  '5yp': 'Loyverse <span style="color:#1D8FE1">5YP</span>'
+  '5yp': 'Loyverse <span style="color:#1D8FE1">5YP</span>',
+  intel: 'Loyverse <span style="color:#1D8FE1">INTEL</span>'
 };
 
 // ─── MARKET FILTER (multi-select) ───────────────────────────────────────────
