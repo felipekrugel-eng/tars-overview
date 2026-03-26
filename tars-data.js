@@ -136,3 +136,41 @@ TARS_DATA.allActions = (function() {
   TARS_DATA.generalActions.forEach(function(a) { arr.push(a); });
   return arr;
 })();
+
+// ─── TILE SYNC: patch initiative cards from TARS_DATA ───────────────────────
+// Updates progress %, progress bar width, and "Next action" text on the
+// three initiative tiles so they always reflect the latest tracker data.
+document.addEventListener("DOMContentLoaded", function() {
+  var map = { payments: 1, pricing: 2, partnerships: 3 };
+  Object.keys(map).forEach(function(key) {
+    var idx  = map[key];
+    var init = TARS_DATA.initiatives[key];
+    if (!init) return;
+
+    // 1. Progress label  (e.g. "50%")
+    var progLabel = document.getElementById("init-prog-" + idx);
+    if (progLabel) progLabel.textContent = init.progress + "%";
+
+    // 2. Progress bar fill width
+    if (progLabel) {
+      var track = progLabel.closest(".init-progress-wrap");
+      if (track) {
+        var fill = track.querySelector(".init-progress-fill");
+        if (fill) fill.style.width = init.progress + "%";
+      }
+    }
+
+    // 3. Next action text — first in-progress, then first overdue, then first upcoming
+    var next = null;
+    ["in-progress","overdue","upcoming"].forEach(function(s) {
+      if (!next) next = init.actions.filter(function(a) { return a.status === s; })[0];
+    });
+    if (next) {
+      var card = progLabel && progLabel.closest(".init-card-body");
+      if (card) {
+        var nextText = card.querySelector(".init-next-text");
+        if (nextText) nextText.textContent = next.text;
+      }
+    }
+  });
+});
