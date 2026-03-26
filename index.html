@@ -81,8 +81,8 @@
     }
 
     /* ─── PANEL SHOW/HIDE ─── */
-    .cc-panel { display: none; }
-    .cc-panel.active { display: block; }
+    .cc-panel { display: none; overflow: visible; }
+    .cc-panel.active { display: block; overflow: visible; }
 
     /* ═══════════════════════════════════════
        HUB LANDING
@@ -283,10 +283,12 @@
     .case-hero-meta { font-size: 12px; color: rgba(255,255,255,0.4); }
     .case-hero-meta strong { color: rgba(255,255,255,0.75); display: block; font-size: 14px; margin-bottom: 2px; }
 
-    .case-body { background: #F7F7F7; padding: 48px 48px 64px; }
+    .case-body { background: #F7F7F7; padding: 48px 48px 64px; overflow: visible; }
 
     /* Market filter bar */
-    .market-filter-bar { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 16px 24px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; overflow: visible; position: sticky; top: 56px; z-index: 50; transition: box-shadow 0.2s, border-radius 0.2s; }
+    .market-filter-bar { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 16px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; overflow: visible; position: sticky; top: 56px; z-index: 50; transition: box-shadow 0.2s, border-radius 0.2s, margin 0.2s, border-radius 0.2s; margin: 24px 48px 0; }
+    .market-filter-bar.stuck { border-radius: 0; margin-left: 0; margin-right: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.12); padding: 12px 48px; }
+    .market-filter-bar.stuck .data-note { display: none; }
     .filter-label { font-family: "Arial Black", Arial, sans-serif; font-size: 12px; color: #2DC46B; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
     .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
     .filter-chip { padding: 5px 12px; font-size: 12px; font-family: Arial, sans-serif; color: #888; background: #F7F7F7; border: 1px solid #E0E0E0; border-radius: 20px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
@@ -568,6 +570,8 @@
       .case-hero { padding: 40px 24px; }
       .case-hero h1 { font-size: 34px; }
       .case-body { padding: 32px 24px; }
+      .market-filter-bar { margin: 24px 24px 0; }
+      .market-filter-bar.stuck { margin-left: 0; margin-right: 0; padding: 12px 24px; }
       .section { padding: 40px 24px; }
       .feed-bar { padding: 16px 24px; }
       .footer { padding: 24px; }
@@ -1472,16 +1476,12 @@
     </div>
   </div>
 
-  <!-- BODY -->
-  <div class="case-body">
-
-    <div class="data-note">
+  <!-- STICKY FILTER BAR (outside case-body for reliable sticky behavior) -->
+  <div class="market-filter-bar" id="caseFilterBar">
+    <div class="data-note" style="width:100%;margin-bottom:8px;">
       <span class="data-note-icon">📊</span>
       <div><strong>5-Year Plan projections (v4, March 2026). </strong>Numbers are model-based. Snowflake actuals pipeline in progress — once live, this dashboard switches to real data with actuals vs. projected comparisons. <span id="case-data-note-period"></span></div>
     </div>
-
-    <!-- MARKET FILTER -->
-    <div class="market-filter-bar">
       <!-- Row 1: Date range -->
       <div class="filter-row">
         <div class="filter-label">📅 Period</div>
@@ -1514,7 +1514,10 @@
       </div>
       <!-- Row 3: Country sub-filters (shown on continent click) -->
       <div class="filter-countries-row" id="country-filters"></div>
-    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="case-body">
 
     <!-- ── GROUP 1: REVENUE ── -->
     <div class="case-section-label">01</div>
@@ -2320,6 +2323,19 @@ document.addEventListener('click', function(e) {
 
 // Initialize dropdowns on load
 document.addEventListener('DOMContentLoaded', _initDateDropdowns);
+
+// ─── STICKY FILTER BAR DETECTION ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  var filterBar = document.getElementById('caseFilterBar');
+  if (!filterBar) return;
+  // Use scroll listener — add .stuck class when bar hits the navbar
+  var navH = 56;
+  window.addEventListener('scroll', function() {
+    if (!filterBar.offsetParent) return; // panel not visible
+    var rect = filterBar.getBoundingClientRect();
+    filterBar.classList.toggle('stuck', rect.top <= navH + 1);
+  }, { passive: true });
+});
 
 // ─── FILTER ENGINE ──────────────────────────────────────────────────────────
 var __chartRevenueYTD = null;
