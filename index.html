@@ -391,6 +391,26 @@
     .cohort-card-value.green { color: #2DC46B; }
     .cohort-card-desc { font-size: 12px; color: var(--mid-gray); line-height: 1.5; }
 
+    /* ── Unit Economics Hero ── */
+    .unit-hero-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px; }
+    .unit-hero-card { background:#fff; border-radius:12px; padding:28px 32px; border:1px solid #e5e7eb; transition:box-shadow .2s; }
+    .unit-hero-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.08); }
+    .unit-hero-label { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#6b7280; margin-bottom:8px; }
+    .unit-hero-value { font-family:'Arial Black',sans-serif; font-size:42px; line-height:1.1; }
+    .unit-hero-value.blue { color:#1D8FE1; }
+    .unit-hero-value.green { color:#2DC46B; }
+    .unit-hero-target { font-size:13px; color:#9ca3af; margin-top:6px; }
+    .unit-hero-note { font-size:13px; color:#6b7280; margin-top:4px; }
+    .unit-hero-drill { font-size:12px; color:#1D8FE1; margin-top:12px; font-weight:600; }
+    .unit-support-row { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-top:20px; }
+    .unit-support-card { background:#fff; border-radius:10px; padding:20px 24px; border:1px solid #e5e7eb; }
+    .unit-support-label { font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#6b7280; }
+    .unit-support-value { font-family:'Arial Black',sans-serif; font-size:24px; margin-top:6px; }
+    .unit-support-note { font-size:12px; color:#9ca3af; margin-top:4px; }
+    .unit-trend-container { background:#fff; border-radius:12px; padding:24px 28px; border:1px solid #e5e7eb; margin-top:20px; }
+    .unit-trend-title { font-family:'Arial Black',sans-serif; font-size:15px; }
+    .unit-trend-sub { font-size:12px; color:#9ca3af; margin-top:2px; margin-bottom:16px; }
+
     .case-footer { background: #0D0D0D; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .case-footer-name { font-family: "Arial Black", Arial, sans-serif; font-size: 20px; color: #2DC46B; }
     .case-footer-sub { font-size: 12px; color: var(--mid-gray); margin-top: 2px; }
@@ -1662,29 +1682,55 @@
     <!-- ── UNIT ECONOMICS ── -->
     <div class="case-section-label" style="margin-top:36px;">05</div>
     <div class="case-section-title">Unit economics.</div>
-    <div class="case-section-sub">Core metrics defining path to profitability. CAC, LTV, payback period, and margin trajectory.</div>
+    <div class="case-section-sub">Cohort-level NPV and LTV tracking. A cohort is all merchants onboarded in a given month.</div>
 
-    <div class="cohort-cards">
-      <div class="cohort-card software">
-        <div class="cohort-card-label">CAC (Customer Acquisition Cost)</div>
-        <div class="cohort-card-value gray" id="unit-cac">—</div>
-        <div class="cohort-card-desc">Organic acquisition · Near-zero CAC. Target 2026: <€5</div>
+    <!-- Hero row: NPV/Cohort and LTV/Cohort -->
+    <div class="unit-hero-row">
+      <div class="unit-hero-card" onclick="_showCohortDrill('npv')" style="cursor:pointer;">
+        <div class="unit-hero-label">NPV / COHORT</div>
+        <div class="unit-hero-value blue" id="unit-npv">—</div>
+        <div class="unit-hero-target">Target: <span id="unit-npv-target">—</span></div>
+        <div class="unit-hero-note" id="unit-npv-note">—</div>
+        <div class="unit-hero-drill">Click to see by vintage ›</div>
       </div>
-      <div class="cohort-card payments">
-        <div class="cohort-card-label">LTV (Software Cohort)</div>
-        <div class="cohort-card-value blue" id="unit-ltv">—</div>
-        <div class="cohort-card-desc">Lifetime value per merchant. Target 2026: €216</div>
+      <div class="unit-hero-card" onclick="_showCohortDrill('ltv')" style="cursor:pointer;">
+        <div class="unit-hero-label">LTV / COHORT</div>
+        <div class="unit-hero-value green" id="unit-ltv-hero">—</div>
+        <div class="unit-hero-target">Target: <span id="unit-ltv-target">—</span></div>
+        <div class="unit-hero-note" id="unit-ltv-note">—</div>
+        <div class="unit-hero-drill">Click to see by vintage ›</div>
       </div>
-      <div class="cohort-card target">
-        <div class="cohort-card-label">Payback Period</div>
-        <div class="cohort-card-value green" id="unit-payback">—</div>
-        <div class="cohort-card-desc">Months to recover acquisition cost. Target 2026: 14 months</div>
+    </div>
+
+    <!-- Supporting metrics: 4 in a row -->
+    <div class="unit-support-row">
+      <div class="unit-support-card">
+        <div class="unit-support-label">CAC</div>
+        <div class="unit-support-value" id="unit-cac">—</div>
+        <div class="unit-support-note" id="unit-cac-note">—</div>
       </div>
-      <div class="cohort-card">
-        <div class="cohort-card-label">Gross Margin</div>
-        <div class="cohort-card-value" id="unit-margin">—</div>
-        <div class="cohort-card-desc">Revenue minus COGS. Target 2026: 69%</div>
+      <div class="unit-support-card">
+        <div class="unit-support-label">PAYBACK</div>
+        <div class="unit-support-value" id="unit-payback">—</div>
+        <div class="unit-support-note" id="unit-payback-note">—</div>
       </div>
+      <div class="unit-support-card">
+        <div class="unit-support-label">GROSS MARGIN</div>
+        <div class="unit-support-value" id="unit-margin">—</div>
+        <div class="unit-support-note" id="unit-margin-note">—</div>
+      </div>
+      <div class="unit-support-card">
+        <div class="unit-support-label">LTV:CAC</div>
+        <div class="unit-support-value" id="unit-ltvcac">—</div>
+        <div class="unit-support-note" id="unit-ltvcac-note">—</div>
+      </div>
+    </div>
+
+    <!-- Cohort NPV trend chart -->
+    <div class="unit-trend-container">
+      <div class="unit-trend-title">NPV trend by cohort vintage</div>
+      <div class="unit-trend-sub">Last 12 monthly cohorts · Click any bar for detail</div>
+      <canvas id="chartCohortNpvTrend" height="140"></canvas>
     </div>
 
 
@@ -2128,11 +2174,26 @@ const CASE_DATA = {
 
   // ── Unit economics ──────────────────────────────────────────────────────────
   unitEconomics: {
-    cac:          { value: "~€0", target: "<€5", note: "Organic acquisition — near-zero CAC" },
-    ltvSoftware:  { value: "€180", target: "€216", note: "Subscription + POS model LTV" },
-    ltvCacRatio:  { value: "N/A", target: ">40×", note: "Organic model — effectively infinite" },
-    payback:      { value: "18mo", target: "14mo", note: "Months to recover acquisition cost" },
-    grossMargin:  { value: "68%", target: "69%", note: "Revenue minus COGS" }
+    avgNpvPerCohort:  { value: "€180", target: "€360+", note: "Software-only today → 2× with payments" },
+    avgLtvPerCohort:  { value: "€180", target: "€216", note: "36-month LTV per merchant in cohort" },
+    cac:              { value: "~€0", target: "<€5", note: "Organic acquisition" },
+    payback:          { value: "18mo", target: "14mo", note: "Months to recover" },
+    grossMargin:      { value: "68%", target: "69%", note: "Revenue minus COGS" },
+    ltvCacRatio:      { value: ">40×", target: ">40×", note: "Organic model" },
+    cohortVintages: [
+      { month: "Apr 2025", merchants: 4200, npv: 165, ltv: 168, arpc: 16.2, paymentPct: 2.1 },
+      { month: "May 2025", merchants: 4350, npv: 168, ltv: 170, arpc: 16.4, paymentPct: 2.3 },
+      { month: "Jun 2025", merchants: 4100, npv: 170, ltv: 172, arpc: 16.5, paymentPct: 2.5 },
+      { month: "Jul 2025", merchants: 4500, npv: 172, ltv: 174, arpc: 16.7, paymentPct: 2.8 },
+      { month: "Aug 2025", merchants: 4300, npv: 175, ltv: 176, arpc: 16.8, paymentPct: 3.0 },
+      { month: "Sep 2025", merchants: 4600, npv: 178, ltv: 178, arpc: 16.9, paymentPct: 3.1 },
+      { month: "Oct 2025", merchants: 4400, npv: 180, ltv: 180, arpc: 17.0, paymentPct: 3.2 },
+      { month: "Nov 2025", merchants: 4250, npv: 178, ltv: 179, arpc: 17.0, paymentPct: 3.0 },
+      { month: "Dec 2025", merchants: 3900, npv: 176, ltv: 177, arpc: 16.9, paymentPct: 2.9 },
+      { month: "Jan 2026", merchants: 4700, npv: 182, ltv: 183, arpc: 17.2, paymentPct: 3.4 },
+      { month: "Feb 2026", merchants: 4800, npv: 185, ltv: 186, arpc: 17.4, paymentPct: 3.5 },
+      { month: "Mar 2026", merchants: 5100, npv: 188, ltv: 189, arpc: 17.6, paymentPct: 3.7 }
+    ]
   },
 
   // ── Revenue ─────────────────────────────────────────────────────────────
@@ -2511,11 +2572,62 @@ function renderCase() {
   document.getElementById("gf-take").style.width = "21%";
   document.getElementById("gf-npv").style.width = "60%";
 
-  // Unit economics cards
-  document.getElementById("unit-cac").textContent = D.unitEconomics.cac.value;
-  document.getElementById("unit-ltv").textContent = D.unitEconomics.ltvSoftware.value;
-  document.getElementById("unit-payback").textContent = D.unitEconomics.payback.value;
-  document.getElementById("unit-margin").textContent = D.unitEconomics.grossMargin.value;
+  // Unit economics — hero + supporting cards
+  const UE = D.unitEconomics;
+  document.getElementById("unit-npv").textContent = UE.avgNpvPerCohort.value;
+  document.getElementById("unit-npv-target").textContent = UE.avgNpvPerCohort.target;
+  document.getElementById("unit-npv-note").textContent = UE.avgNpvPerCohort.note;
+  document.getElementById("unit-ltv-hero").textContent = UE.avgLtvPerCohort.value;
+  document.getElementById("unit-ltv-target").textContent = UE.avgLtvPerCohort.target;
+  document.getElementById("unit-ltv-note").textContent = UE.avgLtvPerCohort.note;
+  document.getElementById("unit-cac").textContent = UE.cac.value;
+  document.getElementById("unit-cac-note").textContent = UE.cac.note;
+  document.getElementById("unit-payback").textContent = UE.payback.value;
+  document.getElementById("unit-payback-note").textContent = UE.payback.note;
+  document.getElementById("unit-margin").textContent = UE.grossMargin.value;
+  document.getElementById("unit-margin-note").textContent = UE.grossMargin.note;
+  document.getElementById("unit-ltvcac").textContent = UE.ltvCacRatio.value;
+  document.getElementById("unit-ltvcac-note").textContent = UE.ltvCacRatio.note;
+
+  // Cohort NPV trend chart
+  const vintages = UE.cohortVintages;
+  new Chart(document.getElementById("chartCohortNpvTrend"), {
+    type: "bar",
+    data: {
+      labels: vintages.map(function(v){ return v.month; }),
+      datasets: [{
+        label: "NPV (€)",
+        data: vintages.map(function(v){ return v.npv; }),
+        backgroundColor: vintages.map(function(v){ return v.npv >= 180 ? "#2DC46B" : "#1D8FE1"; }),
+        borderRadius: 4,
+        barPercentage: 0.7
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            afterLabel: function(ctx) {
+              var v = vintages[ctx.dataIndex];
+              return "Merchants: " + v.merchants.toLocaleString() + "\nLTV: €" + v.ltv + "\nARPC: €" + v.arpc + "\nPayment %: " + v.paymentPct + "%";
+            }
+          }
+        }
+      },
+      scales: {
+        y: { beginAtZero: false, min: 150, grid: { color: "#f3f4f6" }, ticks: { callback: function(v){ return "€" + v; } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      },
+      onClick: function(evt, elements) {
+        if (elements.length > 0) {
+          _showCohortVintageDrill(elements[0].index);
+        }
+      }
+    }
+  });
 
   // Render conversion funnel
   function renderFunnel() {
@@ -2688,6 +2800,134 @@ function renderCase() {
       '<span class="theme-count">' + t.mentions.toLocaleString() + '</span>';
     themesEl.appendChild(div);
   });
+}
+
+// ─── COHORT DRILL-DOWN (NPV or LTV view) ─────────────────────────────────────
+function _showCohortDrill(metric) {
+  var vintages = CASE_DATA.unitEconomics.cohortVintages;
+  var isNpv = metric === 'npv';
+  var title = isNpv ? 'NPV by Cohort Vintage' : 'LTV by Cohort Vintage';
+  var color = isNpv ? '#1D8FE1' : '#2DC46B';
+
+  var overlay = document.getElementById("cohort-drill-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "cohort-drill-overlay";
+    overlay.className = "store-drill-overlay";
+    document.body.appendChild(overlay);
+  }
+
+  overlay.innerHTML =
+    '<div class="store-drill-panel" style="max-width:800px;">' +
+      '<div class="store-drill-header">' +
+        '<span class="store-drill-title">' + title + '</span>' +
+        '<span class="store-drill-close" onclick="document.getElementById(\'cohort-drill-overlay\').classList.remove(\'open\')">✕</span>' +
+      '</div>' +
+      '<div style="padding:24px;">' +
+        '<div style="height:260px;"><canvas id="chartCohortDrill"></canvas></div>' +
+        '<div style="margin-top:20px; overflow-x:auto;">' +
+          '<table style="width:100%; font-size:13px; border-collapse:collapse;">' +
+            '<thead><tr style="border-bottom:2px solid #e5e7eb; text-align:left;">' +
+              '<th style="padding:8px 12px;">Cohort</th>' +
+              '<th style="padding:8px 12px;">Merchants</th>' +
+              '<th style="padding:8px 12px;">' + (isNpv ? 'NPV' : 'LTV') + '</th>' +
+              '<th style="padding:8px 12px;">ARPC</th>' +
+              '<th style="padding:8px 12px;">Payment %</th>' +
+            '</tr></thead>' +
+            '<tbody>' +
+              vintages.map(function(v) {
+                return '<tr style="border-bottom:1px solid #f3f4f6;">' +
+                  '<td style="padding:8px 12px; font-weight:600;">' + v.month + '</td>' +
+                  '<td style="padding:8px 12px;">' + v.merchants.toLocaleString() + '</td>' +
+                  '<td style="padding:8px 12px; color:' + color + '; font-weight:700;">€' + (isNpv ? v.npv : v.ltv) + '</td>' +
+                  '<td style="padding:8px 12px;">€' + v.arpc + '/mo</td>' +
+                  '<td style="padding:8px 12px;">' + v.paymentPct + '%</td>' +
+                '</tr>';
+              }).join("") +
+            '</tbody>' +
+          '</table>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  overlay.classList.add("open");
+
+  new Chart(document.getElementById("chartCohortDrill"), {
+    type: "bar",
+    data: {
+      labels: vintages.map(function(v){ return v.month; }),
+      datasets: [{
+        label: isNpv ? "NPV (€)" : "LTV (€)",
+        data: vintages.map(function(v){ return isNpv ? v.npv : v.ltv; }),
+        backgroundColor: color + "cc",
+        borderRadius: 4,
+        barPercentage: 0.65
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: false, min: 150, grid: { color: "#f3f4f6" }, ticks: { callback: function(v){ return "€" + v; } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+// ─── SINGLE COHORT VINTAGE DRILL-DOWN ────────────────────────────────────────
+function _showCohortVintageDrill(idx) {
+  var v = CASE_DATA.unitEconomics.cohortVintages[idx];
+  var softwareNpv = CASE_DATA.cohortSoftware;
+  var targetNpv = CASE_DATA.cohortTarget;
+
+  var overlay = document.getElementById("cohort-drill-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "cohort-drill-overlay";
+    overlay.className = "store-drill-overlay";
+    document.body.appendChild(overlay);
+  }
+
+  overlay.innerHTML =
+    '<div class="store-drill-panel" style="max-width:600px;">' +
+      '<div class="store-drill-header">' +
+        '<span class="store-drill-title">' + v.month + ' Cohort</span>' +
+        '<span class="store-drill-close" onclick="document.getElementById(\'cohort-drill-overlay\').classList.remove(\'open\')">✕</span>' +
+      '</div>' +
+      '<div style="padding:24px;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">' +
+          '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
+            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Merchants onboarded</div>' +
+            '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px;">' + v.merchants.toLocaleString() + '</div>' +
+          '</div>' +
+          '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
+            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">ARPC</div>' +
+            '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px; color:#1D8FE1;">€' + v.arpc + '/mo</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">' +
+          '<div style="background:#EBF5FF; border-radius:10px; padding:16px 20px; text-align:center;">' +
+            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">NPV</div>' +
+            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#1D8FE1;">€' + v.npv + '</div>' +
+            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Benchmark: ' + softwareNpv + '</div>' +
+          '</div>' +
+          '<div style="background:#ECFDF5; border-radius:10px; padding:16px 20px; text-align:center;">' +
+            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">LTV</div>' +
+            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#2DC46B;">€' + v.ltv + '</div>' +
+            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Target: €216</div>' +
+          '</div>' +
+          '<div style="background:#FFF7ED; border-radius:10px; padding:16px 20px; text-align:center;">' +
+            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Payment %</div>' +
+            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#F59E0B;">' + v.paymentPct + '%</div>' +
+            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Phase 2A: 20%</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  overlay.classList.add("open");
 }
 
 // ─── CASE MONTHLY DRILL-DOWN ──────────────────────────────────────────────────
