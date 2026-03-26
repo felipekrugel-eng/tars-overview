@@ -2111,11 +2111,11 @@ const WORDMARKS = {
   '5yp': 'Loyverse <span style="color:#1D8FE1">5YP</span>'
 };
 
-// ─── MARKET FILTER ──────────────────────────────────────────────────────────
-let __activeMarketFilter = 'all';
-let __activeCountryFilter = null;
-let __dateFrom = '2026-01';
-let __dateTo = '2026-12';
+// ─── MARKET FILTER (multi-select) ───────────────────────────────────────────
+var __selectedRegions = [];   // e.g. ['asia', 'europe']
+var __selectedCountries = []; // e.g. ['TH', 'GB']
+var __dateFrom = '2026-01';
+var __dateTo = '2026-12';
 
 // Top Loyverse markets per continent (up to 8 per region)
 var REGION_COUNTRIES = {
@@ -2128,42 +2128,92 @@ var REGION_COUNTRIES = {
   oceania:        [ {code:"AU",flag:"🇦🇺",name:"Australia"}, {code:"NZ",flag:"🇳🇿",name:"New Zealand"} ]
 };
 
+var REGION_LABELS = {
+  asia: "Asia", europe: "Europe", north_america: "North America",
+  south_america: "South America", middle_east: "Middle East", africa: "Africa", oceania: "Oceania"
+};
+
 function setMarketFilter(market) {
-  __activeMarketFilter = market;
-  __activeCountryFilter = null;
-  document.querySelectorAll('#market-filters .filter-chip').forEach(function(c) { c.classList.remove('active'); });
-  event.target.classList.add('active');
+  if (market === 'all') {
+    // Reset everything
+    __selectedRegions = [];
+    __selectedCountries = [];
+    document.querySelectorAll('#market-filters .filter-chip').forEach(function(c) { c.classList.remove('active'); });
+    document.querySelector('#market-filters .filter-chip').classList.add('active'); // "All Markets" is first
+    document.getElementById('country-filters').innerHTML = '';
+    document.getElementById('country-filters').classList.remove('visible');
+    return;
+  }
 
-  var countryRow = document.getElementById('country-filters');
-  var countries = REGION_COUNTRIES[market];
-
-  if (countries) {
-    // Build country chips
-    var html = '<span class="filter-country-label">' + event.target.textContent + ' markets:</span>';
-    countries.forEach(function(c) {
-      html += '<button class="filter-country-chip" onclick="setCountryFilter(\'' + c.code + '\', this)">' + c.flag + ' ' + c.name + '</button>';
-    });
-    countryRow.innerHTML = html;
-    countryRow.classList.add('visible');
+  // Toggle this region
+  var idx = __selectedRegions.indexOf(market);
+  if (idx > -1) {
+    // Deselect region — also remove its countries from selection
+    __selectedRegions.splice(idx, 1);
+    var regionCodes = REGION_COUNTRIES[market].map(function(c) { return c.code; });
+    __selectedCountries = __selectedCountries.filter(function(c) { return regionCodes.indexOf(c) === -1; });
   } else {
-    // "All Markets" or unknown — hide country row
+    __selectedRegions.push(market);
+  }
+
+  // Update continent chip states
+  document.querySelectorAll('#market-filters .filter-chip').forEach(function(c) { c.classList.remove('active'); });
+  if (__selectedRegions.length === 0) {
+    document.querySelector('#market-filters .filter-chip').classList.add('active'); // "All Markets"
+  } else {
+    document.querySelectorAll('#market-filters .filter-chip').forEach(function(c) {
+      var onclick = c.getAttribute('onclick');
+      __selectedRegions.forEach(function(r) {
+        if (onclick && onclick.indexOf("'" + r + "'") > -1) c.classList.add('active');
+      });
+    });
+  }
+
+  // Rebuild country row with all selected regions' countries
+  _rebuildCountryRow();
+}
+
+function _rebuildCountryRow() {
+  var countryRow = document.getElementById('country-filters');
+  if (__selectedRegions.length === 0) {
     countryRow.innerHTML = '';
     countryRow.classList.remove('visible');
+    return;
   }
-  // Future: re-render metrics per region when Snowflake is connected
+
+  var html = '';
+  __selectedRegions.forEach(function(region) {
+    var countries = REGION_COUNTRIES[region];
+    var label = REGION_LABELS[region] || region;
+    if (countries) {
+      html += '<span class="filter-country-label">' + label + ':</span>';
+      countries.forEach(function(c) {
+        var isActive = __selectedCountries.indexOf(c.code) > -1 ? ' active' : '';
+        html += '<button class="filter-country-chip' + isActive + '" onclick="setCountryFilter(\'' + c.code + '\', this)">' + c.flag + ' ' + c.name + '</button>';
+      });
+      // Add a small gap between region groups if multiple
+      if (__selectedRegions.length > 1) {
+        html += '<span style="display:inline-block;width:8px;"></span>';
+      }
+    }
+  });
+
+  countryRow.innerHTML = html;
+  countryRow.classList.add('visible');
 }
 
 function setCountryFilter(code, btn) {
-  if (__activeCountryFilter === code) {
-    // Deselect — go back to full continent
-    __activeCountryFilter = null;
-    document.querySelectorAll('.filter-country-chip').forEach(function(c) { c.classList.remove('active'); });
+  var idx = __selectedCountries.indexOf(code);
+  if (idx > -1) {
+    // Deselect this country
+    __selectedCountries.splice(idx, 1);
+    btn.classList.remove('active');
   } else {
-    __activeCountryFilter = code;
-    document.querySelectorAll('.filter-country-chip').forEach(function(c) { c.classList.remove('active'); });
+    // Select this country
+    __selectedCountries.push(code);
     btn.classList.add('active');
   }
-  // Future: re-render metrics for specific country when Snowflake is connected
+  // Future: re-render metrics for selected countries when Snowflake is connected
 }
 
 function setDateRange() {
