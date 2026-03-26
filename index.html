@@ -563,7 +563,7 @@
     .store-drill-overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.55); z-index: 999;
-      backdrop-filter: blur(3px); align-items: flex-end; justify-content: center;
+      backdrop-filter: blur(3px); align-items: flex-end;
     }
     .store-drill-overlay.open { display: flex; }
     .store-drill-panel {
@@ -2808,45 +2808,49 @@ function _showCohortDrill(metric) {
   var isNpv = metric === 'npv';
   var title = isNpv ? 'NPV by Cohort Vintage' : 'LTV by Cohort Vintage';
   var color = isNpv ? '#1D8FE1' : '#2DC46B';
+  var icon = isNpv ? '📊' : '📈';
 
   var overlay = document.getElementById("cohort-drill-overlay");
   if (!overlay) {
     overlay = document.createElement("div");
     overlay.id = "cohort-drill-overlay";
     overlay.className = "store-drill-overlay";
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.classList.remove("open"); };
+    overlay.innerHTML = '<div class="store-drill-panel"><div class="drill-header" id="cohortDrillHeader"></div><div class="drill-body" id="cohortDrillBody"></div></div>';
     document.body.appendChild(overlay);
   }
 
-  overlay.innerHTML =
-    '<div class="store-drill-panel" style="max-width:800px;">' +
-      '<div class="store-drill-header">' +
-        '<span class="store-drill-title">' + title + '</span>' +
-        '<span class="store-drill-close" onclick="document.getElementById(\'cohort-drill-overlay\').classList.remove(\'open\')">✕</span>' +
-      '</div>' +
-      '<div style="padding:24px;">' +
-        '<div style="height:260px;"><canvas id="chartCohortDrill"></canvas></div>' +
-        '<div style="margin-top:20px; overflow-x:auto;">' +
-          '<table style="width:100%; font-size:13px; border-collapse:collapse;">' +
-            '<thead><tr style="border-bottom:2px solid #e5e7eb; text-align:left;">' +
-              '<th style="padding:8px 12px;">Cohort</th>' +
-              '<th style="padding:8px 12px;">Merchants</th>' +
-              '<th style="padding:8px 12px;">' + (isNpv ? 'NPV' : 'LTV') + '</th>' +
-              '<th style="padding:8px 12px;">ARPC</th>' +
-              '<th style="padding:8px 12px;">Payment %</th>' +
-            '</tr></thead>' +
-            '<tbody>' +
-              vintages.map(function(v) {
-                return '<tr style="border-bottom:1px solid #f3f4f6;">' +
-                  '<td style="padding:8px 12px; font-weight:600;">' + v.month + '</td>' +
-                  '<td style="padding:8px 12px;">' + v.merchants.toLocaleString() + '</td>' +
-                  '<td style="padding:8px 12px; color:' + color + '; font-weight:700;">€' + (isNpv ? v.npv : v.ltv) + '</td>' +
-                  '<td style="padding:8px 12px;">€' + v.arpc + '/mo</td>' +
-                  '<td style="padding:8px 12px;">' + v.paymentPct + '%</td>' +
-                '</tr>';
-              }).join("") +
-            '</tbody>' +
-          '</table>' +
-        '</div>' +
+  var header = document.getElementById("cohortDrillHeader");
+  header.innerHTML =
+    '<div><div class="drill-title">' + icon + ' ' + title + '</div>' +
+    '<div class="drill-subtitle">Last 12 monthly cohorts · ' + (isNpv ? 'Net Present Value' : 'Lifetime Value') + ' per merchant</div></div>' +
+    '<button class="drill-close-btn" onclick="document.getElementById(\'cohort-drill-overlay\').classList.remove(\'open\')">×</button>';
+
+  var body = document.getElementById("cohortDrillBody");
+  body.innerHTML =
+    '<div style="padding:24px 28px;">' +
+      '<div style="height:260px;"><canvas id="chartCohortDrill"></canvas></div>' +
+      '<div style="margin-top:20px; overflow-x:auto;">' +
+        '<table style="width:100%; font-size:13px; border-collapse:collapse;">' +
+          '<thead><tr style="border-bottom:2px solid #e5e7eb; text-align:left;">' +
+            '<th style="padding:8px 12px;">Cohort</th>' +
+            '<th style="padding:8px 12px;">Merchants</th>' +
+            '<th style="padding:8px 12px;">' + (isNpv ? 'NPV' : 'LTV') + '</th>' +
+            '<th style="padding:8px 12px;">ARPC</th>' +
+            '<th style="padding:8px 12px;">Payment %</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            vintages.map(function(v) {
+              return '<tr style="border-bottom:1px solid #f3f4f6;">' +
+                '<td style="padding:8px 12px; font-weight:600;">' + v.month + '</td>' +
+                '<td style="padding:8px 12px;">' + v.merchants.toLocaleString() + '</td>' +
+                '<td style="padding:8px 12px; color:' + color + '; font-weight:700;">€' + (isNpv ? v.npv : v.ltv) + '</td>' +
+                '<td style="padding:8px 12px;">€' + v.arpc + '/mo</td>' +
+                '<td style="padding:8px 12px;">' + v.paymentPct + '%</td>' +
+              '</tr>';
+            }).join("") +
+          '</tbody>' +
+        '</table>' +
       '</div>' +
     '</div>';
 
@@ -2880,49 +2884,51 @@ function _showCohortDrill(metric) {
 function _showCohortVintageDrill(idx) {
   var v = CASE_DATA.unitEconomics.cohortVintages[idx];
   var softwareNpv = CASE_DATA.cohortSoftware;
-  var targetNpv = CASE_DATA.cohortTarget;
 
-  var overlay = document.getElementById("cohort-drill-overlay");
+  var overlay = document.getElementById("cohortVintage-drill-overlay");
   if (!overlay) {
     overlay = document.createElement("div");
-    overlay.id = "cohort-drill-overlay";
+    overlay.id = "cohortVintage-drill-overlay";
     overlay.className = "store-drill-overlay";
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.classList.remove("open"); };
+    overlay.innerHTML = '<div class="store-drill-panel"><div class="drill-header" id="cohortVintageHeader"></div><div class="drill-body" id="cohortVintageBody"></div></div>';
     document.body.appendChild(overlay);
   }
 
-  overlay.innerHTML =
-    '<div class="store-drill-panel" style="max-width:600px;">' +
-      '<div class="store-drill-header">' +
-        '<span class="store-drill-title">' + v.month + ' Cohort</span>' +
-        '<span class="store-drill-close" onclick="document.getElementById(\'cohort-drill-overlay\').classList.remove(\'open\')">✕</span>' +
-      '</div>' +
-      '<div style="padding:24px;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">' +
-          '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
-            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Merchants onboarded</div>' +
-            '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px;">' + v.merchants.toLocaleString() + '</div>' +
-          '</div>' +
-          '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
-            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">ARPC</div>' +
-            '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px; color:#1D8FE1;">€' + v.arpc + '/mo</div>' +
-          '</div>' +
+  var header = document.getElementById("cohortVintageHeader");
+  header.innerHTML =
+    '<div><div class="drill-title">👥 ' + v.month + ' Cohort</div>' +
+    '<div class="drill-subtitle">' + v.merchants.toLocaleString() + ' merchants onboarded</div></div>' +
+    '<button class="drill-close-btn" onclick="document.getElementById(\'cohortVintage-drill-overlay\').classList.remove(\'open\')">×</button>';
+
+  var body = document.getElementById("cohortVintageBody");
+  body.innerHTML =
+    '<div style="padding:24px 28px;">' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">' +
+        '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
+          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Merchants onboarded</div>' +
+          '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px;">' + v.merchants.toLocaleString() + '</div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">' +
-          '<div style="background:#EBF5FF; border-radius:10px; padding:16px 20px; text-align:center;">' +
-            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">NPV</div>' +
-            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#1D8FE1;">€' + v.npv + '</div>' +
-            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Benchmark: ' + softwareNpv + '</div>' +
-          '</div>' +
-          '<div style="background:#ECFDF5; border-radius:10px; padding:16px 20px; text-align:center;">' +
-            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">LTV</div>' +
-            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#2DC46B;">€' + v.ltv + '</div>' +
-            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Target: €216</div>' +
-          '</div>' +
-          '<div style="background:#FFF7ED; border-radius:10px; padding:16px 20px; text-align:center;">' +
-            '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Payment %</div>' +
-            '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#F59E0B;">' + v.paymentPct + '%</div>' +
-            '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Phase 2A: 20%</div>' +
-          '</div>' +
+        '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
+          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">ARPC</div>' +
+          '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px; color:#1D8FE1;">€' + v.arpc + '/mo</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">' +
+        '<div style="background:#EBF5FF; border-radius:10px; padding:16px 20px; text-align:center;">' +
+          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">NPV</div>' +
+          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#1D8FE1;">€' + v.npv + '</div>' +
+          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Benchmark: ' + softwareNpv + '</div>' +
+        '</div>' +
+        '<div style="background:#ECFDF5; border-radius:10px; padding:16px 20px; text-align:center;">' +
+          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">LTV</div>' +
+          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#2DC46B;">€' + v.ltv + '</div>' +
+          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Target: €216</div>' +
+        '</div>' +
+        '<div style="background:#FFF7ED; border-radius:10px; padding:16px 20px; text-align:center;">' +
+          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Payment %</div>' +
+          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#F59E0B;">' + v.paymentPct + '%</div>' +
+          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Phase 2A: 20%</div>' +
         '</div>' +
       '</div>' +
     '</div>';
