@@ -16,7 +16,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-25T17:07:31Z",
-      nextRunAt: "2026-03-26T17:07:02Z"
+      nextRunAt: "2026-03-26T17:07:02Z",
+      detail: {
+        purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
+        process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
+        outputs: "Updated Action_Tracker.xlsx in Google Drive; Slack summary of changes.",
+        dependencies: "Slack (#strategy-feed), Google Drive (Action_Tracker.xlsx)"
+      }
     },
     {
       id: "sync-tracker-to-html",
@@ -28,7 +34,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-26T10:54:01Z",
-      nextRunAt: "2026-03-26T17:53:08Z"
+      nextRunAt: "2026-03-26T17:53:08Z",
+      detail: {
+        purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
+        process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
+        outputs: "Updated tars-data.js deployed to tars-overview.netlify.app.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo), Netlify"
+      }
     },
     {
       id: "monday-action-reminder",
@@ -40,7 +52,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-23T10:06:09Z",
-      nextRunAt: "2026-03-30T09:05:39Z"
+      nextRunAt: "2026-03-30T09:05:39Z",
+      detail: {
+        purpose: "Kicks off each week by sending personalized Slack DMs to each leadership team member with their outstanding action items and strategic context.",
+        process: "Reads the Action Tracker, groups open actions by owner, crafts a personalized message for each person with their priorities and any relevant context from recent strategy sessions. Also posts a team-wide summary to #strategy-feed.",
+        outputs: "Individual Slack DMs to each team member; team summary in #strategy-feed.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), Slack (DMs + #strategy-feed)"
+      }
     },
     {
       id: "drive-session-naming-audit",
@@ -52,7 +70,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-23T09:56:14Z",
-      nextRunAt: "2026-03-30T08:06:26Z"
+      nextRunAt: "2026-03-30T08:06:26Z",
+      detail: {
+        purpose: "Ensures all strategic session folders in Google Drive follow consistent naming conventions for easy navigation and retrieval.",
+        process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern (e.g., 'YYYY-MM-DD – Topic'), and reports violations to Felipe via Slack DM.",
+        outputs: "Slack DM with any naming convention issues found.",
+        dependencies: "Google Drive (Strategic Sessions folder), Slack"
+      }
     },
     {
       id: "thursday-meeting-preview",
@@ -64,7 +88,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-19T16:04:12Z",
-      nextRunAt: "2026-03-26T16:03:32Z"
+      nextRunAt: "2026-03-26T16:03:32Z",
+      detail: {
+        purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
+        process: "Reviews the Action Tracker for discussion-worthy items, checks recent Fireflies transcripts for unresolved threads, compiles CASE metrics context, and sends a structured preview email via Gmail to leadership.",
+        outputs: "Email to leadership with Friday meeting preview; Slack notification.",
+        dependencies: "Google Drive, Gmail, Fireflies, Slack"
+      }
     },
     {
       id: "friday-meeting-briefing",
@@ -76,7 +106,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-20T16:40:13Z",
-      nextRunAt: "2026-03-27T16:39:14Z"
+      nextRunAt: "2026-03-27T16:39:14Z",
+      detail: {
+        purpose: "Creates a polished executive briefing from the Friday strategy meeting transcript, capturing key decisions, new actions, and strategic insights.",
+        process: "Fetches the latest meeting transcript from Fireflies, extracts decisions, action items, and discussion themes. Generates a structured briefing and delivers it via Gmail and Slack. Also updates the Action Tracker with any new actions identified.",
+        outputs: "Executive briefing email; Slack post to #strategy-feed; updated Action Tracker.",
+        dependencies: "Fireflies (transcript), Gmail, Slack, Google Drive (Action_Tracker.xlsx)"
+      }
     },
     {
       id: "weekly-strategy-tracker-update",
@@ -88,7 +124,13 @@ const HIAGENT_DATA = {
       owner: "TARS",
       enabled: true,
       lastRunAt: "2026-03-20T19:03:43Z",
-      nextRunAt: "2026-03-27T19:04:44Z"
+      nextRunAt: "2026-03-27T19:04:44Z",
+      detail: {
+        purpose: "End-of-week housekeeping that ensures the Action Tracker reflects everything discussed in the Friday session.",
+        process: "Reads the latest session notes and Fireflies transcript, cross-references with the existing Action Tracker, adds new actions, updates statuses, and archives completed items. Writes the updated tracker back to Google Drive.",
+        outputs: "Updated Action_Tracker.xlsx in Google Drive.",
+        dependencies: "Google Drive (Strategic Sessions folder, Action_Tracker.xlsx), Fireflies"
+      }
     },
     {
       id: "weekly-memory-maintenance",
@@ -100,7 +142,13 @@ const HIAGENT_DATA = {
       owner: "Second Brain",
       enabled: true,
       lastRunAt: null,
-      nextRunAt: "2026-03-29T19:06:11Z"
+      nextRunAt: "2026-03-29T19:06:11Z",
+      detail: {
+        purpose: "Maintains long-term agent memory by consolidating ephemeral working context from Slack conversations into structured reference files.",
+        process: "Scans recent Slack activity across key channels, identifies important decisions, context changes, and new information. Consolidates this into the second-brain skill's reference files for future session continuity.",
+        outputs: "Updated second-brain reference files.",
+        dependencies: "Slack, Second Brain skill files"
+      }
     },
     {
       id: "weekly-mem-update",
@@ -112,7 +160,13 @@ const HIAGENT_DATA = {
       owner: "Second Brain",
       enabled: true,
       lastRunAt: null,
-      nextRunAt: "2026-03-27T20:09:01Z"
+      nextRunAt: "2026-03-27T20:09:01Z",
+      detail: {
+        purpose: "Creates structured meeting briefing notes in Mem from Fireflies transcripts, building a searchable knowledge base of all strategic discussions.",
+        process: "Fetches new meeting transcripts from Fireflies since the last run, processes each into a structured briefing note format, and creates or updates corresponding notes in Mem with key topics, decisions, and action items.",
+        outputs: "New or updated Mem notes for each meeting.",
+        dependencies: "Fireflies, Mem"
+      }
     },
     {
       id: "appstore-data-pull",
@@ -124,7 +178,13 @@ const HIAGENT_DATA = {
       owner: "CASE",
       enabled: true,
       lastRunAt: null,
-      nextRunAt: "2026-03-30T08:00:58Z"
+      nextRunAt: "2026-03-30T08:00:58Z",
+      detail: {
+        purpose: "Collects competitive intelligence by pulling Loyverse's latest app store ratings and review data for the CASE dashboard.",
+        process: "Queries App Store and Google Play Store APIs for Loyverse POS app ratings, review counts, and recent review text. Transforms the data and updates the CASE data files. Pending: API keys needed for per-country breakdown.",
+        outputs: "Updated app store metrics in case-data.js.",
+        dependencies: "App Store API, Google Play API (keys pending)"
+      }
     },
     {
       id: "hiagent-monitor",
@@ -136,41 +196,132 @@ const HIAGENT_DATA = {
       owner: "HIAgent",
       enabled: true,
       lastRunAt: null,
-      nextRunAt: "2026-03-26T19:00:00Z"
+      nextRunAt: "2026-03-26T19:00:00Z",
+      detail: {
+        purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
+        process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
+        outputs: "Updated hiagent-data.js on GitHub; Slack alert on failures (silent on success).",
+        dependencies: "Scheduled Tasks API, GitHub (tars-overview repo), Slack"
+      }
     }
   ],
 
   infrastructure: [
     {
-      name: "TARS Overview Dashboard",
+      name: "Command Centre",
       url: "https://tars-overview.netlify.app",
       type: "Netlify",
       status: "live",
-      repo: "felipekrugel-eng/tars-overview"
+      repo: "felipekrugel-eng/tars-overview",
+      owner: "TARS",
+      detail: {
+        purpose: "Loyverse's central operations dashboard — a single-page app hosting TARS action tracking, CASE business analytics, 5-Year Plan projections, Market Intel simulations, and HIAgent monitoring.",
+        stack: "Static HTML/CSS/JS with modular data files (tars-data.js, case-data.js, fyp-data.js, intel-data.js, hiagent-data.js). Deployed via GitHub push to Netlify with auto-deploy.",
+        panels: "TARS (action tracker), CASE (business case analytics), 5YP (five-year projections), Market Intel (market sizing & competitive landscape), HIAgent (agent ops monitoring)",
+        updatedBy: "sync-tracker-to-html (TARS data), hiagent-monitor (HIAgent data)"
+      }
     },
     {
-      name: "Swiss Pricing Dashboard",
-      url: "https://loyverse-pricing-ch.netlify.app",
+      name: "CASE Analytics Dashboard",
+      url: "https://tars-overview.netlify.app",
       type: "Netlify",
       status: "live",
-      repo: "felipekrugel-eng/loyverse-pricing-ch"
+      repo: "felipekrugel-eng/tars-overview",
+      owner: "CASE",
+      detail: {
+        purpose: "Business case analytics panel within the Command Centre — provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse.",
+        stack: "Integrated panel in the Command Centre app, powered by case-data.js which contains financial models, market data, and competitive intelligence.",
+        panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix",
+        updatedBy: "Manual updates via case-data.js; appstore-data-pull (ratings data)"
+      }
     }
   ],
 
   skills: [
-    { name: "case-skill", category: "Intelligence" },
-    { name: "loyverse-brand", category: "Design" },
-    { name: "second-brain", category: "Memory" },
-    { name: "docx", category: "Document" },
-    { name: "pdf", category: "Document" },
-    { name: "pptx", category: "Document" },
-    { name: "xlsx", category: "Document" },
-    { name: "skill-creator", category: "Meta" }
+    {
+      name: "case-skill",
+      category: "Intelligence",
+      detail: {
+        purpose: "Loyverse business case analytics — financial model, revenue projections, KPIs, market data, competitive benchmarks, and strategic phase milestones.",
+        triggers: "Financials, revenue, GTV, ARPC, take rates, pricing model, Phase 2 strategy, 5-year plan, business case, investor materials, competitive analysis, growth strategy.",
+        owner: "Felipe",
+        usedBy: "CASE panel, strategy presentations, board decks, fundraising content"
+      }
+    },
+    {
+      name: "loyverse-brand",
+      category: "Design",
+      detail: {
+        purpose: "Loyverse brand code and design system — ensures all visual outputs follow brand guidelines with correct colors, typography, and layout patterns.",
+        triggers: "Any Loyverse-branded content: presentations, slides, decks, documents, one-pagers, reports, visual assets.",
+        owner: "Felipe",
+        usedBy: "All presentation and document creation tasks"
+      }
+    },
+    {
+      name: "second-brain",
+      category: "Memory",
+      detail: {
+        purpose: "Persistent memory system that provides continuity across sessions — team structure, strategic decisions, past work, and automation context.",
+        triggers: "Session start, 'remember', 'context', 'what do you know', 'pick up where we left off', references to past work.",
+        owner: "Felipe",
+        usedBy: "Every session start, all scheduled tasks requiring historical context"
+      }
+    },
+    {
+      name: "docx",
+      category: "Document",
+      detail: {
+        purpose: "Create, read, edit, and manipulate Word documents with professional formatting — tables of contents, headings, letterheads, tracked changes.",
+        triggers: "Word doc, .docx, report, memo, letter, template as Word file.",
+        owner: "System",
+        usedBy: "Reports, memos, offer letters, policy documents"
+      }
+    },
+    {
+      name: "pdf",
+      category: "Document",
+      detail: {
+        purpose: "PDF manipulation toolkit — extract text/tables, create, merge, split, fill forms, encrypt, OCR scanned documents.",
+        triggers: "PDF, .pdf, form, extract, merge, split.",
+        owner: "System",
+        usedBy: "Document processing, form filling, report generation"
+      }
+    },
+    {
+      name: "pptx",
+      category: "Document",
+      detail: {
+        purpose: "Full PowerPoint support — create decks, read/parse existing presentations, edit slides, work with templates, speaker notes, and comments.",
+        triggers: "Deck, slides, presentation, .pptx, pitch deck.",
+        owner: "System",
+        usedBy: "Strategy decks, Friday briefing deck, board presentations"
+      }
+    },
+    {
+      name: "xlsx",
+      category: "Document",
+      detail: {
+        purpose: "Excel spreadsheet creation and analysis — formulas, formatting, data analysis, charts, and visualization.",
+        triggers: "Excel, spreadsheet, .xlsx, data table, budget, financial model, chart.",
+        owner: "System",
+        usedBy: "Action Tracker, financial models, data analysis"
+      }
+    },
+    {
+      name: "skill-creator",
+      category: "Meta",
+      detail: {
+        purpose: "Create new skills, modify existing ones, run evals, benchmark performance, and optimize skill descriptions for better triggering accuracy.",
+        triggers: "Create a skill, edit skill, optimize skill, run evals, benchmark skill.",
+        owner: "System",
+        usedBy: "Skill development and optimization workflows"
+      }
+    }
   ]
 };
 
 // ─── STATUS CALCULATION ───
-// Determines health status for each task based on cadence and lastRunAt
 function hiagentCalcStatus(task) {
   if (!task.enabled) return { status: 'disabled', label: 'Disabled', color: '#888' };
   if (!task.lastRunAt) return { status: 'pending', label: 'Never run', color: '#C47B10' };
@@ -179,22 +330,18 @@ function hiagentCalcStatus(task) {
   var lastRun = new Date(task.lastRunAt);
   var hoursSince = (now - lastRun) / (1000 * 60 * 60);
 
-  // Grace period: expected interval + 2 hours buffer
   var maxHours;
   switch (task.cadence) {
-    case 'daily':     maxHours = 26; break;    // 24h + 2h grace
-    case 'weekday':   maxHours = 74; break;    // 72h max (Fri→Mon) + 2h grace
-    case 'weekly-mon': maxHours = 170; break;  // 7 days + 2h
-    case 'weekly-thu': maxHours = 170; break;
-    case 'weekly-fri': maxHours = 170; break;
-    case 'weekly-sun': maxHours = 170; break;
-    default:          maxHours = 170; break;
+    case 'daily':     maxHours = 26; break;
+    case 'weekday':   maxHours = 74; break;
+    case 'weekly-mon': case 'weekly-thu': case 'weekly-fri': case 'weekly-sun':
+      maxHours = 170; break;
+    default: maxHours = 170; break;
   }
 
-  // For weekly tasks, also check: has nextRunAt passed without a new lastRunAt?
   if (task.nextRunAt) {
     var nextRun = new Date(task.nextRunAt);
-    var graceMs = 2 * 60 * 60 * 1000; // 2 hour grace after expected run
+    var graceMs = 2 * 60 * 60 * 1000;
     if (now > new Date(nextRun.getTime() + graceMs) && lastRun < nextRun) {
       return { status: 'failed', label: 'Missed run', color: '#CC3333' };
     }
@@ -233,12 +380,143 @@ function hiagentFormatDate(isoStr) {
   return days[d.getDay()] + ' ' + (h > 12 ? h - 12 : h) + ':' + (m < 10 ? '0' + m : m) + (h >= 12 ? 'PM' : 'AM');
 }
 
+// ─── DRILL-DOWN MODAL ───
+function hiagentShowDrill(type, index) {
+  var overlay = document.getElementById('hiagent-drill-overlay');
+  var panel = document.getElementById('hiagent-drill-panel');
+  if (!overlay || !panel) return;
+
+  var ownerColors = { 'TARS': '#1D8FE1', 'CASE': '#2DC46B', 'Second Brain': '#7B3FA0', 'HIAgent': '#1D8FE1' };
+  var html = '';
+
+  if (type === 'task') {
+    var t = HIAGENT_DATA.tasks[index];
+    if (!t || !t.detail) return;
+    var s = hiagentCalcStatus(t);
+    var color = ownerColors[t.owner] || '#1D8FE1';
+
+    html = '<div class="ha-drill-header" style="border-left: 4px solid ' + color + ';">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+        '<div class="ha-status-dot" style="background:' + s.color + ';width:12px;height:12px;"></div>' +
+        '<h2 class="ha-drill-title">' + t.name + '</h2>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+        '<span class="ha-badge ha-badge-schedule">' + t.schedule + '</span>' +
+        '<span class="ha-badge ha-badge-owner" style="background:' + color + '">' + t.owner + '</span>' +
+        '<span class="ha-badge" style="color:' + s.color + ';border-color:' + s.color + '">' + s.label + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ha-drill-body">' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Purpose</div>' +
+        '<div class="ha-drill-text">' + t.detail.purpose + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">How it works</div>' +
+        '<div class="ha-drill-text">' + t.detail.process + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Outputs</div>' +
+        '<div class="ha-drill-text">' + t.detail.outputs + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Dependencies</div>' +
+        '<div class="ha-drill-text">' + t.detail.dependencies + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-divider"></div>' +
+      '<div class="ha-drill-row">' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">Cron</div><div class="ha-drill-stat-val" style="font-family:monospace;font-size:13px;">' + t.cron + '</div></div>' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">Cadence</div><div class="ha-drill-stat-val">' + t.cadence + '</div></div>' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">Last Run</div><div class="ha-drill-stat-val">' + hiagentTimeAgo(t.lastRunAt) + '</div></div>' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">Next Run</div><div class="ha-drill-stat-val">' + hiagentFormatDate(t.nextRunAt) + '</div></div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (type === 'infra') {
+    var inf = HIAGENT_DATA.infrastructure[index];
+    if (!inf || !inf.detail) return;
+    var iColor = ownerColors[inf.owner] || '#1D8FE1';
+
+    html = '<div class="ha-drill-header" style="border-left: 4px solid ' + iColor + ';">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+        '<div class="ha-status-dot" style="background:#2DC46B;width:12px;height:12px;"></div>' +
+        '<h2 class="ha-drill-title">' + inf.name + '</h2>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+        '<span class="ha-badge">' + inf.type + '</span>' +
+        '<span class="ha-badge ha-badge-owner" style="background:' + iColor + '">' + inf.owner + '</span>' +
+        '<span class="ha-badge" style="color:#2DC46B;border-color:#2DC46B">Live</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ha-drill-body">' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Purpose</div>' +
+        '<div class="ha-drill-text">' + inf.detail.purpose + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Tech Stack</div>' +
+        '<div class="ha-drill-text">' + inf.detail.stack + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Panels / Features</div>' +
+        '<div class="ha-drill-text">' + inf.detail.panels + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Updated by</div>' +
+        '<div class="ha-drill-text">' + inf.detail.updatedBy + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-divider"></div>' +
+      '<div class="ha-drill-row">' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">URL</div><a href="' + inf.url + '" target="_blank" class="ha-infra-link">' + inf.url.replace('https://','') + '</a></div>' +
+        '<div class="ha-drill-stat"><div class="ha-drill-stat-label">Repo</div><div class="ha-drill-stat-val" style="font-family:monospace;font-size:13px;">' + inf.repo + '</div></div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (type === 'skill') {
+    var sk = HIAGENT_DATA.skills[index];
+    if (!sk || !sk.detail) return;
+
+    html = '<div class="ha-drill-header" style="border-left: 4px solid #1D8FE1;">' +
+      '<h2 class="ha-drill-title">' + sk.name + '</h2>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">' +
+        '<span class="ha-badge">' + sk.category + '</span>' +
+        '<span class="ha-badge">' + sk.detail.owner + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ha-drill-body">' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Purpose</div>' +
+        '<div class="ha-drill-text">' + sk.detail.purpose + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Triggers</div>' +
+        '<div class="ha-drill-text">' + sk.detail.triggers + '</div>' +
+      '</div>' +
+      '<div class="ha-drill-section">' +
+        '<div class="ha-drill-label">Used by</div>' +
+        '<div class="ha-drill-text">' + sk.detail.usedBy + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  panel.innerHTML = '<button class="ha-drill-close" onclick="hiagentCloseDrill()">&times;</button>' + html;
+  overlay.classList.add('active');
+}
+
+function hiagentCloseDrill() {
+  var overlay = document.getElementById('hiagent-drill-overlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function hiagentDrillOverlayClick(e) {
+  if (e.target.id === 'hiagent-drill-overlay') hiagentCloseDrill();
+}
+
 // ─── RENDER PANEL ───
 function hiagentRender() {
   var container = document.getElementById('hiagent-tasks-grid');
   if (!container) return;
 
-  // Summary counters
   var healthy = 0, failed = 0, pending = 0;
   HIAGENT_DATA.tasks.forEach(function(t) {
     var s = hiagentCalcStatus(t);
@@ -247,7 +525,6 @@ function hiagentRender() {
     else pending++;
   });
 
-  // Update summary
   var sumEl = document.getElementById('hiagent-summary');
   if (sumEl) {
     sumEl.innerHTML =
@@ -257,17 +534,15 @@ function hiagentRender() {
       '<div class="ha-sum-item"><span class="ha-sum-num" style="color:#1D8FE1">' + HIAGENT_DATA.tasks.length + '</span><span class="ha-sum-label">Total</span></div>';
   }
 
-  // Update sync time
   var syncEl = document.getElementById('hiagent-sync-time');
   if (syncEl) syncEl.textContent = 'Last sync: ' + hiagentTimeAgo(HIAGENT_DATA.lastSync);
 
-  // Render task cards
   var ownerColors = { 'TARS': '#1D8FE1', 'CASE': '#2DC46B', 'Second Brain': '#7B3FA0', 'HIAgent': '#1D8FE1' };
   var html = '';
-  HIAGENT_DATA.tasks.forEach(function(t) {
+  HIAGENT_DATA.tasks.forEach(function(t, idx) {
     var s = hiagentCalcStatus(t);
     var topColor = ownerColors[t.owner] || '#1D8FE1';
-    html += '<div class="ha-card">' +
+    html += '<div class="ha-card" onclick="hiagentShowDrill(\'task\',' + idx + ')" style="cursor:pointer;">' +
       '<div class="ha-card-top" style="background:' + topColor + '"></div>' +
       '<div class="ha-card-body">' +
         '<div class="ha-card-header">' +
@@ -293,15 +568,16 @@ function hiagentRender() {
   var infraEl = document.getElementById('hiagent-infra-grid');
   if (infraEl) {
     var infraHtml = '';
-    HIAGENT_DATA.infrastructure.forEach(function(i) {
-      infraHtml += '<div class="ha-infra-card">' +
+    HIAGENT_DATA.infrastructure.forEach(function(i, idx) {
+      var iColor = ownerColors[i.owner] || '#1D8FE1';
+      infraHtml += '<div class="ha-infra-card" onclick="hiagentShowDrill(\'infra\',' + idx + ')" style="cursor:pointer;border-left-color:' + iColor + ';">' +
         '<div class="ha-infra-body">' +
           '<div class="ha-card-header">' +
             '<div class="ha-status-dot" style="background:#2DC46B"></div>' +
             '<div class="ha-card-name">' + i.name + '</div>' +
           '</div>' +
-          '<div class="ha-card-desc">' + i.type + ' · ' + i.repo + '</div>' +
-          '<a href="' + i.url + '" target="_blank" class="ha-infra-link">' + i.url.replace('https://','') + ' →</a>' +
+          '<div class="ha-card-desc">' + i.type + ' · ' + i.owner + '</div>' +
+          '<a href="' + i.url + '" target="_blank" class="ha-infra-link" onclick="event.stopPropagation()">' + i.url.replace('https://','') + ' →</a>' +
         '</div>' +
       '</div>';
     });
@@ -312,8 +588,8 @@ function hiagentRender() {
   var skillsEl = document.getElementById('hiagent-skills-grid');
   if (skillsEl) {
     var skillsHtml = '';
-    HIAGENT_DATA.skills.forEach(function(s) {
-      skillsHtml += '<span class="ha-skill">' + s.name + '<span class="ha-skill-cat">' + s.category + '</span></span>';
+    HIAGENT_DATA.skills.forEach(function(s, idx) {
+      skillsHtml += '<span class="ha-skill" onclick="hiagentShowDrill(\'skill\',' + idx + ')" style="cursor:pointer;">' + s.name + '<span class="ha-skill-cat">' + s.category + '</span></span>';
     });
     skillsEl.innerHTML = skillsHtml;
   }
@@ -321,7 +597,6 @@ function hiagentRender() {
 
 // Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Render when HIAgent panel is first shown
   var origShow = window.showPanel;
   if (typeof origShow === 'function') {
     var _haInit = false;
