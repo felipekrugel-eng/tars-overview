@@ -3757,8 +3757,15 @@
           <option value="1">Loyverse countries</option>
           <option value="0">Outside portfolio</option>
         </select>
+        <select id="cy-psp" onchange="intelRct()">
+          <option value="">All PSPs</option>
+          <option value="S">Stripe</option>
+          <option value="P">Partner</option>
+          <option value="B">Stripe+Teya</option>
+          <option value="N/A">N/A</option>
+        </select>
         <input type="text" id="cy-q" placeholder="Search country..." oninput="intelRct()" style="width:150px">
-        <button onclick="document.getElementById('cy-reg').value='';document.getElementById('cy-lov').value='';document.getElementById('cy-q').value='';intelRct()">Clear</button>
+        <button onclick="document.getElementById('cy-reg').value='';document.getElementById('cy-lov').value='';document.getElementById('cy-psp').value='';document.getElementById('cy-q').value='';intelRct()">Clear</button>
         <span id="cy-c" style="font-size:11px;color:var(--mid-gray);margin-left:4px"></span>
       </div>
       <table class="tbl ctry">

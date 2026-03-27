@@ -332,15 +332,18 @@ function intelRoCy(rows, p, T) {
 
   const reg = sizing.querySelector('#cy-reg');
   const lov = sizing.querySelector('#cy-lov');
+  const psp = sizing.querySelector('#cy-psp');
   const q = sizing.querySelector('#cy-q');
   const regVal = reg ? reg.value : '';
   const lovVal = lov ? lov.value : '';
+  const pspVal = psp ? psp.value : '';
   const qVal = (q ? q.value : '').toLowerCase();
 
   let f = rows.filter(r => {
     if (regVal && r.ct !== regVal) return false;
     if (lovVal === '1' && !r.lo) return false;
     if (lovVal === '0' && r.lo) return false;
+    if (pspVal && r.ps !== pspVal) return false;
     if (qVal && !r.nm.toLowerCase().includes(qVal)) return false;
     return true;
   });
