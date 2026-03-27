@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════
-// HIAGENT ORG CHART — True recursive tree with zoom/pan/filter
+// HIAGENT ORG CHART — Recursive tree with connectors, drag-pan, zoom, filter
 // ═══════════════════════════════════════════════════════════
 
 const HIAGENT_ORG = {
@@ -8,9 +8,13 @@ const HIAGENT_ORG = {
   expandedTeams: {},
   currentZoom: 1,
   filterType: 'all',  // 'all', 'human', 'agent'
-  isPanning: false,
-  panStart: { x: 0, y: 0 },
-  panOffset: { x: 0, y: 0 },
+
+  // Drag-to-pan state
+  isDragging: false,
+  dragStartX: 0,
+  dragStartY: 0,
+  scrollStartX: 0,
+  scrollStartY: 0,
 
   supabaseUrl: 'https://pkxviyscqmilahedtnzz.supabase.co/rest/v1/people',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBreHZpeXNjcW1pbGFoZWR0bnp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MTE5MzEsImV4cCI6MjA5MDE4NzkzMX0.MyHLZoQwL_K74IyXw-KFHOhySa31ePHnTtayOn8v3Dw',
@@ -53,17 +57,12 @@ const HIAGENT_ORG = {
     return tree;
   },
 
-  // Get filtered data based on current filter
   getFilteredData() {
     if (this.filterType === 'all') return this.data;
     return this.data.filter(p => {
-      // Always keep people who are managers of visible people
       if (p.type === this.filterType) return true;
-      // Keep managers in the chain even if they're the other type
-      // so the tree doesn't break
       const hasFilteredChild = this.data.some(c => c.reports_to === p.id && c.type === this.filterType);
       if (hasFilteredChild) return true;
-      // Keep ancestors of filtered people
       return this.isAncestorOfType(p.id, this.filterType);
     });
   },
@@ -92,7 +91,6 @@ const HIAGENT_ORG = {
     return this.expandedTeams[id] === true;
   },
 
-  // Find which node (if any) among siblings is expanded
   getExpandedSiblingId(siblings) {
     if (!siblings) return null;
     for (const s of siblings) {
@@ -139,16 +137,14 @@ const HIAGENT_ORG = {
     container.innerHTML = html;
   },
 
-  // Recursive node renderer with sibling awareness for dimming
+  // Recursive node renderer — now renders ALL children (no placeholders)
+  // and draws proper horizontal connector bar between siblings
   renderNode(person, siblings) {
     const expanded = this.isExpanded(person.id);
     const hasKids = this.hasChildren(person);
+    const allChildren = hasKids ? person.children : [];
 
-    const namedChildren = hasKids ? person.children.filter(c => !c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i)) : [];
-    const placeholders = hasKids ? person.children.filter(c => c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i)) : [];
-
-    // Determine if this node should be dimmed
-    // A node is dimmed if one of its siblings is expanded (and it's not the one)
+    // Dimming logic
     let dimClass = '';
     if (siblings) {
       const expandedSiblingId = this.getExpandedSiblingId(siblings);
@@ -158,30 +154,38 @@ const HIAGENT_ORG = {
     }
 
     let html = '<div class="ha-node' + dimClass + '" data-id="' + person.id + '">';
-
     html += this.renderCard(person);
 
-    if (expanded && namedChildren.length > 0) {
+    if (expanded && allChildren.length > 0) {
+      // Vertical line down from parent card
       html += '<div class="ha-connector-v"></div>';
 
-      if (namedChildren.length > 1 || placeholders.length > 0) {
+      if (allChildren.length === 1) {
+        // Single child — just a straight vertical line down
+        html += this.renderNode(allChildren[0], null);
+      } else {
+        // Multiple children — horizontal bar + vertical drops
         html += '<div class="ha-children-row">';
-        namedChildren.forEach(child => {
+
+        allChildren.forEach((child, idx) => {
           html += '<div class="ha-child-branch">';
+          // Horizontal connector piece: each child-branch gets a top border
+          // We use a pseudo-approach via inline styles for the horizontal bar
+          // Left half-bar for first child, right half-bar for last, full bar for middle
+          let hBarStyle = 'height:2px;background:#C0C0C0;align-self:stretch;';
+          if (idx === 0) {
+            hBarStyle += 'margin-left:50%;margin-right:0;';
+          } else if (idx === allChildren.length - 1) {
+            hBarStyle += 'margin-left:0;margin-right:50%;';
+          }
+          html += '<div style="' + hBarStyle + '"></div>';
+          // Vertical drop to child card
           html += '<div class="ha-connector-v"></div>';
-          // Pass siblings for dim logic
-          html += this.renderNode(child, namedChildren);
+          html += this.renderNode(child, allChildren);
           html += '</div>';
         });
-        if (placeholders.length > 0) {
-          html += '<div class="ha-child-branch">';
-          html += '<div class="ha-connector-v"></div>';
-          html += '<div class="ha-placeholder-count">+ ' + placeholders.length + ' more</div>';
-          html += '</div>';
-        }
+
         html += '</div>';
-      } else {
-        html += this.renderNode(namedChildren[0], null);
       }
     }
 
@@ -196,7 +200,6 @@ const HIAGENT_ORG = {
     const hasKids = this.hasChildren(person);
     const totalDesc = hasKids ? this.countDescendants(person) : 0;
 
-    // If filter is active and this person is not the target type, make card slightly transparent
     const isFilterTarget = (this.filterType === 'all') || (person.type === this.filterType);
     const filterStyle = isFilterTarget ? '' : ' style="opacity:0.55;"';
 
@@ -272,7 +275,6 @@ const HIAGENT_ORG = {
 
   setFilter(type) {
     this.filterType = type;
-    // Update button states
     ['all', 'human', 'agent'].forEach(t => {
       const btn = document.getElementById('ha-fil-' + (t === 'human' ? 'humans' : t === 'agent' ? 'agents' : t));
       if (btn) btn.classList.toggle('active', t === type);
@@ -282,7 +284,7 @@ const HIAGENT_ORG = {
   },
 
   // ═══════════════════════════════════════
-  // ZOOM & PAN
+  // ZOOM & DRAG-PAN
   // ═══════════════════════════════════════
 
   applyTransform() {
@@ -301,7 +303,6 @@ const HIAGENT_ORG = {
   zoomReset() {
     this.currentZoom = 1;
     this.applyTransform();
-    // Scroll to center
     const viewport = document.getElementById('hiagent-org-viewport');
     if (viewport) {
       viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
@@ -314,11 +315,9 @@ const HIAGENT_ORG = {
     const container = document.getElementById('hiagent-org-container');
     if (!viewport || !container) return;
 
-    // Reset zoom to measure real size
     this.currentZoom = 1;
     container.style.transform = 'scale(1)';
 
-    // Wait a frame for layout to recalculate
     requestAnimationFrame(() => {
       const tree = container.querySelector('.ha-org-tree');
       if (!tree) return;
@@ -333,7 +332,6 @@ const HIAGENT_ORG = {
       this.currentZoom = Math.max(0.15, Math.min(1, Math.min(scaleX, scaleY)));
       this.applyTransform();
 
-      // Scroll to center horizontally
       requestAnimationFrame(() => {
         viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
         viewport.scrollTop = 0;
@@ -346,15 +344,45 @@ const HIAGENT_ORG = {
     if (!viewport || viewport._init) return;
     viewport._init = true;
 
-    // Mouse wheel zoom (with Ctrl/Cmd)
+    // Ctrl/Cmd + wheel zoom
     viewport.addEventListener('wheel', (e) => {
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.08 : 0.08;
         this.zoomBy(delta);
       }
-      // Otherwise let normal scroll happen
     }, { passive: false });
+
+    // ── Drag to pan ──
+    viewport.addEventListener('mousedown', (e) => {
+      // Only left mouse button, ignore clicks on cards/buttons
+      if (e.button !== 0) return;
+      const tag = e.target.tagName.toLowerCase();
+      if (tag === 'button' || e.target.closest('.ha-person-card') || e.target.closest('.ha-expand-btn')) return;
+
+      this.isDragging = true;
+      this.dragStartX = e.clientX;
+      this.dragStartY = e.clientY;
+      this.scrollStartX = viewport.scrollLeft;
+      this.scrollStartY = viewport.scrollTop;
+      viewport.classList.add('ha-dragging');
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!this.isDragging) return;
+      const dx = e.clientX - this.dragStartX;
+      const dy = e.clientY - this.dragStartY;
+      viewport.scrollLeft = this.scrollStartX - dx;
+      viewport.scrollTop = this.scrollStartY - dy;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (this.isDragging) {
+        this.isDragging = false;
+        viewport.classList.remove('ha-dragging');
+      }
+    });
 
     // Center scroll on initial load
     requestAnimationFrame(() => {
@@ -367,6 +395,12 @@ const HIAGENT_ORG = {
   // ═══════════════════════════════════════
 
   showPersonDrill(personId) {
+    // Don't open drill panel if we were dragging
+    if (this._wasDragging) {
+      this._wasDragging = false;
+      return;
+    }
+
     const person = this.data.find(p => p.id === personId);
     if (!person) return;
 
@@ -407,17 +441,12 @@ const HIAGENT_ORG = {
 
     const reports = this.data.filter(p => p.reports_to === person.id);
     if (reports.length > 0) {
-      const named = reports.filter(r => !r.name.match(/IC \d+$/i));
-      const placeholders = reports.filter(r => r.name.match(/IC \d+$/i));
       html += '<div class="ha-drill-section"><div class="ha-drill-label">Direct Reports (' + reports.length + ')</div>';
       html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
-      named.forEach(r => {
+      reports.forEach(r => {
         const icon = r.type === 'agent' ? '🤖 ' : '';
         html += '<li>' + icon + r.name + ' — ' + (r.title || '') + '</li>';
       });
-      if (placeholders.length > 0) {
-        html += '<li style="color:#666">+ ' + placeholders.length + ' more team members</li>';
-      }
       html += '</ul></div>';
     }
 

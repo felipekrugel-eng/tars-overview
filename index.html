@@ -2556,7 +2556,6 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  overflow-x: auto;
   padding-bottom: 40px;
 }
 
@@ -2571,16 +2570,16 @@
 .ha-connector-v {
   width: 2px;
   height: 24px;
-  background: #CCC;
+  background: #C0C0C0;
   flex-shrink: 0;
 }
 
 /* Horizontal connector bar spanning all children */
 .ha-connector-h {
   height: 2px;
-  background: #CCC;
+  background: #C0C0C0;
   align-self: stretch;
-  margin: 0 calc(50% / var(--child-count, 1));
+  position: relative;
 }
 
 /* Row of children: side by side */
@@ -2588,8 +2587,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: nowrap;
+  position: relative;
 }
 
 /* Each child branch: vertical column */
@@ -2599,23 +2599,12 @@
   align-items: center;
 }
 
-/* Placeholder for collapsed team members */
-.ha-placeholder-count {
-  text-align: center;
-  padding: 8px 16px;
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  background: rgba(0,0,0,0.03);
-  border-radius: 6px;
-}
-
 /* ── Person card styles ── */
 .ha-person-card {
   position: relative;
-  width: 200px;
-  min-width: 200px;
-  padding: 12px;
+  width: 180px;
+  min-width: 180px;
+  padding: 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -2644,7 +2633,7 @@
 
 .ha-person-name {
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #1A1A1A;
   margin-bottom: 2px;
@@ -2653,9 +2642,12 @@
 
 .ha-person-title {
   font-family: Arial, sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .ha-agent-card .ha-person-title { color: #666; }
 
@@ -2678,13 +2670,13 @@
 
 .ha-headcount {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 11px;
+  top: 6px;
+  right: 6px;
+  font-size: 10px;
   font-weight: 700;
   color: #666;
   background: #EAEAEA;
-  padding: 3px 7px;
+  padding: 2px 6px;
   border-radius: 10px;
 }
 .ha-agent-card .ha-headcount {
@@ -2704,25 +2696,24 @@
 }
 .ha-expand-btn:hover { text-decoration: underline; }
 
-.ha-placeholder-count {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 10px;
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  background: rgba(0,0,0,0.03);
-  border-radius: 6px;
-  width: 100%;
+/* ── Drag-to-pan cursor ── */
+#hiagent-org-viewport {
+  cursor: grab;
+}
+#hiagent-org-viewport.ha-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+#hiagent-org-viewport.ha-dragging * {
+  pointer-events: none;
 }
 
 @media (max-width: 1200px) {
-  .ha-children-row { gap: 10px; }
-  .ha-person-card { width: 180px; min-width: 180px; padding: 10px; }
+  .ha-children-row { gap: 6px; }
+  .ha-person-card { width: 160px; min-width: 160px; padding: 8px; }
 }
 @media (max-width: 768px) {
-  .ha-children-row { flex-wrap: wrap; }
-  .ha-person-card { width: 160px; min-width: 160px; }
+  .ha-person-card { width: 140px; min-width: 140px; }
 }
 
 </style>
