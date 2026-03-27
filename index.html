@@ -2488,97 +2488,72 @@
   color: #fff;
 }
 
-/* Org tree layout */
+/* ── Org tree layout: true top-down tree ── */
 .ha-org-tree {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
+  overflow-x: auto;
+  padding-bottom: 40px;
 }
 
-/* Connector line between CEO and L2 row */
+/* A single node: card on top, connector below, children row below that */
+.ha-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical connector line from parent to children */
 .ha-connector-v {
   width: 2px;
-  height: 32px;
+  height: 24px;
   background: #CCC;
+  flex-shrink: 0;
 }
 
-/* CEO row: centered */
-.ha-tree-ceo {
-  display: flex;
-  justify-content: center;
+/* Horizontal connector bar spanning all children */
+.ha-connector-h {
+  height: 2px;
+  background: #CCC;
+  align-self: stretch;
+  margin: 0 calc(50% / var(--child-count, 1));
 }
 
-/* L2 row: side by side */
-.ha-tree-l2 {
+/* Row of children: side by side */
+.ha-children-row {
   display: flex;
   justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
   align-items: flex-start;
-  width: 100%;
+  gap: 16px;
+  flex-wrap: nowrap;
 }
 
-/* Each L2 branch: card + children underneath */
-.ha-tree-branch {
+/* Each child branch: vertical column */
+.ha-child-branch {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 1 320px;
-  max-width: 400px;
 }
 
-/* Children of L2 (L3 level: dept heads, agents, etc.) */
-.ha-branch-children {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  width: 100%;
-  padding: 16px;
-  background: rgba(0,0,0,0.02);
-  border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.04);
-}
-
-/* Individual L3 leaf: a card + optional sub-team */
-.ha-tree-leaf {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-/* Sub-team (L4 ICs under a dept head) */
-.ha-sub-team {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-  width: 100%;
-  padding: 12px;
-  background: rgba(0,0,0,0.02);
+/* Placeholder for collapsed team members */
+.ha-placeholder-count {
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  background: rgba(0,0,0,0.03);
   border-radius: 6px;
-}
-.ha-sub-team .ha-person-card {
-  width: 100%;
-}
-.ha-sub-leaf {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.ha-sub-leaf .ha-branch-children {
-  grid-column: 1 / -1;
-  margin-top: 8px;
 }
 
 /* ── Person card styles ── */
 .ha-person-card {
   position: relative;
-  width: 260px;
-  padding: 16px;
+  width: 200px;
+  min-width: 200px;
+  padding: 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -2680,13 +2655,12 @@
 }
 
 @media (max-width: 1200px) {
-  .ha-tree-l2 { gap: 24px; }
-  .ha-tree-branch { flex: 0 1 280px; }
+  .ha-children-row { gap: 10px; }
+  .ha-person-card { width: 180px; min-width: 180px; padding: 10px; }
 }
 @media (max-width: 768px) {
-  .ha-tree-l2 { flex-direction: column; align-items: center; }
-  .ha-tree-branch { max-width: 100%; }
-  .ha-sub-team { grid-template-columns: 1fr; }
+  .ha-children-row { flex-wrap: wrap; }
+  .ha-person-card { width: 160px; min-width: 160px; }
 }
 
 </style>
