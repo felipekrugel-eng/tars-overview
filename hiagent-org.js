@@ -5,199 +5,186 @@
 const HIAGENT_ORG = {
   data: null,
   cache: null,
-  currentView: 'orgchart', // 'orgchart' or 'health'
-  expandedTeams: {}, // Track which department teams are expanded
+  expandedTeams: {},
 
-  // Supabase API config
   supabaseUrl: 'https://pkxviyscqmilahedtnzz.supabase.co/rest/v1/people',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBreHZpeXNjcW1pbGFoZWR0bnp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MTE5MzEsImV4cCI6MjA5MDE4NzkzMX0.MyHLZoQwL_K74IyXw-KFHOhySa31ePHnTtayOn8v3Dw',
 
-  // Fetch org data from Supabase
   async fetchData() {
     if (this.cache) return this.cache;
-
     try {
-      const response = await fetch(this.supabaseUrl + '?select=*&order=name', {
-        headers: {
-          'apikey': this.supabaseKey,
-          'Authorization': 'Bearer ' + this.supabaseKey
-        }
+      const r = await fetch(this.supabaseUrl + '?select=*&order=name', {
+        headers: { 'apikey': this.supabaseKey, 'Authorization': 'Bearer ' + this.supabaseKey }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch org data: ' + response.status);
-      }
-
-      this.cache = await response.json();
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      this.cache = await r.json();
       this.data = this.cache;
       return this.data;
-    } catch (error) {
-      console.error('Supabase fetch error:', error);
-      throw error;
+    } catch (e) {
+      console.error('Supabase fetch error:', e);
+      throw e;
     }
   },
 
-  // Build tree structure from flat data
   buildTree(people) {
     const map = {};
     const tree = [];
-
-    // Create map of all people by id
-    people.forEach(p => {
-      map[p.id] = {
-        ...p,
-        children: []
-      };
-    });
-
-    // Build parent-child relationships
+    people.forEach(p => { map[p.id] = { ...p, children: [] }; });
     people.forEach(p => {
       if (p.reports_to && map[p.reports_to]) {
         map[p.reports_to].children.push(map[p.id]);
       } else if (!p.reports_to) {
-        // Root node (should be CEO Caio)
         tree.push(map[p.id]);
       }
     });
-
     return tree;
   },
 
-  // Count direct reports (excluding placeholders)
-  countDirectReports(person) {
-    if (!person.children) return 0;
-    return person.children.filter(c => c.type === 'human').length;
+  isCollapsible(person) {
+    return person.children && person.children.length > 3 && person.level !== 'L1' && person.level !== 'L2';
   },
 
-  // Check if person has placeholder children
-  hasPlaceholderChildren(person) {
-    if (!person.children) return false;
-    return person.children.some(c => c.name.match(/IC \d+|placeholder/i));
+  isExpanded(id) {
+    return this.expandedTeams[id] === true;
   },
 
-  // Count placeholder children
-  countPlaceholders(person) {
-    if (!person.children) return 0;
-    return person.children.filter(c => c.name.match(/IC \d+|placeholder/i)).length;
+  updateStats() {
+    if (!this.data) return;
+    const humans = this.data.filter(p => p.type === 'human');
+    const agents = this.data.filter(p => p.type === 'agent');
+    const depts = new Set(this.data.map(p => p.department).filter(Boolean));
+    const employees = humans.filter(h => h.employment_type === 'employee').length;
+
+    const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    s('ha-stat-humans', humans.length);
+    s('ha-stat-agents', agents.length);
+    s('ha-stat-depts', depts.size);
+    s('ha-stat-emp', employees + '/' + humans.length);
   },
 
-  // Render org chart
   renderOrgChart(container) {
     if (!this.data || this.data.length === 0) {
-      container.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">Failed to load org data</div>';
+      container.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">No org data available</div>';
       return;
     }
 
+    this.updateStats();
+
     const tree = this.buildTree(this.data);
     if (tree.length === 0) return;
+    const root = tree[0];
 
-    const root = tree[0]; // Caio (CEO)
+    let html = '<div class="ha-org-tree">';
 
-    // Build summary stats
-    const humans = this.data.filter(p => p.type === 'human');
-    const agents = this.data.filter(p => p.type === 'agent');
-    const departments = new Set(this.data.map(p => p.department).filter(d => d));
-
-    let html = '<div class="ha-org-stats">';
-    html += '<div class="ha-stat-item"><span class="ha-stat-num">' + humans.length + '</span><span class="ha-stat-label">Humans</span></div>';
-    html += '<div class="ha-stat-item"><span class="ha-stat-num">' + agents.length + '</span><span class="ha-stat-label">AI Agents</span></div>';
-    html += '<div class="ha-stat-item"><span class="ha-stat-num">' + departments.size + '</span><span class="ha-stat-label">Departments</span></div>';
-
-    // Count employees vs contractors
-    const employees = humans.filter(h => h.employment_type === 'employee').length;
-    html += '<div class="ha-stat-item"><span class="ha-stat-num">' + employees + '/' + humans.length + '</span><span class="ha-stat-label">Employees</span></div>';
+    // ── L1: CEO card centered ──
+    html += '<div class="ha-tree-row ha-tree-ceo">';
+    html += this.renderCard(root);
     html += '</div>';
 
-    // Add view toggle
-    html += '<div class="ha-view-toggle">';
-    html += '<button class="ha-toggle-btn active" id="ha-tog-org" onclick="HIAGENT_ORG.switchView(\'orgchart\')">Org Chart</button>';
-    html += '<button class="ha-toggle-btn" id="ha-tog-health" onclick="HIAGENT_ORG.switchView(\'health\')">Infrastructure Health</button>';
-    html += '</div>';
+    // ── L2: Direct reports in a row ──
+    if (root.children.length > 0) {
+      // Sort: humans first, then agents
+      const l2s = root.children.sort((a, b) => {
+        if (a.type === b.type) return a.name.localeCompare(b.name);
+        return a.type === 'human' ? -1 : 1;
+      });
 
-    // Start org chart tree
-    html += '<div class="ha-org-tree">';
-    html += this.renderNode(root, 0);
-    html += '</div>';
+      html += '<div class="ha-connector-v"></div>';
+      html += '<div class="ha-tree-row ha-tree-l2">';
+      l2s.forEach(l2 => {
+        html += '<div class="ha-tree-branch">';
+        html += this.renderCard(l2);
 
+        // ── L3+: Reports under each L2 ──
+        if (l2.children.length > 0) {
+          html += '<div class="ha-branch-children">';
+          const named = l2.children.filter(c => !c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
+          const placeholders = l2.children.filter(c => c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
+
+          named.forEach(l3 => {
+            html += '<div class="ha-tree-leaf">';
+            html += this.renderCard(l3);
+
+            // ── L4+: Sub-teams (collapsible) ──
+            if (l3.children && l3.children.length > 0) {
+              const collapsible = this.isCollapsible(l3);
+              if (collapsible && !this.isExpanded(l3.id)) {
+                // Collapsed — just show expand button with count
+              } else {
+                const subNamed = l3.children.filter(c => !c.name.match(/IC \d+$/i));
+                const subPlaceholders = l3.children.filter(c => c.name.match(/IC \d+$/i));
+
+                html += '<div class="ha-sub-team">';
+                subNamed.forEach(l4 => {
+                  html += this.renderCard(l4);
+                });
+                if (subPlaceholders.length > 0) {
+                  html += '<div class="ha-placeholder-count">+ ' + subPlaceholders.length + ' more team members</div>';
+                }
+                html += '</div>';
+              }
+            }
+
+            html += '</div>'; // end leaf
+          });
+
+          if (placeholders.length > 0) {
+            html += '<div class="ha-placeholder-count">+ ' + placeholders.length + ' more team members</div>';
+          }
+          html += '</div>'; // end branch-children
+        }
+
+        html += '</div>'; // end branch
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
     container.innerHTML = html;
   },
 
-  renderNode(person, depth) {
+  renderCard(person) {
     const isAgent = person.type === 'agent';
-    const isL2 = person.level === 'L2';
-    const isDeptHead = person.level === 'L4' && person.children && person.children.length > 3;
-    const hasDirectReports = person.children && person.children.length > 0;
-    const isExpanded = this.expandedTeams[person.id] !== false; // Default expanded for L2, collapsed for dept heads
-
-    // For dept heads, default to collapsed
-    if (isDeptHead && !(person.id in this.expandedTeams)) {
-      this.expandedTeams[person.id] = false;
-    }
-
-    let html = '<div class="ha-org-level" data-level="' + depth + '">';
-    html += '<div class="ha-org-node">';
-
-    // Card
     const cardClass = isAgent ? 'ha-person-card ha-agent-card' : 'ha-person-card ha-human-card';
-    html += '<div class="' + cardClass + '" onclick="HIAGENT_ORG.showPersonDrill(\'' + person.id + '\')">';
+    const collapsible = this.isCollapsible(person);
+    const expanded = this.isExpanded(person.id);
+
+    let html = '<div class="' + cardClass + '" onclick="HIAGENT_ORG.showPersonDrill(\'' + person.id + '\')">';
+
+    // Headcount badge (top-right)
+    if (person.children && person.children.length > 0) {
+      html += '<div class="ha-headcount">' + person.children.length + '</div>';
+    }
 
     html += '<div class="ha-person-name">' + person.name + '</div>';
     html += '<div class="ha-person-title">' + (person.title || '') + '</div>';
 
+    // Badge row
+    html += '<div class="ha-card-badges">';
     if (isAgent) {
       html += '<span class="ha-person-badge ha-ai-badge">AI</span>';
-    } else {
+    } else if (person.employment_type) {
       const empType = person.employment_type === 'employee' ? 'E' : 'C';
       const empClass = person.employment_type === 'employee' ? 'ha-emp-badge' : 'ha-contr-badge';
       html += '<span class="ha-person-badge ' + empClass + '">' + empType + '</span>';
     }
 
-    // Show headcount for dept heads with large teams
-    if (isDeptHead && hasDirectReports) {
-      html += '<div class="ha-headcount">' + person.children.length + '</div>';
+    // Expand/collapse for collapsible
+    if (collapsible) {
       html += '<button class="ha-expand-btn" onclick="event.stopPropagation(); HIAGENT_ORG.toggleTeam(\'' + person.id + '\')">';
-      const expanded = this.expandedTeams[person.id];
-      html += expanded ? '▼' : '▶';
+      html += expanded ? '▼ collapse' : '▶ expand (' + person.children.length + ')';
       html += '</button>';
     }
+    html += '</div>';
 
-    html += '</div>'; // End card
-
-    // Render children: always show for L1/L2, only when expanded for dept heads
-    const shouldShowChildren = hasDirectReports && (!isDeptHead || this.expandedTeams[person.id]);
-    if (shouldShowChildren) {
-      // Separate named people from placeholders
-      const named = person.children.filter(c => !c.name.match(/IC \d+/i));
-      const placeholders = person.children.filter(c => c.name.match(/IC \d+/i));
-
-      html += '<div class="ha-children">';
-      named.forEach(child => {
-        html += this.renderNode(child, depth + 1);
-      });
-      if (placeholders.length > 0) {
-        html += '<div class="ha-placeholder-count">+ ' + placeholders.length + ' more team members</div>';
-      }
-      html += '</div>';
-    }
-
-    html += '</div>'; // End node
-    html += '</div>'; // End level
-
+    html += '</div>';
     return html;
   },
 
   toggleTeam(personId) {
-    if (personId in this.expandedTeams) {
-      this.expandedTeams[personId] = !this.expandedTeams[personId];
-    } else {
-      this.expandedTeams[personId] = true;
-    }
-
-    // Re-render
+    this.expandedTeams[personId] = !this.isExpanded(personId);
     const container = document.getElementById('hiagent-org-container');
-    if (container) {
-      this.renderOrgChart(container);
-    }
+    if (container) this.renderOrgChart(container);
   },
 
   showPersonDrill(personId) {
@@ -208,129 +195,87 @@ const HIAGENT_ORG = {
     const panel = document.getElementById('hiagent-drill-panel');
     if (!overlay || !panel) return;
 
-    let html = '<div class="ha-drill-header" style="border-left: 4px solid ' + (person.type === 'agent' ? '#1D8FE1' : '#666') + ';">';
+    const borderColor = person.type === 'agent' ? '#1D8FE1' : '#2DC46B';
+    let html = '<div class="ha-drill-header" style="padding-left:16px;border-left:4px solid ' + borderColor + ';">';
     html += '<h2 class="ha-drill-title">' + person.name + '</h2>';
     html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">';
 
     if (person.type === 'agent') {
-      html += '<span class="ha-badge">AI Agent</span>';
+      html += '<span class="ha-badge" style="background:#1D8FE1;color:#fff;border:none">AI Agent</span>';
     } else {
-      html += '<span class="ha-badge">' + person.level + '</span>';
+      if (person.level) html += '<span class="ha-badge">' + person.level + '</span>';
       if (person.employment_type) {
         html += '<span class="ha-badge">' + (person.employment_type === 'employee' ? 'Employee' : 'Contractor') + '</span>';
       }
     }
-
     if (person.status) {
-      html += '<span class="ha-badge" style="color:#1D8FE1;border-color:#1D8FE1">' + person.status + '</span>';
+      const statusColor = person.status === 'active' ? '#2DC46B' : person.status === 'departing' ? '#E8A838' : '#888';
+      html += '<span class="ha-badge" style="color:' + statusColor + ';border-color:' + statusColor + '">' + person.status + '</span>';
     }
-
     html += '</div></div>';
+
     html += '<div class="ha-drill-body">';
 
-    if (person.type === 'agent') {
-      // Agent details
-      html += '<div class="ha-drill-section">';
-      html += '<div class="ha-drill-label">Role</div>';
-      html += '<div class="ha-drill-text">' + (person.title || 'AI Agent') + '</div>';
-      html += '</div>';
+    // Title & department
+    html += this.drillRow('Title', person.title);
+    html += this.drillRow('Department', person.department);
 
-      if (person.profile && person.profile.purpose) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Purpose</div>';
-        html += '<div class="ha-drill-text">' + person.profile.purpose + '</div>';
-        html += '</div>';
+    // Reports to
+    if (person.reports_to) {
+      const mgr = this.data.find(p => p.id === person.reports_to);
+      html += this.drillRow('Reports To', mgr ? mgr.name : person.reports_to);
+    }
+
+    html += this.drillRow('Location', person.location);
+    html += this.drillRow('Start Date', person.start_date);
+
+    // Direct reports
+    const reports = this.data.filter(p => p.reports_to === person.id);
+    if (reports.length > 0) {
+      const named = reports.filter(r => !r.name.match(/IC \d+$/i));
+      const placeholders = reports.filter(r => r.name.match(/IC \d+$/i));
+      html += '<div class="ha-drill-section"><div class="ha-drill-label">Direct Reports (' + reports.length + ')</div>';
+      html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
+      named.forEach(r => {
+        const icon = r.type === 'agent' ? '🤖 ' : '';
+        html += '<li>' + icon + r.name + ' — ' + (r.title || '') + '</li>';
+      });
+      if (placeholders.length > 0) {
+        html += '<li style="color:#666">+ ' + placeholders.length + ' more team members</li>';
       }
+      html += '</ul></div>';
+    }
 
-      if (person.profile && person.profile.capabilities) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Capabilities</div>';
+    // Agent-specific fields
+    if (person.type === 'agent' && person.profile) {
+      html += this.drillRow('Purpose', person.profile.purpose);
+      if (person.profile.capabilities) {
+        html += '<div class="ha-drill-section"><div class="ha-drill-label">Capabilities</div>';
         html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
-        person.profile.capabilities.forEach(cap => {
-          html += '<li>' + cap + '</li>';
-        });
-        html += '</ul>';
-        html += '</div>';
+        person.profile.capabilities.forEach(c => { html += '<li>' + c + '</li>'; });
+        html += '</ul></div>';
       }
-
-      if (person.profile && person.profile.tasks) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Scheduled Tasks</div>';
+      if (person.profile.tasks) {
+        html += '<div class="ha-drill-section"><div class="ha-drill-label">Scheduled Tasks</div>';
         html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
-        person.profile.tasks.forEach(task => {
-          html += '<li>' + task + '</li>';
-        });
-        html += '</ul>';
-        html += '</div>';
+        person.profile.tasks.forEach(t => { html += '<li style="font-family:monospace">' + t + '</li>'; });
+        html += '</ul></div>';
       }
-    } else {
-      // Human details
-      html += '<div class="ha-drill-section">';
-      html += '<div class="ha-drill-label">Title</div>';
-      html += '<div class="ha-drill-text">' + person.title + '</div>';
-      html += '</div>';
+      html += this.drillRow('Infrastructure', person.profile.infrastructure);
+      html += this.drillRow('Deployed', person.profile.deployed);
+    }
 
-      if (person.department) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Department</div>';
-        html += '<div class="ha-drill-text">' + person.department + '</div>';
-        html += '</div>';
-      }
-
-      if (person.reports_to) {
-        const manager = this.data.find(p => p.id === person.reports_to);
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Reports To</div>';
-        html += '<div class="ha-drill-text">' + (manager ? manager.name : person.reports_to) + '</div>';
-        html += '</div>';
-      }
-
-      if (person.location) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Location</div>';
-        html += '<div class="ha-drill-text">' + person.location + '</div>';
-        html += '</div>';
-      }
-
-      if (person.start_date) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Start Date</div>';
-        html += '<div class="ha-drill-text">' + person.start_date + '</div>';
-        html += '</div>';
-      }
-
-      // Direct reports
-      const directReports = this.data.filter(p => p.reports_to === person.id);
-      if (directReports.length > 0) {
-        html += '<div class="ha-drill-section">';
-        html += '<div class="ha-drill-label">Direct Reports</div>';
+    // Human-specific profile fields
+    if (person.type === 'human' && person.profile) {
+      html += this.drillRow('Responsibilities', person.profile.responsibilities);
+      if (person.profile.domains) {
+        html += '<div class="ha-drill-section"><div class="ha-drill-label">Domains</div>';
         html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
-        directReports.forEach(report => {
-          html += '<li>' + report.name + ' (' + report.title + ')</li>';
-        });
-        html += '</ul>';
-        html += '</div>';
+        person.profile.domains.forEach(d => { html += '<li>' + d + '</li>'; });
+        html += '</ul></div>';
       }
-
-      // Profile data
-      if (person.profile) {
-        if (person.profile.responsibilities) {
-          html += '<div class="ha-drill-section">';
-          html += '<div class="ha-drill-label">Responsibilities</div>';
-          html += '<div class="ha-drill-text">' + person.profile.responsibilities + '</div>';
-          html += '</div>';
-        }
-
-        if (person.profile.domains) {
-          html += '<div class="ha-drill-section">';
-          html += '<div class="ha-drill-label">Domains</div>';
-          html += '<ul style="color:#ccc;margin:0;padding-left:16px;">';
-          person.profile.domains.forEach(domain => {
-            html += '<li>' + domain + '</li>';
-          });
-          html += '</ul>';
-          html += '</div>';
-        }
+      if (person.profile.team_size) {
+        html += this.drillRow('Team Size', person.profile.team_size);
       }
     }
 
@@ -340,54 +285,45 @@ const HIAGENT_ORG = {
     overlay.classList.add('active');
   },
 
+  drillRow(label, value) {
+    if (!value) return '';
+    return '<div class="ha-drill-section"><div class="ha-drill-label">' + label + '</div><div class="ha-drill-text">' + value + '</div></div>';
+  },
+
   switchView(view) {
-    this.currentView = view;
-
-    // Update toggle buttons
-    const orgBtn = document.getElementById('ha-tog-org');
-    const healthBtn = document.getElementById('ha-tog-health');
-    if (orgBtn) orgBtn.classList.toggle('active', view === 'orgchart');
-    if (healthBtn) healthBtn.classList.toggle('active', view === 'health');
-
-    // Toggle visibility
     const orgContainer = document.getElementById('hiagent-org-container');
     const healthContainer = document.getElementById('hiagent-health-container');
+    const orgBtn = document.getElementById('ha-tog-org');
+    const healthBtn = document.getElementById('ha-tog-health');
 
     if (view === 'orgchart') {
       if (orgContainer) orgContainer.style.display = 'block';
       if (healthContainer) healthContainer.style.display = 'none';
+      if (orgBtn) orgBtn.classList.add('active');
+      if (healthBtn) healthBtn.classList.remove('active');
     } else {
       if (orgContainer) orgContainer.style.display = 'none';
       if (healthContainer) healthContainer.style.display = 'block';
-      // Ensure health dashboard is rendered
+      if (orgBtn) orgBtn.classList.remove('active');
+      if (healthBtn) healthBtn.classList.add('active');
       if (typeof hiagentRender === 'function') hiagentRender();
-    }
-  },
-
-  init() {
-    // Wait for DOM to be ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.start());
-    } else {
-      this.start();
     }
   },
 
   async start() {
     const container = document.getElementById('hiagent-org-container');
     if (!container) return;
-
     try {
       container.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">Loading org chart...</div>';
       await this.fetchData();
       this.renderOrgChart(container);
     } catch (error) {
-      container.innerHTML = '<div style="padding:40px;text-align:center;color:#CC3333;">Failed to load org chart from Supabase<br><small style="color:#666;margin-top:8px;">' + error.message + '</small></div>';
+      container.innerHTML = '<div style="padding:40px;text-align:center;color:#CC3333;">Failed to load org data<br><small style="color:#666">' + error.message + '</small></div>';
     }
   }
 };
 
-// Initialize when org chart panel is shown
+// Initialize on first HIAgent panel show
 document.addEventListener('DOMContentLoaded', function() {
   var origShow = window.showPanel;
   if (typeof origShow === 'function') {
@@ -396,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
       origShow(name);
       if (name === 'hiagent' && !_orgInit) {
         _orgInit = true;
-        HIAGENT_ORG.init();
+        HIAGENT_ORG.start();
       }
     };
   }
