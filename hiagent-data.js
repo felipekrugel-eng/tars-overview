@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-27T10:07:04Z
+// Last sync: 2026-03-27T10:11:36Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-27T10:07:04Z",
+  lastSync: "2026-03-27T10:11:36Z",
 
   tasks: [
     {
@@ -213,7 +213,7 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-27T10:07:04Z",
+      lastRunAt: "2026-03-27T10:11:36Z",
       nextRunAt: "2026-03-27T12:00:45Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
