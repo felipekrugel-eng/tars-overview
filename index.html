@@ -2488,6 +2488,68 @@
   color: #fff;
 }
 
+/* ── Toolbar styles ── */
+.ha-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ha-toolbar-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-right: 4px;
+}
+.ha-filter-btn {
+  background: #fff;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ha-filter-btn:hover { border-color: #999; color: #333; }
+.ha-filter-btn.active { background: #1A1A1A; color: #fff; border-color: #1A1A1A; }
+.ha-zoom-btn {
+  background: #fff;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.ha-zoom-btn:hover { background: #F0F0F0; border-color: #999; }
+.ha-zoom-level {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* ── Focus/dim: when a node is expanded, dim its siblings ── */
+.ha-node.ha-dimmed {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.ha-node.ha-dimmed:hover {
+  opacity: 0.7;
+}
+.ha-node.ha-focused,
+.ha-node:not(.ha-dimmed) {
+  opacity: 1;
+}
+
 /* ── Org tree layout: true top-down tree ── */
 .ha-org-tree {
   display: flex;
@@ -4474,8 +4536,30 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
     </div>
   </div>
 
-  <!-- ORG CHART VIEW — rendered dynamically by hiagent-org.js -->
-  <div id="hiagent-org-container" style="background: #F7F7F7; padding: 16px 48px 48px 48px; min-height: 60vh;"></div>
+  <!-- ORG CHART TOOLBAR -->
+  <div id="hiagent-org-toolbar" style="background:#F7F7F7; padding: 8px 48px; display:flex; align-items:center; gap:16px; border-bottom:1px solid #E0E0E0;">
+    <!-- Filter -->
+    <div class="ha-toolbar-group">
+      <span class="ha-toolbar-label">Show:</span>
+      <button class="ha-filter-btn active" id="ha-fil-all" onclick="HIAGENT_ORG.setFilter('all')">All</button>
+      <button class="ha-filter-btn" id="ha-fil-humans" onclick="HIAGENT_ORG.setFilter('human')">Humans</button>
+      <button class="ha-filter-btn" id="ha-fil-agents" onclick="HIAGENT_ORG.setFilter('agent')">Agents</button>
+    </div>
+    <div style="flex:1"></div>
+    <!-- Zoom -->
+    <div class="ha-toolbar-group">
+      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomBy(-0.15)" title="Zoom out">−</button>
+      <span class="ha-zoom-level" id="ha-zoom-label">100%</span>
+      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomBy(0.15)" title="Zoom in">+</button>
+      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomFit()" title="Fit to screen" style="font-size:11px;padding:4px 8px;">Fit</button>
+      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomReset()" title="Reset to 100%" style="font-size:11px;padding:4px 8px;">1:1</button>
+    </div>
+  </div>
+
+  <!-- ORG CHART VIEW — zoomable/pannable viewport -->
+  <div id="hiagent-org-viewport" style="background:#F7F7F7; overflow:hidden; min-height:60vh; position:relative; cursor:grab;">
+    <div id="hiagent-org-container" style="transform-origin: top center; transition: transform 0.2s; padding: 24px;"></div>
+  </div>
 
   <!-- HEALTH DASHBOARD VIEW — rendered dynamically by hiagent-data.js -->
   <div id="hiagent-health-container" style="background: #F7F7F7; padding: 16px 48px 48px 48px; min-height: 60vh; display: none;">
