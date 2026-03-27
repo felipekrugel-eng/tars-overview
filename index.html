@@ -4557,8 +4557,8 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
   </div>
 
   <!-- ORG CHART VIEW — zoomable/pannable viewport -->
-  <div id="hiagent-org-viewport" style="background:#F7F7F7; overflow:hidden; min-height:60vh; position:relative; cursor:grab;">
-    <div id="hiagent-org-container" style="transform-origin: top center; transition: transform 0.2s; padding: 24px;"></div>
+  <div id="hiagent-org-viewport" style="background:#F7F7F7; overflow:auto; min-height:60vh; position:relative;">
+    <div id="hiagent-org-container" style="transform-origin: top left; transition: transform 0.2s; padding: 24px; display:inline-block; min-width:100%;"></div>
   </div>
 
   <!-- HEALTH DASHBOARD VIEW — rendered dynamically by hiagent-data.js -->

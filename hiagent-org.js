@@ -288,20 +288,25 @@ const HIAGENT_ORG = {
   applyTransform() {
     const container = document.getElementById('hiagent-org-container');
     if (!container) return;
-    container.style.transform = 'scale(' + this.currentZoom + ') translate(' + this.panOffset.x + 'px, ' + this.panOffset.y + 'px)';
+    container.style.transform = 'scale(' + this.currentZoom + ')';
     const label = document.getElementById('ha-zoom-label');
     if (label) label.textContent = Math.round(this.currentZoom * 100) + '%';
   },
 
   zoomBy(delta) {
-    this.currentZoom = Math.max(0.2, Math.min(2, this.currentZoom + delta));
+    this.currentZoom = Math.max(0.15, Math.min(2, this.currentZoom + delta));
     this.applyTransform();
   },
 
   zoomReset() {
     this.currentZoom = 1;
-    this.panOffset = { x: 0, y: 0 };
     this.applyTransform();
+    // Scroll to center
+    const viewport = document.getElementById('hiagent-org-viewport');
+    if (viewport) {
+      viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
+      viewport.scrollTop = 0;
+    }
   },
 
   zoomFit() {
@@ -309,54 +314,52 @@ const HIAGENT_ORG = {
     const container = document.getElementById('hiagent-org-container');
     if (!viewport || !container) return;
 
-    // Temporarily reset to measure real size
-    container.style.transform = 'scale(1) translate(0px, 0px)';
-    const tree = container.querySelector('.ha-org-tree');
-    if (!tree) return;
+    // Reset zoom to measure real size
+    this.currentZoom = 1;
+    container.style.transform = 'scale(1)';
 
-    const treeRect = tree.getBoundingClientRect();
-    const vpRect = viewport.getBoundingClientRect();
+    // Wait a frame for layout to recalculate
+    requestAnimationFrame(() => {
+      const tree = container.querySelector('.ha-org-tree');
+      if (!tree) return;
 
-    const scaleX = (vpRect.width - 48) / treeRect.width;
-    const scaleY = (vpRect.height - 48) / treeRect.height;
-    this.currentZoom = Math.max(0.15, Math.min(1, Math.min(scaleX, scaleY)));
-    this.panOffset = { x: 0, y: 0 };
-    this.applyTransform();
+      const treeWidth = tree.scrollWidth;
+      const treeHeight = tree.scrollHeight;
+      const vpWidth = viewport.clientWidth;
+      const vpHeight = viewport.clientHeight;
+
+      const scaleX = vpWidth / (treeWidth + 48);
+      const scaleY = vpHeight / (treeHeight + 48);
+      this.currentZoom = Math.max(0.15, Math.min(1, Math.min(scaleX, scaleY)));
+      this.applyTransform();
+
+      // Scroll to center horizontally
+      requestAnimationFrame(() => {
+        viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
+        viewport.scrollTop = 0;
+      });
+    });
   },
 
-  initPan() {
+  initViewport() {
     const viewport = document.getElementById('hiagent-org-viewport');
-    if (!viewport || viewport._panInit) return;
-    viewport._panInit = true;
+    if (!viewport || viewport._init) return;
+    viewport._init = true;
 
-    viewport.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.ha-person-card') || e.target.closest('.ha-expand-btn')) return;
-      this.isPanning = true;
-      this.panStart = { x: e.clientX - this.panOffset.x * this.currentZoom, y: e.clientY - this.panOffset.y * this.currentZoom };
-      viewport.style.cursor = 'grabbing';
-      e.preventDefault();
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!this.isPanning) return;
-      this.panOffset.x = (e.clientX - this.panStart.x) / this.currentZoom;
-      this.panOffset.y = (e.clientY - this.panStart.y) / this.currentZoom;
-      this.applyTransform();
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (this.isPanning) {
-        this.isPanning = false;
-        viewport.style.cursor = 'grab';
-      }
-    });
-
-    // Mouse wheel zoom
+    // Mouse wheel zoom (with Ctrl/Cmd)
     viewport.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? -0.08 : 0.08;
-      this.zoomBy(delta);
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.08 : 0.08;
+        this.zoomBy(delta);
+      }
+      // Otherwise let normal scroll happen
     }, { passive: false });
+
+    // Center scroll on initial load
+    requestAnimationFrame(() => {
+      viewport.scrollLeft = (viewport.scrollWidth - viewport.clientWidth) / 2;
+    });
   },
 
   // ═══════════════════════════════════════
@@ -503,7 +506,7 @@ const HIAGENT_ORG = {
       }
 
       this.renderOrgChart(container);
-      this.initPan();
+      this.initViewport();
     } catch (error) {
       container.innerHTML = '<div style="padding:40px;text-align:center;color:#CC3333;">Failed to load org data<br><small style="color:#666">' + error.message + '</small></div>';
     }
