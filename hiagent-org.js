@@ -5,6 +5,7 @@
 const HIAGENT_ORG = {
   data: null,
   cache: null,
+  // Default: only L1 expanded. Everything else starts collapsed.
   expandedTeams: {},
 
   supabaseUrl: 'https://pkxviyscqmilahedtnzz.supabase.co/rest/v1/people',
@@ -37,11 +38,30 @@ const HIAGENT_ORG = {
         tree.push(map[p.id]);
       }
     });
+    // Sort children: humans first (by name), then agents (by name)
+    const sortChildren = (node) => {
+      node.children.sort((a, b) => {
+        if (a.type === b.type) return a.name.localeCompare(b.name);
+        return a.type === 'human' ? -1 : 1;
+      });
+      node.children.forEach(sortChildren);
+    };
+    tree.forEach(sortChildren);
     return tree;
   },
 
-  isCollapsible(person) {
-    return person.children && person.children.length > 3 && person.level !== 'L1' && person.level !== 'L2';
+  // Count total descendants (not just direct children)
+  countDescendants(node) {
+    let count = 0;
+    if (!node.children) return 0;
+    node.children.forEach(c => {
+      count += 1 + this.countDescendants(c);
+    });
+    return count;
+  },
+
+  hasChildren(person) {
+    return person.children && person.children.length > 0;
   },
 
   isExpanded(id) {
@@ -81,79 +101,85 @@ const HIAGENT_ORG = {
     html += this.renderCard(root);
     html += '</div>';
 
-    // ── L2: Direct reports in a row ──
-    if (root.children.length > 0) {
-      // Sort: humans first, then agents
-      const l2s = root.children.sort((a, b) => {
-        if (a.type === b.type) return a.name.localeCompare(b.name);
-        return a.type === 'human' ? -1 : 1;
-      });
-
+    // ── L2: Direct reports in a row (only if L1 is expanded) ──
+    if (this.isExpanded(root.id) && root.children.length > 0) {
       html += '<div class="ha-connector-v"></div>';
       html += '<div class="ha-tree-row ha-tree-l2">';
-      l2s.forEach(l2 => {
+
+      root.children.forEach(l2 => {
         html += '<div class="ha-tree-branch">';
         html += this.renderCard(l2);
 
-        // ── L3+: Reports under each L2 ──
-        if (l2.children.length > 0) {
-          html += '<div class="ha-branch-children">';
-          const named = l2.children.filter(c => !c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
-          const placeholders = l2.children.filter(c => c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
-
-          named.forEach(l3 => {
-            html += '<div class="ha-tree-leaf">';
-            html += this.renderCard(l3);
-
-            // ── L4+: Sub-teams (collapsible) ──
-            if (l3.children && l3.children.length > 0) {
-              const collapsible = this.isCollapsible(l3);
-              if (collapsible && !this.isExpanded(l3.id)) {
-                // Collapsed — just show expand button with count
-              } else {
-                const subNamed = l3.children.filter(c => !c.name.match(/IC \d+$/i));
-                const subPlaceholders = l3.children.filter(c => c.name.match(/IC \d+$/i));
-
-                html += '<div class="ha-sub-team">';
-                subNamed.forEach(l4 => {
-                  html += this.renderCard(l4);
-                });
-                if (subPlaceholders.length > 0) {
-                  html += '<div class="ha-placeholder-count">+ ' + subPlaceholders.length + ' more team members</div>';
-                }
-                html += '</div>';
-              }
-            }
-
-            html += '</div>'; // end leaf
-          });
-
-          if (placeholders.length > 0) {
-            html += '<div class="ha-placeholder-count">+ ' + placeholders.length + ' more team members</div>';
-          }
-          html += '</div>'; // end branch-children
+        // ── Children under L2 (only if L2 is expanded) ──
+        if (this.isExpanded(l2.id) && l2.children.length > 0) {
+          html += this.renderChildrenContainer(l2.children);
         }
 
         html += '</div>'; // end branch
       });
-      html += '</div>';
+
+      html += '</div>'; // end l2 row
     }
 
     html += '</div>';
     container.innerHTML = html;
   },
 
+  // Recursively render a children container
+  renderChildrenContainer(children) {
+    const named = children.filter(c => !c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
+    const placeholders = children.filter(c => c.name.match(/^(Engineering|CustOps|Accounting) IC \d+$/i));
+
+    let html = '<div class="ha-branch-children">';
+
+    named.forEach(child => {
+      html += '<div class="ha-tree-leaf">';
+      html += this.renderCard(child);
+
+      // If this child has children and is expanded, render them recursively
+      if (this.isExpanded(child.id) && child.children && child.children.length > 0) {
+        const subNamed = child.children.filter(c => !c.name.match(/IC \d+$/i));
+        const subPlaceholders = child.children.filter(c => c.name.match(/IC \d+$/i));
+
+        html += '<div class="ha-sub-team">';
+        subNamed.forEach(sub => {
+          html += '<div class="ha-sub-leaf">';
+          html += this.renderCard(sub);
+          // Deep recursion: if this sub has children and is expanded
+          if (this.isExpanded(sub.id) && sub.children && sub.children.length > 0) {
+            html += this.renderChildrenContainer(sub.children);
+          }
+          html += '</div>';
+        });
+        if (subPlaceholders.length > 0) {
+          html += '<div class="ha-placeholder-count">+ ' + subPlaceholders.length + ' more team members</div>';
+        }
+        html += '</div>';
+      }
+
+      html += '</div>'; // end leaf
+    });
+
+    if (placeholders.length > 0) {
+      html += '<div class="ha-placeholder-count">+ ' + placeholders.length + ' more team members</div>';
+    }
+
+    html += '</div>'; // end branch-children
+    return html;
+  },
+
   renderCard(person) {
     const isAgent = person.type === 'agent';
     const cardClass = isAgent ? 'ha-person-card ha-agent-card' : 'ha-person-card ha-human-card';
-    const collapsible = this.isCollapsible(person);
     const expanded = this.isExpanded(person.id);
+    const hasKids = this.hasChildren(person);
+    const totalDesc = hasKids ? this.countDescendants(person) : 0;
 
     let html = '<div class="' + cardClass + '" onclick="HIAGENT_ORG.showPersonDrill(\'' + person.id + '\')">';
 
-    // Headcount badge (top-right)
-    if (person.children && person.children.length > 0) {
-      html += '<div class="ha-headcount">' + person.children.length + '</div>';
+    // Headcount badge (top-right) — show total descendants
+    if (hasKids) {
+      html += '<div class="ha-headcount">' + totalDesc + '</div>';
     }
 
     html += '<div class="ha-person-name">' + person.name + '</div>';
@@ -169,10 +195,10 @@ const HIAGENT_ORG = {
       html += '<span class="ha-person-badge ' + empClass + '">' + empType + '</span>';
     }
 
-    // Expand/collapse for collapsible
-    if (collapsible) {
+    // Expand/collapse button for anyone with children
+    if (hasKids) {
       html += '<button class="ha-expand-btn" onclick="event.stopPropagation(); HIAGENT_ORG.toggleTeam(\'' + person.id + '\')">';
-      html += expanded ? '▼ collapse' : '▶ expand (' + person.children.length + ')';
+      html += expanded ? '▾ collapse' : '▸ ' + person.children.length + ' reports';
       html += '</button>';
     }
     html += '</div>';
@@ -182,9 +208,40 @@ const HIAGENT_ORG = {
   },
 
   toggleTeam(personId) {
-    this.expandedTeams[personId] = !this.isExpanded(personId);
+    const wasExpanded = this.isExpanded(personId);
+    if (wasExpanded) {
+      // Collapse: also collapse all descendants
+      this.collapseAll(personId);
+    } else {
+      this.expandedTeams[personId] = true;
+    }
     const container = document.getElementById('hiagent-org-container');
     if (container) this.renderOrgChart(container);
+  },
+
+  // Recursively collapse a node and all its descendants
+  collapseAll(personId) {
+    this.expandedTeams[personId] = false;
+    // Find the person in data and collapse children too
+    const tree = this.buildTree(this.data);
+    const findNode = (nodes, id) => {
+      for (const n of nodes) {
+        if (n.id === id) return n;
+        const found = findNode(n.children || [], id);
+        if (found) return found;
+      }
+      return null;
+    };
+    const node = findNode(tree, personId);
+    if (node && node.children) {
+      const collapseChildren = (children) => {
+        children.forEach(c => {
+          this.expandedTeams[c.id] = false;
+          if (c.children) collapseChildren(c.children);
+        });
+      };
+      collapseChildren(node.children);
+    }
   },
 
   showPersonDrill(personId) {
@@ -316,6 +373,13 @@ const HIAGENT_ORG = {
     try {
       container.innerHTML = '<div style="padding:40px;text-align:center;color:#999;">Loading org chart...</div>';
       await this.fetchData();
+
+      // Set default expanded state: only L1 (CEO) is expanded
+      const root = this.data.find(p => !p.reports_to);
+      if (root) {
+        this.expandedTeams[root.id] = true;
+      }
+
       this.renderOrgChart(container);
     } catch (error) {
       container.innerHTML = '<div style="padding:40px;text-align:center;color:#CC3333;">Failed to load org data<br><small style="color:#666">' + error.message + '</small></div>';
