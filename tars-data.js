@@ -1,6 +1,7 @@
-// ─── TARS_DATA: Auto-generated from Action Tracker ──────────────────────────
-// Last sync: 2026-03-26
-// Source: Google Sheets Action_Tracker.xlsx (ID: 1aA6hCdGIS7ZgeUjlmjfyY3ZS2T4MxnWg)
+// ─── TARS_DATA: auto-generated from Action Tracker ──────────────────────────
+// Generated: 2026-03-27
+// Source: Action_Tracker.xlsx (Google Sheets ID: 1aA6hCdGIS7ZgeUjlmjfyY3ZS2T4MxnWg)
+// Total actions: 65
 
 var TARS_DATA = {
   initiatives: {
@@ -17,21 +18,25 @@ var TARS_DATA = {
         { label: "Billing system evaluation",         status: "active",   date: "Mar 2026" },
         { label: "Pilot launch",                      status: "upcoming", date: "Q2 2026"  }
       ],
-      total: 14, done: 6, inProgress: 3, overdue: 5, progress: 43,
+      total: 14,
+      done: 6,
+      inProgress: 3,
+      overdue: 5,
+      progress: 43,
       actions: [
         { id: "A-260206-01", text: "Book time Mon\u2013Thu to discuss Stripe Mexico preview launch", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Feb", status: "done" },
         { id: "A-260213-02", text: "Talk to Bevon to understand how yo-yo operates (vs payments model)", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done" },
         { id: "A-260213-04", text: "Report back on back-office processes at Payments after calls with People team, Flur, People Ops, Comp & TA", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done" },
         { id: "A-260213-08", text: "Visit Brazilian customer in London", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "21 Feb", status: "done" },
         { id: "A-260220-05", text: "Gather payment-side data on Milk No Milk customer", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "24 Feb", status: "done" },
+        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "done" },
         { id: "A-260316-05", text: "Evaluate and propose approach for billing systems and Stripe account management (multi-currency, UK/US pilots)", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" },
         { id: "A-260316-07", text: "Identify expert contacts with Google and Apple payment platform compliance experience", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" },
         { id: "A-260316-14", text: "Support Snowflake data migration and historical/chargeback data transfer with Dimitri", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue" },
         { id: "A-260316-15", text: "Assist Simon and Felipe with Stripe/payment processing on UK and US accounts", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue" },
-        { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup to Simon: Company name / Address / Signer Name / Title / Email / Phone. UK entity to be used for pilot (no US bank account yet). Stripe UK KYC complete - will be live account for pilot due to US entity issues on Teya side.", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
-        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "in-progress" },
+        { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup to Simon", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
         { id: "A-260324-02", text: "Discussion on whether UK customers should be used for pilot due to US legal entity issues", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress" },
-        { id: "A-260324-03", text: "Complete RFP for external legal counsel in US", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Apr", status: "done" },
+        { id: "A-260324-03", text: "Complete RFP for external legal counsel in US", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Apr", status: "in-progress" },
         { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress" }
       ]
     },
@@ -48,17 +53,21 @@ var TARS_DATA = {
         { label: "Rollout \u2014 CH, AU, NG",     status: "upcoming", date: "Q2 2026"  },
         { label: "Global rollout",           status: "upcoming", date: "Q3 2026"  }
       ],
-      total: 9, done: 0, inProgress: 2, overdue: 7, progress: 0,
+      total: 9,
+      done: 0,
+      inProgress: 2,
+      overdue: 7,
+      progress: 0,
       actions: [
         { id: "A-260306-01", text: "Finalize narrative proposal for new pricing model trial by end of week", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue" },
         { id: "A-260306-02", text: "Share document on seven potential directions to evolve the S-curve", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "9 Mar", status: "overdue" },
         { id: "A-260306-03", text: "Share name and website of Croatia competitor to Teya", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "9 Mar", status: "overdue" },
         { id: "A-260306-04", text: "Prepare rough requirements for new monetisation model (0.2% GTV, 3 months free) and align with engineers", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "13 Mar", status: "overdue" },
         { id: "A-260316-02", text: "Arrange narrative presentation meeting with pH consultant for upcoming Friday session", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
-        { id: "A-260316-03", text: "Prepare and circulate updated competitive benchmarking analysis before Friday session", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
+        { id: "A-260316-03", text: "Prepare and share detailed pricing policy communication plans for next Friday meeting", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
         { id: "A-260316-04", text: "Drive internal alignment on pricing strategy rollout for Switzerland, Australia and Nigeria", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue" },
         { id: "A-260324-04", text: "Confirm final payment pricing proposal for US customers with the team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress" },
-        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing. Blocked by A-260324-04 (team review of pricing proposal).", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "in-progress" }
+        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "in-progress" }
       ]
     },
     partnerships: {
@@ -74,11 +83,15 @@ var TARS_DATA = {
         { label: "First partner signed",                   status: "upcoming", date: "Q2 2026"  },
         { label: "Channel programme launch",               status: "upcoming", date: "Q3 2026"  }
       ],
-      total: 4, done: 3, inProgress: 0, overdue: 1, progress: 75,
+      total: 4,
+      done: 3,
+      inProgress: 0,
+      overdue: 1,
+      progress: 75,
       actions: [
         { id: "A-260213-03", text: "Analyse whether TA referral deal will make more money \u2013 provide reasoning and math", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Feb", status: "done" },
         { id: "A-260220-07", text: "Share full list of partner payment inquiries with Simon for strategy research", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
-        { id: "A-260227-04", text: "Introduce China capital-location contact to Alex\u2019s team", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
+        { id: "A-260227-04", text: "Introduce China capital-location contact to Alex\u2019s team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "6 Mar", status: "done" },
         { id: "A-260316-06", text: "Develop and submit clear engagement proposal for Teya partnership", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" }
       ]
     }
@@ -98,13 +111,13 @@ var TARS_DATA = {
     { id: "A-260213-06", text: "Prepare competitive analysis \u2013 focus on competitors and inspirational companies", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Feb", status: "done" },
     { id: "A-260213-07", text: "Discuss 2026 hiring plan and commit to engaging Robert Walters", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "16 Feb", status: "done" },
     { id: "A-260220-01", text: "Talk to Anna and Brandi about accessing new merchant profile table in Snowflake to resolve data mismatch", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
-    { id: "A-260220-02", text: "Create document defining key metrics (Revenue, MRR, GTV, GPV, TPV, EMV) and circulate for comment", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "27 Feb", status: "done" },
+    { id: "A-260220-02", text: "Create document defining key metrics (Revenue, MRR, GTV, GPV, TPV, EMV) and circulate for comment", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
     { id: "A-260220-03", text: "Identify seasonal customers", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "27 Feb", status: "done" },
     { id: "A-260220-04", text: "Speak with Mitri about replicating Snowflake instance for lawyers", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
     { id: "A-260220-06", text: "Share five customer personas, slide deck, and three merchant case summaries in group folder", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
     { id: "A-260227-01", text: "Finalize financial tool by adding new growth charts", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
     { id: "A-260227-02", text: "Share updated financial spreadsheet with group; update tool based on feedback", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
-    { id: "A-260227-03", text: "Add cohort 25 baseline to the financial data", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Mar", status: "done" },
+    { id: "A-260227-03", text: "Add cohort 25 baseline to the financial data", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
     { id: "A-260227-05", text: "Fix broken data for Sep\u2013Dec 2025 in Snowflake (with Mitri)", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Mar", status: "done" },
     { id: "A-260227-06", text: "Confirm whether fixing Sep\u2013Dec 2025 numbers will block upcoming execution work", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Mar", status: "done" },
     { id: "A-260227-07", text: "Compile exercises from Alex and Simon on customers; produce synthesis document", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
@@ -121,18 +134,21 @@ var TARS_DATA = {
     { id: "A-260316-11", text: "Confirm SAP entity integration approach; engage external contractor if required", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
     { id: "A-260316-12", text: "Add Dimitri to Claude AI team account", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "18 Mar", status: "overdue" },
     { id: "A-260316-13", text: "Provide and validate budget figures and cost/revenue projections for Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "18 Mar", status: "overdue" },
-    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "in-progress" }
+    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "done" }
   ]
 };
 
-// ─── allActions: flat array of every action ─────────────────────────────────
-TARS_DATA.allActions = (function() {
+// ─── allActions: flat array from initiatives + general ──────────────────────
+(function() {
   var all = [];
-  Object.keys(TARS_DATA.initiatives).forEach(function(key) {
-    TARS_DATA.initiatives[key].actions.forEach(function(a) { all.push(a); });
+  ["payments","pricing","partnerships"].forEach(function(key) {
+    var init = TARS_DATA.initiatives[key];
+    if (init && init.actions) {
+      init.actions.forEach(function(a) { all.push(a); });
+    }
   });
   TARS_DATA.generalActions.forEach(function(a) { all.push(a); });
-  return all;
+  TARS_DATA.allActions = all;
 })();
 
 // ─── DASHBOARD SYNC: patch all hardcoded values from TARS_DATA ──────────────
