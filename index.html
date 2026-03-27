@@ -4521,39 +4521,10 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
       <div class="ha-stat-item"><span class="ha-stat-num" id="ha-stat-depts">—</span><span class="ha-stat-label">Departments</span></div>
       <div class="ha-stat-item"><span class="ha-stat-num" id="ha-stat-emp">—</span><span class="ha-stat-label">Employees</span></div>
     </div>
-    <div class="ha-view-toggle">
-      <button class="ha-toggle-btn active" id="ha-tog-org" onclick="HIAGENT_ORG.switchView('orgchart')">Org Chart</button>
-      <button class="ha-toggle-btn" id="ha-tog-health" onclick="HIAGENT_ORG.switchView('health')">Infrastructure Health</button>
     </div>
-  </div>
-
-  <!-- ORG CHART TOOLBAR -->
-  <div id="hiagent-org-toolbar" style="background:#F7F7F7; padding: 8px 48px; display:flex; align-items:center; gap:16px; border-bottom:1px solid #E0E0E0;">
-    <!-- Filter -->
-    <div class="ha-toolbar-group">
-      <span class="ha-toolbar-label">Show:</span>
-      <button class="ha-filter-btn active" id="ha-fil-all" onclick="HIAGENT_ORG.setFilter('all')">All</button>
-      <button class="ha-filter-btn" id="ha-fil-humans" onclick="HIAGENT_ORG.setFilter('human')">Humans</button>
-      <button class="ha-filter-btn" id="ha-fil-agents" onclick="HIAGENT_ORG.setFilter('agent')">Agents</button>
-    </div>
-    <div style="flex:1"></div>
-    <!-- Zoom -->
-    <div class="ha-toolbar-group">
-      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomBy(-0.15)" title="Zoom out">−</button>
-      <span class="ha-zoom-level" id="ha-zoom-label">100%</span>
-      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomBy(0.15)" title="Zoom in">+</button>
-      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomFit()" title="Fit to screen" style="font-size:11px;padding:4px 8px;">Fit</button>
-      <button class="ha-zoom-btn" onclick="HIAGENT_ORG.zoomReset()" title="Reset to 100%" style="font-size:11px;padding:4px 8px;">1:1</button>
-    </div>
-  </div>
-
-  <!-- ORG CHART VIEW — zoomable/pannable viewport -->
-  <div id="hiagent-org-viewport" style="background:#F7F7F7; overflow:auto; min-height:60vh; position:relative;">
-    <div id="hiagent-org-container" style="transform-origin: top left; transition: transform 0.2s; padding: 24px; display:inline-block; min-width:100%;"></div>
-  </div>
 
   <!-- HEALTH DASHBOARD VIEW — rendered dynamically by hiagent-data.js -->
-  <div id="hiagent-health-container" style="background: #F7F7F7; padding: 16px 48px 48px 48px; min-height: 60vh; display: none;">
+  <div id="hiagent-health-container" style="background: #F7F7F7; padding: 16px 48px 48px 48px; min-height: 60vh;">
 
     <!-- SECTION 1: SCHEDULED TASKS -->
     <div style="margin-bottom: 60px;">
@@ -4581,10 +4552,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 
 </div>
 
-<!-- ── HIAgent Drill-Down Modal ──────────────────────────────────────────── -->
-<div class="ha-drill-overlay" id="hiagent-drill-overlay" onclick="hiagentDrillOverlayClick(event)">
-  <div class="ha-drill-panel" id="hiagent-drill-panel"></div>
-</div>
+<!-- HIAgent drill-down removed — will be replaced by work chart view -->
 
 <!-- ── App Store Drill-Down Modal ──────────────────────────────────────────── -->
 <div class="store-drill-overlay" id="storeDrillOverlay" onclick="handleOverlayClick(event)">
@@ -4610,7 +4578,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 <script src="intel-data.js"></script>
 <script src="intel-functions.js"></script>
 <script src="hiagent-data.js"></script>
-<script src="hiagent-org.js"></script>
+<!-- hiagent-org.js removed — org chart view disabled -->
 
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
 <script>
