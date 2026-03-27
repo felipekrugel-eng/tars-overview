@@ -2426,6 +2426,262 @@
   font-weight: 700;
 }
 
+/* ═════════════════════════════════════════════════
+   HIAGENT ORG CHART — Tree view styling
+═════════════════════════════════════════════════ */
+
+/* Summary stats bar */
+.ha-org-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+  padding: 24px 32px;
+  background: #1A1A1A;
+  border-radius: 8px;
+}
+.ha-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.ha-stat-num {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #1D8FE1;
+  line-height: 1;
+}
+.ha-stat-label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* View toggle */
+.ha-view-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+  background: #1A1A1A;
+  padding: 4px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.ha-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ha-toggle-btn:hover {
+  color: #ccc;
+}
+.ha-toggle-btn.active {
+  background: #1D8FE1;
+  color: #fff;
+}
+
+/* Org tree */
+.ha-org-tree {
+  position: relative;
+}
+
+.ha-org-level {
+  margin-bottom: 40px;
+}
+
+.ha-org-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* Person card styles */
+.ha-person-card {
+  position: relative;
+  width: 240px;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ha-human-card {
+  background: #ffffff;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.ha-human-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.ha-agent-card {
+  background: #1A1A1A;
+  border: 1px solid #333;
+  border-left: 4px solid #1D8FE1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.ha-agent-card:hover {
+  box-shadow: 0 0 20px rgba(29, 143, 225, 0.4), 0 4px 16px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.ha-person-name {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+.ha-agent-card .ha-person-name {
+  color: #fff;
+}
+
+.ha-person-title {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #666;
+}
+.ha-agent-card .ha-person-title {
+  color: #AAA;
+}
+
+.ha-person-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.ha-emp-badge {
+  background: #2DC46B;
+  color: #fff;
+}
+
+.ha-contr-badge {
+  background: #888;
+  color: #fff;
+}
+
+.ha-ai-badge {
+  background: #1D8FE1;
+  color: #fff;
+}
+
+.ha-headcount {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A1A;
+  background: #E0E0E0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.ha-expand-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-weight: 700;
+}
+.ha-expand-btn:hover {
+  color: #1A1A1A;
+}
+
+/* Children container */
+.ha-children {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.ha-org-level[data-level="0"] > .ha-org-node {
+  margin-bottom: 60px;
+}
+
+.ha-org-level[data-level="1"] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 80px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 80px;
+}
+
+.ha-org-level[data-level="1"] > .ha-org-node {
+  flex: 0 0 auto;
+}
+
+.ha-org-level[data-level="2"],
+.ha-org-level[data-level="3"],
+.ha-org-level[data-level="4"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px 40px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(29, 143, 225, 0.02);
+  border-radius: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.ha-placeholder-count {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+  background: rgba(0,0,0,0.03);
+  border-radius: 6px;
+}
+
+@media (max-width: 1200px) {
+  .ha-org-level[data-level="1"] {
+    gap: 40px;
+  }
+  .ha-org-level[data-level="2"],
+  .ha-org-level[data-level="3"],
+  .ha-org-level[data-level="4"] {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .ha-org-level[data-level="1"] {
+    gap: 20px;
+  }
+  .ha-org-level[data-level="2"],
+  .ha-org-level[data-level="3"],
+  .ha-org-level[data-level="4"] {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4218,13 +4474,16 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 
   <!-- HERO SECTION -->
   <div class="case-hero" style="background: #0D0D0D;">
-    <div class="case-hero-label">Loyverse · Agent Operations</div>
+    <div class="case-hero-label">Loyverse · Human-AI Organization</div>
     <h1><span style="color:#1D8FE1;">HIAgent.</span></h1>
-    <p>Agent registry and operations control. Monitor scheduled tasks, deployed infrastructure, installed skills, and automation health across the Loyverse AI network.</p>
+    <p>The complete map of humans and AI agents working together at Loyverse. Click any node to explore roles, responsibilities, and deliverables.</p>
   </div>
 
-  <!-- HIAGENT DASHBOARD — rendered dynamically by hiagent-data.js -->
-  <div style="background: #F7F7F7; padding: 48px; min-height: 80vh;">
+  <!-- ORG CHART VIEW — rendered dynamically by hiagent-org.js -->
+  <div id="hiagent-org-container" style="background: #F7F7F7; padding: 48px; min-height: 80vh;"></div>
+
+  <!-- HEALTH DASHBOARD VIEW — rendered dynamically by hiagent-data.js -->
+  <div id="hiagent-health-container" style="background: #F7F7F7; padding: 48px; min-height: 80vh; display: none;">
 
     <!-- SECTION 1: SCHEDULED TASKS -->
     <div style="margin-bottom: 60px;">
@@ -4281,6 +4540,7 @@ SAM_Rev = SAM_GTV x gtvRate + (SAM_GTV x digital_pct) x tpvRate
 <script src="intel-data.js"></script>
 <script src="intel-functions.js"></script>
 <script src="hiagent-data.js"></script>
+<script src="hiagent-org.js"></script>
 
 <!-- ─── SCRIPTS ──────────────────────────────────── -->
 <script>
