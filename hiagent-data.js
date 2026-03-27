@@ -1,16 +1,16 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-27T14:02:06Z
+// Last sync: 2026-03-27T16:02:13Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-27T14:02:06Z",
+  lastSync: "2026-03-27T16:02:13Z",
 
   tasks: [
     {
       id: "daily-completion-check",
       name: "Daily Completion Check",
       description: "Scan #strategy-feed and tracker for completed & new actions; update tracker",
-      schedule: "Daily 5 PM (Mon–Fri)",
+      schedule: "Daily 5 PM (Mon\u2013Fri)",
       cron: "0 17 * * 1-5",
       cadence: "weekday",
       owner: "TARS",
@@ -73,7 +73,7 @@ const HIAGENT_DATA = {
       nextRunAt: "2026-03-30T08:06:26Z",
       detail: {
         purpose: "Ensures all strategic session folders in Google Drive follow consistent naming conventions for easy navigation and retrieval.",
-        process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern (e.g., 'YYYY-MM-DD – Topic'), and reports violations to Felipe via Slack DM.",
+        process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern (e.g., 'YYYY-MM-DD \u2013 Topic'), and reports violations to Felipe via Slack DM.",
         outputs: "Slack DM with any naming convention issues found.",
         dependencies: "Google Drive (Strategic Sessions folder), Slack"
       }
@@ -213,8 +213,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-27T14:02:06Z",
-      nextRunAt: "2026-03-27T16:00:45Z",
+      lastRunAt: "2026-03-27T16:02:13Z",
+      nextRunAt: "2026-03-27T18:00:45Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
@@ -233,7 +233,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "HIAgent",
       detail: {
-        purpose: "Loyverse's central operations hub — a single-page app hosting all five operational panels under one roof. Serves as the unified entry point for strategy tracking, business analytics, long-range planning, market intelligence, and agent monitoring.",
+        purpose: "Loyverse's central operations hub \u2014 a single-page app hosting all five operational panels under one roof. Serves as the unified entry point for strategy tracking, business analytics, long-range planning, market intelligence, and agent monitoring.",
         stack: "Static HTML/CSS/JS with modular data files (tars-data.js, case-data.js, fyp-data.js, intel-data.js, hiagent-data.js). Deployed via GitHub push to Netlify with auto-deploy.",
         panels: "Hub (portal), TARS, CASE, 5YP, Market Intel, HIAgent",
         updatedBy: "sync-tracker-to-html (TARS data), hiagent-monitor (HIAgent data), manual deploys"
@@ -247,7 +247,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "TARS",
       detail: {
-        purpose: "Strategy action tracker — monitors leadership team actions from Friday strategy sessions, tracks ownership, status, due dates, and completion. Provides real-time visibility into what's open, overdue, and done.",
+        purpose: "Strategy action tracker \u2014 monitors leadership team actions from Friday strategy sessions, tracks ownership, status, due dates, and completion. Provides real-time visibility into what's open, overdue, and done.",
         stack: "Panel within the Command Centre, powered by tars-data.js which is auto-generated from the Google Sheets Action Tracker. Data refreshed daily by the sync-tracker-to-html task.",
         panels: "Action cards with owner badges, status filters, overdue alerts, completion metrics",
         updatedBy: "sync-tracker-to-html (daily), daily-completion-check (status updates), weekly-strategy-tracker-update (new actions)"
@@ -261,7 +261,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "CASE",
       detail: {
-        purpose: "Business case analytics — provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse. Powers data-driven decision making for the leadership team.",
+        purpose: "Business case analytics \u2014 provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse. Powers data-driven decision making for the leadership team.",
         stack: "Panel within the Command Centre, powered by case-data.js which contains the financial model, market data, and competitive intelligence.",
         panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix, unit economics",
         updatedBy: "Manual updates via case-data.js; appstore-data-pull (app ratings data)"
@@ -274,7 +274,7 @@ const HIAGENT_DATA = {
       name: "case-skill",
       category: "Intelligence",
       detail: {
-        purpose: "Loyverse business case analytics — financial model, revenue projections, KPIs, market data, competitive benchmarks, and strategic phase milestones.",
+        purpose: "Loyverse business case analytics \u2014 financial model, revenue projections, KPIs, market data, competitive benchmarks, and strategic phase milestones.",
         triggers: "Financials, revenue, GTV, ARPC, take rates, pricing model, Phase 2 strategy, 5-year plan, business case, investor materials, competitive analysis, growth strategy.",
         owner: "Felipe",
         usedBy: "CASE panel, strategy presentations, board decks, fundraising content"
@@ -284,7 +284,7 @@ const HIAGENT_DATA = {
       name: "loyverse-brand",
       category: "Design",
       detail: {
-        purpose: "Loyverse brand code and design system — ensures all visual outputs follow brand guidelines with correct colors, typography, and layout patterns.",
+        purpose: "Loyverse brand code and design system \u2014 ensures all visual outputs follow brand guidelines with correct colors, typography, and layout patterns.",
         triggers: "Any Loyverse-branded content: presentations, slides, decks, documents, one-pagers, reports, visual assets.",
         owner: "Felipe",
         usedBy: "All presentation and document creation tasks"
@@ -294,7 +294,7 @@ const HIAGENT_DATA = {
       name: "second-brain",
       category: "Memory",
       detail: {
-        purpose: "Persistent memory system that provides continuity across sessions — team structure, strategic decisions, past work, and automation context.",
+        purpose: "Persistent memory system that provides continuity across sessions \u2014 team structure, strategic decisions, past work, and automation context.",
         triggers: "Session start, 'remember', 'context', 'what do you know', 'pick up where we left off', references to past work.",
         owner: "Felipe",
         usedBy: "Every session start, all scheduled tasks requiring historical context"
@@ -304,7 +304,7 @@ const HIAGENT_DATA = {
       name: "docx",
       category: "Document",
       detail: {
-        purpose: "Create, read, edit, and manipulate Word documents with professional formatting — tables of contents, headings, letterheads, tracked changes.",
+        purpose: "Create, read, edit, and manipulate Word documents with professional formatting \u2014 tables of contents, headings, letterheads, tracked changes.",
         triggers: "Word doc, .docx, report, memo, letter, template as Word file.",
         owner: "System",
         usedBy: "Reports, memos, offer letters, policy documents"
@@ -314,7 +314,7 @@ const HIAGENT_DATA = {
       name: "pdf",
       category: "Document",
       detail: {
-        purpose: "PDF manipulation toolkit — extract text/tables, create, merge, split, fill forms, encrypt, OCR scanned documents.",
+        purpose: "PDF manipulation toolkit \u2014 extract text/tables, create, merge, split, fill forms, encrypt, OCR scanned documents.",
         triggers: "PDF, .pdf, form, extract, merge, split.",
         owner: "System",
         usedBy: "Document processing, form filling, report generation"
@@ -324,7 +324,7 @@ const HIAGENT_DATA = {
       name: "pptx",
       category: "Document",
       detail: {
-        purpose: "Full PowerPoint support — create decks, read/parse existing presentations, edit slides, work with templates, speaker notes, and comments.",
+        purpose: "Full PowerPoint support \u2014 create decks, read/parse existing presentations, edit slides, work with templates, speaker notes, and comments.",
         triggers: "Deck, slides, presentation, .pptx, pitch deck.",
         owner: "System",
         usedBy: "Strategy decks, Friday briefing deck, board presentations"
@@ -334,7 +334,7 @@ const HIAGENT_DATA = {
       name: "xlsx",
       category: "Document",
       detail: {
-        purpose: "Excel spreadsheet creation and analysis — formulas, formatting, data analysis, charts, and visualization.",
+        purpose: "Excel spreadsheet creation and analysis \u2014 formulas, formatting, data analysis, charts, and visualization.",
         triggers: "Excel, spreadsheet, .xlsx, data table, budget, financial model, chart.",
         owner: "System",
         usedBy: "Action Tracker, financial models, data analysis"
