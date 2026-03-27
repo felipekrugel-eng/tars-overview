@@ -332,18 +332,17 @@ function intelRoCy(rows, p, T) {
 
   const reg = sizing.querySelector('#cy-reg');
   const lov = sizing.querySelector('#cy-lov');
-  const psp = sizing.querySelector('#cy-psp');
   const q = sizing.querySelector('#cy-q');
   const regVal = reg ? reg.value : '';
   const lovVal = lov ? lov.value : '';
-  const pspVal = psp ? psp.value : '';
   const qVal = (q ? q.value : '').toLowerCase();
+  const pspChecked = Array.from(sizing.querySelectorAll('#cy-psp-dd input:checked')).map(c => c.value);
 
   let f = rows.filter(r => {
     if (regVal && r.ct !== regVal) return false;
     if (lovVal === '1' && !r.lo) return false;
     if (lovVal === '0' && r.lo) return false;
-    if (pspVal && r.ps !== pspVal) return false;
+    if (pspChecked.length && !pspChecked.includes(r.ps)) return false;
     if (qVal && !r.nm.toLowerCase().includes(qVal)) return false;
     return true;
   });
@@ -445,4 +444,90 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     };
   }
+
+  // Close PSP dropdown on outside click
+  document.addEventListener('click', function(e) {
+    const wrap = document.getElementById('cy-psp-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+    }
+  });
 });
+
+/* PSP multi-select helpers */
+function intelPspChanged() {
+  const btn = document.getElementById('cy-psp-btn');
+  const checks = Array.from(document.querySelectorAll('#cy-psp-dd input:checked'));
+  if (!btn) return;
+  const labels = { 'S': 'Stripe', 'P': 'Partner', 'B': 'Stripe+Teya', 'N/A': 'N/A' };
+  if (checks.length === 0) {
+    btn.innerHTML = 'All PSPs <span class="psp-chevron">▾</span>';
+  } else {
+    const txt = checks.map(c => labels[c.value] || c.value).join(', ');
+    btn.innerHTML = txt + ' <span class="psp-chevron">▾</span>';
+  }
+  intelRct();
+}
+
+/* Export countries table */
+function intelExportCy(fmt) {
+  const pp = intelGp2();
+  const rows = INTEL_DATA.RAW.map(r => intelCalc(r, pp));
+
+  const sizing = document.getElementById('intel-sizing');
+  if (!sizing) return;
+
+  const regVal = (sizing.querySelector('#cy-reg') || {}).value || '';
+  const lovVal = (sizing.querySelector('#cy-lov') || {}).value || '';
+  const qVal = ((sizing.querySelector('#cy-q') || {}).value || '').toLowerCase();
+  const pspChecked = Array.from(sizing.querySelectorAll('#cy-psp-dd input:checked')).map(c => c.value);
+
+  let f = rows.filter(r => {
+    if (regVal && r.ct !== regVal) return false;
+    if (lovVal === '1' && !r.lo) return false;
+    if (lovVal === '0' && r.lo) return false;
+    if (pspChecked.length && !pspChecked.includes(r.ps)) return false;
+    if (qVal && !r.nm.toLowerCase().includes(qVal)) return false;
+    return true;
+  });
+
+  const cm = [null, 'ct', 'ti', 'fml', 'inf', 'tg', 'tt', 'tr', 'sr', 'or_', 'dp'];
+  if (intelCsrt.c) {
+    f.sort((a, b) => {
+      const k = cm[intelCsrt.c];
+      if (!k) return 0;
+      const va = a[k] ?? -Infinity, vb = b[k] ?? -Infinity;
+      return typeof va === 'string' ? intelCsrt.d * va.localeCompare(vb) : intelCsrt.d * (va - vb);
+    });
+  }
+
+  const pspLabel = { 'S': 'Stripe', 'P': 'Partner', 'B': 'Stripe+Teya', 'N/A': 'N/A' };
+  const headers = ['Country', 'Continent', 'Loyverse', 'Tier', 'Formal SMBs', 'Informal SMBs', 'GTV TAM', 'TPV TAM', 'Revenue TAM', 'Revenue SAM', 'Revenue SOM', 'Digital %', 'PSP', 'SMB Source'];
+  const data = f.map(r => [
+    r.nm, r.ct, r.lo ? 'Yes' : 'No', r.ti,
+    Math.round(r.fml), intelSC === 'e' ? Math.round(r.inf) : '',
+    Math.round(r.tg), Math.round(r.tt), Math.round(r.tr), Math.round(r.sr), Math.round(r.or_),
+    (r.dp * 100).toFixed(1) + '%',
+    pspLabel[r.ps] || r.ps, r.src
+  ]);
+
+  if (fmt === 'csv') {
+    const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
+    const csv = [headers.map(esc).join(','), ...data.map(row => row.map(esc).join(','))].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'loyverse_market_sizing_countries.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  } else {
+    // Build simple XLSX using a minimal approach via an HTML table → Excel blob
+    let html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+    html += '<head><meta charset="UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Countries</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>';
+    html += '<table><thead><tr>' + headers.map(h => '<th style="font-weight:bold;background:#E8E8E8">' + h + '</th>').join('') + '</tr></thead><tbody>';
+    html += data.map(row => '<tr>' + row.map(v => '<td>' + String(v).replace(/</g, '&lt;') + '</td>').join('') + '</tr>').join('');
+    html += '</tbody></table></body></html>';
+    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'loyverse_market_sizing_countries.xls';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+}
