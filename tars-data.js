@@ -144,10 +144,11 @@ const TARS_DATA = {
     scheduledTasks: [
       { id: "daily-completion-check", purpose: "Monitor #strategy-feed for completed actions, update tracker", frequency: "Daily 5 PM (Mon-Fri)", owner: "TARS", status: "Active" },
       { id: "sync-tracker-to-html", purpose: "Regenerate tars-data.js, deploy to GitHub/Netlify", frequency: "Daily 5:53 PM", owner: "TARS", status: "Active" },
-      { id: "monday-strategic-pulse", purpose: "Initiative health status, key decisions, pending decisions, strategic questions", frequency: "Monday 10 AM", owner: "TARS", status: "Active" },
+      { id: "monday-strategic-pulse", purpose: "Initiative health, pending decisions, strategic tensions, leadership focus", frequency: "Monday 10 AM", owner: "TARS", status: "Active" },
       { id: "drive-session-naming-audit", purpose: "Verify Strategic Sessions folder naming conventions", frequency: "Monday 9 AM", owner: "TARS", status: "Active" },
-      { id: "thursday-strategic-preview", purpose: "Meeting framing, initiative status, unresolved tensions, discussion questions", frequency: "Thursday 4 PM", owner: "TARS", status: "Active" },
-      { id: "friday-meeting-briefing", purpose: "Process Fireflies transcripts, create executive briefing", frequency: "Friday 4:39 PM", owner: "TARS", status: "Active" },
+      { id: "thursday-strategic-preview", purpose: "The one question worth leadership's time, initiative shifts, unresolved tensions", frequency: "Thursday 4 PM", owner: "TARS", status: "Active" },
+      { id: "thursday-strategy-deck", purpose: "Branded PPTX briefing with CASE metrics, 5YP context, initiative health, agenda", frequency: "Thursday 4:32 PM", owner: "TARS", status: "Active" },
+      { id: "friday-meeting-briefing", purpose: "Process Fireflies transcripts, extract decisions and initiative impact", frequency: "Friday 4:39 PM", owner: "TARS", status: "Active" },
       { id: "weekly-strategy-tracker-update", purpose: "Extract decisions and milestones from strategy sessions, update initiatives + backlog", frequency: "Friday 7 PM", owner: "TARS", status: "Active" },
       { id: "weekly-memory-maintenance", purpose: "Consolidate working memory from Slack into Mem reference files", frequency: "Sunday 8 PM", owner: "Second Brain", status: "Active" },
       { id: "weekly-mem-update", purpose: "Fetch new Fireflies meetings, create/update Mem briefing notes", frequency: "Friday 8 PM", owner: "Second Brain", status: "Active" },
@@ -236,8 +237,37 @@ function renderTARS() {
   renderInitiatives();
   renderBacklog();
 
-  // Sync KPI numbers and owner bars in Operations tab
+  // Sync KPI numbers and owner bars
   syncDashboard();
+
+  // Dynamic hub tile numbers — count from actual data
+  updateHubStats();
+}
+
+function updateHubStats() {
+  // TARS: count task cards on the Operations tab (the meaningful weekly rhythm tasks)
+  var taskCards = document.querySelectorAll('#tars-operations .task-card');
+  var hubTars = document.getElementById('hub-tars-stat');
+  if (hubTars && taskCards.length > 0) {
+    hubTars.textContent = taskCards.length;
+  }
+
+  // Also update the section subtitle text to match
+  var taskCountEl = document.getElementById('tars-ops-task-count');
+  if (taskCountEl && taskCards.length > 0) {
+    var numWords = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve'];
+    var word = numWords[taskCards.length] || taskCards.length;
+    taskCountEl.textContent = word + ' scheduled tasks covering the full weekly strategy cycle \u2014 from strategic pulse to session briefings. Click any card to see details.';
+  }
+
+  // TARS initiatives count from data
+  var initCount = TARS_DATA.initiatives ? TARS_DATA.initiatives.length : 0;
+  if (initCount > 0) {
+    var liveSubEl = document.getElementById('tars-ops-live-sub');
+    if (liveSubEl) {
+      liveSubEl.textContent = initCount + ' active initiatives running in parallel. Progress reflects live data from the Action Tracker. Last sync: ' + TARS_DATA.lastUpdated + '.';
+    }
+  }
 }
 
 function showTab(tabName) {

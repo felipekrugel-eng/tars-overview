@@ -3577,15 +3577,15 @@
         <div class="portal-tag">Strategic Intelligence</div>
         <div class="portal-name">TARS</div>
         <div class="portal-stat">
-          <div class="portal-stat-num">6</div>
-          <div class="portal-stat-label">Active scheduled tasks</div>
+          <div class="portal-stat-num" id="hub-tars-stat">7</div>
+          <div class="portal-stat-label">Weekly rhythm tasks</div>
         </div>
-        <div class="portal-subtitle">Your AI chief of staff. Reads every strategy session, tracks all actions, reminds the right people at the right time — all without you having to manage it.</div>
+        <div class="portal-subtitle">Your AI chief of staff. Reads every strategy session, surfaces decisions, tracks initiative health — keeping leadership focused on what will make the difference.</div>
         <div class="portal-pills">
-          <span class="portal-pill">Friday Briefing</span>
-          <span class="portal-pill">Thursday Preview</span>
-          <span class="portal-pill">Action Tracker</span>
-          <span class="portal-pill">#strategy-feed</span>
+          <span class="portal-pill">Strategic Pulse</span>
+          <span class="portal-pill">Strategic Preview</span>
+          <span class="portal-pill">Strategy Deck</span>
+          <span class="portal-pill">Session Briefing</span>
         </div>
         <button class="portal-btn">Open TARS →</button>
       </div>
@@ -3597,7 +3597,7 @@
         <div class="portal-tag green">Operational Insights</div>
         <div class="portal-name">CASE</div>
         <div class="portal-stat">
-          <div class="portal-stat-num green">12</div>
+          <div class="portal-stat-num green" id="hub-case-stat">12</div>
           <div class="portal-stat-label">Core metrics tracked weekly</div>
         </div>
         <div class="portal-subtitle">Weekly financial and product intelligence. Revenue, GTV, payments penetration, cohort economics, churn, and App Store sentiment — delivered to Slack and email every Monday.</div>
@@ -3754,7 +3754,7 @@
   <div class="section">
     <div class="section-number">01</div>
     <h2 class="section-title">What TARS does.</h2>
-    <p class="section-sub">Six scheduled tasks covering the full weekly strategy cycle — from session briefings to action tracking. Click any card to see details.</p>
+    <p class="section-sub" id="tars-ops-task-count">Seven scheduled tasks covering the full weekly strategy cycle — from strategic pulse to session briefings. Click any card to see details.</p>
     <div class="task-grid">
 
       <div class="task-card" onclick="toggleCard(this)">
@@ -3776,11 +3776,11 @@
         <div class="task-detail">
           <div class="task-detail-title">What it produces</div>
           <ul>
-            <li>Key Highlights — 3–5 sentence strategic narrative</li>
-            <li>Key Decisions made in the session</li>
-            <li>All actions with owners and due dates</li>
-            <li>Emerging themes across sessions</li>
-            <li>Watch list — risks and gaps with owners</li>
+            <li>Key Decisions — explicit decisions with who made them and context</li>
+            <li>New Actions — commitments made with owners and implied deadlines</li>
+            <li>Initiative Impact — what changed for each initiative and what it means</li>
+            <li>Carried Forward — unresolved items that need attention next week</li>
+            <li>Strategic Signal — one observation about direction or dynamics worth noting</li>
           </ul>
         </div>
       </div>
@@ -3789,24 +3789,50 @@
         <div class="task-card-top amber"></div>
         <div class="task-card-body">
           <div class="task-schedule">Every Thursday · 4:04 PM</div>
-          <div class="task-name">Thursday Meeting Preview</div>
-          <div class="task-desc">The pre-read for tomorrow's strategy session. Surfaces unresolved tensions, open actions, patterns from past sessions, and the questions worth putting on the agenda.</div>
+          <div class="task-name">Thursday Strategic Preview</div>
+          <div class="task-desc">Frames tomorrow's strategy session around the one question worth an hour of leadership time. Identifies what's shifted this week and what decisions need to be made.</div>
           <div class="task-outputs">
             <div class="task-outputs-label">Delivers</div>
             <span class="output-pill"><span class="icon">💬</span> #strategy-feed post</span>
-            <span class="output-pill"><span class="icon">📋</span> Agenda suggestions</span>
+            <span class="output-pill"><span class="icon">📧</span> Gmail preview draft</span>
           </div>
         </div>
         <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
           <span>See details</span><span class="arrow">▾</span>
         </button>
         <div class="task-detail">
-          <div class="task-detail-title">What it covers</div>
+          <div class="task-detail-title">What it delivers</div>
           <ul>
-            <li>Open actions from previous sessions</li>
-            <li>Unresolved decisions and tensions</li>
-            <li>Watch list items requiring attention</li>
-            <li>Suggested agenda priorities for Friday</li>
+            <li>The question for tomorrow — the key strategic tension or decision for the session</li>
+            <li>What's shifted this week — meaningful changes across the three initiatives since Monday</li>
+            <li>Unresolved from last session — decisions to revisit, not tasks to check off</li>
+            <li>Come ready with — specific asks for specific people (e.g. "Simon — latest on Stripe blockers")</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top amber"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Thursday · 4:32 PM</div>
+          <div class="task-name">Thursday Strategy Deck</div>
+          <div class="task-desc">Generates a branded PPTX briefing deck for Friday's session — CASE metrics, 5YP positioning, initiative health, and the discussion agenda. Saved to Drive and shared via Slack.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">📊</span> PPTX briefing deck</span>
+            <span class="output-pill"><span class="icon">📁</span> Saved to Google Drive</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">What's in the deck</div>
+          <ul>
+            <li>Key Metrics — GTV, revenue, payments penetration, ARPC with deltas</li>
+            <li>Where we are — 5YP phase status, revenue gap context, key insight</li>
+            <li>Friday's Agenda — discussion topics drawn from the Strategic Preview</li>
+            <li>Initiative Status — health, next decision point, milestone progress for all three initiatives</li>
           </ul>
         </div>
       </div>
@@ -3815,24 +3841,24 @@
         <div class="task-card-top teal"></div>
         <div class="task-card-body">
           <div class="task-schedule">Every Monday · 10:06 AM</div>
-          <div class="task-name">Monday Action Reminder</div>
-          <div class="task-desc">Kicks off the week by DM-ing each person their open actions — connected to the bigger strategic picture. Also creates a weekly team email draft for Felipe.</div>
+          <div class="task-name">Monday Strategic Pulse</div>
+          <div class="task-desc">Kicks off the week with a strategic pulse — where the three initiatives stand, what decisions are pending, and the one tension worth watching. Keeps leadership focused on what matters.</div>
           <div class="task-outputs">
             <div class="task-outputs-label">Delivers</div>
-            <span class="output-pill"><span class="icon">💬</span> Personal DMs to each owner</span>
-            <span class="output-pill"><span class="icon">📧</span> Weekly actions email draft</span>
+            <span class="output-pill"><span class="icon">💬</span> #strategy-feed pulse</span>
+            <span class="output-pill"><span class="icon">🔒</span> Private brief to Felipe</span>
           </div>
         </div>
         <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
           <span>See details</span><span class="arrow">▾</span>
         </button>
         <div class="task-detail">
-          <div class="task-detail-title">How it works</div>
+          <div class="task-detail-title">What it delivers</div>
           <ul>
-            <li>Reads open actions from the Action Tracker and session memory</li>
-            <li>DMs each person their specific actions with strategic context</li>
-            <li>Flags anything overdue or at risk</li>
-            <li>Creates a Gmail draft to the full team with prioritised weekly actions</li>
+            <li>Where the initiatives stand — one sentence per initiative on health and what changed last week</li>
+            <li>Decisions this week — 1-3 pending decisions framed as questions, not tasks</li>
+            <li>The tension worth watching — the chief of staff observation that connects the dots</li>
+            <li>Felipe's private brief — blocker items, workload risks, sensitive context, Caio relay suggestions</li>
           </ul>
         </div>
       </div>
@@ -3929,7 +3955,7 @@
       <div class="tl-item">
         <div class="tl-day"><div class="tl-day-name">Mon</div><div class="tl-day-time">10:06 AM</div></div>
         <div class="tl-dot teal"></div>
-        <div class="tl-content"><div class="tl-name">Monday Action Reminder</div><div class="tl-desc">DMs each person their open actions. Creates the weekly team email draft.</div></div>
+        <div class="tl-content"><div class="tl-name">Monday Strategic Pulse</div><div class="tl-desc">Initiative health, pending decisions, and the tension worth watching this week.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-day"><div class="tl-day-name">Daily</div><div class="tl-day-time">5:07 PM</div></div>
@@ -3939,7 +3965,12 @@
       <div class="tl-item">
         <div class="tl-day"><div class="tl-day-name">Thu</div><div class="tl-day-time">4:04 PM</div></div>
         <div class="tl-dot amber"></div>
-        <div class="tl-content"><div class="tl-name">Thursday Meeting Preview</div><div class="tl-desc">Pre-read for Friday — unresolved items, open actions, agenda suggestions.</div></div>
+        <div class="tl-content"><div class="tl-name">Thursday Strategic Preview</div><div class="tl-desc">The one question worth leadership's time tomorrow. What's shifted and what to decide.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Thu</div><div class="tl-day-time">4:32 PM</div></div>
+        <div class="tl-dot amber"></div>
+        <div class="tl-content"><div class="tl-name">Thursday Strategy Deck</div><div class="tl-desc">Branded PPTX briefing with CASE metrics, 5YP context, initiative status, and agenda.</div></div>
       </div>
       <div class="tl-item">
         <div class="tl-day"><div class="tl-day-name">Fri</div><div class="tl-day-time">4:39 PM</div></div>
