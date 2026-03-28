@@ -253,14 +253,21 @@ function showTab(tabName) {
 
 // ─── INITIATIVES TAB ─────────────────────────────────────────────────────────
 function renderInitiatives() {
-  var grid = document.getElementById('tars-initiatives-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+  var container = document.getElementById('tars-initiatives-grid');
+  if (!container) return;
+  _renderInitiativeGrid(container);
+}
+
+function _renderInitiativeGrid(container) {
+  container.innerHTML = '';
+
+  var grid = document.createElement('div');
+  grid.className = 'tars-grid';
 
   TARS_DATA.initiatives.forEach(function(initiative) {
     var completedMilestones = initiative.milestones.filter(function(m) { return m.status === 'complete'; }).length;
     var totalMilestones = initiative.milestones.length;
-    var milestoneProgress = completedMilestones + '/' + totalMilestones + ' milestones complete';
+    var milestoneProgress = completedMilestones + '/' + totalMilestones + ' milestones';
 
     var healthColor = initiative.health === 'blocked' ? '#CC3333' :
                       initiative.health === 'at-risk' ? '#E1A21D' : '#2DC46B';
@@ -278,75 +285,93 @@ function renderInitiatives() {
         '<div class="tars-card-meta">' +
           '<div class="tars-owner-badge" style="background-color: ' + initiative.ownerColor + ';">' + initiative.ownerInitial + '</div>' +
           '<div class="tars-phase-badge">' + initiative.phase + '</div>' +
+          '<div class="tars-phase-badge" style="font-weight:700;">' + milestoneProgress + '</div>' +
         '</div>' +
         '<div class="tars-health-reason">' + initiative.healthReason + '</div>' +
-        '<div class="tars-milestone-progress">' + milestoneProgress + '</div>' +
-        '<div class="tars-decision-box">' +
-          '<div class="tars-decision-label">Latest Decision</div>' +
-          '<div class="tars-decision-text">' + initiative.latestDecision + '</div>' +
-        '</div>' +
-        '<div class="tars-decision-box">' +
-          '<div class="tars-decision-label">Next Decision Point</div>' +
-          '<div class="tars-decision-text">' + initiative.nextDecisionPoint + '</div>' +
-        '</div>' +
-        '<button class="tars-expand-btn" data-id="' + initiative.id + '">Show context &amp; milestones</button>' +
       '</div>';
 
-    grid.appendChild(card);
+    // Click card → drill down
+    (function(init) {
+      card.addEventListener('click', function() {
+        _renderInitiativeDrilldown(container, init);
+      });
+    })(initiative);
 
-    // Build expansion panel content for this initiative
-    var panelHTML =
-      '<div class="tars-context-box">' +
-        '<div class="tars-section-label">Context</div>' +
-        '<div class="tars-context-text">' + initiative.context + '</div>' +
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+}
+
+function _renderInitiativeDrilldown(container, initiative) {
+  container.innerHTML = '';
+
+  var barColor = initiative.id === 'payments' ? '#1D8FE1' : initiative.id === 'pricing' ? '#C47B10' : '#7B3FA0';
+  var healthColor = initiative.health === 'blocked' ? '#CC3333' :
+                    initiative.health === 'at-risk' ? '#E1A21D' : '#2DC46B';
+  var completedMilestones = initiative.milestones.filter(function(m) { return m.status === 'complete'; }).length;
+  var totalMilestones = initiative.milestones.length;
+
+  var view = document.createElement('div');
+  view.className = 'tars-drilldown';
+  view.innerHTML =
+    '<button class="tars-drilldown-back" id="tars-drill-back">&larr; All initiatives</button>' +
+
+    '<div class="tars-drilldown-header">' +
+      '<div class="tars-card-top-bar" style="background:' + barColor + ';"></div>' +
+      '<div class="tars-drilldown-body">' +
+        '<div class="tars-drilldown-meta">' +
+          '<div class="tars-owner-badge" style="background-color:' + initiative.ownerColor + ';">' + initiative.ownerInitial + '</div>' +
+          '<div class="tars-phase-badge">' + initiative.phase + '</div>' +
+          '<div class="tars-health-indicator" style="background-color:' + healthColor + ';" title="Health"></div>' +
+          '<span style="font-size:12px;color:#888;font-weight:600;">' + completedMilestones + '/' + totalMilestones + ' milestones complete</span>' +
+        '</div>' +
+        '<div class="tars-drilldown-title">' + initiative.name + '</div>' +
+        '<div class="tars-drilldown-reason">' + initiative.healthReason + '</div>' +
+        '<div class="tars-drilldown-decisions">' +
+          '<div class="tars-decision-box">' +
+            '<div class="tars-decision-label">Latest Decision</div>' +
+            '<div class="tars-decision-text">' + initiative.latestDecision + '</div>' +
+          '</div>' +
+          '<div class="tars-decision-box">' +
+            '<div class="tars-decision-label">Next Decision Point</div>' +
+            '<div class="tars-decision-text">' + initiative.nextDecisionPoint + '</div>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
-      '<div class="tars-milestones-section">' +
-        '<div class="tars-section-label">Milestones</div>' +
+    '</div>' +
+
+    '<div class="tars-drilldown-sections">' +
+      '<div class="tars-drilldown-section">' +
+        '<div class="tars-drilldown-section-title">Context</div>' +
+        '<div style="font-size:14px;color:#444;line-height:1.6;">' + initiative.context + '</div>' +
+      '</div>' +
+      '<div class="tars-drilldown-section">' +
+        '<div class="tars-drilldown-section-title">Milestones</div>' +
         '<div class="tars-milestones-list">' +
           initiative.milestones.map(function(m) {
-            return '<div class="tars-milestone-item">' +
-              '<div class="tars-milestone-checkbox ' + (m.status === "complete" ? "checked" : "") + '"></div>' +
+            var statusColor = m.status === 'complete' ? '#2DC46B' : m.status === 'in-progress' ? '#E1A21D' : '#CCC';
+            return '<div class="tars-milestone-item" style="margin-bottom:8px;">' +
+              '<div class="tars-milestone-checkbox ' + (m.status === "complete" ? "checked" : "") + '" style="border-color:' + statusColor + ';"></div>' +
               '<div class="tars-milestone-content">' +
-                '<div class="tars-milestone-name">' + m.name + '</div>' +
-                '<div class="tars-milestone-meta">' +
-                  '<span class="tars-milestone-status">' + m.status + '</span>' +
-                  (m.date ? '<span class="tars-milestone-date">' + m.date + '</span>' : '') +
+                '<div style="font-size:13px;color:#333;font-weight:600;">' + m.name + '</div>' +
+                '<div style="display:flex;gap:8px;margin-top:4px;">' +
+                  '<span style="font-size:11px;color:' + statusColor + ';font-weight:700;text-transform:uppercase;">' + m.status + '</span>' +
+                  (m.date ? '<span style="font-size:11px;color:#999;">' + m.date + '</span>' : '') +
                 '</div>' +
-                (m.notes ? '<div class="tars-milestone-notes">' + m.notes + '</div>' : '') +
+                (m.notes ? '<div style="font-size:12px;color:#888;margin-top:4px;line-height:1.4;">' + m.notes + '</div>' : '') +
               '</div>' +
             '</div>';
           }).join('') +
         '</div>' +
-      '</div>';
+      '</div>' +
+    '</div>';
 
-    // Expand/collapse — renders expansion as full-width panel below the card row
-    (function(initId, initColor, html) {
-      card.querySelector('.tars-expand-btn').addEventListener('click', function(e) {
-        e.stopPropagation();
-        var existing = document.getElementById('expansion-panel-' + initId);
-        if (existing) {
-          existing.remove();
-          this.textContent = 'Show context & milestones';
-          return;
-        }
-        // Collapse any other open panel first
-        var openPanels = grid.querySelectorAll('.tars-expansion-panel');
-        openPanels.forEach(function(p) { p.remove(); });
-        var allBtns = grid.querySelectorAll('.tars-expand-btn');
-        allBtns.forEach(function(b) { b.textContent = 'Show context & milestones'; });
+  container.appendChild(view);
 
-        // Create full-width expansion panel
-        var panel = document.createElement('div');
-        panel.className = 'tars-expansion-panel';
-        panel.id = 'expansion-panel-' + initId;
-        var barColor = initId === 'payments' ? '#1D8FE1' : initId === 'pricing' ? '#C47B10' : '#7B3FA0';
-        panel.style.borderTopColor = barColor;
-        panel.innerHTML = html;
-        // Insert panel right after the card in the grid — it will span full width via CSS
-        card.insertAdjacentElement('afterend', panel);
-        this.textContent = 'Collapse';
-      });
-    })(initiative.id, initiative.ownerColor, panelHTML);
+  // Back button
+  document.getElementById('tars-drill-back').addEventListener('click', function() {
+    _renderInitiativeGrid(container);
   });
 }
 

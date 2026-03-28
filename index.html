@@ -518,7 +518,7 @@
 
 
     /* ── TARS Current State ───────────────────────────────────── */
-    .tars-live-section { background: #F7F7F7; padding: 56px 48px 48px; }
+    .tars-live-section { background: #F7F7F7; padding: 56px 48px 24px; }
     .tars-live-header { margin-bottom: 32px; }
     .tars-live-badge { display: inline-flex; align-items: center; gap: 7px; background: #EDF8F1; border: 1px solid #A8DDB8; border-radius: 20px; padding: 5px 14px; font-size: 11px; font-family: "Arial Black", Arial, sans-serif; font-weight: 900; color: #2A6B42; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
     .tars-live-badge .dot-green { width: 7px; height: 7px; background: #2DC46B; border-radius: 50%; animation: pulse 2s infinite; }
@@ -2778,36 +2778,41 @@
   z-index: 1;
 }
 
-/* Tab Styles — Light Theme */
+/* Tab Styles — Button Style */
 .tars-tabs {
   display: flex;
-  gap: 0;
-  border-bottom: 1px solid #E0E0E0;
+  gap: 8px;
+  padding: 16px 48px;
   background: #fff;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 .tars-tab-btn {
-  flex: 1;
-  padding: 16px 20px;
-  background: transparent;
-  border: none;
-  color: #888;
-  font-size: 14px;
-  font-weight: 600;
+  flex: none;
+  padding: 10px 28px;
+  background: #F2F2F2;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 8px;
+  color: #666;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
+  transition: all 0.15s;
   text-align: center;
+  font-family: Arial, sans-serif;
 }
 
 .tars-tab-btn:hover {
-  color: #555;
-  background: #F9F9F9;
+  color: #333;
+  background: #E8E8E8;
+  border-color: #CCC;
 }
 
 .tars-tab-btn.active {
-  color: var(--blue);
-  border-bottom-color: var(--blue);
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(29, 143, 225, 0.25);
 }
 
 /* Tab Content — Light Background */
@@ -2822,16 +2827,22 @@
   display: block;
 }
 
-/* Initiative Cards Grid */
+/* Initiative Cards Grid — 3 columns */
 .tars-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
   padding: 0;
   align-items: start;
 }
 
 @media (max-width: 1200px) {
+  .tars-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
   .tars-grid {
     grid-template-columns: 1fr;
   }
@@ -2873,7 +2884,7 @@
 }
 
 .tars-card-content {
-  padding: 32px 28px;
+  padding: 24px 22px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -2888,7 +2899,7 @@
 
 .tars-card-title {
   font-family: "Arial Black", Arial, sans-serif;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 900;
   color: #fff;
   flex: 1;
@@ -2970,38 +2981,116 @@
   line-height: 1.4;
 }
 
-.tars-expand-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  background: rgba(29, 143, 225, 0.15);
-  color: var(--blue);
-  border: 1px solid var(--blue);
-  border-radius: 6px;
+/* Drill-down detail view — replaces the grid when a card is clicked */
+.tars-drilldown {
+  animation: drillIn 0.3s ease-out;
+}
+
+@keyframes drillIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.tars-drilldown-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
+  color: #555;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
+  margin-bottom: 28px;
   font-family: Arial, sans-serif;
 }
-
-.tars-expand-btn:hover {
-  background: rgba(29, 143, 225, 0.25);
+.tars-drilldown-back:hover {
+  background: #F5F5F5;
+  border-color: #CCC;
 }
 
-/* Full-width expansion panel — sits inside the grid but spans both columns */
-.tars-expansion-panel {
-  grid-column: 1 / -1;
+.tars-drilldown-header {
   background: #1A1A1A;
   border-radius: 12px;
-  padding: 28px 28px;
-  border-top: 5px solid #1D8FE1;
-  animation: panelSlideDown 0.25s ease-out;
+  overflow: hidden;
+  margin-bottom: 24px;
 }
 
-@keyframes panelSlideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
+.tars-drilldown-header .tars-card-top-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.tars-drilldown-body {
+  padding: 32px 32px;
+}
+
+.tars-drilldown-title {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.tars-drilldown-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tars-drilldown-reason {
+  font-size: 14px;
+  color: #AAAAAA;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.tars-drilldown-decisions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .tars-drilldown-decisions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tars-drilldown-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .tars-drilldown-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tars-drilldown-section {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #E8E8E8;
+  padding: 24px;
+}
+
+.tars-drilldown-section-title {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
 .tars-expanded-content {
@@ -3233,14 +3322,19 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px 14px;
+  padding: 14px 18px;
   border-radius: 10px;
-  background: #F8F9FA;
-  margin-bottom: 8px;
+  background: #fff;
+  margin-bottom: 10px;
+  border: 1px solid #E8E8E8;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.15s, border-color 0.15s;
 }
 
 .td-action-row:hover {
-  background: #EEF0F2;
+  background: #FDFDFD;
+  border-color: #D0D0D0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 
 .td-action-id {
@@ -3357,6 +3451,11 @@
 .tars-ops-fullpage .section,
 .tars-ops-fullpage .footer {
   /* These inherit their own padding from the original TARS CSS */
+}
+
+/* Pull the first section ("What TARS Does") closer to Current State */
+.tars-ops-fullpage .tars-live-section + .section {
+  padding-top: 32px;
 }
 
 .tars-ops-section {
@@ -3578,7 +3677,7 @@
 
   <!-- Tab 1: Initiatives -->
   <div id="tars-initiatives" class="tars-tab-content active">
-    <div id="tars-initiatives-grid" class="tars-grid"></div>
+    <div id="tars-initiatives-grid"></div>
   </div>
 
   <!-- Tab 2: Backlog — full-page layout matching original TARS style -->
