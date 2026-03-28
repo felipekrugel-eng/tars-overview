@@ -112,7 +112,7 @@
     ═══════════════════════════════════════ */
     .hub-hero {
       background: var(--blue);
-      padding: 72px 48px 80px;
+      padding: 52px 48px 60px;
       position: relative;
       overflow: hidden;
     }
@@ -190,7 +190,7 @@
     .tars-hero {
       background: var(--blue);
       color: #fff;
-      padding: 64px 48px 72px;
+      padding: 52px 48px 60px;
       position: relative;
       overflow: hidden;
     }
@@ -2723,7 +2723,7 @@
 .tars-hero {
   background: var(--blue);
   color: #fff;
-  padding: 64px 48px 72px;
+  padding: 52px 48px 60px;
   position: relative;
   overflow: hidden;
 }
@@ -2776,6 +2776,34 @@
   line-height: 1.65;
   position: relative;
   z-index: 1;
+}
+
+/* Health strip in TARS hero — shows initiative health at a glance */
+.tars-health-strip {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tars-health-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+}
+
+.tars-health-chip .health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* Tab Styles — Button Style */
@@ -3664,8 +3692,17 @@
   <div class="tars-hero">
     <div class="hero-deco hero-deco-1"></div>
     <div class="hero-deco hero-deco-2"></div>
-    <h1>TARS.</h1>
-    <p>Strategic intelligence for Loyverse's three 2026 initiatives. TARS tracks decisions, milestones, and health — connecting the dots so leadership stays aligned.</p>
+    <div class="hero-label">Loyverse · Strategic Intelligence</div>
+    <h1>Meet TARS.</h1>
+    <p>Your AI chief of staff. Surfaces decisions, tracks initiative health, and keeps leadership focused on what will make the difference — all without you having to manage it.</p>
+    <div class="tars-health-strip" id="tars-hero-health">
+      <!-- Populated by JS from initiative data -->
+    </div>
+    <div class="case-hero-metas" id="tars-hero-metas">
+      <div class="case-hero-meta"><strong id="tars-hero-initiatives">3</strong>Active initiatives</div>
+      <div class="case-hero-meta"><strong id="tars-hero-tasks">7</strong>Weekly rhythm tasks</div>
+      <div class="case-hero-meta"><strong id="tars-hero-updated">—</strong>Last sync</div>
+    </div>
   </div>
 
   <!-- Tab Navigation -->

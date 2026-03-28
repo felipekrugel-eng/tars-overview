@@ -268,6 +268,48 @@ function updateHubStats() {
       liveSubEl.textContent = initCount + ' active initiatives running in parallel. Progress reflects live data from the Action Tracker. Last sync: ' + TARS_DATA.lastUpdated + '.';
     }
   }
+
+  // ─── TARS Hero Health Strip ─────────────────────────────────────────────────
+  var healthStrip = document.getElementById('tars-hero-health');
+  if (healthStrip && TARS_DATA.initiatives) {
+    var healthColorMap = {
+      'on-track': '#0F7A4C',
+      'at-risk': '#C47B10',
+      'blocked': '#CC3333',
+      'not-started': '#888'
+    };
+    var healthLabelMap = {
+      'on-track': 'On Track',
+      'at-risk': 'At Risk',
+      'blocked': 'Blocked',
+      'not-started': 'Not Started'
+    };
+    healthStrip.innerHTML = '';
+    TARS_DATA.initiatives.forEach(function(init) {
+      var color = healthColorMap[init.health] || '#888';
+      var label = healthLabelMap[init.health] || init.health;
+      var chip = document.createElement('div');
+      chip.className = 'tars-health-chip';
+      chip.innerHTML = '<span class="health-dot" style="background:' + color + '"></span>' +
+        '<span class="health-chip-name">' + init.name.split('—')[0].split('–')[0].trim() + '</span>' +
+        '<span class="health-chip-status" style="color:' + color + '">' + label + '</span>';
+      healthStrip.appendChild(chip);
+    });
+  }
+
+  // ─── TARS Hero Meta Values ──────────────────────────────────────────────────
+  var heroInitEl = document.getElementById('tars-hero-initiatives');
+  if (heroInitEl) {
+    heroInitEl.textContent = initCount + ' Active';
+  }
+  var heroTasksEl = document.getElementById('tars-hero-tasks');
+  if (heroTasksEl && taskCards.length > 0) {
+    heroTasksEl.textContent = taskCards.length + ' Tasks';
+  }
+  var heroUpdatedEl = document.getElementById('tars-hero-updated');
+  if (heroUpdatedEl && TARS_DATA.lastUpdated) {
+    heroUpdatedEl.textContent = TARS_DATA.lastUpdated;
+  }
 }
 
 function showTab(tabName) {
