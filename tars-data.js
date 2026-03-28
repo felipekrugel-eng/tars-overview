@@ -290,42 +290,63 @@ function renderInitiatives() {
           '<div class="tars-decision-text">' + initiative.nextDecisionPoint + '</div>' +
         '</div>' +
         '<button class="tars-expand-btn" data-id="' + initiative.id + '">Show context &amp; milestones</button>' +
-        '<div class="tars-expanded-content" id="expanded-' + initiative.id + '" style="display: none;">' +
-          '<div class="tars-context-box">' +
-            '<div class="tars-section-label">Context</div>' +
-            '<div class="tars-context-text">' + initiative.context + '</div>' +
-          '</div>' +
-          '<div class="tars-milestones-section">' +
-            '<div class="tars-section-label">Milestones</div>' +
-            '<div class="tars-milestones-list">' +
-              initiative.milestones.map(function(m) {
-                return '<div class="tars-milestone-item">' +
-                  '<div class="tars-milestone-checkbox ' + (m.status === "complete" ? "checked" : "") + '"></div>' +
-                  '<div class="tars-milestone-content">' +
-                    '<div class="tars-milestone-name">' + m.name + '</div>' +
-                    '<div class="tars-milestone-meta">' +
-                      '<span class="tars-milestone-status">' + m.status + '</span>' +
-                      (m.date ? '<span class="tars-milestone-date">' + m.date + '</span>' : '') +
-                    '</div>' +
-                    (m.notes ? '<div class="tars-milestone-notes">' + m.notes + '</div>' : '') +
-                  '</div>' +
-                '</div>';
-              }).join('') +
-            '</div>' +
-          '</div>' +
-        '</div>' +
       '</div>';
 
     grid.appendChild(card);
 
-    // Expand/collapse — only affects THIS card
-    card.querySelector('.tars-expand-btn').addEventListener('click', function(e) {
-      e.stopPropagation();
-      var expanded = document.getElementById('expanded-' + initiative.id);
-      var isVisible = expanded.style.display !== 'none';
-      expanded.style.display = isVisible ? 'none' : 'block';
-      this.textContent = isVisible ? 'Show context & milestones' : 'Collapse';
-    });
+    // Build expansion panel content for this initiative
+    var panelHTML =
+      '<div class="tars-context-box">' +
+        '<div class="tars-section-label">Context</div>' +
+        '<div class="tars-context-text">' + initiative.context + '</div>' +
+      '</div>' +
+      '<div class="tars-milestones-section">' +
+        '<div class="tars-section-label">Milestones</div>' +
+        '<div class="tars-milestones-list">' +
+          initiative.milestones.map(function(m) {
+            return '<div class="tars-milestone-item">' +
+              '<div class="tars-milestone-checkbox ' + (m.status === "complete" ? "checked" : "") + '"></div>' +
+              '<div class="tars-milestone-content">' +
+                '<div class="tars-milestone-name">' + m.name + '</div>' +
+                '<div class="tars-milestone-meta">' +
+                  '<span class="tars-milestone-status">' + m.status + '</span>' +
+                  (m.date ? '<span class="tars-milestone-date">' + m.date + '</span>' : '') +
+                '</div>' +
+                (m.notes ? '<div class="tars-milestone-notes">' + m.notes + '</div>' : '') +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+
+    // Expand/collapse — renders expansion as full-width panel below the card row
+    (function(initId, initColor, html) {
+      card.querySelector('.tars-expand-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        var existing = document.getElementById('expansion-panel-' + initId);
+        if (existing) {
+          existing.remove();
+          this.textContent = 'Show context & milestones';
+          return;
+        }
+        // Collapse any other open panel first
+        var openPanels = grid.querySelectorAll('.tars-expansion-panel');
+        openPanels.forEach(function(p) { p.remove(); });
+        var allBtns = grid.querySelectorAll('.tars-expand-btn');
+        allBtns.forEach(function(b) { b.textContent = 'Show context & milestones'; });
+
+        // Create full-width expansion panel
+        var panel = document.createElement('div');
+        panel.className = 'tars-expansion-panel';
+        panel.id = 'expansion-panel-' + initId;
+        var barColor = initId === 'payments' ? '#1D8FE1' : initId === 'pricing' ? '#C47B10' : '#7B3FA0';
+        panel.style.borderTopColor = barColor;
+        panel.innerHTML = html;
+        // Insert panel right after the card in the grid — it will span full width via CSS
+        card.insertAdjacentElement('afterend', panel);
+        this.textContent = 'Collapse';
+      });
+    })(initiative.id, initiative.ownerColor, panelHTML);
   });
 }
 
@@ -444,7 +465,7 @@ function _renderBacklogBody(container) {
 
 // Operations tab is now static HTML in index.html — no JS rendering needed
 
-// ─── Dashboard sync — populates KPIs and owner bars in Operations tab ────────
+// ─── Dashboard sync — populates KPIs and owner bars in Backlog + Ops tabs ────
 function syncDashboard() {
   var all = TARS_DATA.allActions;
 
@@ -453,7 +474,7 @@ function syncDashboard() {
   var ipN      = all.filter(function(a) { return a.status === "in-progress"; }).length;
   var overdueN = all.filter(function(a) { return a.status === "overdue"; }).length;
 
-  // KPI tiles (both old-style and ops-specific)
+  // KPI tiles
   var kpiNums = document.querySelectorAll(".action-kpi-num");
   kpiNums.forEach(function(el) {
     if (el.classList.contains("total")) el.textContent = totalN;
@@ -462,29 +483,30 @@ function syncDashboard() {
     else if (el.classList.contains("over"))  el.textContent = overdueN;
   });
 
-  // Subtitle
+  // Date string
   var today = new Date();
   var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   var dateStr = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
   var sessions = new Set(all.map(function(a) { return a.id.substring(0, 9); }));
 
+  // Subtitles
   var stripSubs = document.querySelectorAll(".action-strip-sub");
   stripSubs.forEach(function(el) {
     el.textContent = totalN + " actions logged across " + sessions.size + " sessions. Last updated: " + dateStr;
   });
 
-  // Live sub
+  // Ops live sub
   var liveSub = document.getElementById("tars-ops-live-sub");
   if (liveSub) {
     liveSub.textContent = "Three active initiatives running in parallel. Progress reflects live data from the Action Tracker (" + totalN + " actions across " + sessions.size + " sessions). Last sync: " + dateStr + ".";
   }
 
-  // Owner breakdown bars
+  // Owner breakdown bars — find by data-backlog-owner attribute
   var owners = ["Simon", "Caio", "Felipe", "Alex"];
   var ownerRows = document.querySelectorAll(".owner-row-item");
-  ownerRows.forEach(function(row, i) {
-    if (i >= owners.length) return;
-    var name = owners[i];
+  ownerRows.forEach(function(row) {
+    var name = row.getAttribute("data-backlog-owner");
+    if (!name) return;
     var mine = all.filter(function(a) { return a.owner === name; });
     var t = mine.length || 1;
     var d = mine.filter(function(a) { return a.status === "done"; }).length;
@@ -504,5 +526,28 @@ function syncDashboard() {
     if (cDone) cDone.textContent = d + "\u2713";
     if (cProg) cProg.textContent = p + "\u25CF";
     if (cOver) cOver.textContent = o > 0 ? o + "!" : "\u2014";
+  });
+
+  // Wire up backlog KPI tiles as filter shortcuts
+  document.querySelectorAll("[data-backlog-filter]").forEach(function(kpi) {
+    kpi.style.cursor = "pointer";
+    kpi.addEventListener("click", function() {
+      var filter = this.getAttribute("data-backlog-filter");
+      __backlogFilter = { owner: "all", project: "all", status: filter };
+      showTab("backlog");
+      var container = document.getElementById("tars-backlog-list");
+      if (container) _renderBacklogBody(container);
+    });
+  });
+
+  // Wire up backlog owner rows as filter shortcuts
+  document.querySelectorAll("[data-backlog-owner]").forEach(function(row) {
+    row.style.cursor = "pointer";
+    row.addEventListener("click", function() {
+      var owner = this.getAttribute("data-backlog-owner");
+      __backlogFilter = { owner: owner, project: "all", status: "all" };
+      var container = document.getElementById("tars-backlog-list");
+      if (container) _renderBacklogBody(container);
+    });
   });
 }
