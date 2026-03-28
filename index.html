@@ -113,6 +113,8 @@
     .hub-hero {
       background: var(--blue);
       padding: 52px 48px 60px;
+      min-height: 320px;
+      box-sizing: border-box;
       position: relative;
       overflow: hidden;
     }
@@ -191,6 +193,8 @@
       background: var(--blue);
       color: #fff;
       padding: 52px 48px 60px;
+      min-height: 320px;
+      box-sizing: border-box;
       position: relative;
       overflow: hidden;
     }
@@ -290,6 +294,8 @@
       background: #0D0D0D;
       color: #fff;
       padding: 52px 48px 60px;
+      min-height: 320px;
+      box-sizing: border-box;
       position: relative;
       overflow: hidden;
     }
@@ -2724,6 +2730,8 @@
   background: var(--blue);
   color: #fff;
   padding: 52px 48px 60px;
+  min-height: 320px;
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
 }
@@ -2769,16 +2777,21 @@
 }
 
 .tars-hero p {
-  font-size: 16px;
-  color: rgba(255,255,255,0.82);
-  margin: 0;
-  max-width: 600px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.88);
+  margin: 0 0 24px 0;
+  max-width: 520px;
   line-height: 1.65;
   position: relative;
   z-index: 1;
 }
 
-/* Updated badge in TARS hero — reuses .case-updated from CASE page */
+/* Updated badge in TARS hero — override colors for blue background */
+.tars-hero .case-updated {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.85);
+}
 
 /* Tab Styles — Button Style */
 .tars-tabs {
