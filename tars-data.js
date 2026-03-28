@@ -11,7 +11,7 @@ const TARS_DATA = {
       ownerColor: "#1D8FE1",
       phase: "Pilot — Pre-Launch",
       health: "at-risk",
-      healthReason: "Working demo complete but security and tip issues flagged as pre-launch blockers. US pricing not finalized. Dedicated strategy meeting not yet scheduled.",
+      healthReason: "Working demo complete but security and tip issues flagged as pre-launch blockers. US pricing not finalized. US Deepdive meeting scheduled Wed 1 Apr.",
       milestones: [
         { id: "m1", name: "Stripe terminal integration demonstrated", status: "complete", date: "27 Mar 2026", notes: "Pay Demo 27 Mar — functional but issues flagged" },
         { id: "m2", name: "Pre-launch blockers resolved (security, tips)", status: "in-progress", date: "15 Apr 2026", notes: "Oleksandr: export validation. Dmytro: tip handling investigation" },
@@ -20,7 +20,7 @@ const TARS_DATA = {
         { id: "m5", name: "5,000 customers on payments + software", status: "not-started", date: "Dec 2026", notes: "Caio's headline proof point for scaling and capital raise" }
       ],
       latestDecision: "US pricing: 3% flat rate with surcharging options recommended (Session 09, 27 Mar)",
-      nextDecisionPoint: "Confirm US pricing approach at dedicated meeting (Caio scheduling)",
+      nextDecisionPoint: "Confirm US pricing approach — Loyverse US Deepdive scheduled Wed 1 Apr, 4 PM UK (5 attendees)",
       context: "Caio proposed 100% US focus until 5K customers proven. Simon suggested 3% flat rate. Alex prefers Mexico given 50% organic growth. Debit card issuance feasible but needs US legal entity (~2-3 months).",
       actions: [
         { id: "A-260206-01", text: "Book time Mon–Thu to discuss Stripe Mexico preview launch", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Feb", status: "done" },
@@ -223,72 +223,76 @@ function renderInitiatives() {
 
     const card = document.createElement('div');
     card.className = 'tars-initiative-card';
+    card.setAttribute('data-initiative', initiative.id);
     card.innerHTML = `
-      <div class="tars-card-header">
-        <div class="tars-card-title">${initiative.name}</div>
-        <div class="tars-health-indicator" style="background-color: ${healthColor};" title="${initiative.healthReason}"></div>
-      </div>
-
-      <div class="tars-card-meta">
-        <div class="tars-owner-badge" style="background-color: ${initiative.ownerColor};">${initiative.ownerInitial}</div>
-        <div class="tars-phase-badge">${initiative.phase}</div>
-      </div>
-
-      <div class="tars-health-reason">${initiative.healthReason}</div>
-
-      <div class="tars-milestone-progress">${milestoneProgress}</div>
-
-      <div class="tars-decision-box">
-        <div class="tars-decision-label">Latest Decision</div>
-        <div class="tars-decision-text">${initiative.latestDecision}</div>
-      </div>
-
-      <div class="tars-decision-box">
-        <div class="tars-decision-label">Next Decision Point</div>
-        <div class="tars-decision-text">${initiative.nextDecisionPoint}</div>
-      </div>
-
-      <button class="tars-expand-btn" data-id="${initiative.id}">Expand to view milestones & actions</button>
-
-      <div class="tars-expanded-content" id="expanded-${initiative.id}" style="display: none;">
-        <div class="tars-context-box">
-          <div class="tars-section-label">Context</div>
-          <div class="tars-context-text">${initiative.context}</div>
+      <div class="tars-card-top-bar"></div>
+      <div class="tars-card-content">
+        <div class="tars-card-header">
+          <div class="tars-card-title">${initiative.name}</div>
+          <div class="tars-health-indicator" style="background-color: ${healthColor};" title="${initiative.healthReason}"></div>
         </div>
 
-        <div class="tars-milestones-section">
-          <div class="tars-section-label">Milestones</div>
-          <div class="tars-milestones-list">
-            ${initiative.milestones.map(m => `
-              <div class="tars-milestone-item">
-                <div class="tars-milestone-checkbox ${m.status === 'complete' ? 'checked' : ''}"></div>
-                <div class="tars-milestone-content">
-                  <div class="tars-milestone-name">${m.name}</div>
-                  <div class="tars-milestone-meta">
-                    <span class="tars-milestone-status">${m.status}</span>
-                    ${m.date ? `<span class="tars-milestone-date">${m.date}</span>` : ''}
-                  </div>
-                  ${m.notes ? `<div class="tars-milestone-notes">${m.notes}</div>` : ''}
-                </div>
-              </div>
-            `).join('')}
+        <div class="tars-card-meta">
+          <div class="tars-owner-badge" style="background-color: ${initiative.ownerColor};">${initiative.ownerInitial}</div>
+          <div class="tars-phase-badge">${initiative.phase}</div>
+        </div>
+
+        <div class="tars-health-reason">${initiative.healthReason}</div>
+
+        <div class="tars-milestone-progress">${milestoneProgress}</div>
+
+        <div class="tars-decision-box">
+          <div class="tars-decision-label">Latest Decision</div>
+          <div class="tars-decision-text">${initiative.latestDecision}</div>
+        </div>
+
+        <div class="tars-decision-box">
+          <div class="tars-decision-label">Next Decision Point</div>
+          <div class="tars-decision-text">${initiative.nextDecisionPoint}</div>
+        </div>
+
+        <button class="tars-expand-btn" data-id="${initiative.id}">Expand to view milestones & actions</button>
+
+        <div class="tars-expanded-content" id="expanded-${initiative.id}" style="display: none;">
+          <div class="tars-context-box">
+            <div class="tars-section-label">Context</div>
+            <div class="tars-context-text">${initiative.context}</div>
           </div>
-        </div>
 
-        <div class="tars-actions-section">
-          <div class="tars-section-label">Related Actions</div>
-          <div class="tars-actions-list">
-            ${initiative.actions.map(action => `
-              <div class="tars-action-item">
-                <div class="tars-action-id">${action.id}</div>
-                <div class="tars-action-text">${action.text}</div>
-                <div class="tars-action-meta">
-                  <span class="tars-owner-small" style="background-color: ${action.ownerColor};">${action.ownerInitial}</span>
-                  <span class="tars-due">${action.due}</span>
-                  <span class="tars-status ${action.status}">${action.status}</span>
+          <div class="tars-milestones-section">
+            <div class="tars-section-label">Milestones</div>
+            <div class="tars-milestones-list">
+              ${initiative.milestones.map(m => `
+                <div class="tars-milestone-item">
+                  <div class="tars-milestone-checkbox ${m.status === 'complete' ? 'checked' : ''}"></div>
+                  <div class="tars-milestone-content">
+                    <div class="tars-milestone-name">${m.name}</div>
+                    <div class="tars-milestone-meta">
+                      <span class="tars-milestone-status">${m.status}</span>
+                      ${m.date ? `<span class="tars-milestone-date">${m.date}</span>` : ''}
+                    </div>
+                    ${m.notes ? `<div class="tars-milestone-notes">${m.notes}</div>` : ''}
+                  </div>
                 </div>
-              </div>
-            `).join('')}
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="tars-actions-section">
+            <div class="tars-section-label">Related Actions</div>
+            <div class="tars-actions-list">
+              ${initiative.actions.map(action => `
+                <div class="tars-action-item">
+                  <div class="tars-action-id">${action.id}</div>
+                  <div class="tars-action-text">${action.text}</div>
+                  <div class="tars-action-meta">
+                    <span class="tars-owner-small" style="background-color: ${action.ownerColor};">${action.ownerInitial}</span>
+                    <span class="tars-due">${action.due}</span>
+                    <span class="tars-status ${action.status}">${action.status}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
           </div>
         </div>
       </div>
@@ -361,37 +365,26 @@ function renderBacklogItems(items) {
 
   itemsContainer.innerHTML = '';
 
-  const table = document.createElement('table');
-  table.className = 'tars-backlog-table';
-
-  const header = document.createElement('tr');
-  header.innerHTML = `
-    <th>ID</th>
-    <th>Action</th>
-    <th>Owner</th>
-    <th>Due</th>
-    <th>Status</th>
-  `;
-  table.appendChild(header);
-
   items.forEach(action => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td class="tars-action-id-col">${action.id}</td>
-      <td class="tars-action-text-col">${action.text}</td>
-      <td class="tars-owner-col">
-        <span class="tars-owner-badge-small" style="background-color: ${action.ownerColor};">${action.ownerInitial}</span>
-        ${action.owner}
-      </td>
-      <td class="tars-due-col">${action.due}</td>
-      <td class="tars-status-col">
-        <span class="tars-status-badge ${action.status}">${action.status}</span>
-      </td>
-    `;
-    table.appendChild(row);
-  });
+    const statusClass = action.status === 'done' ? 'done' :
+                       action.status === 'in-progress' ? 'in-progress' : 'overdue';
 
-  itemsContainer.appendChild(table);
+    const row = document.createElement('div');
+    row.className = 'td-action-row';
+    row.innerHTML = `
+      <div class="td-action-id">${action.id}</div>
+      <div class="td-action-text">${action.text}</div>
+      <div class="td-action-meta">
+        <span class="td-status-chip ${statusClass}">${action.status}</span>
+        <span class="td-owner-chip" style="border-color: ${action.ownerColor}; color: ${action.ownerColor};">
+          <span style="width: 16px; height: 16px; border-radius: 2px; background: ${action.ownerColor}; color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;">${action.ownerInitial}</span>
+          ${action.owner}
+        </span>
+        <span style="font-size: 12px; color: #888;">${action.due}</span>
+      </div>
+    `;
+    itemsContainer.appendChild(row);
+  });
 }
 
 function renderOperations() {
@@ -403,7 +396,7 @@ function renderOperations() {
   // Scheduled tasks
   const tasksSection = document.createElement('div');
   tasksSection.className = 'tars-ops-section';
-  tasksSection.innerHTML = '<div class="tars-section-label">Scheduled Tasks</div>';
+  tasksSection.innerHTML = '<h3>Scheduled Tasks</h3>';
 
   const tasksTable = document.createElement('table');
   tasksTable.className = 'tars-tasks-table';
@@ -422,7 +415,7 @@ function renderOperations() {
       <td>${task.purpose}</td>
       <td>${task.frequency}</td>
       <td>${task.owner}</td>
-      <td><span class="tars-status-badge active">${task.status}</span></td>
+      <td><span class="td-status-chip done">${task.status}</span></td>
     `;
     tasksTable.appendChild(row);
   });
@@ -434,7 +427,7 @@ function renderOperations() {
   const rhythmSection = document.createElement('div');
   rhythmSection.className = 'tars-ops-section';
   rhythmSection.innerHTML = `
-    <div class="tars-section-label">Weekly Rhythm</div>
+    <h3>Weekly Rhythm</h3>
     <div class="tars-ops-text">${TARS_DATA.operations.weeklyRhythm}</div>
   `;
   container.appendChild(rhythmSection);
@@ -442,7 +435,7 @@ function renderOperations() {
   // Connected platforms
   const platformsSection = document.createElement('div');
   platformsSection.className = 'tars-ops-section';
-  platformsSection.innerHTML = '<div class="tars-section-label">Connected Platforms</div>';
+  platformsSection.innerHTML = '<h3>Connected Platforms</h3>';
 
   const platformsList = document.createElement('ul');
   platformsList.className = 'tars-platforms-list';
@@ -459,7 +452,7 @@ function renderOperations() {
   const interactSection = document.createElement('div');
   interactSection.className = 'tars-ops-section';
   interactSection.innerHTML = `
-    <div class="tars-section-label">How to Interact</div>
+    <h3>How to Interact</h3>
     <div class="tars-ops-text">${TARS_DATA.operations.howToInteract}</div>
   `;
   container.appendChild(interactSection);

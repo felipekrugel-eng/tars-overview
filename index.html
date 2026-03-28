@@ -2718,61 +2718,72 @@
 
 /* ═════════════════════════════════════════════════════ TARS PANEL ═════════════════════════════════════════════════════ */
 
+/* ═════════════════════════════════════════════════════ TARS PANEL — LIGHT THEME ═════════════════════════════════════════════════════ */
+
 .tars-hero {
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-  padding: 40px;
-  border-bottom: 1px solid #2a2a3e;
+  background: var(--blue);
+  color: #fff;
+  padding: 64px 48px 72px;
   position: relative;
   overflow: hidden;
 }
 
 .tars-hero::before, .tars-hero::after {
-  content: '';
+  content: "";
   position: absolute;
-  border-radius: 50%;
-  opacity: 0.05;
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
 }
 
 .tars-hero::before {
-  width: 400px;
-  height: 400px;
-  background: #1D8FE1;
-  top: -100px;
-  right: -100px;
+  width: 160px;
+  height: 160px;
+  top: -40px;
+  right: 80px;
+  transform: rotate(18deg);
 }
 
 .tars-hero::after {
-  width: 300px;
-  height: 300px;
-  background: #7B61FF;
-  bottom: -80px;
-  left: -80px;
+  width: 90px;
+  height: 90px;
+  bottom: 20px;
+  right: 260px;
+  transform: rotate(-12deg);
+}
+
+.hero-deco {
+  position: absolute;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
 }
 
 .tars-hero h1 {
-  font-size: 36px;
-  font-weight: 700;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 900;
   color: #fff;
-  margin: 0 0 12px 0;
+  margin: 0 0 22px 0;
   position: relative;
   z-index: 1;
+  line-height: 1.05;
 }
 
 .tars-hero p {
-  font-size: 14px;
-  color: #aaa;
+  font-size: 16px;
+  color: rgba(255,255,255,0.82);
   margin: 0;
   max-width: 600px;
-  line-height: 1.5;
+  line-height: 1.65;
   position: relative;
   z-index: 1;
 }
 
+/* Tab Styles — Light Theme */
 .tars-tabs {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid #2a2a3e;
-  background: #0f0f1a;
+  border-bottom: 1px solid #E0E0E0;
+  background: #fff;
 }
 
 .tars-tab-btn {
@@ -2786,56 +2797,98 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
+  text-align: center;
 }
 
 .tars-tab-btn:hover {
-  color: #bbb;
+  color: #555;
+  background: #F9F9F9;
 }
 
 .tars-tab-btn.active {
-  color: #fff;
-  border-bottom-color: #1D8FE1;
+  color: var(--blue);
+  border-bottom-color: var(--blue);
 }
 
+/* Tab Content — Light Background */
 .tars-tab-content {
   display: none;
-  padding: 24px;
-  background: #0f0f1a;
+  padding: 48px;
+  background: #F7F7F7;
+  min-height: 400px;
 }
 
 .tars-tab-content.active {
   display: block;
 }
 
+/* Initiative Cards Grid */
 .tars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding: 0;
 }
 
+@media (max-width: 1200px) {
+  .tars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Initiative Card — Dark card on light background (Market Intel style) */
 .tars-initiative-card {
-  background: #1a1a2e;
-  border: 1px solid #2a2a3e;
-  border-radius: 8px;
-  padding: 20px;
-  transition: all 0.2s;
+  background: #1A1A1A;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .tars-initiative-card:hover {
-  border-color: #3a3a4e;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+}
+
+/* Colored top bar for each initiative type */
+.tars-initiative-card[data-initiative="payments"] .tars-card-top-bar {
+  background: #1D8FE1;
+}
+
+.tars-initiative-card[data-initiative="pricing"] .tars-card-top-bar {
+  background: #C47B10;
+}
+
+.tars-initiative-card[data-initiative="partnerships"] .tars-card-top-bar {
+  background: #7B3FA0;
+}
+
+.tars-card-top-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.tars-card-content {
+  padding: 32px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .tars-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .tars-card-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
   color: #fff;
   flex: 1;
   line-height: 1.3;
@@ -2852,8 +2905,10 @@
 
 .tars-card-meta {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .tars-owner-badge {
@@ -2870,36 +2925,37 @@
 
 .tars-phase-badge {
   font-size: 11px;
-  color: #aaa;
+  color: #AAAAAA;
   padding: 6px 10px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.1);
   border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .tars-health-reason {
   font-size: 13px;
-  color: #999;
-  line-height: 1.4;
-  margin-bottom: 12px;
+  color: #AAAAAA;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
 
 .tars-milestone-progress {
   font-size: 12px;
-  color: #777;
+  color: #888;
   margin-bottom: 16px;
   font-weight: 600;
 }
 
 .tars-decision-box {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255,255,255,0.08);
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .tars-decision-label {
-  font-size: 11px;
+  font-size: 10px;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -2909,7 +2965,7 @@
 
 .tars-decision-text {
   font-size: 13px;
-  color: #ddd;
+  color: #DDD;
   line-height: 1.4;
 }
 
@@ -2918,13 +2974,14 @@
   padding: 12px;
   margin-top: 12px;
   background: rgba(29, 143, 225, 0.15);
-  color: #1D8FE1;
-  border: 1px solid #1D8FE1;
+  color: var(--blue);
+  border: 1px solid var(--blue);
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  font-family: Arial, sans-serif;
 }
 
 .tars-expand-btn:hover {
@@ -2934,7 +2991,7 @@
 .tars-expanded-content {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #2a2a3e;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .tars-context-box {
@@ -2942,7 +2999,7 @@
 }
 
 .tars-section-label {
-  font-size: 12px;
+  font-size: 10px;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -2952,8 +3009,8 @@
 
 .tars-context-text {
   font-size: 13px;
-  color: #ccc;
-  line-height: 1.5;
+  color: #CCC;
+  line-height: 1.55;
 }
 
 .tars-milestones-section {
@@ -2974,7 +3031,7 @@
 .tars-milestone-checkbox {
   width: 20px;
   height: 20px;
-  border: 2px solid #2a2a3e;
+  border: 2px solid rgba(255,255,255,0.2);
   border-radius: 4px;
   flex-shrink: 0;
   position: relative;
@@ -3003,7 +3060,7 @@
 
 .tars-milestone-name {
   font-size: 13px;
-  color: #ddd;
+  color: #DDD;
   font-weight: 600;
   margin-bottom: 4px;
 }
@@ -3041,21 +3098,23 @@
 }
 
 .tars-action-item {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255,255,255,0.05);
   padding: 10px;
   border-radius: 6px;
   font-size: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .tars-action-id {
-  color: #1D8FE1;
+  color: var(--blue);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10px;
   margin-bottom: 4px;
+  font-family: monospace;
 }
 
 .tars-action-text {
-  color: #ddd;
+  color: #DDD;
   line-height: 1.4;
   margin-bottom: 6px;
 }
@@ -3085,199 +3144,226 @@
 }
 
 .tars-status {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: capitalize;
-  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
   border-radius: 3px;
 }
 
 .tars-status.done {
-  color: #2DC46B;
-  background: rgba(45, 196, 107, 0.15);
+  color: #1A8F50;
+  background: rgba(45,196,107,0.12);
 }
 
 .tars-status.in-progress {
-  color: #1D8FE1;
-  background: rgba(29, 143, 225, 0.15);
+  color: #C87D00;
+  background: rgba(245,166,35,0.12);
 }
 
 .tars-status.overdue {
-  color: #CC3333;
-  background: rgba(204, 51, 51, 0.15);
+  color: #C62828;
+  background: rgba(229,57,53,0.1);
 }
 
 .tars-status.active {
-  color: #2DC46B;
-  background: rgba(45, 196, 107, 0.15);
+  color: #1A8F50;
+  background: rgba(45,196,107,0.12);
 }
 
-/* Backlog Styles */
+/* ═══════════════════════════════════════════════════ BACKLOG TAB — LIGHT ACTION TRACKER STYLE ═══════════════════════════════════════════════════ */
+
 .tars-backlog-container {
-  padding: 24px;
+  padding: 48px;
 }
 
 .tars-backlog-filter {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
 .tars-owner-filter-btn {
-  padding: 8px 14px;
-  background: transparent;
-  border: 1px solid #2a2a3e;
-  color: #999;
-  border-radius: 4px;
+  padding: 6px 14px;
+  background: #fff;
+  border: 1px solid #E0E0E0;
+  color: #666;
+  border-radius: 20px;
   font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  font-weight: 600;
 }
 
 .tars-owner-filter-btn:hover {
-  border-color: #3a3a4e;
-  color: #bbb;
+  border-color: #CCC;
+  background: #F9F9F9;
+  color: #333;
 }
 
 .tars-owner-filter-btn.active {
-  background: rgba(255, 255, 255, 0.1);
+  background: #1D8FE1;
   color: #fff;
+  border-color: #1D8FE1;
 }
 
 .tars-backlog-items {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
-.tars-backlog-table {
-  width: 100%;
-  border-collapse: collapse;
+/* Action row styles from old tracker */
+.td-action-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #F8F9FA;
+  margin-bottom: 8px;
+}
+
+.td-action-row:hover {
+  background: #EEF0F2;
+}
+
+.td-action-id {
+  font-size: 10px;
+  color: #AAA;
+  font-weight: 600;
+  font-family: monospace;
+  flex-shrink: 0;
+}
+
+.td-action-text {
+  flex: 1;
   font-size: 13px;
+  color: #333;
+  line-height: 1.5;
 }
 
-.tars-backlog-table th {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 12px;
-  text-align: left;
-  color: #aaa;
-  font-weight: 700;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 1px solid #2a2a3e;
-}
-
-.tars-backlog-table td {
-  padding: 12px;
-  border-bottom: 1px solid #2a2a3e;
-  color: #ddd;
-}
-
-.tars-action-id-col {
-  color: #1D8FE1;
-  font-weight: 700;
-  font-size: 11px;
-}
-
-.tars-action-text-col {
-  max-width: 400px;
-  line-height: 1.4;
-}
-
-.tars-owner-col {
-  white-space: nowrap;
-}
-
-.tars-owner-badge-small {
-  width: 20px;
-  height: 20px;
-  border-radius: 3px;
-  display: inline-flex;
+.td-action-meta {
+  display: flex;
+  gap: 8px;
   align-items: center;
-  justify-content: center;
-  color: #fff;
+  flex-wrap: wrap;
+}
+
+.td-status-chip {
   font-size: 10px;
   font-weight: 700;
-  margin-right: 6px;
-}
-
-.tars-due-col {
-  color: #999;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.tars-status-col {
-  white-space: nowrap;
-}
-
-.tars-status-badge {
-  display: inline-block;
-  padding: 4px 8px;
+  padding: 2px 8px;
   border-radius: 4px;
-  font-size: 11px;
-  font-weight: 600;
+  text-transform: uppercase;
 }
 
-/* Operations Styles */
+.td-status-chip.done {
+  background: rgba(45,196,107,0.12);
+  color: #1A8F50;
+}
+
+.td-status-chip.in-progress {
+  background: rgba(245,166,35,0.12);
+  color: #C87D00;
+}
+
+.td-status-chip.overdue {
+  background: rgba(229,57,53,0.1);
+  color: #C62828;
+}
+
+.td-owner-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #E0E0E0;
+  background: #F5F5F5;
+  color: #666;
+}
+
+/* ═══════════════════════════════════════════════════ OPERATIONS TAB — LIGHT TABLE STYLE ═══════════════════════════════════════════════════ */
+
 .tars-ops-container {
-  padding: 24px;
+  padding: 48px;
 }
 
 .tars-ops-section {
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .tars-ops-section:last-child {
   margin-bottom: 0;
 }
 
-.tars-ops-text {
-  font-size: 13px;
-  color: #ccc;
-  line-height: 1.6;
+.tars-ops-section h3 {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: #1A1A1A;
+  margin-bottom: 16px;
 }
 
+.tars-ops-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Light table styles */
 .tars-tasks-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  margin-top: 12px;
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .tars-tasks-table th {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 12px;
+  background: #F8F9FA;
+  padding: 12px 14px;
   text-align: left;
-  color: #aaa;
+  color: #888;
   font-weight: 700;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid #2a2a3e;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 .tars-tasks-table td {
-  padding: 12px;
-  border-bottom: 1px solid #2a2a3e;
-  color: #ddd;
+  padding: 12px 14px;
+  border-bottom: 1px solid #E0E0E0;
+  color: #555;
+}
+
+.tars-tasks-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .tars-platforms-list {
   list-style: none;
   padding: 0;
-  margin: 12px 0 0 0;
+  margin: 16px 0 0 0;
 }
 
 .tars-platforms-list li {
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.1);
-  border-left: 2px solid #1D8FE1;
+  padding: 12px 14px;
+  background: #fff;
+  border-left: 3px solid var(--blue);
   margin-bottom: 8px;
-  color: #ddd;
-  font-size: 13px;
-  border-radius: 2px;
+  color: #555;
+  font-size: 14px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 </style>
