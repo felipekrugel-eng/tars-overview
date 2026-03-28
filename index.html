@@ -3332,8 +3332,16 @@
 
 /* ═══════════════════════════════════════════════════ OPERATIONS TAB — LIGHT TABLE STYLE ═══════════════════════════════════════════════════ */
 
-.tars-ops-container {
-  padding: 0;
+/* Operations tab: full-page layout, no extra padding — uses original TARS sections */
+.tars-ops-fullpage {
+  padding: 0 !important;
+}
+.tars-ops-fullpage .feed-bar,
+.tars-ops-fullpage .tars-live-section,
+.tars-ops-fullpage .action-strip,
+.tars-ops-fullpage .section,
+.tars-ops-fullpage .footer {
+  /* These inherit their own padding from the original TARS CSS */
 }
 
 .tars-ops-section {
@@ -3563,9 +3571,328 @@
     <div id="tars-backlog-list" class="tars-backlog-container"></div>
   </div>
 
-  <!-- Tab 3: Operations -->
-  <div id="tars-operations" class="tars-tab-content">
-    <div id="tars-ops-container" class="tars-ops-container"></div>
+  <!-- Tab 3: Operations — restored original TARS page layout -->
+  <div id="tars-operations" class="tars-tab-content tars-ops-fullpage">
+
+  <div class="feed-bar">
+    <div>
+      <div class="feed-bar-label">Primary interaction channel</div>
+      <div class="feed-bar-channel">#strategy-feed</div>
+    </div>
+    <p>Post updates, completions, and context here. TARS reads this channel every day at 5 PM and responds automatically — no commands needed, just natural language.</p>
+  </div>
+
+  <!-- ─── CURRENT STATE ───────────────────────────────────── -->
+  <div class="tars-live-section">
+    <div class="tars-live-header">
+      <div class="tars-live-badge"><span class="dot-green"></span> Live now</div>
+      <div class="tars-live-title">Current state.</div>
+      <div class="tars-live-sub" id="tars-ops-live-sub">Three active initiatives running in parallel. Progress reflects live data from the Action Tracker. Last sync: 28 Mar 2026.</div>
+    </div>
+  </div>
+
+  <!-- ─── ACTION TRACKER KPIs ────────────────────────────────── -->
+  <div class="action-strip">
+    <div class="action-strip-title">Action tracker</div>
+    <div class="action-strip-sub" id="tars-ops-strip-sub">65 actions logged across 10 sessions. Last updated: 28 March 2026</div>
+    <div class="action-strip-grid">
+      <div class="action-kpis">
+        <div class="action-kpi"><div class="action-kpi-num total" id="ops-kpi-total">65</div><div class="action-kpi-label">Total</div></div>
+        <div class="action-kpi"><div class="action-kpi-num done" id="ops-kpi-done">39</div><div class="action-kpi-label">Complete</div></div>
+        <div class="action-kpi"><div class="action-kpi-num prog" id="ops-kpi-ip">5</div><div class="action-kpi-label">In Progress</div></div>
+        <div class="action-kpi"><div class="action-kpi-num over" id="ops-kpi-over">21</div><div class="action-kpi-label">Overdue</div></div>
+      </div>
+      <div class="owner-table" id="tars-ops-owner-table">
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#1D8FE1;">S</div>
+          <div class="owner-name">Simon</div>
+          <div class="owner-bar-wrap"><div class="owner-bar-done" style="width:45%;"></div><div class="owner-bar-prog" style="width:10%;"></div><div class="owner-bar-over" style="width:45%;"></div></div>
+          <div class="owner-counts"><span class="c-done">7✓</span><span class="c-prog">3●</span><span class="c-over">6!</span></div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#E1A21D;">C</div>
+          <div class="owner-name">Caio</div>
+          <div class="owner-bar-wrap"><div class="owner-bar-done" style="width:65%;"></div><div class="owner-bar-prog" style="width:5%;"></div><div class="owner-bar-over" style="width:30%;"></div></div>
+          <div class="owner-counts"><span class="c-done">18✓</span><span class="c-prog">1●</span><span class="c-over">9!</span></div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#7B61FF;">F</div>
+          <div class="owner-name">Felipe</div>
+          <div class="owner-bar-wrap"><div class="owner-bar-done" style="width:40%;"></div><div class="owner-bar-prog" style="width:10%;"></div><div class="owner-bar-over" style="width:50%;"></div></div>
+          <div class="owner-counts"><span class="c-done">5✓</span><span class="c-prog">1●</span><span class="c-over">6!</span></div>
+        </div>
+        <div class="owner-row-item">
+          <div class="owner-avatar" style="background:#2DC46B;">A</div>
+          <div class="owner-name">Alex</div>
+          <div class="owner-bar-wrap"><div class="owner-bar-done" style="width:62%;"></div><div class="owner-bar-prog" style="width:0%;"></div><div class="owner-bar-over" style="width:38%;"></div></div>
+          <div class="owner-counts"><span class="c-done">8✓</span><span class="c-prog">0●</span><span class="c-over">5!</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── WHAT TARS DOES ────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-number">01</div>
+    <h2 class="section-title">What TARS does.</h2>
+    <p class="section-sub">Six scheduled tasks covering the full weekly strategy cycle — from session briefings to action tracking. Click any card to see details.</p>
+    <div class="task-grid">
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Friday · 4:39 PM</div>
+          <div class="task-name">Friday Meeting Briefing</div>
+          <div class="task-desc">Processes the Fireflies transcript from your weekly strategy session and delivers a full executive briefing — decisions, actions, themes, watch list, and a strategic narrative.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">💬</span> #strategy-feed post</span>
+            <span class="output-pill"><span class="icon">📧</span> Gmail briefing draft</span>
+            <span class="output-pill"><span class="icon">📁</span> Drive session folder</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">What it produces</div>
+          <ul>
+            <li>Key Highlights — 3–5 sentence strategic narrative</li>
+            <li>Key Decisions made in the session</li>
+            <li>All actions with owners and due dates</li>
+            <li>Emerging themes across sessions</li>
+            <li>Watch list — risks and gaps with owners</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top amber"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Thursday · 4:04 PM</div>
+          <div class="task-name">Thursday Meeting Preview</div>
+          <div class="task-desc">The pre-read for tomorrow's strategy session. Surfaces unresolved tensions, open actions, patterns from past sessions, and the questions worth putting on the agenda.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">💬</span> #strategy-feed post</span>
+            <span class="output-pill"><span class="icon">📋</span> Agenda suggestions</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">What it covers</div>
+          <ul>
+            <li>Open actions from previous sessions</li>
+            <li>Unresolved decisions and tensions</li>
+            <li>Watch list items requiring attention</li>
+            <li>Suggested agenda priorities for Friday</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top teal"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Monday · 10:06 AM</div>
+          <div class="task-name">Monday Action Reminder</div>
+          <div class="task-desc">Kicks off the week by DM-ing each person their open actions — connected to the bigger strategic picture. Also creates a weekly team email draft for Felipe.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">💬</span> Personal DMs to each owner</span>
+            <span class="output-pill"><span class="icon">📧</span> Weekly actions email draft</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">How it works</div>
+          <ul>
+            <li>Reads open actions from the Action Tracker and session memory</li>
+            <li>DMs each person their specific actions with strategic context</li>
+            <li>Flags anything overdue or at risk</li>
+            <li>Creates a Gmail draft to the full team with prioritised weekly actions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top violet"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Mon–Fri · 5:07 PM</div>
+          <div class="task-name">Daily Completion Check</div>
+          <div class="task-desc">Reads #strategy-feed every day at 5 PM looking for completion signals. When someone marks something done, TARS confirms it, updates the tracker immediately.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">✅</span> DM confirmation to owner</span>
+            <span class="output-pill"><span class="icon">📊</span> Tracker updated same day</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">Completion keywords it detects</div>
+          <ul>
+            <li>done, completed, finished, closed, delivered</li>
+            <li>sorted, wrapped up, shipped, sent, confirmed, resolved</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top coral"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Friday · 7:05 PM</div>
+          <div class="task-name">Weekly Tracker Update</div>
+          <div class="task-desc">After the Friday briefing, TARS does a full reconciliation of the Action Tracker — syncing all completions captured during the week, updating statuses, and flagging anything overdue.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">📊</span> Action_Tracker.xlsx updated</span>
+            <span class="output-pill"><span class="icon">📁</span> Drive sync complete</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">What it updates</div>
+          <ul>
+            <li>Pulls completions from weekly memory (daily-completion-check)</li>
+            <li>Updates Action_Tracker.xlsx with new statuses and dates</li>
+            <li>Adds newly created actions from the Friday session</li>
+            <li>Flags overdue items for Monday's reminder</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="task-card" onclick="toggleCard(this)">
+        <div class="task-card-top green"></div>
+        <div class="task-card-body">
+          <div class="task-schedule">Every Monday · 9:06 AM</div>
+          <div class="task-name">Drive Session Audit</div>
+          <div class="task-desc">Audits the Strategic Sessions folder in Google Drive every Monday morning, checking that session folders follow the correct naming convention and that no sessions are missing archives.</div>
+          <div class="task-outputs">
+            <div class="task-outputs-label">Delivers</div>
+            <span class="output-pill"><span class="icon">🔍</span> Drive audit report</span>
+            <span class="output-pill"><span class="icon">⚠️</span> Naming violations flagged</span>
+          </div>
+        </div>
+        <button class="expand-btn" onclick="event.stopPropagation(); toggleCard(this.closest('.task-card'))">
+          <span>See details</span><span class="arrow">▾</span>
+        </button>
+        <div class="task-detail">
+          <div class="task-detail-title">What it checks</div>
+          <ul>
+            <li>Folder names match: YYYY-MM-DD - Session NN</li>
+            <li>Each session has a briefing doc</li>
+            <li>Each session has a JSON archive</li>
+            <li>Recurring violations tracked in memory</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="section-number">02</div>
+    <h2 class="section-title">The weekly rhythm.</h2>
+    <p class="section-sub">TARS operates on a predictable weekly cycle. Here's what runs when.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Mon</div><div class="tl-day-time">9:06 AM</div></div>
+        <div class="tl-dot green"></div>
+        <div class="tl-content"><div class="tl-name">Drive Session Audit</div><div class="tl-desc">Checks that last week's session folder is properly named and archived.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Mon</div><div class="tl-day-time">10:06 AM</div></div>
+        <div class="tl-dot teal"></div>
+        <div class="tl-content"><div class="tl-name">Monday Action Reminder</div><div class="tl-desc">DMs each person their open actions. Creates the weekly team email draft.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Daily</div><div class="tl-day-time">5:07 PM</div></div>
+        <div class="tl-dot violet"></div>
+        <div class="tl-content"><div class="tl-name">Daily Completion Check</div><div class="tl-desc">Scans #strategy-feed for updates. Confirms completions, updates tracker, DMs if unclear.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Thu</div><div class="tl-day-time">4:04 PM</div></div>
+        <div class="tl-dot amber"></div>
+        <div class="tl-content"><div class="tl-name">Thursday Meeting Preview</div><div class="tl-desc">Pre-read for Friday — unresolved items, open actions, agenda suggestions.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Fri</div><div class="tl-day-time">4:39 PM</div></div>
+        <div class="tl-dot"></div>
+        <div class="tl-content"><div class="tl-name">Friday Meeting Briefing</div><div class="tl-desc">Full session briefing — decisions, actions, themes, Drive folder, Gmail draft.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-day"><div class="tl-day-name">Fri</div><div class="tl-day-time">7:05 PM</div></div>
+        <div class="tl-dot coral"></div>
+        <div class="tl-content"><div class="tl-name">Weekly Tracker Update</div><div class="tl-desc">Full reconciliation of the Action Tracker. Syncs all completions from the week.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-number">03</div>
+    <h2 class="section-title">How to use #strategy-feed.</h2>
+    <p class="section-sub">You don't need commands or special syntax. Just post naturally — TARS reads the channel every day at 5 PM and figures out the rest.</p>
+    <div class="feed-guide">
+      <div class="feed-card">
+        <div class="feed-card-header"><div class="feed-card-title">✅ Marking an action complete</div></div>
+        <div class="feed-card-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">Post naturally in the channel. TARS recognises completion language and matches it to your open actions.</p>
+          <div class="command-block">Billing integration is done ✅</div>
+          <div class="command-note">→ TARS matches to your open action and confirms via DM</div>
+          <div class="command-block">Finished the Google/Apple compliance review</div>
+          <div class="command-note">→ TARS sends confirmation + updates the tracker</div>
+          <p style="font-size:12px;color:#888;margin-top:14px;"><strong>Keywords TARS listens for:</strong> done · completed · finished · closed · delivered · sorted · wrapped up · shipped · sent · confirmed · resolved · handled</p>
+        </div>
+      </div>
+      <div class="feed-card">
+        <div class="feed-card-header dark-header"><div class="feed-card-title">💬 What TARS does next</div></div>
+        <div class="feed-card-body">
+          <div class="response-flow">
+            <div class="response-step"><div class="response-num">1</div><div class="response-text"><strong>Clear match found</strong> — TARS DMs you: <em>"✅ Got it — action marked complete."</em></div></div>
+            <div class="response-step"><div class="response-num">2</div><div class="response-text"><strong>Tracker updated</strong> — Action_Tracker.xlsx is updated in Google Drive that same evening.</div></div>
+            <div class="response-step"><div class="response-num">3</div><div class="response-text"><strong>Channel acknowledgement</strong> — TARS posts once to #strategy-feed if completions were found.</div></div>
+            <div class="response-step"><div class="response-num">4</div><div class="response-text"><strong>If unclear</strong> — TARS DMs you asking which action you mean.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="feed-card">
+        <div class="feed-card-header" style="background:#1578C4;"><div class="feed-card-title">📌 Posting context or updates</div></div>
+        <div class="feed-card-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">Use #strategy-feed to share blockers, progress, or context mid-week. TARS reads all of it and surfaces relevant updates in Thursday's preview and Friday's briefing.</p>
+          <div class="command-block">FYI — Snowflake migration pushed to April</div>
+          <div class="command-note">→ Picked up in Thursday preview as a potential blocker</div>
+          <div class="command-block">Pilot launch date confirmed with Teya: April 14</div>
+          <div class="command-note">→ Noted as progress in Friday's session briefing</div>
+        </div>
+      </div>
+      <div class="feed-card">
+        <div class="feed-card-header" style="background:#2DC46B;"><div class="feed-card-title">🔒 Privacy &amp; personal comms</div></div>
+        <div class="feed-card-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">Any wellbeing or personal observations are handled privately — TARS sends those directly to Felipe via DM, never in group channels.</p>
+          <p style="font-size:12px;color:#888;margin-top:10px;">TARS never posts personal or sensitive information into group channels.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="footer-tars">— TARS</div>
+      <div class="footer-sub">Strategic Intelligence Agent · Loyverse Leadership Team</div>
+    </div>
+    <div class="footer-right">
+      <div>Running since Session 07</div>
+      <div style="color:#555555;margin-top:2px;">Current session: 09 · 11 active tasks</div>
+    </div>
+  </div>
+
   </div>
 
 </div>

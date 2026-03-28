@@ -235,9 +235,8 @@ function renderTARS() {
 
   renderInitiatives();
   renderBacklog();
-  renderOperations();
 
-  // Also sync the old dashboard elements if they exist
+  // Sync KPI numbers and owner bars in Operations tab
   syncDashboard();
 }
 
@@ -443,69 +442,18 @@ function _renderBacklogBody(container) {
   });
 }
 
-// ─── OPERATIONS TAB (old style: light table) ─────────────────────────────────
-function renderOperations() {
-  var container = document.getElementById('tars-ops-container');
-  if (!container) return;
-  container.innerHTML = '';
+// Operations tab is now static HTML in index.html — no JS rendering needed
 
-  // Scheduled tasks table
-  var tasksHtml = '<div class="tars-ops-section">' +
-    '<h3>Scheduled Tasks</h3>' +
-    '<table class="tars-tasks-table"><tr>' +
-    '<th>Purpose</th><th>Frequency</th><th>Owner</th><th>Status</th>' +
-    '</tr>';
-
-  TARS_DATA.operations.scheduledTasks.forEach(function(task) {
-    tasksHtml += '<tr>' +
-      '<td>' + task.purpose + '</td>' +
-      '<td>' + task.frequency + '</td>' +
-      '<td>' + task.owner + '</td>' +
-      '<td><span class="td-status-chip done">' + task.status + '</span></td>' +
-    '</tr>';
-  });
-  tasksHtml += '</table></div>';
-
-  // Weekly rhythm
-  var rhythmHtml = '<div class="tars-ops-section">' +
-    '<h3>Weekly Rhythm</h3>' +
-    '<div class="tars-ops-text">' + TARS_DATA.operations.weeklyRhythm + '</div>' +
-    '</div>';
-
-  // Connected platforms
-  var platformsHtml = '<div class="tars-ops-section">' +
-    '<h3>Connected Platforms</h3>' +
-    '<ul class="tars-platforms-list">' +
-    TARS_DATA.operations.connectedPlatforms.map(function(p) {
-      return '<li>' + p + '</li>';
-    }).join('') +
-    '</ul></div>';
-
-  // How to interact
-  var interactHtml = '<div class="tars-ops-section">' +
-    '<h3>How to Interact</h3>' +
-    '<div class="tars-ops-text">' + TARS_DATA.operations.howToInteract + '</div>' +
-    '</div>';
-
-  container.innerHTML = tasksHtml + rhythmHtml + platformsHtml + interactHtml;
-}
-
-// ─── Dashboard sync (for old initiative tiles & KPI strip if they exist) ─────
+// ─── Dashboard sync — populates KPIs and owner bars in Operations tab ────────
 function syncDashboard() {
   var all = TARS_DATA.allActions;
 
-  // Initiative tile progress bars (old dashboard if still present)
-  var initMap = {};
-  TARS_DATA.initiatives.forEach(function(init) {
-    initMap[init.id] = init;
-  });
-
-  // KPI tiles
   var totalN   = all.length;
   var doneN    = all.filter(function(a) { return a.status === "done"; }).length;
   var ipN      = all.filter(function(a) { return a.status === "in-progress"; }).length;
   var overdueN = all.filter(function(a) { return a.status === "overdue"; }).length;
 
+  // KPI tiles (both old-style and ops-specific)
   var kpiNums = document.querySelectorAll(".action-kpi-num");
   kpiNums.forEach(function(el) {
     if (el.classList.contains("total")) el.textContent = totalN;
@@ -515,13 +463,20 @@ function syncDashboard() {
   });
 
   // Subtitle
-  var stripSub = document.querySelector(".action-strip-sub");
-  if (stripSub) {
-    var sessions = new Set(all.map(function(a) { return a.id.substring(0, 9); }));
-    var today = new Date();
-    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    var dateStr = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
-    stripSub.textContent = totalN + " actions logged across " + sessions.size + " sessions. Last updated: " + dateStr;
+  var today = new Date();
+  var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var dateStr = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
+  var sessions = new Set(all.map(function(a) { return a.id.substring(0, 9); }));
+
+  var stripSubs = document.querySelectorAll(".action-strip-sub");
+  stripSubs.forEach(function(el) {
+    el.textContent = totalN + " actions logged across " + sessions.size + " sessions. Last updated: " + dateStr;
+  });
+
+  // Live sub
+  var liveSub = document.getElementById("tars-ops-live-sub");
+  if (liveSub) {
+    liveSub.textContent = "Three active initiatives running in parallel. Progress reflects live data from the Action Tracker (" + totalN + " actions across " + sessions.size + " sessions). Last sync: " + dateStr + ".";
   }
 
   // Owner breakdown bars
