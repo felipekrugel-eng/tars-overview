@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-28T11:23:00Z
+// Last sync: 2026-03-28T11:44:47Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-28T11:23:00Z",
+  lastSync: "2026-03-28T11:44:47Z",
 
   tasks: [
     {
@@ -141,7 +141,7 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-27T19:04:48.747Z",
+      lastRunAt: "2026-03-28T11:22:12.926Z",
       nextRunAt: "2026-04-03T18:04:44.000Z",
       detail: {
         purpose: "End-of-week housekeeping that ensures the Action Tracker reflects everything discussed in the Friday session.",
@@ -177,7 +177,7 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-03-27T20:02:41.518Z",
+      lastRunAt: "2026-03-28T11:22:17.115Z",
       nextRunAt: "2026-04-03T19:09:01.000Z",
       detail: {
         purpose: "Creates structured meeting briefing notes in Mem from Fireflies transcripts, building a searchable knowledge base of all strategic discussions.",
@@ -213,7 +213,7 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-28T11:23:00Z",
+      lastRunAt: "2026-03-28T11:44:47Z",
       nextRunAt: "2026-03-28T12:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
