@@ -23,20 +23,20 @@ const TARS_DATA = {
       nextDecisionPoint: "Confirm US pricing approach — Loyverse US Deepdive scheduled Wed 1 Apr, 4 PM UK (5 attendees)",
       context: "Caio proposed 100% US focus until 5K customers proven. Simon suggested 3% flat rate. Alex prefers Mexico given 50% organic growth. Debit card issuance feasible but needs US legal entity (~2-3 months).",
       actions: [
-        { id: "A-260206-01", text: "Book time Mon–Thu to discuss Stripe Mexico preview launch", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Feb", status: "done" },
-        { id: "A-260213-02", text: "Talk to Bevon to understand how yo-yo operates (vs payments model)", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done" },
-        { id: "A-260213-04", text: "Report back on back-office processes at Payments", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done" },
-        { id: "A-260213-08", text: "Visit Brazilian customer in London", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "21 Feb", status: "done" },
-        { id: "A-260220-05", text: "Gather payment-side data on Milk No Milk customer", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "24 Feb", status: "done" },
-        { id: "A-260306-06", text: "Add comments to strategy document via Google Docs", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Mar", status: "done" },
-        { id: "A-260316-07", text: "Identify expert contacts with Google and Apple payment platform compliance experience", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" },
-        { id: "A-260316-14", text: "Support Snowflake data migration and historical/chargeback data transfer with Dimitri", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue" },
-        { id: "A-260316-15", text: "Assist Simon and Felipe with Stripe/payment processing on UK and US accounts", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue" },
-        { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup to Simon", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
-        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "in-progress" },
-        { id: "A-260324-02", text: "Discussion on whether UK customers should be used for pilot due to US legal entity issues", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress" },
-        { id: "A-260324-03", text: "Complete RFP for external legal counsel in US", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Apr", status: "done" },
-        { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress" }
+        { id: "A-260206-01", text: "Book time Mon–Thu to discuss Stripe Mexico preview launch", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Feb", status: "done", initiative: "payments" },
+        { id: "A-260213-02", text: "Talk to Bevon to understand how yo-yo operates (vs payments model)", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done", initiative: "payments" },
+        { id: "A-260213-04", text: "Report back on back-office processes at Payments", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done", initiative: "payments" },
+        { id: "A-260213-08", text: "Visit Brazilian customer in London", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "21 Feb", status: "done", initiative: "payments" },
+        { id: "A-260220-05", text: "Gather payment-side data on Milk No Milk customer", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "24 Feb", status: "done", initiative: "payments" },
+        { id: "A-260306-06", text: "Add comments to strategy document via Google Docs", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Mar", status: "done", initiative: "payments" },
+        { id: "A-260316-07", text: "Identify expert contacts with Google and Apple payment platform compliance experience", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue", initiative: "payments" },
+        { id: "A-260316-14", text: "Support Snowflake data migration and historical/chargeback data transfer with Dimitri", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue", initiative: "payments" },
+        { id: "A-260316-15", text: "Assist Simon and Felipe with Stripe/payment processing on UK and US accounts", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue", initiative: "payments" },
+        { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup to Simon", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "payments" },
+        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "in-progress", initiative: "payments" },
+        { id: "A-260324-02", text: "Discussion on whether UK customers should be used for pilot due to US legal entity issues", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress", initiative: "payments" },
+        { id: "A-260324-03", text: "Complete RFP for external legal counsel in US", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Apr", status: "done", initiative: "payments" },
+        { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress", initiative: "payments" }
       ]
     },
     {
@@ -59,15 +59,15 @@ const TARS_DATA = {
       nextDecisionPoint: "Whether to couple pricing rollout with US payments launch or keep separate pilot markets",
       context: "0.2% of GTV above $3,000/month threshold with hard cap. Swiss analysis shows competitive positioning. Execution blocked on billing engine and market confirmation.",
       actions: [
-        { id: "A-260306-01", text: "Finalize narrative proposal for new pricing model trial by end of week", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue" },
-        { id: "A-260306-02", text: "Share document on seven potential directions to evolve the S-curve", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "9 Mar", status: "overdue" },
-        { id: "A-260306-03", text: "Prepare pricing options and positioning for Swiss pilot", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue" },
-        { id: "A-260306-04", text: "Map Loyverse product to G60 tax compliance regulation for Swiss market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue" },
-        { id: "A-260306-05", text: "Draft communication plan for pricing rollout", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue" },
-        { id: "A-260306-09", text: "Design trust-building programme for app store ratings and reviews", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
-        { id: "A-260306-10", text: "Create landing pages and content for new pricing model and partnerships", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue" },
-        { id: "A-260324-04", text: "Confirm final payment pricing proposal for US customers with the team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress" },
-        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing. Blocked by A-260324-04.", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "in-progress" }
+        { id: "A-260306-01", text: "Finalize narrative proposal for new pricing model trial by end of week", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-02", text: "Share document on seven potential directions to evolve the S-curve", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "9 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-03", text: "Prepare pricing options and positioning for Swiss pilot", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-04", text: "Map Loyverse product to G60 tax compliance regulation for Swiss market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-05", text: "Draft communication plan for pricing rollout", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-09", text: "Design trust-building programme for app store ratings and reviews", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260306-10", text: "Create landing pages and content for new pricing model and partnerships", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260324-04", text: "Confirm final payment pricing proposal for US customers with the team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress", initiative: "pricing" },
+        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing. Blocked by A-260324-04.", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "in-progress", initiative: "pricing" }
       ]
     },
     {
@@ -89,54 +89,54 @@ const TARS_DATA = {
       nextDecisionPoint: "Assign owner and define scope — no one is currently driving this",
       context: "Three-layer ecosystem: local solution partners (resellers/integrators), marketplace/software partners, infrastructure partners (PSPs/acquirers). Strategic role: scalable growth and monetisation engine without proportional headcount.",
       actions: [
-        { id: "A-260213-07", text: "Draft partnership proposal framework document", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done" },
-        { id: "A-260220-07", text: "Share full list of partner payment inquiries with Simon for strategy research", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
-        { id: "A-260306-08", text: "Develop structured channel partnership framework", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Mar", status: "done" },
-        { id: "A-260316-06", text: "Develop and submit clear engagement proposal for Teya partnership", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" }
+        { id: "A-260213-07", text: "Draft partnership proposal framework document", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Feb", status: "done", initiative: "partnerships" },
+        { id: "A-260220-07", text: "Share full list of partner payment inquiries with Simon for strategy research", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done", initiative: "partnerships" },
+        { id: "A-260306-08", text: "Develop structured channel partnership framework", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Mar", status: "done", initiative: "partnerships" },
+        { id: "A-260316-06", text: "Develop and submit clear engagement proposal for Teya partnership", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue", initiative: "partnerships" }
       ]
     }
   ],
 
-  // LAYER 2: Backlog
-  backlog: [
-    { id: "A-260316-01", text: "Finalise financial model (v3.1) and share with team", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Mar", status: "done" },
-    { id: "A-260130-01", text: "Research whether fiscalization is required to distribute software in Brazil", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Feb", status: "done" },
-    { id: "A-260130-02", text: "Send notes to group, propose structure for the plan, consolidate documents and share ideas weekly", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Feb", status: "done" },
-    { id: "A-260130-03", text: "Invite Felipe for Monday meeting with Alex to discuss working environment setup", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Feb", status: "done" },
-    { id: "A-260130-04", text: "Send daily calendar invitations (2–3 PM UK time) for continuous strategy collaboration", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Feb", status: "done" },
-    { id: "A-260206-02", text: "Research AI market analysis tools and alternatives to ChatGPT for internal strategy work", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "13 Feb", status: "done" },
-    { id: "A-260206-03", text: "Define and draw out customer personas, clearly identifying their needs", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done" },
-    { id: "A-260206-04", text: "Prepare cashflow projections (monthly) for the first year of the plan", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done" },
-    { id: "A-260206-05", text: "Revise financial model to include NPV per new user in each of the top 10 markets", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done" },
-    { id: "A-260213-01", text: "Prepare one-slide summary of top 10 markets by revenue vs cost from financial model", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Feb", status: "done" },
-    { id: "A-260213-03", text: "Present Singapore and UK cohort analysis using local regulatory and financial context", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Feb", status: "done" },
-    { id: "A-260213-05", text: "Book call with marketing agency (Favoured) and prepare Loyverse onboarding context", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Feb", status: "done" },
-    { id: "A-260213-06", text: "Bring competitive landscape analysis (feature comparison + pricing) to next session", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Feb", status: "done" },
-    { id: "A-260220-01", text: "Finalize 3-month execution budget aligned to cash flow model", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
-    { id: "A-260220-02", text: "Produce written document outlining the 5 prioritized personas with evidence and logic", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
-    { id: "A-260220-03", text: "Assemble list of AI tools to be operationalized across teams", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
-    { id: "A-260220-04", text: "Present competitive benchmarking data: Lightspeed and other POS players", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "27 Feb", status: "done" },
-    { id: "A-260220-06", text: "Share five customer personas, slide deck, and three merchant case summaries", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done" },
-    { id: "A-260227-01", text: "Finalize financial tool by adding new growth charts", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
-    { id: "A-260227-02", text: "Share updated financial spreadsheet with group; update tool based on feedback", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done" },
-    { id: "A-260227-03", text: "Add cohort 25 baseline to the financial data", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Mar", status: "done" },
-    { id: "A-260227-04", text: "Prepare initial competitive product gap analysis vs top 3 competitors", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "6 Mar", status: "done" },
-    { id: "A-260227-05", text: "Set up Robert Walters as recruitment partner for UK operations role", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "6 Mar", status: "done" },
-    { id: "A-260227-06", text: "Confirm whether fixing Sep–Dec 2025 numbers will block upcoming execution work", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Mar", status: "done" },
-    { id: "A-260227-07", text: "Compile exercises from Alex and Simon on customers; produce synthesis document", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done" },
-    { id: "A-260306-07", text: "Provide update on Brex card onboarding and new cards for team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Mar", status: "overdue" },
-    { id: "A-260306-11", text: "Write first draft of SAP partnership proposal document", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Mar", status: "overdue" },
-    { id: "A-260316-02", text: "Push for resolution on Snowflake migration timeline with data team", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-03", text: "Continue competitive benchmarking and prepare summary of key gaps in product", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-04", text: "Draft terms of reference for Loyverse business plan project phase", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-05", text: "Draft initial product requirements document (PRD) for the new pricing module", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-08", text: "Coordinate Snowflake data migration and Claude AI integration meeting", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-09", text: "Continue developing AI-powered notes and task automation agent", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-10", text: "Manage procurement of additional corporate cards for team", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-11", text: "Confirm SAP entity integration approach; engage external contractor if required", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue" },
-    { id: "A-260316-12", text: "Add Dimitri to Claude AI team account", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "18 Mar", status: "overdue" },
-    { id: "A-260316-13", text: "Provide and validate budget figures and cost/revenue projections for Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "18 Mar", status: "overdue" },
-    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "in-progress" }
+  // LAYER 2: General Backlog (non-initiative actions)
+  generalBacklog: [
+    { id: "A-260316-01", text: "Finalise financial model (v3.1) and share with team", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Mar", status: "done", initiative: "general" },
+    { id: "A-260130-01", text: "Research whether fiscalization is required to distribute software in Brazil", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Feb", status: "done", initiative: "general" },
+    { id: "A-260130-02", text: "Send notes to group, propose structure for the plan, consolidate documents and share ideas weekly", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Feb", status: "done", initiative: "general" },
+    { id: "A-260130-03", text: "Invite Felipe for Monday meeting with Alex to discuss working environment setup", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Feb", status: "done", initiative: "general" },
+    { id: "A-260130-04", text: "Send daily calendar invitations (2–3 PM UK time) for continuous strategy collaboration", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Feb", status: "done", initiative: "general" },
+    { id: "A-260206-02", text: "Research AI market analysis tools and alternatives to ChatGPT for internal strategy work", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "13 Feb", status: "done", initiative: "general" },
+    { id: "A-260206-03", text: "Define and draw out customer personas, clearly identifying their needs", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done", initiative: "general" },
+    { id: "A-260206-04", text: "Prepare cashflow projections (monthly) for the first year of the plan", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done", initiative: "general" },
+    { id: "A-260206-05", text: "Revise financial model to include NPV per new user in each of the top 10 markets", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Feb", status: "done", initiative: "general" },
+    { id: "A-260213-01", text: "Prepare one-slide summary of top 10 markets by revenue vs cost from financial model", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Feb", status: "done", initiative: "general" },
+    { id: "A-260213-03", text: "Present Singapore and UK cohort analysis using local regulatory and financial context", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Feb", status: "done", initiative: "general" },
+    { id: "A-260213-05", text: "Book call with marketing agency (Favoured) and prepare Loyverse onboarding context", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "20 Feb", status: "done", initiative: "general" },
+    { id: "A-260213-06", text: "Bring competitive landscape analysis (feature comparison + pricing) to next session", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Feb", status: "done", initiative: "general" },
+    { id: "A-260220-01", text: "Finalize 3-month execution budget aligned to cash flow model", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260220-02", text: "Produce written document outlining the 5 prioritized personas with evidence and logic", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260220-03", text: "Assemble list of AI tools to be operationalized across teams", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260220-04", text: "Present competitive benchmarking data: Lightspeed and other POS players", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260220-06", text: "Share five customer personas, slide deck, and three merchant case summaries", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260227-01", text: "Finalize financial tool by adding new growth charts", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done", initiative: "general" },
+    { id: "A-260227-02", text: "Share updated financial spreadsheet with group; update tool based on feedback", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Feb", status: "done", initiative: "general" },
+    { id: "A-260227-03", text: "Add cohort 25 baseline to the financial data", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "2 Mar", status: "done", initiative: "general" },
+    { id: "A-260227-04", text: "Prepare initial competitive product gap analysis vs top 3 competitors", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "6 Mar", status: "done", initiative: "general" },
+    { id: "A-260227-05", text: "Set up Robert Walters as recruitment partner for UK operations role", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "6 Mar", status: "done", initiative: "general" },
+    { id: "A-260227-06", text: "Confirm whether fixing Sep–Dec 2025 numbers will block upcoming execution work", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "6 Mar", status: "done", initiative: "general" },
+    { id: "A-260227-07", text: "Compile exercises from Alex and Simon on customers; produce synthesis document", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "6 Mar", status: "done", initiative: "general" },
+    { id: "A-260306-07", text: "Provide update on Brex card onboarding and new cards for team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260306-11", text: "Write first draft of SAP partnership proposal document", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "20 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-02", text: "Push for resolution on Snowflake migration timeline with data team", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-03", text: "Continue competitive benchmarking and prepare summary of key gaps in product", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-04", text: "Draft terms of reference for Loyverse business plan project phase", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-05", text: "Draft initial product requirements document (PRD) for the new pricing module", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-08", text: "Coordinate Snowflake data migration and Claude AI integration meeting", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-09", text: "Continue developing AI-powered notes and task automation agent", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-10", text: "Manage procurement of additional corporate cards for team", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-11", text: "Confirm SAP entity integration approach; engage external contractor if required", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-12", text: "Add Dimitri to Claude AI team account", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "18 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260316-13", text: "Provide and validate budget figures and cost/revenue projections for Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "18 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "in-progress", initiative: "general" }
   ],
 
   // LAYER 3: Operations
@@ -169,291 +169,385 @@ const TARS_DATA = {
   }
 };
 
-// Rendering logic
+// ─── Build flat allActions from initiatives + generalBacklog ──────────────
+(function() {
+  var all = [];
+  TARS_DATA.initiatives.forEach(function(init) {
+    if (init.actions) {
+      init.actions.forEach(function(a) { all.push(a); });
+    }
+  });
+  TARS_DATA.generalBacklog.forEach(function(a) { all.push(a); });
+  TARS_DATA.allActions = all;
+})();
+
+// ─── Initiative color/label helpers ──────────────────────────────────────────
+function _initiativeColor(key) {
+  return key === "payments" ? "#1D8FE1" : key === "pricing" ? "#E1A21D" : key === "partnerships" ? "#7B61FF" : "#888";
+}
+function _initiativeLabel(key) {
+  return key === "payments" ? "Payments" : key === "pricing" ? "Pricing" : key === "partnerships" ? "Partnerships" : "Gen. Strategy";
+}
+
+// ─── Action row renderer (old drill-down style) ──────────────────────────────
+function _actionRow(a) {
+  var statusLabel = a.status === "done" ? "Done" : a.status === "in-progress" ? "In Progress" : "Overdue";
+  var iColor = _initiativeColor(a.initiative);
+  var iLabel = _initiativeLabel(a.initiative);
+  return '<div class="td-action-row">' +
+    '<div>' +
+      '<div class="td-action-id">' + a.id + '</div>' +
+      '<div style="width:6px;height:6px;border-radius:50%;background:' + iColor + ';margin-top:8px;"></div>' +
+    '</div>' +
+    '<div style="flex:1;">' +
+      '<div class="td-action-text">' + a.text + '</div>' +
+      '<div class="td-action-meta">' +
+        '<div class="td-action-avatar" style="background:' + a.ownerColor + '">' + a.ownerInitial + '</div>' +
+        '<div class="td-action-owner-name">' + a.owner + '</div>' +
+        '<div class="td-action-due">· due ' + a.due + '</div>' +
+        '<span style="margin-left:auto;font-size:10px;color:' + iColor + ';font-weight:600;">' + iLabel + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="td-status-chip ' + a.status + '">' + statusLabel + '</div>' +
+  '</div>';
+}
+
+// ─── Tab helper ──────────────────────────────────────────────────────────────
+function _tab(filter, current, label, extraClass) {
+  var cls = "td-tab" + (extraClass ? " " + extraClass : "") + (filter === current ? " active" : "");
+  return '<div class="' + cls + '" data-filter="' + filter + '">' + label + '</div>';
+}
+
+// ─── RENDERING ───────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   renderTARS();
 });
 
 function renderTARS() {
   // Initialize tab switching
-  const tabButtons = document.querySelectorAll('.tars-tab-btn');
-  const tabContents = document.querySelectorAll('.tars-tab-content');
-
-  tabButtons.forEach(btn => {
+  var tabButtons = document.querySelectorAll('.tars-tab-btn');
+  tabButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      const tabName = this.getAttribute('data-tab');
+      var tabName = this.getAttribute('data-tab');
       showTab(tabName);
     });
   });
 
-  // Render initiatives
   renderInitiatives();
-
-  // Render backlog
   renderBacklog();
-
-  // Render operations
   renderOperations();
+
+  // Also sync the old dashboard elements if they exist
+  syncDashboard();
 }
 
 function showTab(tabName) {
-  const tabButtons = document.querySelectorAll('.tars-tab-btn');
-  const tabContents = document.querySelectorAll('.tars-tab-content');
+  var tabButtons = document.querySelectorAll('.tars-tab-btn');
+  var tabContents = document.querySelectorAll('.tars-tab-content');
 
-  tabButtons.forEach(btn => btn.classList.remove('active'));
-  tabContents.forEach(content => content.classList.remove('active'));
+  tabButtons.forEach(function(btn) { btn.classList.remove('active'); });
+  tabContents.forEach(function(c) { c.classList.remove('active'); });
 
-  document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-  document.getElementById(`tars-${tabName}`).classList.add('active');
+  document.querySelector('[data-tab="' + tabName + '"]').classList.add('active');
+  document.getElementById('tars-' + tabName).classList.add('active');
 }
 
+// ─── INITIATIVES TAB ─────────────────────────────────────────────────────────
 function renderInitiatives() {
-  const grid = document.getElementById('tars-initiatives-grid');
+  var grid = document.getElementById('tars-initiatives-grid');
   if (!grid) return;
-
   grid.innerHTML = '';
 
-  TARS_DATA.initiatives.forEach(initiative => {
-    const completedMilestones = initiative.milestones.filter(m => m.status === 'complete').length;
-    const totalMilestones = initiative.milestones.length;
-    const milestoneProgress = `${completedMilestones}/${totalMilestones} milestones complete`;
+  TARS_DATA.initiatives.forEach(function(initiative) {
+    var completedMilestones = initiative.milestones.filter(function(m) { return m.status === 'complete'; }).length;
+    var totalMilestones = initiative.milestones.length;
+    var milestoneProgress = completedMilestones + '/' + totalMilestones + ' milestones complete';
 
-    const healthColor = initiative.health === 'blocked' ? '#CC3333' :
-                        initiative.health === 'at-risk' ? '#E1A21D' : '#2DC46B';
+    var healthColor = initiative.health === 'blocked' ? '#CC3333' :
+                      initiative.health === 'at-risk' ? '#E1A21D' : '#2DC46B';
 
-    const card = document.createElement('div');
+    var card = document.createElement('div');
     card.className = 'tars-initiative-card';
     card.setAttribute('data-initiative', initiative.id);
-    card.innerHTML = `
-      <div class="tars-card-top-bar"></div>
-      <div class="tars-card-content">
-        <div class="tars-card-header">
-          <div class="tars-card-title">${initiative.name}</div>
-          <div class="tars-health-indicator" style="background-color: ${healthColor};" title="${initiative.healthReason}"></div>
-        </div>
-
-        <div class="tars-card-meta">
-          <div class="tars-owner-badge" style="background-color: ${initiative.ownerColor};">${initiative.ownerInitial}</div>
-          <div class="tars-phase-badge">${initiative.phase}</div>
-        </div>
-
-        <div class="tars-health-reason">${initiative.healthReason}</div>
-
-        <div class="tars-milestone-progress">${milestoneProgress}</div>
-
-        <div class="tars-decision-box">
-          <div class="tars-decision-label">Latest Decision</div>
-          <div class="tars-decision-text">${initiative.latestDecision}</div>
-        </div>
-
-        <div class="tars-decision-box">
-          <div class="tars-decision-label">Next Decision Point</div>
-          <div class="tars-decision-text">${initiative.nextDecisionPoint}</div>
-        </div>
-
-        <button class="tars-expand-btn" data-id="${initiative.id}">Expand to view milestones & actions</button>
-
-        <div class="tars-expanded-content" id="expanded-${initiative.id}" style="display: none;">
-          <div class="tars-context-box">
-            <div class="tars-section-label">Context</div>
-            <div class="tars-context-text">${initiative.context}</div>
-          </div>
-
-          <div class="tars-milestones-section">
-            <div class="tars-section-label">Milestones</div>
-            <div class="tars-milestones-list">
-              ${initiative.milestones.map(m => `
-                <div class="tars-milestone-item">
-                  <div class="tars-milestone-checkbox ${m.status === 'complete' ? 'checked' : ''}"></div>
-                  <div class="tars-milestone-content">
-                    <div class="tars-milestone-name">${m.name}</div>
-                    <div class="tars-milestone-meta">
-                      <span class="tars-milestone-status">${m.status}</span>
-                      ${m.date ? `<span class="tars-milestone-date">${m.date}</span>` : ''}
-                    </div>
-                    ${m.notes ? `<div class="tars-milestone-notes">${m.notes}</div>` : ''}
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-
-          <div class="tars-actions-section">
-            <div class="tars-section-label">Related Actions</div>
-            <div class="tars-actions-list">
-              ${initiative.actions.map(action => `
-                <div class="tars-action-item">
-                  <div class="tars-action-id">${action.id}</div>
-                  <div class="tars-action-text">${action.text}</div>
-                  <div class="tars-action-meta">
-                    <span class="tars-owner-small" style="background-color: ${action.ownerColor};">${action.ownerInitial}</span>
-                    <span class="tars-due">${action.due}</span>
-                    <span class="tars-status ${action.status}">${action.status}</span>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+    card.innerHTML =
+      '<div class="tars-card-top-bar"></div>' +
+      '<div class="tars-card-content">' +
+        '<div class="tars-card-header">' +
+          '<div class="tars-card-title">' + initiative.name + '</div>' +
+          '<div class="tars-health-indicator" style="background-color: ' + healthColor + ';" title="' + initiative.healthReason + '"></div>' +
+        '</div>' +
+        '<div class="tars-card-meta">' +
+          '<div class="tars-owner-badge" style="background-color: ' + initiative.ownerColor + ';">' + initiative.ownerInitial + '</div>' +
+          '<div class="tars-phase-badge">' + initiative.phase + '</div>' +
+        '</div>' +
+        '<div class="tars-health-reason">' + initiative.healthReason + '</div>' +
+        '<div class="tars-milestone-progress">' + milestoneProgress + '</div>' +
+        '<div class="tars-decision-box">' +
+          '<div class="tars-decision-label">Latest Decision</div>' +
+          '<div class="tars-decision-text">' + initiative.latestDecision + '</div>' +
+        '</div>' +
+        '<div class="tars-decision-box">' +
+          '<div class="tars-decision-label">Next Decision Point</div>' +
+          '<div class="tars-decision-text">' + initiative.nextDecisionPoint + '</div>' +
+        '</div>' +
+        '<button class="tars-expand-btn" data-id="' + initiative.id + '">Show context &amp; milestones</button>' +
+        '<div class="tars-expanded-content" id="expanded-' + initiative.id + '" style="display: none;">' +
+          '<div class="tars-context-box">' +
+            '<div class="tars-section-label">Context</div>' +
+            '<div class="tars-context-text">' + initiative.context + '</div>' +
+          '</div>' +
+          '<div class="tars-milestones-section">' +
+            '<div class="tars-section-label">Milestones</div>' +
+            '<div class="tars-milestones-list">' +
+              initiative.milestones.map(function(m) {
+                return '<div class="tars-milestone-item">' +
+                  '<div class="tars-milestone-checkbox ' + (m.status === "complete" ? "checked" : "") + '"></div>' +
+                  '<div class="tars-milestone-content">' +
+                    '<div class="tars-milestone-name">' + m.name + '</div>' +
+                    '<div class="tars-milestone-meta">' +
+                      '<span class="tars-milestone-status">' + m.status + '</span>' +
+                      (m.date ? '<span class="tars-milestone-date">' + m.date + '</span>' : '') +
+                    '</div>' +
+                    (m.notes ? '<div class="tars-milestone-notes">' + m.notes + '</div>' : '') +
+                  '</div>' +
+                '</div>';
+              }).join('') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
 
     grid.appendChild(card);
 
-    // Attach expand/collapse handler
-    card.querySelector('.tars-expand-btn').addEventListener('click', function() {
-      const expanded = document.getElementById(`expanded-${initiative.id}`);
-      const isVisible = expanded.style.display !== 'none';
+    // Expand/collapse — only affects THIS card
+    card.querySelector('.tars-expand-btn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      var expanded = document.getElementById('expanded-' + initiative.id);
+      var isVisible = expanded.style.display !== 'none';
       expanded.style.display = isVisible ? 'none' : 'block';
-      this.textContent = isVisible ? 'Expand to view milestones & actions' : 'Collapse';
+      this.textContent = isVisible ? 'Show context & milestones' : 'Collapse';
     });
   });
 }
+
+// ─── BACKLOG TAB (old drill-down style with project + owner + status filters) ─
+var __backlogFilter = { owner: "all", project: "all", status: "all" };
 
 function renderBacklog() {
-  const list = document.getElementById('tars-backlog-list');
-  if (!list) return;
-
-  // Get unique owners
-  const owners = [...new Set(TARS_DATA.backlog.map(a => a.owner))];
-
-  // Create filter
-  const filterContainer = document.createElement('div');
-  filterContainer.className = 'tars-backlog-filter';
-
-  const allBtn = document.createElement('button');
-  allBtn.className = 'tars-owner-filter-btn active';
-  allBtn.textContent = 'All';
-  allBtn.addEventListener('click', function() {
-    document.querySelectorAll('.tars-owner-filter-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    renderBacklogItems(TARS_DATA.backlog);
-  });
-  filterContainer.appendChild(allBtn);
-
-  owners.forEach(owner => {
-    const btn = document.createElement('button');
-    btn.className = 'tars-owner-filter-btn';
-    btn.textContent = owner;
-    const ownerData = TARS_DATA.backlog.find(a => a.owner === owner);
-    if (ownerData) {
-      btn.style.borderColor = ownerData.ownerColor;
-    }
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.tars-owner-filter-btn').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      const filtered = TARS_DATA.backlog.filter(a => a.owner === owner);
-      renderBacklogItems(filtered);
-    });
-    filterContainer.appendChild(btn);
-  });
-
-  list.appendChild(filterContainer);
-
-  // Render all items initially
-  renderBacklogItems(TARS_DATA.backlog);
+  var container = document.getElementById('tars-backlog-list');
+  if (!container) return;
+  container.innerHTML = '';
+  _renderBacklogBody(container);
 }
 
-function renderBacklogItems(items) {
-  let itemsContainer = document.getElementById('tars-backlog-items');
-  if (!itemsContainer) {
-    itemsContainer = document.createElement('div');
-    itemsContainer.id = 'tars-backlog-items';
-    itemsContainer.className = 'tars-backlog-items';
-    document.getElementById('tars-backlog-list').appendChild(itemsContainer);
+function _renderBacklogBody(container) {
+  var all = TARS_DATA.allActions;
+  var f = __backlogFilter;
+
+  // Owner chips
+  var ownersDef = [
+    { name: "Simon",  color: "#1D8FE1", initial: "S" },
+    { name: "Caio",   color: "#E1A21D", initial: "C" },
+    { name: "Felipe", color: "#7B61FF", initial: "F" },
+    { name: "Alex",   color: "#2DC46B", initial: "A" }
+  ];
+
+  var ownerChips = '<div class="td-owner-chips">' +
+    ownersDef.map(function(o) {
+      var isActive = f.owner === o.name;
+      return '<div class="td-owner-chip' + (isActive ? ' active' : '') + '" ' +
+        (isActive ? 'style="background:' + o.color + ';border-color:' + o.color + ';"' : '') +
+        ' data-owner="' + o.name + '">' +
+        '<div class="td-owner-chip-av" style="background:' + o.color + '">' + o.initial + '</div>' +
+        o.name + '</div>';
+    }).join('') +
+    '</div>';
+
+  // Project filter tabs
+  var projectTabs = '<div class="tars-section-label" style="margin-top:4px;">Filter by project</div>' +
+    '<div class="td-filter-tabs td-project-tabs">' +
+    '<div class="td-tab' + (f.project === "all" ? ' active' : '') + '" data-project="all">All Projects</div>' +
+    '<div class="td-tab' + (f.project === "payments" ? ' active' : '') + '" data-project="payments" style="' + (f.project === "payments" ? 'background:#1D8FE1;border-color:#1D8FE1;color:#fff;' : '') + '">Payments</div>' +
+    '<div class="td-tab' + (f.project === "pricing" ? ' active' : '') + '" data-project="pricing" style="' + (f.project === "pricing" ? 'background:#E1A21D;border-color:#E1A21D;color:#fff;' : '') + '">Pricing</div>' +
+    '<div class="td-tab' + (f.project === "partnerships" ? ' active' : '') + '" data-project="partnerships" style="' + (f.project === "partnerships" ? 'background:#7B61FF;border-color:#7B61FF;color:#fff;' : '') + '">Partnerships</div>' +
+    '<div class="td-tab' + (f.project === "general" ? ' active' : '') + '" data-project="general">Gen. Strategy</div>' +
+    '</div>';
+
+  // Apply filters
+  var filtered = all;
+  if (f.owner !== "all") {
+    filtered = filtered.filter(function(a) { return a.owner === f.owner; });
+  }
+  if (f.project !== "all") {
+    filtered = filtered.filter(function(a) { return a.initiative === f.project; });
   }
 
-  itemsContainer.innerHTML = '';
+  // Status counts for filtered set
+  var totalN = filtered.length;
+  var doneN = filtered.filter(function(a) { return a.status === "done"; }).length;
+  var ipN   = filtered.filter(function(a) { return a.status === "in-progress"; }).length;
+  var ovN   = filtered.filter(function(a) { return a.status === "overdue"; }).length;
 
-  items.forEach(action => {
-    const statusClass = action.status === 'done' ? 'done' :
-                       action.status === 'in-progress' ? 'in-progress' : 'overdue';
+  // Status filter tabs
+  var statusTabs = '<div class="tars-section-label" style="margin-top:16px;">Filter by status</div>' +
+    '<div class="td-filter-tabs td-status-tabs">' +
+    _tab("all",         f.status, "All (" + totalN + ")") +
+    _tab("done",        f.status, "Done (" + doneN + ")", "done-tab") +
+    _tab("in-progress", f.status, "In Progress (" + ipN + ")", "prog-tab") +
+    _tab("overdue",     f.status, "Overdue (" + ovN + ")", "over-tab") +
+    '</div>';
 
-    const row = document.createElement('div');
-    row.className = 'td-action-row';
-    row.innerHTML = `
-      <div class="td-action-id">${action.id}</div>
-      <div class="td-action-text">${action.text}</div>
-      <div class="td-action-meta">
-        <span class="td-status-chip ${statusClass}">${action.status}</span>
-        <span class="td-owner-chip" style="border-color: ${action.ownerColor}; color: ${action.ownerColor};">
-          <span style="width: 16px; height: 16px; border-radius: 2px; background: ${action.ownerColor}; color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;">${action.ownerInitial}</span>
-          ${action.owner}
-        </span>
-        <span style="font-size: 12px; color: #888;">${action.due}</span>
-      </div>
-    `;
-    itemsContainer.appendChild(row);
+  // Apply status filter
+  var display = filtered;
+  if (f.status !== "all") {
+    display = display.filter(function(a) { return a.status === f.status; });
+  }
+
+  var count = display.length;
+  var actionsHtml = count === 0
+    ? '<div style="text-align:center;color:#CCC;padding:24px;font-size:13px;">No actions found.</div>'
+    : display.map(_actionRow).join('');
+
+  container.innerHTML =
+    ownerChips +
+    projectTabs +
+    statusTabs +
+    '<div class="td-count-summary">' + count + ' action' + (count !== 1 ? 's' : '') + ' shown</div>' +
+    actionsHtml;
+
+  // Wire up owner chip clicks
+  container.querySelectorAll('.td-owner-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var owner = this.getAttribute('data-owner');
+      __backlogFilter.owner = (__backlogFilter.owner === owner) ? "all" : owner;
+      __backlogFilter.status = "all";
+      _renderBacklogBody(container);
+    });
+  });
+
+  // Wire up project tab clicks
+  container.querySelectorAll('.td-project-tabs .td-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      __backlogFilter.project = this.getAttribute('data-project');
+      __backlogFilter.status = "all";
+      _renderBacklogBody(container);
+    });
+  });
+
+  // Wire up status tab clicks
+  container.querySelectorAll('.td-status-tabs .td-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      __backlogFilter.status = this.getAttribute('data-filter');
+      _renderBacklogBody(container);
+    });
   });
 }
 
+// ─── OPERATIONS TAB (old style: light table) ─────────────────────────────────
 function renderOperations() {
-  const container = document.getElementById('tars-ops-container');
+  var container = document.getElementById('tars-ops-container');
   if (!container) return;
-
   container.innerHTML = '';
 
-  // Scheduled tasks
-  const tasksSection = document.createElement('div');
-  tasksSection.className = 'tars-ops-section';
-  tasksSection.innerHTML = '<h3>Scheduled Tasks</h3>';
+  // Scheduled tasks table
+  var tasksHtml = '<div class="tars-ops-section">' +
+    '<h3>Scheduled Tasks</h3>' +
+    '<table class="tars-tasks-table"><tr>' +
+    '<th>Purpose</th><th>Frequency</th><th>Owner</th><th>Status</th>' +
+    '</tr>';
 
-  const tasksTable = document.createElement('table');
-  tasksTable.className = 'tars-tasks-table';
-  tasksTable.innerHTML = `
-    <tr>
-      <th>Purpose</th>
-      <th>Frequency</th>
-      <th>Owner</th>
-      <th>Status</th>
-    </tr>
-  `;
-
-  TARS_DATA.operations.scheduledTasks.forEach(task => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${task.purpose}</td>
-      <td>${task.frequency}</td>
-      <td>${task.owner}</td>
-      <td><span class="td-status-chip done">${task.status}</span></td>
-    `;
-    tasksTable.appendChild(row);
+  TARS_DATA.operations.scheduledTasks.forEach(function(task) {
+    tasksHtml += '<tr>' +
+      '<td>' + task.purpose + '</td>' +
+      '<td>' + task.frequency + '</td>' +
+      '<td>' + task.owner + '</td>' +
+      '<td><span class="td-status-chip done">' + task.status + '</span></td>' +
+    '</tr>';
   });
-
-  tasksSection.appendChild(tasksTable);
-  container.appendChild(tasksSection);
+  tasksHtml += '</table></div>';
 
   // Weekly rhythm
-  const rhythmSection = document.createElement('div');
-  rhythmSection.className = 'tars-ops-section';
-  rhythmSection.innerHTML = `
-    <h3>Weekly Rhythm</h3>
-    <div class="tars-ops-text">${TARS_DATA.operations.weeklyRhythm}</div>
-  `;
-  container.appendChild(rhythmSection);
+  var rhythmHtml = '<div class="tars-ops-section">' +
+    '<h3>Weekly Rhythm</h3>' +
+    '<div class="tars-ops-text">' + TARS_DATA.operations.weeklyRhythm + '</div>' +
+    '</div>';
 
   // Connected platforms
-  const platformsSection = document.createElement('div');
-  platformsSection.className = 'tars-ops-section';
-  platformsSection.innerHTML = '<h3>Connected Platforms</h3>';
-
-  const platformsList = document.createElement('ul');
-  platformsList.className = 'tars-platforms-list';
-  TARS_DATA.operations.connectedPlatforms.forEach(platform => {
-    const li = document.createElement('li');
-    li.textContent = platform;
-    platformsList.appendChild(li);
-  });
-
-  platformsSection.appendChild(platformsList);
-  container.appendChild(platformsSection);
+  var platformsHtml = '<div class="tars-ops-section">' +
+    '<h3>Connected Platforms</h3>' +
+    '<ul class="tars-platforms-list">' +
+    TARS_DATA.operations.connectedPlatforms.map(function(p) {
+      return '<li>' + p + '</li>';
+    }).join('') +
+    '</ul></div>';
 
   // How to interact
-  const interactSection = document.createElement('div');
-  interactSection.className = 'tars-ops-section';
-  interactSection.innerHTML = `
-    <h3>How to Interact</h3>
-    <div class="tars-ops-text">${TARS_DATA.operations.howToInteract}</div>
-  `;
-  container.appendChild(interactSection);
+  var interactHtml = '<div class="tars-ops-section">' +
+    '<h3>How to Interact</h3>' +
+    '<div class="tars-ops-text">' + TARS_DATA.operations.howToInteract + '</div>' +
+    '</div>';
+
+  container.innerHTML = tasksHtml + rhythmHtml + platformsHtml + interactHtml;
+}
+
+// ─── Dashboard sync (for old initiative tiles & KPI strip if they exist) ─────
+function syncDashboard() {
+  var all = TARS_DATA.allActions;
+
+  // Initiative tile progress bars (old dashboard if still present)
+  var initMap = {};
+  TARS_DATA.initiatives.forEach(function(init) {
+    initMap[init.id] = init;
+  });
+
+  // KPI tiles
+  var totalN   = all.length;
+  var doneN    = all.filter(function(a) { return a.status === "done"; }).length;
+  var ipN      = all.filter(function(a) { return a.status === "in-progress"; }).length;
+  var overdueN = all.filter(function(a) { return a.status === "overdue"; }).length;
+
+  var kpiNums = document.querySelectorAll(".action-kpi-num");
+  kpiNums.forEach(function(el) {
+    if (el.classList.contains("total")) el.textContent = totalN;
+    else if (el.classList.contains("done"))  el.textContent = doneN;
+    else if (el.classList.contains("prog"))  el.textContent = ipN;
+    else if (el.classList.contains("over"))  el.textContent = overdueN;
+  });
+
+  // Subtitle
+  var stripSub = document.querySelector(".action-strip-sub");
+  if (stripSub) {
+    var sessions = new Set(all.map(function(a) { return a.id.substring(0, 9); }));
+    var today = new Date();
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var dateStr = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
+    stripSub.textContent = totalN + " actions logged across " + sessions.size + " sessions. Last updated: " + dateStr;
+  }
+
+  // Owner breakdown bars
+  var owners = ["Simon", "Caio", "Felipe", "Alex"];
+  var ownerRows = document.querySelectorAll(".owner-row-item");
+  ownerRows.forEach(function(row, i) {
+    if (i >= owners.length) return;
+    var name = owners[i];
+    var mine = all.filter(function(a) { return a.owner === name; });
+    var t = mine.length || 1;
+    var d = mine.filter(function(a) { return a.status === "done"; }).length;
+    var p = mine.filter(function(a) { return a.status === "in-progress"; }).length;
+    var o = mine.filter(function(a) { return a.status === "overdue"; }).length;
+
+    var barDone = row.querySelector(".owner-bar-done");
+    var barProg = row.querySelector(".owner-bar-prog");
+    var barOver = row.querySelector(".owner-bar-over");
+    if (barDone) barDone.style.width = Math.round((d / t) * 100) + "%";
+    if (barProg) barProg.style.width = Math.round((p / t) * 100) + "%";
+    if (barOver) barOver.style.width = Math.round((o / t) * 100) + "%";
+
+    var cDone = row.querySelector(".c-done");
+    var cProg = row.querySelector(".c-prog");
+    var cOver = row.querySelector(".c-over");
+    if (cDone) cDone.textContent = d + "\u2713";
+    if (cProg) cProg.textContent = p + "\u25CF";
+    if (cOver) cOver.textContent = o > 0 ? o + "!" : "\u2014";
+  });
 }

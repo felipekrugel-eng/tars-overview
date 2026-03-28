@@ -2828,6 +2828,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 28px;
   padding: 0;
+  align-items: start;
 }
 
 @media (max-width: 1200px) {
@@ -3174,7 +3175,7 @@
 /* ═══════════════════════════════════════════════════ BACKLOG TAB — LIGHT ACTION TRACKER STYLE ═══════════════════════════════════════════════════ */
 
 .tars-backlog-container {
-  padding: 48px;
+  padding: 0;
 }
 
 .tars-backlog-filter {
@@ -3276,7 +3277,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 5px 12px 5px 8px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
@@ -3284,12 +3285,55 @@
   border: 1.5px solid #E0E0E0;
   background: #F5F5F5;
   color: #666;
+  transition: all 0.12s;
+}
+.td-owner-chip:hover { background: #E8E8E8; }
+.td-owner-chip.active { border-color: transparent; color: #fff; }
+.td-owner-chip-av {
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 10px; font-weight: 800; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Owner filter chips row */
+.td-owner-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+
+/* Filter tabs */
+.td-filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.td-tab {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid #E0E0E0; background: #F5F5F5; color: #666;
+  transition: all 0.12s;
+}
+.td-tab:hover { background: #E8E8E8; }
+.td-tab.active { background: #1D8FE1; color: #fff; border-color: #1D8FE1; }
+.td-tab.done-tab.active { background: #2DC46B; border-color: #2DC46B; }
+.td-tab.prog-tab.active { background: #F5A623; border-color: #F5A623; }
+.td-tab.over-tab.active { background: #E53935; border-color: #E53935; }
+
+/* Count summary */
+.td-count-summary { font-size: 13px; color: #999; margin-bottom: 14px; }
+
+/* Action row sub-elements (old drill-down style) */
+.td-action-avatar {
+  width: 20px; height: 20px; border-radius: 50%;
+  font-size: 10px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.td-action-owner-name { font-size: 11px; color: #888; }
+.td-action-due { font-size: 11px; color: #AAA; }
+
+/* Section labels in backlog */
+.tars-section-label-backlog {
+  font-size: 11px; font-weight: 700; color: #AAA;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin: 22px 0 10px;
 }
 
 /* ═══════════════════════════════════════════════════ OPERATIONS TAB — LIGHT TABLE STYLE ═══════════════════════════════════════════════════ */
 
 .tars-ops-container {
-  padding: 48px;
+  padding: 0;
 }
 
 .tars-ops-section {
