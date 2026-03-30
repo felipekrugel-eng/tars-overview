@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-30T10:00:00Z
+// Last sync: 2026-03-30T11:03:14Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-30T10:00:00Z",
+  lastSync: "2026-03-30T11:03:14Z",
 
   tasks: [
     {
@@ -51,8 +51,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T07:55:27.028Z",
-      nextRunAt: "2026-03-30T09:05:39.000Z",
+      lastRunAt: "2026-03-30T09:05:58.795Z",
+      nextRunAt: "2026-04-06T09:05:39.000Z",
       detail: {
         purpose: "Kicks off each week by sending personalized Slack DMs to each leadership team member with their outstanding action items and strategic context.",
         process: "Reads the Action Tracker, groups open actions by owner, crafts a personalized message for each person with their priorities and any relevant context from recent strategy sessions. Also posts a team-wide summary to #strategy-feed.",
@@ -69,8 +69,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-23T09:56:14.320Z",
-      nextRunAt: "2026-03-30T08:06:26.000Z",
+      lastRunAt: "2026-03-30T08:06:45.524Z",
+      nextRunAt: "2026-04-06T08:06:26.000Z",
       detail: {
         purpose: "Ensures all strategic session folders in Google Drive follow consistent naming conventions for easy navigation and retrieval.",
         process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern (e.g., 'YYYY-MM-DD – Topic'), and reports violations to Felipe via Slack DM.",
@@ -130,6 +130,24 @@ const HIAGENT_DATA = {
         process: "Fetches the latest meeting transcript from Fireflies, extracts decisions, action items, and discussion themes. Generates a structured briefing and delivers it via Gmail and Slack. Also updates the Action Tracker with any new actions identified.",
         outputs: "Executive briefing email; Slack post to #strategy-feed; updated Action Tracker.",
         dependencies: "Fireflies (transcript), Gmail, Slack, Google Drive (Action_Tracker.xlsx)"
+      }
+    },
+    {
+      id: "friday-session-archive",
+      name: "Friday Session Archive",
+      description: "Create session folder in Google Drive, save all weekly deliverables and transcript",
+      schedule: "Friday 6:30 PM",
+      cron: "30 18 * * 5",
+      cadence: "weekly-fri",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: "2026-03-30T08:35:21.787Z",
+      nextRunAt: "2026-04-03T17:34:09.000Z",
+      detail: {
+        purpose: "Archives all weekly strategy deliverables into a structured Google Drive folder for long-term reference and audit trail.",
+        process: "Creates a dated session folder in Google Drive Strategic Sessions, then saves the Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript into it.",
+        outputs: "Complete session archive folder in Google Drive.",
+        dependencies: "Google Drive (Strategic Sessions folder), Fireflies"
       }
     },
     {
@@ -195,8 +213,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: null,
-      nextRunAt: "2026-03-30T08:00:58.000Z",
+      lastRunAt: "2026-03-30T08:03:19.515Z",
+      nextRunAt: "2026-04-06T08:00:58.000Z",
       detail: {
         purpose: "Collects competitive intelligence by pulling Loyverse's latest app store ratings and review data for the CASE dashboard.",
         process: "Queries App Store and Google Play Store APIs for Loyverse POS app ratings, review counts, and recent review text. Transforms the data and updates the CASE data files. Pending: API keys needed for per-country breakdown.",
@@ -213,8 +231,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-30T10:00:00Z",
-      nextRunAt: "2026-03-30T11:00:45.000Z",
+      lastRunAt: "2026-03-30T11:03:14Z",
+      nextRunAt: "2026-03-30T15:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
