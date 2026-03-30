@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-30T07:55:43Z
+// Last sync: 2026-03-30T10:00:00Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-30T07:55:43Z",
+  lastSync: "2026-03-30T10:00:00Z",
 
   tasks: [
     {
@@ -51,7 +51,7 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-23T10:06:09.002Z",
+      lastRunAt: "2026-03-30T07:55:27.028Z",
       nextRunAt: "2026-03-30T09:05:39.000Z",
       detail: {
         purpose: "Kicks off each week by sending personalized Slack DMs to each leadership team member with their outstanding action items and strategic context.",
@@ -213,7 +213,7 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-30T07:55:43Z",
+      lastRunAt: "2026-03-30T10:00:00Z",
       nextRunAt: "2026-03-30T11:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
