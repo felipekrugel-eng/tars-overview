@@ -143,7 +143,10 @@ const TARS_DATA = {
     { id: "A-260327-02", text: "Refine TARS for main 2026 initiatives with clearer project steps", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "31 Mar", status: "done", initiative: "general" },
     { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
     { id: "A-260327-04", text: "Develop Snowflake-to-CASE dashboard integration", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
-    { id: "A-260327-05", text: "Provide Snowflake access to Felipe and Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "31 Mar", status: "overdue", initiative: "general" }
+    { id: "A-260327-05", text: "Provide Snowflake access to Felipe and Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "31 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260330-01", text: "Enable the Mixpanel MCP for Claude", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "7 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260330-02", text: "Enable data pipelines addon for Mixpanel to Snowflake", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "7 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260330-03", text: "Unlock the n8n connector in Claude", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "7 Apr", status: "in-progress", initiative: "general" }
   ],
 
   // LAYER 3: Operations
