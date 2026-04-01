@@ -1,5 +1,5 @@
 const TARS_DATA = {
-  lastUpdated: "2026-03-28",
+  lastUpdated: "2026-04-01",
 
   // LAYER 1: Strategic Initiatives
   initiatives: [
@@ -20,7 +20,7 @@ const TARS_DATA = {
         { id: "m5", name: "5,000 customers on payments + software", status: "not-started", date: "Dec 2026", notes: "Caio's headline proof point for scaling and capital raise" }
       ],
       latestDecision: "US pricing: 3% flat rate with surcharging options recommended (Session 09, 27 Mar)",
-      nextDecisionPoint: "Confirm US pricing approach — Loyverse US Deepdive scheduled Wed 1 Apr, 4 PM UK (5 attendees)",
+      nextDecisionPoint: "Confirm US pricing approach — Loyverse US Deepdive scheduled Tue 1 Apr, 4 PM BST (5 attendees)",
       context: "Caio proposed 100% US focus until 5K customers proven. Simon suggested 3% flat rate. Alex prefers Mexico given 50% organic growth. Debit card issuance feasible but needs US legal entity (~2-3 months).",
       actions: [
         { id: "A-260206-01", text: "Book time Mon–Thu to discuss Stripe Mexico preview launch", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "13 Feb", status: "done", initiative: "payments" },
@@ -33,10 +33,12 @@ const TARS_DATA = {
         { id: "A-260316-14", text: "Support Snowflake data migration and historical/chargeback data transfer with Dimitri", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue", initiative: "payments" },
         { id: "A-260316-15", text: "Assist Simon and Felipe with Stripe/payment processing on UK and US accounts", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "23 Mar", status: "overdue", initiative: "payments" },
         { id: "A-260323-01", text: "Provide UK company details for Shopify contract setup to Simon", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "payments" },
-        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "in-progress", initiative: "payments" },
-        { id: "A-260324-02", text: "Discussion on whether UK customers should be used for pilot due to US legal entity issues", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress", initiative: "payments" },
+        { id: "A-260324-01", text: "Sign amendment to include Loyverse US with the contracted pricing", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "27 Mar", status: "done", initiative: "payments" },
+        { id: "A-260324-02", text: "Discussion on whether UK customers should be used for pilot due to US legal entity issues", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "overdue", initiative: "payments" },
         { id: "A-260324-03", text: "Complete RFP for external legal counsel in US", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Apr", status: "done", initiative: "payments" },
-        { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress", initiative: "payments" }
+        { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress", initiative: "payments" },
+        { id: "A-260327-06", text: "Book dedicated US payments strategy meeting (next week)", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "31 Mar", status: "done", initiative: "payments" },
+        { id: "A-260327-07", text: "Provide real-world US receipts (Toast, Square) for tip/tax validation", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "in-progress", initiative: "payments" }
       ]
     },
     {
@@ -66,8 +68,8 @@ const TARS_DATA = {
         { id: "A-260306-05", text: "Draft communication plan for pricing rollout", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "13 Mar", status: "overdue", initiative: "pricing" },
         { id: "A-260306-09", text: "Design trust-building programme for app store ratings and reviews", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue", initiative: "pricing" },
         { id: "A-260306-10", text: "Create landing pages and content for new pricing model and partnerships", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "20 Mar", status: "overdue", initiative: "pricing" },
-        { id: "A-260324-04", text: "Confirm final payment pricing proposal for US customers with the team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "in-progress", initiative: "pricing" },
-        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing. Blocked by A-260324-04.", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "in-progress", initiative: "pricing" }
+        { id: "A-260324-04", text: "Confirm final payment pricing proposal for US customers with the team", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "28 Mar", status: "overdue", initiative: "pricing" },
+        { id: "A-260325-02", text: "Build out product list in Shopify with final pricing. Blocked by A-260324-04.", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "31 Mar", status: "overdue", initiative: "pricing" }
       ]
     },
     {
@@ -136,7 +138,12 @@ const TARS_DATA = {
     { id: "A-260316-11", text: "Confirm SAP entity integration approach; engage external contractor if required", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "23 Mar", status: "overdue", initiative: "general" },
     { id: "A-260316-12", text: "Add Dimitri to Claude AI team account", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "18 Mar", status: "overdue", initiative: "general" },
     { id: "A-260316-13", text: "Provide and validate budget figures and cost/revenue projections for Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "18 Mar", status: "overdue", initiative: "general" },
-    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "in-progress", initiative: "general" }
+    { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "overdue", initiative: "general" },
+    { id: "A-260327-01", text: "Upgrade Netlify plan for security layer", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "7 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260327-02", text: "Refine TARS for main 2026 initiatives with clearer project steps", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "31 Mar", status: "done", initiative: "general" },
+    { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260327-04", text: "Develop Snowflake-to-CASE dashboard integration", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260327-05", text: "Provide Snowflake access to Felipe and Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "31 Mar", status: "overdue", initiative: "general" }
   ],
 
   // LAYER 3: Operations
@@ -153,7 +160,7 @@ const TARS_DATA = {
       { id: "weekly-memory-maintenance", purpose: "Consolidate working memory from Slack into Mem reference files", frequency: "Sunday 8 PM", owner: "Second Brain", status: "Active" },
       { id: "weekly-mem-update", purpose: "Fetch new Fireflies meetings, create/update Mem briefing notes", frequency: "Friday 8 PM", owner: "Second Brain", status: "Active" },
       { id: "appstore-data-pull", purpose: "Weekly pull of Loyverse app store ratings and reviews", frequency: "Monday 9 AM", owner: "CASE", status: "Active" },
-      { id: "hiagent-monitor", purpose: "Monitor all scheduled tasks, update dashboard, alert on failures", frequency: "Every 2 hours", owner: "HIAgent", status: "Active" }
+      { id: "hiagent-monitor", purpose: "Monitor all scheduled tasks, update dashboard, alert on failures", frequency: "Every 4 hours", owner: "HIAgent", status: "Active" }
     ],
     weeklyRhythm: "Monday: Strategic Pulse (initiative health + decisions) → Daily: Completion checks + health signal scan → Thursday: Strategic Preview (meeting framing) → Friday: Meeting briefing + tracker update → Sunday: Memory maintenance",
     connectedPlatforms: [
