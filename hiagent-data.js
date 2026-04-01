@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-03-31T08:02:06Z
+// Last sync: 2026-04-01T10:33:39Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-03-31T08:02:06Z",
+  lastSync: "2026-04-01T10:33:39Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T16:04:35.479Z",
-      nextRunAt: "2026-03-31T16:07:02.000Z",
+      lastRunAt: "2026-03-31T16:05:49.295Z",
+      nextRunAt: "2026-04-01T16:07:02.000Z",
       detail: {
         purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
         process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
@@ -33,19 +33,19 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T16:52:18.743Z",
-      nextRunAt: "2026-03-31T16:53:08.000Z",
+      lastRunAt: "2026-03-31T16:48:02.233Z",
+      nextRunAt: "2026-04-01T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
-        outputs: "Updated tars-data.js deployed to tars-overview.netlify.app.",
+        outputs: "Updated tars-data.js on GitHub; auto-deployed to Netlify.",
         dependencies: "Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo), Netlify"
       }
     },
     {
       id: "monday-action-reminder",
       name: "Monday Action Reminder",
-      description: "Set up the week with strategic context, send each person their actions",
+      description: "Strategic Pulse: initiative health, key decisions, strategic tensions, leadership focus",
       schedule: "Monday 10 AM",
       cron: "0 10 * * 1",
       cadence: "weekly-mon",
@@ -54,16 +54,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-30T09:05:58.795Z",
       nextRunAt: "2026-04-06T09:05:39.000Z",
       detail: {
-        purpose: "Kicks off each week by sending personalized Slack DMs to each leadership team member with their outstanding action items and strategic context.",
-        process: "Reads the Action Tracker, groups open actions by owner, crafts a personalized message for each person with their priorities and any relevant context from recent strategy sessions. Also posts a team-wide summary to #strategy-feed.",
-        outputs: "Individual Slack DMs to each team member; team summary in #strategy-feed.",
-        dependencies: "Google Drive (Action_Tracker.xlsx), Slack (DMs + #strategy-feed)"
+        purpose: "Delivers a weekly strategic pulse at the start of the week — highlighting initiative health, key decisions needed, strategic tensions, and what leadership should focus on.",
+        process: "Reads the Action Tracker for open/overdue items, checks recent strategy session decisions, evaluates initiative health indicators, and compiles a focused briefing. Delivered via Slack DM and email.",
+        outputs: "Monday Strategic Pulse briefing via Slack DM and Gmail.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), Slack, Gmail, Second Brain"
       }
     },
     {
       id: "drive-session-naming-audit",
       name: "Drive Naming Audit",
-      description: "Audit Strategic Sessions Drive folders for naming conventions",
+      description: "Audit Strategic Sessions Drive folders for naming conventions and track violations",
       schedule: "Monday 9 AM",
       cron: "0 9 * * 1",
       cadence: "weekly-mon",
@@ -72,16 +72,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-30T08:06:45.524Z",
       nextRunAt: "2026-04-06T08:06:26.000Z",
       detail: {
-        purpose: "Ensures all strategic session folders in Google Drive follow consistent naming conventions for easy navigation and retrieval.",
-        process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern (e.g., 'YYYY-MM-DD – Topic'), and reports violations to Felipe via Slack DM.",
-        outputs: "Slack DM with any naming convention issues found.",
+        purpose: "Ensures Google Drive folder structure follows naming conventions for Strategic Sessions, tracking violations over time and flagging recurring issues.",
+        process: "Scans the Strategic Sessions folder tree in Google Drive, checks each folder and file name against conventions, logs violations, and posts a summary to Felipe.",
+        outputs: "Naming audit report via Slack DM; violation tracking over time.",
         dependencies: "Google Drive (Strategic Sessions folder), Slack"
       }
     },
     {
       id: "thursday-meeting-preview",
       name: "Thursday Meeting Preview",
-      description: "Strategic pre-read for Friday's session with narrative insight",
+      description: "Strategic Preview: key question for Friday, initiative status shifts, unresolved tensions",
       schedule: "Thursday 4 PM",
       cron: "0 16 * * 4",
       cadence: "weekly-thu",
@@ -90,16 +90,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-26T16:04:07.754Z",
       nextRunAt: "2026-04-02T15:03:32.000Z",
       detail: {
-        purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
-        process: "Reviews the Action Tracker for discussion-worthy items, checks recent Fireflies transcripts for unresolved threads, compiles CASE metrics context, and sends a structured preview email via Gmail to leadership.",
-        outputs: "Email to leadership with Friday meeting preview; Slack notification.",
-        dependencies: "Google Drive, Gmail, Fireflies, Slack"
+        purpose: "Prepares leadership for Friday's strategy session by identifying the one question worth an hour of discussion, initiative status shifts since last week, and unresolved tensions.",
+        process: "Reviews tracker changes since Monday, identifies status shifts and new blockers, synthesizes into a focused preview. Delivered via Slack DM.",
+        outputs: "Thursday Strategic Preview via Slack DM.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), Second Brain, Slack"
       }
     },
     {
       id: "thursday-strategy-deck",
       name: "Thursday Strategy Deck",
-      description: "Generate Friday Strategy Briefing deck (PPTX) with latest CASE data and context",
+      description: "Generate Friday Strategy Briefing deck with initiative status, CASE metrics, 5YP context",
       schedule: "Thursday 4:30 PM",
       cron: "30 16 * * 4",
       cadence: "weekly-thu",
@@ -108,16 +108,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-26T16:32:46.841Z",
       nextRunAt: "2026-04-02T15:32:11.000Z",
       detail: {
-        purpose: "Generates a polished PowerPoint briefing deck for Friday's strategy session, incorporating the latest business case data, 5-year plan context, and outstanding action items.",
-        process: "Reads CASE data, 5YP context, and the Action Tracker. Builds a branded PPTX with discussion topics, key metrics, and outstanding actions. Saves to Google Drive Strategic Sessions folder.",
+        purpose: "Produces the PowerPoint deck used in Friday's strategy session — combining initiative status, CASE business metrics, 5-year plan context, and decisions needed.",
+        process: "Reads tracker data, CASE metrics, and 5YP context; generates a branded PPTX deck using the pptx and loyverse-brand skills; saves to Google Drive.",
         outputs: "Friday Strategy Briefing deck (PPTX) in Google Drive.",
-        dependencies: "CASE skill, Google Drive, Action Tracker, pptx skill"
+        dependencies: "Google Drive, case-skill, loyverse-brand skill, pptx skill, Second Brain"
       }
     },
     {
       id: "friday-meeting-briefing",
       name: "Friday Meeting Briefing",
-      description: "Process Fireflies transcript, deliver executive briefing via Slack & Gmail",
+      description: "Process Fireflies transcript, extract decisions and actions, deliver executive briefing",
       schedule: "Friday 4:39 PM",
       cron: "30 16 * * 5",
       cadence: "weekly-fri",
@@ -126,10 +126,10 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-27T16:39:53.158Z",
       nextRunAt: "2026-04-03T15:39:14.000Z",
       detail: {
-        purpose: "Creates a polished executive briefing from the Friday strategy meeting transcript, capturing key decisions, new actions, and strategic insights.",
-        process: "Fetches the latest meeting transcript from Fireflies, extracts decisions, action items, and discussion themes. Generates a structured briefing and delivers it via Gmail and Slack. Also updates the Action Tracker with any new actions identified.",
-        outputs: "Executive briefing email; Slack post to #strategy-feed; updated Action Tracker.",
-        dependencies: "Fireflies (transcript), Gmail, Slack, Google Drive (Action_Tracker.xlsx)"
+        purpose: "Processes the Fireflies transcript from Friday's strategy session, extracts decisions and action items, and delivers an executive briefing.",
+        process: "Fetches the latest Fireflies transcript, identifies decisions, action items, and key discussion points. Creates a structured briefing and delivers via Slack DM and Gmail.",
+        outputs: "Executive briefing via Slack DM and Gmail; updated Action Tracker.",
+        dependencies: "Fireflies, Slack, Gmail, Google Drive (Action_Tracker.xlsx)"
       }
     },
     {
@@ -144,8 +144,8 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-30T08:35:21.787Z",
       nextRunAt: "2026-04-03T17:34:09.000Z",
       detail: {
-        purpose: "Archives all weekly strategy deliverables into a structured Google Drive folder for long-term reference and audit trail.",
-        process: "Creates a dated session folder in Google Drive Strategic Sessions, then saves the Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript into it.",
+        purpose: "Archives all weekly deliverables into a structured session folder in Google Drive — Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript.",
+        process: "Creates a dated session folder in the Strategic Sessions Drive, collects all deliverables generated during the week, and saves them in the correct structure.",
         outputs: "Complete session archive folder in Google Drive.",
         dependencies: "Google Drive (Strategic Sessions folder), Fireflies"
       }
@@ -153,7 +153,7 @@ const HIAGENT_DATA = {
     {
       id: "weekly-strategy-tracker-update",
       name: "Strategy Tracker Update",
-      description: "Read latest session notes, update Action_Tracker.xlsx in Google Drive",
+      description: "Extract decisions and milestones from strategy sessions, update tars-data.js, deploy",
       schedule: "Friday 7 PM",
       cron: "0 19 * * 5",
       cadence: "weekly-fri",
@@ -162,16 +162,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-28T11:22:12.926Z",
       nextRunAt: "2026-04-03T18:04:44.000Z",
       detail: {
-        purpose: "End-of-week housekeeping that ensures the Action Tracker reflects everything discussed in the Friday session.",
-        process: "Reads the latest session notes and Fireflies transcript, cross-references with the existing Action Tracker, adds new actions, updates statuses, and archives completed items. Writes the updated tracker back to Google Drive.",
-        outputs: "Updated Action_Tracker.xlsx in Google Drive.",
-        dependencies: "Google Drive (Strategic Sessions folder, Action_Tracker.xlsx), Fireflies"
+        purpose: "Post-session tracker update — extracts new decisions, milestones, and action items from the Friday strategy session and updates the initiative tracker and backlog.",
+        process: "Processes the Fireflies transcript and briefing outputs, identifies new tracker entries, updates the Google Sheets Action Tracker, regenerates tars-data.js, and deploys to GitHub/Netlify.",
+        outputs: "Updated Action_Tracker.xlsx, updated tars-data.js on GitHub.",
+        dependencies: "Fireflies, Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo)"
       }
     },
     {
       id: "weekly-memory-maintenance",
       name: "Memory Maintenance",
-      description: "Consolidate working memory from Slack into reference files",
+      description: "Consolidate working memory from Slack into reference files, update the second brain",
       schedule: "Sunday 8 PM",
       cron: "0 20 * * 0",
       cadence: "weekly-sun",
@@ -180,16 +180,16 @@ const HIAGENT_DATA = {
       lastRunAt: "2026-03-29T19:05:59.698Z",
       nextRunAt: "2026-04-05T19:06:11.000Z",
       detail: {
-        purpose: "Maintains long-term agent memory by consolidating ephemeral working context from Slack conversations into structured reference files.",
-        process: "Scans recent Slack activity across key channels, identifies important decisions, context changes, and new information. Consolidates this into the second-brain skill's reference files for future session continuity.",
-        outputs: "Updated second-brain reference files.",
-        dependencies: "Slack, Second Brain skill files"
+        purpose: "Weekly consolidation of working memory — reads all memory blocks from Slack #cowork-memory, folds new context into Mem reference notes, and keeps the second brain current.",
+        process: "Reads #cowork-memory messages from the past 7 days, identifies information that should update reference notes, updates Mem notes (People & Org, Systems & Automations, Key Decisions, Session Index), syncs to local files, and posts a changelog.",
+        outputs: "Updated Mem reference notes; changelog in #cowork-memory.",
+        dependencies: "Slack (#cowork-memory), Mem, local reference files"
       }
     },
     {
       id: "weekly-mem-update",
       name: "Mem Briefing Update",
-      description: "Fetch new meetings from Fireflies, create/update Mem briefing notes",
+      description: "Fetch new meetings from Fireflies, create/update Mem briefing notes, keep Session Index current",
       schedule: "Friday 8 PM",
       cron: "0 20 * * 5",
       cadence: "weekly-fri",
@@ -231,13 +231,49 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-03-31T08:02:06Z",
-      nextRunAt: "2026-03-31T11:00:45.000Z",
+      lastRunAt: "2026-04-01T10:33:39Z",
+      nextRunAt: "2026-04-01T11:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
         outputs: "Updated hiagent-data.js on GitHub; Slack alert on failures (silent on success).",
         dependencies: "Scheduled Tasks API, GitHub (tars-overview repo), Slack"
+      }
+    },
+    {
+      id: "session-07-archive",
+      name: "Session 07 Archive",
+      description: "One-time task: generate Session 07 HTML archive and save to Shared Drive",
+      schedule: "One-time: Mar 18, 2026",
+      cron: "",
+      cadence: "daily",
+      owner: "TARS",
+      enabled: false,
+      lastRunAt: "2026-03-18T10:30:45.782Z",
+      nextRunAt: null,
+      detail: {
+        purpose: "One-time backfill task to generate and archive Session 07 HTML output to Google Drive.",
+        process: "Generated the HTML archive for Session 07 and saved it to the correct Shared Drive path.",
+        outputs: "Session 07 HTML archive in Google Drive.",
+        dependencies: "Google Drive"
+      }
+    },
+    {
+      id: "session-07-archive-v2",
+      name: "Session 07 Archive V2",
+      description: "One-time backfill: save Session 07 HTML archive to correct Shared Drive path",
+      schedule: "One-time: Mar 18, 2026",
+      cron: "",
+      cadence: "daily",
+      owner: "TARS",
+      enabled: false,
+      lastRunAt: "2026-03-18T11:00:45.810Z",
+      nextRunAt: null,
+      detail: {
+        purpose: "Retry of the Session 07 archive task to save to the correct Drive path.",
+        process: "Re-generated the Session 07 HTML archive and saved it to the updated Shared Drive location.",
+        outputs: "Session 07 HTML archive in correct Google Drive path.",
+        dependencies: "Google Drive"
       }
     }
   ],
