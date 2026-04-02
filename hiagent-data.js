@@ -1,16 +1,16 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-02T03:03:29Z
+// Last sync: 2026-04-02T07:13:44Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-02T03:03:29Z",
+  lastSync: "2026-04-02T07:13:44Z",
 
   tasks: [
     {
       id: "daily-completion-check",
       name: "Daily Completion Check",
       description: "Scan #strategy-feed and tracker for completed & new actions; update tracker",
-      schedule: "Daily 5 PM (Mon\u2013Fri)",
+      schedule: "Daily 5 PM (Mon–Fri)",
       cron: "0 17 * * 1-5",
       cadence: "weekday",
       owner: "TARS",
@@ -231,8 +231,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-02T03:03:29Z",
-      nextRunAt: "2026-04-02T07:00:45.000Z",
+      lastRunAt: "2026-04-02T07:13:44Z",
+      nextRunAt: "2026-04-02T11:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
