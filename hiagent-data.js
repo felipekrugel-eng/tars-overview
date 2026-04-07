@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-02T11:01:49Z
+// Last sync: 2026-04-07T07:55:55Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-02T11:01:49Z",
+  lastSync: "2026-04-07T07:55:55Z",
 
   tasks: [
     {
@@ -15,10 +15,10 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-01T16:08:00.747Z",
-      nextRunAt: "2026-04-02T16:07:02.000Z",
+      lastRunAt: "2026-04-06T17:16:01.651Z",
+      nextRunAt: "2026-04-07T16:07:02.000Z",
       detail: {
-        purpose: "Keeps the Action Tracker current by scanning Slack\u2019s #strategy-feed channel for completion updates and new actions posted throughout the day.",
+        purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
         process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
         outputs: "Updated Action_Tracker.xlsx in Google Drive; Slack summary of changes.",
         dependencies: "Slack (#strategy-feed), Google Drive (Action_Tracker.xlsx)"
@@ -33,170 +33,170 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-01T16:46:00.538Z",
-      nextRunAt: "2026-04-02T16:53:08.000Z",
+      lastRunAt: "2026-04-06T17:16:01.655Z",
+      nextRunAt: "2026-04-07T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
-        outputs: "Updated tars-data.js on GitHub; Netlify auto-deploy.",
-        dependencies: "Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo)"
+        outputs: "Updated tars-data.js deployed to tars-overview.netlify.app.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo), Netlify"
       }
     },
     {
       id: "monday-action-reminder",
       name: "Monday Action Reminder",
-      description: "Strategic Pulse: initiative health, key decisions this week, strategic tensions",
+      description: "Set up the week with strategic context, send each person their actions",
       schedule: "Monday 10 AM",
       cron: "0 10 * * 1",
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T09:05:58.795Z",
-      nextRunAt: "2026-04-06T09:05:39.000Z",
+      lastRunAt: "2026-04-06T09:40:33.033Z",
+      nextRunAt: "2026-04-13T09:05:39.000Z",
       detail: {
-        purpose: "Monday morning strategic pulse \u2014 initiative health, key decisions this week, strategic tensions, and what leadership should focus on.",
-        process: "Reads tracker data, second-brain context, and recent session outputs to build a concise strategic pulse. Delivers via Slack DM and Gmail.",
-        outputs: "Strategic Pulse briefing via Slack DM and Gmail.",
-        dependencies: "Second Brain, Google Drive (Action_Tracker.xlsx), Slack, Gmail"
+        purpose: "Kicks off each week by sending personalized Slack DMs to each leadership team member with their outstanding action items and strategic context.",
+        process: "Reads the Action Tracker, groups open actions by owner, crafts a personalized message for each person with their priorities and any relevant context from recent strategy sessions. Also posts a team-wide summary to #strategy-feed.",
+        outputs: "Individual Slack DMs to each team member; team summary in #strategy-feed.",
+        dependencies: "Google Drive (Action_Tracker.xlsx), Slack (DMs + #strategy-feed)"
       }
     },
     {
       id: "drive-session-naming-audit",
       name: "Drive Naming Audit",
-      description: "Audit Strategic Sessions Drive folders for naming conventions, track violations",
+      description: "Audit Strategic Sessions Drive folders for naming conventions",
       schedule: "Monday 9 AM",
       cron: "0 9 * * 1",
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T08:06:45.524Z",
-      nextRunAt: "2026-04-06T08:06:26.000Z",
+      lastRunAt: "2026-04-06T13:29:09.020Z",
+      nextRunAt: "2026-04-13T08:06:26.000Z",
       detail: {
-        purpose: "Ensures consistent naming conventions across Strategic Sessions Drive folders, tracking violations over time and flagging recurring issues.",
-        process: "Scans Google Drive Strategic Sessions folder structure, checks folder and file names against naming conventions, logs violations, and reports trends.",
-        outputs: "Naming audit report via Slack DM.",
-        dependencies: "Google Drive (Strategic Sessions folder)"
+        purpose: "Ensures all strategic session folders in Google Drive follow consistent naming conventions for easy navigation and retrieval.",
+        process: "Scans the Strategic Sessions folder tree, identifies any folders or files that don't match the naming pattern, and reports violations to Felipe via Slack DM.",
+        outputs: "Slack DM with any naming convention issues found.",
+        dependencies: "Google Drive (Strategic Sessions folder), Slack"
       }
     },
     {
       id: "thursday-meeting-preview",
       name: "Thursday Meeting Preview",
-      description: "Strategic Preview: the one question worth leadership time, initiative status shifts",
+      description: "Strategic pre-read for Friday's session with narrative insight",
       schedule: "Thursday 4 PM",
       cron: "0 16 * * 4",
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-01T17:21:59.567Z",
-      nextRunAt: "2026-04-02T15:03:32.000Z",
+      lastRunAt: "2026-04-02T15:05:18.069Z",
+      nextRunAt: "2026-04-09T15:03:32.000Z",
       detail: {
-        purpose: "Pre-meeting strategic preview \u2014 identifies the one question worth an hour of leadership time, initiative status shifts, and unresolved tensions for Friday\u2019s session.",
-        process: "Analyzes tracker data, recent decisions, and strategic context to surface the most important discussion topics. Delivers via Slack DM and Gmail.",
-        outputs: "Strategic Preview briefing via Slack DM and Gmail.",
-        dependencies: "Second Brain, Google Drive (Action_Tracker.xlsx), Slack, Gmail"
+        purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
+        process: "Reviews the Action Tracker for discussion-worthy items, checks recent Fireflies transcripts for unresolved threads, compiles CASE metrics context, and sends a structured preview email via Gmail to leadership.",
+        outputs: "Email to leadership with Friday meeting preview; Slack notification.",
+        dependencies: "Google Drive, Gmail, Fireflies, Slack"
       }
     },
     {
       id: "thursday-strategy-deck",
       name: "Thursday Strategy Deck",
-      description: "Generate Friday Strategy Briefing deck with initiative status, CASE metrics, 5YP context",
+      description: "Generate Friday Strategy Briefing deck (PPTX) with latest CASE data and context",
       schedule: "Thursday 4:30 PM",
       cron: "30 16 * * 4",
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-02T08:44:29.633Z",
-      nextRunAt: "2026-04-02T15:32:11.000Z",
+      lastRunAt: "2026-04-02T15:36:24.474Z",
+      nextRunAt: "2026-04-09T15:32:11.000Z",
       detail: {
-        purpose: "Produces the PowerPoint deck used in Friday\u2019s strategy session \u2014 combining initiative status, CASE business metrics, 5-year plan context, and decisions needed.",
-        process: "Reads tracker data, CASE metrics, and 5YP context; generates a branded PPTX deck using the pptx and loyverse-brand skills; saves to Google Drive.",
+        purpose: "Generates a polished PowerPoint briefing deck for Friday's strategy session, incorporating the latest business case data, 5-year plan context, and outstanding action items.",
+        process: "Reads CASE data, 5YP context, and the Action Tracker. Builds a branded PPTX with discussion topics, key metrics, and outstanding actions. Saves to Google Drive Strategic Sessions folder.",
         outputs: "Friday Strategy Briefing deck (PPTX) in Google Drive.",
-        dependencies: "Google Drive, case-skill, loyverse-brand skill, pptx skill, Second Brain"
+        dependencies: "CASE skill, Google Drive, Action Tracker, pptx skill"
       }
     },
     {
       id: "friday-meeting-briefing",
       name: "Friday Meeting Briefing",
-      description: "Process Fireflies transcript, extract decisions and actions, deliver executive briefing",
+      description: "Process Fireflies transcript, deliver executive briefing via Slack & Gmail",
       schedule: "Friday 4:39 PM",
       cron: "30 16 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-27T16:39:53.158Z",
-      nextRunAt: "2026-04-03T15:39:14.000Z",
+      lastRunAt: "2026-04-03T16:25:08.498Z",
+      nextRunAt: "2026-04-10T15:39:14.000Z",
       detail: {
-        purpose: "Processes the Fireflies transcript from Friday\u2019s strategy session, extracts decisions and action items, and delivers an executive briefing.",
-        process: "Fetches the latest Fireflies transcript, identifies decisions, action items, and key discussion points. Creates a structured briefing and delivers via Slack DM and Gmail.",
-        outputs: "Executive briefing via Slack DM and Gmail; updated Action Tracker.",
-        dependencies: "Fireflies, Slack, Gmail, Google Drive (Action_Tracker.xlsx)"
+        purpose: "Creates a polished executive briefing from the Friday strategy meeting transcript, capturing key decisions, new actions, and strategic insights.",
+        process: "Fetches the latest meeting transcript from Fireflies, extracts decisions, action items, and discussion themes. Generates a structured briefing and delivers it via Gmail and Slack. Also updates the Action Tracker with any new actions identified.",
+        outputs: "Executive briefing email; Slack post to #strategy-feed; updated Action Tracker.",
+        dependencies: "Fireflies (transcript), Gmail, Slack, Google Drive (Action_Tracker.xlsx)"
       }
     },
     {
       id: "friday-session-archive",
       name: "Friday Session Archive",
-      description: "Create session folder in Google Drive, save all weekly deliverables and transcript",
+      description: "Create session folder in Google Drive, archive all weekly deliverables and transcript",
       schedule: "Friday 6:30 PM",
       cron: "30 18 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-30T08:35:21.787Z",
-      nextRunAt: "2026-04-03T17:34:09.000Z",
+      lastRunAt: "2026-04-05T14:18:01.308Z",
+      nextRunAt: "2026-04-10T17:34:09.000Z",
       detail: {
-        purpose: "Archives all weekly deliverables into a structured session folder in Google Drive \u2014 Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript.",
-        process: "Creates a dated session folder in the Strategic Sessions Drive, collects all deliverables generated during the week, and saves them in the correct structure.",
-        outputs: "Complete session archive folder in Google Drive.",
+        purpose: "End-of-week archival task that creates a complete session folder in Google Drive with all weekly deliverables for permanent reference.",
+        process: "Creates a session folder in the Strategic Sessions Drive, saves Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript into it.",
+        outputs: "Complete session folder in Google Drive Strategic Sessions.",
         dependencies: "Google Drive (Strategic Sessions folder), Fireflies"
       }
     },
     {
       id: "weekly-strategy-tracker-update",
       name: "Strategy Tracker Update",
-      description: "Extract decisions and milestones from strategy sessions, update tars-data.js, deploy",
+      description: "Read latest session notes, update Action_Tracker.xlsx in Google Drive",
       schedule: "Friday 7 PM",
       cron: "0 19 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-03-28T11:22:12.926Z",
-      nextRunAt: "2026-04-03T18:04:44.000Z",
+      lastRunAt: "2026-04-04T17:27:53.121Z",
+      nextRunAt: "2026-04-10T18:04:44.000Z",
       detail: {
-        purpose: "Post-session tracker update \u2014 extracts new decisions, milestones, and action items from the Friday strategy session and updates the initiative tracker and backlog.",
-        process: "Processes the Fireflies transcript and briefing outputs, identifies new tracker entries, updates the Google Sheets Action Tracker, regenerates tars-data.js, and deploys to GitHub/Netlify.",
-        outputs: "Updated Action_Tracker.xlsx, updated tars-data.js on GitHub.",
-        dependencies: "Fireflies, Google Drive (Action_Tracker.xlsx), GitHub (tars-overview repo)"
+        purpose: "End-of-week housekeeping that ensures the Action Tracker reflects everything discussed in the Friday session.",
+        process: "Reads the latest session notes and Fireflies transcript, cross-references with the existing Action Tracker, adds new actions, updates statuses, and archives completed items. Writes the updated tracker back to Google Drive.",
+        outputs: "Updated Action_Tracker.xlsx in Google Drive.",
+        dependencies: "Google Drive (Strategic Sessions folder, Action_Tracker.xlsx), Fireflies"
       }
     },
     {
       id: "weekly-memory-maintenance",
       name: "Memory Maintenance",
-      description: "Consolidate working memory from Slack into reference files, update the second brain",
+      description: "Consolidate working memory from Slack into reference files",
       schedule: "Sunday 8 PM",
       cron: "0 20 * * 0",
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-03-29T19:05:59.698Z",
-      nextRunAt: "2026-04-05T19:06:11.000Z",
+      lastRunAt: "2026-04-05T20:32:13.966Z",
+      nextRunAt: "2026-04-12T19:06:11.000Z",
       detail: {
-        purpose: "Weekly consolidation of working memory \u2014 reads all memory blocks from Slack #cowork-memory, folds new context into Mem reference notes, and keeps the second brain current.",
-        process: "Reads #cowork-memory messages from the past 7 days, identifies information that should update reference notes, updates Mem notes (People & Org, Systems & Automations, Key Decisions, Session Index), syncs to local files, and posts a changelog.",
-        outputs: "Updated Mem reference notes; changelog in #cowork-memory.",
-        dependencies: "Slack (#cowork-memory), Mem, local reference files"
+        purpose: "Maintains long-term agent memory by consolidating ephemeral working context from Slack conversations into structured reference files.",
+        process: "Scans recent Slack activity across key channels, identifies important decisions, context changes, and new information. Consolidates this into the second-brain reference files for future session continuity.",
+        outputs: "Updated second-brain reference files.",
+        dependencies: "Slack, Second Brain skill files"
       }
     },
     {
       id: "weekly-mem-update",
       name: "Mem Briefing Update",
-      description: "Fetch new meetings from Fireflies, create/update Mem briefing notes, keep Session Index current",
+      description: "Fetch new meetings from Fireflies, create/update Mem briefing notes",
       schedule: "Friday 8 PM",
       cron: "0 20 * * 5",
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-03-28T11:22:17.115Z",
-      nextRunAt: "2026-04-03T19:09:01.000Z",
+      lastRunAt: "2026-04-05T06:54:10.412Z",
+      nextRunAt: "2026-04-10T19:09:01.000Z",
       detail: {
         purpose: "Creates structured meeting briefing notes in Mem from Fireflies transcripts, building a searchable knowledge base of all strategic discussions.",
         process: "Fetches new meeting transcripts from Fireflies since the last run, processes each into a structured briefing note format, and creates or updates corresponding notes in Mem with key topics, decisions, and action items.",
@@ -213,10 +213,10 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: "2026-03-30T08:03:19.515Z",
-      nextRunAt: "2026-04-06T08:00:58.000Z",
+      lastRunAt: "2026-04-06T21:07:28.263Z",
+      nextRunAt: "2026-04-13T08:00:58.000Z",
       detail: {
-        purpose: "Collects competitive intelligence by pulling Loyverse\u2019s latest app store ratings and review data for the CASE dashboard.",
+        purpose: "Collects competitive intelligence by pulling Loyverse's latest app store ratings and review data for the CASE dashboard.",
         process: "Queries App Store and Google Play Store APIs for Loyverse POS app ratings, review counts, and recent review text. Transforms the data and updates the CASE data files.",
         outputs: "Updated app store metrics in case-data.js.",
         dependencies: "App Store API, Google Play API"
@@ -231,49 +231,13 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-02T11:01:49Z",
-      nextRunAt: "2026-04-02T15:00:45.000Z",
+      lastRunAt: "2026-04-07T07:55:55Z",
+      nextRunAt: "2026-04-07T11:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
         outputs: "Updated hiagent-data.js on GitHub; Slack alert on failures (silent on success).",
         dependencies: "Scheduled Tasks API, GitHub (tars-overview repo), Slack"
-      }
-    },
-    {
-      id: "session-07-archive",
-      name: "Session 07 Archive",
-      description: "One-time task: generate Session 07 HTML archive and save to Shared Drive",
-      schedule: "One-time: Mar 18, 2026",
-      cron: "",
-      cadence: "daily",
-      owner: "TARS",
-      enabled: false,
-      lastRunAt: "2026-03-18T10:30:45.782Z",
-      nextRunAt: null,
-      detail: {
-        purpose: "One-time backfill task to generate and archive Session 07 HTML output to Google Drive.",
-        process: "Generated the HTML archive for Session 07 and saved it to the correct Shared Drive path.",
-        outputs: "Session 07 HTML archive in Google Drive.",
-        dependencies: "Google Drive"
-      }
-    },
-    {
-      id: "session-07-archive-v2",
-      name: "Session 07 Archive V2",
-      description: "One-time backfill: save Session 07 HTML archive to correct Shared Drive path",
-      schedule: "One-time: Mar 18, 2026",
-      cron: "",
-      cadence: "daily",
-      owner: "TARS",
-      enabled: false,
-      lastRunAt: "2026-03-18T11:00:45.810Z",
-      nextRunAt: null,
-      detail: {
-        purpose: "Retry of the Session 07 archive task to save to the correct Drive path.",
-        process: "Re-generated the Session 07 HTML archive and saved it to the updated Shared Drive location.",
-        outputs: "Session 07 HTML archive in correct Google Drive path.",
-        dependencies: "Google Drive"
       }
     }
   ],
@@ -287,7 +251,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "HIAgent",
       detail: {
-        purpose: "Loyverse\u2019s central operations hub \u2014 a single-page app hosting all five operational panels under one roof. Serves as the unified entry point for strategy tracking, business analytics, long-range planning, market intelligence, and agent monitoring.",
+        purpose: "Loyverse's central operations hub — a single-page app hosting all five operational panels under one roof.",
         stack: "Static HTML/CSS/JS with modular data files (tars-data.js, case-data.js, fyp-data.js, intel-data.js, hiagent-data.js). Deployed via GitHub push to Netlify with auto-deploy.",
         panels: "Hub (portal), TARS, CASE, 5YP, Market Intel, HIAgent",
         updatedBy: "sync-tracker-to-html (TARS data), hiagent-monitor (HIAgent data), manual deploys"
@@ -301,7 +265,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "TARS",
       detail: {
-        purpose: "Strategy action tracker \u2014 monitors leadership team actions from Friday strategy sessions, tracks ownership, status, due dates, and completion.",
+        purpose: "Strategy action tracker — monitors leadership team actions from Friday strategy sessions, tracks ownership, status, due dates, and completion.",
         stack: "Panel within the Command Centre, powered by tars-data.js which is auto-generated from the Google Sheets Action Tracker.",
         panels: "Action cards with owner badges, status filters, overdue alerts, completion metrics",
         updatedBy: "sync-tracker-to-html (daily), daily-completion-check (status updates), weekly-strategy-tracker-update (new actions)"
@@ -315,7 +279,7 @@ const HIAGENT_DATA = {
       repo: "felipekrugel-eng/tars-overview",
       owner: "CASE",
       detail: {
-        purpose: "Business case analytics \u2014 provides revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse.",
+        purpose: "Business case analytics — revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse.",
         stack: "Panel within the Command Centre, powered by case-data.js which contains the financial model, market data, and competitive intelligence.",
         panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix, unit economics",
         updatedBy: "Manual updates via case-data.js; appstore-data-pull (app ratings data)"
@@ -324,14 +288,14 @@ const HIAGENT_DATA = {
   ],
 
   skills: [
-    { name: "case-skill", category: "Intelligence", detail: { purpose: "Loyverse business case analytics \u2014 financial model, revenue projections, KPIs, market data, competitive benchmarks, and strategic phase milestones.", triggers: "Financials, revenue, GTV, ARPC, take rates, pricing model, Phase 2 strategy, 5-year plan, business case, investor materials, competitive analysis, growth strategy.", owner: "Felipe", usedBy: "CASE panel, strategy presentations, board decks, fundraising content" } },
-    { name: "loyverse-brand", category: "Design", detail: { purpose: "Loyverse brand code and design system \u2014 ensures all visual outputs follow brand guidelines with correct colors, typography, and layout patterns.", triggers: "Any Loyverse-branded content: presentations, slides, decks, documents, one-pagers, reports, visual assets.", owner: "Felipe", usedBy: "All presentation and document creation tasks" } },
-    { name: "second-brain", category: "Memory", detail: { purpose: "Persistent memory system that provides continuity across sessions \u2014 team structure, strategic decisions, past work, and automation context.", triggers: "Session start, 'remember', 'context', 'what do you know', 'pick up where we left off', references to past work.", owner: "Felipe", usedBy: "Every session start, all scheduled tasks requiring historical context" } },
-    { name: "docx", category: "Document", detail: { purpose: "Create, read, edit, and manipulate Word documents with professional formatting \u2014 tables of contents, headings, letterheads, tracked changes.", triggers: "Word doc, .docx, report, memo, letter, template as Word file.", owner: "System", usedBy: "Reports, memos, offer letters, policy documents" } },
-    { name: "pdf", category: "Document", detail: { purpose: "PDF manipulation toolkit \u2014 extract text/tables, create, merge, split, fill forms, encrypt, OCR scanned documents.", triggers: "PDF, .pdf, form, extract, merge, split.", owner: "System", usedBy: "Document processing, form filling, report generation" } },
-    { name: "pptx", category: "Document", detail: { purpose: "Full PowerPoint support \u2014 create decks, read/parse existing presentations, edit slides, work with templates, speaker notes, and comments.", triggers: "Deck, slides, presentation, .pptx, pitch deck.", owner: "System", usedBy: "Strategy decks, Friday briefing deck, board presentations" } },
-    { name: "xlsx", category: "Document", detail: { purpose: "Excel spreadsheet creation and analysis \u2014 formulas, formatting, data analysis, charts, and visualization.", triggers: "Excel, spreadsheet, .xlsx, data table, budget, financial model, chart.", owner: "System", usedBy: "Action Tracker, financial models, data analysis" } },
-    { name: "skill-creator", category: "Meta", detail: { purpose: "Create new skills, modify existing ones, run evals, benchmark performance, and optimize skill descriptions for better triggering accuracy.", triggers: "Create a skill, edit skill, optimize skill, run evals, benchmark skill.", owner: "System", usedBy: "Skill development and optimization workflows" } }
+    { name: "case-skill", category: "Intelligence", detail: { purpose: "Loyverse business case analytics — financial model, revenue projections, KPIs, market data, competitive benchmarks, and strategic phase milestones.", triggers: "Financials, revenue, GTV, ARPC, take rates, pricing model, Phase 2 strategy, 5-year plan, business case, investor materials, competitive analysis, growth strategy.", owner: "Felipe", usedBy: "CASE panel, strategy presentations, board decks, fundraising content" } },
+    { name: "loyverse-brand", category: "Design", detail: { purpose: "Loyverse brand code and design system — ensures all visual outputs follow brand guidelines with correct colors, typography, and layout patterns.", triggers: "Any Loyverse-branded content: presentations, slides, decks, documents, one-pagers, reports, visual assets.", owner: "Felipe", usedBy: "All presentation and document creation tasks" } },
+    { name: "second-brain", category: "Memory", detail: { purpose: "Persistent memory system that provides continuity across sessions — team structure, strategic decisions, past work, and automation context.", triggers: "Session start, remember, context, what do you know, pick up where we left off, references to past work.", owner: "Felipe", usedBy: "Every session start, all scheduled tasks requiring historical context" } },
+    { name: "docx", category: "Document", detail: { purpose: "Create, read, edit, and manipulate Word documents with professional formatting.", triggers: "Word doc, .docx, report, memo, letter, template as Word file.", owner: "System", usedBy: "Reports, memos, offer letters, policy documents" } },
+    { name: "pdf", category: "Document", detail: { purpose: "PDF manipulation toolkit — extract text/tables, create, merge, split, fill forms, encrypt, OCR scanned documents.", triggers: "PDF, .pdf, form, extract, merge, split.", owner: "System", usedBy: "Document processing, form filling, report generation" } },
+    { name: "pptx", category: "Document", detail: { purpose: "Full PowerPoint support — create decks, read/parse existing presentations, edit slides, work with templates, speaker notes, and comments.", triggers: "Deck, slides, presentation, .pptx, pitch deck.", owner: "System", usedBy: "Strategy decks, Friday briefing deck, board presentations" } },
+    { name: "xlsx", category: "Document", detail: { purpose: "Excel spreadsheet creation and analysis — formulas, formatting, data analysis, charts, and visualization.", triggers: "Excel, spreadsheet, .xlsx, data table, budget, financial model, chart.", owner: "System", usedBy: "Action Tracker, financial models, data analysis" } },
+    { name: "skill-creator", category: "Meta", detail: { purpose: "Create new skills, modify existing ones, run evals, benchmark performance, and optimize skill descriptions.", triggers: "Create a skill, edit skill, optimize skill, run evals, benchmark skill.", owner: "System", usedBy: "Skill development and optimization workflows" } }
   ]
 };
 
@@ -386,7 +350,7 @@ function hiagentTimeAgo(isoStr) {
 }
 
 function hiagentFormatDate(isoStr) {
-  if (!isoStr) return '\u2014';
+  if (!isoStr) return '—';
   var d = new Date(isoStr);
   var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var h = d.getHours();
@@ -590,8 +554,8 @@ function hiagentRender() {
             '<div class="ha-status-dot" style="background:#2DC46B"></div>' +
             '<div class="ha-card-name">' + i.name + '</div>' +
           '</div>' +
-          '<div class="ha-card-desc">' + i.type + ' \u00b7 ' + i.owner + '</div>' +
-          '<a href="' + i.url + '" target="_blank" class="ha-infra-link" onclick="event.stopPropagation()">' + i.url.replace('https://','') + ' \u2192</a>' +
+          '<div class="ha-card-desc">' + i.type + ' · ' + i.owner + '</div>' +
+          '<a href="' + i.url + '" target="_blank" class="ha-infra-link" onclick="event.stopPropagation()">' + i.url.replace('https://','') + ' →</a>' +
         '</div>' +
       '</div>';
     });
