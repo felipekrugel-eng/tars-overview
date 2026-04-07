@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922101,
+      "value": 13922103,
       "label": "Registered merchants"
     },
     "active": {
@@ -492,7 +492,7 @@ const CASE_DATA = {
       "country": "es",
       "flag": "",
       "gtv": 0,
-      "merchants": 308409,
+      "merchants": 308410,
       "avgGTV": 0
     }
   ],
@@ -509,6 +509,11 @@ const CASE_DATA = {
       "value": "104%",
       "note": "Target: >110% by end of 2026"
     }
+  },
+  "diagnostics": {
+    "runDate": "2026-04-07T18:24:50.444Z",
+    "monthlyRowCounts": [],
+    "tableInfo": {}
   },
   "appStores": {
     "googlePlay": {
@@ -1017,10 +1022,10 @@ const CASE_DATA = {
     "bd": 0.74,
     "pk": 0.71,
     "jp": 0.69,
-    "ru": 0.68,
     "ng": 0.68,
-    "au": 0.64,
+    "ru": 0.68,
     "do": 0.64,
+    "au": 0.64,
     "kh": 0.58,
     "dz": 0.55
   },
