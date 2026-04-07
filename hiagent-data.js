@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-07T10:37:52Z
+// Last sync: 2026-04-07T15:02:11Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-07T10:37:52Z",
+  lastSync: "2026-04-07T15:02:11Z",
 
   tasks: [
     {
@@ -223,6 +223,24 @@ const HIAGENT_DATA = {
       }
     },
     {
+      id: "case-snowflake-pull",
+      name: "CASE Snowflake Pull",
+      description: "Daily pull from Snowflake to update CASE dashboard data and push to GitHub/Netlify",
+      schedule: "Daily 6:10 AM",
+      cron: "0 6 * * *",
+      cadence: "daily",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: "2026-04-07T14:35:13.238Z",
+      nextRunAt: "2026-04-08T05:09:53.000Z",
+      detail: {
+        purpose: "Keeps the CASE dashboard data fresh by pulling the latest business metrics from Snowflake daily.",
+        process: "Connects to Snowflake, extracts the latest Loyverse business metrics (GTV, revenue, ARPC, etc.), transforms them into the case-data.js format, commits to the tars-overview repo, and Netlify auto-deploys.",
+        outputs: "Updated case-data.js deployed to tars-overview.netlify.app.",
+        dependencies: "Snowflake, GitHub (tars-overview repo), Netlify"
+      }
+    },
+    {
       id: "hiagent-monitor",
       name: "HIAgent Monitor",
       description: "Monitor all scheduled tasks, update dashboard data, alert on failures",
@@ -231,8 +249,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-07T10:37:52Z",
-      nextRunAt: "2026-04-07T15:00:45.000Z",
+      lastRunAt: "2026-04-07T15:02:11Z",
+      nextRunAt: "2026-04-07T19:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
@@ -282,7 +300,7 @@ const HIAGENT_DATA = {
         purpose: "Business case analytics — revenue projections, KPI tracking, competitive benchmarks, and strategic phase milestones for Loyverse.",
         stack: "Panel within the Command Centre, powered by case-data.js which contains the financial model, market data, and competitive intelligence.",
         panels: "Revenue model, payment penetration, ARPC analysis, cohort economics, competitive matrix, unit economics",
-        updatedBy: "Manual updates via case-data.js; appstore-data-pull (app ratings data)"
+        updatedBy: "Manual updates via case-data.js; appstore-data-pull (app ratings data); case-snowflake-pull (daily metrics)"
       }
     }
   ],
