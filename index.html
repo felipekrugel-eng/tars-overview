@@ -5639,7 +5639,7 @@ function applyFilters() {
   if (el) el.textContent = "€" + D.arpc.value;
 
   el = document.getElementById("m-active-users");
-  if (el) el.textContent = Math.round(w(350000) / 1000) + "K";
+  if (el) el.textContent = D.activeUsers.value.toLocaleString();
 
   el = document.getElementById("m-total-gtv");
   if (el) el.textContent = "€" + w(D.totalGTV.value, 1) + "B";
@@ -5929,7 +5929,7 @@ function renderCase() {
   setCell("payment-revenue", D.paymentRevenue);
   setCell("arpc",            D.arpc);
   setCell("active-users",    { ...D.activeUsers, value: (D.activeUsers.value/1000).toFixed(0)+"K" });
-  document.getElementById("m-active-users").textContent = "350K";
+  document.getElementById("m-active-users").textContent = D.activeUsers.value.toLocaleString();
   setCell("total-gtv",       D.totalGTV);
   setCell("attach-rate",     D.attachRate);
 
@@ -5954,7 +5954,7 @@ function renderCase() {
   setProg("total-revenue",   (7.6 / 9.7) * 100);
   setProg("payment-revenue", (0.2 / 0.1) * 100);
   setProg("arpc",            (17 / 20) * 100);
-  setProg("active-users",    (350000 / 400000) * 100);
+  setProg("active-users",    (D.activeUsers.value / 400000) * 100);
   setProg("total-gtv",       (26.9 / 30.9) * 100);
   setProg("attach-rate",     (3 / 8) * 100);
   setProg("gtv-processed",   (0.54 / 5) * 100);
@@ -5986,6 +5986,7 @@ function renderCase() {
   document.getElementById("unit-ltvcac").textContent = UE.ltvCacRatio.value;
   document.getElementById("unit-ltvcac-note").textContent = UE.ltvCacRatio.note;
 
+  try {
   // Cohort NPV trend chart
   const vintages = UE.cohortVintages;
   __chartCohortNpvTrend = new Chart(document.getElementById("chartCohortNpvTrend"), {
@@ -6130,6 +6131,8 @@ function renderCase() {
   document.getElementById("churn-annual-note").textContent  = CH.annual.note;
   document.getElementById("churn-nrr").textContent       = CH.nrr.value;
   document.getElementById("churn-nrr-note").textContent  = CH.nrr.note;
+
+  } catch(chartErr) { console.warn("Chart render error:", chartErr); }
 
   // ── App Store Sentiment ──────────────────────────────────────────────────
   function renderStore(prefix, store) {
