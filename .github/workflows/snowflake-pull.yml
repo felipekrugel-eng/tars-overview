@@ -27,7 +27,7 @@ jobs:
         run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
 
       - name: Run Snowflake pull
-        run: node snowflake-pull.js
+        run: node snowflake-discover.js
 
       - name: Check for changes
         id: changes
