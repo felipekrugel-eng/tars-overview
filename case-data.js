@@ -310,9 +310,9 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "activeUsers": {
-    "value": 227241,
+    "value": 349123,
     "unit": "",
-    "delta": "+-18%",
+    "delta": "+26%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -511,7 +511,7 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-07T19:08:30.003Z",
+    "runDate": "2026-04-07T19:15:05.779Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
