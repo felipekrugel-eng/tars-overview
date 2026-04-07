@@ -48,7 +48,7 @@ const CASE_DATA = {
       "actual": [
         0.008,
         0.009,
-        0.02,
+        null,
         null,
         null,
         null,
@@ -78,7 +78,7 @@ const CASE_DATA = {
       "actual": [
         0,
         0,
-        0,
+        null,
         null,
         null,
         null,
@@ -108,7 +108,7 @@ const CASE_DATA = {
       "actual": [
         0,
         0,
-        0,
+        null,
         null,
         null,
         null,
@@ -138,7 +138,7 @@ const CASE_DATA = {
       "actual": [
         343290,
         349123,
-        227241,
+        null,
         null,
         null,
         null,
@@ -168,7 +168,7 @@ const CASE_DATA = {
       "actual": [
         0,
         0,
-        0,
+        null,
         null,
         null,
         null,
@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922103,
+      "value": 13922110,
       "label": "Registered merchants"
     },
     "active": {
@@ -450,7 +450,7 @@ const CASE_DATA = {
       "country": "mx",
       "flag": "",
       "gtv": 0,
-      "merchants": 1135968,
+      "merchants": 1135970,
       "avgGTV": 0
     },
     {
@@ -492,7 +492,7 @@ const CASE_DATA = {
       "country": "es",
       "flag": "",
       "gtv": 0,
-      "merchants": 308410,
+      "merchants": 308411,
       "avgGTV": 0
     }
   ],
@@ -511,38 +511,54 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-07T18:28:09.382Z",
+    "runDate": "2026-04-07T19:08:30.003Z",
     "monthlyRowCounts": [
       {
+        "source": "active_users",
         "month": "2025-10",
         "rows": 327126,
         "uniqueMerchants": 327126
       },
       {
+        "source": "active_users",
         "month": "2025-11",
         "rows": 330456,
         "uniqueMerchants": 330456
       },
       {
+        "source": "active_users",
         "month": "2025-12",
         "rows": 331800,
         "uniqueMerchants": 331800
       },
       {
+        "source": "active_users",
         "month": "2026-01",
         "rows": 343290,
         "uniqueMerchants": 343290
       },
       {
+        "source": "active_users",
         "month": "2026-02",
         "rows": 349123,
         "uniqueMerchants": 349123
       },
       {
+        "source": "active_users",
         "month": "2026-03",
         "rows": 227241,
         "uniqueMerchants": 227241
       }
+    ],
+    "revenueDiag": {
+      "totalRows": 999331,
+      "currentYearRows": 68712,
+      "currentYearAmount": 3077699,
+      "minDate": "2018-04-06 05:50:52.000",
+      "maxDate": "2026-04-07 10:18:44.000"
+    },
+    "incompleteMonthsNulled": [
+      "Mar"
     ]
   },
   "appStores": {
@@ -1054,8 +1070,8 @@ const CASE_DATA = {
     "jp": 0.69,
     "ng": 0.68,
     "ru": 0.68,
-    "do": 0.64,
     "au": 0.64,
+    "do": 0.64,
     "kh": 0.58,
     "dz": 0.55
   },
