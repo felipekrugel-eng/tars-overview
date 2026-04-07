@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922092,
+      "value": 13922101,
       "label": "Registered merchants"
     },
     "active": {
@@ -429,7 +429,7 @@ const CASE_DATA = {
       "country": "ph",
       "flag": "",
       "gtv": 0,
-      "merchants": 1762223,
+      "merchants": 1762224,
       "avgGTV": 0
     },
     {
@@ -1017,8 +1017,8 @@ const CASE_DATA = {
     "bd": 0.74,
     "pk": 0.71,
     "jp": 0.69,
-    "ng": 0.68,
     "ru": 0.68,
+    "ng": 0.68,
     "au": 0.64,
     "do": 0.64,
     "kh": 0.58,
