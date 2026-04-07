@@ -1,0 +1,54 @@
+name: "CASE: Daily Snowflake Pull"
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  pull-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install snowflake-sdk
+
+      - name: Write Snowflake private key
+        run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
+
+      - name: Run Snowflake pull
+        run: node snowflake-pull.js
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet case-data.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to case-data.js — skipping commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "case-data.js has been updated."
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "CASE Bot"
+          git config user.email "case-bot@loyverse.com"
+          git add case-data.js
+          git commit -m "CASE: daily Snowflake pull $(date +%Y-%m-%d)"
+          git push origin master
+
+      - name: Clean up key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
