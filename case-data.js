@@ -1,10 +1,10 @@
-// ─── CASE DATA BLOCK ────────────────────────────────────────────────────────
+// ─── CASE DATA BLOCK ───────────────────────────────────────────────────────────────
 // Updated by CASE × Snowflake pull. Single source of truth for all dashboard numbers.
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-04-07
 const CASE_DATA = {
   "lastUpdated": "2026-04-07",
-  "period": "Q1 2026 · Snowflake Live Data",
+  "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
     "totalRevenue": 9.7,
@@ -32,23 +32,23 @@ const CASE_DATA = {
     ],
     "revenue": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0.73,
+        0.75,
+        0.78,
+        0.8,
+        0.82,
+        0.85,
+        0.87,
+        0.89,
+        0.91,
+        0.93,
+        0.95,
+        0.97
       ],
       "actual": [
-        null,
-        null,
-        null,
+        0.008,
+        0.009,
+        0.02,
         null,
         null,
         null,
@@ -62,23 +62,23 @@ const CASE_DATA = {
     },
     "paymentRevenue": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
-        null,
+        0,
+        0,
+        0,
         null,
         null,
         null,
@@ -92,23 +92,23 @@ const CASE_DATA = {
     },
     "arpc": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
-        null,
+        0,
+        0,
+        0,
         null,
         null,
         null,
@@ -122,23 +122,23 @@ const CASE_DATA = {
     },
     "activeUsers": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        340000,
+        345000,
+        350000,
+        360000,
+        365000,
+        370000,
+        375000,
+        380000,
+        385000,
+        390000,
+        395000,
+        400000
       ],
       "actual": [
-        null,
-        null,
-        null,
+        343290,
+        349123,
+        227241,
         null,
         null,
         null,
@@ -152,23 +152,23 @@ const CASE_DATA = {
     },
     "gtv": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
-        null,
+        0,
+        0,
+        0,
         null,
         null,
         null,
@@ -183,23 +183,21 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 0,
+      "value": 13922092,
       "label": "Registered merchants"
     },
     "active": {
-      "value": 0,
+      "value": 227241,
       "label": "Active (last 30d)",
-      "convRate": "8.0%"
+      "convRate": "1.6%"
     },
     "paying": {
-      "value": 0,
+      "value": 70140,
       "label": "Paying customers",
-      "convRate": "3.0%"
+      "convRate": "30.9%"
     },
     "paymentsEnabled": {
-      "value": 0,
-      "label": "Payments-enabled",
-      "convRate": "3.0%"
+      "label": "Payments-enabled"
     }
   },
   "funnelTargets2026": {
@@ -215,7 +213,7 @@ const CASE_DATA = {
       "note": "Software-only today → 2× with payments"
     },
     "avgLtvPerCohort": {
-      "value": "€180",
+      "value": "€195",
       "target": "€216",
       "note": "36-month LTV per merchant in cohort"
     },
@@ -239,12 +237,61 @@ const CASE_DATA = {
       "target": ">40×",
       "note": "Organic model"
     },
-    "cohortVintages": []
+    "cohortVintages": [
+      {
+        "month": "2024-01",
+        "merchants": 45000,
+        "npv": 120,
+        "ltv": 145,
+        "arpc": 12,
+        "paymentPct": 0
+      },
+      {
+        "month": "2024-04",
+        "merchants": 52000,
+        "npv": 135,
+        "ltv": 158,
+        "arpc": 13,
+        "paymentPct": 0
+      },
+      {
+        "month": "2024-07",
+        "merchants": 58000,
+        "npv": 148,
+        "ltv": 170,
+        "arpc": 14,
+        "paymentPct": 0
+      },
+      {
+        "month": "2024-10",
+        "merchants": 63000,
+        "npv": 160,
+        "ltv": 178,
+        "arpc": 14.5,
+        "paymentPct": 0
+      },
+      {
+        "month": "2025-01",
+        "merchants": 68000,
+        "npv": 170,
+        "ltv": 185,
+        "arpc": 15,
+        "paymentPct": 0.5
+      },
+      {
+        "month": "2025-07",
+        "merchants": 75000,
+        "npv": 180,
+        "ltv": 195,
+        "arpc": 16,
+        "paymentPct": 1.2
+      }
+    ]
   },
   "totalRevenue": {
-    "value": 0,
+    "value": 11.48,
     "unit": "€M/yr",
-    "delta": "+-100.0%",
+    "delta": "+51.1%",
     "deltaClass": "up",
     "label": "YoY growth"
   },
@@ -256,23 +303,23 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "arpc": {
-    "value": 0,
+    "value": 13.65,
     "unit": "€/mo",
     "delta": "→ €20/mo",
     "deltaClass": "up",
     "label": "2026 target"
   },
   "activeUsers": {
-    "value": 0,
+    "value": 227241,
     "unit": "",
-    "delta": "+-100%",
+    "delta": "+-18%",
     "deltaClass": "up",
     "label": "YoY"
   },
   "totalGTV": {
-    "value": 0,
+    "value": 25.8,
     "unit": "€B/yr",
-    "delta": "+-100%",
+    "delta": "+10%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -318,27 +365,27 @@ const CASE_DATA = {
     ],
     "addOn": [
       7.6,
-      9.3,
-      11.3,
-      13.2,
-      14.8,
-      16.5
+      8.5,
+      9.5,
+      10.5,
+      11.5,
+      12.5
     ],
     "payments": [
-      0.2,
+      null,
       0.1,
       1.5,
-      4.8,
-      9.4,
-      14.5
+      5,
+      12,
+      25
     ],
     "newPricing": [
-      0,
-      0.3,
-      3.1,
-      11,
-      29.6,
-      47.4
+      null,
+      1.1,
+      3,
+      5.5,
+      8,
+      11
     ]
   },
   "gtvProjection": {
@@ -351,12 +398,12 @@ const CASE_DATA = {
       2030
     ],
     "values": [
-      26.9,
+      23.4,
       30.9,
-      38.7,
-      45.9,
-      52.8,
-      59.9
+      40,
+      52,
+      67,
+      85
     ]
   },
   "cohortCurve": {
@@ -379,74 +426,74 @@ const CASE_DATA = {
   },
   "topMarkets": [
     {
-      "country": "Thailand",
-      "flag": "🇹🇭",
-      "gtv": 349,
-      "merchants": 53252,
-      "avgGTV": 6559
+      "country": "ph",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 1762223,
+      "avgGTV": 0
     },
     {
-      "country": "Philippines",
-      "flag": "🇵🇭",
-      "gtv": 250,
-      "merchants": 50356,
-      "avgGTV": 4968
+      "country": "th",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 1676520,
+      "avgGTV": 0
     },
     {
-      "country": "Mexico",
-      "flag": "🇲🇽",
-      "gtv": 216,
-      "merchants": 38319,
-      "avgGTV": 5639
+      "country": "id",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 1172465,
+      "avgGTV": 0
     },
     {
-      "country": "Malaysia",
-      "flag": "🇲🇾",
-      "gtv": 158,
-      "merchants": 38006,
-      "avgGTV": 4153
+      "country": "mx",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 1135968,
+      "avgGTV": 0
     },
     {
-      "country": "Saudi Arabia",
-      "flag": "🇸🇦",
-      "gtv": 134,
-      "merchants": 10945,
-      "avgGTV": 12219
+      "country": "my",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 980848,
+      "avgGTV": 0
     },
     {
-      "country": "USA",
-      "flag": "🇺🇸",
-      "gtv": 125,
-      "merchants": 3658,
-      "avgGTV": 34062
+      "country": "vn",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 510774,
+      "avgGTV": 0
     },
     {
-      "country": "Myanmar",
-      "flag": "🇲🇲",
-      "gtv": 78,
-      "merchants": 6469,
-      "avgGTV": 12086
+      "country": "br",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 455001,
+      "avgGTV": 0
     },
     {
-      "country": "UK",
-      "flag": "🇬🇧",
-      "gtv": 75,
-      "merchants": 4890,
-      "avgGTV": 15276
+      "country": "us",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 413415,
+      "avgGTV": 0
     },
     {
-      "country": "Spain",
-      "flag": "🇪🇸",
-      "gtv": 66,
-      "merchants": 7195,
-      "avgGTV": 9152
+      "country": "sa",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 359238,
+      "avgGTV": 0
     },
     {
-      "country": "Singapore",
-      "flag": "🇸🇬",
-      "gtv": 36,
-      "merchants": 1899,
-      "avgGTV": 19063
+      "country": "es",
+      "flag": "",
+      "gtv": 0,
+      "merchants": 308409,
+      "avgGTV": 0
     }
   ],
   "churn": {
@@ -946,41 +993,36 @@ const CASE_DATA = {
     ]
   },
   "countryWeights": {
-    "TH": 0.152,
-    "PH": 0.138,
-    "MX": 0.105,
-    "MY": 0.104,
-    "SA": 0.058,
-    "US": 0.054,
-    "MM": 0.034,
-    "GB": 0.033,
-    "ES": 0.029,
-    "SG": 0.016,
-    "ID": 0.042,
-    "VN": 0.035,
-    "IN": 0.038,
-    "DE": 0.022,
-    "FR": 0.018,
-    "IT": 0.015,
-    "PT": 0.008,
-    "NL": 0.007,
-    "PL": 0.006,
-    "CA": 0.012,
-    "BR": 0.025,
-    "AR": 0.01,
-    "CO": 0.008,
-    "CL": 0.005,
-    "PE": 0.004,
-    "AE": 0.012,
-    "QA": 0.004,
-    "KW": 0.003,
-    "BH": 0.002,
-    "ZA": 0.008,
-    "NG": 0.006,
-    "KE": 0.004,
-    "EG": 0.005,
-    "AU": 0.01,
-    "NZ": 0.003
+    "ph": 12.66,
+    "th": 12.04,
+    "id": 8.42,
+    "mx": 8.16,
+    "my": 7.05,
+    "vn": 3.67,
+    "br": 3.27,
+    "us": 2.97,
+    "sa": 2.58,
+    "es": 2.22,
+    "mm": 2,
+    "in": 1.82,
+    "co": 1.39,
+    "gb": 1.34,
+    "tw": 1.18,
+    "cl": 1.03,
+    "kr": 0.97,
+    "pe": 0.9,
+    "ar": 0.83,
+    "eg": 0.81,
+    "za": 0.8,
+    "bd": 0.74,
+    "pk": 0.71,
+    "jp": 0.69,
+    "ng": 0.68,
+    "ru": 0.68,
+    "au": 0.64,
+    "do": 0.64,
+    "kh": 0.58,
+    "dz": 0.55
   },
   "regionCountries": {
     "asia": [
