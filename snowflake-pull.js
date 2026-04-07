@@ -181,6 +181,17 @@ const QUERIES = {
     FROM VALUES (2025,23.4),(2026,30.9),(2027,40.0),(2028,52.0),(2029,67.0),(2030,85.0)
     ORDER BY year
   `
+,
+  diagnostics: `
+    SELECT 'row_counts' AS check_type, MONTH, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS unique_merchants
+    FROM SALES_PER_ACCOUNT_MONTHLY
+    WHERE MONTH >= '2025-10'
+    GROUP BY MONTH
+    UNION ALL
+    SELECT 'table_info', TO_VARCHAR(COUNT(*)), TO_VARCHAR(MIN(MONTH)), TO_VARCHAR(MAX(MONTH))
+    FROM SALES_PER_ACCOUNT_MONTHLY
+    ORDER BY 1, 2
+  `
 };
 
 // ââ Strategic defaults âââââââââââââââââââââââââââââââââââââââââââââââââââââ
@@ -278,6 +289,29 @@ function buildCaseData(results) {
   const revenueProjection = { years: revProj.map(r=>r.YEAR||r.year), addOn: revProj.map(r=>r.ADDON_REVENUE||r.addon_revenue), payments: revProj.map(r=>r.PAYMENT_REVENUE||r.payment_revenue), newPricing: revProj.map(r=>r.NEW_PRICING_REVENUE||r.new_pricing_revenue) };
   const gtvProjection = { years: gtvProj.map(r=>r.YEAR||r.year), values: gtvProj.map(r=>r.GTV_BILLIONS||r.gtv_billions) };
 
+  // Diagnostic: row counts per month
+  const diagRows = results.diagnostics || [];
+  const diagnosticData = {
+    runDate: new Date().toISOString(),
+    monthlyRowCounts: diagRows
+      .filter(r => (r.CHECK_TYPE||r.check_type) === 'row_counts')
+      .map(r => ({
+        month: r.MONTH||r.month,
+        rows: r.ROW_COUNT||r.row_count,
+        uniqueMerchants: r.UNIQUE_MERCHANTS||r.unique_merchants
+      })),
+    tableInfo: diagRows
+      .filter(r => (r.CHECK_TYPE||r.check_type) === 'table_info')
+      .map(r => ({
+        totalRows: r.MONTH||r.month,
+        minMonth: r.ROW_COUNT||r.row_count,
+        maxMonth: r.UNIQUE_MERCHANTS||r.unique_merchants
+      }))[0] || {}
+  };
+  console.log('\n-- Diagnostics --');
+  console.log(JSON.stringify(diagnosticData, null, 2));
+
+
   const totalRev = kpi.TOTAL_REVENUE||kpi.total_revenue||0;
   const payRev = kpi.PAYMENT_REVENUE||kpi.payment_revenue||0;
   const arpcVal = kpi.ARPC||kpi.arpc||0;
@@ -347,6 +381,7 @@ function buildCaseData(results) {
       annual: { value: `${annualChurn}%`, note: "Implied from monthly rate \u00b7 target <15% by 2028" },
       nrr: { value: `${nrrVal}%`, note: "Target: >110% by end of 2026" }
     },
+    diagnostics: diagnosticData,
     appStores: existing.appStores||{}, ratingTrend: existing.ratingTrend||{},
     reviewThemes: existing.reviewThemes||[], downloads: existing.downloads||{},
     reviews: existing.reviews||{},
