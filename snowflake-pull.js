@@ -88,12 +88,12 @@ const QUERIES = {
 
   monthly: `
     WITH monthly_inv AS (
-      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) / 100.0 / 1000000.0 AS rev
+      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) / 1000000.0 AS rev
       FROM "CHARGEBEE-EU-INVOICE"
       WHERE STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND DELETED = FALSE
       GROUP BY 1
       UNION ALL
-      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) * 1.16 / 100.0 / 1000000.0 AS rev
+      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) * 1.16 / 1000000.0 AS rev
       FROM "CHARGEBEE-UK-INVOICE"
       WHERE STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND DELETED = FALSE
       GROUP BY 1
@@ -198,6 +198,15 @@ const QUERIES = {
       MAX(TO_TIMESTAMP(DATE)) AS max_date
     FROM "CHARGEBEE-EU-INVOICE"
     WHERE STATUS IN ('paid','payment_due') AND DELETED = FALSE
+  `,
+  revenueSample: `
+    SELECT AMOUNT_DUE, AMOUNT_PAID, TOTAL, CURRENCY_CODE, STATUS,
+           TO_TIMESTAMP(DATE) AS invoice_date
+    FROM "CHARGEBEE-EU-INVOICE"
+    WHERE STATUS IN ('paid','payment_due') AND DELETED = FALSE
+      AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE())
+    ORDER BY TO_TIMESTAMP(DATE) DESC
+    LIMIT 5
   `
 };
 
@@ -317,6 +326,7 @@ function buildCaseData(results) {
   // Diagnostic: row counts per month + revenue check
   const diagRows = results.diagnostics || [];
   const revDiagRows = results.revenueDiag || [];
+  const revSampleRows = results.revenueSample || [];
   const diagnosticData = {
     runDate: new Date().toISOString(),
     monthlyRowCounts: diagRows.map(r => ({
@@ -332,6 +342,7 @@ function buildCaseData(results) {
       minDate: revDiagRows[0].MIN_DATE||revDiagRows[0].min_date,
       maxDate: revDiagRows[0].MAX_DATE||revDiagRows[0].max_date
     } : {},
+    revenueSample: revSampleRows.map(r => ({amount_due: r.AMOUNT_DUE||r.amount_due, amount_paid: r.AMOUNT_PAID||r.amount_paid, total: r.TOTAL||r.total, currency: r.CURRENCY_CODE||r.currency_code, date: r.INVOICE_DATE||r.invoice_date})),
     incompleteMonthsNulled: monthlyData.activeUsers.actual.map((v, i) => v === null && i < currentMonth ? months[i] : null).filter(Boolean)
   };
   console.log('\n-- Diagnostics --');
