@@ -183,14 +183,11 @@ const QUERIES = {
   `
 ,
   diagnostics: `
-    SELECT 'row_counts' AS check_type, MONTH, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS unique_merchants
+    SELECT MONTH, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS unique_merchants
     FROM SALES_PER_ACCOUNT_MONTHLY
     WHERE MONTH >= '2025-10'
     GROUP BY MONTH
-    UNION ALL
-    SELECT 'table_info', TO_VARCHAR(COUNT(*)), TO_VARCHAR(MIN(MONTH)), TO_VARCHAR(MAX(MONTH))
-    FROM SALES_PER_ACCOUNT_MONTHLY
-    ORDER BY 1, 2
+    ORDER BY MONTH
   `
 };
 
@@ -293,20 +290,11 @@ function buildCaseData(results) {
   const diagRows = results.diagnostics || [];
   const diagnosticData = {
     runDate: new Date().toISOString(),
-    monthlyRowCounts: diagRows
-      .filter(r => (r.CHECK_TYPE||r.check_type) === 'row_counts')
-      .map(r => ({
+    monthlyRowCounts: diagRows.map(r => ({
         month: r.MONTH||r.month,
         rows: r.ROW_COUNT||r.row_count,
         uniqueMerchants: r.UNIQUE_MERCHANTS||r.unique_merchants
-      })),
-    tableInfo: diagRows
-      .filter(r => (r.CHECK_TYPE||r.check_type) === 'table_info')
-      .map(r => ({
-        totalRows: r.MONTH||r.month,
-        minMonth: r.ROW_COUNT||r.row_count,
-        maxMonth: r.UNIQUE_MERCHANTS||r.unique_merchants
-      }))[0] || {}
+      }))
   };
   console.log('\n-- Diagnostics --');
   console.log(JSON.stringify(diagnosticData, null, 2));
