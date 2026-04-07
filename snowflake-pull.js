@@ -183,11 +183,21 @@ const QUERIES = {
   `
 ,
   diagnostics: `
-    SELECT MONTH, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS unique_merchants
+    SELECT 'active_users' AS source, MONTH AS period, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS metric_value
     FROM SALES_PER_ACCOUNT_MONTHLY
     WHERE MONTH >= '2025-10'
     GROUP BY MONTH
     ORDER BY MONTH
+  `,
+  revenueDiag: `
+    SELECT 'eu_invoices' AS source,
+      COUNT(*) AS total_rows,
+      COUNT(CASE WHEN YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) THEN 1 END) AS current_year_rows,
+      SUM(CASE WHEN YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) THEN AMOUNT_DUE ELSE 0 END) AS current_year_amount,
+      MIN(TO_TIMESTAMP(DATE)) AS min_date,
+      MAX(TO_TIMESTAMP(DATE)) AS max_date
+    FROM "CHARGEBEE-EU-INVOICE"
+    WHERE STATUS IN ('paid','payment_due') AND DELETED = FALSE
   `
 };
 
@@ -258,6 +268,24 @@ function buildCaseData(results) {
     monthlyData.gtv.actual[i] = null;
   }
 
+  // Detect incomplete monthly data: if a month's active users drops >25% from prior, mark as incomplete
+  const auActuals = monthlyData.activeUsers.actual;
+  for (let i = 1; i < currentMonth; i++) {
+    if (auActuals[i] !== null && auActuals[i-1] !== null && auActuals[i-1] > 0) {
+      const dropPct = (auActuals[i-1] - auActuals[i]) / auActuals[i-1];
+      if (dropPct > 0.25) {
+        console.warn(`Month ${i+1} active users (${auActuals[i]}) dropped ${(dropPct*100).toFixed(0)}% from prior (${auActuals[i-1]}) - marking as potentially incomplete`);
+        // Null out the incomplete month's data across all series
+        monthlyData.activeUsers.actual[i] = null;
+        monthlyData.revenue.actual[i] = null;
+        monthlyData.gtv.actual[i] = null;
+        monthlyData.arpc.actual[i] = null;
+        monthlyData.paymentRevenue.actual[i] = null;
+      }
+    }
+  }
+
+
   const cohortVintages = cohorts.length > 0
     ? cohorts.map(r => ({ month: r.COHORT_MONTH||r.cohort_month, merchants: r.MERCHANTS||r.merchants, npv: r.NPV||r.npv, ltv: r.LTV||r.ltv, arpc: r.ARPC||r.arpc, paymentPct: r.PAYMENT_PCT||r.payment_pct }))
     : STRATEGIC_DEFAULTS.cohortVintages;
@@ -286,15 +314,25 @@ function buildCaseData(results) {
   const revenueProjection = { years: revProj.map(r=>r.YEAR||r.year), addOn: revProj.map(r=>r.ADDON_REVENUE||r.addon_revenue), payments: revProj.map(r=>r.PAYMENT_REVENUE||r.payment_revenue), newPricing: revProj.map(r=>r.NEW_PRICING_REVENUE||r.new_pricing_revenue) };
   const gtvProjection = { years: gtvProj.map(r=>r.YEAR||r.year), values: gtvProj.map(r=>r.GTV_BILLIONS||r.gtv_billions) };
 
-  // Diagnostic: row counts per month
+  // Diagnostic: row counts per month + revenue check
   const diagRows = results.diagnostics || [];
+  const revDiagRows = results.revenueDiag || [];
   const diagnosticData = {
     runDate: new Date().toISOString(),
     monthlyRowCounts: diagRows.map(r => ({
-        month: r.MONTH||r.month,
+        source: r.SOURCE||r.source,
+        month: r.PERIOD||r.period,
         rows: r.ROW_COUNT||r.row_count,
-        uniqueMerchants: r.UNIQUE_MERCHANTS||r.unique_merchants
-      }))
+        uniqueMerchants: r.METRIC_VALUE||r.metric_value
+      })),
+    revenueDiag: revDiagRows.length > 0 ? {
+      totalRows: revDiagRows[0].TOTAL_ROWS||revDiagRows[0].total_rows,
+      currentYearRows: revDiagRows[0].CURRENT_YEAR_ROWS||revDiagRows[0].current_year_rows,
+      currentYearAmount: revDiagRows[0].CURRENT_YEAR_AMOUNT||revDiagRows[0].current_year_amount,
+      minDate: revDiagRows[0].MIN_DATE||revDiagRows[0].min_date,
+      maxDate: revDiagRows[0].MAX_DATE||revDiagRows[0].max_date
+    } : {},
+    incompleteMonthsNulled: monthlyData.activeUsers.actual.map((v, i) => v === null && i < currentMonth ? months[i] : null).filter(Boolean)
   };
   console.log('\n-- Diagnostics --');
   console.log(JSON.stringify(diagnosticData, null, 2));
@@ -303,7 +341,16 @@ function buildCaseData(results) {
   const totalRev = kpi.TOTAL_REVENUE||kpi.total_revenue||0;
   const payRev = kpi.PAYMENT_REVENUE||kpi.payment_revenue||0;
   const arpcVal = kpi.ARPC||kpi.arpc||0;
-  const activeVal = kpi.ACTIVE_USERS||kpi.active_users||0;
+  let activeVal = kpi.ACTIVE_USERS||kpi.active_users||0;
+  // If activeVal looks incomplete (>25% drop from latest complete month), use latest complete month
+  const completedMonthlyAU = monthlyData.activeUsers.actual.filter(v => v !== null);
+  if (completedMonthlyAU.length >= 2) {
+    const latest = completedMonthlyAU[completedMonthlyAU.length - 1];
+    const prior = completedMonthlyAU[completedMonthlyAU.length - 2];
+    if (prior > 0 && (prior - latest) / prior > 0.25) {
+      activeVal = prior; // Use last complete month
+    }
+  }
   const gtvVal = kpi.TOTAL_GTV||kpi.total_gtv||0;
   const attachVal = kpi.ATTACH_RATE||kpi.attach_rate||0;
   const gtvProcessedVal = kpi.GTV_PROCESSED||kpi.gtv_processed||0;
