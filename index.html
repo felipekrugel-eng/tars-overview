@@ -4085,7 +4085,7 @@
     <div class="case-hero-metas">
       <div class="case-hero-meta"><strong id="hero-period">—</strong>Reporting period</div>
       <div class="case-hero-meta"><strong>5YP v4</strong>Model reference</div>
-      <div class="case-hero-meta"><strong>PROJECTED</strong>Data status</div>
+      <div class="case-hero-meta"><strong>ACTUAL</strong>Data status</div>
     </div>
   </div>
 
@@ -4093,7 +4093,7 @@
   <div class="market-filter-bar" id="caseFilterBar">
     <div class="data-note" style="width:100%;margin-bottom:8px;">
       <span class="data-note-icon">📊</span>
-      <div><strong>5-Year Plan projections (v4, March 2026). </strong>Numbers are model-based. Snowflake actuals pipeline in progress — once live, this dashboard switches to real data with actuals vs. projected comparisons. <span id="case-data-note-period"></span></div>
+      <div><strong>Snowflake Live Data (updated daily). </strong>Numbers pulled from Snowflake daily. Actuals vs. targets tracked in real time. <span id="case-data-note-period"></span></div>
     </div>
       <!-- Row 1: Date range -->
       <div class="filter-row">
@@ -6043,13 +6043,13 @@ function renderCase() {
       { key: "registered", label: F.registered.label, current: F.registered.value, target: T.registered, convRate: null },
       { key: "active", label: F.active.label, current: F.active.value, target: T.active, convRate: F.active.convRate },
       { key: "paying", label: F.paying.label, current: F.paying.value, target: T.paying, convRate: F.paying.convRate },
-      { key: "paymentsEnabled", label: F.paymentsEnabled.label, current: F.paymentsEnabled.value, target: T.paymentsEnabled, convRate: F.paymentsEnabled.convRate }
+      { key: "paymentsEnabled", label: F.paymentsEnabled.label, current: F.paymentsEnabled.value || 0, target: T.paymentsEnabled || 0, convRate: F.paymentsEnabled.convRate }
     ];
 
     stages.forEach((s, i) => {
-      const pct = (s.current / s.target) * 100;
+      const pct = s.target ? (s.current / s.target) * 100 : 0;
       const prevVal = i === 0 ? s.current : stages[i-1].current;
-      const funnelPct = (s.current / prevVal) * 100;
+      const funnelPct = prevVal ? (s.current / prevVal) * 100 : 0;
 
       const stage = document.createElement("div");
       stage.style.cssText = "margin:16px 0; padding:12px; border:1px solid #E0E0E0; border-radius:4px; background:#FAFAFA;";
@@ -6057,7 +6057,7 @@ function renderCase() {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <div style="font-weight:600; font-size:14px;">${s.label}</div>
           <div style="text-align:right; font-size:12px; color:#666;">
-            <div><strong>${s.current.toLocaleString()}</strong> / ${s.target.toLocaleString()} (${pct.toFixed(0)}%)</div>
+            <div><strong>${(s.current||0).toLocaleString()}</strong> / ${(s.target||0).toLocaleString()} (${pct.toFixed(0)}%)</div>
             ${s.convRate ? `<div>Conv: ${s.convRate}</div>` : ''}
           </div>
         </div>
