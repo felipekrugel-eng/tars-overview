@@ -46,8 +46,8 @@ const CASE_DATA = {
         0.97
       ],
       "actual": [
-        0.008,
-        0.009,
+        0.798,
+        0.904,
         null,
         null,
         null,
@@ -511,7 +511,7 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-07T19:15:05.779Z",
+    "runDate": "2026-04-07T19:21:33.640Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -557,6 +557,37 @@ const CASE_DATA = {
       "minDate": "2018-04-06 05:50:52.000",
       "maxDate": "2026-04-07 10:18:44.000"
     },
+    "revenueSample": [
+      {
+        "amount_paid": 10000,
+        "total": 10000,
+        "currency": "USD",
+        "date": "2026-04-07 10:18:44.000"
+      },
+      {
+        "total": 500,
+        "currency": "USD",
+        "date": "2026-04-07 10:13:17.000"
+      },
+      {
+        "amount_paid": 2000,
+        "total": 2000,
+        "currency": "EUR",
+        "date": "2026-04-07 10:08:51.000"
+      },
+      {
+        "amount_paid": 6050,
+        "total": 6050,
+        "currency": "EUR",
+        "date": "2026-04-07 10:08:16.000"
+      },
+      {
+        "amount_paid": 2800,
+        "total": 2800,
+        "currency": "USD",
+        "date": "2026-04-07 10:03:06.000"
+      }
+    ],
     "incompleteMonthsNulled": [
       "Mar"
     ]
