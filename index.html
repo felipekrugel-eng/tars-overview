@@ -6027,6 +6027,8 @@ function renderCase() {
     }
   });
 
+  } catch(e) { console.warn("NPV chart error:", e); }
+
   // Render conversion funnel
   function renderFunnel() {
     const F = D.funnel;
@@ -6070,6 +6072,7 @@ function renderCase() {
   }
   renderFunnel();
 
+  try {
   // ── Chart: Revenue YTD (Monthly) ──────────────────────────────────────────
   const revYTDCtx = document.getElementById("chartRevenueYTD");
   if (revYTDCtx) {
@@ -6097,6 +6100,9 @@ function renderCase() {
     });
   }
 
+  } catch(e) { console.warn("Revenue YTD chart error:", e); }
+
+  try {
   // ── Chart: GTV YTD (Monthly) ────────────────────────────────────────────
   const gtvYTDCtx = document.getElementById("chartGTVYTD");
   if (gtvYTDCtx) {
@@ -6123,6 +6129,8 @@ function renderCase() {
   }
 
 
+  } catch(e) { console.warn("GTV YTD chart error:", e); }
+
   // ── Churn & NRR ──────────────────────────────────────────────────────────
   const CH = D.churn;
   document.getElementById("churn-monthly").textContent   = CH.monthly.value;
@@ -6132,7 +6140,7 @@ function renderCase() {
   document.getElementById("churn-nrr").textContent       = CH.nrr.value;
   document.getElementById("churn-nrr-note").textContent  = CH.nrr.note;
 
-  } catch(chartErr) { console.warn("Chart render error:", chartErr); }
+
 
   // ── App Store Sentiment ──────────────────────────────────────────────────
   function renderStore(prefix, store) {
