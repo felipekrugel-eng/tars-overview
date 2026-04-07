@@ -511,9 +511,39 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-07T18:24:50.444Z",
-    "monthlyRowCounts": [],
-    "tableInfo": {}
+    "runDate": "2026-04-07T18:28:09.382Z",
+    "monthlyRowCounts": [
+      {
+        "month": "2025-10",
+        "rows": 327126,
+        "uniqueMerchants": 327126
+      },
+      {
+        "month": "2025-11",
+        "rows": 330456,
+        "uniqueMerchants": 330456
+      },
+      {
+        "month": "2025-12",
+        "rows": 331800,
+        "uniqueMerchants": 331800
+      },
+      {
+        "month": "2026-01",
+        "rows": 343290,
+        "uniqueMerchants": 343290
+      },
+      {
+        "month": "2026-02",
+        "rows": 349123,
+        "uniqueMerchants": 349123
+      },
+      {
+        "month": "2026-03",
+        "rows": 227241,
+        "uniqueMerchants": 227241
+      }
+    ]
   },
   "appStores": {
     "googlePlay": {
