@@ -342,13 +342,13 @@ function buildCaseData(results) {
   const payRev = kpi.PAYMENT_REVENUE||kpi.payment_revenue||0;
   const arpcVal = kpi.ARPC||kpi.arpc||0;
   let activeVal = kpi.ACTIVE_USERS||kpi.active_users||0;
-  // If activeVal looks incomplete (>25% drop from latest complete month), use latest complete month
+  // If KPI activeVal looks incomplete vs latest complete monthly value, use the monthly value
   const completedMonthlyAU = monthlyData.activeUsers.actual.filter(v => v !== null);
-  if (completedMonthlyAU.length >= 2) {
-    const latest = completedMonthlyAU[completedMonthlyAU.length - 1];
-    const prior = completedMonthlyAU[completedMonthlyAU.length - 2];
-    if (prior > 0 && (prior - latest) / prior > 0.25) {
-      activeVal = prior; // Use last complete month
+  if (completedMonthlyAU.length > 0) {
+    const latestCompleteMonth = completedMonthlyAU[completedMonthlyAU.length - 1];
+    if (latestCompleteMonth > 0 && activeVal < latestCompleteMonth * 0.75) {
+      console.warn(`KPI activeUsers (${activeVal}) looks incomplete vs latest month (${latestCompleteMonth}), using monthly value`);
+      activeVal = latestCompleteMonth;
     }
   }
   const gtvVal = kpi.TOTAL_GTV||kpi.total_gtv||0;
