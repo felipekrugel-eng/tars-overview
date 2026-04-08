@@ -6049,7 +6049,7 @@ function showPanel(name) {
   document.getElementById("tab-" + name).classList.add("active");
   document.getElementById("nav-wordmark").innerHTML = WORDMARKS[name] || '';
   window.scrollTo({ top: 0, behavior: "smooth" });
-  if (name === "case" && !window.__caseRendered) { renderCase(); window.__caseRendered = true; }
+  if (name === "case" && !window.__caseRendered) { renderCase(); window.__caseRendered = true; applyFilters(); }
   if (name === "5yp" && !window.__5ypRendered) { render5YP(); window.__5ypRendered = true; }
 }
 
@@ -6496,64 +6496,7 @@ function renderCase() {
     });
   });
 
-  try {
-  // ── Chart: Revenue YTD (Monthly) ──────────────────────────────────────────
-  const revYTDCtx = document.getElementById("chartRevenueYTD");
-  if (revYTDCtx) {
-    __chartRevenueYTD = new Chart(revYTDCtx.getContext("2d"), {
-      type: "bar",
-      data: {
-        labels: D.monthly2026.months,
-        datasets: [
-          {
-            label: "Actual",
-            data: D.monthly2026.revenue.actual,
-            backgroundColor: "#2DC46B",
-            borderRadius: 4
-          }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: true,
-        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
-          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€M", color: "#AAA", font: { size: 10 } } }
-        }
-      }
-    });
-  }
-
-  } catch(e) { console.warn("Revenue YTD chart error:", e); }
-
-  try {
-  // ── Chart: GTV YTD (Monthly) ────────────────────────────────────────────
-  const gtvYTDCtx = document.getElementById("chartGTVYTD");
-  if (gtvYTDCtx) {
-    __chartGTVYTD = new Chart(gtvYTDCtx.getContext("2d"), {
-      type: "line",
-      data: {
-        labels: D.monthly2026.months,
-        datasets: [{
-          label: "Actual", data: D.monthly2026.gtv.actual,
-          borderColor: "#1D8FE1", backgroundColor: "rgba(29,143,225,0.08)",
-          borderWidth: 2.5, pointBackgroundColor: "#1D8FE1", pointRadius: 4,
-          tension: 0.3, fill: true
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: true,
-        plugins: { legend: { position: "bottom", labels: { color: "#555", font: { size: 10 }, padding: 10, boxWidth: 10 } } },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: "#888", font: { size: 10 } } },
-          y: { grid: { color: "#F0F0F0" }, ticks: { color: "#888", font: { size: 10 } }, title: { display: true, text: "€B", color: "#AAA", font: { size: 10 } } }
-        }
-      }
-    });
-  }
-
-
-  } catch(e) { console.warn("GTV YTD chart error:", e); }
+  // Charts (Revenue YTD + GTV YTD) are created by applyFilters() which runs after renderCase()
 
   // ── Churn & NRR ──────────────────────────────────────────────────────────
   const CH = D.churn;
