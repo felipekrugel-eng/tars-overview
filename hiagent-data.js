@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-08T08:39:48Z
+// Last sync: 2026-04-08T15:05:40Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-08T08:39:48Z",
+  lastSync: "2026-04-08T15:05:40Z",
 
   tasks: [
     {
@@ -225,16 +225,16 @@ const HIAGENT_DATA = {
     {
       id: "case-snowflake-pull",
       name: "CASE Snowflake Pull",
-      description: "Daily pull from Snowflake to update CASE dashboard data and push to GitHub/Netlify",
+      description: "DISABLED — Snowflake pull now runs via GitHub Actions (daily 6 AM UTC)",
       schedule: "Daily 6:10 AM",
       cron: "0 6 * * *",
       cadence: "daily",
       owner: "TARS",
-      enabled: true,
+      enabled: false,
       lastRunAt: "2026-04-08T05:10:28.767Z",
-      nextRunAt: "2026-04-09T05:09:53.000Z",
+      nextRunAt: null,
       detail: {
-        purpose: "Keeps the CASE dashboard data fresh by pulling the latest business metrics from Snowflake daily.",
+        purpose: "Keeps the CASE dashboard data fresh by pulling the latest business metrics from Snowflake daily. Now migrated to GitHub Actions.",
         process: "Connects to Snowflake, extracts the latest Loyverse business metrics (GTV, revenue, ARPC, etc.), transforms them into the case-data.js format, commits to the tars-overview repo, and Netlify auto-deploys.",
         outputs: "Updated case-data.js deployed to tars-overview.netlify.app.",
         dependencies: "Snowflake, GitHub (tars-overview repo), Netlify"
@@ -249,8 +249,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-08T08:39:48Z",
-      nextRunAt: "2026-04-08T15:00:45.000Z",
+      lastRunAt: "2026-04-08T15:05:40Z",
+      nextRunAt: "2026-04-08T19:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
