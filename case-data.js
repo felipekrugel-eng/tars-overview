@@ -46,8 +46,8 @@ const CASE_DATA = {
         0.97
       ],
       "actual": [
-        0.798,
-        0.904,
+        0.862,
+        0.881,
         null,
         null,
         null,
@@ -166,8 +166,8 @@ const CASE_DATA = {
         0
       ],
       "actual": [
-        0,
-        0,
+        5617.5,
+        2612321.4,
         null,
         null,
         null,
@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922164,
+      "value": 13922195,
       "label": "Registered merchants"
     },
     "active": {
@@ -192,7 +192,7 @@ const CASE_DATA = {
       "convRate": "1.6%"
     },
     "paying": {
-      "value": 70245,
+      "value": 70226,
       "label": "Paying customers",
       "convRate": "30.9%"
     },
@@ -289,9 +289,9 @@ const CASE_DATA = {
     ]
   },
   "totalRevenue": {
-    "value": 11.5,
+    "value": 9.82,
     "unit": "€M/yr",
-    "delta": "+51.3%",
+    "delta": "+29.2%",
     "deltaClass": "up",
     "label": "YoY growth"
   },
@@ -303,7 +303,7 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "arpc": {
-    "value": 13.64,
+    "value": 11.66,
     "unit": "€/mo",
     "delta": "→ €20/mo",
     "deltaClass": "up",
@@ -317,9 +317,9 @@ const CASE_DATA = {
     "label": "YoY"
   },
   "totalGTV": {
-    "value": 25.8,
+    "value": 241941.4,
     "unit": "€B/yr",
-    "delta": "+10%",
+    "delta": "+1033838%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -428,81 +428,81 @@ const CASE_DATA = {
     {
       "country": "ph",
       "flag": "",
-      "gtv": 0,
-      "merchants": 1762224,
-      "avgGTV": 0
+      "gtv": 5.1879068764,
+      "merchants": 1762226,
+      "avgGTV": 0.000002943951
     },
     {
       "country": "th",
       "flag": "",
-      "gtv": 0,
-      "merchants": 1676524,
-      "avgGTV": 0
+      "gtv": 3.5767681164,
+      "merchants": 1676525,
+      "avgGTV": 0.000002133442
     },
     {
       "country": "id",
       "flag": "",
-      "gtv": 0,
-      "merchants": 1172468,
-      "avgGTV": 0
+      "gtv": 0.3279324349,
+      "merchants": 1172470,
+      "avgGTV": 2.79694e-7
     },
     {
       "country": "mx",
       "flag": "",
-      "gtv": 0,
+      "gtv": 18.019439201,
       "merchants": 1135976,
-      "avgGTV": 0
+      "avgGTV": 0.000015862518
     },
     {
       "country": "my",
       "flag": "",
-      "gtv": 0,
-      "merchants": 980851,
-      "avgGTV": 0
+      "gtv": 0.4400058484,
+      "merchants": 980855,
+      "avgGTV": 4.48594e-7
     },
     {
       "country": "vn",
       "flag": "",
-      "gtv": 0,
+      "gtv": 899.0375916305,
       "merchants": 510775,
-      "avgGTV": 0
+      "avgGTV": 0.001760144078
     },
     {
       "country": "br",
       "flag": "",
-      "gtv": 0,
+      "gtv": 0.25889056,
       "merchants": 455001,
-      "avgGTV": 0
+      "avgGTV": 5.68989e-7
     },
     {
       "country": "us",
       "flag": "",
-      "gtv": 0,
+      "gtv": 167474.6238513905,
       "merchants": 413419,
-      "avgGTV": 0
+      "avgGTV": 0.405096582042
     },
     {
       "country": "sa",
       "flag": "",
-      "gtv": 0,
-      "merchants": 359239,
-      "avgGTV": 0
+      "gtv": 0.0690947056,
+      "merchants": 359240,
+      "avgGTV": 1.92336e-7
     },
     {
       "country": "es",
       "flag": "",
-      "gtv": 0,
-      "merchants": 308413,
-      "avgGTV": 0
+      "gtv": 460.5206508452,
+      "merchants": 308416,
+      "avgGTV": 0.001493180156
     }
   ],
   "churn": {
     "monthly": {
-      "value": "2.1%",
+      "value": "4.7%",
       "note": "Paying merchants · below 3% benchmark"
     },
     "annual": {
-      "value": "22%",
+      "value": "44%",
       "note": "Implied from monthly rate · target <15% by 2028"
     },
     "nrr": {
@@ -511,7 +511,7 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-08T09:52:55.389Z",
+    "runDate": "2026-04-08T16:38:07.514Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -551,41 +551,41 @@ const CASE_DATA = {
       }
     ],
     "revenueDiag": {
-      "totalRows": 999331,
-      "currentYearRows": 68712,
-      "currentYearAmount": 3077699,
+      "totalRows": 999992,
+      "currentYearRows": 69373,
+      "currentYearAmount": 173557708,
       "minDate": "2018-04-06 05:50:52.000",
-      "maxDate": "2026-04-07 10:18:44.000"
+      "maxDate": "2026-04-08 10:08:27.000"
     },
     "revenueSample": [
       {
-        "amount_paid": 10000,
-        "total": 10000,
+        "amount_paid": 2500,
+        "total": 2500,
         "currency": "USD",
-        "date": "2026-04-07 10:18:44.000"
+        "date": "2026-04-08 10:08:27.000"
       },
       {
-        "total": 500,
+        "total": 275,
         "currency": "USD",
-        "date": "2026-04-07 10:13:17.000"
-      },
-      {
-        "amount_paid": 2000,
-        "total": 2000,
-        "currency": "EUR",
-        "date": "2026-04-07 10:08:51.000"
-      },
-      {
-        "amount_paid": 6050,
-        "total": 6050,
-        "currency": "EUR",
-        "date": "2026-04-07 10:08:16.000"
+        "date": "2026-04-08 10:07:56.000"
       },
       {
         "amount_paid": 2800,
         "total": 2800,
         "currency": "USD",
-        "date": "2026-04-07 10:03:06.000"
+        "date": "2026-04-08 10:07:34.000"
+      },
+      {
+        "amount_paid": 500,
+        "total": 500,
+        "currency": "USD",
+        "date": "2026-04-08 10:04:43.000"
+      },
+      {
+        "amount_due": 100000,
+        "total": 100000,
+        "currency": "USD",
+        "date": "2026-04-08 10:03:50.000"
       }
     ],
     "incompleteMonthsNulled": [
@@ -1101,8 +1101,8 @@ const CASE_DATA = {
     "jp": 0.69,
     "ng": 0.68,
     "ru": 0.68,
-    "do": 0.64,
     "au": 0.64,
+    "do": 0.64,
     "kh": 0.58,
     "dz": 0.55
   },
