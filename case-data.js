@@ -1,9 +1,9 @@
 // ─── CASE DATA BLOCK ───────────────────────────────────────────────────────────────
 // Updated by CASE × Snowflake pull. Single source of truth for all dashboard numbers.
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
-// Last pull: 2026-04-07
+// Last pull: 2026-04-08
 const CASE_DATA = {
-  "lastUpdated": "2026-04-07",
+  "lastUpdated": "2026-04-08",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922110,
+      "value": 13922164,
       "label": "Registered merchants"
     },
     "active": {
@@ -192,7 +192,7 @@ const CASE_DATA = {
       "convRate": "1.6%"
     },
     "paying": {
-      "value": 70140,
+      "value": 70245,
       "label": "Paying customers",
       "convRate": "30.9%"
     },
@@ -289,9 +289,9 @@ const CASE_DATA = {
     ]
   },
   "totalRevenue": {
-    "value": 11.48,
+    "value": 11.5,
     "unit": "€M/yr",
-    "delta": "+51.1%",
+    "delta": "+51.3%",
     "deltaClass": "up",
     "label": "YoY growth"
   },
@@ -303,7 +303,7 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "arpc": {
-    "value": 13.65,
+    "value": 13.64,
     "unit": "€/mo",
     "delta": "→ €20/mo",
     "deltaClass": "up",
@@ -436,35 +436,35 @@ const CASE_DATA = {
       "country": "th",
       "flag": "",
       "gtv": 0,
-      "merchants": 1676520,
+      "merchants": 1676524,
       "avgGTV": 0
     },
     {
       "country": "id",
       "flag": "",
       "gtv": 0,
-      "merchants": 1172465,
+      "merchants": 1172468,
       "avgGTV": 0
     },
     {
       "country": "mx",
       "flag": "",
       "gtv": 0,
-      "merchants": 1135970,
+      "merchants": 1135976,
       "avgGTV": 0
     },
     {
       "country": "my",
       "flag": "",
       "gtv": 0,
-      "merchants": 980848,
+      "merchants": 980851,
       "avgGTV": 0
     },
     {
       "country": "vn",
       "flag": "",
       "gtv": 0,
-      "merchants": 510774,
+      "merchants": 510775,
       "avgGTV": 0
     },
     {
@@ -478,21 +478,21 @@ const CASE_DATA = {
       "country": "us",
       "flag": "",
       "gtv": 0,
-      "merchants": 413415,
+      "merchants": 413419,
       "avgGTV": 0
     },
     {
       "country": "sa",
       "flag": "",
       "gtv": 0,
-      "merchants": 359238,
+      "merchants": 359239,
       "avgGTV": 0
     },
     {
       "country": "es",
       "flag": "",
       "gtv": 0,
-      "merchants": 308411,
+      "merchants": 308413,
       "avgGTV": 0
     }
   ],
@@ -511,7 +511,7 @@ const CASE_DATA = {
     }
   },
   "diagnostics": {
-    "runDate": "2026-04-07T19:21:33.640Z",
+    "runDate": "2026-04-08T09:52:55.389Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -1101,8 +1101,8 @@ const CASE_DATA = {
     "jp": 0.69,
     "ng": 0.68,
     "ru": 0.68,
-    "au": 0.64,
     "do": 0.64,
+    "au": 0.64,
     "kh": 0.58,
     "dz": 0.55
   },
