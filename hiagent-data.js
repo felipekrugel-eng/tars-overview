@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-08T15:05:40Z
+// Last sync: 2026-04-08T19:01:54Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-08T15:05:40Z",
+  lastSync: "2026-04-08T19:01:54Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-07T16:07:32.741Z",
-      nextRunAt: "2026-04-08T16:07:02.000Z",
+      lastRunAt: "2026-04-08T16:07:13.131Z",
+      nextRunAt: "2026-04-09T16:07:02.000Z",
       detail: {
         purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
         process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
@@ -33,8 +33,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-07T16:53:39.060Z",
-      nextRunAt: "2026-04-08T16:53:08.000Z",
+      lastRunAt: "2026-04-08T16:58:06.513Z",
+      nextRunAt: "2026-04-09T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
@@ -87,7 +87,7 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-02T15:05:18.069Z",
+      lastRunAt: "2026-04-08T15:43:09.237Z",
       nextRunAt: "2026-04-09T15:03:32.000Z",
       detail: {
         purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
@@ -223,6 +223,42 @@ const HIAGENT_DATA = {
       }
     },
     {
+      id: "session-07-archive",
+      name: "Session 07 Archive",
+      description: "One-time task: generate Session 07 HTML archive and save to Shared Drive",
+      schedule: "One-time (Mar 18, 2026)",
+      cron: "—",
+      cadence: "daily",
+      owner: "TARS",
+      enabled: false,
+      lastRunAt: "2026-03-18T10:30:45.782Z",
+      nextRunAt: null,
+      detail: {
+        purpose: "One-time backfill task to create an HTML archive for Session 07 in the Shared Drive.",
+        process: "Generated session HTML from session notes and saved to the Strategic Sessions Google Drive folder.",
+        outputs: "Session 07 HTML archive in Google Drive.",
+        dependencies: "Google Drive (Strategic Sessions folder)"
+      }
+    },
+    {
+      id: "session-07-archive-v2",
+      name: "Session 07 Archive v2",
+      description: "One-time backfill: save Session 07 HTML archive to correct Shared Drive path",
+      schedule: "One-time (Mar 18, 2026)",
+      cron: "—",
+      cadence: "daily",
+      owner: "TARS",
+      enabled: false,
+      lastRunAt: "2026-03-18T11:00:45.810Z",
+      nextRunAt: null,
+      detail: {
+        purpose: "Retry of Session 07 archive task to save to the correct path in Shared Drive.",
+        process: "Re-generated session HTML and saved to the corrected Strategic Sessions Google Drive folder path.",
+        outputs: "Session 07 HTML archive in correct Google Drive location.",
+        dependencies: "Google Drive (Strategic Sessions folder)"
+      }
+    },
+    {
       id: "case-snowflake-pull",
       name: "CASE Snowflake Pull",
       description: "DISABLED — Snowflake pull now runs via GitHub Actions (daily 6 AM UTC)",
@@ -249,8 +285,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-08T15:05:40Z",
-      nextRunAt: "2026-04-08T19:00:45.000Z",
+      lastRunAt: "2026-04-08T19:01:54Z",
+      nextRunAt: "2026-04-08T23:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
