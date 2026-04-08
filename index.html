@@ -481,6 +481,29 @@
     .cohort-table .num-blue { color:#1D8FE1; font-weight:600; }
     .cohort-table .num-muted { color:#9ca3af; }
 
+    /* ── Cohort Matrix (Giovanni-style) ── */
+    .cohort-matrix-container { background:#fff; border:1px solid #e5e7eb; border-radius:10px; margin-top:16px; }
+    .cohort-matrix-header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px 12px; border-bottom:1px solid #f3f4f6; }
+    .cohort-matrix-title { font-family:'Arial Black',sans-serif; font-size:14px; color:#111; }
+    .cohort-matrix-sub { font-size:11px; color:#9ca3af; }
+    .cohort-matrix-scroll { overflow-x:auto; overflow-y:auto; max-height:480px; }
+    .cohort-matrix { border-collapse:collapse; font-size:11px; width:max-content; }
+    .cohort-matrix thead th { position:sticky; top:0; z-index:2; background:#f8fafc; padding:6px 10px; text-align:center; font-size:9px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:#64748b; border-bottom:2px solid #e2e8f0; white-space:nowrap; min-width:54px; }
+    .cohort-matrix thead th:first-child { position:sticky; left:0; z-index:3; text-align:left; min-width:82px; background:#f8fafc; }
+    .cohort-matrix thead th.lifetime-col { background:#f1f5f9; border-left:2px solid #cbd5e1; }
+    .cohort-matrix tbody td { padding:5px 8px; text-align:center; border-bottom:1px solid #f1f5f9; white-space:nowrap; font-family:'SF Mono','Consolas','Monaco',monospace; font-size:10px; }
+    .cohort-matrix tbody td:first-child { position:sticky; left:0; z-index:1; background:#f8fafc; font-weight:700; color:#1e40af; text-align:left; font-family:Arial,sans-serif; font-size:11px; border-right:2px solid #e2e8f0; }
+    .cohort-matrix tbody td.lifetime-td { border-left:2px solid #cbd5e1; font-weight:600; background:#f8fafc; }
+    .cohort-matrix tbody tr:hover td { filter:brightness(0.95); }
+    .cohort-matrix tbody tr:hover td:first-child { background:#e0f2fe; }
+    .cohort-cell { border-radius:2px; padding:2px 4px; display:inline-block; min-width:40px; }
+    .cohort-summary-row { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-top:16px; }
+    .cohort-summary-card { background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:14px 16px; text-align:center; }
+    .cohort-summary-label { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#64748b; }
+    .cohort-summary-value { font-family:'Arial Black',sans-serif; font-size:22px; margin-top:4px; color:#111; }
+    .cohort-summary-note { font-size:10px; color:#9ca3af; margin-top:2px; }
+    @media (max-width:900px) { .cohort-summary-row { grid-template-columns:repeat(3,1fr); } }
+
     /* ── Cohort Time Filters ── */
     .cohort-filter-row { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; align-items:center; }
     .cohort-filter-label { font-size:11px; font-weight:700; color:#6b7280; margin-right:4px; }
@@ -4390,117 +4413,96 @@
     <!-- ── UNIT ECONOMICS ── -->
     <div class="case-section-label" style="margin-top:36px;">05</div>
     <div class="case-section-title">Unit economics.</div>
-    <div class="case-section-sub">Cohort-level NPV and LTV tracking. A cohort is all merchants onboarded in a given month.</div>
+    <div class="case-section-sub">Cohort-level NPV, LTV, and revenue progression. Tracks how each monthly cohort generates value over its lifetime.</div>
 
-    <!-- Hero row: NPV/Cohort and LTV/Cohort -->
-    <div class="unit-hero-row">
-      <div class="unit-hero-card" onclick="_showCohortDrill('npv')" style="cursor:pointer;">
-        <div class="unit-hero-label">NPV / COHORT</div>
-        <div class="unit-hero-value blue" id="unit-npv">—</div>
-        <div class="unit-hero-target">Target: <span id="unit-npv-target">—</span></div>
-        <div class="unit-hero-note" id="unit-npv-note">—</div>
-        <div class="unit-hero-drill">Click to see by vintage ›</div>
+    <!-- Filters -->
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:16px;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="font-size:11px; font-weight:700; color:#64748b;">Country:</label>
+        <select id="cohort-country-filter" style="font-size:11px; padding:4px 8px; border:1px solid #e2e8f0; border-radius:5px; background:#fff; color:#334155;">
+          <option value="all">All</option>
+        </select>
       </div>
-      <div class="unit-hero-card" onclick="_showCohortDrill('ltv')" style="cursor:pointer;">
-        <div class="unit-hero-label">LTV / COHORT</div>
-        <div class="unit-hero-value green" id="unit-ltv-hero">—</div>
-        <div class="unit-hero-target">Target: <span id="unit-ltv-target">—</span></div>
-        <div class="unit-hero-note" id="unit-ltv-note">—</div>
-        <div class="unit-hero-drill">Click to see by vintage ›</div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="font-size:11px; font-weight:700; color:#64748b;">Year:</label>
+        <select id="cohort-year-filter" style="font-size:11px; padding:4px 8px; border:1px solid #e2e8f0; border-radius:5px; background:#fff; color:#334155;">
+          <option value="all">All</option>
+          <option value="2026">2026</option>
+          <option value="2025" selected>2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+        </select>
+      </div>
+      <div class="cohort-filter-row" id="cohort-time-filters" style="margin:0;">
+        <button class="cohort-filter-btn" data-range="12">Last 12 mo</button>
+        <button class="cohort-filter-btn active" data-range="24">Last 24 mo</button>
+        <button class="cohort-filter-btn" data-range="all">All</button>
       </div>
     </div>
 
-    <!-- Supporting metrics: 4 in a row -->
-    <div class="unit-support-row">
-      <div class="unit-support-card">
-        <div class="unit-support-label">CAC</div>
-        <div class="unit-support-value" id="unit-cac">—</div>
-        <div class="unit-support-note" id="unit-cac-note">—</div>
+    <!-- Summary KPI row -->
+    <div class="cohort-summary-row" id="cohort-summary-row">
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">NPV / Cohort</div>
+        <div class="cohort-summary-value" id="cs-npv">—</div>
+        <div class="cohort-summary-note">per merchant</div>
       </div>
-      <div class="unit-support-card">
-        <div class="unit-support-label">PAYBACK</div>
-        <div class="unit-support-value" id="unit-payback">—</div>
-        <div class="unit-support-note" id="unit-payback-note">—</div>
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">LTV / Paying</div>
+        <div class="cohort-summary-value" id="cs-ltv">—</div>
+        <div class="cohort-summary-note">per paying merchant</div>
       </div>
-      <div class="unit-support-card">
-        <div class="unit-support-label">GROSS MARGIN</div>
-        <div class="unit-support-value" id="unit-margin">—</div>
-        <div class="unit-support-note" id="unit-margin-note">—</div>
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">ARPC</div>
+        <div class="cohort-summary-value" id="cs-arpc">—</div>
+        <div class="cohort-summary-note">avg revenue/paying/mo</div>
       </div>
-      <div class="unit-support-card">
-        <div class="unit-support-label">LTV:CAC</div>
-        <div class="unit-support-value" id="unit-ltvcac">—</div>
-        <div class="unit-support-note" id="unit-ltvcac-note">—</div>
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">Gross Margin</div>
+        <div class="cohort-summary-value" id="cs-margin">—</div>
+        <div class="cohort-summary-note">revenue minus COGS</div>
+      </div>
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">CAC</div>
+        <div class="cohort-summary-value" id="cs-cac">—</div>
+        <div class="cohort-summary-note">organic acquisition</div>
+      </div>
+      <div class="cohort-summary-card">
+        <div class="cohort-summary-label">LTV:CAC</div>
+        <div class="cohort-summary-value" id="cs-ltvcac">—</div>
+        <div class="cohort-summary-note">organic model</div>
       </div>
     </div>
 
-    <!-- Time filter for cohort views -->
-    <div class="cohort-filter-row" id="cohort-time-filters" style="margin-top:20px;">
-      <span class="cohort-filter-label">Show:</span>
-      <button class="cohort-filter-btn active" data-range="12">Last 12 mo</button>
-      <button class="cohort-filter-btn" data-range="24">Last 24 mo</button>
-      <button class="cohort-filter-btn" data-range="2026">2026</button>
-      <button class="cohort-filter-btn" data-range="2025">2025</button>
-      <button class="cohort-filter-btn" data-range="2024">2024</button>
-      <button class="cohort-filter-btn" data-range="all">All</button>
-    </div>
-
-    <!-- Cohort trend chart with KPI toggle -->
-    <div class="unit-trend-container">
-      <div class="unit-trend-title">Cohort KPI trends</div>
-      <div class="unit-trend-sub">Monthly cohorts · Toggle metric · Click any bar for detail</div>
-      <div class="cohort-toggle-row" id="cohort-chart-toggles">
-        <button class="cohort-toggle-btn active" data-metric="npv">NPV (€)</button>
-        <button class="cohort-toggle-btn" data-metric="arpc">ARPC (€)</button>
-        <button class="cohort-toggle-btn" data-metric="activePct">Active %</button>
-        <button class="cohort-toggle-btn" data-metric="payingPct">Paying %</button>
-        <button class="cohort-toggle-btn" data-metric="mrr">MRR (€)</button>
-        <button class="cohort-toggle-btn" data-metric="churnRate30d">Churn %</button>
+    <!-- Main Matrix: Cumulative NPV by Cohort + Lifetime Metrics -->
+    <div class="cohort-matrix-container">
+      <div class="cohort-matrix-header">
+        <div>
+          <div class="cohort-matrix-title">Cumulative NPV by Cohort</div>
+          <div class="cohort-matrix-sub">€ cumulative revenue per merchant at each month of age · Lifetime metrics on the right</div>
+        </div>
       </div>
-      <div style="position:relative; height:220px;"><canvas id="chartCohortNpvTrend"></canvas></div>
-    </div>
-
-    <!-- Full cohort table -->
-    <div class="unit-trend-container" style="margin-top:16px;">
-      <div class="unit-trend-title">All cohorts</div>
-      <div class="unit-trend-sub">One row per registration month · Click any row for full detail</div>
-      <div class="cohort-table-wrap" style="max-height:420px; overflow-y:auto;">
-        <table class="cohort-table" id="cohort-table">
-          <thead>
-            <tr>
-              <th>Cohort</th>
-              <th>Reg.</th>
-              <th>Active</th>
-              <th>Active %</th>
-              <th>Paying</th>
-              <th>Pay %</th>
-              <th>MRR €</th>
-              <th>ARPC €</th>
-              <th>GTV 30d €k</th>
-              <th>NPV €</th>
-              <th>LTV €</th>
-              <th>Churn %</th>
-              <th>Age (mo)</th>
-            </tr>
-          </thead>
-          <tbody id="cohort-table-body"></tbody>
+      <div class="cohort-matrix-scroll">
+        <table class="cohort-matrix" id="cohort-main-table">
+          <thead id="cohort-main-thead"></thead>
+          <tbody id="cohort-main-matrix"></tbody>
         </table>
       </div>
     </div>
 
-
-    <!-- Cohort Aging Heatmap -->
-    <div class="unit-trend-container" style="margin-top:16px;">
-      <div class="unit-trend-title">Cohort evolution over time</div>
-      <div class="unit-trend-sub">Rows = registration month · Columns = months since registration · Color = selected KPI</div>
-      <div class="cohort-toggle-row" id="aging-metric-toggles">
-        <button class="cohort-toggle-btn active" data-metric="retentionPct">Retention %</button>
-        <button class="cohort-toggle-btn" data-metric="revenueEur">Revenue €</button>
-        <button class="cohort-toggle-btn" data-metric="cumulativeRevenue">Cum. Revenue €</button>
-        <button class="cohort-toggle-btn" data-metric="gtvKEur">GTV €k</button>
+    <!-- Cash Flow Matrix -->
+    <div class="cohort-matrix-container" style="margin-top:12px;">
+      <div class="cohort-matrix-header">
+        <div>
+          <div class="cohort-matrix-title">Cash Flow by Cohort</div>
+          <div class="cohort-matrix-sub">€ monthly revenue per cohort at each month of age</div>
+        </div>
       </div>
-      <div class="aging-heatmap-wrap" id="aging-heatmap-container">
-        <div style="padding:40px; text-align:center; color:#9ca3af; font-size:13px;">Loading cohort aging data...</div>
+      <div class="cohort-matrix-scroll">
+        <table class="cohort-matrix" id="cohort-cashflow-table">
+          <thead id="cohort-cashflow-thead"></thead>
+          <tbody id="cohort-cashflow-matrix"></tbody>
+        </table>
       </div>
     </div>
 
@@ -5655,7 +5657,7 @@ document.addEventListener('DOMContentLoaded', function() {
 var __chartRevenueYTD = null;
 var __chartGTVYTD = null;
 var __chartSentiment = null;
-var __chartCohortNpvTrend = null;
+// __chartCohortNpvTrend removed — replaced by Giovanni-style matrix
 
 function _getFilterWeight() {
   var W = CASE_DATA.countryWeights;
@@ -6066,206 +6068,92 @@ function renderCase() {
   document.getElementById("gf-take").style.width = "21%";
   document.getElementById("gf-npv").style.width = "60%";
 
-  // Unit economics — hero + supporting cards
+  // ══════════════════════════════════════════════════════════════════════════
+  // ██  UNIT ECONOMICS — Giovanni-style Cohort Matrix Dashboard
+  // ══════════════════════════════════════════════════════════════════════════
   const UE = D.unitEconomics;
-  document.getElementById("unit-npv").textContent = UE.avgNpvPerCohort.value;
-  document.getElementById("unit-npv-target").textContent = UE.avgNpvPerCohort.target;
-  document.getElementById("unit-npv-note").textContent = UE.avgNpvPerCohort.note;
-  document.getElementById("unit-ltv-hero").textContent = UE.avgLtvPerCohort.value;
-  document.getElementById("unit-ltv-target").textContent = UE.avgLtvPerCohort.target;
-  document.getElementById("unit-ltv-note").textContent = UE.avgLtvPerCohort.note;
-  document.getElementById("unit-cac").textContent = UE.cac.value;
-  document.getElementById("unit-cac-note").textContent = UE.cac.note;
-  document.getElementById("unit-payback").textContent = UE.payback.value;
-  document.getElementById("unit-payback-note").textContent = UE.payback.note;
-  document.getElementById("unit-margin").textContent = UE.grossMargin.value;
-  document.getElementById("unit-margin-note").textContent = UE.grossMargin.note;
-  document.getElementById("unit-ltvcac").textContent = UE.ltvCacRatio.value;
-  document.getElementById("unit-ltvcac-note").textContent = UE.ltvCacRatio.note;
+  var allVintages = UE.cohortVintages || [];
+  var agingData = D.cohortAging || [];
+  var currentMatrixFilter = "24"; // default: last 24 months
+  var currentYearFilter = "all";
 
-  try {
-  // ── Cohort chart, table, and aging heatmap with time filters ──
-  const allVintages = UE.cohortVintages;
-  var currentCohortFilter = "12"; // default: last 12 months
-  var currentCohortMetric = "npv";
-  var currentAgingMetric = "retentionPct";
-
-  // Filter vintages by time range
-  function filterVintages(range) {
+  // ── Helpers ──
+  function _filterVintagesByRange(range) {
     var now = new Date();
-    if (range === "all") return allVintages;
+    var vList = allVintages;
+    // Year filter first
+    if (currentYearFilter !== "all") {
+      vList = vList.filter(function(v) { return v.month && v.month.startsWith(currentYearFilter); });
+    }
+    if (range === "all") return vList;
     if (range === "12" || range === "24") {
       var cutoff = new Date(now.getFullYear(), now.getMonth() - parseInt(range), 1);
       var cutoffStr = cutoff.toISOString().slice(0, 7);
-      return allVintages.filter(function(v) { return v.month >= cutoffStr; });
+      return vList.filter(function(v) { return v.month >= cutoffStr; });
     }
-    // Year filter (e.g., "2026", "2025", "2024")
-    return allVintages.filter(function(v) { return v.month.startsWith(range); });
+    return vList.filter(function(v) { return v.month && v.month.startsWith(range); });
   }
 
-  var cohortMetricConfig = {
-    npv:         { label: "NPV (€)", field: "npv",         prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: 180 },
-    arpc:        { label: "ARPC (€)", field: "arpc",        prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: null },
-    activePct:   { label: "Active %", field: "activePct",   prefix: "",  suffix: "%", color: "#2DC46B", greenThreshold: null },
-    payingPct:   { label: "Paying %", field: "payingPct",   prefix: "",  suffix: "%", color: "#1D8FE1", greenThreshold: null },
-    mrr:         { label: "MRR (€)",  field: "mrr",         prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: null },
-    churnRate30d:{ label: "Churn %",  field: "churnRate30d",prefix: "",  suffix: "%", color: "#E14B1D", greenThreshold: null }
-  };
-
-  function buildCohortChart(metric, vintages) {
-    var cfg = cohortMetricConfig[metric];
-    if (__chartCohortNpvTrend) __chartCohortNpvTrend.destroy();
-    var data = vintages.map(function(v){ return v[cfg.field]; });
-    var bgColors = cfg.greenThreshold
-      ? data.map(function(d){ return d >= cfg.greenThreshold ? "#2DC46B" : "#1D8FE1"; })
-      : data.map(function(){ return cfg.color; });
-
-    __chartCohortNpvTrend = new Chart(document.getElementById("chartCohortNpvTrend"), {
-      type: "bar",
-      data: {
-        labels: vintages.map(function(v){ return v.month; }),
-        datasets: [{ label: cfg.label, data: data, backgroundColor: bgColors, borderRadius: 4, barPercentage: 0.7 }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function(ctx) { return cfg.prefix + ctx.parsed.y.toLocaleString(undefined, {maximumFractionDigits:1}) + cfg.suffix; },
-              afterLabel: function(ctx) {
-                var v = vintages[ctx.dataIndex];
-                return "Registrations: " + v.merchants.toLocaleString() + "\nActive: " + v.activeNow.toLocaleString() + " (" + v.activePct + "%)" +
-                  "\nPaying: " + v.payingNow.toLocaleString() + " (" + v.payingPct + "%)" +
-                  "\nMRR: €" + v.mrr.toLocaleString() + "\nAge: " + v.cohortAgeMonths + " months";
-              }
-            }
-          }
-        },
-        scales: {
-          y: { beginAtZero: metric === "activePct" || metric === "payingPct" || metric === "churnRate30d", grid: { color: "#f3f4f6" },
-               ticks: { callback: function(v){ return cfg.prefix + v + cfg.suffix; } } },
-          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45 } }
-        },
-        onClick: function(evt, elements) {
-          if (elements.length > 0) {
-            var clickedMonth = vintages[elements[0].index].month;
-            var globalIdx = allVintages.findIndex(function(v){ return v.month === clickedMonth; });
-            if (globalIdx >= 0) _showCohortVintageDrill(globalIdx);
-          }
-        }
-      }
-    });
-  }
-
-  function buildCohortTable(vintages) {
-    var tbody = document.getElementById("cohort-table-body");
-    if (!tbody) return;
-    tbody.innerHTML = "";
-    vintages.forEach(function(v) {
-      var globalIdx = allVintages.findIndex(function(av){ return av.month === v.month; });
-      var tr = document.createElement("tr");
-      tr.onclick = function() { if (globalIdx >= 0) _showCohortVintageDrill(globalIdx); };
-      var churnClass = v.churnRate30d > 3 ? "num-red" : (v.churnRate30d <= 2 ? "num-green" : "");
-      var activeClass = v.activePct >= 10 ? "num-green" : (v.activePct < 5 ? "num-red" : "");
-      tr.innerHTML =
-        '<td>' + v.month + '</td>' +
-        '<td>' + v.merchants.toLocaleString() + '</td>' +
-        '<td>' + v.activeNow.toLocaleString() + '</td>' +
-        '<td class="' + activeClass + '">' + v.activePct + '%</td>' +
-        '<td>' + v.payingNow.toLocaleString() + '</td>' +
-        '<td class="num-blue">' + v.payingPct + '%</td>' +
-        '<td>€' + v.mrr.toLocaleString() + '</td>' +
-        '<td>€' + v.arpc + '</td>' +
-        '<td>€' + v.gtv30d + 'k</td>' +
-        '<td class="num-blue">€' + v.npv + '</td>' +
-        '<td class="num-green">€' + v.ltv + '</td>' +
-        '<td class="' + churnClass + '">' + v.churnRate30d + '%</td>' +
-        '<td class="num-muted">' + v.cohortAgeMonths + '</td>';
-      tbody.appendChild(tr);
-    });
-  }
-
-  // Refresh chart + table with current filter
-  function refreshCohortViews() {
-    var filtered = filterVintages(currentCohortFilter);
-    buildCohortChart(currentCohortMetric, filtered);
-    buildCohortTable(filtered);
-  }
-
-  refreshCohortViews();
-
-  // KPI toggle buttons
-  document.querySelectorAll("#cohort-chart-toggles .cohort-toggle-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      document.querySelectorAll("#cohort-chart-toggles .cohort-toggle-btn").forEach(function(b){ b.classList.remove("active"); });
-      btn.classList.add("active");
-      currentCohortMetric = btn.getAttribute("data-metric");
-      refreshCohortViews();
-    });
-  });
-
-  // Time filter buttons
-  document.querySelectorAll("#cohort-time-filters .cohort-filter-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      document.querySelectorAll("#cohort-time-filters .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
-      btn.classList.add("active");
-      currentCohortFilter = btn.getAttribute("data-range");
-      refreshCohortViews();
-      buildAgingHeatmap(currentAgingMetric); // also update aging heatmap
-    });
-  });
-
-  // ── Cohort Aging Heatmap ──
-  var agingData = D.cohortAging || [];
-
-  function agingCellColor(metric, value) {
+  // Green gradient for cumulative NPV cells (Giovanni-style)
+  function _npvCellStyle(value, maxVal) {
     if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#d1d5db;";
-    if (metric === "retentionPct") {
-      if (value >= 15) return "background:#065f46; color:#fff;";
-      if (value >= 10) return "background:#059669; color:#fff;";
-      if (value >= 5)  return "background:#34d399; color:#000;";
-      if (value >= 2)  return "background:#a7f3d0; color:#000;";
-      return "background:#d1fae5; color:#666;";
-    }
-    if (metric === "revenueEur" || metric === "cumulativeRevenue") {
-      if (value >= 5000) return "background:#1e40af; color:#fff;";
-      if (value >= 1000) return "background:#3b82f6; color:#fff;";
-      if (value >= 500)  return "background:#93c5fd; color:#000;";
-      if (value >= 100)  return "background:#bfdbfe; color:#000;";
-      return "background:#dbeafe; color:#666;";
-    }
-    if (metric === "gtvKEur") {
-      if (value >= 1000) return "background:#7c2d12; color:#fff;";
-      if (value >= 100)  return "background:#ea580c; color:#fff;";
-      if (value >= 10)   return "background:#fb923c; color:#000;";
-      if (value >= 1)    return "background:#fed7aa; color:#000;";
-      return "background:#fff7ed; color:#666;";
-    }
-    return "background:#f3f4f6; color:#666;";
+    var intensity = Math.min(value / (maxVal || 1), 1);
+    // Green scale: light → dark
+    var r = Math.round(255 - intensity * 200);
+    var g = Math.round(255 - intensity * 80);
+    var b = Math.round(255 - intensity * 180);
+    var textColor = intensity > 0.5 ? "#fff" : "#1e293b";
+    return "background:rgb(" + r + "," + g + "," + b + "); color:" + textColor + ";";
   }
 
-  function formatAgingValue(metric, value) {
-    if (value === 0 || value === null || value === undefined) return "—";
-    if (metric === "retentionPct") return value + "%";
-    if (metric === "revenueEur") return "€" + value.toLocaleString();
-    if (metric === "cumulativeRevenue") return "€" + value.toLocaleString();
-    if (metric === "gtvKEur") return "€" + value + "k";
-    return value;
+  // Revenue cell coloring (blue scale for cash flow)
+  function _revCellStyle(value, maxVal) {
+    if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#d1d5db;";
+    var intensity = Math.min(value / (maxVal || 1), 1);
+    var r = Math.round(255 - intensity * 220);
+    var g = Math.round(255 - intensity * 160);
+    var b = Math.round(255 - intensity * 40);
+    var textColor = intensity > 0.5 ? "#fff" : "#1e293b";
+    return "background:rgb(" + r + "," + g + "," + b + "); color:" + textColor + ";";
   }
 
-  function buildAgingHeatmap(metric) {
-    var container = document.getElementById("aging-heatmap-container");
-    if (!container || agingData.length === 0) {
-      if (container) container.innerHTML = '<div style="padding:40px; text-align:center; color:#9ca3af; font-size:13px;">Cohort aging data will appear after the next Snowflake pull.</div>';
-      return;
-    }
+  function _fmt(v, pre, suf) {
+    if (v === null || v === undefined || v === 0) return "—";
+    if (typeof v === "number") return (pre||"") + v.toLocaleString(undefined, {maximumFractionDigits:1}) + (suf||"");
+    return (pre||"") + v + (suf||"");
+  }
 
-    // Filter aging data by time filter
-    var filtered = filterVintages(currentCohortFilter);
-    var cohortMonths = filtered.map(function(v){ return v.month; });
+  // ── Summary KPI cards ──
+  function populateSummaryCards(vintages) {
+    // Compute weighted averages from filtered vintages
+    var totalMerchants = 0, sumNpv = 0, sumLtv = 0, sumArpc = 0, payingCount = 0;
+    vintages.forEach(function(v) {
+      var m = v.merchants || 0;
+      totalMerchants += m;
+      sumNpv += (v.npv || 0) * m;
+      sumLtv += (v.ltv || 0) * (v.payingNow || 0);
+      sumArpc += (v.arpc || 0) * (v.payingNow || 0);
+      payingCount += (v.payingNow || 0);
+    });
+    var avgNpv = totalMerchants > 0 ? sumNpv / totalMerchants : 0;
+    var avgLtv = payingCount > 0 ? sumLtv / payingCount : 0;
+    var avgArpc = payingCount > 0 ? sumArpc / payingCount : 0;
 
-    // Build matrix: { cohortMonth: { ageMonths: row } }
+    var el;
+    el = document.getElementById("cs-npv");   if (el) el.textContent = "€" + avgNpv.toFixed(0);
+    el = document.getElementById("cs-ltv");   if (el) el.textContent = "€" + avgLtv.toFixed(0);
+    el = document.getElementById("cs-arpc");  if (el) el.textContent = "€" + avgArpc.toFixed(1);
+    // Gross margin and CAC from strategic data
+    el = document.getElementById("cs-margin"); if (el) el.textContent = UE.grossMargin ? UE.grossMargin.value : "~85%";
+    el = document.getElementById("cs-cac");    if (el) el.textContent = UE.cac ? UE.cac.value : "€5–8";
+    // LTV:CAC ratio
+    var cacVal = UE.cac && typeof UE.cac.value === "string" ? parseFloat(UE.cac.value.replace(/[€$,]/g,"")) : 6;
+    var ltvCac = cacVal > 0 ? (avgLtv / cacVal) : 0;
+    el = document.getElementById("cs-ltvcac"); if (el) el.textContent = ltvCac > 0 ? ltvCac.toFixed(1) + "x" : "—";
+  }
+
+  // ── Build aging matrix lookup ──
+  function _buildAgingLookup(cohortMonths) {
     var matrix = {};
     var maxAge = 0;
     agingData.forEach(function(r) {
@@ -6274,45 +6162,165 @@ function renderCase() {
       matrix[r.cohortMonth][r.ageMonths] = r;
       if (r.ageMonths > maxAge) maxAge = r.ageMonths;
     });
-
-    // Cap max columns for readability
-    var maxCols = Math.min(maxAge, 36);
-
-    // Build table HTML
-    var html = '<table class="aging-heatmap"><thead><tr><th>Cohort</th>';
-    for (var a = 0; a <= maxCols; a++) html += '<th>M' + a + '</th>';
-    html += '</tr></thead><tbody>';
-
-    cohortMonths.forEach(function(cm) {
-      html += '<tr><td>' + cm + '</td>';
-      var row = matrix[cm] || {};
-      for (var a = 0; a <= maxCols; a++) {
-        var cell = row[a];
-        var val = cell ? cell[metric] : 0;
-        var style = agingCellColor(metric, val);
-        var display = formatAgingValue(metric, val);
-        html += '<td><span class="aging-cell" style="' + style + '">' + display + '</span></td>';
-      }
-      html += '</tr>';
-    });
-
-    html += '</tbody></table>';
-    container.innerHTML = html;
+    return { matrix: matrix, maxAge: maxAge };
   }
 
-  buildAgingHeatmap("retentionPct");
+  // ── Build the main cumulative NPV matrix ──
+  function buildMainMatrix(vintages) {
+    var thead = document.getElementById("cohort-main-thead");
+    var tbody = document.getElementById("cohort-main-matrix");
+    if (!thead || !tbody) return;
 
-  // Aging metric toggle buttons
-  document.querySelectorAll("#aging-metric-toggles .cohort-toggle-btn").forEach(function(btn) {
+    var cohortMonths = vintages.map(function(v) { return v.month; });
+    var lookup = _buildAgingLookup(cohortMonths);
+    var maxCols = Math.min(lookup.maxAge, 36);
+
+    // Find max value for color scaling
+    var maxCumRev = 0;
+    agingData.forEach(function(r) {
+      if (cohortMonths.indexOf(r.cohortMonth) !== -1 && r.cumulativeRevenue > maxCumRev) maxCumRev = r.cumulativeRevenue;
+    });
+
+    // Lifetime metric headers
+    var lifetimeCols = ["Reg", "Active%", "Paying%", "NPV", "LTV", "ARPC", "Churn%"];
+
+    // Header row
+    var hhtml = '<tr><th>Cohort</th>';
+    for (var a = 0; a <= maxCols; a++) hhtml += '<th>M' + a + '</th>';
+    lifetimeCols.forEach(function(lc) { hhtml += '<th class="lifetime-col">' + lc + '</th>'; });
+    hhtml += '</tr>';
+    thead.innerHTML = hhtml;
+
+    // Body rows
+    var bhtml = '';
+    vintages.forEach(function(v, vi) {
+      var cm = v.month;
+      var row = lookup.matrix[cm] || {};
+      // Determine how many months this cohort can actually have
+      var cohortDate = new Date(cm + "-01");
+      var now = new Date();
+      var maxPossible = Math.min(maxCols, Math.floor((now - cohortDate) / (30.44 * 24 * 60 * 60 * 1000)));
+
+      bhtml += '<tr><td>' + cm + '</td>';
+      for (var a = 0; a <= maxCols; a++) {
+        if (a > maxPossible) {
+          bhtml += '<td></td>';
+        } else {
+          var cell = row[a];
+          var val = cell ? cell.cumulativeRevenue : 0;
+          var style = _npvCellStyle(val, maxCumRev);
+          var display = val > 0 ? "€" + Math.round(val).toLocaleString() : "—";
+          bhtml += '<td><span class="cohort-cell" style="' + style + '">' + display + '</span></td>';
+        }
+      }
+      // Lifetime metrics
+      bhtml += '<td class="lifetime-td">' + (v.merchants || 0).toLocaleString() + '</td>';
+      bhtml += '<td class="lifetime-td">' + (v.activePct || 0) + '%</td>';
+      bhtml += '<td class="lifetime-td">' + (v.payingPct || 0) + '%</td>';
+      bhtml += '<td class="lifetime-td" style="color:#1e40af; font-weight:700;">€' + (v.npv || 0) + '</td>';
+      bhtml += '<td class="lifetime-td" style="color:#059669; font-weight:700;">€' + (v.ltv || 0) + '</td>';
+      bhtml += '<td class="lifetime-td">€' + (v.arpc || 0) + '</td>';
+      var churnColor = v.churnRate30d > 3 ? '#dc2626' : (v.churnRate30d <= 2 ? '#059669' : '#d97706');
+      bhtml += '<td class="lifetime-td" style="color:' + churnColor + ';">' + (v.churnRate30d || 0) + '%</td>';
+      bhtml += '</tr>';
+    });
+    tbody.innerHTML = bhtml;
+  }
+
+  // ── Build the cash flow matrix (monthly revenue) ──
+  function buildCashFlowMatrix(vintages) {
+    var thead = document.getElementById("cohort-cashflow-thead");
+    var tbody = document.getElementById("cohort-cashflow-matrix");
+    if (!thead || !tbody) return;
+
+    var cohortMonths = vintages.map(function(v) { return v.month; });
+    var lookup = _buildAgingLookup(cohortMonths);
+    var maxCols = Math.min(lookup.maxAge, 36);
+
+    // Find max value for color scaling
+    var maxRev = 0;
+    agingData.forEach(function(r) {
+      if (cohortMonths.indexOf(r.cohortMonth) !== -1 && r.revenueEur > maxRev) maxRev = r.revenueEur;
+    });
+
+    // Header
+    var hhtml = '<tr><th>Cohort</th>';
+    for (var a = 0; a <= maxCols; a++) hhtml += '<th>M' + a + '</th>';
+    hhtml += '<th class="lifetime-col">Total Rev</th><th class="lifetime-col">MRR</th><th class="lifetime-col">ARR</th>';
+    hhtml += '</tr>';
+    thead.innerHTML = hhtml;
+
+    // Body rows
+    var bhtml = '';
+    vintages.forEach(function(v) {
+      var cm = v.month;
+      var row = lookup.matrix[cm] || {};
+      var cohortDate = new Date(cm + "-01");
+      var now = new Date();
+      var maxPossible = Math.min(maxCols, Math.floor((now - cohortDate) / (30.44 * 24 * 60 * 60 * 1000)));
+
+      bhtml += '<tr><td>' + cm + '</td>';
+      for (var a = 0; a <= maxCols; a++) {
+        if (a > maxPossible) {
+          bhtml += '<td></td>';
+        } else {
+          var cell = row[a];
+          var val = cell ? cell.revenueEur : 0;
+          var style = _revCellStyle(val, maxRev);
+          var display = val > 0 ? "€" + Math.round(val).toLocaleString() : "—";
+          bhtml += '<td><span class="cohort-cell" style="' + style + '">' + display + '</span></td>';
+        }
+      }
+      // Lifetime totals
+      bhtml += '<td class="lifetime-td">€' + Math.round(v.revenueAlltime || 0).toLocaleString() + 'k</td>';
+      bhtml += '<td class="lifetime-td">€' + Math.round(v.mrr || 0).toLocaleString() + '</td>';
+      bhtml += '<td class="lifetime-td">€' + Math.round(v.arr || 0).toLocaleString() + '</td>';
+      bhtml += '</tr>';
+    });
+    tbody.innerHTML = bhtml;
+  }
+
+  // ── Master refresh function ──
+  function refreshCohortMatrices() {
+    var filtered = _filterVintagesByRange(currentMatrixFilter);
+    populateSummaryCards(filtered);
+    buildMainMatrix(filtered);
+    buildCashFlowMatrix(filtered);
+  }
+
+  // ── Wire up filter controls ──
+  // Time range buttons
+  document.querySelectorAll("#cohort-time-filters .cohort-filter-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      document.querySelectorAll("#aging-metric-toggles .cohort-toggle-btn").forEach(function(b){ b.classList.remove("active"); });
+      document.querySelectorAll("#cohort-time-filters .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
       btn.classList.add("active");
-      currentAgingMetric = btn.getAttribute("data-metric");
-      buildAgingHeatmap(currentAgingMetric);
+      currentMatrixFilter = btn.getAttribute("data-range");
+      refreshCohortMatrices();
     });
   });
 
-  } catch(e) { console.warn("Cohort chart/table/aging error:", e); }
+  // Year dropdown
+  var yearSelect = document.getElementById("cohort-year-filter");
+  if (yearSelect) {
+    yearSelect.addEventListener("change", function() {
+      currentYearFilter = this.value;
+      refreshCohortMatrices();
+    });
+  }
+
+  // Country dropdown (placeholder — data doesn't include country yet, but wired up for future)
+  var countrySelect = document.getElementById("cohort-country-filter");
+  if (countrySelect) {
+    countrySelect.addEventListener("change", function() {
+      // Future: filter by country when data includes it
+      refreshCohortMatrices();
+    });
+  }
+
+  // ── Initial render ──
+  try {
+    refreshCohortMatrices();
+  } catch(e) { console.warn("Cohort matrix render error:", e); }
 
   // Render conversion funnel
   function renderFunnel() {
