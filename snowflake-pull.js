@@ -90,6 +90,7 @@ const QUERY_FILES = {
   revenueSample:     'revenue-sample.sql',
   gtvByMarket:       'gtv-by-market.sql',
   unifiedMerchant:   'unified-merchant.sql',
+  cohortAging:       'cohort-aging.sql',
 };
 
 const QUERIES = {};
@@ -337,6 +338,17 @@ function buildCaseData(results) {
       annual: { value: `${annualChurn}%`, note: "Implied from monthly rate \u00b7 target <15% by 2028" },
       nrr: { value: `${nrrVal}%`, note: "Target: >110% by end of 2026" }
     },
+    cohortAging: (results.cohortAging || []).map(r => ({
+      cohortMonth:        r.COHORT_MONTH || r.cohort_month,
+      ageMonths:          r.AGE_MONTHS || r.age_months || 0,
+      registrations:      r.REGISTRATIONS || r.registrations || 0,
+      activeMerchants:    r.ACTIVE_MERCHANTS || r.active_merchants || 0,
+      retentionPct:       r.RETENTION_PCT || r.retention_pct || 0,
+      revenueEur:         r.REVENUE_EUR || r.revenue_eur || 0,
+      cumulativeRevenue:  r.CUMULATIVE_REVENUE_EUR || r.cumulative_revenue_eur || 0,
+      revenuePerActive:   r.REVENUE_PER_ACTIVE_EUR || r.revenue_per_active_eur || 0,
+      gtvKEur:            r.GTV_K_EUR || r.gtv_k_eur || 0,
+    })),
     diagnostics: diagnosticData,
     appStores: existing.appStores||{}, ratingTrend: existing.ratingTrend||{},
     reviewThemes: existing.reviewThemes||[], downloads: existing.downloads||{},
@@ -408,6 +420,7 @@ async function main() {
   console.log(`Monthly churn:   ${caseData.churn.monthly.value}`);
   console.log(`Cohort vintages: ${caseData.unitEconomics.cohortVintages.length}`);
   console.log(`Unified merch:   ${(results.unifiedMerchant||[]).length} rows`);
+  console.log(`Cohort aging:    ${(results.cohortAging||[]).length} rows`);
   console.log(`Top markets:     ${caseData.topMarkets.length}`);
   const monthsWithActuals = caseData.monthly2026.revenue.actual.filter(v => v !== null).length;
   console.log(`Monthly actuals: ${monthsWithActuals}/12 months filled`);
