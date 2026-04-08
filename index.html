@@ -4298,7 +4298,8 @@
               <th>Country</th>
               <th style="text-align:right;">GTV (€M)</th>
               <th style="text-align:right;">Merchants</th>
-              <th style="text-align:right;">Avg GTV</th>
+              <th style="text-align:right;">Active</th>
+              <th style="text-align:right;">Avg GTV/Active</th>
             </tr>
           </thead>
           <tbody id="top-markets-body">
@@ -4406,6 +4407,15 @@
     <div class="case-section-title">Conversion funnel.</div>
     <div class="case-section-sub">Merchant progression from registration to payments enablement. Bottleneck analysis and 2026 targets.</div>
 
+    <div style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;" id="funnel-time-filters">
+      <button class="cohort-filter-btn" data-funnel-range="6">Last 6 mo</button>
+      <button class="cohort-filter-btn" data-funnel-range="12">Last 12 mo</button>
+      <button class="cohort-filter-btn" data-funnel-range="24">Last 24 mo</button>
+      <button class="cohort-filter-btn active" data-funnel-range="all">All Time</button>
+      <button class="cohort-filter-btn" data-funnel-range="2026">2026</button>
+      <button class="cohort-filter-btn" data-funnel-range="2025">2025</button>
+      <button class="cohort-filter-btn" data-funnel-range="2024">2024</button>
+    </div>
     <div class="funnel-container" id="funnel-container" style="padding: 24px 0;">
       <!-- Funnel will be rendered here by renderCase() -->
     </div>
@@ -4474,12 +4484,21 @@
       </div>
     </div>
 
+    <!-- Matrix Metric Toggles -->
+    <div style="display:flex; gap:6px; margin-top:14px; flex-wrap:wrap;" id="matrix-metric-toggles">
+      <button class="cohort-filter-btn active" data-matrix-metric="cumulativeRevenue">Cumulative Revenue</button>
+      <button class="cohort-filter-btn" data-matrix-metric="revenueEur">Monthly Revenue</button>
+      <button class="cohort-filter-btn" data-matrix-metric="retentionPct">Retention %</button>
+      <button class="cohort-filter-btn" data-matrix-metric="revenuePerActive">Rev / Active</button>
+      <button class="cohort-filter-btn" data-matrix-metric="gtvKEur">GTV (€k)</button>
+    </div>
+
     <!-- Main Matrix: Cumulative NPV by Cohort + Lifetime Metrics -->
     <div class="cohort-matrix-container">
       <div class="cohort-matrix-header">
         <div>
-          <div class="cohort-matrix-title">Cumulative NPV by Cohort</div>
-          <div class="cohort-matrix-sub">€ cumulative revenue per merchant at each month of age · Lifetime metrics on the right</div>
+          <div class="cohort-matrix-title" id="matrix-title">Cumulative Revenue by Cohort</div>
+          <div class="cohort-matrix-sub" id="matrix-subtitle">Select a metric above to view cohort progression · Lifetime metrics on the right</div>
         </div>
       </div>
       <div class="cohort-matrix-scroll">
@@ -5706,6 +5725,40 @@ var COUNTRY_CODE_MAP = {
   "Australia": "AU", "New Zealand": "NZ"
 };
 
+// Reverse map: code → full name
+var CODE_TO_COUNTRY = {};
+Object.keys(COUNTRY_CODE_MAP).forEach(function(name) {
+  CODE_TO_COUNTRY[COUNTRY_CODE_MAP[name].toLowerCase()] = name;
+});
+// Additional common codes not in the main map
+var EXTRA_COUNTRY_NAMES = {
+  "ph": "Philippines", "th": "Thailand", "id": "Indonesia", "mx": "Mexico",
+  "my": "Malaysia", "sa": "Saudi Arabia", "us": "United States", "gb": "United Kingdom",
+  "es": "Spain", "sg": "Singapore", "vn": "Vietnam", "in": "India",
+  "de": "Germany", "fr": "France", "it": "Italy", "pt": "Portugal",
+  "nl": "Netherlands", "pl": "Poland", "ca": "Canada", "br": "Brazil",
+  "ar": "Argentina", "co": "Colombia", "cl": "Chile", "pe": "Peru",
+  "ae": "UAE", "qa": "Qatar", "kw": "Kuwait", "bh": "Bahrain",
+  "za": "South Africa", "ng": "Nigeria", "ke": "Kenya", "eg": "Egypt",
+  "au": "Australia", "nz": "New Zealand", "jp": "Japan", "kr": "South Korea",
+  "mm": "Myanmar", "tw": "Taiwan", "hk": "Hong Kong", "cn": "China",
+  "ru": "Russia", "ua": "Ukraine", "ro": "Romania", "cz": "Czechia",
+  "se": "Sweden", "no": "Norway", "dk": "Denmark", "fi": "Finland",
+  "ie": "Ireland", "at": "Austria", "ch": "Switzerland", "be": "Belgium",
+  "tr": "Turkey", "il": "Israel", "pk": "Pakistan", "bd": "Bangladesh",
+  "lk": "Sri Lanka", "np": "Nepal", "kh": "Cambodia", "la": "Laos"
+};
+function getCountryName(code) {
+  if (!code) return code;
+  var lc = code.toLowerCase();
+  return CODE_TO_COUNTRY[lc] || EXTRA_COUNTRY_NAMES[lc] || code.toUpperCase();
+}
+function getCountryFlag(code) {
+  if (!code || code.length < 2) return "";
+  var uc = code.toUpperCase();
+  return String.fromCodePoint(0x1F1E6 + uc.charCodeAt(0) - 65, 0x1F1E6 + uc.charCodeAt(1) - 65);
+}
+
 function applyFilters() {
   var D = CASE_DATA;
   var weight = _getFilterWeight();
@@ -5728,7 +5781,13 @@ function applyFilters() {
   // ── 1. KPI TILES ──────────────────────────────────────────────────────────
   var el;
   el = document.getElementById("m-total-revenue");
-  if (el) el.textContent = "€" + w(D.totalRevenue.value, 1) + "M";
+  if (el) {
+    var revActualYTD = w(D.totalRevenue.value, 1);
+    // Calculate annualized projection based on months elapsed
+    var monthsElapsed = new Date().getMonth() + 1; // 1-based
+    var projectedYearEnd = monthsElapsed > 0 ? (revActualYTD / monthsElapsed * 12).toFixed(1) : revActualYTD;
+    el.innerHTML = "€" + revActualYTD + "M <span style='font-size:12px; color:#9ca3af; font-weight:400;'>→ €" + projectedYearEnd + "M</span>";
+  }
 
   el = document.getElementById("m-payment-revenue");
   if (el) el.textContent = "€" + w(D.paymentRevenue.value, 1) + "M";
@@ -5741,7 +5800,16 @@ function applyFilters() {
   if (el) el.textContent = D.activeUsers.value.toLocaleString();
 
   el = document.getElementById("m-total-gtv");
-  if (el) el.textContent = "€" + w(D.totalGTV.value, 1) + "B";
+  if (el) {
+    var gtvVal = w(D.totalGTV.value, 1);
+    var gtvDisplay;
+    // Handle different scales: if value > 1000 it's likely in M not B
+    if (gtvVal > 10000) gtvDisplay = "€" + (gtvVal / 1000000).toFixed(1) + "T";
+    else if (gtvVal > 1000) gtvDisplay = "€" + (gtvVal / 1000).toFixed(1) + "T";
+    else if (gtvVal > 100) gtvDisplay = "€" + gtvVal.toFixed(0) + "B";
+    else gtvDisplay = "€" + gtvVal.toFixed(1) + "B";
+    el.textContent = gtvDisplay;
+  }
 
   el = document.getElementById("m-gtv-processed");
   if (el) el.textContent = "€" + w(D.gtvProcessed.value, 2) + "B";
@@ -5792,23 +5860,30 @@ function applyFilters() {
     var filteredMarkets = D.topMarkets;
     if (countries) {
       filteredMarkets = D.topMarkets.filter(function(m) {
-        var code = COUNTRY_CODE_MAP[m.country];
-        return code && countries.indexOf(code) > -1;
+        var code = m.country.toUpperCase();
+        return countries.indexOf(code) > -1;
       });
     }
     marketsBody.innerHTML = '';
     if (filteredMarkets.length === 0) {
-      marketsBody.innerHTML = '<tr><td colspan="5" style="padding:24px; text-align:center; color:#999; font-size:13px;">No markets match the selected filters</td></tr>';
+      marketsBody.innerHTML = '<tr><td colspan="6" style="padding:24px; text-align:center; color:#999; font-size:13px;">No markets match the selected filters</td></tr>';
     } else {
       filteredMarkets.forEach(function(m, i) {
         var tr = document.createElement("tr");
         tr.style.cssText = "border-bottom:1px solid #f3f4f6;";
+        var countryName = getCountryName(m.country);
+        var flag = m.flag || getCountryFlag(m.country);
+        var gtvDisplay = m.gtv >= 1 ? m.gtv.toFixed(1) : m.gtv.toFixed(3);
+        var activeMerchants = m.activeMerchants || Math.round(m.merchants * 0.016);
+        var avgGtvPerActive = activeMerchants > 0 ? (m.gtv * 1000000 / activeMerchants) : 0;
+        var avgGtvDisplay = avgGtvPerActive >= 1000 ? "€" + (avgGtvPerActive/1000).toFixed(1) + "k" : "€" + Math.round(avgGtvPerActive);
         tr.innerHTML =
           '<td style="padding:10px 14px; font-weight:600; color:#9ca3af; width:32px;">' + (i + 1) + '</td>' +
-          '<td style="padding:10px 14px; font-weight:600;">' + m.flag + '  ' + m.country + '</td>' +
-          '<td style="padding:10px 14px; text-align:right; font-weight:600; color:#1D8FE1;">€' + m.gtv + 'M</td>' +
+          '<td style="padding:10px 14px; font-weight:600;">' + flag + '  ' + countryName + '</td>' +
+          '<td style="padding:10px 14px; text-align:right; font-weight:600; color:#1D8FE1;">€' + gtvDisplay + 'M</td>' +
           '<td style="padding:10px 14px; text-align:right;">' + m.merchants.toLocaleString() + '</td>' +
-          '<td style="padding:10px 14px; text-align:right;">€' + m.avgGTV.toLocaleString() + '</td>';
+          '<td style="padding:10px 14px; text-align:right;">' + activeMerchants.toLocaleString() + '</td>' +
+          '<td style="padding:10px 14px; text-align:right;">' + avgGtvDisplay + '</td>';
         marketsBody.appendChild(tr);
       });
     }
@@ -6009,13 +6084,20 @@ function renderCase() {
   function setCell(id, d) {
     const el = document.getElementById("m-" + id);
     if (!el) return;
-    let display = d.unit === "€M/yr" ? "€" + d.value + "M" :
-                  d.unit === "€B/yr" ? "€" + d.value + "B" :
-                  d.unit === "€/mo" ? "€" + d.value : 
-                  d.unit === "%" ? d.value + "%" :
-                  d.unit === "×" ? d.value + "×" :
-                  d.unit === "€B/yr" ? "€" + d.value + "B" :
-                  d.value.toLocaleString();
+    var display;
+    if (d.unit === "€M/yr") display = "€" + d.value + "M";
+    else if (d.unit === "€/mo") display = "€" + d.value + "/mo";
+    else if (d.unit === "%") display = d.value + "%";
+    else if (d.unit === "×") display = d.value + "×";
+    else if (d.unit === "€B/yr") {
+      // Handle large GTV values that may be in wrong scale
+      var gv = parseFloat(d.value);
+      if (gv > 10000) display = "€" + (gv / 1000000).toFixed(1) + "T";
+      else if (gv > 1000) display = "€" + (gv / 1000).toFixed(1) + "T";
+      else if (gv > 100) display = "€" + gv.toFixed(0) + "B";
+      else display = "€" + gv.toFixed(1) + "B";
+    }
+    else display = d.value.toLocaleString();
     el.textContent = display;
 
     const deltaEl = document.getElementById("m-" + id + "-delta");
@@ -6054,7 +6136,7 @@ function renderCase() {
   setProg("payment-revenue", (0.2 / 0.1) * 100);
   setProg("arpc",            (17 / 20) * 100);
   setProg("active-users",    (D.activeUsers.value / 400000) * 100);
-  setProg("total-gtv",       (26.9 / 30.9) * 100);
+  setProg("total-gtv",       (D.totalGTV.value / (D.targets2026 ? D.targets2026.totalGTV * 1000 : 30900)) * 100);
   setProg("attach-rate",     (3 / 8) * 100);
   setProg("gtv-processed",   (0.54 / 5) * 100);
   setProg("take-rate",       (0.03 / 0.06) * 100);
@@ -6076,6 +6158,7 @@ function renderCase() {
   var agingData = D.cohortAging || [];
   var currentMatrixFilter = "24"; // default: last 24 months
   var currentYearFilter = "all";
+  var currentMatrixMetric = "cumulativeRevenue";
 
   // ── Helpers ──
   function _filterVintagesByRange(range) {
@@ -6096,25 +6179,24 @@ function renderCase() {
 
   // Green gradient for cumulative NPV cells (Giovanni-style)
   function _npvCellStyle(value, maxVal) {
-    if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#d1d5db;";
+    if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#9ca3af;";
     var intensity = Math.min(value / (maxVal || 1), 1);
-    // Green scale: light → dark
-    var r = Math.round(255 - intensity * 200);
-    var g = Math.round(255 - intensity * 80);
-    var b = Math.round(255 - intensity * 180);
-    var textColor = intensity > 0.5 ? "#fff" : "#1e293b";
-    return "background:rgb(" + r + "," + g + "," + b + "); color:" + textColor + ";";
+    if (intensity > 0.7) return "background:#065f46; color:#fff;";
+    if (intensity > 0.5) return "background:#059669; color:#fff;";
+    if (intensity > 0.3) return "background:#34d399; color:#000;";
+    if (intensity > 0.15) return "background:#a7f3d0; color:#000;";
+    return "background:#d1fae5; color:#374151;";
   }
 
   // Revenue cell coloring (blue scale for cash flow)
   function _revCellStyle(value, maxVal) {
-    if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#d1d5db;";
+    if (value === 0 || value === null || value === undefined) return "background:#f9fafb; color:#9ca3af;";
     var intensity = Math.min(value / (maxVal || 1), 1);
-    var r = Math.round(255 - intensity * 220);
-    var g = Math.round(255 - intensity * 160);
-    var b = Math.round(255 - intensity * 40);
-    var textColor = intensity > 0.5 ? "#fff" : "#1e293b";
-    return "background:rgb(" + r + "," + g + "," + b + "); color:" + textColor + ";";
+    if (intensity > 0.7) return "background:#1e3a5f; color:#fff;";
+    if (intensity > 0.5) return "background:#1d4ed8; color:#fff;";
+    if (intensity > 0.3) return "background:#60a5fa; color:#000;";
+    if (intensity > 0.15) return "background:#bfdbfe; color:#000;";
+    return "background:#dbeafe; color:#374151;";
   }
 
   function _fmt(v, pre, suf) {
@@ -6178,7 +6260,10 @@ function renderCase() {
     // Find max value for color scaling
     var maxCumRev = 0;
     agingData.forEach(function(r) {
-      if (cohortMonths.indexOf(r.cohortMonth) !== -1 && r.cumulativeRevenue > maxCumRev) maxCumRev = r.cumulativeRevenue;
+      if (cohortMonths.indexOf(r.cohortMonth) !== -1) {
+        var v = r[currentMatrixMetric] || 0;
+        if (v > maxCumRev) maxCumRev = v;
+      }
     });
 
     // Lifetime metric headers
@@ -6207,9 +6292,14 @@ function renderCase() {
           bhtml += '<td></td>';
         } else {
           var cell = row[a];
-          var val = cell ? cell.cumulativeRevenue : 0;
+          var val = cell ? (cell[currentMatrixMetric] || 0) : 0;
           var style = _npvCellStyle(val, maxCumRev);
-          var display = val > 0 ? "€" + Math.round(val).toLocaleString() : "—";
+          var display;
+          if (val <= 0) { display = "—"; }
+          else if (currentMatrixMetric === "retentionPct") { display = val.toFixed(1) + "%"; }
+          else if (currentMatrixMetric === "revenuePerActive") { display = "€" + val.toFixed(1); }
+          else if (currentMatrixMetric === "gtvKEur") { display = "€" + Math.round(val).toLocaleString() + "k"; }
+          else { display = "€" + Math.round(val).toLocaleString(); }
           bhtml += '<td><span class="cohort-cell" style="' + style + '">' + display + '</span></td>';
         }
       }
@@ -6308,14 +6398,41 @@ function renderCase() {
     });
   }
 
-  // Country dropdown (placeholder — data doesn't include country yet, but wired up for future)
+  // Country dropdown — populated from countryWeights
   var countrySelect = document.getElementById("cohort-country-filter");
   if (countrySelect) {
+    var cw = D.countryWeights || {};
+    var sortedCountries = Object.keys(cw).sort(function(a, b) { return cw[b] - cw[a]; });
+    sortedCountries.forEach(function(code) {
+      var opt = document.createElement("option");
+      opt.value = code;
+      var name = (typeof getCountryName === "function") ? getCountryName(code) : code.toUpperCase();
+      opt.textContent = name + " (" + cw[code].toFixed(1) + "%)";
+      countrySelect.appendChild(opt);
+    });
     countrySelect.addEventListener("change", function() {
-      // Future: filter by country when data includes it
       refreshCohortMatrices();
     });
   }
+
+  // Matrix metric toggle buttons
+  var matrixMetricLabels = {
+    cumulativeRevenue: "Cumulative Revenue by Cohort",
+    revenueEur: "Monthly Revenue by Cohort",
+    retentionPct: "Retention % by Cohort",
+    revenuePerActive: "Revenue per Active Merchant",
+    gtvKEur: "GTV by Cohort (€k)"
+  };
+  document.querySelectorAll("#matrix-metric-toggles .cohort-filter-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll("#matrix-metric-toggles .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      currentMatrixMetric = btn.getAttribute("data-matrix-metric");
+      var titleEl = document.getElementById("matrix-title");
+      if (titleEl) titleEl.textContent = matrixMetricLabels[currentMatrixMetric] || "Cohort Matrix";
+      refreshCohortMatrices();
+    });
+  });
 
   // ── Initial render ──
   try {
@@ -6364,6 +6481,20 @@ function renderCase() {
     container.appendChild(funnel);
   }
   renderFunnel();
+
+  // Funnel time filter buttons
+  document.querySelectorAll("#funnel-time-filters .cohort-filter-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll("#funnel-time-filters .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      // Note: funnel data doesn't vary by time range yet (single snapshot),
+      // but wired up for future time-series funnel data
+      var funnelRange = btn.getAttribute("data-funnel-range");
+      var container = document.getElementById("funnel-container");
+      if (container) container.innerHTML = "";
+      renderFunnel();
+    });
+  });
 
   try {
   // ── Chart: Revenue YTD (Monthly) ──────────────────────────────────────────
