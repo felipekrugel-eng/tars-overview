@@ -4298,8 +4298,7 @@
               <th>Country</th>
               <th style="text-align:right;">GTV (€M)</th>
               <th style="text-align:right;">Merchants</th>
-              <th style="text-align:right;">Active</th>
-              <th style="text-align:right;">Avg GTV/Active</th>
+              <th style="text-align:right;">Avg GTV/Merchant</th>
             </tr>
           </thead>
           <tbody id="top-markets-body">
@@ -5866,23 +5865,31 @@ function applyFilters() {
     }
     marketsBody.innerHTML = '';
     if (filteredMarkets.length === 0) {
-      marketsBody.innerHTML = '<tr><td colspan="6" style="padding:24px; text-align:center; color:#999; font-size:13px;">No markets match the selected filters</td></tr>';
+      marketsBody.innerHTML = '<tr><td colspan="5" style="padding:24px; text-align:center; color:#999; font-size:13px;">No markets match the selected filters</td></tr>';
     } else {
       filteredMarkets.forEach(function(m, i) {
         var tr = document.createElement("tr");
         tr.style.cssText = "border-bottom:1px solid #f3f4f6;";
         var countryName = getCountryName(m.country);
         var flag = m.flag || getCountryFlag(m.country);
-        var gtvDisplay = m.gtv >= 1 ? m.gtv.toFixed(1) : m.gtv.toFixed(3);
-        var activeMerchants = m.activeMerchants || Math.round(m.merchants * 0.016);
-        var avgGtvPerActive = activeMerchants > 0 ? (m.gtv * 1000000 / activeMerchants) : 0;
-        var avgGtvDisplay = avgGtvPerActive >= 1000 ? "€" + (avgGtvPerActive/1000).toFixed(1) + "k" : "€" + Math.round(avgGtvPerActive);
+        // Smart GTV display: scale to appropriate unit
+        var gtvDisplay;
+        if (m.gtv >= 1000) gtvDisplay = "€" + (m.gtv / 1000).toFixed(1) + "B";
+        else if (m.gtv >= 1) gtvDisplay = "€" + m.gtv.toFixed(1) + "M";
+        else if (m.gtv >= 0.001) gtvDisplay = "€" + (m.gtv * 1000).toFixed(0) + "K";
+        else gtvDisplay = "€" + m.gtv.toFixed(3) + "M";
+        // Avg GTV per merchant (gtv is in €M, so * 1000000 / merchants = € per merchant)
+        var avgGtvPerMerchant = m.merchants > 0 ? (m.gtv * 1000000 / m.merchants) : 0;
+        var avgGtvDisplay;
+        if (avgGtvPerMerchant >= 1000000) avgGtvDisplay = "€" + (avgGtvPerMerchant/1000000).toFixed(1) + "M";
+        else if (avgGtvPerMerchant >= 1000) avgGtvDisplay = "€" + (avgGtvPerMerchant/1000).toFixed(1) + "k";
+        else if (avgGtvPerMerchant >= 1) avgGtvDisplay = "€" + Math.round(avgGtvPerMerchant);
+        else avgGtvDisplay = "€" + avgGtvPerMerchant.toFixed(2);
         tr.innerHTML =
           '<td style="padding:10px 14px; font-weight:600; color:#9ca3af; width:32px;">' + (i + 1) + '</td>' +
           '<td style="padding:10px 14px; font-weight:600;">' + flag + '  ' + countryName + '</td>' +
-          '<td style="padding:10px 14px; text-align:right; font-weight:600; color:#1D8FE1;">€' + gtvDisplay + 'M</td>' +
+          '<td style="padding:10px 14px; text-align:right; font-weight:600; color:#1D8FE1;">' + gtvDisplay + '</td>' +
           '<td style="padding:10px 14px; text-align:right;">' + m.merchants.toLocaleString() + '</td>' +
-          '<td style="padding:10px 14px; text-align:right;">' + activeMerchants.toLocaleString() + '</td>' +
           '<td style="padding:10px 14px; text-align:right;">' + avgGtvDisplay + '</td>';
         marketsBody.appendChild(tr);
       });
@@ -6439,60 +6446,93 @@ function renderCase() {
     refreshCohortMatrices();
   } catch(e) { console.warn("Cohort matrix render error:", e); }
 
-  // Render conversion funnel
-  function renderFunnel() {
-    const F = D.funnel;
-    const T = D.funnelTargets2026;
-    const container = document.getElementById("funnel-container");
+  // Render conversion funnel — computes from cohort vintages when filtered
+  function renderFunnel(range) {
+    var F = D.funnel;
+    var T = D.funnelTargets2026;
+    var container = document.getElementById("funnel-container");
     if (!container) return;
 
-    const funnel = document.createElement("div");
-    funnel.style.cssText = "background:#fff; border-radius:8px; padding:24px; margin:12px 0;";
+    var registered, active, paying, paymentsEnabled;
 
-    const stages = [
-      { key: "registered", label: F.registered.label, current: F.registered.value, target: T.registered, convRate: null },
-      { key: "active", label: F.active.label, current: F.active.value, target: T.active, convRate: F.active.convRate },
-      { key: "paying", label: F.paying.label, current: F.paying.value, target: T.paying, convRate: F.paying.convRate },
-      { key: "paymentsEnabled", label: F.paymentsEnabled.label, current: F.paymentsEnabled.value || 0, target: T.paymentsEnabled || 0, convRate: F.paymentsEnabled.convRate }
+    if (!range || range === "all") {
+      // Use snapshot data
+      registered = F.registered.value;
+      active = F.active.value;
+      paying = F.paying.value;
+      paymentsEnabled = F.paymentsEnabled ? (F.paymentsEnabled.value || 0) : 0;
+    } else {
+      // Compute from cohort vintages filtered by range
+      var now = new Date();
+      var filtered = allVintages;
+      if (range === "6" || range === "12" || range === "24") {
+        var cutoff = new Date(now.getFullYear(), now.getMonth() - parseInt(range), 1);
+        var cutoffStr = cutoff.toISOString().slice(0, 7);
+        filtered = allVintages.filter(function(v) { return v.month >= cutoffStr; });
+      } else {
+        // Year filter (e.g. "2026", "2025", "2024")
+        filtered = allVintages.filter(function(v) { return v.month && v.month.startsWith(range); });
+      }
+      registered = 0; active = 0; paying = 0; paymentsEnabled = 0;
+      filtered.forEach(function(v) {
+        registered += v.merchants || 0;
+        active += Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
+        paying += v.payingNow || Math.round((v.merchants || 0) * (v.payingPct || 0) / 100);
+        paymentsEnabled += Math.round((v.merchants || 0) * (v.paymentPct || 0) / 100);
+      });
+    }
+
+    var activeConvRate = registered > 0 ? (active / registered * 100).toFixed(1) + "%" : "—";
+    var payingConvRate = active > 0 ? (paying / active * 100).toFixed(1) + "%" : "—";
+    var pmtConvRate = paying > 0 ? (paymentsEnabled / paying * 100).toFixed(1) + "%" : "—";
+
+    var stages = [
+      { label: "Registered merchants", current: registered, target: T.registered, convRate: null },
+      { label: "Active (last 30d)", current: active, target: T.active, convRate: activeConvRate },
+      { label: "Paying customers", current: paying, target: T.paying, convRate: payingConvRate },
+      { label: "Payments-enabled", current: paymentsEnabled, target: T.paymentsEnabled || 0, convRate: pmtConvRate }
     ];
 
-    stages.forEach((s, i) => {
-      const pct = s.target ? (s.current / s.target) * 100 : 0;
-      const prevVal = i === 0 ? s.current : stages[i-1].current;
-      const funnelPct = prevVal ? (s.current / prevVal) * 100 : 0;
+    var rangeLabel = (!range || range === "all") ? "All Time" : (range.length <= 2 ? "Last " + range + " months" : range);
 
-      const stage = document.createElement("div");
+    var funnel = document.createElement("div");
+    funnel.style.cssText = "background:#fff; border-radius:8px; padding:24px; margin:12px 0;";
+
+    var header = document.createElement("div");
+    header.style.cssText = "font-size:11px; font-weight:600; color:#9ca3af; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;";
+    header.textContent = "Cohorts: " + rangeLabel + " · " + registered.toLocaleString() + " merchants";
+    funnel.appendChild(header);
+
+    stages.forEach(function(s, i) {
+      var pct = s.target ? (s.current / s.target) * 100 : 0;
+
+      var stage = document.createElement("div");
       stage.style.cssText = "margin:16px 0; padding:12px; border:1px solid #E0E0E0; border-radius:4px; background:#FAFAFA;";
-      stage.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <div style="font-weight:600; font-size:14px;">${s.label}</div>
-          <div style="text-align:right; font-size:12px; color:#666;">
-            <div><strong>${(s.current||0).toLocaleString()}</strong> / ${(s.target||0).toLocaleString()} (${pct.toFixed(0)}%)</div>
-            ${s.convRate ? `<div>Conv: ${s.convRate}</div>` : ''}
-          </div>
-        </div>
-        <div style="background:#E0E0E0; height:6px; border-radius:3px; overflow:hidden;">
-          <div style="width:${Math.min(pct, 100)}%; height:100%; background:#1D8FE1;"></div>
-        </div>
-      `;
+      stage.innerHTML =
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+          '<div style="font-weight:600; font-size:14px;">' + s.label + '</div>' +
+          '<div style="text-align:right; font-size:12px; color:#666;">' +
+            '<div><strong>' + (s.current||0).toLocaleString() + '</strong>' + (s.target ? ' / ' + (s.target||0).toLocaleString() + ' (' + pct.toFixed(0) + '%)' : '') + '</div>' +
+            (s.convRate ? '<div>Conv: ' + s.convRate + '</div>' : '') +
+          '</div>' +
+        '</div>' +
+        (s.target ? '<div style="background:#E0E0E0; height:6px; border-radius:3px; overflow:hidden;"><div style="width:' + Math.min(pct, 100) + '%; height:100%; background:#1D8FE1;"></div></div>' : '');
       funnel.appendChild(stage);
     });
 
     container.appendChild(funnel);
   }
-  renderFunnel();
+  renderFunnel("all");
 
   // Funnel time filter buttons
   document.querySelectorAll("#funnel-time-filters .cohort-filter-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
       document.querySelectorAll("#funnel-time-filters .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
       btn.classList.add("active");
-      // Note: funnel data doesn't vary by time range yet (single snapshot),
-      // but wired up for future time-series funnel data
       var funnelRange = btn.getAttribute("data-funnel-range");
       var container = document.getElementById("funnel-container");
       if (container) container.innerHTML = "";
-      renderFunnel();
+      renderFunnel(funnelRange);
     });
   });
 
