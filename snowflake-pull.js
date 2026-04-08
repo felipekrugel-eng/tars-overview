@@ -56,10 +56,29 @@ function connectAsync(connection) {
   });
 }
 
-// ââ Queries (targeting real Snowflake tables) ââââââââââââââââââââââââââââââ
+// ââ FX Rates (static, approximate) ââââââââââââââââââââââââââââââââââââââââ
+// These rates should be updated periodically (monthly recommended) to reflect actual market rates
+// Used to convert Chargebee invoice amounts and Loyverse receipt totals to EUR for consistent KPI reporting
+// Source: approximate rates as of 2025-04 | Last updated: 2026-04-08
+const FX_RATES = {
+  EUR: 1.0,
+  USD: 0.92,    // 1 USD = ~0.92 EUR
+  GBP: 1.17,    // 1 GBP = ~1.17 EUR
+  JPY: 0.0061,  // 1 JPY = ~0.0061 EUR
+  KRW: 0.00067  // 1 KRW = ~0.00067 EUR
+};
+
+// ââ Queries (targeting real Snowflake tables) ââââââââââââââââââââââââââââââ
 const QUERIES = {
   kpis: `
-    WITH registered_count AS (
+    WITH fx_rates AS (
+      SELECT 'EUR' AS currency, 1.0 AS rate UNION ALL
+      SELECT 'USD', 0.92 UNION ALL
+      SELECT 'GBP', 1.17 UNION ALL
+      SELECT 'JPY', 0.0061 UNION ALL
+      SELECT 'KRW', 0.00067
+    ),
+    registered_count AS (
       SELECT COUNT(*) AS cnt FROM LOYVERSE_MERCHANTS
     ),
     active_merchants AS (
@@ -70,36 +89,84 @@ const QUERIES = {
     paying_subs AS (
       SELECT COUNT(*) AS cnt, COALESCE(SUM(mrr_eur), 0) AS total_mrr
       FROM (
-        SELECT MRR AS mrr_eur FROM "CHARGEBEE-EU-SUBSCRIPTION" WHERE STATUS = 'active' AND DELETED = FALSE
+        SELECT eu.MRR * fx.rate AS mrr_eur
+        FROM "CHARGEBEE-EU-SUBSCRIPTION" eu
+        JOIN fx_rates fx ON fx.currency = COALESCE(eu.CURRENCY_CODE, 'EUR')
+        WHERE eu.STATUS = 'active' AND eu.DELETED = FALSE
         UNION ALL
-        SELECT ROUND(MRR * 1.16) AS mrr_eur FROM "CHARGEBEE-UK-SUBSCRIPTION" WHERE STATUS = 'active' AND DELETED = FALSE
+        SELECT uk.MRR * fx.rate AS mrr_eur
+        FROM "CHARGEBEE-UK-SUBSCRIPTION" uk
+        JOIN fx_rates fx ON fx.currency = COALESCE(uk.CURRENCY_CODE, 'GBP')
+        WHERE uk.STATUS = 'active' AND uk.DELETED = FALSE
       )
+    ),
+    gtv_data AS (
+      SELECT COALESCE(SUM(TOTAL_MONEY * fx.rate), 0) AS total_gtv_eur
+      FROM LOYVERSE_RECEIPTS lr
+      LEFT JOIN fx_rates fx ON fx.currency = COALESCE(lr.CURRENCY, 'EUR')
+      WHERE TRY_TO_DATE(RECEIPT_DATE) >= DATEADD('month', -1, CURRENT_DATE())
+    ),
+    active_subs AS (
+      SELECT COUNT(*) AS cnt FROM (
+        SELECT ID FROM "CHARGEBEE-EU-SUBSCRIPTION" WHERE STATUS = 'active' AND DELETED = FALSE
+        UNION ALL
+        SELECT ID FROM "CHARGEBEE-UK-SUBSCRIPTION" WHERE STATUS = 'active' AND DELETED = FALSE
+      )
+    ),
+    cancelled_30d AS (
+      SELECT COUNT(*) AS cnt FROM (
+        SELECT ID FROM "CHARGEBEE-EU-SUBSCRIPTION"
+        WHERE STATUS = 'cancelled' AND DELETED = FALSE
+          AND CANCELLED_AT IS NOT NULL AND TO_TIMESTAMP(CANCELLED_AT) >= DATEADD('day', -30, CURRENT_TIMESTAMP())
+        UNION ALL
+        SELECT ID FROM "CHARGEBEE-UK-SUBSCRIPTION"
+        WHERE STATUS = 'cancelled' AND DELETED = FALSE
+          AND CANCELLED_AT IS NOT NULL AND TO_TIMESTAMP(CANCELLED_AT) >= DATEADD('day', -30, CURRENT_TIMESTAMP())
+      )
+    ),
+    churn_calc AS (
+      SELECT
+        ROUND(c.cnt * 100.0 / NULLIF(a.cnt + c.cnt, 0), 1) AS monthly_churn_calc,
+        ROUND((1 - POWER(1 - c.cnt * 1.0 / NULLIF(a.cnt + c.cnt, 0), 12)) * 100, 0) AS annual_churn_calc
+      FROM active_subs a, cancelled_30d c
     )
     SELECT
       ROUND(ps.total_mrr * 12.0 / 100.0 / 1000000.0, 2) AS total_revenue,
       0 AS payment_revenue,
       CASE WHEN ps.cnt > 0 THEN ROUND(ps.total_mrr / ps.cnt / 100.0, 2) ELSE 0 END AS arpc,
       am.cnt AS active_users,
-      0 AS total_gtv, 0 AS attach_rate, 0 AS take_rate, 0 AS gtv_processed,
-      2.1 AS monthly_churn, 22 AS annual_churn, 104 AS nrr,
+      ROUND(g.total_gtv_eur / 1000000.0, 1) AS total_gtv,
+      0 AS attach_rate, 0 AS take_rate, 0 AS gtv_processed,
+      COALESCE(cc.monthly_churn_calc, 2.1) AS monthly_churn,
+      COALESCE(cc.annual_churn_calc, 22) AS annual_churn,
+      104 AS nrr,
       rc.cnt AS registered, ps.cnt AS paying, 0 AS payments_enabled, 68 AS gross_margin
-    FROM registered_count rc, active_merchants am, paying_subs ps
+    FROM registered_count rc, active_merchants am, paying_subs ps, gtv_data g, churn_calc cc
   `,
 
   monthly: `
-    WITH monthly_inv AS (
-      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) / 1000000.0 AS rev
-      FROM "CHARGEBEE-EU-INVOICE"
-      WHERE STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND DELETED = FALSE
+    WITH fx_rates AS (
+      SELECT 'EUR' AS currency, 1.0 AS rate UNION ALL
+      SELECT 'USD', 0.92 UNION ALL
+      SELECT 'GBP', 1.17 UNION ALL
+      SELECT 'JPY', 0.0061 UNION ALL
+      SELECT 'KRW', 0.00067
+    ),
+    monthly_inv AS (
+      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(TOTAL * fx.rate / 100.0) AS rev
+      FROM "CHARGEBEE-EU-INVOICE" eu
+      JOIN fx_rates fx ON fx.currency = COALESCE(eu.CURRENCY_CODE, 'EUR')
+      WHERE eu.STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND eu.DELETED = FALSE
       GROUP BY 1
       UNION ALL
-      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(AMOUNT_DUE) * 1.16 / 1000000.0 AS rev
-      FROM "CHARGEBEE-UK-INVOICE"
-      WHERE STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND DELETED = FALSE
+      SELECT MONTH(TO_TIMESTAMP(DATE)) AS m, SUM(TOTAL * fx.rate / 100.0) AS rev
+      FROM "CHARGEBEE-UK-INVOICE" uk
+      JOIN fx_rates fx ON fx.currency = COALESCE(uk.CURRENCY_CODE, 'GBP')
+      WHERE uk.STATUS IN ('paid','payment_due') AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) AND uk.DELETED = FALSE
       GROUP BY 1
     ),
     monthly_rev AS (
-      SELECT m AS month_num, ROUND(SUM(rev), 3) AS revenue_actual FROM monthly_inv GROUP BY m
+      SELECT m AS month_num, ROUND(SUM(rev) / 1000000.0, 3) AS revenue_actual FROM monthly_inv GROUP BY m
     ),
     monthly_active AS (
       SELECT CAST(SUBSTRING(MONTH, 6, 2) AS INTEGER) AS month_num,
@@ -107,6 +174,19 @@ const QUERIES = {
       FROM SALES_PER_ACCOUNT_MONTHLY
       WHERE MONTH LIKE CONCAT(CAST(YEAR(CURRENT_DATE()) AS VARCHAR), '%')
       GROUP BY 1
+    ),
+    monthly_gtv AS (
+      SELECT MONTH(TRY_TO_DATE(RECEIPT_DATE)) AS month_num,
+        ROUND(SUM(TOTAL_MONEY * CASE COALESCE(CURRENCY, 'EUR')
+          WHEN 'EUR' THEN 1.0
+          WHEN 'USD' THEN 0.92
+          WHEN 'GBP' THEN 1.17
+          WHEN 'JPY' THEN 0.0061
+          WHEN 'KRW' THEN 0.00067
+          ELSE 1.0 END) / 1000000.0, 1) AS gtv_actual
+      FROM LOYVERSE_RECEIPTS
+      WHERE YEAR(TRY_TO_DATE(RECEIPT_DATE)) = YEAR(CURRENT_DATE())
+      GROUP BY MONTH(TRY_TO_DATE(RECEIPT_DATE))
     ),
     targets AS (
       SELECT column1 AS month_num, column2 AS revenue_target, column3 AS active_users_target
@@ -122,21 +202,41 @@ const QUERIES = {
       0 AS payment_revenue_actual, 0 AS payment_revenue_target,
       0 AS arpc_actual, 0 AS arpc_target,
       ma.active_actual AS active_users_actual, t.active_users_target,
-      0 AS gtv_actual, 0 AS gtv_target
+      mg.gtv_actual, 0 AS gtv_target
     FROM targets t
     LEFT JOIN monthly_rev mr ON mr.month_num = t.month_num
     LEFT JOIN monthly_active ma ON ma.month_num = t.month_num
+    LEFT JOIN monthly_gtv mg ON mg.month_num = t.month_num
     ORDER BY t.month_num
   `,
 
   cohorts: `SELECT 1 AS cohort_month WHERE FALSE`,
 
   markets: `
+    WITH fx_rates AS (
+      SELECT 'EUR' AS currency, 1.0 AS rate UNION ALL
+      SELECT 'USD', 0.92 UNION ALL
+      SELECT 'GBP', 1.17 UNION ALL
+      SELECT 'JPY', 0.0061 UNION ALL
+      SELECT 'KRW', 0.00067
+    ),
+    gtv_by_country AS (
+      SELECT m.COUNTRY,
+        SUM(lr.TOTAL_MONEY * fx.rate) / 1000000.0 AS gtv_millions
+      FROM LOYVERSE_RECEIPTS lr
+      JOIN LOYVERSE_MERCHANTS m ON lr.MERCHANT_ID = m.LOYVERSE_ID
+      LEFT JOIN fx_rates fx ON fx.currency = COALESCE(lr.CURRENCY, 'EUR')
+      WHERE m.COUNTRY IS NOT NULL AND m.COUNTRY != '' AND TRY_TO_DATE(lr.RECEIPT_DATE) >= DATEADD('month', -1, CURRENT_DATE())
+      GROUP BY m.COUNTRY
+    )
     SELECT COALESCE(m.COUNTRY, 'Unknown') AS country, '' AS flag_emoji,
-      0 AS gtv_millions, COUNT(*) AS merchant_count, 0 AS avg_gtv_per_merchant
+      COALESCE(g.gtv_millions, 0) AS gtv_millions, COUNT(*) AS merchant_count,
+      CASE WHEN COUNT(*) > 0 THEN COALESCE(g.gtv_millions, 0) / COUNT(*) ELSE 0 END AS avg_gtv_per_merchant
     FROM LOYVERSE_MERCHANTS m
+    LEFT JOIN gtv_by_country g ON g.COUNTRY = m.COUNTRY
     WHERE m.COUNTRY IS NOT NULL AND m.COUNTRY != ''
-    GROUP BY m.COUNTRY ORDER BY merchant_count DESC LIMIT 10
+    GROUP BY m.COUNTRY, g.gtv_millions
+    ORDER BY COUNT(*) DESC LIMIT 10
   `,
 
   countryWeights: `
@@ -180,8 +280,8 @@ const QUERIES = {
     SELECT column1 AS year, column2 AS gtv_billions
     FROM VALUES (2025,23.4),(2026,30.9),(2027,40.0),(2028,52.0),(2029,67.0),(2030,85.0)
     ORDER BY year
-  `
-,
+  `,
+
   diagnostics: `
     SELECT 'active_users' AS source, MONTH AS period, COUNT(*) AS row_count, COUNT(DISTINCT LOYVERSE_MERCHANT_ID) AS metric_value
     FROM SALES_PER_ACCOUNT_MONTHLY
@@ -189,16 +289,18 @@ const QUERIES = {
     GROUP BY MONTH
     ORDER BY MONTH
   `,
+
   revenueDiag: `
     SELECT 'eu_invoices' AS source,
       COUNT(*) AS total_rows,
       COUNT(CASE WHEN YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) THEN 1 END) AS current_year_rows,
-      SUM(CASE WHEN YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) THEN AMOUNT_DUE ELSE 0 END) AS current_year_amount,
+      SUM(CASE WHEN YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE()) THEN TOTAL ELSE 0 END) AS current_year_amount,
       MIN(TO_TIMESTAMP(DATE)) AS min_date,
       MAX(TO_TIMESTAMP(DATE)) AS max_date
     FROM "CHARGEBEE-EU-INVOICE"
     WHERE STATUS IN ('paid','payment_due') AND DELETED = FALSE
   `,
+
   revenueSample: `
     SELECT AMOUNT_DUE, AMOUNT_PAID, TOTAL, CURRENCY_CODE, STATUS,
            TO_TIMESTAMP(DATE) AS invoice_date
@@ -207,8 +309,28 @@ const QUERIES = {
       AND YEAR(TO_TIMESTAMP(DATE)) = YEAR(CURRENT_DATE())
     ORDER BY TO_TIMESTAMP(DATE) DESC
     LIMIT 5
+  `,
+
+  gtvByMarket: `
+    WITH fx_rates AS (
+      SELECT 'EUR' AS currency, 1.0 AS rate UNION ALL
+      SELECT 'USD', 0.92 UNION ALL
+      SELECT 'GBP', 1.17 UNION ALL
+      SELECT 'JPY', 0.0061 UNION ALL
+      SELECT 'KRW', 0.00067
+    )
+    SELECT m.COUNTRY,
+      ROUND(SUM(lr.TOTAL_MONEY * fx.rate) / 1000000.0, 1) AS gtv_millions,
+      COUNT(DISTINCT lr.MERCHANT_ID) AS merchant_count
+    FROM LOYVERSE_RECEIPTS lr
+    JOIN LOYVERSE_MERCHANTS m ON lr.MERCHANT_ID = m.LOYVERSE_ID
+    LEFT JOIN fx_rates fx ON fx.currency = COALESCE(lr.CURRENCY, 'EUR')
+    WHERE TRY_TO_DATE(lr.RECEIPT_DATE) >= DATEADD('month', -1, CURRENT_DATE())
+    GROUP BY m.COUNTRY
+    ORDER BY gtv_millions DESC
   `
 };
+
 
 // ââ Strategic defaults âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const STRATEGIC_DEFAULTS = {
