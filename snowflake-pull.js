@@ -89,6 +89,7 @@ const QUERY_FILES = {
   revenueDiag:       'revenue-diag.sql',
   revenueSample:     'revenue-sample.sql',
   gtvByMarket:       'gtv-by-market.sql',
+  unifiedMerchant:   'unified-merchant.sql',
 };
 
 const QUERIES = {};
@@ -184,7 +185,28 @@ function buildCaseData(results) {
 
 
   const cohortVintages = cohorts.length > 0
-    ? cohorts.map(r => ({ month: r.COHORT_MONTH||r.cohort_month, merchants: r.MERCHANTS||r.merchants, npv: r.NPV||r.npv, ltv: r.LTV||r.ltv, arpc: r.ARPC||r.arpc, paymentPct: r.PAYMENT_PCT||r.payment_pct }))
+    ? cohorts.map(r => ({
+        month:             r.COHORT_MONTH || r.cohort_month,
+        merchants:         r.REGISTRATIONS || r.registrations || 0,
+        activeNow:         r.ACTIVE_NOW || r.active_now || 0,
+        activePct:         r.ACTIVE_PCT || r.active_pct || 0,
+        payingNow:         r.PAYING_NOW || r.paying_now || 0,
+        payingPct:         r.PAYING_PCT || r.paying_pct || 0,
+        activeToPayingPct: r.ACTIVE_TO_PAYING_PCT || r.active_to_paying_pct || 0,
+        mrr:               r.COHORT_MRR_EUR || r.cohort_mrr_eur || 0,
+        arr:               r.COHORT_ARR_EUR || r.cohort_arr_eur || 0,
+        arpc:              r.ARPC_EUR || r.arpc_eur || 0,
+        gtv30d:            r.GTV_30D_K_EUR || r.gtv_30d_k_eur || 0,
+        gtvAlltime:        r.GTV_ALLTIME_M_EUR || r.gtv_alltime_m_eur || 0,
+        revenueAlltime:    r.REVENUE_ALLTIME_K_EUR || r.revenue_alltime_k_eur || 0,
+        npv:               r.NPV_PER_MERCHANT_EUR || r.npv_per_merchant_eur || 0,
+        ltv:               r.LTV_PER_PAYING_EUR || r.ltv_per_paying_eur || 0,
+        cancelled30d:      r.CANCELLED_30D || r.cancelled_30d || 0,
+        churnRate30d:      r.CHURN_RATE_30D || r.churn_rate_30d || 0,
+        cohortAgeMonths:   r.COHORT_AGE_MONTHS || r.cohort_age_months || 0,
+        // Backward-compat aliases
+        paymentPct:        r.PAYING_PCT || r.paying_pct || 0,
+      }))
     : STRATEGIC_DEFAULTS.cohortVintages;
 
   const topMarkets = markets.map(r => ({
@@ -385,6 +407,7 @@ async function main() {
   console.log(`ARPC:            \u20ac${caseData.arpc.value}/mo`);
   console.log(`Monthly churn:   ${caseData.churn.monthly.value}`);
   console.log(`Cohort vintages: ${caseData.unitEconomics.cohortVintages.length}`);
+  console.log(`Unified merch:   ${(results.unifiedMerchant||[]).length} rows`);
   console.log(`Top markets:     ${caseData.topMarkets.length}`);
   const monthsWithActuals = caseData.monthly2026.revenue.actual.filter(v => v !== null).length;
   console.log(`Monthly actuals: ${monthsWithActuals}/12 months filled`);

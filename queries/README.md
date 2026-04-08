@@ -6,7 +6,7 @@ SQL queries used by `snowflake-pull.js` to pull live data from the Loyverse Data
 |------|---------|
 | `kpis.sql` | Core KPIs: ARR, ARPC, active users, GTV, churn |
 | `monthly.sql` | Month-by-month revenue, active users, GTV vs targets |
-| `cohorts.sql` | Cohort analysis (placeholder) |
+| `cohorts.sql` | Full cohort analysis: one row per registration month with registrations, active, paying, MRR, ARR, ARPC, GTV, NPV, LTV, churn |
 | `markets.sql` | Top 10 countries by merchant count + GTV |
 | `country-weights.sql` | Merchant distribution by country (%) |
 | `funnel.sql` | Registered → Active → Paying → Payments conversion |
@@ -16,6 +16,7 @@ SQL queries used by `snowflake-pull.js` to pull live data from the Loyverse Data
 | `diagnostics.sql` | Data completeness checks |
 | `revenue-diag.sql` | Invoice data summary stats |
 | `revenue-sample.sql` | Sample invoices for spot-checking |
+| `unified-merchant.sql` | One row per merchant joining all data sources via LOYVERSE_ID (subscriptions, activity, GTV) |
 
 ## Key conventions
 
@@ -25,3 +26,5 @@ SQL queries used by `snowflake-pull.js` to pull live data from the Loyverse Data
 - **GTV source**: `LOYVERSE_RECEIPTS.TOTAL_MONEY` (base currency, not cents)
 - **Merchant join key**: `LOYVERSE_MERCHANTS.LOYVERSE_ID` (not `ID`)
 - **Database context**: `LOYVERSE_DATA_LAKE.PUBLIC` with role `DATA_VIEWER`
+- **Master join key**: `LOYVERSE_MERCHANTS.LOYVERSE_ID` = `CHARGEBEE-*-CUSTOMER.ID` (via TRY_CAST to NUMBER, 96.3% match rate)
+- **Cohort grouping**: `LOYVERSE_MERCHANTS.CREATED_AT` (registration timestamp)
