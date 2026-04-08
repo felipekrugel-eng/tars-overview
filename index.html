@@ -463,6 +463,24 @@
     .unit-trend-title { font-family:'Arial Black',sans-serif; font-size:15px; }
     .unit-trend-sub { font-size:12px; color:#9ca3af; margin-top:2px; margin-bottom:16px; }
 
+    /* ── Cohort Table ── */
+    .cohort-toggle-row { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .cohort-toggle-btn { padding:6px 14px; border-radius:6px; border:1px solid #e5e7eb; background:#fff; font-size:11px; font-weight:600; color:#6b7280; cursor:pointer; transition:all .15s; }
+    .cohort-toggle-btn.active { background:#1D8FE1; color:#fff; border-color:#1D8FE1; }
+    .cohort-toggle-btn:hover:not(.active) { background:#f3f4f6; }
+    .cohort-table-wrap { overflow-x:auto; margin-top:16px; border:1px solid #e5e7eb; border-radius:10px; }
+    .cohort-table { width:100%; border-collapse:collapse; font-size:12px; }
+    .cohort-table thead th { position:sticky; top:0; background:#f9fafb; padding:10px 12px; text-align:right; font-size:10px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#6b7280; border-bottom:2px solid #e5e7eb; white-space:nowrap; }
+    .cohort-table thead th:first-child { text-align:left; }
+    .cohort-table tbody tr { cursor:pointer; transition:background .1s; }
+    .cohort-table tbody tr:hover { background:#EBF5FF; }
+    .cohort-table tbody td { padding:8px 12px; text-align:right; border-bottom:1px solid #f3f4f6; white-space:nowrap; }
+    .cohort-table tbody td:first-child { text-align:left; font-weight:700; color:#1D8FE1; }
+    .cohort-table .num-green { color:#2DC46B; font-weight:600; }
+    .cohort-table .num-red { color:#E14B1D; font-weight:600; }
+    .cohort-table .num-blue { color:#1D8FE1; font-weight:600; }
+    .cohort-table .num-muted { color:#9ca3af; }
+
     .case-footer { background: #0D0D0D; padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .case-footer-name { font-family: "Arial Black", Arial, sans-serif; font-size: 20px; color: #2DC46B; }
     .case-footer-sub { font-size: 12px; color: var(--mid-gray); margin-top: 2px; }
@@ -4399,11 +4417,47 @@
       </div>
     </div>
 
-    <!-- Cohort NPV trend chart -->
+    <!-- Cohort trend chart with KPI toggle -->
     <div class="unit-trend-container">
-      <div class="unit-trend-title">NPV trend by cohort vintage</div>
-      <div class="unit-trend-sub">Last 12 monthly cohorts · Click any bar for detail</div>
-      <div style="position:relative; height:180px;"><canvas id="chartCohortNpvTrend"></canvas></div>
+      <div class="unit-trend-title">Cohort KPI trends</div>
+      <div class="unit-trend-sub">All monthly cohorts · Toggle metric · Click any bar for detail</div>
+      <div class="cohort-toggle-row" id="cohort-chart-toggles">
+        <button class="cohort-toggle-btn active" data-metric="npv">NPV (€)</button>
+        <button class="cohort-toggle-btn" data-metric="arpc">ARPC (€)</button>
+        <button class="cohort-toggle-btn" data-metric="activePct">Active %</button>
+        <button class="cohort-toggle-btn" data-metric="payingPct">Paying %</button>
+        <button class="cohort-toggle-btn" data-metric="mrr">MRR (€)</button>
+        <button class="cohort-toggle-btn" data-metric="churnRate30d">Churn %</button>
+      </div>
+      <div style="position:relative; height:220px;"><canvas id="chartCohortNpvTrend"></canvas></div>
+    </div>
+
+    <!-- Full cohort table -->
+    <div class="unit-trend-container" style="margin-top:16px;">
+      <div class="unit-trend-title">All cohorts</div>
+      <div class="unit-trend-sub">One row per registration month · Click any row for full detail</div>
+      <div class="cohort-table-wrap" style="max-height:420px; overflow-y:auto;">
+        <table class="cohort-table" id="cohort-table">
+          <thead>
+            <tr>
+              <th>Cohort</th>
+              <th>Reg.</th>
+              <th>Active</th>
+              <th>Active %</th>
+              <th>Paying</th>
+              <th>Pay %</th>
+              <th>MRR €</th>
+              <th>ARPC €</th>
+              <th>GTV 30d €k</th>
+              <th>NPV €</th>
+              <th>LTV €</th>
+              <th>Churn %</th>
+              <th>Age (mo)</th>
+            </tr>
+          </thead>
+          <tbody id="cohort-table-body"></tbody>
+        </table>
+      </div>
     </div>
 
 
@@ -5987,47 +6041,101 @@ function renderCase() {
   document.getElementById("unit-ltvcac-note").textContent = UE.ltvCacRatio.note;
 
   try {
-  // Cohort NPV trend chart
+  // Cohort chart with KPI toggle
   const vintages = UE.cohortVintages;
-  __chartCohortNpvTrend = new Chart(document.getElementById("chartCohortNpvTrend"), {
-    type: "bar",
-    data: {
-      labels: vintages.map(function(v){ return v.month; }),
-      datasets: [{
-        label: "NPV (€)",
-        data: vintages.map(function(v){ return v.npv; }),
-        backgroundColor: vintages.map(function(v){ return v.npv >= 180 ? "#2DC46B" : "#1D8FE1"; }),
-        borderRadius: 4,
-        barPercentage: 0.7
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            afterLabel: function(ctx) {
-              var v = vintages[ctx.dataIndex];
-              return "Merchants: " + v.merchants.toLocaleString() + "\nLTV: €" + v.ltv + "\nARPC: €" + v.arpc + "\nPayment %: " + v.paymentPct + "%";
+
+  var cohortMetricConfig = {
+    npv:         { label: "NPV (€)", field: "npv",         prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: 180 },
+    arpc:        { label: "ARPC (€)", field: "arpc",        prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: null },
+    activePct:   { label: "Active %", field: "activePct",   prefix: "",  suffix: "%", color: "#2DC46B", greenThreshold: null },
+    payingPct:   { label: "Paying %", field: "payingPct",   prefix: "",  suffix: "%", color: "#1D8FE1", greenThreshold: null },
+    mrr:         { label: "MRR (€)",  field: "mrr",         prefix: "€", suffix: "",  color: "#1D8FE1", greenThreshold: null },
+    churnRate30d:{ label: "Churn %",  field: "churnRate30d",prefix: "",  suffix: "%", color: "#E14B1D", greenThreshold: null }
+  };
+  var currentCohortMetric = "npv";
+
+  function buildCohortChart(metric) {
+    var cfg = cohortMetricConfig[metric];
+    if (__chartCohortNpvTrend) __chartCohortNpvTrend.destroy();
+    var data = vintages.map(function(v){ return v[cfg.field]; });
+    var bgColors = cfg.greenThreshold
+      ? data.map(function(d){ return d >= cfg.greenThreshold ? "#2DC46B" : "#1D8FE1"; })
+      : data.map(function(){ return cfg.color; });
+
+    __chartCohortNpvTrend = new Chart(document.getElementById("chartCohortNpvTrend"), {
+      type: "bar",
+      data: {
+        labels: vintages.map(function(v){ return v.month; }),
+        datasets: [{ label: cfg.label, data: data, backgroundColor: bgColors, borderRadius: 4, barPercentage: 0.7 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) { return cfg.prefix + ctx.parsed.y.toLocaleString(undefined, {maximumFractionDigits:1}) + cfg.suffix; },
+              afterLabel: function(ctx) {
+                var v = vintages[ctx.dataIndex];
+                return "Registrations: " + v.merchants.toLocaleString() + "\nActive: " + v.activeNow.toLocaleString() + " (" + v.activePct + "%)" +
+                  "\nPaying: " + v.payingNow.toLocaleString() + " (" + v.payingPct + "%)" +
+                  "\nMRR: €" + v.mrr.toLocaleString() + "\nAge: " + v.cohortAgeMonths + " months";
+              }
             }
           }
-        }
-      },
-      scales: {
-        y: { beginAtZero: false, min: 150, grid: { color: "#f3f4f6" }, ticks: { callback: function(v){ return "€" + v; } } },
-        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-      },
-      onClick: function(evt, elements) {
-        if (elements.length > 0) {
-          _showCohortVintageDrill(elements[0].index);
+        },
+        scales: {
+          y: { beginAtZero: metric === "activePct" || metric === "payingPct" || metric === "churnRate30d", grid: { color: "#f3f4f6" },
+               ticks: { callback: function(v){ return cfg.prefix + v + cfg.suffix; } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45 } }
+        },
+        onClick: function(evt, elements) {
+          if (elements.length > 0) _showCohortVintageDrill(elements[0].index);
         }
       }
-    }
+    });
+  }
+
+  buildCohortChart("npv");
+
+  // Toggle buttons
+  document.querySelectorAll("#cohort-chart-toggles .cohort-toggle-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll("#cohort-chart-toggles .cohort-toggle-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      currentCohortMetric = btn.getAttribute("data-metric");
+      buildCohortChart(currentCohortMetric);
+    });
   });
 
-  } catch(e) { console.warn("NPV chart error:", e); }
+  // Populate cohort table
+  var tbody = document.getElementById("cohort-table-body");
+  if (tbody) {
+    tbody.innerHTML = "";
+    vintages.forEach(function(v, idx) {
+      var tr = document.createElement("tr");
+      tr.onclick = function() { _showCohortVintageDrill(idx); };
+      var churnClass = v.churnRate30d > 3 ? "num-red" : (v.churnRate30d <= 2 ? "num-green" : "");
+      var activeClass = v.activePct >= 10 ? "num-green" : (v.activePct < 5 ? "num-red" : "");
+      tr.innerHTML =
+        '<td>' + v.month + '</td>' +
+        '<td>' + v.merchants.toLocaleString() + '</td>' +
+        '<td>' + v.activeNow.toLocaleString() + '</td>' +
+        '<td class="' + activeClass + '">' + v.activePct + '%</td>' +
+        '<td>' + v.payingNow.toLocaleString() + '</td>' +
+        '<td class="num-blue">' + v.payingPct + '%</td>' +
+        '<td>€' + v.mrr.toLocaleString() + '</td>' +
+        '<td>€' + v.arpc + '</td>' +
+        '<td>€' + v.gtv30d + 'k</td>' +
+        '<td class="num-blue">€' + v.npv + '</td>' +
+        '<td class="num-green">€' + v.ltv + '</td>' +
+        '<td class="' + churnClass + '">' + v.churnRate30d + '%</td>' +
+        '<td class="num-muted">' + v.cohortAgeMonths + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  } catch(e) { console.warn("Cohort chart/table error:", e); }
 
   // Render conversion funnel
   function renderFunnel() {
@@ -6239,22 +6347,28 @@ function _showCohortDrill(metric) {
     '<div style="padding:24px 28px;">' +
       '<div style="height:260px;"><canvas id="chartCohortDrill"></canvas></div>' +
       '<div style="margin-top:20px; overflow-x:auto;">' +
-        '<table style="width:100%; font-size:13px; border-collapse:collapse;">' +
+        '<table style="width:100%; font-size:12px; border-collapse:collapse;">' +
           '<thead><tr style="border-bottom:2px solid #e5e7eb; text-align:left;">' +
-            '<th style="padding:8px 12px;">Cohort</th>' +
-            '<th style="padding:8px 12px;">Merchants</th>' +
-            '<th style="padding:8px 12px;">' + (isNpv ? 'NPV' : 'LTV') + '</th>' +
-            '<th style="padding:8px 12px;">ARPC</th>' +
-            '<th style="padding:8px 12px;">Payment %</th>' +
+            '<th style="padding:6px 10px;">Cohort</th>' +
+            '<th style="padding:6px 10px;">Reg.</th>' +
+            '<th style="padding:6px 10px;">Active %</th>' +
+            '<th style="padding:6px 10px;">Paying %</th>' +
+            '<th style="padding:6px 10px;">' + (isNpv ? 'NPV' : 'LTV') + '</th>' +
+            '<th style="padding:6px 10px;">MRR</th>' +
+            '<th style="padding:6px 10px;">ARPC</th>' +
+            '<th style="padding:6px 10px;">Churn %</th>' +
           '</tr></thead>' +
           '<tbody>' +
             vintages.map(function(v) {
-              return '<tr style="border-bottom:1px solid #f3f4f6;">' +
-                '<td style="padding:8px 12px; font-weight:600;">' + v.month + '</td>' +
-                '<td style="padding:8px 12px;">' + v.merchants.toLocaleString() + '</td>' +
-                '<td style="padding:8px 12px; color:' + color + '; font-weight:700;">€' + (isNpv ? v.npv : v.ltv) + '</td>' +
-                '<td style="padding:8px 12px;">€' + v.arpc + '/mo</td>' +
-                '<td style="padding:8px 12px;">' + v.paymentPct + '%</td>' +
+              return '<tr style="border-bottom:1px solid #f3f4f6; cursor:pointer;" onclick="_showCohortVintageDrill(' + vintages.indexOf(v) + ')">' +
+                '<td style="padding:6px 10px; font-weight:600; color:#1D8FE1;">' + v.month + '</td>' +
+                '<td style="padding:6px 10px;">' + v.merchants.toLocaleString() + '</td>' +
+                '<td style="padding:6px 10px;">' + v.activePct + '%</td>' +
+                '<td style="padding:6px 10px;">' + v.payingPct + '%</td>' +
+                '<td style="padding:6px 10px; color:' + color + '; font-weight:700;">€' + (isNpv ? v.npv : v.ltv) + '</td>' +
+                '<td style="padding:6px 10px;">€' + v.mrr.toLocaleString() + '</td>' +
+                '<td style="padding:6px 10px;">€' + v.arpc + '/mo</td>' +
+                '<td style="padding:6px 10px;">' + v.churnRate30d + '%</td>' +
               '</tr>';
             }).join("") +
           '</tbody>' +
@@ -6310,35 +6424,35 @@ function _showCohortVintageDrill(idx) {
     '<button class="drill-close-btn" onclick="document.getElementById(\'cohortVintage-drill-overlay\').classList.remove(\'open\')">×</button>';
 
   var body = document.getElementById("cohortVintageBody");
+  function _drillCard(label, value, bg, color) {
+    return '<div style="background:' + bg + '; border-radius:10px; padding:14px 18px; text-align:center;">' +
+      '<div style="font-size:9px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">' + label + '</div>' +
+      '<div style="font-family:Arial Black,sans-serif; font-size:22px; margin-top:4px; color:' + color + ';">' + value + '</div></div>';
+  }
   body.innerHTML =
     '<div style="padding:24px 28px;">' +
-      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">' +
-        '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
-          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Merchants onboarded</div>' +
-          '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px;">' + v.merchants.toLocaleString() + '</div>' +
-        '</div>' +
-        '<div style="background:#f9fafb; border-radius:10px; padding:16px 20px;">' +
-          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">ARPC</div>' +
-          '<div style="font-family:Arial Black,sans-serif; font-size:28px; margin-top:4px; color:#1D8FE1;">€' + v.arpc + '/mo</div>' +
-        '</div>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:16px;">' +
+        _drillCard("Registrations", v.merchants.toLocaleString(), "#f9fafb", "#111") +
+        _drillCard("Active now", v.activeNow.toLocaleString() + ' (' + v.activePct + '%)', "#ECFDF5", "#2DC46B") +
+        _drillCard("Paying now", v.payingNow.toLocaleString() + ' (' + v.payingPct + '%)', "#EBF5FF", "#1D8FE1") +
       '</div>' +
-      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">' +
-        '<div style="background:#EBF5FF; border-radius:10px; padding:16px 20px; text-align:center;">' +
-          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">NPV</div>' +
-          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#1D8FE1;">€' + v.npv + '</div>' +
-          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Benchmark: ' + softwareNpv + '</div>' +
-        '</div>' +
-        '<div style="background:#ECFDF5; border-radius:10px; padding:16px 20px; text-align:center;">' +
-          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">LTV</div>' +
-          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#2DC46B;">€' + v.ltv + '</div>' +
-          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Target: €216</div>' +
-        '</div>' +
-        '<div style="background:#FFF7ED; border-radius:10px; padding:16px 20px; text-align:center;">' +
-          '<div style="font-size:10px; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase;">Payment %</div>' +
-          '<div style="font-family:Arial Black,sans-serif; font-size:24px; margin-top:4px; color:#F59E0B;">' + v.paymentPct + '%</div>' +
-          '<div style="font-size:11px; color:#9ca3af; margin-top:2px;">Phase 2A: 20%</div>' +
-        '</div>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; margin-bottom:16px;">' +
+        _drillCard("ARPC", '€' + v.arpc + '/mo', "#f9fafb", "#1D8FE1") +
+        _drillCard("MRR", '€' + v.mrr.toLocaleString(), "#f9fafb", "#1D8FE1") +
+        _drillCard("ARR", '€' + v.arr.toLocaleString(), "#f9fafb", "#1D8FE1") +
+        _drillCard("Active→Pay", v.activeToPayingPct + '%', "#f9fafb", "#6b7280") +
       '</div>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:16px;">' +
+        _drillCard("NPV", '€' + v.npv, "#EBF5FF", "#1D8FE1") +
+        _drillCard("LTV / paying", '€' + v.ltv, "#ECFDF5", "#2DC46B") +
+        _drillCard("Churn (30d)", v.churnRate30d + '% (' + v.cancelled30d + ' lost)', "#FEF2F2", "#E14B1D") +
+      '</div>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">' +
+        _drillCard("GTV 30d", '€' + v.gtv30d + 'k', "#f9fafb", "#111") +
+        _drillCard("GTV all-time", '€' + v.gtvAlltime + 'M', "#f9fafb", "#111") +
+        _drillCard("Revenue all-time", '€' + v.revenueAlltime + 'k', "#f9fafb", "#111") +
+      '</div>' +
+      '<div style="margin-top:16px; text-align:center; font-size:12px; color:#9ca3af;">Cohort age: ' + v.cohortAgeMonths + ' months · Benchmark NPV: ' + softwareNpv + '</div>' +
     '</div>';
 
   overlay.classList.add("open");
