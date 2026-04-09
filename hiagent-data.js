@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-09T14:47:39Z
+// Last sync: 2026-04-09T19:02:28Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-09T14:47:39Z",
+  lastSync: "2026-04-09T19:02:28Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-08T16:07:13.131Z",
-      nextRunAt: "2026-04-09T16:07:02.000Z",
+      lastRunAt: "2026-04-09T16:07:52.849Z",
+      nextRunAt: "2026-04-10T16:07:02.000Z",
       detail: {
         purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
         process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
@@ -33,8 +33,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-08T16:58:06.513Z",
-      nextRunAt: "2026-04-09T16:53:08.000Z",
+      lastRunAt: "2026-04-09T16:53:59.136Z",
+      nextRunAt: "2026-04-10T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
@@ -87,7 +87,7 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-08T15:43:09.237Z",
+      lastRunAt: "2026-04-09T15:04:22.668Z",
       nextRunAt: "2026-04-16T15:03:32.000Z",
       detail: {
         purpose: "Prepares leadership for Friday's strategy meeting by sending an advance email with discussion topics, key metrics, and context from previous sessions.",
@@ -105,8 +105,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-02T15:36:24.474Z",
-      nextRunAt: "2026-04-09T15:32:11.000Z",
+      lastRunAt: "2026-04-09T15:33:01.788Z",
+      nextRunAt: "2026-04-16T15:32:11.000Z",
       detail: {
         purpose: "Generates a polished PowerPoint briefing deck for Friday's strategy session, incorporating the latest business case data, 5-year plan context, and outstanding action items.",
         process: "Reads CASE data, 5YP context, and the Action Tracker. Builds a branded PPTX with discussion topics, key metrics, and outstanding actions. Saves to Google Drive Strategic Sessions folder.",
@@ -285,8 +285,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-09T14:47:39Z",
-      nextRunAt: "2026-04-09T19:00:45.000Z",
+      lastRunAt: "2026-04-09T19:02:28Z",
+      nextRunAt: "2026-04-09T23:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
