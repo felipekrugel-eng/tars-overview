@@ -32,22 +32,22 @@ const CASE_DATA = {
     ],
     "revenue": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0.73,
+        0.75,
+        0.78,
+        0.8,
+        0.82,
+        0.85,
+        0.87,
+        0.89,
+        0.91,
+        0.93,
+        0.95,
+        0.97
       ],
       "actual": [
-        null,
-        null,
+        0.808,
+        0.826,
         null,
         null,
         null,
@@ -62,22 +62,22 @@ const CASE_DATA = {
     },
     "paymentRevenue": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
+        0,
+        0,
         null,
         null,
         null,
@@ -92,22 +92,22 @@ const CASE_DATA = {
     },
     "arpc": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
+        0,
+        0,
         null,
         null,
         null,
@@ -122,22 +122,22 @@ const CASE_DATA = {
     },
     "activeUsers": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        340000,
+        345000,
+        350000,
+        360000,
+        365000,
+        370000,
+        375000,
+        380000,
+        385000,
+        390000,
+        395000,
+        400000
       ],
       "actual": [
-        null,
-        null,
+        343290,
+        349123,
         null,
         null,
         null,
@@ -152,22 +152,22 @@ const CASE_DATA = {
     },
     "gtv": {
       "target": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "actual": [
-        null,
-        null,
+        0.9,
+        1081,
         null,
         null,
         null,
@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13922282,
+      "value": 13922287,
       "label": "Registered merchants"
     },
     "active": {
@@ -240,7 +240,7 @@ const CASE_DATA = {
     "cohortVintages": [
       {
         "month": "2026-04",
-        "merchants": 874,
+        "merchants": 879,
         "activeNow": 0,
         "activePct": 0,
         "payingNow": 0,
@@ -249,8 +249,8 @@ const CASE_DATA = {
         "mrr": 0,
         "arr": 0,
         "arpc": 0,
-        "gtv30d": 3544.1,
-        "gtvAlltime": 3.54,
+        "gtv30d": 42.7,
+        "gtvAlltime": 0.04,
         "revenueAlltime": 0,
         "npv": 0,
         "ltv": 0,
@@ -270,8 +270,8 @@ const CASE_DATA = {
         "mrr": 4692,
         "arr": 56300,
         "arpc": 16.35,
-        "gtv30d": 810386.5,
-        "gtvAlltime": 2749.83,
+        "gtv30d": 8625.3,
+        "gtvAlltime": 28.31,
         "revenueAlltime": 15.4,
         "npv": 0.96,
         "ltv": 53.83,
@@ -291,8 +291,8 @@ const CASE_DATA = {
         "mrr": 30863,
         "arr": 370362,
         "arpc": 15.05,
-        "gtv30d": 4494684.7,
-        "gtvAlltime": 144661.63,
+        "gtv30d": 47447.5,
+        "gtvAlltime": 1462.31,
         "revenueAlltime": 92,
         "npv": 0.52,
         "ltv": 44.85,
@@ -312,8 +312,8 @@ const CASE_DATA = {
         "mrr": 39542,
         "arr": 474505,
         "arpc": 13.48,
-        "gtv30d": 3812706.1,
-        "gtvAlltime": 67909.53,
+        "gtv30d": 40534,
+        "gtvAlltime": 707.74,
         "revenueAlltime": 168.7,
         "npv": 0.84,
         "ltv": 57.5,
@@ -333,13 +333,13 @@ const CASE_DATA = {
         "mrr": 31172,
         "arr": 374068,
         "arpc": 13.19,
-        "gtv30d": 51207955.2,
-        "gtvAlltime": 120739.73,
+        "gtv30d": 514231.5,
+        "gtvAlltime": 1211.29,
         "revenueAlltime": 161.8,
         "npv": 1.01,
         "ltv": 68.46,
-        "cancelled30d": 196,
-        "churnRate30d": 7.7,
+        "cancelled30d": 194,
+        "churnRate30d": 7.6,
         "cohortAgeMonths": 4,
         "paymentPct": 1.47
       },
@@ -354,8 +354,8 @@ const CASE_DATA = {
         "mrr": 30224,
         "arr": 362684,
         "arpc": 12.13,
-        "gtv30d": 279662.6,
-        "gtvAlltime": 502.49,
+        "gtv30d": 4875.5,
+        "gtvAlltime": 8.7,
         "revenueAlltime": 195.1,
         "npv": 1.19,
         "ltv": 78.34,
@@ -375,8 +375,8 @@ const CASE_DATA = {
         "mrr": 31917,
         "arr": 383003,
         "arpc": 11.79,
-        "gtv30d": 3387556.8,
-        "gtvAlltime": 147915.06,
+        "gtv30d": 37147.6,
+        "gtvAlltime": 1484.43,
         "revenueAlltime": 229.8,
         "npv": 1.39,
         "ltv": 84.86,
@@ -396,8 +396,8 @@ const CASE_DATA = {
         "mrr": 36130,
         "arr": 433554,
         "arpc": 12.93,
-        "gtv30d": 402882.2,
-        "gtvAlltime": 25353.42,
+        "gtv30d": 6045.5,
+        "gtvAlltime": 257.28,
         "revenueAlltime": 296.1,
         "npv": 1.77,
         "ltv": 105.97,
@@ -417,8 +417,8 @@ const CASE_DATA = {
         "mrr": 39309,
         "arr": 471707,
         "arpc": 13.69,
-        "gtv30d": 205523.8,
-        "gtvAlltime": 2062.9,
+        "gtv30d": 4087,
+        "gtvAlltime": 24.15,
         "revenueAlltime": 347.1,
         "npv": 1.98,
         "ltv": 120.87,
@@ -438,8 +438,8 @@ const CASE_DATA = {
         "mrr": 41866,
         "arr": 502392,
         "arpc": 13.07,
-        "gtv30d": 6783488.8,
-        "gtvAlltime": 8227.8,
+        "gtv30d": 71432.5,
+        "gtvAlltime": 88.53,
         "revenueAlltime": 424,
         "npv": 2.3,
         "ltv": 132.37,
@@ -459,8 +459,8 @@ const CASE_DATA = {
         "mrr": 38932,
         "arr": 467186,
         "arpc": 12.81,
-        "gtv30d": 221824.3,
-        "gtvAlltime": 666.88,
+        "gtv30d": 4656,
+        "gtvAlltime": 10.81,
         "revenueAlltime": 419.1,
         "npv": 2.45,
         "ltv": 137.89,
@@ -480,8 +480,8 @@ const CASE_DATA = {
         "mrr": 40766,
         "arr": 489188,
         "arpc": 13.14,
-        "gtv30d": 8881737,
-        "gtvAlltime": 9031.54,
+        "gtv30d": 90937,
+        "gtvAlltime": 93.91,
         "revenueAlltime": 467.5,
         "npv": 2.72,
         "ltv": 150.72,
@@ -501,8 +501,8 @@ const CASE_DATA = {
         "mrr": 35309,
         "arr": 423711,
         "arpc": 13.2,
-        "gtv30d": 165669.1,
-        "gtvAlltime": 30325.29,
+        "gtv30d": 4457.9,
+        "gtvAlltime": 308.21,
         "revenueAlltime": 452.9,
         "npv": 2.95,
         "ltv": 169.29,
@@ -522,8 +522,8 @@ const CASE_DATA = {
         "mrr": 34029,
         "arr": 408350,
         "arpc": 12.28,
-        "gtv30d": 116732.9,
-        "gtvAlltime": 266.8,
+        "gtv30d": 3483.7,
+        "gtvAlltime": 6.88,
         "revenueAlltime": 474.7,
         "npv": 2.76,
         "ltv": 171.32,
@@ -543,8 +543,8 @@ const CASE_DATA = {
         "mrr": 35831,
         "arr": 429974,
         "arpc": 13.36,
-        "gtv30d": 198912.3,
-        "gtvAlltime": 330.04,
+        "gtv30d": 3431,
+        "gtvAlltime": 6.14,
         "revenueAlltime": 546.3,
         "npv": 3.83,
         "ltv": 203.7,
@@ -564,8 +564,8 @@ const CASE_DATA = {
         "mrr": 33939,
         "arr": 407263,
         "arpc": 12.83,
-        "gtv30d": 116939.8,
-        "gtvAlltime": 223.13,
+        "gtv30d": 3011.9,
+        "gtvAlltime": 5.8,
         "revenueAlltime": 573.1,
         "npv": 3.68,
         "ltv": 216.66,
@@ -585,8 +585,8 @@ const CASE_DATA = {
         "mrr": 26615,
         "arr": 319378,
         "arpc": 11.99,
-        "gtv30d": 137207697.5,
-        "gtvAlltime": 137375.81,
+        "gtv30d": 1373745.4,
+        "gtvAlltime": 1377.27,
         "revenueAlltime": 499.1,
         "npv": 4,
         "ltv": 224.83,
@@ -606,8 +606,8 @@ const CASE_DATA = {
         "mrr": 29055,
         "arr": 348659,
         "arpc": 12.76,
-        "gtv30d": 107343,
-        "gtvAlltime": 409434.5,
+        "gtv30d": 3341.5,
+        "gtvAlltime": 14561.63,
         "revenueAlltime": 581.1,
         "npv": 4.22,
         "ltv": 255.22,
@@ -627,8 +627,8 @@ const CASE_DATA = {
         "mrr": 32782,
         "arr": 393384,
         "arpc": 13.51,
-        "gtv30d": 116706.7,
-        "gtvAlltime": 891.37,
+        "gtv30d": 3038,
+        "gtvAlltime": 12.52,
         "revenueAlltime": 656.2,
         "npv": 4.4,
         "ltv": 270.47,
@@ -648,8 +648,8 @@ const CASE_DATA = {
         "mrr": 32472,
         "arr": 389662,
         "arpc": 13.78,
-        "gtv30d": 443710.6,
-        "gtvAlltime": 1397.54,
+        "gtv30d": 6588.3,
+        "gtvAlltime": 18.07,
         "revenueAlltime": 734.1,
         "npv": 5.53,
         "ltv": 311.47,
@@ -669,8 +669,8 @@ const CASE_DATA = {
         "mrr": 33426,
         "arr": 401117,
         "arpc": 14.74,
-        "gtv30d": 170921.9,
-        "gtvAlltime": 1127.7,
+        "gtv30d": 3654,
+        "gtvAlltime": 21.71,
         "revenueAlltime": 748.3,
         "npv": 5.42,
         "ltv": 330.1,
@@ -690,8 +690,8 @@ const CASE_DATA = {
         "mrr": 31283,
         "arr": 375398,
         "arpc": 13.49,
-        "gtv30d": 356476.5,
-        "gtvAlltime": 634.96,
+        "gtv30d": 5439.3,
+        "gtvAlltime": 9.74,
         "revenueAlltime": 700.4,
         "npv": 4.99,
         "ltv": 302.03,
@@ -711,8 +711,8 @@ const CASE_DATA = {
         "mrr": 25304,
         "arr": 303653,
         "arpc": 12.08,
-        "gtv30d": 279132.1,
-        "gtvAlltime": 548.3,
+        "gtv30d": 4419.3,
+        "gtvAlltime": 8.46,
         "revenueAlltime": 650.1,
         "npv": 5.13,
         "ltv": 310.45,
@@ -732,8 +732,8 @@ const CASE_DATA = {
         "mrr": 30837,
         "arr": 370044,
         "arpc": 12.34,
-        "gtv30d": 229267.3,
-        "gtvAlltime": 644.6,
+        "gtv30d": 4122.7,
+        "gtvAlltime": 9.86,
         "revenueAlltime": 716.8,
         "npv": 5.39,
         "ltv": 286.94,
@@ -753,8 +753,8 @@ const CASE_DATA = {
         "mrr": 28256,
         "arr": 339075,
         "arpc": 13.11,
-        "gtv30d": 228626.1,
-        "gtvAlltime": 688.32,
+        "gtv30d": 4274.2,
+        "gtvAlltime": 10.42,
         "revenueAlltime": 699,
         "npv": 5.23,
         "ltv": 324.2,
@@ -774,8 +774,8 @@ const CASE_DATA = {
         "mrr": 39428,
         "arr": 473135,
         "arpc": 15.66,
-        "gtv30d": 136600.4,
-        "gtvAlltime": 919.07,
+        "gtv30d": 3115.6,
+        "gtvAlltime": 12.56,
         "revenueAlltime": 1038.8,
         "npv": 7.38,
         "ltv": 412.7,
@@ -795,8 +795,8 @@ const CASE_DATA = {
         "mrr": 32778,
         "arr": 393336,
         "arpc": 13.65,
-        "gtv30d": 379327.1,
-        "gtvAlltime": 1183.79,
+        "gtv30d": 5502.8,
+        "gtvAlltime": 15.2,
         "revenueAlltime": 921.5,
         "npv": 5.78,
         "ltv": 383.79,
@@ -816,8 +816,8 @@ const CASE_DATA = {
         "mrr": 30990,
         "arr": 371877,
         "arpc": 12.49,
-        "gtv30d": 358776.2,
-        "gtvAlltime": 550.78,
+        "gtv30d": 5713.2,
+        "gtvAlltime": 9.37,
         "revenueAlltime": 962.7,
         "npv": 6.95,
         "ltv": 388.04,
@@ -837,8 +837,8 @@ const CASE_DATA = {
         "mrr": 32082,
         "arr": 384980,
         "arpc": 17.6,
-        "gtv30d": 83719.5,
-        "gtvAlltime": 579.46,
+        "gtv30d": 2643.7,
+        "gtvAlltime": 8.92,
         "revenueAlltime": 910.6,
         "npv": 8.31,
         "ltv": 499.52,
@@ -858,8 +858,8 @@ const CASE_DATA = {
         "mrr": 30728,
         "arr": 368733,
         "arpc": 14.19,
-        "gtv30d": 86924.2,
-        "gtvAlltime": 20169.26,
+        "gtv30d": 3396.2,
+        "gtvAlltime": 207.05,
         "revenueAlltime": 947.4,
         "npv": 8.08,
         "ltv": 437.62,
@@ -879,8 +879,8 @@ const CASE_DATA = {
         "mrr": 27702,
         "arr": 332426,
         "arpc": 13.52,
-        "gtv30d": 211551,
-        "gtvAlltime": 416.48,
+        "gtv30d": 3858.1,
+        "gtvAlltime": 7.84,
         "revenueAlltime": 872.5,
         "npv": 7.18,
         "ltv": 425.81,
@@ -900,8 +900,8 @@ const CASE_DATA = {
         "mrr": 29067,
         "arr": 348801,
         "arpc": 15.19,
-        "gtv30d": 147673.7,
-        "gtvAlltime": 496.85,
+        "gtv30d": 3365.9,
+        "gtvAlltime": 8.62,
         "revenueAlltime": 988.9,
         "npv": 8.16,
         "ltv": 516.67,
@@ -921,8 +921,8 @@ const CASE_DATA = {
         "mrr": 26367,
         "arr": 316401,
         "arpc": 12.96,
-        "gtv30d": 113778.3,
-        "gtvAlltime": 259.64,
+        "gtv30d": 2594.9,
+        "gtvAlltime": 5.47,
         "revenueAlltime": 892.8,
         "npv": 6.49,
         "ltv": 438.93,
@@ -942,8 +942,8 @@ const CASE_DATA = {
         "mrr": 37365,
         "arr": 448381,
         "arpc": 14.53,
-        "gtv30d": 124271.8,
-        "gtvAlltime": 280,
+        "gtv30d": 3242.8,
+        "gtvAlltime": 6.38,
         "revenueAlltime": 1210.2,
         "npv": 7.28,
         "ltv": 470.54,
@@ -963,8 +963,8 @@ const CASE_DATA = {
         "mrr": 31802,
         "arr": 381626,
         "arpc": 13.48,
-        "gtv30d": 124533.5,
-        "gtvAlltime": 256.46,
+        "gtv30d": 2746.7,
+        "gtvAlltime": 6.84,
         "revenueAlltime": 1173.8,
         "npv": 7.67,
         "ltv": 497.57,
@@ -984,8 +984,8 @@ const CASE_DATA = {
         "mrr": 32686,
         "arr": 392229,
         "arpc": 14.3,
-        "gtv30d": 104902.5,
-        "gtvAlltime": 2409.56,
+        "gtv30d": 2358.4,
+        "gtvAlltime": 26.68,
         "revenueAlltime": 1288.4,
         "npv": 8,
         "ltv": 563.62,
@@ -1005,8 +1005,8 @@ const CASE_DATA = {
         "mrr": 35478,
         "arr": 425734,
         "arpc": 15.5,
-        "gtv30d": 149035,
-        "gtvAlltime": 265.07,
+        "gtv30d": 2864.3,
+        "gtvAlltime": 5.39,
         "revenueAlltime": 1269.8,
         "npv": 9.24,
         "ltv": 554.75,
@@ -1026,8 +1026,8 @@ const CASE_DATA = {
         "mrr": 44871,
         "arr": 538458,
         "arpc": 15.96,
-        "gtv30d": 542598.8,
-        "gtvAlltime": 1326.08,
+        "gtv30d": 8237.7,
+        "gtvAlltime": 40.98,
         "revenueAlltime": 2034.8,
         "npv": 11.6,
         "ltv": 723.6,
@@ -1047,8 +1047,8 @@ const CASE_DATA = {
         "mrr": 37529,
         "arr": 450351,
         "arpc": 15.98,
-        "gtv30d": 111136.9,
-        "gtvAlltime": 60365.4,
+        "gtv30d": 2332.4,
+        "gtvAlltime": 606.44,
         "revenueAlltime": 1474.6,
         "npv": 9.13,
         "ltv": 627.74,
@@ -1068,8 +1068,8 @@ const CASE_DATA = {
         "mrr": 37306,
         "arr": 447669,
         "arpc": 14.08,
-        "gtv30d": 133502.1,
-        "gtvAlltime": 268.7,
+        "gtv30d": 2618.6,
+        "gtvAlltime": 5.38,
         "revenueAlltime": 1533.3,
         "npv": 9.37,
         "ltv": 578.6,
@@ -1089,8 +1089,8 @@ const CASE_DATA = {
         "mrr": 29713,
         "arr": 356561,
         "arpc": 13.18,
-        "gtv30d": 187282.1,
-        "gtvAlltime": 378.16,
+        "gtv30d": 4295.7,
+        "gtvAlltime": 8.91,
         "revenueAlltime": 1321.8,
         "npv": 9.08,
         "ltv": 586.15,
@@ -1110,8 +1110,8 @@ const CASE_DATA = {
         "mrr": 34869,
         "arr": 418430,
         "arpc": 15.04,
-        "gtv30d": 116178.2,
-        "gtvAlltime": 516.17,
+        "gtv30d": 4512.2,
+        "gtvAlltime": 17.88,
         "revenueAlltime": 1673,
         "npv": 10.54,
         "ltv": 721.42,
@@ -1131,8 +1131,8 @@ const CASE_DATA = {
         "mrr": 36116,
         "arr": 433394,
         "arpc": 15.63,
-        "gtv30d": 778022.3,
-        "gtvAlltime": 1057.73,
+        "gtv30d": 9339.3,
+        "gtvAlltime": 13.88,
         "revenueAlltime": 1592,
         "npv": 10.04,
         "ltv": 689.17,
@@ -1152,8 +1152,8 @@ const CASE_DATA = {
         "mrr": 33976,
         "arr": 407714,
         "arpc": 15.42,
-        "gtv30d": 257462.8,
-        "gtvAlltime": 537.95,
+        "gtv30d": 3903.5,
+        "gtvAlltime": 8.28,
         "revenueAlltime": 1476,
         "npv": 9.45,
         "ltv": 669.69,
@@ -1173,8 +1173,8 @@ const CASE_DATA = {
         "mrr": 27573,
         "arr": 330881,
         "arpc": 12.52,
-        "gtv30d": 662582.4,
-        "gtvAlltime": 780.23,
+        "gtv30d": 8363.8,
+        "gtvAlltime": 11.25,
         "revenueAlltime": 1455.1,
         "npv": 9.16,
         "ltv": 660.79,
@@ -1194,8 +1194,8 @@ const CASE_DATA = {
         "mrr": 34357,
         "arr": 412280,
         "arpc": 16.15,
-        "gtv30d": 118076.4,
-        "gtvAlltime": 223.36,
+        "gtv30d": 2392,
+        "gtvAlltime": 4.8,
         "revenueAlltime": 1868.3,
         "npv": 11.54,
         "ltv": 878.36,
@@ -1215,8 +1215,8 @@ const CASE_DATA = {
         "mrr": 31169,
         "arr": 374027,
         "arpc": 14.27,
-        "gtv30d": 494466.4,
-        "gtvAlltime": 1062.26,
+        "gtv30d": 6906.8,
+        "gtvAlltime": 14.44,
         "revenueAlltime": 1495.5,
         "npv": 8.75,
         "ltv": 684.74,
@@ -1236,8 +1236,8 @@ const CASE_DATA = {
         "mrr": 30047,
         "arr": 360565,
         "arpc": 14.49,
-        "gtv30d": 1262105.3,
-        "gtvAlltime": 1843.99,
+        "gtv30d": 13759.5,
+        "gtvAlltime": 22.1,
         "revenueAlltime": 1496.8,
         "npv": 9.53,
         "ltv": 722.03,
@@ -1257,8 +1257,8 @@ const CASE_DATA = {
         "mrr": 23542,
         "arr": 282510,
         "arpc": 15.39,
-        "gtv30d": 125962.1,
-        "gtvAlltime": 243.67,
+        "gtv30d": 3257,
+        "gtvAlltime": 6.68,
         "revenueAlltime": 1431.6,
         "npv": 9.77,
         "ltv": 935.7,
@@ -1278,8 +1278,8 @@ const CASE_DATA = {
         "mrr": 29589,
         "arr": 355070,
         "arpc": 13.76,
-        "gtv30d": 140444.5,
-        "gtvAlltime": 346.44,
+        "gtv30d": 2452.9,
+        "gtvAlltime": 5.85,
         "revenueAlltime": 1528.2,
         "npv": 9.87,
         "ltv": 710.46,
@@ -1299,8 +1299,8 @@ const CASE_DATA = {
         "mrr": 27537,
         "arr": 330443,
         "arpc": 17.54,
-        "gtv30d": 107750.7,
-        "gtvAlltime": 270.91,
+        "gtv30d": 2755.1,
+        "gtvAlltime": 26.65,
         "revenueAlltime": 1439.8,
         "npv": 9.62,
         "ltv": 917.1,
@@ -1320,8 +1320,8 @@ const CASE_DATA = {
         "mrr": 29343,
         "arr": 352117,
         "arpc": 16.04,
-        "gtv30d": 99849.4,
-        "gtvAlltime": 315.4,
+        "gtv30d": 2276.6,
+        "gtvAlltime": 5.85,
         "revenueAlltime": 1502.5,
         "npv": 9.82,
         "ltv": 821.51,
@@ -1341,8 +1341,8 @@ const CASE_DATA = {
         "mrr": 25186,
         "arr": 302236,
         "arpc": 16.59,
-        "gtv30d": 323321.3,
-        "gtvAlltime": 683.18,
+        "gtv30d": 5195.9,
+        "gtvAlltime": 11.79,
         "revenueAlltime": 1516.2,
         "npv": 10.04,
         "ltv": 998.78,
@@ -1362,8 +1362,8 @@ const CASE_DATA = {
         "mrr": 19996,
         "arr": 239957,
         "arpc": 11.34,
-        "gtv30d": 128102.1,
-        "gtvAlltime": 914.92,
+        "gtv30d": 2575,
+        "gtvAlltime": 12.78,
         "revenueAlltime": 1173.1,
         "npv": 7.28,
         "ltv": 665.37,
@@ -1383,8 +1383,8 @@ const CASE_DATA = {
         "mrr": 22392,
         "arr": 268703,
         "arpc": 14.9,
-        "gtv30d": 266116.2,
-        "gtvAlltime": 2967.75,
+        "gtv30d": 3708.6,
+        "gtvAlltime": 32.53,
         "revenueAlltime": 1410.3,
         "npv": 8.98,
         "ltv": 938.29,
@@ -1404,8 +1404,8 @@ const CASE_DATA = {
         "mrr": 24372,
         "arr": 292464,
         "arpc": 15.56,
-        "gtv30d": 68423.6,
-        "gtvAlltime": 177.59,
+        "gtv30d": 2235.2,
+        "gtvAlltime": 5.42,
         "revenueAlltime": 1402.2,
         "npv": 9.19,
         "ltv": 895.39,
@@ -1425,8 +1425,8 @@ const CASE_DATA = {
         "mrr": 21660,
         "arr": 259923,
         "arpc": 15.41,
-        "gtv30d": 103345.3,
-        "gtvAlltime": 138681.81,
+        "gtv30d": 2048.5,
+        "gtvAlltime": 1388.98,
         "revenueAlltime": 1192,
         "npv": 7.81,
         "ltv": 847.77,
@@ -1446,8 +1446,8 @@ const CASE_DATA = {
         "mrr": 22825,
         "arr": 273899,
         "arpc": 16.18,
-        "gtv30d": 70490.2,
-        "gtvAlltime": 197.26,
+        "gtv30d": 2535.2,
+        "gtvAlltime": 6.3,
         "revenueAlltime": 1481.7,
         "npv": 8.44,
         "ltv": 1050.07,
@@ -1467,8 +1467,8 @@ const CASE_DATA = {
         "mrr": 20610,
         "arr": 247324,
         "arpc": 13.89,
-        "gtv30d": 81732.2,
-        "gtvAlltime": 190.54,
+        "gtv30d": 2211.4,
+        "gtvAlltime": 5.12,
         "revenueAlltime": 1212.7,
         "npv": 8.81,
         "ltv": 817.15,
@@ -1488,8 +1488,8 @@ const CASE_DATA = {
         "mrr": 21411,
         "arr": 256933,
         "arpc": 15.99,
-        "gtv30d": 64055.3,
-        "gtvAlltime": 228.73,
+        "gtv30d": 1620,
+        "gtvAlltime": 4.55,
         "revenueAlltime": 1230.1,
         "npv": 9.33,
         "ltv": 918.66,
@@ -1509,8 +1509,8 @@ const CASE_DATA = {
         "mrr": 17124,
         "arr": 205483,
         "arpc": 12.82,
-        "gtv30d": 319377.7,
-        "gtvAlltime": 884.48,
+        "gtv30d": 4927.8,
+        "gtvAlltime": 12.47,
         "revenueAlltime": 1068.9,
         "npv": 7.68,
         "ltv": 800.1,
@@ -1530,8 +1530,8 @@ const CASE_DATA = {
         "mrr": 21895,
         "arr": 262739,
         "arpc": 15.17,
-        "gtv30d": 436299.7,
-        "gtvAlltime": 823.68,
+        "gtv30d": 5697.3,
+        "gtvAlltime": 11.71,
         "revenueAlltime": 1358,
         "npv": 8.47,
         "ltv": 941.1,
@@ -1551,8 +1551,8 @@ const CASE_DATA = {
         "mrr": 17820,
         "arr": 213838,
         "arpc": 14.78,
-        "gtv30d": 65437,
-        "gtvAlltime": 145.56,
+        "gtv30d": 1379.6,
+        "gtvAlltime": 3.08,
         "revenueAlltime": 1099.8,
         "npv": 8.12,
         "ltv": 911.91,
@@ -1572,8 +1572,8 @@ const CASE_DATA = {
         "mrr": 30610,
         "arr": 367319,
         "arpc": 23.77,
-        "gtv30d": 99003.7,
-        "gtvAlltime": 171.79,
+        "gtv30d": 4473.9,
+        "gtvAlltime": 7.94,
         "revenueAlltime": 1576.6,
         "npv": 10.16,
         "ltv": 1224.08,
@@ -1593,8 +1593,8 @@ const CASE_DATA = {
         "mrr": 17050,
         "arr": 204605,
         "arpc": 16.3,
-        "gtv30d": 64197.8,
-        "gtvAlltime": 142.61,
+        "gtv30d": 2208.4,
+        "gtvAlltime": 4.71,
         "revenueAlltime": 1060.5,
         "npv": 7.56,
         "ltv": 1013.89,
@@ -1614,8 +1614,8 @@ const CASE_DATA = {
         "mrr": 14399,
         "arr": 172783,
         "arpc": 15.47,
-        "gtv30d": 41219.9,
-        "gtvAlltime": 110.69,
+        "gtv30d": 1260.5,
+        "gtvAlltime": 3.55,
         "revenueAlltime": 958.1,
         "npv": 6.86,
         "ltv": 1029.08,
@@ -1635,8 +1635,8 @@ const CASE_DATA = {
         "mrr": 17539,
         "arr": 210465,
         "arpc": 16.8,
-        "gtv30d": 55162.9,
-        "gtvAlltime": 171.4,
+        "gtv30d": 1358.5,
+        "gtvAlltime": 3.47,
         "revenueAlltime": 898.7,
         "npv": 6.63,
         "ltv": 860.84,
@@ -1656,8 +1656,8 @@ const CASE_DATA = {
         "mrr": 18029,
         "arr": 216351,
         "arpc": 17.49,
-        "gtv30d": 45655.8,
-        "gtvAlltime": 102.74,
+        "gtv30d": 1187.5,
+        "gtvAlltime": 3.1,
         "revenueAlltime": 974.2,
         "npv": 6.5,
         "ltv": 944.89,
@@ -1677,8 +1677,8 @@ const CASE_DATA = {
         "mrr": 18543,
         "arr": 222512,
         "arpc": 19.5,
-        "gtv30d": 46736.5,
-        "gtvAlltime": 114.1,
+        "gtv30d": 1844.1,
+        "gtvAlltime": 4.02,
         "revenueAlltime": 1148.6,
         "npv": 7.21,
         "ltv": 1207.78,
@@ -1698,8 +1698,8 @@ const CASE_DATA = {
         "mrr": 14770,
         "arr": 177239,
         "arpc": 14.95,
-        "gtv30d": 145433.9,
-        "gtvAlltime": 35460.29,
+        "gtv30d": 2311,
+        "gtvAlltime": 356.78,
         "revenueAlltime": 935.8,
         "npv": 5.92,
         "ltv": 947.12,
@@ -1719,8 +1719,8 @@ const CASE_DATA = {
         "mrr": 19638,
         "arr": 235651,
         "arpc": 21.21,
-        "gtv30d": 38215.5,
-        "gtvAlltime": 98.14,
+        "gtv30d": 1386.2,
+        "gtvAlltime": 3.56,
         "revenueAlltime": 1053.7,
         "npv": 7.38,
         "ltv": 1137.93,
@@ -1740,8 +1740,8 @@ const CASE_DATA = {
         "mrr": 12116,
         "arr": 145397,
         "arpc": 17.66,
-        "gtv30d": 29109.3,
-        "gtvAlltime": 755.38,
+        "gtv30d": 652,
+        "gtvAlltime": 8.44,
         "revenueAlltime": 753.2,
         "npv": 6.63,
         "ltv": 1097.89,
@@ -1761,8 +1761,8 @@ const CASE_DATA = {
         "mrr": 6672,
         "arr": 80060,
         "arpc": 19.28,
-        "gtv30d": 22472.5,
-        "gtvAlltime": 47.14,
+        "gtv30d": 707.4,
+        "gtvAlltime": 1.75,
         "revenueAlltime": 450.3,
         "npv": 5.49,
         "ltv": 1301.36,
@@ -1782,8 +1782,8 @@ const CASE_DATA = {
         "mrr": 7673,
         "arr": 92073,
         "arpc": 15.89,
-        "gtv30d": 25382.7,
-        "gtvAlltime": 56.62,
+        "gtv30d": 630.1,
+        "gtvAlltime": 1.35,
         "revenueAlltime": 461.1,
         "npv": 4.72,
         "ltv": 954.6,
@@ -1803,8 +1803,8 @@ const CASE_DATA = {
         "mrr": 11670,
         "arr": 140037,
         "arpc": 16.79,
-        "gtv30d": 31509.8,
-        "gtvAlltime": 307.02,
+        "gtv30d": 1101.9,
+        "gtvAlltime": 4.72,
         "revenueAlltime": 824.6,
         "npv": 7.23,
         "ltv": 1186.43,
@@ -1824,8 +1824,8 @@ const CASE_DATA = {
         "mrr": 12882,
         "arr": 154579,
         "arpc": 17.48,
-        "gtv30d": 154164.8,
-        "gtvAlltime": 858.82,
+        "gtv30d": 2710.2,
+        "gtvAlltime": 11.13,
         "revenueAlltime": 690,
         "npv": 6.29,
         "ltv": 936.25,
@@ -1845,8 +1845,8 @@ const CASE_DATA = {
         "mrr": 11836,
         "arr": 142031,
         "arpc": 19.96,
-        "gtv30d": 344599.7,
-        "gtvAlltime": 379.49,
+        "gtv30d": 3705.9,
+        "gtvAlltime": 4.4,
         "revenueAlltime": 623.6,
         "npv": 6.78,
         "ltv": 1051.63,
@@ -1866,8 +1866,8 @@ const CASE_DATA = {
         "mrr": 10831,
         "arr": 129966,
         "arpc": 17.75,
-        "gtv30d": 26127.2,
-        "gtvAlltime": 95.96,
+        "gtv30d": 520,
+        "gtvAlltime": 1.67,
         "revenueAlltime": 610.1,
         "npv": 6.01,
         "ltv": 1000.17,
@@ -1887,8 +1887,8 @@ const CASE_DATA = {
         "mrr": 12988,
         "arr": 155856,
         "arpc": 17.09,
-        "gtv30d": 28721.9,
-        "gtvAlltime": 155.66,
+        "gtv30d": 1032.5,
+        "gtvAlltime": 3.22,
         "revenueAlltime": 863.2,
         "npv": 7.7,
         "ltv": 1135.79,
@@ -1908,8 +1908,8 @@ const CASE_DATA = {
         "mrr": 11820,
         "arr": 141842,
         "arpc": 19.54,
-        "gtv30d": 49636.8,
-        "gtvAlltime": 103.05,
+        "gtv30d": 1918.7,
+        "gtvAlltime": 4.07,
         "revenueAlltime": 674.4,
         "npv": 6.48,
         "ltv": 1114.75,
@@ -1929,8 +1929,8 @@ const CASE_DATA = {
         "mrr": 11495,
         "arr": 137942,
         "arpc": 19.35,
-        "gtv30d": 30386.3,
-        "gtvAlltime": 68.64,
+        "gtv30d": 596.8,
+        "gtvAlltime": 1.3,
         "revenueAlltime": 519.5,
         "npv": 4.78,
         "ltv": 874.65,
@@ -1950,8 +1950,8 @@ const CASE_DATA = {
         "mrr": 9070,
         "arr": 108839,
         "arpc": 16.73,
-        "gtv30d": 32642.8,
-        "gtvAlltime": 119.89,
+        "gtv30d": 1238.4,
+        "gtvAlltime": 3.4,
         "revenueAlltime": 542.7,
         "npv": 4.71,
         "ltv": 1001.23,
@@ -1971,8 +1971,8 @@ const CASE_DATA = {
         "mrr": 9035,
         "arr": 108418,
         "arpc": 14.55,
-        "gtv30d": 143941.2,
-        "gtvAlltime": 277.3,
+        "gtv30d": 2076.4,
+        "gtvAlltime": 4.78,
         "revenueAlltime": 600.1,
         "npv": 6.01,
         "ltv": 966.36,
@@ -1992,8 +1992,8 @@ const CASE_DATA = {
         "mrr": 11312,
         "arr": 135743,
         "arpc": 18.45,
-        "gtv30d": 329771.1,
-        "gtvAlltime": 1163.75,
+        "gtv30d": 3667.4,
+        "gtvAlltime": 12.71,
         "revenueAlltime": 628.2,
         "npv": 6,
         "ltv": 1024.85,
@@ -2013,8 +2013,8 @@ const CASE_DATA = {
         "mrr": 7646,
         "arr": 91746,
         "arpc": 16.03,
-        "gtv30d": 95113.5,
-        "gtvAlltime": 177.45,
+        "gtv30d": 1280,
+        "gtvAlltime": 2.57,
         "revenueAlltime": 494.5,
         "npv": 4.93,
         "ltv": 1036.62,
@@ -2034,8 +2034,8 @@ const CASE_DATA = {
         "mrr": 6142,
         "arr": 73709,
         "arpc": 11.93,
-        "gtv30d": 140547.6,
-        "gtvAlltime": 349.25,
+        "gtv30d": 1718.8,
+        "gtvAlltime": 4.2,
         "revenueAlltime": 520.7,
         "npv": 5,
         "ltv": 1011.06,
@@ -2055,8 +2055,8 @@ const CASE_DATA = {
         "mrr": 7306,
         "arr": 87677,
         "arpc": 16.2,
-        "gtv30d": 21922.7,
-        "gtvAlltime": 47.83,
+        "gtv30d": 598.5,
+        "gtvAlltime": 1.36,
         "revenueAlltime": 446.3,
         "npv": 4.44,
         "ltv": 989.68,
@@ -2076,8 +2076,8 @@ const CASE_DATA = {
         "mrr": 8820,
         "arr": 105838,
         "arpc": 14.65,
-        "gtv30d": 25980.9,
-        "gtvAlltime": 59.41,
+        "gtv30d": 1395.2,
+        "gtvAlltime": 2.8,
         "revenueAlltime": 460.8,
         "npv": 4.11,
         "ltv": 765.4,
@@ -2097,8 +2097,8 @@ const CASE_DATA = {
         "mrr": 12615,
         "arr": 151376,
         "arpc": 31.94,
-        "gtv30d": 19548.1,
-        "gtvAlltime": 40.08,
+        "gtv30d": 2163.7,
+        "gtvAlltime": 3.3,
         "revenueAlltime": 526.4,
         "npv": 5.57,
         "ltv": 1332.56,
@@ -2118,8 +2118,8 @@ const CASE_DATA = {
         "mrr": 7033,
         "arr": 84397,
         "arpc": 17.63,
-        "gtv30d": 17877.2,
-        "gtvAlltime": 35.8,
+        "gtv30d": 691.7,
+        "gtvAlltime": 1.48,
         "revenueAlltime": 345.7,
         "npv": 3.62,
         "ltv": 866.48,
@@ -2139,8 +2139,8 @@ const CASE_DATA = {
         "mrr": 7387,
         "arr": 88647,
         "arpc": 19.97,
-        "gtv30d": 29553.1,
-        "gtvAlltime": 61.36,
+        "gtv30d": 481,
+        "gtvAlltime": 1.2,
         "revenueAlltime": 619.3,
         "npv": 6.44,
         "ltv": 1673.67,
@@ -2160,8 +2160,8 @@ const CASE_DATA = {
         "mrr": 8088,
         "arr": 97059,
         "arpc": 21.92,
-        "gtv30d": 135580.3,
-        "gtvAlltime": 340.64,
+        "gtv30d": 1704.8,
+        "gtvAlltime": 4.09,
         "revenueAlltime": 398,
         "npv": 4.78,
         "ltv": 1078.7,
@@ -2181,8 +2181,8 @@ const CASE_DATA = {
         "mrr": 4174,
         "arr": 50090,
         "arpc": 14.15,
-        "gtv30d": 14366.9,
-        "gtvAlltime": 29.71,
+        "gtv30d": 2468.1,
+        "gtvAlltime": 3.63,
         "revenueAlltime": 251.2,
         "npv": 2.94,
         "ltv": 851.4,
@@ -2202,8 +2202,8 @@ const CASE_DATA = {
         "mrr": 5195,
         "arr": 62343,
         "arpc": 17.55,
-        "gtv30d": 27932.9,
-        "gtvAlltime": 60.37,
+        "gtv30d": 529.9,
+        "gtvAlltime": 1.17,
         "revenueAlltime": 340.1,
         "npv": 4.27,
         "ltv": 1148.95,
@@ -2223,8 +2223,8 @@ const CASE_DATA = {
         "mrr": 4159,
         "arr": 49907,
         "arpc": 14.54,
-        "gtv30d": 13008.7,
-        "gtvAlltime": 28.79,
+        "gtv30d": 150.2,
+        "gtvAlltime": 0.38,
         "revenueAlltime": 260.4,
         "npv": 3.5,
         "ltv": 910.66,
@@ -2244,8 +2244,8 @@ const CASE_DATA = {
         "mrr": 6985,
         "arr": 83821,
         "arpc": 20.48,
-        "gtv30d": 18866.3,
-        "gtvAlltime": 38.76,
+        "gtv30d": 403.5,
+        "gtvAlltime": 0.94,
         "revenueAlltime": 370.2,
         "npv": 4.64,
         "ltv": 1085.71,
@@ -2265,8 +2265,8 @@ const CASE_DATA = {
         "mrr": 5045,
         "arr": 60541,
         "arpc": 16.71,
-        "gtv30d": 15999.2,
-        "gtvAlltime": 32.72,
+        "gtv30d": 500.9,
+        "gtvAlltime": 0.98,
         "revenueAlltime": 294.1,
         "npv": 3.81,
         "ltv": 973.76,
@@ -2286,8 +2286,8 @@ const CASE_DATA = {
         "mrr": 3570,
         "arr": 42836,
         "arpc": 14.34,
-        "gtv30d": 10429.6,
-        "gtvAlltime": 39.02,
+        "gtv30d": 393.5,
+        "gtvAlltime": 0.91,
         "revenueAlltime": 203,
         "npv": 2.62,
         "ltv": 815.17,
@@ -2307,8 +2307,8 @@ const CASE_DATA = {
         "mrr": 4004,
         "arr": 48048,
         "arpc": 18.12,
-        "gtv30d": 9879.8,
-        "gtvAlltime": 21.47,
+        "gtv30d": 210.6,
+        "gtvAlltime": 0.5,
         "revenueAlltime": 216.8,
         "npv": 3.43,
         "ltv": 980.77,
@@ -2328,8 +2328,8 @@ const CASE_DATA = {
         "mrr": 4759,
         "arr": 57108,
         "arpc": 22.55,
-        "gtv30d": 8515.5,
-        "gtvAlltime": 21.16,
+        "gtv30d": 1059.4,
+        "gtvAlltime": 1.77,
         "revenueAlltime": 287,
         "npv": 4.11,
         "ltv": 1359.99,
@@ -2349,8 +2349,8 @@ const CASE_DATA = {
         "mrr": 4797,
         "arr": 57558,
         "arpc": 23.75,
-        "gtv30d": 12720.6,
-        "gtvAlltime": 36.38,
+        "gtv30d": 316.6,
+        "gtvAlltime": 0.75,
         "revenueAlltime": 233.2,
         "npv": 3.75,
         "ltv": 1154.46,
@@ -2370,8 +2370,8 @@ const CASE_DATA = {
         "mrr": 3081,
         "arr": 36968,
         "arpc": 12.63,
-        "gtv30d": 18349.5,
-        "gtvAlltime": 38.99,
+        "gtv30d": 282.1,
+        "gtvAlltime": 0.62,
         "revenueAlltime": 205.8,
         "npv": 2.97,
         "ltv": 843.55,
@@ -2391,8 +2391,8 @@ const CASE_DATA = {
         "mrr": 3328,
         "arr": 39940,
         "arpc": 12.95,
-        "gtv30d": 14790.3,
-        "gtvAlltime": 44.55,
+        "gtv30d": 167.1,
+        "gtvAlltime": 0.55,
         "revenueAlltime": 206.1,
         "npv": 2.94,
         "ltv": 801.82,
@@ -2412,8 +2412,8 @@ const CASE_DATA = {
         "mrr": 3981,
         "arr": 47769,
         "arpc": 21.63,
-        "gtv30d": 6405.7,
-        "gtvAlltime": 15.51,
+        "gtv30d": 94.8,
+        "gtvAlltime": 0.22,
         "revenueAlltime": 366.8,
         "npv": 5.63,
         "ltv": 1993.4,
@@ -2433,8 +2433,8 @@ const CASE_DATA = {
         "mrr": 3060,
         "arr": 36719,
         "arpc": 15.38,
-        "gtv30d": 5790.5,
-        "gtvAlltime": 5487.24,
+        "gtv30d": 204.7,
+        "gtvAlltime": 55.27,
         "revenueAlltime": 158.9,
         "npv": 2.42,
         "ltv": 798.47,
@@ -2454,8 +2454,8 @@ const CASE_DATA = {
         "mrr": 4659,
         "arr": 55903,
         "arpc": 19.99,
-        "gtv30d": 15476.6,
-        "gtvAlltime": 29.43,
+        "gtv30d": 556.7,
+        "gtvAlltime": 1.23,
         "revenueAlltime": 221.8,
         "npv": 3.67,
         "ltv": 951.81,
@@ -2475,8 +2475,8 @@ const CASE_DATA = {
         "mrr": 6114,
         "arr": 73374,
         "arpc": 25.06,
-        "gtv30d": 8468.7,
-        "gtvAlltime": 19,
+        "gtv30d": 131.5,
+        "gtvAlltime": 0.36,
         "revenueAlltime": 340.9,
         "npv": 7.81,
         "ltv": 1397.26,
@@ -2496,8 +2496,8 @@ const CASE_DATA = {
         "mrr": 5757,
         "arr": 69079,
         "arpc": 24.5,
-        "gtv30d": 27469.5,
-        "gtvAlltime": 76.71,
+        "gtv30d": 437.8,
+        "gtvAlltime": 1.2,
         "revenueAlltime": 249.8,
         "npv": 6.6,
         "ltv": 1063.1,
@@ -2517,8 +2517,8 @@ const CASE_DATA = {
         "mrr": 2818,
         "arr": 33813,
         "arpc": 15.4,
-        "gtv30d": 6890.3,
-        "gtvAlltime": 55.21,
+        "gtv30d": 74.6,
+        "gtvAlltime": 0.59,
         "revenueAlltime": 178.3,
         "npv": 5.52,
         "ltv": 974.39,
@@ -2538,8 +2538,8 @@ const CASE_DATA = {
         "mrr": 2988,
         "arr": 35860,
         "arpc": 18.11,
-        "gtv30d": 4379.8,
-        "gtvAlltime": 9.17,
+        "gtv30d": 80.6,
+        "gtvAlltime": 0.18,
         "revenueAlltime": 157.3,
         "npv": 5.34,
         "ltv": 953.08,
@@ -2559,8 +2559,8 @@ const CASE_DATA = {
         "mrr": 2788,
         "arr": 33455,
         "arpc": 19.63,
-        "gtv30d": 3539.7,
-        "gtvAlltime": 2040.96,
+        "gtv30d": 35.4,
+        "gtvAlltime": 20.41,
         "revenueAlltime": 200.7,
         "npv": 8.84,
         "ltv": 1413.11,
@@ -2580,8 +2580,8 @@ const CASE_DATA = {
         "mrr": 2196,
         "arr": 26353,
         "arpc": 18.3,
-        "gtv30d": 4479.9,
-        "gtvAlltime": 4268.99,
+        "gtv30d": 47,
+        "gtvAlltime": 42.69,
         "revenueAlltime": 144.7,
         "npv": 6.25,
         "ltv": 1205.99,
@@ -2601,8 +2601,8 @@ const CASE_DATA = {
         "mrr": 1163,
         "arr": 13954,
         "arpc": 15.93,
-        "gtv30d": 1904.4,
-        "gtvAlltime": 4.32,
+        "gtv30d": 19,
+        "gtvAlltime": 0.05,
         "revenueAlltime": 144.7,
         "npv": 7.04,
         "ltv": 1981.97,
@@ -2622,8 +2622,8 @@ const CASE_DATA = {
         "mrr": 1715,
         "arr": 20582,
         "arpc": 21.17,
-        "gtv30d": 1543.8,
-        "gtvAlltime": 3.53,
+        "gtv30d": 15.4,
+        "gtvAlltime": 0.04,
         "revenueAlltime": 95.1,
         "npv": 4.46,
         "ltv": 1173.96,
@@ -2643,8 +2643,8 @@ const CASE_DATA = {
         "mrr": 632,
         "arr": 7579,
         "arpc": 18.05,
-        "gtv30d": 1903.6,
-        "gtvAlltime": 4.37,
+        "gtv30d": 19,
+        "gtvAlltime": 0.04,
         "revenueAlltime": 76.1,
         "npv": 3.54,
         "ltv": 2173.06,
@@ -2664,8 +2664,8 @@ const CASE_DATA = {
         "mrr": 3440,
         "arr": 41281,
         "arpc": 29.66,
-        "gtv30d": 8623.6,
-        "gtvAlltime": 17.27,
+        "gtv30d": 86.2,
+        "gtvAlltime": 0.17,
         "revenueAlltime": 165.4,
         "npv": 9.26,
         "ltv": 1425.91,
@@ -2685,8 +2685,8 @@ const CASE_DATA = {
         "mrr": 507,
         "arr": 6085,
         "arpc": 10.56,
-        "gtv30d": 28067.9,
-        "gtvAlltime": 51.8,
+        "gtv30d": 280.7,
+        "gtvAlltime": 0.54,
         "revenueAlltime": 26.8,
         "npv": 1.63,
         "ltv": 557.75,
@@ -2706,8 +2706,8 @@ const CASE_DATA = {
         "mrr": 284,
         "arr": 3409,
         "arpc": 14.95,
-        "gtv30d": 583.7,
-        "gtvAlltime": 1.34,
+        "gtv30d": 30,
+        "gtvAlltime": 0.06,
         "revenueAlltime": 16.3,
         "npv": 1.45,
         "ltv": 859.35,
@@ -2727,8 +2727,8 @@ const CASE_DATA = {
         "mrr": 39,
         "arr": 462,
         "arpc": 4.28,
-        "gtv30d": 51.1,
-        "gtvAlltime": 0.15,
+        "gtv30d": 8.7,
+        "gtvAlltime": 0.03,
         "revenueAlltime": 1.7,
         "npv": 0.25,
         "ltv": 192.96,
@@ -2748,8 +2748,8 @@ const CASE_DATA = {
         "mrr": 102,
         "arr": 1229,
         "arpc": 8.54,
-        "gtv30d": 117.3,
-        "gtvAlltime": 0.31,
+        "gtv30d": 1.2,
+        "gtvAlltime": 0,
         "revenueAlltime": 4.7,
         "npv": 1.06,
         "ltv": 392.76,
@@ -2769,8 +2769,8 @@ const CASE_DATA = {
         "mrr": 48,
         "arr": 576,
         "arpc": 11.99,
-        "gtv30d": 179.8,
-        "gtvAlltime": 0.39,
+        "gtv30d": 1.8,
+        "gtvAlltime": 0,
         "revenueAlltime": 1.6,
         "npv": 0.57,
         "ltv": 399.32,
@@ -2790,7 +2790,7 @@ const CASE_DATA = {
         "mrr": 0,
         "arr": 0,
         "arpc": 0,
-        "gtv30d": 0.5,
+        "gtv30d": 0,
         "gtvAlltime": 0,
         "revenueAlltime": 0,
         "npv": 0,
@@ -2887,16 +2887,16 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "activeUsers": {
-    "value": 227241,
+    "value": 349123,
     "unit": "",
-    "delta": "+-18%",
+    "delta": "+26%",
     "deltaClass": "up",
     "label": "YoY"
   },
   "totalGTV": {
-    "value": 1000362.9,
+    "value": 11131.6,
     "unit": "€B/yr",
-    "delta": "+4274955%",
+    "delta": "+47471%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -3091,13 +3091,13 @@ const CASE_DATA = {
     {
       "cohortMonth": "2026-04",
       "ageMonths": 0,
-      "registrations": 874,
+      "registrations": 879,
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 3544.1
+      "gtvKEur": 42.7
     },
     {
       "cohortMonth": "2026-03",
@@ -3108,7 +3108,7 @@ const CASE_DATA = {
       "revenueEur": 10405,
       "cumulativeRevenue": 10405,
       "revenuePerActive": 4.38,
-      "gtvKEur": 2705296.7
+      "gtvKEur": 27727.8
     },
     {
       "cohortMonth": "2026-03",
@@ -3119,7 +3119,7 @@ const CASE_DATA = {
       "revenueEur": 5044,
       "cumulativeRevenue": 15448,
       "revenuePerActive": 0,
-      "gtvKEur": 44457.6
+      "gtvKEur": 580.7
     },
     {
       "cohortMonth": "2026-02",
@@ -3130,7 +3130,7 @@ const CASE_DATA = {
       "revenueEur": 18396,
       "cumulativeRevenue": 18396,
       "revenuePerActive": 0.46,
-      "gtvKEur": 137956521.6
+      "gtvKEur": 1391950
     },
     {
       "cohortMonth": "2026-02",
@@ -3141,7 +3141,7 @@ const CASE_DATA = {
       "revenueEur": 58107,
       "cumulativeRevenue": 76504,
       "revenuePerActive": 6.21,
-      "gtvKEur": 6080541.6
+      "gtvKEur": 63479.6
     },
     {
       "cohortMonth": "2026-02",
@@ -3152,7 +3152,7 @@ const CASE_DATA = {
       "revenueEur": 15474,
       "cumulativeRevenue": 91977,
       "revenuePerActive": 0,
-      "gtvKEur": 624132.1
+      "gtvKEur": 6878.2
     },
     {
       "cohortMonth": "2026-02",
@@ -3174,7 +3174,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 91977,
       "revenuePerActive": 0,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2026-02",
@@ -3185,7 +3185,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 91977,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2026-01",
@@ -3196,7 +3196,7 @@ const CASE_DATA = {
       "revenueEur": 37393,
       "cumulativeRevenue": 37393,
       "revenuePerActive": 0.77,
-      "gtvKEur": 1911.8
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2026-01",
@@ -3207,7 +3207,7 @@ const CASE_DATA = {
       "revenueEur": 67971,
       "cumulativeRevenue": 105363,
       "revenuePerActive": 3.18,
-      "gtvKEur": 63791329.7
+      "gtvKEur": 663457.1
     },
     {
       "cohortMonth": "2026-01",
@@ -3218,7 +3218,7 @@ const CASE_DATA = {
       "revenueEur": 49659,
       "cumulativeRevenue": 155023,
       "revenuePerActive": 4.63,
-      "gtvKEur": 3840561.6
+      "gtvKEur": 40848.7
     },
     {
       "cohortMonth": "2026-01",
@@ -3229,7 +3229,7 @@ const CASE_DATA = {
       "revenueEur": 13631,
       "cumulativeRevenue": 168654,
       "revenuePerActive": 0,
-      "gtvKEur": 275306.6
+      "gtvKEur": 3403.4
     },
     {
       "cohortMonth": "2026-01",
@@ -3240,7 +3240,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 168654,
       "revenuePerActive": 0,
-      "gtvKEur": 182.5
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2026-01",
@@ -3251,7 +3251,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 168654,
       "revenuePerActive": 0,
-      "gtvKEur": 5.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2026-01",
@@ -3262,7 +3262,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 168654,
       "revenuePerActive": 0,
-      "gtvKEur": 9.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2026-01",
@@ -3273,7 +3273,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 168654,
       "revenuePerActive": 0,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2026-01",
@@ -3295,7 +3295,7 @@ const CASE_DATA = {
       "revenueEur": 22233,
       "cumulativeRevenue": 22233,
       "revenuePerActive": 0.56,
-      "gtvKEur": 10540.1
+      "gtvKEur": 218.8
     },
     {
       "cohortMonth": "2025-12",
@@ -3306,7 +3306,7 @@ const CASE_DATA = {
       "revenueEur": 55931,
       "cumulativeRevenue": 78163,
       "revenuePerActive": 3.22,
-      "gtvKEur": 1670.8
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2025-12",
@@ -3317,7 +3317,7 @@ const CASE_DATA = {
       "revenueEur": 36981,
       "cumulativeRevenue": 115144,
       "revenuePerActive": 2.89,
-      "gtvKEur": 37321642.2
+      "gtvKEur": 374113.2
     },
     {
       "cohortMonth": "2025-12",
@@ -3328,7 +3328,7 @@ const CASE_DATA = {
       "revenueEur": 36126,
       "cumulativeRevenue": 151270,
       "revenuePerActive": 4.78,
-      "gtvKEur": 73839635.8
+      "gtvKEur": 740714.5
     },
     {
       "cohortMonth": "2025-12",
@@ -3339,7 +3339,7 @@ const CASE_DATA = {
       "revenueEur": 10502,
       "cumulativeRevenue": 161773,
       "revenuePerActive": 0,
-      "gtvKEur": 9566059.3
+      "gtvKEur": 96218.4
     },
     {
       "cohortMonth": "2025-12",
@@ -3350,7 +3350,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 161773,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-12",
@@ -3361,7 +3361,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 161773,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-12",
@@ -3383,7 +3383,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 161773,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-11",
@@ -3394,7 +3394,7 @@ const CASE_DATA = {
       "revenueEur": 19739,
       "cumulativeRevenue": 19739,
       "revenuePerActive": 0.47,
-      "gtvKEur": 896.8
+      "gtvKEur": 11.8
     },
     {
       "cohortMonth": "2025-11",
@@ -3405,7 +3405,7 @@ const CASE_DATA = {
       "revenueEur": 56078,
       "cumulativeRevenue": 75817,
       "revenuePerActive": 3.08,
-      "gtvKEur": 4793.1
+      "gtvKEur": 76.1
     },
     {
       "cohortMonth": "2025-11",
@@ -3416,7 +3416,7 @@ const CASE_DATA = {
       "revenueEur": 42235,
       "cumulativeRevenue": 118052,
       "revenuePerActive": 3.1,
-      "gtvKEur": 18453.6
+      "gtvKEur": 184.6
     },
     {
       "cohortMonth": "2025-11",
@@ -3427,7 +3427,7 @@ const CASE_DATA = {
       "revenueEur": 36100,
       "cumulativeRevenue": 154152,
       "revenuePerActive": 3.06,
-      "gtvKEur": 81291
+      "gtvKEur": 1714.9
     },
     {
       "cohortMonth": "2025-11",
@@ -3438,7 +3438,7 @@ const CASE_DATA = {
       "revenueEur": 33200,
       "cumulativeRevenue": 187353,
       "revenuePerActive": 4.52,
-      "gtvKEur": 333348.6
+      "gtvKEur": 5459
     },
     {
       "cohortMonth": "2025-11",
@@ -3449,7 +3449,7 @@ const CASE_DATA = {
       "revenueEur": 7792,
       "cumulativeRevenue": 195145,
       "revenuePerActive": 0,
-      "gtvKEur": 63490.1
+      "gtvKEur": 1247.1
     },
     {
       "cohortMonth": "2025-11",
@@ -3471,7 +3471,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 195145,
       "revenuePerActive": 0,
-      "gtvKEur": 8.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2025-10",
@@ -3482,7 +3482,7 @@ const CASE_DATA = {
       "revenueEur": 21373,
       "cumulativeRevenue": 21373,
       "revenuePerActive": 0.51,
-      "gtvKEur": 2913.2
+      "gtvKEur": 57.4
     },
     {
       "cohortMonth": "2025-10",
@@ -3493,7 +3493,7 @@ const CASE_DATA = {
       "revenueEur": 53817,
       "cumulativeRevenue": 75190,
       "revenuePerActive": 2.87,
-      "gtvKEur": 169.3
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2025-10",
@@ -3504,7 +3504,7 @@ const CASE_DATA = {
       "revenueEur": 46043,
       "cumulativeRevenue": 121233,
       "revenuePerActive": 3.31,
-      "gtvKEur": 4728.6
+      "gtvKEur": 96.3
     },
     {
       "cohortMonth": "2025-10",
@@ -3515,7 +3515,7 @@ const CASE_DATA = {
       "revenueEur": 34568,
       "cumulativeRevenue": 155801,
       "revenuePerActive": 2.81,
-      "gtvKEur": 1639.5
+      "gtvKEur": 16.4
     },
     {
       "cohortMonth": "2025-10",
@@ -3526,7 +3526,7 @@ const CASE_DATA = {
       "revenueEur": 34359,
       "cumulativeRevenue": 190160,
       "revenuePerActive": 3.05,
-      "gtvKEur": 24702044.9
+      "gtvKEur": 248092.6
     },
     {
       "cohortMonth": "2025-10",
@@ -3537,7 +3537,7 @@ const CASE_DATA = {
       "revenueEur": 31917,
       "cumulativeRevenue": 222077,
       "revenuePerActive": 4.34,
-      "gtvKEur": 122208787.2
+      "gtvKEur": 1225488.4
     },
     {
       "cohortMonth": "2025-10",
@@ -3548,7 +3548,7 @@ const CASE_DATA = {
       "revenueEur": 7737,
       "cumulativeRevenue": 229814,
       "revenuePerActive": 0,
-      "gtvKEur": 994271.8
+      "gtvKEur": 10675.6
     },
     {
       "cohortMonth": "2025-10",
@@ -3559,7 +3559,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 229814,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-10",
@@ -3581,7 +3581,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 229814,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-10",
@@ -3592,7 +3592,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 229814,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-09",
@@ -3603,7 +3603,7 @@ const CASE_DATA = {
       "revenueEur": 21093,
       "cumulativeRevenue": 21093,
       "revenuePerActive": 0.52,
-      "gtvKEur": 85.7
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2025-09",
@@ -3614,7 +3614,7 @@ const CASE_DATA = {
       "revenueEur": 70077,
       "cumulativeRevenue": 91170,
       "revenuePerActive": 3.81,
-      "gtvKEur": 32948.7
+      "gtvKEur": 345.9
     },
     {
       "cohortMonth": "2025-09",
@@ -3625,7 +3625,7 @@ const CASE_DATA = {
       "revenueEur": 45244,
       "cumulativeRevenue": 136414,
       "revenuePerActive": 3.33,
-      "gtvKEur": 145
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2025-09",
@@ -3636,7 +3636,7 @@ const CASE_DATA = {
       "revenueEur": 40220,
       "cumulativeRevenue": 176633,
       "revenuePerActive": 3.36,
-      "gtvKEur": 3576.5
+      "gtvKEur": 64.3
     },
     {
       "cohortMonth": "2025-09",
@@ -3647,7 +3647,7 @@ const CASE_DATA = {
       "revenueEur": 40611,
       "cumulativeRevenue": 217244,
       "revenuePerActive": 3.71,
-      "gtvKEur": 37248
+      "gtvKEur": 382
     },
     {
       "cohortMonth": "2025-09",
@@ -3658,7 +3658,7 @@ const CASE_DATA = {
       "revenueEur": 34527,
       "cumulativeRevenue": 251772,
       "revenuePerActive": 3.36,
-      "gtvKEur": 93671.4
+      "gtvKEur": 1908
     },
     {
       "cohortMonth": "2025-09",
@@ -3669,7 +3669,7 @@ const CASE_DATA = {
       "revenueEur": 35195,
       "cumulativeRevenue": 286967,
       "revenuePerActive": 5.21,
-      "gtvKEur": 25141658.6
+      "gtvKEur": 253582.4
     },
     {
       "cohortMonth": "2025-09",
@@ -3680,7 +3680,7 @@ const CASE_DATA = {
       "revenueEur": 9122,
       "cumulativeRevenue": 296088,
       "revenuePerActive": 0,
-      "gtvKEur": 43863.8
+      "gtvKEur": 987.8
     },
     {
       "cohortMonth": "2025-09",
@@ -3691,7 +3691,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 296088,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-08",
@@ -3702,7 +3702,7 @@ const CASE_DATA = {
       "revenueEur": 23945,
       "cumulativeRevenue": 23945,
       "revenuePerActive": 0.56,
-      "gtvKEur": 2696.7
+      "gtvKEur": 47.6
     },
     {
       "cohortMonth": "2025-08",
@@ -3713,7 +3713,7 @@ const CASE_DATA = {
       "revenueEur": 72897,
       "cumulativeRevenue": 96843,
       "revenuePerActive": 3.89,
-      "gtvKEur": 289.4
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2025-08",
@@ -3724,7 +3724,7 @@ const CASE_DATA = {
       "revenueEur": 48211,
       "cumulativeRevenue": 145054,
       "revenuePerActive": 3.43,
-      "gtvKEur": 1780.6
+      "gtvKEur": 42
     },
     {
       "cohortMonth": "2025-08",
@@ -3735,7 +3735,7 @@ const CASE_DATA = {
       "revenueEur": 42919,
       "cumulativeRevenue": 187973,
       "revenuePerActive": 3.48,
-      "gtvKEur": 738
+      "gtvKEur": 7.4
     },
     {
       "cohortMonth": "2025-08",
@@ -3746,7 +3746,7 @@ const CASE_DATA = {
       "revenueEur": 37815,
       "cumulativeRevenue": 225789,
       "revenuePerActive": 3.37,
-      "gtvKEur": 1761622.6
+      "gtvKEur": 17662.9
     },
     {
       "cohortMonth": "2025-08",
@@ -3757,7 +3757,7 @@ const CASE_DATA = {
       "revenueEur": 37050,
       "cumulativeRevenue": 262839,
       "revenuePerActive": 3.5,
-      "gtvKEur": 2560.4
+      "gtvKEur": 26.2
     },
     {
       "cohortMonth": "2025-08",
@@ -3768,7 +3768,7 @@ const CASE_DATA = {
       "revenueEur": 39144,
       "cumulativeRevenue": 301983,
       "revenuePerActive": 3.94,
-      "gtvKEur": 51990.7
+      "gtvKEur": 1346.1
     },
     {
       "cohortMonth": "2025-08",
@@ -3779,7 +3779,7 @@ const CASE_DATA = {
       "revenueEur": 34436,
       "cumulativeRevenue": 336419,
       "revenuePerActive": 5.09,
-      "gtvKEur": 201610.3
+      "gtvKEur": 4038.7
     },
     {
       "cohortMonth": "2025-08",
@@ -3790,7 +3790,7 @@ const CASE_DATA = {
       "revenueEur": 10723,
       "cumulativeRevenue": 347142,
       "revenuePerActive": 0,
-      "gtvKEur": 39472.3
+      "gtvKEur": 977
     },
     {
       "cohortMonth": "2025-08",
@@ -3801,7 +3801,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 347142,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-08",
@@ -3812,7 +3812,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 347142,
       "revenuePerActive": 0,
-      "gtvKEur": 9.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2025-07",
@@ -3823,7 +3823,7 @@ const CASE_DATA = {
       "revenueEur": 28341,
       "cumulativeRevenue": 28341,
       "revenuePerActive": 0.65,
-      "gtvKEur": 59.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2025-07",
@@ -3834,7 +3834,7 @@ const CASE_DATA = {
       "revenueEur": 74451,
       "cumulativeRevenue": 102792,
       "revenuePerActive": 3.72,
-      "gtvKEur": 2204.3
+      "gtvKEur": 50.5
     },
     {
       "cohortMonth": "2025-07",
@@ -3845,7 +3845,7 @@ const CASE_DATA = {
       "revenueEur": 53969,
       "cumulativeRevenue": 156761,
       "revenuePerActive": 3.6,
-      "gtvKEur": 164.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2025-07",
@@ -3856,7 +3856,7 @@ const CASE_DATA = {
       "revenueEur": 46862,
       "cumulativeRevenue": 203623,
       "revenuePerActive": 3.53,
-      "gtvKEur": 2233.2
+      "gtvKEur": 48.1
     },
     {
       "cohortMonth": "2025-07",
@@ -3867,7 +3867,7 @@ const CASE_DATA = {
       "revenueEur": 45828,
       "cumulativeRevenue": 249451,
       "revenuePerActive": 3.8,
-      "gtvKEur": 291.7
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2025-07",
@@ -3878,7 +3878,7 @@ const CASE_DATA = {
       "revenueEur": 39683,
       "cumulativeRevenue": 289134,
       "revenuePerActive": 3.52,
-      "gtvKEur": 4575.2
+      "gtvKEur": 108.6
     },
     {
       "cohortMonth": "2025-07",
@@ -3889,7 +3889,7 @@ const CASE_DATA = {
       "revenueEur": 43292,
       "cumulativeRevenue": 332426,
       "revenuePerActive": 4.05,
-      "gtvKEur": 614.6
+      "gtvKEur": 7.1
     },
     {
       "cohortMonth": "2025-07",
@@ -3900,7 +3900,7 @@ const CASE_DATA = {
       "revenueEur": 44812,
       "cumulativeRevenue": 377238,
       "revenuePerActive": 4.44,
-      "gtvKEur": 848963.9
+      "gtvKEur": 9908.6
     },
     {
       "cohortMonth": "2025-07",
@@ -3911,7 +3911,7 @@ const CASE_DATA = {
       "revenueEur": 37203,
       "cumulativeRevenue": 414441,
       "revenuePerActive": 5.27,
-      "gtvKEur": 713663.3
+      "gtvKEur": 10805.3
     },
     {
       "cohortMonth": "2025-07",
@@ -3922,7 +3922,7 @@ const CASE_DATA = {
       "revenueEur": 9527,
       "cumulativeRevenue": 423969,
       "revenuePerActive": 0,
-      "gtvKEur": 6654940
+      "gtvKEur": 67596.4
     },
     {
       "cohortMonth": "2025-07",
@@ -3933,7 +3933,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 423969,
       "revenuePerActive": 0,
-      "gtvKEur": 3.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-07",
@@ -3955,7 +3955,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 423969,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-06",
@@ -3966,7 +3966,7 @@ const CASE_DATA = {
       "revenueEur": 22145,
       "cumulativeRevenue": 22145,
       "revenuePerActive": 0.56,
-      "gtvKEur": 2886.4
+      "gtvKEur": 70.1
     },
     {
       "cohortMonth": "2025-06",
@@ -3977,7 +3977,7 @@ const CASE_DATA = {
       "revenueEur": 75273,
       "cumulativeRevenue": 97418,
       "revenuePerActive": 4.13,
-      "gtvKEur": 24.3
+      "gtvKEur": 20.5
     },
     {
       "cohortMonth": "2025-06",
@@ -3988,7 +3988,7 @@ const CASE_DATA = {
       "revenueEur": 43774,
       "cumulativeRevenue": 141193,
       "revenuePerActive": 3.13,
-      "gtvKEur": 1819
+      "gtvKEur": 50
     },
     {
       "cohortMonth": "2025-06",
@@ -3999,7 +3999,7 @@ const CASE_DATA = {
       "revenueEur": 44023,
       "cumulativeRevenue": 185216,
       "revenuePerActive": 3.6,
-      "gtvKEur": 13055.4
+      "gtvKEur": 130.6
     },
     {
       "cohortMonth": "2025-06",
@@ -4010,7 +4010,7 @@ const CASE_DATA = {
       "revenueEur": 37458,
       "cumulativeRevenue": 222674,
       "revenuePerActive": 3.33,
-      "gtvKEur": 13743.5
+      "gtvKEur": 161.6
     },
     {
       "cohortMonth": "2025-06",
@@ -4021,7 +4021,7 @@ const CASE_DATA = {
       "revenueEur": 40263,
       "cumulativeRevenue": 262937,
       "revenuePerActive": 3.86,
-      "gtvKEur": 6408.2
+      "gtvKEur": 66
     },
     {
       "cohortMonth": "2025-06",
@@ -4032,7 +4032,7 @@ const CASE_DATA = {
       "revenueEur": 36052,
       "cumulativeRevenue": 298989,
       "revenuePerActive": 3.65,
-      "gtvKEur": 5907
+      "gtvKEur": 95.9
     },
     {
       "cohortMonth": "2025-06",
@@ -4043,7 +4043,7 @@ const CASE_DATA = {
       "revenueEur": 39742,
       "cumulativeRevenue": 338730,
       "revenuePerActive": 4.18,
-      "gtvKEur": 746
+      "gtvKEur": 9.6
     },
     {
       "cohortMonth": "2025-06",
@@ -4054,7 +4054,7 @@ const CASE_DATA = {
       "revenueEur": 38561,
       "cumulativeRevenue": 377291,
       "revenuePerActive": 4.31,
-      "gtvKEur": 284424.8
+      "gtvKEur": 3694.3
     },
     {
       "cohortMonth": "2025-06",
@@ -4065,7 +4065,7 @@ const CASE_DATA = {
       "revenueEur": 34441,
       "cumulativeRevenue": 411732,
       "revenuePerActive": 5.43,
-      "gtvKEur": 240115.9
+      "gtvKEur": 4842
     },
     {
       "cohortMonth": "2025-06",
@@ -4076,7 +4076,7 @@ const CASE_DATA = {
       "revenueEur": 7326,
       "cumulativeRevenue": 419058,
       "revenuePerActive": 0,
-      "gtvKEur": 94195.5
+      "gtvKEur": 1638.6
     },
     {
       "cohortMonth": "2025-06",
@@ -4087,7 +4087,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 419058,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-06",
@@ -4098,7 +4098,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 419058,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-05",
@@ -4109,7 +4109,7 @@ const CASE_DATA = {
       "revenueEur": 23038,
       "cumulativeRevenue": 23038,
       "revenuePerActive": 0.57,
-      "gtvKEur": 9.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2025-05",
@@ -4120,7 +4120,7 @@ const CASE_DATA = {
       "revenueEur": 64203,
       "cumulativeRevenue": 87242,
       "revenuePerActive": 3.55,
-      "gtvKEur": 2667
+      "gtvKEur": 54.1
     },
     {
       "cohortMonth": "2025-05",
@@ -4131,7 +4131,7 @@ const CASE_DATA = {
       "revenueEur": 57355,
       "cumulativeRevenue": 144597,
       "revenuePerActive": 4.14,
-      "gtvKEur": 84.1
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2025-05",
@@ -4142,7 +4142,7 @@ const CASE_DATA = {
       "revenueEur": 45441,
       "cumulativeRevenue": 190038,
       "revenuePerActive": 3.74,
-      "gtvKEur": 1840.6
+      "gtvKEur": 36.4
     },
     {
       "cohortMonth": "2025-05",
@@ -4153,7 +4153,7 @@ const CASE_DATA = {
       "revenueEur": 38574,
       "cumulativeRevenue": 228612,
       "revenuePerActive": 3.46,
-      "gtvKEur": 192.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2025-05",
@@ -4164,7 +4164,7 @@ const CASE_DATA = {
       "revenueEur": 39277,
       "cumulativeRevenue": 267888,
       "revenuePerActive": 3.76,
-      "gtvKEur": 2548.1
+      "gtvKEur": 47.4
     },
     {
       "cohortMonth": "2025-05",
@@ -4175,7 +4175,7 @@ const CASE_DATA = {
       "revenueEur": 36338,
       "cumulativeRevenue": 304226,
       "revenuePerActive": 3.7,
-      "gtvKEur": 297.6
+      "gtvKEur": 3.9
     },
     {
       "cohortMonth": "2025-05",
@@ -4186,7 +4186,7 @@ const CASE_DATA = {
       "revenueEur": 40547,
       "cumulativeRevenue": 344773,
       "revenuePerActive": 4.36,
-      "gtvKEur": 6782.4
+      "gtvKEur": 110.2
     },
     {
       "cohortMonth": "2025-05",
@@ -4197,7 +4197,7 @@ const CASE_DATA = {
       "revenueEur": 39000,
       "cumulativeRevenue": 383773,
       "revenuePerActive": 4.4,
-      "gtvKEur": 1171.9
+      "gtvKEur": 16.3
     },
     {
       "cohortMonth": "2025-05",
@@ -4208,7 +4208,7 @@ const CASE_DATA = {
       "revenueEur": 37819,
       "cumulativeRevenue": 421592,
       "revenuePerActive": 4.46,
-      "gtvKEur": 74271.9
+      "gtvKEur": 1472.2
     },
     {
       "cohortMonth": "2025-05",
@@ -4219,7 +4219,7 @@ const CASE_DATA = {
       "revenueEur": 37643,
       "cumulativeRevenue": 459235,
       "revenuePerActive": 6.21,
-      "gtvKEur": 215206.5
+      "gtvKEur": 4309
     },
     {
       "cohortMonth": "2025-05",
@@ -4230,7 +4230,7 @@ const CASE_DATA = {
       "revenueEur": 8312,
       "cumulativeRevenue": 467547,
       "revenuePerActive": 0,
-      "gtvKEur": 8726354.7
+      "gtvKEur": 87852.3
     },
     {
       "cohortMonth": "2025-05",
@@ -4252,7 +4252,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 467547,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-05",
@@ -4274,7 +4274,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 467547,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-05",
@@ -4296,7 +4296,7 @@ const CASE_DATA = {
       "revenueEur": 21286,
       "cumulativeRevenue": 21286,
       "revenuePerActive": 0.6,
-      "gtvKEur": 34361.7
+      "gtvKEur": 358.8
     },
     {
       "cohortMonth": "2025-04",
@@ -4307,7 +4307,7 @@ const CASE_DATA = {
       "revenueEur": 54849,
       "cumulativeRevenue": 76135,
       "revenuePerActive": 3.41,
-      "gtvKEur": 41.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2025-04",
@@ -4318,7 +4318,7 @@ const CASE_DATA = {
       "revenueEur": 49736,
       "cumulativeRevenue": 125871,
       "revenuePerActive": 4.14,
-      "gtvKEur": 7876.9
+      "gtvKEur": 101.3
     },
     {
       "cohortMonth": "2025-04",
@@ -4329,7 +4329,7 @@ const CASE_DATA = {
       "revenueEur": 42052,
       "cumulativeRevenue": 167923,
       "revenuePerActive": 3.88,
-      "gtvKEur": 59.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2025-04",
@@ -4340,7 +4340,7 @@ const CASE_DATA = {
       "revenueEur": 37864,
       "cumulativeRevenue": 205787,
       "revenuePerActive": 3.82,
-      "gtvKEur": 23113.7
+      "gtvKEur": 248.4
     },
     {
       "cohortMonth": "2025-04",
@@ -4351,7 +4351,7 @@ const CASE_DATA = {
       "revenueEur": 38912,
       "cumulativeRevenue": 244699,
       "revenuePerActive": 4.24,
-      "gtvKEur": 95.7
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2025-04",
@@ -4362,7 +4362,7 @@ const CASE_DATA = {
       "revenueEur": 35302,
       "cumulativeRevenue": 280001,
       "revenuePerActive": 4.01,
-      "gtvKEur": 30001507.9
+      "gtvKEur": 300047
     },
     {
       "cohortMonth": "2025-04",
@@ -4373,7 +4373,7 @@ const CASE_DATA = {
       "revenueEur": 32792,
       "cumulativeRevenue": 312793,
       "revenuePerActive": 3.96,
-      "gtvKEur": 256.3
+      "gtvKEur": 12
     },
     {
       "cohortMonth": "2025-04",
@@ -4384,7 +4384,7 @@ const CASE_DATA = {
       "revenueEur": 33405,
       "cumulativeRevenue": 346197,
       "revenuePerActive": 4.22,
-      "gtvKEur": 3852.9
+      "gtvKEur": 91.8
     },
     {
       "cohortMonth": "2025-04",
@@ -4395,7 +4395,7 @@ const CASE_DATA = {
       "revenueEur": 36260,
       "cumulativeRevenue": 382457,
       "revenuePerActive": 4.79,
-      "gtvKEur": 1147.5
+      "gtvKEur": 11.5
     },
     {
       "cohortMonth": "2025-04",
@@ -4406,7 +4406,7 @@ const CASE_DATA = {
       "revenueEur": 31031,
       "cumulativeRevenue": 413488,
       "revenuePerActive": 4.3,
-      "gtvKEur": 51737.2
+      "gtvKEur": 1662.5
     },
     {
       "cohortMonth": "2025-04",
@@ -4417,7 +4417,7 @@ const CASE_DATA = {
       "revenueEur": 31815,
       "cumulativeRevenue": 445304,
       "revenuePerActive": 6.04,
-      "gtvKEur": 152654.5
+      "gtvKEur": 4434.8
     },
     {
       "cohortMonth": "2025-04",
@@ -4428,7 +4428,7 @@ const CASE_DATA = {
       "revenueEur": 7547,
       "cumulativeRevenue": 452850,
       "revenuePerActive": 0,
-      "gtvKEur": 48476.4
+      "gtvKEur": 1232.1
     },
     {
       "cohortMonth": "2025-04",
@@ -4461,7 +4461,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 452850,
       "revenuePerActive": 0,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-03",
@@ -4472,7 +4472,7 @@ const CASE_DATA = {
       "revenueEur": 18261,
       "cumulativeRevenue": 18261,
       "revenuePerActive": 0.48,
-      "gtvKEur": 33
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2025-03",
@@ -4483,7 +4483,7 @@ const CASE_DATA = {
       "revenueEur": 67204,
       "cumulativeRevenue": 85465,
       "revenuePerActive": 4.26,
-      "gtvKEur": 10283.8
+      "gtvKEur": 134.8
     },
     {
       "cohortMonth": "2025-03",
@@ -4494,7 +4494,7 @@ const CASE_DATA = {
       "revenueEur": 42968,
       "cumulativeRevenue": 128434,
       "revenuePerActive": 3.54,
-      "gtvKEur": 32.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2025-03",
@@ -4505,7 +4505,7 @@ const CASE_DATA = {
       "revenueEur": 34300,
       "cumulativeRevenue": 162734,
       "revenuePerActive": 3.26,
-      "gtvKEur": 1269.5
+      "gtvKEur": 35.1
     },
     {
       "cohortMonth": "2025-03",
@@ -4516,7 +4516,7 @@ const CASE_DATA = {
       "revenueEur": 38498,
       "cumulativeRevenue": 201231,
       "revenuePerActive": 3.93,
-      "gtvKEur": 118.8
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2025-03",
@@ -4527,7 +4527,7 @@ const CASE_DATA = {
       "revenueEur": 33328,
       "cumulativeRevenue": 234559,
       "revenuePerActive": 3.68,
-      "gtvKEur": 4764.8
+      "gtvKEur": 61.9
     },
     {
       "cohortMonth": "2025-03",
@@ -4538,7 +4538,7 @@ const CASE_DATA = {
       "revenueEur": 31433,
       "cumulativeRevenue": 265993,
       "revenuePerActive": 3.66,
-      "gtvKEur": 144.9
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2025-03",
@@ -4549,7 +4549,7 @@ const CASE_DATA = {
       "revenueEur": 31917,
       "cumulativeRevenue": 297910,
       "revenuePerActive": 3.85,
-      "gtvKEur": 2837.4
+      "gtvKEur": 54.7
     },
     {
       "cohortMonth": "2025-03",
@@ -4560,7 +4560,7 @@ const CASE_DATA = {
       "revenueEur": 29999,
       "cumulativeRevenue": 327909,
       "revenuePerActive": 3.85,
-      "gtvKEur": 147.8
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2025-03",
@@ -4571,7 +4571,7 @@ const CASE_DATA = {
       "revenueEur": 32484,
       "cumulativeRevenue": 360393,
       "revenuePerActive": 4.35,
-      "gtvKEur": 1885
+      "gtvKEur": 47.6
     },
     {
       "cohortMonth": "2025-03",
@@ -4582,7 +4582,7 @@ const CASE_DATA = {
       "revenueEur": 30032,
       "cumulativeRevenue": 390425,
       "revenuePerActive": 4.15,
-      "gtvKEur": 741.6
+      "gtvKEur": 7.4
     },
     {
       "cohortMonth": "2025-03",
@@ -4593,7 +4593,7 @@ const CASE_DATA = {
       "revenueEur": 29333,
       "cumulativeRevenue": 419757,
       "revenuePerActive": 4.17,
-      "gtvKEur": 94864.6
+      "gtvKEur": 1931.3
     },
     {
       "cohortMonth": "2025-03",
@@ -4604,7 +4604,7 @@ const CASE_DATA = {
       "revenueEur": 39547,
       "cumulativeRevenue": 459304,
       "revenuePerActive": 7.78,
-      "gtvKEur": 113318.3
+      "gtvKEur": 3578.1
     },
     {
       "cohortMonth": "2025-03",
@@ -4615,7 +4615,7 @@ const CASE_DATA = {
       "revenueEur": 15410,
       "cumulativeRevenue": 474715,
       "revenuePerActive": 0,
-      "gtvKEur": 36211
+      "gtvKEur": 1018.2
     },
     {
       "cohortMonth": "2025-03",
@@ -4626,7 +4626,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 474715,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-03",
@@ -4637,7 +4637,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 474715,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-02",
@@ -4648,7 +4648,7 @@ const CASE_DATA = {
       "revenueEur": 19740,
       "cumulativeRevenue": 19740,
       "revenuePerActive": 0.6,
-      "gtvKEur": 21
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2025-02",
@@ -4659,7 +4659,7 @@ const CASE_DATA = {
       "revenueEur": 57266,
       "cumulativeRevenue": 77006,
       "revenuePerActive": 3.81,
-      "gtvKEur": 165.3
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2025-02",
@@ -4670,7 +4670,7 @@ const CASE_DATA = {
       "revenueEur": 42589,
       "cumulativeRevenue": 119595,
       "revenuePerActive": 3.85,
-      "gtvKEur": 1516.3
+      "gtvKEur": 37.6
     },
     {
       "cohortMonth": "2025-02",
@@ -4681,7 +4681,7 @@ const CASE_DATA = {
       "revenueEur": 37968,
       "cumulativeRevenue": 157562,
       "revenuePerActive": 3.74,
-      "gtvKEur": 45.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2025-02",
@@ -4692,7 +4692,7 @@ const CASE_DATA = {
       "revenueEur": 38265,
       "cumulativeRevenue": 195827,
       "revenuePerActive": 4.17,
-      "gtvKEur": 1293.8
+      "gtvKEur": 45.3
     },
     {
       "cohortMonth": "2025-02",
@@ -4703,7 +4703,7 @@ const CASE_DATA = {
       "revenueEur": 33765,
       "cumulativeRevenue": 229592,
       "revenuePerActive": 3.92,
-      "gtvKEur": 218.9
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2025-02",
@@ -4714,7 +4714,7 @@ const CASE_DATA = {
       "revenueEur": 33238,
       "cumulativeRevenue": 262830,
       "revenuePerActive": 4.06,
-      "gtvKEur": 4823.3
+      "gtvKEur": 66.2
     },
     {
       "cohortMonth": "2025-02",
@@ -4725,7 +4725,7 @@ const CASE_DATA = {
       "revenueEur": 35099,
       "cumulativeRevenue": 297929,
       "revenuePerActive": 4.56,
-      "gtvKEur": 189.5
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2025-02",
@@ -4736,7 +4736,7 @@ const CASE_DATA = {
       "revenueEur": 33109,
       "cumulativeRevenue": 331038,
       "revenuePerActive": 4.43,
-      "gtvKEur": 1752.1
+      "gtvKEur": 35.4
     },
     {
       "cohortMonth": "2025-02",
@@ -4747,7 +4747,7 @@ const CASE_DATA = {
       "revenueEur": 29860,
       "cumulativeRevenue": 360899,
       "revenuePerActive": 4.22,
-      "gtvKEur": 150.3
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2025-02",
@@ -4758,7 +4758,7 @@ const CASE_DATA = {
       "revenueEur": 31761,
       "cumulativeRevenue": 392659,
       "revenuePerActive": 4.65,
-      "gtvKEur": 19937.5
+      "gtvKEur": 214.7
     },
     {
       "cohortMonth": "2025-02",
@@ -4769,7 +4769,7 @@ const CASE_DATA = {
       "revenueEur": 31604,
       "cumulativeRevenue": 424264,
       "revenuePerActive": 4.82,
-      "gtvKEur": 1011.8
+      "gtvKEur": 16.3
     },
     {
       "cohortMonth": "2025-02",
@@ -4780,7 +4780,7 @@ const CASE_DATA = {
       "revenueEur": 46129,
       "cumulativeRevenue": 470392,
       "revenuePerActive": 7.1,
-      "gtvKEur": 49875.8
+      "gtvKEur": 1209.5
     },
     {
       "cohortMonth": "2025-02",
@@ -4791,7 +4791,7 @@ const CASE_DATA = {
       "revenueEur": 63299,
       "cumulativeRevenue": 533691,
       "revenuePerActive": 13.49,
-      "gtvKEur": 212431.8
+      "gtvKEur": 3725.3
     },
     {
       "cohortMonth": "2025-02",
@@ -4802,7 +4802,7 @@ const CASE_DATA = {
       "revenueEur": 12631,
       "cumulativeRevenue": 546322,
       "revenuePerActive": 0,
-      "gtvKEur": 36223.4
+      "gtvKEur": 770.3
     },
     {
       "cohortMonth": "2025-02",
@@ -4813,7 +4813,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 546322,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-02",
@@ -4835,7 +4835,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 546322,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-02",
@@ -4846,7 +4846,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 546322,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-02",
@@ -4857,7 +4857,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 546322,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-01",
@@ -4868,7 +4868,7 @@ const CASE_DATA = {
       "revenueEur": 28493,
       "cumulativeRevenue": 28493,
       "revenuePerActive": 0.79,
-      "gtvKEur": 7858.2
+      "gtvKEur": 110.3
     },
     {
       "cohortMonth": "2025-01",
@@ -4879,7 +4879,7 @@ const CASE_DATA = {
       "revenueEur": 55778,
       "cumulativeRevenue": 84271,
       "revenuePerActive": 3.5,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-01",
@@ -4890,7 +4890,7 @@ const CASE_DATA = {
       "revenueEur": 41696,
       "cumulativeRevenue": 125966,
       "revenuePerActive": 3.41,
-      "gtvKEur": 37.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2025-01",
@@ -4901,7 +4901,7 @@ const CASE_DATA = {
       "revenueEur": 35873,
       "cumulativeRevenue": 161839,
       "revenuePerActive": 3.32,
-      "gtvKEur": 1948.6
+      "gtvKEur": 68.9
     },
     {
       "cohortMonth": "2025-01",
@@ -4912,7 +4912,7 @@ const CASE_DATA = {
       "revenueEur": 33396,
       "cumulativeRevenue": 195236,
       "revenuePerActive": 3.33,
-      "gtvKEur": 98.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2025-01",
@@ -4923,7 +4923,7 @@ const CASE_DATA = {
       "revenueEur": 31847,
       "cumulativeRevenue": 227082,
       "revenuePerActive": 3.42,
-      "gtvKEur": 1311
+      "gtvKEur": 19
     },
     {
       "cohortMonth": "2025-01",
@@ -4934,7 +4934,7 @@ const CASE_DATA = {
       "revenueEur": 34866,
       "cumulativeRevenue": 261948,
       "revenuePerActive": 3.91,
-      "gtvKEur": 284.8
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2025-01",
@@ -4945,7 +4945,7 @@ const CASE_DATA = {
       "revenueEur": 31565,
       "cumulativeRevenue": 293514,
       "revenuePerActive": 3.72,
-      "gtvKEur": 1687.9
+      "gtvKEur": 29.2
     },
     {
       "cohortMonth": "2025-01",
@@ -4956,7 +4956,7 @@ const CASE_DATA = {
       "revenueEur": 30087,
       "cumulativeRevenue": 323601,
       "revenuePerActive": 3.75,
-      "gtvKEur": 934
+      "gtvKEur": 9.3
     },
     {
       "cohortMonth": "2025-01",
@@ -4967,7 +4967,7 @@ const CASE_DATA = {
       "revenueEur": 31107,
       "cumulativeRevenue": 354708,
       "revenuePerActive": 3.97,
-      "gtvKEur": 1943.8
+      "gtvKEur": 34
     },
     {
       "cohortMonth": "2025-01",
@@ -4978,7 +4978,7 @@ const CASE_DATA = {
       "revenueEur": 29753,
       "cumulativeRevenue": 384461,
       "revenuePerActive": 3.99,
-      "gtvKEur": 503.2
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2025-01",
@@ -4989,7 +4989,7 @@ const CASE_DATA = {
       "revenueEur": 28449,
       "cumulativeRevenue": 412910,
       "revenuePerActive": 3.95,
-      "gtvKEur": 2384.5
+      "gtvKEur": 69.3
     },
     {
       "cohortMonth": "2025-01",
@@ -5000,7 +5000,7 @@ const CASE_DATA = {
       "revenueEur": 50320,
       "cumulativeRevenue": 463230,
       "revenuePerActive": 7.09,
-      "gtvKEur": 1138.8
+      "gtvKEur": 11.5
     },
     {
       "cohortMonth": "2025-01",
@@ -5011,7 +5011,7 @@ const CASE_DATA = {
       "revenueEur": 60704,
       "cumulativeRevenue": 523934,
       "revenuePerActive": 8.94,
-      "gtvKEur": 50352.6
+      "gtvKEur": 1431.4
     },
     {
       "cohortMonth": "2025-01",
@@ -5022,7 +5022,7 @@ const CASE_DATA = {
       "revenueEur": 41380,
       "cumulativeRevenue": 565314,
       "revenuePerActive": 8.51,
-      "gtvKEur": 121455.7
+      "gtvKEur": 3210.6
     },
     {
       "cohortMonth": "2025-01",
@@ -5033,7 +5033,7 @@ const CASE_DATA = {
       "revenueEur": 7765,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 30902
+      "gtvKEur": 789.6
     },
     {
       "cohortMonth": "2025-01",
@@ -5044,7 +5044,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-01",
@@ -5055,7 +5055,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-01",
@@ -5066,7 +5066,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 7.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2025-01",
@@ -5077,7 +5077,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2025-01",
@@ -5088,7 +5088,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 573079,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-12",
@@ -5099,7 +5099,7 @@ const CASE_DATA = {
       "revenueEur": 19081,
       "cumulativeRevenue": 19081,
       "revenuePerActive": 0.65,
-      "gtvKEur": 2.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-12",
@@ -5110,7 +5110,7 @@ const CASE_DATA = {
       "revenueEur": 42676,
       "cumulativeRevenue": 61757,
       "revenuePerActive": 3.22,
-      "gtvKEur": 2196
+      "gtvKEur": 55.3
     },
     {
       "cohortMonth": "2024-12",
@@ -5121,7 +5121,7 @@ const CASE_DATA = {
       "revenueEur": 35821,
       "cumulativeRevenue": 97578,
       "revenuePerActive": 3.56,
-      "gtvKEur": 91.6
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2024-12",
@@ -5132,7 +5132,7 @@ const CASE_DATA = {
       "revenueEur": 30291,
       "cumulativeRevenue": 127869,
       "revenuePerActive": 3.39,
-      "gtvKEur": 84.5
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2024-12",
@@ -5143,7 +5143,7 @@ const CASE_DATA = {
       "revenueEur": 29573,
       "cumulativeRevenue": 157442,
       "revenuePerActive": 3.6,
-      "gtvKEur": 2555.3
+      "gtvKEur": 47.9
     },
     {
       "cohortMonth": "2024-12",
@@ -5154,7 +5154,7 @@ const CASE_DATA = {
       "revenueEur": 32389,
       "cumulativeRevenue": 189831,
       "revenuePerActive": 4.12,
-      "gtvKEur": 89.3
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2024-12",
@@ -5165,7 +5165,7 @@ const CASE_DATA = {
       "revenueEur": 27901,
       "cumulativeRevenue": 217732,
       "revenuePerActive": 3.8,
-      "gtvKEur": 5009.7
+      "gtvKEur": 68
     },
     {
       "cohortMonth": "2024-12",
@@ -5176,7 +5176,7 @@ const CASE_DATA = {
       "revenueEur": 27782,
       "cumulativeRevenue": 245514,
       "revenuePerActive": 3.94,
-      "gtvKEur": 220.4
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2024-12",
@@ -5187,7 +5187,7 @@ const CASE_DATA = {
       "revenueEur": 25300,
       "cumulativeRevenue": 270815,
       "revenuePerActive": 3.79,
-      "gtvKEur": 4467.8
+      "gtvKEur": 52.6
     },
     {
       "cohortMonth": "2024-12",
@@ -5198,7 +5198,7 @@ const CASE_DATA = {
       "revenueEur": 26757,
       "cumulativeRevenue": 297571,
       "revenuePerActive": 4.17,
-      "gtvKEur": 423.2
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2024-12",
@@ -5209,7 +5209,7 @@ const CASE_DATA = {
       "revenueEur": 25563,
       "cumulativeRevenue": 323134,
       "revenuePerActive": 4.1,
-      "gtvKEur": 1852.9
+      "gtvKEur": 28.4
     },
     {
       "cohortMonth": "2024-12",
@@ -5220,7 +5220,7 @@ const CASE_DATA = {
       "revenueEur": 25218,
       "cumulativeRevenue": 348353,
       "revenuePerActive": 4.18,
-      "gtvKEur": 469
+      "gtvKEur": 4.7
     },
     {
       "cohortMonth": "2024-12",
@@ -5231,7 +5231,7 @@ const CASE_DATA = {
       "revenueEur": 37873,
       "cumulativeRevenue": 386226,
       "revenuePerActive": 6.38,
-      "gtvKEur": 4600.9
+      "gtvKEur": 67.4
     },
     {
       "cohortMonth": "2024-12",
@@ -5242,7 +5242,7 @@ const CASE_DATA = {
       "revenueEur": 44247,
       "cumulativeRevenue": 430472,
       "revenuePerActive": 7.84,
-      "gtvKEur": 6966.9
+      "gtvKEur": 82.2
     },
     {
       "cohortMonth": "2024-12",
@@ -5253,7 +5253,7 @@ const CASE_DATA = {
       "revenueEur": 34076,
       "cumulativeRevenue": 464548,
       "revenuePerActive": 6.34,
-      "gtvKEur": 75849.6
+      "gtvKEur": 1974.8
     },
     {
       "cohortMonth": "2024-12",
@@ -5264,7 +5264,7 @@ const CASE_DATA = {
       "revenueEur": 27277,
       "cumulativeRevenue": 491825,
       "revenuePerActive": 6.92,
-      "gtvKEur": 137222701.6
+      "gtvKEur": 1373964.3
     },
     {
       "cohortMonth": "2024-12",
@@ -5275,7 +5275,7 @@ const CASE_DATA = {
       "revenueEur": 7288,
       "cumulativeRevenue": 499112,
       "revenuePerActive": 0,
-      "gtvKEur": 47990.4
+      "gtvKEur": 910.7
     },
     {
       "cohortMonth": "2024-12",
@@ -5286,7 +5286,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 499112,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-12",
@@ -5308,7 +5308,7 @@ const CASE_DATA = {
       "revenueEur": 16615,
       "cumulativeRevenue": 16615,
       "revenuePerActive": 0.51,
-      "gtvKEur": 404662384.4
+      "gtvKEur": 14509644.4
     },
     {
       "cohortMonth": "2024-11",
@@ -5319,7 +5319,7 @@ const CASE_DATA = {
       "revenueEur": 38710,
       "cumulativeRevenue": 55324,
       "revenuePerActive": 2.64,
-      "gtvKEur": 20.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5330,7 +5330,7 @@ const CASE_DATA = {
       "revenueEur": 43542,
       "cumulativeRevenue": 98866,
       "revenuePerActive": 3.95,
-      "gtvKEur": 1748
+      "gtvKEur": 47.4
     },
     {
       "cohortMonth": "2024-11",
@@ -5341,7 +5341,7 @@ const CASE_DATA = {
       "revenueEur": 33123,
       "cumulativeRevenue": 131989,
       "revenuePerActive": 3.39,
-      "gtvKEur": 29
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2024-11",
@@ -5352,7 +5352,7 @@ const CASE_DATA = {
       "revenueEur": 30761,
       "cumulativeRevenue": 162750,
       "revenuePerActive": 3.45,
-      "gtvKEur": 89.4
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2024-11",
@@ -5363,7 +5363,7 @@ const CASE_DATA = {
       "revenueEur": 32725,
       "cumulativeRevenue": 195476,
       "revenuePerActive": 3.9,
-      "gtvKEur": 3828.8
+      "gtvKEur": 65.5
     },
     {
       "cohortMonth": "2024-11",
@@ -5374,7 +5374,7 @@ const CASE_DATA = {
       "revenueEur": 30166,
       "cumulativeRevenue": 225642,
       "revenuePerActive": 3.79,
-      "gtvKEur": 14.8
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2024-11",
@@ -5385,7 +5385,7 @@ const CASE_DATA = {
       "revenueEur": 30832,
       "cumulativeRevenue": 256474,
       "revenuePerActive": 4.07,
-      "gtvKEur": 1418.9
+      "gtvKEur": 47.5
     },
     {
       "cohortMonth": "2024-11",
@@ -5396,7 +5396,7 @@ const CASE_DATA = {
       "revenueEur": 30897,
       "cumulativeRevenue": 287371,
       "revenuePerActive": 4.26,
-      "gtvKEur": 19.6
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5407,7 +5407,7 @@ const CASE_DATA = {
       "revenueEur": 31517,
       "cumulativeRevenue": 318888,
       "revenuePerActive": 4.47,
-      "gtvKEur": 1655
+      "gtvKEur": 24.8
     },
     {
       "cohortMonth": "2024-11",
@@ -5418,7 +5418,7 @@ const CASE_DATA = {
       "revenueEur": 29279,
       "cumulativeRevenue": 348167,
       "revenuePerActive": 4.33,
-      "gtvKEur": 111.3
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5429,7 +5429,7 @@ const CASE_DATA = {
       "revenueEur": 30210,
       "cumulativeRevenue": 378378,
       "revenuePerActive": 4.56,
-      "gtvKEur": 1391.2
+      "gtvKEur": 29
     },
     {
       "cohortMonth": "2024-11",
@@ -5440,7 +5440,7 @@ const CASE_DATA = {
       "revenueEur": 38132,
       "cumulativeRevenue": 416510,
       "revenuePerActive": 5.9,
-      "gtvKEur": 263.6
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2024-11",
@@ -5451,7 +5451,7 @@ const CASE_DATA = {
       "revenueEur": 47044,
       "cumulativeRevenue": 463554,
       "revenuePerActive": 7.55,
-      "gtvKEur": 5182.7
+      "gtvKEur": 88.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5462,7 +5462,7 @@ const CASE_DATA = {
       "revenueEur": 46866,
       "cumulativeRevenue": 510420,
       "revenuePerActive": 7.83,
-      "gtvKEur": 50024.8
+      "gtvKEur": 500.3
     },
     {
       "cohortMonth": "2024-11",
@@ -5473,7 +5473,7 @@ const CASE_DATA = {
       "revenueEur": 31769,
       "cumulativeRevenue": 542189,
       "revenuePerActive": 5.55,
-      "gtvKEur": 4568913.4
+      "gtvKEur": 46750.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5484,7 +5484,7 @@ const CASE_DATA = {
       "revenueEur": 29520,
       "cumulativeRevenue": 571708,
       "revenuePerActive": 7,
-      "gtvKEur": 108609.5
+      "gtvKEur": 3530.6
     },
     {
       "cohortMonth": "2024-11",
@@ -5495,7 +5495,7 @@ const CASE_DATA = {
       "revenueEur": 9434,
       "cumulativeRevenue": 581142,
       "revenuePerActive": 0,
-      "gtvKEur": 28640.5
+      "gtvKEur": 881.4
     },
     {
       "cohortMonth": "2024-11",
@@ -5506,7 +5506,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 581142,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-11",
@@ -5517,7 +5517,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 581142,
       "revenuePerActive": 0,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-11",
@@ -5539,7 +5539,7 @@ const CASE_DATA = {
       "revenueEur": 17929,
       "cumulativeRevenue": 17929,
       "revenuePerActive": 0.51,
-      "gtvKEur": 197.1
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2024-10",
@@ -5550,7 +5550,7 @@ const CASE_DATA = {
       "revenueEur": 54227,
       "cumulativeRevenue": 72156,
       "revenuePerActive": 3.49,
-      "gtvKEur": 2141.6
+      "gtvKEur": 59.9
     },
     {
       "cohortMonth": "2024-10",
@@ -5561,7 +5561,7 @@ const CASE_DATA = {
       "revenueEur": 34779,
       "cumulativeRevenue": 106935,
       "revenuePerActive": 2.96,
-      "gtvKEur": 19.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-10",
@@ -5572,7 +5572,7 @@ const CASE_DATA = {
       "revenueEur": 33409,
       "cumulativeRevenue": 140345,
       "revenuePerActive": 3.18,
-      "gtvKEur": 2101.9
+      "gtvKEur": 51.9
     },
     {
       "cohortMonth": "2024-10",
@@ -5583,7 +5583,7 @@ const CASE_DATA = {
       "revenueEur": 31164,
       "cumulativeRevenue": 171508,
       "revenuePerActive": 3.21,
-      "gtvKEur": 13.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-10",
@@ -5594,7 +5594,7 @@ const CASE_DATA = {
       "revenueEur": 30926,
       "cumulativeRevenue": 202435,
       "revenuePerActive": 3.47,
-      "gtvKEur": 28.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2024-10",
@@ -5605,7 +5605,7 @@ const CASE_DATA = {
       "revenueEur": 31334,
       "cumulativeRevenue": 233769,
       "revenuePerActive": 3.7,
-      "gtvKEur": 1588.9
+      "gtvKEur": 35.6
     },
     {
       "cohortMonth": "2024-10",
@@ -5616,7 +5616,7 @@ const CASE_DATA = {
       "revenueEur": 32701,
       "cumulativeRevenue": 266469,
       "revenuePerActive": 4,
-      "gtvKEur": 14.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-10",
@@ -5627,7 +5627,7 @@ const CASE_DATA = {
       "revenueEur": 36815,
       "cumulativeRevenue": 303284,
       "revenuePerActive": 4.78,
-      "gtvKEur": 1298.4
+      "gtvKEur": 19.5
     },
     {
       "cohortMonth": "2024-10",
@@ -5638,7 +5638,7 @@ const CASE_DATA = {
       "revenueEur": 33590,
       "cumulativeRevenue": 336875,
       "revenuePerActive": 4.53,
-      "gtvKEur": 290
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2024-10",
@@ -5649,7 +5649,7 @@ const CASE_DATA = {
       "revenueEur": 31123,
       "cumulativeRevenue": 367998,
       "revenuePerActive": 4.38,
-      "gtvKEur": 7602.2
+      "gtvKEur": 83.4
     },
     {
       "cohortMonth": "2024-10",
@@ -5660,7 +5660,7 @@ const CASE_DATA = {
       "revenueEur": 30938,
       "cumulativeRevenue": 398935,
       "revenuePerActive": 4.48,
-      "gtvKEur": 238.4
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2024-10",
@@ -5671,7 +5671,7 @@ const CASE_DATA = {
       "revenueEur": 41448,
       "cumulativeRevenue": 440383,
       "revenuePerActive": 6.01,
-      "gtvKEur": 1708.8
+      "gtvKEur": 42.8
     },
     {
       "cohortMonth": "2024-10",
@@ -5682,7 +5682,7 @@ const CASE_DATA = {
       "revenueEur": 66468,
       "cumulativeRevenue": 506851,
       "revenuePerActive": 10.08,
-      "gtvKEur": 399.2
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2024-10",
@@ -5693,7 +5693,7 @@ const CASE_DATA = {
       "revenueEur": 39504,
       "cumulativeRevenue": 546356,
       "revenuePerActive": 6.24,
-      "gtvKEur": 2252.7
+      "gtvKEur": 47.4
     },
     {
       "cohortMonth": "2024-10",
@@ -5704,7 +5704,7 @@ const CASE_DATA = {
       "revenueEur": 35848,
       "cumulativeRevenue": 582203,
       "revenuePerActive": 5.87,
-      "gtvKEur": 1067.5
+      "gtvKEur": 23
     },
     {
       "cohortMonth": "2024-10",
@@ -5715,7 +5715,7 @@ const CASE_DATA = {
       "revenueEur": 34163,
       "cumulativeRevenue": 616366,
       "revenuePerActive": 5.82,
-      "gtvKEur": 699126.1
+      "gtvKEur": 7936.2
     },
     {
       "cohortMonth": "2024-10",
@@ -5726,7 +5726,7 @@ const CASE_DATA = {
       "revenueEur": 32489,
       "cumulativeRevenue": 648855,
       "revenuePerActive": 7.59,
-      "gtvKEur": 141934.4
+      "gtvKEur": 3399.6
     },
     {
       "cohortMonth": "2024-10",
@@ -5737,7 +5737,7 @@ const CASE_DATA = {
       "revenueEur": 7309,
       "cumulativeRevenue": 656163,
       "revenuePerActive": 0,
-      "gtvKEur": 29127
+      "gtvKEur": 800.5
     },
     {
       "cohortMonth": "2024-10",
@@ -5759,7 +5759,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 656163,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-10",
@@ -5781,7 +5781,7 @@ const CASE_DATA = {
       "revenueEur": 19038,
       "cumulativeRevenue": 19038,
       "revenuePerActive": 0.61,
-      "gtvKEur": 5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-09",
@@ -5792,7 +5792,7 @@ const CASE_DATA = {
       "revenueEur": 61351,
       "cumulativeRevenue": 80389,
       "revenuePerActive": 4.25,
-      "gtvKEur": 20.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-09",
@@ -5803,7 +5803,7 @@ const CASE_DATA = {
       "revenueEur": 43959,
       "cumulativeRevenue": 124349,
       "revenuePerActive": 4.12,
-      "gtvKEur": 727400.8
+      "gtvKEur": 7317.1
     },
     {
       "cohortMonth": "2024-09",
@@ -5814,7 +5814,7 @@ const CASE_DATA = {
       "revenueEur": 39295,
       "cumulativeRevenue": 163643,
       "revenuePerActive": 4.19,
-      "gtvKEur": 59.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2024-09",
@@ -5825,7 +5825,7 @@ const CASE_DATA = {
       "revenueEur": 35054,
       "cumulativeRevenue": 198697,
       "revenuePerActive": 4.12,
-      "gtvKEur": 3985.9
+      "gtvKEur": 66.2
     },
     {
       "cohortMonth": "2024-09",
@@ -5836,7 +5836,7 @@ const CASE_DATA = {
       "revenueEur": 34633,
       "cumulativeRevenue": 233330,
       "revenuePerActive": 4.32,
-      "gtvKEur": 130.3
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2024-09",
@@ -5847,7 +5847,7 @@ const CASE_DATA = {
       "revenueEur": 35148,
       "cumulativeRevenue": 268477,
       "revenuePerActive": 4.7,
-      "gtvKEur": 77.4
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2024-09",
@@ -5858,7 +5858,7 @@ const CASE_DATA = {
       "revenueEur": 33260,
       "cumulativeRevenue": 301737,
       "revenuePerActive": 4.64,
-      "gtvKEur": 3057
+      "gtvKEur": 50.8
     },
     {
       "cohortMonth": "2024-09",
@@ -5869,7 +5869,7 @@ const CASE_DATA = {
       "revenueEur": 32396,
       "cumulativeRevenue": 334134,
       "revenuePerActive": 4.65,
-      "gtvKEur": 145.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2024-09",
@@ -5880,7 +5880,7 @@ const CASE_DATA = {
       "revenueEur": 36376,
       "cumulativeRevenue": 370510,
       "revenuePerActive": 5.46,
-      "gtvKEur": 1994.8
+      "gtvKEur": 30.9
     },
     {
       "cohortMonth": "2024-09",
@@ -5891,7 +5891,7 @@ const CASE_DATA = {
       "revenueEur": 32603,
       "cumulativeRevenue": 403113,
       "revenuePerActive": 5.08,
-      "gtvKEur": 280.1
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2024-09",
@@ -5902,7 +5902,7 @@ const CASE_DATA = {
       "revenueEur": 34321,
       "cumulativeRevenue": 437434,
       "revenuePerActive": 5.53,
-      "gtvKEur": 1364.4
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2024-09",
@@ -5913,7 +5913,7 @@ const CASE_DATA = {
       "revenueEur": 39729,
       "cumulativeRevenue": 477164,
       "revenuePerActive": 6.53,
-      "gtvKEur": 276.1
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2024-09",
@@ -5924,7 +5924,7 @@ const CASE_DATA = {
       "revenueEur": 63904,
       "cumulativeRevenue": 541068,
       "revenuePerActive": 10.88,
-      "gtvKEur": 2063
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2024-09",
@@ -5935,7 +5935,7 @@ const CASE_DATA = {
       "revenueEur": 43596,
       "cumulativeRevenue": 584665,
       "revenuePerActive": 7.76,
-      "gtvKEur": 8942.5
+      "gtvKEur": 103.2
     },
     {
       "cohortMonth": "2024-09",
@@ -5946,7 +5946,7 @@ const CASE_DATA = {
       "revenueEur": 40451,
       "cumulativeRevenue": 625116,
       "revenuePerActive": 7.42,
-      "gtvKEur": 3224.2
+      "gtvKEur": 97.9
     },
     {
       "cohortMonth": "2024-09",
@@ -5957,7 +5957,7 @@ const CASE_DATA = {
       "revenueEur": 35717,
       "cumulativeRevenue": 660832,
       "revenuePerActive": 6.82,
-      "gtvKEur": 973
+      "gtvKEur": 26.8
     },
     {
       "cohortMonth": "2024-09",
@@ -5968,7 +5968,7 @@ const CASE_DATA = {
       "revenueEur": 33718,
       "cumulativeRevenue": 694550,
       "revenuePerActive": 6.55,
-      "gtvKEur": 170743.3
+      "gtvKEur": 2658.5
     },
     {
       "cohortMonth": "2024-09",
@@ -5979,7 +5979,7 @@ const CASE_DATA = {
       "revenueEur": 32936,
       "cumulativeRevenue": 727487,
       "revenuePerActive": 8.75,
-      "gtvKEur": 447363.6
+      "gtvKEur": 6862.3
     },
     {
       "cohortMonth": "2024-09",
@@ -5990,7 +5990,7 @@ const CASE_DATA = {
       "revenueEur": 6652,
       "cumulativeRevenue": 734139,
       "revenuePerActive": 0,
-      "gtvKEur": 24165.8
+      "gtvKEur": 782.3
     },
     {
       "cohortMonth": "2024-09",
@@ -6023,7 +6023,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 734139,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-09",
@@ -6034,7 +6034,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 734139,
       "revenuePerActive": 0,
-      "gtvKEur": 20.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-09",
@@ -6045,7 +6045,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 734139,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-09",
@@ -6089,7 +6089,7 @@ const CASE_DATA = {
       "revenueEur": 23244,
       "cumulativeRevenue": 23244,
       "revenuePerActive": 0.73,
-      "gtvKEur": 805006.7
+      "gtvKEur": 9137.3
     },
     {
       "cohortMonth": "2024-08",
@@ -6100,7 +6100,7 @@ const CASE_DATA = {
       "revenueEur": 52509,
       "cumulativeRevenue": 75753,
       "revenuePerActive": 3.56,
-      "gtvKEur": 7.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-08",
@@ -6111,7 +6111,7 @@ const CASE_DATA = {
       "revenueEur": 36386,
       "cumulativeRevenue": 112139,
       "revenuePerActive": 3.2,
-      "gtvKEur": 23.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-08",
@@ -6122,7 +6122,7 @@ const CASE_DATA = {
       "revenueEur": 33806,
       "cumulativeRevenue": 145946,
       "revenuePerActive": 3.39,
-      "gtvKEur": 2769.6
+      "gtvKEur": 64.7
     },
     {
       "cohortMonth": "2024-08",
@@ -6133,7 +6133,7 @@ const CASE_DATA = {
       "revenueEur": 33599,
       "cumulativeRevenue": 179545,
       "revenuePerActive": 3.65,
-      "gtvKEur": 216.9
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2024-08",
@@ -6144,7 +6144,7 @@ const CASE_DATA = {
       "revenueEur": 30164,
       "cumulativeRevenue": 209709,
       "revenuePerActive": 3.48,
-      "gtvKEur": 2565.9
+      "gtvKEur": 75.6
     },
     {
       "cohortMonth": "2024-08",
@@ -6155,7 +6155,7 @@ const CASE_DATA = {
       "revenueEur": 28470,
       "cumulativeRevenue": 238179,
       "revenuePerActive": 3.5,
-      "gtvKEur": 28.2
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2024-08",
@@ -6166,7 +6166,7 @@ const CASE_DATA = {
       "revenueEur": 31098,
       "cumulativeRevenue": 269277,
       "revenuePerActive": 4.08,
-      "gtvKEur": 35.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-08",
@@ -6177,7 +6177,7 @@ const CASE_DATA = {
       "revenueEur": 29213,
       "cumulativeRevenue": 298490,
       "revenuePerActive": 3.94,
-      "gtvKEur": 1457
+      "gtvKEur": 36.6
     },
     {
       "cohortMonth": "2024-08",
@@ -6188,7 +6188,7 @@ const CASE_DATA = {
       "revenueEur": 31688,
       "cumulativeRevenue": 330179,
       "revenuePerActive": 4.33,
-      "gtvKEur": 35.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-08",
@@ -6199,7 +6199,7 @@ const CASE_DATA = {
       "revenueEur": 47714,
       "cumulativeRevenue": 377892,
       "revenuePerActive": 6.91,
-      "gtvKEur": 1183
+      "gtvKEur": 21.6
     },
     {
       "cohortMonth": "2024-08",
@@ -6210,7 +6210,7 @@ const CASE_DATA = {
       "revenueEur": 29959,
       "cumulativeRevenue": 407852,
       "revenuePerActive": 4.47,
-      "gtvKEur": 99.8
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2024-08",
@@ -6221,7 +6221,7 @@ const CASE_DATA = {
       "revenueEur": 48073,
       "cumulativeRevenue": 455925,
       "revenuePerActive": 7.25,
-      "gtvKEur": 1372.1
+      "gtvKEur": 22.7
     },
     {
       "cohortMonth": "2024-08",
@@ -6232,7 +6232,7 @@ const CASE_DATA = {
       "revenueEur": 63103,
       "cumulativeRevenue": 519028,
       "revenuePerActive": 10.03,
-      "gtvKEur": 75
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-08",
@@ -6243,7 +6243,7 @@ const CASE_DATA = {
       "revenueEur": 41796,
       "cumulativeRevenue": 560824,
       "revenuePerActive": 6.82,
-      "gtvKEur": 18995.6
+      "gtvKEur": 211.4
     },
     {
       "cohortMonth": "2024-08",
@@ -6254,7 +6254,7 @@ const CASE_DATA = {
       "revenueEur": 37498,
       "cumulativeRevenue": 598322,
       "revenuePerActive": 6.36,
-      "gtvKEur": 412.7
+      "gtvKEur": 4.1
     },
     {
       "cohortMonth": "2024-08",
@@ -6265,7 +6265,7 @@ const CASE_DATA = {
       "revenueEur": 50539,
       "cumulativeRevenue": 648861,
       "revenuePerActive": 8.83,
-      "gtvKEur": 3123.3
+      "gtvKEur": 71.8
     },
     {
       "cohortMonth": "2024-08",
@@ -6276,7 +6276,7 @@ const CASE_DATA = {
       "revenueEur": 33325,
       "cumulativeRevenue": 682186,
       "revenuePerActive": 5.94,
-      "gtvKEur": 1224
+      "gtvKEur": 14.9
     },
     {
       "cohortMonth": "2024-08",
@@ -6287,7 +6287,7 @@ const CASE_DATA = {
       "revenueEur": 28600,
       "cumulativeRevenue": 710786,
       "revenuePerActive": 5.23,
-      "gtvKEur": 63961.8
+      "gtvKEur": 1652.9
     },
     {
       "cohortMonth": "2024-08",
@@ -6298,7 +6298,7 @@ const CASE_DATA = {
       "revenueEur": 31227,
       "cumulativeRevenue": 742013,
       "revenuePerActive": 7.78,
-      "gtvKEur": 172847.5
+      "gtvKEur": 9349
     },
     {
       "cohortMonth": "2024-08",
@@ -6309,7 +6309,7 @@ const CASE_DATA = {
       "revenueEur": 6327,
       "cumulativeRevenue": 748340,
       "revenuePerActive": 0,
-      "gtvKEur": 52128.4
+      "gtvKEur": 1018.1
     },
     {
       "cohortMonth": "2024-08",
@@ -6320,7 +6320,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 748340,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-08",
@@ -6331,7 +6331,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 748340,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-07",
@@ -6342,7 +6342,7 @@ const CASE_DATA = {
       "revenueEur": 20544,
       "cumulativeRevenue": 20544,
       "revenuePerActive": 0.64,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-07",
@@ -6353,7 +6353,7 @@ const CASE_DATA = {
       "revenueEur": 45099,
       "cumulativeRevenue": 65643,
       "revenuePerActive": 2.99,
-      "gtvKEur": 4139.1
+      "gtvKEur": 64.7
     },
     {
       "cohortMonth": "2024-07",
@@ -6364,7 +6364,7 @@ const CASE_DATA = {
       "revenueEur": 40483,
       "cumulativeRevenue": 106126,
       "revenuePerActive": 3.52,
-      "gtvKEur": 115.9
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2024-07",
@@ -6375,7 +6375,7 @@ const CASE_DATA = {
       "revenueEur": 32535,
       "cumulativeRevenue": 138661,
       "revenuePerActive": 3.18,
-      "gtvKEur": 65.7
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-07",
@@ -6386,7 +6386,7 @@ const CASE_DATA = {
       "revenueEur": 31714,
       "cumulativeRevenue": 170375,
       "revenuePerActive": 3.38,
-      "gtvKEur": 2573.4
+      "gtvKEur": 59.2
     },
     {
       "cohortMonth": "2024-07",
@@ -6397,7 +6397,7 @@ const CASE_DATA = {
       "revenueEur": 25814,
       "cumulativeRevenue": 196189,
       "revenuePerActive": 2.96,
-      "gtvKEur": 27.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2024-07",
@@ -6408,7 +6408,7 @@ const CASE_DATA = {
       "revenueEur": 30131,
       "cumulativeRevenue": 226320,
       "revenuePerActive": 3.67,
-      "gtvKEur": 4642.8
+      "gtvKEur": 70.8
     },
     {
       "cohortMonth": "2024-07",
@@ -6419,7 +6419,7 @@ const CASE_DATA = {
       "revenueEur": 27272,
       "cumulativeRevenue": 253592,
       "revenuePerActive": 3.51,
-      "gtvKEur": 110
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2024-07",
@@ -6430,7 +6430,7 @@ const CASE_DATA = {
       "revenueEur": 26376,
       "cumulativeRevenue": 279968,
       "revenuePerActive": 3.61,
-      "gtvKEur": 664.1
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2024-07",
@@ -6441,7 +6441,7 @@ const CASE_DATA = {
       "revenueEur": 27166,
       "cumulativeRevenue": 307134,
       "revenuePerActive": 3.82,
-      "gtvKEur": 4126
+      "gtvKEur": 63.3
     },
     {
       "cohortMonth": "2024-07",
@@ -6452,7 +6452,7 @@ const CASE_DATA = {
       "revenueEur": 27966,
       "cumulativeRevenue": 335101,
       "revenuePerActive": 4,
-      "gtvKEur": 597.1
+      "gtvKEur": 6
     },
     {
       "cohortMonth": "2024-07",
@@ -6463,7 +6463,7 @@ const CASE_DATA = {
       "revenueEur": 29905,
       "cumulativeRevenue": 365006,
       "revenuePerActive": 4.4,
-      "gtvKEur": 2302.2
+      "gtvKEur": 39
     },
     {
       "cohortMonth": "2024-07",
@@ -6474,7 +6474,7 @@ const CASE_DATA = {
       "revenueEur": 44430,
       "cumulativeRevenue": 409436,
       "revenuePerActive": 6.68,
-      "gtvKEur": 1191.6
+      "gtvKEur": 11.9
     },
     {
       "cohortMonth": "2024-07",
@@ -6485,7 +6485,7 @@ const CASE_DATA = {
       "revenueEur": 52057,
       "cumulativeRevenue": 461493,
       "revenuePerActive": 8.09,
-      "gtvKEur": 1938.7
+      "gtvKEur": 31.2
     },
     {
       "cohortMonth": "2024-07",
@@ -6496,7 +6496,7 @@ const CASE_DATA = {
       "revenueEur": 40598,
       "cumulativeRevenue": 502091,
       "revenuePerActive": 6.66,
-      "gtvKEur": 573.6
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2024-07",
@@ -6507,7 +6507,7 @@ const CASE_DATA = {
       "revenueEur": 33843,
       "cumulativeRevenue": 535933,
       "revenuePerActive": 5.66,
-      "gtvKEur": 2163.7
+      "gtvKEur": 40.7
     },
     {
       "cohortMonth": "2024-07",
@@ -6518,7 +6518,7 @@ const CASE_DATA = {
       "revenueEur": 34062,
       "cumulativeRevenue": 569996,
       "revenuePerActive": 5.88,
-      "gtvKEur": 1332.7
+      "gtvKEur": 13.3
     },
     {
       "cohortMonth": "2024-07",
@@ -6529,7 +6529,7 @@ const CASE_DATA = {
       "revenueEur": 30660,
       "cumulativeRevenue": 600656,
       "revenuePerActive": 5.47,
-      "gtvKEur": 12485.6
+      "gtvKEur": 155.7
     },
     {
       "cohortMonth": "2024-07",
@@ -6540,7 +6540,7 @@ const CASE_DATA = {
       "revenueEur": 30716,
       "cumulativeRevenue": 631372,
       "revenuePerActive": 5.64,
-      "gtvKEur": 4152.1
+      "gtvKEur": 41.6
     },
     {
       "cohortMonth": "2024-07",
@@ -6551,7 +6551,7 @@ const CASE_DATA = {
       "revenueEur": 30036,
       "cumulativeRevenue": 661408,
       "revenuePerActive": 5.71,
-      "gtvKEur": 135913.8
+      "gtvKEur": 2163.7
     },
     {
       "cohortMonth": "2024-07",
@@ -6562,7 +6562,7 @@ const CASE_DATA = {
       "revenueEur": 30560,
       "cumulativeRevenue": 691968,
       "revenuePerActive": 7.79,
-      "gtvKEur": 362535.2
+      "gtvKEur": 5507
     },
     {
       "cohortMonth": "2024-07",
@@ -6573,7 +6573,7 @@ const CASE_DATA = {
       "revenueEur": 8435,
       "cumulativeRevenue": 700404,
       "revenuePerActive": 0,
-      "gtvKEur": 93121.9
+      "gtvKEur": 1456.8
     },
     {
       "cohortMonth": "2024-07",
@@ -6584,7 +6584,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 700404,
       "revenuePerActive": 0,
-      "gtvKEur": 53.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2024-07",
@@ -6595,7 +6595,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 700404,
       "revenuePerActive": 0,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-07",
@@ -6606,7 +6606,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 700404,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-06",
@@ -6617,7 +6617,7 @@ const CASE_DATA = {
       "revenueEur": 17324,
       "cumulativeRevenue": 17324,
       "revenuePerActive": 0.6,
-      "gtvKEur": 44176.5
+      "gtvKEur": 460.4
     },
     {
       "cohortMonth": "2024-06",
@@ -6628,7 +6628,7 @@ const CASE_DATA = {
       "revenueEur": 51040,
       "cumulativeRevenue": 68364,
       "revenuePerActive": 3.66,
-      "gtvKEur": 8.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-06",
@@ -6639,7 +6639,7 @@ const CASE_DATA = {
       "revenueEur": 31642,
       "cumulativeRevenue": 100006,
       "revenuePerActive": 2.95,
-      "gtvKEur": 2336.8
+      "gtvKEur": 51.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6650,7 +6650,7 @@ const CASE_DATA = {
       "revenueEur": 28424,
       "cumulativeRevenue": 128429,
       "revenuePerActive": 2.99,
-      "gtvKEur": 67.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6661,7 +6661,7 @@ const CASE_DATA = {
       "revenueEur": 27073,
       "cumulativeRevenue": 155502,
       "revenuePerActive": 3.11,
-      "gtvKEur": 71.1
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6672,7 +6672,7 @@ const CASE_DATA = {
       "revenueEur": 26401,
       "cumulativeRevenue": 181904,
       "revenuePerActive": 3.25,
-      "gtvKEur": 1728.1
+      "gtvKEur": 41.5
     },
     {
       "cohortMonth": "2024-06",
@@ -6683,7 +6683,7 @@ const CASE_DATA = {
       "revenueEur": 23335,
       "cumulativeRevenue": 205238,
       "revenuePerActive": 3.06,
-      "gtvKEur": 2010.4
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2024-06",
@@ -6694,7 +6694,7 @@ const CASE_DATA = {
       "revenueEur": 26062,
       "cumulativeRevenue": 231301,
       "revenuePerActive": 3.61,
-      "gtvKEur": 2710.1
+      "gtvKEur": 53.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6705,7 +6705,7 @@ const CASE_DATA = {
       "revenueEur": 24660,
       "cumulativeRevenue": 255961,
       "revenuePerActive": 3.57,
-      "gtvKEur": 82.7
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2024-06",
@@ -6716,7 +6716,7 @@ const CASE_DATA = {
       "revenueEur": 29320,
       "cumulativeRevenue": 285281,
       "revenuePerActive": 4.46,
-      "gtvKEur": 111.9
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2024-06",
@@ -6727,7 +6727,7 @@ const CASE_DATA = {
       "revenueEur": 26719,
       "cumulativeRevenue": 312000,
       "revenuePerActive": 4.2,
-      "gtvKEur": 2914.5
+      "gtvKEur": 62.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6738,7 +6738,7 @@ const CASE_DATA = {
       "revenueEur": 25247,
       "cumulativeRevenue": 337247,
       "revenuePerActive": 4.05,
-      "gtvKEur": 181.9
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2024-06",
@@ -6749,7 +6749,7 @@ const CASE_DATA = {
       "revenueEur": 39420,
       "cumulativeRevenue": 376667,
       "revenuePerActive": 6.44,
-      "gtvKEur": 3953.4
+      "gtvKEur": 57.2
     },
     {
       "cohortMonth": "2024-06",
@@ -6760,7 +6760,7 @@ const CASE_DATA = {
       "revenueEur": 53005,
       "cumulativeRevenue": 429671,
       "revenuePerActive": 8.94,
-      "gtvKEur": 111.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2024-06",
@@ -6771,7 +6771,7 @@ const CASE_DATA = {
       "revenueEur": 33105,
       "cumulativeRevenue": 462777,
       "revenuePerActive": 5.76,
-      "gtvKEur": 1661.9
+      "gtvKEur": 31.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6782,7 +6782,7 @@ const CASE_DATA = {
       "revenueEur": 28566,
       "cumulativeRevenue": 491343,
       "revenuePerActive": 5.22,
-      "gtvKEur": 319.8
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2024-06",
@@ -6793,7 +6793,7 @@ const CASE_DATA = {
       "revenueEur": 29137,
       "cumulativeRevenue": 520479,
       "revenuePerActive": 5.54,
-      "gtvKEur": 2092.4
+      "gtvKEur": 39.1
     },
     {
       "cohortMonth": "2024-06",
@@ -6804,7 +6804,7 @@ const CASE_DATA = {
       "revenueEur": 26406,
       "cumulativeRevenue": 546885,
       "revenuePerActive": 5.21,
-      "gtvKEur": 445.5
+      "gtvKEur": 4.5
     },
     {
       "cohortMonth": "2024-06",
@@ -6815,7 +6815,7 @@ const CASE_DATA = {
       "revenueEur": 23110,
       "cumulativeRevenue": 569995,
       "revenuePerActive": 4.68,
-      "gtvKEur": 3492.2
+      "gtvKEur": 52.2
     },
     {
       "cohortMonth": "2024-06",
@@ -6826,7 +6826,7 @@ const CASE_DATA = {
       "revenueEur": 25153,
       "cumulativeRevenue": 595148,
       "revenuePerActive": 5.21,
-      "gtvKEur": 1344.9
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2024-06",
@@ -6837,7 +6837,7 @@ const CASE_DATA = {
       "revenueEur": 22113,
       "cumulativeRevenue": 617262,
       "revenuePerActive": 4.73,
-      "gtvKEur": 108032.6
+      "gtvKEur": 1744.7
     },
     {
       "cohortMonth": "2024-06",
@@ -6848,7 +6848,7 @@ const CASE_DATA = {
       "revenueEur": 26709,
       "cumulativeRevenue": 643970,
       "revenuePerActive": 7.56,
-      "gtvKEur": 300541.9
+      "gtvKEur": 4656
     },
     {
       "cohortMonth": "2024-06",
@@ -6859,7 +6859,7 @@ const CASE_DATA = {
       "revenueEur": 6113,
       "cumulativeRevenue": 650083,
       "revenuePerActive": 0,
-      "gtvKEur": 69048.9
+      "gtvKEur": 1152.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6870,7 +6870,7 @@ const CASE_DATA = {
       "revenueEur": 19409,
       "cumulativeRevenue": 19409,
       "revenuePerActive": 0.64,
-      "gtvKEur": 8927.3
+      "gtvKEur": 89.3
     },
     {
       "cohortMonth": "2024-05",
@@ -6881,7 +6881,7 @@ const CASE_DATA = {
       "revenueEur": 55218,
       "cumulativeRevenue": 74626,
       "revenuePerActive": 3.83,
-      "gtvKEur": 13357
+      "gtvKEur": 180.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6892,7 +6892,7 @@ const CASE_DATA = {
       "revenueEur": 30570,
       "cumulativeRevenue": 105196,
       "revenuePerActive": 2.74,
-      "gtvKEur": 5035.6
+      "gtvKEur": 52.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6903,7 +6903,7 @@ const CASE_DATA = {
       "revenueEur": 26490,
       "cumulativeRevenue": 131686,
       "revenuePerActive": 2.64,
-      "gtvKEur": 5397.9
+      "gtvKEur": 79.1
     },
     {
       "cohortMonth": "2024-05",
@@ -6914,7 +6914,7 @@ const CASE_DATA = {
       "revenueEur": 27364,
       "cumulativeRevenue": 159050,
       "revenuePerActive": 2.97,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-05",
@@ -6925,7 +6925,7 @@ const CASE_DATA = {
       "revenueEur": 25119,
       "cumulativeRevenue": 184169,
       "revenuePerActive": 2.89,
-      "gtvKEur": 4.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-05",
@@ -6936,7 +6936,7 @@ const CASE_DATA = {
       "revenueEur": 25624,
       "cumulativeRevenue": 209794,
       "revenuePerActive": 3.14,
-      "gtvKEur": 1689.4
+      "gtvKEur": 51.1
     },
     {
       "cohortMonth": "2024-05",
@@ -6947,7 +6947,7 @@ const CASE_DATA = {
       "revenueEur": 21214,
       "cumulativeRevenue": 231008,
       "revenuePerActive": 2.73,
-      "gtvKEur": 395.6
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2024-05",
@@ -6958,7 +6958,7 @@ const CASE_DATA = {
       "revenueEur": 23029,
       "cumulativeRevenue": 254038,
       "revenuePerActive": 3.12,
-      "gtvKEur": 2130
+      "gtvKEur": 45.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6969,7 +6969,7 @@ const CASE_DATA = {
       "revenueEur": 27389,
       "cumulativeRevenue": 281426,
       "revenuePerActive": 3.88,
-      "gtvKEur": 18.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6980,7 +6980,7 @@ const CASE_DATA = {
       "revenueEur": 24761,
       "cumulativeRevenue": 306187,
       "revenuePerActive": 3.68,
-      "gtvKEur": 16
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-05",
@@ -6991,7 +6991,7 @@ const CASE_DATA = {
       "revenueEur": 23563,
       "cumulativeRevenue": 329750,
       "revenuePerActive": 3.63,
-      "gtvKEur": 1458.9
+      "gtvKEur": 42.5
     },
     {
       "cohortMonth": "2024-05",
@@ -7002,7 +7002,7 @@ const CASE_DATA = {
       "revenueEur": 39697,
       "cumulativeRevenue": 369446,
       "revenuePerActive": 6.05,
-      "gtvKEur": 62.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2024-05",
@@ -7013,7 +7013,7 @@ const CASE_DATA = {
       "revenueEur": 64780,
       "cumulativeRevenue": 434226,
       "revenuePerActive": 10.31,
-      "gtvKEur": 1936.5
+      "gtvKEur": 41.4
     },
     {
       "cohortMonth": "2024-05",
@@ -7024,7 +7024,7 @@ const CASE_DATA = {
       "revenueEur": 39709,
       "cumulativeRevenue": 473935,
       "revenuePerActive": 6.56,
-      "gtvKEur": 43.5
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-05",
@@ -7035,7 +7035,7 @@ const CASE_DATA = {
       "revenueEur": 31085,
       "cumulativeRevenue": 505020,
       "revenuePerActive": 5.31,
-      "gtvKEur": 3940.2
+      "gtvKEur": 58.4
     },
     {
       "cohortMonth": "2024-05",
@@ -7046,7 +7046,7 @@ const CASE_DATA = {
       "revenueEur": 31129,
       "cumulativeRevenue": 536149,
       "revenuePerActive": 5.5,
-      "gtvKEur": 173.3
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2024-05",
@@ -7057,7 +7057,7 @@ const CASE_DATA = {
       "revenueEur": 30359,
       "cumulativeRevenue": 566508,
       "revenuePerActive": 5.48,
-      "gtvKEur": 3064.5
+      "gtvKEur": 48.4
     },
     {
       "cohortMonth": "2024-05",
@@ -7068,7 +7068,7 @@ const CASE_DATA = {
       "revenueEur": 27047,
       "cumulativeRevenue": 593556,
       "revenuePerActive": 5.07,
-      "gtvKEur": 117.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2024-05",
@@ -7079,7 +7079,7 @@ const CASE_DATA = {
       "revenueEur": 26134,
       "cumulativeRevenue": 619689,
       "revenuePerActive": 5.06,
-      "gtvKEur": 263020.4
+      "gtvKEur": 2650.9
     },
     {
       "cohortMonth": "2024-05",
@@ -7090,7 +7090,7 @@ const CASE_DATA = {
       "revenueEur": 27799,
       "cumulativeRevenue": 647488,
       "revenuePerActive": 5.46,
-      "gtvKEur": 345.6
+      "gtvKEur": 18.6
     },
     {
       "cohortMonth": "2024-05",
@@ -7101,7 +7101,7 @@ const CASE_DATA = {
       "revenueEur": 34014,
       "cumulativeRevenue": 681502,
       "revenuePerActive": 6.9,
-      "gtvKEur": 50532.3
+      "gtvKEur": 1249.1
     },
     {
       "cohortMonth": "2024-05",
@@ -7112,7 +7112,7 @@ const CASE_DATA = {
       "revenueEur": 28782,
       "cumulativeRevenue": 710284,
       "revenuePerActive": 7.81,
-      "gtvKEur": 213824.6
+      "gtvKEur": 4048.2
     },
     {
       "cohortMonth": "2024-05",
@@ -7123,7 +7123,7 @@ const CASE_DATA = {
       "revenueEur": 6491,
       "cumulativeRevenue": 716775,
       "revenuePerActive": 0,
-      "gtvKEur": 69042.9
+      "gtvKEur": 1192.7
     },
     {
       "cohortMonth": "2024-05",
@@ -7145,7 +7145,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 716775,
       "revenuePerActive": 0,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-05",
@@ -7156,7 +7156,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 716775,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-04",
@@ -7167,7 +7167,7 @@ const CASE_DATA = {
       "revenueEur": 18467,
       "cumulativeRevenue": 18467,
       "revenuePerActive": 0.63,
-      "gtvKEur": 13.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-04",
@@ -7178,7 +7178,7 @@ const CASE_DATA = {
       "revenueEur": 50270,
       "cumulativeRevenue": 68738,
       "revenuePerActive": 3.68,
-      "gtvKEur": 221.2
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2024-04",
@@ -7189,7 +7189,7 @@ const CASE_DATA = {
       "revenueEur": 30828,
       "cumulativeRevenue": 99565,
       "revenuePerActive": 3.04,
-      "gtvKEur": 3410.6
+      "gtvKEur": 70
     },
     {
       "cohortMonth": "2024-04",
@@ -7200,7 +7200,7 @@ const CASE_DATA = {
       "revenueEur": 27648,
       "cumulativeRevenue": 127214,
       "revenuePerActive": 3.04,
-      "gtvKEur": 137.4
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2024-04",
@@ -7211,7 +7211,7 @@ const CASE_DATA = {
       "revenueEur": 24554,
       "cumulativeRevenue": 151768,
       "revenuePerActive": 2.92,
-      "gtvKEur": 3235.2
+      "gtvKEur": 39.9
     },
     {
       "cohortMonth": "2024-04",
@@ -7222,7 +7222,7 @@ const CASE_DATA = {
       "revenueEur": 22679,
       "cumulativeRevenue": 174447,
       "revenuePerActive": 2.88,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-04",
@@ -7233,7 +7233,7 @@ const CASE_DATA = {
       "revenueEur": 24828,
       "cumulativeRevenue": 199275,
       "revenuePerActive": 3.27,
-      "gtvKEur": 27
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2024-04",
@@ -7244,7 +7244,7 @@ const CASE_DATA = {
       "revenueEur": 23786,
       "cumulativeRevenue": 223061,
       "revenuePerActive": 3.36,
-      "gtvKEur": 2294
+      "gtvKEur": 62.6
     },
     {
       "cohortMonth": "2024-04",
@@ -7255,7 +7255,7 @@ const CASE_DATA = {
       "revenueEur": 22037,
       "cumulativeRevenue": 245098,
       "revenuePerActive": 3.28,
-      "gtvKEur": 25.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2024-04",
@@ -7266,7 +7266,7 @@ const CASE_DATA = {
       "revenueEur": 22500,
       "cumulativeRevenue": 267597,
       "revenuePerActive": 3.49,
-      "gtvKEur": 1698.1
+      "gtvKEur": 45.3
     },
     {
       "cohortMonth": "2024-04",
@@ -7277,7 +7277,7 @@ const CASE_DATA = {
       "revenueEur": 21869,
       "cumulativeRevenue": 289466,
       "revenuePerActive": 3.49,
-      "gtvKEur": 51.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2024-04",
@@ -7288,7 +7288,7 @@ const CASE_DATA = {
       "revenueEur": 24223,
       "cumulativeRevenue": 313689,
       "revenuePerActive": 3.97,
-      "gtvKEur": 41
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-04",
@@ -7299,7 +7299,7 @@ const CASE_DATA = {
       "revenueEur": 44639,
       "cumulativeRevenue": 358327,
       "revenuePerActive": 7.45,
-      "gtvKEur": 1753.3
+      "gtvKEur": 38.2
     },
     {
       "cohortMonth": "2024-04",
@@ -7310,7 +7310,7 @@ const CASE_DATA = {
       "revenueEur": 56440,
       "cumulativeRevenue": 414767,
       "revenuePerActive": 9.78,
-      "gtvKEur": 94.1
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2024-04",
@@ -7321,7 +7321,7 @@ const CASE_DATA = {
       "revenueEur": 35784,
       "cumulativeRevenue": 450551,
       "revenuePerActive": 6.43,
-      "gtvKEur": 1272.4
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2024-04",
@@ -7332,7 +7332,7 @@ const CASE_DATA = {
       "revenueEur": 34811,
       "cumulativeRevenue": 485362,
       "revenuePerActive": 6.5,
-      "gtvKEur": 123.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2024-04",
@@ -7343,7 +7343,7 @@ const CASE_DATA = {
       "revenueEur": 27469,
       "cumulativeRevenue": 512831,
       "revenuePerActive": 5.27,
-      "gtvKEur": 1481
+      "gtvKEur": 19.7
     },
     {
       "cohortMonth": "2024-04",
@@ -7354,7 +7354,7 @@ const CASE_DATA = {
       "revenueEur": 26820,
       "cumulativeRevenue": 539652,
       "revenuePerActive": 5.3,
-      "gtvKEur": 114
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2024-04",
@@ -7365,7 +7365,7 @@ const CASE_DATA = {
       "revenueEur": 26499,
       "cumulativeRevenue": 566151,
       "revenuePerActive": 5.3,
-      "gtvKEur": 1285.3
+      "gtvKEur": 24.7
     },
     {
       "cohortMonth": "2024-04",
@@ -7376,7 +7376,7 @@ const CASE_DATA = {
       "revenueEur": 25025,
       "cumulativeRevenue": 591176,
       "revenuePerActive": 5.21,
-      "gtvKEur": 160.1
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2024-04",
@@ -7387,7 +7387,7 @@ const CASE_DATA = {
       "revenueEur": 23448,
       "cumulativeRevenue": 614624,
       "revenuePerActive": 5.02,
-      "gtvKEur": 4898
+      "gtvKEur": 76.7
     },
     {
       "cohortMonth": "2024-04",
@@ -7398,7 +7398,7 @@ const CASE_DATA = {
       "revenueEur": 25723,
       "cumulativeRevenue": 640347,
       "revenuePerActive": 5.74,
-      "gtvKEur": 1269.5
+      "gtvKEur": 12.7
     },
     {
       "cohortMonth": "2024-04",
@@ -7409,7 +7409,7 @@ const CASE_DATA = {
       "revenueEur": 24715,
       "cumulativeRevenue": 665062,
       "revenuePerActive": 5.61,
-      "gtvKEur": 97317.7
+      "gtvKEur": 1730
     },
     {
       "cohortMonth": "2024-04",
@@ -7420,7 +7420,7 @@ const CASE_DATA = {
       "revenueEur": 25530,
       "cumulativeRevenue": 690592,
       "revenuePerActive": 7.72,
-      "gtvKEur": 499099.2
+      "gtvKEur": 7065.4
     },
     {
       "cohortMonth": "2024-04",
@@ -7431,7 +7431,7 @@ const CASE_DATA = {
       "revenueEur": 8374,
       "cumulativeRevenue": 698966,
       "revenuePerActive": 0,
-      "gtvKEur": 68212.8
+      "gtvKEur": 1207.3
     },
     {
       "cohortMonth": "2024-04",
@@ -7442,7 +7442,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 698966,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-03",
@@ -7453,7 +7453,7 @@ const CASE_DATA = {
       "revenueEur": 32535,
       "cumulativeRevenue": 32535,
       "revenuePerActive": 1.06,
-      "gtvKEur": 52993
+      "gtvKEur": 549.6
     },
     {
       "cohortMonth": "2024-03",
@@ -7464,7 +7464,7 @@ const CASE_DATA = {
       "revenueEur": 67916,
       "cumulativeRevenue": 100451,
       "revenuePerActive": 4.9,
-      "gtvKEur": 6.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-03",
@@ -7475,7 +7475,7 @@ const CASE_DATA = {
       "revenueEur": 42300,
       "cumulativeRevenue": 142750,
       "revenuePerActive": 3.9,
-      "gtvKEur": 38.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-03",
@@ -7486,7 +7486,7 @@ const CASE_DATA = {
       "revenueEur": 36430,
       "cumulativeRevenue": 179181,
       "revenuePerActive": 3.82,
-      "gtvKEur": 2228.8
+      "gtvKEur": 51.5
     },
     {
       "cohortMonth": "2024-03",
@@ -7497,7 +7497,7 @@ const CASE_DATA = {
       "revenueEur": 34685,
       "cumulativeRevenue": 213866,
       "revenuePerActive": 3.92,
-      "gtvKEur": 10.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-03",
@@ -7508,7 +7508,7 @@ const CASE_DATA = {
       "revenueEur": 31942,
       "cumulativeRevenue": 245808,
       "revenuePerActive": 3.8,
-      "gtvKEur": 2294.7
+      "gtvKEur": 45.4
     },
     {
       "cohortMonth": "2024-03",
@@ -7519,7 +7519,7 @@ const CASE_DATA = {
       "revenueEur": 32351,
       "cumulativeRevenue": 278160,
       "revenuePerActive": 4.11,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-03",
@@ -7530,7 +7530,7 @@ const CASE_DATA = {
       "revenueEur": 32387,
       "cumulativeRevenue": 310547,
       "revenuePerActive": 4.26,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-03",
@@ -7541,7 +7541,7 @@ const CASE_DATA = {
       "revenueEur": 30063,
       "cumulativeRevenue": 340610,
       "revenuePerActive": 4.2,
-      "gtvKEur": 1948.5
+      "gtvKEur": 52.3
     },
     {
       "cohortMonth": "2024-03",
@@ -7552,7 +7552,7 @@ const CASE_DATA = {
       "revenueEur": 32646,
       "cumulativeRevenue": 373257,
       "revenuePerActive": 4.72,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-03",
@@ -7563,7 +7563,7 @@ const CASE_DATA = {
       "revenueEur": 32384,
       "cumulativeRevenue": 405641,
       "revenuePerActive": 4.89,
-      "gtvKEur": 1729.7
+      "gtvKEur": 64
     },
     {
       "cohortMonth": "2024-03",
@@ -7574,7 +7574,7 @@ const CASE_DATA = {
       "revenueEur": 31539,
       "cumulativeRevenue": 437180,
       "revenuePerActive": 4.95,
-      "gtvKEur": 7.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-03",
@@ -7585,7 +7585,7 @@ const CASE_DATA = {
       "revenueEur": 58986,
       "cumulativeRevenue": 496166,
       "revenuePerActive": 9.11,
-      "gtvKEur": 47.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2024-03",
@@ -7596,7 +7596,7 @@ const CASE_DATA = {
       "revenueEur": 74596,
       "cumulativeRevenue": 570762,
       "revenuePerActive": 12.19,
-      "gtvKEur": 2617.3
+      "gtvKEur": 43.7
     },
     {
       "cohortMonth": "2024-03",
@@ -7607,7 +7607,7 @@ const CASE_DATA = {
       "revenueEur": 45586,
       "cumulativeRevenue": 616348,
       "revenuePerActive": 7.75,
-      "gtvKEur": 52.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2024-03",
@@ -7618,7 +7618,7 @@ const CASE_DATA = {
       "revenueEur": 48122,
       "cumulativeRevenue": 664470,
       "revenuePerActive": 8.4,
-      "gtvKEur": 1907.6
+      "gtvKEur": 35
     },
     {
       "cohortMonth": "2024-03",
@@ -7629,7 +7629,7 @@ const CASE_DATA = {
       "revenueEur": 39567,
       "cumulativeRevenue": 704037,
       "revenuePerActive": 7.14,
-      "gtvKEur": 56.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2024-03",
@@ -7640,7 +7640,7 @@ const CASE_DATA = {
       "revenueEur": 37695,
       "cumulativeRevenue": 741732,
       "revenuePerActive": 7.02,
-      "gtvKEur": 1516.1
+      "gtvKEur": 29.8
     },
     {
       "cohortMonth": "2024-03",
@@ -7651,7 +7651,7 @@ const CASE_DATA = {
       "revenueEur": 35683,
       "cumulativeRevenue": 777415,
       "revenuePerActive": 6.81,
-      "gtvKEur": 64.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2024-03",
@@ -7662,7 +7662,7 @@ const CASE_DATA = {
       "revenueEur": 34867,
       "cumulativeRevenue": 812282,
       "revenuePerActive": 6.79,
-      "gtvKEur": 1421.5
+      "gtvKEur": 39.4
     },
     {
       "cohortMonth": "2024-03",
@@ -7673,7 +7673,7 @@ const CASE_DATA = {
       "revenueEur": 35956,
       "cumulativeRevenue": 848237,
       "revenuePerActive": 7.19,
-      "gtvKEur": 124.6
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2024-03",
@@ -7684,7 +7684,7 @@ const CASE_DATA = {
       "revenueEur": 38186,
       "cumulativeRevenue": 886424,
       "revenuePerActive": 7.93,
-      "gtvKEur": 4803.5
+      "gtvKEur": 73.1
     },
     {
       "cohortMonth": "2024-03",
@@ -7695,7 +7695,7 @@ const CASE_DATA = {
       "revenueEur": 39449,
       "cumulativeRevenue": 925872,
       "revenuePerActive": 8.43,
-      "gtvKEur": 674.4
+      "gtvKEur": 7.8
     },
     {
       "cohortMonth": "2024-03",
@@ -7706,7 +7706,7 @@ const CASE_DATA = {
       "revenueEur": 35690,
       "cumulativeRevenue": 961562,
       "revenuePerActive": 7.64,
-      "gtvKEur": 50203.2
+      "gtvKEur": 1230.9
     },
     {
       "cohortMonth": "2024-03",
@@ -7717,7 +7717,7 @@ const CASE_DATA = {
       "revenueEur": 62320,
       "cumulativeRevenue": 1023882,
       "revenuePerActive": 17.22,
-      "gtvKEur": 743234.3
+      "gtvKEur": 9371.2
     },
     {
       "cohortMonth": "2024-03",
@@ -7728,7 +7728,7 @@ const CASE_DATA = {
       "revenueEur": 14879,
       "cumulativeRevenue": 1038761,
       "revenuePerActive": 0,
-      "gtvKEur": 48801.3
+      "gtvKEur": 940.1
     },
     {
       "cohortMonth": "2024-03",
@@ -7739,7 +7739,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1038761,
       "revenuePerActive": 0,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-02",
@@ -7750,7 +7750,7 @@ const CASE_DATA = {
       "revenueEur": 23479,
       "cumulativeRevenue": 23479,
       "revenuePerActive": 0.71,
-      "gtvKEur": 66.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-02",
@@ -7761,7 +7761,7 @@ const CASE_DATA = {
       "revenueEur": 70126,
       "cumulativeRevenue": 93605,
       "revenuePerActive": 4.76,
-      "gtvKEur": 3525.3
+      "gtvKEur": 87
     },
     {
       "cohortMonth": "2024-02",
@@ -7772,7 +7772,7 @@ const CASE_DATA = {
       "revenueEur": 34302,
       "cumulativeRevenue": 127907,
       "revenuePerActive": 3.18,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-02",
@@ -7783,7 +7783,7 @@ const CASE_DATA = {
       "revenueEur": 30805,
       "cumulativeRevenue": 158712,
       "revenuePerActive": 3.21,
-      "gtvKEur": 36
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-02",
@@ -7794,7 +7794,7 @@ const CASE_DATA = {
       "revenueEur": 34411,
       "cumulativeRevenue": 193123,
       "revenuePerActive": 4,
-      "gtvKEur": 537261.6
+      "gtvKEur": 5413.9
     },
     {
       "cohortMonth": "2024-02",
@@ -7805,7 +7805,7 @@ const CASE_DATA = {
       "revenueEur": 25558,
       "cumulativeRevenue": 218681,
       "revenuePerActive": 3.17,
-      "gtvKEur": 150.2
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2024-02",
@@ -7816,7 +7816,7 @@ const CASE_DATA = {
       "revenueEur": 25656,
       "cumulativeRevenue": 244337,
       "revenuePerActive": 3.32,
-      "gtvKEur": 3633.3
+      "gtvKEur": 48.2
     },
     {
       "cohortMonth": "2024-02",
@@ -7827,7 +7827,7 @@ const CASE_DATA = {
       "revenueEur": 31393,
       "cumulativeRevenue": 275730,
       "revenuePerActive": 4.22,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-02",
@@ -7838,7 +7838,7 @@ const CASE_DATA = {
       "revenueEur": 25239,
       "cumulativeRevenue": 300970,
       "revenuePerActive": 3.54,
-      "gtvKEur": 7.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-02",
@@ -7849,7 +7849,7 @@ const CASE_DATA = {
       "revenueEur": 25372,
       "cumulativeRevenue": 326342,
       "revenuePerActive": 3.73,
-      "gtvKEur": 5467
+      "gtvKEur": 87.7
     },
     {
       "cohortMonth": "2024-02",
@@ -7860,7 +7860,7 @@ const CASE_DATA = {
       "revenueEur": 24761,
       "cumulativeRevenue": 351103,
       "revenuePerActive": 3.79,
-      "gtvKEur": 9.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-02",
@@ -7871,7 +7871,7 @@ const CASE_DATA = {
       "revenueEur": 25515,
       "cumulativeRevenue": 376618,
       "revenuePerActive": 4.02,
-      "gtvKEur": 4215.7
+      "gtvKEur": 223.9
     },
     {
       "cohortMonth": "2024-02",
@@ -7882,7 +7882,7 @@ const CASE_DATA = {
       "revenueEur": 40209,
       "cumulativeRevenue": 416827,
       "revenuePerActive": 6.58,
-      "gtvKEur": 20.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-02",
@@ -7893,7 +7893,7 @@ const CASE_DATA = {
       "revenueEur": 63520,
       "cumulativeRevenue": 480347,
       "revenuePerActive": 10.79,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-02",
@@ -7904,7 +7904,7 @@ const CASE_DATA = {
       "revenueEur": 37383,
       "cumulativeRevenue": 517730,
       "revenuePerActive": 6.67,
-      "gtvKEur": 5026
+      "gtvKEur": 73.1
     },
     {
       "cohortMonth": "2024-02",
@@ -7915,7 +7915,7 @@ const CASE_DATA = {
       "revenueEur": 34467,
       "cumulativeRevenue": 552196,
       "revenuePerActive": 6.26,
-      "gtvKEur": 120.3
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2024-02",
@@ -7926,7 +7926,7 @@ const CASE_DATA = {
       "revenueEur": 40139,
       "cumulativeRevenue": 592336,
       "revenuePerActive": 7.48,
-      "gtvKEur": 2160.4
+      "gtvKEur": 53.4
     },
     {
       "cohortMonth": "2024-02",
@@ -7937,7 +7937,7 @@ const CASE_DATA = {
       "revenueEur": 32148,
       "cumulativeRevenue": 624484,
       "revenuePerActive": 6.16,
-      "gtvKEur": 12.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-02",
@@ -7948,7 +7948,7 @@ const CASE_DATA = {
       "revenueEur": 29576,
       "cumulativeRevenue": 654060,
       "revenuePerActive": 5.78,
-      "gtvKEur": 2471.2
+      "gtvKEur": 34.6
     },
     {
       "cohortMonth": "2024-02",
@@ -7959,7 +7959,7 @@ const CASE_DATA = {
       "revenueEur": 33399,
       "cumulativeRevenue": 687459,
       "revenuePerActive": 6.74,
-      "gtvKEur": 91.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2024-02",
@@ -7970,7 +7970,7 @@ const CASE_DATA = {
       "revenueEur": 32269,
       "cumulativeRevenue": 719728,
       "revenuePerActive": 6.59,
-      "gtvKEur": 5935.6
+      "gtvKEur": 75.8
     },
     {
       "cohortMonth": "2024-02",
@@ -7981,7 +7981,7 @@ const CASE_DATA = {
       "revenueEur": 31163,
       "cumulativeRevenue": 750891,
       "revenuePerActive": 6.59,
-      "gtvKEur": 229.2
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2024-02",
@@ -7992,7 +7992,7 @@ const CASE_DATA = {
       "revenueEur": 33563,
       "cumulativeRevenue": 784454,
       "revenuePerActive": 7.23,
-      "gtvKEur": 8647.9
+      "gtvKEur": 124.1
     },
     {
       "cohortMonth": "2024-02",
@@ -8003,7 +8003,7 @@ const CASE_DATA = {
       "revenueEur": 31264,
       "cumulativeRevenue": 815718,
       "revenuePerActive": 6.85,
-      "gtvKEur": 607.7
+      "gtvKEur": 6.1
     },
     {
       "cohortMonth": "2024-02",
@@ -8014,7 +8014,7 @@ const CASE_DATA = {
       "revenueEur": 37356,
       "cumulativeRevenue": 853074,
       "revenuePerActive": 8.36,
-      "gtvKEur": 125024.7
+      "gtvKEur": 1946.6
     },
     {
       "cohortMonth": "2024-02",
@@ -8025,7 +8025,7 @@ const CASE_DATA = {
       "revenueEur": 55036,
       "cumulativeRevenue": 908110,
       "revenuePerActive": 16.15,
-      "gtvKEur": 370781.9
+      "gtvKEur": 5465
     },
     {
       "cohortMonth": "2024-02",
@@ -8036,7 +8036,7 @@ const CASE_DATA = {
       "revenueEur": 13366,
       "cumulativeRevenue": 921476,
       "revenuePerActive": 0,
-      "gtvKEur": 108119.3
+      "gtvKEur": 1554.2
     },
     {
       "cohortMonth": "2024-02",
@@ -8069,7 +8069,7 @@ const CASE_DATA = {
       "revenueEur": 25791,
       "cumulativeRevenue": 25791,
       "revenuePerActive": 0.87,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-01",
@@ -8080,7 +8080,7 @@ const CASE_DATA = {
       "revenueEur": 57820,
       "cumulativeRevenue": 83611,
       "revenuePerActive": 4.03,
-      "gtvKEur": 10.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-01",
@@ -8091,7 +8091,7 @@ const CASE_DATA = {
       "revenueEur": 40737,
       "cumulativeRevenue": 124348,
       "revenuePerActive": 3.67,
-      "gtvKEur": 2813.8
+      "gtvKEur": 92.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8102,7 +8102,7 @@ const CASE_DATA = {
       "revenueEur": 31279,
       "cumulativeRevenue": 155627,
       "revenuePerActive": 3.21,
-      "gtvKEur": 55.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2024-01",
@@ -8113,7 +8113,7 @@ const CASE_DATA = {
       "revenueEur": 36407,
       "cumulativeRevenue": 192034,
       "revenuePerActive": 4.01,
-      "gtvKEur": 119.6
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2024-01",
@@ -8124,7 +8124,7 @@ const CASE_DATA = {
       "revenueEur": 30316,
       "cumulativeRevenue": 222350,
       "revenuePerActive": 3.56,
-      "gtvKEur": 2188.4
+      "gtvKEur": 56.1
     },
     {
       "cohortMonth": "2024-01",
@@ -8135,7 +8135,7 @@ const CASE_DATA = {
       "revenueEur": 30680,
       "cumulativeRevenue": 253030,
       "revenuePerActive": 3.79,
-      "gtvKEur": 11.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2024-01",
@@ -8146,7 +8146,7 @@ const CASE_DATA = {
       "revenueEur": 28851,
       "cumulativeRevenue": 281881,
       "revenuePerActive": 3.73,
-      "gtvKEur": 2481.5
+      "gtvKEur": 42.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8157,7 +8157,7 @@ const CASE_DATA = {
       "revenueEur": 27134,
       "cumulativeRevenue": 309015,
       "revenuePerActive": 3.67,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-01",
@@ -8168,7 +8168,7 @@ const CASE_DATA = {
       "revenueEur": 29314,
       "cumulativeRevenue": 338329,
       "revenuePerActive": 4.12,
-      "gtvKEur": 24.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2024-01",
@@ -8179,7 +8179,7 @@ const CASE_DATA = {
       "revenueEur": 30066,
       "cumulativeRevenue": 368395,
       "revenuePerActive": 4.35,
-      "gtvKEur": 1988.5
+      "gtvKEur": 55.2
     },
     {
       "cohortMonth": "2024-01",
@@ -8190,7 +8190,7 @@ const CASE_DATA = {
       "revenueEur": 29580,
       "cumulativeRevenue": 397975,
       "revenuePerActive": 4.41,
-      "gtvKEur": 43.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2024-01",
@@ -8201,7 +8201,7 @@ const CASE_DATA = {
       "revenueEur": 45122,
       "cumulativeRevenue": 443097,
       "revenuePerActive": 6.83,
-      "gtvKEur": 1720
+      "gtvKEur": 55.5
     },
     {
       "cohortMonth": "2024-01",
@@ -8212,7 +8212,7 @@ const CASE_DATA = {
       "revenueEur": 61914,
       "cumulativeRevenue": 505012,
       "revenuePerActive": 9.79,
-      "gtvKEur": 273.8
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8223,7 +8223,7 @@ const CASE_DATA = {
       "revenueEur": 43343,
       "cumulativeRevenue": 548355,
       "revenuePerActive": 7.2,
-      "gtvKEur": 530.6
+      "gtvKEur": 5.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8234,7 +8234,7 @@ const CASE_DATA = {
       "revenueEur": 33004,
       "cumulativeRevenue": 581359,
       "revenuePerActive": 5.63,
-      "gtvKEur": 2509.5
+      "gtvKEur": 43.1
     },
     {
       "cohortMonth": "2024-01",
@@ -8245,7 +8245,7 @@ const CASE_DATA = {
       "revenueEur": 32107,
       "cumulativeRevenue": 613466,
       "revenuePerActive": 5.55,
-      "gtvKEur": 351.3
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2024-01",
@@ -8256,7 +8256,7 @@ const CASE_DATA = {
       "revenueEur": 32138,
       "cumulativeRevenue": 645604,
       "revenuePerActive": 5.73,
-      "gtvKEur": 1371.4
+      "gtvKEur": 19.5
     },
     {
       "cohortMonth": "2024-01",
@@ -8267,7 +8267,7 @@ const CASE_DATA = {
       "revenueEur": 32152,
       "cumulativeRevenue": 677756,
       "revenuePerActive": 5.85,
-      "gtvKEur": 25.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8278,7 +8278,7 @@ const CASE_DATA = {
       "revenueEur": 31470,
       "cumulativeRevenue": 709226,
       "revenuePerActive": 5.91,
-      "gtvKEur": 1392.6
+      "gtvKEur": 18.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8289,7 +8289,7 @@ const CASE_DATA = {
       "revenueEur": 27457,
       "cumulativeRevenue": 736682,
       "revenuePerActive": 5.29,
-      "gtvKEur": 74
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8300,7 +8300,7 @@ const CASE_DATA = {
       "revenueEur": 29370,
       "cumulativeRevenue": 766052,
       "revenuePerActive": 5.74,
-      "gtvKEur": 1612.7
+      "gtvKEur": 39.8
     },
     {
       "cohortMonth": "2024-01",
@@ -8311,7 +8311,7 @@ const CASE_DATA = {
       "revenueEur": 28483,
       "cumulativeRevenue": 794536,
       "revenuePerActive": 5.67,
-      "gtvKEur": 360.1
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2024-01",
@@ -8322,7 +8322,7 @@ const CASE_DATA = {
       "revenueEur": 28108,
       "cumulativeRevenue": 822644,
       "revenuePerActive": 5.71,
-      "gtvKEur": 2121
+      "gtvKEur": 43.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8333,7 +8333,7 @@ const CASE_DATA = {
       "revenueEur": 42927,
       "cumulativeRevenue": 865571,
       "revenuePerActive": 8.8,
-      "gtvKEur": 1391.3
+      "gtvKEur": 14.2
     },
     {
       "cohortMonth": "2024-01",
@@ -8344,7 +8344,7 @@ const CASE_DATA = {
       "revenueEur": 50783,
       "cumulativeRevenue": 916353,
       "revenuePerActive": 10.69,
-      "gtvKEur": 134370.5
+      "gtvKEur": 2140.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8355,7 +8355,7 @@ const CASE_DATA = {
       "revenueEur": 37563,
       "cumulativeRevenue": 953916,
       "revenuePerActive": 10.44,
-      "gtvKEur": 214749.4
+      "gtvKEur": 4365.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8366,7 +8366,7 @@ const CASE_DATA = {
       "revenueEur": 8814,
       "cumulativeRevenue": 962731,
       "revenuePerActive": 0,
-      "gtvKEur": 177799.6
+      "gtvKEur": 2358.3
     },
     {
       "cohortMonth": "2024-01",
@@ -8377,7 +8377,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 962731,
       "revenuePerActive": 0,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-01",
@@ -8388,7 +8388,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 962731,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2024-01",
@@ -8410,7 +8410,7 @@ const CASE_DATA = {
       "revenueEur": 28132,
       "cumulativeRevenue": 28132,
       "revenuePerActive": 1.19,
-      "gtvKEur": 1131.5
+      "gtvKEur": 30.4
     },
     {
       "cohortMonth": "2023-12",
@@ -8421,7 +8421,7 @@ const CASE_DATA = {
       "revenueEur": 52048,
       "cumulativeRevenue": 80180,
       "revenuePerActive": 4.59,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-12",
@@ -8432,7 +8432,7 @@ const CASE_DATA = {
       "revenueEur": 29278,
       "cumulativeRevenue": 109458,
       "revenuePerActive": 3.35,
-      "gtvKEur": 61.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8443,7 +8443,7 @@ const CASE_DATA = {
       "revenueEur": 32725,
       "cumulativeRevenue": 142183,
       "revenuePerActive": 4.16,
-      "gtvKEur": 2047.6
+      "gtvKEur": 48.9
     },
     {
       "cohortMonth": "2023-12",
@@ -8454,7 +8454,7 @@ const CASE_DATA = {
       "revenueEur": 26781,
       "cumulativeRevenue": 168963,
       "revenuePerActive": 3.78,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-12",
@@ -8465,7 +8465,7 @@ const CASE_DATA = {
       "revenueEur": 29274,
       "cumulativeRevenue": 198237,
       "revenuePerActive": 4.35,
-      "gtvKEur": 6.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-12",
@@ -8476,7 +8476,7 @@ const CASE_DATA = {
       "revenueEur": 28759,
       "cumulativeRevenue": 226997,
       "revenuePerActive": 4.55,
-      "gtvKEur": 1993.4
+      "gtvKEur": 61.5
     },
     {
       "cohortMonth": "2023-12",
@@ -8487,7 +8487,7 @@ const CASE_DATA = {
       "revenueEur": 28246,
       "cumulativeRevenue": 255243,
       "revenuePerActive": 4.64,
-      "gtvKEur": 124.3
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-12",
@@ -8498,7 +8498,7 @@ const CASE_DATA = {
       "revenueEur": 26503,
       "cumulativeRevenue": 281745,
       "revenuePerActive": 4.56,
-      "gtvKEur": 1844.4
+      "gtvKEur": 40.7
     },
     {
       "cohortMonth": "2023-12",
@@ -8509,7 +8509,7 @@ const CASE_DATA = {
       "revenueEur": 28305,
       "cumulativeRevenue": 310051,
       "revenuePerActive": 5.05,
-      "gtvKEur": 64.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8520,7 +8520,7 @@ const CASE_DATA = {
       "revenueEur": 27342,
       "cumulativeRevenue": 337392,
       "revenuePerActive": 5.01,
-      "gtvKEur": 22.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-12",
@@ -8531,7 +8531,7 @@ const CASE_DATA = {
       "revenueEur": 27153,
       "cumulativeRevenue": 364545,
       "revenuePerActive": 5.19,
-      "gtvKEur": 1792.5
+      "gtvKEur": 58.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8542,7 +8542,7 @@ const CASE_DATA = {
       "revenueEur": 39166,
       "cumulativeRevenue": 403711,
       "revenuePerActive": 7.58,
-      "gtvKEur": 183.9
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2023-12",
@@ -8553,7 +8553,7 @@ const CASE_DATA = {
       "revenueEur": 49280,
       "cumulativeRevenue": 452991,
       "revenuePerActive": 9.93,
-      "gtvKEur": 1965.3
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2023-12",
@@ -8564,7 +8564,7 @@ const CASE_DATA = {
       "revenueEur": 33573,
       "cumulativeRevenue": 486564,
       "revenuePerActive": 7.13,
-      "gtvKEur": 376.8
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2023-12",
@@ -8575,7 +8575,7 @@ const CASE_DATA = {
       "revenueEur": 35841,
       "cumulativeRevenue": 522404,
       "revenuePerActive": 7.93,
-      "gtvKEur": 404.8
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2023-12",
@@ -8586,7 +8586,7 @@ const CASE_DATA = {
       "revenueEur": 29171,
       "cumulativeRevenue": 551575,
       "revenuePerActive": 6.65,
-      "gtvKEur": 1735.9
+      "gtvKEur": 39.9
     },
     {
       "cohortMonth": "2023-12",
@@ -8597,7 +8597,7 @@ const CASE_DATA = {
       "revenueEur": 30686,
       "cumulativeRevenue": 582261,
       "revenuePerActive": 7.09,
-      "gtvKEur": 584.9
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2023-12",
@@ -8608,7 +8608,7 @@ const CASE_DATA = {
       "revenueEur": 30605,
       "cumulativeRevenue": 612866,
       "revenuePerActive": 7.3,
-      "gtvKEur": 1434
+      "gtvKEur": 22.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8619,7 +8619,7 @@ const CASE_DATA = {
       "revenueEur": 31318,
       "cumulativeRevenue": 644183,
       "revenuePerActive": 7.63,
-      "gtvKEur": 669.8
+      "gtvKEur": 6.7
     },
     {
       "cohortMonth": "2023-12",
@@ -8630,7 +8630,7 @@ const CASE_DATA = {
       "revenueEur": 27956,
       "cumulativeRevenue": 672140,
       "revenuePerActive": 6.99,
-      "gtvKEur": 1484.7
+      "gtvKEur": 40.8
     },
     {
       "cohortMonth": "2023-12",
@@ -8641,7 +8641,7 @@ const CASE_DATA = {
       "revenueEur": 27850,
       "cumulativeRevenue": 699989,
       "revenuePerActive": 7.08,
-      "gtvKEur": 555.7
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8652,7 +8652,7 @@ const CASE_DATA = {
       "revenueEur": 28369,
       "cumulativeRevenue": 728358,
       "revenuePerActive": 7.31,
-      "gtvKEur": 1450.6
+      "gtvKEur": 39.5
     },
     {
       "cohortMonth": "2023-12",
@@ -8663,7 +8663,7 @@ const CASE_DATA = {
       "revenueEur": 28574,
       "cumulativeRevenue": 756932,
       "revenuePerActive": 7.55,
-      "gtvKEur": 544.6
+      "gtvKEur": 8.6
     },
     {
       "cohortMonth": "2023-12",
@@ -8674,7 +8674,7 @@ const CASE_DATA = {
       "revenueEur": 36671,
       "cumulativeRevenue": 793604,
       "revenuePerActive": 9.73,
-      "gtvKEur": 1899.8
+      "gtvKEur": 54.4
     },
     {
       "cohortMonth": "2023-12",
@@ -8685,7 +8685,7 @@ const CASE_DATA = {
       "revenueEur": 39894,
       "cumulativeRevenue": 833498,
       "revenuePerActive": 10.98,
-      "gtvKEur": 1099.7
+      "gtvKEur": 23.2
     },
     {
       "cohortMonth": "2023-12",
@@ -8696,7 +8696,7 @@ const CASE_DATA = {
       "revenueEur": 33350,
       "cumulativeRevenue": 866848,
       "revenuePerActive": 9.61,
-      "gtvKEur": 446563.3
+      "gtvKEur": 5054.5
     },
     {
       "cohortMonth": "2023-12",
@@ -8707,7 +8707,7 @@ const CASE_DATA = {
       "revenueEur": 34693,
       "cumulativeRevenue": 901541,
       "revenuePerActive": 13.34,
-      "gtvKEur": 86270.3
+      "gtvKEur": 2582
     },
     {
       "cohortMonth": "2023-12",
@@ -8718,7 +8718,7 @@ const CASE_DATA = {
       "revenueEur": 9090,
       "cumulativeRevenue": 910631,
       "revenuePerActive": 0,
-      "gtvKEur": 21363.5
+      "gtvKEur": 726.2
     },
     {
       "cohortMonth": "2023-12",
@@ -8729,7 +8729,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 910631,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-12",
@@ -8740,7 +8740,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 910631,
       "revenuePerActive": 0,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-12",
@@ -8751,7 +8751,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 910631,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-12",
@@ -8762,7 +8762,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 910631,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-11",
@@ -8773,7 +8773,7 @@ const CASE_DATA = {
       "revenueEur": 18994,
       "cumulativeRevenue": 18994,
       "revenuePerActive": 0.76,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-11",
@@ -8784,7 +8784,7 @@ const CASE_DATA = {
       "revenueEur": 49835,
       "cumulativeRevenue": 68829,
       "revenuePerActive": 4.06,
-      "gtvKEur": 20002280.5
+      "gtvKEur": 200107.8
     },
     {
       "cohortMonth": "2023-11",
@@ -8795,7 +8795,7 @@ const CASE_DATA = {
       "revenueEur": 36041,
       "cumulativeRevenue": 104871,
       "revenuePerActive": 3.75,
-      "gtvKEur": 154.9
+      "gtvKEur": 3.9
     },
     {
       "cohortMonth": "2023-11",
@@ -8806,7 +8806,7 @@ const CASE_DATA = {
       "revenueEur": 29630,
       "cumulativeRevenue": 134501,
       "revenuePerActive": 3.51,
-      "gtvKEur": 170.4
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2023-11",
@@ -8817,7 +8817,7 @@ const CASE_DATA = {
       "revenueEur": 27103,
       "cumulativeRevenue": 161604,
       "revenuePerActive": 3.46,
-      "gtvKEur": 1984.8
+      "gtvKEur": 88.7
     },
     {
       "cohortMonth": "2023-11",
@@ -8828,7 +8828,7 @@ const CASE_DATA = {
       "revenueEur": 27830,
       "cumulativeRevenue": 189434,
       "revenuePerActive": 3.82,
-      "gtvKEur": 45.4
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2023-11",
@@ -8839,7 +8839,7 @@ const CASE_DATA = {
       "revenueEur": 25095,
       "cumulativeRevenue": 214529,
       "revenuePerActive": 3.58,
-      "gtvKEur": 53.5
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2023-11",
@@ -8850,7 +8850,7 @@ const CASE_DATA = {
       "revenueEur": 25298,
       "cumulativeRevenue": 239827,
       "revenuePerActive": 3.81,
-      "gtvKEur": 1895.9
+      "gtvKEur": 84.1
     },
     {
       "cohortMonth": "2023-11",
@@ -8861,7 +8861,7 @@ const CASE_DATA = {
       "revenueEur": 25274,
       "cumulativeRevenue": 265100,
       "revenuePerActive": 3.96,
-      "gtvKEur": 31.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-11",
@@ -8872,7 +8872,7 @@ const CASE_DATA = {
       "revenueEur": 24267,
       "cumulativeRevenue": 289367,
       "revenuePerActive": 3.9,
-      "gtvKEur": 1478.9
+      "gtvKEur": 31.6
     },
     {
       "cohortMonth": "2023-11",
@@ -8883,7 +8883,7 @@ const CASE_DATA = {
       "revenueEur": 24889,
       "cumulativeRevenue": 314257,
       "revenuePerActive": 4.21,
-      "gtvKEur": 55.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-11",
@@ -8894,7 +8894,7 @@ const CASE_DATA = {
       "revenueEur": 23850,
       "cumulativeRevenue": 338107,
       "revenuePerActive": 4.12,
-      "gtvKEur": 85.4
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-11",
@@ -8905,7 +8905,7 @@ const CASE_DATA = {
       "revenueEur": 39392,
       "cumulativeRevenue": 377499,
       "revenuePerActive": 6.92,
-      "gtvKEur": 1469.5
+      "gtvKEur": 65.7
     },
     {
       "cohortMonth": "2023-11",
@@ -8916,7 +8916,7 @@ const CASE_DATA = {
       "revenueEur": 51868,
       "cumulativeRevenue": 429367,
       "revenuePerActive": 9.4,
-      "gtvKEur": 43.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-11",
@@ -8927,7 +8927,7 @@ const CASE_DATA = {
       "revenueEur": 39555,
       "cumulativeRevenue": 468922,
       "revenuePerActive": 7.54,
-      "gtvKEur": 1621.8
+      "gtvKEur": 70.7
     },
     {
       "cohortMonth": "2023-11",
@@ -8938,7 +8938,7 @@ const CASE_DATA = {
       "revenueEur": 28907,
       "cumulativeRevenue": 497829,
       "revenuePerActive": 5.67,
-      "gtvKEur": 29.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-11",
@@ -8949,7 +8949,7 @@ const CASE_DATA = {
       "revenueEur": 32648,
       "cumulativeRevenue": 530477,
       "revenuePerActive": 6.68,
-      "gtvKEur": 42.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-11",
@@ -8960,7 +8960,7 @@ const CASE_DATA = {
       "revenueEur": 33649,
       "cumulativeRevenue": 564126,
       "revenuePerActive": 7.02,
-      "gtvKEur": 1247.5
+      "gtvKEur": 55.1
     },
     {
       "cohortMonth": "2023-11",
@@ -8971,7 +8971,7 @@ const CASE_DATA = {
       "revenueEur": 28089,
       "cumulativeRevenue": 592215,
       "revenuePerActive": 5.97,
-      "gtvKEur": 41.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-11",
@@ -8982,7 +8982,7 @@ const CASE_DATA = {
       "revenueEur": 30834,
       "cumulativeRevenue": 623049,
       "revenuePerActive": 6.72,
-      "gtvKEur": 1023.5
+      "gtvKEur": 19.9
     },
     {
       "cohortMonth": "2023-11",
@@ -8993,7 +8993,7 @@ const CASE_DATA = {
       "revenueEur": 32694,
       "cumulativeRevenue": 655743,
       "revenuePerActive": 7.28,
-      "gtvKEur": 731.3
+      "gtvKEur": 7.3
     },
     {
       "cohortMonth": "2023-11",
@@ -9004,7 +9004,7 @@ const CASE_DATA = {
       "revenueEur": 27293,
       "cumulativeRevenue": 683037,
       "revenuePerActive": 6.29,
-      "gtvKEur": 1235.3
+      "gtvKEur": 22.2
     },
     {
       "cohortMonth": "2023-11",
@@ -9015,7 +9015,7 @@ const CASE_DATA = {
       "revenueEur": 30349,
       "cumulativeRevenue": 713386,
       "revenuePerActive": 7.06,
-      "gtvKEur": 151.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2023-11",
@@ -9026,7 +9026,7 @@ const CASE_DATA = {
       "revenueEur": 28185,
       "cumulativeRevenue": 741571,
       "revenuePerActive": 6.63,
-      "gtvKEur": 1294.9
+      "gtvKEur": 40.9
     },
     {
       "cohortMonth": "2023-11",
@@ -9037,7 +9037,7 @@ const CASE_DATA = {
       "revenueEur": 39146,
       "cumulativeRevenue": 780716,
       "revenuePerActive": 9.4,
-      "gtvKEur": 289.6
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2023-11",
@@ -9048,7 +9048,7 @@ const CASE_DATA = {
       "revenueEur": 46984,
       "cumulativeRevenue": 827701,
       "revenuePerActive": 11.51,
-      "gtvKEur": 1606.3
+      "gtvKEur": 150.3
     },
     {
       "cohortMonth": "2023-11",
@@ -9059,7 +9059,7 @@ const CASE_DATA = {
       "revenueEur": 43585,
       "cumulativeRevenue": 871285,
       "revenuePerActive": 10.97,
-      "gtvKEur": 1250.9
+      "gtvKEur": 14.3
     },
     {
       "cohortMonth": "2023-11",
@@ -9070,7 +9070,7 @@ const CASE_DATA = {
       "revenueEur": 30448,
       "cumulativeRevenue": 901733,
       "revenuePerActive": 7.96,
-      "gtvKEur": 35347.7
+      "gtvKEur": 1685.1
     },
     {
       "cohortMonth": "2023-11",
@@ -9081,7 +9081,7 @@ const CASE_DATA = {
       "revenueEur": 33275,
       "cumulativeRevenue": 935008,
       "revenuePerActive": 11.19,
-      "gtvKEur": 90258.5
+      "gtvKEur": 3649.1
     },
     {
       "cohortMonth": "2023-11",
@@ -9092,7 +9092,7 @@ const CASE_DATA = {
       "revenueEur": 12430,
       "cumulativeRevenue": 947438,
       "revenuePerActive": 0,
-      "gtvKEur": 23255.5
+      "gtvKEur": 905
     },
     {
       "cohortMonth": "2023-11",
@@ -9103,7 +9103,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 947438,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-11",
@@ -9125,7 +9125,7 @@ const CASE_DATA = {
       "revenueEur": 18887,
       "cumulativeRevenue": 18887,
       "revenuePerActive": 0.71,
-      "gtvKEur": 12.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-10",
@@ -9136,7 +9136,7 @@ const CASE_DATA = {
       "revenueEur": 46836,
       "cumulativeRevenue": 65723,
       "revenuePerActive": 3.65,
-      "gtvKEur": 26.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9147,7 +9147,7 @@ const CASE_DATA = {
       "revenueEur": 35097,
       "cumulativeRevenue": 100820,
       "revenuePerActive": 3.55,
-      "gtvKEur": 9373.1
+      "gtvKEur": 187.8
     },
     {
       "cohortMonth": "2023-10",
@@ -9158,7 +9158,7 @@ const CASE_DATA = {
       "revenueEur": 29198,
       "cumulativeRevenue": 130018,
       "revenuePerActive": 3.26,
-      "gtvKEur": 13
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-10",
@@ -9169,7 +9169,7 @@ const CASE_DATA = {
       "revenueEur": 27265,
       "cumulativeRevenue": 157283,
       "revenuePerActive": 3.32,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-10",
@@ -9180,7 +9180,7 @@ const CASE_DATA = {
       "revenueEur": 25795,
       "cumulativeRevenue": 183078,
       "revenuePerActive": 3.33,
-      "gtvKEur": 10629.7
+      "gtvKEur": 162.8
     },
     {
       "cohortMonth": "2023-10",
@@ -9191,7 +9191,7 @@ const CASE_DATA = {
       "revenueEur": 23771,
       "cumulativeRevenue": 206850,
       "revenuePerActive": 3.3,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-10",
@@ -9202,7 +9202,7 @@ const CASE_DATA = {
       "revenueEur": 23748,
       "cumulativeRevenue": 230597,
       "revenuePerActive": 3.4,
-      "gtvKEur": 22.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9213,7 +9213,7 @@ const CASE_DATA = {
       "revenueEur": 23453,
       "cumulativeRevenue": 254050,
       "revenuePerActive": 3.55,
-      "gtvKEur": 7328.6
+      "gtvKEur": 96.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9224,7 +9224,7 @@ const CASE_DATA = {
       "revenueEur": 25488,
       "cumulativeRevenue": 279538,
       "revenuePerActive": 4.02,
-      "gtvKEur": 20.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9235,7 +9235,7 @@ const CASE_DATA = {
       "revenueEur": 22762,
       "cumulativeRevenue": 302301,
       "revenuePerActive": 3.72,
-      "gtvKEur": 9520.1
+      "gtvKEur": 144.9
     },
     {
       "cohortMonth": "2023-10",
@@ -9246,7 +9246,7 @@ const CASE_DATA = {
       "revenueEur": 23192,
       "cumulativeRevenue": 325493,
       "revenuePerActive": 3.91,
-      "gtvKEur": 15.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-10",
@@ -9257,7 +9257,7 @@ const CASE_DATA = {
       "revenueEur": 33937,
       "cumulativeRevenue": 359430,
       "revenuePerActive": 5.85,
-      "gtvKEur": 45.4
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9268,7 +9268,7 @@ const CASE_DATA = {
       "revenueEur": 45982,
       "cumulativeRevenue": 405411,
       "revenuePerActive": 8.18,
-      "gtvKEur": 6660
+      "gtvKEur": 92.3
     },
     {
       "cohortMonth": "2023-10",
@@ -9279,7 +9279,7 @@ const CASE_DATA = {
       "revenueEur": 30334,
       "cumulativeRevenue": 435745,
       "revenuePerActive": 5.58,
-      "gtvKEur": 155.5
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9290,7 +9290,7 @@ const CASE_DATA = {
       "revenueEur": 27782,
       "cumulativeRevenue": 463527,
       "revenuePerActive": 5.31,
-      "gtvKEur": 2946.1
+      "gtvKEur": 60.3
     },
     {
       "cohortMonth": "2023-10",
@@ -9301,7 +9301,7 @@ const CASE_DATA = {
       "revenueEur": 26265,
       "cumulativeRevenue": 489792,
       "revenuePerActive": 5.22,
-      "gtvKEur": 56.8
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9312,7 +9312,7 @@ const CASE_DATA = {
       "revenueEur": 27220,
       "cumulativeRevenue": 517012,
       "revenuePerActive": 5.65,
-      "gtvKEur": 311.1
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2023-10",
@@ -9323,7 +9323,7 @@ const CASE_DATA = {
       "revenueEur": 25421,
       "cumulativeRevenue": 542433,
       "revenuePerActive": 5.39,
-      "gtvKEur": 1263.8
+      "gtvKEur": 54.1
     },
     {
       "cohortMonth": "2023-10",
@@ -9334,7 +9334,7 @@ const CASE_DATA = {
       "revenueEur": 23815,
       "cumulativeRevenue": 566248,
       "revenuePerActive": 5.07,
-      "gtvKEur": 64.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9345,7 +9345,7 @@ const CASE_DATA = {
       "revenueEur": 28210,
       "cumulativeRevenue": 594458,
       "revenuePerActive": 6.17,
-      "gtvKEur": 3140.6
+      "gtvKEur": 76.3
     },
     {
       "cohortMonth": "2023-10",
@@ -9356,7 +9356,7 @@ const CASE_DATA = {
       "revenueEur": 27258,
       "cumulativeRevenue": 621716,
       "revenuePerActive": 6.06,
-      "gtvKEur": 39
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-10",
@@ -9367,7 +9367,7 @@ const CASE_DATA = {
       "revenueEur": 27267,
       "cumulativeRevenue": 648982,
       "revenuePerActive": 6.28,
-      "gtvKEur": 2208.5
+      "gtvKEur": 37.6
     },
     {
       "cohortMonth": "2023-10",
@@ -9378,7 +9378,7 @@ const CASE_DATA = {
       "revenueEur": 29528,
       "cumulativeRevenue": 678511,
       "revenuePerActive": 6.89,
-      "gtvKEur": 1304
+      "gtvKEur": 16.4
     },
     {
       "cohortMonth": "2023-10",
@@ -9389,7 +9389,7 @@ const CASE_DATA = {
       "revenueEur": 29503,
       "cumulativeRevenue": 708013,
       "revenuePerActive": 6.9,
-      "gtvKEur": 1942.2
+      "gtvKEur": 37
     },
     {
       "cohortMonth": "2023-10",
@@ -9400,7 +9400,7 @@ const CASE_DATA = {
       "revenueEur": 40138,
       "cumulativeRevenue": 748151,
       "revenuePerActive": 9.68,
-      "gtvKEur": 1723.5
+      "gtvKEur": 17.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9411,7 +9411,7 @@ const CASE_DATA = {
       "revenueEur": 28952,
       "cumulativeRevenue": 777104,
       "revenuePerActive": 7.11,
-      "gtvKEur": 4842
+      "gtvKEur": 60.9
     },
     {
       "cohortMonth": "2023-10",
@@ -9422,7 +9422,7 @@ const CASE_DATA = {
       "revenueEur": 26749,
       "cumulativeRevenue": 803853,
       "revenuePerActive": 6.71,
-      "gtvKEur": 745.6
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9433,7 +9433,7 @@ const CASE_DATA = {
       "revenueEur": 31156,
       "cumulativeRevenue": 835008,
       "revenuePerActive": 8.12,
-      "gtvKEur": 76835
+      "gtvKEur": 1621.3
     },
     {
       "cohortMonth": "2023-10",
@@ -9444,7 +9444,7 @@ const CASE_DATA = {
       "revenueEur": 29018,
       "cumulativeRevenue": 864027,
       "revenuePerActive": 9.78,
-      "gtvKEur": 217449.4
+      "gtvKEur": 4038.3
     },
     {
       "cohortMonth": "2023-10",
@@ -9455,7 +9455,7 @@ const CASE_DATA = {
       "revenueEur": 8454,
       "cumulativeRevenue": 872481,
       "revenuePerActive": 0,
-      "gtvKEur": 57276.5
+      "gtvKEur": 1104.2
     },
     {
       "cohortMonth": "2023-10",
@@ -9466,7 +9466,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 872481,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-10",
@@ -9477,7 +9477,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 872481,
       "revenuePerActive": 0,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-10",
@@ -9488,7 +9488,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 872481,
       "revenuePerActive": 0,
-      "gtvKEur": 19.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9499,7 +9499,7 @@ const CASE_DATA = {
       "revenueEur": 30946,
       "cumulativeRevenue": 30946,
       "revenuePerActive": 1.19,
-      "gtvKEur": 28.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-09",
@@ -9510,7 +9510,7 @@ const CASE_DATA = {
       "revenueEur": 42211,
       "cumulativeRevenue": 73157,
       "revenuePerActive": 3.27,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9521,7 +9521,7 @@ const CASE_DATA = {
       "revenueEur": 38494,
       "cumulativeRevenue": 111652,
       "revenuePerActive": 3.89,
-      "gtvKEur": 102.6
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2023-09",
@@ -9532,7 +9532,7 @@ const CASE_DATA = {
       "revenueEur": 28989,
       "cumulativeRevenue": 140641,
       "revenuePerActive": 3.31,
-      "gtvKEur": 196800.2
+      "gtvKEur": 2004.1
     },
     {
       "cohortMonth": "2023-09",
@@ -9543,7 +9543,7 @@ const CASE_DATA = {
       "revenueEur": 31987,
       "cumulativeRevenue": 172628,
       "revenuePerActive": 3.96,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9554,7 +9554,7 @@ const CASE_DATA = {
       "revenueEur": 28093,
       "cumulativeRevenue": 200721,
       "revenuePerActive": 3.73,
-      "gtvKEur": 102.7
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-09",
@@ -9565,7 +9565,7 @@ const CASE_DATA = {
       "revenueEur": 28226,
       "cumulativeRevenue": 228947,
       "revenuePerActive": 3.91,
-      "gtvKEur": 2054.9
+      "gtvKEur": 44.7
     },
     {
       "cohortMonth": "2023-09",
@@ -9576,7 +9576,7 @@ const CASE_DATA = {
       "revenueEur": 25186,
       "cumulativeRevenue": 254133,
       "revenuePerActive": 3.72,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9587,7 +9587,7 @@ const CASE_DATA = {
       "revenueEur": 24791,
       "cumulativeRevenue": 278924,
       "revenuePerActive": 3.78,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9598,7 +9598,7 @@ const CASE_DATA = {
       "revenueEur": 24004,
       "cumulativeRevenue": 302928,
       "revenuePerActive": 3.83,
-      "gtvKEur": 1900.9
+      "gtvKEur": 44.1
     },
     {
       "cohortMonth": "2023-09",
@@ -9609,7 +9609,7 @@ const CASE_DATA = {
       "revenueEur": 25433,
       "cumulativeRevenue": 328361,
       "revenuePerActive": 4.2,
-      "gtvKEur": 20.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9620,7 +9620,7 @@ const CASE_DATA = {
       "revenueEur": 23280,
       "cumulativeRevenue": 351641,
       "revenuePerActive": 4.03,
-      "gtvKEur": 2591.9
+      "gtvKEur": 33.3
     },
     {
       "cohortMonth": "2023-09",
@@ -9631,7 +9631,7 @@ const CASE_DATA = {
       "revenueEur": 47325,
       "cumulativeRevenue": 398966,
       "revenuePerActive": 8.36,
-      "gtvKEur": 621.6
+      "gtvKEur": 6.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9642,7 +9642,7 @@ const CASE_DATA = {
       "revenueEur": 43932,
       "cumulativeRevenue": 442898,
       "revenuePerActive": 8.07,
-      "gtvKEur": 263.9
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2023-09",
@@ -9653,7 +9653,7 @@ const CASE_DATA = {
       "revenueEur": 35271,
       "cumulativeRevenue": 478169,
       "revenuePerActive": 6.63,
-      "gtvKEur": 7392.6
+      "gtvKEur": 101.7
     },
     {
       "cohortMonth": "2023-09",
@@ -9664,7 +9664,7 @@ const CASE_DATA = {
       "revenueEur": 27404,
       "cumulativeRevenue": 505573,
       "revenuePerActive": 5.42,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9675,7 +9675,7 @@ const CASE_DATA = {
       "revenueEur": 29683,
       "cumulativeRevenue": 535256,
       "revenuePerActive": 6.07,
-      "gtvKEur": 2355.5
+      "gtvKEur": 47.5
     },
     {
       "cohortMonth": "2023-09",
@@ -9686,7 +9686,7 @@ const CASE_DATA = {
       "revenueEur": 27240,
       "cumulativeRevenue": 562496,
       "revenuePerActive": 5.76,
-      "gtvKEur": 20.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9697,7 +9697,7 @@ const CASE_DATA = {
       "revenueEur": 28541,
       "cumulativeRevenue": 591037,
       "revenuePerActive": 6.22,
-      "gtvKEur": 4.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9708,7 +9708,7 @@ const CASE_DATA = {
       "revenueEur": 28500,
       "cumulativeRevenue": 619537,
       "revenuePerActive": 6.32,
-      "gtvKEur": 3017.1
+      "gtvKEur": 42.5
     },
     {
       "cohortMonth": "2023-09",
@@ -9719,7 +9719,7 @@ const CASE_DATA = {
       "revenueEur": 31073,
       "cumulativeRevenue": 650610,
       "revenuePerActive": 6.96,
-      "gtvKEur": 37.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-09",
@@ -9730,7 +9730,7 @@ const CASE_DATA = {
       "revenueEur": 30155,
       "cumulativeRevenue": 680765,
       "revenuePerActive": 6.93,
-      "gtvKEur": 1978.5
+      "gtvKEur": 25.5
     },
     {
       "cohortMonth": "2023-09",
@@ -9741,7 +9741,7 @@ const CASE_DATA = {
       "revenueEur": 27970,
       "cumulativeRevenue": 708735,
       "revenuePerActive": 6.62,
-      "gtvKEur": 101
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-09",
@@ -9752,7 +9752,7 @@ const CASE_DATA = {
       "revenueEur": 25876,
       "cumulativeRevenue": 734611,
       "revenuePerActive": 6.2,
-      "gtvKEur": 1462.2
+      "gtvKEur": 19.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9763,7 +9763,7 @@ const CASE_DATA = {
       "revenueEur": 48907,
       "cumulativeRevenue": 783518,
       "revenuePerActive": 11.85,
-      "gtvKEur": 79.3
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2023-09",
@@ -9774,7 +9774,7 @@ const CASE_DATA = {
       "revenueEur": 45795,
       "cumulativeRevenue": 829313,
       "revenuePerActive": 11.46,
-      "gtvKEur": 1235.9
+      "gtvKEur": 21.9
     },
     {
       "cohortMonth": "2023-09",
@@ -9785,7 +9785,7 @@ const CASE_DATA = {
       "revenueEur": 35625,
       "cumulativeRevenue": 864938,
       "revenuePerActive": 9.16,
-      "gtvKEur": 119.1
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-09",
@@ -9796,7 +9796,7 @@ const CASE_DATA = {
       "revenueEur": 29182,
       "cumulativeRevenue": 894120,
       "revenuePerActive": 7.69,
-      "gtvKEur": 8918.4
+      "gtvKEur": 135.6
     },
     {
       "cohortMonth": "2023-09",
@@ -9807,7 +9807,7 @@ const CASE_DATA = {
       "revenueEur": 32484,
       "cumulativeRevenue": 926604,
       "revenuePerActive": 8.75,
-      "gtvKEur": 355.9
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2023-09",
@@ -9818,7 +9818,7 @@ const CASE_DATA = {
       "revenueEur": 26815,
       "cumulativeRevenue": 953419,
       "revenuePerActive": 7.49,
-      "gtvKEur": 78580.7
+      "gtvKEur": 1685
     },
     {
       "cohortMonth": "2023-09",
@@ -9829,7 +9829,7 @@ const CASE_DATA = {
       "revenueEur": 28574,
       "cumulativeRevenue": 981994,
       "revenuePerActive": 10.42,
-      "gtvKEur": 143776.5
+      "gtvKEur": 3492.6
     },
     {
       "cohortMonth": "2023-09",
@@ -9840,7 +9840,7 @@ const CASE_DATA = {
       "revenueEur": 6914,
       "cumulativeRevenue": 988907,
       "revenuePerActive": 0,
-      "gtvKEur": 42857.3
+      "gtvKEur": 900.1
     },
     {
       "cohortMonth": "2023-09",
@@ -9851,7 +9851,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 988907,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-09",
@@ -9862,7 +9862,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 988907,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-08",
@@ -9873,7 +9873,7 @@ const CASE_DATA = {
       "revenueEur": 21866,
       "cumulativeRevenue": 21866,
       "revenuePerActive": 0.77,
-      "gtvKEur": 6606.6
+      "gtvKEur": 107.1
     },
     {
       "cohortMonth": "2023-08",
@@ -9884,7 +9884,7 @@ const CASE_DATA = {
       "revenueEur": 48506,
       "cumulativeRevenue": 70372,
       "revenuePerActive": 3.65,
-      "gtvKEur": 25.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-08",
@@ -9895,7 +9895,7 @@ const CASE_DATA = {
       "revenueEur": 27527,
       "cumulativeRevenue": 97899,
       "revenuePerActive": 2.67,
-      "gtvKEur": 17.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-08",
@@ -9906,7 +9906,7 @@ const CASE_DATA = {
       "revenueEur": 26305,
       "cumulativeRevenue": 124204,
       "revenuePerActive": 2.87,
-      "gtvKEur": 69.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-08",
@@ -9917,7 +9917,7 @@ const CASE_DATA = {
       "revenueEur": 25917,
       "cumulativeRevenue": 150121,
       "revenuePerActive": 3.04,
-      "gtvKEur": 15098.3
+      "gtvKEur": 209.8
     },
     {
       "cohortMonth": "2023-08",
@@ -9928,7 +9928,7 @@ const CASE_DATA = {
       "revenueEur": 25949,
       "cumulativeRevenue": 176070,
       "revenuePerActive": 3.22,
-      "gtvKEur": 43.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-08",
@@ -9939,7 +9939,7 @@ const CASE_DATA = {
       "revenueEur": 24061,
       "cumulativeRevenue": 200131,
       "revenuePerActive": 3.21,
-      "gtvKEur": 44.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-08",
@@ -9950,7 +9950,7 @@ const CASE_DATA = {
       "revenueEur": 24617,
       "cumulativeRevenue": 224748,
       "revenuePerActive": 3.42,
-      "gtvKEur": 3258.5
+      "gtvKEur": 66.3
     },
     {
       "cohortMonth": "2023-08",
@@ -9961,7 +9961,7 @@ const CASE_DATA = {
       "revenueEur": 25881,
       "cumulativeRevenue": 250629,
       "revenuePerActive": 3.79,
-      "gtvKEur": 1.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-08",
@@ -9972,7 +9972,7 @@ const CASE_DATA = {
       "revenueEur": 21741,
       "cumulativeRevenue": 272370,
       "revenuePerActive": 3.31,
-      "gtvKEur": 11.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-08",
@@ -9983,7 +9983,7 @@ const CASE_DATA = {
       "revenueEur": 21319,
       "cumulativeRevenue": 293689,
       "revenuePerActive": 3.39,
-      "gtvKEur": 9668.6
+      "gtvKEur": 128.1
     },
     {
       "cohortMonth": "2023-08",
@@ -9994,7 +9994,7 @@ const CASE_DATA = {
       "revenueEur": 22013,
       "cumulativeRevenue": 315702,
       "revenuePerActive": 3.61,
-      "gtvKEur": 8.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10005,7 +10005,7 @@ const CASE_DATA = {
       "revenueEur": 34343,
       "cumulativeRevenue": 350045,
       "revenuePerActive": 5.69,
-      "gtvKEur": 1805
+      "gtvKEur": 35
     },
     {
       "cohortMonth": "2023-08",
@@ -10016,7 +10016,7 @@ const CASE_DATA = {
       "revenueEur": 45540,
       "cumulativeRevenue": 395585,
       "revenuePerActive": 7.91,
-      "gtvKEur": 8.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10027,7 +10027,7 @@ const CASE_DATA = {
       "revenueEur": 26859,
       "cumulativeRevenue": 422445,
       "revenuePerActive": 4.8,
-      "gtvKEur": 24.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-08",
@@ -10038,7 +10038,7 @@ const CASE_DATA = {
       "revenueEur": 25747,
       "cumulativeRevenue": 448191,
       "revenuePerActive": 4.73,
-      "gtvKEur": 26015.4
+      "gtvKEur": 295
     },
     {
       "cohortMonth": "2023-08",
@@ -10049,7 +10049,7 @@ const CASE_DATA = {
       "revenueEur": 23327,
       "cumulativeRevenue": 471519,
       "revenuePerActive": 4.42,
-      "gtvKEur": 8.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10060,7 +10060,7 @@ const CASE_DATA = {
       "revenueEur": 24189,
       "cumulativeRevenue": 495707,
       "revenuePerActive": 4.77,
-      "gtvKEur": 1840.5
+      "gtvKEur": 48.3
     },
     {
       "cohortMonth": "2023-08",
@@ -10071,7 +10071,7 @@ const CASE_DATA = {
       "revenueEur": 23926,
       "cumulativeRevenue": 519633,
       "revenuePerActive": 4.83,
-      "gtvKEur": 31.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-08",
@@ -10082,7 +10082,7 @@ const CASE_DATA = {
       "revenueEur": 25965,
       "cumulativeRevenue": 545598,
       "revenuePerActive": 5.43,
-      "gtvKEur": 34.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-08",
@@ -10093,7 +10093,7 @@ const CASE_DATA = {
       "revenueEur": 27663,
       "cumulativeRevenue": 573260,
       "revenuePerActive": 5.87,
-      "gtvKEur": 1404.2
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10104,7 +10104,7 @@ const CASE_DATA = {
       "revenueEur": 22563,
       "cumulativeRevenue": 595824,
       "revenuePerActive": 4.88,
-      "gtvKEur": 66.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-08",
@@ -10115,7 +10115,7 @@ const CASE_DATA = {
       "revenueEur": 24412,
       "cumulativeRevenue": 620236,
       "revenuePerActive": 5.36,
-      "gtvKEur": 1356.1
+      "gtvKEur": 26.8
     },
     {
       "cohortMonth": "2023-08",
@@ -10126,7 +10126,7 @@ const CASE_DATA = {
       "revenueEur": 23259,
       "cumulativeRevenue": 643495,
       "revenuePerActive": 5.16,
-      "gtvKEur": 105.3
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10137,7 +10137,7 @@ const CASE_DATA = {
       "revenueEur": 29791,
       "cumulativeRevenue": 673286,
       "revenuePerActive": 6.74,
-      "gtvKEur": 1290.7
+      "gtvKEur": 23.5
     },
     {
       "cohortMonth": "2023-08",
@@ -10148,7 +10148,7 @@ const CASE_DATA = {
       "revenueEur": 41166,
       "cumulativeRevenue": 714451,
       "revenuePerActive": 9.69,
-      "gtvKEur": 63.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-08",
@@ -10159,7 +10159,7 @@ const CASE_DATA = {
       "revenueEur": 30332,
       "cumulativeRevenue": 744783,
       "revenuePerActive": 7.28,
-      "gtvKEur": 1506.5
+      "gtvKEur": 29.2
     },
     {
       "cohortMonth": "2023-08",
@@ -10170,7 +10170,7 @@ const CASE_DATA = {
       "revenueEur": 27402,
       "cumulativeRevenue": 772185,
       "revenuePerActive": 6.77,
-      "gtvKEur": 228.3
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2023-08",
@@ -10181,7 +10181,7 @@ const CASE_DATA = {
       "revenueEur": 26435,
       "cumulativeRevenue": 798620,
       "revenuePerActive": 6.64,
-      "gtvKEur": 1816.3
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10192,7 +10192,7 @@ const CASE_DATA = {
       "revenueEur": 27302,
       "cumulativeRevenue": 825923,
       "revenuePerActive": 7.05,
-      "gtvKEur": 544.4
+      "gtvKEur": 5.5
     },
     {
       "cohortMonth": "2023-08",
@@ -10203,7 +10203,7 @@ const CASE_DATA = {
       "revenueEur": 25288,
       "cumulativeRevenue": 851211,
       "revenuePerActive": 6.6,
-      "gtvKEur": 41194.4
+      "gtvKEur": 1044.2
     },
     {
       "cohortMonth": "2023-08",
@@ -10214,7 +10214,7 @@ const CASE_DATA = {
       "revenueEur": 32643,
       "cumulativeRevenue": 883853,
       "revenuePerActive": 11.24,
-      "gtvKEur": 116592.9
+      "gtvKEur": 2722.7
     },
     {
       "cohortMonth": "2023-08",
@@ -10225,7 +10225,7 @@ const CASE_DATA = {
       "revenueEur": 8937,
       "cumulativeRevenue": 892790,
       "revenuePerActive": 0,
-      "gtvKEur": 28670.3
+      "gtvKEur": 648.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10236,7 +10236,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 892790,
       "revenuePerActive": 0,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-07",
@@ -10247,7 +10247,7 @@ const CASE_DATA = {
       "revenueEur": 17788,
       "cumulativeRevenue": 17788,
       "revenuePerActive": 0.66,
-      "gtvKEur": 3.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-07",
@@ -10258,7 +10258,7 @@ const CASE_DATA = {
       "revenueEur": 64418,
       "cumulativeRevenue": 82206,
       "revenuePerActive": 4.99,
-      "gtvKEur": 4982.6
+      "gtvKEur": 136.9
     },
     {
       "cohortMonth": "2023-07",
@@ -10269,7 +10269,7 @@ const CASE_DATA = {
       "revenueEur": 35814,
       "cumulativeRevenue": 118020,
       "revenuePerActive": 3.61,
-      "gtvKEur": 16.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-07",
@@ -10280,7 +10280,7 @@ const CASE_DATA = {
       "revenueEur": 35353,
       "cumulativeRevenue": 153373,
       "revenuePerActive": 3.99,
-      "gtvKEur": 17.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-07",
@@ -10291,7 +10291,7 @@ const CASE_DATA = {
       "revenueEur": 31419,
       "cumulativeRevenue": 184792,
       "revenuePerActive": 3.87,
-      "gtvKEur": 33.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10302,7 +10302,7 @@ const CASE_DATA = {
       "revenueEur": 31072,
       "cumulativeRevenue": 215863,
       "revenuePerActive": 4.1,
-      "gtvKEur": 10861.5
+      "gtvKEur": 152.6
     },
     {
       "cohortMonth": "2023-07",
@@ -10313,7 +10313,7 @@ const CASE_DATA = {
       "revenueEur": 33086,
       "cumulativeRevenue": 248949,
       "revenuePerActive": 4.58,
-      "gtvKEur": 13.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-07",
@@ -10324,7 +10324,7 @@ const CASE_DATA = {
       "revenueEur": 28402,
       "cumulativeRevenue": 277352,
       "revenuePerActive": 4.14,
-      "gtvKEur": 34.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10335,7 +10335,7 @@ const CASE_DATA = {
       "revenueEur": 28575,
       "cumulativeRevenue": 305926,
       "revenuePerActive": 4.31,
-      "gtvKEur": 5617.8
+      "gtvKEur": 97
     },
     {
       "cohortMonth": "2023-07",
@@ -10346,7 +10346,7 @@ const CASE_DATA = {
       "revenueEur": 28825,
       "cumulativeRevenue": 334751,
       "revenuePerActive": 4.59,
-      "gtvKEur": 4.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-07",
@@ -10357,7 +10357,7 @@ const CASE_DATA = {
       "revenueEur": 27723,
       "cumulativeRevenue": 362474,
       "revenuePerActive": 4.48,
-      "gtvKEur": 17.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-07",
@@ -10368,7 +10368,7 @@ const CASE_DATA = {
       "revenueEur": 27276,
       "cumulativeRevenue": 389750,
       "revenuePerActive": 4.54,
-      "gtvKEur": 2479.1
+      "gtvKEur": 49.6
     },
     {
       "cohortMonth": "2023-07",
@@ -10390,7 +10390,7 @@ const CASE_DATA = {
       "revenueEur": 60145,
       "cumulativeRevenue": 492658,
       "revenuePerActive": 10.53,
-      "gtvKEur": 1980.1
+      "gtvKEur": 38.8
     },
     {
       "cohortMonth": "2023-07",
@@ -10401,7 +10401,7 @@ const CASE_DATA = {
       "revenueEur": 36010,
       "cumulativeRevenue": 528668,
       "revenuePerActive": 6.66,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-07",
@@ -10412,7 +10412,7 @@ const CASE_DATA = {
       "revenueEur": 36563,
       "cumulativeRevenue": 565231,
       "revenuePerActive": 6.91,
-      "gtvKEur": 25
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10423,7 +10423,7 @@ const CASE_DATA = {
       "revenueEur": 29233,
       "cumulativeRevenue": 594464,
       "revenuePerActive": 5.74,
-      "gtvKEur": 2426.5
+      "gtvKEur": 45.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10434,7 +10434,7 @@ const CASE_DATA = {
       "revenueEur": 35594,
       "cumulativeRevenue": 630058,
       "revenuePerActive": 7.22,
-      "gtvKEur": 314.7
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2023-07",
@@ -10445,7 +10445,7 @@ const CASE_DATA = {
       "revenueEur": 30597,
       "cumulativeRevenue": 660655,
       "revenuePerActive": 6.44,
-      "gtvKEur": 2616.7
+      "gtvKEur": 51.9
     },
     {
       "cohortMonth": "2023-07",
@@ -10456,7 +10456,7 @@ const CASE_DATA = {
       "revenueEur": 29466,
       "cumulativeRevenue": 690120,
       "revenuePerActive": 6.38,
-      "gtvKEur": 31
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10467,7 +10467,7 @@ const CASE_DATA = {
       "revenueEur": 33579,
       "cumulativeRevenue": 723700,
       "revenuePerActive": 7.54,
-      "gtvKEur": 58.9
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-07",
@@ -10478,7 +10478,7 @@ const CASE_DATA = {
       "revenueEur": 34897,
       "cumulativeRevenue": 758597,
       "revenuePerActive": 7.91,
-      "gtvKEur": 1543.4
+      "gtvKEur": 48.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10489,7 +10489,7 @@ const CASE_DATA = {
       "revenueEur": 30164,
       "cumulativeRevenue": 788761,
       "revenuePerActive": 6.89,
-      "gtvKEur": 38.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-07",
@@ -10500,7 +10500,7 @@ const CASE_DATA = {
       "revenueEur": 34879,
       "cumulativeRevenue": 823639,
       "revenuePerActive": 8.04,
-      "gtvKEur": 1755.1
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2023-07",
@@ -10511,7 +10511,7 @@ const CASE_DATA = {
       "revenueEur": 50831,
       "cumulativeRevenue": 874471,
       "revenuePerActive": 11.94,
-      "gtvKEur": 108.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2023-07",
@@ -10522,7 +10522,7 @@ const CASE_DATA = {
       "revenueEur": 51698,
       "cumulativeRevenue": 926169,
       "revenuePerActive": 12.33,
-      "gtvKEur": 23093.4
+      "gtvKEur": 247.2
     },
     {
       "cohortMonth": "2023-07",
@@ -10533,7 +10533,7 @@ const CASE_DATA = {
       "revenueEur": 37596,
       "cumulativeRevenue": 963765,
       "revenuePerActive": 9.28,
-      "gtvKEur": 153.2
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2023-07",
@@ -10544,7 +10544,7 @@ const CASE_DATA = {
       "revenueEur": 43921,
       "cumulativeRevenue": 1007686,
       "revenuePerActive": 11.18,
-      "gtvKEur": 1294.1
+      "gtvKEur": 34.8
     },
     {
       "cohortMonth": "2023-07",
@@ -10555,7 +10555,7 @@ const CASE_DATA = {
       "revenueEur": 34755,
       "cumulativeRevenue": 1042442,
       "revenuePerActive": 9.07,
-      "gtvKEur": 186.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2023-07",
@@ -10566,7 +10566,7 @@ const CASE_DATA = {
       "revenueEur": 41594,
       "cumulativeRevenue": 1084036,
       "revenuePerActive": 11.13,
-      "gtvKEur": 2861.3
+      "gtvKEur": 54.5
     },
     {
       "cohortMonth": "2023-07",
@@ -10577,7 +10577,7 @@ const CASE_DATA = {
       "revenueEur": 36000,
       "cumulativeRevenue": 1120035,
       "revenuePerActive": 9.81,
-      "gtvKEur": 376
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2023-07",
@@ -10588,7 +10588,7 @@ const CASE_DATA = {
       "revenueEur": 34420,
       "cumulativeRevenue": 1154455,
       "revenuePerActive": 9.64,
-      "gtvKEur": 58066.8
+      "gtvKEur": 1260.6
     },
     {
       "cohortMonth": "2023-07",
@@ -10599,7 +10599,7 @@ const CASE_DATA = {
       "revenueEur": 39650,
       "cumulativeRevenue": 1194105,
       "revenuePerActive": 14.19,
-      "gtvKEur": 123369.1
+      "gtvKEur": 3192.3
     },
     {
       "cohortMonth": "2023-07",
@@ -10610,7 +10610,7 @@ const CASE_DATA = {
       "revenueEur": 16133,
       "cumulativeRevenue": 1210238,
       "revenuePerActive": 0,
-      "gtvKEur": 35455.1
+      "gtvKEur": 920.2
     },
     {
       "cohortMonth": "2023-07",
@@ -10621,7 +10621,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1210238,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-07",
@@ -10632,7 +10632,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1210238,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -10643,7 +10643,7 @@ const CASE_DATA = {
       "revenueEur": 32864,
       "cumulativeRevenue": 32864,
       "revenuePerActive": 1.33,
-      "gtvKEur": 117.1
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-06",
@@ -10654,7 +10654,7 @@ const CASE_DATA = {
       "revenueEur": 52881,
       "cumulativeRevenue": 85745,
       "revenuePerActive": 4.46,
-      "gtvKEur": 90.4
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-06",
@@ -10665,7 +10665,7 @@ const CASE_DATA = {
       "revenueEur": 39877,
       "cumulativeRevenue": 125622,
       "revenuePerActive": 4.36,
-      "gtvKEur": 6827.4
+      "gtvKEur": 109.9
     },
     {
       "cohortMonth": "2023-06",
@@ -10676,7 +10676,7 @@ const CASE_DATA = {
       "revenueEur": 31359,
       "cumulativeRevenue": 156981,
       "revenuePerActive": 3.83,
-      "gtvKEur": 885.2
+      "gtvKEur": 8.9
     },
     {
       "cohortMonth": "2023-06",
@@ -10687,7 +10687,7 @@ const CASE_DATA = {
       "revenueEur": 29312,
       "cumulativeRevenue": 186293,
       "revenuePerActive": 3.9,
-      "gtvKEur": 697.6
+      "gtvKEur": 7
     },
     {
       "cohortMonth": "2023-06",
@@ -10698,7 +10698,7 @@ const CASE_DATA = {
       "revenueEur": 29696,
       "cumulativeRevenue": 215989,
       "revenuePerActive": 4.2,
-      "gtvKEur": 7.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-06",
@@ -10709,7 +10709,7 @@ const CASE_DATA = {
       "revenueEur": 31193,
       "cumulativeRevenue": 247183,
       "revenuePerActive": 4.7,
-      "gtvKEur": 6036.5
+      "gtvKEur": 129
     },
     {
       "cohortMonth": "2023-06",
@@ -10720,7 +10720,7 @@ const CASE_DATA = {
       "revenueEur": 25886,
       "cumulativeRevenue": 273069,
       "revenuePerActive": 4.05,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -10731,7 +10731,7 @@ const CASE_DATA = {
       "revenueEur": 26176,
       "cumulativeRevenue": 299245,
       "revenuePerActive": 4.35,
-      "gtvKEur": 45.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-06",
@@ -10742,7 +10742,7 @@ const CASE_DATA = {
       "revenueEur": 28019,
       "cumulativeRevenue": 327264,
       "revenuePerActive": 4.83,
-      "gtvKEur": 2722.8
+      "gtvKEur": 75.4
     },
     {
       "cohortMonth": "2023-06",
@@ -10753,7 +10753,7 @@ const CASE_DATA = {
       "revenueEur": 27359,
       "cumulativeRevenue": 354623,
       "revenuePerActive": 4.95,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -10764,7 +10764,7 @@ const CASE_DATA = {
       "revenueEur": 26453,
       "cumulativeRevenue": 381076,
       "revenuePerActive": 4.84,
-      "gtvKEur": 8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-06",
@@ -10775,7 +10775,7 @@ const CASE_DATA = {
       "revenueEur": 50468,
       "cumulativeRevenue": 431544,
       "revenuePerActive": 9.48,
-      "gtvKEur": 5154.4
+      "gtvKEur": 73.3
     },
     {
       "cohortMonth": "2023-06",
@@ -10786,7 +10786,7 @@ const CASE_DATA = {
       "revenueEur": 51226,
       "cumulativeRevenue": 482770,
       "revenuePerActive": 9.84,
-      "gtvKEur": 57.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-06",
@@ -10797,7 +10797,7 @@ const CASE_DATA = {
       "revenueEur": 37090,
       "cumulativeRevenue": 519860,
       "revenuePerActive": 7.46,
-      "gtvKEur": 1970.2
+      "gtvKEur": 46.3
     },
     {
       "cohortMonth": "2023-06",
@@ -10808,7 +10808,7 @@ const CASE_DATA = {
       "revenueEur": 29344,
       "cumulativeRevenue": 549203,
       "revenuePerActive": 6.18,
-      "gtvKEur": 57.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-06",
@@ -10819,7 +10819,7 @@ const CASE_DATA = {
       "revenueEur": 29159,
       "cumulativeRevenue": 578363,
       "revenuePerActive": 6.28,
-      "gtvKEur": 16.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-06",
@@ -10830,7 +10830,7 @@ const CASE_DATA = {
       "revenueEur": 33682,
       "cumulativeRevenue": 612045,
       "revenuePerActive": 7.45,
-      "gtvKEur": 2929.6
+      "gtvKEur": 53.5
     },
     {
       "cohortMonth": "2023-06",
@@ -10841,7 +10841,7 @@ const CASE_DATA = {
       "revenueEur": 29003,
       "cumulativeRevenue": 641048,
       "revenuePerActive": 6.58,
-      "gtvKEur": 44.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-06",
@@ -10852,7 +10852,7 @@ const CASE_DATA = {
       "revenueEur": 25193,
       "cumulativeRevenue": 666241,
       "revenuePerActive": 5.89,
-      "gtvKEur": 2375.3
+      "gtvKEur": 55.2
     },
     {
       "cohortMonth": "2023-06",
@@ -10863,7 +10863,7 @@ const CASE_DATA = {
       "revenueEur": 27997,
       "cumulativeRevenue": 694238,
       "revenuePerActive": 6.8,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -10874,7 +10874,7 @@ const CASE_DATA = {
       "revenueEur": 31995,
       "cumulativeRevenue": 726233,
       "revenuePerActive": 7.96,
-      "gtvKEur": 49.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-06",
@@ -10885,7 +10885,7 @@ const CASE_DATA = {
       "revenueEur": 32838,
       "cumulativeRevenue": 759071,
       "revenuePerActive": 8.31,
-      "gtvKEur": 1596.8
+      "gtvKEur": 34.3
     },
     {
       "cohortMonth": "2023-06",
@@ -10896,7 +10896,7 @@ const CASE_DATA = {
       "revenueEur": 29628,
       "cumulativeRevenue": 788698,
       "revenuePerActive": 7.6,
-      "gtvKEur": 331.3
+      "gtvKEur": 3.3
     },
     {
       "cohortMonth": "2023-06",
@@ -10907,7 +10907,7 @@ const CASE_DATA = {
       "revenueEur": 53865,
       "cumulativeRevenue": 842563,
       "revenuePerActive": 13.71,
-      "gtvKEur": 3984.7
+      "gtvKEur": 47.5
     },
     {
       "cohortMonth": "2023-06",
@@ -10918,7 +10918,7 @@ const CASE_DATA = {
       "revenueEur": 51380,
       "cumulativeRevenue": 893943,
       "revenuePerActive": 13.31,
-      "gtvKEur": 144.6
+      "gtvKEur": 47.2
     },
     {
       "cohortMonth": "2023-06",
@@ -10929,7 +10929,7 @@ const CASE_DATA = {
       "revenueEur": 44375,
       "cumulativeRevenue": 938317,
       "revenuePerActive": 11.83,
-      "gtvKEur": 1636.2
+      "gtvKEur": 175.7
     },
     {
       "cohortMonth": "2023-06",
@@ -10940,7 +10940,7 @@ const CASE_DATA = {
       "revenueEur": 35147,
       "cumulativeRevenue": 973465,
       "revenuePerActive": 9.7,
-      "gtvKEur": 250.6
+      "gtvKEur": 149.3
     },
     {
       "cohortMonth": "2023-06",
@@ -10951,7 +10951,7 @@ const CASE_DATA = {
       "revenueEur": 33154,
       "cumulativeRevenue": 1006619,
       "revenuePerActive": 9.32,
-      "gtvKEur": 1301.5
+      "gtvKEur": 157.7
     },
     {
       "cohortMonth": "2023-06",
@@ -10962,7 +10962,7 @@ const CASE_DATA = {
       "revenueEur": 36535,
       "cumulativeRevenue": 1043154,
       "revenuePerActive": 10.44,
-      "gtvKEur": 538.2
+      "gtvKEur": 150.4
     },
     {
       "cohortMonth": "2023-06",
@@ -10973,7 +10973,7 @@ const CASE_DATA = {
       "revenueEur": 29595,
       "cumulativeRevenue": 1072749,
       "revenuePerActive": 8.62,
-      "gtvKEur": 2485.9
+      "gtvKEur": 180.2
     },
     {
       "cohortMonth": "2023-06",
@@ -10984,7 +10984,7 @@ const CASE_DATA = {
       "revenueEur": 30848,
       "cumulativeRevenue": 1103597,
       "revenuePerActive": 9.2,
-      "gtvKEur": 522
+      "gtvKEur": 117.1
     },
     {
       "cohortMonth": "2023-06",
@@ -10995,7 +10995,7 @@ const CASE_DATA = {
       "revenueEur": 31804,
       "cumulativeRevenue": 1135401,
       "revenuePerActive": 9.68,
-      "gtvKEur": 50320.7
+      "gtvKEur": 1530.9
     },
     {
       "cohortMonth": "2023-06",
@@ -11006,7 +11006,7 @@ const CASE_DATA = {
       "revenueEur": 31116,
       "cumulativeRevenue": 1166517,
       "revenuePerActive": 12.28,
-      "gtvKEur": 129063.5
+      "gtvKEur": 2967.5
     },
     {
       "cohortMonth": "2023-06",
@@ -11017,7 +11017,7 @@ const CASE_DATA = {
       "revenueEur": 7252,
       "cumulativeRevenue": 1173770,
       "revenuePerActive": 0,
-      "gtvKEur": 34096.2
+      "gtvKEur": 709.9
     },
     {
       "cohortMonth": "2023-06",
@@ -11028,7 +11028,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173770,
       "revenuePerActive": 0,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -11039,7 +11039,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173770,
       "revenuePerActive": 0,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-06",
@@ -11061,7 +11061,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173770,
       "revenuePerActive": 0,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-05",
@@ -11072,7 +11072,7 @@ const CASE_DATA = {
       "revenueEur": 25690,
       "cumulativeRevenue": 25690,
       "revenuePerActive": 1.01,
-      "gtvKEur": 3963.8
+      "gtvKEur": 62.5
     },
     {
       "cohortMonth": "2023-05",
@@ -11083,7 +11083,7 @@ const CASE_DATA = {
       "revenueEur": 65564,
       "cumulativeRevenue": 91254,
       "revenuePerActive": 5.63,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-05",
@@ -11094,7 +11094,7 @@ const CASE_DATA = {
       "revenueEur": 43259,
       "cumulativeRevenue": 134513,
       "revenuePerActive": 4.76,
-      "gtvKEur": 22.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-05",
@@ -11105,7 +11105,7 @@ const CASE_DATA = {
       "revenueEur": 42407,
       "cumulativeRevenue": 176920,
       "revenuePerActive": 5.2,
-      "gtvKEur": 28339.3
+      "gtvKEur": 317
     },
     {
       "cohortMonth": "2023-05",
@@ -11116,7 +11116,7 @@ const CASE_DATA = {
       "revenueEur": 34098,
       "cumulativeRevenue": 211018,
       "revenuePerActive": 4.58,
-      "gtvKEur": 12.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11127,7 +11127,7 @@ const CASE_DATA = {
       "revenueEur": 36164,
       "cumulativeRevenue": 247182,
       "revenuePerActive": 5.17,
-      "gtvKEur": 7.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11138,7 +11138,7 @@ const CASE_DATA = {
       "revenueEur": 34850,
       "cumulativeRevenue": 282033,
       "revenuePerActive": 5.3,
-      "gtvKEur": 40.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-05",
@@ -11149,7 +11149,7 @@ const CASE_DATA = {
       "revenueEur": 32026,
       "cumulativeRevenue": 314059,
       "revenuePerActive": 5.09,
-      "gtvKEur": 2592.2
+      "gtvKEur": 60.5
     },
     {
       "cohortMonth": "2023-05",
@@ -11160,7 +11160,7 @@ const CASE_DATA = {
       "revenueEur": 32901,
       "cumulativeRevenue": 346959,
       "revenuePerActive": 5.46,
-      "gtvKEur": 504.8
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2023-05",
@@ -11171,7 +11171,7 @@ const CASE_DATA = {
       "revenueEur": 31815,
       "cumulativeRevenue": 378775,
       "revenuePerActive": 5.52,
-      "gtvKEur": 26.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-05",
@@ -11182,7 +11182,7 @@ const CASE_DATA = {
       "revenueEur": 31033,
       "cumulativeRevenue": 409808,
       "revenuePerActive": 5.53,
-      "gtvKEur": 2531.8
+      "gtvKEur": 69.4
     },
     {
       "cohortMonth": "2023-05",
@@ -11193,7 +11193,7 @@ const CASE_DATA = {
       "revenueEur": 31972,
       "cumulativeRevenue": 441779,
       "revenuePerActive": 5.95,
-      "gtvKEur": 34
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-05",
@@ -11204,7 +11204,7 @@ const CASE_DATA = {
       "revenueEur": 46438,
       "cumulativeRevenue": 488217,
       "revenuePerActive": 8.61,
-      "gtvKEur": 27.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-05",
@@ -11215,7 +11215,7 @@ const CASE_DATA = {
       "revenueEur": 66400,
       "cumulativeRevenue": 554617,
       "revenuePerActive": 12.67,
-      "gtvKEur": 1660033.9
+      "gtvKEur": 16629.8
     },
     {
       "cohortMonth": "2023-05",
@@ -11226,7 +11226,7 @@ const CASE_DATA = {
       "revenueEur": 40705,
       "cumulativeRevenue": 595323,
       "revenuePerActive": 8.09,
-      "gtvKEur": 113.8
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11237,7 +11237,7 @@ const CASE_DATA = {
       "revenueEur": 36153,
       "cumulativeRevenue": 631475,
       "revenuePerActive": 7.4,
-      "gtvKEur": 393053.4
+      "gtvKEur": 3940.7
     },
     {
       "cohortMonth": "2023-05",
@@ -11248,7 +11248,7 @@ const CASE_DATA = {
       "revenueEur": 29598,
       "cumulativeRevenue": 661073,
       "revenuePerActive": 6.27,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-05",
@@ -11259,7 +11259,7 @@ const CASE_DATA = {
       "revenueEur": 33530,
       "cumulativeRevenue": 694603,
       "revenuePerActive": 7.28,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11270,7 +11270,7 @@ const CASE_DATA = {
       "revenueEur": 29091,
       "cumulativeRevenue": 723694,
       "revenuePerActive": 6.58,
-      "gtvKEur": 1657.5
+      "gtvKEur": 44.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11281,7 +11281,7 @@ const CASE_DATA = {
       "revenueEur": 27452,
       "cumulativeRevenue": 751146,
       "revenuePerActive": 6.3,
-      "gtvKEur": 2.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-05",
@@ -11292,7 +11292,7 @@ const CASE_DATA = {
       "revenueEur": 27710,
       "cumulativeRevenue": 778856,
       "revenuePerActive": 6.54,
-      "gtvKEur": 1488.5
+      "gtvKEur": 37.3
     },
     {
       "cohortMonth": "2023-05",
@@ -11303,7 +11303,7 @@ const CASE_DATA = {
       "revenueEur": 29366,
       "cumulativeRevenue": 808222,
       "revenuePerActive": 7.12,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11314,7 +11314,7 @@ const CASE_DATA = {
       "revenueEur": 32723,
       "cumulativeRevenue": 840946,
       "revenuePerActive": 8.27,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11325,7 +11325,7 @@ const CASE_DATA = {
       "revenueEur": 33538,
       "cumulativeRevenue": 874483,
       "revenuePerActive": 8.56,
-      "gtvKEur": 1462.3
+      "gtvKEur": 36.4
     },
     {
       "cohortMonth": "2023-05",
@@ -11336,7 +11336,7 @@ const CASE_DATA = {
       "revenueEur": 44735,
       "cumulativeRevenue": 919218,
       "revenuePerActive": 11.34,
-      "gtvKEur": 101.2
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-05",
@@ -11347,7 +11347,7 @@ const CASE_DATA = {
       "revenueEur": 53836,
       "cumulativeRevenue": 973054,
       "revenuePerActive": 14.02,
-      "gtvKEur": 1311.3
+      "gtvKEur": 25.1
     },
     {
       "cohortMonth": "2023-05",
@@ -11358,7 +11358,7 @@ const CASE_DATA = {
       "revenueEur": 44946,
       "cumulativeRevenue": 1017999,
       "revenuePerActive": 11.8,
-      "gtvKEur": 146.9
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2023-05",
@@ -11369,7 +11369,7 @@ const CASE_DATA = {
       "revenueEur": 33305,
       "cumulativeRevenue": 1051304,
       "revenuePerActive": 8.96,
-      "gtvKEur": 1459.4
+      "gtvKEur": 23.6
     },
     {
       "cohortMonth": "2023-05",
@@ -11380,7 +11380,7 @@ const CASE_DATA = {
       "revenueEur": 31587,
       "cumulativeRevenue": 1082891,
       "revenuePerActive": 8.8,
-      "gtvKEur": 46.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-05",
@@ -11391,7 +11391,7 @@ const CASE_DATA = {
       "revenueEur": 34562,
       "cumulativeRevenue": 1117453,
       "revenuePerActive": 9.71,
-      "gtvKEur": 1122.6
+      "gtvKEur": 29.4
     },
     {
       "cohortMonth": "2023-05",
@@ -11402,7 +11402,7 @@ const CASE_DATA = {
       "revenueEur": 30160,
       "cumulativeRevenue": 1147613,
       "revenuePerActive": 8.69,
-      "gtvKEur": 124.3
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-05",
@@ -11413,7 +11413,7 @@ const CASE_DATA = {
       "revenueEur": 30694,
       "cumulativeRevenue": 1178307,
       "revenuePerActive": 9.01,
-      "gtvKEur": 1691.6
+      "gtvKEur": 29.9
     },
     {
       "cohortMonth": "2023-05",
@@ -11424,7 +11424,7 @@ const CASE_DATA = {
       "revenueEur": 30926,
       "cumulativeRevenue": 1209233,
       "revenuePerActive": 9.44,
-      "gtvKEur": 1691.1
+      "gtvKEur": 16.9
     },
     {
       "cohortMonth": "2023-05",
@@ -11435,7 +11435,7 @@ const CASE_DATA = {
       "revenueEur": 34045,
       "cumulativeRevenue": 1243279,
       "revenuePerActive": 10.61,
-      "gtvKEur": 164021.9
+      "gtvKEur": 2188.8
     },
     {
       "cohortMonth": "2023-05",
@@ -11446,7 +11446,7 @@ const CASE_DATA = {
       "revenueEur": 33925,
       "cumulativeRevenue": 1277204,
       "revenuePerActive": 13.57,
-      "gtvKEur": 113400.6
+      "gtvKEur": 2516
     },
     {
       "cohortMonth": "2023-05",
@@ -11457,7 +11457,7 @@ const CASE_DATA = {
       "revenueEur": 11237,
       "cumulativeRevenue": 1288441,
       "revenuePerActive": 0,
-      "gtvKEur": 28179.9
+      "gtvKEur": 635.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11468,7 +11468,7 @@ const CASE_DATA = {
       "revenueEur": 27744,
       "cumulativeRevenue": 27744,
       "revenuePerActive": 1.3,
-      "gtvKEur": 49.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-04",
@@ -11479,7 +11479,7 @@ const CASE_DATA = {
       "revenueEur": 62997,
       "cumulativeRevenue": 90741,
       "revenuePerActive": 6.35,
-      "gtvKEur": 7697.3
+      "gtvKEur": 138.8
     },
     {
       "cohortMonth": "2023-04",
@@ -11490,7 +11490,7 @@ const CASE_DATA = {
       "revenueEur": 36498,
       "cumulativeRevenue": 127238,
       "revenuePerActive": 4.79,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-04",
@@ -11501,7 +11501,7 @@ const CASE_DATA = {
       "revenueEur": 34894,
       "cumulativeRevenue": 162133,
       "revenuePerActive": 5.07,
-      "gtvKEur": 26.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11512,7 +11512,7 @@ const CASE_DATA = {
       "revenueEur": 29579,
       "cumulativeRevenue": 191712,
       "revenuePerActive": 4.66,
-      "gtvKEur": 4918.9
+      "gtvKEur": 79
     },
     {
       "cohortMonth": "2023-04",
@@ -11523,7 +11523,7 @@ const CASE_DATA = {
       "revenueEur": 32534,
       "cumulativeRevenue": 224246,
       "revenuePerActive": 5.47,
-      "gtvKEur": 37.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-04",
@@ -11534,7 +11534,7 @@ const CASE_DATA = {
       "revenueEur": 30800,
       "cumulativeRevenue": 255046,
       "revenuePerActive": 5.43,
-      "gtvKEur": 25.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11545,7 +11545,7 @@ const CASE_DATA = {
       "revenueEur": 28554,
       "cumulativeRevenue": 283599,
       "revenuePerActive": 5.33,
-      "gtvKEur": 21.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-04",
@@ -11556,7 +11556,7 @@ const CASE_DATA = {
       "revenueEur": 28016,
       "cumulativeRevenue": 311616,
       "revenuePerActive": 5.4,
-      "gtvKEur": 4864.2
+      "gtvKEur": 70.7
     },
     {
       "cohortMonth": "2023-04",
@@ -11567,7 +11567,7 @@ const CASE_DATA = {
       "revenueEur": 28931,
       "cumulativeRevenue": 340546,
       "revenuePerActive": 5.87,
-      "gtvKEur": 4738
+      "gtvKEur": 47.4
     },
     {
       "cohortMonth": "2023-04",
@@ -11578,7 +11578,7 @@ const CASE_DATA = {
       "revenueEur": 28962,
       "cumulativeRevenue": 369508,
       "revenuePerActive": 6.13,
-      "gtvKEur": 60.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-04",
@@ -11589,7 +11589,7 @@ const CASE_DATA = {
       "revenueEur": 28835,
       "cumulativeRevenue": 398343,
       "revenuePerActive": 6.17,
-      "gtvKEur": 4666.6
+      "gtvKEur": 71.9
     },
     {
       "cohortMonth": "2023-04",
@@ -11600,7 +11600,7 @@ const CASE_DATA = {
       "revenueEur": 39007,
       "cumulativeRevenue": 437350,
       "revenuePerActive": 8.69,
-      "gtvKEur": 49.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-04",
@@ -11611,7 +11611,7 @@ const CASE_DATA = {
       "revenueEur": 62785,
       "cumulativeRevenue": 500135,
       "revenuePerActive": 14.22,
-      "gtvKEur": 90.6
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-04",
@@ -11622,7 +11622,7 @@ const CASE_DATA = {
       "revenueEur": 37618,
       "cumulativeRevenue": 537753,
       "revenuePerActive": 8.9,
-      "gtvKEur": 4296.5
+      "gtvKEur": 71
     },
     {
       "cohortMonth": "2023-04",
@@ -11633,7 +11633,7 @@ const CASE_DATA = {
       "revenueEur": 32885,
       "cumulativeRevenue": 570638,
       "revenuePerActive": 8.07,
-      "gtvKEur": 56.9
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-04",
@@ -11644,7 +11644,7 @@ const CASE_DATA = {
       "revenueEur": 30886,
       "cumulativeRevenue": 601524,
       "revenuePerActive": 7.71,
-      "gtvKEur": 2915.3
+      "gtvKEur": 43
     },
     {
       "cohortMonth": "2023-04",
@@ -11655,7 +11655,7 @@ const CASE_DATA = {
       "revenueEur": 29569,
       "cumulativeRevenue": 631094,
       "revenuePerActive": 7.65,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-04",
@@ -11666,7 +11666,7 @@ const CASE_DATA = {
       "revenueEur": 25922,
       "cumulativeRevenue": 657016,
       "revenuePerActive": 6.87,
-      "gtvKEur": 38.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-04",
@@ -11677,7 +11677,7 @@ const CASE_DATA = {
       "revenueEur": 27370,
       "cumulativeRevenue": 684386,
       "revenuePerActive": 7.41,
-      "gtvKEur": 3102.7
+      "gtvKEur": 61.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11688,7 +11688,7 @@ const CASE_DATA = {
       "revenueEur": 29292,
       "cumulativeRevenue": 713678,
       "revenuePerActive": 8.17,
-      "gtvKEur": 26.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11699,7 +11699,7 @@ const CASE_DATA = {
       "revenueEur": 29795,
       "cumulativeRevenue": 743473,
       "revenuePerActive": 8.63,
-      "gtvKEur": 1555.8
+      "gtvKEur": 33.2
     },
     {
       "cohortMonth": "2023-04",
@@ -11710,7 +11710,7 @@ const CASE_DATA = {
       "revenueEur": 29821,
       "cumulativeRevenue": 773294,
       "revenuePerActive": 8.83,
-      "gtvKEur": 27.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-04",
@@ -11721,7 +11721,7 @@ const CASE_DATA = {
       "revenueEur": 32685,
       "cumulativeRevenue": 805979,
       "revenuePerActive": 9.84,
-      "gtvKEur": 51.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-04",
@@ -11732,7 +11732,7 @@ const CASE_DATA = {
       "revenueEur": 41160,
       "cumulativeRevenue": 847140,
       "revenuePerActive": 12.65,
-      "gtvKEur": 1504
+      "gtvKEur": 27.8
     },
     {
       "cohortMonth": "2023-04",
@@ -11743,7 +11743,7 @@ const CASE_DATA = {
       "revenueEur": 58330,
       "cumulativeRevenue": 905470,
       "revenuePerActive": 18.17,
-      "gtvKEur": 70.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-04",
@@ -11754,7 +11754,7 @@ const CASE_DATA = {
       "revenueEur": 49850,
       "cumulativeRevenue": 955319,
       "revenuePerActive": 15.86,
-      "gtvKEur": 1098.6
+      "gtvKEur": 22.8
     },
     {
       "cohortMonth": "2023-04",
@@ -11765,7 +11765,7 @@ const CASE_DATA = {
       "revenueEur": 33032,
       "cumulativeRevenue": 988351,
       "revenuePerActive": 10.78,
-      "gtvKEur": 37.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-04",
@@ -11776,7 +11776,7 @@ const CASE_DATA = {
       "revenueEur": 37848,
       "cumulativeRevenue": 1026200,
       "revenuePerActive": 12.63,
-      "gtvKEur": 1036.7
+      "gtvKEur": 23.6
     },
     {
       "cohortMonth": "2023-04",
@@ -11787,7 +11787,7 @@ const CASE_DATA = {
       "revenueEur": 33329,
       "cumulativeRevenue": 1059528,
       "revenuePerActive": 11.34,
-      "gtvKEur": 50.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-04",
@@ -11798,7 +11798,7 @@ const CASE_DATA = {
       "revenueEur": 32698,
       "cumulativeRevenue": 1092227,
       "revenuePerActive": 11.34,
-      "gtvKEur": 1149.4
+      "gtvKEur": 19.9
     },
     {
       "cohortMonth": "2023-04",
@@ -11809,7 +11809,7 @@ const CASE_DATA = {
       "revenueEur": 33636,
       "cumulativeRevenue": 1125862,
       "revenuePerActive": 11.93,
-      "gtvKEur": 345.5
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2023-04",
@@ -11820,7 +11820,7 @@ const CASE_DATA = {
       "revenueEur": 31043,
       "cumulativeRevenue": 1156905,
       "revenuePerActive": 11.21,
-      "gtvKEur": 1958.9
+      "gtvKEur": 35.6
     },
     {
       "cohortMonth": "2023-04",
@@ -11831,7 +11831,7 @@ const CASE_DATA = {
       "revenueEur": 33830,
       "cumulativeRevenue": 1190736,
       "revenuePerActive": 12.58,
-      "gtvKEur": 550.1
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2023-04",
@@ -11842,7 +11842,7 @@ const CASE_DATA = {
       "revenueEur": 35871,
       "cumulativeRevenue": 1226606,
       "revenuePerActive": 13.55,
-      "gtvKEur": 39213.6
+      "gtvKEur": 1017.5
     },
     {
       "cohortMonth": "2023-04",
@@ -11853,7 +11853,7 @@ const CASE_DATA = {
       "revenueEur": 33979,
       "cumulativeRevenue": 1260586,
       "revenuePerActive": 16.17,
-      "gtvKEur": 150407.5
+      "gtvKEur": 2929.2
     },
     {
       "cohortMonth": "2023-04",
@@ -11864,7 +11864,7 @@ const CASE_DATA = {
       "revenueEur": 9239,
       "cumulativeRevenue": 1269825,
       "revenuePerActive": 0,
-      "gtvKEur": 26781.9
+      "gtvKEur": 643.1
     },
     {
       "cohortMonth": "2023-04",
@@ -11875,7 +11875,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1269825,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-04",
@@ -11897,7 +11897,7 @@ const CASE_DATA = {
       "revenueEur": 46727,
       "cumulativeRevenue": 46727,
       "revenuePerActive": 1.7,
-      "gtvKEur": 9.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -11908,7 +11908,7 @@ const CASE_DATA = {
       "revenueEur": 78619,
       "cumulativeRevenue": 125345,
       "revenuePerActive": 6.46,
-      "gtvKEur": 48.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-03",
@@ -11919,7 +11919,7 @@ const CASE_DATA = {
       "revenueEur": 59026,
       "cumulativeRevenue": 184371,
       "revenuePerActive": 6.18,
-      "gtvKEur": 21807.6
+      "gtvKEur": 359.3
     },
     {
       "cohortMonth": "2023-03",
@@ -11930,7 +11930,7 @@ const CASE_DATA = {
       "revenueEur": 41686,
       "cumulativeRevenue": 226058,
       "revenuePerActive": 5,
-      "gtvKEur": 21.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-03",
@@ -11941,7 +11941,7 @@ const CASE_DATA = {
       "revenueEur": 50114,
       "cumulativeRevenue": 276172,
       "revenuePerActive": 6.48,
-      "gtvKEur": 41.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-03",
@@ -11952,7 +11952,7 @@ const CASE_DATA = {
       "revenueEur": 41730,
       "cumulativeRevenue": 317902,
       "revenuePerActive": 5.75,
-      "gtvKEur": 28732.9
+      "gtvKEur": 428.7
     },
     {
       "cohortMonth": "2023-03",
@@ -11963,7 +11963,7 @@ const CASE_DATA = {
       "revenueEur": 46746,
       "cumulativeRevenue": 364648,
       "revenuePerActive": 6.8,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -11974,7 +11974,7 @@ const CASE_DATA = {
       "revenueEur": 37525,
       "cumulativeRevenue": 402174,
       "revenuePerActive": 5.69,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -11985,7 +11985,7 @@ const CASE_DATA = {
       "revenueEur": 38438,
       "cumulativeRevenue": 440611,
       "revenuePerActive": 6.1,
-      "gtvKEur": 10
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-03",
@@ -11996,7 +11996,7 @@ const CASE_DATA = {
       "revenueEur": 35676,
       "cumulativeRevenue": 476288,
       "revenuePerActive": 5.98,
-      "gtvKEur": 34202.4
+      "gtvKEur": 369.6
     },
     {
       "cohortMonth": "2023-03",
@@ -12007,7 +12007,7 @@ const CASE_DATA = {
       "revenueEur": 36385,
       "cumulativeRevenue": 512672,
       "revenuePerActive": 6.28,
-      "gtvKEur": 5.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12018,7 +12018,7 @@ const CASE_DATA = {
       "revenueEur": 33621,
       "cumulativeRevenue": 546294,
       "revenuePerActive": 6.02,
-      "gtvKEur": 29.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-03",
@@ -12029,7 +12029,7 @@ const CASE_DATA = {
       "revenueEur": 82630,
       "cumulativeRevenue": 628924,
       "revenuePerActive": 14.66,
-      "gtvKEur": 23030
+      "gtvKEur": 266.8
     },
     {
       "cohortMonth": "2023-03",
@@ -12040,7 +12040,7 @@ const CASE_DATA = {
       "revenueEur": 82319,
       "cumulativeRevenue": 711243,
       "revenuePerActive": 15.39,
-      "gtvKEur": 3.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12051,7 +12051,7 @@ const CASE_DATA = {
       "revenueEur": 50281,
       "cumulativeRevenue": 761523,
       "revenuePerActive": 9.68,
-      "gtvKEur": 20.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12062,7 +12062,7 @@ const CASE_DATA = {
       "revenueEur": 38344,
       "cumulativeRevenue": 799867,
       "revenuePerActive": 7.64,
-      "gtvKEur": 13586.1
+      "gtvKEur": 300.3
     },
     {
       "cohortMonth": "2023-03",
@@ -12073,7 +12073,7 @@ const CASE_DATA = {
       "revenueEur": 44118,
       "cumulativeRevenue": 843985,
       "revenuePerActive": 9.04,
-      "gtvKEur": 18.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12084,7 +12084,7 @@ const CASE_DATA = {
       "revenueEur": 38874,
       "cumulativeRevenue": 882860,
       "revenuePerActive": 8.13,
-      "gtvKEur": 12527.1
+      "gtvKEur": 161.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12095,7 +12095,7 @@ const CASE_DATA = {
       "revenueEur": 46444,
       "cumulativeRevenue": 929304,
       "revenuePerActive": 9.96,
-      "gtvKEur": 14.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12106,7 +12106,7 @@ const CASE_DATA = {
       "revenueEur": 41579,
       "cumulativeRevenue": 970883,
       "revenuePerActive": 9.12,
-      "gtvKEur": 19.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12117,7 +12117,7 @@ const CASE_DATA = {
       "revenueEur": 35074,
       "cumulativeRevenue": 1005958,
       "revenuePerActive": 7.91,
-      "gtvKEur": 25366.6
+      "gtvKEur": 416.9
     },
     {
       "cohortMonth": "2023-03",
@@ -12128,7 +12128,7 @@ const CASE_DATA = {
       "revenueEur": 33832,
       "cumulativeRevenue": 1039789,
       "revenuePerActive": 7.83,
-      "gtvKEur": 30
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-03",
@@ -12139,7 +12139,7 @@ const CASE_DATA = {
       "revenueEur": 33360,
       "cumulativeRevenue": 1073150,
       "revenuePerActive": 7.93,
-      "gtvKEur": 1891.1
+      "gtvKEur": 50.7
     },
     {
       "cohortMonth": "2023-03",
@@ -12150,7 +12150,7 @@ const CASE_DATA = {
       "revenueEur": 37863,
       "cumulativeRevenue": 1111013,
       "revenuePerActive": 9.26,
-      "gtvKEur": 15.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12161,7 +12161,7 @@ const CASE_DATA = {
       "revenueEur": 171124,
       "cumulativeRevenue": 1282137,
       "revenuePerActive": 41.29,
-      "gtvKEur": 95.2
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-03",
@@ -12172,7 +12172,7 @@ const CASE_DATA = {
       "revenueEur": 81957,
       "cumulativeRevenue": 1364094,
       "revenuePerActive": 20.57,
-      "gtvKEur": 2061.7
+      "gtvKEur": 48.9
     },
     {
       "cohortMonth": "2023-03",
@@ -12183,7 +12183,7 @@ const CASE_DATA = {
       "revenueEur": 63491,
       "cumulativeRevenue": 1427585,
       "revenuePerActive": 16.07,
-      "gtvKEur": 169.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2023-03",
@@ -12194,7 +12194,7 @@ const CASE_DATA = {
       "revenueEur": 60199,
       "cumulativeRevenue": 1487783,
       "revenuePerActive": 15.51,
-      "gtvKEur": 5943.8
+      "gtvKEur": 122.7
     },
     {
       "cohortMonth": "2023-03",
@@ -12205,7 +12205,7 @@ const CASE_DATA = {
       "revenueEur": 70797,
       "cumulativeRevenue": 1558580,
       "revenuePerActive": 18.82,
-      "gtvKEur": 227.3
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2023-03",
@@ -12216,7 +12216,7 @@ const CASE_DATA = {
       "revenueEur": 55101,
       "cumulativeRevenue": 1613681,
       "revenuePerActive": 14.86,
-      "gtvKEur": 1855.8
+      "gtvKEur": 38.8
     },
     {
       "cohortMonth": "2023-03",
@@ -12227,7 +12227,7 @@ const CASE_DATA = {
       "revenueEur": 101231,
       "cumulativeRevenue": 1714912,
       "revenuePerActive": 27.96,
-      "gtvKEur": 155.1
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2023-03",
@@ -12238,7 +12238,7 @@ const CASE_DATA = {
       "revenueEur": 55815,
       "cumulativeRevenue": 1770727,
       "revenuePerActive": 15.83,
-      "gtvKEur": 1753.3
+      "gtvKEur": 29.5
     },
     {
       "cohortMonth": "2023-03",
@@ -12249,7 +12249,7 @@ const CASE_DATA = {
       "revenueEur": 70024,
       "cumulativeRevenue": 1840752,
       "revenuePerActive": 20.2,
-      "gtvKEur": 319
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12260,7 +12260,7 @@ const CASE_DATA = {
       "revenueEur": 44177,
       "cumulativeRevenue": 1884929,
       "revenuePerActive": 12.94,
-      "gtvKEur": 18955.1
+      "gtvKEur": 210.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12271,7 +12271,7 @@ const CASE_DATA = {
       "revenueEur": 41355,
       "cumulativeRevenue": 1926285,
       "revenuePerActive": 12.55,
-      "gtvKEur": 762.9
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2023-03",
@@ -12282,7 +12282,7 @@ const CASE_DATA = {
       "revenueEur": 37888,
       "cumulativeRevenue": 1964172,
       "revenuePerActive": 11.52,
-      "gtvKEur": 320587
+      "gtvKEur": 26590.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12293,7 +12293,7 @@ const CASE_DATA = {
       "revenueEur": 56490,
       "cumulativeRevenue": 2020662,
       "revenuePerActive": 22.35,
-      "gtvKEur": 694632.9
+      "gtvKEur": 9434.7
     },
     {
       "cohortMonth": "2023-03",
@@ -12304,7 +12304,7 @@ const CASE_DATA = {
       "revenueEur": 14105,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 116718.1
+      "gtvKEur": 2128.6
     },
     {
       "cohortMonth": "2023-03",
@@ -12315,7 +12315,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -12326,7 +12326,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 5.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12337,7 +12337,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-03",
@@ -12348,7 +12348,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -12359,7 +12359,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -12370,7 +12370,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2034767,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-03",
@@ -12392,7 +12392,7 @@ const CASE_DATA = {
       "revenueEur": 23345,
       "cumulativeRevenue": 23345,
       "revenuePerActive": 0.95,
-      "gtvKEur": 4.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-02",
@@ -12403,7 +12403,7 @@ const CASE_DATA = {
       "revenueEur": 69640,
       "cumulativeRevenue": 92985,
       "revenuePerActive": 6.13,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-02",
@@ -12414,7 +12414,7 @@ const CASE_DATA = {
       "revenueEur": 42729,
       "cumulativeRevenue": 135714,
       "revenuePerActive": 5.12,
-      "gtvKEur": 87.5
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-02",
@@ -12425,7 +12425,7 @@ const CASE_DATA = {
       "revenueEur": 35550,
       "cumulativeRevenue": 171264,
       "revenuePerActive": 4.68,
-      "gtvKEur": 19282.8
+      "gtvKEur": 227.9
     },
     {
       "cohortMonth": "2023-02",
@@ -12436,7 +12436,7 @@ const CASE_DATA = {
       "revenueEur": 33616,
       "cumulativeRevenue": 204880,
       "revenuePerActive": 4.82,
-      "gtvKEur": 52.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-02",
@@ -12447,7 +12447,7 @@ const CASE_DATA = {
       "revenueEur": 32193,
       "cumulativeRevenue": 237073,
       "revenuePerActive": 4.88,
-      "gtvKEur": 49.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-02",
@@ -12458,7 +12458,7 @@ const CASE_DATA = {
       "revenueEur": 31831,
       "cumulativeRevenue": 268904,
       "revenuePerActive": 5.1,
-      "gtvKEur": 60025419.9
+      "gtvKEur": 600279.2
     },
     {
       "cohortMonth": "2023-02",
@@ -12469,7 +12469,7 @@ const CASE_DATA = {
       "revenueEur": 30704,
       "cumulativeRevenue": 299608,
       "revenuePerActive": 5.14,
-      "gtvKEur": 53.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-02",
@@ -12480,7 +12480,7 @@ const CASE_DATA = {
       "revenueEur": 33377,
       "cumulativeRevenue": 332985,
       "revenuePerActive": 5.87,
-      "gtvKEur": 32.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-02",
@@ -12491,7 +12491,7 @@ const CASE_DATA = {
       "revenueEur": 30930,
       "cumulativeRevenue": 363915,
       "revenuePerActive": 5.73,
-      "gtvKEur": 40.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-02",
@@ -12502,7 +12502,7 @@ const CASE_DATA = {
       "revenueEur": 31331,
       "cumulativeRevenue": 395246,
       "revenuePerActive": 5.99,
-      "gtvKEur": 13043.7
+      "gtvKEur": 166
     },
     {
       "cohortMonth": "2023-02",
@@ -12513,7 +12513,7 @@ const CASE_DATA = {
       "revenueEur": 32210,
       "cumulativeRevenue": 427456,
       "revenuePerActive": 6.37,
-      "gtvKEur": 9.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-02",
@@ -12524,7 +12524,7 @@ const CASE_DATA = {
       "revenueEur": 45869,
       "cumulativeRevenue": 473325,
       "revenuePerActive": 9.26,
-      "gtvKEur": 116.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-02",
@@ -12535,7 +12535,7 @@ const CASE_DATA = {
       "revenueEur": 71930,
       "cumulativeRevenue": 545255,
       "revenuePerActive": 15.03,
-      "gtvKEur": 23627.5
+      "gtvKEur": 264
     },
     {
       "cohortMonth": "2023-02",
@@ -12546,7 +12546,7 @@ const CASE_DATA = {
       "revenueEur": 39720,
       "cumulativeRevenue": 584976,
       "revenuePerActive": 8.74,
-      "gtvKEur": 74.7
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-02",
@@ -12557,7 +12557,7 @@ const CASE_DATA = {
       "revenueEur": 35960,
       "cumulativeRevenue": 620936,
       "revenuePerActive": 8.13,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-02",
@@ -12568,7 +12568,7 @@ const CASE_DATA = {
       "revenueEur": 32951,
       "cumulativeRevenue": 653886,
       "revenuePerActive": 7.68,
-      "gtvKEur": 34716.6
+      "gtvKEur": 380.2
     },
     {
       "cohortMonth": "2023-02",
@@ -12579,7 +12579,7 @@ const CASE_DATA = {
       "revenueEur": 31729,
       "cumulativeRevenue": 685616,
       "revenuePerActive": 7.54,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-02",
@@ -12590,7 +12590,7 @@ const CASE_DATA = {
       "revenueEur": 29566,
       "cumulativeRevenue": 715182,
       "revenuePerActive": 7.17,
-      "gtvKEur": 1962.5
+      "gtvKEur": 27.8
     },
     {
       "cohortMonth": "2023-02",
@@ -12601,7 +12601,7 @@ const CASE_DATA = {
       "revenueEur": 32334,
       "cumulativeRevenue": 747516,
       "revenuePerActive": 8.09,
-      "gtvKEur": 11.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-02",
@@ -12612,7 +12612,7 @@ const CASE_DATA = {
       "revenueEur": 32577,
       "cumulativeRevenue": 780093,
       "revenuePerActive": 8.35,
-      "gtvKEur": 22.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2023-02",
@@ -12623,7 +12623,7 @@ const CASE_DATA = {
       "revenueEur": 34029,
       "cumulativeRevenue": 814122,
       "revenuePerActive": 8.97,
-      "gtvKEur": 32371.7
+      "gtvKEur": 353
     },
     {
       "cohortMonth": "2023-02",
@@ -12634,7 +12634,7 @@ const CASE_DATA = {
       "revenueEur": 29828,
       "cumulativeRevenue": 843950,
       "revenuePerActive": 7.97,
-      "gtvKEur": 52
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-02",
@@ -12645,7 +12645,7 @@ const CASE_DATA = {
       "revenueEur": 26059,
       "cumulativeRevenue": 870009,
       "revenuePerActive": 7.11,
-      "gtvKEur": 1806.4
+      "gtvKEur": 42.4
     },
     {
       "cohortMonth": "2023-02",
@@ -12656,7 +12656,7 @@ const CASE_DATA = {
       "revenueEur": 35968,
       "cumulativeRevenue": 905976,
       "revenuePerActive": 10.05,
-      "gtvKEur": 84.5
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2023-02",
@@ -12667,7 +12667,7 @@ const CASE_DATA = {
       "revenueEur": 69697,
       "cumulativeRevenue": 975673,
       "revenuePerActive": 19.96,
-      "gtvKEur": 131
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2023-02",
@@ -12678,7 +12678,7 @@ const CASE_DATA = {
       "revenueEur": 39081,
       "cumulativeRevenue": 1014754,
       "revenuePerActive": 11.45,
-      "gtvKEur": 2034.2
+      "gtvKEur": 46.9
     },
     {
       "cohortMonth": "2023-02",
@@ -12689,7 +12689,7 @@ const CASE_DATA = {
       "revenueEur": 34994,
       "cumulativeRevenue": 1049748,
       "revenuePerActive": 10.38,
-      "gtvKEur": 1600.8
+      "gtvKEur": 16
     },
     {
       "cohortMonth": "2023-02",
@@ -12700,7 +12700,7 @@ const CASE_DATA = {
       "revenueEur": 56405,
       "cumulativeRevenue": 1106153,
       "revenuePerActive": 17.08,
-      "gtvKEur": 2459.8
+      "gtvKEur": 37.4
     },
     {
       "cohortMonth": "2023-02",
@@ -12711,7 +12711,7 @@ const CASE_DATA = {
       "revenueEur": 35212,
       "cumulativeRevenue": 1141365,
       "revenuePerActive": 10.97,
-      "gtvKEur": 1283.9
+      "gtvKEur": 12.8
     },
     {
       "cohortMonth": "2023-02",
@@ -12722,7 +12722,7 @@ const CASE_DATA = {
       "revenueEur": 31380,
       "cumulativeRevenue": 1172745,
       "revenuePerActive": 9.9,
-      "gtvKEur": 1262.7
+      "gtvKEur": 26.1
     },
     {
       "cohortMonth": "2023-02",
@@ -12733,7 +12733,7 @@ const CASE_DATA = {
       "revenueEur": 37580,
       "cumulativeRevenue": 1210325,
       "revenuePerActive": 11.87,
-      "gtvKEur": 252.6
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2023-02",
@@ -12744,7 +12744,7 @@ const CASE_DATA = {
       "revenueEur": 35227,
       "cumulativeRevenue": 1245552,
       "revenuePerActive": 11.44,
-      "gtvKEur": 3893.4
+      "gtvKEur": 76
     },
     {
       "cohortMonth": "2023-02",
@@ -12755,7 +12755,7 @@ const CASE_DATA = {
       "revenueEur": 41479,
       "cumulativeRevenue": 1287031,
       "revenuePerActive": 13.6,
-      "gtvKEur": 2629.1
+      "gtvKEur": 26.3
     },
     {
       "cohortMonth": "2023-02",
@@ -12766,7 +12766,7 @@ const CASE_DATA = {
       "revenueEur": 36468,
       "cumulativeRevenue": 1323499,
       "revenuePerActive": 12.3,
-      "gtvKEur": 4658.2
+      "gtvKEur": 69.8
     },
     {
       "cohortMonth": "2023-02",
@@ -12777,7 +12777,7 @@ const CASE_DATA = {
       "revenueEur": 34211,
       "cumulativeRevenue": 1357710,
       "revenuePerActive": 11.79,
-      "gtvKEur": 1328
+      "gtvKEur": 13.3
     },
     {
       "cohortMonth": "2023-02",
@@ -12788,7 +12788,7 @@ const CASE_DATA = {
       "revenueEur": 40291,
       "cumulativeRevenue": 1398002,
       "revenuePerActive": 13.9,
-      "gtvKEur": 43368.4
+      "gtvKEur": 1221.8
     },
     {
       "cohortMonth": "2023-02",
@@ -12799,7 +12799,7 @@ const CASE_DATA = {
       "revenueEur": 67388,
       "cumulativeRevenue": 1465390,
       "revenuePerActive": 30.26,
-      "gtvKEur": 116238.9
+      "gtvKEur": 2509
     },
     {
       "cohortMonth": "2023-02",
@@ -12810,7 +12810,7 @@ const CASE_DATA = {
       "revenueEur": 9171,
       "cumulativeRevenue": 1474560,
       "revenuePerActive": 0,
-      "gtvKEur": 31225
+      "gtvKEur": 631.9
     },
     {
       "cohortMonth": "2023-01",
@@ -12821,7 +12821,7 @@ const CASE_DATA = {
       "revenueEur": 28814,
       "cumulativeRevenue": 28814,
       "revenuePerActive": 1.14,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12832,7 +12832,7 @@ const CASE_DATA = {
       "revenueEur": 63951,
       "cumulativeRevenue": 92764,
       "revenuePerActive": 5.57,
-      "gtvKEur": 2.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12843,7 +12843,7 @@ const CASE_DATA = {
       "revenueEur": 44092,
       "cumulativeRevenue": 136856,
       "revenuePerActive": 4.86,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12854,7 +12854,7 @@ const CASE_DATA = {
       "revenueEur": 38973,
       "cumulativeRevenue": 175829,
       "revenuePerActive": 5.01,
-      "gtvKEur": 791.6
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2023-01",
@@ -12865,7 +12865,7 @@ const CASE_DATA = {
       "revenueEur": 38097,
       "cumulativeRevenue": 213926,
       "revenuePerActive": 5.16,
-      "gtvKEur": 5118.2
+      "gtvKEur": 81.7
     },
     {
       "cohortMonth": "2023-01",
@@ -12876,7 +12876,7 @@ const CASE_DATA = {
       "revenueEur": 37575,
       "cumulativeRevenue": 251502,
       "revenuePerActive": 5.5,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12887,7 +12887,7 @@ const CASE_DATA = {
       "revenueEur": 32107,
       "cumulativeRevenue": 283609,
       "revenuePerActive": 4.91,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12898,7 +12898,7 @@ const CASE_DATA = {
       "revenueEur": 33564,
       "cumulativeRevenue": 317173,
       "revenuePerActive": 5.39,
-      "gtvKEur": 5606.4
+      "gtvKEur": 78.1
     },
     {
       "cohortMonth": "2023-01",
@@ -12909,7 +12909,7 @@ const CASE_DATA = {
       "revenueEur": 33725,
       "cumulativeRevenue": 350898,
       "revenuePerActive": 5.65,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12920,7 +12920,7 @@ const CASE_DATA = {
       "revenueEur": 30817,
       "cumulativeRevenue": 381716,
       "revenuePerActive": 5.33,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12931,7 +12931,7 @@ const CASE_DATA = {
       "revenueEur": 29831,
       "cumulativeRevenue": 411547,
       "revenuePerActive": 5.37,
-      "gtvKEur": 13.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2023-01",
@@ -12942,7 +12942,7 @@ const CASE_DATA = {
       "revenueEur": 32101,
       "cumulativeRevenue": 443648,
       "revenuePerActive": 5.93,
-      "gtvKEur": 3887.6
+      "gtvKEur": 76.9
     },
     {
       "cohortMonth": "2023-01",
@@ -12953,7 +12953,7 @@ const CASE_DATA = {
       "revenueEur": 47767,
       "cumulativeRevenue": 491415,
       "revenuePerActive": 8.93,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -12964,7 +12964,7 @@ const CASE_DATA = {
       "revenueEur": 64884,
       "cumulativeRevenue": 556299,
       "revenuePerActive": 12.53,
-      "gtvKEur": 67.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2023-01",
@@ -12975,7 +12975,7 @@ const CASE_DATA = {
       "revenueEur": 42561,
       "cumulativeRevenue": 598860,
       "revenuePerActive": 8.52,
-      "gtvKEur": 3690.8
+      "gtvKEur": 60.6
     },
     {
       "cohortMonth": "2023-01",
@@ -12986,7 +12986,7 @@ const CASE_DATA = {
       "revenueEur": 36116,
       "cumulativeRevenue": 634975,
       "revenuePerActive": 7.51,
-      "gtvKEur": 7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2023-01",
@@ -12997,7 +12997,7 @@ const CASE_DATA = {
       "revenueEur": 34379,
       "cumulativeRevenue": 669355,
       "revenuePerActive": 7.27,
-      "gtvKEur": 34.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2023-01",
@@ -13008,7 +13008,7 @@ const CASE_DATA = {
       "revenueEur": 36908,
       "cumulativeRevenue": 706263,
       "revenuePerActive": 8.1,
-      "gtvKEur": 2402
+      "gtvKEur": 44.7
     },
     {
       "cohortMonth": "2023-01",
@@ -13019,7 +13019,7 @@ const CASE_DATA = {
       "revenueEur": 30701,
       "cumulativeRevenue": 736964,
       "revenuePerActive": 6.86,
-      "gtvKEur": 58.9
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-01",
@@ -13030,7 +13030,7 @@ const CASE_DATA = {
       "revenueEur": 32473,
       "cumulativeRevenue": 769437,
       "revenuePerActive": 7.4,
-      "gtvKEur": 2275.8
+      "gtvKEur": 30.4
     },
     {
       "cohortMonth": "2023-01",
@@ -13041,7 +13041,7 @@ const CASE_DATA = {
       "revenueEur": 31681,
       "cumulativeRevenue": 801118,
       "revenuePerActive": 7.44,
-      "gtvKEur": 747
+      "gtvKEur": 7.5
     },
     {
       "cohortMonth": "2023-01",
@@ -13052,7 +13052,7 @@ const CASE_DATA = {
       "revenueEur": 29552,
       "cumulativeRevenue": 830670,
       "revenuePerActive": 7.12,
-      "gtvKEur": 37.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-01",
@@ -13063,7 +13063,7 @@ const CASE_DATA = {
       "revenueEur": 29586,
       "cumulativeRevenue": 860256,
       "revenuePerActive": 7.31,
-      "gtvKEur": 1904.3
+      "gtvKEur": 46.1
     },
     {
       "cohortMonth": "2023-01",
@@ -13074,7 +13074,7 @@ const CASE_DATA = {
       "revenueEur": 29625,
       "cumulativeRevenue": 889881,
       "revenuePerActive": 7.47,
-      "gtvKEur": 63.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2023-01",
@@ -13085,7 +13085,7 @@ const CASE_DATA = {
       "revenueEur": 46144,
       "cumulativeRevenue": 936025,
       "revenuePerActive": 11.74,
-      "gtvKEur": 1974.6
+      "gtvKEur": 40.5
     },
     {
       "cohortMonth": "2023-01",
@@ -13096,7 +13096,7 @@ const CASE_DATA = {
       "revenueEur": 48143,
       "cumulativeRevenue": 984168,
       "revenuePerActive": 12.54,
-      "gtvKEur": 76.9
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2023-01",
@@ -13107,7 +13107,7 @@ const CASE_DATA = {
       "revenueEur": 49944,
       "cumulativeRevenue": 1034112,
       "revenuePerActive": 13.41,
-      "gtvKEur": 86.9
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-01",
@@ -13118,7 +13118,7 @@ const CASE_DATA = {
       "revenueEur": 44308,
       "cumulativeRevenue": 1078419,
       "revenuePerActive": 12.04,
-      "gtvKEur": 2870.8
+      "gtvKEur": 47.7
     },
     {
       "cohortMonth": "2023-01",
@@ -13129,7 +13129,7 @@ const CASE_DATA = {
       "revenueEur": 39013,
       "cumulativeRevenue": 1117432,
       "revenuePerActive": 10.85,
-      "gtvKEur": 107.8
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2023-01",
@@ -13140,7 +13140,7 @@ const CASE_DATA = {
       "revenueEur": 38980,
       "cumulativeRevenue": 1156412,
       "revenuePerActive": 11.01,
-      "gtvKEur": 1527.7
+      "gtvKEur": 18.1
     },
     {
       "cohortMonth": "2023-01",
@@ -13151,7 +13151,7 @@ const CASE_DATA = {
       "revenueEur": 36585,
       "cumulativeRevenue": 1192997,
       "revenuePerActive": 10.44,
-      "gtvKEur": 91.9
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2023-01",
@@ -13162,7 +13162,7 @@ const CASE_DATA = {
       "revenueEur": 41886,
       "cumulativeRevenue": 1234883,
       "revenuePerActive": 12.13,
-      "gtvKEur": 1696.4
+      "gtvKEur": 22.9
     },
     {
       "cohortMonth": "2023-01",
@@ -13173,7 +13173,7 @@ const CASE_DATA = {
       "revenueEur": 38364,
       "cumulativeRevenue": 1273247,
       "revenuePerActive": 11.56,
-      "gtvKEur": 150.6
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2023-01",
@@ -13184,7 +13184,7 @@ const CASE_DATA = {
       "revenueEur": 32531,
       "cumulativeRevenue": 1305777,
       "revenuePerActive": 9.85,
-      "gtvKEur": 1910.4
+      "gtvKEur": 32.1
     },
     {
       "cohortMonth": "2023-01",
@@ -13195,7 +13195,7 @@ const CASE_DATA = {
       "revenueEur": 33830,
       "cumulativeRevenue": 1339607,
       "revenuePerActive": 10.45,
-      "gtvKEur": 396.5
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2023-01",
@@ -13206,7 +13206,7 @@ const CASE_DATA = {
       "revenueEur": 35532,
       "cumulativeRevenue": 1375139,
       "revenuePerActive": 11.16,
-      "gtvKEur": 2722.2
+      "gtvKEur": 51.7
     },
     {
       "cohortMonth": "2023-01",
@@ -13217,7 +13217,7 @@ const CASE_DATA = {
       "revenueEur": 47711,
       "cumulativeRevenue": 1422850,
       "revenuePerActive": 15.09,
-      "gtvKEur": 818.2
+      "gtvKEur": 8.2
     },
     {
       "cohortMonth": "2023-01",
@@ -13228,7 +13228,7 @@ const CASE_DATA = {
       "revenueEur": 46152,
       "cumulativeRevenue": 1469002,
       "revenuePerActive": 14.99,
-      "gtvKEur": 52342.4
+      "gtvKEur": 1170.4
     },
     {
       "cohortMonth": "2023-01",
@@ -13239,7 +13239,7 @@ const CASE_DATA = {
       "revenueEur": 49621,
       "cumulativeRevenue": 1518623,
       "revenuePerActive": 20.35,
-      "gtvKEur": 138404.8
+      "gtvKEur": 2790
     },
     {
       "cohortMonth": "2023-01",
@@ -13250,7 +13250,7 @@ const CASE_DATA = {
       "revenueEur": 14664,
       "cumulativeRevenue": 1533287,
       "revenuePerActive": 0,
-      "gtvKEur": 36600.3
+      "gtvKEur": 713.5
     },
     {
       "cohortMonth": "2023-01",
@@ -13261,7 +13261,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1533287,
       "revenuePerActive": 0,
-      "gtvKEur": 41.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2023-01",
@@ -13272,7 +13272,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1533287,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2023-01",
@@ -13283,7 +13283,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1533287,
       "revenuePerActive": 0,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-12",
@@ -13294,7 +13294,7 @@ const CASE_DATA = {
       "revenueEur": 24829,
       "cumulativeRevenue": 24829,
       "revenuePerActive": 1.16,
-      "gtvKEur": 14147.8
+      "gtvKEur": 212.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13305,7 +13305,7 @@ const CASE_DATA = {
       "revenueEur": 51880,
       "cumulativeRevenue": 76709,
       "revenuePerActive": 5.3,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-12",
@@ -13327,7 +13327,7 @@ const CASE_DATA = {
       "revenueEur": 36485,
       "cumulativeRevenue": 151293,
       "revenuePerActive": 5.26,
-      "gtvKEur": 5.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2022-12",
@@ -13338,7 +13338,7 @@ const CASE_DATA = {
       "revenueEur": 30367,
       "cumulativeRevenue": 181660,
       "revenuePerActive": 4.97,
-      "gtvKEur": 10
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13349,7 +13349,7 @@ const CASE_DATA = {
       "revenueEur": 33482,
       "cumulativeRevenue": 215142,
       "revenuePerActive": 5.73,
-      "gtvKEur": 4472.7
+      "gtvKEur": 140.2
     },
     {
       "cohortMonth": "2022-12",
@@ -13360,7 +13360,7 @@ const CASE_DATA = {
       "revenueEur": 27274,
       "cumulativeRevenue": 242416,
       "revenuePerActive": 4.94,
-      "gtvKEur": 1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-12",
@@ -13371,7 +13371,7 @@ const CASE_DATA = {
       "revenueEur": 28602,
       "cumulativeRevenue": 271018,
       "revenuePerActive": 5.41,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-12",
@@ -13382,7 +13382,7 @@ const CASE_DATA = {
       "revenueEur": 27779,
       "cumulativeRevenue": 298797,
       "revenuePerActive": 5.51,
-      "gtvKEur": 3944.9
+      "gtvKEur": 87.8
     },
     {
       "cohortMonth": "2022-12",
@@ -13415,7 +13415,7 @@ const CASE_DATA = {
       "revenueEur": 28102,
       "cumulativeRevenue": 382357,
       "revenuePerActive": 6.14,
-      "gtvKEur": 77.2
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-12",
@@ -13426,7 +13426,7 @@ const CASE_DATA = {
       "revenueEur": 45016,
       "cumulativeRevenue": 427374,
       "revenuePerActive": 9.9,
-      "gtvKEur": 5166.4
+      "gtvKEur": 128.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13437,7 +13437,7 @@ const CASE_DATA = {
       "revenueEur": 50837,
       "cumulativeRevenue": 478210,
       "revenuePerActive": 11.69,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-12",
@@ -13448,7 +13448,7 @@ const CASE_DATA = {
       "revenueEur": 33626,
       "cumulativeRevenue": 511836,
       "revenuePerActive": 8.18,
-      "gtvKEur": 6.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13459,7 +13459,7 @@ const CASE_DATA = {
       "revenueEur": 33396,
       "cumulativeRevenue": 545232,
       "revenuePerActive": 8.36,
-      "gtvKEur": 3244.8
+      "gtvKEur": 109.6
     },
     {
       "cohortMonth": "2022-12",
@@ -13470,7 +13470,7 @@ const CASE_DATA = {
       "revenueEur": 28390,
       "cumulativeRevenue": 573622,
       "revenuePerActive": 7.48,
-      "gtvKEur": 28.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-12",
@@ -13481,7 +13481,7 @@ const CASE_DATA = {
       "revenueEur": 31114,
       "cumulativeRevenue": 604736,
       "revenuePerActive": 8.36,
-      "gtvKEur": 115.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-12",
@@ -13492,7 +13492,7 @@ const CASE_DATA = {
       "revenueEur": 28180,
       "cumulativeRevenue": 632916,
       "revenuePerActive": 7.73,
-      "gtvKEur": 3072.9
+      "gtvKEur": 64.8
     },
     {
       "cohortMonth": "2022-12",
@@ -13503,7 +13503,7 @@ const CASE_DATA = {
       "revenueEur": 26059,
       "cumulativeRevenue": 658975,
       "revenuePerActive": 7.34,
-      "gtvKEur": 5.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13514,7 +13514,7 @@ const CASE_DATA = {
       "revenueEur": 25222,
       "cumulativeRevenue": 684196,
       "revenuePerActive": 7.25,
-      "gtvKEur": 2010.7
+      "gtvKEur": 47.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13525,7 +13525,7 @@ const CASE_DATA = {
       "revenueEur": 24578,
       "cumulativeRevenue": 708775,
       "revenuePerActive": 7.23,
-      "gtvKEur": 14.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13536,7 +13536,7 @@ const CASE_DATA = {
       "revenueEur": 25043,
       "cumulativeRevenue": 733818,
       "revenuePerActive": 7.48,
-      "gtvKEur": 46.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13547,7 +13547,7 @@ const CASE_DATA = {
       "revenueEur": 27002,
       "cumulativeRevenue": 760820,
       "revenuePerActive": 8.28,
-      "gtvKEur": 9301
+      "gtvKEur": 132.9
     },
     {
       "cohortMonth": "2022-12",
@@ -13558,7 +13558,7 @@ const CASE_DATA = {
       "revenueEur": 31161,
       "cumulativeRevenue": 791981,
       "revenuePerActive": 9.52,
-      "gtvKEur": 24.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-12",
@@ -13569,7 +13569,7 @@ const CASE_DATA = {
       "revenueEur": 40600,
       "cumulativeRevenue": 832581,
       "revenuePerActive": 12.89,
-      "gtvKEur": 1421.2
+      "gtvKEur": 68.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13580,7 +13580,7 @@ const CASE_DATA = {
       "revenueEur": 33913,
       "cumulativeRevenue": 866495,
       "revenuePerActive": 11.04,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-12",
@@ -13591,7 +13591,7 @@ const CASE_DATA = {
       "revenueEur": 40383,
       "cumulativeRevenue": 906878,
       "revenuePerActive": 13.61,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-12",
@@ -13602,7 +13602,7 @@ const CASE_DATA = {
       "revenueEur": 34295,
       "cumulativeRevenue": 941173,
       "revenuePerActive": 11.9,
-      "gtvKEur": 2066.4
+      "gtvKEur": 56.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13613,7 +13613,7 @@ const CASE_DATA = {
       "revenueEur": 33061,
       "cumulativeRevenue": 974235,
       "revenuePerActive": 11.56,
-      "gtvKEur": 58.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-12",
@@ -13624,7 +13624,7 @@ const CASE_DATA = {
       "revenueEur": 30903,
       "cumulativeRevenue": 1005138,
       "revenuePerActive": 11.06,
-      "gtvKEur": 1202.1
+      "gtvKEur": 48.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13635,7 +13635,7 @@ const CASE_DATA = {
       "revenueEur": 31097,
       "cumulativeRevenue": 1036234,
       "revenuePerActive": 11.32,
-      "gtvKEur": 205.1
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2022-12",
@@ -13646,7 +13646,7 @@ const CASE_DATA = {
       "revenueEur": 31688,
       "cumulativeRevenue": 1067923,
       "revenuePerActive": 11.79,
-      "gtvKEur": 1384.4
+      "gtvKEur": 33
     },
     {
       "cohortMonth": "2022-12",
@@ -13657,7 +13657,7 @@ const CASE_DATA = {
       "revenueEur": 31031,
       "cumulativeRevenue": 1098954,
       "revenuePerActive": 11.77,
-      "gtvKEur": 298.1
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2022-12",
@@ -13668,7 +13668,7 @@ const CASE_DATA = {
       "revenueEur": 31314,
       "cumulativeRevenue": 1130269,
       "revenuePerActive": 12.06,
-      "gtvKEur": 1408.2
+      "gtvKEur": 39.8
     },
     {
       "cohortMonth": "2022-12",
@@ -13679,7 +13679,7 @@ const CASE_DATA = {
       "revenueEur": 33412,
       "cumulativeRevenue": 1163681,
       "revenuePerActive": 12.88,
-      "gtvKEur": 385.9
+      "gtvKEur": 3.9
     },
     {
       "cohortMonth": "2022-12",
@@ -13690,7 +13690,7 @@ const CASE_DATA = {
       "revenueEur": 30705,
       "cumulativeRevenue": 1194386,
       "revenuePerActive": 11.97,
-      "gtvKEur": 4408.5
+      "gtvKEur": 84.3
     },
     {
       "cohortMonth": "2022-12",
@@ -13701,7 +13701,7 @@ const CASE_DATA = {
       "revenueEur": 41741,
       "cumulativeRevenue": 1236127,
       "revenuePerActive": 16.64,
-      "gtvKEur": 1070.2
+      "gtvKEur": 112.9
     },
     {
       "cohortMonth": "2022-12",
@@ -13712,7 +13712,7 @@ const CASE_DATA = {
       "revenueEur": 35509,
       "cumulativeRevenue": 1271636,
       "revenuePerActive": 14.34,
-      "gtvKEur": 89204.1
+      "gtvKEur": 2000.4
     },
     {
       "cohortMonth": "2022-12",
@@ -13723,7 +13723,7 @@ const CASE_DATA = {
       "revenueEur": 38198,
       "cumulativeRevenue": 1309835,
       "revenuePerActive": 19.98,
-      "gtvKEur": 189576.1
+      "gtvKEur": 4469.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13734,7 +13734,7 @@ const CASE_DATA = {
       "revenueEur": 11940,
       "cumulativeRevenue": 1321775,
       "revenuePerActive": 0,
-      "gtvKEur": 39536.6
+      "gtvKEur": 1055.5
     },
     {
       "cohortMonth": "2022-12",
@@ -13756,7 +13756,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1321775,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -13767,7 +13767,7 @@ const CASE_DATA = {
       "revenueEur": 29093,
       "cumulativeRevenue": 29093,
       "revenuePerActive": 1.22,
-      "gtvKEur": 28.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-11",
@@ -13778,7 +13778,7 @@ const CASE_DATA = {
       "revenueEur": 66088,
       "cumulativeRevenue": 95181,
       "revenuePerActive": 6.19,
-      "gtvKEur": 180047.6
+      "gtvKEur": 2347.7
     },
     {
       "cohortMonth": "2022-11",
@@ -13789,7 +13789,7 @@ const CASE_DATA = {
       "revenueEur": 58621,
       "cumulativeRevenue": 153802,
       "revenuePerActive": 7.1,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -13811,7 +13811,7 @@ const CASE_DATA = {
       "revenueEur": 45875,
       "cumulativeRevenue": 244174,
       "revenuePerActive": 6.67,
-      "gtvKEur": 8.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-11",
@@ -13822,7 +13822,7 @@ const CASE_DATA = {
       "revenueEur": 37789,
       "cumulativeRevenue": 281963,
       "revenuePerActive": 6.07,
-      "gtvKEur": 14.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-11",
@@ -13833,7 +13833,7 @@ const CASE_DATA = {
       "revenueEur": 39079,
       "cumulativeRevenue": 321042,
       "revenuePerActive": 6.5,
-      "gtvKEur": 49474.8
+      "gtvKEur": 687.7
     },
     {
       "cohortMonth": "2022-11",
@@ -13844,7 +13844,7 @@ const CASE_DATA = {
       "revenueEur": 34775,
       "cumulativeRevenue": 355817,
       "revenuePerActive": 6.16,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -13855,7 +13855,7 @@ const CASE_DATA = {
       "revenueEur": 33515,
       "cumulativeRevenue": 389333,
       "revenuePerActive": 6.15,
-      "gtvKEur": 14.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-11",
@@ -13866,7 +13866,7 @@ const CASE_DATA = {
       "revenueEur": 38005,
       "cumulativeRevenue": 427337,
       "revenuePerActive": 7.21,
-      "gtvKEur": 19277.2
+      "gtvKEur": 260.1
     },
     {
       "cohortMonth": "2022-11",
@@ -13877,7 +13877,7 @@ const CASE_DATA = {
       "revenueEur": 31853,
       "cumulativeRevenue": 459190,
       "revenuePerActive": 6.26,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -13888,7 +13888,7 @@ const CASE_DATA = {
       "revenueEur": 32834,
       "cumulativeRevenue": 492024,
       "revenuePerActive": 6.61,
-      "gtvKEur": 51.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-11",
@@ -13899,7 +13899,7 @@ const CASE_DATA = {
       "revenueEur": 50320,
       "cumulativeRevenue": 542344,
       "revenuePerActive": 10.38,
-      "gtvKEur": 89.9
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-11",
@@ -13910,7 +13910,7 @@ const CASE_DATA = {
       "revenueEur": 67092,
       "cumulativeRevenue": 609435,
       "revenuePerActive": 14.23,
-      "gtvKEur": 10200.4
+      "gtvKEur": 152.7
     },
     {
       "cohortMonth": "2022-11",
@@ -13932,7 +13932,7 @@ const CASE_DATA = {
       "revenueEur": 36137,
       "cumulativeRevenue": 698974,
       "revenuePerActive": 8.23,
-      "gtvKEur": 23.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-11",
@@ -13943,7 +13943,7 @@ const CASE_DATA = {
       "revenueEur": 51460,
       "cumulativeRevenue": 750433,
       "revenuePerActive": 12.07,
-      "gtvKEur": 3768.8
+      "gtvKEur": 286
     },
     {
       "cohortMonth": "2022-11",
@@ -13954,7 +13954,7 @@ const CASE_DATA = {
       "revenueEur": 35171,
       "cumulativeRevenue": 785604,
       "revenuePerActive": 8.58,
-      "gtvKEur": 63.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-11",
@@ -13965,7 +13965,7 @@ const CASE_DATA = {
       "revenueEur": 35402,
       "cumulativeRevenue": 821006,
       "revenuePerActive": 8.8,
-      "gtvKEur": 66.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-11",
@@ -13976,7 +13976,7 @@ const CASE_DATA = {
       "revenueEur": 30326,
       "cumulativeRevenue": 851332,
       "revenuePerActive": 7.69,
-      "gtvKEur": 1907.3
+      "gtvKEur": 47.6
     },
     {
       "cohortMonth": "2022-11",
@@ -13987,7 +13987,7 @@ const CASE_DATA = {
       "revenueEur": 31608,
       "cumulativeRevenue": 882939,
       "revenuePerActive": 8.23,
-      "gtvKEur": 19.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-11",
@@ -13998,7 +13998,7 @@ const CASE_DATA = {
       "revenueEur": 32035,
       "cumulativeRevenue": 914975,
       "revenuePerActive": 8.45,
-      "gtvKEur": 8282.2
+      "gtvKEur": 6524.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14009,7 +14009,7 @@ const CASE_DATA = {
       "revenueEur": 29881,
       "cumulativeRevenue": 944856,
       "revenuePerActive": 8.13,
-      "gtvKEur": 34.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14020,7 +14020,7 @@ const CASE_DATA = {
       "revenueEur": 29858,
       "cumulativeRevenue": 974714,
       "revenuePerActive": 8.29,
-      "gtvKEur": 97.6
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-11",
@@ -14031,7 +14031,7 @@ const CASE_DATA = {
       "revenueEur": 43335,
       "cumulativeRevenue": 1018049,
       "revenuePerActive": 12.19,
-      "gtvKEur": 2563.3
+      "gtvKEur": 48.5
     },
     {
       "cohortMonth": "2022-11",
@@ -14042,7 +14042,7 @@ const CASE_DATA = {
       "revenueEur": 52359,
       "cumulativeRevenue": 1070407,
       "revenuePerActive": 15.15,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -14053,7 +14053,7 @@ const CASE_DATA = {
       "revenueEur": 50578,
       "cumulativeRevenue": 1120985,
       "revenuePerActive": 14.9,
-      "gtvKEur": 1662
+      "gtvKEur": 32.1
     },
     {
       "cohortMonth": "2022-11",
@@ -14064,7 +14064,7 @@ const CASE_DATA = {
       "revenueEur": 36127,
       "cumulativeRevenue": 1157113,
       "revenuePerActive": 11.02,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -14075,7 +14075,7 @@ const CASE_DATA = {
       "revenueEur": 55484,
       "cumulativeRevenue": 1212597,
       "revenuePerActive": 17.43,
-      "gtvKEur": 17
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14086,7 +14086,7 @@ const CASE_DATA = {
       "revenueEur": 35343,
       "cumulativeRevenue": 1247940,
       "revenuePerActive": 11.24,
-      "gtvKEur": 1552.4
+      "gtvKEur": 19.9
     },
     {
       "cohortMonth": "2022-11",
@@ -14097,7 +14097,7 @@ const CASE_DATA = {
       "revenueEur": 35626,
       "cumulativeRevenue": 1283566,
       "revenuePerActive": 11.37,
-      "gtvKEur": 27.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14108,7 +14108,7 @@ const CASE_DATA = {
       "revenueEur": 34032,
       "cumulativeRevenue": 1317598,
       "revenuePerActive": 10.99,
-      "gtvKEur": 1246.7
+      "gtvKEur": 19.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14119,7 +14119,7 @@ const CASE_DATA = {
       "revenueEur": 32129,
       "cumulativeRevenue": 1349728,
       "revenuePerActive": 10.75,
-      "gtvKEur": 98.1
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-11",
@@ -14130,7 +14130,7 @@ const CASE_DATA = {
       "revenueEur": 32870,
       "cumulativeRevenue": 1382598,
       "revenuePerActive": 11.15,
-      "gtvKEur": 37250.8
+      "gtvKEur": 424.9
     },
     {
       "cohortMonth": "2022-11",
@@ -14141,7 +14141,7 @@ const CASE_DATA = {
       "revenueEur": 28428,
       "cumulativeRevenue": 1411026,
       "revenuePerActive": 9.84,
-      "gtvKEur": 514.8
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2022-11",
@@ -14152,7 +14152,7 @@ const CASE_DATA = {
       "revenueEur": 29912,
       "cumulativeRevenue": 1440937,
       "revenuePerActive": 10.4,
-      "gtvKEur": 1951.2
+      "gtvKEur": 140.8
     },
     {
       "cohortMonth": "2022-11",
@@ -14163,7 +14163,7 @@ const CASE_DATA = {
       "revenueEur": 43297,
       "cumulativeRevenue": 1484234,
       "revenuePerActive": 15.14,
-      "gtvKEur": 355.6
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14174,7 +14174,7 @@ const CASE_DATA = {
       "revenueEur": 47263,
       "cumulativeRevenue": 1531497,
       "revenuePerActive": 16.67,
-      "gtvKEur": 1951.1
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2022-11",
@@ -14185,7 +14185,7 @@ const CASE_DATA = {
       "revenueEur": 53493,
       "cumulativeRevenue": 1584990,
       "revenuePerActive": 19.6,
-      "gtvKEur": 863.1
+      "gtvKEur": 12
     },
     {
       "cohortMonth": "2022-11",
@@ -14196,7 +14196,7 @@ const CASE_DATA = {
       "revenueEur": 31784,
       "cumulativeRevenue": 1616774,
       "revenuePerActive": 11.98,
-      "gtvKEur": 43192.8
+      "gtvKEur": 1042.4
     },
     {
       "cohortMonth": "2022-11",
@@ -14207,7 +14207,7 @@ const CASE_DATA = {
       "revenueEur": 48943,
       "cumulativeRevenue": 1665717,
       "revenuePerActive": 24.04,
-      "gtvKEur": 117813.2
+      "gtvKEur": 4812.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14218,7 +14218,7 @@ const CASE_DATA = {
       "revenueEur": 7263,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 31487.3
+      "gtvKEur": 965.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14240,7 +14240,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -14251,7 +14251,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -14262,7 +14262,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-11",
@@ -14273,7 +14273,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 22.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14284,7 +14284,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1672980,
       "revenuePerActive": 0,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14306,7 +14306,7 @@ const CASE_DATA = {
       "revenueEur": 80154,
       "cumulativeRevenue": 110700,
       "revenuePerActive": 7.43,
-      "gtvKEur": 17.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-10",
@@ -14317,7 +14317,7 @@ const CASE_DATA = {
       "revenueEur": 35115,
       "cumulativeRevenue": 145815,
       "revenuePerActive": 4.2,
-      "gtvKEur": 9950.1
+      "gtvKEur": 167.7
     },
     {
       "cohortMonth": "2022-10",
@@ -14328,7 +14328,7 @@ const CASE_DATA = {
       "revenueEur": 44236,
       "cumulativeRevenue": 190051,
       "revenuePerActive": 5.94,
-      "gtvKEur": 148.9
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2022-10",
@@ -14339,7 +14339,7 @@ const CASE_DATA = {
       "revenueEur": 42547,
       "cumulativeRevenue": 232598,
       "revenuePerActive": 6.19,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14350,7 +14350,7 @@ const CASE_DATA = {
       "revenueEur": 36438,
       "cumulativeRevenue": 269036,
       "revenuePerActive": 5.62,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14361,7 +14361,7 @@ const CASE_DATA = {
       "revenueEur": 36788,
       "cumulativeRevenue": 305825,
       "revenuePerActive": 6.22,
-      "gtvKEur": 69
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-10",
@@ -14372,7 +14372,7 @@ const CASE_DATA = {
       "revenueEur": 34843,
       "cumulativeRevenue": 340667,
       "revenuePerActive": 6.12,
-      "gtvKEur": 3171.5
+      "gtvKEur": 72.1
     },
     {
       "cohortMonth": "2022-10",
@@ -14383,7 +14383,7 @@ const CASE_DATA = {
       "revenueEur": 35674,
       "cumulativeRevenue": 376341,
       "revenuePerActive": 6.53,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14394,7 +14394,7 @@ const CASE_DATA = {
       "revenueEur": 28896,
       "cumulativeRevenue": 405238,
       "revenuePerActive": 5.46,
-      "gtvKEur": 6.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-10",
@@ -14405,7 +14405,7 @@ const CASE_DATA = {
       "revenueEur": 30373,
       "cumulativeRevenue": 435611,
       "revenuePerActive": 5.94,
-      "gtvKEur": 2764.5
+      "gtvKEur": 73.8
     },
     {
       "cohortMonth": "2022-10",
@@ -14416,7 +14416,7 @@ const CASE_DATA = {
       "revenueEur": 27015,
       "cumulativeRevenue": 462626,
       "revenuePerActive": 5.47,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14427,7 +14427,7 @@ const CASE_DATA = {
       "revenueEur": 50606,
       "cumulativeRevenue": 513232,
       "revenuePerActive": 10.42,
-      "gtvKEur": 12.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-10",
@@ -14438,7 +14438,7 @@ const CASE_DATA = {
       "revenueEur": 71255,
       "cumulativeRevenue": 584487,
       "revenuePerActive": 15.33,
-      "gtvKEur": 29.1
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2022-10",
@@ -14449,7 +14449,7 @@ const CASE_DATA = {
       "revenueEur": 30831,
       "cumulativeRevenue": 615318,
       "revenuePerActive": 6.87,
-      "gtvKEur": 3484.5
+      "gtvKEur": 94.8
     },
     {
       "cohortMonth": "2022-10",
@@ -14460,7 +14460,7 @@ const CASE_DATA = {
       "revenueEur": 42325,
       "cumulativeRevenue": 657644,
       "revenuePerActive": 9.7,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-10",
@@ -14471,7 +14471,7 @@ const CASE_DATA = {
       "revenueEur": 40445,
       "cumulativeRevenue": 698089,
       "revenuePerActive": 9.55,
-      "gtvKEur": 110.1
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-10",
@@ -14482,7 +14482,7 @@ const CASE_DATA = {
       "revenueEur": 28191,
       "cumulativeRevenue": 726280,
       "revenuePerActive": 6.78,
-      "gtvKEur": 11264.3
+      "gtvKEur": 156.9
     },
     {
       "cohortMonth": "2022-10",
@@ -14504,7 +14504,7 @@ const CASE_DATA = {
       "revenueEur": 30817,
       "cumulativeRevenue": 790415,
       "revenuePerActive": 7.78,
-      "gtvKEur": 47.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-10",
@@ -14515,7 +14515,7 @@ const CASE_DATA = {
       "revenueEur": 33393,
       "cumulativeRevenue": 823808,
       "revenuePerActive": 8.84,
-      "gtvKEur": 21655.4
+      "gtvKEur": 247.3
     },
     {
       "cohortMonth": "2022-10",
@@ -14526,7 +14526,7 @@ const CASE_DATA = {
       "revenueEur": 25624,
       "cumulativeRevenue": 849432,
       "revenuePerActive": 6.95,
-      "gtvKEur": 31.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-10",
@@ -14537,7 +14537,7 @@ const CASE_DATA = {
       "revenueEur": 26534,
       "cumulativeRevenue": 875966,
       "revenuePerActive": 7.38,
-      "gtvKEur": 17821.5
+      "gtvKEur": 189.2
     },
     {
       "cohortMonth": "2022-10",
@@ -14548,7 +14548,7 @@ const CASE_DATA = {
       "revenueEur": 24266,
       "cumulativeRevenue": 900232,
       "revenuePerActive": 6.83,
-      "gtvKEur": 29
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-10",
@@ -14559,7 +14559,7 @@ const CASE_DATA = {
       "revenueEur": 45426,
       "cumulativeRevenue": 945658,
       "revenuePerActive": 12.8,
-      "gtvKEur": 36.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-10",
@@ -14570,7 +14570,7 @@ const CASE_DATA = {
       "revenueEur": 54935,
       "cumulativeRevenue": 1000593,
       "revenuePerActive": 15.94,
-      "gtvKEur": 1667.1
+      "gtvKEur": 57
     },
     {
       "cohortMonth": "2022-10",
@@ -14581,7 +14581,7 @@ const CASE_DATA = {
       "revenueEur": 27854,
       "cumulativeRevenue": 1028446,
       "revenuePerActive": 8.24,
-      "gtvKEur": 39.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-10",
@@ -14592,7 +14592,7 @@ const CASE_DATA = {
       "revenueEur": 39434,
       "cumulativeRevenue": 1067881,
       "revenuePerActive": 12.18,
-      "gtvKEur": 5611.9
+      "gtvKEur": 78.9
     },
     {
       "cohortMonth": "2022-10",
@@ -14603,7 +14603,7 @@ const CASE_DATA = {
       "revenueEur": 37340,
       "cumulativeRevenue": 1105221,
       "revenuePerActive": 11.61,
-      "gtvKEur": 45.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-10",
@@ -14614,7 +14614,7 @@ const CASE_DATA = {
       "revenueEur": 30032,
       "cumulativeRevenue": 1135253,
       "revenuePerActive": 9.67,
-      "gtvKEur": 37.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-10",
@@ -14625,7 +14625,7 @@ const CASE_DATA = {
       "revenueEur": 40521,
       "cumulativeRevenue": 1175774,
       "revenuePerActive": 13.36,
-      "gtvKEur": 1267.4
+      "gtvKEur": 30.4
     },
     {
       "cohortMonth": "2022-10",
@@ -14636,7 +14636,7 @@ const CASE_DATA = {
       "revenueEur": 36831,
       "cumulativeRevenue": 1212605,
       "revenuePerActive": 12.12,
-      "gtvKEur": 120
+      "gtvKEur": 80.4
     },
     {
       "cohortMonth": "2022-10",
@@ -14647,7 +14647,7 @@ const CASE_DATA = {
       "revenueEur": 33859,
       "cumulativeRevenue": 1246464,
       "revenuePerActive": 11.34,
-      "gtvKEur": 12702.3
+      "gtvKEur": 252.2
     },
     {
       "cohortMonth": "2022-10",
@@ -14658,7 +14658,7 @@ const CASE_DATA = {
       "revenueEur": 30783,
       "cumulativeRevenue": 1277247,
       "revenuePerActive": 10.68,
-      "gtvKEur": 143.1
+      "gtvKEur": 92.6
     },
     {
       "cohortMonth": "2022-10",
@@ -14669,7 +14669,7 @@ const CASE_DATA = {
       "revenueEur": 33007,
       "cumulativeRevenue": 1310254,
       "revenuePerActive": 11.7,
-      "gtvKEur": 1237.1
+      "gtvKEur": 20.9
     },
     {
       "cohortMonth": "2022-10",
@@ -14680,7 +14680,7 @@ const CASE_DATA = {
       "revenueEur": 28449,
       "cumulativeRevenue": 1338703,
       "revenuePerActive": 10.3,
-      "gtvKEur": 65.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-10",
@@ -14691,7 +14691,7 @@ const CASE_DATA = {
       "revenueEur": 40760,
       "cumulativeRevenue": 1379463,
       "revenuePerActive": 14.78,
-      "gtvKEur": 1953.2
+      "gtvKEur": 29.6
     },
     {
       "cohortMonth": "2022-10",
@@ -14702,7 +14702,7 @@ const CASE_DATA = {
       "revenueEur": 52423,
       "cumulativeRevenue": 1431885,
       "revenuePerActive": 19.46,
-      "gtvKEur": 129.5
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2022-10",
@@ -14713,7 +14713,7 @@ const CASE_DATA = {
       "revenueEur": 28723,
       "cumulativeRevenue": 1460608,
       "revenuePerActive": 10.87,
-      "gtvKEur": 2190.5
+      "gtvKEur": 46.2
     },
     {
       "cohortMonth": "2022-10",
@@ -14724,7 +14724,7 @@ const CASE_DATA = {
       "revenueEur": 48617,
       "cumulativeRevenue": 1509225,
       "revenuePerActive": 18.95,
-      "gtvKEur": 689.7
+      "gtvKEur": 13.5
     },
     {
       "cohortMonth": "2022-10",
@@ -14735,7 +14735,7 @@ const CASE_DATA = {
       "revenueEur": 41450,
       "cumulativeRevenue": 1550675,
       "revenuePerActive": 16.47,
-      "gtvKEur": 91084.3
+      "gtvKEur": 1488.5
     },
     {
       "cohortMonth": "2022-10",
@@ -14746,7 +14746,7 @@ const CASE_DATA = {
       "revenueEur": 35247,
       "cumulativeRevenue": 1585922,
       "revenuePerActive": 18.09,
-      "gtvKEur": 778766
+      "gtvKEur": 9342
     },
     {
       "cohortMonth": "2022-10",
@@ -14757,7 +14757,7 @@ const CASE_DATA = {
       "revenueEur": 6054,
       "cumulativeRevenue": 1591976,
       "revenuePerActive": 0,
-      "gtvKEur": 89228.4
+      "gtvKEur": 1331.3
     },
     {
       "cohortMonth": "2022-10",
@@ -14768,7 +14768,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1591976,
       "revenuePerActive": 0,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-09",
@@ -14779,7 +14779,7 @@ const CASE_DATA = {
       "revenueEur": 24755,
       "cumulativeRevenue": 24755,
       "revenuePerActive": 1.04,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-09",
@@ -14790,7 +14790,7 @@ const CASE_DATA = {
       "revenueEur": 52398,
       "cumulativeRevenue": 77154,
       "revenuePerActive": 4.89,
-      "gtvKEur": 308.6
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2022-09",
@@ -14801,7 +14801,7 @@ const CASE_DATA = {
       "revenueEur": 34714,
       "cumulativeRevenue": 111868,
       "revenuePerActive": 4.28,
-      "gtvKEur": 101.8
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-09",
@@ -14812,7 +14812,7 @@ const CASE_DATA = {
       "revenueEur": 32976,
       "cumulativeRevenue": 144844,
       "revenuePerActive": 4.57,
-      "gtvKEur": 62350
+      "gtvKEur": 693.2
     },
     {
       "cohortMonth": "2022-09",
@@ -14834,7 +14834,7 @@ const CASE_DATA = {
       "revenueEur": 31428,
       "cumulativeRevenue": 209793,
       "revenuePerActive": 5.06,
-      "gtvKEur": 18.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-09",
@@ -14845,7 +14845,7 @@ const CASE_DATA = {
       "revenueEur": 35575,
       "cumulativeRevenue": 245368,
       "revenuePerActive": 6.04,
-      "gtvKEur": 31
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-09",
@@ -14856,7 +14856,7 @@ const CASE_DATA = {
       "revenueEur": 31135,
       "cumulativeRevenue": 276503,
       "revenuePerActive": 5.72,
-      "gtvKEur": 27.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-09",
@@ -14867,7 +14867,7 @@ const CASE_DATA = {
       "revenueEur": 27033,
       "cumulativeRevenue": 303537,
       "revenuePerActive": 5.07,
-      "gtvKEur": 6280
+      "gtvKEur": 168.8
     },
     {
       "cohortMonth": "2022-09",
@@ -14878,7 +14878,7 @@ const CASE_DATA = {
       "revenueEur": 29909,
       "cumulativeRevenue": 333446,
       "revenuePerActive": 5.87,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-09",
@@ -14889,7 +14889,7 @@ const CASE_DATA = {
       "revenueEur": 27919,
       "cumulativeRevenue": 361365,
       "revenuePerActive": 5.7,
-      "gtvKEur": 9.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-09",
@@ -14900,7 +14900,7 @@ const CASE_DATA = {
       "revenueEur": 28703,
       "cumulativeRevenue": 390068,
       "revenuePerActive": 6.06,
-      "gtvKEur": 4426.7
+      "gtvKEur": 90.6
     },
     {
       "cohortMonth": "2022-09",
@@ -14911,7 +14911,7 @@ const CASE_DATA = {
       "revenueEur": 45347,
       "cumulativeRevenue": 435415,
       "revenuePerActive": 9.76,
-      "gtvKEur": 9.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-09",
@@ -14922,7 +14922,7 @@ const CASE_DATA = {
       "revenueEur": 58183,
       "cumulativeRevenue": 493599,
       "revenuePerActive": 12.94,
-      "gtvKEur": 39.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-09",
@@ -14933,7 +14933,7 @@ const CASE_DATA = {
       "revenueEur": 36697,
       "cumulativeRevenue": 530295,
       "revenuePerActive": 8.44,
-      "gtvKEur": 11.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-09",
@@ -14944,7 +14944,7 @@ const CASE_DATA = {
       "revenueEur": 31623,
       "cumulativeRevenue": 561918,
       "revenuePerActive": 7.49,
-      "gtvKEur": 3012.3
+      "gtvKEur": 72.4
     },
     {
       "cohortMonth": "2022-09",
@@ -14955,7 +14955,7 @@ const CASE_DATA = {
       "revenueEur": 28814,
       "cumulativeRevenue": 590732,
       "revenuePerActive": 6.97,
-      "gtvKEur": 16.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-09",
@@ -14966,7 +14966,7 @@ const CASE_DATA = {
       "revenueEur": 27085,
       "cumulativeRevenue": 617816,
       "revenuePerActive": 6.79,
-      "gtvKEur": 13.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-09",
@@ -14977,7 +14977,7 @@ const CASE_DATA = {
       "revenueEur": 28765,
       "cumulativeRevenue": 646582,
       "revenuePerActive": 7.37,
-      "gtvKEur": 2559.8
+      "gtvKEur": 61.2
     },
     {
       "cohortMonth": "2022-09",
@@ -14988,7 +14988,7 @@ const CASE_DATA = {
       "revenueEur": 30101,
       "cumulativeRevenue": 676683,
       "revenuePerActive": 8.11,
-      "gtvKEur": 9.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-09",
@@ -14999,7 +14999,7 @@ const CASE_DATA = {
       "revenueEur": 27259,
       "cumulativeRevenue": 703943,
       "revenuePerActive": 7.39,
-      "gtvKEur": 14.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-09",
@@ -15010,7 +15010,7 @@ const CASE_DATA = {
       "revenueEur": 26343,
       "cumulativeRevenue": 730286,
       "revenuePerActive": 7.32,
-      "gtvKEur": 2168.5
+      "gtvKEur": 48.1
     },
     {
       "cohortMonth": "2022-09",
@@ -15021,7 +15021,7 @@ const CASE_DATA = {
       "revenueEur": 25368,
       "cumulativeRevenue": 755654,
       "revenuePerActive": 7.24,
-      "gtvKEur": 29.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-09",
@@ -15032,7 +15032,7 @@ const CASE_DATA = {
       "revenueEur": 27819,
       "cumulativeRevenue": 783473,
       "revenuePerActive": 8.11,
-      "gtvKEur": 2233.3
+      "gtvKEur": 35.4
     },
     {
       "cohortMonth": "2022-09",
@@ -15043,7 +15043,7 @@ const CASE_DATA = {
       "revenueEur": 38789,
       "cumulativeRevenue": 822262,
       "revenuePerActive": 11.53,
-      "gtvKEur": 18.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-09",
@@ -15054,7 +15054,7 @@ const CASE_DATA = {
       "revenueEur": 41151,
       "cumulativeRevenue": 863412,
       "revenuePerActive": 12.69,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-09",
@@ -15065,7 +15065,7 @@ const CASE_DATA = {
       "revenueEur": 37580,
       "cumulativeRevenue": 900992,
       "revenuePerActive": 11.79,
-      "gtvKEur": 2114.4
+      "gtvKEur": 52.7
     },
     {
       "cohortMonth": "2022-09",
@@ -15076,7 +15076,7 @@ const CASE_DATA = {
       "revenueEur": 32526,
       "cumulativeRevenue": 933519,
       "revenuePerActive": 10.25,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-09",
@@ -15087,7 +15087,7 @@ const CASE_DATA = {
       "revenueEur": 27099,
       "cumulativeRevenue": 960618,
       "revenuePerActive": 8.83,
-      "gtvKEur": 5742.2
+      "gtvKEur": 78.3
     },
     {
       "cohortMonth": "2022-09",
@@ -15098,7 +15098,7 @@ const CASE_DATA = {
       "revenueEur": 29338,
       "cumulativeRevenue": 989956,
       "revenuePerActive": 9.78,
-      "gtvKEur": 32.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-09",
@@ -15109,7 +15109,7 @@ const CASE_DATA = {
       "revenueEur": 37130,
       "cumulativeRevenue": 1027086,
       "revenuePerActive": 12.56,
-      "gtvKEur": 62
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-09",
@@ -15120,7 +15120,7 @@ const CASE_DATA = {
       "revenueEur": 34141,
       "cumulativeRevenue": 1061227,
       "revenuePerActive": 11.68,
-      "gtvKEur": 2333.1
+      "gtvKEur": 35.7
     },
     {
       "cohortMonth": "2022-09",
@@ -15131,7 +15131,7 @@ const CASE_DATA = {
       "revenueEur": 32800,
       "cumulativeRevenue": 1094027,
       "revenuePerActive": 11.39,
-      "gtvKEur": 973.7
+      "gtvKEur": 9.7
     },
     {
       "cohortMonth": "2022-09",
@@ -15142,7 +15142,7 @@ const CASE_DATA = {
       "revenueEur": 32283,
       "cumulativeRevenue": 1126311,
       "revenuePerActive": 11.37,
-      "gtvKEur": 2189
+      "gtvKEur": 38.2
     },
     {
       "cohortMonth": "2022-09",
@@ -15153,7 +15153,7 @@ const CASE_DATA = {
       "revenueEur": 36360,
       "cumulativeRevenue": 1162671,
       "revenuePerActive": 13.22,
-      "gtvKEur": 32.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-09",
@@ -15164,7 +15164,7 @@ const CASE_DATA = {
       "revenueEur": 33174,
       "cumulativeRevenue": 1195845,
       "revenuePerActive": 12.1,
-      "gtvKEur": 7204.4
+      "gtvKEur": 82.2
     },
     {
       "cohortMonth": "2022-09",
@@ -15175,7 +15175,7 @@ const CASE_DATA = {
       "revenueEur": 39631,
       "cumulativeRevenue": 1235476,
       "revenuePerActive": 14.64,
-      "gtvKEur": 92.1
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-09",
@@ -15186,7 +15186,7 @@ const CASE_DATA = {
       "revenueEur": 47149,
       "cumulativeRevenue": 1282625,
       "revenuePerActive": 17.57,
-      "gtvKEur": 9894.4
+      "gtvKEur": 141.3
     },
     {
       "cohortMonth": "2022-09",
@@ -15197,7 +15197,7 @@ const CASE_DATA = {
       "revenueEur": 41809,
       "cumulativeRevenue": 1324434,
       "revenuePerActive": 16.04,
-      "gtvKEur": 136.1
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2022-09",
@@ -15208,7 +15208,7 @@ const CASE_DATA = {
       "revenueEur": 34827,
       "cumulativeRevenue": 1359262,
       "revenuePerActive": 13.66,
-      "gtvKEur": 2139.9
+      "gtvKEur": 47.8
     },
     {
       "cohortMonth": "2022-09",
@@ -15219,7 +15219,7 @@ const CASE_DATA = {
       "revenueEur": 31083,
       "cumulativeRevenue": 1390345,
       "revenuePerActive": 12.49,
-      "gtvKEur": 933.5
+      "gtvKEur": 10.2
     },
     {
       "cohortMonth": "2022-09",
@@ -15230,7 +15230,7 @@ const CASE_DATA = {
       "revenueEur": 32283,
       "cumulativeRevenue": 1422627,
       "revenuePerActive": 13.2,
-      "gtvKEur": 91036.4
+      "gtvKEur": 1568.8
     },
     {
       "cohortMonth": "2022-09",
@@ -15241,7 +15241,7 @@ const CASE_DATA = {
       "revenueEur": 40431,
       "cumulativeRevenue": 1463059,
       "revenuePerActive": 21.49,
-      "gtvKEur": 249505.4
+      "gtvKEur": 3893
     },
     {
       "cohortMonth": "2022-09",
@@ -15252,7 +15252,7 @@ const CASE_DATA = {
       "revenueEur": 12940,
       "cumulativeRevenue": 1475999,
       "revenuePerActive": 0,
-      "gtvKEur": 79506.1
+      "gtvKEur": 1139.4
     },
     {
       "cohortMonth": "2022-09",
@@ -15263,7 +15263,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1475999,
       "revenuePerActive": 0,
-      "gtvKEur": 199.8
+      "gtvKEur": 2
     },
     {
       "cohortMonth": "2022-09",
@@ -15274,7 +15274,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1475999,
       "revenuePerActive": 0,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15285,7 +15285,7 @@ const CASE_DATA = {
       "revenueEur": 27139,
       "cumulativeRevenue": 27139,
       "revenuePerActive": 1.13,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15296,7 +15296,7 @@ const CASE_DATA = {
       "revenueEur": 63666,
       "cumulativeRevenue": 90805,
       "revenuePerActive": 5.98,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15307,7 +15307,7 @@ const CASE_DATA = {
       "revenueEur": 33968,
       "cumulativeRevenue": 124773,
       "revenuePerActive": 4.1,
-      "gtvKEur": 25.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-08",
@@ -15318,7 +15318,7 @@ const CASE_DATA = {
       "revenueEur": 47996,
       "cumulativeRevenue": 172769,
       "revenuePerActive": 6.61,
-      "gtvKEur": 41.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-08",
@@ -15329,7 +15329,7 @@ const CASE_DATA = {
       "revenueEur": 31913,
       "cumulativeRevenue": 204682,
       "revenuePerActive": 4.75,
-      "gtvKEur": 19410.4
+      "gtvKEur": 251
     },
     {
       "cohortMonth": "2022-08",
@@ -15340,7 +15340,7 @@ const CASE_DATA = {
       "revenueEur": 36920,
       "cumulativeRevenue": 241602,
       "revenuePerActive": 5.95,
-      "gtvKEur": 14.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15351,7 +15351,7 @@ const CASE_DATA = {
       "revenueEur": 32070,
       "cumulativeRevenue": 273673,
       "revenuePerActive": 5.44,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15362,7 +15362,7 @@ const CASE_DATA = {
       "revenueEur": 27771,
       "cumulativeRevenue": 301444,
       "revenuePerActive": 4.9,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15373,7 +15373,7 @@ const CASE_DATA = {
       "revenueEur": 26940,
       "cumulativeRevenue": 328384,
       "revenuePerActive": 5.18,
-      "gtvKEur": 33.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-08",
@@ -15384,7 +15384,7 @@ const CASE_DATA = {
       "revenueEur": 44006,
       "cumulativeRevenue": 372390,
       "revenuePerActive": 8.56,
-      "gtvKEur": 4431.3
+      "gtvKEur": 82.3
     },
     {
       "cohortMonth": "2022-08",
@@ -15395,7 +15395,7 @@ const CASE_DATA = {
       "revenueEur": 29042,
       "cumulativeRevenue": 401432,
       "revenuePerActive": 5.91,
-      "gtvKEur": 21.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15406,7 +15406,7 @@ const CASE_DATA = {
       "revenueEur": 29535,
       "cumulativeRevenue": 430968,
       "revenuePerActive": 6.1,
-      "gtvKEur": 15.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15417,7 +15417,7 @@ const CASE_DATA = {
       "revenueEur": 40484,
       "cumulativeRevenue": 471452,
       "revenuePerActive": 8.51,
-      "gtvKEur": 3144.1
+      "gtvKEur": 52.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15439,7 +15439,7 @@ const CASE_DATA = {
       "revenueEur": 29692,
       "cumulativeRevenue": 565216,
       "revenuePerActive": 6.72,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15450,7 +15450,7 @@ const CASE_DATA = {
       "revenueEur": 38820,
       "cumulativeRevenue": 604036,
       "revenuePerActive": 9.04,
-      "gtvKEur": 30.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-08",
@@ -15461,7 +15461,7 @@ const CASE_DATA = {
       "revenueEur": 31596,
       "cumulativeRevenue": 635631,
       "revenuePerActive": 7.58,
-      "gtvKEur": 2498.3
+      "gtvKEur": 67
     },
     {
       "cohortMonth": "2022-08",
@@ -15472,7 +15472,7 @@ const CASE_DATA = {
       "revenueEur": 36770,
       "cumulativeRevenue": 672401,
       "revenuePerActive": 9.15,
-      "gtvKEur": 57
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-08",
@@ -15483,7 +15483,7 @@ const CASE_DATA = {
       "revenueEur": 28673,
       "cumulativeRevenue": 701074,
       "revenuePerActive": 7.36,
-      "gtvKEur": 48.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-08",
@@ -15494,7 +15494,7 @@ const CASE_DATA = {
       "revenueEur": 23519,
       "cumulativeRevenue": 724593,
       "revenuePerActive": 6.17,
-      "gtvKEur": 1936.5
+      "gtvKEur": 49.4
     },
     {
       "cohortMonth": "2022-08",
@@ -15505,7 +15505,7 @@ const CASE_DATA = {
       "revenueEur": 24262,
       "cumulativeRevenue": 748855,
       "revenuePerActive": 6.59,
-      "gtvKEur": 8.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15516,7 +15516,7 @@ const CASE_DATA = {
       "revenueEur": 28987,
       "cumulativeRevenue": 777843,
       "revenuePerActive": 8.05,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15527,7 +15527,7 @@ const CASE_DATA = {
       "revenueEur": 22881,
       "cumulativeRevenue": 800724,
       "revenuePerActive": 6.36,
-      "gtvKEur": 1955.2
+      "gtvKEur": 59.6
     },
     {
       "cohortMonth": "2022-08",
@@ -15538,7 +15538,7 @@ const CASE_DATA = {
       "revenueEur": 23122,
       "cumulativeRevenue": 823846,
       "revenuePerActive": 6.63,
-      "gtvKEur": 16.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15549,7 +15549,7 @@ const CASE_DATA = {
       "revenueEur": 31918,
       "cumulativeRevenue": 855764,
       "revenuePerActive": 9.17,
-      "gtvKEur": 2329.6
+      "gtvKEur": 47.9
     },
     {
       "cohortMonth": "2022-08",
@@ -15560,7 +15560,7 @@ const CASE_DATA = {
       "revenueEur": 44586,
       "cumulativeRevenue": 900350,
       "revenuePerActive": 13.06,
-      "gtvKEur": 19.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15571,7 +15571,7 @@ const CASE_DATA = {
       "revenueEur": 31186,
       "cumulativeRevenue": 931536,
       "revenuePerActive": 9.44,
-      "gtvKEur": 25.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-08",
@@ -15582,7 +15582,7 @@ const CASE_DATA = {
       "revenueEur": 32570,
       "cumulativeRevenue": 964106,
       "revenuePerActive": 10.17,
-      "gtvKEur": 1787.6
+      "gtvKEur": 41
     },
     {
       "cohortMonth": "2022-08",
@@ -15593,7 +15593,7 @@ const CASE_DATA = {
       "revenueEur": 26100,
       "cumulativeRevenue": 990206,
       "revenuePerActive": 8.22,
-      "gtvKEur": 23.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15604,7 +15604,7 @@ const CASE_DATA = {
       "revenueEur": 28662,
       "cumulativeRevenue": 1018868,
       "revenuePerActive": 9.26,
-      "gtvKEur": 2317.1
+      "gtvKEur": 52.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15615,7 +15615,7 @@ const CASE_DATA = {
       "revenueEur": 25555,
       "cumulativeRevenue": 1044423,
       "revenuePerActive": 8.48,
-      "gtvKEur": 40.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-08",
@@ -15626,7 +15626,7 @@ const CASE_DATA = {
       "revenueEur": 28767,
       "cumulativeRevenue": 1073189,
       "revenuePerActive": 9.77,
-      "gtvKEur": 103.6
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-08",
@@ -15637,7 +15637,7 @@ const CASE_DATA = {
       "revenueEur": 30158,
       "cumulativeRevenue": 1103347,
       "revenuePerActive": 10.41,
-      "gtvKEur": 1782
+      "gtvKEur": 38
     },
     {
       "cohortMonth": "2022-08",
@@ -15648,7 +15648,7 @@ const CASE_DATA = {
       "revenueEur": 29584,
       "cumulativeRevenue": 1132931,
       "revenuePerActive": 10.23,
-      "gtvKEur": 24.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15659,7 +15659,7 @@ const CASE_DATA = {
       "revenueEur": 29073,
       "cumulativeRevenue": 1162004,
       "revenuePerActive": 10.34,
-      "gtvKEur": 1447.1
+      "gtvKEur": 30.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15670,7 +15670,7 @@ const CASE_DATA = {
       "revenueEur": 27942,
       "cumulativeRevenue": 1189947,
       "revenuePerActive": 9.98,
-      "gtvKEur": 112.4
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15681,7 +15681,7 @@ const CASE_DATA = {
       "revenueEur": 32407,
       "cumulativeRevenue": 1222354,
       "revenuePerActive": 11.71,
-      "gtvKEur": 1368.2
+      "gtvKEur": 26.6
     },
     {
       "cohortMonth": "2022-08",
@@ -15692,7 +15692,7 @@ const CASE_DATA = {
       "revenueEur": 45937,
       "cumulativeRevenue": 1268291,
       "revenuePerActive": 16.94,
-      "gtvKEur": 45.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-08",
@@ -15703,7 +15703,7 @@ const CASE_DATA = {
       "revenueEur": 34884,
       "cumulativeRevenue": 1303175,
       "revenuePerActive": 13.09,
-      "gtvKEur": 1258.3
+      "gtvKEur": 26.5
     },
     {
       "cohortMonth": "2022-08",
@@ -15714,7 +15714,7 @@ const CASE_DATA = {
       "revenueEur": 35864,
       "cumulativeRevenue": 1339040,
       "revenuePerActive": 13.66,
-      "gtvKEur": 96.3
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-08",
@@ -15725,7 +15725,7 @@ const CASE_DATA = {
       "revenueEur": 25835,
       "cumulativeRevenue": 1364875,
       "revenuePerActive": 9.97,
-      "gtvKEur": 1861.7
+      "gtvKEur": 37.2
     },
     {
       "cohortMonth": "2022-08",
@@ -15736,7 +15736,7 @@ const CASE_DATA = {
       "revenueEur": 28893,
       "cumulativeRevenue": 1393768,
       "revenuePerActive": 11.52,
-      "gtvKEur": 302.6
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2022-08",
@@ -15747,7 +15747,7 @@ const CASE_DATA = {
       "revenueEur": 24569,
       "cumulativeRevenue": 1418337,
       "revenuePerActive": 9.96,
-      "gtvKEur": 38424.1
+      "gtvKEur": 1201.1
     },
     {
       "cohortMonth": "2022-08",
@@ -15758,7 +15758,7 @@ const CASE_DATA = {
       "revenueEur": 29854,
       "cumulativeRevenue": 1448192,
       "revenuePerActive": 15.69,
-      "gtvKEur": 664922.8
+      "gtvKEur": 8280.4
     },
     {
       "cohortMonth": "2022-08",
@@ -15769,7 +15769,7 @@ const CASE_DATA = {
       "revenueEur": 6865,
       "cumulativeRevenue": 1455056,
       "revenuePerActive": 0,
-      "gtvKEur": 27731.9
+      "gtvKEur": 887.7
     },
     {
       "cohortMonth": "2022-08",
@@ -15780,7 +15780,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1455056,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15791,7 +15791,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1455056,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-08",
@@ -15802,7 +15802,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1455056,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15813,7 +15813,7 @@ const CASE_DATA = {
       "revenueEur": 26147,
       "cumulativeRevenue": 26147,
       "revenuePerActive": 1.1,
-      "gtvKEur": 3199.9
+      "gtvKEur": 84.7
     },
     {
       "cohortMonth": "2022-07",
@@ -15824,7 +15824,7 @@ const CASE_DATA = {
       "revenueEur": 65008,
       "cumulativeRevenue": 91155,
       "revenuePerActive": 6.39,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15835,7 +15835,7 @@ const CASE_DATA = {
       "revenueEur": 45726,
       "cumulativeRevenue": 136881,
       "revenuePerActive": 5.88,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15846,7 +15846,7 @@ const CASE_DATA = {
       "revenueEur": 44856,
       "cumulativeRevenue": 181737,
       "revenuePerActive": 6.47,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15857,7 +15857,7 @@ const CASE_DATA = {
       "revenueEur": 42588,
       "cumulativeRevenue": 224324,
       "revenuePerActive": 6.62,
-      "gtvKEur": 23
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-07",
@@ -15868,7 +15868,7 @@ const CASE_DATA = {
       "revenueEur": 43475,
       "cumulativeRevenue": 267799,
       "revenuePerActive": 7.27,
-      "gtvKEur": 6139.4
+      "gtvKEur": 109.1
     },
     {
       "cohortMonth": "2022-07",
@@ -15879,7 +15879,7 @@ const CASE_DATA = {
       "revenueEur": 41298,
       "cumulativeRevenue": 309097,
       "revenuePerActive": 7.34,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15890,7 +15890,7 @@ const CASE_DATA = {
       "revenueEur": 39636,
       "cumulativeRevenue": 348733,
       "revenuePerActive": 7.45,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15901,7 +15901,7 @@ const CASE_DATA = {
       "revenueEur": 38283,
       "cumulativeRevenue": 387016,
       "revenuePerActive": 7.54,
-      "gtvKEur": 95.9
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-07",
@@ -15912,7 +15912,7 @@ const CASE_DATA = {
       "revenueEur": 38593,
       "cumulativeRevenue": 425609,
       "revenuePerActive": 7.98,
-      "gtvKEur": 39.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-07",
@@ -15923,7 +15923,7 @@ const CASE_DATA = {
       "revenueEur": 39213,
       "cumulativeRevenue": 464823,
       "revenuePerActive": 8.2,
-      "gtvKEur": 3100.6
+      "gtvKEur": 109.9
     },
     {
       "cohortMonth": "2022-07",
@@ -15934,7 +15934,7 @@ const CASE_DATA = {
       "revenueEur": 38689,
       "cumulativeRevenue": 503512,
       "revenuePerActive": 8.33,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15945,7 +15945,7 @@ const CASE_DATA = {
       "revenueEur": 52087,
       "cumulativeRevenue": 555599,
       "revenuePerActive": 11.44,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -15956,7 +15956,7 @@ const CASE_DATA = {
       "revenueEur": 72965,
       "cumulativeRevenue": 628564,
       "revenuePerActive": 16.56,
-      "gtvKEur": 4084.8
+      "gtvKEur": 86.4
     },
     {
       "cohortMonth": "2022-07",
@@ -15978,7 +15978,7 @@ const CASE_DATA = {
       "revenueEur": 45406,
       "cumulativeRevenue": 728533,
       "revenuePerActive": 11.15,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-07",
@@ -15989,7 +15989,7 @@ const CASE_DATA = {
       "revenueEur": 44940,
       "cumulativeRevenue": 773474,
       "revenuePerActive": 11.46,
-      "gtvKEur": 24.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-07",
@@ -16000,7 +16000,7 @@ const CASE_DATA = {
       "revenueEur": 43695,
       "cumulativeRevenue": 817168,
       "revenuePerActive": 11.39,
-      "gtvKEur": 2276
+      "gtvKEur": 53.4
     },
     {
       "cohortMonth": "2022-07",
@@ -16011,7 +16011,7 @@ const CASE_DATA = {
       "revenueEur": 41218,
       "cumulativeRevenue": 858387,
       "revenuePerActive": 10.92,
-      "gtvKEur": 50.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-07",
@@ -16022,7 +16022,7 @@ const CASE_DATA = {
       "revenueEur": 44203,
       "cumulativeRevenue": 902589,
       "revenuePerActive": 12.29,
-      "gtvKEur": 47.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-07",
@@ -16033,7 +16033,7 @@ const CASE_DATA = {
       "revenueEur": 37533,
       "cumulativeRevenue": 940122,
       "revenuePerActive": 10.69,
-      "gtvKEur": 2174.2
+      "gtvKEur": 53.2
     },
     {
       "cohortMonth": "2022-07",
@@ -16044,7 +16044,7 @@ const CASE_DATA = {
       "revenueEur": 37845,
       "cumulativeRevenue": 977967,
       "revenuePerActive": 11.02,
-      "gtvKEur": 80.7
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-07",
@@ -16055,7 +16055,7 @@ const CASE_DATA = {
       "revenueEur": 41612,
       "cumulativeRevenue": 1019579,
       "revenuePerActive": 12.21,
-      "gtvKEur": 89.7
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-07",
@@ -16066,7 +16066,7 @@ const CASE_DATA = {
       "revenueEur": 32535,
       "cumulativeRevenue": 1052114,
       "revenuePerActive": 9.72,
-      "gtvKEur": 1642.3
+      "gtvKEur": 34.6
     },
     {
       "cohortMonth": "2022-07",
@@ -16077,7 +16077,7 @@ const CASE_DATA = {
       "revenueEur": 38986,
       "cumulativeRevenue": 1091100,
       "revenuePerActive": 11.8,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -16088,7 +16088,7 @@ const CASE_DATA = {
       "revenueEur": 61732,
       "cumulativeRevenue": 1152831,
       "revenuePerActive": 19.24,
-      "gtvKEur": 1737.1
+      "gtvKEur": 63.7
     },
     {
       "cohortMonth": "2022-07",
@@ -16099,7 +16099,7 @@ const CASE_DATA = {
       "revenueEur": 39283,
       "cumulativeRevenue": 1192114,
       "revenuePerActive": 12.57,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -16110,7 +16110,7 @@ const CASE_DATA = {
       "revenueEur": 36079,
       "cumulativeRevenue": 1228194,
       "revenuePerActive": 11.68,
-      "gtvKEur": 2.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-07",
@@ -16121,7 +16121,7 @@ const CASE_DATA = {
       "revenueEur": 37361,
       "cumulativeRevenue": 1265554,
       "revenuePerActive": 12.55,
-      "gtvKEur": 1419
+      "gtvKEur": 34
     },
     {
       "cohortMonth": "2022-07",
@@ -16132,7 +16132,7 @@ const CASE_DATA = {
       "revenueEur": 36660,
       "cumulativeRevenue": 1302215,
       "revenuePerActive": 12.57,
-      "gtvKEur": 27.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-07",
@@ -16143,7 +16143,7 @@ const CASE_DATA = {
       "revenueEur": 31922,
       "cumulativeRevenue": 1334137,
       "revenuePerActive": 11.23,
-      "gtvKEur": 1396.4
+      "gtvKEur": 38.3
     },
     {
       "cohortMonth": "2022-07",
@@ -16154,7 +16154,7 @@ const CASE_DATA = {
       "revenueEur": 38884,
       "cumulativeRevenue": 1373021,
       "revenuePerActive": 13.85,
-      "gtvKEur": 24
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-07",
@@ -16165,7 +16165,7 @@ const CASE_DATA = {
       "revenueEur": 35449,
       "cumulativeRevenue": 1408470,
       "revenuePerActive": 12.87,
-      "gtvKEur": 72.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-07",
@@ -16176,7 +16176,7 @@ const CASE_DATA = {
       "revenueEur": 38576,
       "cumulativeRevenue": 1447046,
       "revenuePerActive": 14.32,
-      "gtvKEur": 1512.1
+      "gtvKEur": 30.3
     },
     {
       "cohortMonth": "2022-07",
@@ -16187,7 +16187,7 @@ const CASE_DATA = {
       "revenueEur": 37776,
       "cumulativeRevenue": 1484822,
       "revenuePerActive": 13.93,
-      "gtvKEur": 44.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-07",
@@ -16198,7 +16198,7 @@ const CASE_DATA = {
       "revenueEur": 35196,
       "cumulativeRevenue": 1520018,
       "revenuePerActive": 12.9,
-      "gtvKEur": 1278.9
+      "gtvKEur": 34.3
     },
     {
       "cohortMonth": "2022-07",
@@ -16209,7 +16209,7 @@ const CASE_DATA = {
       "revenueEur": 36673,
       "cumulativeRevenue": 1556691,
       "revenuePerActive": 13.68,
-      "gtvKEur": 104.3
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-07",
@@ -16220,7 +16220,7 @@ const CASE_DATA = {
       "revenueEur": 59262,
       "cumulativeRevenue": 1615954,
       "revenuePerActive": 22.59,
-      "gtvKEur": 1216.5
+      "gtvKEur": 22.6
     },
     {
       "cohortMonth": "2022-07",
@@ -16231,7 +16231,7 @@ const CASE_DATA = {
       "revenueEur": 33413,
       "cumulativeRevenue": 1649366,
       "revenuePerActive": 13.04,
-      "gtvKEur": 73.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-07",
@@ -16242,7 +16242,7 @@ const CASE_DATA = {
       "revenueEur": 34882,
       "cumulativeRevenue": 1684248,
       "revenuePerActive": 13.87,
-      "gtvKEur": 1085.4
+      "gtvKEur": 25.1
     },
     {
       "cohortMonth": "2022-07",
@@ -16253,7 +16253,7 @@ const CASE_DATA = {
       "revenueEur": 36413,
       "cumulativeRevenue": 1720661,
       "revenuePerActive": 14.81,
-      "gtvKEur": 186.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2022-07",
@@ -16264,7 +16264,7 @@ const CASE_DATA = {
       "revenueEur": 33893,
       "cumulativeRevenue": 1754554,
       "revenuePerActive": 14.12,
-      "gtvKEur": 1657.4
+      "gtvKEur": 37.8
     },
     {
       "cohortMonth": "2022-07",
@@ -16275,7 +16275,7 @@ const CASE_DATA = {
       "revenueEur": 30412,
       "cumulativeRevenue": 1784966,
       "revenuePerActive": 12.84,
-      "gtvKEur": 465.3
+      "gtvKEur": 8.2
     },
     {
       "cohortMonth": "2022-07",
@@ -16286,7 +16286,7 @@ const CASE_DATA = {
       "revenueEur": 37032,
       "cumulativeRevenue": 1821998,
       "revenuePerActive": 16.07,
-      "gtvKEur": 41601.6
+      "gtvKEur": 960.2
     },
     {
       "cohortMonth": "2022-07",
@@ -16297,7 +16297,7 @@ const CASE_DATA = {
       "revenueEur": 34813,
       "cumulativeRevenue": 1856812,
       "revenuePerActive": 19.59,
-      "gtvKEur": 118863.1
+      "gtvKEur": 2396.1
     },
     {
       "cohortMonth": "2022-07",
@@ -16308,7 +16308,7 @@ const CASE_DATA = {
       "revenueEur": 11462,
       "cumulativeRevenue": 1868273,
       "revenuePerActive": 0,
-      "gtvKEur": 27336
+      "gtvKEur": 606.5
     },
     {
       "cohortMonth": "2022-06",
@@ -16319,7 +16319,7 @@ const CASE_DATA = {
       "revenueEur": 29148,
       "cumulativeRevenue": 29148,
       "revenuePerActive": 1.21,
-      "gtvKEur": 14.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16330,7 +16330,7 @@ const CASE_DATA = {
       "revenueEur": 63672,
       "cumulativeRevenue": 92820,
       "revenuePerActive": 6.13,
-      "gtvKEur": 14273.6
+      "gtvKEur": 233
     },
     {
       "cohortMonth": "2022-06",
@@ -16341,7 +16341,7 @@ const CASE_DATA = {
       "revenueEur": 40501,
       "cumulativeRevenue": 133322,
       "revenuePerActive": 5.11,
-      "gtvKEur": 8.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16352,7 +16352,7 @@ const CASE_DATA = {
       "revenueEur": 35511,
       "cumulativeRevenue": 168833,
       "revenuePerActive": 5.12,
-      "gtvKEur": 7.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16363,7 +16363,7 @@ const CASE_DATA = {
       "revenueEur": 33073,
       "cumulativeRevenue": 201905,
       "revenuePerActive": 5.18,
-      "gtvKEur": 5.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16374,7 +16374,7 @@ const CASE_DATA = {
       "revenueEur": 30891,
       "cumulativeRevenue": 232796,
       "revenuePerActive": 5.24,
-      "gtvKEur": 10
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16385,7 +16385,7 @@ const CASE_DATA = {
       "revenueEur": 31243,
       "cumulativeRevenue": 264039,
       "revenuePerActive": 5.67,
-      "gtvKEur": 36579.2
+      "gtvKEur": 440.5
     },
     {
       "cohortMonth": "2022-06",
@@ -16396,7 +16396,7 @@ const CASE_DATA = {
       "revenueEur": 35785,
       "cumulativeRevenue": 299824,
       "revenuePerActive": 6.81,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-06",
@@ -16418,7 +16418,7 @@ const CASE_DATA = {
       "revenueEur": 27613,
       "cumulativeRevenue": 358041,
       "revenuePerActive": 5.65,
-      "gtvKEur": 9.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16429,7 +16429,7 @@ const CASE_DATA = {
       "revenueEur": 29174,
       "cumulativeRevenue": 387216,
       "revenuePerActive": 6.42,
-      "gtvKEur": 53.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-06",
@@ -16440,7 +16440,7 @@ const CASE_DATA = {
       "revenueEur": 28686,
       "cumulativeRevenue": 415901,
       "revenuePerActive": 6.34,
-      "gtvKEur": 6546.5
+      "gtvKEur": 105.8
     },
     {
       "cohortMonth": "2022-06",
@@ -16451,7 +16451,7 @@ const CASE_DATA = {
       "revenueEur": 42467,
       "cumulativeRevenue": 458368,
       "revenuePerActive": 9.64,
-      "gtvKEur": 31.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-06",
@@ -16462,7 +16462,7 @@ const CASE_DATA = {
       "revenueEur": 66198,
       "cumulativeRevenue": 524567,
       "revenuePerActive": 15.31,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16473,7 +16473,7 @@ const CASE_DATA = {
       "revenueEur": 38233,
       "cumulativeRevenue": 562799,
       "revenuePerActive": 9.1,
-      "gtvKEur": 10014.7
+      "gtvKEur": 142.6
     },
     {
       "cohortMonth": "2022-06",
@@ -16484,7 +16484,7 @@ const CASE_DATA = {
       "revenueEur": 32343,
       "cumulativeRevenue": 595142,
       "revenuePerActive": 7.96,
-      "gtvKEur": 6.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16495,7 +16495,7 @@ const CASE_DATA = {
       "revenueEur": 30819,
       "cumulativeRevenue": 625962,
       "revenuePerActive": 7.91,
-      "gtvKEur": 11.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16506,7 +16506,7 @@ const CASE_DATA = {
       "revenueEur": 31898,
       "cumulativeRevenue": 657860,
       "revenuePerActive": 8.4,
-      "gtvKEur": 13.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16517,7 +16517,7 @@ const CASE_DATA = {
       "revenueEur": 25100,
       "cumulativeRevenue": 682959,
       "revenuePerActive": 6.78,
-      "gtvKEur": 5035.8
+      "gtvKEur": 116.2
     },
     {
       "cohortMonth": "2022-06",
@@ -16528,7 +16528,7 @@ const CASE_DATA = {
       "revenueEur": 28104,
       "cumulativeRevenue": 711064,
       "revenuePerActive": 7.87,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-06",
@@ -16539,7 +16539,7 @@ const CASE_DATA = {
       "revenueEur": 21754,
       "cumulativeRevenue": 732817,
       "revenuePerActive": 6.25,
-      "gtvKEur": 9.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16550,7 +16550,7 @@ const CASE_DATA = {
       "revenueEur": 23200,
       "cumulativeRevenue": 756017,
       "revenuePerActive": 6.83,
-      "gtvKEur": 3062.2
+      "gtvKEur": 98.2
     },
     {
       "cohortMonth": "2022-06",
@@ -16561,7 +16561,7 @@ const CASE_DATA = {
       "revenueEur": 25243,
       "cumulativeRevenue": 781260,
       "revenuePerActive": 7.69,
-      "gtvKEur": 170.9
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16572,7 +16572,7 @@ const CASE_DATA = {
       "revenueEur": 23096,
       "cumulativeRevenue": 804355,
       "revenuePerActive": 7.01,
-      "gtvKEur": 236.1
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2022-06",
@@ -16583,7 +16583,7 @@ const CASE_DATA = {
       "revenueEur": 33722,
       "cumulativeRevenue": 838077,
       "revenuePerActive": 10.27,
-      "gtvKEur": 2177.9
+      "gtvKEur": 74.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16594,7 +16594,7 @@ const CASE_DATA = {
       "revenueEur": 52924,
       "cumulativeRevenue": 891001,
       "revenuePerActive": 16.74,
-      "gtvKEur": 233.9
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2022-06",
@@ -16605,7 +16605,7 @@ const CASE_DATA = {
       "revenueEur": 36919,
       "cumulativeRevenue": 927921,
       "revenuePerActive": 11.81,
-      "gtvKEur": 11964
+      "gtvKEur": 165.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16616,7 +16616,7 @@ const CASE_DATA = {
       "revenueEur": 30013,
       "cumulativeRevenue": 957934,
       "revenuePerActive": 9.75,
-      "gtvKEur": 296.7
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2022-06",
@@ -16627,7 +16627,7 @@ const CASE_DATA = {
       "revenueEur": 24217,
       "cumulativeRevenue": 982151,
       "revenuePerActive": 8.08,
-      "gtvKEur": 67859
+      "gtvKEur": 678.6
     },
     {
       "cohortMonth": "2022-06",
@@ -16638,7 +16638,7 @@ const CASE_DATA = {
       "revenueEur": 28730,
       "cumulativeRevenue": 1010881,
       "revenuePerActive": 9.79,
-      "gtvKEur": 2180.9
+      "gtvKEur": 57.9
     },
     {
       "cohortMonth": "2022-06",
@@ -16649,7 +16649,7 @@ const CASE_DATA = {
       "revenueEur": 23330,
       "cumulativeRevenue": 1034211,
       "revenuePerActive": 8.2,
-      "gtvKEur": 77
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-06",
@@ -16660,7 +16660,7 @@ const CASE_DATA = {
       "revenueEur": 21421,
       "cumulativeRevenue": 1055632,
       "revenuePerActive": 7.66,
-      "gtvKEur": 16494.1
+      "gtvKEur": 183.9
     },
     {
       "cohortMonth": "2022-06",
@@ -16671,7 +16671,7 @@ const CASE_DATA = {
       "revenueEur": 24579,
       "cumulativeRevenue": 1080211,
       "revenuePerActive": 8.97,
-      "gtvKEur": 106.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16682,7 +16682,7 @@ const CASE_DATA = {
       "revenueEur": 25386,
       "cumulativeRevenue": 1105597,
       "revenuePerActive": 9.36,
-      "gtvKEur": 181
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2022-06",
@@ -16693,7 +16693,7 @@ const CASE_DATA = {
       "revenueEur": 28301,
       "cumulativeRevenue": 1133898,
       "revenuePerActive": 10.56,
-      "gtvKEur": 4872.9
+      "gtvKEur": 105.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16704,7 +16704,7 @@ const CASE_DATA = {
       "revenueEur": 26183,
       "cumulativeRevenue": 1160081,
       "revenuePerActive": 9.84,
-      "gtvKEur": 16.9
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2022-06",
@@ -16715,7 +16715,7 @@ const CASE_DATA = {
       "revenueEur": 36088,
       "cumulativeRevenue": 1196169,
       "revenuePerActive": 13.65,
-      "gtvKEur": 22746.5
+      "gtvKEur": 237.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16726,7 +16726,7 @@ const CASE_DATA = {
       "revenueEur": 54649,
       "cumulativeRevenue": 1250818,
       "revenuePerActive": 20.91,
-      "gtvKEur": 985.1
+      "gtvKEur": 9.9
     },
     {
       "cohortMonth": "2022-06",
@@ -16737,7 +16737,7 @@ const CASE_DATA = {
       "revenueEur": 34305,
       "cumulativeRevenue": 1285123,
       "revenuePerActive": 13.5,
-      "gtvKEur": 9861.7
+      "gtvKEur": 109.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16748,7 +16748,7 @@ const CASE_DATA = {
       "revenueEur": 28764,
       "cumulativeRevenue": 1313887,
       "revenuePerActive": 11.57,
-      "gtvKEur": 43.5
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-06",
@@ -16759,7 +16759,7 @@ const CASE_DATA = {
       "revenueEur": 27091,
       "cumulativeRevenue": 1340978,
       "revenuePerActive": 11.17,
-      "gtvKEur": 5386.6
+      "gtvKEur": 71.2
     },
     {
       "cohortMonth": "2022-06",
@@ -16770,7 +16770,7 @@ const CASE_DATA = {
       "revenueEur": 31892,
       "cumulativeRevenue": 1372870,
       "revenuePerActive": 13.33,
-      "gtvKEur": 475.5
+      "gtvKEur": 4.8
     },
     {
       "cohortMonth": "2022-06",
@@ -16781,7 +16781,7 @@ const CASE_DATA = {
       "revenueEur": 26492,
       "cumulativeRevenue": 1399362,
       "revenuePerActive": 11.23,
-      "gtvKEur": 2367.1
+      "gtvKEur": 35.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16792,7 +16792,7 @@ const CASE_DATA = {
       "revenueEur": 26102,
       "cumulativeRevenue": 1425464,
       "revenuePerActive": 11.29,
-      "gtvKEur": 2101.7
+      "gtvKEur": 32.7
     },
     {
       "cohortMonth": "2022-06",
@@ -16803,7 +16803,7 @@ const CASE_DATA = {
       "revenueEur": 29346,
       "cumulativeRevenue": 1454809,
       "revenuePerActive": 12.91,
-      "gtvKEur": 170506.8
+      "gtvKEur": 2366
     },
     {
       "cohortMonth": "2022-06",
@@ -16814,7 +16814,7 @@ const CASE_DATA = {
       "revenueEur": 28852,
       "cumulativeRevenue": 1483662,
       "revenuePerActive": 16.46,
-      "gtvKEur": 564479.4
+      "gtvKEur": 7587.4
     },
     {
       "cohortMonth": "2022-06",
@@ -16825,7 +16825,7 @@ const CASE_DATA = {
       "revenueEur": 11810,
       "cumulativeRevenue": 1495472,
       "revenuePerActive": 0,
-      "gtvKEur": 100502.4
+      "gtvKEur": 1557.3
     },
     {
       "cohortMonth": "2022-06",
@@ -16836,7 +16836,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1495472,
       "revenuePerActive": 0,
-      "gtvKEur": 107.4
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-06",
@@ -16847,7 +16847,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1495472,
       "revenuePerActive": 0,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-05",
@@ -16858,7 +16858,7 @@ const CASE_DATA = {
       "revenueEur": 22226,
       "cumulativeRevenue": 22226,
       "revenuePerActive": 0.97,
-      "gtvKEur": 59.1
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2022-05",
@@ -16869,7 +16869,7 @@ const CASE_DATA = {
       "revenueEur": 57768,
       "cumulativeRevenue": 79994,
       "revenuePerActive": 5.91,
-      "gtvKEur": 101
+      "gtvKEur": 11
     },
     {
       "cohortMonth": "2022-05",
@@ -16880,7 +16880,7 @@ const CASE_DATA = {
       "revenueEur": 40678,
       "cumulativeRevenue": 120673,
       "revenuePerActive": 5.37,
-      "gtvKEur": 25104.7
+      "gtvKEur": 320.1
     },
     {
       "cohortMonth": "2022-05",
@@ -16891,7 +16891,7 @@ const CASE_DATA = {
       "revenueEur": 33051,
       "cumulativeRevenue": 153723,
       "revenuePerActive": 5.01,
-      "gtvKEur": 62.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -16902,7 +16902,7 @@ const CASE_DATA = {
       "revenueEur": 31054,
       "cumulativeRevenue": 184777,
       "revenuePerActive": 5.14,
-      "gtvKEur": 106
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-05",
@@ -16913,7 +16913,7 @@ const CASE_DATA = {
       "revenueEur": 27784,
       "cumulativeRevenue": 212561,
       "revenuePerActive": 4.9,
-      "gtvKEur": 126
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2022-05",
@@ -16924,7 +16924,7 @@ const CASE_DATA = {
       "revenueEur": 32122,
       "cumulativeRevenue": 244683,
       "revenuePerActive": 6.02,
-      "gtvKEur": 120.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-05",
@@ -16935,7 +16935,7 @@ const CASE_DATA = {
       "revenueEur": 24710,
       "cumulativeRevenue": 269393,
       "revenuePerActive": 4.86,
-      "gtvKEur": 16673.3
+      "gtvKEur": 213.2
     },
     {
       "cohortMonth": "2022-05",
@@ -16946,7 +16946,7 @@ const CASE_DATA = {
       "revenueEur": 24742,
       "cumulativeRevenue": 294136,
       "revenuePerActive": 5.13,
-      "gtvKEur": 75
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-05",
@@ -16957,7 +16957,7 @@ const CASE_DATA = {
       "revenueEur": 25663,
       "cumulativeRevenue": 319799,
       "revenuePerActive": 5.57,
-      "gtvKEur": 83.4
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-05",
@@ -16968,7 +16968,7 @@ const CASE_DATA = {
       "revenueEur": 26161,
       "cumulativeRevenue": 345960,
       "revenuePerActive": 5.78,
-      "gtvKEur": 99.1
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-05",
@@ -16979,7 +16979,7 @@ const CASE_DATA = {
       "revenueEur": 23556,
       "cumulativeRevenue": 369516,
       "revenuePerActive": 5.51,
-      "gtvKEur": 105.2
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-05",
@@ -16990,7 +16990,7 @@ const CASE_DATA = {
       "revenueEur": 33812,
       "cumulativeRevenue": 403329,
       "revenuePerActive": 7.95,
-      "gtvKEur": 4424.8
+      "gtvKEur": 66.7
     },
     {
       "cohortMonth": "2022-05",
@@ -17001,7 +17001,7 @@ const CASE_DATA = {
       "revenueEur": 61835,
       "cumulativeRevenue": 465163,
       "revenuePerActive": 15.06,
-      "gtvKEur": 87.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-05",
@@ -17012,7 +17012,7 @@ const CASE_DATA = {
       "revenueEur": 40512,
       "cumulativeRevenue": 505675,
       "revenuePerActive": 10.15,
-      "gtvKEur": 104.7
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2022-05",
@@ -17023,7 +17023,7 @@ const CASE_DATA = {
       "revenueEur": 28317,
       "cumulativeRevenue": 533992,
       "revenuePerActive": 7.28,
-      "gtvKEur": 3794.4
+      "gtvKEur": 70.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17034,7 +17034,7 @@ const CASE_DATA = {
       "revenueEur": 28584,
       "cumulativeRevenue": 562576,
       "revenuePerActive": 7.64,
-      "gtvKEur": 18.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-05",
@@ -17045,7 +17045,7 @@ const CASE_DATA = {
       "revenueEur": 27050,
       "cumulativeRevenue": 589626,
       "revenuePerActive": 7.42,
-      "gtvKEur": 24
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-05",
@@ -17056,7 +17056,7 @@ const CASE_DATA = {
       "revenueEur": 28072,
       "cumulativeRevenue": 617698,
       "revenuePerActive": 7.99,
-      "gtvKEur": 29.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-05",
@@ -17067,7 +17067,7 @@ const CASE_DATA = {
       "revenueEur": 22760,
       "cumulativeRevenue": 640458,
       "revenuePerActive": 6.59,
-      "gtvKEur": 3657
+      "gtvKEur": 160.9
     },
     {
       "cohortMonth": "2022-05",
@@ -17078,7 +17078,7 @@ const CASE_DATA = {
       "revenueEur": 24897,
       "cumulativeRevenue": 665355,
       "revenuePerActive": 7.43,
-      "gtvKEur": 55
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17089,7 +17089,7 @@ const CASE_DATA = {
       "revenueEur": 22432,
       "cumulativeRevenue": 687787,
       "revenuePerActive": 6.83,
-      "gtvKEur": 53
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17100,7 +17100,7 @@ const CASE_DATA = {
       "revenueEur": 23313,
       "cumulativeRevenue": 711100,
       "revenuePerActive": 7.16,
-      "gtvKEur": 21169.9
+      "gtvKEur": 235.3
     },
     {
       "cohortMonth": "2022-05",
@@ -17111,7 +17111,7 @@ const CASE_DATA = {
       "revenueEur": 20923,
       "cumulativeRevenue": 732023,
       "revenuePerActive": 6.61,
-      "gtvKEur": 54.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17122,7 +17122,7 @@ const CASE_DATA = {
       "revenueEur": 33616,
       "cumulativeRevenue": 765638,
       "revenuePerActive": 10.67,
-      "gtvKEur": 56.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17133,7 +17133,7 @@ const CASE_DATA = {
       "revenueEur": 46845,
       "cumulativeRevenue": 812483,
       "revenuePerActive": 15.25,
-      "gtvKEur": 2672.3
+      "gtvKEur": 48.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17144,7 +17144,7 @@ const CASE_DATA = {
       "revenueEur": 43641,
       "cumulativeRevenue": 856125,
       "revenuePerActive": 14.47,
-      "gtvKEur": 81.6
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-05",
@@ -17155,7 +17155,7 @@ const CASE_DATA = {
       "revenueEur": 27213,
       "cumulativeRevenue": 883338,
       "revenuePerActive": 9.17,
-      "gtvKEur": 1870.2
+      "gtvKEur": 32.1
     },
     {
       "cohortMonth": "2022-05",
@@ -17166,7 +17166,7 @@ const CASE_DATA = {
       "revenueEur": 27646,
       "cumulativeRevenue": 910983,
       "revenuePerActive": 9.54,
-      "gtvKEur": 58.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17177,7 +17177,7 @@ const CASE_DATA = {
       "revenueEur": 25413,
       "cumulativeRevenue": 936397,
       "revenuePerActive": 8.96,
-      "gtvKEur": 85
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-05",
@@ -17188,7 +17188,7 @@ const CASE_DATA = {
       "revenueEur": 24919,
       "cumulativeRevenue": 961315,
       "revenuePerActive": 8.94,
-      "gtvKEur": 2502.6
+      "gtvKEur": 41.9
     },
     {
       "cohortMonth": "2022-05",
@@ -17199,7 +17199,7 @@ const CASE_DATA = {
       "revenueEur": 23136,
       "cumulativeRevenue": 984452,
       "revenuePerActive": 8.57,
-      "gtvKEur": 51.5
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17210,7 +17210,7 @@ const CASE_DATA = {
       "revenueEur": 26718,
       "cumulativeRevenue": 1011170,
       "revenuePerActive": 10.05,
-      "gtvKEur": 2258.1
+      "gtvKEur": 58.3
     },
     {
       "cohortMonth": "2022-05",
@@ -17221,7 +17221,7 @@ const CASE_DATA = {
       "revenueEur": 25580,
       "cumulativeRevenue": 1036749,
       "revenuePerActive": 9.82,
-      "gtvKEur": 79.8
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-05",
@@ -17232,7 +17232,7 @@ const CASE_DATA = {
       "revenueEur": 34795,
       "cumulativeRevenue": 1071545,
       "revenuePerActive": 13.67,
-      "gtvKEur": 58.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17243,7 +17243,7 @@ const CASE_DATA = {
       "revenueEur": 32806,
       "cumulativeRevenue": 1104351,
       "revenuePerActive": 13.01,
-      "gtvKEur": 1638.3
+      "gtvKEur": 36
     },
     {
       "cohortMonth": "2022-05",
@@ -17254,7 +17254,7 @@ const CASE_DATA = {
       "revenueEur": 44463,
       "cumulativeRevenue": 1148813,
       "revenuePerActive": 17.37,
-      "gtvKEur": 54.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17265,7 +17265,7 @@ const CASE_DATA = {
       "revenueEur": 48602,
       "cumulativeRevenue": 1197415,
       "revenuePerActive": 19.75,
-      "gtvKEur": 1574.6
+      "gtvKEur": 23.7
     },
     {
       "cohortMonth": "2022-05",
@@ -17276,7 +17276,7 @@ const CASE_DATA = {
       "revenueEur": 40966,
       "cumulativeRevenue": 1238381,
       "revenuePerActive": 16.57,
-      "gtvKEur": 60.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17287,7 +17287,7 @@ const CASE_DATA = {
       "revenueEur": 29656,
       "cumulativeRevenue": 1268037,
       "revenuePerActive": 12.38,
-      "gtvKEur": 1571.9
+      "gtvKEur": 27.5
     },
     {
       "cohortMonth": "2022-05",
@@ -17298,7 +17298,7 @@ const CASE_DATA = {
       "revenueEur": 32489,
       "cumulativeRevenue": 1300527,
       "revenuePerActive": 13.69,
-      "gtvKEur": 564.1
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17309,7 +17309,7 @@ const CASE_DATA = {
       "revenueEur": 31079,
       "cumulativeRevenue": 1331606,
       "revenuePerActive": 13.33,
-      "gtvKEur": 2042.6
+      "gtvKEur": 48.7
     },
     {
       "cohortMonth": "2022-05",
@@ -17320,7 +17320,7 @@ const CASE_DATA = {
       "revenueEur": 30798,
       "cumulativeRevenue": 1362404,
       "revenuePerActive": 13.51,
-      "gtvKEur": 220.1
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2022-05",
@@ -17331,7 +17331,7 @@ const CASE_DATA = {
       "revenueEur": 28610,
       "cumulativeRevenue": 1391014,
       "revenuePerActive": 12.83,
-      "gtvKEur": 4690.8
+      "gtvKEur": 62
     },
     {
       "cohortMonth": "2022-05",
@@ -17342,7 +17342,7 @@ const CASE_DATA = {
       "revenueEur": 28949,
       "cumulativeRevenue": 1419963,
       "revenuePerActive": 13.21,
-      "gtvKEur": 522.5
+      "gtvKEur": 14.4
     },
     {
       "cohortMonth": "2022-05",
@@ -17353,7 +17353,7 @@ const CASE_DATA = {
       "revenueEur": 32118,
       "cumulativeRevenue": 1452081,
       "revenuePerActive": 14.87,
-      "gtvKEur": 257173.3
+      "gtvKEur": 3146.9
     },
     {
       "cohortMonth": "2022-05",
@@ -17364,7 +17364,7 @@ const CASE_DATA = {
       "revenueEur": 37889,
       "cumulativeRevenue": 1489970,
       "revenuePerActive": 22.73,
-      "gtvKEur": 824383.1
+      "gtvKEur": 10413.2
     },
     {
       "cohortMonth": "2022-05",
@@ -17375,7 +17375,7 @@ const CASE_DATA = {
       "revenueEur": 6807,
       "cumulativeRevenue": 1496777,
       "revenuePerActive": 0,
-      "gtvKEur": 662908.4
+      "gtvKEur": 7007.6
     },
     {
       "cohortMonth": "2022-05",
@@ -17386,7 +17386,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1496777,
       "revenuePerActive": 0,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17397,7 +17397,7 @@ const CASE_DATA = {
       "revenueEur": 22421,
       "cumulativeRevenue": 22421,
       "revenuePerActive": 0.97,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17408,7 +17408,7 @@ const CASE_DATA = {
       "revenueEur": 57174,
       "cumulativeRevenue": 79595,
       "revenuePerActive": 6.1,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17419,7 +17419,7 @@ const CASE_DATA = {
       "revenueEur": 38038,
       "cumulativeRevenue": 117633,
       "revenuePerActive": 5.33,
-      "gtvKEur": 23.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-04",
@@ -17430,7 +17430,7 @@ const CASE_DATA = {
       "revenueEur": 35179,
       "cumulativeRevenue": 152812,
       "revenuePerActive": 5.51,
-      "gtvKEur": 7348.3
+      "gtvKEur": 175.6
     },
     {
       "cohortMonth": "2022-04",
@@ -17441,7 +17441,7 @@ const CASE_DATA = {
       "revenueEur": 33372,
       "cumulativeRevenue": 186184,
       "revenuePerActive": 5.81,
-      "gtvKEur": 10.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17452,7 +17452,7 @@ const CASE_DATA = {
       "revenueEur": 26268,
       "cumulativeRevenue": 212452,
       "revenuePerActive": 4.93,
-      "gtvKEur": 10.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17474,7 +17474,7 @@ const CASE_DATA = {
       "revenueEur": 28711,
       "cumulativeRevenue": 268602,
       "revenuePerActive": 6.1,
-      "gtvKEur": 29.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-04",
@@ -17485,7 +17485,7 @@ const CASE_DATA = {
       "revenueEur": 24800,
       "cumulativeRevenue": 293403,
       "revenuePerActive": 5.5,
-      "gtvKEur": 4793.3
+      "gtvKEur": 126
     },
     {
       "cohortMonth": "2022-04",
@@ -17496,7 +17496,7 @@ const CASE_DATA = {
       "revenueEur": 24447,
       "cumulativeRevenue": 317850,
       "revenuePerActive": 5.68,
-      "gtvKEur": 14.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17507,7 +17507,7 @@ const CASE_DATA = {
       "revenueEur": 29313,
       "cumulativeRevenue": 347163,
       "revenuePerActive": 7.1,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17518,7 +17518,7 @@ const CASE_DATA = {
       "revenueEur": 24810,
       "cumulativeRevenue": 371973,
       "revenuePerActive": 6.07,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17529,7 +17529,7 @@ const CASE_DATA = {
       "revenueEur": 39382,
       "cumulativeRevenue": 411354,
       "revenuePerActive": 9.93,
-      "gtvKEur": 41.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-04",
@@ -17540,7 +17540,7 @@ const CASE_DATA = {
       "revenueEur": 57989,
       "cumulativeRevenue": 469343,
       "revenuePerActive": 15.21,
-      "gtvKEur": 3156.2
+      "gtvKEur": 70.7
     },
     {
       "cohortMonth": "2022-04",
@@ -17551,7 +17551,7 @@ const CASE_DATA = {
       "revenueEur": 39582,
       "cumulativeRevenue": 508925,
       "revenuePerActive": 10.83,
-      "gtvKEur": 46.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-04",
@@ -17562,7 +17562,7 @@ const CASE_DATA = {
       "revenueEur": 34631,
       "cumulativeRevenue": 543556,
       "revenuePerActive": 9.67,
-      "gtvKEur": 50.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-04",
@@ -17573,7 +17573,7 @@ const CASE_DATA = {
       "revenueEur": 27536,
       "cumulativeRevenue": 571092,
       "revenuePerActive": 7.92,
-      "gtvKEur": 5815
+      "gtvKEur": 112.4
     },
     {
       "cohortMonth": "2022-04",
@@ -17584,7 +17584,7 @@ const CASE_DATA = {
       "revenueEur": 23793,
       "cumulativeRevenue": 594885,
       "revenuePerActive": 7.1,
-      "gtvKEur": 7.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17595,7 +17595,7 @@ const CASE_DATA = {
       "revenueEur": 24273,
       "cumulativeRevenue": 619159,
       "revenuePerActive": 7.45,
-      "gtvKEur": 10.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17606,7 +17606,7 @@ const CASE_DATA = {
       "revenueEur": 21878,
       "cumulativeRevenue": 641037,
       "revenuePerActive": 6.9,
-      "gtvKEur": 11.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17617,7 +17617,7 @@ const CASE_DATA = {
       "revenueEur": 22658,
       "cumulativeRevenue": 663695,
       "revenuePerActive": 7.28,
-      "gtvKEur": 2089
+      "gtvKEur": 77
     },
     {
       "cohortMonth": "2022-04",
@@ -17628,7 +17628,7 @@ const CASE_DATA = {
       "revenueEur": 22206,
       "cumulativeRevenue": 685901,
       "revenuePerActive": 7.39,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17639,7 +17639,7 @@ const CASE_DATA = {
       "revenueEur": 41223,
       "cumulativeRevenue": 727125,
       "revenuePerActive": 13.94,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17650,7 +17650,7 @@ const CASE_DATA = {
       "revenueEur": 24776,
       "cumulativeRevenue": 751901,
       "revenuePerActive": 8.44,
-      "gtvKEur": 4152.3
+      "gtvKEur": 88.3
     },
     {
       "cohortMonth": "2022-04",
@@ -17661,7 +17661,7 @@ const CASE_DATA = {
       "revenueEur": 33847,
       "cumulativeRevenue": 785748,
       "revenuePerActive": 12,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17672,7 +17672,7 @@ const CASE_DATA = {
       "revenueEur": 45937,
       "cumulativeRevenue": 831685,
       "revenuePerActive": 16.49,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17683,7 +17683,7 @@ const CASE_DATA = {
       "revenueEur": 35461,
       "cumulativeRevenue": 867146,
       "revenuePerActive": 13.19,
-      "gtvKEur": 1595.1
+      "gtvKEur": 48.7
     },
     {
       "cohortMonth": "2022-04",
@@ -17694,7 +17694,7 @@ const CASE_DATA = {
       "revenueEur": 27686,
       "cumulativeRevenue": 894832,
       "revenuePerActive": 10.46,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17705,7 +17705,7 @@ const CASE_DATA = {
       "revenueEur": 24143,
       "cumulativeRevenue": 918975,
       "revenuePerActive": 9.27,
-      "gtvKEur": 3913.2
+      "gtvKEur": 60
     },
     {
       "cohortMonth": "2022-04",
@@ -17716,7 +17716,7 @@ const CASE_DATA = {
       "revenueEur": 23094,
       "cumulativeRevenue": 942069,
       "revenuePerActive": 8.93,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17727,7 +17727,7 @@ const CASE_DATA = {
       "revenueEur": 22081,
       "cumulativeRevenue": 964150,
       "revenuePerActive": 8.7,
-      "gtvKEur": 3.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-04",
@@ -17738,7 +17738,7 @@ const CASE_DATA = {
       "revenueEur": 22520,
       "cumulativeRevenue": 986670,
       "revenuePerActive": 9.1,
-      "gtvKEur": 1258.1
+      "gtvKEur": 46.5
     },
     {
       "cohortMonth": "2022-04",
@@ -17749,7 +17749,7 @@ const CASE_DATA = {
       "revenueEur": 21368,
       "cumulativeRevenue": 1008038,
       "revenuePerActive": 8.83,
-      "gtvKEur": 10.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17760,7 +17760,7 @@ const CASE_DATA = {
       "revenueEur": 22676,
       "cumulativeRevenue": 1030714,
       "revenuePerActive": 9.7,
-      "gtvKEur": 1137.6
+      "gtvKEur": 38.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17771,7 +17771,7 @@ const CASE_DATA = {
       "revenueEur": 32649,
       "cumulativeRevenue": 1063363,
       "revenuePerActive": 14.2,
-      "gtvKEur": 18.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-04",
@@ -17782,7 +17782,7 @@ const CASE_DATA = {
       "revenueEur": 25410,
       "cumulativeRevenue": 1088772,
       "revenuePerActive": 11.13,
-      "gtvKEur": 5.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-04",
@@ -17793,7 +17793,7 @@ const CASE_DATA = {
       "revenueEur": 35989,
       "cumulativeRevenue": 1124761,
       "revenuePerActive": 16.03,
-      "gtvKEur": 1076.4
+      "gtvKEur": 30.8
     },
     {
       "cohortMonth": "2022-04",
@@ -17804,7 +17804,7 @@ const CASE_DATA = {
       "revenueEur": 41523,
       "cumulativeRevenue": 1166285,
       "revenuePerActive": 18.73,
-      "gtvKEur": 28.6
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2022-04",
@@ -17815,7 +17815,7 @@ const CASE_DATA = {
       "revenueEur": 37993,
       "cumulativeRevenue": 1204278,
       "revenuePerActive": 17.55,
-      "gtvKEur": 1082
+      "gtvKEur": 34.6
     },
     {
       "cohortMonth": "2022-04",
@@ -17826,7 +17826,7 @@ const CASE_DATA = {
       "revenueEur": 28040,
       "cumulativeRevenue": 1232318,
       "revenuePerActive": 13.32,
-      "gtvKEur": 210.1
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2022-04",
@@ -17837,7 +17837,7 @@ const CASE_DATA = {
       "revenueEur": 27940,
       "cumulativeRevenue": 1260258,
       "revenuePerActive": 13.38,
-      "gtvKEur": 1007.7
+      "gtvKEur": 35.4
     },
     {
       "cohortMonth": "2022-04",
@@ -17848,7 +17848,7 @@ const CASE_DATA = {
       "revenueEur": 26674,
       "cumulativeRevenue": 1286932,
       "revenuePerActive": 13.06,
-      "gtvKEur": 91.3
+      "gtvKEur": 9
     },
     {
       "cohortMonth": "2022-04",
@@ -17859,7 +17859,7 @@ const CASE_DATA = {
       "revenueEur": 22831,
       "cumulativeRevenue": 1309764,
       "revenuePerActive": 11.41,
-      "gtvKEur": 969.9
+      "gtvKEur": 38.5
     },
     {
       "cohortMonth": "2022-04",
@@ -17870,7 +17870,7 @@ const CASE_DATA = {
       "revenueEur": 24721,
       "cumulativeRevenue": 1334484,
       "revenuePerActive": 12.64,
-      "gtvKEur": 83.3
+      "gtvKEur": 20.8
     },
     {
       "cohortMonth": "2022-04",
@@ -17881,7 +17881,7 @@ const CASE_DATA = {
       "revenueEur": 22202,
       "cumulativeRevenue": 1356687,
       "revenuePerActive": 11.58,
-      "gtvKEur": 4134.8
+      "gtvKEur": 93.5
     },
     {
       "cohortMonth": "2022-04",
@@ -17892,7 +17892,7 @@ const CASE_DATA = {
       "revenueEur": 22033,
       "cumulativeRevenue": 1378719,
       "revenuePerActive": 11.45,
-      "gtvKEur": 301.1
+      "gtvKEur": 13.8
     },
     {
       "cohortMonth": "2022-04",
@@ -17903,7 +17903,7 @@ const CASE_DATA = {
       "revenueEur": 22841,
       "cumulativeRevenue": 1401561,
       "revenuePerActive": 12.18,
-      "gtvKEur": 37518.9
+      "gtvKEur": 1251.3
     },
     {
       "cohortMonth": "2022-04",
@@ -17914,7 +17914,7 @@ const CASE_DATA = {
       "revenueEur": 22747,
       "cumulativeRevenue": 1424308,
       "revenuePerActive": 15.45,
-      "gtvKEur": 121751.1
+      "gtvKEur": 3337.4
     },
     {
       "cohortMonth": "2022-04",
@@ -17925,7 +17925,7 @@ const CASE_DATA = {
       "revenueEur": 7317,
       "cumulativeRevenue": 1431624,
       "revenuePerActive": 0,
-      "gtvKEur": 39768.5
+      "gtvKEur": 946.9
     },
     {
       "cohortMonth": "2022-03",
@@ -17936,7 +17936,7 @@ const CASE_DATA = {
       "revenueEur": 16545,
       "cumulativeRevenue": 16545,
       "revenuePerActive": 0.69,
-      "gtvKEur": 10.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-03",
@@ -17947,7 +17947,7 @@ const CASE_DATA = {
       "revenueEur": 66589,
       "cumulativeRevenue": 83134,
       "revenuePerActive": 6.5,
-      "gtvKEur": 30.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-03",
@@ -17958,7 +17958,7 @@ const CASE_DATA = {
       "revenueEur": 43094,
       "cumulativeRevenue": 126228,
       "revenuePerActive": 5.48,
-      "gtvKEur": 85.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-03",
@@ -17969,7 +17969,7 @@ const CASE_DATA = {
       "revenueEur": 34389,
       "cumulativeRevenue": 160617,
       "revenuePerActive": 4.93,
-      "gtvKEur": 109.1
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2022-03",
@@ -17980,7 +17980,7 @@ const CASE_DATA = {
       "revenueEur": 28691,
       "cumulativeRevenue": 189309,
       "revenuePerActive": 4.49,
-      "gtvKEur": 18107.5
+      "gtvKEur": 238
     },
     {
       "cohortMonth": "2022-03",
@@ -17991,7 +17991,7 @@ const CASE_DATA = {
       "revenueEur": 27940,
       "cumulativeRevenue": 217249,
       "revenuePerActive": 4.68,
-      "gtvKEur": 20.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18002,7 +18002,7 @@ const CASE_DATA = {
       "revenueEur": 26008,
       "cumulativeRevenue": 243257,
       "revenuePerActive": 4.55,
-      "gtvKEur": 33.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18013,7 +18013,7 @@ const CASE_DATA = {
       "revenueEur": 31997,
       "cumulativeRevenue": 275253,
       "revenuePerActive": 5.83,
-      "gtvKEur": 24.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18024,7 +18024,7 @@ const CASE_DATA = {
       "revenueEur": 28248,
       "cumulativeRevenue": 303501,
       "revenuePerActive": 5.53,
-      "gtvKEur": 82.9
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-03",
@@ -18035,7 +18035,7 @@ const CASE_DATA = {
       "revenueEur": 28061,
       "cumulativeRevenue": 331562,
       "revenuePerActive": 5.72,
-      "gtvKEur": 17425.4
+      "gtvKEur": 225.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18046,7 +18046,7 @@ const CASE_DATA = {
       "revenueEur": 26405,
       "cumulativeRevenue": 357967,
       "revenuePerActive": 5.54,
-      "gtvKEur": 22.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18057,7 +18057,7 @@ const CASE_DATA = {
       "revenueEur": 26017,
       "cumulativeRevenue": 383984,
       "revenuePerActive": 5.64,
-      "gtvKEur": 37
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-03",
@@ -18068,7 +18068,7 @@ const CASE_DATA = {
       "revenueEur": 32661,
       "cumulativeRevenue": 416645,
       "revenuePerActive": 7.17,
-      "gtvKEur": 75.2
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-03",
@@ -18079,7 +18079,7 @@ const CASE_DATA = {
       "revenueEur": 62295,
       "cumulativeRevenue": 478940,
       "revenuePerActive": 14.45,
-      "gtvKEur": 1033.8
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18090,7 +18090,7 @@ const CASE_DATA = {
       "revenueEur": 41952,
       "cumulativeRevenue": 520893,
       "revenuePerActive": 9.88,
-      "gtvKEur": 11965.6
+      "gtvKEur": 184.9
     },
     {
       "cohortMonth": "2022-03",
@@ -18101,7 +18101,7 @@ const CASE_DATA = {
       "revenueEur": 29591,
       "cumulativeRevenue": 550483,
       "revenuePerActive": 7.09,
-      "gtvKEur": 27.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18112,7 +18112,7 @@ const CASE_DATA = {
       "revenueEur": 24295,
       "cumulativeRevenue": 574778,
       "revenuePerActive": 6.01,
-      "gtvKEur": 21.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18123,7 +18123,7 @@ const CASE_DATA = {
       "revenueEur": 23573,
       "cumulativeRevenue": 598352,
       "revenuePerActive": 5.98,
-      "gtvKEur": 18714.9
+      "gtvKEur": 217.1
     },
     {
       "cohortMonth": "2022-03",
@@ -18134,7 +18134,7 @@ const CASE_DATA = {
       "revenueEur": 24765,
       "cumulativeRevenue": 623117,
       "revenuePerActive": 6.44,
-      "gtvKEur": 30.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18145,7 +18145,7 @@ const CASE_DATA = {
       "revenueEur": 30375,
       "cumulativeRevenue": 653492,
       "revenuePerActive": 8.17,
-      "gtvKEur": 39.5
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-03",
@@ -18156,7 +18156,7 @@ const CASE_DATA = {
       "revenueEur": 24444,
       "cumulativeRevenue": 677936,
       "revenuePerActive": 6.78,
-      "gtvKEur": 46.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-03",
@@ -18167,7 +18167,7 @@ const CASE_DATA = {
       "revenueEur": 25381,
       "cumulativeRevenue": 703317,
       "revenuePerActive": 7.27,
-      "gtvKEur": 9565.6
+      "gtvKEur": 119.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18178,7 +18178,7 @@ const CASE_DATA = {
       "revenueEur": 26355,
       "cumulativeRevenue": 729672,
       "revenuePerActive": 7.74,
-      "gtvKEur": 40.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-03",
@@ -18189,7 +18189,7 @@ const CASE_DATA = {
       "revenueEur": 30236,
       "cumulativeRevenue": 759908,
       "revenuePerActive": 8.99,
-      "gtvKEur": 52.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-03",
@@ -18200,7 +18200,7 @@ const CASE_DATA = {
       "revenueEur": 28935,
       "cumulativeRevenue": 788843,
       "revenuePerActive": 8.59,
-      "gtvKEur": 10713.3
+      "gtvKEur": 138.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18211,7 +18211,7 @@ const CASE_DATA = {
       "revenueEur": 41357,
       "cumulativeRevenue": 830200,
       "revenuePerActive": 12.6,
-      "gtvKEur": 13.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-03",
@@ -18222,7 +18222,7 @@ const CASE_DATA = {
       "revenueEur": 35297,
       "cumulativeRevenue": 865497,
       "revenuePerActive": 10.98,
-      "gtvKEur": 4.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-03",
@@ -18233,7 +18233,7 @@ const CASE_DATA = {
       "revenueEur": 26681,
       "cumulativeRevenue": 892179,
       "revenuePerActive": 8.45,
-      "gtvKEur": 1875.2
+      "gtvKEur": 34.9
     },
     {
       "cohortMonth": "2022-03",
@@ -18244,7 +18244,7 @@ const CASE_DATA = {
       "revenueEur": 23972,
       "cumulativeRevenue": 916151,
       "revenuePerActive": 7.79,
-      "gtvKEur": 31.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18255,7 +18255,7 @@ const CASE_DATA = {
       "revenueEur": 24594,
       "cumulativeRevenue": 940745,
       "revenuePerActive": 8.12,
-      "gtvKEur": 2078.9
+      "gtvKEur": 31.4
     },
     {
       "cohortMonth": "2022-03",
@@ -18266,7 +18266,7 @@ const CASE_DATA = {
       "revenueEur": 25483,
       "cumulativeRevenue": 966228,
       "revenuePerActive": 8.47,
-      "gtvKEur": 195.8
+      "gtvKEur": 2
     },
     {
       "cohortMonth": "2022-03",
@@ -18277,7 +18277,7 @@ const CASE_DATA = {
       "revenueEur": 27846,
       "cumulativeRevenue": 994074,
       "revenuePerActive": 9.51,
-      "gtvKEur": 183.6
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2022-03",
@@ -18288,7 +18288,7 @@ const CASE_DATA = {
       "revenueEur": 22562,
       "cumulativeRevenue": 1016636,
       "revenuePerActive": 7.95,
-      "gtvKEur": 2219.2
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2022-03",
@@ -18299,7 +18299,7 @@ const CASE_DATA = {
       "revenueEur": 24896,
       "cumulativeRevenue": 1041532,
       "revenuePerActive": 8.89,
-      "gtvKEur": 164.8
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18310,7 +18310,7 @@ const CASE_DATA = {
       "revenueEur": 24048,
       "cumulativeRevenue": 1065580,
       "revenuePerActive": 8.8,
-      "gtvKEur": 3769.7
+      "gtvKEur": 52
     },
     {
       "cohortMonth": "2022-03",
@@ -18321,7 +18321,7 @@ const CASE_DATA = {
       "revenueEur": 30568,
       "cumulativeRevenue": 1096148,
       "revenuePerActive": 11.28,
-      "gtvKEur": 59.2
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18332,7 +18332,7 @@ const CASE_DATA = {
       "revenueEur": 32389,
       "cumulativeRevenue": 1128537,
       "revenuePerActive": 12.1,
-      "gtvKEur": 87.3
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2022-03",
@@ -18343,7 +18343,7 @@ const CASE_DATA = {
       "revenueEur": 37727,
       "cumulativeRevenue": 1166264,
       "revenuePerActive": 14.37,
-      "gtvKEur": 2516.5
+      "gtvKEur": 39.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18354,7 +18354,7 @@ const CASE_DATA = {
       "revenueEur": 38099,
       "cumulativeRevenue": 1204363,
       "revenuePerActive": 14.43,
-      "gtvKEur": 305.9
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2022-03",
@@ -18365,7 +18365,7 @@ const CASE_DATA = {
       "revenueEur": 30691,
       "cumulativeRevenue": 1235053,
       "revenuePerActive": 12.04,
-      "gtvKEur": 1579.7
+      "gtvKEur": 25.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18376,7 +18376,7 @@ const CASE_DATA = {
       "revenueEur": 31363,
       "cumulativeRevenue": 1266416,
       "revenuePerActive": 12.38,
-      "gtvKEur": 261.7
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18387,7 +18387,7 @@ const CASE_DATA = {
       "revenueEur": 29486,
       "cumulativeRevenue": 1295902,
       "revenuePerActive": 11.78,
-      "gtvKEur": 1677.4
+      "gtvKEur": 26.3
     },
     {
       "cohortMonth": "2022-03",
@@ -18398,7 +18398,7 @@ const CASE_DATA = {
       "revenueEur": 28393,
       "cumulativeRevenue": 1324295,
       "revenuePerActive": 11.58,
-      "gtvKEur": 300.3
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2022-03",
@@ -18409,7 +18409,7 @@ const CASE_DATA = {
       "revenueEur": 38664,
       "cumulativeRevenue": 1362959,
       "revenuePerActive": 16.04,
-      "gtvKEur": 1341.7
+      "gtvKEur": 31.9
     },
     {
       "cohortMonth": "2022-03",
@@ -18420,7 +18420,7 @@ const CASE_DATA = {
       "revenueEur": 25316,
       "cumulativeRevenue": 1388274,
       "revenuePerActive": 10.76,
-      "gtvKEur": 264.5
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2022-03",
@@ -18431,7 +18431,7 @@ const CASE_DATA = {
       "revenueEur": 28157,
       "cumulativeRevenue": 1416431,
       "revenuePerActive": 12.11,
-      "gtvKEur": 2470.1
+      "gtvKEur": 41.4
     },
     {
       "cohortMonth": "2022-03",
@@ -18442,7 +18442,7 @@ const CASE_DATA = {
       "revenueEur": 30200,
       "cumulativeRevenue": 1446631,
       "revenuePerActive": 13.15,
-      "gtvKEur": 598.5
+      "gtvKEur": 6
     },
     {
       "cohortMonth": "2022-03",
@@ -18453,7 +18453,7 @@ const CASE_DATA = {
       "revenueEur": 34101,
       "cumulativeRevenue": 1480732,
       "revenuePerActive": 15.07,
-      "gtvKEur": 54936.6
+      "gtvKEur": 1090.2
     },
     {
       "cohortMonth": "2022-03",
@@ -18464,7 +18464,7 @@ const CASE_DATA = {
       "revenueEur": 35150,
       "cumulativeRevenue": 1515882,
       "revenuePerActive": 20.24,
-      "gtvKEur": 139984.2
+      "gtvKEur": 2591
     },
     {
       "cohortMonth": "2022-03",
@@ -18475,7 +18475,7 @@ const CASE_DATA = {
       "revenueEur": 12309,
       "cumulativeRevenue": 1528191,
       "revenuePerActive": 0,
-      "gtvKEur": 41039.8
+      "gtvKEur": 681.5
     },
     {
       "cohortMonth": "2022-02",
@@ -18486,7 +18486,7 @@ const CASE_DATA = {
       "revenueEur": 19065,
       "cumulativeRevenue": 19065,
       "revenuePerActive": 0.83,
-      "gtvKEur": 8.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18497,7 +18497,7 @@ const CASE_DATA = {
       "revenueEur": 48725,
       "cumulativeRevenue": 67790,
       "revenuePerActive": 4.95,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -18508,7 +18508,7 @@ const CASE_DATA = {
       "revenueEur": 28801,
       "cumulativeRevenue": 96591,
       "revenuePerActive": 3.99,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -18519,7 +18519,7 @@ const CASE_DATA = {
       "revenueEur": 30323,
       "cumulativeRevenue": 126914,
       "revenuePerActive": 4.69,
-      "gtvKEur": 785.5
+      "gtvKEur": 7.9
     },
     {
       "cohortMonth": "2022-02",
@@ -18530,7 +18530,7 @@ const CASE_DATA = {
       "revenueEur": 24579,
       "cumulativeRevenue": 151492,
       "revenuePerActive": 4.1,
-      "gtvKEur": 478.1
+      "gtvKEur": 4.8
     },
     {
       "cohortMonth": "2022-02",
@@ -18541,7 +18541,7 @@ const CASE_DATA = {
       "revenueEur": 26174,
       "cumulativeRevenue": 177666,
       "revenuePerActive": 4.73,
-      "gtvKEur": 13266.2
+      "gtvKEur": 191.4
     },
     {
       "cohortMonth": "2022-02",
@@ -18552,7 +18552,7 @@ const CASE_DATA = {
       "revenueEur": 25687,
       "cumulativeRevenue": 203353,
       "revenuePerActive": 4.91,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18563,7 +18563,7 @@ const CASE_DATA = {
       "revenueEur": 25524,
       "cumulativeRevenue": 228878,
       "revenuePerActive": 5.15,
-      "gtvKEur": 17.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18574,7 +18574,7 @@ const CASE_DATA = {
       "revenueEur": 22115,
       "cumulativeRevenue": 250992,
       "revenuePerActive": 4.65,
-      "gtvKEur": 18.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18585,7 +18585,7 @@ const CASE_DATA = {
       "revenueEur": 24503,
       "cumulativeRevenue": 275496,
       "revenuePerActive": 5.46,
-      "gtvKEur": 5.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18596,7 +18596,7 @@ const CASE_DATA = {
       "revenueEur": 24006,
       "cumulativeRevenue": 299502,
       "revenuePerActive": 5.57,
-      "gtvKEur": 3707
+      "gtvKEur": 78.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18607,7 +18607,7 @@ const CASE_DATA = {
       "revenueEur": 23653,
       "cumulativeRevenue": 323155,
       "revenuePerActive": 5.66,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -18618,7 +18618,7 @@ const CASE_DATA = {
       "revenueEur": 32242,
       "cumulativeRevenue": 355397,
       "revenuePerActive": 8,
-      "gtvKEur": 9.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18629,7 +18629,7 @@ const CASE_DATA = {
       "revenueEur": 48551,
       "cumulativeRevenue": 403949,
       "revenuePerActive": 12.25,
-      "gtvKEur": 33.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-02",
@@ -18640,7 +18640,7 @@ const CASE_DATA = {
       "revenueEur": 28494,
       "cumulativeRevenue": 432443,
       "revenuePerActive": 7.66,
-      "gtvKEur": 20.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18651,7 +18651,7 @@ const CASE_DATA = {
       "revenueEur": 27466,
       "cumulativeRevenue": 459909,
       "revenuePerActive": 7.45,
-      "gtvKEur": 2728.1
+      "gtvKEur": 72.4
     },
     {
       "cohortMonth": "2022-02",
@@ -18662,7 +18662,7 @@ const CASE_DATA = {
       "revenueEur": 22771,
       "cumulativeRevenue": 482680,
       "revenuePerActive": 6.35,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -18673,7 +18673,7 @@ const CASE_DATA = {
       "revenueEur": 24515,
       "cumulativeRevenue": 507195,
       "revenuePerActive": 7,
-      "gtvKEur": 27.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-02",
@@ -18684,7 +18684,7 @@ const CASE_DATA = {
       "revenueEur": 27183,
       "cumulativeRevenue": 534378,
       "revenuePerActive": 7.98,
-      "gtvKEur": 3539.9
+      "gtvKEur": 77.6
     },
     {
       "cohortMonth": "2022-02",
@@ -18695,7 +18695,7 @@ const CASE_DATA = {
       "revenueEur": 21741,
       "cumulativeRevenue": 556119,
       "revenuePerActive": 6.5,
-      "gtvKEur": 60.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-02",
@@ -18706,7 +18706,7 @@ const CASE_DATA = {
       "revenueEur": 20954,
       "cumulativeRevenue": 577073,
       "revenuePerActive": 6.34,
-      "gtvKEur": 73.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-02",
@@ -18717,7 +18717,7 @@ const CASE_DATA = {
       "revenueEur": 22621,
       "cumulativeRevenue": 599693,
       "revenuePerActive": 7.05,
-      "gtvKEur": 56.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2022-02",
@@ -18728,7 +18728,7 @@ const CASE_DATA = {
       "revenueEur": 21764,
       "cumulativeRevenue": 621457,
       "revenuePerActive": 7.03,
-      "gtvKEur": 5486.4
+      "gtvKEur": 87.6
     },
     {
       "cohortMonth": "2022-02",
@@ -18739,7 +18739,7 @@ const CASE_DATA = {
       "revenueEur": 25713,
       "cumulativeRevenue": 647170,
       "revenuePerActive": 8.46,
-      "gtvKEur": 70.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-02",
@@ -18750,7 +18750,7 @@ const CASE_DATA = {
       "revenueEur": 36575,
       "cumulativeRevenue": 683745,
       "revenuePerActive": 12.28,
-      "gtvKEur": 81.8
+      "gtvKEur": 6.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18761,7 +18761,7 @@ const CASE_DATA = {
       "revenueEur": 46360,
       "cumulativeRevenue": 730104,
       "revenuePerActive": 15.91,
-      "gtvKEur": 3187.3
+      "gtvKEur": 69.1
     },
     {
       "cohortMonth": "2022-02",
@@ -18772,7 +18772,7 @@ const CASE_DATA = {
       "revenueEur": 33260,
       "cumulativeRevenue": 763364,
       "revenuePerActive": 11.86,
-      "gtvKEur": 82.4
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-02",
@@ -18783,7 +18783,7 @@ const CASE_DATA = {
       "revenueEur": 30035,
       "cumulativeRevenue": 793399,
       "revenuePerActive": 10.72,
-      "gtvKEur": 248.3
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2022-02",
@@ -18794,7 +18794,7 @@ const CASE_DATA = {
       "revenueEur": 24380,
       "cumulativeRevenue": 817779,
       "revenuePerActive": 8.97,
-      "gtvKEur": 4395.6
+      "gtvKEur": 77
     },
     {
       "cohortMonth": "2022-02",
@@ -18805,7 +18805,7 @@ const CASE_DATA = {
       "revenueEur": 25328,
       "cumulativeRevenue": 843108,
       "revenuePerActive": 9.44,
-      "gtvKEur": 150
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2022-02",
@@ -18816,7 +18816,7 @@ const CASE_DATA = {
       "revenueEur": 27617,
       "cumulativeRevenue": 870724,
       "revenuePerActive": 10.31,
-      "gtvKEur": 1665.6
+      "gtvKEur": 41.4
     },
     {
       "cohortMonth": "2022-02",
@@ -18827,7 +18827,7 @@ const CASE_DATA = {
       "revenueEur": 21459,
       "cumulativeRevenue": 892183,
       "revenuePerActive": 8.34,
-      "gtvKEur": 118
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18838,7 +18838,7 @@ const CASE_DATA = {
       "revenueEur": 21775,
       "cumulativeRevenue": 913958,
       "revenuePerActive": 8.5,
-      "gtvKEur": 168.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2022-02",
@@ -18849,7 +18849,7 @@ const CASE_DATA = {
       "revenueEur": 23452,
       "cumulativeRevenue": 937410,
       "revenuePerActive": 9.35,
-      "gtvKEur": 3461.9
+      "gtvKEur": 55.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18860,7 +18860,7 @@ const CASE_DATA = {
       "revenueEur": 23046,
       "cumulativeRevenue": 960456,
       "revenuePerActive": 9.3,
-      "gtvKEur": 295
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2022-02",
@@ -18871,7 +18871,7 @@ const CASE_DATA = {
       "revenueEur": 25897,
       "cumulativeRevenue": 986353,
       "revenuePerActive": 10.83,
-      "gtvKEur": 22601.8
+      "gtvKEur": 20947
     },
     {
       "cohortMonth": "2022-02",
@@ -18882,7 +18882,7 @@ const CASE_DATA = {
       "revenueEur": 29853,
       "cumulativeRevenue": 1016206,
       "revenuePerActive": 12.59,
-      "gtvKEur": 51.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-02",
@@ -18893,7 +18893,7 @@ const CASE_DATA = {
       "revenueEur": 43267,
       "cumulativeRevenue": 1059473,
       "revenuePerActive": 18.88,
-      "gtvKEur": 68.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-02",
@@ -18904,7 +18904,7 @@ const CASE_DATA = {
       "revenueEur": 33617,
       "cumulativeRevenue": 1093089,
       "revenuePerActive": 14.8,
-      "gtvKEur": 1427.3
+      "gtvKEur": 37
     },
     {
       "cohortMonth": "2022-02",
@@ -18915,7 +18915,7 @@ const CASE_DATA = {
       "revenueEur": 34212,
       "cumulativeRevenue": 1127301,
       "revenuePerActive": 15.04,
-      "gtvKEur": 188
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2022-02",
@@ -18926,7 +18926,7 @@ const CASE_DATA = {
       "revenueEur": 31792,
       "cumulativeRevenue": 1159093,
       "revenuePerActive": 14.52,
-      "gtvKEur": 1266
+      "gtvKEur": 19
     },
     {
       "cohortMonth": "2022-02",
@@ -18937,7 +18937,7 @@ const CASE_DATA = {
       "revenueEur": 39299,
       "cumulativeRevenue": 1198392,
       "revenuePerActive": 18.17,
-      "gtvKEur": 240.7
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2022-02",
@@ -18948,7 +18948,7 @@ const CASE_DATA = {
       "revenueEur": 33913,
       "cumulativeRevenue": 1232305,
       "revenuePerActive": 15.9,
-      "gtvKEur": 1129.6
+      "gtvKEur": 22.5
     },
     {
       "cohortMonth": "2022-02",
@@ -18959,7 +18959,7 @@ const CASE_DATA = {
       "revenueEur": 26114,
       "cumulativeRevenue": 1258419,
       "revenuePerActive": 12.39,
-      "gtvKEur": 121.2
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-02",
@@ -18970,7 +18970,7 @@ const CASE_DATA = {
       "revenueEur": 25572,
       "cumulativeRevenue": 1283990,
       "revenuePerActive": 12.2,
-      "gtvKEur": 1281.7
+      "gtvKEur": 39.4
     },
     {
       "cohortMonth": "2022-02",
@@ -18981,7 +18981,7 @@ const CASE_DATA = {
       "revenueEur": 25185,
       "cumulativeRevenue": 1309176,
       "revenuePerActive": 12.27,
-      "gtvKEur": 167.5
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2022-02",
@@ -18992,7 +18992,7 @@ const CASE_DATA = {
       "revenueEur": 26265,
       "cumulativeRevenue": 1335440,
       "revenuePerActive": 13,
-      "gtvKEur": 1573.4
+      "gtvKEur": 30.1
     },
     {
       "cohortMonth": "2022-02",
@@ -19003,7 +19003,7 @@ const CASE_DATA = {
       "revenueEur": 26632,
       "cumulativeRevenue": 1362072,
       "revenuePerActive": 13.36,
-      "gtvKEur": 317
+      "gtvKEur": 4.8
     },
     {
       "cohortMonth": "2022-02",
@@ -19014,7 +19014,7 @@ const CASE_DATA = {
       "revenueEur": 31231,
       "cumulativeRevenue": 1393303,
       "revenuePerActive": 16.1,
-      "gtvKEur": 49974.1
+      "gtvKEur": 1064.8
     },
     {
       "cohortMonth": "2022-02",
@@ -19025,7 +19025,7 @@ const CASE_DATA = {
       "revenueEur": 38197,
       "cumulativeRevenue": 1431500,
       "revenuePerActive": 26.53,
-      "gtvKEur": 115696
+      "gtvKEur": 2943.5
     },
     {
       "cohortMonth": "2022-02",
@@ -19036,7 +19036,7 @@ const CASE_DATA = {
       "revenueEur": 8346,
       "cumulativeRevenue": 1439846,
       "revenuePerActive": 0,
-      "gtvKEur": 30250.9
+      "gtvKEur": 743.6
     },
     {
       "cohortMonth": "2022-02",
@@ -19047,7 +19047,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1439846,
       "revenuePerActive": 0,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -19058,7 +19058,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1439846,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-02",
@@ -19069,7 +19069,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1439846,
       "revenuePerActive": 0,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19080,7 +19080,7 @@ const CASE_DATA = {
       "revenueEur": 32040,
       "cumulativeRevenue": 32040,
       "revenuePerActive": 1.38,
-      "gtvKEur": 72054.5
+      "gtvKEur": 795.5
     },
     {
       "cohortMonth": "2022-01",
@@ -19091,7 +19091,7 @@ const CASE_DATA = {
       "revenueEur": 52238,
       "cumulativeRevenue": 84278,
       "revenuePerActive": 5.15,
-      "gtvKEur": 21.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19102,7 +19102,7 @@ const CASE_DATA = {
       "revenueEur": 37632,
       "cumulativeRevenue": 121910,
       "revenuePerActive": 4.67,
-      "gtvKEur": 9.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19113,7 +19113,7 @@ const CASE_DATA = {
       "revenueEur": 31898,
       "cumulativeRevenue": 153808,
       "revenuePerActive": 4.57,
-      "gtvKEur": 28.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-01",
@@ -19124,7 +19124,7 @@ const CASE_DATA = {
       "revenueEur": 28443,
       "cumulativeRevenue": 182251,
       "revenuePerActive": 4.34,
-      "gtvKEur": 25.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-01",
@@ -19135,7 +19135,7 @@ const CASE_DATA = {
       "revenueEur": 26230,
       "cumulativeRevenue": 208481,
       "revenuePerActive": 4.27,
-      "gtvKEur": 144.8
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19146,7 +19146,7 @@ const CASE_DATA = {
       "revenueEur": 29408,
       "cumulativeRevenue": 237889,
       "revenuePerActive": 5.07,
-      "gtvKEur": 37108.8
+      "gtvKEur": 434.9
     },
     {
       "cohortMonth": "2022-01",
@@ -19157,7 +19157,7 @@ const CASE_DATA = {
       "revenueEur": 26594,
       "cumulativeRevenue": 264483,
       "revenuePerActive": 4.82,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19168,7 +19168,7 @@ const CASE_DATA = {
       "revenueEur": 27797,
       "cumulativeRevenue": 292280,
       "revenuePerActive": 5.32,
-      "gtvKEur": 13.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19179,7 +19179,7 @@ const CASE_DATA = {
       "revenueEur": 26994,
       "cumulativeRevenue": 319274,
       "revenuePerActive": 5.37,
-      "gtvKEur": 48.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-01",
@@ -19190,7 +19190,7 @@ const CASE_DATA = {
       "revenueEur": 25599,
       "cumulativeRevenue": 344873,
       "revenuePerActive": 5.38,
-      "gtvKEur": 48.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-01",
@@ -19201,7 +19201,7 @@ const CASE_DATA = {
       "revenueEur": 24309,
       "cumulativeRevenue": 369183,
       "revenuePerActive": 5.18,
-      "gtvKEur": 3788.1
+      "gtvKEur": 81.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19212,7 +19212,7 @@ const CASE_DATA = {
       "revenueEur": 42181,
       "cumulativeRevenue": 411363,
       "revenuePerActive": 9.27,
-      "gtvKEur": 11.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19223,7 +19223,7 @@ const CASE_DATA = {
       "revenueEur": 46748,
       "cumulativeRevenue": 458111,
       "revenuePerActive": 10.63,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19234,7 +19234,7 @@ const CASE_DATA = {
       "revenueEur": 34233,
       "cumulativeRevenue": 492345,
       "revenuePerActive": 7.92,
-      "gtvKEur": 22
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19245,7 +19245,7 @@ const CASE_DATA = {
       "revenueEur": 29580,
       "cumulativeRevenue": 521924,
       "revenuePerActive": 7.4,
-      "gtvKEur": 70.5
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-01",
@@ -19256,7 +19256,7 @@ const CASE_DATA = {
       "revenueEur": 27651,
       "cumulativeRevenue": 549575,
       "revenuePerActive": 6.99,
-      "gtvKEur": 2990.4
+      "gtvKEur": 71.8
     },
     {
       "cohortMonth": "2022-01",
@@ -19267,7 +19267,7 @@ const CASE_DATA = {
       "revenueEur": 25000,
       "cumulativeRevenue": 574575,
       "revenuePerActive": 6.49,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19278,7 +19278,7 @@ const CASE_DATA = {
       "revenueEur": 27075,
       "cumulativeRevenue": 601650,
       "revenuePerActive": 7.13,
-      "gtvKEur": 5.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-01",
@@ -19289,7 +19289,7 @@ const CASE_DATA = {
       "revenueEur": 25625,
       "cumulativeRevenue": 627275,
       "revenuePerActive": 6.93,
-      "gtvKEur": 3034.2
+      "gtvKEur": 67.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19300,7 +19300,7 @@ const CASE_DATA = {
       "revenueEur": 25723,
       "cumulativeRevenue": 652998,
       "revenuePerActive": 7.09,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19311,7 +19311,7 @@ const CASE_DATA = {
       "revenueEur": 29083,
       "cumulativeRevenue": 682080,
       "revenuePerActive": 8.19,
-      "gtvKEur": 2.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19322,7 +19322,7 @@ const CASE_DATA = {
       "revenueEur": 23176,
       "cumulativeRevenue": 705257,
       "revenuePerActive": 6.74,
-      "gtvKEur": 47.5
+      "gtvKEur": 5.3
     },
     {
       "cohortMonth": "2022-01",
@@ -19333,7 +19333,7 @@ const CASE_DATA = {
       "revenueEur": 23570,
       "cumulativeRevenue": 728826,
       "revenuePerActive": 6.96,
-      "gtvKEur": 3634.7
+      "gtvKEur": 84.5
     },
     {
       "cohortMonth": "2022-01",
@@ -19344,7 +19344,7 @@ const CASE_DATA = {
       "revenueEur": 36444,
       "cumulativeRevenue": 765270,
       "revenuePerActive": 10.65,
-      "gtvKEur": 5.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19355,7 +19355,7 @@ const CASE_DATA = {
       "revenueEur": 38009,
       "cumulativeRevenue": 803279,
       "revenuePerActive": 11.54,
-      "gtvKEur": 12.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19366,7 +19366,7 @@ const CASE_DATA = {
       "revenueEur": 30368,
       "cumulativeRevenue": 833647,
       "revenuePerActive": 9.47,
-      "gtvKEur": 2729.9
+      "gtvKEur": 47.9
     },
     {
       "cohortMonth": "2022-01",
@@ -19377,7 +19377,7 @@ const CASE_DATA = {
       "revenueEur": 22584,
       "cumulativeRevenue": 856231,
       "revenuePerActive": 7.31,
-      "gtvKEur": 14.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19388,7 +19388,7 @@ const CASE_DATA = {
       "revenueEur": 21128,
       "cumulativeRevenue": 877358,
       "revenuePerActive": 6.87,
-      "gtvKEur": 27.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-01",
@@ -19399,7 +19399,7 @@ const CASE_DATA = {
       "revenueEur": 20846,
       "cumulativeRevenue": 898204,
       "revenuePerActive": 6.88,
-      "gtvKEur": 1826.9
+      "gtvKEur": 41.6
     },
     {
       "cohortMonth": "2022-01",
@@ -19410,7 +19410,7 @@ const CASE_DATA = {
       "revenueEur": 20620,
       "cumulativeRevenue": 918824,
       "revenuePerActive": 6.94,
-      "gtvKEur": 24
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19421,7 +19421,7 @@ const CASE_DATA = {
       "revenueEur": 18658,
       "cumulativeRevenue": 937482,
       "revenuePerActive": 6.37,
-      "gtvKEur": 2412.1
+      "gtvKEur": 37.7
     },
     {
       "cohortMonth": "2022-01",
@@ -19432,7 +19432,7 @@ const CASE_DATA = {
       "revenueEur": 19814,
       "cumulativeRevenue": 957297,
       "revenuePerActive": 6.98,
-      "gtvKEur": 35.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19443,7 +19443,7 @@ const CASE_DATA = {
       "revenueEur": 24203,
       "cumulativeRevenue": 981500,
       "revenuePerActive": 8.61,
-      "gtvKEur": 51.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-01",
@@ -19454,7 +19454,7 @@ const CASE_DATA = {
       "revenueEur": 23384,
       "cumulativeRevenue": 1004884,
       "revenuePerActive": 8.44,
-      "gtvKEur": 1556.7
+      "gtvKEur": 38.6
     },
     {
       "cohortMonth": "2022-01",
@@ -19465,7 +19465,7 @@ const CASE_DATA = {
       "revenueEur": 21425,
       "cumulativeRevenue": 1026309,
       "revenuePerActive": 7.89,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19476,7 +19476,7 @@ const CASE_DATA = {
       "revenueEur": 32592,
       "cumulativeRevenue": 1058901,
       "revenuePerActive": 12.07,
-      "gtvKEur": 1569.6
+      "gtvKEur": 34
     },
     {
       "cohortMonth": "2022-01",
@@ -19487,7 +19487,7 @@ const CASE_DATA = {
       "revenueEur": 34342,
       "cumulativeRevenue": 1093243,
       "revenuePerActive": 12.94,
-      "gtvKEur": 14.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19498,7 +19498,7 @@ const CASE_DATA = {
       "revenueEur": 36208,
       "cumulativeRevenue": 1129451,
       "revenuePerActive": 14.23,
-      "gtvKEur": 120.8
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19509,7 +19509,7 @@ const CASE_DATA = {
       "revenueEur": 29047,
       "cumulativeRevenue": 1158497,
       "revenuePerActive": 11.42,
-      "gtvKEur": 1162.1
+      "gtvKEur": 24.8
     },
     {
       "cohortMonth": "2022-01",
@@ -19520,7 +19520,7 @@ const CASE_DATA = {
       "revenueEur": 24718,
       "cumulativeRevenue": 1183215,
       "revenuePerActive": 9.8,
-      "gtvKEur": 24.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19531,7 +19531,7 @@ const CASE_DATA = {
       "revenueEur": 30097,
       "cumulativeRevenue": 1213312,
       "revenuePerActive": 12.12,
-      "gtvKEur": 975.1
+      "gtvKEur": 21.7
     },
     {
       "cohortMonth": "2022-01",
@@ -19542,7 +19542,7 @@ const CASE_DATA = {
       "revenueEur": 29149,
       "cumulativeRevenue": 1242462,
       "revenuePerActive": 11.79,
-      "gtvKEur": 79
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2022-01",
@@ -19553,7 +19553,7 @@ const CASE_DATA = {
       "revenueEur": 24596,
       "cumulativeRevenue": 1267057,
       "revenuePerActive": 10.18,
-      "gtvKEur": 1084.5
+      "gtvKEur": 19.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19564,7 +19564,7 @@ const CASE_DATA = {
       "revenueEur": 27089,
       "cumulativeRevenue": 1294146,
       "revenuePerActive": 11.4,
-      "gtvKEur": 58.9
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2022-01",
@@ -19575,7 +19575,7 @@ const CASE_DATA = {
       "revenueEur": 30796,
       "cumulativeRevenue": 1324941,
       "revenuePerActive": 13.04,
-      "gtvKEur": 1068.5
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19586,7 +19586,7 @@ const CASE_DATA = {
       "revenueEur": 32252,
       "cumulativeRevenue": 1357194,
       "revenuePerActive": 13.85,
-      "gtvKEur": 157.3
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2022-01",
@@ -19597,7 +19597,7 @@ const CASE_DATA = {
       "revenueEur": 25203,
       "cumulativeRevenue": 1382397,
       "revenuePerActive": 11.01,
-      "gtvKEur": 3828.2
+      "gtvKEur": 58.2
     },
     {
       "cohortMonth": "2022-01",
@@ -19608,7 +19608,7 @@ const CASE_DATA = {
       "revenueEur": 37939,
       "cumulativeRevenue": 1420336,
       "revenuePerActive": 16.66,
-      "gtvKEur": 1638.8
+      "gtvKEur": 22.6
     },
     {
       "cohortMonth": "2022-01",
@@ -19619,7 +19619,7 @@ const CASE_DATA = {
       "revenueEur": 36999,
       "cumulativeRevenue": 1457335,
       "revenuePerActive": 16.83,
-      "gtvKEur": 43241.5
+      "gtvKEur": 1001.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19630,7 +19630,7 @@ const CASE_DATA = {
       "revenueEur": 37672,
       "cumulativeRevenue": 1495007,
       "revenuePerActive": 22.2,
-      "gtvKEur": 100856.5
+      "gtvKEur": 2324.4
     },
     {
       "cohortMonth": "2022-01",
@@ -19641,7 +19641,7 @@ const CASE_DATA = {
       "revenueEur": 7533,
       "cumulativeRevenue": 1502540,
       "revenuePerActive": 0,
-      "gtvKEur": 27429.1
+      "gtvKEur": 598.1
     },
     {
       "cohortMonth": "2022-01",
@@ -19663,7 +19663,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1502540,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19674,7 +19674,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1502540,
       "revenuePerActive": 0,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2022-01",
@@ -19696,7 +19696,7 @@ const CASE_DATA = {
       "revenueEur": 6217,
       "cumulativeRevenue": 6217,
       "revenuePerActive": 0.28,
-      "gtvKEur": 35655.7
+      "gtvKEur": 527.6
     },
     {
       "cohortMonth": "2021-12",
@@ -19707,7 +19707,7 @@ const CASE_DATA = {
       "revenueEur": 63394,
       "cumulativeRevenue": 69611,
       "revenuePerActive": 6.31,
-      "gtvKEur": 74923.3
+      "gtvKEur": 1380.1
     },
     {
       "cohortMonth": "2021-12",
@@ -19718,7 +19718,7 @@ const CASE_DATA = {
       "revenueEur": 30799,
       "cumulativeRevenue": 100410,
       "revenuePerActive": 3.93,
-      "gtvKEur": 114.9
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2021-12",
@@ -19729,7 +19729,7 @@ const CASE_DATA = {
       "revenueEur": 36867,
       "cumulativeRevenue": 137277,
       "revenuePerActive": 5.19,
-      "gtvKEur": 2038.6
+      "gtvKEur": 20.4
     },
     {
       "cohortMonth": "2021-12",
@@ -19740,7 +19740,7 @@ const CASE_DATA = {
       "revenueEur": 28093,
       "cumulativeRevenue": 165370,
       "revenuePerActive": 4.43,
-      "gtvKEur": 157.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-12",
@@ -19751,7 +19751,7 @@ const CASE_DATA = {
       "revenueEur": 27795,
       "cumulativeRevenue": 193165,
       "revenuePerActive": 4.65,
-      "gtvKEur": 497.2
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2021-12",
@@ -19762,7 +19762,7 @@ const CASE_DATA = {
       "revenueEur": 27832,
       "cumulativeRevenue": 220997,
       "revenuePerActive": 4.87,
-      "gtvKEur": 675.6
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2021-12",
@@ -19773,7 +19773,7 @@ const CASE_DATA = {
       "revenueEur": 28546,
       "cumulativeRevenue": 249543,
       "revenuePerActive": 5.27,
-      "gtvKEur": 10053.1
+      "gtvKEur": 317.4
     },
     {
       "cohortMonth": "2021-12",
@@ -19784,7 +19784,7 @@ const CASE_DATA = {
       "revenueEur": 27962,
       "cumulativeRevenue": 277505,
       "revenuePerActive": 5.38,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -19795,7 +19795,7 @@ const CASE_DATA = {
       "revenueEur": 28966,
       "cumulativeRevenue": 306471,
       "revenuePerActive": 5.76,
-      "gtvKEur": 54.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-12",
@@ -19806,7 +19806,7 @@ const CASE_DATA = {
       "revenueEur": 28742,
       "cumulativeRevenue": 335213,
       "revenuePerActive": 5.89,
-      "gtvKEur": 50.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-12",
@@ -19817,7 +19817,7 @@ const CASE_DATA = {
       "revenueEur": 26996,
       "cumulativeRevenue": 362209,
       "revenuePerActive": 5.77,
-      "gtvKEur": 53.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-12",
@@ -19828,7 +19828,7 @@ const CASE_DATA = {
       "revenueEur": 40252,
       "cumulativeRevenue": 402460,
       "revenuePerActive": 8.74,
-      "gtvKEur": 7125.8
+      "gtvKEur": 195.5
     },
     {
       "cohortMonth": "2021-12",
@@ -19839,7 +19839,7 @@ const CASE_DATA = {
       "revenueEur": 51059,
       "cumulativeRevenue": 453520,
       "revenuePerActive": 11.46,
-      "gtvKEur": 43.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-12",
@@ -19850,7 +19850,7 @@ const CASE_DATA = {
       "revenueEur": 31277,
       "cumulativeRevenue": 484797,
       "revenuePerActive": 7.53,
-      "gtvKEur": 23.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-12",
@@ -19861,7 +19861,7 @@ const CASE_DATA = {
       "revenueEur": 32312,
       "cumulativeRevenue": 517109,
       "revenuePerActive": 7.88,
-      "gtvKEur": 24
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-12",
@@ -19872,7 +19872,7 @@ const CASE_DATA = {
       "revenueEur": 27471,
       "cumulativeRevenue": 544580,
       "revenuePerActive": 7.2,
-      "gtvKEur": 320.2
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2021-12",
@@ -19883,7 +19883,7 @@ const CASE_DATA = {
       "revenueEur": 27930,
       "cumulativeRevenue": 572511,
       "revenuePerActive": 7.29,
-      "gtvKEur": 7726.8
+      "gtvKEur": 113.8
     },
     {
       "cohortMonth": "2021-12",
@@ -19894,7 +19894,7 @@ const CASE_DATA = {
       "revenueEur": 24886,
       "cumulativeRevenue": 597396,
       "revenuePerActive": 6.7,
-      "gtvKEur": 29.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-12",
@@ -19905,7 +19905,7 @@ const CASE_DATA = {
       "revenueEur": 24789,
       "cumulativeRevenue": 622186,
       "revenuePerActive": 6.81,
-      "gtvKEur": 69.1
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-12",
@@ -19916,7 +19916,7 @@ const CASE_DATA = {
       "revenueEur": 25328,
       "cumulativeRevenue": 647513,
       "revenuePerActive": 7.14,
-      "gtvKEur": 2705.3
+      "gtvKEur": 54.7
     },
     {
       "cohortMonth": "2021-12",
@@ -19927,7 +19927,7 @@ const CASE_DATA = {
       "revenueEur": 25054,
       "cumulativeRevenue": 672567,
       "revenuePerActive": 7.27,
-      "gtvKEur": 107.3
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2021-12",
@@ -19938,7 +19938,7 @@ const CASE_DATA = {
       "revenueEur": 25150,
       "cumulativeRevenue": 697717,
       "revenuePerActive": 7.41,
-      "gtvKEur": 345.5
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2021-12",
@@ -19949,7 +19949,7 @@ const CASE_DATA = {
       "revenueEur": 23814,
       "cumulativeRevenue": 721532,
       "revenuePerActive": 7.14,
-      "gtvKEur": 420.4
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2021-12",
@@ -19960,7 +19960,7 @@ const CASE_DATA = {
       "revenueEur": 30167,
       "cumulativeRevenue": 751698,
       "revenuePerActive": 9.14,
-      "gtvKEur": 4002.5
+      "gtvKEur": 70.9
     },
     {
       "cohortMonth": "2021-12",
@@ -19971,7 +19971,7 @@ const CASE_DATA = {
       "revenueEur": 44074,
       "cumulativeRevenue": 795773,
       "revenuePerActive": 13.43,
-      "gtvKEur": 174.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2021-12",
@@ -19982,7 +19982,7 @@ const CASE_DATA = {
       "revenueEur": 29333,
       "cumulativeRevenue": 825106,
       "revenuePerActive": 9.19,
-      "gtvKEur": 168.8
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2021-12",
@@ -19993,7 +19993,7 @@ const CASE_DATA = {
       "revenueEur": 27616,
       "cumulativeRevenue": 852722,
       "revenuePerActive": 8.89,
-      "gtvKEur": 2543.1
+      "gtvKEur": 57.3
     },
     {
       "cohortMonth": "2021-12",
@@ -20004,7 +20004,7 @@ const CASE_DATA = {
       "revenueEur": 24288,
       "cumulativeRevenue": 877010,
       "revenuePerActive": 7.93,
-      "gtvKEur": 65.7
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-12",
@@ -20015,7 +20015,7 @@ const CASE_DATA = {
       "revenueEur": 24839,
       "cumulativeRevenue": 901848,
       "revenuePerActive": 8.18,
-      "gtvKEur": 209.7
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2021-12",
@@ -20026,7 +20026,7 @@ const CASE_DATA = {
       "revenueEur": 27927,
       "cumulativeRevenue": 929775,
       "revenuePerActive": 9.52,
-      "gtvKEur": 3167.7
+      "gtvKEur": 51.3
     },
     {
       "cohortMonth": "2021-12",
@@ -20037,7 +20037,7 @@ const CASE_DATA = {
       "revenueEur": 23884,
       "cumulativeRevenue": 953659,
       "revenuePerActive": 8.2,
-      "gtvKEur": 328.5
+      "gtvKEur": 3.3
     },
     {
       "cohortMonth": "2021-12",
@@ -20048,7 +20048,7 @@ const CASE_DATA = {
       "revenueEur": 23707,
       "cumulativeRevenue": 977366,
       "revenuePerActive": 8.21,
-      "gtvKEur": 5798.7
+      "gtvKEur": 93.6
     },
     {
       "cohortMonth": "2021-12",
@@ -20059,7 +20059,7 @@ const CASE_DATA = {
       "revenueEur": 27328,
       "cumulativeRevenue": 1004695,
       "revenuePerActive": 9.83,
-      "gtvKEur": 384.2
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2021-12",
@@ -20070,7 +20070,7 @@ const CASE_DATA = {
       "revenueEur": 28775,
       "cumulativeRevenue": 1033470,
       "revenuePerActive": 10.41,
-      "gtvKEur": 354.9
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2021-12",
@@ -20081,7 +20081,7 @@ const CASE_DATA = {
       "revenueEur": 22997,
       "cumulativeRevenue": 1056467,
       "revenuePerActive": 8.44,
-      "gtvKEur": 3238.3
+      "gtvKEur": 49.2
     },
     {
       "cohortMonth": "2021-12",
@@ -20092,7 +20092,7 @@ const CASE_DATA = {
       "revenueEur": 28502,
       "cumulativeRevenue": 1084969,
       "revenuePerActive": 10.54,
-      "gtvKEur": 249
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2021-12",
@@ -20103,7 +20103,7 @@ const CASE_DATA = {
       "revenueEur": 35766,
       "cumulativeRevenue": 1120735,
       "revenuePerActive": 13.29,
-      "gtvKEur": 4074.8
+      "gtvKEur": 54.1
     },
     {
       "cohortMonth": "2021-12",
@@ -20114,7 +20114,7 @@ const CASE_DATA = {
       "revenueEur": 28588,
       "cumulativeRevenue": 1149323,
       "revenuePerActive": 11.08,
-      "gtvKEur": 282
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2021-12",
@@ -20125,7 +20125,7 @@ const CASE_DATA = {
       "revenueEur": 28154,
       "cumulativeRevenue": 1177477,
       "revenuePerActive": 11.14,
-      "gtvKEur": 251.9
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2021-12",
@@ -20136,7 +20136,7 @@ const CASE_DATA = {
       "revenueEur": 23797,
       "cumulativeRevenue": 1201274,
       "revenuePerActive": 9.55,
-      "gtvKEur": 1564.5
+      "gtvKEur": 34.4
     },
     {
       "cohortMonth": "2021-12",
@@ -20147,7 +20147,7 @@ const CASE_DATA = {
       "revenueEur": 25885,
       "cumulativeRevenue": 1227159,
       "revenuePerActive": 10.42,
-      "gtvKEur": 217.1
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2021-12",
@@ -20158,7 +20158,7 @@ const CASE_DATA = {
       "revenueEur": 25992,
       "cumulativeRevenue": 1253151,
       "revenuePerActive": 10.83,
-      "gtvKEur": 4308
+      "gtvKEur": 81.9
     },
     {
       "cohortMonth": "2021-12",
@@ -20169,7 +20169,7 @@ const CASE_DATA = {
       "revenueEur": 26216,
       "cumulativeRevenue": 1279367,
       "revenuePerActive": 11.03,
-      "gtvKEur": 234.4
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2021-12",
@@ -20180,7 +20180,7 @@ const CASE_DATA = {
       "revenueEur": 24296,
       "cumulativeRevenue": 1303662,
       "revenuePerActive": 10.33,
-      "gtvKEur": 3574
+      "gtvKEur": 51.2
     },
     {
       "cohortMonth": "2021-12",
@@ -20191,7 +20191,7 @@ const CASE_DATA = {
       "revenueEur": 26574,
       "cumulativeRevenue": 1330236,
       "revenuePerActive": 11.6,
-      "gtvKEur": 373.3
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2021-12",
@@ -20202,7 +20202,7 @@ const CASE_DATA = {
       "revenueEur": 32833,
       "cumulativeRevenue": 1363069,
       "revenuePerActive": 14.35,
-      "gtvKEur": 4386.7
+      "gtvKEur": 123.1
     },
     {
       "cohortMonth": "2021-12",
@@ -20213,7 +20213,7 @@ const CASE_DATA = {
       "revenueEur": 24221,
       "cumulativeRevenue": 1387290,
       "revenuePerActive": 10.85,
-      "gtvKEur": 735.1
+      "gtvKEur": 7.4
     },
     {
       "cohortMonth": "2021-12",
@@ -20224,7 +20224,7 @@ const CASE_DATA = {
       "revenueEur": 31089,
       "cumulativeRevenue": 1418379,
       "revenuePerActive": 13.93,
-      "gtvKEur": 2666.2
+      "gtvKEur": 42
     },
     {
       "cohortMonth": "2021-12",
@@ -20235,7 +20235,7 @@ const CASE_DATA = {
       "revenueEur": 32961,
       "cumulativeRevenue": 1451340,
       "revenuePerActive": 15.11,
-      "gtvKEur": 2300.9
+      "gtvKEur": 23
     },
     {
       "cohortMonth": "2021-12",
@@ -20246,7 +20246,7 @@ const CASE_DATA = {
       "revenueEur": 29252,
       "cumulativeRevenue": 1480592,
       "revenuePerActive": 14.02,
-      "gtvKEur": 93155.9
+      "gtvKEur": 1677.3
     },
     {
       "cohortMonth": "2021-12",
@@ -20257,7 +20257,7 @@ const CASE_DATA = {
       "revenueEur": 28872,
       "cumulativeRevenue": 1509464,
       "revenuePerActive": 18.64,
-      "gtvKEur": 310234.9
+      "gtvKEur": 5152
     },
     {
       "cohortMonth": "2021-12",
@@ -20268,7 +20268,7 @@ const CASE_DATA = {
       "revenueEur": 6690,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 90266.4
+      "gtvKEur": 1539.8
     },
     {
       "cohortMonth": "2021-12",
@@ -20290,7 +20290,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -20301,7 +20301,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -20312,7 +20312,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -20323,7 +20323,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -20334,7 +20334,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 21.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-12",
@@ -20345,7 +20345,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 14.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-12",
@@ -20356,7 +20356,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1516154,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-12",
@@ -20378,7 +20378,7 @@ const CASE_DATA = {
       "revenueEur": 1097,
       "cumulativeRevenue": 1097,
       "revenuePerActive": 0.05,
-      "gtvKEur": 908.5
+      "gtvKEur": 9.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20389,7 +20389,7 @@ const CASE_DATA = {
       "revenueEur": 19934,
       "cumulativeRevenue": 21031,
       "revenuePerActive": 1.91,
-      "gtvKEur": 15922.1
+      "gtvKEur": 287.4
     },
     {
       "cohortMonth": "2021-11",
@@ -20400,7 +20400,7 @@ const CASE_DATA = {
       "revenueEur": 29703,
       "cumulativeRevenue": 50734,
       "revenuePerActive": 3.79,
-      "gtvKEur": 45315.1
+      "gtvKEur": 918.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20433,7 +20433,7 @@ const CASE_DATA = {
       "revenueEur": 22036,
       "cumulativeRevenue": 118954,
       "revenuePerActive": 3.74,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -20444,7 +20444,7 @@ const CASE_DATA = {
       "revenueEur": 21864,
       "cumulativeRevenue": 140818,
       "revenuePerActive": 3.87,
-      "gtvKEur": 89.5
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20455,7 +20455,7 @@ const CASE_DATA = {
       "revenueEur": 26572,
       "cumulativeRevenue": 167390,
       "revenuePerActive": 4.9,
-      "gtvKEur": 194.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20466,7 +20466,7 @@ const CASE_DATA = {
       "revenueEur": 21649,
       "cumulativeRevenue": 189039,
       "revenuePerActive": 4.16,
-      "gtvKEur": 15712.5
+      "gtvKEur": 240.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20477,7 +20477,7 @@ const CASE_DATA = {
       "revenueEur": 21702,
       "cumulativeRevenue": 210741,
       "revenuePerActive": 4.37,
-      "gtvKEur": 926.1
+      "gtvKEur": 9.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20488,7 +20488,7 @@ const CASE_DATA = {
       "revenueEur": 25314,
       "cumulativeRevenue": 236055,
       "revenuePerActive": 5.3,
-      "gtvKEur": 15.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-11",
@@ -20499,7 +20499,7 @@ const CASE_DATA = {
       "revenueEur": 22779,
       "cumulativeRevenue": 258834,
       "revenuePerActive": 4.96,
-      "gtvKEur": 23.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-11",
@@ -20510,7 +20510,7 @@ const CASE_DATA = {
       "revenueEur": 29005,
       "cumulativeRevenue": 287839,
       "revenuePerActive": 6.51,
-      "gtvKEur": 14.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20521,7 +20521,7 @@ const CASE_DATA = {
       "revenueEur": 51536,
       "cumulativeRevenue": 339375,
       "revenuePerActive": 11.94,
-      "gtvKEur": 7440.2
+      "gtvKEur": 106.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20532,7 +20532,7 @@ const CASE_DATA = {
       "revenueEur": 25821,
       "cumulativeRevenue": 365196,
       "revenuePerActive": 6.14,
-      "gtvKEur": 50.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-11",
@@ -20543,7 +20543,7 @@ const CASE_DATA = {
       "revenueEur": 22629,
       "cumulativeRevenue": 387825,
       "revenuePerActive": 5.65,
-      "gtvKEur": 12.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20554,7 +20554,7 @@ const CASE_DATA = {
       "revenueEur": 19936,
       "cumulativeRevenue": 407762,
       "revenuePerActive": 5.14,
-      "gtvKEur": 253.2
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2021-11",
@@ -20565,7 +20565,7 @@ const CASE_DATA = {
       "revenueEur": 20983,
       "cumulativeRevenue": 428745,
       "revenuePerActive": 5.7,
-      "gtvKEur": 152.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20576,7 +20576,7 @@ const CASE_DATA = {
       "revenueEur": 20796,
       "cumulativeRevenue": 449541,
       "revenuePerActive": 5.68,
-      "gtvKEur": 2816
+      "gtvKEur": 42.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20587,7 +20587,7 @@ const CASE_DATA = {
       "revenueEur": 20859,
       "cumulativeRevenue": 470399,
       "revenuePerActive": 5.82,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20598,7 +20598,7 @@ const CASE_DATA = {
       "revenueEur": 18898,
       "cumulativeRevenue": 489297,
       "revenuePerActive": 5.45,
-      "gtvKEur": 68.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20609,7 +20609,7 @@ const CASE_DATA = {
       "revenueEur": 19496,
       "cumulativeRevenue": 508793,
       "revenuePerActive": 5.77,
-      "gtvKEur": 6051.5
+      "gtvKEur": 79.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20620,7 +20620,7 @@ const CASE_DATA = {
       "revenueEur": 24686,
       "cumulativeRevenue": 533479,
       "revenuePerActive": 7.43,
-      "gtvKEur": 33.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20631,7 +20631,7 @@ const CASE_DATA = {
       "revenueEur": 20278,
       "cumulativeRevenue": 553758,
       "revenuePerActive": 6.21,
-      "gtvKEur": 25.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20642,7 +20642,7 @@ const CASE_DATA = {
       "revenueEur": 26319,
       "cumulativeRevenue": 580077,
       "revenuePerActive": 8.22,
-      "gtvKEur": 60.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20653,7 +20653,7 @@ const CASE_DATA = {
       "revenueEur": 32454,
       "cumulativeRevenue": 612531,
       "revenuePerActive": 10.38,
-      "gtvKEur": 2860.6
+      "gtvKEur": 51.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20664,7 +20664,7 @@ const CASE_DATA = {
       "revenueEur": 25390,
       "cumulativeRevenue": 637921,
       "revenuePerActive": 8.35,
-      "gtvKEur": 73.7
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20675,7 +20675,7 @@ const CASE_DATA = {
       "revenueEur": 24905,
       "cumulativeRevenue": 662826,
       "revenuePerActive": 8.36,
-      "gtvKEur": 91.8
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20686,7 +20686,7 @@ const CASE_DATA = {
       "revenueEur": 18608,
       "cumulativeRevenue": 681434,
       "revenuePerActive": 6.35,
-      "gtvKEur": 3426.5
+      "gtvKEur": 47.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20697,7 +20697,7 @@ const CASE_DATA = {
       "revenueEur": 18131,
       "cumulativeRevenue": 699565,
       "revenuePerActive": 6.37,
-      "gtvKEur": 87.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20708,7 +20708,7 @@ const CASE_DATA = {
       "revenueEur": 15322,
       "cumulativeRevenue": 714887,
       "revenuePerActive": 5.42,
-      "gtvKEur": 159.1
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20719,7 +20719,7 @@ const CASE_DATA = {
       "revenueEur": 17688,
       "cumulativeRevenue": 732576,
       "revenuePerActive": 6.32,
-      "gtvKEur": 3891.6
+      "gtvKEur": 57.3
     },
     {
       "cohortMonth": "2021-11",
@@ -20730,7 +20730,7 @@ const CASE_DATA = {
       "revenueEur": 16186,
       "cumulativeRevenue": 748762,
       "revenuePerActive": 5.88,
-      "gtvKEur": 188.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20741,7 +20741,7 @@ const CASE_DATA = {
       "revenueEur": 16592,
       "cumulativeRevenue": 765354,
       "revenuePerActive": 6.15,
-      "gtvKEur": 1880.3
+      "gtvKEur": 28.8
     },
     {
       "cohortMonth": "2021-11",
@@ -20752,7 +20752,7 @@ const CASE_DATA = {
       "revenueEur": 21315,
       "cumulativeRevenue": 786669,
       "revenuePerActive": 8.02,
-      "gtvKEur": 70.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20763,7 +20763,7 @@ const CASE_DATA = {
       "revenueEur": 16822,
       "cumulativeRevenue": 803492,
       "revenuePerActive": 6.4,
-      "gtvKEur": 244.7
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2021-11",
@@ -20774,7 +20774,7 @@ const CASE_DATA = {
       "revenueEur": 21101,
       "cumulativeRevenue": 824593,
       "revenuePerActive": 8.07,
-      "gtvKEur": 5148.5
+      "gtvKEur": 69.4
     },
     {
       "cohortMonth": "2021-11",
@@ -20785,7 +20785,7 @@ const CASE_DATA = {
       "revenueEur": 23447,
       "cumulativeRevenue": 848040,
       "revenuePerActive": 9.06,
-      "gtvKEur": 305
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20796,7 +20796,7 @@ const CASE_DATA = {
       "revenueEur": 18314,
       "cumulativeRevenue": 866354,
       "revenuePerActive": 7.28,
-      "gtvKEur": 2697.6
+      "gtvKEur": 39.4
     },
     {
       "cohortMonth": "2021-11",
@@ -20807,7 +20807,7 @@ const CASE_DATA = {
       "revenueEur": 20509,
       "cumulativeRevenue": 886863,
       "revenuePerActive": 8.34,
-      "gtvKEur": 272.5
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20818,7 +20818,7 @@ const CASE_DATA = {
       "revenueEur": 20690,
       "cumulativeRevenue": 907554,
       "revenuePerActive": 8.72,
-      "gtvKEur": 259.6
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20829,7 +20829,7 @@ const CASE_DATA = {
       "revenueEur": 20454,
       "cumulativeRevenue": 928008,
       "revenuePerActive": 8.63,
-      "gtvKEur": 2192.7
+      "gtvKEur": 29.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20840,7 +20840,7 @@ const CASE_DATA = {
       "revenueEur": 19379,
       "cumulativeRevenue": 947386,
       "revenuePerActive": 8.18,
-      "gtvKEur": 535.2
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2021-11",
@@ -20851,7 +20851,7 @@ const CASE_DATA = {
       "revenueEur": 21406,
       "cumulativeRevenue": 968792,
       "revenuePerActive": 9.19,
-      "gtvKEur": 2344.6
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2021-11",
@@ -20862,7 +20862,7 @@ const CASE_DATA = {
       "revenueEur": 20681,
       "cumulativeRevenue": 989474,
       "revenuePerActive": 9.13,
-      "gtvKEur": 417
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2021-11",
@@ -20873,7 +20873,7 @@ const CASE_DATA = {
       "revenueEur": 18182,
       "cumulativeRevenue": 1007656,
       "revenuePerActive": 8.19,
-      "gtvKEur": 1867.5
+      "gtvKEur": 27.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20884,7 +20884,7 @@ const CASE_DATA = {
       "revenueEur": 21240,
       "cumulativeRevenue": 1028896,
       "revenuePerActive": 9.72,
-      "gtvKEur": 748.6
+      "gtvKEur": 7.5
     },
     {
       "cohortMonth": "2021-11",
@@ -20895,7 +20895,7 @@ const CASE_DATA = {
       "revenueEur": 25155,
       "cumulativeRevenue": 1054051,
       "revenuePerActive": 11.61,
-      "gtvKEur": 2096.9
+      "gtvKEur": 29.7
     },
     {
       "cohortMonth": "2021-11",
@@ -20906,7 +20906,7 @@ const CASE_DATA = {
       "revenueEur": 23010,
       "cumulativeRevenue": 1077061,
       "revenuePerActive": 10.69,
-      "gtvKEur": 893.4
+      "gtvKEur": 8.9
     },
     {
       "cohortMonth": "2021-11",
@@ -20917,7 +20917,7 @@ const CASE_DATA = {
       "revenueEur": 26179,
       "cumulativeRevenue": 1103240,
       "revenuePerActive": 12.39,
-      "gtvKEur": 3565.8
+      "gtvKEur": 44.1
     },
     {
       "cohortMonth": "2021-11",
@@ -20928,7 +20928,7 @@ const CASE_DATA = {
       "revenueEur": 20428,
       "cumulativeRevenue": 1123667,
       "revenuePerActive": 9.75,
-      "gtvKEur": 3480.5
+      "gtvKEur": 36
     },
     {
       "cohortMonth": "2021-11",
@@ -20939,7 +20939,7 @@ const CASE_DATA = {
       "revenueEur": 23790,
       "cumulativeRevenue": 1147457,
       "revenuePerActive": 11.73,
-      "gtvKEur": 618003.6
+      "gtvKEur": 7078.6
     },
     {
       "cohortMonth": "2021-11",
@@ -20950,7 +20950,7 @@ const CASE_DATA = {
       "revenueEur": 18366,
       "cumulativeRevenue": 1165824,
       "revenuePerActive": 11.92,
-      "gtvKEur": 131087.4
+      "gtvKEur": 2850.5
     },
     {
       "cohortMonth": "2021-11",
@@ -20961,7 +20961,7 @@ const CASE_DATA = {
       "revenueEur": 7228,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 27102.9
+      "gtvKEur": 585.2
     },
     {
       "cohortMonth": "2021-11",
@@ -20972,7 +20972,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -20983,7 +20983,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 24.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-11",
@@ -20994,7 +20994,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -21005,7 +21005,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -21016,7 +21016,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -21038,7 +21038,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-11",
@@ -21049,7 +21049,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1173052,
       "revenuePerActive": 0,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21060,7 +21060,7 @@ const CASE_DATA = {
       "revenueEur": 4684,
       "cumulativeRevenue": 4684,
       "revenuePerActive": 0.21,
-      "gtvKEur": 24.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21071,7 +21071,7 @@ const CASE_DATA = {
       "revenueEur": 10718,
       "cumulativeRevenue": 15402,
       "revenuePerActive": 1.15,
-      "gtvKEur": 873
+      "gtvKEur": 8.7
     },
     {
       "cohortMonth": "2021-10",
@@ -21082,7 +21082,7 @@ const CASE_DATA = {
       "revenueEur": 6131,
       "cumulativeRevenue": 21533,
       "revenuePerActive": 0.87,
-      "gtvKEur": 35141.8
+      "gtvKEur": 410.3
     },
     {
       "cohortMonth": "2021-10",
@@ -21093,7 +21093,7 @@ const CASE_DATA = {
       "revenueEur": 29169,
       "cumulativeRevenue": 50702,
       "revenuePerActive": 4.74,
-      "gtvKEur": 2546002.9
+      "gtvKEur": 25714.4
     },
     {
       "cohortMonth": "2021-10",
@@ -21115,7 +21115,7 @@ const CASE_DATA = {
       "revenueEur": 24521,
       "cumulativeRevenue": 101899,
       "revenuePerActive": 4.58,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21126,7 +21126,7 @@ const CASE_DATA = {
       "revenueEur": 25655,
       "cumulativeRevenue": 127554,
       "revenuePerActive": 5.23,
-      "gtvKEur": 46.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21137,7 +21137,7 @@ const CASE_DATA = {
       "revenueEur": 26232,
       "cumulativeRevenue": 153786,
       "revenuePerActive": 5.59,
-      "gtvKEur": 81.8
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21148,7 +21148,7 @@ const CASE_DATA = {
       "revenueEur": 24498,
       "cumulativeRevenue": 178285,
       "revenuePerActive": 5.42,
-      "gtvKEur": 75.6
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21159,7 +21159,7 @@ const CASE_DATA = {
       "revenueEur": 24274,
       "cumulativeRevenue": 202558,
       "revenuePerActive": 5.6,
-      "gtvKEur": 13499.4
+      "gtvKEur": 185.6
     },
     {
       "cohortMonth": "2021-10",
@@ -21170,7 +21170,7 @@ const CASE_DATA = {
       "revenueEur": 21824,
       "cumulativeRevenue": 224382,
       "revenuePerActive": 5.23,
-      "gtvKEur": 140
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2021-10",
@@ -21181,7 +21181,7 @@ const CASE_DATA = {
       "revenueEur": 21915,
       "cumulativeRevenue": 246297,
       "revenuePerActive": 5.38,
-      "gtvKEur": 80.1
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21192,7 +21192,7 @@ const CASE_DATA = {
       "revenueEur": 40111,
       "cumulativeRevenue": 286408,
       "revenuePerActive": 10.18,
-      "gtvKEur": 17.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21203,7 +21203,7 @@ const CASE_DATA = {
       "revenueEur": 95128,
       "cumulativeRevenue": 381536,
       "revenuePerActive": 25.22,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21214,7 +21214,7 @@ const CASE_DATA = {
       "revenueEur": 33114,
       "cumulativeRevenue": 414650,
       "revenuePerActive": 9.09,
-      "gtvKEur": 17689.8
+      "gtvKEur": 207.6
     },
     {
       "cohortMonth": "2021-10",
@@ -21225,7 +21225,7 @@ const CASE_DATA = {
       "revenueEur": 27956,
       "cumulativeRevenue": 442606,
       "revenuePerActive": 8.06,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21247,7 +21247,7 @@ const CASE_DATA = {
       "revenueEur": 21124,
       "cumulativeRevenue": 489179,
       "revenuePerActive": 6.32,
-      "gtvKEur": 9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-10",
@@ -21258,7 +21258,7 @@ const CASE_DATA = {
       "revenueEur": 24614,
       "cumulativeRevenue": 513793,
       "revenuePerActive": 7.75,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21269,7 +21269,7 @@ const CASE_DATA = {
       "revenueEur": 22503,
       "cumulativeRevenue": 536297,
       "revenuePerActive": 7.2,
-      "gtvKEur": 16482.2
+      "gtvKEur": 198.1
     },
     {
       "cohortMonth": "2021-10",
@@ -21280,7 +21280,7 @@ const CASE_DATA = {
       "revenueEur": 21055,
       "cumulativeRevenue": 557351,
       "revenuePerActive": 6.98,
-      "gtvKEur": 73.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-10",
@@ -21291,7 +21291,7 @@ const CASE_DATA = {
       "revenueEur": 24389,
       "cumulativeRevenue": 581740,
       "revenuePerActive": 8.28,
-      "gtvKEur": 60.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-10",
@@ -21302,7 +21302,7 @@ const CASE_DATA = {
       "revenueEur": 23544,
       "cumulativeRevenue": 605284,
       "revenuePerActive": 8.18,
-      "gtvKEur": 1691
+      "gtvKEur": 32.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21313,7 +21313,7 @@ const CASE_DATA = {
       "revenueEur": 21712,
       "cumulativeRevenue": 626996,
       "revenuePerActive": 7.64,
-      "gtvKEur": 75.7
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21324,7 +21324,7 @@ const CASE_DATA = {
       "revenueEur": 45731,
       "cumulativeRevenue": 672726,
       "revenuePerActive": 16.45,
-      "gtvKEur": 66.9
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-10",
@@ -21335,7 +21335,7 @@ const CASE_DATA = {
       "revenueEur": 54352,
       "cumulativeRevenue": 727078,
       "revenuePerActive": 20,
-      "gtvKEur": 79.6
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21346,7 +21346,7 @@ const CASE_DATA = {
       "revenueEur": 25482,
       "cumulativeRevenue": 752560,
       "revenuePerActive": 9.58,
-      "gtvKEur": 1899.6
+      "gtvKEur": 52.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21357,7 +21357,7 @@ const CASE_DATA = {
       "revenueEur": 25049,
       "cumulativeRevenue": 777609,
       "revenuePerActive": 9.65,
-      "gtvKEur": 52.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21368,7 +21368,7 @@ const CASE_DATA = {
       "revenueEur": 28841,
       "cumulativeRevenue": 806451,
       "revenuePerActive": 11.44,
-      "gtvKEur": 71.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-10",
@@ -21379,7 +21379,7 @@ const CASE_DATA = {
       "revenueEur": 20253,
       "cumulativeRevenue": 826703,
       "revenuePerActive": 8.15,
-      "gtvKEur": 1405.5
+      "gtvKEur": 30.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21401,7 +21401,7 @@ const CASE_DATA = {
       "revenueEur": 19289,
       "cumulativeRevenue": 868621,
       "revenuePerActive": 7.99,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21412,7 +21412,7 @@ const CASE_DATA = {
       "revenueEur": 18810,
       "cumulativeRevenue": 887431,
       "revenuePerActive": 7.95,
-      "gtvKEur": 1161.4
+      "gtvKEur": 34.6
     },
     {
       "cohortMonth": "2021-10",
@@ -21423,7 +21423,7 @@ const CASE_DATA = {
       "revenueEur": 17916,
       "cumulativeRevenue": 905347,
       "revenuePerActive": 7.75,
-      "gtvKEur": 31.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-10",
@@ -21434,7 +21434,7 @@ const CASE_DATA = {
       "revenueEur": 20319,
       "cumulativeRevenue": 925667,
       "revenuePerActive": 8.9,
-      "gtvKEur": 2022
+      "gtvKEur": 47.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21445,7 +21445,7 @@ const CASE_DATA = {
       "revenueEur": 18091,
       "cumulativeRevenue": 943758,
       "revenuePerActive": 8.04,
-      "gtvKEur": 30.3
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21456,7 +21456,7 @@ const CASE_DATA = {
       "revenueEur": 40182,
       "cumulativeRevenue": 983939,
       "revenuePerActive": 18.12,
-      "gtvKEur": 47.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21467,7 +21467,7 @@ const CASE_DATA = {
       "revenueEur": 37851,
       "cumulativeRevenue": 1021790,
       "revenuePerActive": 17.38,
-      "gtvKEur": 5755.4
+      "gtvKEur": 86.1
     },
     {
       "cohortMonth": "2021-10",
@@ -21478,7 +21478,7 @@ const CASE_DATA = {
       "revenueEur": 20659,
       "cumulativeRevenue": 1042449,
       "revenuePerActive": 9.62,
-      "gtvKEur": 20.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21489,7 +21489,7 @@ const CASE_DATA = {
       "revenueEur": 20825,
       "cumulativeRevenue": 1063274,
       "revenuePerActive": 9.88,
-      "gtvKEur": 1350.3
+      "gtvKEur": 36.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21500,7 +21500,7 @@ const CASE_DATA = {
       "revenueEur": 21790,
       "cumulativeRevenue": 1085065,
       "revenuePerActive": 10.51,
-      "gtvKEur": 42.3
+      "gtvKEur": 4.8
     },
     {
       "cohortMonth": "2021-10",
@@ -21511,7 +21511,7 @@ const CASE_DATA = {
       "revenueEur": 23603,
       "cumulativeRevenue": 1108668,
       "revenuePerActive": 11.49,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21522,7 +21522,7 @@ const CASE_DATA = {
       "revenueEur": 24875,
       "cumulativeRevenue": 1133543,
       "revenuePerActive": 12.41,
-      "gtvKEur": 1006.8
+      "gtvKEur": 30.4
     },
     {
       "cohortMonth": "2021-10",
@@ -21533,7 +21533,7 @@ const CASE_DATA = {
       "revenueEur": 18863,
       "cumulativeRevenue": 1152406,
       "revenuePerActive": 9.55,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21544,7 +21544,7 @@ const CASE_DATA = {
       "revenueEur": 19919,
       "cumulativeRevenue": 1172325,
       "revenuePerActive": 10.15,
-      "gtvKEur": 882.6
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2021-10",
@@ -21555,7 +21555,7 @@ const CASE_DATA = {
       "revenueEur": 19527,
       "cumulativeRevenue": 1191852,
       "revenuePerActive": 10.06,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21566,7 +21566,7 @@ const CASE_DATA = {
       "revenueEur": 23510,
       "cumulativeRevenue": 1215362,
       "revenuePerActive": 12.35,
-      "gtvKEur": 1073.7
+      "gtvKEur": 22.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21577,7 +21577,7 @@ const CASE_DATA = {
       "revenueEur": 21236,
       "cumulativeRevenue": 1236598,
       "revenuePerActive": 11.31,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-10",
@@ -21588,7 +21588,7 @@ const CASE_DATA = {
       "revenueEur": 36651,
       "cumulativeRevenue": 1273250,
       "revenuePerActive": 19.57,
-      "gtvKEur": 1109.9
+      "gtvKEur": 23.3
     },
     {
       "cohortMonth": "2021-10",
@@ -21599,7 +21599,7 @@ const CASE_DATA = {
       "revenueEur": 34973,
       "cumulativeRevenue": 1308222,
       "revenuePerActive": 18.82,
-      "gtvKEur": 22.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-10",
@@ -21610,7 +21610,7 @@ const CASE_DATA = {
       "revenueEur": 24310,
       "cumulativeRevenue": 1332532,
       "revenuePerActive": 13.4,
-      "gtvKEur": 846.4
+      "gtvKEur": 33
     },
     {
       "cohortMonth": "2021-10",
@@ -21621,7 +21621,7 @@ const CASE_DATA = {
       "revenueEur": 22424,
       "cumulativeRevenue": 1354956,
       "revenuePerActive": 12.61,
-      "gtvKEur": 148.3
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21632,7 +21632,7 @@ const CASE_DATA = {
       "revenueEur": 21938,
       "cumulativeRevenue": 1376894,
       "revenuePerActive": 12.68,
-      "gtvKEur": 28614.4
+      "gtvKEur": 968.5
     },
     {
       "cohortMonth": "2021-10",
@@ -21643,7 +21643,7 @@ const CASE_DATA = {
       "revenueEur": 26432,
       "cumulativeRevenue": 1403326,
       "revenuePerActive": 19.34,
-      "gtvKEur": 267511.1
+      "gtvKEur": 3895.9
     },
     {
       "cohortMonth": "2021-10",
@@ -21654,7 +21654,7 @@ const CASE_DATA = {
       "revenueEur": 6927,
       "cumulativeRevenue": 1410253,
       "revenuePerActive": 0,
-      "gtvKEur": 19580.2
+      "gtvKEur": 446.7
     },
     {
       "cohortMonth": "2021-09",
@@ -21665,7 +21665,7 @@ const CASE_DATA = {
       "revenueEur": 653,
       "cumulativeRevenue": 653,
       "revenuePerActive": 0.03,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-09",
@@ -21676,7 +21676,7 @@ const CASE_DATA = {
       "revenueEur": 7665,
       "cumulativeRevenue": 8317,
       "revenuePerActive": 0.87,
-      "gtvKEur": 18.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -21687,7 +21687,7 @@ const CASE_DATA = {
       "revenueEur": 4745,
       "cumulativeRevenue": 13062,
       "revenuePerActive": 0.71,
-      "gtvKEur": 63.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-09",
@@ -21698,7 +21698,7 @@ const CASE_DATA = {
       "revenueEur": 4457,
       "cumulativeRevenue": 17519,
       "revenuePerActive": 0.76,
-      "gtvKEur": 13000.2
+      "gtvKEur": 191
     },
     {
       "cohortMonth": "2021-09",
@@ -21709,7 +21709,7 @@ const CASE_DATA = {
       "revenueEur": 28865,
       "cumulativeRevenue": 46385,
       "revenuePerActive": 5.46,
-      "gtvKEur": 23084.3
+      "gtvKEur": 590.8
     },
     {
       "cohortMonth": "2021-09",
@@ -21720,7 +21720,7 @@ const CASE_DATA = {
       "revenueEur": 29182,
       "cumulativeRevenue": 75566,
       "revenuePerActive": 5.92,
-      "gtvKEur": 116.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2021-09",
@@ -21764,7 +21764,7 @@ const CASE_DATA = {
       "revenueEur": 25177,
       "cumulativeRevenue": 182329,
       "revenuePerActive": 6.26,
-      "gtvKEur": 12
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-09",
@@ -21775,7 +21775,7 @@ const CASE_DATA = {
       "revenueEur": 24173,
       "cumulativeRevenue": 206502,
       "revenuePerActive": 6.28,
-      "gtvKEur": 2985.1
+      "gtvKEur": 72.9
     },
     {
       "cohortMonth": "2021-09",
@@ -21797,7 +21797,7 @@ const CASE_DATA = {
       "revenueEur": 27367,
       "cumulativeRevenue": 257411,
       "revenuePerActive": 7.6,
-      "gtvKEur": 45.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-09",
@@ -21808,7 +21808,7 @@ const CASE_DATA = {
       "revenueEur": 44977,
       "cumulativeRevenue": 302388,
       "revenuePerActive": 13.03,
-      "gtvKEur": 117.6
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2021-09",
@@ -21819,7 +21819,7 @@ const CASE_DATA = {
       "revenueEur": 30179,
       "cumulativeRevenue": 332567,
       "revenuePerActive": 8.98,
-      "gtvKEur": 123.8
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2021-09",
@@ -21830,7 +21830,7 @@ const CASE_DATA = {
       "revenueEur": 30778,
       "cumulativeRevenue": 363345,
       "revenuePerActive": 9.51,
-      "gtvKEur": 3013.4
+      "gtvKEur": 84.8
     },
     {
       "cohortMonth": "2021-09",
@@ -21841,7 +21841,7 @@ const CASE_DATA = {
       "revenueEur": 25942,
       "cumulativeRevenue": 389287,
       "revenuePerActive": 8.25,
-      "gtvKEur": 61.2
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-09",
@@ -21852,7 +21852,7 @@ const CASE_DATA = {
       "revenueEur": 30202,
       "cumulativeRevenue": 419489,
       "revenuePerActive": 9.86,
-      "gtvKEur": 98
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2021-09",
@@ -21863,7 +21863,7 @@ const CASE_DATA = {
       "revenueEur": 29735,
       "cumulativeRevenue": 449224,
       "revenuePerActive": 9.95,
-      "gtvKEur": 130.5
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2021-09",
@@ -21874,7 +21874,7 @@ const CASE_DATA = {
       "revenueEur": 22590,
       "cumulativeRevenue": 471814,
       "revenuePerActive": 7.97,
-      "gtvKEur": 140.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2021-09",
@@ -21885,7 +21885,7 @@ const CASE_DATA = {
       "revenueEur": 24107,
       "cumulativeRevenue": 495921,
       "revenuePerActive": 8.55,
-      "gtvKEur": 2214.2
+      "gtvKEur": 71
     },
     {
       "cohortMonth": "2021-09",
@@ -21896,7 +21896,7 @@ const CASE_DATA = {
       "revenueEur": 20393,
       "cumulativeRevenue": 516314,
       "revenuePerActive": 7.49,
-      "gtvKEur": 27.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-09",
@@ -21907,7 +21907,7 @@ const CASE_DATA = {
       "revenueEur": 20767,
       "cumulativeRevenue": 537081,
       "revenuePerActive": 7.66,
-      "gtvKEur": 12.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-09",
@@ -21918,7 +21918,7 @@ const CASE_DATA = {
       "revenueEur": 21135,
       "cumulativeRevenue": 558216,
       "revenuePerActive": 7.95,
-      "gtvKEur": 1784.9
+      "gtvKEur": 50.3
     },
     {
       "cohortMonth": "2021-09",
@@ -21929,7 +21929,7 @@ const CASE_DATA = {
       "revenueEur": 26365,
       "cumulativeRevenue": 584581,
       "revenuePerActive": 10.06,
-      "gtvKEur": 16.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -21940,7 +21940,7 @@ const CASE_DATA = {
       "revenueEur": 40673,
       "cumulativeRevenue": 625254,
       "revenuePerActive": 15.88,
-      "gtvKEur": 7.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-09",
@@ -21951,7 +21951,7 @@ const CASE_DATA = {
       "revenueEur": 28591,
       "cumulativeRevenue": 653845,
       "revenuePerActive": 11.44,
-      "gtvKEur": 2.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-09",
@@ -21962,7 +21962,7 @@ const CASE_DATA = {
       "revenueEur": 25607,
       "cumulativeRevenue": 679452,
       "revenuePerActive": 10.39,
-      "gtvKEur": 2556.5
+      "gtvKEur": 69.6
     },
     {
       "cohortMonth": "2021-09",
@@ -21973,7 +21973,7 @@ const CASE_DATA = {
       "revenueEur": 25440,
       "cumulativeRevenue": 704892,
       "revenuePerActive": 10.6,
-      "gtvKEur": 2.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-09",
@@ -21984,7 +21984,7 @@ const CASE_DATA = {
       "revenueEur": 25934,
       "cumulativeRevenue": 730826,
       "revenuePerActive": 11.18,
-      "gtvKEur": 6.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-09",
@@ -21995,7 +21995,7 @@ const CASE_DATA = {
       "revenueEur": 23297,
       "cumulativeRevenue": 754123,
       "revenuePerActive": 10.23,
-      "gtvKEur": 1981.8
+      "gtvKEur": 49.9
     },
     {
       "cohortMonth": "2021-09",
@@ -22006,7 +22006,7 @@ const CASE_DATA = {
       "revenueEur": 20613,
       "cumulativeRevenue": 774736,
       "revenuePerActive": 9.29,
-      "gtvKEur": 36.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-09",
@@ -22017,7 +22017,7 @@ const CASE_DATA = {
       "revenueEur": 24021,
       "cumulativeRevenue": 798756,
       "revenuePerActive": 10.94,
-      "gtvKEur": 45.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-09",
@@ -22028,7 +22028,7 @@ const CASE_DATA = {
       "revenueEur": 22815,
       "cumulativeRevenue": 821571,
       "revenuePerActive": 10.52,
-      "gtvKEur": 1295.2
+      "gtvKEur": 38.8
     },
     {
       "cohortMonth": "2021-09",
@@ -22039,7 +22039,7 @@ const CASE_DATA = {
       "revenueEur": 23383,
       "cumulativeRevenue": 844954,
       "revenuePerActive": 11.09,
-      "gtvKEur": 16.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22050,7 +22050,7 @@ const CASE_DATA = {
       "revenueEur": 23355,
       "cumulativeRevenue": 868310,
       "revenuePerActive": 11.19,
-      "gtvKEur": 1477.5
+      "gtvKEur": 46.7
     },
     {
       "cohortMonth": "2021-09",
@@ -22061,7 +22061,7 @@ const CASE_DATA = {
       "revenueEur": 24213,
       "cumulativeRevenue": 892522,
       "revenuePerActive": 11.59,
-      "gtvKEur": 18.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22072,7 +22072,7 @@ const CASE_DATA = {
       "revenueEur": 45820,
       "cumulativeRevenue": 938342,
       "revenuePerActive": 22.43,
-      "gtvKEur": 16.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22083,7 +22083,7 @@ const CASE_DATA = {
       "revenueEur": 25979,
       "cumulativeRevenue": 964321,
       "revenuePerActive": 12.83,
-      "gtvKEur": 1241.9
+      "gtvKEur": 37.5
     },
     {
       "cohortMonth": "2021-09",
@@ -22094,7 +22094,7 @@ const CASE_DATA = {
       "revenueEur": 24509,
       "cumulativeRevenue": 988830,
       "revenuePerActive": 12.31,
-      "gtvKEur": 519.3
+      "gtvKEur": 5.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22105,7 +22105,7 @@ const CASE_DATA = {
       "revenueEur": 27037,
       "cumulativeRevenue": 1015867,
       "revenuePerActive": 13.85,
-      "gtvKEur": 1441.5
+      "gtvKEur": 46.8
     },
     {
       "cohortMonth": "2021-09",
@@ -22116,7 +22116,7 @@ const CASE_DATA = {
       "revenueEur": 27958,
       "cumulativeRevenue": 1043825,
       "revenuePerActive": 14.64,
-      "gtvKEur": 16.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22127,7 +22127,7 @@ const CASE_DATA = {
       "revenueEur": 25912,
       "cumulativeRevenue": 1069738,
       "revenuePerActive": 13.62,
-      "gtvKEur": 26.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-09",
@@ -22138,7 +22138,7 @@ const CASE_DATA = {
       "revenueEur": 26002,
       "cumulativeRevenue": 1095740,
       "revenuePerActive": 13.87,
-      "gtvKEur": 1083.3
+      "gtvKEur": 37
     },
     {
       "cohortMonth": "2021-09",
@@ -22149,7 +22149,7 @@ const CASE_DATA = {
       "revenueEur": 22487,
       "cumulativeRevenue": 1118226,
       "revenuePerActive": 12.02,
-      "gtvKEur": 30.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-09",
@@ -22160,7 +22160,7 @@ const CASE_DATA = {
       "revenueEur": 25491,
       "cumulativeRevenue": 1143718,
       "revenuePerActive": 13.87,
-      "gtvKEur": 936
+      "gtvKEur": 39.4
     },
     {
       "cohortMonth": "2021-09",
@@ -22171,7 +22171,7 @@ const CASE_DATA = {
       "revenueEur": 24618,
       "cumulativeRevenue": 1168336,
       "revenuePerActive": 13.75,
-      "gtvKEur": 19.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22182,7 +22182,7 @@ const CASE_DATA = {
       "revenueEur": 29186,
       "cumulativeRevenue": 1197522,
       "revenuePerActive": 16.37,
-      "gtvKEur": 840.5
+      "gtvKEur": 20.5
     },
     {
       "cohortMonth": "2021-09",
@@ -22193,7 +22193,7 @@ const CASE_DATA = {
       "revenueEur": 24135,
       "cumulativeRevenue": 1221656,
       "revenuePerActive": 13.55,
-      "gtvKEur": 142.7
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-09",
@@ -22204,7 +22204,7 @@ const CASE_DATA = {
       "revenueEur": 45562,
       "cumulativeRevenue": 1267218,
       "revenuePerActive": 26.16,
-      "gtvKEur": 891.1
+      "gtvKEur": 26
     },
     {
       "cohortMonth": "2021-09",
@@ -22215,7 +22215,7 @@ const CASE_DATA = {
       "revenueEur": 28930,
       "cumulativeRevenue": 1296148,
       "revenuePerActive": 16.76,
-      "gtvKEur": 20
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-09",
@@ -22226,7 +22226,7 @@ const CASE_DATA = {
       "revenueEur": 24712,
       "cumulativeRevenue": 1320859,
       "revenuePerActive": 14.51,
-      "gtvKEur": 967.9
+      "gtvKEur": 21
     },
     {
       "cohortMonth": "2021-09",
@@ -22237,7 +22237,7 @@ const CASE_DATA = {
       "revenueEur": 26343,
       "cumulativeRevenue": 1347203,
       "revenuePerActive": 15.76,
-      "gtvKEur": 128.9
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2021-09",
@@ -22248,7 +22248,7 @@ const CASE_DATA = {
       "revenueEur": 23599,
       "cumulativeRevenue": 1370802,
       "revenuePerActive": 14.26,
-      "gtvKEur": 25604
+      "gtvKEur": 913.6
     },
     {
       "cohortMonth": "2021-09",
@@ -22259,7 +22259,7 @@ const CASE_DATA = {
       "revenueEur": 24414,
       "cumulativeRevenue": 1395216,
       "revenuePerActive": 18.95,
-      "gtvKEur": 70162.9
+      "gtvKEur": 2375
     },
     {
       "cohortMonth": "2021-09",
@@ -22270,7 +22270,7 @@ const CASE_DATA = {
       "revenueEur": 6970,
       "cumulativeRevenue": 1402186,
       "revenuePerActive": 0,
-      "gtvKEur": 18744.7
+      "gtvKEur": 616
     },
     {
       "cohortMonth": "2021-09",
@@ -22281,7 +22281,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1402186,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-09",
@@ -22292,7 +22292,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1402186,
       "revenuePerActive": 0,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22303,7 +22303,7 @@ const CASE_DATA = {
       "revenueEur": 7729,
       "cumulativeRevenue": 7729,
       "revenuePerActive": 0.38,
-      "gtvKEur": 4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22314,7 +22314,7 @@ const CASE_DATA = {
       "revenueEur": 2111,
       "cumulativeRevenue": 9841,
       "revenuePerActive": 0.25,
-      "gtvKEur": 38
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-08",
@@ -22325,7 +22325,7 @@ const CASE_DATA = {
       "revenueEur": 1840,
       "cumulativeRevenue": 11681,
       "revenuePerActive": 0.3,
-      "gtvKEur": 35.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-08",
@@ -22336,7 +22336,7 @@ const CASE_DATA = {
       "revenueEur": 2454,
       "cumulativeRevenue": 14135,
       "revenuePerActive": 0.46,
-      "gtvKEur": 116.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22347,7 +22347,7 @@ const CASE_DATA = {
       "revenueEur": 5604,
       "cumulativeRevenue": 19738,
       "revenuePerActive": 1.15,
-      "gtvKEur": 6459.2
+      "gtvKEur": 104.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22358,7 +22358,7 @@ const CASE_DATA = {
       "revenueEur": 21208,
       "cumulativeRevenue": 40947,
       "revenuePerActive": 4.69,
-      "gtvKEur": 138386190.8
+      "gtvKEur": 1383978.9
     },
     {
       "cohortMonth": "2021-08",
@@ -22391,7 +22391,7 @@ const CASE_DATA = {
       "revenueEur": 20356,
       "cumulativeRevenue": 105185,
       "revenuePerActive": 5.4,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22402,7 +22402,7 @@ const CASE_DATA = {
       "revenueEur": 21286,
       "cumulativeRevenue": 126471,
       "revenuePerActive": 5.81,
-      "gtvKEur": 8.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22413,7 +22413,7 @@ const CASE_DATA = {
       "revenueEur": 20831,
       "cumulativeRevenue": 147302,
       "revenuePerActive": 5.9,
-      "gtvKEur": 3.8
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2021-08",
@@ -22424,7 +22424,7 @@ const CASE_DATA = {
       "revenueEur": 21568,
       "cumulativeRevenue": 168870,
       "revenuePerActive": 6.35,
-      "gtvKEur": 5152.6
+      "gtvKEur": 102.5
     },
     {
       "cohortMonth": "2021-08",
@@ -22468,7 +22468,7 @@ const CASE_DATA = {
       "revenueEur": 26571,
       "cumulativeRevenue": 302164,
       "revenuePerActive": 9.07,
-      "gtvKEur": 6.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22479,7 +22479,7 @@ const CASE_DATA = {
       "revenueEur": 22677,
       "cumulativeRevenue": 324840,
       "revenuePerActive": 7.97,
-      "gtvKEur": 5099.3
+      "gtvKEur": 105.7
     },
     {
       "cohortMonth": "2021-08",
@@ -22490,7 +22490,7 @@ const CASE_DATA = {
       "revenueEur": 21326,
       "cumulativeRevenue": 346166,
       "revenuePerActive": 7.74,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22501,7 +22501,7 @@ const CASE_DATA = {
       "revenueEur": 21342,
       "cumulativeRevenue": 367507,
       "revenuePerActive": 8,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22512,7 +22512,7 @@ const CASE_DATA = {
       "revenueEur": 19030,
       "cumulativeRevenue": 386537,
       "revenuePerActive": 7.19,
-      "gtvKEur": 7.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22523,7 +22523,7 @@ const CASE_DATA = {
       "revenueEur": 21418,
       "cumulativeRevenue": 407955,
       "revenuePerActive": 8.51,
-      "gtvKEur": 21.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22534,7 +22534,7 @@ const CASE_DATA = {
       "revenueEur": 21045,
       "cumulativeRevenue": 429000,
       "revenuePerActive": 8.5,
-      "gtvKEur": 3835.6
+      "gtvKEur": 69
     },
     {
       "cohortMonth": "2021-08",
@@ -22545,7 +22545,7 @@ const CASE_DATA = {
       "revenueEur": 17255,
       "cumulativeRevenue": 446256,
       "revenuePerActive": 7.19,
-      "gtvKEur": 5.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22556,7 +22556,7 @@ const CASE_DATA = {
       "revenueEur": 19445,
       "cumulativeRevenue": 465701,
       "revenuePerActive": 8.1,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22567,7 +22567,7 @@ const CASE_DATA = {
       "revenueEur": 27538,
       "cumulativeRevenue": 493239,
       "revenuePerActive": 11.8,
-      "gtvKEur": 2538.2
+      "gtvKEur": 44.8
     },
     {
       "cohortMonth": "2021-08",
@@ -22600,7 +22600,7 @@ const CASE_DATA = {
       "revenueEur": 24903,
       "cumulativeRevenue": 572693,
       "revenuePerActive": 11.48,
-      "gtvKEur": 49
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-08",
@@ -22611,7 +22611,7 @@ const CASE_DATA = {
       "revenueEur": 21282,
       "cumulativeRevenue": 593975,
       "revenuePerActive": 9.93,
-      "gtvKEur": 3547.3
+      "gtvKEur": 70.7
     },
     {
       "cohortMonth": "2021-08",
@@ -22622,7 +22622,7 @@ const CASE_DATA = {
       "revenueEur": 19837,
       "cumulativeRevenue": 613812,
       "revenuePerActive": 9.42,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22633,7 +22633,7 @@ const CASE_DATA = {
       "revenueEur": 21771,
       "cumulativeRevenue": 635583,
       "revenuePerActive": 10.49,
-      "gtvKEur": 23.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22644,7 +22644,7 @@ const CASE_DATA = {
       "revenueEur": 17749,
       "cumulativeRevenue": 653332,
       "revenuePerActive": 8.58,
-      "gtvKEur": 2246
+      "gtvKEur": 61.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22655,7 +22655,7 @@ const CASE_DATA = {
       "revenueEur": 20276,
       "cumulativeRevenue": 673608,
       "revenuePerActive": 10.15,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22666,7 +22666,7 @@ const CASE_DATA = {
       "revenueEur": 18773,
       "cumulativeRevenue": 692382,
       "revenuePerActive": 9.39,
-      "gtvKEur": 15.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22677,7 +22677,7 @@ const CASE_DATA = {
       "revenueEur": 16550,
       "cumulativeRevenue": 708932,
       "revenuePerActive": 8.53,
-      "gtvKEur": 2626.4
+      "gtvKEur": 34.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22688,7 +22688,7 @@ const CASE_DATA = {
       "revenueEur": 17652,
       "cumulativeRevenue": 726584,
       "revenuePerActive": 9.19,
-      "gtvKEur": 16.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-08",
@@ -22699,7 +22699,7 @@ const CASE_DATA = {
       "revenueEur": 26185,
       "cumulativeRevenue": 752769,
       "revenuePerActive": 13.66,
-      "gtvKEur": 85762.8
+      "gtvKEur": 874
     },
     {
       "cohortMonth": "2021-08",
@@ -22710,7 +22710,7 @@ const CASE_DATA = {
       "revenueEur": 26901,
       "cumulativeRevenue": 779670,
       "revenuePerActive": 14.36,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22721,7 +22721,7 @@ const CASE_DATA = {
       "revenueEur": 19384,
       "cumulativeRevenue": 799053,
       "revenuePerActive": 10.64,
-      "gtvKEur": 6.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22732,7 +22732,7 @@ const CASE_DATA = {
       "revenueEur": 21042,
       "cumulativeRevenue": 820095,
       "revenuePerActive": 11.74,
-      "gtvKEur": 1366.4
+      "gtvKEur": 23.3
     },
     {
       "cohortMonth": "2021-08",
@@ -22743,7 +22743,7 @@ const CASE_DATA = {
       "revenueEur": 22567,
       "cumulativeRevenue": 842662,
       "revenuePerActive": 12.85,
-      "gtvKEur": 5.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22754,7 +22754,7 @@ const CASE_DATA = {
       "revenueEur": 21027,
       "cumulativeRevenue": 863689,
       "revenuePerActive": 12.04,
-      "gtvKEur": 1941
+      "gtvKEur": 28.5
     },
     {
       "cohortMonth": "2021-08",
@@ -22765,7 +22765,7 @@ const CASE_DATA = {
       "revenueEur": 27392,
       "cumulativeRevenue": 891081,
       "revenuePerActive": 16.16,
-      "gtvKEur": 5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-08",
@@ -22776,7 +22776,7 @@ const CASE_DATA = {
       "revenueEur": 19895,
       "cumulativeRevenue": 910976,
       "revenuePerActive": 11.84,
-      "gtvKEur": 49
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-08",
@@ -22787,7 +22787,7 @@ const CASE_DATA = {
       "revenueEur": 22166,
       "cumulativeRevenue": 933142,
       "revenuePerActive": 13.51,
-      "gtvKEur": 1450
+      "gtvKEur": 27.8
     },
     {
       "cohortMonth": "2021-08",
@@ -22798,7 +22798,7 @@ const CASE_DATA = {
       "revenueEur": 21926,
       "cumulativeRevenue": 955068,
       "revenuePerActive": 13.3,
-      "gtvKEur": 11.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22809,7 +22809,7 @@ const CASE_DATA = {
       "revenueEur": 20186,
       "cumulativeRevenue": 975253,
       "revenuePerActive": 12.55,
-      "gtvKEur": 1194.2
+      "gtvKEur": 26.8
     },
     {
       "cohortMonth": "2021-08",
@@ -22820,7 +22820,7 @@ const CASE_DATA = {
       "revenueEur": 24173,
       "cumulativeRevenue": 999426,
       "revenuePerActive": 15.11,
-      "gtvKEur": 59.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-08",
@@ -22831,7 +22831,7 @@ const CASE_DATA = {
       "revenueEur": 28074,
       "cumulativeRevenue": 1027500,
       "revenuePerActive": 17.63,
-      "gtvKEur": 1229.2
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2021-08",
@@ -22842,7 +22842,7 @@ const CASE_DATA = {
       "revenueEur": 25379,
       "cumulativeRevenue": 1052879,
       "revenuePerActive": 16.17,
-      "gtvKEur": 212.1
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22853,7 +22853,7 @@ const CASE_DATA = {
       "revenueEur": 22983,
       "cumulativeRevenue": 1075862,
       "revenuePerActive": 15.04,
-      "gtvKEur": 1286.4
+      "gtvKEur": 25.7
     },
     {
       "cohortMonth": "2021-08",
@@ -22864,7 +22864,7 @@ const CASE_DATA = {
       "revenueEur": 23752,
       "cumulativeRevenue": 1099614,
       "revenuePerActive": 15.74,
-      "gtvKEur": 243.4
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2021-08",
@@ -22875,7 +22875,7 @@ const CASE_DATA = {
       "revenueEur": 21445,
       "cumulativeRevenue": 1121059,
       "revenuePerActive": 14.21,
-      "gtvKEur": 1360.6
+      "gtvKEur": 29.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22886,7 +22886,7 @@ const CASE_DATA = {
       "revenueEur": 20770,
       "cumulativeRevenue": 1141829,
       "revenuePerActive": 14.24,
-      "gtvKEur": 506.8
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22897,7 +22897,7 @@ const CASE_DATA = {
       "revenueEur": 21491,
       "cumulativeRevenue": 1163320,
       "revenuePerActive": 14.79,
-      "gtvKEur": 32060.2
+      "gtvKEur": 694.1
     },
     {
       "cohortMonth": "2021-08",
@@ -22908,7 +22908,7 @@ const CASE_DATA = {
       "revenueEur": 21242,
       "cumulativeRevenue": 1184562,
       "revenuePerActive": 18.81,
-      "gtvKEur": 103320.1
+      "gtvKEur": 2068.4
     },
     {
       "cohortMonth": "2021-08",
@@ -22919,7 +22919,7 @@ const CASE_DATA = {
       "revenueEur": 7402,
       "cumulativeRevenue": 1191963,
       "revenuePerActive": 0,
-      "gtvKEur": 31528.2
+      "gtvKEur": 567.8
     },
     {
       "cohortMonth": "2021-08",
@@ -22930,7 +22930,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1191963,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -22941,7 +22941,7 @@ const CASE_DATA = {
       "revenueEur": 3897,
       "cumulativeRevenue": 3897,
       "revenuePerActive": 0.18,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -22952,7 +22952,7 @@ const CASE_DATA = {
       "revenueEur": 1404,
       "cumulativeRevenue": 5301,
       "revenuePerActive": 0.17,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -22963,7 +22963,7 @@ const CASE_DATA = {
       "revenueEur": 1024,
       "cumulativeRevenue": 6326,
       "revenuePerActive": 0.16,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-07",
@@ -22974,7 +22974,7 @@ const CASE_DATA = {
       "revenueEur": 2757,
       "cumulativeRevenue": 9082,
       "revenuePerActive": 0.5,
-      "gtvKEur": 65.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-07",
@@ -22985,7 +22985,7 @@ const CASE_DATA = {
       "revenueEur": 391,
       "cumulativeRevenue": 9474,
       "revenuePerActive": 0.08,
-      "gtvKEur": 158.1
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-07",
@@ -22996,7 +22996,7 @@ const CASE_DATA = {
       "revenueEur": 2140,
       "cumulativeRevenue": 11614,
       "revenuePerActive": 0.46,
-      "gtvKEur": 7747.4
+      "gtvKEur": 138.8
     },
     {
       "cohortMonth": "2021-07",
@@ -23007,7 +23007,7 @@ const CASE_DATA = {
       "revenueEur": 26715,
       "cumulativeRevenue": 38329,
       "revenuePerActive": 6.17,
-      "gtvKEur": 18942.7
+      "gtvKEur": 475
     },
     {
       "cohortMonth": "2021-07",
@@ -23018,7 +23018,7 @@ const CASE_DATA = {
       "revenueEur": 25111,
       "cumulativeRevenue": 63441,
       "revenuePerActive": 6.19,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -23029,7 +23029,7 @@ const CASE_DATA = {
       "revenueEur": 23177,
       "cumulativeRevenue": 86617,
       "revenuePerActive": 5.84,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -23040,7 +23040,7 @@ const CASE_DATA = {
       "revenueEur": 25473,
       "cumulativeRevenue": 112090,
       "revenuePerActive": 6.91,
-      "gtvKEur": 2.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -23051,7 +23051,7 @@ const CASE_DATA = {
       "revenueEur": 22080,
       "cumulativeRevenue": 134170,
       "revenuePerActive": 6.22,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -23062,7 +23062,7 @@ const CASE_DATA = {
       "revenueEur": 22771,
       "cumulativeRevenue": 156940,
       "revenuePerActive": 6.55,
-      "gtvKEur": 11.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23073,7 +23073,7 @@ const CASE_DATA = {
       "revenueEur": 33745,
       "cumulativeRevenue": 190686,
       "revenuePerActive": 10.06,
-      "gtvKEur": 11130.1
+      "gtvKEur": 190.5
     },
     {
       "cohortMonth": "2021-07",
@@ -23084,7 +23084,7 @@ const CASE_DATA = {
       "revenueEur": 52361,
       "cumulativeRevenue": 243047,
       "revenuePerActive": 16.32,
-      "gtvKEur": 111.6
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23095,7 +23095,7 @@ const CASE_DATA = {
       "revenueEur": 29682,
       "cumulativeRevenue": 272728,
       "revenuePerActive": 9.78,
-      "gtvKEur": 71
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-07",
@@ -23106,7 +23106,7 @@ const CASE_DATA = {
       "revenueEur": 23251,
       "cumulativeRevenue": 295980,
       "revenuePerActive": 7.94,
-      "gtvKEur": 54.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-07",
@@ -23117,7 +23117,7 @@ const CASE_DATA = {
       "revenueEur": 29103,
       "cumulativeRevenue": 325083,
       "revenuePerActive": 10.28,
-      "gtvKEur": 74.9
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-07",
@@ -23128,7 +23128,7 @@ const CASE_DATA = {
       "revenueEur": 24539,
       "cumulativeRevenue": 349622,
       "revenuePerActive": 8.99,
-      "gtvKEur": 10786.3
+      "gtvKEur": 171.6
     },
     {
       "cohortMonth": "2021-07",
@@ -23139,7 +23139,7 @@ const CASE_DATA = {
       "revenueEur": 24990,
       "cumulativeRevenue": 374611,
       "revenuePerActive": 9.34,
-      "gtvKEur": 34.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23150,7 +23150,7 @@ const CASE_DATA = {
       "revenueEur": 23342,
       "cumulativeRevenue": 397953,
       "revenuePerActive": 8.95,
-      "gtvKEur": 34.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23161,7 +23161,7 @@ const CASE_DATA = {
       "revenueEur": 20632,
       "cumulativeRevenue": 418586,
       "revenuePerActive": 8.07,
-      "gtvKEur": 32.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23172,7 +23172,7 @@ const CASE_DATA = {
       "revenueEur": 23244,
       "cumulativeRevenue": 441830,
       "revenuePerActive": 9.42,
-      "gtvKEur": 79.5
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-07",
@@ -23183,7 +23183,7 @@ const CASE_DATA = {
       "revenueEur": 20485,
       "cumulativeRevenue": 462315,
       "revenuePerActive": 8.24,
-      "gtvKEur": 3772.9
+      "gtvKEur": 90.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23205,7 +23205,7 @@ const CASE_DATA = {
       "revenueEur": 42465,
       "cumulativeRevenue": 524818,
       "revenuePerActive": 17.5,
-      "gtvKEur": 4.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-07",
@@ -23216,7 +23216,7 @@ const CASE_DATA = {
       "revenueEur": 44315,
       "cumulativeRevenue": 569133,
       "revenuePerActive": 18.52,
-      "gtvKEur": 9569.2
+      "gtvKEur": 154.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23249,7 +23249,7 @@ const CASE_DATA = {
       "revenueEur": 21919,
       "cumulativeRevenue": 634972,
       "revenuePerActive": 9.96,
-      "gtvKEur": 6.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23260,7 +23260,7 @@ const CASE_DATA = {
       "revenueEur": 21023,
       "cumulativeRevenue": 655995,
       "revenuePerActive": 9.66,
-      "gtvKEur": 4707.2
+      "gtvKEur": 105.2
     },
     {
       "cohortMonth": "2021-07",
@@ -23271,7 +23271,7 @@ const CASE_DATA = {
       "revenueEur": 22889,
       "cumulativeRevenue": 678884,
       "revenuePerActive": 10.8,
-      "gtvKEur": 33.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23282,7 +23282,7 @@ const CASE_DATA = {
       "revenueEur": 22589,
       "cumulativeRevenue": 701473,
       "revenuePerActive": 10.91,
-      "gtvKEur": 32
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23293,7 +23293,7 @@ const CASE_DATA = {
       "revenueEur": 20934,
       "cumulativeRevenue": 722407,
       "revenuePerActive": 10.19,
-      "gtvKEur": 1608.7
+      "gtvKEur": 138.5
     },
     {
       "cohortMonth": "2021-07",
@@ -23304,7 +23304,7 @@ const CASE_DATA = {
       "revenueEur": 23955,
       "cumulativeRevenue": 746362,
       "revenuePerActive": 11.89,
-      "gtvKEur": 33
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23315,7 +23315,7 @@ const CASE_DATA = {
       "revenueEur": 19258,
       "cumulativeRevenue": 765620,
       "revenuePerActive": 9.59,
-      "gtvKEur": 36
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-07",
@@ -23326,7 +23326,7 @@ const CASE_DATA = {
       "revenueEur": 20274,
       "cumulativeRevenue": 785895,
       "revenuePerActive": 10.07,
-      "gtvKEur": 1248.2
+      "gtvKEur": 46.4
     },
     {
       "cohortMonth": "2021-07",
@@ -23337,7 +23337,7 @@ const CASE_DATA = {
       "revenueEur": 87603,
       "cumulativeRevenue": 873498,
       "revenuePerActive": 43.65,
-      "gtvKEur": 35.5
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-07",
@@ -23348,7 +23348,7 @@ const CASE_DATA = {
       "revenueEur": 44475,
       "cumulativeRevenue": 917973,
       "revenuePerActive": 22.69,
-      "gtvKEur": 1296.9
+      "gtvKEur": 32.7
     },
     {
       "cohortMonth": "2021-07",
@@ -23359,7 +23359,7 @@ const CASE_DATA = {
       "revenueEur": 26379,
       "cumulativeRevenue": 944352,
       "revenuePerActive": 13.88,
-      "gtvKEur": 34.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23370,7 +23370,7 @@ const CASE_DATA = {
       "revenueEur": 23555,
       "cumulativeRevenue": 967907,
       "revenuePerActive": 12.72,
-      "gtvKEur": 31.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23381,7 +23381,7 @@ const CASE_DATA = {
       "revenueEur": 24507,
       "cumulativeRevenue": 992414,
       "revenuePerActive": 13.4,
-      "gtvKEur": 1065.4
+      "gtvKEur": 34.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23392,7 +23392,7 @@ const CASE_DATA = {
       "revenueEur": 22008,
       "cumulativeRevenue": 1014422,
       "revenuePerActive": 12.11,
-      "gtvKEur": 34.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23403,7 +23403,7 @@ const CASE_DATA = {
       "revenueEur": 20186,
       "cumulativeRevenue": 1034608,
       "revenuePerActive": 11.35,
-      "gtvKEur": 1360.7
+      "gtvKEur": 45.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23414,7 +23414,7 @@ const CASE_DATA = {
       "revenueEur": 21309,
       "cumulativeRevenue": 1055917,
       "revenuePerActive": 12.18,
-      "gtvKEur": 28.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23425,7 +23425,7 @@ const CASE_DATA = {
       "revenueEur": 24558,
       "cumulativeRevenue": 1080475,
       "revenuePerActive": 14.51,
-      "gtvKEur": 32.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23436,7 +23436,7 @@ const CASE_DATA = {
       "revenueEur": 26900,
       "cumulativeRevenue": 1107374,
       "revenuePerActive": 15.59,
-      "gtvKEur": 1010.1
+      "gtvKEur": 39.4
     },
     {
       "cohortMonth": "2021-07",
@@ -23447,7 +23447,7 @@ const CASE_DATA = {
       "revenueEur": 22277,
       "cumulativeRevenue": 1129651,
       "revenuePerActive": 13.1,
-      "gtvKEur": 34.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23458,7 +23458,7 @@ const CASE_DATA = {
       "revenueEur": 21662,
       "cumulativeRevenue": 1151313,
       "revenuePerActive": 12.96,
-      "gtvKEur": 905.4
+      "gtvKEur": 28.2
     },
     {
       "cohortMonth": "2021-07",
@@ -23469,7 +23469,7 @@ const CASE_DATA = {
       "revenueEur": 115522,
       "cumulativeRevenue": 1266836,
       "revenuePerActive": 69.68,
-      "gtvKEur": 29.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-07",
@@ -23480,7 +23480,7 @@ const CASE_DATA = {
       "revenueEur": 43889,
       "cumulativeRevenue": 1310724,
       "revenuePerActive": 26.6,
-      "gtvKEur": 1060.3
+      "gtvKEur": 28.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23491,7 +23491,7 @@ const CASE_DATA = {
       "revenueEur": 25373,
       "cumulativeRevenue": 1336098,
       "revenuePerActive": 15.42,
-      "gtvKEur": 157.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-07",
@@ -23502,7 +23502,7 @@ const CASE_DATA = {
       "revenueEur": 24636,
       "cumulativeRevenue": 1360734,
       "revenuePerActive": 15.05,
-      "gtvKEur": 817.7
+      "gtvKEur": 29.7
     },
     {
       "cohortMonth": "2021-07",
@@ -23513,7 +23513,7 @@ const CASE_DATA = {
       "revenueEur": 22258,
       "cumulativeRevenue": 1382992,
       "revenuePerActive": 14.09,
-      "gtvKEur": 207.4
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23524,7 +23524,7 @@ const CASE_DATA = {
       "revenueEur": 20600,
       "cumulativeRevenue": 1403592,
       "revenuePerActive": 13.18,
-      "gtvKEur": 1392.4
+      "gtvKEur": 89.5
     },
     {
       "cohortMonth": "2021-07",
@@ -23535,7 +23535,7 @@ const CASE_DATA = {
       "revenueEur": 21076,
       "cumulativeRevenue": 1424668,
       "revenuePerActive": 13.83,
-      "gtvKEur": 321.1
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2021-07",
@@ -23546,7 +23546,7 @@ const CASE_DATA = {
       "revenueEur": 23582,
       "cumulativeRevenue": 1448249,
       "revenuePerActive": 15.43,
-      "gtvKEur": 26231.8
+      "gtvKEur": 1106.8
     },
     {
       "cohortMonth": "2021-07",
@@ -23557,7 +23557,7 @@ const CASE_DATA = {
       "revenueEur": 24771,
       "cumulativeRevenue": 1473021,
       "revenuePerActive": 22.14,
-      "gtvKEur": 70991.6
+      "gtvKEur": 2631.9
     },
     {
       "cohortMonth": "2021-07",
@@ -23568,7 +23568,7 @@ const CASE_DATA = {
       "revenueEur": 8635,
       "cumulativeRevenue": 1481655,
       "revenuePerActive": 0,
-      "gtvKEur": 19616.5
+      "gtvKEur": 706.1
     },
     {
       "cohortMonth": "2021-07",
@@ -23579,7 +23579,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1481655,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23601,7 +23601,7 @@ const CASE_DATA = {
       "revenueEur": 4992,
       "cumulativeRevenue": 8221,
       "revenuePerActive": 0.66,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23612,7 +23612,7 @@ const CASE_DATA = {
       "revenueEur": 1514,
       "cumulativeRevenue": 9734,
       "revenuePerActive": 0.26,
-      "gtvKEur": 18.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-06",
@@ -23623,7 +23623,7 @@ const CASE_DATA = {
       "revenueEur": 2005,
       "cumulativeRevenue": 11739,
       "revenuePerActive": 0.4,
-      "gtvKEur": 35.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-06",
@@ -23634,7 +23634,7 @@ const CASE_DATA = {
       "revenueEur": 415,
       "cumulativeRevenue": 12155,
       "revenuePerActive": 0.09,
-      "gtvKEur": 61.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-06",
@@ -23645,7 +23645,7 @@ const CASE_DATA = {
       "revenueEur": 317,
       "cumulativeRevenue": 12472,
       "revenuePerActive": 0.07,
-      "gtvKEur": 94.3
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-06",
@@ -23656,7 +23656,7 @@ const CASE_DATA = {
       "revenueEur": 2819,
       "cumulativeRevenue": 15291,
       "revenuePerActive": 0.68,
-      "gtvKEur": 3651.5
+      "gtvKEur": 128.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23667,7 +23667,7 @@ const CASE_DATA = {
       "revenueEur": 22665,
       "cumulativeRevenue": 37956,
       "revenuePerActive": 5.79,
-      "gtvKEur": 26995.8
+      "gtvKEur": 517.4
     },
     {
       "cohortMonth": "2021-06",
@@ -23678,7 +23678,7 @@ const CASE_DATA = {
       "revenueEur": 19249,
       "cumulativeRevenue": 57204,
       "revenuePerActive": 5.18,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23689,7 +23689,7 @@ const CASE_DATA = {
       "revenueEur": 22148,
       "cumulativeRevenue": 79353,
       "revenuePerActive": 6.17,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23722,7 +23722,7 @@ const CASE_DATA = {
       "revenueEur": 28344,
       "cumulativeRevenue": 154480,
       "revenuePerActive": 8.76,
-      "gtvKEur": 16.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-06",
@@ -23733,7 +23733,7 @@ const CASE_DATA = {
       "revenueEur": 52205,
       "cumulativeRevenue": 206685,
       "revenuePerActive": 16.49,
-      "gtvKEur": 4288
+      "gtvKEur": 116.2
     },
     {
       "cohortMonth": "2021-06",
@@ -23766,7 +23766,7 @@ const CASE_DATA = {
       "revenueEur": 23501,
       "cumulativeRevenue": 284162,
       "revenuePerActive": 8.41,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23777,7 +23777,7 @@ const CASE_DATA = {
       "revenueEur": 21669,
       "cumulativeRevenue": 305830,
       "revenuePerActive": 8.06,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23788,7 +23788,7 @@ const CASE_DATA = {
       "revenueEur": 21861,
       "cumulativeRevenue": 327692,
       "revenuePerActive": 8.36,
-      "gtvKEur": 2517.6
+      "gtvKEur": 68.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23799,7 +23799,7 @@ const CASE_DATA = {
       "revenueEur": 22301,
       "cumulativeRevenue": 349993,
       "revenuePerActive": 8.74,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23810,7 +23810,7 @@ const CASE_DATA = {
       "revenueEur": 19992,
       "cumulativeRevenue": 369985,
       "revenuePerActive": 8.1,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23821,7 +23821,7 @@ const CASE_DATA = {
       "revenueEur": 28582,
       "cumulativeRevenue": 398567,
       "revenuePerActive": 11.64,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23832,7 +23832,7 @@ const CASE_DATA = {
       "revenueEur": 17592,
       "cumulativeRevenue": 416159,
       "revenuePerActive": 7.46,
-      "gtvKEur": 11.4
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2021-06",
@@ -23843,7 +23843,7 @@ const CASE_DATA = {
       "revenueEur": 24745,
       "cumulativeRevenue": 440903,
       "revenuePerActive": 10.47,
-      "gtvKEur": 1866.4
+      "gtvKEur": 49.4
     },
     {
       "cohortMonth": "2021-06",
@@ -23854,7 +23854,7 @@ const CASE_DATA = {
       "revenueEur": 29304,
       "cumulativeRevenue": 470208,
       "revenuePerActive": 12.62,
-      "gtvKEur": 7.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23865,7 +23865,7 @@ const CASE_DATA = {
       "revenueEur": 42352,
       "cumulativeRevenue": 512559,
       "revenuePerActive": 18.81,
-      "gtvKEur": 4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23876,7 +23876,7 @@ const CASE_DATA = {
       "revenueEur": 18501,
       "cumulativeRevenue": 531061,
       "revenuePerActive": 8.4,
-      "gtvKEur": 1780.5
+      "gtvKEur": 41.7
     },
     {
       "cohortMonth": "2021-06",
@@ -23887,7 +23887,7 @@ const CASE_DATA = {
       "revenueEur": 19941,
       "cumulativeRevenue": 551001,
       "revenuePerActive": 9.25,
-      "gtvKEur": 5.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23898,7 +23898,7 @@ const CASE_DATA = {
       "revenueEur": 17259,
       "cumulativeRevenue": 568260,
       "revenuePerActive": 8.13,
-      "gtvKEur": 66.8
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-06",
@@ -23909,7 +23909,7 @@ const CASE_DATA = {
       "revenueEur": 20254,
       "cumulativeRevenue": 588514,
       "revenuePerActive": 9.86,
-      "gtvKEur": 164.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-06",
@@ -23920,7 +23920,7 @@ const CASE_DATA = {
       "revenueEur": 17734,
       "cumulativeRevenue": 606248,
       "revenuePerActive": 8.86,
-      "gtvKEur": 1968.5
+      "gtvKEur": 53.3
     },
     {
       "cohortMonth": "2021-06",
@@ -23931,7 +23931,7 @@ const CASE_DATA = {
       "revenueEur": 17995,
       "cumulativeRevenue": 624242,
       "revenuePerActive": 9.15,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23942,7 +23942,7 @@ const CASE_DATA = {
       "revenueEur": 20949,
       "cumulativeRevenue": 645191,
       "revenuePerActive": 10.94,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-06",
@@ -23953,7 +23953,7 @@ const CASE_DATA = {
       "revenueEur": 27508,
       "cumulativeRevenue": 672699,
       "revenuePerActive": 14.18,
-      "gtvKEur": 1291.2
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23964,7 +23964,7 @@ const CASE_DATA = {
       "revenueEur": 17477,
       "cumulativeRevenue": 690175,
       "revenuePerActive": 9.34,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -23975,7 +23975,7 @@ const CASE_DATA = {
       "revenueEur": 21919,
       "cumulativeRevenue": 712094,
       "revenuePerActive": 11.71,
-      "gtvKEur": 18.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-06",
@@ -23986,7 +23986,7 @@ const CASE_DATA = {
       "revenueEur": 25877,
       "cumulativeRevenue": 737971,
       "revenuePerActive": 13.96,
-      "gtvKEur": 1452.5
+      "gtvKEur": 27.4
     },
     {
       "cohortMonth": "2021-06",
@@ -23997,7 +23997,7 @@ const CASE_DATA = {
       "revenueEur": 37923,
       "cumulativeRevenue": 775894,
       "revenuePerActive": 20.77,
-      "gtvKEur": 638.2
+      "gtvKEur": 6.4
     },
     {
       "cohortMonth": "2021-06",
@@ -24008,7 +24008,7 @@ const CASE_DATA = {
       "revenueEur": 15249,
       "cumulativeRevenue": 791143,
       "revenuePerActive": 8.4,
-      "gtvKEur": 1609.6
+      "gtvKEur": 21.8
     },
     {
       "cohortMonth": "2021-06",
@@ -24019,7 +24019,7 @@ const CASE_DATA = {
       "revenueEur": 16690,
       "cumulativeRevenue": 807833,
       "revenuePerActive": 9.43,
-      "gtvKEur": 9.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -24030,7 +24030,7 @@ const CASE_DATA = {
       "revenueEur": 15241,
       "cumulativeRevenue": 823074,
       "revenuePerActive": 8.8,
-      "gtvKEur": 11.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -24041,7 +24041,7 @@ const CASE_DATA = {
       "revenueEur": 22493,
       "cumulativeRevenue": 845567,
       "revenuePerActive": 13.18,
-      "gtvKEur": 2607.9
+      "gtvKEur": 44.3
     },
     {
       "cohortMonth": "2021-06",
@@ -24052,7 +24052,7 @@ const CASE_DATA = {
       "revenueEur": 15094,
       "cumulativeRevenue": 860661,
       "revenuePerActive": 9.01,
-      "gtvKEur": 8.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -24063,7 +24063,7 @@ const CASE_DATA = {
       "revenueEur": 15395,
       "cumulativeRevenue": 876056,
       "revenuePerActive": 9.39,
-      "gtvKEur": 1298.3
+      "gtvKEur": 28.6
     },
     {
       "cohortMonth": "2021-06",
@@ -24074,7 +24074,7 @@ const CASE_DATA = {
       "revenueEur": 20821,
       "cumulativeRevenue": 896877,
       "revenuePerActive": 12.78,
-      "gtvKEur": 8.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-06",
@@ -24085,7 +24085,7 @@ const CASE_DATA = {
       "revenueEur": 29814,
       "cumulativeRevenue": 926690,
       "revenuePerActive": 18.53,
-      "gtvKEur": 49.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-06",
@@ -24096,7 +24096,7 @@ const CASE_DATA = {
       "revenueEur": 19222,
       "cumulativeRevenue": 945913,
       "revenuePerActive": 12.33,
-      "gtvKEur": 779.5
+      "gtvKEur": 19.2
     },
     {
       "cohortMonth": "2021-06",
@@ -24107,7 +24107,7 @@ const CASE_DATA = {
       "revenueEur": 23289,
       "cumulativeRevenue": 969202,
       "revenuePerActive": 14.71,
-      "gtvKEur": 58.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-06",
@@ -24118,7 +24118,7 @@ const CASE_DATA = {
       "revenueEur": 28021,
       "cumulativeRevenue": 997223,
       "revenuePerActive": 17.99,
-      "gtvKEur": 1288.2
+      "gtvKEur": 21.1
     },
     {
       "cohortMonth": "2021-06",
@@ -24129,7 +24129,7 @@ const CASE_DATA = {
       "revenueEur": 38019,
       "cumulativeRevenue": 1035243,
       "revenuePerActive": 24.88,
-      "gtvKEur": 43.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-06",
@@ -24140,7 +24140,7 @@ const CASE_DATA = {
       "revenueEur": 18698,
       "cumulativeRevenue": 1053941,
       "revenuePerActive": 12.47,
-      "gtvKEur": 817.4
+      "gtvKEur": 16
     },
     {
       "cohortMonth": "2021-06",
@@ -24151,7 +24151,7 @@ const CASE_DATA = {
       "revenueEur": 16822,
       "cumulativeRevenue": 1070763,
       "revenuePerActive": 11.29,
-      "gtvKEur": 47.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-06",
@@ -24162,7 +24162,7 @@ const CASE_DATA = {
       "revenueEur": 18405,
       "cumulativeRevenue": 1089168,
       "revenuePerActive": 12.52,
-      "gtvKEur": 947.3
+      "gtvKEur": 69.7
     },
     {
       "cohortMonth": "2021-06",
@@ -24173,7 +24173,7 @@ const CASE_DATA = {
       "revenueEur": 25099,
       "cumulativeRevenue": 1114268,
       "revenuePerActive": 17.48,
-      "gtvKEur": 87.7
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-06",
@@ -24184,7 +24184,7 @@ const CASE_DATA = {
       "revenueEur": 20577,
       "cumulativeRevenue": 1134844,
       "revenuePerActive": 14.44,
-      "gtvKEur": 1219.2
+      "gtvKEur": 27.2
     },
     {
       "cohortMonth": "2021-06",
@@ -24195,7 +24195,7 @@ const CASE_DATA = {
       "revenueEur": 20568,
       "cumulativeRevenue": 1155413,
       "revenuePerActive": 14.83,
-      "gtvKEur": 420.6
+      "gtvKEur": 4.5
     },
     {
       "cohortMonth": "2021-06",
@@ -24206,7 +24206,7 @@ const CASE_DATA = {
       "revenueEur": 19002,
       "cumulativeRevenue": 1174415,
       "revenuePerActive": 13.94,
-      "gtvKEur": 28867.6
+      "gtvKEur": 973.2
     },
     {
       "cohortMonth": "2021-06",
@@ -24217,7 +24217,7 @@ const CASE_DATA = {
       "revenueEur": 33134,
       "cumulativeRevenue": 1207549,
       "revenuePerActive": 30.57,
-      "gtvKEur": 80911.8
+      "gtvKEur": 2280.2
     },
     {
       "cohortMonth": "2021-06",
@@ -24228,7 +24228,7 @@ const CASE_DATA = {
       "revenueEur": 5102,
       "cumulativeRevenue": 1212651,
       "revenuePerActive": 0,
-      "gtvKEur": 22323.7
+      "gtvKEur": 552.7
     },
     {
       "cohortMonth": "2021-05",
@@ -24239,7 +24239,7 @@ const CASE_DATA = {
       "revenueEur": 2404,
       "cumulativeRevenue": 2404,
       "revenuePerActive": 0.14,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24261,7 +24261,7 @@ const CASE_DATA = {
       "revenueEur": 1194,
       "cumulativeRevenue": 8891,
       "revenuePerActive": 0.23,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24272,7 +24272,7 @@ const CASE_DATA = {
       "revenueEur": 299,
       "cumulativeRevenue": 9190,
       "revenuePerActive": 0.06,
-      "gtvKEur": 9.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24283,7 +24283,7 @@ const CASE_DATA = {
       "revenueEur": 829,
       "cumulativeRevenue": 10019,
       "revenuePerActive": 0.19,
-      "gtvKEur": 5.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24294,7 +24294,7 @@ const CASE_DATA = {
       "revenueEur": 1280,
       "cumulativeRevenue": 11300,
       "revenuePerActive": 0.31,
-      "gtvKEur": 11.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24305,7 +24305,7 @@ const CASE_DATA = {
       "revenueEur": 638,
       "cumulativeRevenue": 11938,
       "revenuePerActive": 0.16,
-      "gtvKEur": 18
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-05",
@@ -24316,7 +24316,7 @@ const CASE_DATA = {
       "revenueEur": 1642,
       "cumulativeRevenue": 13580,
       "revenuePerActive": 0.45,
-      "gtvKEur": 3267.2
+      "gtvKEur": 76.4
     },
     {
       "cohortMonth": "2021-05",
@@ -24327,7 +24327,7 @@ const CASE_DATA = {
       "revenueEur": 25751,
       "cumulativeRevenue": 39330,
       "revenuePerActive": 7.54,
-      "gtvKEur": 17812.6
+      "gtvKEur": 421.7
     },
     {
       "cohortMonth": "2021-05",
@@ -24338,7 +24338,7 @@ const CASE_DATA = {
       "revenueEur": 22480,
       "cumulativeRevenue": 61810,
       "revenuePerActive": 6.9,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24349,7 +24349,7 @@ const CASE_DATA = {
       "revenueEur": 22132,
       "cumulativeRevenue": 83942,
       "revenuePerActive": 6.87,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24360,7 +24360,7 @@ const CASE_DATA = {
       "revenueEur": 22426,
       "cumulativeRevenue": 106368,
       "revenuePerActive": 7.29,
-      "gtvKEur": 19.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-05",
@@ -24371,7 +24371,7 @@ const CASE_DATA = {
       "revenueEur": 37166,
       "cumulativeRevenue": 143534,
       "revenuePerActive": 12.33,
-      "gtvKEur": 58.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-05",
@@ -24382,7 +24382,7 @@ const CASE_DATA = {
       "revenueEur": 46063,
       "cumulativeRevenue": 189596,
       "revenuePerActive": 16.08,
-      "gtvKEur": 151.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2021-05",
@@ -24393,7 +24393,7 @@ const CASE_DATA = {
       "revenueEur": 29987,
       "cumulativeRevenue": 219583,
       "revenuePerActive": 10.77,
-      "gtvKEur": 23830.6
+      "gtvKEur": 297.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24404,7 +24404,7 @@ const CASE_DATA = {
       "revenueEur": 22818,
       "cumulativeRevenue": 242401,
       "revenuePerActive": 8.48,
-      "gtvKEur": 169.2
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2021-05",
@@ -24415,7 +24415,7 @@ const CASE_DATA = {
       "revenueEur": 24336,
       "cumulativeRevenue": 266737,
       "revenuePerActive": 9.31,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24426,7 +24426,7 @@ const CASE_DATA = {
       "revenueEur": 24868,
       "cumulativeRevenue": 291604,
       "revenuePerActive": 9.92,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24437,7 +24437,7 @@ const CASE_DATA = {
       "revenueEur": 24237,
       "cumulativeRevenue": 315841,
       "revenuePerActive": 9.86,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24448,7 +24448,7 @@ const CASE_DATA = {
       "revenueEur": 21157,
       "cumulativeRevenue": 336998,
       "revenuePerActive": 8.95,
-      "gtvKEur": 5722.6
+      "gtvKEur": 112.3
     },
     {
       "cohortMonth": "2021-05",
@@ -24459,7 +24459,7 @@ const CASE_DATA = {
       "revenueEur": 23010,
       "cumulativeRevenue": 360009,
       "revenuePerActive": 10.04,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24470,7 +24470,7 @@ const CASE_DATA = {
       "revenueEur": 19725,
       "cumulativeRevenue": 379733,
       "revenuePerActive": 8.8,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24481,7 +24481,7 @@ const CASE_DATA = {
       "revenueEur": 22619,
       "cumulativeRevenue": 402352,
       "revenuePerActive": 10.29,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24492,7 +24492,7 @@ const CASE_DATA = {
       "revenueEur": 23176,
       "cumulativeRevenue": 425528,
       "revenuePerActive": 10.71,
-      "gtvKEur": 2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24503,7 +24503,7 @@ const CASE_DATA = {
       "revenueEur": 33521,
       "cumulativeRevenue": 459049,
       "revenuePerActive": 15.81,
-      "gtvKEur": 2263.7
+      "gtvKEur": 58.5
     },
     {
       "cohortMonth": "2021-05",
@@ -24514,7 +24514,7 @@ const CASE_DATA = {
       "revenueEur": 39638,
       "cumulativeRevenue": 498687,
       "revenuePerActive": 18.69,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24525,7 +24525,7 @@ const CASE_DATA = {
       "revenueEur": 26785,
       "cumulativeRevenue": 525473,
       "revenuePerActive": 12.96,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24536,7 +24536,7 @@ const CASE_DATA = {
       "revenueEur": 20820,
       "cumulativeRevenue": 546292,
       "revenuePerActive": 10.35,
-      "gtvKEur": 7778
+      "gtvKEur": 114.4
     },
     {
       "cohortMonth": "2021-05",
@@ -24547,7 +24547,7 @@ const CASE_DATA = {
       "revenueEur": 21233,
       "cumulativeRevenue": 567526,
       "revenuePerActive": 10.73,
-      "gtvKEur": 125.2
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2021-05",
@@ -24558,7 +24558,7 @@ const CASE_DATA = {
       "revenueEur": 23340,
       "cumulativeRevenue": 590866,
       "revenuePerActive": 12.12,
-      "gtvKEur": 95.8
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2021-05",
@@ -24569,7 +24569,7 @@ const CASE_DATA = {
       "revenueEur": 19792,
       "cumulativeRevenue": 610658,
       "revenuePerActive": 10.68,
-      "gtvKEur": 100.1
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2021-05",
@@ -24580,7 +24580,7 @@ const CASE_DATA = {
       "revenueEur": 19169,
       "cumulativeRevenue": 629827,
       "revenuePerActive": 10.51,
-      "gtvKEur": 20086.4
+      "gtvKEur": 220.5
     },
     {
       "cohortMonth": "2021-05",
@@ -24591,7 +24591,7 @@ const CASE_DATA = {
       "revenueEur": 21105,
       "cumulativeRevenue": 650932,
       "revenuePerActive": 11.78,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24602,7 +24602,7 @@ const CASE_DATA = {
       "revenueEur": 19288,
       "cumulativeRevenue": 670220,
       "revenuePerActive": 10.9,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24613,7 +24613,7 @@ const CASE_DATA = {
       "revenueEur": 22392,
       "cumulativeRevenue": 692612,
       "revenuePerActive": 12.76,
-      "gtvKEur": 21686.9
+      "gtvKEur": 246.9
     },
     {
       "cohortMonth": "2021-05",
@@ -24624,7 +24624,7 @@ const CASE_DATA = {
       "revenueEur": 20350,
       "cumulativeRevenue": 712962,
       "revenuePerActive": 11.85,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24635,7 +24635,7 @@ const CASE_DATA = {
       "revenueEur": 27037,
       "cumulativeRevenue": 740000,
       "revenuePerActive": 15.96,
-      "gtvKEur": 5.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24646,7 +24646,7 @@ const CASE_DATA = {
       "revenueEur": 34733,
       "cumulativeRevenue": 774733,
       "revenuePerActive": 20.87,
-      "gtvKEur": 998.7
+      "gtvKEur": 28.8
     },
     {
       "cohortMonth": "2021-05",
@@ -24668,7 +24668,7 @@ const CASE_DATA = {
       "revenueEur": 18401,
       "cumulativeRevenue": 815101,
       "revenuePerActive": 11.42,
-      "gtvKEur": 1637.7
+      "gtvKEur": 28
     },
     {
       "cohortMonth": "2021-05",
@@ -24679,7 +24679,7 @@ const CASE_DATA = {
       "revenueEur": 17990,
       "cumulativeRevenue": 833091,
       "revenuePerActive": 11.34,
-      "gtvKEur": 20.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-05",
@@ -24690,7 +24690,7 @@ const CASE_DATA = {
       "revenueEur": 19896,
       "cumulativeRevenue": 852987,
       "revenuePerActive": 12.8,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24701,7 +24701,7 @@ const CASE_DATA = {
       "revenueEur": 16393,
       "cumulativeRevenue": 869381,
       "revenuePerActive": 10.7,
-      "gtvKEur": 10158
+      "gtvKEur": 115.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24712,7 +24712,7 @@ const CASE_DATA = {
       "revenueEur": 17428,
       "cumulativeRevenue": 886809,
       "revenuePerActive": 11.5,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24723,7 +24723,7 @@ const CASE_DATA = {
       "revenueEur": 17197,
       "cumulativeRevenue": 904006,
       "revenuePerActive": 11.53,
-      "gtvKEur": 1064.6
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2021-05",
@@ -24734,7 +24734,7 @@ const CASE_DATA = {
       "revenueEur": 17112,
       "cumulativeRevenue": 921118,
       "revenuePerActive": 11.74,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24745,7 +24745,7 @@ const CASE_DATA = {
       "revenueEur": 22603,
       "cumulativeRevenue": 943721,
       "revenuePerActive": 15.44,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24756,7 +24756,7 @@ const CASE_DATA = {
       "revenueEur": 22710,
       "cumulativeRevenue": 966430,
       "revenuePerActive": 15.81,
-      "gtvKEur": 1011.8
+      "gtvKEur": 28
     },
     {
       "cohortMonth": "2021-05",
@@ -24767,7 +24767,7 @@ const CASE_DATA = {
       "revenueEur": 27842,
       "cumulativeRevenue": 994273,
       "revenuePerActive": 19.16,
-      "gtvKEur": 28.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-05",
@@ -24778,7 +24778,7 @@ const CASE_DATA = {
       "revenueEur": 37182,
       "cumulativeRevenue": 1031455,
       "revenuePerActive": 26.2,
-      "gtvKEur": 872.9
+      "gtvKEur": 15.2
     },
     {
       "cohortMonth": "2021-05",
@@ -24789,7 +24789,7 @@ const CASE_DATA = {
       "revenueEur": 24905,
       "cumulativeRevenue": 1056359,
       "revenuePerActive": 17.9,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-05",
@@ -24800,7 +24800,7 @@ const CASE_DATA = {
       "revenueEur": 20568,
       "cumulativeRevenue": 1076927,
       "revenuePerActive": 15.07,
-      "gtvKEur": 864.3
+      "gtvKEur": 18.6
     },
     {
       "cohortMonth": "2021-05",
@@ -24811,7 +24811,7 @@ const CASE_DATA = {
       "revenueEur": 18694,
       "cumulativeRevenue": 1095621,
       "revenuePerActive": 13.73,
-      "gtvKEur": 19
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-05",
@@ -24822,7 +24822,7 @@ const CASE_DATA = {
       "revenueEur": 22597,
       "cumulativeRevenue": 1118218,
       "revenuePerActive": 17.03,
-      "gtvKEur": 886
+      "gtvKEur": 18.5
     },
     {
       "cohortMonth": "2021-05",
@@ -24833,7 +24833,7 @@ const CASE_DATA = {
       "revenueEur": 20732,
       "cumulativeRevenue": 1138950,
       "revenuePerActive": 15.74,
-      "gtvKEur": 74.1
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-05",
@@ -24844,7 +24844,7 @@ const CASE_DATA = {
       "revenueEur": 21569,
       "cumulativeRevenue": 1160520,
       "revenuePerActive": 16.52,
-      "gtvKEur": 684.7
+      "gtvKEur": 25.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24855,7 +24855,7 @@ const CASE_DATA = {
       "revenueEur": 21377,
       "cumulativeRevenue": 1181897,
       "revenuePerActive": 16.75,
-      "gtvKEur": 411.3
+      "gtvKEur": 4.3
     },
     {
       "cohortMonth": "2021-05",
@@ -24866,7 +24866,7 @@ const CASE_DATA = {
       "revenueEur": 20305,
       "cumulativeRevenue": 1202202,
       "revenuePerActive": 15.99,
-      "gtvKEur": 24062.2
+      "gtvKEur": 609.6
     },
     {
       "cohortMonth": "2021-05",
@@ -24877,7 +24877,7 @@ const CASE_DATA = {
       "revenueEur": 21896,
       "cumulativeRevenue": 1224098,
       "revenuePerActive": 22.18,
-      "gtvKEur": 64795.4
+      "gtvKEur": 1650.6
     },
     {
       "cohortMonth": "2021-05",
@@ -24888,7 +24888,7 @@ const CASE_DATA = {
       "revenueEur": 5986,
       "cumulativeRevenue": 1230084,
       "revenuePerActive": 0,
-      "gtvKEur": 17758
+      "gtvKEur": 432.8
     },
     {
       "cohortMonth": "2021-05",
@@ -24899,7 +24899,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1230084,
       "revenuePerActive": 0,
-      "gtvKEur": 6.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-05",
@@ -24910,7 +24910,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1230084,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24932,7 +24932,7 @@ const CASE_DATA = {
       "revenueEur": 2612,
       "cumulativeRevenue": 5678,
       "revenuePerActive": 0.36,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24954,7 +24954,7 @@ const CASE_DATA = {
       "revenueEur": 2748,
       "cumulativeRevenue": 9362,
       "revenuePerActive": 0.59,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24965,7 +24965,7 @@ const CASE_DATA = {
       "revenueEur": 859,
       "cumulativeRevenue": 10221,
       "revenuePerActive": 0.21,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24976,7 +24976,7 @@ const CASE_DATA = {
       "revenueEur": 695,
       "cumulativeRevenue": 10916,
       "revenuePerActive": 0.17,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24987,7 +24987,7 @@ const CASE_DATA = {
       "revenueEur": 278,
       "cumulativeRevenue": 11195,
       "revenuePerActive": 0.07,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -24998,7 +24998,7 @@ const CASE_DATA = {
       "revenueEur": 158,
       "cumulativeRevenue": 11353,
       "revenuePerActive": 0.04,
-      "gtvKEur": 17.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-04",
@@ -25009,7 +25009,7 @@ const CASE_DATA = {
       "revenueEur": 3508,
       "cumulativeRevenue": 14861,
       "revenuePerActive": 1.03,
-      "gtvKEur": 4581.6
+      "gtvKEur": 108.8
     },
     {
       "cohortMonth": "2021-04",
@@ -25020,7 +25020,7 @@ const CASE_DATA = {
       "revenueEur": 22337,
       "cumulativeRevenue": 37198,
       "revenuePerActive": 6.83,
-      "gtvKEur": 35768.1
+      "gtvKEur": 526.9
     },
     {
       "cohortMonth": "2021-04",
@@ -25053,7 +25053,7 @@ const CASE_DATA = {
       "revenueEur": 31768,
       "cumulativeRevenue": 110415,
       "revenuePerActive": 10.74,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25064,7 +25064,7 @@ const CASE_DATA = {
       "revenueEur": 39587,
       "cumulativeRevenue": 150003,
       "revenuePerActive": 13.86,
-      "gtvKEur": 71.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25075,7 +25075,7 @@ const CASE_DATA = {
       "revenueEur": 29062,
       "cumulativeRevenue": 179065,
       "revenuePerActive": 10.58,
-      "gtvKEur": 65.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25086,7 +25086,7 @@ const CASE_DATA = {
       "revenueEur": 24918,
       "cumulativeRevenue": 203983,
       "revenuePerActive": 9.44,
-      "gtvKEur": 10652.3
+      "gtvKEur": 140
     },
     {
       "cohortMonth": "2021-04",
@@ -25108,7 +25108,7 @@ const CASE_DATA = {
       "revenueEur": 20969,
       "cumulativeRevenue": 246929,
       "revenuePerActive": 8.38,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25130,7 +25130,7 @@ const CASE_DATA = {
       "revenueEur": 20242,
       "cumulativeRevenue": 289576,
       "revenuePerActive": 8.52,
-      "gtvKEur": 5.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25141,7 +25141,7 @@ const CASE_DATA = {
       "revenueEur": 18835,
       "cumulativeRevenue": 308411,
       "revenuePerActive": 8.09,
-      "gtvKEur": 14074.9
+      "gtvKEur": 178.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25152,7 +25152,7 @@ const CASE_DATA = {
       "revenueEur": 20863,
       "cumulativeRevenue": 329273,
       "revenuePerActive": 9.31,
-      "gtvKEur": 6.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25163,7 +25163,7 @@ const CASE_DATA = {
       "revenueEur": 18897,
       "cumulativeRevenue": 348171,
       "revenuePerActive": 8.66,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25174,7 +25174,7 @@ const CASE_DATA = {
       "revenueEur": 18586,
       "cumulativeRevenue": 366756,
       "revenuePerActive": 8.55,
-      "gtvKEur": 7.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25185,7 +25185,7 @@ const CASE_DATA = {
       "revenueEur": 23512,
       "cumulativeRevenue": 390268,
       "revenuePerActive": 10.93,
-      "gtvKEur": 53
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25196,7 +25196,7 @@ const CASE_DATA = {
       "revenueEur": 33807,
       "cumulativeRevenue": 424075,
       "revenuePerActive": 16.11,
-      "gtvKEur": 27631.2
+      "gtvKEur": 317.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25229,7 +25229,7 @@ const CASE_DATA = {
       "revenueEur": 19330,
       "cumulativeRevenue": 488779,
       "revenuePerActive": 9.85,
-      "gtvKEur": 2315.5
+      "gtvKEur": 44.6
     },
     {
       "cohortMonth": "2021-04",
@@ -25240,7 +25240,7 @@ const CASE_DATA = {
       "revenueEur": 17397,
       "cumulativeRevenue": 506176,
       "revenuePerActive": 8.9,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25262,7 +25262,7 @@ const CASE_DATA = {
       "revenueEur": 16430,
       "cumulativeRevenue": 538014,
       "revenuePerActive": 8.91,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25273,7 +25273,7 @@ const CASE_DATA = {
       "revenueEur": 16818,
       "cumulativeRevenue": 554832,
       "revenuePerActive": 9.28,
-      "gtvKEur": 1891.1
+      "gtvKEur": 62.9
     },
     {
       "cohortMonth": "2021-04",
@@ -25284,7 +25284,7 @@ const CASE_DATA = {
       "revenueEur": 17560,
       "cumulativeRevenue": 572391,
       "revenuePerActive": 9.95,
-      "gtvKEur": 7.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25295,7 +25295,7 @@ const CASE_DATA = {
       "revenueEur": 15125,
       "cumulativeRevenue": 587516,
       "revenuePerActive": 8.71,
-      "gtvKEur": 18.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-04",
@@ -25306,7 +25306,7 @@ const CASE_DATA = {
       "revenueEur": 15290,
       "cumulativeRevenue": 602807,
       "revenuePerActive": 8.79,
-      "gtvKEur": 1421.5
+      "gtvKEur": 36.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25317,7 +25317,7 @@ const CASE_DATA = {
       "revenueEur": 22658,
       "cumulativeRevenue": 625465,
       "revenuePerActive": 13.23,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25328,7 +25328,7 @@ const CASE_DATA = {
       "revenueEur": 28517,
       "cumulativeRevenue": 653981,
       "revenuePerActive": 16.93,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25339,7 +25339,7 @@ const CASE_DATA = {
       "revenueEur": 24825,
       "cumulativeRevenue": 678806,
       "revenuePerActive": 14.94,
-      "gtvKEur": 70497.5
+      "gtvKEur": 736.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25350,7 +25350,7 @@ const CASE_DATA = {
       "revenueEur": 17210,
       "cumulativeRevenue": 696016,
       "revenuePerActive": 10.53,
-      "gtvKEur": 5.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25361,7 +25361,7 @@ const CASE_DATA = {
       "revenueEur": 19081,
       "cumulativeRevenue": 715097,
       "revenuePerActive": 11.9,
-      "gtvKEur": 5422.2
+      "gtvKEur": 72.8
     },
     {
       "cohortMonth": "2021-04",
@@ -25372,7 +25372,7 @@ const CASE_DATA = {
       "revenueEur": 16410,
       "cumulativeRevenue": 731507,
       "revenuePerActive": 10.25,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25383,7 +25383,7 @@ const CASE_DATA = {
       "revenueEur": 14182,
       "cumulativeRevenue": 745689,
       "revenuePerActive": 9,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-04",
@@ -25394,7 +25394,7 @@ const CASE_DATA = {
       "revenueEur": 14994,
       "cumulativeRevenue": 760684,
       "revenuePerActive": 9.86,
-      "gtvKEur": 234390.7
+      "gtvKEur": 2379.1
     },
     {
       "cohortMonth": "2021-04",
@@ -25405,7 +25405,7 @@ const CASE_DATA = {
       "revenueEur": 15275,
       "cumulativeRevenue": 775959,
       "revenuePerActive": 10.11,
-      "gtvKEur": 90.3
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-04",
@@ -25416,7 +25416,7 @@ const CASE_DATA = {
       "revenueEur": 16489,
       "cumulativeRevenue": 792447,
       "revenuePerActive": 11.17,
-      "gtvKEur": 6414.7
+      "gtvKEur": 86.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25427,7 +25427,7 @@ const CASE_DATA = {
       "revenueEur": 14382,
       "cumulativeRevenue": 806829,
       "revenuePerActive": 9.94,
-      "gtvKEur": 24.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-04",
@@ -25438,7 +25438,7 @@ const CASE_DATA = {
       "revenueEur": 17713,
       "cumulativeRevenue": 824542,
       "revenuePerActive": 12.01,
-      "gtvKEur": 35.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25449,7 +25449,7 @@ const CASE_DATA = {
       "revenueEur": 24428,
       "cumulativeRevenue": 848970,
       "revenuePerActive": 16.79,
-      "gtvKEur": 864.9
+      "gtvKEur": 29.3
     },
     {
       "cohortMonth": "2021-04",
@@ -25460,7 +25460,7 @@ const CASE_DATA = {
       "revenueEur": 28586,
       "cumulativeRevenue": 877556,
       "revenuePerActive": 19.81,
-      "gtvKEur": 42.5
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25471,7 +25471,7 @@ const CASE_DATA = {
       "revenueEur": 25384,
       "cumulativeRevenue": 902941,
       "revenuePerActive": 18.18,
-      "gtvKEur": 838.6
+      "gtvKEur": 20.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25482,7 +25482,7 @@ const CASE_DATA = {
       "revenueEur": 22001,
       "cumulativeRevenue": 924942,
       "revenuePerActive": 15.81,
-      "gtvKEur": 36.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-04",
@@ -25493,7 +25493,7 @@ const CASE_DATA = {
       "revenueEur": 18524,
       "cumulativeRevenue": 943466,
       "revenuePerActive": 13.52,
-      "gtvKEur": 733.8
+      "gtvKEur": 22
     },
     {
       "cohortMonth": "2021-04",
@@ -25504,7 +25504,7 @@ const CASE_DATA = {
       "revenueEur": 16242,
       "cumulativeRevenue": 959708,
       "revenuePerActive": 12.04,
-      "gtvKEur": 65.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25515,7 +25515,7 @@ const CASE_DATA = {
       "revenueEur": 16762,
       "cumulativeRevenue": 976469,
       "revenuePerActive": 12.58,
-      "gtvKEur": 9153.4
+      "gtvKEur": 110.5
     },
     {
       "cohortMonth": "2021-04",
@@ -25526,7 +25526,7 @@ const CASE_DATA = {
       "revenueEur": 16212,
       "cumulativeRevenue": 992681,
       "revenuePerActive": 12.39,
-      "gtvKEur": 64.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-04",
@@ -25537,7 +25537,7 @@ const CASE_DATA = {
       "revenueEur": 18141,
       "cumulativeRevenue": 1010822,
       "revenuePerActive": 14.21,
-      "gtvKEur": 591.5
+      "gtvKEur": 28.2
     },
     {
       "cohortMonth": "2021-04",
@@ -25548,7 +25548,7 @@ const CASE_DATA = {
       "revenueEur": 15886,
       "cumulativeRevenue": 1026708,
       "revenuePerActive": 12.53,
-      "gtvKEur": 164.1
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2021-04",
@@ -25559,7 +25559,7 @@ const CASE_DATA = {
       "revenueEur": 19526,
       "cumulativeRevenue": 1046234,
       "revenuePerActive": 15.71,
-      "gtvKEur": 75615.6
+      "gtvKEur": 1404.3
     },
     {
       "cohortMonth": "2021-04",
@@ -25570,7 +25570,7 @@ const CASE_DATA = {
       "revenueEur": 18153,
       "cumulativeRevenue": 1064387,
       "revenuePerActive": 19.01,
-      "gtvKEur": 298703
+      "gtvKEur": 4932.7
     },
     {
       "cohortMonth": "2021-04",
@@ -25581,7 +25581,7 @@ const CASE_DATA = {
       "revenueEur": 4542,
       "cumulativeRevenue": 1068929,
       "revenuePerActive": 0,
-      "gtvKEur": 81947.4
+      "gtvKEur": 1218.4
     },
     {
       "cohortMonth": "2021-03",
@@ -25592,7 +25592,7 @@ const CASE_DATA = {
       "revenueEur": 3039,
       "cumulativeRevenue": 3039,
       "revenuePerActive": 0.14,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25625,7 +25625,7 @@ const CASE_DATA = {
       "revenueEur": 801,
       "cumulativeRevenue": 11274,
       "revenuePerActive": 0.15,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25636,7 +25636,7 @@ const CASE_DATA = {
       "revenueEur": 519,
       "cumulativeRevenue": 11793,
       "revenuePerActive": 0.11,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25647,7 +25647,7 @@ const CASE_DATA = {
       "revenueEur": 823,
       "cumulativeRevenue": 12616,
       "revenuePerActive": 0.19,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25658,7 +25658,7 @@ const CASE_DATA = {
       "revenueEur": 1152,
       "cumulativeRevenue": 13767,
       "revenuePerActive": 0.27,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25669,7 +25669,7 @@ const CASE_DATA = {
       "revenueEur": 810,
       "cumulativeRevenue": 14577,
       "revenuePerActive": 0.2,
-      "gtvKEur": 12.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-03",
@@ -25680,7 +25680,7 @@ const CASE_DATA = {
       "revenueEur": 2050,
       "cumulativeRevenue": 16627,
       "revenuePerActive": 0.52,
-      "gtvKEur": 257.3
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2021-03",
@@ -25691,7 +25691,7 @@ const CASE_DATA = {
       "revenueEur": 6118,
       "cumulativeRevenue": 22745,
       "revenuePerActive": 1.66,
-      "gtvKEur": 5399.4
+      "gtvKEur": 126.3
     },
     {
       "cohortMonth": "2021-03",
@@ -25702,7 +25702,7 @@ const CASE_DATA = {
       "revenueEur": 26346,
       "cumulativeRevenue": 49090,
       "revenuePerActive": 7.44,
-      "gtvKEur": 22834.7
+      "gtvKEur": 493.4
     },
     {
       "cohortMonth": "2021-03",
@@ -25746,7 +25746,7 @@ const CASE_DATA = {
       "revenueEur": 27158,
       "cumulativeRevenue": 186362,
       "revenuePerActive": 8.87,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25757,7 +25757,7 @@ const CASE_DATA = {
       "revenueEur": 27597,
       "cumulativeRevenue": 213958,
       "revenuePerActive": 9.3,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25768,7 +25768,7 @@ const CASE_DATA = {
       "revenueEur": 25289,
       "cumulativeRevenue": 239247,
       "revenuePerActive": 8.75,
-      "gtvKEur": 6948.7
+      "gtvKEur": 124.5
     },
     {
       "cohortMonth": "2021-03",
@@ -25779,7 +25779,7 @@ const CASE_DATA = {
       "revenueEur": 24620,
       "cumulativeRevenue": 263867,
       "revenuePerActive": 8.81,
-      "gtvKEur": 11.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-03",
@@ -25790,7 +25790,7 @@ const CASE_DATA = {
       "revenueEur": 24376,
       "cumulativeRevenue": 288243,
       "revenuePerActive": 8.99,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25812,7 +25812,7 @@ const CASE_DATA = {
       "revenueEur": 22606,
       "cumulativeRevenue": 334498,
       "revenuePerActive": 8.91,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25823,7 +25823,7 @@ const CASE_DATA = {
       "revenueEur": 21211,
       "cumulativeRevenue": 355709,
       "revenuePerActive": 8.46,
-      "gtvKEur": 6646.1
+      "gtvKEur": 109.4
     },
     {
       "cohortMonth": "2021-03",
@@ -25834,7 +25834,7 @@ const CASE_DATA = {
       "revenueEur": 23011,
       "cumulativeRevenue": 378721,
       "revenuePerActive": 9.32,
-      "gtvKEur": 33.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-03",
@@ -25845,7 +25845,7 @@ const CASE_DATA = {
       "revenueEur": 19969,
       "cumulativeRevenue": 398689,
       "revenuePerActive": 8.37,
-      "gtvKEur": 7.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-03",
@@ -25856,7 +25856,7 @@ const CASE_DATA = {
       "revenueEur": 35258,
       "cumulativeRevenue": 433948,
       "revenuePerActive": 14.9,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25867,7 +25867,7 @@ const CASE_DATA = {
       "revenueEur": 35341,
       "cumulativeRevenue": 469289,
       "revenuePerActive": 15.53,
-      "gtvKEur": 52.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-03",
@@ -25878,7 +25878,7 @@ const CASE_DATA = {
       "revenueEur": 28189,
       "cumulativeRevenue": 497478,
       "revenuePerActive": 12.61,
-      "gtvKEur": 4631.6
+      "gtvKEur": 73.2
     },
     {
       "cohortMonth": "2021-03",
@@ -25900,7 +25900,7 @@ const CASE_DATA = {
       "revenueEur": 23739,
       "cumulativeRevenue": 549099,
       "revenuePerActive": 10.99,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25911,7 +25911,7 @@ const CASE_DATA = {
       "revenueEur": 22939,
       "cumulativeRevenue": 572038,
       "revenuePerActive": 10.8,
-      "gtvKEur": 6356.4
+      "gtvKEur": 93.2
     },
     {
       "cohortMonth": "2021-03",
@@ -25944,7 +25944,7 @@ const CASE_DATA = {
       "revenueEur": 21979,
       "cumulativeRevenue": 637513,
       "revenuePerActive": 11.03,
-      "gtvKEur": 21.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-03",
@@ -25955,7 +25955,7 @@ const CASE_DATA = {
       "revenueEur": 21752,
       "cumulativeRevenue": 659265,
       "revenuePerActive": 11.18,
-      "gtvKEur": 5136.4
+      "gtvKEur": 102.7
     },
     {
       "cohortMonth": "2021-03",
@@ -25966,7 +25966,7 @@ const CASE_DATA = {
       "revenueEur": 23156,
       "cumulativeRevenue": 682421,
       "revenuePerActive": 11.99,
-      "gtvKEur": 3.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-03",
@@ -25977,7 +25977,7 @@ const CASE_DATA = {
       "revenueEur": 21003,
       "cumulativeRevenue": 703424,
       "revenuePerActive": 11.21,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -25988,7 +25988,7 @@ const CASE_DATA = {
       "revenueEur": 39262,
       "cumulativeRevenue": 742686,
       "revenuePerActive": 20.93,
-      "gtvKEur": 6389.9
+      "gtvKEur": 90.8
     },
     {
       "cohortMonth": "2021-03",
@@ -26010,7 +26010,7 @@ const CASE_DATA = {
       "revenueEur": 25681,
       "cumulativeRevenue": 797869,
       "revenuePerActive": 14.13,
-      "gtvKEur": 16
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-03",
@@ -26021,7 +26021,7 @@ const CASE_DATA = {
       "revenueEur": 28511,
       "cumulativeRevenue": 826381,
       "revenuePerActive": 15.98,
-      "gtvKEur": 4301.3
+      "gtvKEur": 71
     },
     {
       "cohortMonth": "2021-03",
@@ -26032,7 +26032,7 @@ const CASE_DATA = {
       "revenueEur": 23114,
       "cumulativeRevenue": 849495,
       "revenuePerActive": 13.09,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26043,7 +26043,7 @@ const CASE_DATA = {
       "revenueEur": 23680,
       "cumulativeRevenue": 873174,
       "revenuePerActive": 13.59,
-      "gtvKEur": 3451.2
+      "gtvKEur": 46.8
     },
     {
       "cohortMonth": "2021-03",
@@ -26054,7 +26054,7 @@ const CASE_DATA = {
       "revenueEur": 21784,
       "cumulativeRevenue": 894959,
       "revenuePerActive": 12.75,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26065,7 +26065,7 @@ const CASE_DATA = {
       "revenueEur": 26598,
       "cumulativeRevenue": 921557,
       "revenuePerActive": 15.98,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26076,7 +26076,7 @@ const CASE_DATA = {
       "revenueEur": 24410,
       "cumulativeRevenue": 945967,
       "revenuePerActive": 14.87,
-      "gtvKEur": 2913.9
+      "gtvKEur": 59.1
     },
     {
       "cohortMonth": "2021-03",
@@ -26087,7 +26087,7 @@ const CASE_DATA = {
       "revenueEur": 19801,
       "cumulativeRevenue": 965767,
       "revenuePerActive": 12.08,
-      "gtvKEur": 3.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26098,7 +26098,7 @@ const CASE_DATA = {
       "revenueEur": 21006,
       "cumulativeRevenue": 986773,
       "revenuePerActive": 13.01,
-      "gtvKEur": 4870.4
+      "gtvKEur": 68.2
     },
     {
       "cohortMonth": "2021-03",
@@ -26109,7 +26109,7 @@ const CASE_DATA = {
       "revenueEur": 21995,
       "cumulativeRevenue": 1008768,
       "revenuePerActive": 13.76,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26120,7 +26120,7 @@ const CASE_DATA = {
       "revenueEur": 41940,
       "cumulativeRevenue": 1050708,
       "revenuePerActive": 26.66,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26131,7 +26131,7 @@ const CASE_DATA = {
       "revenueEur": 26764,
       "cumulativeRevenue": 1077473,
       "revenuePerActive": 17.22,
-      "gtvKEur": 11461.7
+      "gtvKEur": 144.5
     },
     {
       "cohortMonth": "2021-03",
@@ -26142,7 +26142,7 @@ const CASE_DATA = {
       "revenueEur": 25533,
       "cumulativeRevenue": 1103006,
       "revenuePerActive": 16.71,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26153,7 +26153,7 @@ const CASE_DATA = {
       "revenueEur": 30297,
       "cumulativeRevenue": 1133303,
       "revenuePerActive": 20.09,
-      "gtvKEur": 5005.1
+      "gtvKEur": 55.7
     },
     {
       "cohortMonth": "2021-03",
@@ -26164,7 +26164,7 @@ const CASE_DATA = {
       "revenueEur": 22115,
       "cumulativeRevenue": 1155418,
       "revenuePerActive": 14.8,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26175,7 +26175,7 @@ const CASE_DATA = {
       "revenueEur": 25967,
       "cumulativeRevenue": 1181385,
       "revenuePerActive": 17.9,
-      "gtvKEur": 4888.7
+      "gtvKEur": 101.9
     },
     {
       "cohortMonth": "2021-03",
@@ -26186,7 +26186,7 @@ const CASE_DATA = {
       "revenueEur": 22426,
       "cumulativeRevenue": 1203811,
       "revenuePerActive": 15.62,
-      "gtvKEur": 93.4
+      "gtvKEur": 50.5
     },
     {
       "cohortMonth": "2021-03",
@@ -26197,7 +26197,7 @@ const CASE_DATA = {
       "revenueEur": 25754,
       "cumulativeRevenue": 1229565,
       "revenuePerActive": 17.82,
-      "gtvKEur": 7315.6
+      "gtvKEur": 150.6
     },
     {
       "cohortMonth": "2021-03",
@@ -26208,7 +26208,7 @@ const CASE_DATA = {
       "revenueEur": 21671,
       "cumulativeRevenue": 1251236,
       "revenuePerActive": 15.2,
-      "gtvKEur": 53.5
+      "gtvKEur": 47.6
     },
     {
       "cohortMonth": "2021-03",
@@ -26219,7 +26219,7 @@ const CASE_DATA = {
       "revenueEur": 20273,
       "cumulativeRevenue": 1271509,
       "revenuePerActive": 14.79,
-      "gtvKEur": 3015.4
+      "gtvKEur": 110.4
     },
     {
       "cohortMonth": "2021-03",
@@ -26230,7 +26230,7 @@ const CASE_DATA = {
       "revenueEur": 22028,
       "cumulativeRevenue": 1293537,
       "revenuePerActive": 16.29,
-      "gtvKEur": 147.2
+      "gtvKEur": 54.2
     },
     {
       "cohortMonth": "2021-03",
@@ -26241,7 +26241,7 @@ const CASE_DATA = {
       "revenueEur": 21206,
       "cumulativeRevenue": 1314743,
       "revenuePerActive": 16.04,
-      "gtvKEur": 139409.5
+      "gtvKEur": 1988
     },
     {
       "cohortMonth": "2021-03",
@@ -26252,7 +26252,7 @@ const CASE_DATA = {
       "revenueEur": 37865,
       "cumulativeRevenue": 1352608,
       "revenuePerActive": 36.62,
-      "gtvKEur": 432630.5
+      "gtvKEur": 5812.2
     },
     {
       "cohortMonth": "2021-03",
@@ -26263,7 +26263,7 @@ const CASE_DATA = {
       "revenueEur": 5401,
       "cumulativeRevenue": 1358009,
       "revenuePerActive": 0,
-      "gtvKEur": 138478.4
+      "gtvKEur": 1715.2
     },
     {
       "cohortMonth": "2021-03",
@@ -26274,7 +26274,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1358009,
       "revenuePerActive": 0,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26285,7 +26285,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1358009,
       "revenuePerActive": 0,
-      "gtvKEur": 3.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26296,7 +26296,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1358009,
       "revenuePerActive": 0,
-      "gtvKEur": 2.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-03",
@@ -26318,7 +26318,7 @@ const CASE_DATA = {
       "revenueEur": 771,
       "cumulativeRevenue": 771,
       "revenuePerActive": 0.04,
-      "gtvKEur": 5.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26329,7 +26329,7 @@ const CASE_DATA = {
       "revenueEur": 2225,
       "cumulativeRevenue": 2996,
       "revenuePerActive": 0.3,
-      "gtvKEur": 10.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26340,7 +26340,7 @@ const CASE_DATA = {
       "revenueEur": 189,
       "cumulativeRevenue": 3185,
       "revenuePerActive": 0.04,
-      "gtvKEur": 10.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26351,7 +26351,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 3314,
       "revenuePerActive": 0.03,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26362,7 +26362,7 @@ const CASE_DATA = {
       "revenueEur": 92,
       "cumulativeRevenue": 3406,
       "revenuePerActive": 0.02,
-      "gtvKEur": 11.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26373,7 +26373,7 @@ const CASE_DATA = {
       "revenueEur": 53,
       "cumulativeRevenue": 3459,
       "revenuePerActive": 0.01,
-      "gtvKEur": 13.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26384,7 +26384,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 3459,
       "revenuePerActive": 0,
-      "gtvKEur": 12.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26395,7 +26395,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 3459,
       "revenuePerActive": 0,
-      "gtvKEur": 33.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-02",
@@ -26406,7 +26406,7 @@ const CASE_DATA = {
       "revenueEur": 368,
       "cumulativeRevenue": 3827,
       "revenuePerActive": 0.11,
-      "gtvKEur": 46.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2021-02",
@@ -26417,7 +26417,7 @@ const CASE_DATA = {
       "revenueEur": 172,
       "cumulativeRevenue": 4000,
       "revenuePerActive": 0.05,
-      "gtvKEur": 76.5
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-02",
@@ -26428,7 +26428,7 @@ const CASE_DATA = {
       "revenueEur": 1384,
       "cumulativeRevenue": 5384,
       "revenuePerActive": 0.45,
-      "gtvKEur": 2305.2
+      "gtvKEur": 62.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26439,7 +26439,7 @@ const CASE_DATA = {
       "revenueEur": 17363,
       "cumulativeRevenue": 22747,
       "revenuePerActive": 5.92,
-      "gtvKEur": 10230.7
+      "gtvKEur": 246.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26483,7 +26483,7 @@ const CASE_DATA = {
       "revenueEur": 21203,
       "cumulativeRevenue": 139778,
       "revenuePerActive": 8.5,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26494,7 +26494,7 @@ const CASE_DATA = {
       "revenueEur": 22661,
       "cumulativeRevenue": 162439,
       "revenuePerActive": 9.25,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26505,7 +26505,7 @@ const CASE_DATA = {
       "revenueEur": 18027,
       "cumulativeRevenue": 180466,
       "revenuePerActive": 7.64,
-      "gtvKEur": 2431.7
+      "gtvKEur": 68.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26538,7 +26538,7 @@ const CASE_DATA = {
       "revenueEur": 15149,
       "cumulativeRevenue": 231645,
       "revenuePerActive": 7.06,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26549,7 +26549,7 @@ const CASE_DATA = {
       "revenueEur": 15131,
       "cumulativeRevenue": 246776,
       "revenuePerActive": 7.16,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26560,7 +26560,7 @@ const CASE_DATA = {
       "revenueEur": 24610,
       "cumulativeRevenue": 271386,
       "revenuePerActive": 12.24,
-      "gtvKEur": 2524.8
+      "gtvKEur": 64.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26571,7 +26571,7 @@ const CASE_DATA = {
       "revenueEur": 16452,
       "cumulativeRevenue": 287838,
       "revenuePerActive": 8.41,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26604,7 +26604,7 @@ const CASE_DATA = {
       "revenueEur": 20162,
       "cumulativeRevenue": 367374,
       "revenuePerActive": 10.99,
-      "gtvKEur": 3.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26615,7 +26615,7 @@ const CASE_DATA = {
       "revenueEur": 21731,
       "cumulativeRevenue": 389104,
       "revenuePerActive": 11.95,
-      "gtvKEur": 2072.7
+      "gtvKEur": 42.9
     },
     {
       "cohortMonth": "2021-02",
@@ -26637,7 +26637,7 @@ const CASE_DATA = {
       "revenueEur": 21681,
       "cumulativeRevenue": 432506,
       "revenuePerActive": 12.3,
-      "gtvKEur": 23.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26648,7 +26648,7 @@ const CASE_DATA = {
       "revenueEur": 21718,
       "cumulativeRevenue": 454224,
       "revenuePerActive": 12.52,
-      "gtvKEur": 1518.4
+      "gtvKEur": 33.5
     },
     {
       "cohortMonth": "2021-02",
@@ -26681,7 +26681,7 @@ const CASE_DATA = {
       "revenueEur": 15039,
       "cumulativeRevenue": 511319,
       "revenuePerActive": 9.22,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26692,7 +26692,7 @@ const CASE_DATA = {
       "revenueEur": 19148,
       "cumulativeRevenue": 530467,
       "revenuePerActive": 11.86,
-      "gtvKEur": 1309.3
+      "gtvKEur": 26.5
     },
     {
       "cohortMonth": "2021-02",
@@ -26714,7 +26714,7 @@ const CASE_DATA = {
       "revenueEur": 22165,
       "cumulativeRevenue": 573842,
       "revenuePerActive": 13.93,
-      "gtvKEur": 22.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26725,7 +26725,7 @@ const CASE_DATA = {
       "revenueEur": 34352,
       "cumulativeRevenue": 608194,
       "revenuePerActive": 22.03,
-      "gtvKEur": 1419
+      "gtvKEur": 28.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26747,7 +26747,7 @@ const CASE_DATA = {
       "revenueEur": 25921,
       "cumulativeRevenue": 653687,
       "revenuePerActive": 17.27,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26758,7 +26758,7 @@ const CASE_DATA = {
       "revenueEur": 21358,
       "cumulativeRevenue": 675045,
       "revenuePerActive": 14.31,
-      "gtvKEur": 1152
+      "gtvKEur": 29
     },
     {
       "cohortMonth": "2021-02",
@@ -26769,7 +26769,7 @@ const CASE_DATA = {
       "revenueEur": 16917,
       "cumulativeRevenue": 691962,
       "revenuePerActive": 11.55,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26780,7 +26780,7 @@ const CASE_DATA = {
       "revenueEur": 21997,
       "cumulativeRevenue": 713959,
       "revenuePerActive": 15.12,
-      "gtvKEur": 1083.3
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26791,7 +26791,7 @@ const CASE_DATA = {
       "revenueEur": 19529,
       "cumulativeRevenue": 733488,
       "revenuePerActive": 13.7,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26802,7 +26802,7 @@ const CASE_DATA = {
       "revenueEur": 15505,
       "cumulativeRevenue": 748993,
       "revenuePerActive": 10.8,
-      "gtvKEur": 24.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26813,7 +26813,7 @@ const CASE_DATA = {
       "revenueEur": 15713,
       "cumulativeRevenue": 764706,
       "revenuePerActive": 11.36,
-      "gtvKEur": 995.2
+      "gtvKEur": 48.4
     },
     {
       "cohortMonth": "2021-02",
@@ -26824,7 +26824,7 @@ const CASE_DATA = {
       "revenueEur": 15908,
       "cumulativeRevenue": 780614,
       "revenuePerActive": 11.71,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-02",
@@ -26835,7 +26835,7 @@ const CASE_DATA = {
       "revenueEur": 19600,
       "cumulativeRevenue": 800214,
       "revenuePerActive": 14.66,
-      "gtvKEur": 1215.8
+      "gtvKEur": 30.8
     },
     {
       "cohortMonth": "2021-02",
@@ -26846,7 +26846,7 @@ const CASE_DATA = {
       "revenueEur": 21398,
       "cumulativeRevenue": 821611,
       "revenuePerActive": 16.38,
-      "gtvKEur": 41.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-02",
@@ -26857,7 +26857,7 @@ const CASE_DATA = {
       "revenueEur": 31546,
       "cumulativeRevenue": 853157,
       "revenuePerActive": 24.03,
-      "gtvKEur": 32
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2021-02",
@@ -26868,7 +26868,7 @@ const CASE_DATA = {
       "revenueEur": 18899,
       "cumulativeRevenue": 872056,
       "revenuePerActive": 14.54,
-      "gtvKEur": 787.5
+      "gtvKEur": 17.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26890,7 +26890,7 @@ const CASE_DATA = {
       "revenueEur": 21916,
       "cumulativeRevenue": 917632,
       "revenuePerActive": 17.15,
-      "gtvKEur": 628.9
+      "gtvKEur": 9.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26901,7 +26901,7 @@ const CASE_DATA = {
       "revenueEur": 18490,
       "cumulativeRevenue": 936122,
       "revenuePerActive": 14.72,
-      "gtvKEur": 12
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-02",
@@ -26912,7 +26912,7 @@ const CASE_DATA = {
       "revenueEur": 23192,
       "cumulativeRevenue": 959315,
       "revenuePerActive": 18.78,
-      "gtvKEur": 1268
+      "gtvKEur": 23.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26923,7 +26923,7 @@ const CASE_DATA = {
       "revenueEur": 20319,
       "cumulativeRevenue": 979634,
       "revenuePerActive": 16.85,
-      "gtvKEur": 15.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26934,7 +26934,7 @@ const CASE_DATA = {
       "revenueEur": 19037,
       "cumulativeRevenue": 998671,
       "revenuePerActive": 15.98,
-      "gtvKEur": 865.8
+      "gtvKEur": 26.2
     },
     {
       "cohortMonth": "2021-02",
@@ -26945,7 +26945,7 @@ const CASE_DATA = {
       "revenueEur": 17153,
       "cumulativeRevenue": 1015824,
       "revenuePerActive": 14.62,
-      "gtvKEur": 56.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-02",
@@ -26956,7 +26956,7 @@ const CASE_DATA = {
       "revenueEur": 16462,
       "cumulativeRevenue": 1032286,
       "revenuePerActive": 14.2,
-      "gtvKEur": 930.6
+      "gtvKEur": 21.4
     },
     {
       "cohortMonth": "2021-02",
@@ -26967,7 +26967,7 @@ const CASE_DATA = {
       "revenueEur": 15794,
       "cumulativeRevenue": 1048079,
       "revenuePerActive": 13.93,
-      "gtvKEur": 222.6
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2021-02",
@@ -26978,7 +26978,7 @@ const CASE_DATA = {
       "revenueEur": 19781,
       "cumulativeRevenue": 1067860,
       "revenuePerActive": 17.69,
-      "gtvKEur": 26742.9
+      "gtvKEur": 502.7
     },
     {
       "cohortMonth": "2021-02",
@@ -26989,7 +26989,7 @@ const CASE_DATA = {
       "revenueEur": 24982,
       "cumulativeRevenue": 1092843,
       "revenuePerActive": 28.26,
-      "gtvKEur": 68249.4
+      "gtvKEur": 1408.8
     },
     {
       "cohortMonth": "2021-02",
@@ -27000,7 +27000,7 @@ const CASE_DATA = {
       "revenueEur": 6921,
       "cumulativeRevenue": 1099764,
       "revenuePerActive": 0,
-      "gtvKEur": 17054.5
+      "gtvKEur": 363.5
     },
     {
       "cohortMonth": "2021-01",
@@ -27055,7 +27055,7 @@ const CASE_DATA = {
       "revenueEur": 282,
       "cumulativeRevenue": 10342,
       "revenuePerActive": 0.06,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27066,7 +27066,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 10342,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27077,7 +27077,7 @@ const CASE_DATA = {
       "revenueEur": 768,
       "cumulativeRevenue": 11110,
       "revenuePerActive": 0.2,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27088,7 +27088,7 @@ const CASE_DATA = {
       "revenueEur": 242,
       "cumulativeRevenue": 11353,
       "revenuePerActive": 0.07,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27099,7 +27099,7 @@ const CASE_DATA = {
       "revenueEur": 659,
       "cumulativeRevenue": 12012,
       "revenuePerActive": 0.19,
-      "gtvKEur": 5.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-01",
@@ -27110,7 +27110,7 @@ const CASE_DATA = {
       "revenueEur": 197,
       "cumulativeRevenue": 12209,
       "revenuePerActive": 0.06,
-      "gtvKEur": 62.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2021-01",
@@ -27121,7 +27121,7 @@ const CASE_DATA = {
       "revenueEur": 851,
       "cumulativeRevenue": 13060,
       "revenuePerActive": 0.26,
-      "gtvKEur": 146.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2021-01",
@@ -27132,7 +27132,7 @@ const CASE_DATA = {
       "revenueEur": 3935,
       "cumulativeRevenue": 16995,
       "revenuePerActive": 1.26,
-      "gtvKEur": 2659.8
+      "gtvKEur": 119.1
     },
     {
       "cohortMonth": "2021-01",
@@ -27143,7 +27143,7 @@ const CASE_DATA = {
       "revenueEur": 45902,
       "cumulativeRevenue": 62897,
       "revenuePerActive": 15,
-      "gtvKEur": 10331.5
+      "gtvKEur": 379.8
     },
     {
       "cohortMonth": "2021-01",
@@ -27165,7 +27165,7 @@ const CASE_DATA = {
       "revenueEur": 43736,
       "cumulativeRevenue": 200764,
       "revenuePerActive": 15.22,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27176,7 +27176,7 @@ const CASE_DATA = {
       "revenueEur": 31390,
       "cumulativeRevenue": 232155,
       "revenuePerActive": 11.6,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27187,7 +27187,7 @@ const CASE_DATA = {
       "revenueEur": 28244,
       "cumulativeRevenue": 260399,
       "revenuePerActive": 10.63,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27198,7 +27198,7 @@ const CASE_DATA = {
       "revenueEur": 28565,
       "cumulativeRevenue": 288964,
       "revenuePerActive": 11.19,
-      "gtvKEur": 15
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27209,7 +27209,7 @@ const CASE_DATA = {
       "revenueEur": 23814,
       "cumulativeRevenue": 312778,
       "revenuePerActive": 9.64,
-      "gtvKEur": 2629.4
+      "gtvKEur": 79.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27253,7 +27253,7 @@ const CASE_DATA = {
       "revenueEur": 21956,
       "cumulativeRevenue": 405894,
       "revenuePerActive": 9.95,
-      "gtvKEur": 5.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-01",
@@ -27264,7 +27264,7 @@ const CASE_DATA = {
       "revenueEur": 22698,
       "cumulativeRevenue": 428591,
       "revenuePerActive": 10.47,
-      "gtvKEur": 2527.8
+      "gtvKEur": 163.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27308,7 +27308,7 @@ const CASE_DATA = {
       "revenueEur": 28259,
       "cumulativeRevenue": 589206,
       "revenuePerActive": 14.42,
-      "gtvKEur": 1.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2021-01",
@@ -27319,7 +27319,7 @@ const CASE_DATA = {
       "revenueEur": 22967,
       "cumulativeRevenue": 612172,
       "revenuePerActive": 11.74,
-      "gtvKEur": 1698.1
+      "gtvKEur": 66
     },
     {
       "cohortMonth": "2021-01",
@@ -27330,7 +27330,7 @@ const CASE_DATA = {
       "revenueEur": 27552,
       "cumulativeRevenue": 639724,
       "revenuePerActive": 14.48,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27341,7 +27341,7 @@ const CASE_DATA = {
       "revenueEur": 23621,
       "cumulativeRevenue": 663345,
       "revenuePerActive": 12.8,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27352,7 +27352,7 @@ const CASE_DATA = {
       "revenueEur": 23290,
       "cumulativeRevenue": 686635,
       "revenuePerActive": 12.69,
-      "gtvKEur": 1512.2
+      "gtvKEur": 87.1
     },
     {
       "cohortMonth": "2021-01",
@@ -27363,7 +27363,7 @@ const CASE_DATA = {
       "revenueEur": 19456,
       "cumulativeRevenue": 706091,
       "revenuePerActive": 10.87,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27385,7 +27385,7 @@ const CASE_DATA = {
       "revenueEur": 19840,
       "cumulativeRevenue": 752563,
       "revenuePerActive": 11.31,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27396,7 +27396,7 @@ const CASE_DATA = {
       "revenueEur": 18694,
       "cumulativeRevenue": 771257,
       "revenuePerActive": 11.01,
-      "gtvKEur": 1181.4
+      "gtvKEur": 41
     },
     {
       "cohortMonth": "2021-01",
@@ -27418,7 +27418,7 @@ const CASE_DATA = {
       "revenueEur": 43798,
       "cumulativeRevenue": 849297,
       "revenuePerActive": 26.71,
-      "gtvKEur": 69.6
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2021-01",
@@ -27429,7 +27429,7 @@ const CASE_DATA = {
       "revenueEur": 45685,
       "cumulativeRevenue": 894982,
       "revenuePerActive": 28.22,
-      "gtvKEur": 1200.8
+      "gtvKEur": 61.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27451,7 +27451,7 @@ const CASE_DATA = {
       "revenueEur": 17598,
       "cumulativeRevenue": 931166,
       "revenuePerActive": 11.14,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27462,7 +27462,7 @@ const CASE_DATA = {
       "revenueEur": 25205,
       "cumulativeRevenue": 956371,
       "revenuePerActive": 16.07,
-      "gtvKEur": 773.2
+      "gtvKEur": 16.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27484,7 +27484,7 @@ const CASE_DATA = {
       "revenueEur": 22921,
       "cumulativeRevenue": 1001336,
       "revenuePerActive": 14.94,
-      "gtvKEur": 979
+      "gtvKEur": 29.6
     },
     {
       "cohortMonth": "2021-01",
@@ -27517,7 +27517,7 @@ const CASE_DATA = {
       "revenueEur": 17277,
       "cumulativeRevenue": 1059593,
       "revenuePerActive": 12.05,
-      "gtvKEur": 712.4
+      "gtvKEur": 25.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27528,7 +27528,7 @@ const CASE_DATA = {
       "revenueEur": 19685,
       "cumulativeRevenue": 1079278,
       "revenuePerActive": 13.52,
-      "gtvKEur": 23.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27539,7 +27539,7 @@ const CASE_DATA = {
       "revenueEur": 34890,
       "cumulativeRevenue": 1114168,
       "revenuePerActive": 24.89,
-      "gtvKEur": 1009.9
+      "gtvKEur": 33.5
     },
     {
       "cohortMonth": "2021-01",
@@ -27550,7 +27550,7 @@ const CASE_DATA = {
       "revenueEur": 38453,
       "cumulativeRevenue": 1152622,
       "revenuePerActive": 27.93,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27561,7 +27561,7 @@ const CASE_DATA = {
       "revenueEur": 55401,
       "cumulativeRevenue": 1208023,
       "revenuePerActive": 40.53,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27572,7 +27572,7 @@ const CASE_DATA = {
       "revenueEur": 26644,
       "cumulativeRevenue": 1234667,
       "revenuePerActive": 19.99,
-      "gtvKEur": 692.6
+      "gtvKEur": 33.6
     },
     {
       "cohortMonth": "2021-01",
@@ -27583,7 +27583,7 @@ const CASE_DATA = {
       "revenueEur": 18771,
       "cumulativeRevenue": 1253438,
       "revenuePerActive": 14.05,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2021-01",
@@ -27594,7 +27594,7 @@ const CASE_DATA = {
       "revenueEur": 20078,
       "cumulativeRevenue": 1273517,
       "revenuePerActive": 15.15,
-      "gtvKEur": 557
+      "gtvKEur": 21.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27605,7 +27605,7 @@ const CASE_DATA = {
       "revenueEur": 28033,
       "cumulativeRevenue": 1301549,
       "revenuePerActive": 21.37,
-      "gtvKEur": 21.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27616,7 +27616,7 @@ const CASE_DATA = {
       "revenueEur": 23286,
       "cumulativeRevenue": 1324835,
       "revenuePerActive": 18.41,
-      "gtvKEur": 847.8
+      "gtvKEur": 29
     },
     {
       "cohortMonth": "2021-01",
@@ -27627,7 +27627,7 @@ const CASE_DATA = {
       "revenueEur": 20701,
       "cumulativeRevenue": 1345537,
       "revenuePerActive": 16.64,
-      "gtvKEur": 36.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2021-01",
@@ -27638,7 +27638,7 @@ const CASE_DATA = {
       "revenueEur": 23360,
       "cumulativeRevenue": 1368897,
       "revenuePerActive": 19.02,
-      "gtvKEur": 875
+      "gtvKEur": 98.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27649,7 +27649,7 @@ const CASE_DATA = {
       "revenueEur": 19081,
       "cumulativeRevenue": 1387977,
       "revenuePerActive": 15.41,
-      "gtvKEur": 92.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27660,7 +27660,7 @@ const CASE_DATA = {
       "revenueEur": 23529,
       "cumulativeRevenue": 1411506,
       "revenuePerActive": 19.35,
-      "gtvKEur": 1079
+      "gtvKEur": 43.4
     },
     {
       "cohortMonth": "2021-01",
@@ -27671,7 +27671,7 @@ const CASE_DATA = {
       "revenueEur": 40705,
       "cumulativeRevenue": 1452211,
       "revenuePerActive": 33.45,
-      "gtvKEur": 326.6
+      "gtvKEur": 3.3
     },
     {
       "cohortMonth": "2021-01",
@@ -27682,7 +27682,7 @@ const CASE_DATA = {
       "revenueEur": 43615,
       "cumulativeRevenue": 1495826,
       "revenuePerActive": 36.71,
-      "gtvKEur": 21980.8
+      "gtvKEur": 1189.2
     },
     {
       "cohortMonth": "2021-01",
@@ -27693,7 +27693,7 @@ const CASE_DATA = {
       "revenueEur": 73847,
       "cumulativeRevenue": 1569673,
       "revenuePerActive": 80.18,
-      "gtvKEur": 100613.3
+      "gtvKEur": 4216.8
     },
     {
       "cohortMonth": "2021-01",
@@ -27704,7 +27704,7 @@ const CASE_DATA = {
       "revenueEur": 6940,
       "cumulativeRevenue": 1576613,
       "revenuePerActive": 0,
-      "gtvKEur": 17061.9
+      "gtvKEur": 1187.9
     },
     {
       "cohortMonth": "2021-01",
@@ -27715,7 +27715,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1576613,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27759,7 +27759,7 @@ const CASE_DATA = {
       "revenueEur": 133,
       "cumulativeRevenue": 948,
       "revenuePerActive": 0.03,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27770,7 +27770,7 @@ const CASE_DATA = {
       "revenueEur": 321,
       "cumulativeRevenue": 1269,
       "revenuePerActive": 0.08,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27814,7 +27814,7 @@ const CASE_DATA = {
       "revenueEur": 214,
       "cumulativeRevenue": 2797,
       "revenuePerActive": 0.07,
-      "gtvKEur": 0.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-12",
@@ -27825,7 +27825,7 @@ const CASE_DATA = {
       "revenueEur": 1078,
       "cumulativeRevenue": 3874,
       "revenuePerActive": 0.38,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27836,7 +27836,7 @@ const CASE_DATA = {
       "revenueEur": 1173,
       "cumulativeRevenue": 5047,
       "revenuePerActive": 0.43,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27847,7 +27847,7 @@ const CASE_DATA = {
       "revenueEur": 545,
       "cumulativeRevenue": 5592,
       "revenuePerActive": 0.2,
-      "gtvKEur": 20.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-12",
@@ -27858,7 +27858,7 @@ const CASE_DATA = {
       "revenueEur": 7300,
       "cumulativeRevenue": 12892,
       "revenuePerActive": 2.8,
-      "gtvKEur": 4291.7
+      "gtvKEur": 217.7
     },
     {
       "cohortMonth": "2020-12",
@@ -27869,7 +27869,7 @@ const CASE_DATA = {
       "revenueEur": 35705,
       "cumulativeRevenue": 48597,
       "revenuePerActive": 14.19,
-      "gtvKEur": 11992.2
+      "gtvKEur": 271.8
     },
     {
       "cohortMonth": "2020-12",
@@ -27924,7 +27924,7 @@ const CASE_DATA = {
       "revenueEur": 19857,
       "cumulativeRevenue": 170965,
       "revenuePerActive": 9.47,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27935,7 +27935,7 @@ const CASE_DATA = {
       "revenueEur": 17817,
       "cumulativeRevenue": 188781,
       "revenuePerActive": 8.67,
-      "gtvKEur": 3308.2
+      "gtvKEur": 67.2
     },
     {
       "cohortMonth": "2020-12",
@@ -27968,7 +27968,7 @@ const CASE_DATA = {
       "revenueEur": 14924,
       "cumulativeRevenue": 247017,
       "revenuePerActive": 7.97,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -27990,7 +27990,7 @@ const CASE_DATA = {
       "revenueEur": 18778,
       "cumulativeRevenue": 280818,
       "revenuePerActive": 10.3,
-      "gtvKEur": 2589.7
+      "gtvKEur": 45.7
     },
     {
       "cohortMonth": "2020-12",
@@ -28012,7 +28012,7 @@ const CASE_DATA = {
       "revenueEur": 27863,
       "cumulativeRevenue": 339636,
       "revenuePerActive": 15.89,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -28023,7 +28023,7 @@ const CASE_DATA = {
       "revenueEur": 20869,
       "cumulativeRevenue": 360506,
       "revenuePerActive": 12.22,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-12",
@@ -28034,7 +28034,7 @@ const CASE_DATA = {
       "revenueEur": 18158,
       "cumulativeRevenue": 378664,
       "revenuePerActive": 11.09,
-      "gtvKEur": 13.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-12",
@@ -28045,7 +28045,7 @@ const CASE_DATA = {
       "revenueEur": 16612,
       "cumulativeRevenue": 395276,
       "revenuePerActive": 10.12,
-      "gtvKEur": 2007.5
+      "gtvKEur": 44.6
     },
     {
       "cohortMonth": "2020-12",
@@ -28056,7 +28056,7 @@ const CASE_DATA = {
       "revenueEur": 18421,
       "cumulativeRevenue": 413697,
       "revenuePerActive": 11.52,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-12",
@@ -28067,7 +28067,7 @@ const CASE_DATA = {
       "revenueEur": 18634,
       "cumulativeRevenue": 432331,
       "revenuePerActive": 11.64,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -28078,7 +28078,7 @@ const CASE_DATA = {
       "revenueEur": 15942,
       "cumulativeRevenue": 448272,
       "revenuePerActive": 10.12,
-      "gtvKEur": 2125.9
+      "gtvKEur": 40.6
     },
     {
       "cohortMonth": "2020-12",
@@ -28089,7 +28089,7 @@ const CASE_DATA = {
       "revenueEur": 24714,
       "cumulativeRevenue": 472986,
       "revenuePerActive": 16.13,
-      "gtvKEur": 3.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -28111,7 +28111,7 @@ const CASE_DATA = {
       "revenueEur": 18259,
       "cumulativeRevenue": 507944,
       "revenuePerActive": 12.35,
-      "gtvKEur": 32.6
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28122,7 +28122,7 @@ const CASE_DATA = {
       "revenueEur": 19695,
       "cumulativeRevenue": 527639,
       "revenuePerActive": 13.31,
-      "gtvKEur": 1506.2
+      "gtvKEur": 32.8
     },
     {
       "cohortMonth": "2020-12",
@@ -28144,7 +28144,7 @@ const CASE_DATA = {
       "revenueEur": 28088,
       "cumulativeRevenue": 583603,
       "revenuePerActive": 19.88,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-12",
@@ -28155,7 +28155,7 @@ const CASE_DATA = {
       "revenueEur": 21046,
       "cumulativeRevenue": 604649,
       "revenuePerActive": 15.08,
-      "gtvKEur": 1027
+      "gtvKEur": 28.8
     },
     {
       "cohortMonth": "2020-12",
@@ -28177,7 +28177,7 @@ const CASE_DATA = {
       "revenueEur": 16737,
       "cumulativeRevenue": 640357,
       "revenuePerActive": 12.41,
-      "gtvKEur": 3.7
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28188,7 +28188,7 @@ const CASE_DATA = {
       "revenueEur": 16134,
       "cumulativeRevenue": 656491,
       "revenuePerActive": 12.16,
-      "gtvKEur": 1115.3
+      "gtvKEur": 26.8
     },
     {
       "cohortMonth": "2020-12",
@@ -28199,7 +28199,7 @@ const CASE_DATA = {
       "revenueEur": 16260,
       "cumulativeRevenue": 672750,
       "revenuePerActive": 12.48,
-      "gtvKEur": 13
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2020-12",
@@ -28210,7 +28210,7 @@ const CASE_DATA = {
       "revenueEur": 13870,
       "cumulativeRevenue": 686621,
       "revenuePerActive": 10.94,
-      "gtvKEur": 874.1
+      "gtvKEur": 27.6
     },
     {
       "cohortMonth": "2020-12",
@@ -28221,7 +28221,7 @@ const CASE_DATA = {
       "revenueEur": 22388,
       "cumulativeRevenue": 709009,
       "revenuePerActive": 17.55,
-      "gtvKEur": 1.3
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2020-12",
@@ -28243,7 +28243,7 @@ const CASE_DATA = {
       "revenueEur": 17481,
       "cumulativeRevenue": 742192,
       "revenuePerActive": 14.39,
-      "gtvKEur": 1005.2
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2020-12",
@@ -28265,7 +28265,7 @@ const CASE_DATA = {
       "revenueEur": 20146,
       "cumulativeRevenue": 781565,
       "revenuePerActive": 16.76,
-      "gtvKEur": 807.8
+      "gtvKEur": 13.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28276,7 +28276,7 @@ const CASE_DATA = {
       "revenueEur": 25263,
       "cumulativeRevenue": 806828,
       "revenuePerActive": 21.34,
-      "gtvKEur": 2.7
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2020-12",
@@ -28287,7 +28287,7 @@ const CASE_DATA = {
       "revenueEur": 19771,
       "cumulativeRevenue": 826600,
       "revenuePerActive": 17.54,
-      "gtvKEur": 3.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2020-12",
@@ -28298,7 +28298,7 @@ const CASE_DATA = {
       "revenueEur": 20242,
       "cumulativeRevenue": 846842,
       "revenuePerActive": 17.74,
-      "gtvKEur": 719.8
+      "gtvKEur": 18.4
     },
     {
       "cohortMonth": "2020-12",
@@ -28309,7 +28309,7 @@ const CASE_DATA = {
       "revenueEur": 16480,
       "cumulativeRevenue": 863321,
       "revenuePerActive": 14.6,
-      "gtvKEur": 29.6
+      "gtvKEur": 13.6
     },
     {
       "cohortMonth": "2020-12",
@@ -28320,7 +28320,7 @@ const CASE_DATA = {
       "revenueEur": 24367,
       "cumulativeRevenue": 887688,
       "revenuePerActive": 21.74,
-      "gtvKEur": 695.3
+      "gtvKEur": 30.6
     },
     {
       "cohortMonth": "2020-12",
@@ -28331,7 +28331,7 @@ const CASE_DATA = {
       "revenueEur": 16708,
       "cumulativeRevenue": 904396,
       "revenuePerActive": 14.9,
-      "gtvKEur": 62
+      "gtvKEur": 9.3
     },
     {
       "cohortMonth": "2020-12",
@@ -28342,7 +28342,7 @@ const CASE_DATA = {
       "revenueEur": 16222,
       "cumulativeRevenue": 920618,
       "revenuePerActive": 14.67,
-      "gtvKEur": 715.9
+      "gtvKEur": 23.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28353,7 +28353,7 @@ const CASE_DATA = {
       "revenueEur": 20308,
       "cumulativeRevenue": 940926,
       "revenuePerActive": 18.98,
-      "gtvKEur": 42
+      "gtvKEur": 11.3
     },
     {
       "cohortMonth": "2020-12",
@@ -28364,7 +28364,7 @@ const CASE_DATA = {
       "revenueEur": 17159,
       "cumulativeRevenue": 958085,
       "revenuePerActive": 15.87,
-      "gtvKEur": 673.4
+      "gtvKEur": 22.4
     },
     {
       "cohortMonth": "2020-12",
@@ -28375,7 +28375,7 @@ const CASE_DATA = {
       "revenueEur": 17358,
       "cumulativeRevenue": 975443,
       "revenuePerActive": 16.3,
-      "gtvKEur": 76.8
+      "gtvKEur": 38.2
     },
     {
       "cohortMonth": "2020-12",
@@ -28386,7 +28386,7 @@ const CASE_DATA = {
       "revenueEur": 18329,
       "cumulativeRevenue": 993772,
       "revenuePerActive": 17.29,
-      "gtvKEur": 860
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2020-12",
@@ -28397,7 +28397,7 @@ const CASE_DATA = {
       "revenueEur": 17563,
       "cumulativeRevenue": 1011334,
       "revenuePerActive": 16.79,
-      "gtvKEur": 286.5
+      "gtvKEur": 46.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28408,7 +28408,7 @@ const CASE_DATA = {
       "revenueEur": 25819,
       "cumulativeRevenue": 1037153,
       "revenuePerActive": 25.04,
-      "gtvKEur": 22501
+      "gtvKEur": 751.1
     },
     {
       "cohortMonth": "2020-12",
@@ -28419,7 +28419,7 @@ const CASE_DATA = {
       "revenueEur": 17633,
       "cumulativeRevenue": 1054786,
       "revenuePerActive": 21.61,
-      "gtvKEur": 62884.5
+      "gtvKEur": 2248.9
     },
     {
       "cohortMonth": "2020-12",
@@ -28430,7 +28430,7 @@ const CASE_DATA = {
       "revenueEur": 5746,
       "cumulativeRevenue": 1060532,
       "revenuePerActive": 0,
-      "gtvKEur": 19878.7
+      "gtvKEur": 590.6
     },
     {
       "cohortMonth": "2020-11",
@@ -28496,7 +28496,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 43,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28562,7 +28562,7 @@ const CASE_DATA = {
       "revenueEur": 559,
       "cumulativeRevenue": 3079,
       "revenuePerActive": 0.21,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28573,7 +28573,7 @@ const CASE_DATA = {
       "revenueEur": 6186,
       "cumulativeRevenue": 9265,
       "revenuePerActive": 2.43,
-      "gtvKEur": 36.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2020-11",
@@ -28584,7 +28584,7 @@ const CASE_DATA = {
       "revenueEur": 10427,
       "cumulativeRevenue": 19691,
       "revenuePerActive": 4.17,
-      "gtvKEur": 2744
+      "gtvKEur": 120.9
     },
     {
       "cohortMonth": "2020-11",
@@ -28595,7 +28595,7 @@ const CASE_DATA = {
       "revenueEur": 23539,
       "cumulativeRevenue": 43231,
       "revenuePerActive": 9.94,
-      "gtvKEur": 10970
+      "gtvKEur": 751.9
     },
     {
       "cohortMonth": "2020-11",
@@ -28617,7 +28617,7 @@ const CASE_DATA = {
       "revenueEur": 19555,
       "cumulativeRevenue": 82254,
       "revenuePerActive": 8.74,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28650,7 +28650,7 @@ const CASE_DATA = {
       "revenueEur": 16745,
       "cumulativeRevenue": 131588,
       "revenuePerActive": 8.35,
-      "gtvKEur": 6.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-11",
@@ -28661,7 +28661,7 @@ const CASE_DATA = {
       "revenueEur": 15306,
       "cumulativeRevenue": 146894,
       "revenuePerActive": 7.91,
-      "gtvKEur": 2167.5
+      "gtvKEur": 62
     },
     {
       "cohortMonth": "2020-11",
@@ -28705,7 +28705,7 @@ const CASE_DATA = {
       "revenueEur": 24719,
       "cumulativeRevenue": 217899,
       "revenuePerActive": 13.98,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28716,7 +28716,7 @@ const CASE_DATA = {
       "revenueEur": 51228,
       "cumulativeRevenue": 269127,
       "revenuePerActive": 29.29,
-      "gtvKEur": 7459
+      "gtvKEur": 98.7
     },
     {
       "cohortMonth": "2020-11",
@@ -28760,7 +28760,7 @@ const CASE_DATA = {
       "revenueEur": 12895,
       "cumulativeRevenue": 337038,
       "revenuePerActive": 8.27,
-      "gtvKEur": 14.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-11",
@@ -28771,7 +28771,7 @@ const CASE_DATA = {
       "revenueEur": 14753,
       "cumulativeRevenue": 351790,
       "revenuePerActive": 9.65,
-      "gtvKEur": 6951.3
+      "gtvKEur": 90.3
     },
     {
       "cohortMonth": "2020-11",
@@ -28782,7 +28782,7 @@ const CASE_DATA = {
       "revenueEur": 14982,
       "cumulativeRevenue": 366772,
       "revenuePerActive": 10.04,
-      "gtvKEur": 24.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-11",
@@ -28793,7 +28793,7 @@ const CASE_DATA = {
       "revenueEur": 14061,
       "cumulativeRevenue": 380833,
       "revenuePerActive": 9.44,
-      "gtvKEur": 19.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-11",
@@ -28804,7 +28804,7 @@ const CASE_DATA = {
       "revenueEur": 14805,
       "cumulativeRevenue": 395638,
       "revenuePerActive": 10.15,
-      "gtvKEur": 1736
+      "gtvKEur": 32.5
     },
     {
       "cohortMonth": "2020-11",
@@ -28815,7 +28815,7 @@ const CASE_DATA = {
       "revenueEur": 13889,
       "cumulativeRevenue": 409527,
       "revenuePerActive": 9.62,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28848,7 +28848,7 @@ const CASE_DATA = {
       "revenueEur": 49017,
       "cumulativeRevenue": 489132,
       "revenuePerActive": 34.59,
-      "gtvKEur": 1192.7
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2020-11",
@@ -28870,7 +28870,7 @@ const CASE_DATA = {
       "revenueEur": 14253,
       "cumulativeRevenue": 523667,
       "revenuePerActive": 10.54,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28881,7 +28881,7 @@ const CASE_DATA = {
       "revenueEur": 17307,
       "cumulativeRevenue": 540974,
       "revenuePerActive": 12.75,
-      "gtvKEur": 966.8
+      "gtvKEur": 22.5
     },
     {
       "cohortMonth": "2020-11",
@@ -28892,7 +28892,7 @@ const CASE_DATA = {
       "revenueEur": 14112,
       "cumulativeRevenue": 555086,
       "revenuePerActive": 10.73,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28903,7 +28903,7 @@ const CASE_DATA = {
       "revenueEur": 16166,
       "cumulativeRevenue": 571252,
       "revenuePerActive": 12.32,
-      "gtvKEur": 6.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2020-11",
@@ -28914,7 +28914,7 @@ const CASE_DATA = {
       "revenueEur": 16981,
       "cumulativeRevenue": 588232,
       "revenuePerActive": 12.97,
-      "gtvKEur": 1005.2
+      "gtvKEur": 23.5
     },
     {
       "cohortMonth": "2020-11",
@@ -28925,7 +28925,7 @@ const CASE_DATA = {
       "revenueEur": 14958,
       "cumulativeRevenue": 603190,
       "revenuePerActive": 11.77,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28936,7 +28936,7 @@ const CASE_DATA = {
       "revenueEur": 15550,
       "cumulativeRevenue": 618740,
       "revenuePerActive": 12.32,
-      "gtvKEur": 989.7
+      "gtvKEur": 24.9
     },
     {
       "cohortMonth": "2020-11",
@@ -28958,7 +28958,7 @@ const CASE_DATA = {
       "revenueEur": 13070,
       "cumulativeRevenue": 645127,
       "revenuePerActive": 10.7,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -28969,7 +28969,7 @@ const CASE_DATA = {
       "revenueEur": 14563,
       "cumulativeRevenue": 659689,
       "revenuePerActive": 12.17,
-      "gtvKEur": 722
+      "gtvKEur": 15.7
     },
     {
       "cohortMonth": "2020-11",
@@ -28991,7 +28991,7 @@ const CASE_DATA = {
       "revenueEur": 16170,
       "cumulativeRevenue": 718219,
       "revenuePerActive": 13.99,
-      "gtvKEur": 772.3
+      "gtvKEur": 22
     },
     {
       "cohortMonth": "2020-11",
@@ -29024,7 +29024,7 @@ const CASE_DATA = {
       "revenueEur": 14240,
       "cumulativeRevenue": 767342,
       "revenuePerActive": 12.89,
-      "gtvKEur": 554
+      "gtvKEur": 14.1
     },
     {
       "cohortMonth": "2020-11",
@@ -29035,7 +29035,7 @@ const CASE_DATA = {
       "revenueEur": 17730,
       "cumulativeRevenue": 785072,
       "revenuePerActive": 16.27,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -29046,7 +29046,7 @@ const CASE_DATA = {
       "revenueEur": 17322,
       "cumulativeRevenue": 802394,
       "revenuePerActive": 15.89,
-      "gtvKEur": 599
+      "gtvKEur": 19.6
     },
     {
       "cohortMonth": "2020-11",
@@ -29057,7 +29057,7 @@ const CASE_DATA = {
       "revenueEur": 16393,
       "cumulativeRevenue": 818787,
       "revenuePerActive": 15.32,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-11",
@@ -29068,7 +29068,7 @@ const CASE_DATA = {
       "revenueEur": 17717,
       "cumulativeRevenue": 836504,
       "revenuePerActive": 17,
-      "gtvKEur": 583.7
+      "gtvKEur": 14.6
     },
     {
       "cohortMonth": "2020-11",
@@ -29090,7 +29090,7 @@ const CASE_DATA = {
       "revenueEur": 13837,
       "cumulativeRevenue": 865642,
       "revenuePerActive": 13.71,
-      "gtvKEur": 442.5
+      "gtvKEur": 15.7
     },
     {
       "cohortMonth": "2020-11",
@@ -29101,7 +29101,7 @@ const CASE_DATA = {
       "revenueEur": 14791,
       "cumulativeRevenue": 880434,
       "revenuePerActive": 14.7,
-      "gtvKEur": 49.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2020-11",
@@ -29112,7 +29112,7 @@ const CASE_DATA = {
       "revenueEur": 28498,
       "cumulativeRevenue": 908931,
       "revenuePerActive": 28.87,
-      "gtvKEur": 565
+      "gtvKEur": 23.5
     },
     {
       "cohortMonth": "2020-11",
@@ -29123,7 +29123,7 @@ const CASE_DATA = {
       "revenueEur": 17100,
       "cumulativeRevenue": 926031,
       "revenuePerActive": 17.54,
-      "gtvKEur": 73.3
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2020-11",
@@ -29134,7 +29134,7 @@ const CASE_DATA = {
       "revenueEur": 12934,
       "cumulativeRevenue": 938965,
       "revenuePerActive": 13.86,
-      "gtvKEur": 15904.9
+      "gtvKEur": 492.5
     },
     {
       "cohortMonth": "2020-11",
@@ -29145,7 +29145,7 @@ const CASE_DATA = {
       "revenueEur": 15736,
       "cumulativeRevenue": 954701,
       "revenuePerActive": 21.59,
-      "gtvKEur": 42096.6
+      "gtvKEur": 1359.7
     },
     {
       "cohortMonth": "2020-11",
@@ -29156,7 +29156,7 @@ const CASE_DATA = {
       "revenueEur": 3369,
       "cumulativeRevenue": 958071,
       "revenuePerActive": 0,
-      "gtvKEur": 11998.7
+      "gtvKEur": 314.1
     },
     {
       "cohortMonth": "2020-10",
@@ -29255,7 +29255,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 1649,
       "revenuePerActive": 0.05,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29266,7 +29266,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1649,
       "revenuePerActive": 0,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29277,7 +29277,7 @@ const CASE_DATA = {
       "revenueEur": 86,
       "cumulativeRevenue": 1735,
       "revenuePerActive": 0.03,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29288,7 +29288,7 @@ const CASE_DATA = {
       "revenueEur": 8900,
       "cumulativeRevenue": 10635,
       "revenuePerActive": 3.63,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29299,7 +29299,7 @@ const CASE_DATA = {
       "revenueEur": 3682,
       "cumulativeRevenue": 14317,
       "revenuePerActive": 1.52,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29310,7 +29310,7 @@ const CASE_DATA = {
       "revenueEur": 6487,
       "cumulativeRevenue": 20804,
       "revenuePerActive": 2.75,
-      "gtvKEur": 10
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-10",
@@ -29321,7 +29321,7 @@ const CASE_DATA = {
       "revenueEur": 5717,
       "cumulativeRevenue": 26520,
       "revenuePerActive": 2.5,
-      "gtvKEur": 4438.9
+      "gtvKEur": 68.3
     },
     {
       "cohortMonth": "2020-10",
@@ -29332,7 +29332,7 @@ const CASE_DATA = {
       "revenueEur": 21614,
       "cumulativeRevenue": 48134,
       "revenuePerActive": 9.98,
-      "gtvKEur": 44836.6
+      "gtvKEur": 550.4
     },
     {
       "cohortMonth": "2020-10",
@@ -29343,7 +29343,7 @@ const CASE_DATA = {
       "revenueEur": 17888,
       "cumulativeRevenue": 66022,
       "revenuePerActive": 8.48,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29398,7 +29398,7 @@ const CASE_DATA = {
       "revenueEur": 14824,
       "cumulativeRevenue": 144505,
       "revenuePerActive": 8.35,
-      "gtvKEur": 9748.7
+      "gtvKEur": 128.3
     },
     {
       "cohortMonth": "2020-10",
@@ -29431,7 +29431,7 @@ const CASE_DATA = {
       "revenueEur": 16526,
       "cumulativeRevenue": 194761,
       "revenuePerActive": 10.02,
-      "gtvKEur": 2.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29442,7 +29442,7 @@ const CASE_DATA = {
       "revenueEur": 22976,
       "cumulativeRevenue": 217736,
       "revenuePerActive": 14.39,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29453,7 +29453,7 @@ const CASE_DATA = {
       "revenueEur": 14225,
       "cumulativeRevenue": 231962,
       "revenuePerActive": 9.17,
-      "gtvKEur": 3934.3
+      "gtvKEur": 72.3
     },
     {
       "cohortMonth": "2020-10",
@@ -29486,7 +29486,7 @@ const CASE_DATA = {
       "revenueEur": 17731,
       "cumulativeRevenue": 284740,
       "revenuePerActive": 12.19,
-      "gtvKEur": 2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29497,7 +29497,7 @@ const CASE_DATA = {
       "revenueEur": 12763,
       "cumulativeRevenue": 297503,
       "revenuePerActive": 9.19,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29508,7 +29508,7 @@ const CASE_DATA = {
       "revenueEur": 14266,
       "cumulativeRevenue": 311770,
       "revenuePerActive": 10.18,
-      "gtvKEur": 1700.6
+      "gtvKEur": 47
     },
     {
       "cohortMonth": "2020-10",
@@ -29541,7 +29541,7 @@ const CASE_DATA = {
       "revenueEur": 13236,
       "cumulativeRevenue": 353256,
       "revenuePerActive": 9.98,
-      "gtvKEur": 2131.8
+      "gtvKEur": 43.3
     },
     {
       "cohortMonth": "2020-10",
@@ -29574,7 +29574,7 @@ const CASE_DATA = {
       "revenueEur": 23258,
       "cumulativeRevenue": 414759,
       "revenuePerActive": 18.39,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29585,7 +29585,7 @@ const CASE_DATA = {
       "revenueEur": 12874,
       "cumulativeRevenue": 427633,
       "revenuePerActive": 10.32,
-      "gtvKEur": 1490.7
+      "gtvKEur": 36.6
     },
     {
       "cohortMonth": "2020-10",
@@ -29596,7 +29596,7 @@ const CASE_DATA = {
       "revenueEur": 19164,
       "cumulativeRevenue": 446797,
       "revenuePerActive": 15.63,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29618,7 +29618,7 @@ const CASE_DATA = {
       "revenueEur": 16916,
       "cumulativeRevenue": 481467,
       "revenuePerActive": 14.26,
-      "gtvKEur": 1720.2
+      "gtvKEur": 32.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29640,7 +29640,7 @@ const CASE_DATA = {
       "revenueEur": 13881,
       "cumulativeRevenue": 508820,
       "revenuePerActive": 12.05,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29651,7 +29651,7 @@ const CASE_DATA = {
       "revenueEur": 13923,
       "cumulativeRevenue": 522743,
       "revenuePerActive": 12.39,
-      "gtvKEur": 863.6
+      "gtvKEur": 35.8
     },
     {
       "cohortMonth": "2020-10",
@@ -29673,7 +29673,7 @@ const CASE_DATA = {
       "revenueEur": 12399,
       "cumulativeRevenue": 547157,
       "revenuePerActive": 11.49,
-      "gtvKEur": 870.5
+      "gtvKEur": 15.6
     },
     {
       "cohortMonth": "2020-10",
@@ -29684,7 +29684,7 @@ const CASE_DATA = {
       "revenueEur": 19446,
       "cumulativeRevenue": 566604,
       "revenuePerActive": 18.09,
-      "gtvKEur": 23.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29706,7 +29706,7 @@ const CASE_DATA = {
       "revenueEur": 17316,
       "cumulativeRevenue": 600431,
       "revenuePerActive": 16.67,
-      "gtvKEur": 817
+      "gtvKEur": 17.6
     },
     {
       "cohortMonth": "2020-10",
@@ -29728,7 +29728,7 @@ const CASE_DATA = {
       "revenueEur": 15994,
       "cumulativeRevenue": 628802,
       "revenuePerActive": 15.68,
-      "gtvKEur": 1715.8
+      "gtvKEur": 27.4
     },
     {
       "cohortMonth": "2020-10",
@@ -29761,7 +29761,7 @@ const CASE_DATA = {
       "revenueEur": 17463,
       "cumulativeRevenue": 679952,
       "revenuePerActive": 18.08,
-      "gtvKEur": 625.3
+      "gtvKEur": 19.4
     },
     {
       "cohortMonth": "2020-10",
@@ -29783,7 +29783,7 @@ const CASE_DATA = {
       "revenueEur": 16403,
       "cumulativeRevenue": 713256,
       "revenuePerActive": 17.16,
-      "gtvKEur": 609.8
+      "gtvKEur": 9.1
     },
     {
       "cohortMonth": "2020-10",
@@ -29794,7 +29794,7 @@ const CASE_DATA = {
       "revenueEur": 18082,
       "cumulativeRevenue": 731339,
       "revenuePerActive": 18.84,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-10",
@@ -29805,7 +29805,7 @@ const CASE_DATA = {
       "revenueEur": 17247,
       "cumulativeRevenue": 748585,
       "revenuePerActive": 18.1,
-      "gtvKEur": 588.6
+      "gtvKEur": 8.5
     },
     {
       "cohortMonth": "2020-10",
@@ -29816,7 +29816,7 @@ const CASE_DATA = {
       "revenueEur": 22370,
       "cumulativeRevenue": 770956,
       "revenuePerActive": 24.03,
-      "gtvKEur": 23.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29827,7 +29827,7 @@ const CASE_DATA = {
       "revenueEur": 19623,
       "cumulativeRevenue": 790579,
       "revenuePerActive": 21.01,
-      "gtvKEur": 714.1
+      "gtvKEur": 13.3
     },
     {
       "cohortMonth": "2020-10",
@@ -29838,7 +29838,7 @@ const CASE_DATA = {
       "revenueEur": 23492,
       "cumulativeRevenue": 814071,
       "revenuePerActive": 25.29,
-      "gtvKEur": 148.7
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2020-10",
@@ -29849,7 +29849,7 @@ const CASE_DATA = {
       "revenueEur": 16583,
       "cumulativeRevenue": 830654,
       "revenuePerActive": 18.63,
-      "gtvKEur": 561.1
+      "gtvKEur": 18.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29860,7 +29860,7 @@ const CASE_DATA = {
       "revenueEur": 19945,
       "cumulativeRevenue": 850599,
       "revenuePerActive": 22.64,
-      "gtvKEur": 123.6
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29871,7 +29871,7 @@ const CASE_DATA = {
       "revenueEur": 17524,
       "cumulativeRevenue": 868123,
       "revenuePerActive": 19.98,
-      "gtvKEur": 20817.5
+      "gtvKEur": 525.2
     },
     {
       "cohortMonth": "2020-10",
@@ -29882,7 +29882,7 @@ const CASE_DATA = {
       "revenueEur": 24920,
       "cumulativeRevenue": 893043,
       "revenuePerActive": 37.42,
-      "gtvKEur": 55961.1
+      "gtvKEur": 1415.6
     },
     {
       "cohortMonth": "2020-10",
@@ -29893,7 +29893,7 @@ const CASE_DATA = {
       "revenueEur": 5671,
       "cumulativeRevenue": 898714,
       "revenuePerActive": 0,
-      "gtvKEur": 16771.9
+      "gtvKEur": 384.9
     },
     {
       "cohortMonth": "2020-09",
@@ -29915,7 +29915,7 @@ const CASE_DATA = {
       "revenueEur": 956,
       "cumulativeRevenue": 956,
       "revenuePerActive": 0.15,
-      "gtvKEur": 6.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-09",
@@ -29926,7 +29926,7 @@ const CASE_DATA = {
       "revenueEur": 93,
       "cumulativeRevenue": 1050,
       "revenuePerActive": 0.02,
-      "gtvKEur": 19.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-09",
@@ -29959,7 +29959,7 @@ const CASE_DATA = {
       "revenueEur": 1622,
       "cumulativeRevenue": 2727,
       "revenuePerActive": 0.48,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -29970,7 +29970,7 @@ const CASE_DATA = {
       "revenueEur": 787,
       "cumulativeRevenue": 3514,
       "revenuePerActive": 0.24,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30025,7 +30025,7 @@ const CASE_DATA = {
       "revenueEur": 698,
       "cumulativeRevenue": 4406,
       "revenuePerActive": 0.3,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30036,7 +30036,7 @@ const CASE_DATA = {
       "revenueEur": 1571,
       "cumulativeRevenue": 5977,
       "revenuePerActive": 0.69,
-      "gtvKEur": 3.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30047,7 +30047,7 @@ const CASE_DATA = {
       "revenueEur": 7154,
       "cumulativeRevenue": 13131,
       "revenuePerActive": 3.16,
-      "gtvKEur": 14.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30058,7 +30058,7 @@ const CASE_DATA = {
       "revenueEur": 6296,
       "cumulativeRevenue": 19427,
       "revenuePerActive": 2.91,
-      "gtvKEur": 26.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2020-09",
@@ -30069,7 +30069,7 @@ const CASE_DATA = {
       "revenueEur": 6618,
       "cumulativeRevenue": 26045,
       "revenuePerActive": 3.09,
-      "gtvKEur": 2109.5
+      "gtvKEur": 91.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30080,7 +30080,7 @@ const CASE_DATA = {
       "revenueEur": 20770,
       "cumulativeRevenue": 46815,
       "revenuePerActive": 9.96,
-      "gtvKEur": 8865.4
+      "gtvKEur": 606.7
     },
     {
       "cohortMonth": "2020-09",
@@ -30124,7 +30124,7 @@ const CASE_DATA = {
       "revenueEur": 19953,
       "cumulativeRevenue": 123902,
       "revenuePerActive": 10.85,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30135,7 +30135,7 @@ const CASE_DATA = {
       "revenueEur": 16390,
       "cumulativeRevenue": 140292,
       "revenuePerActive": 9.16,
-      "gtvKEur": 5.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30146,7 +30146,7 @@ const CASE_DATA = {
       "revenueEur": 16268,
       "cumulativeRevenue": 156561,
       "revenuePerActive": 9.24,
-      "gtvKEur": 2060.3
+      "gtvKEur": 57.3
     },
     {
       "cohortMonth": "2020-09",
@@ -30190,7 +30190,7 @@ const CASE_DATA = {
       "revenueEur": 22001,
       "cumulativeRevenue": 241586,
       "revenuePerActive": 13.52,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30201,7 +30201,7 @@ const CASE_DATA = {
       "revenueEur": 22473,
       "cumulativeRevenue": 264059,
       "revenuePerActive": 14.28,
-      "gtvKEur": 1542.7
+      "gtvKEur": 44.6
     },
     {
       "cohortMonth": "2020-09",
@@ -30212,7 +30212,7 @@ const CASE_DATA = {
       "revenueEur": 22091,
       "cumulativeRevenue": 286150,
       "revenuePerActive": 14.37,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30245,7 +30245,7 @@ const CASE_DATA = {
       "revenueEur": 15062,
       "cumulativeRevenue": 341856,
       "revenuePerActive": 10.69,
-      "gtvKEur": 7.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30256,7 +30256,7 @@ const CASE_DATA = {
       "revenueEur": 20546,
       "cumulativeRevenue": 362402,
       "revenuePerActive": 14.6,
-      "gtvKEur": 1229.1
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2020-09",
@@ -30267,7 +30267,7 @@ const CASE_DATA = {
       "revenueEur": 19459,
       "cumulativeRevenue": 381861,
       "revenuePerActive": 14.03,
-      "gtvKEur": 3.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30278,7 +30278,7 @@ const CASE_DATA = {
       "revenueEur": 15899,
       "cumulativeRevenue": 397760,
       "revenuePerActive": 11.64,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30289,7 +30289,7 @@ const CASE_DATA = {
       "revenueEur": 16207,
       "cumulativeRevenue": 413967,
       "revenuePerActive": 11.84,
-      "gtvKEur": 1081.8
+      "gtvKEur": 31.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30322,7 +30322,7 @@ const CASE_DATA = {
       "revenueEur": 19274,
       "cumulativeRevenue": 474827,
       "revenuePerActive": 14.87,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30333,7 +30333,7 @@ const CASE_DATA = {
       "revenueEur": 16571,
       "cumulativeRevenue": 491397,
       "revenuePerActive": 12.89,
-      "gtvKEur": 1072.1
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30344,7 +30344,7 @@ const CASE_DATA = {
       "revenueEur": 21251,
       "cumulativeRevenue": 512648,
       "revenuePerActive": 16.96,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30366,7 +30366,7 @@ const CASE_DATA = {
       "revenueEur": 16767,
       "cumulativeRevenue": 550287,
       "revenuePerActive": 13.63,
-      "gtvKEur": 891.8
+      "gtvKEur": 19.5
     },
     {
       "cohortMonth": "2020-09",
@@ -30399,7 +30399,7 @@ const CASE_DATA = {
       "revenueEur": 15286,
       "cumulativeRevenue": 599470,
       "revenuePerActive": 13.25,
-      "gtvKEur": 810.6
+      "gtvKEur": 14.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30421,7 +30421,7 @@ const CASE_DATA = {
       "revenueEur": 13839,
       "cumulativeRevenue": 628498,
       "revenuePerActive": 12.04,
-      "gtvKEur": 701.6
+      "gtvKEur": 14.7
     },
     {
       "cohortMonth": "2020-09",
@@ -30443,7 +30443,7 @@ const CASE_DATA = {
       "revenueEur": 21372,
       "cumulativeRevenue": 665243,
       "revenuePerActive": 19.1,
-      "gtvKEur": 55.8
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2020-09",
@@ -30454,7 +30454,7 @@ const CASE_DATA = {
       "revenueEur": 14245,
       "cumulativeRevenue": 679489,
       "revenuePerActive": 12.65,
-      "gtvKEur": 729.7
+      "gtvKEur": 14.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30476,7 +30476,7 @@ const CASE_DATA = {
       "revenueEur": 18787,
       "cumulativeRevenue": 714261,
       "revenuePerActive": 17.36,
-      "gtvKEur": 784.2
+      "gtvKEur": 40.8
     },
     {
       "cohortMonth": "2020-09",
@@ -30487,7 +30487,7 @@ const CASE_DATA = {
       "revenueEur": 15558,
       "cumulativeRevenue": 729819,
       "revenuePerActive": 14.93,
-      "gtvKEur": 9.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30498,7 +30498,7 @@ const CASE_DATA = {
       "revenueEur": 18195,
       "cumulativeRevenue": 748015,
       "revenuePerActive": 17.65,
-      "gtvKEur": 22
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30509,7 +30509,7 @@ const CASE_DATA = {
       "revenueEur": 18466,
       "cumulativeRevenue": 766481,
       "revenuePerActive": 17.82,
-      "gtvKEur": 665.7
+      "gtvKEur": 17.3
     },
     {
       "cohortMonth": "2020-09",
@@ -30520,7 +30520,7 @@ const CASE_DATA = {
       "revenueEur": 22400,
       "cumulativeRevenue": 788880,
       "revenuePerActive": 21.94,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30531,7 +30531,7 @@ const CASE_DATA = {
       "revenueEur": 18983,
       "cumulativeRevenue": 807863,
       "revenuePerActive": 18.61,
-      "gtvKEur": 436.3
+      "gtvKEur": 11.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30542,7 +30542,7 @@ const CASE_DATA = {
       "revenueEur": 17163,
       "cumulativeRevenue": 825027,
       "revenuePerActive": 17.2,
-      "gtvKEur": 3.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30553,7 +30553,7 @@ const CASE_DATA = {
       "revenueEur": 15271,
       "cumulativeRevenue": 840298,
       "revenuePerActive": 15.38,
-      "gtvKEur": 535.3
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30564,7 +30564,7 @@ const CASE_DATA = {
       "revenueEur": 16399,
       "cumulativeRevenue": 856697,
       "revenuePerActive": 17.06,
-      "gtvKEur": 4.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30575,7 +30575,7 @@ const CASE_DATA = {
       "revenueEur": 23009,
       "cumulativeRevenue": 879705,
       "revenuePerActive": 24.19,
-      "gtvKEur": 446.5
+      "gtvKEur": 13
     },
     {
       "cohortMonth": "2020-09",
@@ -30586,7 +30586,7 @@ const CASE_DATA = {
       "revenueEur": 17536,
       "cumulativeRevenue": 897241,
       "revenuePerActive": 19.19,
-      "gtvKEur": 3.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30597,7 +30597,7 @@ const CASE_DATA = {
       "revenueEur": 17926,
       "cumulativeRevenue": 915167,
       "revenuePerActive": 19.59,
-      "gtvKEur": 541
+      "gtvKEur": 11.5
     },
     {
       "cohortMonth": "2020-09",
@@ -30608,7 +30608,7 @@ const CASE_DATA = {
       "revenueEur": 20979,
       "cumulativeRevenue": 936146,
       "revenuePerActive": 23.26,
-      "gtvKEur": 112
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2020-09",
@@ -30619,7 +30619,7 @@ const CASE_DATA = {
       "revenueEur": 17533,
       "cumulativeRevenue": 953679,
       "revenuePerActive": 19.63,
-      "gtvKEur": 16922.5
+      "gtvKEur": 479.2
     },
     {
       "cohortMonth": "2020-09",
@@ -30630,7 +30630,7 @@ const CASE_DATA = {
       "revenueEur": 17721,
       "cumulativeRevenue": 971399,
       "revenuePerActive": 26.61,
-      "gtvKEur": 48498.4
+      "gtvKEur": 1224.8
     },
     {
       "cohortMonth": "2020-09",
@@ -30641,7 +30641,7 @@ const CASE_DATA = {
       "revenueEur": 2782,
       "cumulativeRevenue": 974181,
       "revenuePerActive": 0,
-      "gtvKEur": 12263.8
+      "gtvKEur": 319.9
     },
     {
       "cohortMonth": "2020-09",
@@ -30652,7 +30652,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 974181,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-09",
@@ -30663,7 +30663,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 974181,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30751,7 +30751,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 377,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30762,7 +30762,7 @@ const CASE_DATA = {
       "revenueEur": 514,
       "cumulativeRevenue": 891,
       "revenuePerActive": 0.19,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30773,7 +30773,7 @@ const CASE_DATA = {
       "revenueEur": 2484,
       "cumulativeRevenue": 3374,
       "revenuePerActive": 0.97,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30817,7 +30817,7 @@ const CASE_DATA = {
       "revenueEur": 17531,
       "cumulativeRevenue": 23515,
       "revenuePerActive": 8.06,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30839,7 +30839,7 @@ const CASE_DATA = {
       "revenueEur": 1767,
       "cumulativeRevenue": 27223,
       "revenuePerActive": 0.84,
-      "gtvKEur": 53.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2020-08",
@@ -30850,7 +30850,7 @@ const CASE_DATA = {
       "revenueEur": 2192,
       "cumulativeRevenue": 29416,
       "revenuePerActive": 1.1,
-      "gtvKEur": 2852.8
+      "gtvKEur": 73.8
     },
     {
       "cohortMonth": "2020-08",
@@ -30861,7 +30861,7 @@ const CASE_DATA = {
       "revenueEur": 24932,
       "cumulativeRevenue": 54347,
       "revenuePerActive": 12.93,
-      "gtvKEur": 10719
+      "gtvKEur": 314.5
     },
     {
       "cohortMonth": "2020-08",
@@ -30905,7 +30905,7 @@ const CASE_DATA = {
       "revenueEur": 20756,
       "cumulativeRevenue": 137849,
       "revenuePerActive": 12.24,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -30916,7 +30916,7 @@ const CASE_DATA = {
       "revenueEur": 21355,
       "cumulativeRevenue": 159204,
       "revenuePerActive": 12.85,
-      "gtvKEur": 5.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-08",
@@ -30927,7 +30927,7 @@ const CASE_DATA = {
       "revenueEur": 20798,
       "cumulativeRevenue": 180002,
       "revenuePerActive": 12.95,
-      "gtvKEur": 3760.7
+      "gtvKEur": 79.1
     },
     {
       "cohortMonth": "2020-08",
@@ -30982,7 +30982,7 @@ const CASE_DATA = {
       "revenueEur": 18543,
       "cumulativeRevenue": 321530,
       "revenuePerActive": 13.12,
-      "gtvKEur": 2954.5
+      "gtvKEur": 69.6
     },
     {
       "cohortMonth": "2020-08",
@@ -31026,7 +31026,7 @@ const CASE_DATA = {
       "revenueEur": 21121,
       "cumulativeRevenue": 409378,
       "revenuePerActive": 16.32,
-      "gtvKEur": 1.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31037,7 +31037,7 @@ const CASE_DATA = {
       "revenueEur": 20254,
       "cumulativeRevenue": 429633,
       "revenuePerActive": 15.76,
-      "gtvKEur": 1578.8
+      "gtvKEur": 39.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31070,7 +31070,7 @@ const CASE_DATA = {
       "revenueEur": 30572,
       "cumulativeRevenue": 501763,
       "revenuePerActive": 25.02,
-      "gtvKEur": 1515.1
+      "gtvKEur": 31.6
     },
     {
       "cohortMonth": "2020-08",
@@ -31103,7 +31103,7 @@ const CASE_DATA = {
       "revenueEur": 24936,
       "cumulativeRevenue": 591707,
       "revenuePerActive": 21.53,
-      "gtvKEur": 37
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2020-08",
@@ -31114,7 +31114,7 @@ const CASE_DATA = {
       "revenueEur": 18502,
       "cumulativeRevenue": 610209,
       "revenuePerActive": 16.16,
-      "gtvKEur": 1029.4
+      "gtvKEur": 40
     },
     {
       "cohortMonth": "2020-08",
@@ -31147,7 +31147,7 @@ const CASE_DATA = {
       "revenueEur": 24304,
       "cumulativeRevenue": 676239,
       "revenuePerActive": 22.65,
-      "gtvKEur": 665.9
+      "gtvKEur": 24.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31158,7 +31158,7 @@ const CASE_DATA = {
       "revenueEur": 18705,
       "cumulativeRevenue": 694944,
       "revenuePerActive": 17.51,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -31169,7 +31169,7 @@ const CASE_DATA = {
       "revenueEur": 14975,
       "cumulativeRevenue": 709919,
       "revenuePerActive": 14.37,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -31180,7 +31180,7 @@ const CASE_DATA = {
       "revenueEur": 15810,
       "cumulativeRevenue": 725729,
       "revenuePerActive": 15.16,
-      "gtvKEur": 710.6
+      "gtvKEur": 19.6
     },
     {
       "cohortMonth": "2020-08",
@@ -31191,7 +31191,7 @@ const CASE_DATA = {
       "revenueEur": 17287,
       "cumulativeRevenue": 743016,
       "revenuePerActive": 16.37,
-      "gtvKEur": 28.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31202,7 +31202,7 @@ const CASE_DATA = {
       "revenueEur": 32749,
       "cumulativeRevenue": 775765,
       "revenuePerActive": 31.37,
-      "gtvKEur": 795.2
+      "gtvKEur": 22.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31235,7 +31235,7 @@ const CASE_DATA = {
       "revenueEur": 19313,
       "cumulativeRevenue": 830115,
       "revenuePerActive": 19.71,
-      "gtvKEur": 815.3
+      "gtvKEur": 23.4
     },
     {
       "cohortMonth": "2020-08",
@@ -31257,7 +31257,7 @@ const CASE_DATA = {
       "revenueEur": 21009,
       "cumulativeRevenue": 865459,
       "revenuePerActive": 22.42,
-      "gtvKEur": 818
+      "gtvKEur": 30.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31279,7 +31279,7 @@ const CASE_DATA = {
       "revenueEur": 20291,
       "cumulativeRevenue": 900059,
       "revenuePerActive": 22.45,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -31290,7 +31290,7 @@ const CASE_DATA = {
       "revenueEur": 22348,
       "cumulativeRevenue": 922406,
       "revenuePerActive": 24.89,
-      "gtvKEur": 666.8
+      "gtvKEur": 25.7
     },
     {
       "cohortMonth": "2020-08",
@@ -31301,7 +31301,7 @@ const CASE_DATA = {
       "revenueEur": 16891,
       "cumulativeRevenue": 939298,
       "revenuePerActive": 19,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-08",
@@ -31312,7 +31312,7 @@ const CASE_DATA = {
       "revenueEur": 21119,
       "cumulativeRevenue": 960416,
       "revenuePerActive": 23.97,
-      "gtvKEur": 1061
+      "gtvKEur": 18.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31323,7 +31323,7 @@ const CASE_DATA = {
       "revenueEur": 20894,
       "cumulativeRevenue": 981310,
       "revenuePerActive": 24.04,
-      "gtvKEur": 6.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31334,7 +31334,7 @@ const CASE_DATA = {
       "revenueEur": 28474,
       "cumulativeRevenue": 1009784,
       "revenuePerActive": 32.58,
-      "gtvKEur": 775.1
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2020-08",
@@ -31345,7 +31345,7 @@ const CASE_DATA = {
       "revenueEur": 23861,
       "cumulativeRevenue": 1033645,
       "revenuePerActive": 28.04,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31356,7 +31356,7 @@ const CASE_DATA = {
       "revenueEur": 16463,
       "cumulativeRevenue": 1050108,
       "revenuePerActive": 19.6,
-      "gtvKEur": 582.9
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2020-08",
@@ -31367,7 +31367,7 @@ const CASE_DATA = {
       "revenueEur": 21732,
       "cumulativeRevenue": 1071839,
       "revenuePerActive": 26.37,
-      "gtvKEur": 235.5
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2020-08",
@@ -31378,7 +31378,7 @@ const CASE_DATA = {
       "revenueEur": 17578,
       "cumulativeRevenue": 1089417,
       "revenuePerActive": 21.51,
-      "gtvKEur": 642.9
+      "gtvKEur": 19.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31389,7 +31389,7 @@ const CASE_DATA = {
       "revenueEur": 17746,
       "cumulativeRevenue": 1107163,
       "revenuePerActive": 22.46,
-      "gtvKEur": 418.3
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2020-08",
@@ -31400,7 +31400,7 @@ const CASE_DATA = {
       "revenueEur": 19420,
       "cumulativeRevenue": 1126582,
       "revenuePerActive": 24.74,
-      "gtvKEur": 19063.6
+      "gtvKEur": 756.6
     },
     {
       "cohortMonth": "2020-08",
@@ -31411,7 +31411,7 @@ const CASE_DATA = {
       "revenueEur": 17397,
       "cumulativeRevenue": 1143979,
       "revenuePerActive": 29.49,
-      "gtvKEur": 51130.9
+      "gtvKEur": 1902.3
     },
     {
       "cohortMonth": "2020-08",
@@ -31422,7 +31422,7 @@ const CASE_DATA = {
       "revenueEur": 4620,
       "cumulativeRevenue": 1148599,
       "revenuePerActive": 0,
-      "gtvKEur": 11081.4
+      "gtvKEur": 476.1
     },
     {
       "cohortMonth": "2020-08",
@@ -31466,7 +31466,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 642,
       "revenuePerActive": 0,
-      "gtvKEur": 7.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-07",
@@ -31477,7 +31477,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 642,
       "revenuePerActive": 0,
-      "gtvKEur": 5.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-07",
@@ -31609,7 +31609,7 @@ const CASE_DATA = {
       "revenueEur": 1112,
       "cumulativeRevenue": 9531,
       "revenuePerActive": 0.52,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31620,7 +31620,7 @@ const CASE_DATA = {
       "revenueEur": 1723,
       "cumulativeRevenue": 11254,
       "revenuePerActive": 0.83,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-07",
@@ -31631,7 +31631,7 @@ const CASE_DATA = {
       "revenueEur": 2535,
       "cumulativeRevenue": 13789,
       "revenuePerActive": 1.26,
-      "gtvKEur": 2948.7
+      "gtvKEur": 121.3
     },
     {
       "cohortMonth": "2020-07",
@@ -31642,7 +31642,7 @@ const CASE_DATA = {
       "revenueEur": 18106,
       "cumulativeRevenue": 31895,
       "revenuePerActive": 9.27,
-      "gtvKEur": 12200.8
+      "gtvKEur": 394.3
     },
     {
       "cohortMonth": "2020-07",
@@ -31697,7 +31697,7 @@ const CASE_DATA = {
       "revenueEur": 16091,
       "cumulativeRevenue": 125373,
       "revenuePerActive": 9.35,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31708,7 +31708,7 @@ const CASE_DATA = {
       "revenueEur": 22252,
       "cumulativeRevenue": 147626,
       "revenuePerActive": 13.06,
-      "gtvKEur": 3224.7
+      "gtvKEur": 83.5
     },
     {
       "cohortMonth": "2020-07",
@@ -31741,7 +31741,7 @@ const CASE_DATA = {
       "revenueEur": 18073,
       "cumulativeRevenue": 216361,
       "revenuePerActive": 11.52,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31752,7 +31752,7 @@ const CASE_DATA = {
       "revenueEur": 20206,
       "cumulativeRevenue": 236567,
       "revenuePerActive": 13.21,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31763,7 +31763,7 @@ const CASE_DATA = {
       "revenueEur": 16169,
       "cumulativeRevenue": 252735,
       "revenuePerActive": 10.92,
-      "gtvKEur": 1892
+      "gtvKEur": 59.9
     },
     {
       "cohortMonth": "2020-07",
@@ -31796,7 +31796,7 @@ const CASE_DATA = {
       "revenueEur": 16689,
       "cumulativeRevenue": 303910,
       "revenuePerActive": 11.99,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31807,7 +31807,7 @@ const CASE_DATA = {
       "revenueEur": 15605,
       "cumulativeRevenue": 319514,
       "revenuePerActive": 11.55,
-      "gtvKEur": 4.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31818,7 +31818,7 @@ const CASE_DATA = {
       "revenueEur": 18225,
       "cumulativeRevenue": 337739,
       "revenuePerActive": 13.34,
-      "gtvKEur": 1648.5
+      "gtvKEur": 68.3
     },
     {
       "cohortMonth": "2020-07",
@@ -31851,7 +31851,7 @@ const CASE_DATA = {
       "revenueEur": 27266,
       "cumulativeRevenue": 404551,
       "revenuePerActive": 21.05,
-      "gtvKEur": 9391716.3
+      "gtvKEur": 93941.2
     },
     {
       "cohortMonth": "2020-07",
@@ -31884,7 +31884,7 @@ const CASE_DATA = {
       "revenueEur": 20993,
       "cumulativeRevenue": 465171,
       "revenuePerActive": 17.19,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -31895,7 +31895,7 @@ const CASE_DATA = {
       "revenueEur": 17007,
       "cumulativeRevenue": 482178,
       "revenuePerActive": 14.23,
-      "gtvKEur": 25839318.4
+      "gtvKEur": 258433.1
     },
     {
       "cohortMonth": "2020-07",
@@ -31917,7 +31917,7 @@ const CASE_DATA = {
       "revenueEur": 17265,
       "cumulativeRevenue": 516339,
       "revenuePerActive": 15.03,
-      "gtvKEur": 19.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-07",
@@ -31928,7 +31928,7 @@ const CASE_DATA = {
       "revenueEur": 16239,
       "cumulativeRevenue": 532578,
       "revenuePerActive": 14.04,
-      "gtvKEur": 1384.8
+      "gtvKEur": 29.7
     },
     {
       "cohortMonth": "2020-07",
@@ -31950,7 +31950,7 @@ const CASE_DATA = {
       "revenueEur": 15662,
       "cumulativeRevenue": 563400,
       "revenuePerActive": 14.05,
-      "gtvKEur": 17.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-07",
@@ -31961,7 +31961,7 @@ const CASE_DATA = {
       "revenueEur": 14922,
       "cumulativeRevenue": 578322,
       "revenuePerActive": 13.64,
-      "gtvKEur": 1376.2
+      "gtvKEur": 36.7
     },
     {
       "cohortMonth": "2020-07",
@@ -31972,7 +31972,7 @@ const CASE_DATA = {
       "revenueEur": 20789,
       "cumulativeRevenue": 599111,
       "revenuePerActive": 19.18,
-      "gtvKEur": 25.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2020-07",
@@ -31983,7 +31983,7 @@ const CASE_DATA = {
       "revenueEur": 16084,
       "cumulativeRevenue": 615196,
       "revenuePerActive": 15.22,
-      "gtvKEur": 769.2
+      "gtvKEur": 19.6
     },
     {
       "cohortMonth": "2020-07",
@@ -32016,7 +32016,7 @@ const CASE_DATA = {
       "revenueEur": 19504,
       "cumulativeRevenue": 667608,
       "revenuePerActive": 19.45,
-      "gtvKEur": 1296.3
+      "gtvKEur": 30.5
     },
     {
       "cohortMonth": "2020-07",
@@ -32027,7 +32027,7 @@ const CASE_DATA = {
       "revenueEur": 13535,
       "cumulativeRevenue": 681143,
       "revenuePerActive": 13.73,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -32038,7 +32038,7 @@ const CASE_DATA = {
       "revenueEur": 14217,
       "cumulativeRevenue": 695360,
       "revenuePerActive": 14.64,
-      "gtvKEur": 760.3
+      "gtvKEur": 17.9
     },
     {
       "cohortMonth": "2020-07",
@@ -32049,7 +32049,7 @@ const CASE_DATA = {
       "revenueEur": 15073,
       "cumulativeRevenue": 710434,
       "revenuePerActive": 15.75,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -32060,7 +32060,7 @@ const CASE_DATA = {
       "revenueEur": 15357,
       "cumulativeRevenue": 725791,
       "revenuePerActive": 16.48,
-      "gtvKEur": 18.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-07",
@@ -32071,7 +32071,7 @@ const CASE_DATA = {
       "revenueEur": 16935,
       "cumulativeRevenue": 742725,
       "revenuePerActive": 18.07,
-      "gtvKEur": 777.7
+      "gtvKEur": 18.8
     },
     {
       "cohortMonth": "2020-07",
@@ -32093,7 +32093,7 @@ const CASE_DATA = {
       "revenueEur": 14137,
       "cumulativeRevenue": 771893,
       "revenuePerActive": 15.38,
-      "gtvKEur": 882.8
+      "gtvKEur": 21.5
     },
     {
       "cohortMonth": "2020-07",
@@ -32104,7 +32104,7 @@ const CASE_DATA = {
       "revenueEur": 26549,
       "cumulativeRevenue": 798441,
       "revenuePerActive": 28.58,
-      "gtvKEur": 189.8
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2020-07",
@@ -32115,7 +32115,7 @@ const CASE_DATA = {
       "revenueEur": 18279,
       "cumulativeRevenue": 816720,
       "revenuePerActive": 19.98,
-      "gtvKEur": 1980.2
+      "gtvKEur": 31.6
     },
     {
       "cohortMonth": "2020-07",
@@ -32126,7 +32126,7 @@ const CASE_DATA = {
       "revenueEur": 19003,
       "cumulativeRevenue": 835723,
       "revenuePerActive": 21.09,
-      "gtvKEur": 55.5
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2020-07",
@@ -32137,7 +32137,7 @@ const CASE_DATA = {
       "revenueEur": 13781,
       "cumulativeRevenue": 849505,
       "revenuePerActive": 15.73,
-      "gtvKEur": 572.9
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2020-07",
@@ -32148,7 +32148,7 @@ const CASE_DATA = {
       "revenueEur": 21999,
       "cumulativeRevenue": 871504,
       "revenuePerActive": 24.72,
-      "gtvKEur": 12
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-07",
@@ -32159,7 +32159,7 @@ const CASE_DATA = {
       "revenueEur": 15985,
       "cumulativeRevenue": 887489,
       "revenuePerActive": 18.46,
-      "gtvKEur": 1029.8
+      "gtvKEur": 30.6
     },
     {
       "cohortMonth": "2020-07",
@@ -32170,7 +32170,7 @@ const CASE_DATA = {
       "revenueEur": 16460,
       "cumulativeRevenue": 903948,
       "revenuePerActive": 19.36,
-      "gtvKEur": 46.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2020-07",
@@ -32181,7 +32181,7 @@ const CASE_DATA = {
       "revenueEur": 12488,
       "cumulativeRevenue": 916437,
       "revenuePerActive": 14.73,
-      "gtvKEur": 31483.9
+      "gtvKEur": 630.7
     },
     {
       "cohortMonth": "2020-07",
@@ -32192,7 +32192,7 @@ const CASE_DATA = {
       "revenueEur": 15120,
       "cumulativeRevenue": 931557,
       "revenuePerActive": 23.85,
-      "gtvKEur": 146357.9
+      "gtvKEur": 2391.9
     },
     {
       "cohortMonth": "2020-07",
@@ -32203,7 +32203,7 @@ const CASE_DATA = {
       "revenueEur": 4200,
       "cumulativeRevenue": 935756,
       "revenuePerActive": 0,
-      "gtvKEur": 18233.1
+      "gtvKEur": 389.6
     },
     {
       "cohortMonth": "2020-07",
@@ -32214,7 +32214,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 935756,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-07",
@@ -32225,7 +32225,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 935756,
       "revenuePerActive": 0,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32269,7 +32269,7 @@ const CASE_DATA = {
       "revenueEur": 1064,
       "cumulativeRevenue": 2370,
       "revenuePerActive": 0.28,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32313,7 +32313,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 2447,
       "revenuePerActive": 0.02,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32324,7 +32324,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2447,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32335,7 +32335,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2447,
       "revenuePerActive": 0,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32346,7 +32346,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2447,
       "revenuePerActive": 0,
-      "gtvKEur": 3.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32357,7 +32357,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2447,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32368,7 +32368,7 @@ const CASE_DATA = {
       "revenueEur": 7829,
       "cumulativeRevenue": 10276,
       "revenuePerActive": 3.55,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32379,7 +32379,7 @@ const CASE_DATA = {
       "revenueEur": 4866,
       "cumulativeRevenue": 15142,
       "revenuePerActive": 2.32,
-      "gtvKEur": 88.8
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2020-06",
@@ -32390,7 +32390,7 @@ const CASE_DATA = {
       "revenueEur": 2007,
       "cumulativeRevenue": 17149,
       "revenuePerActive": 1,
-      "gtvKEur": 184.8
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2020-06",
@@ -32401,7 +32401,7 @@ const CASE_DATA = {
       "revenueEur": 5271,
       "cumulativeRevenue": 22420,
       "revenuePerActive": 2.77,
-      "gtvKEur": 186.5
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2020-06",
@@ -32412,7 +32412,7 @@ const CASE_DATA = {
       "revenueEur": 1370,
       "cumulativeRevenue": 23789,
       "revenuePerActive": 0.72,
-      "gtvKEur": 186.7
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2020-06",
@@ -32423,7 +32423,7 @@ const CASE_DATA = {
       "revenueEur": 1452,
       "cumulativeRevenue": 25241,
       "revenuePerActive": 0.79,
-      "gtvKEur": 309.9
+      "gtvKEur": 69.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32434,7 +32434,7 @@ const CASE_DATA = {
       "revenueEur": 1507,
       "cumulativeRevenue": 26747,
       "revenuePerActive": 0.84,
-      "gtvKEur": 4639.6
+      "gtvKEur": 158.9
     },
     {
       "cohortMonth": "2020-06",
@@ -32445,7 +32445,7 @@ const CASE_DATA = {
       "revenueEur": 15310,
       "cumulativeRevenue": 42058,
       "revenuePerActive": 8.91,
-      "gtvKEur": 10324.5
+      "gtvKEur": 296.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32467,7 +32467,7 @@ const CASE_DATA = {
       "revenueEur": 16086,
       "cumulativeRevenue": 75110,
       "revenuePerActive": 9.56,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32478,7 +32478,7 @@ const CASE_DATA = {
       "revenueEur": 18401,
       "cumulativeRevenue": 93510,
       "revenuePerActive": 11.55,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32489,7 +32489,7 @@ const CASE_DATA = {
       "revenueEur": 17081,
       "cumulativeRevenue": 110591,
       "revenuePerActive": 10.71,
-      "gtvKEur": 32.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2020-06",
@@ -32500,7 +32500,7 @@ const CASE_DATA = {
       "revenueEur": 25192,
       "cumulativeRevenue": 135783,
       "revenuePerActive": 15.95,
-      "gtvKEur": 73.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2020-06",
@@ -32511,7 +32511,7 @@ const CASE_DATA = {
       "revenueEur": 30302,
       "cumulativeRevenue": 166085,
       "revenuePerActive": 19.96,
-      "gtvKEur": 3239.5
+      "gtvKEur": 73.5
     },
     {
       "cohortMonth": "2020-06",
@@ -32566,7 +32566,7 @@ const CASE_DATA = {
       "revenueEur": 16764,
       "cumulativeRevenue": 263803,
       "revenuePerActive": 12.79,
-      "gtvKEur": 2703.6
+      "gtvKEur": 66.8
     },
     {
       "cohortMonth": "2020-06",
@@ -32610,7 +32610,7 @@ const CASE_DATA = {
       "revenueEur": 18857,
       "cumulativeRevenue": 331684,
       "revenuePerActive": 15.71,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32621,7 +32621,7 @@ const CASE_DATA = {
       "revenueEur": 16237,
       "cumulativeRevenue": 347921,
       "revenuePerActive": 13.36,
-      "gtvKEur": 1809.9
+      "gtvKEur": 42.4
     },
     {
       "cohortMonth": "2020-06",
@@ -32654,7 +32654,7 @@ const CASE_DATA = {
       "revenueEur": 22269,
       "cumulativeRevenue": 418895,
       "revenuePerActive": 18.94,
-      "gtvKEur": 1960.3
+      "gtvKEur": 36.7
     },
     {
       "cohortMonth": "2020-06",
@@ -32698,7 +32698,7 @@ const CASE_DATA = {
       "revenueEur": 17486,
       "cumulativeRevenue": 493660,
       "revenuePerActive": 16.07,
-      "gtvKEur": 1706.7
+      "gtvKEur": 39.5
     },
     {
       "cohortMonth": "2020-06",
@@ -32709,7 +32709,7 @@ const CASE_DATA = {
       "revenueEur": 17078,
       "cumulativeRevenue": 510738,
       "revenuePerActive": 16.1,
-      "gtvKEur": 8.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-06",
@@ -32720,7 +32720,7 @@ const CASE_DATA = {
       "revenueEur": 18628,
       "cumulativeRevenue": 529366,
       "revenuePerActive": 17.86,
-      "gtvKEur": 4.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32731,7 +32731,7 @@ const CASE_DATA = {
       "revenueEur": 17673,
       "cumulativeRevenue": 547039,
       "revenuePerActive": 16.74,
-      "gtvKEur": 1281.1
+      "gtvKEur": 34.1
     },
     {
       "cohortMonth": "2020-06",
@@ -32753,7 +32753,7 @@ const CASE_DATA = {
       "revenueEur": 18752,
       "cumulativeRevenue": 585863,
       "revenuePerActive": 18.38,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32764,7 +32764,7 @@ const CASE_DATA = {
       "revenueEur": 20723,
       "cumulativeRevenue": 606586,
       "revenuePerActive": 20.18,
-      "gtvKEur": 962.4
+      "gtvKEur": 33.7
     },
     {
       "cohortMonth": "2020-06",
@@ -32786,7 +32786,7 @@ const CASE_DATA = {
       "revenueEur": 23238,
       "cumulativeRevenue": 661094,
       "revenuePerActive": 23.5,
-      "gtvKEur": 673.1
+      "gtvKEur": 29.4
     },
     {
       "cohortMonth": "2020-06",
@@ -32797,7 +32797,7 @@ const CASE_DATA = {
       "revenueEur": 18052,
       "cumulativeRevenue": 679146,
       "revenuePerActive": 18.67,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32819,7 +32819,7 @@ const CASE_DATA = {
       "revenueEur": 22014,
       "cumulativeRevenue": 718501,
       "revenuePerActive": 23.7,
-      "gtvKEur": 1025.8
+      "gtvKEur": 23.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32830,7 +32830,7 @@ const CASE_DATA = {
       "revenueEur": 16405,
       "cumulativeRevenue": 734906,
       "revenuePerActive": 17.99,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32841,7 +32841,7 @@ const CASE_DATA = {
       "revenueEur": 15277,
       "cumulativeRevenue": 750183,
       "revenuePerActive": 16.79,
-      "gtvKEur": 1394.3
+      "gtvKEur": 38.7
     },
     {
       "cohortMonth": "2020-06",
@@ -32852,7 +32852,7 @@ const CASE_DATA = {
       "revenueEur": 17750,
       "cumulativeRevenue": 767933,
       "revenuePerActive": 19.66,
-      "gtvKEur": 8.1
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32874,7 +32874,7 @@ const CASE_DATA = {
       "revenueEur": 25986,
       "cumulativeRevenue": 812078,
       "revenuePerActive": 28.87,
-      "gtvKEur": 876.7
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32896,7 +32896,7 @@ const CASE_DATA = {
       "revenueEur": 24271,
       "cumulativeRevenue": 859930,
       "revenuePerActive": 27.46,
-      "gtvKEur": 493.6
+      "gtvKEur": 24.2
     },
     {
       "cohortMonth": "2020-06",
@@ -32907,7 +32907,7 @@ const CASE_DATA = {
       "revenueEur": 29084,
       "cumulativeRevenue": 889014,
       "revenuePerActive": 33.13,
-      "gtvKEur": 2.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-06",
@@ -32918,7 +32918,7 @@ const CASE_DATA = {
       "revenueEur": 23221,
       "cumulativeRevenue": 912236,
       "revenuePerActive": 26.69,
-      "gtvKEur": 621
+      "gtvKEur": 25.1
     },
     {
       "cohortMonth": "2020-06",
@@ -32940,7 +32940,7 @@ const CASE_DATA = {
       "revenueEur": 28685,
       "cumulativeRevenue": 958603,
       "revenuePerActive": 33.99,
-      "gtvKEur": 446.8
+      "gtvKEur": 17.7
     },
     {
       "cohortMonth": "2020-06",
@@ -32951,7 +32951,7 @@ const CASE_DATA = {
       "revenueEur": 20887,
       "cumulativeRevenue": 979490,
       "revenuePerActive": 25.53,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-06",
@@ -32962,7 +32962,7 @@ const CASE_DATA = {
       "revenueEur": 17516,
       "cumulativeRevenue": 997007,
       "revenuePerActive": 21.9,
-      "gtvKEur": 564.1
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2020-06",
@@ -32973,7 +32973,7 @@ const CASE_DATA = {
       "revenueEur": 15530,
       "cumulativeRevenue": 1012537,
       "revenuePerActive": 19.89,
-      "gtvKEur": 56.8
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2020-06",
@@ -32984,7 +32984,7 @@ const CASE_DATA = {
       "revenueEur": 18338,
       "cumulativeRevenue": 1030875,
       "revenuePerActive": 23.12,
-      "gtvKEur": 13486.9
+      "gtvKEur": 610.8
     },
     {
       "cohortMonth": "2020-06",
@@ -32995,7 +32995,7 @@ const CASE_DATA = {
       "revenueEur": 16893,
       "cumulativeRevenue": 1047767,
       "revenuePerActive": 28.11,
-      "gtvKEur": 38567.1
+      "gtvKEur": 1498
     },
     {
       "cohortMonth": "2020-06",
@@ -33006,7 +33006,7 @@ const CASE_DATA = {
       "revenueEur": 5955,
       "cumulativeRevenue": 1053722,
       "revenuePerActive": 0,
-      "gtvKEur": 10106.4
+      "gtvKEur": 378.7
     },
     {
       "cohortMonth": "2020-05",
@@ -33193,7 +33193,7 @@ const CASE_DATA = {
       "revenueEur": 906,
       "cumulativeRevenue": 4667,
       "revenuePerActive": 0.68,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33204,7 +33204,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 4838,
       "revenuePerActive": 0.13,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33215,7 +33215,7 @@ const CASE_DATA = {
       "revenueEur": 373,
       "cumulativeRevenue": 5210,
       "revenuePerActive": 0.3,
-      "gtvKEur": 110.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2020-05",
@@ -33226,7 +33226,7 @@ const CASE_DATA = {
       "revenueEur": 1202,
       "cumulativeRevenue": 6413,
       "revenuePerActive": 0.97,
-      "gtvKEur": 203454.3
+      "gtvKEur": 2064.1
     },
     {
       "cohortMonth": "2020-05",
@@ -33237,7 +33237,7 @@ const CASE_DATA = {
       "revenueEur": 14522,
       "cumulativeRevenue": 20935,
       "revenuePerActive": 12.22,
-      "gtvKEur": 306085.4
+      "gtvKEur": 3161
     },
     {
       "cohortMonth": "2020-05",
@@ -33303,7 +33303,7 @@ const CASE_DATA = {
       "revenueEur": 18211,
       "cumulativeRevenue": 123232,
       "revenuePerActive": 17.63,
-      "gtvKEur": 107181.1
+      "gtvKEur": 1098.9
     },
     {
       "cohortMonth": "2020-05",
@@ -33347,7 +33347,7 @@ const CASE_DATA = {
       "revenueEur": 14455,
       "cumulativeRevenue": 175075,
       "revenuePerActive": 15.3,
-      "gtvKEur": 10.1
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2020-05",
@@ -33358,7 +33358,7 @@ const CASE_DATA = {
       "revenueEur": 12573,
       "cumulativeRevenue": 187649,
       "revenuePerActive": 13.59,
-      "gtvKEur": 83838.6
+      "gtvKEur": 865.3
     },
     {
       "cohortMonth": "2020-05",
@@ -33391,7 +33391,7 @@ const CASE_DATA = {
       "revenueEur": 14490,
       "cumulativeRevenue": 230163,
       "revenuePerActive": 16.28,
-      "gtvKEur": 3.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33402,7 +33402,7 @@ const CASE_DATA = {
       "revenueEur": 11039,
       "cumulativeRevenue": 241202,
       "revenuePerActive": 12.6,
-      "gtvKEur": 11.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-05",
@@ -33413,7 +33413,7 @@ const CASE_DATA = {
       "revenueEur": 17128,
       "cumulativeRevenue": 258330,
       "revenuePerActive": 20.06,
-      "gtvKEur": 961.7
+      "gtvKEur": 26.3
     },
     {
       "cohortMonth": "2020-05",
@@ -33446,7 +33446,7 @@ const CASE_DATA = {
       "revenueEur": 14261,
       "cumulativeRevenue": 318002,
       "revenuePerActive": 16.94,
-      "gtvKEur": 969.7
+      "gtvKEur": 25.5
     },
     {
       "cohortMonth": "2020-05",
@@ -33468,7 +33468,7 @@ const CASE_DATA = {
       "revenueEur": 12496,
       "cumulativeRevenue": 343424,
       "revenuePerActive": 15.28,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33490,7 +33490,7 @@ const CASE_DATA = {
       "revenueEur": 13272,
       "cumulativeRevenue": 371993,
       "revenuePerActive": 16.89,
-      "gtvKEur": 598.9
+      "gtvKEur": 24.7
     },
     {
       "cohortMonth": "2020-05",
@@ -33501,7 +33501,7 @@ const CASE_DATA = {
       "revenueEur": 12307,
       "cumulativeRevenue": 384300,
       "revenuePerActive": 15.82,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33523,7 +33523,7 @@ const CASE_DATA = {
       "revenueEur": 14959,
       "cumulativeRevenue": 413973,
       "revenuePerActive": 19.4,
-      "gtvKEur": 573.4
+      "gtvKEur": 16.9
     },
     {
       "cohortMonth": "2020-05",
@@ -33556,7 +33556,7 @@ const CASE_DATA = {
       "revenueEur": 17368,
       "cumulativeRevenue": 459560,
       "revenuePerActive": 23.41,
-      "gtvKEur": 455.3
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2020-05",
@@ -33578,7 +33578,7 @@ const CASE_DATA = {
       "revenueEur": 13177,
       "cumulativeRevenue": 492988,
       "revenuePerActive": 17.98,
-      "gtvKEur": 425.2
+      "gtvKEur": 10.9
     },
     {
       "cohortMonth": "2020-05",
@@ -33589,7 +33589,7 @@ const CASE_DATA = {
       "revenueEur": 13850,
       "cumulativeRevenue": 506838,
       "revenuePerActive": 19.45,
-      "gtvKEur": 1225.9
+      "gtvKEur": 12.3
     },
     {
       "cohortMonth": "2020-05",
@@ -33600,7 +33600,7 @@ const CASE_DATA = {
       "revenueEur": 12521,
       "cumulativeRevenue": 519359,
       "revenuePerActive": 17.61,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33611,7 +33611,7 @@ const CASE_DATA = {
       "revenueEur": 14576,
       "cumulativeRevenue": 533935,
       "revenuePerActive": 21.22,
-      "gtvKEur": 352.7
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2020-05",
@@ -33622,7 +33622,7 @@ const CASE_DATA = {
       "revenueEur": 13754,
       "cumulativeRevenue": 547689,
       "revenuePerActive": 20.08,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33633,7 +33633,7 @@ const CASE_DATA = {
       "revenueEur": 12593,
       "cumulativeRevenue": 560282,
       "revenuePerActive": 18.52,
-      "gtvKEur": 481
+      "gtvKEur": 10.7
     },
     {
       "cohortMonth": "2020-05",
@@ -33644,7 +33644,7 @@ const CASE_DATA = {
       "revenueEur": 12165,
       "cumulativeRevenue": 572447,
       "revenuePerActive": 18.27,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33655,7 +33655,7 @@ const CASE_DATA = {
       "revenueEur": 14577,
       "cumulativeRevenue": 587024,
       "revenuePerActive": 21.37,
-      "gtvKEur": 4.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33666,7 +33666,7 @@ const CASE_DATA = {
       "revenueEur": 12285,
       "cumulativeRevenue": 599309,
       "revenuePerActive": 19.02,
-      "gtvKEur": 334.2
+      "gtvKEur": 7.9
     },
     {
       "cohortMonth": "2020-05",
@@ -33688,7 +33688,7 @@ const CASE_DATA = {
       "revenueEur": 15607,
       "cumulativeRevenue": 629421,
       "revenuePerActive": 23.75,
-      "gtvKEur": 424.6
+      "gtvKEur": 12.1
     },
     {
       "cohortMonth": "2020-05",
@@ -33699,7 +33699,7 @@ const CASE_DATA = {
       "revenueEur": 20824,
       "cumulativeRevenue": 650245,
       "revenuePerActive": 32.79,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-05",
@@ -33710,7 +33710,7 @@ const CASE_DATA = {
       "revenueEur": 12544,
       "cumulativeRevenue": 662789,
       "revenuePerActive": 20.01,
-      "gtvKEur": 302
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2020-05",
@@ -33732,7 +33732,7 @@ const CASE_DATA = {
       "revenueEur": 12389,
       "cumulativeRevenue": 687757,
       "revenuePerActive": 19.98,
-      "gtvKEur": 367.5
+      "gtvKEur": 6.5
     },
     {
       "cohortMonth": "2020-05",
@@ -33754,7 +33754,7 @@ const CASE_DATA = {
       "revenueEur": 12365,
       "cumulativeRevenue": 713337,
       "revenuePerActive": 20.71,
-      "gtvKEur": 279.8
+      "gtvKEur": 10
     },
     {
       "cohortMonth": "2020-05",
@@ -33765,7 +33765,7 @@ const CASE_DATA = {
       "revenueEur": 11415,
       "cumulativeRevenue": 724752,
       "revenuePerActive": 19.41,
-      "gtvKEur": 10.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-05",
@@ -33776,7 +33776,7 @@ const CASE_DATA = {
       "revenueEur": 11402,
       "cumulativeRevenue": 736154,
       "revenuePerActive": 20.04,
-      "gtvKEur": 9968.1
+      "gtvKEur": 224.4
     },
     {
       "cohortMonth": "2020-05",
@@ -33787,7 +33787,7 @@ const CASE_DATA = {
       "revenueEur": 13311,
       "cumulativeRevenue": 749464,
       "revenuePerActive": 29.32,
-      "gtvKEur": 29483
+      "gtvKEur": 659.6
     },
     {
       "cohortMonth": "2020-05",
@@ -33798,7 +33798,7 @@ const CASE_DATA = {
       "revenueEur": 3690,
       "cumulativeRevenue": 753155,
       "revenuePerActive": 0,
-      "gtvKEur": 7453.7
+      "gtvKEur": 167.2
     },
     {
       "cohortMonth": "2020-05",
@@ -33809,7 +33809,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 753155,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34029,7 +34029,7 @@ const CASE_DATA = {
       "revenueEur": 343,
       "cumulativeRevenue": 2799,
       "revenuePerActive": 0.46,
-      "gtvKEur": 0.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-04",
@@ -34040,7 +34040,7 @@ const CASE_DATA = {
       "revenueEur": 1819,
       "cumulativeRevenue": 4618,
       "revenuePerActive": 2.49,
-      "gtvKEur": 609.5
+      "gtvKEur": 41.5
     },
     {
       "cohortMonth": "2020-04",
@@ -34051,7 +34051,7 @@ const CASE_DATA = {
       "revenueEur": 9419,
       "cumulativeRevenue": 14037,
       "revenuePerActive": 13.55,
-      "gtvKEur": 3180
+      "gtvKEur": 146.4
     },
     {
       "cohortMonth": "2020-04",
@@ -34106,7 +34106,7 @@ const CASE_DATA = {
       "revenueEur": 8435,
       "cumulativeRevenue": 65363,
       "revenuePerActive": 13.92,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34117,7 +34117,7 @@ const CASE_DATA = {
       "revenueEur": 14759,
       "cumulativeRevenue": 80121,
       "revenuePerActive": 24.64,
-      "gtvKEur": 562.5
+      "gtvKEur": 30.9
     },
     {
       "cohortMonth": "2020-04",
@@ -34172,7 +34172,7 @@ const CASE_DATA = {
       "revenueEur": 8679,
       "cumulativeRevenue": 125629,
       "revenuePerActive": 15.64,
-      "gtvKEur": 593.3
+      "gtvKEur": 29.1
     },
     {
       "cohortMonth": "2020-04",
@@ -34227,7 +34227,7 @@ const CASE_DATA = {
       "revenueEur": 11729,
       "cumulativeRevenue": 172441,
       "revenuePerActive": 22.26,
-      "gtvKEur": 619.7
+      "gtvKEur": 25.7
     },
     {
       "cohortMonth": "2020-04",
@@ -34249,7 +34249,7 @@ const CASE_DATA = {
       "revenueEur": 13672,
       "cumulativeRevenue": 193847,
       "revenuePerActive": 27.56,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34260,7 +34260,7 @@ const CASE_DATA = {
       "revenueEur": 10427,
       "cumulativeRevenue": 204274,
       "revenuePerActive": 21.28,
-      "gtvKEur": 409.4
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2020-04",
@@ -34304,7 +34304,7 @@ const CASE_DATA = {
       "revenueEur": 6806,
       "cumulativeRevenue": 235874,
       "revenuePerActive": 14.33,
-      "gtvKEur": 413.5
+      "gtvKEur": 37.3
     },
     {
       "cohortMonth": "2020-04",
@@ -34326,7 +34326,7 @@ const CASE_DATA = {
       "revenueEur": 6299,
       "cumulativeRevenue": 248742,
       "revenuePerActive": 13.61,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34337,7 +34337,7 @@ const CASE_DATA = {
       "revenueEur": 7429,
       "cumulativeRevenue": 256170,
       "revenuePerActive": 16.08,
-      "gtvKEur": 394.4
+      "gtvKEur": 25
     },
     {
       "cohortMonth": "2020-04",
@@ -34370,7 +34370,7 @@ const CASE_DATA = {
       "revenueEur": 6695,
       "cumulativeRevenue": 278890,
       "revenuePerActive": 15.18,
-      "gtvKEur": 278.6
+      "gtvKEur": 11.9
     },
     {
       "cohortMonth": "2020-04",
@@ -34392,7 +34392,7 @@ const CASE_DATA = {
       "revenueEur": 9929,
       "cumulativeRevenue": 299376,
       "revenuePerActive": 22.83,
-      "gtvKEur": 314
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2020-04",
@@ -34425,7 +34425,7 @@ const CASE_DATA = {
       "revenueEur": 6385,
       "cumulativeRevenue": 325638,
       "revenuePerActive": 15.27,
-      "gtvKEur": 217.6
+      "gtvKEur": 12.1
     },
     {
       "cohortMonth": "2020-04",
@@ -34436,7 +34436,7 @@ const CASE_DATA = {
       "revenueEur": 6265,
       "cumulativeRevenue": 331903,
       "revenuePerActive": 15.17,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34447,7 +34447,7 @@ const CASE_DATA = {
       "revenueEur": 6628,
       "cumulativeRevenue": 338530,
       "revenuePerActive": 16.13,
-      "gtvKEur": 242.4
+      "gtvKEur": 12.3
     },
     {
       "cohortMonth": "2020-04",
@@ -34469,7 +34469,7 @@ const CASE_DATA = {
       "revenueEur": 9177,
       "cumulativeRevenue": 354244,
       "revenuePerActive": 22.55,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34480,7 +34480,7 @@ const CASE_DATA = {
       "revenueEur": 7139,
       "cumulativeRevenue": 361383,
       "revenuePerActive": 18.07,
-      "gtvKEur": 262.6
+      "gtvKEur": 7.9
     },
     {
       "cohortMonth": "2020-04",
@@ -34491,7 +34491,7 @@ const CASE_DATA = {
       "revenueEur": 8655,
       "cumulativeRevenue": 370038,
       "revenuePerActive": 21.01,
-      "gtvKEur": 19.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-04",
@@ -34502,7 +34502,7 @@ const CASE_DATA = {
       "revenueEur": 6241,
       "cumulativeRevenue": 376279,
       "revenuePerActive": 15.84,
-      "gtvKEur": 192.3
+      "gtvKEur": 8
     },
     {
       "cohortMonth": "2020-04",
@@ -34524,7 +34524,7 @@ const CASE_DATA = {
       "revenueEur": 9042,
       "cumulativeRevenue": 394303,
       "revenuePerActive": 23.49,
-      "gtvKEur": 193.7
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2020-04",
@@ -34546,7 +34546,7 @@ const CASE_DATA = {
       "revenueEur": 11685,
       "cumulativeRevenue": 415096,
       "revenuePerActive": 30.27,
-      "gtvKEur": 197.6
+      "gtvKEur": 8.9
     },
     {
       "cohortMonth": "2020-04",
@@ -34557,7 +34557,7 @@ const CASE_DATA = {
       "revenueEur": 6238,
       "cumulativeRevenue": 421334,
       "revenuePerActive": 16.46,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-04",
@@ -34568,7 +34568,7 @@ const CASE_DATA = {
       "revenueEur": 6008,
       "cumulativeRevenue": 427342,
       "revenuePerActive": 15.89,
-      "gtvKEur": 617.7
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2020-04",
@@ -34579,7 +34579,7 @@ const CASE_DATA = {
       "revenueEur": 6512,
       "cumulativeRevenue": 433854,
       "revenuePerActive": 17.7,
-      "gtvKEur": 10.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-04",
@@ -34590,7 +34590,7 @@ const CASE_DATA = {
       "revenueEur": 6299,
       "cumulativeRevenue": 440153,
       "revenuePerActive": 17.26,
-      "gtvKEur": 8491.4
+      "gtvKEur": 357.5
     },
     {
       "cohortMonth": "2020-04",
@@ -34601,7 +34601,7 @@ const CASE_DATA = {
       "revenueEur": 8392,
       "cumulativeRevenue": 448544,
       "revenuePerActive": 30.74,
-      "gtvKEur": 23322.5
+      "gtvKEur": 720.6
     },
     {
       "cohortMonth": "2020-04",
@@ -34612,7 +34612,7 @@ const CASE_DATA = {
       "revenueEur": 1726,
       "cumulativeRevenue": 450271,
       "revenuePerActive": 0,
-      "gtvKEur": 5941.2
+      "gtvKEur": 179.9
     },
     {
       "cohortMonth": "2020-03",
@@ -34788,7 +34788,7 @@ const CASE_DATA = {
       "revenueEur": 796,
       "cumulativeRevenue": 2746,
       "revenuePerActive": 0.72,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-03",
@@ -34843,7 +34843,7 @@ const CASE_DATA = {
       "revenueEur": 116,
       "cumulativeRevenue": 4994,
       "revenuePerActive": 0.12,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-03",
@@ -34854,7 +34854,7 @@ const CASE_DATA = {
       "revenueEur": 1225,
       "cumulativeRevenue": 6220,
       "revenuePerActive": 1.31,
-      "gtvKEur": 1353.1
+      "gtvKEur": 33.4
     },
     {
       "cohortMonth": "2020-03",
@@ -34865,7 +34865,7 @@ const CASE_DATA = {
       "revenueEur": 8635,
       "cumulativeRevenue": 14854,
       "revenuePerActive": 9.72,
-      "gtvKEur": 4046.2
+      "gtvKEur": 105.9
     },
     {
       "cohortMonth": "2020-03",
@@ -34931,7 +34931,7 @@ const CASE_DATA = {
       "revenueEur": 12705,
       "cumulativeRevenue": 81378,
       "revenuePerActive": 15.76,
-      "gtvKEur": 1541.8
+      "gtvKEur": 33
     },
     {
       "cohortMonth": "2020-03",
@@ -34975,7 +34975,7 @@ const CASE_DATA = {
       "revenueEur": 6833,
       "cumulativeRevenue": 112989,
       "revenuePerActive": 9.39,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-03",
@@ -34986,7 +34986,7 @@ const CASE_DATA = {
       "revenueEur": 8546,
       "cumulativeRevenue": 121535,
       "revenuePerActive": 11.94,
-      "gtvKEur": 1167.2
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2020-03",
@@ -35030,7 +35030,7 @@ const CASE_DATA = {
       "revenueEur": 24460,
       "cumulativeRevenue": 168170,
       "revenuePerActive": 36.45,
-      "gtvKEur": 5.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-03",
@@ -35041,7 +35041,7 @@ const CASE_DATA = {
       "revenueEur": 7033,
       "cumulativeRevenue": 175204,
       "revenuePerActive": 10.62,
-      "gtvKEur": 911.9
+      "gtvKEur": 31.8
     },
     {
       "cohortMonth": "2020-03",
@@ -35074,7 +35074,7 @@ const CASE_DATA = {
       "revenueEur": 8155,
       "cumulativeRevenue": 200154,
       "revenuePerActive": 12.28,
-      "gtvKEur": 978.1
+      "gtvKEur": 14.9
     },
     {
       "cohortMonth": "2020-03",
@@ -35096,7 +35096,7 @@ const CASE_DATA = {
       "revenueEur": 6650,
       "cumulativeRevenue": 215482,
       "revenuePerActive": 10.67,
-      "gtvKEur": 64.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2020-03",
@@ -35118,7 +35118,7 @@ const CASE_DATA = {
       "revenueEur": 8026,
       "cumulativeRevenue": 230412,
       "revenuePerActive": 13.49,
-      "gtvKEur": 901.1
+      "gtvKEur": 12.4
     },
     {
       "cohortMonth": "2020-03",
@@ -35129,7 +35129,7 @@ const CASE_DATA = {
       "revenueEur": 8411,
       "cumulativeRevenue": 238822,
       "revenuePerActive": 14.16,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-03",
@@ -35140,7 +35140,7 @@ const CASE_DATA = {
       "revenueEur": 6980,
       "cumulativeRevenue": 245802,
       "revenuePerActive": 12.06,
-      "gtvKEur": 15.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-03",
@@ -35151,7 +35151,7 @@ const CASE_DATA = {
       "revenueEur": 7437,
       "cumulativeRevenue": 253239,
       "revenuePerActive": 12.87,
-      "gtvKEur": 550.4
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2020-03",
@@ -35184,7 +35184,7 @@ const CASE_DATA = {
       "revenueEur": 7411,
       "cumulativeRevenue": 276757,
       "revenuePerActive": 13.67,
-      "gtvKEur": 350.7
+      "gtvKEur": 7.5
     },
     {
       "cohortMonth": "2020-03",
@@ -35206,7 +35206,7 @@ const CASE_DATA = {
       "revenueEur": 8824,
       "cumulativeRevenue": 295289,
       "revenuePerActive": 16.22,
-      "gtvKEur": 274.3
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2020-03",
@@ -35239,7 +35239,7 @@ const CASE_DATA = {
       "revenueEur": 7039,
       "cumulativeRevenue": 317672,
       "revenuePerActive": 13.31,
-      "gtvKEur": 300.8
+      "gtvKEur": 6.5
     },
     {
       "cohortMonth": "2020-03",
@@ -35261,7 +35261,7 @@ const CASE_DATA = {
       "revenueEur": 9567,
       "cumulativeRevenue": 335523,
       "revenuePerActive": 19.37,
-      "gtvKEur": 362.2
+      "gtvKEur": 8.6
     },
     {
       "cohortMonth": "2020-03",
@@ -35283,7 +35283,7 @@ const CASE_DATA = {
       "revenueEur": 10324,
       "cumulativeRevenue": 352641,
       "revenuePerActive": 21.2,
-      "gtvKEur": 4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-03",
@@ -35294,7 +35294,7 @@ const CASE_DATA = {
       "revenueEur": 8734,
       "cumulativeRevenue": 361375,
       "revenuePerActive": 17.43,
-      "gtvKEur": 359
+      "gtvKEur": 12.5
     },
     {
       "cohortMonth": "2020-03",
@@ -35316,7 +35316,7 @@ const CASE_DATA = {
       "revenueEur": 8406,
       "cumulativeRevenue": 377180,
       "revenuePerActive": 17.4,
-      "gtvKEur": 179.2
+      "gtvKEur": 8
     },
     {
       "cohortMonth": "2020-03",
@@ -35338,7 +35338,7 @@ const CASE_DATA = {
       "revenueEur": 13447,
       "cumulativeRevenue": 399477,
       "revenuePerActive": 27.22,
-      "gtvKEur": 404
+      "gtvKEur": 9.6
     },
     {
       "cohortMonth": "2020-03",
@@ -35360,7 +35360,7 @@ const CASE_DATA = {
       "revenueEur": 7153,
       "cumulativeRevenue": 417541,
       "revenuePerActive": 15,
-      "gtvKEur": 339.5
+      "gtvKEur": 10.4
     },
     {
       "cohortMonth": "2020-03",
@@ -35371,7 +35371,7 @@ const CASE_DATA = {
       "revenueEur": 7036,
       "cumulativeRevenue": 424577,
       "revenuePerActive": 15.64,
-      "gtvKEur": 98.9
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2020-03",
@@ -35382,7 +35382,7 @@ const CASE_DATA = {
       "revenueEur": 7309,
       "cumulativeRevenue": 431886,
       "revenuePerActive": 16.21,
-      "gtvKEur": 408.4
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2020-03",
@@ -35393,7 +35393,7 @@ const CASE_DATA = {
       "revenueEur": 8446,
       "cumulativeRevenue": 440332,
       "revenuePerActive": 18.69,
-      "gtvKEur": 90.6
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2020-03",
@@ -35404,7 +35404,7 @@ const CASE_DATA = {
       "revenueEur": 7771,
       "cumulativeRevenue": 448102,
       "revenuePerActive": 17.62,
-      "gtvKEur": 9430.3
+      "gtvKEur": 206
     },
     {
       "cohortMonth": "2020-03",
@@ -35415,7 +35415,7 @@ const CASE_DATA = {
       "revenueEur": 10335,
       "cumulativeRevenue": 458438,
       "revenuePerActive": 30.13,
-      "gtvKEur": 25046.4
+      "gtvKEur": 570.7
     },
     {
       "cohortMonth": "2020-03",
@@ -35426,7 +35426,7 @@ const CASE_DATA = {
       "revenueEur": 2635,
       "cumulativeRevenue": 461073,
       "revenuePerActive": 0,
-      "gtvKEur": 7418.9
+      "gtvKEur": 224
     },
     {
       "cohortMonth": "2020-02",
@@ -35492,7 +35492,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 403,
       "revenuePerActive": 0.01,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-02",
@@ -35558,7 +35558,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 702,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35591,7 +35591,7 @@ const CASE_DATA = {
       "revenueEur": 4757,
       "cumulativeRevenue": 8482,
       "revenuePerActive": 3.29,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35602,7 +35602,7 @@ const CASE_DATA = {
       "revenueEur": 257,
       "cumulativeRevenue": 8739,
       "revenuePerActive": 0.18,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35613,7 +35613,7 @@ const CASE_DATA = {
       "revenueEur": 1554,
       "cumulativeRevenue": 10293,
       "revenuePerActive": 1.12,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35624,7 +35624,7 @@ const CASE_DATA = {
       "revenueEur": 1713,
       "cumulativeRevenue": 12006,
       "revenuePerActive": 1.29,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35635,7 +35635,7 @@ const CASE_DATA = {
       "revenueEur": 972,
       "cumulativeRevenue": 12978,
       "revenuePerActive": 0.76,
-      "gtvKEur": 4.7
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2020-02",
@@ -35646,7 +35646,7 @@ const CASE_DATA = {
       "revenueEur": 43,
       "cumulativeRevenue": 13021,
       "revenuePerActive": 0.03,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35657,7 +35657,7 @@ const CASE_DATA = {
       "revenueEur": 1417,
       "cumulativeRevenue": 14438,
       "revenuePerActive": 1.11,
-      "gtvKEur": 2.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35668,7 +35668,7 @@ const CASE_DATA = {
       "revenueEur": 435,
       "cumulativeRevenue": 14873,
       "revenuePerActive": 0.35,
-      "gtvKEur": 17.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-02",
@@ -35679,7 +35679,7 @@ const CASE_DATA = {
       "revenueEur": 2071,
       "cumulativeRevenue": 16944,
       "revenuePerActive": 1.74,
-      "gtvKEur": 2080.9
+      "gtvKEur": 50.7
     },
     {
       "cohortMonth": "2020-02",
@@ -35690,7 +35690,7 @@ const CASE_DATA = {
       "revenueEur": 16022,
       "cumulativeRevenue": 32966,
       "revenuePerActive": 13.73,
-      "gtvKEur": 172431.2
+      "gtvKEur": 1813.4
     },
     {
       "cohortMonth": "2020-02",
@@ -35734,7 +35734,7 @@ const CASE_DATA = {
       "revenueEur": 28630,
       "cumulativeRevenue": 125758,
       "revenuePerActive": 25.72,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35745,7 +35745,7 @@ const CASE_DATA = {
       "revenueEur": 14967,
       "cumulativeRevenue": 140725,
       "revenuePerActive": 13.79,
-      "gtvKEur": 12
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-02",
@@ -35756,7 +35756,7 @@ const CASE_DATA = {
       "revenueEur": 11670,
       "cumulativeRevenue": 152395,
       "revenuePerActive": 11.04,
-      "gtvKEur": 2618.5
+      "gtvKEur": 58.6
     },
     {
       "cohortMonth": "2020-02",
@@ -35811,7 +35811,7 @@ const CASE_DATA = {
       "revenueEur": 11475,
       "cumulativeRevenue": 218603,
       "revenuePerActive": 11.94,
-      "gtvKEur": 2600.8
+      "gtvKEur": 48
     },
     {
       "cohortMonth": "2020-02",
@@ -35844,7 +35844,7 @@ const CASE_DATA = {
       "revenueEur": 23196,
       "cumulativeRevenue": 271665,
       "revenuePerActive": 24.39,
-      "gtvKEur": 7.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-02",
@@ -35855,7 +35855,7 @@ const CASE_DATA = {
       "revenueEur": 15431,
       "cumulativeRevenue": 287096,
       "revenuePerActive": 16.98,
-      "gtvKEur": 15.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-02",
@@ -35866,7 +35866,7 @@ const CASE_DATA = {
       "revenueEur": 28157,
       "cumulativeRevenue": 315253,
       "revenuePerActive": 30.71,
-      "gtvKEur": 2053.1
+      "gtvKEur": 39.8
     },
     {
       "cohortMonth": "2020-02",
@@ -35888,7 +35888,7 @@ const CASE_DATA = {
       "revenueEur": 11873,
       "cumulativeRevenue": 340583,
       "revenuePerActive": 13.66,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35899,7 +35899,7 @@ const CASE_DATA = {
       "revenueEur": 14430,
       "cumulativeRevenue": 355013,
       "revenuePerActive": 16.59,
-      "gtvKEur": 2994.6
+      "gtvKEur": 42.4
     },
     {
       "cohortMonth": "2020-02",
@@ -35921,7 +35921,7 @@ const CASE_DATA = {
       "revenueEur": 11634,
       "cumulativeRevenue": 380451,
       "revenuePerActive": 13.5,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35932,7 +35932,7 @@ const CASE_DATA = {
       "revenueEur": 9986,
       "cumulativeRevenue": 390436,
       "revenuePerActive": 11.68,
-      "gtvKEur": 3.8
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2020-02",
@@ -35943,7 +35943,7 @@ const CASE_DATA = {
       "revenueEur": 12629,
       "cumulativeRevenue": 403066,
       "revenuePerActive": 15.33,
-      "gtvKEur": 7276.8
+      "gtvKEur": 95.9
     },
     {
       "cohortMonth": "2020-02",
@@ -35954,7 +35954,7 @@ const CASE_DATA = {
       "revenueEur": 14325,
       "cumulativeRevenue": 417390,
       "revenuePerActive": 17.45,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35965,7 +35965,7 @@ const CASE_DATA = {
       "revenueEur": 14658,
       "cumulativeRevenue": 432049,
       "revenuePerActive": 18.16,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -35976,7 +35976,7 @@ const CASE_DATA = {
       "revenueEur": 31665,
       "cumulativeRevenue": 463714,
       "revenuePerActive": 39.38,
-      "gtvKEur": 4483.4
+      "gtvKEur": 56.1
     },
     {
       "cohortMonth": "2020-02",
@@ -35998,7 +35998,7 @@ const CASE_DATA = {
       "revenueEur": 29541,
       "cumulativeRevenue": 514656,
       "revenuePerActive": 37.35,
-      "gtvKEur": 12.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-02",
@@ -36009,7 +36009,7 @@ const CASE_DATA = {
       "revenueEur": 14007,
       "cumulativeRevenue": 528663,
       "revenuePerActive": 18.03,
-      "gtvKEur": 12673.1
+      "gtvKEur": 134.7
     },
     {
       "cohortMonth": "2020-02",
@@ -36031,7 +36031,7 @@ const CASE_DATA = {
       "revenueEur": 15745,
       "cumulativeRevenue": 556335,
       "revenuePerActive": 20.85,
-      "gtvKEur": 3454.9
+      "gtvKEur": 56.9
     },
     {
       "cohortMonth": "2020-02",
@@ -36064,7 +36064,7 @@ const CASE_DATA = {
       "revenueEur": 10257,
       "cumulativeRevenue": 592232,
       "revenuePerActive": 13.94,
-      "gtvKEur": 10403.5
+      "gtvKEur": 113.2
     },
     {
       "cohortMonth": "2020-02",
@@ -36086,7 +36086,7 @@ const CASE_DATA = {
       "revenueEur": 11882,
       "cumulativeRevenue": 614556,
       "revenuePerActive": 17,
-      "gtvKEur": 4874.6
+      "gtvKEur": 58.3
     },
     {
       "cohortMonth": "2020-02",
@@ -36108,7 +36108,7 @@ const CASE_DATA = {
       "revenueEur": 22440,
       "cumulativeRevenue": 649762,
       "revenuePerActive": 32.1,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-02",
@@ -36119,7 +36119,7 @@ const CASE_DATA = {
       "revenueEur": 14615,
       "cumulativeRevenue": 664378,
       "revenuePerActive": 21.56,
-      "gtvKEur": 9428
+      "gtvKEur": 103.9
     },
     {
       "cohortMonth": "2020-02",
@@ -36130,7 +36130,7 @@ const CASE_DATA = {
       "revenueEur": 17131,
       "cumulativeRevenue": 681509,
       "revenuePerActive": 24.61,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -36141,7 +36141,7 @@ const CASE_DATA = {
       "revenueEur": 14140,
       "cumulativeRevenue": 695648,
       "revenuePerActive": 20.61,
-      "gtvKEur": 2725.9
+      "gtvKEur": 37.6
     },
     {
       "cohortMonth": "2020-02",
@@ -36163,7 +36163,7 @@ const CASE_DATA = {
       "revenueEur": 15608,
       "cumulativeRevenue": 727288,
       "revenuePerActive": 23.83,
-      "gtvKEur": 3285.5
+      "gtvKEur": 40.4
     },
     {
       "cohortMonth": "2020-02",
@@ -36174,7 +36174,7 @@ const CASE_DATA = {
       "revenueEur": 19735,
       "cumulativeRevenue": 747022,
       "revenuePerActive": 30.18,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -36185,7 +36185,7 @@ const CASE_DATA = {
       "revenueEur": 12360,
       "cumulativeRevenue": 759382,
       "revenuePerActive": 18.81,
-      "gtvKEur": 1734.3
+      "gtvKEur": 26.2
     },
     {
       "cohortMonth": "2020-02",
@@ -36196,7 +36196,7 @@ const CASE_DATA = {
       "revenueEur": 12051,
       "cumulativeRevenue": 771433,
       "revenuePerActive": 18.4,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-02",
@@ -36207,7 +36207,7 @@ const CASE_DATA = {
       "revenueEur": 10492,
       "cumulativeRevenue": 781925,
       "revenuePerActive": 16.79,
-      "gtvKEur": 10422.5
+      "gtvKEur": 120
     },
     {
       "cohortMonth": "2020-02",
@@ -36218,7 +36218,7 @@ const CASE_DATA = {
       "revenueEur": 11501,
       "cumulativeRevenue": 793426,
       "revenuePerActive": 18.61,
-      "gtvKEur": 29.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2020-02",
@@ -36229,7 +36229,7 @@ const CASE_DATA = {
       "revenueEur": 10952,
       "cumulativeRevenue": 804378,
       "revenuePerActive": 17.98,
-      "gtvKEur": 10973.5
+      "gtvKEur": 395.9
     },
     {
       "cohortMonth": "2020-02",
@@ -36240,7 +36240,7 @@ const CASE_DATA = {
       "revenueEur": 16283,
       "cumulativeRevenue": 820660,
       "revenuePerActive": 34.64,
-      "gtvKEur": 31143.7
+      "gtvKEur": 1113.7
     },
     {
       "cohortMonth": "2020-02",
@@ -36251,7 +36251,7 @@ const CASE_DATA = {
       "revenueEur": 3909,
       "cumulativeRevenue": 824570,
       "revenuePerActive": 0,
-      "gtvKEur": 8991.9
+      "gtvKEur": 305.6
     },
     {
       "cohortMonth": "2020-01",
@@ -36361,7 +36361,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2252,
       "revenuePerActive": 0,
-      "gtvKEur": 20.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-01",
@@ -36416,7 +36416,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 15710,
       "revenuePerActive": 0,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36493,7 +36493,7 @@ const CASE_DATA = {
       "revenueEur": 514,
       "cumulativeRevenue": 18715,
       "revenuePerActive": 0.4,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36504,7 +36504,7 @@ const CASE_DATA = {
       "revenueEur": 598,
       "cumulativeRevenue": 19313,
       "revenuePerActive": 0.48,
-      "gtvKEur": 10.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-01",
@@ -36515,7 +36515,7 @@ const CASE_DATA = {
       "revenueEur": 2709,
       "cumulativeRevenue": 22022,
       "revenuePerActive": 2.18,
-      "gtvKEur": 76494
+      "gtvKEur": 814.1
     },
     {
       "cohortMonth": "2020-01",
@@ -36526,7 +36526,7 @@ const CASE_DATA = {
       "revenueEur": 16555,
       "cumulativeRevenue": 38577,
       "revenuePerActive": 13.69,
-      "gtvKEur": 402250
+      "gtvKEur": 4206.3
     },
     {
       "cohortMonth": "2020-01",
@@ -36592,7 +36592,7 @@ const CASE_DATA = {
       "revenueEur": 10973,
       "cumulativeRevenue": 122883,
       "revenuePerActive": 10.13,
-      "gtvKEur": 24513.2
+      "gtvKEur": 298
     },
     {
       "cohortMonth": "2020-01",
@@ -36625,7 +36625,7 @@ const CASE_DATA = {
       "revenueEur": 12244,
       "cumulativeRevenue": 161562,
       "revenuePerActive": 11.82,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36647,7 +36647,7 @@ const CASE_DATA = {
       "revenueEur": 12331,
       "cumulativeRevenue": 184824,
       "revenuePerActive": 12.53,
-      "gtvKEur": 16717.8
+      "gtvKEur": 201.6
     },
     {
       "cohortMonth": "2020-01",
@@ -36702,7 +36702,7 @@ const CASE_DATA = {
       "revenueEur": 12271,
       "cumulativeRevenue": 255094,
       "revenuePerActive": 13.34,
-      "gtvKEur": 17441.3
+      "gtvKEur": 200.5
     },
     {
       "cohortMonth": "2020-01",
@@ -36735,7 +36735,7 @@ const CASE_DATA = {
       "revenueEur": 11115,
       "cumulativeRevenue": 292573,
       "revenuePerActive": 12.69,
-      "gtvKEur": 22697.9
+      "gtvKEur": 265.8
     },
     {
       "cohortMonth": "2020-01",
@@ -36768,7 +36768,7 @@ const CASE_DATA = {
       "revenueEur": 10773,
       "cumulativeRevenue": 329463,
       "revenuePerActive": 12.78,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36779,7 +36779,7 @@ const CASE_DATA = {
       "revenueEur": 11598,
       "cumulativeRevenue": 341061,
       "revenuePerActive": 13.73,
-      "gtvKEur": 9539.8
+      "gtvKEur": 135
     },
     {
       "cohortMonth": "2020-01",
@@ -36801,7 +36801,7 @@ const CASE_DATA = {
       "revenueEur": 14989,
       "cumulativeRevenue": 370738,
       "revenuePerActive": 18.46,
-      "gtvKEur": 19.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-01",
@@ -36812,7 +36812,7 @@ const CASE_DATA = {
       "revenueEur": 15083,
       "cumulativeRevenue": 385821,
       "revenuePerActive": 18.97,
-      "gtvKEur": 8180
+      "gtvKEur": 127.5
     },
     {
       "cohortMonth": "2020-01",
@@ -36834,7 +36834,7 @@ const CASE_DATA = {
       "revenueEur": 10825,
       "cumulativeRevenue": 406835,
       "revenuePerActive": 13.81,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36845,7 +36845,7 @@ const CASE_DATA = {
       "revenueEur": 11493,
       "cumulativeRevenue": 418328,
       "revenuePerActive": 15.28,
-      "gtvKEur": 7289.6
+      "gtvKEur": 93.4
     },
     {
       "cohortMonth": "2020-01",
@@ -36867,7 +36867,7 @@ const CASE_DATA = {
       "revenueEur": 9762,
       "cumulativeRevenue": 441521,
       "revenuePerActive": 12.91,
-      "gtvKEur": 452.8
+      "gtvKEur": 17.8
     },
     {
       "cohortMonth": "2020-01",
@@ -36900,7 +36900,7 @@ const CASE_DATA = {
       "revenueEur": 8821,
       "cumulativeRevenue": 475453,
       "revenuePerActive": 12.18,
-      "gtvKEur": 5255.7
+      "gtvKEur": 76.2
     },
     {
       "cohortMonth": "2020-01",
@@ -36911,7 +36911,7 @@ const CASE_DATA = {
       "revenueEur": 11151,
       "cumulativeRevenue": 486604,
       "revenuePerActive": 15.32,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36922,7 +36922,7 @@ const CASE_DATA = {
       "revenueEur": 13805,
       "cumulativeRevenue": 500409,
       "revenuePerActive": 19.64,
-      "gtvKEur": 7615.1
+      "gtvKEur": 115.5
     },
     {
       "cohortMonth": "2020-01",
@@ -36933,7 +36933,7 @@ const CASE_DATA = {
       "revenueEur": 13949,
       "cumulativeRevenue": 514358,
       "revenuePerActive": 20.07,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36944,7 +36944,7 @@ const CASE_DATA = {
       "revenueEur": 16708,
       "cumulativeRevenue": 531066,
       "revenuePerActive": 23.83,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36955,7 +36955,7 @@ const CASE_DATA = {
       "revenueEur": 12083,
       "cumulativeRevenue": 543149,
       "revenuePerActive": 17.36,
-      "gtvKEur": 1872.8
+      "gtvKEur": 36.9
     },
     {
       "cohortMonth": "2020-01",
@@ -36966,7 +36966,7 @@ const CASE_DATA = {
       "revenueEur": 12504,
       "cumulativeRevenue": 555654,
       "revenuePerActive": 18.1,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36977,7 +36977,7 @@ const CASE_DATA = {
       "revenueEur": 11930,
       "cumulativeRevenue": 567584,
       "revenuePerActive": 17.34,
-      "gtvKEur": 294.2
+      "gtvKEur": 6.5
     },
     {
       "cohortMonth": "2020-01",
@@ -36988,7 +36988,7 @@ const CASE_DATA = {
       "revenueEur": 13274,
       "cumulativeRevenue": 580857,
       "revenuePerActive": 19.41,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -36999,7 +36999,7 @@ const CASE_DATA = {
       "revenueEur": 10673,
       "cumulativeRevenue": 591530,
       "revenuePerActive": 15.86,
-      "gtvKEur": 354.5
+      "gtvKEur": 7.4
     },
     {
       "cohortMonth": "2020-01",
@@ -37010,7 +37010,7 @@ const CASE_DATA = {
       "revenueEur": 18460,
       "cumulativeRevenue": 609990,
       "revenuePerActive": 27.15,
-      "gtvKEur": 5.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2020-01",
@@ -37021,7 +37021,7 @@ const CASE_DATA = {
       "revenueEur": 8870,
       "cumulativeRevenue": 618860,
       "revenuePerActive": 13.52,
-      "gtvKEur": 718.9
+      "gtvKEur": 13.6
     },
     {
       "cohortMonth": "2020-01",
@@ -37032,7 +37032,7 @@ const CASE_DATA = {
       "revenueEur": 11283,
       "cumulativeRevenue": 630143,
       "revenuePerActive": 17.71,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2020-01",
@@ -37043,7 +37043,7 @@ const CASE_DATA = {
       "revenueEur": 12368,
       "cumulativeRevenue": 642511,
       "revenuePerActive": 19.2,
-      "gtvKEur": 788.7
+      "gtvKEur": 30.6
     },
     {
       "cohortMonth": "2020-01",
@@ -37054,7 +37054,7 @@ const CASE_DATA = {
       "revenueEur": 11392,
       "cumulativeRevenue": 653903,
       "revenuePerActive": 17.72,
-      "gtvKEur": 17.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2020-01",
@@ -37065,7 +37065,7 @@ const CASE_DATA = {
       "revenueEur": 14821,
       "cumulativeRevenue": 668724,
       "revenuePerActive": 23.75,
-      "gtvKEur": 64608.8
+      "gtvKEur": 1072
     },
     {
       "cohortMonth": "2020-01",
@@ -37076,7 +37076,7 @@ const CASE_DATA = {
       "revenueEur": 17769,
       "cumulativeRevenue": 686493,
       "revenuePerActive": 36.49,
-      "gtvKEur": 154255.7
+      "gtvKEur": 2708.8
     },
     {
       "cohortMonth": "2020-01",
@@ -37087,7 +37087,7 @@ const CASE_DATA = {
       "revenueEur": 3525,
       "cumulativeRevenue": 690019,
       "revenuePerActive": 0,
-      "gtvKEur": 37384.7
+      "gtvKEur": 702.8
     },
     {
       "cohortMonth": "2020-01",
@@ -37098,7 +37098,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 690019,
       "revenuePerActive": 0,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37186,7 +37186,7 @@ const CASE_DATA = {
       "revenueEur": 237,
       "cumulativeRevenue": 1001,
       "revenuePerActive": 0.14,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37340,7 +37340,7 @@ const CASE_DATA = {
       "revenueEur": 342,
       "cumulativeRevenue": 6453,
       "revenuePerActive": 0.34,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37351,7 +37351,7 @@ const CASE_DATA = {
       "revenueEur": 248,
       "cumulativeRevenue": 6701,
       "revenuePerActive": 0.25,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37362,7 +37362,7 @@ const CASE_DATA = {
       "revenueEur": 190,
       "cumulativeRevenue": 6892,
       "revenuePerActive": 0.19,
-      "gtvKEur": 2.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37373,7 +37373,7 @@ const CASE_DATA = {
       "revenueEur": 4360,
       "cumulativeRevenue": 11251,
       "revenuePerActive": 4.38,
-      "gtvKEur": 1106.9
+      "gtvKEur": 42.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37384,7 +37384,7 @@ const CASE_DATA = {
       "revenueEur": 13046,
       "cumulativeRevenue": 24297,
       "revenuePerActive": 13.39,
-      "gtvKEur": 4098.6
+      "gtvKEur": 94.6
     },
     {
       "cohortMonth": "2019-12",
@@ -37428,7 +37428,7 @@ const CASE_DATA = {
       "revenueEur": 10184,
       "cumulativeRevenue": 75813,
       "revenuePerActive": 11.56,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37439,7 +37439,7 @@ const CASE_DATA = {
       "revenueEur": 9669,
       "cumulativeRevenue": 85481,
       "revenuePerActive": 11.14,
-      "gtvKEur": 5.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37450,7 +37450,7 @@ const CASE_DATA = {
       "revenueEur": 9945,
       "cumulativeRevenue": 95427,
       "revenuePerActive": 11.76,
-      "gtvKEur": 1083.6
+      "gtvKEur": 22.6
     },
     {
       "cohortMonth": "2019-12",
@@ -37461,7 +37461,7 @@ const CASE_DATA = {
       "revenueEur": 11019,
       "cumulativeRevenue": 106445,
       "revenuePerActive": 12.95,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37505,7 +37505,7 @@ const CASE_DATA = {
       "revenueEur": 12855,
       "cumulativeRevenue": 149645,
       "revenuePerActive": 16.42,
-      "gtvKEur": 909.7
+      "gtvKEur": 17.4
     },
     {
       "cohortMonth": "2019-12",
@@ -37516,7 +37516,7 @@ const CASE_DATA = {
       "revenueEur": 12812,
       "cumulativeRevenue": 162457,
       "revenuePerActive": 16.92,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37527,7 +37527,7 @@ const CASE_DATA = {
       "revenueEur": 13912,
       "cumulativeRevenue": 176370,
       "revenuePerActive": 18.52,
-      "gtvKEur": 4.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37538,7 +37538,7 @@ const CASE_DATA = {
       "revenueEur": 13340,
       "cumulativeRevenue": 189709,
       "revenuePerActive": 17.83,
-      "gtvKEur": 4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37549,7 +37549,7 @@ const CASE_DATA = {
       "revenueEur": 13803,
       "cumulativeRevenue": 203512,
       "revenuePerActive": 19.44,
-      "gtvKEur": 10
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37560,7 +37560,7 @@ const CASE_DATA = {
       "revenueEur": 11040,
       "cumulativeRevenue": 214552,
       "revenuePerActive": 15.64,
-      "gtvKEur": 724.9
+      "gtvKEur": 12.7
     },
     {
       "cohortMonth": "2019-12",
@@ -37582,7 +37582,7 @@ const CASE_DATA = {
       "revenueEur": 12394,
       "cumulativeRevenue": 236435,
       "revenuePerActive": 17.83,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37593,7 +37593,7 @@ const CASE_DATA = {
       "revenueEur": 10109,
       "cumulativeRevenue": 246544,
       "revenuePerActive": 14.63,
-      "gtvKEur": 782.4
+      "gtvKEur": 11.7
     },
     {
       "cohortMonth": "2019-12",
@@ -37637,7 +37637,7 @@ const CASE_DATA = {
       "revenueEur": 12385,
       "cumulativeRevenue": 287004,
       "revenuePerActive": 17.92,
-      "gtvKEur": 801.9
+      "gtvKEur": 23.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37659,7 +37659,7 @@ const CASE_DATA = {
       "revenueEur": 14428,
       "cumulativeRevenue": 314362,
       "revenuePerActive": 21.86,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37670,7 +37670,7 @@ const CASE_DATA = {
       "revenueEur": 14012,
       "cumulativeRevenue": 328374,
       "revenuePerActive": 21.36,
-      "gtvKEur": 842.8
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2019-12",
@@ -37692,7 +37692,7 @@ const CASE_DATA = {
       "revenueEur": 11347,
       "cumulativeRevenue": 353530,
       "revenuePerActive": 17.68,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37703,7 +37703,7 @@ const CASE_DATA = {
       "revenueEur": 8783,
       "cumulativeRevenue": 362313,
       "revenuePerActive": 13.88,
-      "gtvKEur": 1233.5
+      "gtvKEur": 15.7
     },
     {
       "cohortMonth": "2019-12",
@@ -37725,7 +37725,7 @@ const CASE_DATA = {
       "revenueEur": 9916,
       "cumulativeRevenue": 384303,
       "revenuePerActive": 16.1,
-      "gtvKEur": 472.2
+      "gtvKEur": 12
     },
     {
       "cohortMonth": "2019-12",
@@ -37758,7 +37758,7 @@ const CASE_DATA = {
       "revenueEur": 8044,
       "cumulativeRevenue": 414524,
       "revenuePerActive": 13.27,
-      "gtvKEur": 418.1
+      "gtvKEur": 8
     },
     {
       "cohortMonth": "2019-12",
@@ -37769,7 +37769,7 @@ const CASE_DATA = {
       "revenueEur": 11800,
       "cumulativeRevenue": 426324,
       "revenuePerActive": 19.44,
-      "gtvKEur": 5.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37780,7 +37780,7 @@ const CASE_DATA = {
       "revenueEur": 12429,
       "cumulativeRevenue": 438753,
       "revenuePerActive": 20.75,
-      "gtvKEur": 512.9
+      "gtvKEur": 7.7
     },
     {
       "cohortMonth": "2019-12",
@@ -37813,7 +37813,7 @@ const CASE_DATA = {
       "revenueEur": 14507,
       "cumulativeRevenue": 480269,
       "revenuePerActive": 25.19,
-      "gtvKEur": 359.8
+      "gtvKEur": 6.9
     },
     {
       "cohortMonth": "2019-12",
@@ -37835,7 +37835,7 @@ const CASE_DATA = {
       "revenueEur": 12143,
       "cumulativeRevenue": 504497,
       "revenuePerActive": 21.72,
-      "gtvKEur": 344.2
+      "gtvKEur": 7.2
     },
     {
       "cohortMonth": "2019-12",
@@ -37846,7 +37846,7 @@ const CASE_DATA = {
       "revenueEur": 13978,
       "cumulativeRevenue": 518474,
       "revenuePerActive": 25.14,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-12",
@@ -37857,7 +37857,7 @@ const CASE_DATA = {
       "revenueEur": 10644,
       "cumulativeRevenue": 529119,
       "revenuePerActive": 19.49,
-      "gtvKEur": 286.5
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2019-12",
@@ -37879,7 +37879,7 @@ const CASE_DATA = {
       "revenueEur": 15737,
       "cumulativeRevenue": 555021,
       "revenuePerActive": 29.3,
-      "gtvKEur": 256.1
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2019-12",
@@ -37901,7 +37901,7 @@ const CASE_DATA = {
       "revenueEur": 11814,
       "cumulativeRevenue": 578030,
       "revenuePerActive": 21.68,
-      "gtvKEur": 505
+      "gtvKEur": 6.3
     },
     {
       "cohortMonth": "2019-12",
@@ -37912,7 +37912,7 @@ const CASE_DATA = {
       "revenueEur": 11763,
       "cumulativeRevenue": 589792,
       "revenuePerActive": 22.32,
-      "gtvKEur": 58.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2019-12",
@@ -37923,7 +37923,7 @@ const CASE_DATA = {
       "revenueEur": 14407,
       "cumulativeRevenue": 604199,
       "revenuePerActive": 27.81,
-      "gtvKEur": 11409.2
+      "gtvKEur": 224.2
     },
     {
       "cohortMonth": "2019-12",
@@ -37934,7 +37934,7 @@ const CASE_DATA = {
       "revenueEur": 13963,
       "cumulativeRevenue": 618163,
       "revenuePerActive": 34.14,
-      "gtvKEur": 345507.8
+      "gtvKEur": 3711.3
     },
     {
       "cohortMonth": "2019-12",
@@ -37945,7 +37945,7 @@ const CASE_DATA = {
       "revenueEur": 5455,
       "cumulativeRevenue": 623617,
       "revenuePerActive": 0,
-      "gtvKEur": 7712
+      "gtvKEur": 150.7
     },
     {
       "cohortMonth": "2019-11",
@@ -38044,7 +38044,7 @@ const CASE_DATA = {
       "revenueEur": 137,
       "cumulativeRevenue": 689,
       "revenuePerActive": 0.08,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38209,7 +38209,7 @@ const CASE_DATA = {
       "revenueEur": 77,
       "cumulativeRevenue": 2760,
       "revenuePerActive": 0.07,
-      "gtvKEur": 17.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-11",
@@ -38220,7 +38220,7 @@ const CASE_DATA = {
       "revenueEur": 51,
       "cumulativeRevenue": 2811,
       "revenuePerActive": 0.05,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38231,7 +38231,7 @@ const CASE_DATA = {
       "revenueEur": 2051,
       "cumulativeRevenue": 4863,
       "revenuePerActive": 1.96,
-      "gtvKEur": 1335.4
+      "gtvKEur": 25.9
     },
     {
       "cohortMonth": "2019-11",
@@ -38242,7 +38242,7 @@ const CASE_DATA = {
       "revenueEur": 12729,
       "cumulativeRevenue": 17592,
       "revenuePerActive": 12.9,
-      "gtvKEur": 4072.1
+      "gtvKEur": 133
     },
     {
       "cohortMonth": "2019-11",
@@ -38308,7 +38308,7 @@ const CASE_DATA = {
       "revenueEur": 12737,
       "cumulativeRevenue": 84747,
       "revenuePerActive": 14.25,
-      "gtvKEur": 1277
+      "gtvKEur": 33.6
     },
     {
       "cohortMonth": "2019-11",
@@ -38352,7 +38352,7 @@ const CASE_DATA = {
       "revenueEur": 11298,
       "cumulativeRevenue": 135024,
       "revenuePerActive": 13.21,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38363,7 +38363,7 @@ const CASE_DATA = {
       "revenueEur": 19063,
       "cumulativeRevenue": 154087,
       "revenuePerActive": 22.27,
-      "gtvKEur": 1104.3
+      "gtvKEur": 42.8
     },
     {
       "cohortMonth": "2019-11",
@@ -38407,7 +38407,7 @@ const CASE_DATA = {
       "revenueEur": 10508,
       "cumulativeRevenue": 199921,
       "revenuePerActive": 13.52,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38418,7 +38418,7 @@ const CASE_DATA = {
       "revenueEur": 9489,
       "cumulativeRevenue": 209409,
       "revenuePerActive": 12.29,
-      "gtvKEur": 945.7
+      "gtvKEur": 29.8
     },
     {
       "cohortMonth": "2019-11",
@@ -38451,7 +38451,7 @@ const CASE_DATA = {
       "revenueEur": 12135,
       "cumulativeRevenue": 243623,
       "revenuePerActive": 16.22,
-      "gtvKEur": 966.8
+      "gtvKEur": 19
     },
     {
       "cohortMonth": "2019-11",
@@ -38484,7 +38484,7 @@ const CASE_DATA = {
       "revenueEur": 11069,
       "cumulativeRevenue": 282549,
       "revenuePerActive": 15.23,
-      "gtvKEur": 8.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-11",
@@ -38495,7 +38495,7 @@ const CASE_DATA = {
       "revenueEur": 16724,
       "cumulativeRevenue": 299274,
       "revenuePerActive": 23.26,
-      "gtvKEur": 1595
+      "gtvKEur": 26.1
     },
     {
       "cohortMonth": "2019-11",
@@ -38517,7 +38517,7 @@ const CASE_DATA = {
       "revenueEur": 11115,
       "cumulativeRevenue": 320997,
       "revenuePerActive": 15.9,
-      "gtvKEur": 11.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-11",
@@ -38528,7 +38528,7 @@ const CASE_DATA = {
       "revenueEur": 10078,
       "cumulativeRevenue": 331075,
       "revenuePerActive": 14.67,
-      "gtvKEur": 814.7
+      "gtvKEur": 16.7
     },
     {
       "cohortMonth": "2019-11",
@@ -38550,7 +38550,7 @@ const CASE_DATA = {
       "revenueEur": 8856,
       "cumulativeRevenue": 350428,
       "revenuePerActive": 13.22,
-      "gtvKEur": 148.9
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2019-11",
@@ -38561,7 +38561,7 @@ const CASE_DATA = {
       "revenueEur": 11508,
       "cumulativeRevenue": 361936,
       "revenuePerActive": 17.28,
-      "gtvKEur": 599.5
+      "gtvKEur": 14
     },
     {
       "cohortMonth": "2019-11",
@@ -38572,7 +38572,7 @@ const CASE_DATA = {
       "revenueEur": 9722,
       "cumulativeRevenue": 371658,
       "revenuePerActive": 14.71,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38583,7 +38583,7 @@ const CASE_DATA = {
       "revenueEur": 10542,
       "cumulativeRevenue": 382200,
       "revenuePerActive": 16.32,
-      "gtvKEur": 428.5
+      "gtvKEur": 16.6
     },
     {
       "cohortMonth": "2019-11",
@@ -38605,7 +38605,7 @@ const CASE_DATA = {
       "revenueEur": 17464,
       "cumulativeRevenue": 408436,
       "revenuePerActive": 27.37,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38616,7 +38616,7 @@ const CASE_DATA = {
       "revenueEur": 10625,
       "cumulativeRevenue": 419061,
       "revenuePerActive": 16.47,
-      "gtvKEur": 449.9
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2019-11",
@@ -38627,7 +38627,7 @@ const CASE_DATA = {
       "revenueEur": 15533,
       "cumulativeRevenue": 434594,
       "revenuePerActive": 23.86,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38638,7 +38638,7 @@ const CASE_DATA = {
       "revenueEur": 17404,
       "cumulativeRevenue": 451998,
       "revenuePerActive": 27.89,
-      "gtvKEur": 322.7
+      "gtvKEur": 10.7
     },
     {
       "cohortMonth": "2019-11",
@@ -38660,7 +38660,7 @@ const CASE_DATA = {
       "revenueEur": 11478,
       "cumulativeRevenue": 473146,
       "revenuePerActive": 19.42,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38671,7 +38671,7 @@ const CASE_DATA = {
       "revenueEur": 11251,
       "cumulativeRevenue": 484397,
       "revenuePerActive": 19.4,
-      "gtvKEur": 1105.5
+      "gtvKEur": 16.5
     },
     {
       "cohortMonth": "2019-11",
@@ -38682,7 +38682,7 @@ const CASE_DATA = {
       "revenueEur": 8576,
       "cumulativeRevenue": 492973,
       "revenuePerActive": 14.84,
-      "gtvKEur": 21
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-11",
@@ -38693,7 +38693,7 @@ const CASE_DATA = {
       "revenueEur": 13978,
       "cumulativeRevenue": 506951,
       "revenuePerActive": 25.05,
-      "gtvKEur": 1632.2
+      "gtvKEur": 22.8
     },
     {
       "cohortMonth": "2019-11",
@@ -38704,7 +38704,7 @@ const CASE_DATA = {
       "revenueEur": 9626,
       "cumulativeRevenue": 516577,
       "revenuePerActive": 17.07,
-      "gtvKEur": 16.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-11",
@@ -38715,7 +38715,7 @@ const CASE_DATA = {
       "revenueEur": 12254,
       "cumulativeRevenue": 528831,
       "revenuePerActive": 22.16,
-      "gtvKEur": 258.7
+      "gtvKEur": 8.7
     },
     {
       "cohortMonth": "2019-11",
@@ -38726,7 +38726,7 @@ const CASE_DATA = {
       "revenueEur": 8332,
       "cumulativeRevenue": 537163,
       "revenuePerActive": 15.2,
-      "gtvKEur": 19.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-11",
@@ -38737,7 +38737,7 @@ const CASE_DATA = {
       "revenueEur": 17579,
       "cumulativeRevenue": 554742,
       "revenuePerActive": 31.96,
-      "gtvKEur": 210.4
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2019-11",
@@ -38759,7 +38759,7 @@ const CASE_DATA = {
       "revenueEur": 15139,
       "cumulativeRevenue": 579855,
       "revenuePerActive": 27.33,
-      "gtvKEur": 407
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2019-11",
@@ -38770,7 +38770,7 @@ const CASE_DATA = {
       "revenueEur": 9984,
       "cumulativeRevenue": 589839,
       "revenuePerActive": 18.35,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-11",
@@ -38781,7 +38781,7 @@ const CASE_DATA = {
       "revenueEur": 8683,
       "cumulativeRevenue": 598522,
       "revenuePerActive": 16.63,
-      "gtvKEur": 11658.7
+      "gtvKEur": 218.9
     },
     {
       "cohortMonth": "2019-11",
@@ -38792,7 +38792,7 @@ const CASE_DATA = {
       "revenueEur": 8934,
       "cumulativeRevenue": 607456,
       "revenuePerActive": 21.58,
-      "gtvKEur": 59649.8
+      "gtvKEur": 881.4
     },
     {
       "cohortMonth": "2019-11",
@@ -38803,7 +38803,7 @@ const CASE_DATA = {
       "revenueEur": 2650,
       "cumulativeRevenue": 610105,
       "revenuePerActive": 0,
-      "gtvKEur": 6861.4
+      "gtvKEur": 129.1
     },
     {
       "cohortMonth": "2019-11",
@@ -39067,7 +39067,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2832,
       "revenuePerActive": 0,
-      "gtvKEur": 6.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39089,7 +39089,7 @@ const CASE_DATA = {
       "revenueEur": 1285,
       "cumulativeRevenue": 4401,
       "revenuePerActive": 1.18,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39100,7 +39100,7 @@ const CASE_DATA = {
       "revenueEur": 3776,
       "cumulativeRevenue": 8177,
       "revenuePerActive": 3.54,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39111,7 +39111,7 @@ const CASE_DATA = {
       "revenueEur": 88,
       "cumulativeRevenue": 8265,
       "revenuePerActive": 0.08,
-      "gtvKEur": 15780.3
+      "gtvKEur": 195.5
     },
     {
       "cohortMonth": "2019-10",
@@ -39122,7 +39122,7 @@ const CASE_DATA = {
       "revenueEur": 14080,
       "cumulativeRevenue": 22345,
       "revenuePerActive": 14.09,
-      "gtvKEur": 49281
+      "gtvKEur": 650.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39177,7 +39177,7 @@ const CASE_DATA = {
       "revenueEur": 18883,
       "cumulativeRevenue": 97349,
       "revenuePerActive": 19.77,
-      "gtvKEur": 8.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39188,7 +39188,7 @@ const CASE_DATA = {
       "revenueEur": 12030,
       "cumulativeRevenue": 109379,
       "revenuePerActive": 13.03,
-      "gtvKEur": 10327.9
+      "gtvKEur": 139.3
     },
     {
       "cohortMonth": "2019-10",
@@ -39199,7 +39199,7 @@ const CASE_DATA = {
       "revenueEur": 11963,
       "cumulativeRevenue": 121341,
       "revenuePerActive": 13.25,
-      "gtvKEur": 4.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39210,7 +39210,7 @@ const CASE_DATA = {
       "revenueEur": 12471,
       "cumulativeRevenue": 133812,
       "revenuePerActive": 13.89,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39232,7 +39232,7 @@ const CASE_DATA = {
       "revenueEur": 17980,
       "cumulativeRevenue": 171585,
       "revenuePerActive": 20.11,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39243,7 +39243,7 @@ const CASE_DATA = {
       "revenueEur": 14576,
       "cumulativeRevenue": 186160,
       "revenuePerActive": 16.97,
-      "gtvKEur": 5251.1
+      "gtvKEur": 79.7
     },
     {
       "cohortMonth": "2019-10",
@@ -39254,7 +39254,7 @@ const CASE_DATA = {
       "revenueEur": 18342,
       "cumulativeRevenue": 204502,
       "revenuePerActive": 21.84,
-      "gtvKEur": 12.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39276,7 +39276,7 @@ const CASE_DATA = {
       "revenueEur": 17559,
       "cumulativeRevenue": 238576,
       "revenuePerActive": 21.13,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39287,7 +39287,7 @@ const CASE_DATA = {
       "revenueEur": 16138,
       "cumulativeRevenue": 254714,
       "revenuePerActive": 20.2,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-10",
@@ -39298,7 +39298,7 @@ const CASE_DATA = {
       "revenueEur": 18082,
       "cumulativeRevenue": 272796,
       "revenuePerActive": 22.72,
-      "gtvKEur": 4970.1
+      "gtvKEur": 74.5
     },
     {
       "cohortMonth": "2019-10",
@@ -39331,7 +39331,7 @@ const CASE_DATA = {
       "revenueEur": 17385,
       "cumulativeRevenue": 332528,
       "revenuePerActive": 22.17,
-      "gtvKEur": 3285.2
+      "gtvKEur": 55
     },
     {
       "cohortMonth": "2019-10",
@@ -39364,7 +39364,7 @@ const CASE_DATA = {
       "revenueEur": 24259,
       "cumulativeRevenue": 394705,
       "revenuePerActive": 32.26,
-      "gtvKEur": 46.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-10",
@@ -39375,7 +39375,7 @@ const CASE_DATA = {
       "revenueEur": 21376,
       "cumulativeRevenue": 416081,
       "revenuePerActive": 28.81,
-      "gtvKEur": 5087.8
+      "gtvKEur": 68.6
     },
     {
       "cohortMonth": "2019-10",
@@ -39408,7 +39408,7 @@ const CASE_DATA = {
       "revenueEur": 19773,
       "cumulativeRevenue": 478437,
       "revenuePerActive": 28.33,
-      "gtvKEur": 4987.1
+      "gtvKEur": 68
     },
     {
       "cohortMonth": "2019-10",
@@ -39441,7 +39441,7 @@ const CASE_DATA = {
       "revenueEur": 27043,
       "cumulativeRevenue": 544665,
       "revenuePerActive": 39.48,
-      "gtvKEur": 576.9
+      "gtvKEur": 13.7
     },
     {
       "cohortMonth": "2019-10",
@@ -39463,7 +39463,7 @@ const CASE_DATA = {
       "revenueEur": 11577,
       "cumulativeRevenue": 569282,
       "revenuePerActive": 17.65,
-      "gtvKEur": 473.2
+      "gtvKEur": 18.7
     },
     {
       "cohortMonth": "2019-10",
@@ -39496,7 +39496,7 @@ const CASE_DATA = {
       "revenueEur": 18504,
       "cumulativeRevenue": 615967,
       "revenuePerActive": 28.47,
-      "gtvKEur": 462.3
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2019-10",
@@ -39518,7 +39518,7 @@ const CASE_DATA = {
       "revenueEur": 17576,
       "cumulativeRevenue": 649142,
       "revenuePerActive": 29,
-      "gtvKEur": 388.7
+      "gtvKEur": 27.5
     },
     {
       "cohortMonth": "2019-10",
@@ -39529,7 +39529,7 @@ const CASE_DATA = {
       "revenueEur": 15844,
       "cumulativeRevenue": 664986,
       "revenuePerActive": 26.02,
-      "gtvKEur": 5.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39540,7 +39540,7 @@ const CASE_DATA = {
       "revenueEur": 14646,
       "cumulativeRevenue": 679631,
       "revenuePerActive": 24.29,
-      "gtvKEur": 13.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39551,7 +39551,7 @@ const CASE_DATA = {
       "revenueEur": 14712,
       "cumulativeRevenue": 694344,
       "revenuePerActive": 24.85,
-      "gtvKEur": 259.8
+      "gtvKEur": 8.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39562,7 +39562,7 @@ const CASE_DATA = {
       "revenueEur": 17369,
       "cumulativeRevenue": 711713,
       "revenuePerActive": 28.85,
-      "gtvKEur": 14.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-10",
@@ -39573,7 +39573,7 @@ const CASE_DATA = {
       "revenueEur": 21336,
       "cumulativeRevenue": 733049,
       "revenuePerActive": 35.92,
-      "gtvKEur": 257.5
+      "gtvKEur": 16.7
     },
     {
       "cohortMonth": "2019-10",
@@ -39595,7 +39595,7 @@ const CASE_DATA = {
       "revenueEur": 12459,
       "cumulativeRevenue": 758880,
       "revenuePerActive": 21.82,
-      "gtvKEur": 234.2
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2019-10",
@@ -39606,7 +39606,7 @@ const CASE_DATA = {
       "revenueEur": 13368,
       "cumulativeRevenue": 772248,
       "revenuePerActive": 23.87,
-      "gtvKEur": 50
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-10",
@@ -39617,7 +39617,7 @@ const CASE_DATA = {
       "revenueEur": 16131,
       "cumulativeRevenue": 788379,
       "revenuePerActive": 28.3,
-      "gtvKEur": 300.8
+      "gtvKEur": 9.8
     },
     {
       "cohortMonth": "2019-10",
@@ -39628,7 +39628,7 @@ const CASE_DATA = {
       "revenueEur": 17410,
       "cumulativeRevenue": 805788,
       "revenuePerActive": 31.48,
-      "gtvKEur": 101.9
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2019-10",
@@ -39639,7 +39639,7 @@ const CASE_DATA = {
       "revenueEur": 14590,
       "cumulativeRevenue": 820379,
       "revenuePerActive": 26.05,
-      "gtvKEur": 639
+      "gtvKEur": 13
     },
     {
       "cohortMonth": "2019-10",
@@ -39650,7 +39650,7 @@ const CASE_DATA = {
       "revenueEur": 13825,
       "cumulativeRevenue": 834204,
       "revenuePerActive": 26.04,
-      "gtvKEur": 433.6
+      "gtvKEur": 4.3
     },
     {
       "cohortMonth": "2019-10",
@@ -39661,7 +39661,7 @@ const CASE_DATA = {
       "revenueEur": 14106,
       "cumulativeRevenue": 848310,
       "revenuePerActive": 27.18,
-      "gtvKEur": 13382.2
+      "gtvKEur": 385.9
     },
     {
       "cohortMonth": "2019-10",
@@ -39672,7 +39672,7 @@ const CASE_DATA = {
       "revenueEur": 12205,
       "cumulativeRevenue": 860515,
       "revenuePerActive": 31.87,
-      "gtvKEur": 32502.3
+      "gtvKEur": 1093
     },
     {
       "cohortMonth": "2019-10",
@@ -39683,7 +39683,7 @@ const CASE_DATA = {
       "revenueEur": 2681,
       "cumulativeRevenue": 863197,
       "revenuePerActive": 0,
-      "gtvKEur": 6502.6
+      "gtvKEur": 270.2
     },
     {
       "cohortMonth": "2019-09",
@@ -39793,7 +39793,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1140,
       "revenuePerActive": 0,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -39903,7 +39903,7 @@ const CASE_DATA = {
       "revenueEur": 438,
       "cumulativeRevenue": 3170,
       "revenuePerActive": 0.39,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -39936,7 +39936,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 4211,
       "revenuePerActive": 0.02,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -39969,7 +39969,7 @@ const CASE_DATA = {
       "revenueEur": 2712,
       "cumulativeRevenue": 7137,
       "revenuePerActive": 2.66,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -39980,7 +39980,7 @@ const CASE_DATA = {
       "revenueEur": 1501,
       "cumulativeRevenue": 8638,
       "revenuePerActive": 1.5,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -39991,7 +39991,7 @@ const CASE_DATA = {
       "revenueEur": 2902,
       "cumulativeRevenue": 11540,
       "revenuePerActive": 2.93,
-      "gtvKEur": 2161.4
+      "gtvKEur": 75.8
     },
     {
       "cohortMonth": "2019-09",
@@ -40002,7 +40002,7 @@ const CASE_DATA = {
       "revenueEur": 12828,
       "cumulativeRevenue": 24368,
       "revenuePerActive": 13.52,
-      "gtvKEur": 4685.6
+      "gtvKEur": 343.4
     },
     {
       "cohortMonth": "2019-09",
@@ -40046,7 +40046,7 @@ const CASE_DATA = {
       "revenueEur": 10166,
       "cumulativeRevenue": 68500,
       "revenuePerActive": 11.35,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40068,7 +40068,7 @@ const CASE_DATA = {
       "revenueEur": 16722,
       "cumulativeRevenue": 96380,
       "revenuePerActive": 19.54,
-      "gtvKEur": 1106.2
+      "gtvKEur": 53.1
     },
     {
       "cohortMonth": "2019-09",
@@ -40112,7 +40112,7 @@ const CASE_DATA = {
       "revenueEur": 20487,
       "cumulativeRevenue": 162262,
       "revenuePerActive": 24.3,
-      "gtvKEur": 8.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-09",
@@ -40123,7 +40123,7 @@ const CASE_DATA = {
       "revenueEur": 15368,
       "cumulativeRevenue": 177631,
       "revenuePerActive": 19,
-      "gtvKEur": 1400.4
+      "gtvKEur": 70.2
     },
     {
       "cohortMonth": "2019-09",
@@ -40167,7 +40167,7 @@ const CASE_DATA = {
       "revenueEur": 15480,
       "cumulativeRevenue": 229908,
       "revenuePerActive": 20.34,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-09",
@@ -40178,7 +40178,7 @@ const CASE_DATA = {
       "revenueEur": 12620,
       "cumulativeRevenue": 242529,
       "revenuePerActive": 16.96,
-      "gtvKEur": 2986.1
+      "gtvKEur": 79.1
     },
     {
       "cohortMonth": "2019-09",
@@ -40211,7 +40211,7 @@ const CASE_DATA = {
       "revenueEur": 10284,
       "cumulativeRevenue": 278630,
       "revenuePerActive": 14.2,
-      "gtvKEur": 616.8
+      "gtvKEur": 61.9
     },
     {
       "cohortMonth": "2019-09",
@@ -40255,7 +40255,7 @@ const CASE_DATA = {
       "revenueEur": 13778,
       "cumulativeRevenue": 337507,
       "revenuePerActive": 19.6,
-      "gtvKEur": 1376.8
+      "gtvKEur": 25.2
     },
     {
       "cohortMonth": "2019-09",
@@ -40277,7 +40277,7 @@ const CASE_DATA = {
       "revenueEur": 12204,
       "cumulativeRevenue": 361434,
       "revenuePerActive": 17.82,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40288,7 +40288,7 @@ const CASE_DATA = {
       "revenueEur": 11853,
       "cumulativeRevenue": 373287,
       "revenuePerActive": 17.61,
-      "gtvKEur": 556.4
+      "gtvKEur": 30.2
     },
     {
       "cohortMonth": "2019-09",
@@ -40321,7 +40321,7 @@ const CASE_DATA = {
       "revenueEur": 9628,
       "cumulativeRevenue": 407650,
       "revenuePerActive": 14.77,
-      "gtvKEur": 989.4
+      "gtvKEur": 15
     },
     {
       "cohortMonth": "2019-09",
@@ -40343,7 +40343,7 @@ const CASE_DATA = {
       "revenueEur": 9873,
       "cumulativeRevenue": 431056,
       "revenuePerActive": 15.43,
-      "gtvKEur": 768.6
+      "gtvKEur": 24.4
     },
     {
       "cohortMonth": "2019-09",
@@ -40376,7 +40376,7 @@ const CASE_DATA = {
       "revenueEur": 14915,
       "cumulativeRevenue": 475572,
       "revenuePerActive": 24.02,
-      "gtvKEur": 778
+      "gtvKEur": 17.8
     },
     {
       "cohortMonth": "2019-09",
@@ -40387,7 +40387,7 @@ const CASE_DATA = {
       "revenueEur": 12612,
       "cumulativeRevenue": 488185,
       "revenuePerActive": 20.74,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40398,7 +40398,7 @@ const CASE_DATA = {
       "revenueEur": 10315,
       "cumulativeRevenue": 498500,
       "revenuePerActive": 17.72,
-      "gtvKEur": 429
+      "gtvKEur": 43.5
     },
     {
       "cohortMonth": "2019-09",
@@ -40431,7 +40431,7 @@ const CASE_DATA = {
       "revenueEur": 11736,
       "cumulativeRevenue": 535301,
       "revenuePerActive": 20.74,
-      "gtvKEur": 355.4
+      "gtvKEur": 25.4
     },
     {
       "cohortMonth": "2019-09",
@@ -40453,7 +40453,7 @@ const CASE_DATA = {
       "revenueEur": 11080,
       "cumulativeRevenue": 560982,
       "revenuePerActive": 20.04,
-      "gtvKEur": 833.8
+      "gtvKEur": 21
     },
     {
       "cohortMonth": "2019-09",
@@ -40464,7 +40464,7 @@ const CASE_DATA = {
       "revenueEur": 14402,
       "cumulativeRevenue": 575383,
       "revenuePerActive": 26.47,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40475,7 +40475,7 @@ const CASE_DATA = {
       "revenueEur": 11087,
       "cumulativeRevenue": 586471,
       "revenuePerActive": 20.27,
-      "gtvKEur": 1669.3
+      "gtvKEur": 33
     },
     {
       "cohortMonth": "2019-09",
@@ -40486,7 +40486,7 @@ const CASE_DATA = {
       "revenueEur": 10776,
       "cumulativeRevenue": 597247,
       "revenuePerActive": 19.77,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40497,7 +40497,7 @@ const CASE_DATA = {
       "revenueEur": 16780,
       "cumulativeRevenue": 614027,
       "revenuePerActive": 31.31,
-      "gtvKEur": 279.2
+      "gtvKEur": 10.9
     },
     {
       "cohortMonth": "2019-09",
@@ -40508,7 +40508,7 @@ const CASE_DATA = {
       "revenueEur": 13228,
       "cumulativeRevenue": 627255,
       "revenuePerActive": 24.27,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-09",
@@ -40519,7 +40519,7 @@ const CASE_DATA = {
       "revenueEur": 9662,
       "cumulativeRevenue": 636918,
       "revenuePerActive": 18.27,
-      "gtvKEur": 311.5
+      "gtvKEur": 16.3
     },
     {
       "cohortMonth": "2019-09",
@@ -40530,7 +40530,7 @@ const CASE_DATA = {
       "revenueEur": 9363,
       "cumulativeRevenue": 646281,
       "revenuePerActive": 18.07,
-      "gtvKEur": 6.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-09",
@@ -40541,7 +40541,7 @@ const CASE_DATA = {
       "revenueEur": 13649,
       "cumulativeRevenue": 659929,
       "revenuePerActive": 26.61,
-      "gtvKEur": 16087.9
+      "gtvKEur": 750
     },
     {
       "cohortMonth": "2019-09",
@@ -40552,7 +40552,7 @@ const CASE_DATA = {
       "revenueEur": 12439,
       "cumulativeRevenue": 672368,
       "revenuePerActive": 31.49,
-      "gtvKEur": 52613.4
+      "gtvKEur": 2067.7
     },
     {
       "cohortMonth": "2019-09",
@@ -40563,7 +40563,7 @@ const CASE_DATA = {
       "revenueEur": 2057,
       "cumulativeRevenue": 674424,
       "revenuePerActive": 0,
-      "gtvKEur": 12826.5
+      "gtvKEur": 308.3
     },
     {
       "cohortMonth": "2019-08",
@@ -40695,7 +40695,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 351,
       "revenuePerActive": 0,
-      "gtvKEur": 60.4
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2019-08",
@@ -40706,7 +40706,7 @@ const CASE_DATA = {
       "revenueEur": 334,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0.24,
-      "gtvKEur": 111.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2019-08",
@@ -40717,7 +40717,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0,
-      "gtvKEur": 109.8
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2019-08",
@@ -40728,7 +40728,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0,
-      "gtvKEur": 148.7
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2019-08",
@@ -40739,7 +40739,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0,
-      "gtvKEur": 188.5
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2019-08",
@@ -40750,7 +40750,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0,
-      "gtvKEur": 241.9
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2019-08",
@@ -40761,7 +40761,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 685,
       "revenuePerActive": 0,
-      "gtvKEur": 94.1
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2019-08",
@@ -40827,7 +40827,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 2016,
       "revenuePerActive": 0.13,
-      "gtvKEur": 38
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2019-08",
@@ -40838,7 +40838,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2016,
       "revenuePerActive": 0,
-      "gtvKEur": 42.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2019-08",
@@ -40849,7 +40849,7 @@ const CASE_DATA = {
       "revenueEur": 959,
       "cumulativeRevenue": 2976,
       "revenuePerActive": 0.99,
-      "gtvKEur": 26.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2019-08",
@@ -40860,7 +40860,7 @@ const CASE_DATA = {
       "revenueEur": 257,
       "cumulativeRevenue": 3232,
       "revenuePerActive": 0.26,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -40871,7 +40871,7 @@ const CASE_DATA = {
       "revenueEur": 3093,
       "cumulativeRevenue": 6325,
       "revenuePerActive": 3.23,
-      "gtvKEur": 14
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -40882,7 +40882,7 @@ const CASE_DATA = {
       "revenueEur": 899,
       "cumulativeRevenue": 7224,
       "revenuePerActive": 0.97,
-      "gtvKEur": 728.6
+      "gtvKEur": 12.9
     },
     {
       "cohortMonth": "2019-08",
@@ -40893,7 +40893,7 @@ const CASE_DATA = {
       "revenueEur": 8184,
       "cumulativeRevenue": 15409,
       "revenuePerActive": 9.2,
-      "gtvKEur": 6682.3
+      "gtvKEur": 112.8
     },
     {
       "cohortMonth": "2019-08",
@@ -40948,7 +40948,7 @@ const CASE_DATA = {
       "revenueEur": 8917,
       "cumulativeRevenue": 59028,
       "revenuePerActive": 10.42,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -40959,7 +40959,7 @@ const CASE_DATA = {
       "revenueEur": 8369,
       "cumulativeRevenue": 67397,
       "revenuePerActive": 9.99,
-      "gtvKEur": 970.4
+      "gtvKEur": 17.1
     },
     {
       "cohortMonth": "2019-08",
@@ -40981,7 +40981,7 @@ const CASE_DATA = {
       "revenueEur": 14038,
       "cumulativeRevenue": 100795,
       "revenuePerActive": 16.93,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41003,7 +41003,7 @@ const CASE_DATA = {
       "revenueEur": 8442,
       "cumulativeRevenue": 118174,
       "revenuePerActive": 10.51,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41014,7 +41014,7 @@ const CASE_DATA = {
       "revenueEur": 9314,
       "cumulativeRevenue": 127488,
       "revenuePerActive": 11.93,
-      "gtvKEur": 918.2
+      "gtvKEur": 18.4
     },
     {
       "cohortMonth": "2019-08",
@@ -41058,7 +41058,7 @@ const CASE_DATA = {
       "revenueEur": 9005,
       "cumulativeRevenue": 161933,
       "revenuePerActive": 12.39,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41069,7 +41069,7 @@ const CASE_DATA = {
       "revenueEur": 7808,
       "cumulativeRevenue": 169741,
       "revenuePerActive": 10.89,
-      "gtvKEur": 698.3
+      "gtvKEur": 17.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41102,7 +41102,7 @@ const CASE_DATA = {
       "revenueEur": 17684,
       "cumulativeRevenue": 203518,
       "revenuePerActive": 25.44,
-      "gtvKEur": 526.2
+      "gtvKEur": 9.5
     },
     {
       "cohortMonth": "2019-08",
@@ -41146,7 +41146,7 @@ const CASE_DATA = {
       "revenueEur": 7925,
       "cumulativeRevenue": 235463,
       "revenuePerActive": 12.08,
-      "gtvKEur": 469.3
+      "gtvKEur": 9.8
     },
     {
       "cohortMonth": "2019-08",
@@ -41157,7 +41157,7 @@ const CASE_DATA = {
       "revenueEur": 7271,
       "cumulativeRevenue": 242734,
       "revenuePerActive": 11.17,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41168,7 +41168,7 @@ const CASE_DATA = {
       "revenueEur": 8104,
       "cumulativeRevenue": 250837,
       "revenuePerActive": 12.43,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41179,7 +41179,7 @@ const CASE_DATA = {
       "revenueEur": 8293,
       "cumulativeRevenue": 259130,
       "revenuePerActive": 12.88,
-      "gtvKEur": 500.2
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2019-08",
@@ -41212,7 +41212,7 @@ const CASE_DATA = {
       "revenueEur": 10470,
       "cumulativeRevenue": 283968,
       "revenuePerActive": 16.62,
-      "gtvKEur": 328.9
+      "gtvKEur": 5.5
     },
     {
       "cohortMonth": "2019-08",
@@ -41223,7 +41223,7 @@ const CASE_DATA = {
       "revenueEur": 7906,
       "cumulativeRevenue": 291875,
       "revenuePerActive": 12.59,
-      "gtvKEur": 6.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41234,7 +41234,7 @@ const CASE_DATA = {
       "revenueEur": 15974,
       "cumulativeRevenue": 307849,
       "revenuePerActive": 26.19,
-      "gtvKEur": 606.5
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2019-08",
@@ -41245,7 +41245,7 @@ const CASE_DATA = {
       "revenueEur": 10724,
       "cumulativeRevenue": 318573,
       "revenuePerActive": 17.78,
-      "gtvKEur": 11.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41256,7 +41256,7 @@ const CASE_DATA = {
       "revenueEur": 8950,
       "cumulativeRevenue": 327523,
       "revenuePerActive": 14.7,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41267,7 +41267,7 @@ const CASE_DATA = {
       "revenueEur": 7893,
       "cumulativeRevenue": 335416,
       "revenuePerActive": 13.38,
-      "gtvKEur": 370.6
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2019-08",
@@ -41289,7 +41289,7 @@ const CASE_DATA = {
       "revenueEur": 7405,
       "cumulativeRevenue": 351356,
       "revenuePerActive": 12.53,
-      "gtvKEur": 595.1
+      "gtvKEur": 13.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41311,7 +41311,7 @@ const CASE_DATA = {
       "revenueEur": 10489,
       "cumulativeRevenue": 371191,
       "revenuePerActive": 17.93,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41322,7 +41322,7 @@ const CASE_DATA = {
       "revenueEur": 10722,
       "cumulativeRevenue": 381914,
       "revenuePerActive": 18.71,
-      "gtvKEur": 438.4
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2019-08",
@@ -41344,7 +41344,7 @@ const CASE_DATA = {
       "revenueEur": 15061,
       "cumulativeRevenue": 406969,
       "revenuePerActive": 26.33,
-      "gtvKEur": 414.6
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2019-08",
@@ -41355,7 +41355,7 @@ const CASE_DATA = {
       "revenueEur": 10069,
       "cumulativeRevenue": 417038,
       "revenuePerActive": 18.01,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-08",
@@ -41366,7 +41366,7 @@ const CASE_DATA = {
       "revenueEur": 22730,
       "cumulativeRevenue": 439769,
       "revenuePerActive": 39.81,
-      "gtvKEur": 415.6
+      "gtvKEur": 7
     },
     {
       "cohortMonth": "2019-08",
@@ -41377,7 +41377,7 @@ const CASE_DATA = {
       "revenueEur": 14139,
       "cumulativeRevenue": 453908,
       "revenuePerActive": 25.11,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-08",
@@ -41388,7 +41388,7 @@ const CASE_DATA = {
       "revenueEur": 8801,
       "cumulativeRevenue": 462709,
       "revenuePerActive": 15.8,
-      "gtvKEur": 382.7
+      "gtvKEur": 8.2
     },
     {
       "cohortMonth": "2019-08",
@@ -41399,7 +41399,7 @@ const CASE_DATA = {
       "revenueEur": 9076,
       "cumulativeRevenue": 471785,
       "revenuePerActive": 16.78,
-      "gtvKEur": 15.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-08",
@@ -41410,7 +41410,7 @@ const CASE_DATA = {
       "revenueEur": 9764,
       "cumulativeRevenue": 481549,
       "revenuePerActive": 18.18,
-      "gtvKEur": 240.6
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2019-08",
@@ -41421,7 +41421,7 @@ const CASE_DATA = {
       "revenueEur": 10028,
       "cumulativeRevenue": 491577,
       "revenuePerActive": 18.67,
-      "gtvKEur": 65.6
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2019-08",
@@ -41432,7 +41432,7 @@ const CASE_DATA = {
       "revenueEur": 11109,
       "cumulativeRevenue": 502686,
       "revenuePerActive": 21.12,
-      "gtvKEur": 11716.7
+      "gtvKEur": 227.4
     },
     {
       "cohortMonth": "2019-08",
@@ -41443,7 +41443,7 @@ const CASE_DATA = {
       "revenueEur": 11137,
       "cumulativeRevenue": 513823,
       "revenuePerActive": 27.3,
-      "gtvKEur": 32248.3
+      "gtvKEur": 623.6
     },
     {
       "cohortMonth": "2019-08",
@@ -41454,7 +41454,7 @@ const CASE_DATA = {
       "revenueEur": 5718,
       "cumulativeRevenue": 519541,
       "revenuePerActive": 0,
-      "gtvKEur": 8167.1
+      "gtvKEur": 157.6
     },
     {
       "cohortMonth": "2019-07",
@@ -41509,7 +41509,7 @@ const CASE_DATA = {
       "revenueEur": 77,
       "cumulativeRevenue": 77,
       "revenuePerActive": 0.03,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -41762,7 +41762,7 @@ const CASE_DATA = {
       "revenueEur": 120,
       "cumulativeRevenue": 2168,
       "revenuePerActive": 0.13,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -41784,7 +41784,7 @@ const CASE_DATA = {
       "revenueEur": 912,
       "cumulativeRevenue": 3446,
       "revenuePerActive": 1.01,
-      "gtvKEur": 19923.4
+      "gtvKEur": 239.5
     },
     {
       "cohortMonth": "2019-07",
@@ -41795,7 +41795,7 @@ const CASE_DATA = {
       "revenueEur": 11427,
       "cumulativeRevenue": 14873,
       "revenuePerActive": 12.84,
-      "gtvKEur": 35336
+      "gtvKEur": 515.7
     },
     {
       "cohortMonth": "2019-07",
@@ -41861,7 +41861,7 @@ const CASE_DATA = {
       "revenueEur": 11322,
       "cumulativeRevenue": 81012,
       "revenuePerActive": 14.39,
-      "gtvKEur": 6288.3
+      "gtvKEur": 89.6
     },
     {
       "cohortMonth": "2019-07",
@@ -41916,7 +41916,7 @@ const CASE_DATA = {
       "revenueEur": 10560,
       "cumulativeRevenue": 136094,
       "revenuePerActive": 14.51,
-      "gtvKEur": 3147.1
+      "gtvKEur": 74.2
     },
     {
       "cohortMonth": "2019-07",
@@ -41971,7 +41971,7 @@ const CASE_DATA = {
       "revenueEur": 9250,
       "cumulativeRevenue": 189540,
       "revenuePerActive": 13.56,
-      "gtvKEur": 586.1
+      "gtvKEur": 53.1
     },
     {
       "cohortMonth": "2019-07",
@@ -41993,7 +41993,7 @@ const CASE_DATA = {
       "revenueEur": 9785,
       "cumulativeRevenue": 209475,
       "revenuePerActive": 14.3,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -42004,7 +42004,7 @@ const CASE_DATA = {
       "revenueEur": 10788,
       "cumulativeRevenue": 220264,
       "revenuePerActive": 16.03,
-      "gtvKEur": 493.1
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2019-07",
@@ -42048,7 +42048,7 @@ const CASE_DATA = {
       "revenueEur": 10425,
       "cumulativeRevenue": 264594,
       "revenuePerActive": 16.79,
-      "gtvKEur": 533
+      "gtvKEur": 38.1
     },
     {
       "cohortMonth": "2019-07",
@@ -42059,7 +42059,7 @@ const CASE_DATA = {
       "revenueEur": 13365,
       "cumulativeRevenue": 277960,
       "revenuePerActive": 21.45,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -42081,7 +42081,7 @@ const CASE_DATA = {
       "revenueEur": 9095,
       "cumulativeRevenue": 297430,
       "revenuePerActive": 15.03,
-      "gtvKEur": 453.6
+      "gtvKEur": 17.6
     },
     {
       "cohortMonth": "2019-07",
@@ -42092,7 +42092,7 @@ const CASE_DATA = {
       "revenueEur": 9172,
       "cumulativeRevenue": 306602,
       "revenuePerActive": 15.63,
-      "gtvKEur": 9.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-07",
@@ -42103,7 +42103,7 @@ const CASE_DATA = {
       "revenueEur": 9656,
       "cumulativeRevenue": 316258,
       "revenuePerActive": 16.79,
-      "gtvKEur": 4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -42114,7 +42114,7 @@ const CASE_DATA = {
       "revenueEur": 10186,
       "cumulativeRevenue": 326445,
       "revenuePerActive": 17.53,
-      "gtvKEur": 301.9
+      "gtvKEur": 19.3
     },
     {
       "cohortMonth": "2019-07",
@@ -42136,7 +42136,7 @@ const CASE_DATA = {
       "revenueEur": 10505,
       "cumulativeRevenue": 346696,
       "revenuePerActive": 17.57,
-      "gtvKEur": 396.2
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2019-07",
@@ -42169,7 +42169,7 @@ const CASE_DATA = {
       "revenueEur": 9444,
       "cumulativeRevenue": 374331,
       "revenuePerActive": 17.11,
-      "gtvKEur": 264.6
+      "gtvKEur": 25.5
     },
     {
       "cohortMonth": "2019-07",
@@ -42191,7 +42191,7 @@ const CASE_DATA = {
       "revenueEur": 10160,
       "cumulativeRevenue": 392749,
       "revenuePerActive": 18.68,
-      "gtvKEur": 380.9
+      "gtvKEur": 16.2
     },
     {
       "cohortMonth": "2019-07",
@@ -42224,7 +42224,7 @@ const CASE_DATA = {
       "revenueEur": 8179,
       "cumulativeRevenue": 422438,
       "revenuePerActive": 15.23,
-      "gtvKEur": 287
+      "gtvKEur": 14.8
     },
     {
       "cohortMonth": "2019-07",
@@ -42246,7 +42246,7 @@ const CASE_DATA = {
       "revenueEur": 9090,
       "cumulativeRevenue": 440398,
       "revenuePerActive": 17.68,
-      "gtvKEur": 323.1
+      "gtvKEur": 87.3
     },
     {
       "cohortMonth": "2019-07",
@@ -42268,7 +42268,7 @@ const CASE_DATA = {
       "revenueEur": 10217,
       "cumulativeRevenue": 460673,
       "revenuePerActive": 20.03,
-      "gtvKEur": 276.1
+      "gtvKEur": 7.8
     },
     {
       "cohortMonth": "2019-07",
@@ -42279,7 +42279,7 @@ const CASE_DATA = {
       "revenueEur": 12194,
       "cumulativeRevenue": 472867,
       "revenuePerActive": 24.63,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-07",
@@ -42290,7 +42290,7 @@ const CASE_DATA = {
       "revenueEur": 8457,
       "cumulativeRevenue": 481325,
       "revenuePerActive": 17.09,
-      "gtvKEur": 274
+      "gtvKEur": 8.6
     },
     {
       "cohortMonth": "2019-07",
@@ -42312,7 +42312,7 @@ const CASE_DATA = {
       "revenueEur": 9238,
       "cumulativeRevenue": 501483,
       "revenuePerActive": 19.17,
-      "gtvKEur": 334.9
+      "gtvKEur": 14
     },
     {
       "cohortMonth": "2019-07",
@@ -42323,7 +42323,7 @@ const CASE_DATA = {
       "revenueEur": 12793,
       "cumulativeRevenue": 514276,
       "revenuePerActive": 26.16,
-      "gtvKEur": 176.6
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2019-07",
@@ -42334,7 +42334,7 @@ const CASE_DATA = {
       "revenueEur": 16074,
       "cumulativeRevenue": 530351,
       "revenuePerActive": 33.14,
-      "gtvKEur": 9787.3
+      "gtvKEur": 503.2
     },
     {
       "cohortMonth": "2019-07",
@@ -42345,7 +42345,7 @@ const CASE_DATA = {
       "revenueEur": 10176,
       "cumulativeRevenue": 540527,
       "revenuePerActive": 26.99,
-      "gtvKEur": 33641.2
+      "gtvKEur": 1336.5
     },
     {
       "cohortMonth": "2019-07",
@@ -42356,7 +42356,7 @@ const CASE_DATA = {
       "revenueEur": 2140,
       "cumulativeRevenue": 542667,
       "revenuePerActive": 0,
-      "gtvKEur": 6645.8
+      "gtvKEur": 307.7
     },
     {
       "cohortMonth": "2019-06",
@@ -42389,7 +42389,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 182,
       "revenuePerActive": 0,
-      "gtvKEur": 26.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2019-06",
@@ -42400,7 +42400,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 182,
       "revenuePerActive": 0,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42642,7 +42642,7 @@ const CASE_DATA = {
       "revenueEur": 1756,
       "cumulativeRevenue": 6509,
       "revenuePerActive": 1.94,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42675,7 +42675,7 @@ const CASE_DATA = {
       "revenueEur": 208,
       "cumulativeRevenue": 6918,
       "revenuePerActive": 0.25,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42686,7 +42686,7 @@ const CASE_DATA = {
       "revenueEur": 260,
       "cumulativeRevenue": 7178,
       "revenuePerActive": 0.31,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42697,7 +42697,7 @@ const CASE_DATA = {
       "revenueEur": 488,
       "cumulativeRevenue": 7666,
       "revenuePerActive": 0.59,
-      "gtvKEur": 2501.5
+      "gtvKEur": 112.9
     },
     {
       "cohortMonth": "2019-06",
@@ -42708,7 +42708,7 @@ const CASE_DATA = {
       "revenueEur": 10663,
       "cumulativeRevenue": 18329,
       "revenuePerActive": 13.6,
-      "gtvKEur": 10169.7
+      "gtvKEur": 790.6
     },
     {
       "cohortMonth": "2019-06",
@@ -42763,7 +42763,7 @@ const CASE_DATA = {
       "revenueEur": 14894,
       "cumulativeRevenue": 78892,
       "revenuePerActive": 19.27,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42774,7 +42774,7 @@ const CASE_DATA = {
       "revenueEur": 14577,
       "cumulativeRevenue": 93469,
       "revenuePerActive": 19.06,
-      "gtvKEur": 2546.6
+      "gtvKEur": 111.5
     },
     {
       "cohortMonth": "2019-06",
@@ -42785,7 +42785,7 @@ const CASE_DATA = {
       "revenueEur": 13277,
       "cumulativeRevenue": 106745,
       "revenuePerActive": 17.18,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42796,7 +42796,7 @@ const CASE_DATA = {
       "revenueEur": 11324,
       "cumulativeRevenue": 118070,
       "revenuePerActive": 15.22,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42829,7 +42829,7 @@ const CASE_DATA = {
       "revenueEur": 9713,
       "cumulativeRevenue": 155535,
       "revenuePerActive": 14,
-      "gtvKEur": 3145.8
+      "gtvKEur": 47.7
     },
     {
       "cohortMonth": "2019-06",
@@ -42873,7 +42873,7 @@ const CASE_DATA = {
       "revenueEur": 9792,
       "cumulativeRevenue": 199010,
       "revenuePerActive": 14.81,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42884,7 +42884,7 @@ const CASE_DATA = {
       "revenueEur": 9531,
       "cumulativeRevenue": 208541,
       "revenuePerActive": 14.25,
-      "gtvKEur": 2220
+      "gtvKEur": 32.6
     },
     {
       "cohortMonth": "2019-06",
@@ -42917,7 +42917,7 @@ const CASE_DATA = {
       "revenueEur": 15123,
       "cumulativeRevenue": 249343,
       "revenuePerActive": 22.98,
-      "gtvKEur": 1622.9
+      "gtvKEur": 30.8
     },
     {
       "cohortMonth": "2019-06",
@@ -42939,7 +42939,7 @@ const CASE_DATA = {
       "revenueEur": 14554,
       "cumulativeRevenue": 275624,
       "revenuePerActive": 22.99,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42950,7 +42950,7 @@ const CASE_DATA = {
       "revenueEur": 12812,
       "cumulativeRevenue": 288435,
       "revenuePerActive": 20.76,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42961,7 +42961,7 @@ const CASE_DATA = {
       "revenueEur": 11345,
       "cumulativeRevenue": 299781,
       "revenuePerActive": 18.57,
-      "gtvKEur": 1420.1
+      "gtvKEur": 25.9
     },
     {
       "cohortMonth": "2019-06",
@@ -42983,7 +42983,7 @@ const CASE_DATA = {
       "revenueEur": 10055,
       "cumulativeRevenue": 320184,
       "revenuePerActive": 17.19,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -42994,7 +42994,7 @@ const CASE_DATA = {
       "revenueEur": 14761,
       "cumulativeRevenue": 334946,
       "revenuePerActive": 25.02,
-      "gtvKEur": 1552
+      "gtvKEur": 30.4
     },
     {
       "cohortMonth": "2019-06",
@@ -43005,7 +43005,7 @@ const CASE_DATA = {
       "revenueEur": 10181,
       "cumulativeRevenue": 345127,
       "revenuePerActive": 17.4,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -43016,7 +43016,7 @@ const CASE_DATA = {
       "revenueEur": 9541,
       "cumulativeRevenue": 354668,
       "revenuePerActive": 16.12,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -43027,7 +43027,7 @@ const CASE_DATA = {
       "revenueEur": 10287,
       "cumulativeRevenue": 364955,
       "revenuePerActive": 17.55,
-      "gtvKEur": 1712
+      "gtvKEur": 18
     },
     {
       "cohortMonth": "2019-06",
@@ -43038,7 +43038,7 @@ const CASE_DATA = {
       "revenueEur": 11892,
       "cumulativeRevenue": 376847,
       "revenuePerActive": 20.5,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -43049,7 +43049,7 @@ const CASE_DATA = {
       "revenueEur": 14301,
       "cumulativeRevenue": 391148,
       "revenuePerActive": 24.53,
-      "gtvKEur": 2434.1
+      "gtvKEur": 28.8
     },
     {
       "cohortMonth": "2019-06",
@@ -43060,7 +43060,7 @@ const CASE_DATA = {
       "revenueEur": 11546,
       "cumulativeRevenue": 402695,
       "revenuePerActive": 20.55,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-06",
@@ -43082,7 +43082,7 @@ const CASE_DATA = {
       "revenueEur": 11918,
       "cumulativeRevenue": 429824,
       "revenuePerActive": 21.59,
-      "gtvKEur": 2000.4
+      "gtvKEur": 22.8
     },
     {
       "cohortMonth": "2019-06",
@@ -43104,7 +43104,7 @@ const CASE_DATA = {
       "revenueEur": 10809,
       "cumulativeRevenue": 450952,
       "revenuePerActive": 20.83,
-      "gtvKEur": 1725.3
+      "gtvKEur": 29.7
     },
     {
       "cohortMonth": "2019-06",
@@ -43115,7 +43115,7 @@ const CASE_DATA = {
       "revenueEur": 9856,
       "cumulativeRevenue": 460808,
       "revenuePerActive": 18.85,
-      "gtvKEur": 14.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-06",
@@ -43126,7 +43126,7 @@ const CASE_DATA = {
       "revenueEur": 13117,
       "cumulativeRevenue": 473925,
       "revenuePerActive": 25.97,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-06",
@@ -43137,7 +43137,7 @@ const CASE_DATA = {
       "revenueEur": 10184,
       "cumulativeRevenue": 484110,
       "revenuePerActive": 19.58,
-      "gtvKEur": 414.7
+      "gtvKEur": 8.7
     },
     {
       "cohortMonth": "2019-06",
@@ -43148,7 +43148,7 @@ const CASE_DATA = {
       "revenueEur": 12247,
       "cumulativeRevenue": 496357,
       "revenuePerActive": 23.42,
-      "gtvKEur": 12.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-06",
@@ -43159,7 +43159,7 @@ const CASE_DATA = {
       "revenueEur": 8934,
       "cumulativeRevenue": 505291,
       "revenuePerActive": 16.95,
-      "gtvKEur": 2897
+      "gtvKEur": 33.2
     },
     {
       "cohortMonth": "2019-06",
@@ -43170,7 +43170,7 @@ const CASE_DATA = {
       "revenueEur": 10912,
       "cumulativeRevenue": 516204,
       "revenuePerActive": 21.31,
-      "gtvKEur": 21.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-06",
@@ -43181,7 +43181,7 @@ const CASE_DATA = {
       "revenueEur": 13252,
       "cumulativeRevenue": 529456,
       "revenuePerActive": 26.35,
-      "gtvKEur": 2033
+      "gtvKEur": 22.6
     },
     {
       "cohortMonth": "2019-06",
@@ -43192,7 +43192,7 @@ const CASE_DATA = {
       "revenueEur": 9746,
       "cumulativeRevenue": 539202,
       "revenuePerActive": 19.73,
-      "gtvKEur": 28.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2019-06",
@@ -43203,7 +43203,7 @@ const CASE_DATA = {
       "revenueEur": 11092,
       "cumulativeRevenue": 550294,
       "revenuePerActive": 22.68,
-      "gtvKEur": 1627.8
+      "gtvKEur": 22.8
     },
     {
       "cohortMonth": "2019-06",
@@ -43214,7 +43214,7 @@ const CASE_DATA = {
       "revenueEur": 9886,
       "cumulativeRevenue": 560180,
       "revenuePerActive": 20.6,
-      "gtvKEur": 50.1
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-06",
@@ -43225,7 +43225,7 @@ const CASE_DATA = {
       "revenueEur": 7312,
       "cumulativeRevenue": 567492,
       "revenuePerActive": 15.46,
-      "gtvKEur": 832.8
+      "gtvKEur": 17.6
     },
     {
       "cohortMonth": "2019-06",
@@ -43236,7 +43236,7 @@ const CASE_DATA = {
       "revenueEur": 8914,
       "cumulativeRevenue": 576406,
       "revenuePerActive": 19.13,
-      "gtvKEur": 68.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2019-06",
@@ -43247,7 +43247,7 @@ const CASE_DATA = {
       "revenueEur": 9020,
       "cumulativeRevenue": 585426,
       "revenuePerActive": 19.48,
-      "gtvKEur": 50843.8
+      "gtvKEur": 746.3
     },
     {
       "cohortMonth": "2019-06",
@@ -43258,7 +43258,7 @@ const CASE_DATA = {
       "revenueEur": 12176,
       "cumulativeRevenue": 597602,
       "revenuePerActive": 33.73,
-      "gtvKEur": 141545
+      "gtvKEur": 2058.5
     },
     {
       "cohortMonth": "2019-06",
@@ -43269,7 +43269,7 @@ const CASE_DATA = {
       "revenueEur": 2509,
       "cumulativeRevenue": 600110,
       "revenuePerActive": 0,
-      "gtvKEur": 43800.7
+      "gtvKEur": 586.5
     },
     {
       "cohortMonth": "2019-05",
@@ -43522,7 +43522,7 @@ const CASE_DATA = {
       "revenueEur": 343,
       "cumulativeRevenue": 4770,
       "revenuePerActive": 0.4,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43533,7 +43533,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4770,
       "revenuePerActive": 0,
-      "gtvKEur": 2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43544,7 +43544,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4770,
       "revenuePerActive": 0,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43566,7 +43566,7 @@ const CASE_DATA = {
       "revenueEur": 5652,
       "cumulativeRevenue": 12992,
       "revenuePerActive": 6.85,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43610,7 +43610,7 @@ const CASE_DATA = {
       "revenueEur": 642,
       "cumulativeRevenue": 14789,
       "revenuePerActive": 0.83,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43621,7 +43621,7 @@ const CASE_DATA = {
       "revenueEur": 2589,
       "cumulativeRevenue": 17377,
       "revenuePerActive": 3.44,
-      "gtvKEur": 14650.2
+      "gtvKEur": 163.6
     },
     {
       "cohortMonth": "2019-05",
@@ -43632,7 +43632,7 @@ const CASE_DATA = {
       "revenueEur": 9997,
       "cumulativeRevenue": 27375,
       "revenuePerActive": 13.46,
-      "gtvKEur": 55354.4
+      "gtvKEur": 735.5
     },
     {
       "cohortMonth": "2019-05",
@@ -43698,7 +43698,7 @@ const CASE_DATA = {
       "revenueEur": 22855,
       "cumulativeRevenue": 106509,
       "revenuePerActive": 32.19,
-      "gtvKEur": 510918.7
+      "gtvKEur": 5148.9
     },
     {
       "cohortMonth": "2019-05",
@@ -43753,7 +43753,7 @@ const CASE_DATA = {
       "revenueEur": 8620,
       "cumulativeRevenue": 156846,
       "revenuePerActive": 13.53,
-      "gtvKEur": 5735.5
+      "gtvKEur": 83.1
     },
     {
       "cohortMonth": "2019-05",
@@ -43797,7 +43797,7 @@ const CASE_DATA = {
       "revenueEur": 8175,
       "cumulativeRevenue": 194110,
       "revenuePerActive": 13.27,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43808,7 +43808,7 @@ const CASE_DATA = {
       "revenueEur": 9994,
       "cumulativeRevenue": 204104,
       "revenuePerActive": 16.07,
-      "gtvKEur": 1357.9
+      "gtvKEur": 26
     },
     {
       "cohortMonth": "2019-05",
@@ -43841,7 +43841,7 @@ const CASE_DATA = {
       "revenueEur": 15731,
       "cumulativeRevenue": 258154,
       "revenuePerActive": 25.09,
-      "gtvKEur": 5680.2
+      "gtvKEur": 73.7
     },
     {
       "cohortMonth": "2019-05",
@@ -43885,7 +43885,7 @@ const CASE_DATA = {
       "revenueEur": 10624,
       "cumulativeRevenue": 299990,
       "revenuePerActive": 18.35,
-      "gtvKEur": 3733
+      "gtvKEur": 51.5
     },
     {
       "cohortMonth": "2019-05",
@@ -43907,7 +43907,7 @@ const CASE_DATA = {
       "revenueEur": 12495,
       "cumulativeRevenue": 321936,
       "revenuePerActive": 22.19,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -43918,7 +43918,7 @@ const CASE_DATA = {
       "revenueEur": 9862,
       "cumulativeRevenue": 331798,
       "revenuePerActive": 17.46,
-      "gtvKEur": 5578.7
+      "gtvKEur": 65
     },
     {
       "cohortMonth": "2019-05",
@@ -43951,7 +43951,7 @@ const CASE_DATA = {
       "revenueEur": 14204,
       "cumulativeRevenue": 365161,
       "revenuePerActive": 25.55,
-      "gtvKEur": 6100.3
+      "gtvKEur": 66.9
     },
     {
       "cohortMonth": "2019-05",
@@ -43973,7 +43973,7 @@ const CASE_DATA = {
       "revenueEur": 17148,
       "cumulativeRevenue": 398593,
       "revenuePerActive": 31.87,
-      "gtvKEur": 417.1
+      "gtvKEur": 11.4
     },
     {
       "cohortMonth": "2019-05",
@@ -44006,7 +44006,7 @@ const CASE_DATA = {
       "revenueEur": 9830,
       "cumulativeRevenue": 430666,
       "revenuePerActive": 19.46,
-      "gtvKEur": 2906.8
+      "gtvKEur": 37.1
     },
     {
       "cohortMonth": "2019-05",
@@ -44028,7 +44028,7 @@ const CASE_DATA = {
       "revenueEur": 13246,
       "cumulativeRevenue": 452659,
       "revenuePerActive": 27.6,
-      "gtvKEur": 5197
+      "gtvKEur": 61.4
     },
     {
       "cohortMonth": "2019-05",
@@ -44039,7 +44039,7 @@ const CASE_DATA = {
       "revenueEur": 13490,
       "cumulativeRevenue": 466149,
       "revenuePerActive": 28.1,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -44061,7 +44061,7 @@ const CASE_DATA = {
       "revenueEur": 10288,
       "cumulativeRevenue": 487731,
       "revenuePerActive": 20.87,
-      "gtvKEur": 19667.7
+      "gtvKEur": 219.5
     },
     {
       "cohortMonth": "2019-05",
@@ -44072,7 +44072,7 @@ const CASE_DATA = {
       "revenueEur": 9655,
       "cumulativeRevenue": 497387,
       "revenuePerActive": 19.12,
-      "gtvKEur": 3
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2019-05",
@@ -44083,7 +44083,7 @@ const CASE_DATA = {
       "revenueEur": 14152,
       "cumulativeRevenue": 511538,
       "revenuePerActive": 28.47,
-      "gtvKEur": 615.6
+      "gtvKEur": 9.5
     },
     {
       "cohortMonth": "2019-05",
@@ -44094,7 +44094,7 @@ const CASE_DATA = {
       "revenueEur": 16762,
       "cumulativeRevenue": 528300,
       "revenuePerActive": 33.79,
-      "gtvKEur": 5.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-05",
@@ -44105,7 +44105,7 @@ const CASE_DATA = {
       "revenueEur": 13497,
       "cumulativeRevenue": 541796,
       "revenuePerActive": 28.18,
-      "gtvKEur": 1067.6
+      "gtvKEur": 13.8
     },
     {
       "cohortMonth": "2019-05",
@@ -44116,7 +44116,7 @@ const CASE_DATA = {
       "revenueEur": 10447,
       "cumulativeRevenue": 552243,
       "revenuePerActive": 22.13,
-      "gtvKEur": 2.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-05",
@@ -44127,7 +44127,7 @@ const CASE_DATA = {
       "revenueEur": 12349,
       "cumulativeRevenue": 564592,
       "revenuePerActive": 26.33,
-      "gtvKEur": 3158.5
+      "gtvKEur": 34.1
     },
     {
       "cohortMonth": "2019-05",
@@ -44138,7 +44138,7 @@ const CASE_DATA = {
       "revenueEur": 10163,
       "cumulativeRevenue": 574755,
       "revenuePerActive": 22.69,
-      "gtvKEur": 9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-05",
@@ -44149,7 +44149,7 @@ const CASE_DATA = {
       "revenueEur": 8829,
       "cumulativeRevenue": 583584,
       "revenuePerActive": 20.25,
-      "gtvKEur": 1423.5
+      "gtvKEur": 22
     },
     {
       "cohortMonth": "2019-05",
@@ -44160,7 +44160,7 @@ const CASE_DATA = {
       "revenueEur": 16025,
       "cumulativeRevenue": 599609,
       "revenuePerActive": 37.71,
-      "gtvKEur": 80.9
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2019-05",
@@ -44171,7 +44171,7 @@ const CASE_DATA = {
       "revenueEur": 12513,
       "cumulativeRevenue": 612122,
       "revenuePerActive": 29.3,
-      "gtvKEur": 83336.2
+      "gtvKEur": 1021.3
     },
     {
       "cohortMonth": "2019-05",
@@ -44182,7 +44182,7 @@ const CASE_DATA = {
       "revenueEur": 11717,
       "cumulativeRevenue": 623839,
       "revenuePerActive": 34.98,
-      "gtvKEur": 338112.6
+      "gtvKEur": 3764.8
     },
     {
       "cohortMonth": "2019-05",
@@ -44193,7 +44193,7 @@ const CASE_DATA = {
       "revenueEur": 4395,
       "cumulativeRevenue": 628235,
       "revenuePerActive": 0,
-      "gtvKEur": 98565.9
+      "gtvKEur": 1099.8
     },
     {
       "cohortMonth": "2019-04",
@@ -44501,7 +44501,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 2091,
       "revenuePerActive": 0.23,
-      "gtvKEur": 14
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-04",
@@ -44512,7 +44512,7 @@ const CASE_DATA = {
       "revenueEur": 141,
       "cumulativeRevenue": 2233,
       "revenuePerActive": 0.2,
-      "gtvKEur": 20.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-04",
@@ -44523,7 +44523,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 2361,
       "revenuePerActive": 0.18,
-      "gtvKEur": 22.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-04",
@@ -44534,7 +44534,7 @@ const CASE_DATA = {
       "revenueEur": 212,
       "cumulativeRevenue": 2573,
       "revenuePerActive": 0.31,
-      "gtvKEur": 24.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-04",
@@ -44545,7 +44545,7 @@ const CASE_DATA = {
       "revenueEur": 9211,
       "cumulativeRevenue": 11784,
       "revenuePerActive": 13.35,
-      "gtvKEur": 16.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-04",
@@ -44556,7 +44556,7 @@ const CASE_DATA = {
       "revenueEur": 1154,
       "cumulativeRevenue": 12938,
       "revenuePerActive": 1.72,
-      "gtvKEur": 876.6
+      "gtvKEur": 25.6
     },
     {
       "cohortMonth": "2019-04",
@@ -44567,7 +44567,7 @@ const CASE_DATA = {
       "revenueEur": 9079,
       "cumulativeRevenue": 22017,
       "revenuePerActive": 13.92,
-      "gtvKEur": 11021.1
+      "gtvKEur": 184.6
     },
     {
       "cohortMonth": "2019-04",
@@ -44633,7 +44633,7 @@ const CASE_DATA = {
       "revenueEur": 9223,
       "cumulativeRevenue": 79885,
       "revenuePerActive": 14.8,
-      "gtvKEur": 1059.4
+      "gtvKEur": 27.8
     },
     {
       "cohortMonth": "2019-04",
@@ -44655,7 +44655,7 @@ const CASE_DATA = {
       "revenueEur": 7862,
       "cumulativeRevenue": 95608,
       "revenuePerActive": 13.15,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44688,7 +44688,7 @@ const CASE_DATA = {
       "revenueEur": 6514,
       "cumulativeRevenue": 128228,
       "revenuePerActive": 11.45,
-      "gtvKEur": 702.5
+      "gtvKEur": 21.1
     },
     {
       "cohortMonth": "2019-04",
@@ -44732,7 +44732,7 @@ const CASE_DATA = {
       "revenueEur": 9712,
       "cumulativeRevenue": 171067,
       "revenuePerActive": 17.4,
-      "gtvKEur": 11.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-04",
@@ -44743,7 +44743,7 @@ const CASE_DATA = {
       "revenueEur": 10139,
       "cumulativeRevenue": 181206,
       "revenuePerActive": 18.5,
-      "gtvKEur": 1502.1
+      "gtvKEur": 28.4
     },
     {
       "cohortMonth": "2019-04",
@@ -44776,7 +44776,7 @@ const CASE_DATA = {
       "revenueEur": 8569,
       "cumulativeRevenue": 207458,
       "revenuePerActive": 16.14,
-      "gtvKEur": 1894.4
+      "gtvKEur": 45.6
     },
     {
       "cohortMonth": "2019-04",
@@ -44787,7 +44787,7 @@ const CASE_DATA = {
       "revenueEur": 7465,
       "cumulativeRevenue": 214923,
       "revenuePerActive": 14.09,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44798,7 +44798,7 @@ const CASE_DATA = {
       "revenueEur": 7683,
       "cumulativeRevenue": 222606,
       "revenuePerActive": 14.55,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44809,7 +44809,7 @@ const CASE_DATA = {
       "revenueEur": 12485,
       "cumulativeRevenue": 235091,
       "revenuePerActive": 23.12,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44820,7 +44820,7 @@ const CASE_DATA = {
       "revenueEur": 5503,
       "cumulativeRevenue": 240594,
       "revenuePerActive": 10.81,
-      "gtvKEur": 3142
+      "gtvKEur": 35.8
     },
     {
       "cohortMonth": "2019-04",
@@ -44831,7 +44831,7 @@ const CASE_DATA = {
       "revenueEur": 8565,
       "cumulativeRevenue": 249158,
       "revenuePerActive": 17.73,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44842,7 +44842,7 @@ const CASE_DATA = {
       "revenueEur": 13157,
       "cumulativeRevenue": 262315,
       "revenuePerActive": 26.69,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44853,7 +44853,7 @@ const CASE_DATA = {
       "revenueEur": 11502,
       "cumulativeRevenue": 273817,
       "revenuePerActive": 23.24,
-      "gtvKEur": 4676.3
+      "gtvKEur": 53.5
     },
     {
       "cohortMonth": "2019-04",
@@ -44875,7 +44875,7 @@ const CASE_DATA = {
       "revenueEur": 10231,
       "cumulativeRevenue": 293252,
       "revenuePerActive": 21.05,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44886,7 +44886,7 @@ const CASE_DATA = {
       "revenueEur": 5921,
       "cumulativeRevenue": 299173,
       "revenuePerActive": 12.44,
-      "gtvKEur": 448.4
+      "gtvKEur": 6.5
     },
     {
       "cohortMonth": "2019-04",
@@ -44908,7 +44908,7 @@ const CASE_DATA = {
       "revenueEur": 7591,
       "cumulativeRevenue": 315348,
       "revenuePerActive": 16.47,
-      "gtvKEur": 336.6
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2019-04",
@@ -44941,7 +44941,7 @@ const CASE_DATA = {
       "revenueEur": 15869,
       "cumulativeRevenue": 348172,
       "revenuePerActive": 35.42,
-      "gtvKEur": 222.3
+      "gtvKEur": 4.7
     },
     {
       "cohortMonth": "2019-04",
@@ -44963,7 +44963,7 @@ const CASE_DATA = {
       "revenueEur": 9156,
       "cumulativeRevenue": 363433,
       "revenuePerActive": 20.81,
-      "gtvKEur": 1790.2
+      "gtvKEur": 25
     },
     {
       "cohortMonth": "2019-04",
@@ -44974,7 +44974,7 @@ const CASE_DATA = {
       "revenueEur": 9749,
       "cumulativeRevenue": 373182,
       "revenuePerActive": 22.67,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -44996,7 +44996,7 @@ const CASE_DATA = {
       "revenueEur": 10170,
       "cumulativeRevenue": 390355,
       "revenuePerActive": 23.11,
-      "gtvKEur": 1194.7
+      "gtvKEur": 20.8
     },
     {
       "cohortMonth": "2019-04",
@@ -45018,7 +45018,7 @@ const CASE_DATA = {
       "revenueEur": 6833,
       "cumulativeRevenue": 406324,
       "revenuePerActive": 16.04,
-      "gtvKEur": 788.4
+      "gtvKEur": 12.5
     },
     {
       "cohortMonth": "2019-04",
@@ -45029,7 +45029,7 @@ const CASE_DATA = {
       "revenueEur": 11231,
       "cumulativeRevenue": 417555,
       "revenuePerActive": 26.74,
-      "gtvKEur": 11.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-04",
@@ -45040,7 +45040,7 @@ const CASE_DATA = {
       "revenueEur": 8346,
       "cumulativeRevenue": 425901,
       "revenuePerActive": 20.41,
-      "gtvKEur": 432.3
+      "gtvKEur": 10.7
     },
     {
       "cohortMonth": "2019-04",
@@ -45062,7 +45062,7 @@ const CASE_DATA = {
       "revenueEur": 8712,
       "cumulativeRevenue": 444451,
       "revenuePerActive": 22.34,
-      "gtvKEur": 626.8
+      "gtvKEur": 13.6
     },
     {
       "cohortMonth": "2019-04",
@@ -45073,7 +45073,7 @@ const CASE_DATA = {
       "revenueEur": 14277,
       "cumulativeRevenue": 458728,
       "revenuePerActive": 36.99,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-04",
@@ -45084,7 +45084,7 @@ const CASE_DATA = {
       "revenueEur": 6022,
       "cumulativeRevenue": 464750,
       "revenuePerActive": 15.77,
-      "gtvKEur": 253.9
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2019-04",
@@ -45095,7 +45095,7 @@ const CASE_DATA = {
       "revenueEur": 9849,
       "cumulativeRevenue": 474599,
       "revenuePerActive": 26.19,
-      "gtvKEur": 54.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-04",
@@ -45106,7 +45106,7 @@ const CASE_DATA = {
       "revenueEur": 10060,
       "cumulativeRevenue": 484659,
       "revenuePerActive": 26.54,
-      "gtvKEur": 30373.5
+      "gtvKEur": 431
     },
     {
       "cohortMonth": "2019-04",
@@ -45117,7 +45117,7 @@ const CASE_DATA = {
       "revenueEur": 8143,
       "cumulativeRevenue": 492802,
       "revenuePerActive": 30.05,
-      "gtvKEur": 101092.3
+      "gtvKEur": 1348.6
     },
     {
       "cohortMonth": "2019-04",
@@ -45128,7 +45128,7 @@ const CASE_DATA = {
       "revenueEur": 1664,
       "cumulativeRevenue": 494467,
       "revenuePerActive": 0,
-      "gtvKEur": 14809.8
+      "gtvKEur": 236.9
     },
     {
       "cohortMonth": "2019-03",
@@ -45249,7 +45249,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 958,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45315,7 +45315,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1065,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45337,7 +45337,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1065,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45348,7 +45348,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1065,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45359,7 +45359,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1065,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45370,7 +45370,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1065,
       "revenuePerActive": 0,
-      "gtvKEur": 17.2
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2019-03",
@@ -45392,7 +45392,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1078,
       "revenuePerActive": 0,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45403,7 +45403,7 @@ const CASE_DATA = {
       "revenueEur": 2672,
       "cumulativeRevenue": 3750,
       "revenuePerActive": 3.07,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45425,7 +45425,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4350,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45447,7 +45447,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4519,
       "revenuePerActive": 0,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45458,7 +45458,7 @@ const CASE_DATA = {
       "revenueEur": 163,
       "cumulativeRevenue": 4681,
       "revenuePerActive": 0.22,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45469,7 +45469,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4681,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45480,7 +45480,7 @@ const CASE_DATA = {
       "revenueEur": 184,
       "cumulativeRevenue": 4866,
       "revenuePerActive": 0.25,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45491,7 +45491,7 @@ const CASE_DATA = {
       "revenueEur": 833,
       "cumulativeRevenue": 5699,
       "revenuePerActive": 1.12,
-      "gtvKEur": 3.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45502,7 +45502,7 @@ const CASE_DATA = {
       "revenueEur": 1029,
       "cumulativeRevenue": 6728,
       "revenuePerActive": 1.42,
-      "gtvKEur": 14113.5
+      "gtvKEur": 160.4
     },
     {
       "cohortMonth": "2019-03",
@@ -45513,7 +45513,7 @@ const CASE_DATA = {
       "revenueEur": 8659,
       "cumulativeRevenue": 15387,
       "revenuePerActive": 12.3,
-      "gtvKEur": 77073.7
+      "gtvKEur": 811.7
     },
     {
       "cohortMonth": "2019-03",
@@ -45579,7 +45579,7 @@ const CASE_DATA = {
       "revenueEur": 6507,
       "cumulativeRevenue": 70996,
       "revenuePerActive": 10,
-      "gtvKEur": 1890
+      "gtvKEur": 30.9
     },
     {
       "cohortMonth": "2019-03",
@@ -45590,7 +45590,7 @@ const CASE_DATA = {
       "revenueEur": 8267,
       "cumulativeRevenue": 79263,
       "revenuePerActive": 12.76,
-      "gtvKEur": 4.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45623,7 +45623,7 @@ const CASE_DATA = {
       "revenueEur": 8682,
       "cumulativeRevenue": 127163,
       "revenuePerActive": 14.05,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45634,7 +45634,7 @@ const CASE_DATA = {
       "revenueEur": 8662,
       "cumulativeRevenue": 135824,
       "revenuePerActive": 13.99,
-      "gtvKEur": 1231.9
+      "gtvKEur": 28.7
     },
     {
       "cohortMonth": "2019-03",
@@ -45678,7 +45678,7 @@ const CASE_DATA = {
       "revenueEur": 8979,
       "cumulativeRevenue": 170032,
       "revenuePerActive": 15.04,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-03",
@@ -45689,7 +45689,7 @@ const CASE_DATA = {
       "revenueEur": 9731,
       "cumulativeRevenue": 179762,
       "revenuePerActive": 16.08,
-      "gtvKEur": 3461.3
+      "gtvKEur": 53.7
     },
     {
       "cohortMonth": "2019-03",
@@ -45711,7 +45711,7 @@ const CASE_DATA = {
       "revenueEur": 6221,
       "cumulativeRevenue": 192714,
       "revenuePerActive": 10.74,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45722,7 +45722,7 @@ const CASE_DATA = {
       "revenueEur": 7789,
       "cumulativeRevenue": 200503,
       "revenuePerActive": 13.52,
-      "gtvKEur": 2612.9
+      "gtvKEur": 33.6
     },
     {
       "cohortMonth": "2019-03",
@@ -45766,7 +45766,7 @@ const CASE_DATA = {
       "revenueEur": 7260,
       "cumulativeRevenue": 247677,
       "revenuePerActive": 13.32,
-      "gtvKEur": 1998.7
+      "gtvKEur": 26.1
     },
     {
       "cohortMonth": "2019-03",
@@ -45777,7 +45777,7 @@ const CASE_DATA = {
       "revenueEur": 5690,
       "cumulativeRevenue": 253367,
       "revenuePerActive": 10.69,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45788,7 +45788,7 @@ const CASE_DATA = {
       "revenueEur": 7018,
       "cumulativeRevenue": 260385,
       "revenuePerActive": 13.12,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -45799,7 +45799,7 @@ const CASE_DATA = {
       "revenueEur": 6315,
       "cumulativeRevenue": 266699,
       "revenuePerActive": 11.72,
-      "gtvKEur": 1259.3
+      "gtvKEur": 17.8
     },
     {
       "cohortMonth": "2019-03",
@@ -45832,7 +45832,7 @@ const CASE_DATA = {
       "revenueEur": 5997,
       "cumulativeRevenue": 288667,
       "revenuePerActive": 11.25,
-      "gtvKEur": 1497.9
+      "gtvKEur": 21.6
     },
     {
       "cohortMonth": "2019-03",
@@ -45854,7 +45854,7 @@ const CASE_DATA = {
       "revenueEur": 5202,
       "cumulativeRevenue": 299187,
       "revenuePerActive": 10.47,
-      "gtvKEur": 3820.1
+      "gtvKEur": 42
     },
     {
       "cohortMonth": "2019-03",
@@ -45887,7 +45887,7 @@ const CASE_DATA = {
       "revenueEur": 8167,
       "cumulativeRevenue": 345645,
       "revenuePerActive": 16.77,
-      "gtvKEur": 1258.5
+      "gtvKEur": 19.2
     },
     {
       "cohortMonth": "2019-03",
@@ -45909,7 +45909,7 @@ const CASE_DATA = {
       "revenueEur": 7476,
       "cumulativeRevenue": 360260,
       "revenuePerActive": 16.43,
-      "gtvKEur": 1407.5
+      "gtvKEur": 17.8
     },
     {
       "cohortMonth": "2019-03",
@@ -45942,7 +45942,7 @@ const CASE_DATA = {
       "revenueEur": 10647,
       "cumulativeRevenue": 389015,
       "revenuePerActive": 23.09,
-      "gtvKEur": 346.9
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2019-03",
@@ -45964,7 +45964,7 @@ const CASE_DATA = {
       "revenueEur": 10077,
       "cumulativeRevenue": 411417,
       "revenuePerActive": 22.39,
-      "gtvKEur": 4071.9
+      "gtvKEur": 44.6
     },
     {
       "cohortMonth": "2019-03",
@@ -45986,7 +45986,7 @@ const CASE_DATA = {
       "revenueEur": 8615,
       "cumulativeRevenue": 428556,
       "revenuePerActive": 19.49,
-      "gtvKEur": 2792.7
+      "gtvKEur": 30.6
     },
     {
       "cohortMonth": "2019-03",
@@ -46008,7 +46008,7 @@ const CASE_DATA = {
       "revenueEur": 8800,
       "cumulativeRevenue": 446812,
       "revenuePerActive": 19.96,
-      "gtvKEur": 1561.2
+      "gtvKEur": 19.8
     },
     {
       "cohortMonth": "2019-03",
@@ -46019,7 +46019,7 @@ const CASE_DATA = {
       "revenueEur": 8674,
       "cumulativeRevenue": 455486,
       "revenuePerActive": 20.41,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-03",
@@ -46030,7 +46030,7 @@ const CASE_DATA = {
       "revenueEur": 7912,
       "cumulativeRevenue": 463399,
       "revenuePerActive": 18.11,
-      "gtvKEur": 677.2
+      "gtvKEur": 11.2
     },
     {
       "cohortMonth": "2019-03",
@@ -46041,7 +46041,7 @@ const CASE_DATA = {
       "revenueEur": 8156,
       "cumulativeRevenue": 471555,
       "revenuePerActive": 19.28,
-      "gtvKEur": 24.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-03",
@@ -46052,7 +46052,7 @@ const CASE_DATA = {
       "revenueEur": 39017,
       "cumulativeRevenue": 510573,
       "revenuePerActive": 94.93,
-      "gtvKEur": 41717.4
+      "gtvKEur": 554.3
     },
     {
       "cohortMonth": "2019-03",
@@ -46063,7 +46063,7 @@ const CASE_DATA = {
       "revenueEur": 7021,
       "cumulativeRevenue": 517594,
       "revenuePerActive": 22.72,
-      "gtvKEur": 141331.5
+      "gtvKEur": 1745.4
     },
     {
       "cohortMonth": "2019-03",
@@ -46074,7 +46074,7 @@ const CASE_DATA = {
       "revenueEur": 3101,
       "cumulativeRevenue": 520695,
       "revenuePerActive": 0,
-      "gtvKEur": 45037.5
+      "gtvKEur": 521.7
     },
     {
       "cohortMonth": "2019-02",
@@ -46195,7 +46195,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 64.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2019-02",
@@ -46338,7 +46338,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 257,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46415,7 +46415,7 @@ const CASE_DATA = {
       "revenueEur": 86,
       "cumulativeRevenue": 7682,
       "revenuePerActive": 0.13,
-      "gtvKEur": 1.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46448,7 +46448,7 @@ const CASE_DATA = {
       "revenueEur": 450,
       "cumulativeRevenue": 8475,
       "revenuePerActive": 0.67,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46459,7 +46459,7 @@ const CASE_DATA = {
       "revenueEur": 575,
       "cumulativeRevenue": 9051,
       "revenuePerActive": 0.87,
-      "gtvKEur": 645.4
+      "gtvKEur": 18.5
     },
     {
       "cohortMonth": "2019-02",
@@ -46470,7 +46470,7 @@ const CASE_DATA = {
       "revenueEur": 7956,
       "cumulativeRevenue": 17006,
       "revenuePerActive": 12.28,
-      "gtvKEur": 4600.8
+      "gtvKEur": 87.9
     },
     {
       "cohortMonth": "2019-02",
@@ -46503,7 +46503,7 @@ const CASE_DATA = {
       "revenueEur": 10209,
       "cumulativeRevenue": 50785,
       "revenuePerActive": 16.26,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46525,7 +46525,7 @@ const CASE_DATA = {
       "revenueEur": 8259,
       "cumulativeRevenue": 70849,
       "revenuePerActive": 13.45,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46536,7 +46536,7 @@ const CASE_DATA = {
       "revenueEur": 8216,
       "cumulativeRevenue": 79065,
       "revenuePerActive": 13.79,
-      "gtvKEur": 1353.9
+      "gtvKEur": 34.4
     },
     {
       "cohortMonth": "2019-02",
@@ -46580,7 +46580,7 @@ const CASE_DATA = {
       "revenueEur": 8255,
       "cumulativeRevenue": 117775,
       "revenuePerActive": 14.9,
-      "gtvKEur": 4.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46591,7 +46591,7 @@ const CASE_DATA = {
       "revenueEur": 7323,
       "cumulativeRevenue": 125098,
       "revenuePerActive": 13.41,
-      "gtvKEur": 527.6
+      "gtvKEur": 22
     },
     {
       "cohortMonth": "2019-02",
@@ -46613,7 +46613,7 @@ const CASE_DATA = {
       "revenueEur": 9845,
       "cumulativeRevenue": 143729,
       "revenuePerActive": 18,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46635,7 +46635,7 @@ const CASE_DATA = {
       "revenueEur": 9331,
       "cumulativeRevenue": 162951,
       "revenuePerActive": 17.88,
-      "gtvKEur": 9.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-02",
@@ -46646,7 +46646,7 @@ const CASE_DATA = {
       "revenueEur": 8899,
       "cumulativeRevenue": 171850,
       "revenuePerActive": 17.21,
-      "gtvKEur": 691.7
+      "gtvKEur": 14.8
     },
     {
       "cohortMonth": "2019-02",
@@ -46668,7 +46668,7 @@ const CASE_DATA = {
       "revenueEur": 7173,
       "cumulativeRevenue": 187068,
       "revenuePerActive": 14.4,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46679,7 +46679,7 @@ const CASE_DATA = {
       "revenueEur": 8520,
       "cumulativeRevenue": 195588,
       "revenuePerActive": 17.21,
-      "gtvKEur": 461.9
+      "gtvKEur": 48.7
     },
     {
       "cohortMonth": "2019-02",
@@ -46723,7 +46723,7 @@ const CASE_DATA = {
       "revenueEur": 7237,
       "cumulativeRevenue": 234347,
       "revenuePerActive": 15.33,
-      "gtvKEur": 391.3
+      "gtvKEur": 21.7
     },
     {
       "cohortMonth": "2019-02",
@@ -46756,7 +46756,7 @@ const CASE_DATA = {
       "revenueEur": 8078,
       "cumulativeRevenue": 257885,
       "revenuePerActive": 16.9,
-      "gtvKEur": 281.1
+      "gtvKEur": 12.2
     },
     {
       "cohortMonth": "2019-02",
@@ -46789,7 +46789,7 @@ const CASE_DATA = {
       "revenueEur": 6760,
       "cumulativeRevenue": 279755,
       "revenuePerActive": 14.95,
-      "gtvKEur": 316.3
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2019-02",
@@ -46811,7 +46811,7 @@ const CASE_DATA = {
       "revenueEur": 7382,
       "cumulativeRevenue": 292944,
       "revenuePerActive": 16.89,
-      "gtvKEur": 217.2
+      "gtvKEur": 7.5
     },
     {
       "cohortMonth": "2019-02",
@@ -46833,7 +46833,7 @@ const CASE_DATA = {
       "revenueEur": 8506,
       "cumulativeRevenue": 311698,
       "revenuePerActive": 19.83,
-      "gtvKEur": 10.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-02",
@@ -46844,7 +46844,7 @@ const CASE_DATA = {
       "revenueEur": 5841,
       "cumulativeRevenue": 317538,
       "revenuePerActive": 13.46,
-      "gtvKEur": 294
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2019-02",
@@ -46855,7 +46855,7 @@ const CASE_DATA = {
       "revenueEur": 5411,
       "cumulativeRevenue": 322949,
       "revenuePerActive": 12.11,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46866,7 +46866,7 @@ const CASE_DATA = {
       "revenueEur": 6161,
       "cumulativeRevenue": 329110,
       "revenuePerActive": 14.36,
-      "gtvKEur": 310.9
+      "gtvKEur": 4.7
     },
     {
       "cohortMonth": "2019-02",
@@ -46899,7 +46899,7 @@ const CASE_DATA = {
       "revenueEur": 7094,
       "cumulativeRevenue": 351675,
       "revenuePerActive": 17.05,
-      "gtvKEur": 190
+      "gtvKEur": 4.3
     },
     {
       "cohortMonth": "2019-02",
@@ -46921,7 +46921,7 @@ const CASE_DATA = {
       "revenueEur": 7867,
       "cumulativeRevenue": 367308,
       "revenuePerActive": 19.72,
-      "gtvKEur": 197.6
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2019-02",
@@ -46932,7 +46932,7 @@ const CASE_DATA = {
       "revenueEur": 7077,
       "cumulativeRevenue": 374386,
       "revenuePerActive": 17.69,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46943,7 +46943,7 @@ const CASE_DATA = {
       "revenueEur": 8227,
       "cumulativeRevenue": 382612,
       "revenuePerActive": 21.26,
-      "gtvKEur": 146.1
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2019-02",
@@ -46954,7 +46954,7 @@ const CASE_DATA = {
       "revenueEur": 11633,
       "cumulativeRevenue": 394246,
       "revenuePerActive": 30.45,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-02",
@@ -46965,7 +46965,7 @@ const CASE_DATA = {
       "revenueEur": 9227,
       "cumulativeRevenue": 403472,
       "revenuePerActive": 23.78,
-      "gtvKEur": 206.1
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2019-02",
@@ -46976,7 +46976,7 @@ const CASE_DATA = {
       "revenueEur": 7860,
       "cumulativeRevenue": 411332,
       "revenuePerActive": 20.68,
-      "gtvKEur": 51.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-02",
@@ -46987,7 +46987,7 @@ const CASE_DATA = {
       "revenueEur": 5926,
       "cumulativeRevenue": 417258,
       "revenuePerActive": 15.51,
-      "gtvKEur": 300.9
+      "gtvKEur": 6
     },
     {
       "cohortMonth": "2019-02",
@@ -46998,7 +46998,7 @@ const CASE_DATA = {
       "revenueEur": 9189,
       "cumulativeRevenue": 426447,
       "revenuePerActive": 23.99,
-      "gtvKEur": 38.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2019-02",
@@ -47009,7 +47009,7 @@ const CASE_DATA = {
       "revenueEur": 9015,
       "cumulativeRevenue": 435462,
       "revenuePerActive": 24.17,
-      "gtvKEur": 7779.2
+      "gtvKEur": 242.2
     },
     {
       "cohortMonth": "2019-02",
@@ -47020,7 +47020,7 @@ const CASE_DATA = {
       "revenueEur": 8975,
       "cumulativeRevenue": 444437,
       "revenuePerActive": 30.22,
-      "gtvKEur": 22902.6
+      "gtvKEur": 636.9
     },
     {
       "cohortMonth": "2019-02",
@@ -47031,7 +47031,7 @@ const CASE_DATA = {
       "revenueEur": 1907,
       "cumulativeRevenue": 446344,
       "revenuePerActive": 0,
-      "gtvKEur": 5801.6
+      "gtvKEur": 158.3
     },
     {
       "cohortMonth": "2019-02",
@@ -47042,7 +47042,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 446344,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47427,7 +47427,7 @@ const CASE_DATA = {
       "revenueEur": 672,
       "cumulativeRevenue": 14421,
       "revenuePerActive": 0.9,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47438,7 +47438,7 @@ const CASE_DATA = {
       "revenueEur": 1218,
       "cumulativeRevenue": 15639,
       "revenuePerActive": 1.69,
-      "gtvKEur": 1194.4
+      "gtvKEur": 28
     },
     {
       "cohortMonth": "2019-01",
@@ -47449,7 +47449,7 @@ const CASE_DATA = {
       "revenueEur": 6304,
       "cumulativeRevenue": 21943,
       "revenuePerActive": 8.89,
-      "gtvKEur": 7979.6
+      "gtvKEur": 172.6
     },
     {
       "cohortMonth": "2019-01",
@@ -47515,7 +47515,7 @@ const CASE_DATA = {
       "revenueEur": 8297,
       "cumulativeRevenue": 82827,
       "revenuePerActive": 13.23,
-      "gtvKEur": 922.6
+      "gtvKEur": 24.6
     },
     {
       "cohortMonth": "2019-01",
@@ -47537,7 +47537,7 @@ const CASE_DATA = {
       "revenueEur": 7914,
       "cumulativeRevenue": 95666,
       "revenuePerActive": 13.02,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47548,7 +47548,7 @@ const CASE_DATA = {
       "revenueEur": 12009,
       "cumulativeRevenue": 107675,
       "revenuePerActive": 19.18,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47570,7 +47570,7 @@ const CASE_DATA = {
       "revenueEur": 6358,
       "cumulativeRevenue": 119938,
       "revenuePerActive": 10.96,
-      "gtvKEur": 750.8
+      "gtvKEur": 30.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47614,7 +47614,7 @@ const CASE_DATA = {
       "revenueEur": 5588,
       "cumulativeRevenue": 163323,
       "revenuePerActive": 10.01,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47625,7 +47625,7 @@ const CASE_DATA = {
       "revenueEur": 6083,
       "cumulativeRevenue": 169406,
       "revenuePerActive": 10.77,
-      "gtvKEur": 824.7
+      "gtvKEur": 24.8
     },
     {
       "cohortMonth": "2019-01",
@@ -47647,7 +47647,7 @@ const CASE_DATA = {
       "revenueEur": 5271,
       "cumulativeRevenue": 181669,
       "revenuePerActive": 9.09,
-      "gtvKEur": 25.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2019-01",
@@ -47658,7 +47658,7 @@ const CASE_DATA = {
       "revenueEur": 5837,
       "cumulativeRevenue": 187506,
       "revenuePerActive": 10.29,
-      "gtvKEur": 611.9
+      "gtvKEur": 10.8
     },
     {
       "cohortMonth": "2019-01",
@@ -47702,7 +47702,7 @@ const CASE_DATA = {
       "revenueEur": 7514,
       "cumulativeRevenue": 223333,
       "revenuePerActive": 13.91,
-      "gtvKEur": 686
+      "gtvKEur": 26.9
     },
     {
       "cohortMonth": "2019-01",
@@ -47724,7 +47724,7 @@ const CASE_DATA = {
       "revenueEur": 9609,
       "cumulativeRevenue": 239758,
       "revenuePerActive": 17.86,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47735,7 +47735,7 @@ const CASE_DATA = {
       "revenueEur": 18758,
       "cumulativeRevenue": 258517,
       "revenuePerActive": 35.26,
-      "gtvKEur": 606.1
+      "gtvKEur": 24.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47757,7 +47757,7 @@ const CASE_DATA = {
       "revenueEur": 6028,
       "cumulativeRevenue": 270469,
       "revenuePerActive": 11.8,
-      "gtvKEur": 4.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2019-01",
@@ -47768,7 +47768,7 @@ const CASE_DATA = {
       "revenueEur": 5833,
       "cumulativeRevenue": 276302,
       "revenuePerActive": 11.57,
-      "gtvKEur": 347
+      "gtvKEur": 4.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47779,7 +47779,7 @@ const CASE_DATA = {
       "revenueEur": 6027,
       "cumulativeRevenue": 282329,
       "revenuePerActive": 12.05,
-      "gtvKEur": 110.5
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47790,7 +47790,7 @@ const CASE_DATA = {
       "revenueEur": 5287,
       "cumulativeRevenue": 287615,
       "revenuePerActive": 10.83,
-      "gtvKEur": 454.8
+      "gtvKEur": 10.6
     },
     {
       "cohortMonth": "2019-01",
@@ -47823,7 +47823,7 @@ const CASE_DATA = {
       "revenueEur": 5296,
       "cumulativeRevenue": 305047,
       "revenuePerActive": 10.99,
-      "gtvKEur": 262.1
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2019-01",
@@ -47845,7 +47845,7 @@ const CASE_DATA = {
       "revenueEur": 5326,
       "cumulativeRevenue": 317040,
       "revenuePerActive": 11.4,
-      "gtvKEur": 315.7
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2019-01",
@@ -47856,7 +47856,7 @@ const CASE_DATA = {
       "revenueEur": 10322,
       "cumulativeRevenue": 327361,
       "revenuePerActive": 22.44,
-      "gtvKEur": 20
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-01",
@@ -47867,7 +47867,7 @@ const CASE_DATA = {
       "revenueEur": 20065,
       "cumulativeRevenue": 347427,
       "revenuePerActive": 43.53,
-      "gtvKEur": 113.1
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47878,7 +47878,7 @@ const CASE_DATA = {
       "revenueEur": 9510,
       "cumulativeRevenue": 356937,
       "revenuePerActive": 21.42,
-      "gtvKEur": 320.5
+      "gtvKEur": 9.9
     },
     {
       "cohortMonth": "2019-01",
@@ -47889,7 +47889,7 @@ const CASE_DATA = {
       "revenueEur": 7731,
       "cumulativeRevenue": 364668,
       "revenuePerActive": 17.33,
-      "gtvKEur": 18
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2019-01",
@@ -47900,7 +47900,7 @@ const CASE_DATA = {
       "revenueEur": 7367,
       "cumulativeRevenue": 372035,
       "revenuePerActive": 16.74,
-      "gtvKEur": 209.1
+      "gtvKEur": 8.9
     },
     {
       "cohortMonth": "2019-01",
@@ -47911,7 +47911,7 @@ const CASE_DATA = {
       "revenueEur": 7604,
       "cumulativeRevenue": 379639,
       "revenuePerActive": 17.32,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47922,7 +47922,7 @@ const CASE_DATA = {
       "revenueEur": 6947,
       "cumulativeRevenue": 386586,
       "revenuePerActive": 15.68,
-      "gtvKEur": 266.4
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2019-01",
@@ -47933,7 +47933,7 @@ const CASE_DATA = {
       "revenueEur": 7592,
       "cumulativeRevenue": 394178,
       "revenuePerActive": 17.37,
-      "gtvKEur": 12.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2019-01",
@@ -47944,7 +47944,7 @@ const CASE_DATA = {
       "revenueEur": 8646,
       "cumulativeRevenue": 402824,
       "revenuePerActive": 19.47,
-      "gtvKEur": 236.1
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2019-01",
@@ -47955,7 +47955,7 @@ const CASE_DATA = {
       "revenueEur": 8381,
       "cumulativeRevenue": 411204,
       "revenuePerActive": 19.09,
-      "gtvKEur": 29.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2019-01",
@@ -47966,7 +47966,7 @@ const CASE_DATA = {
       "revenueEur": 9451,
       "cumulativeRevenue": 420655,
       "revenuePerActive": 21.73,
-      "gtvKEur": 493.1
+      "gtvKEur": 102.2
     },
     {
       "cohortMonth": "2019-01",
@@ -47977,7 +47977,7 @@ const CASE_DATA = {
       "revenueEur": 7396,
       "cumulativeRevenue": 428051,
       "revenuePerActive": 16.85,
-      "gtvKEur": 46.8
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2019-01",
@@ -47988,7 +47988,7 @@ const CASE_DATA = {
       "revenueEur": 10649,
       "cumulativeRevenue": 438700,
       "revenuePerActive": 24.59,
-      "gtvKEur": 9433
+      "gtvKEur": 472.3
     },
     {
       "cohortMonth": "2019-01",
@@ -47999,7 +47999,7 @@ const CASE_DATA = {
       "revenueEur": 19762,
       "cumulativeRevenue": 458462,
       "revenuePerActive": 60.81,
-      "gtvKEur": 26178.2
+      "gtvKEur": 1430.2
     },
     {
       "cohortMonth": "2019-01",
@@ -48010,7 +48010,7 @@ const CASE_DATA = {
       "revenueEur": 2308,
       "cumulativeRevenue": 460770,
       "revenuePerActive": 0,
-      "gtvKEur": 6896.8
+      "gtvKEur": 384.1
     },
     {
       "cohortMonth": "2018-12",
@@ -48274,7 +48274,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 578,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48406,7 +48406,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 1578,
       "revenuePerActive": 0.25,
-      "gtvKEur": 4.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48417,7 +48417,7 @@ const CASE_DATA = {
       "revenueEur": 162,
       "cumulativeRevenue": 1740,
       "revenuePerActive": 0.32,
-      "gtvKEur": 736.1
+      "gtvKEur": 32.9
     },
     {
       "cohortMonth": "2018-12",
@@ -48428,7 +48428,7 @@ const CASE_DATA = {
       "revenueEur": 8468,
       "cumulativeRevenue": 10208,
       "revenuePerActive": 18.09,
-      "gtvKEur": 2302.4
+      "gtvKEur": 133.2
     },
     {
       "cohortMonth": "2018-12",
@@ -48472,7 +48472,7 @@ const CASE_DATA = {
       "revenueEur": 6506,
       "cumulativeRevenue": 41333,
       "revenuePerActive": 14.62,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48494,7 +48494,7 @@ const CASE_DATA = {
       "revenueEur": 6423,
       "cumulativeRevenue": 56135,
       "revenuePerActive": 15.04,
-      "gtvKEur": 611.9
+      "gtvKEur": 46.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48549,7 +48549,7 @@ const CASE_DATA = {
       "revenueEur": 21397,
       "cumulativeRevenue": 108351,
       "revenuePerActive": 50.23,
-      "gtvKEur": 603.9
+      "gtvKEur": 38.5
     },
     {
       "cohortMonth": "2018-12",
@@ -48604,7 +48604,7 @@ const CASE_DATA = {
       "revenueEur": 7618,
       "cumulativeRevenue": 147778,
       "revenuePerActive": 19.63,
-      "gtvKEur": 421.7
+      "gtvKEur": 33.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48637,7 +48637,7 @@ const CASE_DATA = {
       "revenueEur": 10113,
       "cumulativeRevenue": 174647,
       "revenuePerActive": 26.27,
-      "gtvKEur": 464.1
+      "gtvKEur": 28.5
     },
     {
       "cohortMonth": "2018-12",
@@ -48670,7 +48670,7 @@ const CASE_DATA = {
       "revenueEur": 7774,
       "cumulativeRevenue": 199101,
       "revenuePerActive": 20.62,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48681,7 +48681,7 @@ const CASE_DATA = {
       "revenueEur": 16573,
       "cumulativeRevenue": 215674,
       "revenuePerActive": 42.6,
-      "gtvKEur": 456.4
+      "gtvKEur": 21.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48714,7 +48714,7 @@ const CASE_DATA = {
       "revenueEur": 9810,
       "cumulativeRevenue": 241346,
       "revenuePerActive": 25.82,
-      "gtvKEur": 385.8
+      "gtvKEur": 26.7
     },
     {
       "cohortMonth": "2018-12",
@@ -48725,7 +48725,7 @@ const CASE_DATA = {
       "revenueEur": 12561,
       "cumulativeRevenue": 253907,
       "revenuePerActive": 33.95,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48736,7 +48736,7 @@ const CASE_DATA = {
       "revenueEur": 9301,
       "cumulativeRevenue": 263208,
       "revenuePerActive": 26.2,
-      "gtvKEur": 6.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-12",
@@ -48747,7 +48747,7 @@ const CASE_DATA = {
       "revenueEur": 8383,
       "cumulativeRevenue": 271591,
       "revenuePerActive": 24.23,
-      "gtvKEur": 370.9
+      "gtvKEur": 20.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48769,7 +48769,7 @@ const CASE_DATA = {
       "revenueEur": 11431,
       "cumulativeRevenue": 291251,
       "revenuePerActive": 32.29,
-      "gtvKEur": 281.5
+      "gtvKEur": 8.7
     },
     {
       "cohortMonth": "2018-12",
@@ -48802,7 +48802,7 @@ const CASE_DATA = {
       "revenueEur": 10275,
       "cumulativeRevenue": 326008,
       "revenuePerActive": 28.78,
-      "gtvKEur": 293.7
+      "gtvKEur": 6.5
     },
     {
       "cohortMonth": "2018-12",
@@ -48824,7 +48824,7 @@ const CASE_DATA = {
       "revenueEur": 8356,
       "cumulativeRevenue": 354732,
       "revenuePerActive": 25.4,
-      "gtvKEur": 294.6
+      "gtvKEur": 19.4
     },
     {
       "cohortMonth": "2018-12",
@@ -48857,7 +48857,7 @@ const CASE_DATA = {
       "revenueEur": 11905,
       "cumulativeRevenue": 385990,
       "revenuePerActive": 37.09,
-      "gtvKEur": 194.8
+      "gtvKEur": 50.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48879,7 +48879,7 @@ const CASE_DATA = {
       "revenueEur": 8980,
       "cumulativeRevenue": 404544,
       "revenuePerActive": 27.89,
-      "gtvKEur": 160.1
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48901,7 +48901,7 @@ const CASE_DATA = {
       "revenueEur": 11318,
       "cumulativeRevenue": 425231,
       "revenuePerActive": 35.26,
-      "gtvKEur": 209.6
+      "gtvKEur": 17.3
     },
     {
       "cohortMonth": "2018-12",
@@ -48923,7 +48923,7 @@ const CASE_DATA = {
       "revenueEur": 26652,
       "cumulativeRevenue": 462367,
       "revenuePerActive": 85.15,
-      "gtvKEur": 172.9
+      "gtvKEur": 23
     },
     {
       "cohortMonth": "2018-12",
@@ -48934,7 +48934,7 @@ const CASE_DATA = {
       "revenueEur": 8446,
       "cumulativeRevenue": 470813,
       "revenuePerActive": 26.81,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-12",
@@ -48945,7 +48945,7 @@ const CASE_DATA = {
       "revenueEur": 25288,
       "cumulativeRevenue": 496102,
       "revenuePerActive": 82.91,
-      "gtvKEur": 358
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2018-12",
@@ -48956,7 +48956,7 @@ const CASE_DATA = {
       "revenueEur": 8062,
       "cumulativeRevenue": 504164,
       "revenuePerActive": 27.8,
-      "gtvKEur": 33
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-12",
@@ -48967,7 +48967,7 @@ const CASE_DATA = {
       "revenueEur": 9893,
       "cumulativeRevenue": 514057,
       "revenuePerActive": 34,
-      "gtvKEur": 7036.1
+      "gtvKEur": 390.1
     },
     {
       "cohortMonth": "2018-12",
@@ -48978,7 +48978,7 @@ const CASE_DATA = {
       "revenueEur": 10870,
       "cumulativeRevenue": 524927,
       "revenuePerActive": 44.37,
-      "gtvKEur": 19503
+      "gtvKEur": 2033.4
     },
     {
       "cohortMonth": "2018-12",
@@ -48989,7 +48989,7 @@ const CASE_DATA = {
       "revenueEur": 1436,
       "cumulativeRevenue": 526363,
       "revenuePerActive": 0,
-      "gtvKEur": 5173.1
+      "gtvKEur": 354.9
     },
     {
       "cohortMonth": "2018-11",
@@ -49055,7 +49055,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49220,7 +49220,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 454,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49231,7 +49231,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 454,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49242,7 +49242,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 454,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49264,7 +49264,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 454,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49286,7 +49286,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 518,
       "revenuePerActive": 0.1,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49396,7 +49396,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 895,
       "revenuePerActive": 0.32,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49407,7 +49407,7 @@ const CASE_DATA = {
       "revenueEur": 441,
       "cumulativeRevenue": 1337,
       "revenuePerActive": 0.82,
-      "gtvKEur": 574.1
+      "gtvKEur": 17.7
     },
     {
       "cohortMonth": "2018-11",
@@ -49418,7 +49418,7 @@ const CASE_DATA = {
       "revenueEur": 8077,
       "cumulativeRevenue": 9413,
       "revenuePerActive": 15.74,
-      "gtvKEur": 2119.2
+      "gtvKEur": 54.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49484,7 +49484,7 @@ const CASE_DATA = {
       "revenueEur": 5802,
       "cumulativeRevenue": 49270,
       "revenuePerActive": 12.29,
-      "gtvKEur": 589.5
+      "gtvKEur": 14
     },
     {
       "cohortMonth": "2018-11",
@@ -49539,7 +49539,7 @@ const CASE_DATA = {
       "revenueEur": 9440,
       "cumulativeRevenue": 81491,
       "revenuePerActive": 20.98,
-      "gtvKEur": 569.3
+      "gtvKEur": 12.7
     },
     {
       "cohortMonth": "2018-11",
@@ -49583,7 +49583,7 @@ const CASE_DATA = {
       "revenueEur": 7291,
       "cumulativeRevenue": 109230,
       "revenuePerActive": 16.8,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49594,7 +49594,7 @@ const CASE_DATA = {
       "revenueEur": 4602,
       "cumulativeRevenue": 113832,
       "revenuePerActive": 10.46,
-      "gtvKEur": 555.3
+      "gtvKEur": 14.9
     },
     {
       "cohortMonth": "2018-11",
@@ -49627,7 +49627,7 @@ const CASE_DATA = {
       "revenueEur": 5084,
       "cumulativeRevenue": 128916,
       "revenuePerActive": 11.99,
-      "gtvKEur": 499
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2018-11",
@@ -49671,7 +49671,7 @@ const CASE_DATA = {
       "revenueEur": 9670,
       "cumulativeRevenue": 155113,
       "revenuePerActive": 22.33,
-      "gtvKEur": 589.9
+      "gtvKEur": 20.9
     },
     {
       "cohortMonth": "2018-11",
@@ -49704,7 +49704,7 @@ const CASE_DATA = {
       "revenueEur": 5236,
       "cumulativeRevenue": 179467,
       "revenuePerActive": 12.93,
-      "gtvKEur": 276.4
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2018-11",
@@ -49737,7 +49737,7 @@ const CASE_DATA = {
       "revenueEur": 4403,
       "cumulativeRevenue": 195072,
       "revenuePerActive": 11.38,
-      "gtvKEur": 329.9
+      "gtvKEur": 18.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49759,7 +49759,7 @@ const CASE_DATA = {
       "revenueEur": 4135,
       "cumulativeRevenue": 204004,
       "revenuePerActive": 10.82,
-      "gtvKEur": 262.5
+      "gtvKEur": 6.2
     },
     {
       "cohortMonth": "2018-11",
@@ -49792,7 +49792,7 @@ const CASE_DATA = {
       "revenueEur": 4318,
       "cumulativeRevenue": 217992,
       "revenuePerActive": 11.02,
-      "gtvKEur": 255.9
+      "gtvKEur": 17.2
     },
     {
       "cohortMonth": "2018-11",
@@ -49814,7 +49814,7 @@ const CASE_DATA = {
       "revenueEur": 5630,
       "cumulativeRevenue": 232848,
       "revenuePerActive": 15.34,
-      "gtvKEur": 215.7
+      "gtvKEur": 6.9
     },
     {
       "cohortMonth": "2018-11",
@@ -49825,7 +49825,7 @@ const CASE_DATA = {
       "revenueEur": 16233,
       "cumulativeRevenue": 249082,
       "revenuePerActive": 42.72,
-      "gtvKEur": 26.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49836,7 +49836,7 @@ const CASE_DATA = {
       "revenueEur": 5731,
       "cumulativeRevenue": 254812,
       "revenuePerActive": 15.96,
-      "gtvKEur": 27.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49847,7 +49847,7 @@ const CASE_DATA = {
       "revenueEur": 8920,
       "cumulativeRevenue": 263732,
       "revenuePerActive": 24.04,
-      "gtvKEur": 162.8
+      "gtvKEur": 8.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49869,7 +49869,7 @@ const CASE_DATA = {
       "revenueEur": 4891,
       "cumulativeRevenue": 274165,
       "revenuePerActive": 13.29,
-      "gtvKEur": 168.3
+      "gtvKEur": 7.3
     },
     {
       "cohortMonth": "2018-11",
@@ -49891,7 +49891,7 @@ const CASE_DATA = {
       "revenueEur": 6226,
       "cumulativeRevenue": 285614,
       "revenuePerActive": 17.06,
-      "gtvKEur": 155.9
+      "gtvKEur": 4.7
     },
     {
       "cohortMonth": "2018-11",
@@ -49913,7 +49913,7 @@ const CASE_DATA = {
       "revenueEur": 4555,
       "cumulativeRevenue": 296097,
       "revenuePerActive": 12.51,
-      "gtvKEur": 147.9
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2018-11",
@@ -49924,7 +49924,7 @@ const CASE_DATA = {
       "revenueEur": 5496,
       "cumulativeRevenue": 301593,
       "revenuePerActive": 15.23,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49935,7 +49935,7 @@ const CASE_DATA = {
       "revenueEur": 10135,
       "cumulativeRevenue": 311728,
       "revenuePerActive": 28.87,
-      "gtvKEur": 212.6
+      "gtvKEur": 10.7
     },
     {
       "cohortMonth": "2018-11",
@@ -49946,7 +49946,7 @@ const CASE_DATA = {
       "revenueEur": 7401,
       "cumulativeRevenue": 319129,
       "revenuePerActive": 22.16,
-      "gtvKEur": 2.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-11",
@@ -49957,7 +49957,7 @@ const CASE_DATA = {
       "revenueEur": 18067,
       "cumulativeRevenue": 337196,
       "revenuePerActive": 53.45,
-      "gtvKEur": 5824.7
+      "gtvKEur": 307.2
     },
     {
       "cohortMonth": "2018-11",
@@ -49968,7 +49968,7 @@ const CASE_DATA = {
       "revenueEur": 6806,
       "cumulativeRevenue": 344002,
       "revenuePerActive": 26.18,
-      "gtvKEur": 14891.7
+      "gtvKEur": 683.4
     },
     {
       "cohortMonth": "2018-11",
@@ -49979,7 +49979,7 @@ const CASE_DATA = {
       "revenueEur": 1723,
       "cumulativeRevenue": 345725,
       "revenuePerActive": 0,
-      "gtvKEur": 7334.2
+      "gtvKEur": 247.2
     },
     {
       "cohortMonth": "2018-10",
@@ -50320,7 +50320,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 1246,
       "revenuePerActive": 0.3,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50375,7 +50375,7 @@ const CASE_DATA = {
       "revenueEur": 642,
       "cumulativeRevenue": 1911,
       "revenuePerActive": 1.21,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50386,7 +50386,7 @@ const CASE_DATA = {
       "revenueEur": 385,
       "cumulativeRevenue": 2297,
       "revenuePerActive": 0.75,
-      "gtvKEur": 2.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50397,7 +50397,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2297,
       "revenuePerActive": 0,
-      "gtvKEur": 1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50408,7 +50408,7 @@ const CASE_DATA = {
       "revenueEur": 2155,
       "cumulativeRevenue": 4452,
       "revenuePerActive": 4.32,
-      "gtvKEur": 1264.7
+      "gtvKEur": 25
     },
     {
       "cohortMonth": "2018-10",
@@ -50419,7 +50419,7 @@ const CASE_DATA = {
       "revenueEur": 14836,
       "cumulativeRevenue": 19288,
       "revenuePerActive": 30.09,
-      "gtvKEur": 3818
+      "gtvKEur": 142.3
     },
     {
       "cohortMonth": "2018-10",
@@ -50485,7 +50485,7 @@ const CASE_DATA = {
       "revenueEur": 12002,
       "cumulativeRevenue": 91867,
       "revenuePerActive": 25.65,
-      "gtvKEur": 970.3
+      "gtvKEur": 28.5
     },
     {
       "cohortMonth": "2018-10",
@@ -50518,7 +50518,7 @@ const CASE_DATA = {
       "revenueEur": 14802,
       "cumulativeRevenue": 130092,
       "revenuePerActive": 31.83,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50529,7 +50529,7 @@ const CASE_DATA = {
       "revenueEur": 15812,
       "cumulativeRevenue": 145904,
       "revenuePerActive": 34.6,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50540,7 +50540,7 @@ const CASE_DATA = {
       "revenueEur": 16360,
       "cumulativeRevenue": 162264,
       "revenuePerActive": 36.68,
-      "gtvKEur": 1501.7
+      "gtvKEur": 26.3
     },
     {
       "cohortMonth": "2018-10",
@@ -50584,7 +50584,7 @@ const CASE_DATA = {
       "revenueEur": 11907,
       "cumulativeRevenue": 210758,
       "revenuePerActive": 27.69,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50595,7 +50595,7 @@ const CASE_DATA = {
       "revenueEur": 11501,
       "cumulativeRevenue": 222259,
       "revenuePerActive": 27.51,
-      "gtvKEur": 1003.5
+      "gtvKEur": 19.3
     },
     {
       "cohortMonth": "2018-10",
@@ -50628,7 +50628,7 @@ const CASE_DATA = {
       "revenueEur": 11124,
       "cumulativeRevenue": 256610,
       "revenuePerActive": 27.07,
-      "gtvKEur": 807.2
+      "gtvKEur": 16.8
     },
     {
       "cohortMonth": "2018-10",
@@ -50672,7 +50672,7 @@ const CASE_DATA = {
       "revenueEur": 13271,
       "cumulativeRevenue": 308460,
       "revenuePerActive": 33.77,
-      "gtvKEur": 698.5
+      "gtvKEur": 20.8
     },
     {
       "cohortMonth": "2018-10",
@@ -50705,7 +50705,7 @@ const CASE_DATA = {
       "revenueEur": 12054,
       "cumulativeRevenue": 344792,
       "revenuePerActive": 30.59,
-      "gtvKEur": 670.8
+      "gtvKEur": 17.1
     },
     {
       "cohortMonth": "2018-10",
@@ -50738,7 +50738,7 @@ const CASE_DATA = {
       "revenueEur": 11721,
       "cumulativeRevenue": 380780,
       "revenuePerActive": 31.17,
-      "gtvKEur": 565.8
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2018-10",
@@ -50760,7 +50760,7 @@ const CASE_DATA = {
       "revenueEur": 10816,
       "cumulativeRevenue": 402845,
       "revenuePerActive": 28.61,
-      "gtvKEur": 404.8
+      "gtvKEur": 10.4
     },
     {
       "cohortMonth": "2018-10",
@@ -50793,7 +50793,7 @@ const CASE_DATA = {
       "revenueEur": 14340,
       "cumulativeRevenue": 440300,
       "revenuePerActive": 37.84,
-      "gtvKEur": 437.1
+      "gtvKEur": 10.1
     },
     {
       "cohortMonth": "2018-10",
@@ -50815,7 +50815,7 @@ const CASE_DATA = {
       "revenueEur": 13570,
       "cumulativeRevenue": 465935,
       "revenuePerActive": 36.77,
-      "gtvKEur": 280.4
+      "gtvKEur": 6.4
     },
     {
       "cohortMonth": "2018-10",
@@ -50848,7 +50848,7 @@ const CASE_DATA = {
       "revenueEur": 13838,
       "cumulativeRevenue": 503731,
       "revenuePerActive": 39.76,
-      "gtvKEur": 299.9
+      "gtvKEur": 20
     },
     {
       "cohortMonth": "2018-10",
@@ -50859,7 +50859,7 @@ const CASE_DATA = {
       "revenueEur": 12339,
       "cumulativeRevenue": 516070,
       "revenuePerActive": 35.05,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50870,7 +50870,7 @@ const CASE_DATA = {
       "revenueEur": 12139,
       "cumulativeRevenue": 528209,
       "revenuePerActive": 34.39,
-      "gtvKEur": 157.7
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2018-10",
@@ -50892,7 +50892,7 @@ const CASE_DATA = {
       "revenueEur": 11669,
       "cumulativeRevenue": 551824,
       "revenuePerActive": 34.22,
-      "gtvKEur": 303.7
+      "gtvKEur": 8.9
     },
     {
       "cohortMonth": "2018-10",
@@ -50903,7 +50903,7 @@ const CASE_DATA = {
       "revenueEur": 12723,
       "cumulativeRevenue": 564547,
       "revenuePerActive": 38.56,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50914,7 +50914,7 @@ const CASE_DATA = {
       "revenueEur": 8380,
       "cumulativeRevenue": 572928,
       "revenuePerActive": 25.63,
-      "gtvKEur": 156.4
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2018-10",
@@ -50925,7 +50925,7 @@ const CASE_DATA = {
       "revenueEur": 10587,
       "cumulativeRevenue": 583514,
       "revenuePerActive": 31.79,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-10",
@@ -50936,7 +50936,7 @@ const CASE_DATA = {
       "revenueEur": 8186,
       "cumulativeRevenue": 591701,
       "revenuePerActive": 24.96,
-      "gtvKEur": 407.7
+      "gtvKEur": 6.9
     },
     {
       "cohortMonth": "2018-10",
@@ -50947,7 +50947,7 @@ const CASE_DATA = {
       "revenueEur": 9380,
       "cumulativeRevenue": 601081,
       "revenuePerActive": 30.16,
-      "gtvKEur": 18.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-10",
@@ -50958,7 +50958,7 @@ const CASE_DATA = {
       "revenueEur": 8149,
       "cumulativeRevenue": 609230,
       "revenuePerActive": 26.81,
-      "gtvKEur": 9937.2
+      "gtvKEur": 197.6
     },
     {
       "cohortMonth": "2018-10",
@@ -50969,7 +50969,7 @@ const CASE_DATA = {
       "revenueEur": 9110,
       "cumulativeRevenue": 618340,
       "revenuePerActive": 39.61,
-      "gtvKEur": 29999.5
+      "gtvKEur": 503.8
     },
     {
       "cohortMonth": "2018-10",
@@ -50980,7 +50980,7 @@ const CASE_DATA = {
       "revenueEur": 917,
       "cumulativeRevenue": 619257,
       "revenuePerActive": 0,
-      "gtvKEur": 7642.8
+      "gtvKEur": 122.5
     },
     {
       "cohortMonth": "2018-09",
@@ -51145,7 +51145,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 1416,
       "revenuePerActive": 0.15,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-09",
@@ -51222,7 +51222,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 1621,
       "revenuePerActive": 0.1,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-09",
@@ -51420,7 +51420,7 @@ const CASE_DATA = {
       "revenueEur": 186,
       "cumulativeRevenue": 3181,
       "revenuePerActive": 0.38,
-      "gtvKEur": 25138.6
+      "gtvKEur": 259.5
     },
     {
       "cohortMonth": "2018-09",
@@ -51431,7 +51431,7 @@ const CASE_DATA = {
       "revenueEur": 10305,
       "cumulativeRevenue": 13486,
       "revenuePerActive": 20.82,
-      "gtvKEur": 29671.6
+      "gtvKEur": 332.6
     },
     {
       "cohortMonth": "2018-09",
@@ -51497,7 +51497,7 @@ const CASE_DATA = {
       "revenueEur": 6267,
       "cumulativeRevenue": 54414,
       "revenuePerActive": 13.99,
-      "gtvKEur": 12680.8
+      "gtvKEur": 139.2
     },
     {
       "cohortMonth": "2018-09",
@@ -51552,7 +51552,7 @@ const CASE_DATA = {
       "revenueEur": 11603,
       "cumulativeRevenue": 99812,
       "revenuePerActive": 28.16,
-      "gtvKEur": 22836.1
+      "gtvKEur": 242.9
     },
     {
       "cohortMonth": "2018-09",
@@ -51596,7 +51596,7 @@ const CASE_DATA = {
       "revenueEur": 6155,
       "cumulativeRevenue": 129275,
       "revenuePerActive": 15.62,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-09",
@@ -51607,7 +51607,7 @@ const CASE_DATA = {
       "revenueEur": 6100,
       "cumulativeRevenue": 135375,
       "revenuePerActive": 16.31,
-      "gtvKEur": 1292
+      "gtvKEur": 19.5
     },
     {
       "cohortMonth": "2018-09",
@@ -51640,7 +51640,7 @@ const CASE_DATA = {
       "revenueEur": 5412,
       "cumulativeRevenue": 152860,
       "revenuePerActive": 14.55,
-      "gtvKEur": 4364.9
+      "gtvKEur": 45.9
     },
     {
       "cohortMonth": "2018-09",
@@ -51684,7 +51684,7 @@ const CASE_DATA = {
       "revenueEur": 12064,
       "cumulativeRevenue": 190828,
       "revenuePerActive": 32.26,
-      "gtvKEur": 7877.4
+      "gtvKEur": 81.1
     },
     {
       "cohortMonth": "2018-09",
@@ -51717,7 +51717,7 @@ const CASE_DATA = {
       "revenueEur": 5196,
       "cumulativeRevenue": 211401,
       "revenuePerActive": 14.64,
-      "gtvKEur": 2840.6
+      "gtvKEur": 30.2
     },
     {
       "cohortMonth": "2018-09",
@@ -51750,7 +51750,7 @@ const CASE_DATA = {
       "revenueEur": 5756,
       "cumulativeRevenue": 228364,
       "revenuePerActive": 16.03,
-      "gtvKEur": 3592
+      "gtvKEur": 37
     },
     {
       "cohortMonth": "2018-09",
@@ -51772,7 +51772,7 @@ const CASE_DATA = {
       "revenueEur": 6411,
       "cumulativeRevenue": 239854,
       "revenuePerActive": 18.32,
-      "gtvKEur": 314.9
+      "gtvKEur": 6
     },
     {
       "cohortMonth": "2018-09",
@@ -51805,7 +51805,7 @@ const CASE_DATA = {
       "revenueEur": 7980,
       "cumulativeRevenue": 265250,
       "revenuePerActive": 22.48,
-      "gtvKEur": 2350.4
+      "gtvKEur": 28.3
     },
     {
       "cohortMonth": "2018-09",
@@ -51827,7 +51827,7 @@ const CASE_DATA = {
       "revenueEur": 10247,
       "cumulativeRevenue": 286030,
       "revenuePerActive": 30.77,
-      "gtvKEur": 1793.3
+      "gtvKEur": 24.6
     },
     {
       "cohortMonth": "2018-09",
@@ -51860,7 +51860,7 @@ const CASE_DATA = {
       "revenueEur": 6870,
       "cumulativeRevenue": 303881,
       "revenuePerActive": 21.34,
-      "gtvKEur": 599.7
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2018-09",
@@ -51882,7 +51882,7 @@ const CASE_DATA = {
       "revenueEur": 5452,
       "cumulativeRevenue": 315535,
       "revenuePerActive": 16.47,
-      "gtvKEur": 174.3
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2018-09",
@@ -51904,7 +51904,7 @@ const CASE_DATA = {
       "revenueEur": 6511,
       "cumulativeRevenue": 329280,
       "revenuePerActive": 20.03,
-      "gtvKEur": 151.3
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2018-09",
@@ -51926,7 +51926,7 @@ const CASE_DATA = {
       "revenueEur": 9298,
       "cumulativeRevenue": 348337,
       "revenuePerActive": 28.18,
-      "gtvKEur": 1622.2
+      "gtvKEur": 18.2
     },
     {
       "cohortMonth": "2018-09",
@@ -51937,7 +51937,7 @@ const CASE_DATA = {
       "revenueEur": 9201,
       "cumulativeRevenue": 357539,
       "revenuePerActive": 28.75,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-09",
@@ -51948,7 +51948,7 @@ const CASE_DATA = {
       "revenueEur": 12672,
       "cumulativeRevenue": 370211,
       "revenuePerActive": 39.98,
-      "gtvKEur": 2222.4
+      "gtvKEur": 36.3
     },
     {
       "cohortMonth": "2018-09",
@@ -51970,7 +51970,7 @@ const CASE_DATA = {
       "revenueEur": 8200,
       "cumulativeRevenue": 390618,
       "revenuePerActive": 26.8,
-      "gtvKEur": 49158.2
+      "gtvKEur": 636.3
     },
     {
       "cohortMonth": "2018-09",
@@ -51981,7 +51981,7 @@ const CASE_DATA = {
       "revenueEur": 6078,
       "cumulativeRevenue": 396696,
       "revenuePerActive": 24.31,
-      "gtvKEur": 137583.5
+      "gtvKEur": 1706.6
     },
     {
       "cohortMonth": "2018-09",
@@ -51992,7 +51992,7 @@ const CASE_DATA = {
       "revenueEur": 1343,
       "cumulativeRevenue": 398039,
       "revenuePerActive": 0,
-      "gtvKEur": 34372.8
+      "gtvKEur": 431.2
     },
     {
       "cohortMonth": "2018-08",
@@ -52300,7 +52300,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 548,
       "revenuePerActive": 0,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52443,7 +52443,7 @@ const CASE_DATA = {
       "revenueEur": 655,
       "cumulativeRevenue": 6564,
       "revenuePerActive": 1.38,
-      "gtvKEur": 380.4
+      "gtvKEur": 6.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52454,7 +52454,7 @@ const CASE_DATA = {
       "revenueEur": 4250,
       "cumulativeRevenue": 10815,
       "revenuePerActive": 8.82,
-      "gtvKEur": 1858.6
+      "gtvKEur": 96
     },
     {
       "cohortMonth": "2018-08",
@@ -52509,7 +52509,7 @@ const CASE_DATA = {
       "revenueEur": 3629,
       "cumulativeRevenue": 30734,
       "revenuePerActive": 8.17,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52520,7 +52520,7 @@ const CASE_DATA = {
       "revenueEur": 4730,
       "cumulativeRevenue": 35463,
       "revenuePerActive": 10.49,
-      "gtvKEur": 541.7
+      "gtvKEur": 23.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52564,7 +52564,7 @@ const CASE_DATA = {
       "revenueEur": 4123,
       "cumulativeRevenue": 66362,
       "revenuePerActive": 9.35,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52575,7 +52575,7 @@ const CASE_DATA = {
       "revenueEur": 5556,
       "cumulativeRevenue": 71918,
       "revenuePerActive": 13.1,
-      "gtvKEur": 532.6
+      "gtvKEur": 10
     },
     {
       "cohortMonth": "2018-08",
@@ -52619,7 +52619,7 @@ const CASE_DATA = {
       "revenueEur": 2813,
       "cumulativeRevenue": 84841,
       "revenuePerActive": 6.7,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52630,7 +52630,7 @@ const CASE_DATA = {
       "revenueEur": 2821,
       "cumulativeRevenue": 87662,
       "revenuePerActive": 6.86,
-      "gtvKEur": 414.1
+      "gtvKEur": 18.9
     },
     {
       "cohortMonth": "2018-08",
@@ -52641,7 +52641,7 @@ const CASE_DATA = {
       "revenueEur": 2993,
       "cumulativeRevenue": 90655,
       "revenuePerActive": 7.58,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52663,7 +52663,7 @@ const CASE_DATA = {
       "revenueEur": 3579,
       "cumulativeRevenue": 98097,
       "revenuePerActive": 8.79,
-      "gtvKEur": 309.3
+      "gtvKEur": 15.5
     },
     {
       "cohortMonth": "2018-08",
@@ -52707,7 +52707,7 @@ const CASE_DATA = {
       "revenueEur": 3062,
       "cumulativeRevenue": 133286,
       "revenuePerActive": 7.89,
-      "gtvKEur": 445.8
+      "gtvKEur": 124.5
     },
     {
       "cohortMonth": "2018-08",
@@ -52740,7 +52740,7 @@ const CASE_DATA = {
       "revenueEur": 2715,
       "cumulativeRevenue": 143089,
       "revenuePerActive": 7.05,
-      "gtvKEur": 281.1
+      "gtvKEur": 4.6
     },
     {
       "cohortMonth": "2018-08",
@@ -52773,7 +52773,7 @@ const CASE_DATA = {
       "revenueEur": 3234,
       "cumulativeRevenue": 151350,
       "revenuePerActive": 8.67,
-      "gtvKEur": 235.5
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52795,7 +52795,7 @@ const CASE_DATA = {
       "revenueEur": 3301,
       "cumulativeRevenue": 158435,
       "revenuePerActive": 8.92,
-      "gtvKEur": 202.9
+      "gtvKEur": 11.9
     },
     {
       "cohortMonth": "2018-08",
@@ -52828,7 +52828,7 @@ const CASE_DATA = {
       "revenueEur": 3734,
       "cumulativeRevenue": 181700,
       "revenuePerActive": 10.46,
-      "gtvKEur": 205.3
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52850,7 +52850,7 @@ const CASE_DATA = {
       "revenueEur": 2042,
       "cumulativeRevenue": 186073,
       "revenuePerActive": 6.08,
-      "gtvKEur": 223
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2018-08",
@@ -52861,7 +52861,7 @@ const CASE_DATA = {
       "revenueEur": 5616,
       "cumulativeRevenue": 191689,
       "revenuePerActive": 16.37,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-08",
@@ -52883,7 +52883,7 @@ const CASE_DATA = {
       "revenueEur": 3408,
       "cumulativeRevenue": 198425,
       "revenuePerActive": 10.62,
-      "gtvKEur": 181.8
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2018-08",
@@ -52905,7 +52905,7 @@ const CASE_DATA = {
       "revenueEur": 2832,
       "cumulativeRevenue": 205734,
       "revenuePerActive": 8.96,
-      "gtvKEur": 106.7
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52927,7 +52927,7 @@ const CASE_DATA = {
       "revenueEur": 2623,
       "cumulativeRevenue": 212169,
       "revenuePerActive": 8.1,
-      "gtvKEur": 146.4
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2018-08",
@@ -52949,7 +52949,7 @@ const CASE_DATA = {
       "revenueEur": 11576,
       "cumulativeRevenue": 231798,
       "revenuePerActive": 35.84,
-      "gtvKEur": 147.2
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2018-08",
@@ -52960,7 +52960,7 @@ const CASE_DATA = {
       "revenueEur": 3768,
       "cumulativeRevenue": 235566,
       "revenuePerActive": 11.96,
-      "gtvKEur": 33.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-08",
@@ -52971,7 +52971,7 @@ const CASE_DATA = {
       "revenueEur": 2458,
       "cumulativeRevenue": 238024,
       "revenuePerActive": 8.11,
-      "gtvKEur": 223.5
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2018-08",
@@ -52982,7 +52982,7 @@ const CASE_DATA = {
       "revenueEur": 3089,
       "cumulativeRevenue": 241113,
       "revenuePerActive": 9.84,
-      "gtvKEur": 41.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2018-08",
@@ -52993,7 +52993,7 @@ const CASE_DATA = {
       "revenueEur": 5234,
       "cumulativeRevenue": 246347,
       "revenuePerActive": 17.99,
-      "gtvKEur": 4548
+      "gtvKEur": 235.9
     },
     {
       "cohortMonth": "2018-08",
@@ -53004,7 +53004,7 @@ const CASE_DATA = {
       "revenueEur": 3438,
       "cumulativeRevenue": 249785,
       "revenuePerActive": 14.88,
-      "gtvKEur": 13083.7
+      "gtvKEur": 1046.6
     },
     {
       "cohortMonth": "2018-08",
@@ -53015,7 +53015,7 @@ const CASE_DATA = {
       "revenueEur": 1378,
       "cumulativeRevenue": 251163,
       "revenuePerActive": 0,
-      "gtvKEur": 5554.1
+      "gtvKEur": 2014.8
     },
     {
       "cohortMonth": "2018-07",
@@ -53466,7 +53466,7 @@ const CASE_DATA = {
       "revenueEur": 2223,
       "cumulativeRevenue": 4462,
       "revenuePerActive": 4.76,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-07",
@@ -53477,7 +53477,7 @@ const CASE_DATA = {
       "revenueEur": 640,
       "cumulativeRevenue": 5103,
       "revenuePerActive": 1.38,
-      "gtvKEur": 2415.8
+      "gtvKEur": 29.6
     },
     {
       "cohortMonth": "2018-07",
@@ -53488,7 +53488,7 @@ const CASE_DATA = {
       "revenueEur": 6092,
       "cumulativeRevenue": 11195,
       "revenuePerActive": 13.39,
-      "gtvKEur": 9385.5
+      "gtvKEur": 162.9
     },
     {
       "cohortMonth": "2018-07",
@@ -53554,7 +53554,7 @@ const CASE_DATA = {
       "revenueEur": 8250,
       "cumulativeRevenue": 50092,
       "revenuePerActive": 19.14,
-      "gtvKEur": 425.7
+      "gtvKEur": 12.4
     },
     {
       "cohortMonth": "2018-07",
@@ -53609,7 +53609,7 @@ const CASE_DATA = {
       "revenueEur": 5887,
       "cumulativeRevenue": 87227,
       "revenuePerActive": 14.53,
-      "gtvKEur": 476.9
+      "gtvKEur": 15.2
     },
     {
       "cohortMonth": "2018-07",
@@ -53664,7 +53664,7 @@ const CASE_DATA = {
       "revenueEur": 4513,
       "cumulativeRevenue": 115607,
       "revenuePerActive": 11.75,
-      "gtvKEur": 458.1
+      "gtvKEur": 20.9
     },
     {
       "cohortMonth": "2018-07",
@@ -53697,7 +53697,7 @@ const CASE_DATA = {
       "revenueEur": 12410,
       "cumulativeRevenue": 140429,
       "revenuePerActive": 31.34,
-      "gtvKEur": 277.8
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2018-07",
@@ -53741,7 +53741,7 @@ const CASE_DATA = {
       "revenueEur": 4916,
       "cumulativeRevenue": 165108,
       "revenuePerActive": 13.93,
-      "gtvKEur": 269.2
+      "gtvKEur": 9.5
     },
     {
       "cohortMonth": "2018-07",
@@ -53774,7 +53774,7 @@ const CASE_DATA = {
       "revenueEur": 4672,
       "cumulativeRevenue": 182405,
       "revenuePerActive": 14.24,
-      "gtvKEur": 243.4
+      "gtvKEur": 7.7
     },
     {
       "cohortMonth": "2018-07",
@@ -53807,7 +53807,7 @@ const CASE_DATA = {
       "revenueEur": 4896,
       "cumulativeRevenue": 198741,
       "revenuePerActive": 14.66,
-      "gtvKEur": 408.7
+      "gtvKEur": 6.2
     },
     {
       "cohortMonth": "2018-07",
@@ -53829,7 +53829,7 @@ const CASE_DATA = {
       "revenueEur": 12711,
       "cumulativeRevenue": 217014,
       "revenuePerActive": 36.74,
-      "gtvKEur": 208.8
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2018-07",
@@ -53862,7 +53862,7 @@ const CASE_DATA = {
       "revenueEur": 8771,
       "cumulativeRevenue": 239784,
       "revenuePerActive": 27.24,
-      "gtvKEur": 341
+      "gtvKEur": 10.6
     },
     {
       "cohortMonth": "2018-07",
@@ -53884,7 +53884,7 @@ const CASE_DATA = {
       "revenueEur": 5928,
       "cumulativeRevenue": 252431,
       "revenuePerActive": 18.94,
-      "gtvKEur": 163.7
+      "gtvKEur": 6.1
     },
     {
       "cohortMonth": "2018-07",
@@ -53917,7 +53917,7 @@ const CASE_DATA = {
       "revenueEur": 7174,
       "cumulativeRevenue": 272050,
       "revenuePerActive": 22.56,
-      "gtvKEur": 392.1
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2018-07",
@@ -53939,7 +53939,7 @@ const CASE_DATA = {
       "revenueEur": 5867,
       "cumulativeRevenue": 283170,
       "revenuePerActive": 18.99,
-      "gtvKEur": 155.9
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2018-07",
@@ -53950,7 +53950,7 @@ const CASE_DATA = {
       "revenueEur": 6687,
       "cumulativeRevenue": 289857,
       "revenuePerActive": 20.96,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-07",
@@ -53961,7 +53961,7 @@ const CASE_DATA = {
       "revenueEur": 8481,
       "cumulativeRevenue": 298338,
       "revenuePerActive": 27.36,
-      "gtvKEur": 159
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2018-07",
@@ -53972,7 +53972,7 @@ const CASE_DATA = {
       "revenueEur": 6308,
       "cumulativeRevenue": 304646,
       "revenuePerActive": 20.48,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-07",
@@ -53983,7 +53983,7 @@ const CASE_DATA = {
       "revenueEur": 6074,
       "cumulativeRevenue": 310721,
       "revenuePerActive": 19.98,
-      "gtvKEur": 158.6
+      "gtvKEur": 4.5
     },
     {
       "cohortMonth": "2018-07",
@@ -53994,7 +53994,7 @@ const CASE_DATA = {
       "revenueEur": 7082,
       "cumulativeRevenue": 317803,
       "revenuePerActive": 23.93,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-07",
@@ -54005,7 +54005,7 @@ const CASE_DATA = {
       "revenueEur": 4959,
       "cumulativeRevenue": 322763,
       "revenuePerActive": 16.81,
-      "gtvKEur": 284.5
+      "gtvKEur": 8.1
     },
     {
       "cohortMonth": "2018-07",
@@ -54016,7 +54016,7 @@ const CASE_DATA = {
       "revenueEur": 4655,
       "cumulativeRevenue": 327418,
       "revenuePerActive": 16.11,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-07",
@@ -54027,7 +54027,7 @@ const CASE_DATA = {
       "revenueEur": 6049,
       "cumulativeRevenue": 333467,
       "revenuePerActive": 20.57,
-      "gtvKEur": 9101.9
+      "gtvKEur": 175.4
     },
     {
       "cohortMonth": "2018-07",
@@ -54038,7 +54038,7 @@ const CASE_DATA = {
       "revenueEur": 5679,
       "cumulativeRevenue": 339145,
       "revenuePerActive": 27.17,
-      "gtvKEur": 25962.8
+      "gtvKEur": 518.4
     },
     {
       "cohortMonth": "2018-07",
@@ -54049,7 +54049,7 @@ const CASE_DATA = {
       "revenueEur": 945,
       "cumulativeRevenue": 340090,
       "revenuePerActive": 0,
-      "gtvKEur": 9060.9
+      "gtvKEur": 156.3
     },
     {
       "cohortMonth": "2018-06",
@@ -54511,7 +54511,7 @@ const CASE_DATA = {
       "revenueEur": 90,
       "cumulativeRevenue": 4081,
       "revenuePerActive": 0.22,
-      "gtvKEur": 37
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2018-06",
@@ -54522,7 +54522,7 @@ const CASE_DATA = {
       "revenueEur": 861,
       "cumulativeRevenue": 4942,
       "revenuePerActive": 2.27,
-      "gtvKEur": 521.2
+      "gtvKEur": 19.6
     },
     {
       "cohortMonth": "2018-06",
@@ -54533,7 +54533,7 @@ const CASE_DATA = {
       "revenueEur": 4204,
       "cumulativeRevenue": 9146,
       "revenuePerActive": 11.03,
-      "gtvKEur": 2360.5
+      "gtvKEur": 56.1
     },
     {
       "cohortMonth": "2018-06",
@@ -54599,7 +54599,7 @@ const CASE_DATA = {
       "revenueEur": 5532,
       "cumulativeRevenue": 41009,
       "revenuePerActive": 14.41,
-      "gtvKEur": 638.7
+      "gtvKEur": 10.7
     },
     {
       "cohortMonth": "2018-06",
@@ -54654,7 +54654,7 @@ const CASE_DATA = {
       "revenueEur": 4518,
       "cumulativeRevenue": 65000,
       "revenuePerActive": 13.61,
-      "gtvKEur": 739.2
+      "gtvKEur": 17
     },
     {
       "cohortMonth": "2018-06",
@@ -54709,7 +54709,7 @@ const CASE_DATA = {
       "revenueEur": 3837,
       "cumulativeRevenue": 87244,
       "revenuePerActive": 11.09,
-      "gtvKEur": 365.5
+      "gtvKEur": 7
     },
     {
       "cohortMonth": "2018-06",
@@ -54742,7 +54742,7 @@ const CASE_DATA = {
       "revenueEur": 4847,
       "cumulativeRevenue": 107222,
       "revenuePerActive": 13.97,
-      "gtvKEur": 339.8
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2018-06",
@@ -54786,7 +54786,7 @@ const CASE_DATA = {
       "revenueEur": 4351,
       "cumulativeRevenue": 125961,
       "revenuePerActive": 13.81,
-      "gtvKEur": 319.6
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2018-06",
@@ -54819,7 +54819,7 @@ const CASE_DATA = {
       "revenueEur": 3648,
       "cumulativeRevenue": 139178,
       "revenuePerActive": 12.08,
-      "gtvKEur": 323.7
+      "gtvKEur": 3.3
     },
     {
       "cohortMonth": "2018-06",
@@ -54852,7 +54852,7 @@ const CASE_DATA = {
       "revenueEur": 9092,
       "cumulativeRevenue": 155292,
       "revenuePerActive": 29.91,
-      "gtvKEur": 315.9
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2018-06",
@@ -54874,7 +54874,7 @@ const CASE_DATA = {
       "revenueEur": 4295,
       "cumulativeRevenue": 163608,
       "revenuePerActive": 14.71,
-      "gtvKEur": 175.7
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2018-06",
@@ -54907,7 +54907,7 @@ const CASE_DATA = {
       "revenueEur": 5543,
       "cumulativeRevenue": 177498,
       "revenuePerActive": 20.3,
-      "gtvKEur": 254.7
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2018-06",
@@ -54929,7 +54929,7 @@ const CASE_DATA = {
       "revenueEur": 3288,
       "cumulativeRevenue": 184908,
       "revenuePerActive": 12.65,
-      "gtvKEur": 191.4
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2018-06",
@@ -54962,7 +54962,7 @@ const CASE_DATA = {
       "revenueEur": 5860,
       "cumulativeRevenue": 200819,
       "revenuePerActive": 23.92,
-      "gtvKEur": 104
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2018-06",
@@ -54984,7 +54984,7 @@ const CASE_DATA = {
       "revenueEur": 9963,
       "cumulativeRevenue": 215018,
       "revenuePerActive": 38.62,
-      "gtvKEur": 247.5
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2018-06",
@@ -55006,7 +55006,7 @@ const CASE_DATA = {
       "revenueEur": 4344,
       "cumulativeRevenue": 226621,
       "revenuePerActive": 17.1,
-      "gtvKEur": 109
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2018-06",
@@ -55017,7 +55017,7 @@ const CASE_DATA = {
       "revenueEur": 3854,
       "cumulativeRevenue": 230475,
       "revenuePerActive": 16.26,
-      "gtvKEur": 20.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-06",
@@ -55028,7 +55028,7 @@ const CASE_DATA = {
       "revenueEur": 4716,
       "cumulativeRevenue": 235190,
       "revenuePerActive": 19.17,
-      "gtvKEur": 158.6
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2018-06",
@@ -55050,7 +55050,7 @@ const CASE_DATA = {
       "revenueEur": 3954,
       "cumulativeRevenue": 245905,
       "revenuePerActive": 17.27,
-      "gtvKEur": 192.1
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2018-06",
@@ -55061,7 +55061,7 @@ const CASE_DATA = {
       "revenueEur": 3354,
       "cumulativeRevenue": 249259,
       "revenuePerActive": 14.03,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-06",
@@ -55072,7 +55072,7 @@ const CASE_DATA = {
       "revenueEur": 4954,
       "cumulativeRevenue": 254213,
       "revenuePerActive": 21.83,
-      "gtvKEur": 4667.3
+      "gtvKEur": 49.7
     },
     {
       "cohortMonth": "2018-06",
@@ -55083,7 +55083,7 @@ const CASE_DATA = {
       "revenueEur": 4414,
       "cumulativeRevenue": 258628,
       "revenuePerActive": 25.52,
-      "gtvKEur": 13051.5
+      "gtvKEur": 143.4
     },
     {
       "cohortMonth": "2018-06",
@@ -55094,7 +55094,7 @@ const CASE_DATA = {
       "revenueEur": 1820,
       "cumulativeRevenue": 260448,
       "revenuePerActive": 0,
-      "gtvKEur": 3650
+      "gtvKEur": 45.3
     },
     {
       "cohortMonth": "2018-05",
@@ -55171,7 +55171,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 18,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55402,7 +55402,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 159,
       "revenuePerActive": 0,
-      "gtvKEur": 4.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55413,7 +55413,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 159,
       "revenuePerActive": 0,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55435,7 +55435,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 159,
       "revenuePerActive": 0,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55457,7 +55457,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 159,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55468,7 +55468,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 159,
       "revenuePerActive": 0,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55545,7 +55545,7 @@ const CASE_DATA = {
       "revenueEur": 529,
       "cumulativeRevenue": 1003,
       "revenuePerActive": 1.23,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55567,7 +55567,7 @@ const CASE_DATA = {
       "revenueEur": 1203,
       "cumulativeRevenue": 2384,
       "revenuePerActive": 2.83,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55578,7 +55578,7 @@ const CASE_DATA = {
       "revenueEur": 201,
       "cumulativeRevenue": 2585,
       "revenuePerActive": 0.48,
-      "gtvKEur": 570.3
+      "gtvKEur": 11.9
     },
     {
       "cohortMonth": "2018-05",
@@ -55589,7 +55589,7 @@ const CASE_DATA = {
       "revenueEur": 7807,
       "cumulativeRevenue": 10393,
       "revenuePerActive": 19.04,
-      "gtvKEur": 1817
+      "gtvKEur": 80.5
     },
     {
       "cohortMonth": "2018-05",
@@ -55622,7 +55622,7 @@ const CASE_DATA = {
       "revenueEur": 5773,
       "cumulativeRevenue": 31488,
       "revenuePerActive": 14.65,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55655,7 +55655,7 @@ const CASE_DATA = {
       "revenueEur": 6599,
       "cumulativeRevenue": 54648,
       "revenuePerActive": 16.25,
-      "gtvKEur": 655.7
+      "gtvKEur": 16.8
     },
     {
       "cohortMonth": "2018-05",
@@ -55710,7 +55710,7 @@ const CASE_DATA = {
       "revenueEur": 5162,
       "cumulativeRevenue": 89434,
       "revenuePerActive": 14.58,
-      "gtvKEur": 545.3
+      "gtvKEur": 23.6
     },
     {
       "cohortMonth": "2018-05",
@@ -55765,7 +55765,7 @@ const CASE_DATA = {
       "revenueEur": 7845,
       "cumulativeRevenue": 122191,
       "revenuePerActive": 22.04,
-      "gtvKEur": 543.4
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2018-05",
@@ -55776,7 +55776,7 @@ const CASE_DATA = {
       "revenueEur": 6443,
       "cumulativeRevenue": 128634,
       "revenuePerActive": 18,
-      "gtvKEur": 9.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-05",
@@ -55798,7 +55798,7 @@ const CASE_DATA = {
       "revenueEur": 6576,
       "cumulativeRevenue": 141214,
       "revenuePerActive": 18.53,
-      "gtvKEur": 400.1
+      "gtvKEur": 10.6
     },
     {
       "cohortMonth": "2018-05",
@@ -55842,7 +55842,7 @@ const CASE_DATA = {
       "revenueEur": 4939,
       "cumulativeRevenue": 174518,
       "revenuePerActive": 15.06,
-      "gtvKEur": 442.9
+      "gtvKEur": 16.8
     },
     {
       "cohortMonth": "2018-05",
@@ -55864,7 +55864,7 @@ const CASE_DATA = {
       "revenueEur": 6486,
       "cumulativeRevenue": 189679,
       "revenuePerActive": 19.65,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55875,7 +55875,7 @@ const CASE_DATA = {
       "revenueEur": 4634,
       "cumulativeRevenue": 194313,
       "revenuePerActive": 14.3,
-      "gtvKEur": 334.9
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2018-05",
@@ -55908,7 +55908,7 @@ const CASE_DATA = {
       "revenueEur": 4412,
       "cumulativeRevenue": 210235,
       "revenuePerActive": 13.96,
-      "gtvKEur": 186.3
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2018-05",
@@ -55919,7 +55919,7 @@ const CASE_DATA = {
       "revenueEur": 4722,
       "cumulativeRevenue": 214956,
       "revenuePerActive": 14.71,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-05",
@@ -55930,7 +55930,7 @@ const CASE_DATA = {
       "revenueEur": 5905,
       "cumulativeRevenue": 220862,
       "revenuePerActive": 18.51,
-      "gtvKEur": 404.2
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2018-05",
@@ -55963,7 +55963,7 @@ const CASE_DATA = {
       "revenueEur": 5633,
       "cumulativeRevenue": 250353,
       "revenuePerActive": 19.03,
-      "gtvKEur": 206.9
+      "gtvKEur": 7.7
     },
     {
       "cohortMonth": "2018-05",
@@ -55985,7 +55985,7 @@ const CASE_DATA = {
       "revenueEur": 6584,
       "cumulativeRevenue": 261572,
       "revenuePerActive": 24.85,
-      "gtvKEur": 257.8
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2018-05",
@@ -56018,7 +56018,7 @@ const CASE_DATA = {
       "revenueEur": 5377,
       "cumulativeRevenue": 280848,
       "revenuePerActive": 18.23,
-      "gtvKEur": 126.5
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2018-05",
@@ -56040,7 +56040,7 @@ const CASE_DATA = {
       "revenueEur": 5556,
       "cumulativeRevenue": 294530,
       "revenuePerActive": 18.71,
-      "gtvKEur": 141.8
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2018-05",
@@ -56062,7 +56062,7 @@ const CASE_DATA = {
       "revenueEur": 6670,
       "cumulativeRevenue": 306971,
       "revenuePerActive": 23.91,
-      "gtvKEur": 210.5
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2018-05",
@@ -56084,7 +56084,7 @@ const CASE_DATA = {
       "revenueEur": 19866,
       "cumulativeRevenue": 337302,
       "revenuePerActive": 71.72,
-      "gtvKEur": 157.8
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2018-05",
@@ -56095,7 +56095,7 @@ const CASE_DATA = {
       "revenueEur": 5358,
       "cumulativeRevenue": 342660,
       "revenuePerActive": 19.77,
-      "gtvKEur": 9.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-05",
@@ -56106,7 +56106,7 @@ const CASE_DATA = {
       "revenueEur": 5005,
       "cumulativeRevenue": 347665,
       "revenuePerActive": 19.1,
-      "gtvKEur": 207.8
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2018-05",
@@ -56117,7 +56117,7 @@ const CASE_DATA = {
       "revenueEur": 5572,
       "cumulativeRevenue": 353236,
       "revenuePerActive": 22.2,
-      "gtvKEur": 14.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-05",
@@ -56128,7 +56128,7 @@ const CASE_DATA = {
       "revenueEur": 7354,
       "cumulativeRevenue": 360590,
       "revenuePerActive": 30.64,
-      "gtvKEur": 7106.4
+      "gtvKEur": 142
     },
     {
       "cohortMonth": "2018-05",
@@ -56139,7 +56139,7 @@ const CASE_DATA = {
       "revenueEur": 7682,
       "cumulativeRevenue": 368272,
       "revenuePerActive": 41.75,
-      "gtvKEur": 19316.9
+      "gtvKEur": 407.6
     },
     {
       "cohortMonth": "2018-05",
@@ -56150,7 +56150,7 @@ const CASE_DATA = {
       "revenueEur": 1954,
       "cumulativeRevenue": 370226,
       "revenuePerActive": 0,
-      "gtvKEur": 5034.6
+      "gtvKEur": 119.2
     },
     {
       "cohortMonth": "2018-04",
@@ -56524,7 +56524,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 321,
       "revenuePerActive": 0.31,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -56612,7 +56612,7 @@ const CASE_DATA = {
       "revenueEur": 173,
       "cumulativeRevenue": 780,
       "revenuePerActive": 0.44,
-      "gtvKEur": 2.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -56623,7 +56623,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 780,
       "revenuePerActive": 0,
-      "gtvKEur": 4.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -56634,7 +56634,7 @@ const CASE_DATA = {
       "revenueEur": 556,
       "cumulativeRevenue": 1336,
       "revenuePerActive": 1.43,
-      "gtvKEur": 7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-04",
@@ -56645,7 +56645,7 @@ const CASE_DATA = {
       "revenueEur": 784,
       "cumulativeRevenue": 2120,
       "revenuePerActive": 2.08,
-      "gtvKEur": 425.3
+      "gtvKEur": 6.1
     },
     {
       "cohortMonth": "2018-04",
@@ -56656,7 +56656,7 @@ const CASE_DATA = {
       "revenueEur": 5363,
       "cumulativeRevenue": 7483,
       "revenuePerActive": 14.3,
-      "gtvKEur": 1518.2
+      "gtvKEur": 34.6
     },
     {
       "cohortMonth": "2018-04",
@@ -56711,7 +56711,7 @@ const CASE_DATA = {
       "revenueEur": 6312,
       "cumulativeRevenue": 43516,
       "revenuePerActive": 17.44,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -56722,7 +56722,7 @@ const CASE_DATA = {
       "revenueEur": 4515,
       "cumulativeRevenue": 48030,
       "revenuePerActive": 12.54,
-      "gtvKEur": 508.4
+      "gtvKEur": 15.4
     },
     {
       "cohortMonth": "2018-04",
@@ -56777,7 +56777,7 @@ const CASE_DATA = {
       "revenueEur": 4199,
       "cumulativeRevenue": 73285,
       "revenuePerActive": 13.08,
-      "gtvKEur": 435.8
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2018-04",
@@ -56832,7 +56832,7 @@ const CASE_DATA = {
       "revenueEur": 8613,
       "cumulativeRevenue": 109659,
       "revenuePerActive": 26.67,
-      "gtvKEur": 396.2
+      "gtvKEur": 9.3
     },
     {
       "cohortMonth": "2018-04",
@@ -56865,7 +56865,7 @@ const CASE_DATA = {
       "revenueEur": 6007,
       "cumulativeRevenue": 128521,
       "revenuePerActive": 19.13,
-      "gtvKEur": 397.8
+      "gtvKEur": 6.1
     },
     {
       "cohortMonth": "2018-04",
@@ -56909,7 +56909,7 @@ const CASE_DATA = {
       "revenueEur": 3648,
       "cumulativeRevenue": 148848,
       "revenuePerActive": 13.08,
-      "gtvKEur": 341.2
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2018-04",
@@ -56942,7 +56942,7 @@ const CASE_DATA = {
       "revenueEur": 4432,
       "cumulativeRevenue": 161744,
       "revenuePerActive": 15.44,
-      "gtvKEur": 330.5
+      "gtvKEur": 7.3
     },
     {
       "cohortMonth": "2018-04",
@@ -56964,7 +56964,7 @@ const CASE_DATA = {
       "revenueEur": 7871,
       "cumulativeRevenue": 179740,
       "revenuePerActive": 26.68,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -56975,7 +56975,7 @@ const CASE_DATA = {
       "revenueEur": 6395,
       "cumulativeRevenue": 186136,
       "revenuePerActive": 21.46,
-      "gtvKEur": 256.1
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2018-04",
@@ -56997,7 +56997,7 @@ const CASE_DATA = {
       "revenueEur": 5157,
       "cumulativeRevenue": 195729,
       "revenuePerActive": 17.54,
-      "gtvKEur": 249.3
+      "gtvKEur": 7.1
     },
     {
       "cohortMonth": "2018-04",
@@ -57008,7 +57008,7 @@ const CASE_DATA = {
       "revenueEur": 4026,
       "cumulativeRevenue": 199755,
       "revenuePerActive": 14.33,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-04",
@@ -57030,7 +57030,7 @@ const CASE_DATA = {
       "revenueEur": 4801,
       "cumulativeRevenue": 208077,
       "revenuePerActive": 17.27,
-      "gtvKEur": 195.8
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2018-04",
@@ -57052,7 +57052,7 @@ const CASE_DATA = {
       "revenueEur": 4399,
       "cumulativeRevenue": 216097,
       "revenuePerActive": 16.54,
-      "gtvKEur": 246.6
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2018-04",
@@ -57085,7 +57085,7 @@ const CASE_DATA = {
       "revenueEur": 9867,
       "cumulativeRevenue": 236229,
       "revenuePerActive": 36.82,
-      "gtvKEur": 108.4
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2018-04",
@@ -57107,7 +57107,7 @@ const CASE_DATA = {
       "revenueEur": 4887,
       "cumulativeRevenue": 249694,
       "revenuePerActive": 18.03,
-      "gtvKEur": 112.4
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2018-04",
@@ -57129,7 +57129,7 @@ const CASE_DATA = {
       "revenueEur": 3844,
       "cumulativeRevenue": 259169,
       "revenuePerActive": 15.37,
-      "gtvKEur": 130.4
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2018-04",
@@ -57151,7 +57151,7 @@ const CASE_DATA = {
       "revenueEur": 4517,
       "cumulativeRevenue": 268208,
       "revenuePerActive": 18.07,
-      "gtvKEur": 129.6
+      "gtvKEur": 5.2
     },
     {
       "cohortMonth": "2018-04",
@@ -57173,7 +57173,7 @@ const CASE_DATA = {
       "revenueEur": 4535,
       "cumulativeRevenue": 277955,
       "revenuePerActive": 18.21,
-      "gtvKEur": 147.2
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2018-04",
@@ -57184,7 +57184,7 @@ const CASE_DATA = {
       "revenueEur": 4346,
       "cumulativeRevenue": 282302,
       "revenuePerActive": 17.74,
-      "gtvKEur": 13.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-04",
@@ -57195,7 +57195,7 @@ const CASE_DATA = {
       "revenueEur": 4759,
       "cumulativeRevenue": 287060,
       "revenuePerActive": 20.16,
-      "gtvKEur": 5884
+      "gtvKEur": 200.9
     },
     {
       "cohortMonth": "2018-04",
@@ -57206,7 +57206,7 @@ const CASE_DATA = {
       "revenueEur": 6305,
       "cumulativeRevenue": 293365,
       "revenuePerActive": 33.36,
-      "gtvKEur": 16396.9
+      "gtvKEur": 499.6
     },
     {
       "cohortMonth": "2018-04",
@@ -57217,7 +57217,7 @@ const CASE_DATA = {
       "revenueEur": 711,
       "cumulativeRevenue": 294076,
       "revenuePerActive": 0,
-      "gtvKEur": 4475.8
+      "gtvKEur": 136.5
     },
     {
       "cohortMonth": "2018-03",
@@ -57602,7 +57602,7 @@ const CASE_DATA = {
       "revenueEur": 128,
       "cumulativeRevenue": 5842,
       "revenuePerActive": 0.31,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-03",
@@ -57723,7 +57723,7 @@ const CASE_DATA = {
       "revenueEur": 223,
       "cumulativeRevenue": 7792,
       "revenuePerActive": 0.58,
-      "gtvKEur": 454.4
+      "gtvKEur": 21.4
     },
     {
       "cohortMonth": "2018-03",
@@ -57734,7 +57734,7 @@ const CASE_DATA = {
       "revenueEur": 3205,
       "cumulativeRevenue": 10997,
       "revenuePerActive": 8.48,
-      "gtvKEur": 1713
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2018-03",
@@ -57800,7 +57800,7 @@ const CASE_DATA = {
       "revenueEur": 4865,
       "cumulativeRevenue": 38517,
       "revenuePerActive": 13.51,
-      "gtvKEur": 474.8
+      "gtvKEur": 8.6
     },
     {
       "cohortMonth": "2018-03",
@@ -57822,7 +57822,7 @@ const CASE_DATA = {
       "revenueEur": 5723,
       "cumulativeRevenue": 49899,
       "revenuePerActive": 16.3,
-      "gtvKEur": 2.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-03",
@@ -57855,7 +57855,7 @@ const CASE_DATA = {
       "revenueEur": 5159,
       "cumulativeRevenue": 63702,
       "revenuePerActive": 15.59,
-      "gtvKEur": 441.5
+      "gtvKEur": 5.2
     },
     {
       "cohortMonth": "2018-03",
@@ -57877,7 +57877,7 @@ const CASE_DATA = {
       "revenueEur": 4605,
       "cumulativeRevenue": 71836,
       "revenuePerActive": 14.62,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-03",
@@ -57888,7 +57888,7 @@ const CASE_DATA = {
       "revenueEur": 5590,
       "cumulativeRevenue": 77426,
       "revenuePerActive": 17.47,
-      "gtvKEur": 15.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-03",
@@ -57899,7 +57899,7 @@ const CASE_DATA = {
       "revenueEur": 3304,
       "cumulativeRevenue": 80730,
       "revenuePerActive": 10.17,
-      "gtvKEur": 8.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-03",
@@ -57910,7 +57910,7 @@ const CASE_DATA = {
       "revenueEur": 4614,
       "cumulativeRevenue": 85344,
       "revenuePerActive": 14.42,
-      "gtvKEur": 266
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2018-03",
@@ -57943,7 +57943,7 @@ const CASE_DATA = {
       "revenueEur": 4786,
       "cumulativeRevenue": 99008,
       "revenuePerActive": 14.55,
-      "gtvKEur": 214.3
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2018-03",
@@ -57987,7 +57987,7 @@ const CASE_DATA = {
       "revenueEur": 2792,
       "cumulativeRevenue": 114989,
       "revenuePerActive": 9.18,
-      "gtvKEur": 16709.5
+      "gtvKEur": 175.6
     },
     {
       "cohortMonth": "2018-03",
@@ -58020,7 +58020,7 @@ const CASE_DATA = {
       "revenueEur": 5108,
       "cumulativeRevenue": 125688,
       "revenuePerActive": 16.91,
-      "gtvKEur": 202.2
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2018-03",
@@ -58053,7 +58053,7 @@ const CASE_DATA = {
       "revenueEur": 3436,
       "cumulativeRevenue": 135669,
       "revenuePerActive": 11.57,
-      "gtvKEur": 224.1
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2018-03",
@@ -58075,7 +58075,7 @@ const CASE_DATA = {
       "revenueEur": 3863,
       "cumulativeRevenue": 141648,
       "revenuePerActive": 13.75,
-      "gtvKEur": 333
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2018-03",
@@ -58108,7 +58108,7 @@ const CASE_DATA = {
       "revenueEur": 2450,
       "cumulativeRevenue": 151260,
       "revenuePerActive": 8.94,
-      "gtvKEur": 197.9
+      "gtvKEur": 16.1
     },
     {
       "cohortMonth": "2018-03",
@@ -58130,7 +58130,7 @@ const CASE_DATA = {
       "revenueEur": 1661,
       "cumulativeRevenue": 155198,
       "revenuePerActive": 6.04,
-      "gtvKEur": 144.1
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2018-03",
@@ -58163,7 +58163,7 @@ const CASE_DATA = {
       "revenueEur": 2283,
       "cumulativeRevenue": 164700,
       "revenuePerActive": 8.78,
-      "gtvKEur": 145.6
+      "gtvKEur": 9.4
     },
     {
       "cohortMonth": "2018-03",
@@ -58185,7 +58185,7 @@ const CASE_DATA = {
       "revenueEur": 2452,
       "cumulativeRevenue": 171286,
       "revenuePerActive": 9.18,
-      "gtvKEur": 115.5
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2018-03",
@@ -58207,7 +58207,7 @@ const CASE_DATA = {
       "revenueEur": 4082,
       "cumulativeRevenue": 178212,
       "revenuePerActive": 15.94,
-      "gtvKEur": 105.7
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2018-03",
@@ -58229,7 +58229,7 @@ const CASE_DATA = {
       "revenueEur": 4101,
       "cumulativeRevenue": 184699,
       "revenuePerActive": 16.34,
-      "gtvKEur": 101.7
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2018-03",
@@ -58251,7 +58251,7 @@ const CASE_DATA = {
       "revenueEur": 3092,
       "cumulativeRevenue": 190594,
       "revenuePerActive": 12.47,
-      "gtvKEur": 122.6
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2018-03",
@@ -58262,7 +58262,7 @@ const CASE_DATA = {
       "revenueEur": 2895,
       "cumulativeRevenue": 193489,
       "revenuePerActive": 12.22,
-      "gtvKEur": 17.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-03",
@@ -58273,7 +58273,7 @@ const CASE_DATA = {
       "revenueEur": 3240,
       "cumulativeRevenue": 196728,
       "revenuePerActive": 13.33,
-      "gtvKEur": 3702.5
+      "gtvKEur": 115.9
     },
     {
       "cohortMonth": "2018-03",
@@ -58284,7 +58284,7 @@ const CASE_DATA = {
       "revenueEur": 5328,
       "cumulativeRevenue": 202057,
       "revenuePerActive": 28.04,
-      "gtvKEur": 10443.5
+      "gtvKEur": 387.9
     },
     {
       "cohortMonth": "2018-03",
@@ -58295,7 +58295,7 @@ const CASE_DATA = {
       "revenueEur": 920,
       "cumulativeRevenue": 202977,
       "revenuePerActive": 0,
-      "gtvKEur": 2817.6
+      "gtvKEur": 106.2
     },
     {
       "cohortMonth": "2018-02",
@@ -58702,7 +58702,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 203,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -58713,7 +58713,7 @@ const CASE_DATA = {
       "revenueEur": 4265,
       "cumulativeRevenue": 4468,
       "revenuePerActive": 12.77,
-      "gtvKEur": 1.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -58724,7 +58724,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4468,
       "revenuePerActive": 0,
-      "gtvKEur": 1.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -58735,7 +58735,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4468,
       "revenuePerActive": 0,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -58746,7 +58746,7 @@ const CASE_DATA = {
       "revenueEur": 18,
       "cumulativeRevenue": 4486,
       "revenuePerActive": 0.06,
-      "gtvKEur": 6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -58757,7 +58757,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4486,
       "revenuePerActive": 0,
-      "gtvKEur": 8.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -58768,7 +58768,7 @@ const CASE_DATA = {
       "revenueEur": 49,
       "cumulativeRevenue": 4536,
       "revenuePerActive": 0.17,
-      "gtvKEur": 13.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -58779,7 +58779,7 @@ const CASE_DATA = {
       "revenueEur": 357,
       "cumulativeRevenue": 4893,
       "revenuePerActive": 1.17,
-      "gtvKEur": 14.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -58790,7 +58790,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 4893,
       "revenuePerActive": 0,
-      "gtvKEur": 15.5
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-02",
@@ -58801,7 +58801,7 @@ const CASE_DATA = {
       "revenueEur": 34,
       "cumulativeRevenue": 4927,
       "revenuePerActive": 0.12,
-      "gtvKEur": 16.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-02",
@@ -58812,7 +58812,7 @@ const CASE_DATA = {
       "revenueEur": 859,
       "cumulativeRevenue": 5786,
       "revenuePerActive": 2.89,
-      "gtvKEur": 347.7
+      "gtvKEur": 4.4
     },
     {
       "cohortMonth": "2018-02",
@@ -58823,7 +58823,7 @@ const CASE_DATA = {
       "revenueEur": 3609,
       "cumulativeRevenue": 9394,
       "revenuePerActive": 12.49,
-      "gtvKEur": 977.2
+      "gtvKEur": 45.9
     },
     {
       "cohortMonth": "2018-02",
@@ -58889,7 +58889,7 @@ const CASE_DATA = {
       "revenueEur": 2758,
       "cumulativeRevenue": 38194,
       "revenuePerActive": 9.82,
-      "gtvKEur": 298.8
+      "gtvKEur": 10
     },
     {
       "cohortMonth": "2018-02",
@@ -58944,7 +58944,7 @@ const CASE_DATA = {
       "revenueEur": 2550,
       "cumulativeRevenue": 53178,
       "revenuePerActive": 9.77,
-      "gtvKEur": 518.4
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2018-02",
@@ -58999,7 +58999,7 @@ const CASE_DATA = {
       "revenueEur": 3285,
       "cumulativeRevenue": 80611,
       "revenuePerActive": 13.19,
-      "gtvKEur": 210.2
+      "gtvKEur": 10.9
     },
     {
       "cohortMonth": "2018-02",
@@ -59032,7 +59032,7 @@ const CASE_DATA = {
       "revenueEur": 2098,
       "cumulativeRevenue": 88616,
       "revenuePerActive": 8.89,
-      "gtvKEur": 937
+      "gtvKEur": 12.7
     },
     {
       "cohortMonth": "2018-02",
@@ -59076,7 +59076,7 @@ const CASE_DATA = {
       "revenueEur": 2011,
       "cumulativeRevenue": 98026,
       "revenuePerActive": 8.9,
-      "gtvKEur": 162.4
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2018-02",
@@ -59109,7 +59109,7 @@ const CASE_DATA = {
       "revenueEur": 7632,
       "cumulativeRevenue": 113029,
       "revenuePerActive": 31.54,
-      "gtvKEur": 178.3
+      "gtvKEur": 4.4
     },
     {
       "cohortMonth": "2018-02",
@@ -59120,7 +59120,7 @@ const CASE_DATA = {
       "revenueEur": 6070,
       "cumulativeRevenue": 119099,
       "revenuePerActive": 25.4,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -59142,7 +59142,7 @@ const CASE_DATA = {
       "revenueEur": 3665,
       "cumulativeRevenue": 126367,
       "revenuePerActive": 16.14,
-      "gtvKEur": 210.4
+      "gtvKEur": 4.7
     },
     {
       "cohortMonth": "2018-02",
@@ -59164,7 +59164,7 @@ const CASE_DATA = {
       "revenueEur": 2924,
       "cumulativeRevenue": 132083,
       "revenuePerActive": 13.17,
-      "gtvKEur": 154.9
+      "gtvKEur": 10.6
     },
     {
       "cohortMonth": "2018-02",
@@ -59175,7 +59175,7 @@ const CASE_DATA = {
       "revenueEur": 2754,
       "cumulativeRevenue": 134837,
       "revenuePerActive": 12.18,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -59186,7 +59186,7 @@ const CASE_DATA = {
       "revenueEur": 2611,
       "cumulativeRevenue": 137448,
       "revenuePerActive": 12.09,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -59197,7 +59197,7 @@ const CASE_DATA = {
       "revenueEur": 3748,
       "cumulativeRevenue": 141196,
       "revenuePerActive": 17.12,
-      "gtvKEur": 205
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2018-02",
@@ -59208,7 +59208,7 @@ const CASE_DATA = {
       "revenueEur": 2598,
       "cumulativeRevenue": 143795,
       "revenuePerActive": 12.37,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -59219,7 +59219,7 @@ const CASE_DATA = {
       "revenueEur": 4235,
       "cumulativeRevenue": 148030,
       "revenuePerActive": 19.98,
-      "gtvKEur": 149
+      "gtvKEur": 6.7
     },
     {
       "cohortMonth": "2018-02",
@@ -59230,7 +59230,7 @@ const CASE_DATA = {
       "revenueEur": 5115,
       "cumulativeRevenue": 153145,
       "revenuePerActive": 24.83,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-02",
@@ -59241,7 +59241,7 @@ const CASE_DATA = {
       "revenueEur": 8400,
       "cumulativeRevenue": 161544,
       "revenuePerActive": 40.58,
-      "gtvKEur": 5.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -59252,7 +59252,7 @@ const CASE_DATA = {
       "revenueEur": 6317,
       "cumulativeRevenue": 167862,
       "revenuePerActive": 29.38,
-      "gtvKEur": 137.2
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2018-02",
@@ -59263,7 +59263,7 @@ const CASE_DATA = {
       "revenueEur": 4093,
       "cumulativeRevenue": 171955,
       "revenuePerActive": 19.4,
-      "gtvKEur": 16.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-02",
@@ -59274,7 +59274,7 @@ const CASE_DATA = {
       "revenueEur": 4764,
       "cumulativeRevenue": 176719,
       "revenuePerActive": 22.9,
-      "gtvKEur": 185.7
+      "gtvKEur": 8.8
     },
     {
       "cohortMonth": "2018-02",
@@ -59285,7 +59285,7 @@ const CASE_DATA = {
       "revenueEur": 3199,
       "cumulativeRevenue": 179918,
       "revenuePerActive": 15.38,
-      "gtvKEur": 10.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -59296,7 +59296,7 @@ const CASE_DATA = {
       "revenueEur": 2881,
       "cumulativeRevenue": 182798,
       "revenuePerActive": 13.59,
-      "gtvKEur": 161.3
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2018-02",
@@ -59307,7 +59307,7 @@ const CASE_DATA = {
       "revenueEur": 2908,
       "cumulativeRevenue": 185707,
       "revenuePerActive": 13.85,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2018-02",
@@ -59318,7 +59318,7 @@ const CASE_DATA = {
       "revenueEur": 4839,
       "cumulativeRevenue": 190545,
       "revenuePerActive": 22.4,
-      "gtvKEur": 126.2
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2018-02",
@@ -59340,7 +59340,7 @@ const CASE_DATA = {
       "revenueEur": 2911,
       "cumulativeRevenue": 196393,
       "revenuePerActive": 14.85,
-      "gtvKEur": 89.6
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2018-02",
@@ -59351,7 +59351,7 @@ const CASE_DATA = {
       "revenueEur": 4375,
       "cumulativeRevenue": 200768,
       "revenuePerActive": 23.15,
-      "gtvKEur": 36.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2018-02",
@@ -59362,7 +59362,7 @@ const CASE_DATA = {
       "revenueEur": 6112,
       "cumulativeRevenue": 206880,
       "revenuePerActive": 31.18,
-      "gtvKEur": 3416.8
+      "gtvKEur": 68.9
     },
     {
       "cohortMonth": "2018-02",
@@ -59373,7 +59373,7 @@ const CASE_DATA = {
       "revenueEur": 8784,
       "cumulativeRevenue": 215664,
       "revenuePerActive": 59.35,
-      "gtvKEur": 9980.1
+      "gtvKEur": 209.3
     },
     {
       "cohortMonth": "2018-02",
@@ -59384,7 +59384,7 @@ const CASE_DATA = {
       "revenueEur": 1086,
       "cumulativeRevenue": 216751,
       "revenuePerActive": 0,
-      "gtvKEur": 2851.2
+      "gtvKEur": 63
     },
     {
       "cohortMonth": "2018-01",
@@ -59912,7 +59912,7 @@ const CASE_DATA = {
       "revenueEur": 430,
       "cumulativeRevenue": 1188,
       "revenuePerActive": 1.19,
-      "gtvKEur": 684.6
+      "gtvKEur": 10.3
     },
     {
       "cohortMonth": "2018-01",
@@ -59923,7 +59923,7 @@ const CASE_DATA = {
       "revenueEur": 4478,
       "cumulativeRevenue": 5666,
       "revenuePerActive": 13.13,
-      "gtvKEur": 2591.7
+      "gtvKEur": 42.4
     },
     {
       "cohortMonth": "2018-01",
@@ -59978,7 +59978,7 @@ const CASE_DATA = {
       "revenueEur": 5336,
       "cumulativeRevenue": 35246,
       "revenuePerActive": 16.52,
-      "gtvKEur": 2.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-01",
@@ -59989,7 +59989,7 @@ const CASE_DATA = {
       "revenueEur": 6269,
       "cumulativeRevenue": 41515,
       "revenuePerActive": 19.23,
-      "gtvKEur": 907.3
+      "gtvKEur": 20.5
     },
     {
       "cohortMonth": "2018-01",
@@ -60044,7 +60044,7 @@ const CASE_DATA = {
       "revenueEur": 4705,
       "cumulativeRevenue": 66562,
       "revenuePerActive": 15.48,
-      "gtvKEur": 376.2
+      "gtvKEur": 14.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60088,7 +60088,7 @@ const CASE_DATA = {
       "revenueEur": 6419,
       "cumulativeRevenue": 97392,
       "revenuePerActive": 21.69,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-01",
@@ -60099,7 +60099,7 @@ const CASE_DATA = {
       "revenueEur": 4811,
       "cumulativeRevenue": 102203,
       "revenuePerActive": 16.09,
-      "gtvKEur": 315.6
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2018-01",
@@ -60132,7 +60132,7 @@ const CASE_DATA = {
       "revenueEur": 5505,
       "cumulativeRevenue": 119591,
       "revenuePerActive": 19.66,
-      "gtvKEur": 290.3
+      "gtvKEur": 16.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60176,7 +60176,7 @@ const CASE_DATA = {
       "revenueEur": 4759,
       "cumulativeRevenue": 141027,
       "revenuePerActive": 16.93,
-      "gtvKEur": 291
+      "gtvKEur": 11.8
     },
     {
       "cohortMonth": "2018-01",
@@ -60198,7 +60198,7 @@ const CASE_DATA = {
       "revenueEur": 12241,
       "cumulativeRevenue": 158838,
       "revenuePerActive": 46.9,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-01",
@@ -60209,7 +60209,7 @@ const CASE_DATA = {
       "revenueEur": 14685,
       "cumulativeRevenue": 173522,
       "revenuePerActive": 55.21,
-      "gtvKEur": 298.7
+      "gtvKEur": 13.9
     },
     {
       "cohortMonth": "2018-01",
@@ -60242,7 +60242,7 @@ const CASE_DATA = {
       "revenueEur": 4847,
       "cumulativeRevenue": 188525,
       "revenuePerActive": 18.57,
-      "gtvKEur": 254.4
+      "gtvKEur": 12.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60264,7 +60264,7 @@ const CASE_DATA = {
       "revenueEur": 4275,
       "cumulativeRevenue": 198171,
       "revenuePerActive": 16.51,
-      "gtvKEur": 186.6
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2018-01",
@@ -60297,7 +60297,7 @@ const CASE_DATA = {
       "revenueEur": 4092,
       "cumulativeRevenue": 211510,
       "revenuePerActive": 16.63,
-      "gtvKEur": 218.7
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2018-01",
@@ -60319,7 +60319,7 @@ const CASE_DATA = {
       "revenueEur": 4458,
       "cumulativeRevenue": 220059,
       "revenuePerActive": 18.42,
-      "gtvKEur": 58.5
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2018-01",
@@ -60341,7 +60341,7 @@ const CASE_DATA = {
       "revenueEur": 4098,
       "cumulativeRevenue": 228389,
       "revenuePerActive": 17.37,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2018-01",
@@ -60352,7 +60352,7 @@ const CASE_DATA = {
       "revenueEur": 5153,
       "cumulativeRevenue": 233541,
       "revenuePerActive": 21.83,
-      "gtvKEur": 82
+      "gtvKEur": 15.7
     },
     {
       "cohortMonth": "2018-01",
@@ -60363,7 +60363,7 @@ const CASE_DATA = {
       "revenueEur": 3990,
       "cumulativeRevenue": 237532,
       "revenuePerActive": 17.05,
-      "gtvKEur": 15.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2018-01",
@@ -60374,7 +60374,7 @@ const CASE_DATA = {
       "revenueEur": 4153,
       "cumulativeRevenue": 241685,
       "revenuePerActive": 17.67,
-      "gtvKEur": 102
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2018-01",
@@ -60385,7 +60385,7 @@ const CASE_DATA = {
       "revenueEur": 5170,
       "cumulativeRevenue": 246855,
       "revenuePerActive": 22.78,
-      "gtvKEur": 30.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-01",
@@ -60396,7 +60396,7 @@ const CASE_DATA = {
       "revenueEur": 4624,
       "cumulativeRevenue": 251479,
       "revenuePerActive": 19.59,
-      "gtvKEur": 117.4
+      "gtvKEur": 12.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60407,7 +60407,7 @@ const CASE_DATA = {
       "revenueEur": 4686,
       "cumulativeRevenue": 256165,
       "revenuePerActive": 19.86,
-      "gtvKEur": 34.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2018-01",
@@ -60418,7 +60418,7 @@ const CASE_DATA = {
       "revenueEur": 5234,
       "cumulativeRevenue": 261399,
       "revenuePerActive": 22.56,
-      "gtvKEur": 163.4
+      "gtvKEur": 12.7
     },
     {
       "cohortMonth": "2018-01",
@@ -60429,7 +60429,7 @@ const CASE_DATA = {
       "revenueEur": 4460,
       "cumulativeRevenue": 265859,
       "revenuePerActive": 19.48,
-      "gtvKEur": 40
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60440,7 +60440,7 @@ const CASE_DATA = {
       "revenueEur": 4306,
       "cumulativeRevenue": 270166,
       "revenuePerActive": 19.05,
-      "gtvKEur": 173.8
+      "gtvKEur": 4.6
     },
     {
       "cohortMonth": "2018-01",
@@ -60451,7 +60451,7 @@ const CASE_DATA = {
       "revenueEur": 4729,
       "cumulativeRevenue": 274894,
       "revenuePerActive": 21.3,
-      "gtvKEur": 39.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2018-01",
@@ -60462,7 +60462,7 @@ const CASE_DATA = {
       "revenueEur": 5197,
       "cumulativeRevenue": 280092,
       "revenuePerActive": 23.84,
-      "gtvKEur": 2861.7
+      "gtvKEur": 200.2
     },
     {
       "cohortMonth": "2018-01",
@@ -60473,7 +60473,7 @@ const CASE_DATA = {
       "revenueEur": 4743,
       "cumulativeRevenue": 284835,
       "revenuePerActive": 28.4,
-      "gtvKEur": 9035.4
+      "gtvKEur": 1087.5
     },
     {
       "cohortMonth": "2018-01",
@@ -60484,7 +60484,7 @@ const CASE_DATA = {
       "revenueEur": 2124,
       "cumulativeRevenue": 286959,
       "revenuePerActive": 0,
-      "gtvKEur": 1977.6
+      "gtvKEur": 265.1
     },
     {
       "cohortMonth": "2017-12",
@@ -61023,7 +61023,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 767,
       "revenuePerActive": 0,
-      "gtvKEur": 248.6
+      "gtvKEur": 5.7
     },
     {
       "cohortMonth": "2017-12",
@@ -61034,7 +61034,7 @@ const CASE_DATA = {
       "revenueEur": 5925,
       "cumulativeRevenue": 6692,
       "revenuePerActive": 21.54,
-      "gtvKEur": 1204.4
+      "gtvKEur": 28.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61045,7 +61045,7 @@ const CASE_DATA = {
       "revenueEur": 5307,
       "cumulativeRevenue": 11999,
       "revenuePerActive": 19.16,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-12",
@@ -61056,7 +61056,7 @@ const CASE_DATA = {
       "revenueEur": 4433,
       "cumulativeRevenue": 16431,
       "revenuePerActive": 16.54,
-      "gtvKEur": 51.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61067,7 +61067,7 @@ const CASE_DATA = {
       "revenueEur": 4996,
       "cumulativeRevenue": 21427,
       "revenuePerActive": 18.5,
-      "gtvKEur": 85.8
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2017-12",
@@ -61078,7 +61078,7 @@ const CASE_DATA = {
       "revenueEur": 4471,
       "cumulativeRevenue": 25898,
       "revenuePerActive": 16.74,
-      "gtvKEur": 40.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61089,7 +61089,7 @@ const CASE_DATA = {
       "revenueEur": 6781,
       "cumulativeRevenue": 32679,
       "revenuePerActive": 26.28,
-      "gtvKEur": 34.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61100,7 +61100,7 @@ const CASE_DATA = {
       "revenueEur": 4056,
       "cumulativeRevenue": 36735,
       "revenuePerActive": 16.35,
-      "gtvKEur": 8559.7
+      "gtvKEur": 95.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61111,7 +61111,7 @@ const CASE_DATA = {
       "revenueEur": 4428,
       "cumulativeRevenue": 41163,
       "revenuePerActive": 17.5,
-      "gtvKEur": 33.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61122,7 +61122,7 @@ const CASE_DATA = {
       "revenueEur": 4141,
       "cumulativeRevenue": 45304,
       "revenuePerActive": 17.47,
-      "gtvKEur": 34.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61133,7 +61133,7 @@ const CASE_DATA = {
       "revenueEur": 3643,
       "cumulativeRevenue": 48947,
       "revenuePerActive": 14.87,
-      "gtvKEur": 41
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61144,7 +61144,7 @@ const CASE_DATA = {
       "revenueEur": 4356,
       "cumulativeRevenue": 53303,
       "revenuePerActive": 18.94,
-      "gtvKEur": 43.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61155,7 +61155,7 @@ const CASE_DATA = {
       "revenueEur": 4573,
       "cumulativeRevenue": 57876,
       "revenuePerActive": 19.3,
-      "gtvKEur": 440.9
+      "gtvKEur": 15
     },
     {
       "cohortMonth": "2017-12",
@@ -61166,7 +61166,7 @@ const CASE_DATA = {
       "revenueEur": 4016,
       "cumulativeRevenue": 61892,
       "revenuePerActive": 18.01,
-      "gtvKEur": 52.2
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61177,7 +61177,7 @@ const CASE_DATA = {
       "revenueEur": 4022,
       "cumulativeRevenue": 65914,
       "revenuePerActive": 17.8,
-      "gtvKEur": 38.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61188,7 +61188,7 @@ const CASE_DATA = {
       "revenueEur": 3129,
       "cumulativeRevenue": 69042,
       "revenuePerActive": 13.66,
-      "gtvKEur": 69.9
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-12",
@@ -61199,7 +61199,7 @@ const CASE_DATA = {
       "revenueEur": 5205,
       "cumulativeRevenue": 74248,
       "revenuePerActive": 22.93,
-      "gtvKEur": 70.1
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-12",
@@ -61210,7 +61210,7 @@ const CASE_DATA = {
       "revenueEur": 3739,
       "cumulativeRevenue": 77987,
       "revenuePerActive": 15.98,
-      "gtvKEur": 275.7
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2017-12",
@@ -61221,7 +61221,7 @@ const CASE_DATA = {
       "revenueEur": 6029,
       "cumulativeRevenue": 84016,
       "revenuePerActive": 26.68,
-      "gtvKEur": 37.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61232,7 +61232,7 @@ const CASE_DATA = {
       "revenueEur": 3304,
       "cumulativeRevenue": 87320,
       "revenuePerActive": 14.49,
-      "gtvKEur": 29.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61243,7 +61243,7 @@ const CASE_DATA = {
       "revenueEur": 3165,
       "cumulativeRevenue": 90485,
       "revenuePerActive": 14.19,
-      "gtvKEur": 276.4
+      "gtvKEur": 6.6
     },
     {
       "cohortMonth": "2017-12",
@@ -61254,7 +61254,7 @@ const CASE_DATA = {
       "revenueEur": 4282,
       "cumulativeRevenue": 94767,
       "revenuePerActive": 19.46,
-      "gtvKEur": 37.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61265,7 +61265,7 @@ const CASE_DATA = {
       "revenueEur": 3421,
       "cumulativeRevenue": 98187,
       "revenuePerActive": 15.55,
-      "gtvKEur": 41.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61276,7 +61276,7 @@ const CASE_DATA = {
       "revenueEur": 7237,
       "cumulativeRevenue": 105425,
       "revenuePerActive": 32.6,
-      "gtvKEur": 44.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61287,7 +61287,7 @@ const CASE_DATA = {
       "revenueEur": 4793,
       "cumulativeRevenue": 110217,
       "revenuePerActive": 21.59,
-      "gtvKEur": 370.3
+      "gtvKEur": 6.1
     },
     {
       "cohortMonth": "2017-12",
@@ -61298,7 +61298,7 @@ const CASE_DATA = {
       "revenueEur": 3821,
       "cumulativeRevenue": 114039,
       "revenuePerActive": 17.53,
-      "gtvKEur": 53.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61309,7 +61309,7 @@ const CASE_DATA = {
       "revenueEur": 4139,
       "cumulativeRevenue": 118178,
       "revenuePerActive": 19.71,
-      "gtvKEur": 47
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61320,7 +61320,7 @@ const CASE_DATA = {
       "revenueEur": 3365,
       "cumulativeRevenue": 121543,
       "revenuePerActive": 15.72,
-      "gtvKEur": 324.9
+      "gtvKEur": 6.9
     },
     {
       "cohortMonth": "2017-12",
@@ -61331,7 +61331,7 @@ const CASE_DATA = {
       "revenueEur": 4217,
       "cumulativeRevenue": 125760,
       "revenuePerActive": 19.43,
-      "gtvKEur": 55.8
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-12",
@@ -61342,7 +61342,7 @@ const CASE_DATA = {
       "revenueEur": 3458,
       "cumulativeRevenue": 129218,
       "revenuePerActive": 16.08,
-      "gtvKEur": 43
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61353,7 +61353,7 @@ const CASE_DATA = {
       "revenueEur": 5267,
       "cumulativeRevenue": 134485,
       "revenuePerActive": 24.61,
-      "gtvKEur": 164.6
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-12",
@@ -61364,7 +61364,7 @@ const CASE_DATA = {
       "revenueEur": 2730,
       "cumulativeRevenue": 137215,
       "revenuePerActive": 12.7,
-      "gtvKEur": 39.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61375,7 +61375,7 @@ const CASE_DATA = {
       "revenueEur": 2604,
       "cumulativeRevenue": 139819,
       "revenuePerActive": 12.23,
-      "gtvKEur": 231.1
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2017-12",
@@ -61386,7 +61386,7 @@ const CASE_DATA = {
       "revenueEur": 2883,
       "cumulativeRevenue": 142703,
       "revenuePerActive": 14.49,
-      "gtvKEur": 39.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61397,7 +61397,7 @@ const CASE_DATA = {
       "revenueEur": 3014,
       "cumulativeRevenue": 145717,
       "revenuePerActive": 14.49,
-      "gtvKEur": 42.3
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61408,7 +61408,7 @@ const CASE_DATA = {
       "revenueEur": 7550,
       "cumulativeRevenue": 153267,
       "revenuePerActive": 36.83,
-      "gtvKEur": 138.8
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2017-12",
@@ -61419,7 +61419,7 @@ const CASE_DATA = {
       "revenueEur": 4736,
       "cumulativeRevenue": 158003,
       "revenuePerActive": 23.92,
-      "gtvKEur": 48
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61430,7 +61430,7 @@ const CASE_DATA = {
       "revenueEur": 3950,
       "cumulativeRevenue": 161953,
       "revenuePerActive": 20.68,
-      "gtvKEur": 154.4
+      "gtvKEur": 9.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61441,7 +61441,7 @@ const CASE_DATA = {
       "revenueEur": 6206,
       "cumulativeRevenue": 168159,
       "revenuePerActive": 33.19,
-      "gtvKEur": 42.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61452,7 +61452,7 @@ const CASE_DATA = {
       "revenueEur": 4227,
       "cumulativeRevenue": 172386,
       "revenuePerActive": 22.72,
-      "gtvKEur": 72.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-12",
@@ -61463,7 +61463,7 @@ const CASE_DATA = {
       "revenueEur": 6338,
       "cumulativeRevenue": 178724,
       "revenuePerActive": 33.89,
-      "gtvKEur": 155.2
+      "gtvKEur": 9.7
     },
     {
       "cohortMonth": "2017-12",
@@ -61474,7 +61474,7 @@ const CASE_DATA = {
       "revenueEur": 4576,
       "cumulativeRevenue": 183301,
       "revenuePerActive": 23.47,
-      "gtvKEur": 32.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61485,7 +61485,7 @@ const CASE_DATA = {
       "revenueEur": 7954,
       "cumulativeRevenue": 191255,
       "revenuePerActive": 41.86,
-      "gtvKEur": 110.2
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2017-12",
@@ -61496,7 +61496,7 @@ const CASE_DATA = {
       "revenueEur": 4709,
       "cumulativeRevenue": 195964,
       "revenuePerActive": 25.32,
-      "gtvKEur": 29.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61507,7 +61507,7 @@ const CASE_DATA = {
       "revenueEur": 3141,
       "cumulativeRevenue": 199105,
       "revenuePerActive": 17.17,
-      "gtvKEur": 677.6
+      "gtvKEur": 11.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61518,7 +61518,7 @@ const CASE_DATA = {
       "revenueEur": 3189,
       "cumulativeRevenue": 202294,
       "revenuePerActive": 17.92,
-      "gtvKEur": 29.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61529,7 +61529,7 @@ const CASE_DATA = {
       "revenueEur": 3344,
       "cumulativeRevenue": 205638,
       "revenuePerActive": 18.27,
-      "gtvKEur": 218.7
+      "gtvKEur": 11.1
     },
     {
       "cohortMonth": "2017-12",
@@ -61540,7 +61540,7 @@ const CASE_DATA = {
       "revenueEur": 5440,
       "cumulativeRevenue": 211078,
       "revenuePerActive": 29.56,
-      "gtvKEur": 36.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61551,7 +61551,7 @@ const CASE_DATA = {
       "revenueEur": 5468,
       "cumulativeRevenue": 216546,
       "revenuePerActive": 29.08,
-      "gtvKEur": 122
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2017-12",
@@ -61562,7 +61562,7 @@ const CASE_DATA = {
       "revenueEur": 4203,
       "cumulativeRevenue": 220749,
       "revenuePerActive": 22.35,
-      "gtvKEur": 34.1
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-12",
@@ -61573,7 +61573,7 @@ const CASE_DATA = {
       "revenueEur": 4597,
       "cumulativeRevenue": 225346,
       "revenuePerActive": 26.27,
-      "gtvKEur": 4126.3
+      "gtvKEur": 99.9
     },
     {
       "cohortMonth": "2017-12",
@@ -61584,7 +61584,7 @@ const CASE_DATA = {
       "revenueEur": 4005,
       "cumulativeRevenue": 229350,
       "revenuePerActive": 30.34,
-      "gtvKEur": 14193.6
+      "gtvKEur": 325.5
     },
     {
       "cohortMonth": "2017-12",
@@ -61595,7 +61595,7 @@ const CASE_DATA = {
       "revenueEur": 3851,
       "cumulativeRevenue": 233201,
       "revenuePerActive": 0,
-      "gtvKEur": 2951.6
+      "gtvKEur": 86.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62145,7 +62145,7 @@ const CASE_DATA = {
       "revenueEur": 73,
       "cumulativeRevenue": 2021,
       "revenuePerActive": 0.23,
-      "gtvKEur": 436.4
+      "gtvKEur": 10.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62156,7 +62156,7 @@ const CASE_DATA = {
       "revenueEur": 3293,
       "cumulativeRevenue": 5313,
       "revenuePerActive": 10.23,
-      "gtvKEur": 2964.3
+      "gtvKEur": 53.6
     },
     {
       "cohortMonth": "2017-11",
@@ -62189,7 +62189,7 @@ const CASE_DATA = {
       "revenueEur": 4594,
       "cumulativeRevenue": 18307,
       "revenuePerActive": 15.47,
-      "gtvKEur": 8.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62200,7 +62200,7 @@ const CASE_DATA = {
       "revenueEur": 8262,
       "cumulativeRevenue": 26569,
       "revenuePerActive": 28.79,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62211,7 +62211,7 @@ const CASE_DATA = {
       "revenueEur": 4661,
       "cumulativeRevenue": 31230,
       "revenuePerActive": 15.85,
-      "gtvKEur": 13.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62222,7 +62222,7 @@ const CASE_DATA = {
       "revenueEur": 4444,
       "cumulativeRevenue": 35674,
       "revenuePerActive": 15.65,
-      "gtvKEur": 496.2
+      "gtvKEur": 9
     },
     {
       "cohortMonth": "2017-11",
@@ -62233,7 +62233,7 @@ const CASE_DATA = {
       "revenueEur": 6461,
       "cumulativeRevenue": 42135,
       "revenuePerActive": 22.99,
-      "gtvKEur": 14.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62244,7 +62244,7 @@ const CASE_DATA = {
       "revenueEur": 3244,
       "cumulativeRevenue": 45379,
       "revenuePerActive": 12.06,
-      "gtvKEur": 12.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62277,7 +62277,7 @@ const CASE_DATA = {
       "revenueEur": 4339,
       "cumulativeRevenue": 58201,
       "revenuePerActive": 15.61,
-      "gtvKEur": 640.1
+      "gtvKEur": 10.4
     },
     {
       "cohortMonth": "2017-11",
@@ -62310,7 +62310,7 @@ const CASE_DATA = {
       "revenueEur": 5118,
       "cumulativeRevenue": 70916,
       "revenuePerActive": 18.82,
-      "gtvKEur": 22.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62321,7 +62321,7 @@ const CASE_DATA = {
       "revenueEur": 5799,
       "cumulativeRevenue": 76715,
       "revenuePerActive": 20.86,
-      "gtvKEur": 25.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-11",
@@ -62332,7 +62332,7 @@ const CASE_DATA = {
       "revenueEur": 8243,
       "cumulativeRevenue": 84958,
       "revenuePerActive": 31.11,
-      "gtvKEur": 1328.3
+      "gtvKEur": 16.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62365,7 +62365,7 @@ const CASE_DATA = {
       "revenueEur": 6274,
       "cumulativeRevenue": 98062,
       "revenuePerActive": 24.04,
-      "gtvKEur": 216.4
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2017-11",
@@ -62409,7 +62409,7 @@ const CASE_DATA = {
       "revenueEur": 4228,
       "cumulativeRevenue": 113041,
       "revenuePerActive": 16.45,
-      "gtvKEur": 321.7
+      "gtvKEur": 8.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62442,7 +62442,7 @@ const CASE_DATA = {
       "revenueEur": 4685,
       "cumulativeRevenue": 124121,
       "revenuePerActive": 19.44,
-      "gtvKEur": 166.9
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2017-11",
@@ -62464,7 +62464,7 @@ const CASE_DATA = {
       "revenueEur": 7663,
       "cumulativeRevenue": 135602,
       "revenuePerActive": 32.47,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-11",
@@ -62475,7 +62475,7 @@ const CASE_DATA = {
       "revenueEur": 1948,
       "cumulativeRevenue": 137550,
       "revenuePerActive": 8.36,
-      "gtvKEur": 216.7
+      "gtvKEur": 7.7
     },
     {
       "cohortMonth": "2017-11",
@@ -62497,7 +62497,7 @@ const CASE_DATA = {
       "revenueEur": 4317,
       "cumulativeRevenue": 144274,
       "revenuePerActive": 19.19,
-      "gtvKEur": 522.1
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2017-11",
@@ -62508,7 +62508,7 @@ const CASE_DATA = {
       "revenueEur": 1657,
       "cumulativeRevenue": 145932,
       "revenuePerActive": 7.47,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-11",
@@ -62530,7 +62530,7 @@ const CASE_DATA = {
       "revenueEur": 2091,
       "cumulativeRevenue": 152013,
       "revenuePerActive": 8.71,
-      "gtvKEur": 174.9
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62552,7 +62552,7 @@ const CASE_DATA = {
       "revenueEur": 2010,
       "cumulativeRevenue": 156980,
       "revenuePerActive": 9.35,
-      "gtvKEur": 254.4
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2017-11",
@@ -62585,7 +62585,7 @@ const CASE_DATA = {
       "revenueEur": 3607,
       "cumulativeRevenue": 166691,
       "revenuePerActive": 17.77,
-      "gtvKEur": 159.9
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62607,7 +62607,7 @@ const CASE_DATA = {
       "revenueEur": 2576,
       "cumulativeRevenue": 173072,
       "revenuePerActive": 13.28,
-      "gtvKEur": 182.8
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62618,7 +62618,7 @@ const CASE_DATA = {
       "revenueEur": 3027,
       "cumulativeRevenue": 176100,
       "revenuePerActive": 15.6,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-11",
@@ -62629,7 +62629,7 @@ const CASE_DATA = {
       "revenueEur": 5585,
       "cumulativeRevenue": 181685,
       "revenuePerActive": 27.65,
-      "gtvKEur": 247.2
+      "gtvKEur": 3.1
     },
     {
       "cohortMonth": "2017-11",
@@ -62640,7 +62640,7 @@ const CASE_DATA = {
       "revenueEur": 2751,
       "cumulativeRevenue": 184436,
       "revenuePerActive": 13.62,
-      "gtvKEur": 22.8
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62651,7 +62651,7 @@ const CASE_DATA = {
       "revenueEur": 4965,
       "cumulativeRevenue": 189400,
       "revenuePerActive": 23.98,
-      "gtvKEur": 195.9
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62673,7 +62673,7 @@ const CASE_DATA = {
       "revenueEur": 3177,
       "cumulativeRevenue": 195353,
       "revenuePerActive": 15.73,
-      "gtvKEur": 176.9
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-11",
@@ -62684,7 +62684,7 @@ const CASE_DATA = {
       "revenueEur": 2583,
       "cumulativeRevenue": 197936,
       "revenuePerActive": 13.52,
-      "gtvKEur": 1.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-11",
@@ -62695,7 +62695,7 @@ const CASE_DATA = {
       "revenueEur": 2684,
       "cumulativeRevenue": 200620,
       "revenuePerActive": 13.77,
-      "gtvKEur": 5944.8
+      "gtvKEur": 96.9
     },
     {
       "cohortMonth": "2017-11",
@@ -62706,7 +62706,7 @@ const CASE_DATA = {
       "revenueEur": 3792,
       "cumulativeRevenue": 204412,
       "revenuePerActive": 25.28,
-      "gtvKEur": 19052.6
+      "gtvKEur": 294.7
     },
     {
       "cohortMonth": "2017-11",
@@ -62717,7 +62717,7 @@ const CASE_DATA = {
       "revenueEur": 1414,
       "cumulativeRevenue": 205826,
       "revenuePerActive": 0,
-      "gtvKEur": 5156.3
+      "gtvKEur": 82.2
     },
     {
       "cohortMonth": "2017-10",
@@ -63234,7 +63234,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 2221,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-10",
@@ -63278,7 +63278,7 @@ const CASE_DATA = {
       "revenueEur": 462,
       "cumulativeRevenue": 2880,
       "revenuePerActive": 1.79,
-      "gtvKEur": 377.9
+      "gtvKEur": 10.2
     },
     {
       "cohortMonth": "2017-10",
@@ -63289,7 +63289,7 @@ const CASE_DATA = {
       "revenueEur": 3289,
       "cumulativeRevenue": 6169,
       "revenuePerActive": 12.32,
-      "gtvKEur": 2003.8
+      "gtvKEur": 48.3
     },
     {
       "cohortMonth": "2017-10",
@@ -63355,7 +63355,7 @@ const CASE_DATA = {
       "revenueEur": 6978,
       "cumulativeRevenue": 37476,
       "revenuePerActive": 29.32,
-      "gtvKEur": 258.3
+      "gtvKEur": 7.3
     },
     {
       "cohortMonth": "2017-10",
@@ -63410,7 +63410,7 @@ const CASE_DATA = {
       "revenueEur": 5155,
       "cumulativeRevenue": 63409,
       "revenuePerActive": 21.75,
-      "gtvKEur": 348.7
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2017-10",
@@ -63465,7 +63465,7 @@ const CASE_DATA = {
       "revenueEur": 2938,
       "cumulativeRevenue": 81799,
       "revenuePerActive": 13.29,
-      "gtvKEur": 183.1
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2017-10",
@@ -63498,7 +63498,7 @@ const CASE_DATA = {
       "revenueEur": 4548,
       "cumulativeRevenue": 97172,
       "revenuePerActive": 20.77,
-      "gtvKEur": 130.2
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2017-10",
@@ -63542,7 +63542,7 @@ const CASE_DATA = {
       "revenueEur": 4290,
       "cumulativeRevenue": 109683,
       "revenuePerActive": 20.43,
-      "gtvKEur": 328.8
+      "gtvKEur": 8
     },
     {
       "cohortMonth": "2017-10",
@@ -63575,7 +63575,7 @@ const CASE_DATA = {
       "revenueEur": 4915,
       "cumulativeRevenue": 120944,
       "revenuePerActive": 23.18,
-      "gtvKEur": 429.1
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2017-10",
@@ -63608,7 +63608,7 @@ const CASE_DATA = {
       "revenueEur": 4079,
       "cumulativeRevenue": 130406,
       "revenuePerActive": 19.06,
-      "gtvKEur": 140.5
+      "gtvKEur": 2.9
     },
     {
       "cohortMonth": "2017-10",
@@ -63630,7 +63630,7 @@ const CASE_DATA = {
       "revenueEur": 3565,
       "cumulativeRevenue": 139577,
       "revenuePerActive": 16.58,
-      "gtvKEur": 127.1
+      "gtvKEur": 4.1
     },
     {
       "cohortMonth": "2017-10",
@@ -63663,7 +63663,7 @@ const CASE_DATA = {
       "revenueEur": 2805,
       "cumulativeRevenue": 147052,
       "revenuePerActive": 13.42,
-      "gtvKEur": 146.1
+      "gtvKEur": 5.3
     },
     {
       "cohortMonth": "2017-10",
@@ -63685,7 +63685,7 @@ const CASE_DATA = {
       "revenueEur": 2596,
       "cumulativeRevenue": 153677,
       "revenuePerActive": 12.6,
-      "gtvKEur": 122.9
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2017-10",
@@ -63718,7 +63718,7 @@ const CASE_DATA = {
       "revenueEur": 2917,
       "cumulativeRevenue": 163897,
       "revenuePerActive": 14.81,
-      "gtvKEur": 109.7
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2017-10",
@@ -63740,7 +63740,7 @@ const CASE_DATA = {
       "revenueEur": 2603,
       "cumulativeRevenue": 169273,
       "revenuePerActive": 12.51,
-      "gtvKEur": 1185.1
+      "gtvKEur": 14.6
     },
     {
       "cohortMonth": "2017-10",
@@ -63751,7 +63751,7 @@ const CASE_DATA = {
       "revenueEur": 5732,
       "cumulativeRevenue": 175005,
       "revenuePerActive": 26.54,
-      "gtvKEur": 8.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-10",
@@ -63762,7 +63762,7 @@ const CASE_DATA = {
       "revenueEur": 3508,
       "cumulativeRevenue": 178513,
       "revenuePerActive": 17.03,
-      "gtvKEur": 112.9
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2017-10",
@@ -63784,7 +63784,7 @@ const CASE_DATA = {
       "revenueEur": 2311,
       "cumulativeRevenue": 183262,
       "revenuePerActive": 11.06,
-      "gtvKEur": 114.5
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2017-10",
@@ -63795,7 +63795,7 @@ const CASE_DATA = {
       "revenueEur": 2472,
       "cumulativeRevenue": 185735,
       "revenuePerActive": 12.94,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-10",
@@ -63806,7 +63806,7 @@ const CASE_DATA = {
       "revenueEur": 4278,
       "cumulativeRevenue": 190013,
       "revenuePerActive": 22.17,
-      "gtvKEur": 228.3
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2017-10",
@@ -63828,7 +63828,7 @@ const CASE_DATA = {
       "revenueEur": 3044,
       "cumulativeRevenue": 195680,
       "revenuePerActive": 15.94,
-      "gtvKEur": 7496
+      "gtvKEur": 82.1
     },
     {
       "cohortMonth": "2017-10",
@@ -63839,7 +63839,7 @@ const CASE_DATA = {
       "revenueEur": 9344,
       "cumulativeRevenue": 205024,
       "revenuePerActive": 63.14,
-      "gtvKEur": 27567.9
+      "gtvKEur": 294.3
     },
     {
       "cohortMonth": "2017-10",
@@ -63850,7 +63850,7 @@ const CASE_DATA = {
       "revenueEur": 1043,
       "cumulativeRevenue": 206067,
       "revenuePerActive": 0,
-      "gtvKEur": 3123.3
+      "gtvKEur": 37.2
     },
     {
       "cohortMonth": "2017-09",
@@ -64422,7 +64422,7 @@ const CASE_DATA = {
       "revenueEur": 404,
       "cumulativeRevenue": 6212,
       "revenuePerActive": 1.67,
-      "gtvKEur": 457.1
+      "gtvKEur": 5.2
     },
     {
       "cohortMonth": "2017-09",
@@ -64433,7 +64433,7 @@ const CASE_DATA = {
       "revenueEur": 6511,
       "cumulativeRevenue": 12723,
       "revenuePerActive": 27.71,
-      "gtvKEur": 1798.6
+      "gtvKEur": 21.2
     },
     {
       "cohortMonth": "2017-09",
@@ -64488,7 +64488,7 @@ const CASE_DATA = {
       "revenueEur": 7091,
       "cumulativeRevenue": 71250,
       "revenuePerActive": 30.7,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64499,7 +64499,7 @@ const CASE_DATA = {
       "revenueEur": 6663,
       "cumulativeRevenue": 77913,
       "revenuePerActive": 29.74,
-      "gtvKEur": 339.2
+      "gtvKEur": 6.4
     },
     {
       "cohortMonth": "2017-09",
@@ -64554,7 +64554,7 @@ const CASE_DATA = {
       "revenueEur": 6734,
       "cumulativeRevenue": 110980,
       "revenuePerActive": 30.2,
-      "gtvKEur": 315.5
+      "gtvKEur": 4.1
     },
     {
       "cohortMonth": "2017-09",
@@ -64609,7 +64609,7 @@ const CASE_DATA = {
       "revenueEur": 13806,
       "cumulativeRevenue": 160794,
       "revenuePerActive": 63.92,
-      "gtvKEur": 204.8
+      "gtvKEur": 2.6
     },
     {
       "cohortMonth": "2017-09",
@@ -64642,7 +64642,7 @@ const CASE_DATA = {
       "revenueEur": 10011,
       "cumulativeRevenue": 187839,
       "revenuePerActive": 49.56,
-      "gtvKEur": 253.1
+      "gtvKEur": 3.8
     },
     {
       "cohortMonth": "2017-09",
@@ -64686,7 +64686,7 @@ const CASE_DATA = {
       "revenueEur": 7025,
       "cumulativeRevenue": 216208,
       "revenuePerActive": 37.97,
-      "gtvKEur": 224.3
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2017-09",
@@ -64708,7 +64708,7 @@ const CASE_DATA = {
       "revenueEur": 6402,
       "cumulativeRevenue": 229672,
       "revenuePerActive": 34.98,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64719,7 +64719,7 @@ const CASE_DATA = {
       "revenueEur": 8131,
       "cumulativeRevenue": 237802,
       "revenuePerActive": 43.71,
-      "gtvKEur": 160.4
+      "gtvKEur": 3.3
     },
     {
       "cohortMonth": "2017-09",
@@ -64752,7 +64752,7 @@ const CASE_DATA = {
       "revenueEur": 6657,
       "cumulativeRevenue": 260662,
       "revenuePerActive": 36.78,
-      "gtvKEur": 160.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2017-09",
@@ -64774,7 +64774,7 @@ const CASE_DATA = {
       "revenueEur": 4028,
       "cumulativeRevenue": 269181,
       "revenuePerActive": 22.76,
-      "gtvKEur": 175.3
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2017-09",
@@ -64785,7 +64785,7 @@ const CASE_DATA = {
       "revenueEur": 5125,
       "cumulativeRevenue": 274306,
       "revenuePerActive": 29.45,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64796,7 +64796,7 @@ const CASE_DATA = {
       "revenueEur": 4485,
       "cumulativeRevenue": 278791,
       "revenuePerActive": 25.34,
-      "gtvKEur": 3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64807,7 +64807,7 @@ const CASE_DATA = {
       "revenueEur": 6182,
       "cumulativeRevenue": 284973,
       "revenuePerActive": 37.93,
-      "gtvKEur": 114.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-09",
@@ -64829,7 +64829,7 @@ const CASE_DATA = {
       "revenueEur": 5456,
       "cumulativeRevenue": 295454,
       "revenuePerActive": 33.27,
-      "gtvKEur": 108.7
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2017-09",
@@ -64862,7 +64862,7 @@ const CASE_DATA = {
       "revenueEur": 5379,
       "cumulativeRevenue": 311260,
       "revenuePerActive": 30.74,
-      "gtvKEur": 78.5
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2017-09",
@@ -64884,7 +64884,7 @@ const CASE_DATA = {
       "revenueEur": 5474,
       "cumulativeRevenue": 325217,
       "revenuePerActive": 33.18,
-      "gtvKEur": 87.5
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-09",
@@ -64906,7 +64906,7 @@ const CASE_DATA = {
       "revenueEur": 3999,
       "cumulativeRevenue": 333936,
       "revenuePerActive": 27.58,
-      "gtvKEur": 71.2
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-09",
@@ -64917,7 +64917,7 @@ const CASE_DATA = {
       "revenueEur": 4053,
       "cumulativeRevenue": 337989,
       "revenuePerActive": 27.2,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64928,7 +64928,7 @@ const CASE_DATA = {
       "revenueEur": 3929,
       "cumulativeRevenue": 341917,
       "revenuePerActive": 24.25,
-      "gtvKEur": 66
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2017-09",
@@ -64939,7 +64939,7 @@ const CASE_DATA = {
       "revenueEur": 3533,
       "cumulativeRevenue": 345451,
       "revenuePerActive": 24.2,
-      "gtvKEur": 8.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-09",
@@ -64950,7 +64950,7 @@ const CASE_DATA = {
       "revenueEur": 4300,
       "cumulativeRevenue": 349751,
       "revenuePerActive": 29.65,
-      "gtvKEur": 110.5
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2017-09",
@@ -64961,7 +64961,7 @@ const CASE_DATA = {
       "revenueEur": 4916,
       "cumulativeRevenue": 354667,
       "revenuePerActive": 34.14,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-09",
@@ -64972,7 +64972,7 @@ const CASE_DATA = {
       "revenueEur": 4061,
       "cumulativeRevenue": 358728,
       "revenuePerActive": 30.31,
-      "gtvKEur": 2541
+      "gtvKEur": 37.4
     },
     {
       "cohortMonth": "2017-09",
@@ -64983,7 +64983,7 @@ const CASE_DATA = {
       "revenueEur": 7275,
       "cumulativeRevenue": 366003,
       "revenuePerActive": 74.99,
-      "gtvKEur": 6046.9
+      "gtvKEur": 92.8
     },
     {
       "cohortMonth": "2017-09",
@@ -64994,7 +64994,7 @@ const CASE_DATA = {
       "revenueEur": 783,
       "cumulativeRevenue": 366786,
       "revenuePerActive": 0,
-      "gtvKEur": 2172
+      "gtvKEur": 28.2
     },
     {
       "cohortMonth": "2017-08",
@@ -65489,7 +65489,7 @@ const CASE_DATA = {
       "revenueEur": 30,
       "cumulativeRevenue": 1729,
       "revenuePerActive": 0.14,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65555,7 +65555,7 @@ const CASE_DATA = {
       "revenueEur": 146,
       "cumulativeRevenue": 3374,
       "revenuePerActive": 0.62,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65566,7 +65566,7 @@ const CASE_DATA = {
       "revenueEur": 814,
       "cumulativeRevenue": 4188,
       "revenuePerActive": 3.51,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65577,7 +65577,7 @@ const CASE_DATA = {
       "revenueEur": 217,
       "cumulativeRevenue": 4405,
       "revenuePerActive": 0.97,
-      "gtvKEur": 74406.1
+      "gtvKEur": 754.9
     },
     {
       "cohortMonth": "2017-08",
@@ -65588,7 +65588,7 @@ const CASE_DATA = {
       "revenueEur": 2043,
       "cumulativeRevenue": 6448,
       "revenuePerActive": 9.42,
-      "gtvKEur": 480923.7
+      "gtvKEur": 4846.3
     },
     {
       "cohortMonth": "2017-08",
@@ -65621,7 +65621,7 @@ const CASE_DATA = {
       "revenueEur": 3183,
       "cumulativeRevenue": 15857,
       "revenuePerActive": 14.87,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65643,7 +65643,7 @@ const CASE_DATA = {
       "revenueEur": 3121,
       "cumulativeRevenue": 22226,
       "revenuePerActive": 14.94,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65654,7 +65654,7 @@ const CASE_DATA = {
       "revenueEur": 5387,
       "cumulativeRevenue": 27613,
       "revenuePerActive": 25.9,
-      "gtvKEur": 349718.3
+      "gtvKEur": 3514
     },
     {
       "cohortMonth": "2017-08",
@@ -65665,7 +65665,7 @@ const CASE_DATA = {
       "revenueEur": 1914,
       "cumulativeRevenue": 29527,
       "revenuePerActive": 8.82,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65676,7 +65676,7 @@ const CASE_DATA = {
       "revenueEur": 1850,
       "cumulativeRevenue": 31377,
       "revenuePerActive": 8.85,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65687,7 +65687,7 @@ const CASE_DATA = {
       "revenueEur": 2459,
       "cumulativeRevenue": 33836,
       "revenuePerActive": 12.29,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65698,7 +65698,7 @@ const CASE_DATA = {
       "revenueEur": 1590,
       "cumulativeRevenue": 35426,
       "revenuePerActive": 7.95,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -65709,7 +65709,7 @@ const CASE_DATA = {
       "revenueEur": 4249,
       "cumulativeRevenue": 39674,
       "revenuePerActive": 21.57,
-      "gtvKEur": 65028.1
+      "gtvKEur": 667.8
     },
     {
       "cohortMonth": "2017-08",
@@ -65764,7 +65764,7 @@ const CASE_DATA = {
       "revenueEur": 2773,
       "cumulativeRevenue": 52442,
       "revenuePerActive": 15.07,
-      "gtvKEur": 691346.2
+      "gtvKEur": 6919.2
     },
     {
       "cohortMonth": "2017-08",
@@ -65797,7 +65797,7 @@ const CASE_DATA = {
       "revenueEur": 2140,
       "cumulativeRevenue": 63045,
       "revenuePerActive": 11.26,
-      "gtvKEur": 1257661.7
+      "gtvKEur": 12585.5
     },
     {
       "cohortMonth": "2017-08",
@@ -65841,7 +65841,7 @@ const CASE_DATA = {
       "revenueEur": 4297,
       "cumulativeRevenue": 74885,
       "revenuePerActive": 23.35,
-      "gtvKEur": 420406.4
+      "gtvKEur": 4214.6
     },
     {
       "cohortMonth": "2017-08",
@@ -65874,7 +65874,7 @@ const CASE_DATA = {
       "revenueEur": 4238,
       "cumulativeRevenue": 82727,
       "revenuePerActive": 23.67,
-      "gtvKEur": 232875.1
+      "gtvKEur": 2338.3
     },
     {
       "cohortMonth": "2017-08",
@@ -65907,7 +65907,7 @@ const CASE_DATA = {
       "revenueEur": 3203,
       "cumulativeRevenue": 90019,
       "revenuePerActive": 17.04,
-      "gtvKEur": 1219746.2
+      "gtvKEur": 12205.9
     },
     {
       "cohortMonth": "2017-08",
@@ -65918,7 +65918,7 @@ const CASE_DATA = {
       "revenueEur": 5157,
       "cumulativeRevenue": 95177,
       "revenuePerActive": 27.43,
-      "gtvKEur": 28.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-08",
@@ -65929,7 +65929,7 @@ const CASE_DATA = {
       "revenueEur": 2224,
       "cumulativeRevenue": 97401,
       "revenuePerActive": 11.65,
-      "gtvKEur": 332105.5
+      "gtvKEur": 3321.6
     },
     {
       "cohortMonth": "2017-08",
@@ -65962,7 +65962,7 @@ const CASE_DATA = {
       "revenueEur": 1917,
       "cumulativeRevenue": 105615,
       "revenuePerActive": 10.96,
-      "gtvKEur": 348218.9
+      "gtvKEur": 3485.3
     },
     {
       "cohortMonth": "2017-08",
@@ -65984,7 +65984,7 @@ const CASE_DATA = {
       "revenueEur": 1978,
       "cumulativeRevenue": 111968,
       "revenuePerActive": 11.3,
-      "gtvKEur": 5060
+      "gtvKEur": 52.7
     },
     {
       "cohortMonth": "2017-08",
@@ -66017,7 +66017,7 @@ const CASE_DATA = {
       "revenueEur": 3701,
       "cumulativeRevenue": 121511,
       "revenuePerActive": 22.56,
-      "gtvKEur": 38
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2017-08",
@@ -66039,7 +66039,7 @@ const CASE_DATA = {
       "revenueEur": 4201,
       "cumulativeRevenue": 129364,
       "revenuePerActive": 25.3,
-      "gtvKEur": 50.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2017-08",
@@ -66061,7 +66061,7 @@ const CASE_DATA = {
       "revenueEur": 3850,
       "cumulativeRevenue": 138015,
       "revenuePerActive": 24.52,
-      "gtvKEur": 80.6
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2017-08",
@@ -66083,7 +66083,7 @@ const CASE_DATA = {
       "revenueEur": 2268,
       "cumulativeRevenue": 142788,
       "revenuePerActive": 14.44,
-      "gtvKEur": 72.4
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-08",
@@ -66094,7 +66094,7 @@ const CASE_DATA = {
       "revenueEur": 2775,
       "cumulativeRevenue": 145562,
       "revenuePerActive": 17.9,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -66105,7 +66105,7 @@ const CASE_DATA = {
       "revenueEur": 5722,
       "cumulativeRevenue": 151284,
       "revenuePerActive": 37.64,
-      "gtvKEur": 44.2
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-08",
@@ -66116,7 +66116,7 @@ const CASE_DATA = {
       "revenueEur": 2071,
       "cumulativeRevenue": 153355,
       "revenuePerActive": 14.28,
-      "gtvKEur": 2.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-08",
@@ -66127,7 +66127,7 @@ const CASE_DATA = {
       "revenueEur": 2026,
       "cumulativeRevenue": 155381,
       "revenuePerActive": 14.47,
-      "gtvKEur": 2079.8
+      "gtvKEur": 87.9
     },
     {
       "cohortMonth": "2017-08",
@@ -66138,7 +66138,7 @@ const CASE_DATA = {
       "revenueEur": 2576,
       "cumulativeRevenue": 157957,
       "revenuePerActive": 25.5,
-      "gtvKEur": 5658.9
+      "gtvKEur": 205.8
     },
     {
       "cohortMonth": "2017-08",
@@ -66149,7 +66149,7 @@ const CASE_DATA = {
       "revenueEur": 938,
       "cumulativeRevenue": 158895,
       "revenuePerActive": 0,
-      "gtvKEur": 1677.9
+      "gtvKEur": 59.8
     },
     {
       "cohortMonth": "2017-07",
@@ -66523,7 +66523,7 @@ const CASE_DATA = {
       "revenueEur": 51,
       "cumulativeRevenue": 107,
       "revenuePerActive": 0.25,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-07",
@@ -66743,7 +66743,7 @@ const CASE_DATA = {
       "revenueEur": 127,
       "cumulativeRevenue": 2392,
       "revenuePerActive": 0.52,
-      "gtvKEur": 346.6
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2017-07",
@@ -66754,7 +66754,7 @@ const CASE_DATA = {
       "revenueEur": 3995,
       "cumulativeRevenue": 6386,
       "revenuePerActive": 17.07,
-      "gtvKEur": 1621.2
+      "gtvKEur": 47.5
     },
     {
       "cohortMonth": "2017-07",
@@ -66820,7 +66820,7 @@ const CASE_DATA = {
       "revenueEur": 2818,
       "cumulativeRevenue": 32623,
       "revenuePerActive": 13.11,
-      "gtvKEur": 408.3
+      "gtvKEur": 7.4
     },
     {
       "cohortMonth": "2017-07",
@@ -66875,7 +66875,7 @@ const CASE_DATA = {
       "revenueEur": 3663,
       "cumulativeRevenue": 49715,
       "revenuePerActive": 18.41,
-      "gtvKEur": 377.6
+      "gtvKEur": 16.2
     },
     {
       "cohortMonth": "2017-07",
@@ -66919,7 +66919,7 @@ const CASE_DATA = {
       "revenueEur": 6500,
       "cumulativeRevenue": 70048,
       "revenuePerActive": 33.33,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-07",
@@ -66930,7 +66930,7 @@ const CASE_DATA = {
       "revenueEur": 3146,
       "cumulativeRevenue": 73194,
       "revenuePerActive": 16.3,
-      "gtvKEur": 225.1
+      "gtvKEur": 10.9
     },
     {
       "cohortMonth": "2017-07",
@@ -66963,7 +66963,7 @@ const CASE_DATA = {
       "revenueEur": 4984,
       "cumulativeRevenue": 83353,
       "revenuePerActive": 25.56,
-      "gtvKEur": 269.5
+      "gtvKEur": 11
     },
     {
       "cohortMonth": "2017-07",
@@ -67007,7 +67007,7 @@ const CASE_DATA = {
       "revenueEur": 3482,
       "cumulativeRevenue": 94953,
       "revenuePerActive": 17.76,
-      "gtvKEur": 213.7
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2017-07",
@@ -67040,7 +67040,7 @@ const CASE_DATA = {
       "revenueEur": 7104,
       "cumulativeRevenue": 108059,
       "revenuePerActive": 36.81,
-      "gtvKEur": 237.1
+      "gtvKEur": 13.6
     },
     {
       "cohortMonth": "2017-07",
@@ -67073,7 +67073,7 @@ const CASE_DATA = {
       "revenueEur": 3126,
       "cumulativeRevenue": 122282,
       "revenuePerActive": 16.11,
-      "gtvKEur": 154.9
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2017-07",
@@ -67095,7 +67095,7 @@ const CASE_DATA = {
       "revenueEur": 3525,
       "cumulativeRevenue": 129286,
       "revenuePerActive": 18.46,
-      "gtvKEur": 132.5
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2017-07",
@@ -67128,7 +67128,7 @@ const CASE_DATA = {
       "revenueEur": 3454,
       "cumulativeRevenue": 139625,
       "revenuePerActive": 18.98,
-      "gtvKEur": 124.2
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2017-07",
@@ -67150,7 +67150,7 @@ const CASE_DATA = {
       "revenueEur": 3473,
       "cumulativeRevenue": 147242,
       "revenuePerActive": 20.19,
-      "gtvKEur": 133
+      "gtvKEur": 8.7
     },
     {
       "cohortMonth": "2017-07",
@@ -67183,7 +67183,7 @@ const CASE_DATA = {
       "revenueEur": 9475,
       "cumulativeRevenue": 168320,
       "revenuePerActive": 56.74,
-      "gtvKEur": 103.6
+      "gtvKEur": 6.7
     },
     {
       "cohortMonth": "2017-07",
@@ -67205,7 +67205,7 @@ const CASE_DATA = {
       "revenueEur": 4235,
       "cumulativeRevenue": 176552,
       "revenuePerActive": 24.91,
-      "gtvKEur": 54.3
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2017-07",
@@ -67227,7 +67227,7 @@ const CASE_DATA = {
       "revenueEur": 4395,
       "cumulativeRevenue": 185491,
       "revenuePerActive": 26.16,
-      "gtvKEur": 190.6
+      "gtvKEur": 4.2
     },
     {
       "cohortMonth": "2017-07",
@@ -67249,7 +67249,7 @@ const CASE_DATA = {
       "revenueEur": 4462,
       "cumulativeRevenue": 194796,
       "revenuePerActive": 26.88,
-      "gtvKEur": 164.4
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2017-07",
@@ -67271,7 +67271,7 @@ const CASE_DATA = {
       "revenueEur": 5191,
       "cumulativeRevenue": 204876,
       "revenuePerActive": 32.65,
-      "gtvKEur": 70.3
+      "gtvKEur": 11.4
     },
     {
       "cohortMonth": "2017-07",
@@ -67282,7 +67282,7 @@ const CASE_DATA = {
       "revenueEur": 4270,
       "cumulativeRevenue": 209146,
       "revenuePerActive": 27.37,
-      "gtvKEur": 3.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-07",
@@ -67293,7 +67293,7 @@ const CASE_DATA = {
       "revenueEur": 4567,
       "cumulativeRevenue": 213713,
       "revenuePerActive": 28.91,
-      "gtvKEur": 5172.2
+      "gtvKEur": 315.1
     },
     {
       "cohortMonth": "2017-07",
@@ -67304,7 +67304,7 @@ const CASE_DATA = {
       "revenueEur": 7702,
       "cumulativeRevenue": 221415,
       "revenuePerActive": 64.18,
-      "gtvKEur": 15025.9
+      "gtvKEur": 608.4
     },
     {
       "cohortMonth": "2017-07",
@@ -67315,7 +67315,7 @@ const CASE_DATA = {
       "revenueEur": 358,
       "cumulativeRevenue": 221773,
       "revenuePerActive": 0,
-      "gtvKEur": 4397.7
+      "gtvKEur": 133.2
     },
     {
       "cohortMonth": "2017-06",
@@ -67887,7 +67887,7 @@ const CASE_DATA = {
       "revenueEur": 34,
       "cumulativeRevenue": 1507,
       "revenuePerActive": 0.18,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-06",
@@ -67898,7 +67898,7 @@ const CASE_DATA = {
       "revenueEur": 1250,
       "cumulativeRevenue": 2757,
       "revenuePerActive": 6.19,
-      "gtvKEur": 15.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-06",
@@ -67909,7 +67909,7 @@ const CASE_DATA = {
       "revenueEur": 154,
       "cumulativeRevenue": 2911,
       "revenuePerActive": 0.79,
-      "gtvKEur": 15.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-06",
@@ -67920,7 +67920,7 @@ const CASE_DATA = {
       "revenueEur": 48,
       "cumulativeRevenue": 2959,
       "revenuePerActive": 0.25,
-      "gtvKEur": 404.7
+      "gtvKEur": 14.2
     },
     {
       "cohortMonth": "2017-06",
@@ -67931,7 +67931,7 @@ const CASE_DATA = {
       "revenueEur": 2890,
       "cumulativeRevenue": 5849,
       "revenuePerActive": 15.79,
-      "gtvKEur": 1605.2
+      "gtvKEur": 34
     },
     {
       "cohortMonth": "2017-06",
@@ -67997,7 +67997,7 @@ const CASE_DATA = {
       "revenueEur": 2586,
       "cumulativeRevenue": 49183,
       "revenuePerActive": 14.13,
-      "gtvKEur": 330.6
+      "gtvKEur": 13.8
     },
     {
       "cohortMonth": "2017-06",
@@ -68019,7 +68019,7 @@ const CASE_DATA = {
       "revenueEur": 3141,
       "cumulativeRevenue": 55143,
       "revenuePerActive": 18.58,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-06",
@@ -68052,7 +68052,7 @@ const CASE_DATA = {
       "revenueEur": 3020,
       "cumulativeRevenue": 64205,
       "revenuePerActive": 19.23,
-      "gtvKEur": 253.5
+      "gtvKEur": 13.7
     },
     {
       "cohortMonth": "2017-06",
@@ -68096,7 +68096,7 @@ const CASE_DATA = {
       "revenueEur": 20619,
       "cumulativeRevenue": 94393,
       "revenuePerActive": 133.03,
-      "gtvKEur": 6.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-06",
@@ -68107,7 +68107,7 @@ const CASE_DATA = {
       "revenueEur": 3080,
       "cumulativeRevenue": 97473,
       "revenuePerActive": 19.87,
-      "gtvKEur": 173.2
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2017-06",
@@ -68140,7 +68140,7 @@ const CASE_DATA = {
       "revenueEur": 4646,
       "cumulativeRevenue": 117060,
       "revenuePerActive": 28.5,
-      "gtvKEur": 233.9
+      "gtvKEur": 17.4
     },
     {
       "cohortMonth": "2017-06",
@@ -68184,7 +68184,7 @@ const CASE_DATA = {
       "revenueEur": 4631,
       "cumulativeRevenue": 135806,
       "revenuePerActive": 32.16,
-      "gtvKEur": 317.4
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2017-06",
@@ -68206,7 +68206,7 @@ const CASE_DATA = {
       "revenueEur": 4659,
       "cumulativeRevenue": 145017,
       "revenuePerActive": 32.13,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-06",
@@ -68217,7 +68217,7 @@ const CASE_DATA = {
       "revenueEur": 5637,
       "cumulativeRevenue": 150655,
       "revenuePerActive": 38.61,
-      "gtvKEur": 192.4
+      "gtvKEur": 17.7
     },
     {
       "cohortMonth": "2017-06",
@@ -68250,7 +68250,7 @@ const CASE_DATA = {
       "revenueEur": 13015,
       "cumulativeRevenue": 191656,
       "revenuePerActive": 91.01,
-      "gtvKEur": 224.9
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2017-06",
@@ -68272,7 +68272,7 @@ const CASE_DATA = {
       "revenueEur": 4502,
       "cumulativeRevenue": 201091,
       "revenuePerActive": 31.26,
-      "gtvKEur": 106.6
+      "gtvKEur": 3.2
     },
     {
       "cohortMonth": "2017-06",
@@ -68305,7 +68305,7 @@ const CASE_DATA = {
       "revenueEur": 4797,
       "cumulativeRevenue": 215193,
       "revenuePerActive": 34.76,
-      "gtvKEur": 227.4
+      "gtvKEur": 3.6
     },
     {
       "cohortMonth": "2017-06",
@@ -68327,7 +68327,7 @@ const CASE_DATA = {
       "revenueEur": 4616,
       "cumulativeRevenue": 224444,
       "revenuePerActive": 34.7,
-      "gtvKEur": 134
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2017-06",
@@ -68360,7 +68360,7 @@ const CASE_DATA = {
       "revenueEur": 22569,
       "cumulativeRevenue": 257586,
       "revenuePerActive": 177.71,
-      "gtvKEur": 126
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2017-06",
@@ -68382,7 +68382,7 @@ const CASE_DATA = {
       "revenueEur": 13350,
       "cumulativeRevenue": 276710,
       "revenuePerActive": 100.38,
-      "gtvKEur": 92
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2017-06",
@@ -68404,7 +68404,7 @@ const CASE_DATA = {
       "revenueEur": 7200,
       "cumulativeRevenue": 290596,
       "revenuePerActive": 52.17,
-      "gtvKEur": 60.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-06",
@@ -68426,7 +68426,7 @@ const CASE_DATA = {
       "revenueEur": 6963,
       "cumulativeRevenue": 303676,
       "revenuePerActive": 53.15,
-      "gtvKEur": 79.6
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-06",
@@ -68448,7 +68448,7 @@ const CASE_DATA = {
       "revenueEur": 6442,
       "cumulativeRevenue": 316895,
       "revenuePerActive": 51.53,
-      "gtvKEur": 150.9
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-06",
@@ -68459,7 +68459,7 @@ const CASE_DATA = {
       "revenueEur": 6845,
       "cumulativeRevenue": 323740,
       "revenuePerActive": 53.9,
-      "gtvKEur": 13.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-06",
@@ -68470,7 +68470,7 @@ const CASE_DATA = {
       "revenueEur": 7071,
       "cumulativeRevenue": 330812,
       "revenuePerActive": 58.44,
-      "gtvKEur": 3283.8
+      "gtvKEur": 52
     },
     {
       "cohortMonth": "2017-06",
@@ -68481,7 +68481,7 @@ const CASE_DATA = {
       "revenueEur": 8300,
       "cumulativeRevenue": 339112,
       "revenuePerActive": 90.22,
-      "gtvKEur": 8774.1
+      "gtvKEur": 134.2
     },
     {
       "cohortMonth": "2017-06",
@@ -68492,7 +68492,7 @@ const CASE_DATA = {
       "revenueEur": 1819,
       "cumulativeRevenue": 340931,
       "revenuePerActive": 0,
-      "gtvKEur": 2180.1
+      "gtvKEur": 32.6
     },
     {
       "cohortMonth": "2017-05",
@@ -69108,7 +69108,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 1349,
       "revenuePerActive": 1.13,
-      "gtvKEur": 222.6
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69119,7 +69119,7 @@ const CASE_DATA = {
       "revenueEur": 3103,
       "cumulativeRevenue": 4452,
       "revenuePerActive": 20.82,
-      "gtvKEur": 1605.9
+      "gtvKEur": 73.9
     },
     {
       "cohortMonth": "2017-05",
@@ -69185,7 +69185,7 @@ const CASE_DATA = {
       "revenueEur": 4241,
       "cumulativeRevenue": 34364,
       "revenuePerActive": 27.9,
-      "gtvKEur": 11513.6
+      "gtvKEur": 124.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69240,7 +69240,7 @@ const CASE_DATA = {
       "revenueEur": 3986,
       "cumulativeRevenue": 52724,
       "revenuePerActive": 28.88,
-      "gtvKEur": 975.2
+      "gtvKEur": 24.5
     },
     {
       "cohortMonth": "2017-05",
@@ -69295,7 +69295,7 @@ const CASE_DATA = {
       "revenueEur": 10759,
       "cumulativeRevenue": 79709,
       "revenuePerActive": 80.89,
-      "gtvKEur": 1276.2
+      "gtvKEur": 41.3
     },
     {
       "cohortMonth": "2017-05",
@@ -69328,7 +69328,7 @@ const CASE_DATA = {
       "revenueEur": 3424,
       "cumulativeRevenue": 90573,
       "revenuePerActive": 25.55,
-      "gtvKEur": 799.9
+      "gtvKEur": 12.5
     },
     {
       "cohortMonth": "2017-05",
@@ -69372,7 +69372,7 @@ const CASE_DATA = {
       "revenueEur": 3830,
       "cumulativeRevenue": 104289,
       "revenuePerActive": 30.64,
-      "gtvKEur": 1128.8
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69383,7 +69383,7 @@ const CASE_DATA = {
       "revenueEur": 3935,
       "cumulativeRevenue": 108223,
       "revenuePerActive": 31.99,
-      "gtvKEur": 3.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-05",
@@ -69394,7 +69394,7 @@ const CASE_DATA = {
       "revenueEur": 3017,
       "cumulativeRevenue": 111240,
       "revenuePerActive": 24.93,
-      "gtvKEur": 2.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-05",
@@ -69405,7 +69405,7 @@ const CASE_DATA = {
       "revenueEur": 6226,
       "cumulativeRevenue": 117466,
       "revenuePerActive": 50.21,
-      "gtvKEur": 899.6
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69427,7 +69427,7 @@ const CASE_DATA = {
       "revenueEur": 11378,
       "cumulativeRevenue": 132064,
       "revenuePerActive": 90.3,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-05",
@@ -69438,7 +69438,7 @@ const CASE_DATA = {
       "revenueEur": 3943,
       "cumulativeRevenue": 136007,
       "revenuePerActive": 30.8,
-      "gtvKEur": 1029.8
+      "gtvKEur": 15.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69460,7 +69460,7 @@ const CASE_DATA = {
       "revenueEur": 4665,
       "cumulativeRevenue": 144611,
       "revenuePerActive": 37.62,
-      "gtvKEur": 639.4
+      "gtvKEur": 13.2
     },
     {
       "cohortMonth": "2017-05",
@@ -69493,7 +69493,7 @@ const CASE_DATA = {
       "revenueEur": 3908,
       "cumulativeRevenue": 156496,
       "revenuePerActive": 33.98,
-      "gtvKEur": 632.1
+      "gtvKEur": 7.8
     },
     {
       "cohortMonth": "2017-05",
@@ -69515,7 +69515,7 @@ const CASE_DATA = {
       "revenueEur": 4806,
       "cumulativeRevenue": 165676,
       "revenuePerActive": 43.69,
-      "gtvKEur": 660.8
+      "gtvKEur": 14.8
     },
     {
       "cohortMonth": "2017-05",
@@ -69548,7 +69548,7 @@ const CASE_DATA = {
       "revenueEur": 4330,
       "cumulativeRevenue": 180279,
       "revenuePerActive": 39.36,
-      "gtvKEur": 539.7
+      "gtvKEur": 15.2
     },
     {
       "cohortMonth": "2017-05",
@@ -69570,7 +69570,7 @@ const CASE_DATA = {
       "revenueEur": 5231,
       "cumulativeRevenue": 201946,
       "revenuePerActive": 48.44,
-      "gtvKEur": 688
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2017-05",
@@ -69581,7 +69581,7 @@ const CASE_DATA = {
       "revenueEur": 5343,
       "cumulativeRevenue": 207289,
       "revenuePerActive": 47.29,
-      "gtvKEur": 71.4
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-05",
@@ -69592,7 +69592,7 @@ const CASE_DATA = {
       "revenueEur": 5883,
       "cumulativeRevenue": 213173,
       "revenuePerActive": 52.53,
-      "gtvKEur": 378
+      "gtvKEur": 5.5
     },
     {
       "cohortMonth": "2017-05",
@@ -69603,7 +69603,7 @@ const CASE_DATA = {
       "revenueEur": 5245,
       "cumulativeRevenue": 218418,
       "revenuePerActive": 46.42,
-      "gtvKEur": 96.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2017-05",
@@ -69614,7 +69614,7 @@ const CASE_DATA = {
       "revenueEur": 4854,
       "cumulativeRevenue": 223272,
       "revenuePerActive": 43.73,
-      "gtvKEur": 215.9
+      "gtvKEur": 6.2
     },
     {
       "cohortMonth": "2017-05",
@@ -69625,7 +69625,7 @@ const CASE_DATA = {
       "revenueEur": 4550,
       "cumulativeRevenue": 227822,
       "revenuePerActive": 39.23,
-      "gtvKEur": 118.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-05",
@@ -69636,7 +69636,7 @@ const CASE_DATA = {
       "revenueEur": 3993,
       "cumulativeRevenue": 231815,
       "revenuePerActive": 36.3,
-      "gtvKEur": 2639.6
+      "gtvKEur": 26.6
     },
     {
       "cohortMonth": "2017-05",
@@ -69647,7 +69647,7 @@ const CASE_DATA = {
       "revenueEur": 4671,
       "cumulativeRevenue": 236486,
       "revenuePerActive": 44.07,
-      "gtvKEur": 54.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-05",
@@ -69658,7 +69658,7 @@ const CASE_DATA = {
       "revenueEur": 4569,
       "cumulativeRevenue": 241056,
       "revenuePerActive": 45.24,
-      "gtvKEur": 14381
+      "gtvKEur": 187.1
     },
     {
       "cohortMonth": "2017-05",
@@ -69669,7 +69669,7 @@ const CASE_DATA = {
       "revenueEur": 7209,
       "cumulativeRevenue": 248265,
       "revenuePerActive": 86.86,
-      "gtvKEur": 28855.9
+      "gtvKEur": 459.4
     },
     {
       "cohortMonth": "2017-05",
@@ -69680,7 +69680,7 @@ const CASE_DATA = {
       "revenueEur": 1563,
       "cumulativeRevenue": 249828,
       "revenuePerActive": 0,
-      "gtvKEur": 7281
+      "gtvKEur": 120.2
     },
     {
       "cohortMonth": "2017-04",
@@ -70087,7 +70087,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 963,
       "revenuePerActive": 0,
-      "gtvKEur": 1.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-04",
@@ -70307,7 +70307,7 @@ const CASE_DATA = {
       "revenueEur": 338,
       "cumulativeRevenue": 1518,
       "revenuePerActive": 2.77,
-      "gtvKEur": 2324.7
+      "gtvKEur": 27
     },
     {
       "cohortMonth": "2017-04",
@@ -70318,7 +70318,7 @@ const CASE_DATA = {
       "revenueEur": 1623,
       "cumulativeRevenue": 3141,
       "revenuePerActive": 14.12,
-      "gtvKEur": 3767.4
+      "gtvKEur": 45.6
     },
     {
       "cohortMonth": "2017-04",
@@ -70384,7 +70384,7 @@ const CASE_DATA = {
       "revenueEur": 3690,
       "cumulativeRevenue": 25890,
       "revenuePerActive": 30,
-      "gtvKEur": 304
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2017-04",
@@ -70439,7 +70439,7 @@ const CASE_DATA = {
       "revenueEur": 2486,
       "cumulativeRevenue": 41161,
       "revenuePerActive": 22.2,
-      "gtvKEur": 35642.3
+      "gtvKEur": 357.5
     },
     {
       "cohortMonth": "2017-04",
@@ -70494,7 +70494,7 @@ const CASE_DATA = {
       "revenueEur": 5113,
       "cumulativeRevenue": 63204,
       "revenuePerActive": 41.57,
-      "gtvKEur": 227
+      "gtvKEur": 4.6
     },
     {
       "cohortMonth": "2017-04",
@@ -70527,7 +70527,7 @@ const CASE_DATA = {
       "revenueEur": 2557,
       "cumulativeRevenue": 75312,
       "revenuePerActive": 21.31,
-      "gtvKEur": 169.2
+      "gtvKEur": 3.9
     },
     {
       "cohortMonth": "2017-04",
@@ -70560,7 +70560,7 @@ const CASE_DATA = {
       "revenueEur": 3414,
       "cumulativeRevenue": 84581,
       "revenuePerActive": 29.18,
-      "gtvKEur": 1.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-04",
@@ -70571,7 +70571,7 @@ const CASE_DATA = {
       "revenueEur": 2561,
       "cumulativeRevenue": 87141,
       "revenuePerActive": 21.52,
-      "gtvKEur": 217.9
+      "gtvKEur": 4.8
     },
     {
       "cohortMonth": "2017-04",
@@ -70604,7 +70604,7 @@ const CASE_DATA = {
       "revenueEur": 5678,
       "cumulativeRevenue": 102487,
       "revenuePerActive": 48.95,
-      "gtvKEur": 114.7
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2017-04",
@@ -70637,7 +70637,7 @@ const CASE_DATA = {
       "revenueEur": 3582,
       "cumulativeRevenue": 113263,
       "revenuePerActive": 32.27,
-      "gtvKEur": 109.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2017-04",
@@ -70659,7 +70659,7 @@ const CASE_DATA = {
       "revenueEur": 1894,
       "cumulativeRevenue": 118686,
       "revenuePerActive": 17.37,
-      "gtvKEur": 106.6
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2017-04",
@@ -70692,7 +70692,7 @@ const CASE_DATA = {
       "revenueEur": 2403,
       "cumulativeRevenue": 125518,
       "revenuePerActive": 23.33,
-      "gtvKEur": 71.7
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-04",
@@ -70714,7 +70714,7 @@ const CASE_DATA = {
       "revenueEur": 1491,
       "cumulativeRevenue": 128559,
       "revenuePerActive": 15.06,
-      "gtvKEur": 64.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-04",
@@ -70747,7 +70747,7 @@ const CASE_DATA = {
       "revenueEur": 2679,
       "cumulativeRevenue": 145782,
       "revenuePerActive": 28.21,
-      "gtvKEur": 40.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-04",
@@ -70769,7 +70769,7 @@ const CASE_DATA = {
       "revenueEur": 3769,
       "cumulativeRevenue": 151515,
       "revenuePerActive": 37.31,
-      "gtvKEur": 72.6
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-04",
@@ -70791,7 +70791,7 @@ const CASE_DATA = {
       "revenueEur": 1576,
       "cumulativeRevenue": 154756,
       "revenuePerActive": 16.59,
-      "gtvKEur": 82.2
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-04",
@@ -70813,7 +70813,7 @@ const CASE_DATA = {
       "revenueEur": 1844,
       "cumulativeRevenue": 158023,
       "revenuePerActive": 20.95,
-      "gtvKEur": 49.7
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-04",
@@ -70835,7 +70835,7 @@ const CASE_DATA = {
       "revenueEur": 1889,
       "cumulativeRevenue": 162087,
       "revenuePerActive": 20.54,
-      "gtvKEur": 140.6
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2017-04",
@@ -70846,7 +70846,7 @@ const CASE_DATA = {
       "revenueEur": 1405,
       "cumulativeRevenue": 163491,
       "revenuePerActive": 16.33,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-04",
@@ -70857,7 +70857,7 @@ const CASE_DATA = {
       "revenueEur": 9045,
       "cumulativeRevenue": 172537,
       "revenuePerActive": 106.41,
-      "gtvKEur": 2800
+      "gtvKEur": 33.2
     },
     {
       "cohortMonth": "2017-04",
@@ -70868,7 +70868,7 @@ const CASE_DATA = {
       "revenueEur": 5192,
       "cumulativeRevenue": 177729,
       "revenuePerActive": 83.74,
-      "gtvKEur": 6990.4
+      "gtvKEur": 78.4
     },
     {
       "cohortMonth": "2017-04",
@@ -70879,7 +70879,7 @@ const CASE_DATA = {
       "revenueEur": 584,
       "cumulativeRevenue": 178313,
       "revenuePerActive": 0,
-      "gtvKEur": 1912.9
+      "gtvKEur": 19.3
     },
     {
       "cohortMonth": "2017-03",
@@ -71495,7 +71495,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 388,
       "revenuePerActive": 0,
-      "gtvKEur": 1.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-03",
@@ -71506,7 +71506,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 388,
       "revenuePerActive": 0,
-      "gtvKEur": 15.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-03",
@@ -71517,7 +71517,7 @@ const CASE_DATA = {
       "revenueEur": 883,
       "cumulativeRevenue": 1271,
       "revenuePerActive": 6.95,
-      "gtvKEur": 161.3
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2017-03",
@@ -71528,7 +71528,7 @@ const CASE_DATA = {
       "revenueEur": 2236,
       "cumulativeRevenue": 3507,
       "revenuePerActive": 18.03,
-      "gtvKEur": 577
+      "gtvKEur": 16.4
     },
     {
       "cohortMonth": "2017-03",
@@ -71594,7 +71594,7 @@ const CASE_DATA = {
       "revenueEur": 2381,
       "cumulativeRevenue": 23566,
       "revenuePerActive": 20.35,
-      "gtvKEur": 148.3
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2017-03",
@@ -71649,7 +71649,7 @@ const CASE_DATA = {
       "revenueEur": 3096,
       "cumulativeRevenue": 39470,
       "revenuePerActive": 29.2,
-      "gtvKEur": 209.6
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2017-03",
@@ -71704,7 +71704,7 @@ const CASE_DATA = {
       "revenueEur": 3013,
       "cumulativeRevenue": 56592,
       "revenuePerActive": 28.16,
-      "gtvKEur": 113.7
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2017-03",
@@ -71737,7 +71737,7 @@ const CASE_DATA = {
       "revenueEur": 5761,
       "cumulativeRevenue": 66610,
       "revenuePerActive": 51.43,
-      "gtvKEur": 102.6
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2017-03",
@@ -71770,7 +71770,7 @@ const CASE_DATA = {
       "revenueEur": 3412,
       "cumulativeRevenue": 74238,
       "revenuePerActive": 33.13,
-      "gtvKEur": 49
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-03",
@@ -71781,7 +71781,7 @@ const CASE_DATA = {
       "revenueEur": 3648,
       "cumulativeRevenue": 77885,
       "revenuePerActive": 34.41,
-      "gtvKEur": 169.5
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2017-03",
@@ -71814,7 +71814,7 @@ const CASE_DATA = {
       "revenueEur": 4351,
       "cumulativeRevenue": 87989,
       "revenuePerActive": 42.66,
-      "gtvKEur": 106.3
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2017-03",
@@ -71847,7 +71847,7 @@ const CASE_DATA = {
       "revenueEur": 1818,
       "cumulativeRevenue": 94992,
       "revenuePerActive": 18.56,
-      "gtvKEur": 83.8
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-03",
@@ -71869,7 +71869,7 @@ const CASE_DATA = {
       "revenueEur": 5241,
       "cumulativeRevenue": 102833,
       "revenuePerActive": 53.48,
-      "gtvKEur": 65.5
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-03",
@@ -71902,7 +71902,7 @@ const CASE_DATA = {
       "revenueEur": 1684,
       "cumulativeRevenue": 107994,
       "revenuePerActive": 19.14,
-      "gtvKEur": 73.4
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2017-03",
@@ -71924,7 +71924,7 @@ const CASE_DATA = {
       "revenueEur": 1650,
       "cumulativeRevenue": 112936,
       "revenuePerActive": 17.74,
-      "gtvKEur": 79.5
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2017-03",
@@ -71957,7 +71957,7 @@ const CASE_DATA = {
       "revenueEur": 2495,
       "cumulativeRevenue": 125037,
       "revenuePerActive": 26.54,
-      "gtvKEur": 59
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-03",
@@ -71979,7 +71979,7 @@ const CASE_DATA = {
       "revenueEur": 2208,
       "cumulativeRevenue": 130516,
       "revenuePerActive": 24.81,
-      "gtvKEur": 23
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-03",
@@ -72001,7 +72001,7 @@ const CASE_DATA = {
       "revenueEur": 5024,
       "cumulativeRevenue": 137713,
       "revenuePerActive": 55.82,
-      "gtvKEur": 49.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-03",
@@ -72023,7 +72023,7 @@ const CASE_DATA = {
       "revenueEur": 1799,
       "cumulativeRevenue": 141596,
       "revenuePerActive": 20.45,
-      "gtvKEur": 52.4
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2017-03",
@@ -72045,7 +72045,7 @@ const CASE_DATA = {
       "revenueEur": 4124,
       "cumulativeRevenue": 147440,
       "revenuePerActive": 47.96,
-      "gtvKEur": 70.9
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-03",
@@ -72056,7 +72056,7 @@ const CASE_DATA = {
       "revenueEur": 1834,
       "cumulativeRevenue": 149273,
       "revenuePerActive": 22.92,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-03",
@@ -72067,7 +72067,7 @@ const CASE_DATA = {
       "revenueEur": 3593,
       "cumulativeRevenue": 152866,
       "revenuePerActive": 43.29,
-      "gtvKEur": 1548.8
+      "gtvKEur": 44.3
     },
     {
       "cohortMonth": "2017-03",
@@ -72078,7 +72078,7 @@ const CASE_DATA = {
       "revenueEur": 3759,
       "cumulativeRevenue": 156625,
       "revenuePerActive": 57.83,
-      "gtvKEur": 4213.6
+      "gtvKEur": 77.1
     },
     {
       "cohortMonth": "2017-03",
@@ -72089,7 +72089,7 @@ const CASE_DATA = {
       "revenueEur": 634,
       "cumulativeRevenue": 157259,
       "revenuePerActive": 0,
-      "gtvKEur": 1199
+      "gtvKEur": 24.1
     },
     {
       "cohortMonth": "2017-02",
@@ -72738,7 +72738,7 @@ const CASE_DATA = {
       "revenueEur": 167,
       "cumulativeRevenue": 343,
       "revenuePerActive": 1.64,
-      "gtvKEur": 7427.2
+      "gtvKEur": 74.3
     },
     {
       "cohortMonth": "2017-02",
@@ -72749,7 +72749,7 @@ const CASE_DATA = {
       "revenueEur": 2500,
       "cumulativeRevenue": 2843,
       "revenuePerActive": 25,
-      "gtvKEur": 54688.4
+      "gtvKEur": 546.9
     },
     {
       "cohortMonth": "2017-02",
@@ -72815,7 +72815,7 @@ const CASE_DATA = {
       "revenueEur": 4573,
       "cumulativeRevenue": 36685,
       "revenuePerActive": 55.1,
-      "gtvKEur": 158.8
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2017-02",
@@ -72870,7 +72870,7 @@ const CASE_DATA = {
       "revenueEur": 2913,
       "cumulativeRevenue": 51108,
       "revenuePerActive": 35.52,
-      "gtvKEur": 124.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-02",
@@ -72925,7 +72925,7 @@ const CASE_DATA = {
       "revenueEur": 5730,
       "cumulativeRevenue": 79280,
       "revenuePerActive": 77.43,
-      "gtvKEur": 159576.7
+      "gtvKEur": 1595.8
     },
     {
       "cohortMonth": "2017-02",
@@ -72958,7 +72958,7 @@ const CASE_DATA = {
       "revenueEur": 2677,
       "cumulativeRevenue": 87812,
       "revenuePerActive": 31.87,
-      "gtvKEur": 446502.2
+      "gtvKEur": 4465
     },
     {
       "cohortMonth": "2017-02",
@@ -73002,7 +73002,7 @@ const CASE_DATA = {
       "revenueEur": 2469,
       "cumulativeRevenue": 98728,
       "revenuePerActive": 30.87,
-      "gtvKEur": 124.6
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-02",
@@ -73035,7 +73035,7 @@ const CASE_DATA = {
       "revenueEur": 3016,
       "cumulativeRevenue": 113297,
       "revenuePerActive": 41.32,
-      "gtvKEur": 72.2
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2017-02",
@@ -73057,7 +73057,7 @@ const CASE_DATA = {
       "revenueEur": 5536,
       "cumulativeRevenue": 124797,
       "revenuePerActive": 81.42,
-      "gtvKEur": 7.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-02",
@@ -73068,7 +73068,7 @@ const CASE_DATA = {
       "revenueEur": 2765,
       "cumulativeRevenue": 127562,
       "revenuePerActive": 40.66,
-      "gtvKEur": 87.5
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2017-02",
@@ -73079,7 +73079,7 @@ const CASE_DATA = {
       "revenueEur": 3084,
       "cumulativeRevenue": 130646,
       "revenuePerActive": 45.35,
-      "gtvKEur": 1336926
+      "gtvKEur": 13369.3
     },
     {
       "cohortMonth": "2017-02",
@@ -73090,7 +73090,7 @@ const CASE_DATA = {
       "revenueEur": 3086,
       "cumulativeRevenue": 133732,
       "revenuePerActive": 46.76,
-      "gtvKEur": 27.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-02",
@@ -73123,7 +73123,7 @@ const CASE_DATA = {
       "revenueEur": 3448,
       "cumulativeRevenue": 143055,
       "revenuePerActive": 49.26,
-      "gtvKEur": 58.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-02",
@@ -73145,7 +73145,7 @@ const CASE_DATA = {
       "revenueEur": 2826,
       "cumulativeRevenue": 148896,
       "revenuePerActive": 44.86,
-      "gtvKEur": 29067.5
+      "gtvKEur": 290.7
     },
     {
       "cohortMonth": "2017-02",
@@ -73167,7 +73167,7 @@ const CASE_DATA = {
       "revenueEur": 3799,
       "cumulativeRevenue": 159845,
       "revenuePerActive": 55.86,
-      "gtvKEur": 1.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-02",
@@ -73178,7 +73178,7 @@ const CASE_DATA = {
       "revenueEur": 4370,
       "cumulativeRevenue": 164214,
       "revenuePerActive": 64.26,
-      "gtvKEur": 25.8
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2017-02",
@@ -73200,7 +73200,7 @@ const CASE_DATA = {
       "revenueEur": 3120,
       "cumulativeRevenue": 170197,
       "revenuePerActive": 47.27,
-      "gtvKEur": 21
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-02",
@@ -73222,7 +73222,7 @@ const CASE_DATA = {
       "revenueEur": 3512,
       "cumulativeRevenue": 177141,
       "revenuePerActive": 53.22,
-      "gtvKEur": 21.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-02",
@@ -73244,7 +73244,7 @@ const CASE_DATA = {
       "revenueEur": 2622,
       "cumulativeRevenue": 182628,
       "revenuePerActive": 40.97,
-      "gtvKEur": 15.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-02",
@@ -73266,7 +73266,7 @@ const CASE_DATA = {
       "revenueEur": 3132,
       "cumulativeRevenue": 189003,
       "revenuePerActive": 49.71,
-      "gtvKEur": 44.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-02",
@@ -73277,7 +73277,7 @@ const CASE_DATA = {
       "revenueEur": 2645,
       "cumulativeRevenue": 191648,
       "revenuePerActive": 40.69,
-      "gtvKEur": 2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-02",
@@ -73288,7 +73288,7 @@ const CASE_DATA = {
       "revenueEur": 3411,
       "cumulativeRevenue": 195059,
       "revenuePerActive": 56.85,
-      "gtvKEur": 1395.5
+      "gtvKEur": 14
     },
     {
       "cohortMonth": "2017-02",
@@ -73299,7 +73299,7 @@ const CASE_DATA = {
       "revenueEur": 3726,
       "cumulativeRevenue": 198785,
       "revenuePerActive": 79.27,
-      "gtvKEur": 3575.6
+      "gtvKEur": 35.8
     },
     {
       "cohortMonth": "2017-02",
@@ -73310,7 +73310,7 @@ const CASE_DATA = {
       "revenueEur": 1877,
       "cumulativeRevenue": 200662,
       "revenuePerActive": 0,
-      "gtvKEur": 997.1
+      "gtvKEur": 10
     },
     {
       "cohortMonth": "2017-01",
@@ -73970,7 +73970,7 @@ const CASE_DATA = {
       "revenueEur": 324,
       "cumulativeRevenue": 6452,
       "revenuePerActive": 3.85,
-      "gtvKEur": 155
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2017-01",
@@ -73981,7 +73981,7 @@ const CASE_DATA = {
       "revenueEur": 2446,
       "cumulativeRevenue": 8898,
       "revenuePerActive": 29.47,
-      "gtvKEur": 380.1
+      "gtvKEur": 4.1
     },
     {
       "cohortMonth": "2017-01",
@@ -74047,7 +74047,7 @@ const CASE_DATA = {
       "revenueEur": 2883,
       "cumulativeRevenue": 26424,
       "revenuePerActive": 37.44,
-      "gtvKEur": 135.1
+      "gtvKEur": 1.4
     },
     {
       "cohortMonth": "2017-01",
@@ -74102,7 +74102,7 @@ const CASE_DATA = {
       "revenueEur": 3667,
       "cumulativeRevenue": 42173,
       "revenuePerActive": 50.94,
-      "gtvKEur": 4260161.7
+      "gtvKEur": 42601.6
     },
     {
       "cohortMonth": "2017-01",
@@ -74157,7 +74157,7 @@ const CASE_DATA = {
       "revenueEur": 3515,
       "cumulativeRevenue": 59152,
       "revenuePerActive": 46.26,
-      "gtvKEur": 176.1
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2017-01",
@@ -74190,7 +74190,7 @@ const CASE_DATA = {
       "revenueEur": 1871,
       "cumulativeRevenue": 65165,
       "revenuePerActive": 27.12,
-      "gtvKEur": 88
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2017-01",
@@ -74234,7 +74234,7 @@ const CASE_DATA = {
       "revenueEur": 1971,
       "cumulativeRevenue": 74727,
       "revenuePerActive": 31.28,
-      "gtvKEur": 120.4
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2017-01",
@@ -74267,7 +74267,7 @@ const CASE_DATA = {
       "revenueEur": 2091,
       "cumulativeRevenue": 80596,
       "revenuePerActive": 29.88,
-      "gtvKEur": 76.4
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-01",
@@ -74300,7 +74300,7 @@ const CASE_DATA = {
       "revenueEur": 1919,
       "cumulativeRevenue": 87096,
       "revenuePerActive": 33.09,
-      "gtvKEur": 64
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-01",
@@ -74322,7 +74322,7 @@ const CASE_DATA = {
       "revenueEur": 1920,
       "cumulativeRevenue": 91861,
       "revenuePerActive": 32.54,
-      "gtvKEur": 58.2
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-01",
@@ -74355,7 +74355,7 @@ const CASE_DATA = {
       "revenueEur": 3975,
       "cumulativeRevenue": 102108,
       "revenuePerActive": 68.53,
-      "gtvKEur": 84.9
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-01",
@@ -74377,7 +74377,7 @@ const CASE_DATA = {
       "revenueEur": 2181,
       "cumulativeRevenue": 109152,
       "revenuePerActive": 38.27,
-      "gtvKEur": 62.1
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2017-01",
@@ -74388,7 +74388,7 @@ const CASE_DATA = {
       "revenueEur": 2334,
       "cumulativeRevenue": 111486,
       "revenuePerActive": 40.94,
-      "gtvKEur": 0.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2017-01",
@@ -74410,7 +74410,7 @@ const CASE_DATA = {
       "revenueEur": 2429,
       "cumulativeRevenue": 116848,
       "revenuePerActive": 42.61,
-      "gtvKEur": 40.4
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2017-01",
@@ -74432,7 +74432,7 @@ const CASE_DATA = {
       "revenueEur": 2215,
       "cumulativeRevenue": 121119,
       "revenuePerActive": 39.56,
-      "gtvKEur": 48.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-01",
@@ -74454,7 +74454,7 @@ const CASE_DATA = {
       "revenueEur": 3028,
       "cumulativeRevenue": 127372,
       "revenuePerActive": 51.33,
-      "gtvKEur": 50.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2017-01",
@@ -74476,7 +74476,7 @@ const CASE_DATA = {
       "revenueEur": 2392,
       "cumulativeRevenue": 132376,
       "revenuePerActive": 41.96,
-      "gtvKEur": 22
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2017-01",
@@ -74498,7 +74498,7 @@ const CASE_DATA = {
       "revenueEur": 1848,
       "cumulativeRevenue": 137950,
       "revenuePerActive": 33.61,
-      "gtvKEur": 84.9
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2017-01",
@@ -74509,7 +74509,7 @@ const CASE_DATA = {
       "revenueEur": 1881,
       "cumulativeRevenue": 139831,
       "revenuePerActive": 32.43,
-      "gtvKEur": 9.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2017-01",
@@ -74520,7 +74520,7 @@ const CASE_DATA = {
       "revenueEur": 1959,
       "cumulativeRevenue": 141790,
       "revenuePerActive": 34.37,
-      "gtvKEur": 1543.1
+      "gtvKEur": 15.4
     },
     {
       "cohortMonth": "2017-01",
@@ -74531,7 +74531,7 @@ const CASE_DATA = {
       "revenueEur": 2611,
       "cumulativeRevenue": 144401,
       "revenuePerActive": 63.69,
-      "gtvKEur": 4479.6
+      "gtvKEur": 46
     },
     {
       "cohortMonth": "2017-01",
@@ -74542,7 +74542,7 @@ const CASE_DATA = {
       "revenueEur": 318,
       "cumulativeRevenue": 144719,
       "revenuePerActive": 0,
-      "gtvKEur": 1142.3
+      "gtvKEur": 12.5
     },
     {
       "cohortMonth": "2016-12",
@@ -75213,7 +75213,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 788,
       "revenuePerActive": 0,
-      "gtvKEur": 308.7
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2016-12",
@@ -75224,7 +75224,7 @@ const CASE_DATA = {
       "revenueEur": 1881,
       "cumulativeRevenue": 2669,
       "revenuePerActive": 28.07,
-      "gtvKEur": 225.9
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2016-12",
@@ -75290,7 +75290,7 @@ const CASE_DATA = {
       "revenueEur": 573,
       "cumulativeRevenue": 29213,
       "revenuePerActive": 10.41,
-      "gtvKEur": 52
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-12",
@@ -75345,7 +75345,7 @@ const CASE_DATA = {
       "revenueEur": 3186,
       "cumulativeRevenue": 34574,
       "revenuePerActive": 56.9,
-      "gtvKEur": 64.6
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2016-12",
@@ -75400,7 +75400,7 @@ const CASE_DATA = {
       "revenueEur": 2851,
       "cumulativeRevenue": 61590,
       "revenuePerActive": 48.33,
-      "gtvKEur": 38.7
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-12",
@@ -75433,7 +75433,7 @@ const CASE_DATA = {
       "revenueEur": 2940,
       "cumulativeRevenue": 71068,
       "revenuePerActive": 54.45,
-      "gtvKEur": 36.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-12",
@@ -75466,7 +75466,7 @@ const CASE_DATA = {
       "revenueEur": 2910,
       "cumulativeRevenue": 79311,
       "revenuePerActive": 59.39,
-      "gtvKEur": 2.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-12",
@@ -75477,7 +75477,7 @@ const CASE_DATA = {
       "revenueEur": 5198,
       "cumulativeRevenue": 84509,
       "revenuePerActive": 108.3,
-      "gtvKEur": 82.4
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2016-12",
@@ -75510,7 +75510,7 @@ const CASE_DATA = {
       "revenueEur": 2649,
       "cumulativeRevenue": 92694,
       "revenuePerActive": 54.07,
-      "gtvKEur": 23.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-12",
@@ -75543,7 +75543,7 @@ const CASE_DATA = {
       "revenueEur": 4954,
       "cumulativeRevenue": 105085,
       "revenuePerActive": 105.41,
-      "gtvKEur": 35.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-12",
@@ -75565,7 +75565,7 @@ const CASE_DATA = {
       "revenueEur": 2816,
       "cumulativeRevenue": 110560,
       "revenuePerActive": 74.11,
-      "gtvKEur": 15.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-12",
@@ -75598,7 +75598,7 @@ const CASE_DATA = {
       "revenueEur": 2085,
       "cumulativeRevenue": 117273,
       "revenuePerActive": 50.86,
-      "gtvKEur": 59.3
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2016-12",
@@ -75620,7 +75620,7 @@ const CASE_DATA = {
       "revenueEur": 2090,
       "cumulativeRevenue": 123905,
       "revenuePerActive": 46.44,
-      "gtvKEur": 13.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-12",
@@ -75653,7 +75653,7 @@ const CASE_DATA = {
       "revenueEur": 1485,
       "cumulativeRevenue": 128998,
       "revenuePerActive": 35.35,
-      "gtvKEur": 17.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-12",
@@ -75675,7 +75675,7 @@ const CASE_DATA = {
       "revenueEur": 3163,
       "cumulativeRevenue": 133412,
       "revenuePerActive": 70.3,
-      "gtvKEur": 17.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-12",
@@ -75697,7 +75697,7 @@ const CASE_DATA = {
       "revenueEur": 1391,
       "cumulativeRevenue": 136827,
       "revenuePerActive": 33.93,
-      "gtvKEur": 20.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-12",
@@ -75719,7 +75719,7 @@ const CASE_DATA = {
       "revenueEur": 696,
       "cumulativeRevenue": 138262,
       "revenuePerActive": 19.33,
-      "gtvKEur": 9.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-12",
@@ -75730,7 +75730,7 @@ const CASE_DATA = {
       "revenueEur": 696,
       "cumulativeRevenue": 138957,
       "revenuePerActive": 19.88,
-      "gtvKEur": 12
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-12",
@@ -75741,7 +75741,7 @@ const CASE_DATA = {
       "revenueEur": 3293,
       "cumulativeRevenue": 142251,
       "revenuePerActive": 82.34,
-      "gtvKEur": 180.4
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2016-12",
@@ -75752,7 +75752,7 @@ const CASE_DATA = {
       "revenueEur": 831,
       "cumulativeRevenue": 143082,
       "revenuePerActive": 20.78,
-      "gtvKEur": 14.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-12",
@@ -75763,7 +75763,7 @@ const CASE_DATA = {
       "revenueEur": 705,
       "cumulativeRevenue": 143787,
       "revenuePerActive": 19.59,
-      "gtvKEur": 672.3
+      "gtvKEur": 6.7
     },
     {
       "cohortMonth": "2016-12",
@@ -75774,7 +75774,7 @@ const CASE_DATA = {
       "revenueEur": 748,
       "cumulativeRevenue": 144535,
       "revenuePerActive": 24.13,
-      "gtvKEur": 1832.8
+      "gtvKEur": 18.3
     },
     {
       "cohortMonth": "2016-12",
@@ -75785,7 +75785,7 @@ const CASE_DATA = {
       "revenueEur": 148,
       "cumulativeRevenue": 144684,
       "revenuePerActive": 0,
-      "gtvKEur": 585.5
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2016-11",
@@ -76467,7 +76467,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 698,
       "revenuePerActive": 0,
-      "gtvKEur": 85.5
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2016-11",
@@ -76478,7 +76478,7 @@ const CASE_DATA = {
       "revenueEur": 1469,
       "cumulativeRevenue": 2167,
       "revenuePerActive": 25.77,
-      "gtvKEur": 282.5
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2016-11",
@@ -76544,7 +76544,7 @@ const CASE_DATA = {
       "revenueEur": 1573,
       "cumulativeRevenue": 17951,
       "revenuePerActive": 32.78,
-      "gtvKEur": 65.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-11",
@@ -76599,7 +76599,7 @@ const CASE_DATA = {
       "revenueEur": 1526,
       "cumulativeRevenue": 25949,
       "revenuePerActive": 26.77,
-      "gtvKEur": 116.3
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2016-11",
@@ -76654,7 +76654,7 @@ const CASE_DATA = {
       "revenueEur": 1699,
       "cumulativeRevenue": 35038,
       "revenuePerActive": 29.29,
-      "gtvKEur": 78.5
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2016-11",
@@ -76687,7 +76687,7 @@ const CASE_DATA = {
       "revenueEur": 1786,
       "cumulativeRevenue": 40180,
       "revenuePerActive": 31.89,
-      "gtvKEur": 47.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-11",
@@ -76731,7 +76731,7 @@ const CASE_DATA = {
       "revenueEur": 1743,
       "cumulativeRevenue": 47216,
       "revenuePerActive": 31.69,
-      "gtvKEur": 46.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-11",
@@ -76764,7 +76764,7 @@ const CASE_DATA = {
       "revenueEur": 2324,
       "cumulativeRevenue": 53010,
       "revenuePerActive": 48.41,
-      "gtvKEur": 56.6
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2016-11",
@@ -76797,7 +76797,7 @@ const CASE_DATA = {
       "revenueEur": 1600,
       "cumulativeRevenue": 58062,
       "revenuePerActive": 35.55,
-      "gtvKEur": 35.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-11",
@@ -76819,7 +76819,7 @@ const CASE_DATA = {
       "revenueEur": 1469,
       "cumulativeRevenue": 61075,
       "revenuePerActive": 31.94,
-      "gtvKEur": 26.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-11",
@@ -76852,7 +76852,7 @@ const CASE_DATA = {
       "revenueEur": 1697,
       "cumulativeRevenue": 65918,
       "revenuePerActive": 42.44,
-      "gtvKEur": 31.4
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-11",
@@ -76874,7 +76874,7 @@ const CASE_DATA = {
       "revenueEur": 1680,
       "cumulativeRevenue": 69299,
       "revenuePerActive": 45.41,
-      "gtvKEur": 7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-11",
@@ -76907,7 +76907,7 @@ const CASE_DATA = {
       "revenueEur": 1751,
       "cumulativeRevenue": 75256,
       "revenuePerActive": 42.71,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-11",
@@ -76929,7 +76929,7 @@ const CASE_DATA = {
       "revenueEur": 1749,
       "cumulativeRevenue": 78753,
       "revenuePerActive": 44.84,
-      "gtvKEur": 22
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-11",
@@ -76951,7 +76951,7 @@ const CASE_DATA = {
       "revenueEur": 1518,
       "cumulativeRevenue": 82277,
       "revenuePerActive": 39.94,
-      "gtvKEur": 14.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-11",
@@ -76973,7 +76973,7 @@ const CASE_DATA = {
       "revenueEur": 1793,
       "cumulativeRevenue": 85792,
       "revenuePerActive": 51.24,
-      "gtvKEur": 5.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-11",
@@ -76995,7 +76995,7 @@ const CASE_DATA = {
       "revenueEur": 1585,
       "cumulativeRevenue": 89121,
       "revenuePerActive": 48.04,
-      "gtvKEur": 28.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-11",
@@ -77017,7 +77017,7 @@ const CASE_DATA = {
       "revenueEur": 1907,
       "cumulativeRevenue": 93148,
       "revenuePerActive": 56.09,
-      "gtvKEur": 581.3
+      "gtvKEur": 5.8
     },
     {
       "cohortMonth": "2016-11",
@@ -77028,7 +77028,7 @@ const CASE_DATA = {
       "revenueEur": 1664,
       "cumulativeRevenue": 94812,
       "revenuePerActive": 57.38,
-      "gtvKEur": 1625.6
+      "gtvKEur": 16.3
     },
     {
       "cohortMonth": "2016-11",
@@ -77039,7 +77039,7 @@ const CASE_DATA = {
       "revenueEur": 279,
       "cumulativeRevenue": 95091,
       "revenuePerActive": 0,
-      "gtvKEur": 371.3
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2016-10",
@@ -77732,7 +77732,7 @@ const CASE_DATA = {
       "revenueEur": 56,
       "cumulativeRevenue": 73,
       "revenuePerActive": 0.98,
-      "gtvKEur": 80.3
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2016-10",
@@ -77743,7 +77743,7 @@ const CASE_DATA = {
       "revenueEur": 450,
       "cumulativeRevenue": 524,
       "revenuePerActive": 9.01,
-      "gtvKEur": 301.2
+      "gtvKEur": 3
     },
     {
       "cohortMonth": "2016-10",
@@ -77798,7 +77798,7 @@ const CASE_DATA = {
       "revenueEur": 278,
       "cumulativeRevenue": 3390,
       "revenuePerActive": 5.15,
-      "gtvKEur": 0.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-10",
@@ -77809,7 +77809,7 @@ const CASE_DATA = {
       "revenueEur": 1160,
       "cumulativeRevenue": 4551,
       "revenuePerActive": 20.01,
-      "gtvKEur": 74.5
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-10",
@@ -77864,7 +77864,7 @@ const CASE_DATA = {
       "revenueEur": 994,
       "cumulativeRevenue": 8631,
       "revenuePerActive": 18.42,
-      "gtvKEur": 115.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2016-10",
@@ -77919,7 +77919,7 @@ const CASE_DATA = {
       "revenueEur": 1054,
       "cumulativeRevenue": 20332,
       "revenuePerActive": 19.89,
-      "gtvKEur": 49.6
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-10",
@@ -77952,7 +77952,7 @@ const CASE_DATA = {
       "revenueEur": 11359,
       "cumulativeRevenue": 33772,
       "revenuePerActive": 218.44,
-      "gtvKEur": 57
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2016-10",
@@ -77996,7 +77996,7 @@ const CASE_DATA = {
       "revenueEur": 1355,
       "cumulativeRevenue": 35744,
       "revenuePerActive": 25.56,
-      "gtvKEur": 85.2
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2016-10",
@@ -78029,7 +78029,7 @@ const CASE_DATA = {
       "revenueEur": 206,
       "cumulativeRevenue": 36360,
       "revenuePerActive": 4.03,
-      "gtvKEur": 51.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-10",
@@ -78062,7 +78062,7 @@ const CASE_DATA = {
       "revenueEur": 236,
       "cumulativeRevenue": 37265,
       "revenuePerActive": 4.55,
-      "gtvKEur": 32.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-10",
@@ -78084,7 +78084,7 @@ const CASE_DATA = {
       "revenueEur": 13432,
       "cumulativeRevenue": 50933,
       "revenuePerActive": 291.99,
-      "gtvKEur": 36.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-10",
@@ -78117,7 +78117,7 @@ const CASE_DATA = {
       "revenueEur": 1062,
       "cumulativeRevenue": 54246,
       "revenuePerActive": 20.42,
-      "gtvKEur": 35.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-10",
@@ -78139,7 +78139,7 @@ const CASE_DATA = {
       "revenueEur": 1260,
       "cumulativeRevenue": 57768,
       "revenuePerActive": 25.72,
-      "gtvKEur": 22.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-10",
@@ -78172,7 +78172,7 @@ const CASE_DATA = {
       "revenueEur": 2538,
       "cumulativeRevenue": 64276,
       "revenuePerActive": 54,
-      "gtvKEur": 25.5
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-10",
@@ -78194,7 +78194,7 @@ const CASE_DATA = {
       "revenueEur": 1414,
       "cumulativeRevenue": 67532,
       "revenuePerActive": 27.2,
-      "gtvKEur": 17.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-10",
@@ -78216,7 +78216,7 @@ const CASE_DATA = {
       "revenueEur": 2657,
       "cumulativeRevenue": 71528,
       "revenuePerActive": 56.53,
-      "gtvKEur": 21.7
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-10",
@@ -78238,7 +78238,7 @@ const CASE_DATA = {
       "revenueEur": 327,
       "cumulativeRevenue": 72214,
       "revenuePerActive": 6.96,
-      "gtvKEur": 15.1
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-10",
@@ -78260,7 +78260,7 @@ const CASE_DATA = {
       "revenueEur": 1434,
       "cumulativeRevenue": 73881,
       "revenuePerActive": 31.86,
-      "gtvKEur": 53
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-10",
@@ -78282,7 +78282,7 @@ const CASE_DATA = {
       "revenueEur": 254,
       "cumulativeRevenue": 74389,
       "revenuePerActive": 5.65,
-      "gtvKEur": 833.8
+      "gtvKEur": 8.3
     },
     {
       "cohortMonth": "2016-10",
@@ -78293,7 +78293,7 @@ const CASE_DATA = {
       "revenueEur": 1655,
       "cumulativeRevenue": 76044,
       "revenuePerActive": 55.16,
-      "gtvKEur": 1966.7
+      "gtvKEur": 19.7
     },
     {
       "cohortMonth": "2016-10",
@@ -78304,7 +78304,7 @@ const CASE_DATA = {
       "revenueEur": 13,
       "cumulativeRevenue": 76057,
       "revenuePerActive": 0,
-      "gtvKEur": 492.1
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2016-09",
@@ -79008,7 +79008,7 @@ const CASE_DATA = {
       "revenueEur": 104,
       "cumulativeRevenue": 2919,
       "revenuePerActive": 1.89,
-      "gtvKEur": 189.7
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2016-09",
@@ -79019,7 +79019,7 @@ const CASE_DATA = {
       "revenueEur": 689,
       "cumulativeRevenue": 3609,
       "revenuePerActive": 12.77,
-      "gtvKEur": 544.8
+      "gtvKEur": 5.4
     },
     {
       "cohortMonth": "2016-09",
@@ -79085,7 +79085,7 @@ const CASE_DATA = {
       "revenueEur": 813,
       "cumulativeRevenue": 18317,
       "revenuePerActive": 14.02,
-      "gtvKEur": 95.2
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2016-09",
@@ -79140,7 +79140,7 @@ const CASE_DATA = {
       "revenueEur": 668,
       "cumulativeRevenue": 26391,
       "revenuePerActive": 11.93,
-      "gtvKEur": 152.1
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2016-09",
@@ -79195,7 +79195,7 @@ const CASE_DATA = {
       "revenueEur": 1811,
       "cumulativeRevenue": 45911,
       "revenuePerActive": 32.34,
-      "gtvKEur": 108.7
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2016-09",
@@ -79228,7 +79228,7 @@ const CASE_DATA = {
       "revenueEur": 681,
       "cumulativeRevenue": 48211,
       "revenuePerActive": 13.62,
-      "gtvKEur": 44.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-09",
@@ -79272,7 +79272,7 @@ const CASE_DATA = {
       "revenueEur": 1204,
       "cumulativeRevenue": 66587,
       "revenuePerActive": 24.57,
-      "gtvKEur": 273.6
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2016-09",
@@ -79305,7 +79305,7 @@ const CASE_DATA = {
       "revenueEur": 2971,
       "cumulativeRevenue": 74943,
       "revenuePerActive": 56.05,
-      "gtvKEur": 215.7
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2016-09",
@@ -79338,7 +79338,7 @@ const CASE_DATA = {
       "revenueEur": 1750,
       "cumulativeRevenue": 79988,
       "revenuePerActive": 34.31,
-      "gtvKEur": 63.7
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2016-09",
@@ -79360,7 +79360,7 @@ const CASE_DATA = {
       "revenueEur": 1054,
       "cumulativeRevenue": 82214,
       "revenuePerActive": 20.66,
-      "gtvKEur": 33.3
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-09",
@@ -79393,7 +79393,7 @@ const CASE_DATA = {
       "revenueEur": 19508,
       "cumulativeRevenue": 107076,
       "revenuePerActive": 433.51,
-      "gtvKEur": 165.6
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2016-09",
@@ -79415,7 +79415,7 @@ const CASE_DATA = {
       "revenueEur": 2832,
       "cumulativeRevenue": 112303,
       "revenuePerActive": 69.06,
-      "gtvKEur": 128.2
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2016-09",
@@ -79448,7 +79448,7 @@ const CASE_DATA = {
       "revenueEur": 2411,
       "cumulativeRevenue": 125932,
       "revenuePerActive": 57.41,
-      "gtvKEur": 34
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-09",
@@ -79470,7 +79470,7 @@ const CASE_DATA = {
       "revenueEur": 2844,
       "cumulativeRevenue": 135341,
       "revenuePerActive": 69.37,
-      "gtvKEur": 13.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-09",
@@ -79492,7 +79492,7 @@ const CASE_DATA = {
       "revenueEur": 3296,
       "cumulativeRevenue": 141675,
       "revenuePerActive": 78.49,
-      "gtvKEur": 25.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-09",
@@ -79514,7 +79514,7 @@ const CASE_DATA = {
       "revenueEur": 2649,
       "cumulativeRevenue": 148690,
       "revenuePerActive": 63.07,
-      "gtvKEur": 77.1
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2016-09",
@@ -79536,7 +79536,7 @@ const CASE_DATA = {
       "revenueEur": 2616,
       "cumulativeRevenue": 154077,
       "revenuePerActive": 62.28,
-      "gtvKEur": 163.4
+      "gtvKEur": 1.6
     },
     {
       "cohortMonth": "2016-09",
@@ -79558,7 +79558,7 @@ const CASE_DATA = {
       "revenueEur": 3932,
       "cumulativeRevenue": 160832,
       "revenuePerActive": 100.81,
-      "gtvKEur": 3813.8
+      "gtvKEur": 38.1
     },
     {
       "cohortMonth": "2016-09",
@@ -79569,7 +79569,7 @@ const CASE_DATA = {
       "revenueEur": 4441,
       "cumulativeRevenue": 165273,
       "revenuePerActive": 138.77,
-      "gtvKEur": 8738.3
+      "gtvKEur": 87.4
     },
     {
       "cohortMonth": "2016-09",
@@ -79580,7 +79580,7 @@ const CASE_DATA = {
       "revenueEur": 133,
       "cumulativeRevenue": 165406,
       "revenuePerActive": 0,
-      "gtvKEur": 2394.3
+      "gtvKEur": 23.9
     },
     {
       "cohortMonth": "2016-08",
@@ -80295,7 +80295,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 991,
       "revenuePerActive": 0,
-      "gtvKEur": 33.3
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2016-08",
@@ -80306,7 +80306,7 @@ const CASE_DATA = {
       "revenueEur": 680,
       "cumulativeRevenue": 1671,
       "revenuePerActive": 17.91,
-      "gtvKEur": 105.3
+      "gtvKEur": 7.9
     },
     {
       "cohortMonth": "2016-08",
@@ -80372,7 +80372,7 @@ const CASE_DATA = {
       "revenueEur": 151,
       "cumulativeRevenue": 5427,
       "revenuePerActive": 4.59,
-      "gtvKEur": 54.8
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2016-08",
@@ -80427,7 +80427,7 @@ const CASE_DATA = {
       "revenueEur": 365,
       "cumulativeRevenue": 8593,
       "revenuePerActive": 9.36,
-      "gtvKEur": 30.3
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2016-08",
@@ -80482,7 +80482,7 @@ const CASE_DATA = {
       "revenueEur": 322,
       "cumulativeRevenue": 10744,
       "revenuePerActive": 9.21,
-      "gtvKEur": 18
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-08",
@@ -80515,7 +80515,7 @@ const CASE_DATA = {
       "revenueEur": 322,
       "cumulativeRevenue": 11711,
       "revenuePerActive": 10.74,
-      "gtvKEur": 16.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-08",
@@ -80559,7 +80559,7 @@ const CASE_DATA = {
       "revenueEur": 237,
       "cumulativeRevenue": 12743,
       "revenuePerActive": 8.16,
-      "gtvKEur": 29.5
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2016-08",
@@ -80592,7 +80592,7 @@ const CASE_DATA = {
       "revenueEur": 408,
       "cumulativeRevenue": 13624,
       "revenuePerActive": 12.75,
-      "gtvKEur": 13.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-08",
@@ -80625,7 +80625,7 @@ const CASE_DATA = {
       "revenueEur": 408,
       "cumulativeRevenue": 14677,
       "revenuePerActive": 14.07,
-      "gtvKEur": 11.1
+      "gtvKEur": 2.2
     },
     {
       "cohortMonth": "2016-08",
@@ -80647,7 +80647,7 @@ const CASE_DATA = {
       "revenueEur": 532,
       "cumulativeRevenue": 15399,
       "revenuePerActive": 19.02,
-      "gtvKEur": 12.9
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-08",
@@ -80680,7 +80680,7 @@ const CASE_DATA = {
       "revenueEur": 190,
       "cumulativeRevenue": 15969,
       "revenuePerActive": 7.03,
-      "gtvKEur": 10.4
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2016-08",
@@ -80702,7 +80702,7 @@ const CASE_DATA = {
       "revenueEur": 2245,
       "cumulativeRevenue": 18404,
       "revenuePerActive": 89.81,
-      "gtvKEur": 15.9
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-08",
@@ -80735,7 +80735,7 @@ const CASE_DATA = {
       "revenueEur": 415,
       "cumulativeRevenue": 19604,
       "revenuePerActive": 15.98,
-      "gtvKEur": 4.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-08",
@@ -80757,7 +80757,7 @@ const CASE_DATA = {
       "revenueEur": 767,
       "cumulativeRevenue": 20563,
       "revenuePerActive": 30.68,
-      "gtvKEur": 7.3
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-08",
@@ -80779,7 +80779,7 @@ const CASE_DATA = {
       "revenueEur": 617,
       "cumulativeRevenue": 21454,
       "revenuePerActive": 24.68,
-      "gtvKEur": 7.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-08",
@@ -80801,7 +80801,7 @@ const CASE_DATA = {
       "revenueEur": 300,
       "cumulativeRevenue": 22054,
       "revenuePerActive": 14.29,
-      "gtvKEur": 3.7
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-08",
@@ -80823,7 +80823,7 @@ const CASE_DATA = {
       "revenueEur": 192,
       "cumulativeRevenue": 22437,
       "revenuePerActive": 7.98,
-      "gtvKEur": 1178.9
+      "gtvKEur": 11.8
     },
     {
       "cohortMonth": "2016-08",
@@ -80845,7 +80845,7 @@ const CASE_DATA = {
       "revenueEur": 1029,
       "cumulativeRevenue": 25713,
       "revenuePerActive": 42.85,
-      "gtvKEur": 11238.7
+      "gtvKEur": 112.4
     },
     {
       "cohortMonth": "2016-08",
@@ -80856,7 +80856,7 @@ const CASE_DATA = {
       "revenueEur": 973,
       "cumulativeRevenue": 26686,
       "revenuePerActive": 57.26,
-      "gtvKEur": 30593.1
+      "gtvKEur": 305.9
     },
     {
       "cohortMonth": "2016-08",
@@ -80867,7 +80867,7 @@ const CASE_DATA = {
       "revenueEur": 86,
       "cumulativeRevenue": 26772,
       "revenuePerActive": 0,
-      "gtvKEur": 8417.4
+      "gtvKEur": 84.2
     },
     {
       "cohortMonth": "2016-07",
@@ -81593,7 +81593,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -81604,7 +81604,7 @@ const CASE_DATA = {
       "revenueEur": 218,
       "cumulativeRevenue": 218,
       "revenuePerActive": 10.39,
-      "gtvKEur": 91.7
+      "gtvKEur": 2.7
     },
     {
       "cohortMonth": "2016-07",
@@ -81670,7 +81670,7 @@ const CASE_DATA = {
       "revenueEur": 240,
       "cumulativeRevenue": 2193,
       "revenuePerActive": 10.89,
-      "gtvKEur": 39.7
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2016-07",
@@ -81725,7 +81725,7 @@ const CASE_DATA = {
       "revenueEur": 237,
       "cumulativeRevenue": 3432,
       "revenuePerActive": 12.49,
-      "gtvKEur": 15.2
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-07",
@@ -81747,7 +81747,7 @@ const CASE_DATA = {
       "revenueEur": 237,
       "cumulativeRevenue": 3907,
       "revenuePerActive": 11.87,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-07",
@@ -81780,7 +81780,7 @@ const CASE_DATA = {
       "revenueEur": 244,
       "cumulativeRevenue": 5139,
       "revenuePerActive": 10.59,
-      "gtvKEur": 14.3
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-07",
@@ -81813,7 +81813,7 @@ const CASE_DATA = {
       "revenueEur": 352,
       "cumulativeRevenue": 6202,
       "revenuePerActive": 16.01,
-      "gtvKEur": 21.8
+      "gtvKEur": 1.5
     },
     {
       "cohortMonth": "2016-07",
@@ -81857,7 +81857,7 @@ const CASE_DATA = {
       "revenueEur": 288,
       "cumulativeRevenue": 7547,
       "revenuePerActive": 13.72,
-      "gtvKEur": 20.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-07",
@@ -81890,7 +81890,7 @@ const CASE_DATA = {
       "revenueEur": 802,
       "cumulativeRevenue": 8956,
       "revenuePerActive": 32.08,
-      "gtvKEur": 16.6
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2016-07",
@@ -81923,7 +81923,7 @@ const CASE_DATA = {
       "revenueEur": 241,
       "cumulativeRevenue": 9680,
       "revenuePerActive": 11.49,
-      "gtvKEur": 16
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-07",
@@ -81945,7 +81945,7 @@ const CASE_DATA = {
       "revenueEur": 241,
       "cumulativeRevenue": 10162,
       "revenuePerActive": 12.7,
-      "gtvKEur": 9.2
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -81978,7 +81978,7 @@ const CASE_DATA = {
       "revenueEur": 241,
       "cumulativeRevenue": 10950,
       "revenuePerActive": 10.49,
-      "gtvKEur": 11.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -82000,7 +82000,7 @@ const CASE_DATA = {
       "revenueEur": 241,
       "cumulativeRevenue": 11433,
       "revenuePerActive": 12.7,
-      "gtvKEur": 8.7
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -82033,7 +82033,7 @@ const CASE_DATA = {
       "revenueEur": 373,
       "cumulativeRevenue": 12802,
       "revenuePerActive": 19.65,
-      "gtvKEur": 11.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -82055,7 +82055,7 @@ const CASE_DATA = {
       "revenueEur": 258,
       "cumulativeRevenue": 13319,
       "revenuePerActive": 13.6,
-      "gtvKEur": 4.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-07",
@@ -82077,7 +82077,7 @@ const CASE_DATA = {
       "revenueEur": 256,
       "cumulativeRevenue": 13847,
       "revenuePerActive": 12.17,
-      "gtvKEur": 5.4
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -82099,7 +82099,7 @@ const CASE_DATA = {
       "revenueEur": 256,
       "cumulativeRevenue": 14401,
       "revenuePerActive": 15.04,
-      "gtvKEur": 5.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-07",
@@ -82121,7 +82121,7 @@ const CASE_DATA = {
       "revenueEur": 256,
       "cumulativeRevenue": 14913,
       "revenuePerActive": 15.98,
-      "gtvKEur": 7.1
+      "gtvKEur": 0.9
     },
     {
       "cohortMonth": "2016-07",
@@ -82143,7 +82143,7 @@ const CASE_DATA = {
       "revenueEur": 256,
       "cumulativeRevenue": 15424,
       "revenuePerActive": 17.04,
-      "gtvKEur": 277.2
+      "gtvKEur": 10.8
     },
     {
       "cohortMonth": "2016-07",
@@ -82154,7 +82154,7 @@ const CASE_DATA = {
       "revenueEur": 769,
       "cumulativeRevenue": 16193,
       "revenuePerActive": 54.96,
-      "gtvKEur": 583.6
+      "gtvKEur": 29.6
     },
     {
       "cohortMonth": "2016-07",
@@ -82165,7 +82165,7 @@ const CASE_DATA = {
       "revenueEur": 134,
       "cumulativeRevenue": 16328,
       "revenuePerActive": 0,
-      "gtvKEur": 171.2
+      "gtvKEur": 8.4
     },
     {
       "cohortMonth": "2016-06",
@@ -82902,7 +82902,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 17,
       "revenuePerActive": 2.85,
-      "gtvKEur": 7.2
+      "gtvKEur": 0.6
     },
     {
       "cohortMonth": "2016-06",
@@ -82913,7 +82913,7 @@ const CASE_DATA = {
       "revenueEur": 51,
       "cumulativeRevenue": 69,
       "revenuePerActive": 8.56,
-      "gtvKEur": 16.1
+      "gtvKEur": 1
     },
     {
       "cohortMonth": "2016-06",
@@ -82979,7 +82979,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 274,
       "revenuePerActive": 3.21,
-      "gtvKEur": 4.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-06",
@@ -83034,7 +83034,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 403,
       "revenuePerActive": 3.67,
-      "gtvKEur": 1.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-06",
@@ -83089,7 +83089,7 @@ const CASE_DATA = {
       "revenueEur": 43,
       "cumulativeRevenue": 683,
       "revenuePerActive": 6.12,
-      "gtvKEur": 3.8
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-06",
@@ -83122,7 +83122,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 760,
       "revenuePerActive": 4.28,
-      "gtvKEur": 2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-06",
@@ -83166,7 +83166,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 863,
       "revenuePerActive": 4.28,
-      "gtvKEur": 4.1
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-06",
@@ -83199,7 +83199,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 940,
       "revenuePerActive": 3.67,
-      "gtvKEur": 9.6
+      "gtvKEur": 8.1
     },
     {
       "cohortMonth": "2016-06",
@@ -83232,7 +83232,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 1017,
       "revenuePerActive": 3.67,
-      "gtvKEur": 7.9
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2016-06",
@@ -83254,7 +83254,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 1069,
       "revenuePerActive": 4.28,
-      "gtvKEur": 1.1
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-06",
@@ -83287,7 +83287,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 1146,
       "revenuePerActive": 6.42,
-      "gtvKEur": 0.6
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-06",
@@ -83430,7 +83430,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 1595,
       "revenuePerActive": 7.71,
-      "gtvKEur": 1.3
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-06",
@@ -83452,7 +83452,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 1672,
       "revenuePerActive": 12.85,
-      "gtvKEur": 20.2
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2016-06",
@@ -83463,7 +83463,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 1711,
       "revenuePerActive": 12.85,
-      "gtvKEur": 56.5
+      "gtvKEur": 13.6
     },
     {
       "cohortMonth": "2016-06",
@@ -83474,7 +83474,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 1737,
       "revenuePerActive": 0,
-      "gtvKEur": 11.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-05",
@@ -84222,7 +84222,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 26,
       "revenuePerActive": 0,
-      "gtvKEur": 22.6
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-05",
@@ -84233,7 +84233,7 @@ const CASE_DATA = {
       "revenueEur": 51,
       "cumulativeRevenue": 77,
       "revenuePerActive": 4.28,
-      "gtvKEur": 3.3
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2016-05",
@@ -84299,7 +84299,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 465,
       "revenuePerActive": 8.03,
-      "gtvKEur": 3.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84354,7 +84354,7 @@ const CASE_DATA = {
       "revenueEur": 90,
       "cumulativeRevenue": 1094,
       "revenuePerActive": 8.99,
-      "gtvKEur": 8.6
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-05",
@@ -84409,7 +84409,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 1416,
       "revenuePerActive": 5.35,
-      "gtvKEur": 2.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-05",
@@ -84442,7 +84442,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 1608,
       "revenuePerActive": 5.84,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84486,7 +84486,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 2015,
       "revenuePerActive": 7.14,
-      "gtvKEur": 14.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-05",
@@ -84519,7 +84519,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 2208,
       "revenuePerActive": 5.35,
-      "gtvKEur": 0.5
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-05",
@@ -84552,7 +84552,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 2401,
       "revenuePerActive": 5.35,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84574,7 +84574,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 2636,
       "revenuePerActive": 17.13,
-      "gtvKEur": 13.4
+      "gtvKEur": 0.2
     },
     {
       "cohortMonth": "2016-05",
@@ -84607,7 +84607,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 3300,
       "revenuePerActive": 15.57,
-      "gtvKEur": 0.8
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84629,7 +84629,7 @@ const CASE_DATA = {
       "revenueEur": 171,
       "cumulativeRevenue": 3535,
       "revenuePerActive": 15.57,
-      "gtvKEur": 2.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84662,7 +84662,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 3728,
       "revenuePerActive": 5.35,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84684,7 +84684,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 3857,
       "revenuePerActive": 5.84,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84706,7 +84706,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 3985,
       "revenuePerActive": 6.42,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84728,7 +84728,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 4264,
       "revenuePerActive": 6.42,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84750,7 +84750,7 @@ const CASE_DATA = {
       "revenueEur": 64,
       "cumulativeRevenue": 4392,
       "revenuePerActive": 7.14,
-      "gtvKEur": 0.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-05",
@@ -84772,7 +84772,7 @@ const CASE_DATA = {
       "revenueEur": 141,
       "cumulativeRevenue": 4598,
       "revenuePerActive": 17.66,
-      "gtvKEur": 84.2
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2016-05",
@@ -84783,7 +84783,7 @@ const CASE_DATA = {
       "revenueEur": 90,
       "cumulativeRevenue": 4687,
       "revenuePerActive": 14.99,
-      "gtvKEur": 113.8
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2016-05",
@@ -84794,7 +84794,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 4713,
       "revenuePerActive": 0,
-      "gtvKEur": 37.9
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-04",
@@ -85553,7 +85553,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 6.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-04",
@@ -85564,7 +85564,7 @@ const CASE_DATA = {
       "revenueEur": 54,
       "cumulativeRevenue": 54,
       "revenuePerActive": 8.98,
-      "gtvKEur": 32.9
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-04",
@@ -85630,7 +85630,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 230,
       "revenuePerActive": 2.85,
-      "gtvKEur": 13.6
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-04",
@@ -85685,7 +85685,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 316,
       "revenuePerActive": 3.43,
-      "gtvKEur": 25.7
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2016-04",
@@ -85740,7 +85740,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 486,
       "revenuePerActive": 9.63,
-      "gtvKEur": 3.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -85773,7 +85773,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 601,
       "revenuePerActive": 9.63,
-      "gtvKEur": 10.8
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2016-04",
@@ -85817,7 +85817,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 755,
       "revenuePerActive": 12.85,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -85850,7 +85850,7 @@ const CASE_DATA = {
       "revenueEur": 39,
       "cumulativeRevenue": 871,
       "revenuePerActive": 12.85,
-      "gtvKEur": 0.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -85883,7 +85883,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 922,
       "revenuePerActive": 3.43,
-      "gtvKEur": 2.9
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -85905,7 +85905,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 957,
       "revenuePerActive": 4.28,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -85938,7 +85938,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 1008,
       "revenuePerActive": 4.28,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -86015,7 +86015,7 @@ const CASE_DATA = {
       "revenueEur": 17,
       "cumulativeRevenue": 1128,
       "revenuePerActive": 4.28,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -86037,7 +86037,7 @@ const CASE_DATA = {
       "revenueEur": 65,
       "cumulativeRevenue": 1210,
       "revenuePerActive": 13.02,
-      "gtvKEur": 2.4
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -86059,7 +86059,7 @@ const CASE_DATA = {
       "revenueEur": 65,
       "cumulativeRevenue": 1340,
       "revenuePerActive": 21.7,
-      "gtvKEur": 3.5
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -86081,7 +86081,7 @@ const CASE_DATA = {
       "revenueEur": 48,
       "cumulativeRevenue": 1453,
       "revenuePerActive": 15.99,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-04",
@@ -86103,7 +86103,7 @@ const CASE_DATA = {
       "revenueEur": 48,
       "cumulativeRevenue": 1549,
       "revenuePerActive": 23.98,
-      "gtvKEur": 71.6
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-04",
@@ -86114,7 +86114,7 @@ const CASE_DATA = {
       "revenueEur": 48,
       "cumulativeRevenue": 1597,
       "revenuePerActive": 23.98,
-      "gtvKEur": 176.8
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2016-04",
@@ -86125,7 +86125,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 1597,
       "revenuePerActive": 0,
-      "gtvKEur": 43.1
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2016-03",
@@ -87115,7 +87115,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 0.3
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-03",
@@ -87159,7 +87159,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 0.1
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-03",
@@ -87456,7 +87456,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 0.6
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-02",
@@ -88193,7 +88193,7 @@ const CASE_DATA = {
       "revenueEur": 137,
       "cumulativeRevenue": 163,
       "revenuePerActive": 45.67,
-      "gtvKEur": 0.2
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2016-02",
@@ -89066,7 +89066,7 @@ const CASE_DATA = {
     }
   ],
   "diagnostics": {
-    "runDate": "2026-04-09T12:06:32.413Z",
+    "runDate": "2026-04-09T12:42:16.846Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -90038,8 +90038,6 @@ const CASE_DATA = {
       }
     ],
     "incompleteMonthsNulled": [
-      "Jan",
-      "Feb",
       "Mar"
     ]
   },
@@ -90552,8 +90550,8 @@ const CASE_DATA = {
     "jp": 0.69,
     "ru": 0.68,
     "ng": 0.68,
-    "au": 0.64,
     "do": 0.64,
+    "au": 0.64,
     "kh": 0.58,
     "dz": 0.55
   },
