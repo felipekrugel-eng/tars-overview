@@ -1,4 +1,4 @@
--- Markets: Top 10 countries by merchant count with GTV data
+→—-- Markets: Top 10 countries by merchant count with GTV data
 -- Joins LOYVERSE_RECEIPTS → LOYVERSE_MERCHANTS on LOYVERSE_ID (not ID)
 -- GTV converted to EUR millions via static FX rates
 
