@@ -6446,9 +6446,8 @@ function renderCase() {
     refreshCohortMatrices();
   } catch(e) { console.warn("Cohort matrix render error:", e); }
 
-  // Render conversion funnel — visual funnel shape, computes from cohort vintages when filtered
-  var _funnelColors = ["#1D8FE1", "#1578C4", "#2DC46B", "#0D9488"];
-  var _funnelBgColors = ["rgba(29,143,225,0.12)", "rgba(21,120,196,0.12)", "rgba(45,196,107,0.12)", "rgba(13,148,136,0.12)"];
+  // Render conversion funnel — SVG trapezoid funnel with numbers inside each layer
+  var _funnelFills = ["#1D8FE1", "#1578C4", "#2DC46B", "#0D9488"];
 
   function renderFunnel(range) {
     var F = D.funnel;
@@ -6483,66 +6482,59 @@ function renderCase() {
     }
 
     var stages = [
-      { label: "Registered", current: registered, target: T.registered, convRate: null, icon: "\u{1F464}" },
-      { label: "Active (30d)", current: active, target: T.active, convRate: registered > 0 ? (active/registered*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F4CA}" },
-      { label: "Paying", current: paying, target: T.paying, convRate: active > 0 ? (paying/active*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F4B3}" },
-      { label: "Payments-enabled", current: paymentsEnabled, target: T.paymentsEnabled || 0, convRate: paying > 0 ? (paymentsEnabled/paying*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F680}" }
+      { label: "Registered", value: registered, convRate: null },
+      { label: "Active (30d)", value: active, convRate: registered > 0 ? (active/registered*100).toFixed(1) + "%" : "" },
+      { label: "Paying", value: paying, convRate: active > 0 ? (paying/active*100).toFixed(1) + "%" : "" },
+      { label: "Payments-enabled", value: paymentsEnabled, convRate: paying > 0 ? (paymentsEnabled/paying*100).toFixed(1) + "%" : "" }
     ];
 
     var rangeLabel = (!range || range === "all") ? "All Time" : (range.length <= 2 ? "Last " + range + " mo" : range);
-    var maxVal = registered || 1;
-    var minWidthPct = 20;
 
-    var html = '<div style="background:#fff; border-radius:12px; padding:28px 24px;">';
-    html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">';
-    html += '<div style="font-size:11px; font-weight:700; color:#9ca3af; letter-spacing:1px; text-transform:uppercase;">' +
-            'Cohorts: ' + rangeLabel + '</div>';
-    html += '<div style="font-size:12px; color:#6b7280;">' + registered.toLocaleString() + ' total merchants</div>';
+    // SVG funnel dimensions
+    var svgW = 700, layerH = 72, gap = 3;
+    var totalH = stages.length * layerH + (stages.length - 1) * gap;
+    var topW = svgW * 0.96;
+    var botW = svgW * 0.28;
+    var cx = svgW / 2;
+
+    var html = '<div style="background:#fff; border-radius:12px; padding:24px 20px;">';
+    html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">';
+    html += '<div style="font-size:11px; font-weight:700; color:#9ca3af; letter-spacing:1px; text-transform:uppercase;">Cohorts: ' + rangeLabel + '</div>';
+    html += '<div style="font-size:12px; color:#6b7280;">' + (registered || 0).toLocaleString() + ' total merchants</div>';
     html += '</div>';
+
+    html += '<svg viewBox="0 0 ' + svgW + ' ' + totalH + '" style="width:100%; max-width:700px; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">';
 
     stages.forEach(function(s, i) {
-      var widthPct = maxVal > 0 ? Math.max((s.current / maxVal) * 100, minWidthPct) : minWidthPct;
-      if (i === 0) widthPct = 100;
-      var color = _funnelColors[i];
-      var bgColor = _funnelBgColors[i];
-      var dropFromPrev = i > 0 ? stages[i-1].current - s.current : 0;
-      var dropPct = i > 0 && stages[i-1].current > 0 ? (dropFromPrev / stages[i-1].current * 100).toFixed(0) : 0;
+      var n = stages.length;
+      var t = i / (n - 1);
+      var tNext = (i + 1) / (n - 1);
+      if (i === n - 1) tNext = 1;
 
-      html += '<div style="display:flex; flex-direction:column; align-items:center; margin-bottom:4px;">';
-      html += '<div style="width:' + widthPct + '%; transition:width 0.4s ease; background:' + bgColor + '; border:2px solid ' + color + '; border-radius:8px; padding:14px 20px; position:relative;">';
-      html += '<div style="display:flex; justify-content:space-between; align-items:center;">';
-      html += '<div style="display:flex; align-items:center; gap:10px;">';
-      html += '<span style="font-size:18px;">' + s.icon + '</span>';
-      html += '<div>';
-      html += '<div style="font-weight:700; font-size:14px; color:#111;">' + s.label + '</div>';
-      html += '<div style="font-size:20px; font-weight:800; color:' + color + '; margin-top:2px;">' + (s.current||0).toLocaleString() + '</div>';
-      html += '</div>';
-      html += '</div>';
+      var wTop = topW + (botW - topW) * t;
+      var wBot = topW + (botW - topW) * tNext;
+      if (i === n - 1) wBot = botW;
 
-      html += '<div style="text-align:right;">';
+      var y = i * (layerH + gap);
+      var x1Top = cx - wTop / 2, x2Top = cx + wTop / 2;
+      var x1Bot = cx - wBot / 2, x2Bot = cx + wBot / 2;
+      var yBot = y + layerH;
+
+      var path = 'M' + x1Top + ',' + y + ' L' + x2Top + ',' + y + ' L' + x2Bot + ',' + yBot + ' L' + x1Bot + ',' + yBot + ' Z';
+      html += '<path d="' + path + '" fill="' + _funnelFills[i] + '" opacity="0.92"/>';
+
+      var midY = y + layerH / 2;
+      html += '<text x="' + cx + '" y="' + (midY - 10) + '" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Arial, sans-serif">' + s.label + '</text>';
+      html += '<text x="' + cx + '" y="' + (midY + 14) + '" text-anchor="middle" fill="#fff" font-size="20" font-weight="800" font-family="Arial, sans-serif">' + (s.value || 0).toLocaleString() + '</text>';
+
       if (s.convRate) {
-        html += '<div style="font-size:22px; font-weight:800; color:' + color + ';">' + s.convRate + '</div>';
-        html += '<div style="font-size:10px; color:#9ca3af; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">conv. rate</div>';
+        html += '<text x="' + (x2Top - 8) + '" y="' + (midY + 5) + '" text-anchor="end" fill="rgba(255,255,255,0.85)" font-size="12" font-weight="700" font-family="Arial, sans-serif">' + s.convRate + '</text>';
       }
-      if (s.target && s.target > 0) {
-        var tgtPct = (s.current / s.target * 100).toFixed(0);
-        html += '<div style="font-size:10px; color:#6b7280; margin-top:4px;">Target: ' + s.target.toLocaleString() + ' (' + tgtPct + '%)</div>';
-      }
-      html += '</div>';
-      html += '</div>';
-      html += '</div>';
-
-      if (i < stages.length - 1) {
-        html += '<div style="display:flex; align-items:center; gap:6px; padding:6px 0; color:#d1d5db;">';
-        html += '<svg width="12" height="12" viewBox="0 0 12 12" style="opacity:0.5;"><path d="M6 2 L6 10 M3 7 L6 10 L9 7" stroke="#9ca3af" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
-        html += '<span style="font-size:10px; font-weight:600; color:#9ca3af;">' + dropFromPrev.toLocaleString() + ' drop-off (' + dropPct + '%)</span>';
-        html += '</div>';
-      }
-
-      html += '</div>';
     });
 
+    html += '</svg>';
     html += '</div>';
+
     container.innerHTML = html;
   }
   renderFunnel("all");
