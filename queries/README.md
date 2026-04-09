@@ -23,7 +23,7 @@ SQL queries used by `snowflake-pull.js` to pull live data from the Loyverse Data
 - **FX rates**: Static CTE at top of each query (EUR base). Update monthly.
 - **Chargebee amounts**: Always in cents → divide by 100.0
 - **Chargebee regions**: EU (`CHARGEBEE-EU-*`) and UK (`CHARGEBEE-UK-*`), both multi-currency
-- **GTV source**: `LOYVERSE_RECEIPTS.TOTAL_MONEY` (base currency, not cents)
+- **GTV source**: `LOYVERSE_RECEIPTS.TOTAL_MONEY` (smallest currency unit — divide by `POWER(10, minor_units)` via fx_rates CTE)
 - **Merchant join key**: `LOYVERSE_MERCHANTS.LOYVERSE_ID` (not `ID`)
 - **Database context**: `LOYVERSE_DATA_LAKE.PUBLIC` with role `DATA_VIEWER`
 - **Master join key**: `LOYVERSE_MERCHANTS.LOYVERSE_ID` = `CHARGEBEE-*-CUSTOMER.ID` (via TRY_CAST to NUMBER, 96.3% match rate)
