@@ -6487,14 +6487,14 @@ function renderCase() {
       registered += v.merchants || 0;
       active += v.activeNow || Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
       paying += v.payingNow || Math.round((v.merchants || 0) * (v.payingPct || 0) / 100);
-      paymentsEnabled += Math.round((v.merchants || 0) * (v.paymentPct || 0) / 100);
+      // paymentsEnabled: embedded payments pilot not yet launched — will come from real data once live
     });
 
     var stages = [
       { label: "Registered", value: registered, convRate: null },
       { label: "Active (30d)", value: active, convRate: registered > 0 ? (active/registered*100).toFixed(1) + "%" : "" },
       { label: "Paying", value: paying, convRate: active > 0 ? (paying/active*100).toFixed(1) + "%" : "" },
-      { label: "Payments-enabled", value: paymentsEnabled, convRate: paying > 0 ? (paymentsEnabled/paying*100).toFixed(1) + "%" : "" }
+      { label: "Payments-enabled", value: 0, convRate: "Pilot pending" }
     ];
 
     var rangeLabel = (!range || range === "all") ? "All Time" : (range.length <= 2 ? "Last " + range + " mo" : range);
