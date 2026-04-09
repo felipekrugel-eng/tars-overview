@@ -6446,7 +6446,10 @@ function renderCase() {
     refreshCohortMatrices();
   } catch(e) { console.warn("Cohort matrix render error:", e); }
 
-  // Render conversion funnel — computes from cohort vintages when filtered
+  // Render conversion funnel — visual funnel shape, computes from cohort vintages when filtered
+  var _funnelColors = ["#1D8FE1", "#1578C4", "#2DC46B", "#0D9488"];
+  var _funnelBgColors = ["rgba(29,143,225,0.12)", "rgba(21,120,196,0.12)", "rgba(45,196,107,0.12)", "rgba(13,148,136,0.12)"];
+
   function renderFunnel(range) {
     var F = D.funnel;
     var T = D.funnelTargets2026;
@@ -6456,13 +6459,11 @@ function renderCase() {
     var registered, active, paying, paymentsEnabled;
 
     if (!range || range === "all") {
-      // Use snapshot data
       registered = F.registered.value;
       active = F.active.value;
       paying = F.paying.value;
       paymentsEnabled = F.paymentsEnabled ? (F.paymentsEnabled.value || 0) : 0;
     } else {
-      // Compute from cohort vintages filtered by range
       var now = new Date();
       var filtered = allVintages;
       if (range === "6" || range === "12" || range === "24") {
@@ -6470,7 +6471,6 @@ function renderCase() {
         var cutoffStr = cutoff.toISOString().slice(0, 7);
         filtered = allVintages.filter(function(v) { return v.month >= cutoffStr; });
       } else {
-        // Year filter (e.g. "2026", "2025", "2024")
         filtered = allVintages.filter(function(v) { return v.month && v.month.startsWith(range); });
       }
       registered = 0; active = 0; paying = 0; paymentsEnabled = 0;
@@ -6482,45 +6482,68 @@ function renderCase() {
       });
     }
 
-    var activeConvRate = registered > 0 ? (active / registered * 100).toFixed(1) + "%" : "—";
-    var payingConvRate = active > 0 ? (paying / active * 100).toFixed(1) + "%" : "—";
-    var pmtConvRate = paying > 0 ? (paymentsEnabled / paying * 100).toFixed(1) + "%" : "—";
-
     var stages = [
-      { label: "Registered merchants", current: registered, target: T.registered, convRate: null },
-      { label: "Active (last 30d)", current: active, target: T.active, convRate: activeConvRate },
-      { label: "Paying customers", current: paying, target: T.paying, convRate: payingConvRate },
-      { label: "Payments-enabled", current: paymentsEnabled, target: T.paymentsEnabled || 0, convRate: pmtConvRate }
+      { label: "Registered", current: registered, target: T.registered, convRate: null, icon: "\u{1F464}" },
+      { label: "Active (30d)", current: active, target: T.active, convRate: registered > 0 ? (active/registered*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F4CA}" },
+      { label: "Paying", current: paying, target: T.paying, convRate: active > 0 ? (paying/active*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F4B3}" },
+      { label: "Payments-enabled", current: paymentsEnabled, target: T.paymentsEnabled || 0, convRate: paying > 0 ? (paymentsEnabled/paying*100).toFixed(1)+"%" : "\u2014", icon: "\u{1F680}" }
     ];
 
-    var rangeLabel = (!range || range === "all") ? "All Time" : (range.length <= 2 ? "Last " + range + " months" : range);
+    var rangeLabel = (!range || range === "all") ? "All Time" : (range.length <= 2 ? "Last " + range + " mo" : range);
+    var maxVal = registered || 1;
+    var minWidthPct = 20;
 
-    var funnel = document.createElement("div");
-    funnel.style.cssText = "background:#fff; border-radius:8px; padding:24px; margin:12px 0;";
-
-    var header = document.createElement("div");
-    header.style.cssText = "font-size:11px; font-weight:600; color:#9ca3af; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;";
-    header.textContent = "Cohorts: " + rangeLabel + " · " + registered.toLocaleString() + " merchants";
-    funnel.appendChild(header);
+    var html = '<div style="background:#fff; border-radius:12px; padding:28px 24px;">';
+    html += '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">';
+    html += '<div style="font-size:11px; font-weight:700; color:#9ca3af; letter-spacing:1px; text-transform:uppercase;">' +
+            'Cohorts: ' + rangeLabel + '</div>';
+    html += '<div style="font-size:12px; color:#6b7280;">' + registered.toLocaleString() + ' total merchants</div>';
+    html += '</div>';
 
     stages.forEach(function(s, i) {
-      var pct = s.target ? (s.current / s.target) * 100 : 0;
+      var widthPct = maxVal > 0 ? Math.max((s.current / maxVal) * 100, minWidthPct) : minWidthPct;
+      if (i === 0) widthPct = 100;
+      var color = _funnelColors[i];
+      var bgColor = _funnelBgColors[i];
+      var dropFromPrev = i > 0 ? stages[i-1].current - s.current : 0;
+      var dropPct = i > 0 && stages[i-1].current > 0 ? (dropFromPrev / stages[i-1].current * 100).toFixed(0) : 0;
 
-      var stage = document.createElement("div");
-      stage.style.cssText = "margin:16px 0; padding:12px; border:1px solid #E0E0E0; border-radius:4px; background:#FAFAFA;";
-      stage.innerHTML =
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
-          '<div style="font-weight:600; font-size:14px;">' + s.label + '</div>' +
-          '<div style="text-align:right; font-size:12px; color:#666;">' +
-            '<div><strong>' + (s.current||0).toLocaleString() + '</strong>' + (s.target ? ' / ' + (s.target||0).toLocaleString() + ' (' + pct.toFixed(0) + '%)' : '') + '</div>' +
-            (s.convRate ? '<div>Conv: ' + s.convRate + '</div>' : '') +
-          '</div>' +
-        '</div>' +
-        (s.target ? '<div style="background:#E0E0E0; height:6px; border-radius:3px; overflow:hidden;"><div style="width:' + Math.min(pct, 100) + '%; height:100%; background:#1D8FE1;"></div></div>' : '');
-      funnel.appendChild(stage);
+      html += '<div style="display:flex; flex-direction:column; align-items:center; margin-bottom:4px;">';
+      html += '<div style="width:' + widthPct + '%; transition:width 0.4s ease; background:' + bgColor + '; border:2px solid ' + color + '; border-radius:8px; padding:14px 20px; position:relative;">';
+      html += '<div style="display:flex; justify-content:space-between; align-items:center;">';
+      html += '<div style="display:flex; align-items:center; gap:10px;">';
+      html += '<span style="font-size:18px;">' + s.icon + '</span>';
+      html += '<div>';
+      html += '<div style="font-weight:700; font-size:14px; color:#111;">' + s.label + '</div>';
+      html += '<div style="font-size:20px; font-weight:800; color:' + color + '; margin-top:2px;">' + (s.current||0).toLocaleString() + '</div>';
+      html += '</div>';
+      html += '</div>';
+
+      html += '<div style="text-align:right;">';
+      if (s.convRate) {
+        html += '<div style="font-size:22px; font-weight:800; color:' + color + ';">' + s.convRate + '</div>';
+        html += '<div style="font-size:10px; color:#9ca3af; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">conv. rate</div>';
+      }
+      if (s.target && s.target > 0) {
+        var tgtPct = (s.current / s.target * 100).toFixed(0);
+        html += '<div style="font-size:10px; color:#6b7280; margin-top:4px;">Target: ' + s.target.toLocaleString() + ' (' + tgtPct + '%)</div>';
+      }
+      html += '</div>';
+      html += '</div>';
+      html += '</div>';
+
+      if (i < stages.length - 1) {
+        html += '<div style="display:flex; align-items:center; gap:6px; padding:6px 0; color:#d1d5db;">';
+        html += '<svg width="12" height="12" viewBox="0 0 12 12" style="opacity:0.5;"><path d="M6 2 L6 10 M3 7 L6 10 L9 7" stroke="#9ca3af" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
+        html += '<span style="font-size:10px; font-weight:600; color:#9ca3af;">' + dropFromPrev.toLocaleString() + ' drop-off (' + dropPct + '%)</span>';
+        html += '</div>';
+      }
+
+      html += '</div>';
     });
 
-    container.appendChild(funnel);
+    html += '</div>';
+    container.innerHTML = html;
   }
   renderFunnel("all");
 
@@ -6530,8 +6553,6 @@ function renderCase() {
       document.querySelectorAll("#funnel-time-filters .cohort-filter-btn").forEach(function(b){ b.classList.remove("active"); });
       btn.classList.add("active");
       var funnelRange = btn.getAttribute("data-funnel-range");
-      var container = document.getElementById("funnel-container");
-      if (container) container.innerHTML = "";
       renderFunnel(funnelRange);
     });
   });
