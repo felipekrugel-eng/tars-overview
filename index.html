@@ -6528,7 +6528,8 @@ function renderCase() {
       html += '<text x="' + cx + '" y="' + (midY + 14) + '" text-anchor="middle" fill="#fff" font-size="20" font-weight="800" font-family="Arial, sans-serif">' + (s.value || 0).toLocaleString() + '</text>';
 
       if (s.convRate) {
-        html += '<text x="' + (x2Top - 8) + '" y="' + (midY + 5) + '" text-anchor="end" fill="rgba(255,255,255,0.85)" font-size="12" font-weight="700" font-family="Arial, sans-serif">' + s.convRate + '</text>';
+        var convX = (x2Top + x2Bot) / 2 - 12;
+        html += '<text x="' + convX + '" y="' + (midY + 5) + '" text-anchor="end" fill="rgba(255,255,255,0.85)" font-size="12" font-weight="700" font-family="Arial, sans-serif">' + s.convRate + '</text>';
       }
     });
 
