@@ -5795,17 +5795,23 @@ function applyFilters() {
   el = document.getElementById("m-arpc");
   if (el) el.textContent = "€" + D.arpc.value;
 
+  // Derive active users from cohort vintages for consistency with funnel
+  var _cvFiltered = (D.unitEconomics && D.unitEconomics.cohortVintages) || [];
+  var _filteredActive = 0;
+  _cvFiltered.forEach(function(v) {
+    _filteredActive += v.activeNow || Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
+  });
   el = document.getElementById("m-active-users");
-  if (el) el.textContent = D.activeUsers.value.toLocaleString();
+  if (el) el.textContent = (isFiltered ? Math.round(_filteredActive * weight) : _filteredActive).toLocaleString();
 
   el = document.getElementById("m-total-gtv");
   if (el) {
     var gtvVal = w(D.totalGTV.value, 1);
     var gtvDisplay;
-    // Handle different scales: if value > 1000 it's likely in M not B
-    if (gtvVal > 10000) gtvDisplay = "€" + (gtvVal / 1000000).toFixed(1) + "T";
-    else if (gtvVal > 1000) gtvDisplay = "€" + (gtvVal / 1000).toFixed(1) + "T";
-    else if (gtvVal > 100) gtvDisplay = "€" + gtvVal.toFixed(0) + "B";
+    // GTV is pre-FX-correction — show as approximate, treat value as mixed-currency millions
+    if (gtvVal > 10000) gtvDisplay = "~€" + (gtvVal / 1000).toFixed(0) + "B*";
+    else if (gtvVal > 1000) gtvDisplay = "~€" + (gtvVal / 1000).toFixed(1) + "B*";
+    else if (gtvVal > 100) gtvDisplay = "~€" + gtvVal.toFixed(0) + "B*";
     else gtvDisplay = "€" + gtvVal.toFixed(1) + "B";
     el.textContent = gtvDisplay;
   }
@@ -6097,11 +6103,11 @@ function renderCase() {
     else if (d.unit === "%") display = d.value + "%";
     else if (d.unit === "×") display = d.value + "×";
     else if (d.unit === "€B/yr") {
-      // Handle large GTV values that may be in wrong scale
+      // GTV values are pre-FX-correction (many currencies at 1:1 rate) — flag as approximate
       var gv = parseFloat(d.value);
-      if (gv > 10000) display = "€" + (gv / 1000000).toFixed(1) + "T";
-      else if (gv > 1000) display = "€" + (gv / 1000).toFixed(1) + "T";
-      else if (gv > 100) display = "€" + gv.toFixed(0) + "B";
+      if (gv > 10000) display = "~€" + (gv / 1000).toFixed(0) + "B*";
+      else if (gv > 1000) display = "~€" + (gv / 1000).toFixed(1) + "B*";
+      else if (gv > 100) display = "~€" + gv.toFixed(0) + "B*";
       else display = "€" + gv.toFixed(1) + "B";
     }
     else display = d.value.toLocaleString();
@@ -6113,11 +6119,18 @@ function renderCase() {
     if (labelEl) { labelEl.textContent = d.label; }
   }
 
+  // Derive active users from cohort vintages for consistency with funnel
+  var _cvAll = (D.unitEconomics && D.unitEconomics.cohortVintages) || [];
+  var _cohortActive = 0;
+  _cvAll.forEach(function(v) {
+    _cohortActive += v.activeNow || Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
+  });
+
   setCell("total-revenue",   D.totalRevenue);
   setCell("payment-revenue", D.paymentRevenue);
   setCell("arpc",            D.arpc);
-  setCell("active-users",    { ...D.activeUsers, value: (D.activeUsers.value/1000).toFixed(0)+"K" });
-  document.getElementById("m-active-users").textContent = D.activeUsers.value.toLocaleString();
+  setCell("active-users",    { ...D.activeUsers, value: (_cohortActive/1000).toFixed(0)+"K" });
+  document.getElementById("m-active-users").textContent = _cohortActive.toLocaleString();
   setCell("total-gtv",       D.totalGTV);
   setCell("attach-rate",     D.attachRate);
 
@@ -6142,7 +6155,7 @@ function renderCase() {
   setProg("total-revenue",   (7.6 / 9.7) * 100);
   setProg("payment-revenue", (0.2 / 0.1) * 100);
   setProg("arpc",            (17 / 20) * 100);
-  setProg("active-users",    (D.activeUsers.value / 400000) * 100);
+  setProg("active-users",    (_cohortActive / 400000) * 100);
   setProg("total-gtv",       (D.totalGTV.value / (D.targets2026 ? D.targets2026.totalGTV * 1000 : 30900)) * 100);
   setProg("attach-rate",     (3 / 8) * 100);
   setProg("gtv-processed",   (0.54 / 5) * 100);
@@ -6457,14 +6470,10 @@ function renderCase() {
 
     var registered, active, paying, paymentsEnabled;
 
-    if (!range || range === "all") {
-      registered = F.registered.value;
-      active = F.active.value;
-      paying = F.paying.value;
-      paymentsEnabled = F.paymentsEnabled ? (F.paymentsEnabled.value || 0) : 0;
-    } else {
-      var now = new Date();
-      var filtered = allVintages;
+    // Always compute from cohort vintages for data consistency across all filters
+    var now = new Date();
+    var filtered = allVintages;
+    if (range && range !== "all") {
       if (range === "6" || range === "12" || range === "24") {
         var cutoff = new Date(now.getFullYear(), now.getMonth() - parseInt(range), 1);
         var cutoffStr = cutoff.toISOString().slice(0, 7);
@@ -6472,14 +6481,14 @@ function renderCase() {
       } else {
         filtered = allVintages.filter(function(v) { return v.month && v.month.startsWith(range); });
       }
-      registered = 0; active = 0; paying = 0; paymentsEnabled = 0;
-      filtered.forEach(function(v) {
-        registered += v.merchants || 0;
-        active += Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
-        paying += v.payingNow || Math.round((v.merchants || 0) * (v.payingPct || 0) / 100);
-        paymentsEnabled += Math.round((v.merchants || 0) * (v.paymentPct || 0) / 100);
-      });
     }
+    registered = 0; active = 0; paying = 0; paymentsEnabled = 0;
+    filtered.forEach(function(v) {
+      registered += v.merchants || 0;
+      active += v.activeNow || Math.round((v.merchants || 0) * (v.activePct || 0) / 100);
+      paying += v.payingNow || Math.round((v.merchants || 0) * (v.payingPct || 0) / 100);
+      paymentsEnabled += Math.round((v.merchants || 0) * (v.paymentPct || 0) / 100);
+    });
 
     var stages = [
       { label: "Registered", value: registered, convRate: null },
