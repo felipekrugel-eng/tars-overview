@@ -1,22 +1,22 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-10T07:15:37Z
+// Last sync: 2026-04-10T18:59:38Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-10T07:15:37Z",
+  lastSync: "2026-04-10T18:59:38Z",
 
   tasks: [
     {
       id: "daily-completion-check",
       name: "Daily Completion Check",
-      description: "Scan #strategy-feed and tracker for completed & new actions; update tracker",
+      description: "Daily 5 PM — Scan #strategy-feed for completed actions and new signals, update tracker and initiative health indicators",
       schedule: "Daily 5 PM (Mon–Fri)",
       cron: "0 17 * * 1-5",
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-09T16:07:52.849Z",
-      nextRunAt: "2026-04-10T16:07:02.000Z",
+      lastRunAt: "2026-04-10T16:05:44.904Z",
+      nextRunAt: "2026-04-13T16:07:02.000Z",
       detail: {
         purpose: "Keeps the Action Tracker current by scanning Slack's #strategy-feed channel for completion updates and new actions posted throughout the day.",
         process: "Reads #strategy-feed messages since last run, matches them against open actions in the Google Sheets tracker, marks completed items, and adds any new actions discovered. Sends a summary to Felipe via Slack DM.",
@@ -27,14 +27,14 @@ const HIAGENT_DATA = {
     {
       id: "sync-tracker-to-html",
       name: "Sync Tracker to Dashboard",
-      description: "Read Action Tracker sheet, regenerate tars-data.js, deploy to GitHub/Netlify",
+      description: "Daily 5:53 PM — Regenerate tars-data.js from Google Drive Action Tracker, deploy to GitHub/Netlify. Data file only — never touches index.html.",
       schedule: "Daily 5:53 PM",
       cron: "45 17 * * *",
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-09T16:53:59.136Z",
-      nextRunAt: "2026-04-10T16:53:08.000Z",
+      lastRunAt: "2026-04-10T16:47:33.704Z",
+      nextRunAt: "2026-04-11T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
@@ -45,7 +45,7 @@ const HIAGENT_DATA = {
     {
       id: "monday-action-reminder",
       name: "Monday Action Reminder",
-      description: "Set up the week with strategic context, send each person their actions",
+      description: "Monday 10 AM — Strategic Pulse: one focused view on what matters this week, sent to #strategy-feed",
       schedule: "Monday 10 AM",
       cron: "0 10 * * 1",
       cadence: "weekly-mon",
@@ -63,7 +63,7 @@ const HIAGENT_DATA = {
     {
       id: "drive-session-naming-audit",
       name: "Drive Naming Audit",
-      description: "Audit Strategic Sessions Drive folders for naming conventions",
+      description: "Monday 9 AM — audit Strategic Sessions Drive folders for naming conventions, track violations over time, flag recurring issues",
       schedule: "Monday 9 AM",
       cron: "0 9 * * 1",
       cadence: "weekly-mon",
@@ -81,7 +81,7 @@ const HIAGENT_DATA = {
     {
       id: "thursday-meeting-preview",
       name: "Thursday Meeting Preview",
-      description: "Strategic pre-read for Friday's session with narrative insight",
+      description: "Thursday 4 PM — Strategic Pre-read: one focused strategic topic with depth and conviction, sent as email to leadership team and posted to #strategy-feed",
       schedule: "Thursday 4 PM",
       cron: "0 16 * * 4",
       cadence: "weekly-thu",
@@ -99,7 +99,7 @@ const HIAGENT_DATA = {
     {
       id: "thursday-strategy-deck",
       name: "Thursday Strategy Deck",
-      description: "Generate Friday Strategy Briefing deck (PPTX) with latest CASE data and context",
+      description: "Thursday 4:30 PM — generate Friday Strategy Briefing deck (PPTX) with initiative status, CASE metrics, 5YP context, and decisions needed",
       schedule: "Thursday 4:30 PM",
       cron: "30 16 * * 4",
       cadence: "weekly-thu",
@@ -117,14 +117,14 @@ const HIAGENT_DATA = {
     {
       id: "friday-meeting-briefing",
       name: "Friday Meeting Briefing",
-      description: "Process Fireflies transcript, deliver executive briefing via Slack & Gmail",
+      description: "Friday 4:39 PM — Post-session strategic summary: narrative account of what was discussed, decided, and where the team landed, sent as email to leadership and posted to #strategy-feed",
       schedule: "Friday 4:39 PM",
       cron: "30 16 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-03T16:25:08.498Z",
-      nextRunAt: "2026-04-10T15:39:14.000Z",
+      lastRunAt: "2026-04-10T15:33:50.114Z",
+      nextRunAt: "2026-04-17T15:39:14.000Z",
       detail: {
         purpose: "Creates a polished executive briefing from the Friday strategy meeting transcript, capturing key decisions, new actions, and strategic insights.",
         process: "Fetches the latest meeting transcript from Fireflies, extracts decisions, action items, and discussion themes. Generates a structured briefing and delivers it via Gmail and Slack. Also updates the Action Tracker with any new actions identified.",
@@ -135,14 +135,14 @@ const HIAGENT_DATA = {
     {
       id: "friday-session-archive",
       name: "Friday Session Archive",
-      description: "Create session folder in Google Drive, archive all weekly deliverables and transcript",
+      description: "Friday 6:30 PM — Create session folder in Google Drive, save Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript",
       schedule: "Friday 6:30 PM",
       cron: "30 18 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-05T14:18:01.308Z",
-      nextRunAt: "2026-04-10T17:34:09.000Z",
+      lastRunAt: "2026-04-10T17:36:30.356Z",
+      nextRunAt: "2026-04-17T17:34:09.000Z",
       detail: {
         purpose: "End-of-week archival task that creates a complete session folder in Google Drive with all weekly deliverables for permanent reference.",
         process: "Creates a session folder in the Strategic Sessions Drive, saves Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript into it.",
@@ -153,14 +153,14 @@ const HIAGENT_DATA = {
     {
       id: "weekly-strategy-tracker-update",
       name: "Strategy Tracker Update",
-      description: "Read latest session notes, update Action_Tracker.xlsx in Google Drive",
+      description: "Friday 7 PM — Extract decisions and milestones from strategy sessions, update initiatives + backlog in tars-data.js, deploy to GitHub/Netlify",
       schedule: "Friday 7 PM",
       cron: "0 19 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-04T17:27:53.121Z",
-      nextRunAt: "2026-04-10T18:04:44.000Z",
+      lastRunAt: "2026-04-10T18:02:33.445Z",
+      nextRunAt: "2026-04-17T18:04:44.000Z",
       detail: {
         purpose: "End-of-week housekeeping that ensures the Action Tracker reflects everything discussed in the Friday session.",
         process: "Reads the latest session notes and Fireflies transcript, cross-references with the existing Action Tracker, adds new actions, updates statuses, and archives completed items. Writes the updated tracker back to Google Drive.",
@@ -171,7 +171,7 @@ const HIAGENT_DATA = {
     {
       id: "weekly-memory-maintenance",
       name: "Memory Maintenance",
-      description: "Consolidate working memory from Slack into reference files",
+      description: "Sunday 8 PM — consolidate working memory from Slack into reference files, update the second brain",
       schedule: "Sunday 8 PM",
       cron: "0 20 * * 0",
       cadence: "weekly-sun",
@@ -189,14 +189,14 @@ const HIAGENT_DATA = {
     {
       id: "weekly-mem-update",
       name: "Mem Briefing Update",
-      description: "Fetch new meetings from Fireflies, create/update Mem briefing notes",
+      description: "Friday 8 PM — fetch new meetings from Fireflies, create/update Mem briefing notes, keep Session Index current, flag any 5YP conflicts.",
       schedule: "Friday 8 PM",
       cron: "0 20 * * 5",
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-04-05T06:54:10.412Z",
-      nextRunAt: "2026-04-10T19:09:01.000Z",
+      lastRunAt: "2026-04-10T19:04:53.999Z",
+      nextRunAt: "2026-04-17T19:09:01.000Z",
       detail: {
         purpose: "Creates structured meeting briefing notes in Mem from Fireflies transcripts, building a searchable knowledge base of all strategic discussions.",
         process: "Fetches new meeting transcripts from Fireflies since the last run, processes each into a structured briefing note format, and creates or updates corresponding notes in Mem with key topics, decisions, and action items.",
@@ -207,7 +207,7 @@ const HIAGENT_DATA = {
     {
       id: "appstore-data-pull",
       name: "App Store Data Pull",
-      description: "Weekly pull of Loyverse app store ratings and reviews",
+      description: "Weekly pull of Loyverse app store ratings and reviews, updating case-data.js (isolated data file) and deploying to GitHub/Netlify.",
       schedule: "Monday 9 AM",
       cron: "0 9 * * 1",
       cadence: "weekly-mon",
@@ -285,8 +285,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-10T07:15:37Z",
-      nextRunAt: "2026-04-10T19:00:45.000Z",
+      lastRunAt: "2026-04-10T18:59:38Z",
+      nextRunAt: "2026-04-10T23:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
