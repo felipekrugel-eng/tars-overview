@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-11T00:16:45Z
+// Last sync: 2026-04-11T03:00:40Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-11T00:16:45Z",
+  lastSync: "2026-04-11T03:00:40Z",
 
   tasks: [
     {
@@ -227,7 +227,7 @@ const HIAGENT_DATA = {
       name: "Session 07 Archive",
       description: "One-time task: generate Session 07 HTML archive and save to Shared Drive",
       schedule: "One-time (Mar 18, 2026)",
-      cron: "\u2014",
+      cron: "—",
       cadence: "daily",
       owner: "TARS",
       enabled: false,
@@ -245,7 +245,7 @@ const HIAGENT_DATA = {
       name: "Session 07 Archive v2",
       description: "One-time backfill: save Session 07 HTML archive to correct Shared Drive path",
       schedule: "One-time (Mar 18, 2026)",
-      cron: "\u2014",
+      cron: "—",
       cadence: "daily",
       owner: "TARS",
       enabled: false,
@@ -285,8 +285,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-11T00:16:45Z",
-      nextRunAt: "2026-04-11T03:00:45.000Z",
+      lastRunAt: "2026-04-11T03:00:40Z",
+      nextRunAt: "2026-04-11T07:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
@@ -404,7 +404,7 @@ function hiagentTimeAgo(isoStr) {
 }
 
 function hiagentFormatDate(isoStr) {
-  if (!isoStr) return '\u2014';
+  if (!isoStr) return '—';
   var d = new Date(isoStr);
   var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var h = d.getHours();
@@ -609,7 +609,7 @@ function hiagentRender() {
             '<div class="ha-card-name">' + i.name + '</div>' +
           '</div>' +
           '<div class="ha-card-desc">' + i.type + ' · ' + i.owner + '</div>' +
-          '<a href="' + i.url + '" target="_blank" class="ha-infra-link" onclick="event.stopPropagation()">' + i.url.replace('https://','') + ' \u2192</a>' +
+          '<a href="' + i.url + '" target="_blank" class="ha-infra-link" onclick="event.stopPropagation()">' + i.url.replace('https://','') + ' →</a>' +
         '</div>' +
       '</div>';
     });
