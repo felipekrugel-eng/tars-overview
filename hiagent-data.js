@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-12T14:59:38Z
+// Last sync: 2026-04-12T19:06:22Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-12T14:59:38Z",
+  lastSync: "2026-04-12T19:06:22Z",
 
   tasks: [
     {
@@ -33,8 +33,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-11T16:46:05.647Z",
-      nextRunAt: "2026-04-12T16:53:08.000Z",
+      lastRunAt: "2026-04-12T16:46:53.541Z",
+      nextRunAt: "2026-04-13T16:53:08.000Z",
       detail: {
         purpose: "Bridges the Google Sheets Action Tracker to the live TARS dashboard on Netlify, ensuring the web view always reflects the latest data.",
         process: "Reads Action_Tracker.xlsx from Google Drive, transforms it into a JavaScript data file (tars-data.js), clones the tars-overview repo, writes the updated file, commits, and pushes. Netlify auto-deploys.",
@@ -177,8 +177,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-04-05T20:32:13.966Z",
-      nextRunAt: "2026-04-12T19:06:11.000Z",
+      lastRunAt: "2026-04-12T19:05:39.369Z",
+      nextRunAt: "2026-04-19T19:06:11.000Z",
       detail: {
         purpose: "Maintains long-term agent memory by consolidating ephemeral working context from Slack conversations into structured reference files.",
         process: "Scans recent Slack activity across key channels, identifies important decisions, context changes, and new information. Consolidates this into the second-brain reference files for future session continuity.",
@@ -285,8 +285,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-12T14:59:38Z",
-      nextRunAt: "2026-04-12T19:00:45.000Z",
+      lastRunAt: "2026-04-12T19:06:22Z",
+      nextRunAt: "2026-04-12T23:00:45.000Z",
       detail: {
         purpose: "Self-monitoring agent that keeps the HIAgent dashboard live and alerts Felipe when any automation breaks.",
         process: "Calls list_scheduled_tasks to get current states, rebuilds hiagent-data.js with fresh timestamps, pushes to GitHub (Netlify auto-deploys). Evaluates each task against cadence-aware health thresholds. If any task is overdue or missed, sends a Slack DM alert to Felipe.",
