@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-13T11:02:57Z
+// Last sync: 2026-04-14T10:47:40Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-13T11:02:57Z",
+  lastSync: "2026-04-14T10:47:40Z",
 
   tasks: [
     {
@@ -94,13 +94,13 @@ const HIAGENT_DATA = {
       id: "daily-completion-check",
       name: "Daily Completion Check",
       description: "Daily 5 PM — Scan #strategy-feed for completed actions and new signals, update tracker and initiative health indicators",
-      schedule: "Daily 5 PM (Mon–Fri)",
+      schedule: "Daily 5 PM (Mon-Fri)",
       cron: "0 17 * * 1-5",
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-10T16:05:44.904Z",
-      nextRunAt: "2026-04-13T16:07:02.000Z"
+      lastRunAt: "2026-04-13T16:07:47.869Z",
+      nextRunAt: "2026-04-14T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-12T16:46:53.541Z",
-      nextRunAt: "2026-04-13T16:53:08.000Z"
+      lastRunAt: "2026-04-13T16:49:24.043Z",
+      nextRunAt: "2026-04-14T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-13T11:01:44.951Z",
-      nextRunAt: "2026-04-14T11:00:45.000Z"
+      lastRunAt: "2026-04-14T10:47:40.000Z",
+      nextRunAt: "2026-04-15T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
