@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-14T10:47:40Z
+// Last sync: 2026-04-15T11:02:29Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-14T10:47:40Z",
+  lastSync: "2026-04-15T11:02:29Z",
 
   tasks: [
     {
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-13T16:07:47.869Z",
-      nextRunAt: "2026-04-14T16:07:02.000Z"
+      lastRunAt: "2026-04-14T16:07:22.508Z",
+      nextRunAt: "2026-04-15T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-13T16:49:24.043Z",
-      nextRunAt: "2026-04-14T16:53:08.000Z"
+      lastRunAt: "2026-04-14T16:53:28.795Z",
+      nextRunAt: "2026-04-15T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-14T10:47:40.000Z",
-      nextRunAt: "2026-04-15T11:00:45.000Z"
+      lastRunAt: "2026-04-15T11:01:27.179Z",
+      nextRunAt: "2026-04-16T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
