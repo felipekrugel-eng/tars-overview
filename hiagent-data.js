@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-15T11:02:29Z
+// Last sync: 2026-04-17T12:00:19Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-15T11:02:29Z",
+  lastSync: "2026-04-17T12:00:19Z",
 
   tasks: [
     {
@@ -39,8 +39,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-09T15:04:22.668Z",
-      nextRunAt: "2026-04-16T15:03:32.000Z"
+      lastRunAt: "2026-04-16T15:03:49.450Z",
+      nextRunAt: "2026-04-23T15:03:32.000Z"
     },
     {
       id: "session-07-archive",
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-14T16:07:22.508Z",
-      nextRunAt: "2026-04-15T16:07:02.000Z"
+      lastRunAt: "2026-04-16T16:07:19.437Z",
+      nextRunAt: "2026-04-17T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-14T16:53:28.795Z",
-      nextRunAt: "2026-04-15T16:53:08.000Z"
+      lastRunAt: "2026-04-16T16:53:25.574Z",
+      nextRunAt: "2026-04-17T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -159,8 +159,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-09T15:33:01.788Z",
-      nextRunAt: "2026-04-16T15:32:11.000Z"
+      lastRunAt: "2026-04-16T15:32:28.339Z",
+      nextRunAt: "2026-04-23T15:32:11.000Z"
     },
     {
       id: "hiagent-monitor",
@@ -171,13 +171,13 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-15T11:01:27.179Z",
-      nextRunAt: "2026-04-16T11:00:45.000Z"
+      lastRunAt: "2026-04-17T11:03:13.788Z",
+      nextRunAt: "2026-04-18T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
       name: "Friday Session Archive",
-      description: "Friday 6:30 PM — Create session folder in Google Drive, save Monday Pulse, Thursday Preview, Thursday Deck, Friday Briefing, and Fireflies transcript",
+      description: "Friday 6:30 PM — Create local session folder with 3 core .docx docs (Pre-read, Transcript, Briefing) plus optional extras, for manual upload to Google Drive",
       schedule: "Friday 6:30 PM",
       cron: "30 18 * * 5",
       cadence: "weekly-fri",
@@ -197,6 +197,30 @@ const HIAGENT_DATA = {
       enabled: false,
       lastRunAt: "2026-04-08T05:10:28.767Z",
       nextRunAt: null
+    },
+    {
+      id: "daily-simon-briefing",
+      name: "Daily Simon Briefing",
+      description: "Mon–Thu 2 PM — Fetch daily Felipe × Simon touchpoint transcript from Fireflies, generate briefing note in Mem, and save archive files locally for manual upload to Google Drive",
+      schedule: "Mon-Thu 2 PM",
+      cron: "0 14 * * 1-4",
+      cadence: "weekday",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: "2026-04-16T15:56:26.699Z",
+      nextRunAt: "2026-04-20T13:01:14.000Z"
+    },
+    {
+      id: "weekly-payments-briefing",
+      name: "Weekly Payments Briefing",
+      description: "Thursday 7 PM — Fetch weekly Embedded Payments meeting transcript from Fireflies, generate briefing note in Mem, and save archive files locally for manual upload to Google Drive",
+      schedule: "Thursday 7 PM",
+      cron: "0 19 * * 4",
+      cadence: "weekly-thu",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: "2026-04-16T18:01:15.001Z",
+      nextRunAt: "2026-04-23T18:09:02.000Z"
     }
   ],
 
