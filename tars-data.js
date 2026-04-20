@@ -40,7 +40,10 @@ const TARS_DATA = {
         { id: "A-260327-06", text: "Book dedicated US payments strategy meeting (next week)", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "31 Mar", status: "done", initiative: "payments" },
         { id: "A-260327-07", text: "Provide real-world US receipts (Toast, Square) for tip/tax validation", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "overdue", initiative: "payments" },
         { id: "A-260409-01", text: "Shape communication strategy for Loyverse payments launch with Simon", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "overdue", initiative: "payments" },
-        { id: "A-260409-02", text: "Build country launch playbook \u2014 US as version one", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "30 Apr", status: "in-progress", initiative: "payments" }
+        { id: "A-260409-02", text: "Build country launch playbook \u2014 US as version one", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "30 Apr", status: "in-progress", initiative: "payments" },
+        { id: "A-260417-01", text: "Set up US legal entity (bank accounts, compliance, Stripe integration) — operational by July 1", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "1 Jul", status: "in-progress", initiative: "payments" },
+        { id: "A-260417-02", text: "Resolve hardware procurement process (in-house or agile partners, corporate credit cards)", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "30 Apr", status: "overdue", initiative: "payments" },
+        { id: "A-260417-03", text: "Validate metrics pipeline (Stripe Sigma + Snowflake dashboards)", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "25 Apr", status: "in-progress", initiative: "payments" }
       ]
     },
     {
