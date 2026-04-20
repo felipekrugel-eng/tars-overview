@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-19T18:03:49Z
+// Last sync: 2026-04-20T10:06:41Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-19T18:03:49Z",
+  lastSync: "2026-04-20T10:06:41Z",
 
   tasks: [
     {
@@ -27,8 +27,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-13T09:01:59.646Z",
-      nextRunAt: "2026-04-20T09:05:39.000Z"
+      lastRunAt: "2026-04-20T09:05:59.715Z",
+      nextRunAt: "2026-04-27T09:05:39.000Z"
     },
     {
       id: "thursday-meeting-preview",
@@ -75,8 +75,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-13T08:03:26.874Z",
-      nextRunAt: "2026-04-20T08:06:26.000Z"
+      lastRunAt: "2026-04-20T08:09:46.800Z",
+      nextRunAt: "2026-04-27T08:06:26.000Z"
     },
     {
       id: "weekly-strategy-tracker-update",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-18T16:48:33.776Z",
-      nextRunAt: "2026-04-19T16:53:08.000Z"
+      lastRunAt: "2026-04-19T16:57:34.478Z",
+      nextRunAt: "2026-04-20T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -123,8 +123,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-04-12T19:05:39.369Z",
-      nextRunAt: "2026-04-19T19:06:11.000Z"
+      lastRunAt: "2026-04-19T19:02:11.237Z",
+      nextRunAt: "2026-04-26T19:06:11.000Z"
     },
     {
       id: "weekly-mem-update",
@@ -147,8 +147,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: "2026-04-13T08:03:27.046Z",
-      nextRunAt: "2026-04-20T08:00:58.000Z"
+      lastRunAt: "2026-04-20T08:04:58.571Z",
+      nextRunAt: "2026-04-27T08:00:58.000Z"
     },
     {
       id: "thursday-strategy-deck",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-19T11:01:56.268Z",
-      nextRunAt: "2026-04-20T11:00:45.000Z"
+      lastRunAt: "2026-04-20T10:06:41Z",
+      nextRunAt: "2026-04-21T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
