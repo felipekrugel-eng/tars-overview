@@ -1,5 +1,5 @@
 const TARS_DATA = {
-  lastUpdated: "2026-04-16",
+  lastUpdated: "2026-04-20",
 
   // LAYER 1: Strategic Initiatives
   initiatives: [
@@ -14,7 +14,7 @@ const TARS_DATA = {
       healthReason: "Working demo complete but security and tip issues flagged as pre-launch blockers. US pricing not finalized. US Deepdive meeting scheduled Wed 1 Apr.",
       milestones: [
         { id: "m1", name: "Stripe terminal integration demonstrated", status: "complete", date: "27 Mar 2026", notes: "Pay Demo 27 Mar â functional but issues flagged" },
-        { id: "m2", name: "Pre-launch blockers resolved (security, tips)", status: "in-progress", date: "15 Apr 2026", notes: "Oleksandr: export validation. Dmytro: tip handling investigation" },
+        { id: "m2", name: "Pre-launch blockers resolved (security, tps)", status: "in-progress", date: "15 Apr 2026", notes: "Oleksandr: export validation. Dmytro: tip handling investigation" },
         { id: "m3", name: "US pricing model validated", status: "not-started", date: null, notes: "3% flat rate proposed (Session 09). Dedicated meeting TBD." },
         { id: "m4", name: "First merchant processing payment", status: "not-started", date: null, notes: "Pending KYC + pricing + billing infrastructure" },
         { id: "m5", name: "5,000 customers on payments + software", status: "not-started", date: "Dec 2026", notes: "Caio's headline proof point for scaling and capital raise" }
@@ -39,7 +39,7 @@ const TARS_DATA = {
         { id: "A-260325-01", text: "Test Teya SIM-cards in Stripe devices to reduce Stripe costs of $10/month", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "overdue", initiative: "payments" },
         { id: "A-260327-06", text: "Book dedicated US payments strategy meeting (next week)", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "31 Mar", status: "done", initiative: "payments" },
         { id: "A-260327-07", text: "Provide real-world US receipts (Toast, Square) for tip/tax validation", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "7 Apr", status: "overdue", initiative: "payments" },
-        { id: "A-260409-01", text: "Shape communication strategy for Loyverse payments launch with Simon", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "in-progress", initiative: "payments" },
+        { id: "A-260409-01", text: "Shape communication strategy for Loyverse payments launch with Simon", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "overdue", initiative: "payments" },
         { id: "A-260409-02", text: "Build country launch playbook \u2014 US as version one", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "30 Apr", status: "in-progress", initiative: "payments" }
       ]
     },
@@ -97,7 +97,7 @@ const TARS_DATA = {
         { id: "A-260220-07", text: "Share full list of partner payment inquiries with Simon for strategy research", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done", initiative: "partnerships" },
         { id: "A-260306-08", text: "Develop structured channel partnership framework", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Mar", status: "done", initiative: "partnerships" },
         { id: "A-260316-06", text: "Develop and submit clear engagement proposal for Teya partnership", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue", initiative: "partnerships" },
-        { id: "A-260409-03", text: "Book and conduct Teya Spain meeting with Pedro re: joint go-to-market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "in-progress", initiative: "partnerships" }
+        { id: "A-260409-03", text: "Book and conduct Teya Spain meeting with Pedro re: joint go-to-market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "overdue", initiative: "partnerships" }
       ]
     }
   ],
@@ -144,7 +144,7 @@ const TARS_DATA = {
     { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "overdue", initiative: "general" },
     { id: "A-260327-01", text: "Upgrade Netlify plan for security layer", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "7 Apr", status: "overdue", initiative: "general" },
     { id: "A-260327-02", text: "Refine TARS for main 2026 initiatives with clearer project steps", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "31 Mar", status: "done", initiative: "general" },
-    { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "overdue", initiative: "general" },
     { id: "A-260327-04", text: "Develop Snowflake-to-CASE dashboard integration", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "done", initiative: "general" },
     { id: "A-260327-05", text: "Provide Snowflake access to Felipe and Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "31 Mar", status: "overdue", initiative: "general" },
     { id: "A-260330-01", text: "Enable the Mixpanel MCP for Claude", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "7 Apr", status: "overdue", initiative: "general" },
@@ -768,7 +768,7 @@ const TARS_DATA = {
     { id: "A-260324-05", text: "Prepare discussion topics for Friday: From POS to BOSS and From Integrations to Plug-Ins", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "27 Mar", status: "overdue", initiative: "general" },
     { id: "A-260327-01", text: "Upgrade Netlify plan for security layer", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "7 Apr", status: "overdue", initiative: "general" },
     { id: "A-260327-02", text: "Refine TARS for main 2026 initiatives with clearer project steps", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "31 Mar", status: "done", initiative: "general" },
-    { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "in-progress", initiative: "general" },
+    { id: "A-260327-03", text: "Connect Confluence to TARS memory system", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "overdue", initiative: "general" },
     { id: "A-260327-04", text: "Develop Snowflake-to-CASE dashboard integration", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "14 Apr", status: "done", initiative: "general" },
     { id: "A-260327-05", text: "Provide Snowflake access to Felipe and Caio", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "31 Mar", status: "overdue", initiative: "general" },
     { id: "A-260330-01", text: "Enable the Mixpanel MCP for Claude", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "7 Apr", status: "overdue", initiative: "general" },
