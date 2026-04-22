@@ -1,10 +1,10 @@
 const TARS_DATA = {
-  lastUpdated: "2026-04-20",
+  lastUpdated: "2026-04-22",
 
   // LAYER 1: Strategic Initiatives
   initiatives: [
     {
-      id: "payments",
+      id: "payments"
       name: "Embedded Payments â US Launch",
       owner: "Simon Perry",
       ownerInitial: "S",
@@ -100,7 +100,7 @@ const TARS_DATA = {
         { id: "A-260220-07", text: "Share full list of partner payment inquiries with Simon for strategy research", owner: "Alex", ownerColor: "#2DC46B", ownerInitial: "A", due: "27 Feb", status: "done", initiative: "partnerships" },
         { id: "A-260306-08", text: "Develop structured channel partnership framework", owner: "Felipe", ownerColor: "#7B61FF", ownerInitial: "F", due: "20 Mar", status: "done", initiative: "partnerships" },
         { id: "A-260316-06", text: "Develop and submit clear engagement proposal for Teya partnership", owner: "Simon", ownerColor: "#1D8FE1", ownerInitial: "S", due: "23 Mar", status: "overdue", initiative: "partnerships" },
-        { id: "A-260409-03", text: "Book and conduct Teya Spain meeting with Pedro re: joint go-to-market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "overdue", initiative: "partnerships" }
+        { id: "A-260409-03", text: "Book and conduct Teya Spain meeting with Pedro re: joint go-to-market", owner: "Caio", ownerColor: "#E1A21D", ownerInitial: "C", due: "16 Apr", status: "done", initiative: "partnerships" }
       ]
     }
   ],
