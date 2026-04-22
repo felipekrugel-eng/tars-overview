@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-21T11:01:36Z
+// Last sync: 2026-04-22T11:02:16Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-21T11:01:36Z",
+  lastSync: "2026-04-22T11:02:16Z",
 
   tasks: [
     {
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-20T16:12:21.534Z",
-      nextRunAt: "2026-04-21T16:07:02.000Z"
+      lastRunAt: "2026-04-21T16:07:45.030Z",
+      nextRunAt: "2026-04-22T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-20T16:53:28.848Z",
-      nextRunAt: "2026-04-21T16:53:08.000Z"
+      lastRunAt: "2026-04-21T16:53:51.210Z",
+      nextRunAt: "2026-04-22T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-21T11:01:07.473Z",
-      nextRunAt: "2026-04-22T11:00:45.000Z"
+      lastRunAt: "2026-04-22T11:01:36.882Z",
+      nextRunAt: "2026-04-23T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -201,14 +201,14 @@ const HIAGENT_DATA = {
     {
       id: "daily-simon-briefing",
       name: "Daily Simon Briefing",
-      description: "Mon–Thu 2 PM — Fetch daily Felipe × Simon touchpoint transcript from Fireflies, generate briefing note in Mem, and save archive files locally for manual upload to Google Drive",
+      description: "Mon\u2013Thu 2 PM — Fetch daily Felipe \u00d7 Simon touchpoint transcript from Fireflies, generate briefing note in Mem, and save archive files locally for manual upload to Google Drive",
       schedule: "Mon-Thu 2 PM",
       cron: "0 14 * * 1-4",
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-20T15:05:20.709Z",
-      nextRunAt: "2026-04-21T13:01:14.000Z"
+      lastRunAt: "2026-04-21T13:01:55.857Z",
+      nextRunAt: "2026-04-22T13:01:14.000Z"
     },
     {
       id: "weekly-payments-briefing",
