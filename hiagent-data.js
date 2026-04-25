@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-04-24T11:02:01Z
+// Last sync: 2026-04-25T08:41:45Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-04-24T11:02:01Z",
+  lastSync: "2026-04-25T08:41:45Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-17T15:39:22.365Z",
-      nextRunAt: "2026-04-24T15:39:14.000Z"
+      lastRunAt: "2026-04-24T15:39:18.114Z",
+      nextRunAt: "2026-05-01T15:39:14.000Z"
     },
     {
       id: "monday-action-reminder",
@@ -87,8 +87,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-17T18:03:14.084Z",
-      nextRunAt: "2026-04-24T18:04:44.000Z"
+      lastRunAt: "2026-04-24T18:06:13.994Z",
+      nextRunAt: "2026-05-01T18:04:44.000Z"
     },
     {
       id: "daily-completion-check",
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-23T16:07:19.269Z",
-      nextRunAt: "2026-04-24T16:07:02.000Z"
+      lastRunAt: "2026-04-24T16:07:06.140Z",
+      nextRunAt: "2026-04-27T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-23T16:53:25.173Z",
-      nextRunAt: "2026-04-24T16:53:08.000Z"
+      lastRunAt: "2026-04-24T16:55:07.361Z",
+      nextRunAt: "2026-04-25T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -135,8 +135,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-04-17T19:04:00.058Z",
-      nextRunAt: "2026-04-24T19:09:01.000Z"
+      lastRunAt: "2026-04-24T19:02:35.444Z",
+      nextRunAt: "2026-05-01T19:09:01.000Z"
     },
     {
       id: "appstore-data-pull",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-04-24T11:01:19.784Z",
-      nextRunAt: "2026-04-25T11:00:45.000Z"
+      lastRunAt: "2026-04-25T11:02:41.814Z",
+      nextRunAt: "2026-04-26T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -183,8 +183,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-17T17:34:16.138Z",
-      nextRunAt: "2026-04-24T17:34:09.000Z"
+      lastRunAt: "2026-04-24T17:38:31.201Z",
+      nextRunAt: "2026-05-01T17:34:09.000Z"
     },
     {
       id: "case-snowflake-pull",
