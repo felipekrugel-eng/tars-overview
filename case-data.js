@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-04-26
 const CASE_DATA = {
-  "lastUpdated": "2026-04-26",
+  "lastUpdated": "2026-04-27",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -90462,9 +90462,9 @@ const CASE_DATA = {
   "appStores": {
     "googlePlay": {
       "rating": 4.9,
-      "reviewCount": "502K",
-      "positive": 87,
-      "neutral": 7,
+      "reviewCount": "504K",
+      "positive": 88,
+      "neutral": 6,
       "negative": 6,
       "tags": [
         {
@@ -90495,7 +90495,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "131K",
+      "reviewCount": "132K",
       "positive": 87,
       "neutral": 7,
       "negative": 6,
@@ -90529,26 +90529,26 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
+      "Nov",
       "Dec",
       "Jan",
       "Feb",
       "Mar",
-      "Apr",
-      "May"
+      "Apr"
     ],
     "googlePlay": [
+      4.71,
       4.72,
       4.74,
       4.76,
       4.8,
-      4.9,
       4.9
     ],
     "appStore": [
+      4.76,
       4.77,
       4.78,
       4.79,
-      4.8,
       4.7,
       4.7
     ]
@@ -90556,43 +90556,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3042,
+      "mentions": 3078,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2098,
+      "mentions": 2124,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1668,
+      "mentions": 1689,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1334,
+      "mentions": 1356,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 988,
+      "mentions": 1004,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 724,
+      "mentions": 738,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 541,
+      "mentions": 552,
       "type": "neg",
       "key": "sync"
     }
@@ -90601,31 +90601,31 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "10M+",
       "trend": [
-        920000,
         960000,
         1010000,
         1045000,
         1070000,
-        1095000
+        1095000,
+        1120000
       ]
     },
     "appStore": {
       "total": "2M+",
       "trend": [
-        198000,
         205000,
         215000,
         222000,
         228000,
-        234000
+        234000,
+        240000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
       {
-        "author": "BoutiqueID",
-        "country": "ID",
+        "author": "AccessoriesPH",
+        "country": "PH",
         "region": "asia",
         "rating": 5,
         "date": "Apr 2026",
@@ -90634,11 +90634,11 @@ const CASE_DATA = {
           "ease-of-use",
           "free-value"
         ],
-        "text": "Stumbled on this app from a recommendation and it is a life saver. Very user friendly for my boutique and can be easily integrated for further expansion."
+        "text": "Absolutely the best POS app out there. Free with API access and human support agents to help solve problems. Running two branches smoothly."
       },
       {
-        "author": "PharmacyPH",
-        "country": "PH",
+        "author": "BakeryTH",
+        "country": "TH",
         "region": "asia",
         "rating": 5,
         "date": "Apr 2026",
@@ -90647,7 +90647,7 @@ const CASE_DATA = {
           "inventory",
           "ease-of-use"
         ],
-        "text": "Running 3 pharmacy branches with barcode scanning and real-time stock tracking. Staff learned the system in minutes. Best free POS available."
+        "text": "Best POS app I have tried so far. Never had any issues and the features are quite complete. Barcode scanning and stock tracking work perfectly."
       },
       {
         "author": "JuiceBarUS",
@@ -90660,7 +90660,7 @@ const CASE_DATA = {
           "free-value",
           "reporting"
         ],
-        "text": "Compared 17 POS systems and Loyverse was the best based on price, features, support, and simplicity. Sales breakdown by payment type is incredibly useful."
+        "text": "Compared 17 POS systems across 100 factors and Loyverse was the best based on price, features, support, and simplicity. Sales breakdowns are incredibly useful."
       },
       {
         "author": "GadgetsMY",
@@ -90686,7 +90686,7 @@ const CASE_DATA = {
           "reporting",
           "free-value"
         ],
-        "text": "Real-time sales insights, best-selling items, hourly trends, profit margins — all free. My accountant is impressed with the export options."
+        "text": "Real-time sales insights, hourly trends, profit margins — all free. My accountant is impressed with the export options. Great value for money."
       },
       {
         "author": "PubOwnerUK",
@@ -90698,7 +90698,7 @@ const CASE_DATA = {
         "themes": [
           "ease-of-use"
         ],
-        "text": "Clean interface and rock solid day to day. Would love table management and tipping support but cannot argue with the price."
+        "text": "Clean interface and rock solid day to day. Would love table management and tipping support on Android but cannot argue with the price."
       },
       {
         "author": "TiendaMX",
@@ -90710,7 +90710,7 @@ const CASE_DATA = {
         "themes": [
           "inventory"
         ],
-        "text": "Inventory tracking works well but low-stock alerts need improvement. Auto reorder suggestions would save time. Still the best free option."
+        "text": "Inventory tracking works well but low-stock alerts need improvement. Auto reorder suggestions would save time. Still the best free option around."
       },
       {
         "author": "NoodleSG",
@@ -90725,7 +90725,7 @@ const CASE_DATA = {
         "text": "Sync between tablet and phone lags during peak hours. A quick restart fixes it but costs valuable time during lunch rush."
       },
       {
-        "author": "RecordShopDE",
+        "author": "VinylShopDE",
         "country": "DE",
         "region": "europe",
         "rating": 2,
@@ -90734,10 +90734,10 @@ const CASE_DATA = {
         "themes": [
           "customer-support"
         ],
-        "text": "Receipt printer issue unresolved after 4 emails over 2 weeks. Responses are generic links to FAQ articles that do not address the problem."
+        "text": "Receipt printer issue unresolved after multiple emails over 2 weeks. Responses are generic FAQ links that do not address the actual problem."
       },
       {
-        "author": "HealthMM",
+        "author": "ClinicMM",
         "country": "MM",
         "region": "asia",
         "rating": 2,
@@ -90747,7 +90747,7 @@ const CASE_DATA = {
           "customer-support",
           "sync"
         ],
-        "text": "Inventory sync between registers keeps breaking during busy periods. Support ticket open 2 weeks with no meaningful resolution."
+        "text": "Inventory sync between registers keeps breaking during busy periods. Support ticket open 2 weeks with no meaningful resolution offered."
       },
       {
         "author": "TapasES",
@@ -90759,7 +90759,7 @@ const CASE_DATA = {
         "themes": [
           "payment-integration"
         ],
-        "text": "Spent weeks trying to set up card payments. Documentation is outdated and support sends copy-paste replies. Eventually switched providers."
+        "text": "Android version lacks integration with EFTPOS machines that iOS supports. Documentation is outdated and support sends copy-paste replies."
       },
       {
         "author": "DeliUS",
@@ -90790,7 +90790,7 @@ const CASE_DATA = {
     ],
     "appStore": [
       {
-        "author": "ThriftNYC",
+        "author": "BoutiqueNYC",
         "country": "US",
         "region": "north_america",
         "rating": 5,
@@ -90798,9 +90798,9 @@ const CASE_DATA = {
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
-          "reporting"
+          "free-value"
         ],
-        "text": "Switched from Square and the interface is noticeably cleaner. Export options and sales reports make end-of-month accounting a breeze."
+        "text": "Stumbled on this app after hearing someone recommend it. Very user friendly for my boutique and can be easily integrated for further expansion."
       },
       {
         "author": "CafeMelb",
@@ -90851,7 +90851,7 @@ const CASE_DATA = {
         "themes": [
           "reporting"
         ],
-        "text": "New hires learn the system in 15 minutes. Sales reports are accurate and real-time. Would be 5 stars without the paid add-on for analytics."
+        "text": "New hires learn the system in 15 minutes. Sales reports are accurate and real-time. Would be 5 stars if the analytics add-on were included."
       },
       {
         "author": "GroceryPH",
@@ -90863,7 +90863,7 @@ const CASE_DATA = {
         "themes": [
           "inventory"
         ],
-        "text": "Solid app but bulk product import is needed. Entering 700 items manually was tedious. A CSV upload would save hours of setup time."
+        "text": "One of the best ERP software for small scale industries. Not as easy to configure for bulk imports but very solid once set up."
       },
       {
         "author": "BarberUK",
@@ -90875,7 +90875,7 @@ const CASE_DATA = {
         "themes": [
           "payment-integration"
         ],
-        "text": "POS features are excellent for tracking sales. But setting up integrated card payments was confusing — needs better step-by-step guidance."
+        "text": "POS features excellent for tracking sales. Setting up integrated card payments was confusing — needs better step-by-step guidance for SumUp."
       },
       {
         "author": "MarketTH",
@@ -90899,7 +90899,7 @@ const CASE_DATA = {
         "themes": [
           "customer-support"
         ],
-        "text": "Email-only support with 5 to 7 day waits is not acceptable for a business tool. Register crashed Friday and was not resolved until Thursday."
+        "text": "Chat support only available with paid add-ons. Free users rely on help section and peer forum. Register crashed Friday, not resolved until Thursday."
       },
       {
         "author": "FarmStandUS",
@@ -90937,7 +90937,7 @@ const CASE_DATA = {
         "themes": [
           "payment-integration"
         ],
-        "text": "Payment setup documentation references screens that no longer exist in the app. Support sent an outdated guide. Gave up on card payments."
+        "text": "Payment setup documentation references screens that no longer exist in the app. Requires their servers to fully use the app which feels limiting."
       }
     ]
   },
