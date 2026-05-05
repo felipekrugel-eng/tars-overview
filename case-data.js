@@ -1,9 +1,9 @@
 // ─── CASE DATA BLOCK ───────────────────────────────────────────────────────────────
 // Updated by CASE × Snowflake pull. Single source of truth for all dashboard numbers.
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
-// Last pull: 2026-05-04
+// Last pull: 2026-05-05
 const CASE_DATA = {
-  "lastUpdated": "2026-05-04",
+  "lastUpdated": "2026-05-05",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -169,7 +169,7 @@ const CASE_DATA = {
         1,
         1081.4,
         null,
-        20768.8,
+        20769,
         null,
         null,
         null,
@@ -183,14 +183,14 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 13925343,
+      "value": 13925472,
       "label": "Registered merchants"
     },
     "active": {
       "label": "Active (last 30d)"
     },
     "paying": {
-      "value": 71879,
+      "value": 71915,
       "label": "Paying customers"
     },
     "paymentsEnabled": {
@@ -237,7 +237,7 @@ const CASE_DATA = {
     "cohortVintages": [
       {
         "month": "2026-05",
-        "merchants": 228,
+        "merchants": 327,
         "activeNow": 0,
         "activePct": 0,
         "payingNow": 0,
@@ -246,8 +246,8 @@ const CASE_DATA = {
         "mrr": 0,
         "arr": 0,
         "arpc": 0,
-        "gtv30d": 7.4,
-        "gtvAlltime": 0.01,
+        "gtv30d": 63.9,
+        "gtvAlltime": 0.06,
         "revenueAlltime": 0,
         "npv": 0,
         "ltv": 0,
@@ -258,45 +258,45 @@ const CASE_DATA = {
       },
       {
         "month": "2026-04",
-        "merchants": 3707,
+        "merchants": 3737,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 80,
-        "payingPct": 2.16,
+        "payingNow": 85,
+        "payingPct": 2.27,
         "activeToPayingPct": 0,
-        "mrr": 1057,
-        "arr": 12679,
-        "arpc": 13.21,
-        "gtv30d": 7785.9,
-        "gtvAlltime": 7.81,
-        "revenueAlltime": 2.8,
-        "npv": 0.77,
-        "ltv": 35.62,
+        "mrr": 1112,
+        "arr": 13347,
+        "arpc": 13.09,
+        "gtv30d": 7803.3,
+        "gtvAlltime": 7.83,
+        "revenueAlltime": 3,
+        "npv": 0.81,
+        "ltv": 35.58,
         "cancelled30d": 15,
-        "churnRate30d": 15.8,
+        "churnRate30d": 15,
         "cohortAgeMonths": 1,
-        "paymentPct": 2.16
+        "paymentPct": 2.27
       },
       {
         "month": "2026-03",
         "merchants": 16039,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 425,
-        "payingPct": 2.65,
+        "payingNow": 430,
+        "payingPct": 2.68,
         "activeToPayingPct": 0,
-        "mrr": 7190,
-        "arr": 86278,
-        "arpc": 16.92,
-        "gtv30d": 1074267.3,
-        "gtvAlltime": 1102.35,
+        "mrr": 7237,
+        "arr": 86843,
+        "arpc": 16.83,
+        "gtv30d": 1074265.4,
+        "gtvAlltime": 1102.4,
         "revenueAlltime": 24.2,
         "npv": 1.51,
-        "ltv": 56.99,
-        "cancelled30d": 31,
-        "churnRate30d": 6.8,
+        "ltv": 56.36,
+        "cancelled30d": 33,
+        "churnRate30d": 7.1,
         "cohortAgeMonths": 2,
-        "paymentPct": 2.65
+        "paymentPct": 2.68
       },
       {
         "month": "2026-02",
@@ -306,16 +306,16 @@ const CASE_DATA = {
         "payingNow": 2331,
         "payingPct": 1.32,
         "activeToPayingPct": 0,
-        "mrr": 33095,
-        "arr": 397136,
-        "arpc": 14.2,
-        "gtv30d": 246989.6,
-        "gtvAlltime": 1703.54,
-        "revenueAlltime": 126.3,
-        "npv": 0.71,
-        "ltv": 54.17,
-        "cancelled30d": 233,
-        "churnRate30d": 9.1,
+        "mrr": 33192,
+        "arr": 398309,
+        "arpc": 14.24,
+        "gtv30d": 246900.4,
+        "gtvAlltime": 1703.87,
+        "revenueAlltime": 128.4,
+        "npv": 0.73,
+        "ltv": 55.1,
+        "cancelled30d": 227,
+        "churnRate30d": 8.9,
         "cohortAgeMonths": 3,
         "paymentPct": 1.32
       },
@@ -324,61 +324,61 @@ const CASE_DATA = {
         "merchants": 200783,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 3071,
-        "payingPct": 1.53,
+        "payingNow": 3083,
+        "payingPct": 1.54,
         "activeToPayingPct": 0,
-        "mrr": 41020,
-        "arr": 492237,
-        "arpc": 13.36,
-        "gtv30d": 11434.4,
-        "gtvAlltime": 717.28,
-        "revenueAlltime": 206.4,
-        "npv": 1.03,
-        "ltv": 67.2,
-        "cancelled30d": 273,
+        "mrr": 41008,
+        "arr": 492100,
+        "arpc": 13.3,
+        "gtv30d": 11253.7,
+        "gtvAlltime": 717.58,
+        "revenueAlltime": 207.8,
+        "npv": 1.04,
+        "ltv": 67.41,
+        "cancelled30d": 277,
         "churnRate30d": 8.2,
         "cohortAgeMonths": 4,
-        "paymentPct": 1.53
+        "paymentPct": 1.54
       },
       {
         "month": "2025-12",
         "merchants": 160714,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2412,
-        "payingPct": 1.5,
+        "payingNow": 2421,
+        "payingPct": 1.51,
         "activeToPayingPct": 0,
-        "mrr": 31591,
-        "arr": 379098,
-        "arpc": 13.1,
-        "gtv30d": 7847605.1,
-        "gtvAlltime": 9056.88,
-        "revenueAlltime": 191.8,
-        "npv": 1.19,
-        "ltv": 79.5,
-        "cancelled30d": 217,
-        "churnRate30d": 8.3,
+        "mrr": 31703,
+        "arr": 380434,
+        "arpc": 13.09,
+        "gtv30d": 7847779.4,
+        "gtvAlltime": 9057.41,
+        "revenueAlltime": 193.1,
+        "npv": 1.2,
+        "ltv": 79.78,
+        "cancelled30d": 223,
+        "churnRate30d": 8.4,
         "cohortAgeMonths": 5,
-        "paymentPct": 1.5
+        "paymentPct": 1.51
       },
       {
         "month": "2025-11",
         "merchants": 163604,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2515,
+        "payingNow": 2512,
         "payingPct": 1.54,
         "activeToPayingPct": 0,
-        "mrr": 30213,
-        "arr": 362551,
-        "arpc": 12.01,
-        "gtv30d": 5094.5,
-        "gtvAlltime": 13.02,
-        "revenueAlltime": 222.8,
-        "npv": 1.36,
-        "ltv": 88.57,
-        "cancelled30d": 265,
-        "churnRate30d": 9.5,
+        "mrr": 30212,
+        "arr": 362543,
+        "arpc": 12.03,
+        "gtv30d": 5021.7,
+        "gtvAlltime": 13.14,
+        "revenueAlltime": 223.8,
+        "npv": 1.37,
+        "ltv": 89.09,
+        "cancelled30d": 269,
+        "churnRate30d": 9.7,
         "cohortAgeMonths": 6,
         "paymentPct": 1.54
       },
@@ -390,16 +390,16 @@ const CASE_DATA = {
         "payingNow": 2716,
         "payingPct": 1.64,
         "activeToPayingPct": 0,
-        "mrr": 32247,
-        "arr": 386966,
-        "arpc": 11.87,
-        "gtv30d": 15077.3,
-        "gtvAlltime": 1501.33,
-        "revenueAlltime": 256.2,
-        "npv": 1.54,
-        "ltv": 94.32,
-        "cancelled30d": 259,
-        "churnRate30d": 8.7,
+        "mrr": 32301,
+        "arr": 387617,
+        "arpc": 11.89,
+        "gtv30d": 15050.6,
+        "gtvAlltime": 1501.49,
+        "revenueAlltime": 257.1,
+        "npv": 1.55,
+        "ltv": 94.67,
+        "cancelled30d": 268,
+        "churnRate30d": 9,
         "cohortAgeMonths": 7,
         "paymentPct": 1.64
       },
@@ -408,19 +408,19 @@ const CASE_DATA = {
         "merchants": 167023,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2790,
+        "payingNow": 2786,
         "payingPct": 1.67,
         "activeToPayingPct": 0,
-        "mrr": 35386,
-        "arr": 424638,
-        "arpc": 12.68,
-        "gtv30d": 14921.3,
-        "gtvAlltime": 271.9,
-        "revenueAlltime": 324,
+        "mrr": 35341,
+        "arr": 424089,
+        "arpc": 12.69,
+        "gtv30d": 15084.6,
+        "gtvAlltime": 272.22,
+        "revenueAlltime": 324.7,
         "npv": 1.94,
-        "ltv": 116.15,
-        "cancelled30d": 213,
-        "churnRate30d": 7.1,
+        "ltv": 116.56,
+        "cancelled30d": 210,
+        "churnRate30d": 7,
         "cohortAgeMonths": 8,
         "paymentPct": 1.67
       },
@@ -429,38 +429,38 @@ const CASE_DATA = {
         "merchants": 175191,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2885,
-        "payingPct": 1.65,
+        "payingNow": 2879,
+        "payingPct": 1.64,
         "activeToPayingPct": 0,
-        "mrr": 39668,
-        "arr": 476016,
-        "arpc": 13.75,
-        "gtv30d": 3545.6,
-        "gtvAlltime": 27.13,
-        "revenueAlltime": 378.8,
-        "npv": 2.16,
-        "ltv": 131.31,
+        "mrr": 39702,
+        "arr": 476427,
+        "arpc": 13.79,
+        "gtv30d": 3518.7,
+        "gtvAlltime": 27.24,
+        "revenueAlltime": 379.9,
+        "npv": 2.17,
+        "ltv": 131.95,
         "cancelled30d": 226,
         "churnRate30d": 7.3,
         "cohortAgeMonths": 9,
-        "paymentPct": 1.65
+        "paymentPct": 1.64
       },
       {
         "month": "2025-07",
         "merchants": 184450,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 3201,
+        "payingNow": 3202,
         "payingPct": 1.74,
         "activeToPayingPct": 0,
-        "mrr": 41384,
-        "arr": 496604,
-        "arpc": 12.93,
-        "gtv30d": 75828,
-        "gtvAlltime": 97.35,
-        "revenueAlltime": 454.7,
-        "npv": 2.47,
-        "ltv": 142.04,
+        "mrr": 41285,
+        "arr": 495423,
+        "arpc": 12.89,
+        "gtv30d": 78892,
+        "gtvAlltime": 100.74,
+        "revenueAlltime": 456.8,
+        "npv": 2.48,
+        "ltv": 142.67,
         "cancelled30d": 244,
         "churnRate30d": 7.1,
         "cohortAgeMonths": 10,
@@ -471,19 +471,19 @@ const CASE_DATA = {
         "merchants": 170907,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 3039,
+        "payingNow": 3034,
         "payingPct": 1.78,
         "activeToPayingPct": 0,
-        "mrr": 39378,
-        "arr": 472539,
-        "arpc": 12.96,
-        "gtv30d": 5167.7,
-        "gtvAlltime": 15.12,
-        "revenueAlltime": 448,
-        "npv": 2.62,
-        "ltv": 147.42,
-        "cancelled30d": 234,
-        "churnRate30d": 7.1,
+        "mrr": 39267,
+        "arr": 471203,
+        "arpc": 12.94,
+        "gtv30d": 5147.4,
+        "gtvAlltime": 15.25,
+        "revenueAlltime": 449,
+        "npv": 2.63,
+        "ltv": 147.99,
+        "cancelled30d": 235,
+        "churnRate30d": 7.2,
         "cohortAgeMonths": 11,
         "paymentPct": 1.78
       },
@@ -492,40 +492,40 @@ const CASE_DATA = {
         "merchants": 171748,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 3105,
-        "payingPct": 1.81,
+        "payingNow": 3097,
+        "payingPct": 1.8,
         "activeToPayingPct": 0,
-        "mrr": 40196,
-        "arr": 482357,
-        "arpc": 12.95,
-        "gtv30d": 90981,
-        "gtvAlltime": 97.53,
-        "revenueAlltime": 498.4,
-        "npv": 2.9,
-        "ltv": 160.5,
-        "cancelled30d": 196,
-        "churnRate30d": 5.9,
+        "mrr": 40022,
+        "arr": 480259,
+        "arpc": 12.92,
+        "gtv30d": 90793.8,
+        "gtvAlltime": 97.71,
+        "revenueAlltime": 500,
+        "npv": 2.91,
+        "ltv": 161.46,
+        "cancelled30d": 197,
+        "churnRate30d": 6,
         "cohortAgeMonths": 12,
-        "paymentPct": 1.81
+        "paymentPct": 1.8
       },
       {
         "month": "2025-04",
         "merchants": 153611,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2723,
+        "payingNow": 2721,
         "payingPct": 1.77,
         "activeToPayingPct": 0,
-        "mrr": 35754,
-        "arr": 429050,
+        "mrr": 35737,
+        "arr": 428844,
         "arpc": 13.13,
-        "gtv30d": 519059.7,
-        "gtvAlltime": 826.53,
-        "revenueAlltime": 492.7,
+        "gtv30d": 519061.8,
+        "gtvAlltime": 826.68,
+        "revenueAlltime": 493.6,
         "npv": 3.21,
-        "ltv": 180.96,
-        "cancelled30d": 205,
-        "churnRate30d": 7,
+        "ltv": 181.39,
+        "cancelled30d": 203,
+        "churnRate30d": 6.9,
         "cohortAgeMonths": 13,
         "paymentPct": 1.77
       },
@@ -534,19 +534,19 @@ const CASE_DATA = {
         "merchants": 171827,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2738,
+        "payingNow": 2732,
         "payingPct": 1.59,
         "activeToPayingPct": 0,
-        "mrr": 34428,
-        "arr": 413136,
-        "arpc": 12.57,
-        "gtv30d": 4902.8,
-        "gtvAlltime": 11.12,
-        "revenueAlltime": 532.2,
+        "mrr": 34290,
+        "arr": 411478,
+        "arpc": 12.55,
+        "gtv30d": 4826.8,
+        "gtvAlltime": 11.23,
+        "revenueAlltime": 533.2,
         "npv": 3.1,
-        "ltv": 194.39,
-        "cancelled30d": 239,
-        "churnRate30d": 8,
+        "ltv": 195.18,
+        "cancelled30d": 234,
+        "churnRate30d": 7.9,
         "cohortAgeMonths": 14,
         "paymentPct": 1.59
       },
@@ -555,17 +555,17 @@ const CASE_DATA = {
         "merchants": 142535,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2665,
+        "payingNow": 2663,
         "payingPct": 1.87,
         "activeToPayingPct": 0,
-        "mrr": 36450,
-        "arr": 437402,
-        "arpc": 13.68,
-        "gtv30d": 2733.1,
-        "gtvAlltime": 8.41,
-        "revenueAlltime": 579.9,
-        "npv": 4.07,
-        "ltv": 217.61,
+        "mrr": 36584,
+        "arr": 439013,
+        "arpc": 13.74,
+        "gtv30d": 2735.8,
+        "gtvAlltime": 8.51,
+        "revenueAlltime": 581.2,
+        "npv": 4.08,
+        "ltv": 218.25,
         "cancelled30d": 152,
         "churnRate30d": 5.4,
         "cohortAgeMonths": 15,
@@ -576,19 +576,19 @@ const CASE_DATA = {
         "merchants": 155807,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2619,
+        "payingNow": 2615,
         "payingPct": 1.68,
         "activeToPayingPct": 0,
-        "mrr": 33360,
-        "arr": 400326,
-        "arpc": 12.74,
-        "gtv30d": 60466.8,
-        "gtvAlltime": 65.81,
-        "revenueAlltime": 606.4,
-        "npv": 3.89,
-        "ltv": 231.52,
-        "cancelled30d": 178,
-        "churnRate30d": 6.4,
+        "mrr": 33275,
+        "arr": 399298,
+        "arpc": 12.72,
+        "gtv30d": 60445.7,
+        "gtvAlltime": 65.9,
+        "revenueAlltime": 607.5,
+        "npv": 3.9,
+        "ltv": 232.32,
+        "cancelled30d": 186,
+        "churnRate30d": 6.6,
         "cohortAgeMonths": 16,
         "paymentPct": 1.68
       },
@@ -597,19 +597,19 @@ const CASE_DATA = {
         "merchants": 124860,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2176,
+        "payingNow": 2175,
         "payingPct": 1.74,
         "activeToPayingPct": 0,
-        "mrr": 26125,
-        "arr": 313504,
+        "mrr": 26119,
+        "arr": 313427,
         "arpc": 12.01,
-        "gtv30d": 3101.6,
-        "gtvAlltime": 1379.95,
-        "revenueAlltime": 523.2,
-        "npv": 4.19,
-        "ltv": 240.44,
-        "cancelled30d": 208,
-        "churnRate30d": 8.7,
+        "gtv30d": 3085.5,
+        "gtvAlltime": 1380.09,
+        "revenueAlltime": 524.1,
+        "npv": 4.2,
+        "ltv": 240.96,
+        "cancelled30d": 198,
+        "churnRate30d": 8.3,
         "cohortAgeMonths": 17,
         "paymentPct": 1.74
       },
@@ -618,38 +618,38 @@ const CASE_DATA = {
         "merchants": 137654,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2284,
-        "payingPct": 1.66,
+        "payingNow": 2278,
+        "payingPct": 1.65,
         "activeToPayingPct": 0,
-        "mrr": 29233,
-        "arr": 350801,
-        "arpc": 12.8,
-        "gtv30d": 45635.3,
-        "gtvAlltime": 14606.88,
-        "revenueAlltime": 607.2,
-        "npv": 4.41,
-        "ltv": 265.86,
-        "cancelled30d": 156,
+        "mrr": 29130,
+        "arr": 349565,
+        "arpc": 12.79,
+        "gtv30d": 45637.4,
+        "gtvAlltime": 14607.02,
+        "revenueAlltime": 607.9,
+        "npv": 4.42,
+        "ltv": 266.87,
+        "cancelled30d": 157,
         "churnRate30d": 6.4,
         "cohortAgeMonths": 18,
-        "paymentPct": 1.66
+        "paymentPct": 1.65
       },
       {
         "month": "2024-10",
         "merchants": 149212,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2427,
+        "payingNow": 2429,
         "payingPct": 1.63,
         "activeToPayingPct": 0,
-        "mrr": 33210,
-        "arr": 398524,
-        "arpc": 13.68,
-        "gtv30d": 6387.4,
-        "gtvAlltime": 18.48,
-        "revenueAlltime": 685.5,
-        "npv": 4.59,
-        "ltv": 282.43,
+        "mrr": 33161,
+        "arr": 397934,
+        "arpc": 13.65,
+        "gtv30d": 6347.7,
+        "gtvAlltime": 18.55,
+        "revenueAlltime": 686.4,
+        "npv": 4.6,
+        "ltv": 282.6,
         "cancelled30d": 149,
         "churnRate30d": 5.8,
         "cohortAgeMonths": 19,
@@ -660,19 +660,19 @@ const CASE_DATA = {
         "merchants": 132759,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2373,
+        "payingNow": 2380,
         "payingPct": 1.79,
         "activeToPayingPct": 0,
-        "mrr": 32050,
-        "arr": 384602,
-        "arpc": 13.51,
-        "gtv30d": 3120.6,
-        "gtvAlltime": 20.81,
-        "revenueAlltime": 760.7,
-        "npv": 5.73,
-        "ltv": 320.55,
-        "cancelled30d": 93,
-        "churnRate30d": 3.8,
+        "mrr": 32084,
+        "arr": 385005,
+        "arpc": 13.48,
+        "gtv30d": 3140,
+        "gtvAlltime": 20.95,
+        "revenueAlltime": 762.1,
+        "npv": 5.74,
+        "ltv": 320.2,
+        "cancelled30d": 92,
+        "churnRate30d": 3.7,
         "cohortAgeMonths": 20,
         "paymentPct": 1.79
       },
@@ -681,19 +681,19 @@ const CASE_DATA = {
         "merchants": 138101,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2270,
+        "payingNow": 2265,
         "payingPct": 1.64,
         "activeToPayingPct": 0,
-        "mrr": 33646,
-        "arr": 403755,
-        "arpc": 14.82,
-        "gtv30d": 8422.8,
-        "gtvAlltime": 29.52,
-        "revenueAlltime": 775.2,
-        "npv": 5.61,
-        "ltv": 341.49,
-        "cancelled30d": 115,
-        "churnRate30d": 4.8,
+        "mrr": 33633,
+        "arr": 403601,
+        "arpc": 14.85,
+        "gtv30d": 8413.3,
+        "gtvAlltime": 29.65,
+        "revenueAlltime": 775.7,
+        "npv": 5.62,
+        "ltv": 342.46,
+        "cancelled30d": 117,
+        "churnRate30d": 4.9,
         "cohortAgeMonths": 21,
         "paymentPct": 1.64
       },
@@ -702,19 +702,19 @@ const CASE_DATA = {
         "merchants": 140399,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2322,
+        "payingNow": 2317,
         "payingPct": 1.65,
         "activeToPayingPct": 0,
-        "mrr": 31753,
-        "arr": 381035,
-        "arpc": 13.67,
-        "gtv30d": 5179,
-        "gtvAlltime": 14.16,
-        "revenueAlltime": 725.7,
-        "npv": 5.17,
-        "ltv": 312.53,
-        "cancelled30d": 96,
-        "churnRate30d": 4,
+        "mrr": 31532,
+        "arr": 378389,
+        "arpc": 13.61,
+        "gtv30d": 5159.3,
+        "gtvAlltime": 14.35,
+        "revenueAlltime": 727.8,
+        "npv": 5.18,
+        "ltv": 314.1,
+        "cancelled30d": 102,
+        "churnRate30d": 4.2,
         "cohortAgeMonths": 22,
         "paymentPct": 1.65
       },
@@ -726,16 +726,16 @@ const CASE_DATA = {
         "payingNow": 2117,
         "payingPct": 1.67,
         "activeToPayingPct": 0,
-        "mrr": 25763,
-        "arr": 309159,
+        "mrr": 25770,
+        "arr": 309245,
         "arpc": 12.17,
-        "gtv30d": 4454.5,
-        "gtvAlltime": 12.91,
-        "revenueAlltime": 677.2,
+        "gtv30d": 4498.3,
+        "gtvAlltime": 13.1,
+        "revenueAlltime": 677.6,
         "npv": 5.34,
-        "ltv": 319.89,
-        "cancelled30d": 125,
-        "churnRate30d": 5.6,
+        "ltv": 320.07,
+        "cancelled30d": 128,
+        "churnRate30d": 5.7,
         "cohortAgeMonths": 23,
         "paymentPct": 1.67
       },
@@ -744,17 +744,17 @@ const CASE_DATA = {
         "merchants": 132946,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2473,
+        "payingNow": 2478,
         "payingPct": 1.86,
         "activeToPayingPct": 0,
-        "mrr": 30617,
-        "arr": 367402,
-        "arpc": 12.38,
-        "gtv30d": 11180735.3,
-        "gtvAlltime": 11189.86,
-        "revenueAlltime": 740.8,
-        "npv": 5.57,
-        "ltv": 299.56,
+        "mrr": 30698,
+        "arr": 368378,
+        "arpc": 12.39,
+        "gtv30d": 11180730.4,
+        "gtvAlltime": 11190.02,
+        "revenueAlltime": 741.3,
+        "npv": 5.58,
+        "ltv": 299.14,
         "cancelled30d": 152,
         "churnRate30d": 5.8,
         "cohortAgeMonths": 24,
@@ -765,19 +765,19 @@ const CASE_DATA = {
         "merchants": 133555,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2136,
+        "payingNow": 2141,
         "payingPct": 1.6,
         "activeToPayingPct": 0,
-        "mrr": 28401,
-        "arr": 340814,
-        "arpc": 13.3,
-        "gtv30d": 4502.2,
-        "gtvAlltime": 14.15,
-        "revenueAlltime": 738.3,
-        "npv": 5.53,
-        "ltv": 345.64,
-        "cancelled30d": 140,
-        "churnRate30d": 6.2,
+        "mrr": 28464,
+        "arr": 341568,
+        "arpc": 13.29,
+        "gtv30d": 4443.9,
+        "gtvAlltime": 14.3,
+        "revenueAlltime": 740.3,
+        "npv": 5.54,
+        "ltv": 345.76,
+        "cancelled30d": 143,
+        "churnRate30d": 6.3,
         "cohortAgeMonths": 25,
         "paymentPct": 1.6
       },
@@ -786,17 +786,17 @@ const CASE_DATA = {
         "merchants": 140731,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2521,
+        "payingNow": 2525,
         "payingPct": 1.79,
         "activeToPayingPct": 0,
-        "mrr": 39751,
-        "arr": 477010,
-        "arpc": 15.77,
-        "gtv30d": 5402.9,
-        "gtvAlltime": 18.42,
-        "revenueAlltime": 1089.4,
-        "npv": 7.74,
-        "ltv": 432.12,
+        "mrr": 39934,
+        "arr": 479209,
+        "arpc": 15.82,
+        "gtv30d": 5218.1,
+        "gtvAlltime": 18.51,
+        "revenueAlltime": 1094.1,
+        "npv": 7.77,
+        "ltv": 433.32,
         "cancelled30d": 132,
         "churnRate30d": 5,
         "cohortAgeMonths": 26,
@@ -807,40 +807,40 @@ const CASE_DATA = {
         "merchants": 159370,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2367,
-        "payingPct": 1.49,
+        "payingNow": 2364,
+        "payingPct": 1.48,
         "activeToPayingPct": 0,
-        "mrr": 32537,
-        "arr": 390443,
+        "mrr": 32516,
+        "arr": 390190,
         "arpc": 13.75,
-        "gtv30d": 5979.5,
-        "gtvAlltime": 20.25,
-        "revenueAlltime": 950.5,
-        "npv": 5.96,
-        "ltv": 401.57,
-        "cancelled30d": 137,
-        "churnRate30d": 5.5,
+        "gtv30d": 6007.8,
+        "gtvAlltime": 20.47,
+        "revenueAlltime": 951.6,
+        "npv": 5.97,
+        "ltv": 402.54,
+        "cancelled30d": 142,
+        "churnRate30d": 5.7,
         "cohortAgeMonths": 27,
-        "paymentPct": 1.49
+        "paymentPct": 1.48
       },
       {
         "month": "2024-01",
         "merchants": 138545,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2412,
+        "payingNow": 2414,
         "payingPct": 1.74,
         "activeToPayingPct": 0,
-        "mrr": 30684,
-        "arr": 368203,
-        "arpc": 12.72,
-        "gtv30d": 3225.3,
-        "gtvAlltime": 11.98,
-        "revenueAlltime": 989.2,
+        "mrr": 30761,
+        "arr": 369137,
+        "arpc": 12.74,
+        "gtv30d": 3115,
+        "gtvAlltime": 12.07,
+        "revenueAlltime": 989.6,
         "npv": 7.14,
-        "ltv": 410.12,
-        "cancelled30d": 176,
-        "churnRate30d": 6.8,
+        "ltv": 409.93,
+        "cancelled30d": 180,
+        "churnRate30d": 6.9,
         "cohortAgeMonths": 28,
         "paymentPct": 1.74
       },
@@ -852,14 +852,14 @@ const CASE_DATA = {
         "payingNow": 1776,
         "payingPct": 1.62,
         "activeToPayingPct": 0,
-        "mrr": 30820,
-        "arr": 369844,
-        "arpc": 17.35,
-        "gtv30d": 2560.2,
-        "gtvAlltime": 11.09,
-        "revenueAlltime": 934,
-        "npv": 8.52,
-        "ltv": 525.92,
+        "mrr": 30632,
+        "arr": 367584,
+        "arpc": 17.25,
+        "gtv30d": 2633.5,
+        "gtvAlltime": 11.24,
+        "revenueAlltime": 934.8,
+        "npv": 8.53,
+        "ltv": 526.36,
         "cancelled30d": 138,
         "churnRate30d": 7.2,
         "cohortAgeMonths": 29,
@@ -870,40 +870,40 @@ const CASE_DATA = {
         "merchants": 117238,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2156,
-        "payingPct": 1.84,
+        "payingNow": 2150,
+        "payingPct": 1.83,
         "activeToPayingPct": 0,
-        "mrr": 30559,
-        "arr": 366712,
+        "mrr": 30469,
+        "arr": 365631,
         "arpc": 14.17,
-        "gtv30d": 3879.3,
-        "gtvAlltime": 210.38,
-        "revenueAlltime": 972.4,
-        "npv": 8.29,
-        "ltv": 451.04,
-        "cancelled30d": 99,
-        "churnRate30d": 4.4,
+        "gtv30d": 3845.6,
+        "gtvAlltime": 210.48,
+        "revenueAlltime": 972.5,
+        "npv": 8.3,
+        "ltv": 452.33,
+        "cancelled30d": 101,
+        "churnRate30d": 4.5,
         "cohortAgeMonths": 30,
-        "paymentPct": 1.84
+        "paymentPct": 1.83
       },
       {
         "month": "2023-10",
         "merchants": 121477,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2058,
+        "payingNow": 2047,
         "payingPct": 1.69,
         "activeToPayingPct": 0,
-        "mrr": 27941,
-        "arr": 335293,
-        "arpc": 13.58,
-        "gtv30d": 503732.6,
-        "gtvAlltime": 510.98,
-        "revenueAlltime": 895.4,
-        "npv": 7.37,
-        "ltv": 435.1,
-        "cancelled30d": 110,
-        "churnRate30d": 5.1,
+        "mrr": 27894,
+        "arr": 334728,
+        "arpc": 13.63,
+        "gtv30d": 503699.4,
+        "gtvAlltime": 511.13,
+        "revenueAlltime": 897.1,
+        "npv": 7.39,
+        "ltv": 438.27,
+        "cancelled30d": 112,
+        "churnRate30d": 5.2,
         "cohortAgeMonths": 31,
         "paymentPct": 1.69
       },
@@ -912,21 +912,21 @@ const CASE_DATA = {
         "merchants": 121202,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1899,
-        "payingPct": 1.57,
+        "payingNow": 1895,
+        "payingPct": 1.56,
         "activeToPayingPct": 0,
-        "mrr": 29130,
-        "arr": 349564,
-        "arpc": 15.34,
-        "gtv30d": 3195.8,
-        "gtvAlltime": 12.44,
-        "revenueAlltime": 1013.3,
-        "npv": 8.36,
-        "ltv": 533.61,
-        "cancelled30d": 95,
-        "churnRate30d": 4.8,
+        "mrr": 29105,
+        "arr": 349259,
+        "arpc": 15.36,
+        "gtv30d": 3196.5,
+        "gtvAlltime": 12.55,
+        "revenueAlltime": 1014.4,
+        "npv": 8.37,
+        "ltv": 535.32,
+        "cancelled30d": 93,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 32,
-        "paymentPct": 1.57
+        "paymentPct": 1.56
       },
       {
         "month": "2023-08",
@@ -936,15 +936,15 @@ const CASE_DATA = {
         "payingNow": 2020,
         "payingPct": 1.47,
         "activeToPayingPct": 0,
-        "mrr": 26017,
-        "arr": 312208,
-        "arpc": 12.88,
-        "gtv30d": 8137.1,
-        "gtvAlltime": 13.24,
-        "revenueAlltime": 917.9,
-        "npv": 6.67,
-        "ltv": 454.39,
-        "cancelled30d": 94,
+        "mrr": 26043,
+        "arr": 312517,
+        "arpc": 12.89,
+        "gtv30d": 8136.7,
+        "gtvAlltime": 13.32,
+        "revenueAlltime": 918.8,
+        "npv": 6.68,
+        "ltv": 454.84,
+        "cancelled30d": 92,
         "churnRate30d": 4.4,
         "cohortAgeMonths": 33,
         "paymentPct": 1.47
@@ -954,42 +954,42 @@ const CASE_DATA = {
         "merchants": 166326,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2585,
-        "payingPct": 1.55,
+        "payingNow": 2592,
+        "payingPct": 1.56,
         "activeToPayingPct": 0,
-        "mrr": 37669,
-        "arr": 452032,
-        "arpc": 14.57,
-        "gtv30d": 3504.6,
-        "gtvAlltime": 9.36,
-        "revenueAlltime": 1248.9,
-        "npv": 7.51,
-        "ltv": 483.13,
-        "cancelled30d": 130,
-        "churnRate30d": 4.8,
+        "mrr": 37751,
+        "arr": 453008,
+        "arpc": 14.56,
+        "gtv30d": 3534.9,
+        "gtvAlltime": 9.49,
+        "revenueAlltime": 1250.1,
+        "npv": 7.52,
+        "ltv": 482.31,
+        "cancelled30d": 128,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 34,
-        "paymentPct": 1.55
+        "paymentPct": 1.56
       },
       {
         "month": "2023-06",
         "merchants": 153103,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2333,
-        "payingPct": 1.52,
+        "payingNow": 2336,
+        "payingPct": 1.53,
         "activeToPayingPct": 0,
-        "mrr": 31489,
-        "arr": 377864,
-        "arpc": 13.5,
-        "gtv30d": 2806.5,
-        "gtvAlltime": 9.91,
-        "revenueAlltime": 1202.7,
+        "mrr": 31553,
+        "arr": 378635,
+        "arpc": 13.51,
+        "gtv30d": 2782.8,
+        "gtvAlltime": 10.01,
+        "revenueAlltime": 1203.5,
         "npv": 7.86,
-        "ltv": 515.51,
-        "cancelled30d": 111,
-        "churnRate30d": 4.5,
+        "ltv": 515.21,
+        "cancelled30d": 115,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 35,
-        "paymentPct": 1.52
+        "paymentPct": 1.53
       },
       {
         "month": "2023-05",
@@ -999,16 +999,16 @@ const CASE_DATA = {
         "payingNow": 2301,
         "payingPct": 1.43,
         "activeToPayingPct": 0,
-        "mrr": 32056,
-        "arr": 384674,
-        "arpc": 13.93,
-        "gtv30d": 2388.1,
-        "gtvAlltime": 28.73,
-        "revenueAlltime": 1317.5,
-        "npv": 8.18,
-        "ltv": 572.58,
-        "cancelled30d": 127,
-        "churnRate30d": 5.2,
+        "mrr": 32030,
+        "arr": 384365,
+        "arpc": 13.92,
+        "gtv30d": 2387.5,
+        "gtvAlltime": 28.82,
+        "revenueAlltime": 1319.2,
+        "npv": 8.19,
+        "ltv": 573.3,
+        "cancelled30d": 121,
+        "churnRate30d": 5,
         "cohortAgeMonths": 36,
         "paymentPct": 1.43
       },
@@ -1023,13 +1023,13 @@ const CASE_DATA = {
         "mrr": 34988,
         "arr": 419853,
         "arpc": 15.42,
-        "gtv30d": 2418,
-        "gtvAlltime": 7.41,
-        "revenueAlltime": 1303.9,
-        "npv": 9.49,
-        "ltv": 574.64,
-        "cancelled30d": 130,
-        "churnRate30d": 5.4,
+        "gtv30d": 2394.4,
+        "gtvAlltime": 7.49,
+        "revenueAlltime": 1305.6,
+        "npv": 9.5,
+        "ltv": 575.41,
+        "cancelled30d": 134,
+        "churnRate30d": 5.6,
         "cohortAgeMonths": 37,
         "paymentPct": 1.65
       },
@@ -1044,13 +1044,13 @@ const CASE_DATA = {
         "mrr": 43604,
         "arr": 523244,
         "arpc": 15.82,
-        "gtv30d": 9181,
-        "gtvAlltime": 48.82,
-        "revenueAlltime": 2087,
+        "gtv30d": 9256.6,
+        "gtvAlltime": 49.15,
+        "revenueAlltime": 2087.1,
         "npv": 11.9,
-        "ltv": 756.98,
-        "cancelled30d": 159,
-        "churnRate30d": 5.5,
+        "ltv": 757,
+        "cancelled30d": 155,
+        "churnRate30d": 5.3,
         "cohortAgeMonths": 38,
         "paymentPct": 1.57
       },
@@ -1062,16 +1062,16 @@ const CASE_DATA = {
         "payingNow": 2360,
         "payingPct": 1.46,
         "activeToPayingPct": 0,
-        "mrr": 37673,
-        "arr": 452078,
-        "arpc": 15.96,
-        "gtv30d": 3068,
-        "gtvAlltime": 609.13,
-        "revenueAlltime": 1509.7,
+        "mrr": 36710,
+        "arr": 440517,
+        "arpc": 15.55,
+        "gtv30d": 3049.6,
+        "gtvAlltime": 609.2,
+        "revenueAlltime": 1510.7,
         "npv": 9.35,
-        "ltv": 639.71,
-        "cancelled30d": 138,
-        "churnRate30d": 5.5,
+        "ltv": 640.13,
+        "cancelled30d": 132,
+        "churnRate30d": 5.3,
         "cohortAgeMonths": 39,
         "paymentPct": 1.46
       },
@@ -1080,19 +1080,19 @@ const CASE_DATA = {
         "merchants": 163684,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2618,
+        "payingNow": 2623,
         "payingPct": 1.6,
         "activeToPayingPct": 0,
-        "mrr": 36327,
-        "arr": 435930,
-        "arpc": 13.88,
-        "gtv30d": 2631.4,
-        "gtvAlltime": 7.59,
-        "revenueAlltime": 1570.7,
-        "npv": 9.6,
-        "ltv": 599.96,
-        "cancelled30d": 118,
-        "churnRate30d": 4.3,
+        "mrr": 36073,
+        "arr": 432870,
+        "arpc": 13.75,
+        "gtv30d": 2622.3,
+        "gtvAlltime": 7.69,
+        "revenueAlltime": 1573.4,
+        "npv": 9.61,
+        "ltv": 599.84,
+        "cancelled30d": 127,
+        "churnRate30d": 4.6,
         "cohortAgeMonths": 40,
         "paymentPct": 1.6
       },
@@ -1101,40 +1101,40 @@ const CASE_DATA = {
         "merchants": 145574,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2247,
-        "payingPct": 1.54,
+        "payingNow": 2253,
+        "payingPct": 1.55,
         "activeToPayingPct": 0,
-        "mrr": 29713,
-        "arr": 356561,
-        "arpc": 13.22,
-        "gtv30d": 3804.7,
-        "gtvAlltime": 12.16,
-        "revenueAlltime": 1351.4,
-        "npv": 9.28,
-        "ltv": 601.43,
+        "mrr": 29596,
+        "arr": 355149,
+        "arpc": 13.14,
+        "gtv30d": 3843.6,
+        "gtvAlltime": 12.36,
+        "revenueAlltime": 1352.8,
+        "npv": 9.29,
+        "ltv": 600.44,
         "cancelled30d": 115,
         "churnRate30d": 4.9,
         "cohortAgeMonths": 41,
-        "paymentPct": 1.54
+        "paymentPct": 1.55
       },
       {
         "month": "2022-11",
         "merchants": 158730,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2314,
+        "payingNow": 2311,
         "payingPct": 1.46,
         "activeToPayingPct": 0,
-        "mrr": 34877,
-        "arr": 418525,
-        "arpc": 15.07,
-        "gtv30d": 3372.5,
-        "gtvAlltime": 20.77,
-        "revenueAlltime": 1704.7,
+        "mrr": 34766,
+        "arr": 417189,
+        "arpc": 15.04,
+        "gtv30d": 3422.9,
+        "gtvAlltime": 20.92,
+        "revenueAlltime": 1705.1,
         "npv": 10.74,
-        "ltv": 736.69,
-        "cancelled30d": 121,
-        "churnRate30d": 5,
+        "ltv": 737.82,
+        "cancelled30d": 111,
+        "churnRate30d": 4.6,
         "cohortAgeMonths": 42,
         "paymentPct": 1.46
       },
@@ -1143,17 +1143,17 @@ const CASE_DATA = {
         "merchants": 158573,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2271,
+        "payingNow": 2272,
         "payingPct": 1.43,
         "activeToPayingPct": 0,
-        "mrr": 36129,
-        "arr": 433549,
+        "mrr": 36150,
+        "arr": 433806,
         "arpc": 15.91,
-        "gtv30d": 3958.5,
-        "gtvAlltime": 16.97,
-        "revenueAlltime": 1627.4,
-        "npv": 10.26,
-        "ltv": 716.59,
+        "gtv30d": 3868.5,
+        "gtvAlltime": 17.13,
+        "revenueAlltime": 1628.5,
+        "npv": 10.27,
+        "ltv": 716.78,
         "cancelled30d": 128,
         "churnRate30d": 5.3,
         "cohortAgeMonths": 43,
@@ -1164,17 +1164,17 @@ const CASE_DATA = {
         "merchants": 156241,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2201,
+        "payingNow": 2197,
         "payingPct": 1.41,
         "activeToPayingPct": 0,
-        "mrr": 34523,
-        "arr": 414275,
-        "arpc": 15.69,
-        "gtv30d": 3545.3,
-        "gtvAlltime": 11.14,
-        "revenueAlltime": 1505.6,
+        "mrr": 34506,
+        "arr": 414070,
+        "arpc": 15.71,
+        "gtv30d": 3478.8,
+        "gtvAlltime": 11.23,
+        "revenueAlltime": 1506.6,
         "npv": 9.64,
-        "ltv": 684.06,
+        "ltv": 685.77,
         "cancelled30d": 99,
         "churnRate30d": 4.3,
         "cohortAgeMonths": 44,
@@ -1185,40 +1185,40 @@ const CASE_DATA = {
         "merchants": 158849,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2218,
-        "payingPct": 1.4,
+        "payingNow": 2214,
+        "payingPct": 1.39,
         "activeToPayingPct": 0,
         "mrr": 28262,
         "arr": 339138,
-        "arpc": 12.74,
-        "gtv30d": 2709.7,
-        "gtvAlltime": 13.38,
-        "revenueAlltime": 1481,
-        "npv": 9.32,
-        "ltv": 667.72,
-        "cancelled30d": 99,
-        "churnRate30d": 4.3,
+        "arpc": 12.76,
+        "gtv30d": 2683.9,
+        "gtvAlltime": 13.46,
+        "revenueAlltime": 1481.4,
+        "npv": 9.33,
+        "ltv": 669.12,
+        "cancelled30d": 98,
+        "churnRate30d": 4.2,
         "cohortAgeMonths": 45,
-        "paymentPct": 1.4
+        "paymentPct": 1.39
       },
       {
         "month": "2022-07",
         "merchants": 161963,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2140,
+        "payingNow": 2142,
         "payingPct": 1.32,
         "activeToPayingPct": 0,
-        "mrr": 34052,
-        "arr": 408628,
-        "arpc": 15.91,
-        "gtv30d": 2154.4,
-        "gtvAlltime": 6.59,
-        "revenueAlltime": 1895.2,
-        "npv": 11.7,
-        "ltv": 885.59,
-        "cancelled30d": 155,
-        "churnRate30d": 6.8,
+        "mrr": 34044,
+        "arr": 408525,
+        "arpc": 15.89,
+        "gtv30d": 2206.6,
+        "gtvAlltime": 6.72,
+        "revenueAlltime": 1897.3,
+        "npv": 11.71,
+        "ltv": 885.76,
+        "cancelled30d": 159,
+        "churnRate30d": 6.9,
         "cohortAgeMonths": 46,
         "paymentPct": 1.32
       },
@@ -1227,19 +1227,19 @@ const CASE_DATA = {
         "merchants": 170947,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2169,
+        "payingNow": 2166,
         "payingPct": 1.27,
         "activeToPayingPct": 0,
-        "mrr": 30441,
-        "arr": 365296,
-        "arpc": 14.03,
-        "gtv30d": 9876,
-        "gtvAlltime": 23.51,
-        "revenueAlltime": 1523.6,
-        "npv": 8.91,
-        "ltv": 702.46,
-        "cancelled30d": 94,
-        "churnRate30d": 4.2,
+        "mrr": 30429,
+        "arr": 365142,
+        "arpc": 14.05,
+        "gtv30d": 9935.9,
+        "gtvAlltime": 23.77,
+        "revenueAlltime": 1524.3,
+        "npv": 8.92,
+        "ltv": 703.73,
+        "cancelled30d": 97,
+        "churnRate30d": 4.3,
         "cohortAgeMonths": 47,
         "paymentPct": 1.27
       },
@@ -1248,19 +1248,19 @@ const CASE_DATA = {
         "merchants": 157128,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2103,
+        "payingNow": 2098,
         "payingPct": 1.34,
         "activeToPayingPct": 0,
-        "mrr": 30246,
-        "arr": 362949,
-        "arpc": 14.38,
-        "gtv30d": 9672.4,
-        "gtvAlltime": 25.99,
-        "revenueAlltime": 1525.3,
+        "mrr": 30224,
+        "arr": 362693,
+        "arpc": 14.41,
+        "gtv30d": 9272.1,
+        "gtvAlltime": 26.07,
+        "revenueAlltime": 1525.7,
         "npv": 9.71,
-        "ltv": 725.28,
-        "cancelled30d": 80,
-        "churnRate30d": 3.7,
+        "ltv": 727.21,
+        "cancelled30d": 63,
+        "churnRate30d": 2.9,
         "cohortAgeMonths": 48,
         "paymentPct": 1.34
       },
@@ -1269,17 +1269,17 @@ const CASE_DATA = {
         "merchants": 146494,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1552,
+        "payingNow": 1546,
         "payingPct": 1.06,
         "activeToPayingPct": 0,
-        "mrr": 23677,
-        "arr": 284120,
-        "arpc": 15.26,
-        "gtv30d": 3341.9,
-        "gtvAlltime": 9.47,
-        "revenueAlltime": 1459.6,
-        "npv": 9.96,
-        "ltv": 940.43,
+        "mrr": 23659,
+        "arr": 283903,
+        "arpc": 15.3,
+        "gtv30d": 3378,
+        "gtvAlltime": 9.63,
+        "revenueAlltime": 1461.2,
+        "npv": 9.97,
+        "ltv": 945.13,
         "cancelled30d": 82,
         "churnRate30d": 5,
         "cohortAgeMonths": 49,
@@ -1290,17 +1290,17 @@ const CASE_DATA = {
         "merchants": 154876,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 2138,
+        "payingNow": 2145,
         "payingPct": 1.38,
         "activeToPayingPct": 0,
-        "mrr": 28975,
-        "arr": 347699,
-        "arpc": 13.55,
-        "gtv30d": 2435.4,
-        "gtvAlltime": 7.88,
-        "revenueAlltime": 1552.7,
-        "npv": 10.03,
-        "ltv": 726.25,
+        "mrr": 29119,
+        "arr": 349429,
+        "arpc": 13.58,
+        "gtv30d": 2460.6,
+        "gtvAlltime": 7.99,
+        "revenueAlltime": 1554.3,
+        "npv": 10.04,
+        "ltv": 724.61,
         "cancelled30d": 99,
         "churnRate30d": 4.4,
         "cohortAgeMonths": 50,
@@ -1311,19 +1311,19 @@ const CASE_DATA = {
         "merchants": 149622,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1564,
+        "payingNow": 1568,
         "payingPct": 1.05,
         "activeToPayingPct": 0,
-        "mrr": 27637,
-        "arr": 331643,
-        "arpc": 17.67,
-        "gtv30d": 2778.5,
-        "gtvAlltime": 28.97,
-        "revenueAlltime": 1465.2,
-        "npv": 9.79,
-        "ltv": 936.84,
-        "cancelled30d": 76,
-        "churnRate30d": 4.6,
+        "mrr": 27671,
+        "arr": 332054,
+        "arpc": 17.65,
+        "gtv30d": 2757.7,
+        "gtvAlltime": 29.06,
+        "revenueAlltime": 1466.1,
+        "npv": 9.8,
+        "ltv": 935.02,
+        "cancelled30d": 77,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 51,
         "paymentPct": 1.05
       },
@@ -1338,13 +1338,13 @@ const CASE_DATA = {
         "mrr": 29314,
         "arr": 351770,
         "arpc": 16.12,
-        "gtv30d": 2462.3,
-        "gtvAlltime": 7.99,
-        "revenueAlltime": 1528.4,
+        "gtv30d": 2436.4,
+        "gtvAlltime": 8.27,
+        "revenueAlltime": 1529.1,
         "npv": 9.99,
-        "ltv": 840.24,
-        "cancelled30d": 67,
-        "churnRate30d": 3.6,
+        "ltv": 840.63,
+        "cancelled30d": 72,
+        "churnRate30d": 3.8,
         "cohortAgeMonths": 52,
         "paymentPct": 1.19
       },
@@ -1353,19 +1353,19 @@ const CASE_DATA = {
         "merchants": 150984,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1501,
+        "payingNow": 1494,
         "payingPct": 0.99,
         "activeToPayingPct": 0,
-        "mrr": 24086,
-        "arr": 289037,
-        "arpc": 16.05,
-        "gtv30d": 4250.4,
-        "gtvAlltime": 15.27,
-        "revenueAlltime": 1534.6,
-        "npv": 10.16,
-        "ltv": 1022.41,
-        "cancelled30d": 91,
-        "churnRate30d": 5.7,
+        "mrr": 24056,
+        "arr": 288678,
+        "arpc": 16.1,
+        "gtv30d": 4124.4,
+        "gtvAlltime": 15.36,
+        "revenueAlltime": 1535.3,
+        "npv": 10.17,
+        "ltv": 1027.61,
+        "cancelled30d": 94,
+        "churnRate30d": 5.9,
         "cohortAgeMonths": 53,
         "paymentPct": 0.99
       },
@@ -1374,19 +1374,19 @@ const CASE_DATA = {
         "merchants": 161147,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1749,
+        "payingNow": 1757,
         "payingPct": 1.09,
         "activeToPayingPct": 0,
-        "mrr": 19904,
-        "arr": 238852,
-        "arpc": 11.38,
-        "gtv30d": 2667.8,
-        "gtvAlltime": 15.17,
-        "revenueAlltime": 1191.5,
-        "npv": 7.39,
-        "ltv": 681.26,
-        "cancelled30d": 60,
-        "churnRate30d": 3.3,
+        "mrr": 19973,
+        "arr": 239677,
+        "arpc": 11.37,
+        "gtv30d": 2443.3,
+        "gtvAlltime": 15.22,
+        "revenueAlltime": 1191.9,
+        "npv": 7.4,
+        "ltv": 678.38,
+        "cancelled30d": 56,
+        "churnRate30d": 3.1,
         "cohortAgeMonths": 54,
         "paymentPct": 1.09
       },
@@ -1395,19 +1395,19 @@ const CASE_DATA = {
         "merchants": 156969,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1479,
+        "payingNow": 1476,
         "payingPct": 0.94,
         "activeToPayingPct": 0,
-        "mrr": 22718,
-        "arr": 272615,
-        "arpc": 15.36,
-        "gtv30d": 3692.2,
-        "gtvAlltime": 35.95,
-        "revenueAlltime": 1431.3,
-        "npv": 9.12,
-        "ltv": 967.78,
+        "mrr": 22720,
+        "arr": 272640,
+        "arpc": 15.39,
+        "gtv30d": 3707.5,
+        "gtvAlltime": 36.02,
+        "revenueAlltime": 1430.3,
+        "npv": 9.11,
+        "ltv": 969.06,
         "cancelled30d": 72,
-        "churnRate30d": 4.6,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 55,
         "paymentPct": 0.94
       },
@@ -1419,16 +1419,16 @@ const CASE_DATA = {
         "payingNow": 1570,
         "payingPct": 1.03,
         "activeToPayingPct": 0,
-        "mrr": 24746,
-        "arr": 296957,
-        "arpc": 15.76,
-        "gtv30d": 2346.4,
-        "gtvAlltime": 7.4,
-        "revenueAlltime": 1423.2,
-        "npv": 9.33,
-        "ltv": 906.49,
-        "cancelled30d": 46,
-        "churnRate30d": 2.8,
+        "mrr": 24849,
+        "arr": 298191,
+        "arpc": 15.83,
+        "gtv30d": 2312.9,
+        "gtvAlltime": 7.46,
+        "revenueAlltime": 1424.7,
+        "npv": 9.34,
+        "ltv": 907.44,
+        "cancelled30d": 50,
+        "churnRate30d": 3.1,
         "cohortAgeMonths": 56,
         "paymentPct": 1.03
       },
@@ -1437,38 +1437,38 @@ const CASE_DATA = {
         "merchants": 152662,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1423,
-        "payingPct": 0.93,
+        "payingNow": 1430,
+        "payingPct": 0.94,
         "activeToPayingPct": 0,
-        "mrr": 21914,
-        "arr": 262974,
-        "arpc": 15.4,
-        "gtv30d": 2048.8,
-        "gtvAlltime": 1390.66,
-        "revenueAlltime": 1212.8,
-        "npv": 7.94,
-        "ltv": 852.27,
+        "mrr": 21979,
+        "arr": 263744,
+        "arpc": 15.37,
+        "gtv30d": 2048.9,
+        "gtvAlltime": 1390.74,
+        "revenueAlltime": 1214.1,
+        "npv": 7.95,
+        "ltv": 849.04,
         "cancelled30d": 53,
         "churnRate30d": 3.6,
         "cohortAgeMonths": 57,
-        "paymentPct": 0.93
+        "paymentPct": 0.94
       },
       {
         "month": "2021-07",
         "merchants": 175489,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1453,
+        "payingNow": 1449,
         "payingPct": 0.83,
         "activeToPayingPct": 0,
-        "mrr": 23265,
-        "arr": 279174,
-        "arpc": 16.01,
-        "gtv30d": 2442.7,
-        "gtvAlltime": 8.33,
-        "revenueAlltime": 1501.4,
+        "mrr": 23420,
+        "arr": 281041,
+        "arpc": 16.16,
+        "gtv30d": 2479.9,
+        "gtvAlltime": 8.45,
+        "revenueAlltime": 1501.9,
         "npv": 8.56,
-        "ltv": 1033.3,
+        "ltv": 1036.53,
         "cancelled30d": 61,
         "churnRate30d": 4,
         "cohortAgeMonths": 58,
@@ -1479,19 +1479,19 @@ const CASE_DATA = {
         "merchants": 137647,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1502,
+        "payingNow": 1495,
         "payingPct": 1.09,
         "activeToPayingPct": 0,
-        "mrr": 20643,
-        "arr": 247712,
-        "arpc": 13.74,
-        "gtv30d": 2064.8,
-        "gtvAlltime": 6.86,
-        "revenueAlltime": 1230.4,
-        "npv": 8.94,
-        "ltv": 819.15,
+        "mrr": 20152,
+        "arr": 241828,
+        "arpc": 13.48,
+        "gtv30d": 2050.1,
+        "gtvAlltime": 6.93,
+        "revenueAlltime": 1232.5,
+        "npv": 8.95,
+        "ltv": 824.42,
         "cancelled30d": 60,
-        "churnRate30d": 3.8,
+        "churnRate30d": 3.9,
         "cohortAgeMonths": 59,
         "paymentPct": 1.09
       },
@@ -1500,21 +1500,21 @@ const CASE_DATA = {
         "merchants": 131847,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1360,
-        "payingPct": 1.03,
+        "payingNow": 1366,
+        "payingPct": 1.04,
         "activeToPayingPct": 0,
-        "mrr": 21488,
-        "arr": 257857,
-        "arpc": 15.8,
-        "gtv30d": 1610.1,
-        "gtvAlltime": 5.89,
-        "revenueAlltime": 1249.5,
+        "mrr": 21514,
+        "arr": 258165,
+        "arpc": 15.75,
+        "gtv30d": 1617.8,
+        "gtvAlltime": 5.95,
+        "revenueAlltime": 1250.2,
         "npv": 9.48,
-        "ltv": 918.74,
+        "ltv": 915.26,
         "cancelled30d": 28,
         "churnRate30d": 2,
         "cohortAgeMonths": 60,
-        "paymentPct": 1.03
+        "paymentPct": 1.04
       },
       {
         "month": "2021-04",
@@ -1524,16 +1524,16 @@ const CASE_DATA = {
         "payingNow": 1330,
         "payingPct": 0.96,
         "activeToPayingPct": 0,
-        "mrr": 17179,
-        "arr": 206154,
-        "arpc": 12.92,
-        "gtv30d": 3489.6,
-        "gtvAlltime": 15.07,
-        "revenueAlltime": 1089.3,
-        "npv": 7.83,
-        "ltv": 819.04,
-        "cancelled30d": 66,
-        "churnRate30d": 4.7,
+        "mrr": 17167,
+        "arr": 205999,
+        "arpc": 12.91,
+        "gtv30d": 3411.5,
+        "gtvAlltime": 15.14,
+        "revenueAlltime": 1091.7,
+        "npv": 7.85,
+        "ltv": 820.85,
+        "cancelled30d": 60,
+        "churnRate30d": 4.3,
         "cohortAgeMonths": 61,
         "paymentPct": 0.96
       },
@@ -1548,13 +1548,13 @@ const CASE_DATA = {
         "mrr": 21279,
         "arr": 255346,
         "arpc": 15.05,
-        "gtv30d": 5421.3,
-        "gtvAlltime": 16.09,
-        "revenueAlltime": 1378.2,
+        "gtv30d": 5385.6,
+        "gtvAlltime": 16.26,
+        "revenueAlltime": 1378.3,
         "npv": 8.6,
-        "ltv": 974.66,
-        "cancelled30d": 74,
-        "churnRate30d": 5,
+        "ltv": 974.75,
+        "cancelled30d": 87,
+        "churnRate30d": 5.8,
         "cohortAgeMonths": 62,
         "paymentPct": 0.88
       },
@@ -1563,21 +1563,21 @@ const CASE_DATA = {
         "merchants": 135461,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1216,
-        "payingPct": 0.9,
+        "payingNow": 1212,
+        "payingPct": 0.89,
         "activeToPayingPct": 0,
-        "mrr": 17812,
-        "arr": 213740,
-        "arpc": 14.65,
-        "gtv30d": 1282.6,
-        "gtvAlltime": 4.15,
-        "revenueAlltime": 1113,
-        "npv": 8.22,
-        "ltv": 915.29,
-        "cancelled30d": 31,
-        "churnRate30d": 2.5,
+        "mrr": 17717,
+        "arr": 212609,
+        "arpc": 14.62,
+        "gtv30d": 1283.6,
+        "gtvAlltime": 4.19,
+        "revenueAlltime": 1114.4,
+        "npv": 8.23,
+        "ltv": 919.43,
+        "cancelled30d": 32,
+        "churnRate30d": 2.6,
         "cohortAgeMonths": 63,
-        "paymentPct": 0.9
+        "paymentPct": 0.89
       },
       {
         "month": "2021-01",
@@ -1590,11 +1590,11 @@ const CASE_DATA = {
         "mrr": 30370,
         "arr": 364442,
         "arpc": 23.71,
-        "gtv30d": 3969,
-        "gtvAlltime": 11.23,
-        "revenueAlltime": 1603.5,
+        "gtv30d": 4058,
+        "gtvAlltime": 11.43,
+        "revenueAlltime": 1604.2,
         "npv": 10.33,
-        "ltv": 1251.75,
+        "ltv": 1252.27,
         "cancelled30d": 52,
         "churnRate30d": 3.9,
         "cohortAgeMonths": 64,
@@ -1611,13 +1611,13 @@ const CASE_DATA = {
         "mrr": 16666,
         "arr": 199993,
         "arpc": 16.12,
-        "gtv30d": 2105.7,
-        "gtvAlltime": 6.46,
-        "revenueAlltime": 1073.9,
+        "gtv30d": 2092.8,
+        "gtvAlltime": 6.52,
+        "revenueAlltime": 1074.3,
         "npv": 7.66,
-        "ltv": 1038.62,
-        "cancelled30d": 25,
-        "churnRate30d": 2.4,
+        "ltv": 1038.96,
+        "cancelled30d": 21,
+        "churnRate30d": 2,
         "cohortAgeMonths": 65,
         "paymentPct": 0.74
       },
@@ -1626,19 +1626,19 @@ const CASE_DATA = {
         "merchants": 139599,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 942,
+        "payingNow": 934,
         "payingPct": 0.67,
         "activeToPayingPct": 0,
-        "mrr": 14568,
-        "arr": 174818,
-        "arpc": 15.47,
-        "gtv30d": 1179.3,
-        "gtvAlltime": 4.53,
-        "revenueAlltime": 970,
+        "mrr": 14565,
+        "arr": 174784,
+        "arpc": 15.59,
+        "gtv30d": 1164,
+        "gtvAlltime": 4.57,
+        "revenueAlltime": 970.1,
         "npv": 6.95,
-        "ltv": 1029.7,
+        "ltv": 1038.69,
         "cancelled30d": 48,
-        "churnRate30d": 4.8,
+        "churnRate30d": 4.9,
         "cohortAgeMonths": 66,
         "paymentPct": 0.67
       },
@@ -1647,17 +1647,17 @@ const CASE_DATA = {
         "merchants": 135595,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 1039,
+        "payingNow": 1042,
         "payingPct": 0.77,
         "activeToPayingPct": 0,
-        "mrr": 17412,
-        "arr": 208946,
-        "arpc": 16.76,
-        "gtv30d": 1629.8,
-        "gtvAlltime": 4.9,
-        "revenueAlltime": 915.1,
+        "mrr": 17438,
+        "arr": 209254,
+        "arpc": 16.73,
+        "gtv30d": 1653.1,
+        "gtvAlltime": 4.97,
+        "revenueAlltime": 915.4,
         "npv": 6.75,
-        "ltv": 880.79,
+        "ltv": 878.48,
         "cancelled30d": 52,
         "churnRate30d": 4.8,
         "cohortAgeMonths": 67,
@@ -1671,14 +1671,14 @@ const CASE_DATA = {
         "payingNow": 1026,
         "payingPct": 0.68,
         "activeToPayingPct": 0,
-        "mrr": 18101,
-        "arr": 217210,
-        "arpc": 17.64,
-        "gtv30d": 1146.4,
-        "gtvAlltime": 4.06,
-        "revenueAlltime": 995.8,
-        "npv": 6.64,
-        "ltv": 970.55,
+        "mrr": 18131,
+        "arr": 217569,
+        "arpc": 17.67,
+        "gtv30d": 1158.5,
+        "gtvAlltime": 4.11,
+        "revenueAlltime": 996.4,
+        "npv": 6.65,
+        "ltv": 971.11,
         "cancelled30d": 39,
         "churnRate30d": 3.7,
         "cohortAgeMonths": 68,
@@ -1692,14 +1692,14 @@ const CASE_DATA = {
         "payingNow": 949,
         "payingPct": 0.6,
         "activeToPayingPct": 0,
-        "mrr": 18294,
-        "arr": 219528,
-        "arpc": 19.28,
-        "gtv30d": 1654.9,
-        "gtvAlltime": 5.38,
+        "mrr": 18273,
+        "arr": 219271,
+        "arpc": 19.25,
+        "gtv30d": 1623.4,
+        "gtvAlltime": 5.43,
         "revenueAlltime": 1165.6,
         "npv": 7.32,
-        "ltv": 1228.22,
+        "ltv": 1228.26,
         "cancelled30d": 44,
         "churnRate30d": 4.4,
         "cohortAgeMonths": 69,
@@ -1710,17 +1710,17 @@ const CASE_DATA = {
         "merchants": 158133,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 984,
+        "payingNow": 981,
         "payingPct": 0.62,
         "activeToPayingPct": 0,
-        "mrr": 14893,
-        "arr": 178719,
-        "arpc": 15.14,
-        "gtv30d": 2016.6,
-        "gtvAlltime": 358.56,
-        "revenueAlltime": 948.2,
+        "mrr": 14465,
+        "arr": 173581,
+        "arpc": 14.75,
+        "gtv30d": 2021.4,
+        "gtvAlltime": 358.61,
+        "revenueAlltime": 948.3,
         "npv": 6,
-        "ltv": 963.63,
+        "ltv": 966.63,
         "cancelled30d": 45,
         "churnRate30d": 4.4,
         "cohortAgeMonths": 70,
@@ -1734,14 +1734,14 @@ const CASE_DATA = {
         "payingNow": 952,
         "payingPct": 0.67,
         "activeToPayingPct": 0,
-        "mrr": 19771,
-        "arr": 237250,
-        "arpc": 20.77,
-        "gtv30d": 1502.8,
-        "gtvAlltime": 4.83,
-        "revenueAlltime": 1076.5,
+        "mrr": 19788,
+        "arr": 237456,
+        "arpc": 20.79,
+        "gtv30d": 1509.2,
+        "gtvAlltime": 4.89,
+        "revenueAlltime": 1076.8,
         "npv": 7.54,
-        "ltv": 1130.74,
+        "ltv": 1131.12,
         "cancelled30d": 17,
         "churnRate30d": 1.8,
         "cohortAgeMonths": 71,
@@ -1758,13 +1758,13 @@ const CASE_DATA = {
         "mrr": 12457,
         "arr": 149485,
         "arpc": 17.37,
-        "gtv30d": 587.3,
-        "gtvAlltime": 8.92,
-        "revenueAlltime": 762.7,
-        "npv": 6.71,
-        "ltv": 1063.81,
-        "cancelled30d": 24,
-        "churnRate30d": 3.2,
+        "gtv30d": 586.3,
+        "gtvAlltime": 8.94,
+        "revenueAlltime": 764.1,
+        "npv": 6.72,
+        "ltv": 1065.73,
+        "cancelled30d": 20,
+        "churnRate30d": 2.7,
         "cohortAgeMonths": 72,
         "paymentPct": 0.63
       },
@@ -1779,13 +1779,13 @@ const CASE_DATA = {
         "mrr": 6812,
         "arr": 81746,
         "arpc": 19.75,
-        "gtv30d": 647.3,
-        "gtvAlltime": 2.28,
-        "revenueAlltime": 455.8,
+        "gtv30d": 640,
+        "gtvAlltime": 2.3,
+        "revenueAlltime": 455.9,
         "npv": 5.55,
-        "ltv": 1321.28,
-        "cancelled30d": 27,
-        "churnRate30d": 7.3,
+        "ltv": 1321.36,
+        "cancelled30d": 23,
+        "churnRate30d": 6.3,
         "cohortAgeMonths": 73,
         "paymentPct": 0.42
       },
@@ -1800,11 +1800,11 @@ const CASE_DATA = {
         "mrr": 7768,
         "arr": 93216,
         "arpc": 15.63,
-        "gtv30d": 739.7,
-        "gtvAlltime": 1.92,
+        "gtv30d": 752.1,
+        "gtvAlltime": 1.95,
         "revenueAlltime": 468.3,
         "npv": 4.79,
-        "ltv": 942.3,
+        "ltv": 942.35,
         "cancelled30d": 11,
         "churnRate30d": 2.2,
         "cohortAgeMonths": 74,
@@ -1815,17 +1815,17 @@ const CASE_DATA = {
         "merchants": 114096,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 699,
+        "payingNow": 695,
         "payingPct": 0.61,
         "activeToPayingPct": 0,
-        "mrr": 11764,
-        "arr": 141172,
-        "arpc": 16.83,
-        "gtv30d": 1125.9,
-        "gtvAlltime": 5.65,
-        "revenueAlltime": 833.6,
-        "npv": 7.31,
-        "ltv": 1192.52,
+        "mrr": 11726,
+        "arr": 140709,
+        "arpc": 16.87,
+        "gtv30d": 1127.3,
+        "gtvAlltime": 5.7,
+        "revenueAlltime": 833.1,
+        "npv": 7.3,
+        "ltv": 1198.68,
         "cancelled30d": 28,
         "churnRate30d": 3.9,
         "cohortAgeMonths": 75,
@@ -1836,21 +1836,21 @@ const CASE_DATA = {
         "merchants": 109716,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 740,
-        "payingPct": 0.67,
+        "payingNow": 743,
+        "payingPct": 0.68,
         "activeToPayingPct": 0,
-        "mrr": 12848,
-        "arr": 154170,
-        "arpc": 17.36,
-        "gtv30d": 2506,
-        "gtvAlltime": 13.24,
-        "revenueAlltime": 703.8,
+        "mrr": 12860,
+        "arr": 154324,
+        "arpc": 17.31,
+        "gtv30d": 2509.5,
+        "gtvAlltime": 13.34,
+        "revenueAlltime": 704,
         "npv": 6.42,
-        "ltv": 951.14,
-        "cancelled30d": 31,
-        "churnRate30d": 4,
+        "ltv": 947.48,
+        "cancelled30d": 34,
+        "churnRate30d": 4.4,
         "cohortAgeMonths": 76,
-        "paymentPct": 0.67
+        "paymentPct": 0.68
       },
       {
         "month": "2019-12",
@@ -1860,16 +1860,16 @@ const CASE_DATA = {
         "payingNow": 603,
         "payingPct": 0.66,
         "activeToPayingPct": 0,
-        "mrr": 11034,
-        "arr": 132409,
-        "arpc": 18.3,
-        "gtv30d": 658.1,
-        "gtvAlltime": 4.97,
+        "mrr": 11017,
+        "arr": 132204,
+        "arpc": 18.27,
+        "gtv30d": 650.7,
+        "gtvAlltime": 4.99,
         "revenueAlltime": 634.6,
         "npv": 6.9,
-        "ltv": 1052.39,
-        "cancelled30d": 18,
-        "churnRate30d": 2.9,
+        "ltv": 1052.44,
+        "cancelled30d": 22,
+        "churnRate30d": 3.5,
         "cohortAgeMonths": 77,
         "paymentPct": 0.66
       },
@@ -1884,11 +1884,11 @@ const CASE_DATA = {
         "mrr": 10801,
         "arr": 129615,
         "arpc": 17.77,
-        "gtv30d": 505.6,
-        "gtvAlltime": 2.09,
-        "revenueAlltime": 619.2,
+        "gtv30d": 507,
+        "gtvAlltime": 2.11,
+        "revenueAlltime": 619.8,
         "npv": 6.1,
-        "ltv": 1018.48,
+        "ltv": 1019.36,
         "cancelled30d": 19,
         "churnRate30d": 3,
         "cohortAgeMonths": 78,
@@ -1902,14 +1902,14 @@ const CASE_DATA = {
         "payingNow": 768,
         "payingPct": 0.69,
         "activeToPayingPct": 0,
-        "mrr": 13419,
-        "arr": 161030,
-        "arpc": 17.47,
-        "gtv30d": 948.4,
-        "gtvAlltime": 4,
-        "revenueAlltime": 875.3,
+        "mrr": 13248,
+        "arr": 158974,
+        "arpc": 17.25,
+        "gtv30d": 942.3,
+        "gtvAlltime": 4.03,
+        "revenueAlltime": 875.5,
         "npv": 7.81,
-        "ltv": 1139.68,
+        "ltv": 1139.93,
         "cancelled30d": 17,
         "churnRate30d": 2.2,
         "cohortAgeMonths": 79,
@@ -1926,11 +1926,11 @@ const CASE_DATA = {
         "mrr": 10822,
         "arr": 129863,
         "arpc": 18.89,
-        "gtv30d": 1092.3,
-        "gtvAlltime": 4.97,
-        "revenueAlltime": 683.9,
+        "gtv30d": 1096.8,
+        "gtvAlltime": 5.06,
+        "revenueAlltime": 684.2,
         "npv": 6.57,
-        "ltv": 1193.46,
+        "ltv": 1194,
         "cancelled30d": 29,
         "churnRate30d": 4.8,
         "cohortAgeMonths": 80,
@@ -1941,17 +1941,17 @@ const CASE_DATA = {
         "merchants": 108747,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 593,
+        "payingNow": 597,
         "payingPct": 0.55,
         "activeToPayingPct": 0,
-        "mrr": 11482,
-        "arr": 137787,
-        "arpc": 19.36,
-        "gtv30d": 932.1,
-        "gtvAlltime": 2.14,
-        "revenueAlltime": 528,
-        "npv": 4.86,
-        "ltv": 890.35,
+        "mrr": 11502,
+        "arr": 138027,
+        "arpc": 19.27,
+        "gtv30d": 936.2,
+        "gtvAlltime": 2.16,
+        "revenueAlltime": 527.5,
+        "npv": 4.85,
+        "ltv": 883.65,
         "cancelled30d": 7,
         "churnRate30d": 1.2,
         "cohortAgeMonths": 81,
@@ -1968,11 +1968,11 @@ const CASE_DATA = {
         "mrr": 8699,
         "arr": 104386,
         "arpc": 16.11,
-        "gtv30d": 1265.4,
-        "gtvAlltime": 4.48,
-        "revenueAlltime": 548.4,
-        "npv": 4.76,
-        "ltv": 1015.59,
+        "gtv30d": 1250.9,
+        "gtvAlltime": 4.52,
+        "revenueAlltime": 549.1,
+        "npv": 4.77,
+        "ltv": 1016.87,
         "cancelled30d": 28,
         "churnRate30d": 4.9,
         "cohortAgeMonths": 82,
@@ -1986,14 +1986,14 @@ const CASE_DATA = {
         "payingNow": 647,
         "payingPct": 0.65,
         "activeToPayingPct": 0,
-        "mrr": 9305,
-        "arr": 111663,
-        "arpc": 14.38,
-        "gtv30d": 1803.1,
-        "gtvAlltime": 6.21,
-        "revenueAlltime": 607.6,
-        "npv": 6.08,
-        "ltv": 939.12,
+        "mrr": 9100,
+        "arr": 109196,
+        "arpc": 14.06,
+        "gtv30d": 1808.7,
+        "gtvAlltime": 6.29,
+        "revenueAlltime": 607.8,
+        "npv": 6.09,
+        "ltv": 939.48,
         "cancelled30d": 12,
         "churnRate30d": 1.8,
         "cohortAgeMonths": 83,
@@ -2010,13 +2010,13 @@ const CASE_DATA = {
         "mrr": 10227,
         "arr": 122722,
         "arpc": 16.63,
-        "gtv30d": 3192.4,
-        "gtvAlltime": 15.35,
-        "revenueAlltime": 635.7,
+        "gtv30d": 3084.2,
+        "gtvAlltime": 15.41,
+        "revenueAlltime": 635.8,
         "npv": 6.07,
-        "ltv": 1033.67,
-        "cancelled30d": 37,
-        "churnRate30d": 5.7,
+        "ltv": 1033.8,
+        "cancelled30d": 33,
+        "churnRate30d": 5.1,
         "cohortAgeMonths": 84,
         "paymentPct": 0.59
       },
@@ -2031,13 +2031,13 @@ const CASE_DATA = {
         "mrr": 7692,
         "arr": 92307,
         "arpc": 16.09,
-        "gtv30d": 849.2,
-        "gtvAlltime": 3.28,
-        "revenueAlltime": 505.6,
+        "gtv30d": 837.7,
+        "gtvAlltime": 3.31,
+        "revenueAlltime": 505.9,
         "npv": 5.04,
-        "ltv": 1057.75,
-        "cancelled30d": 29,
-        "churnRate30d": 5.7,
+        "ltv": 1058.36,
+        "cancelled30d": 25,
+        "churnRate30d": 5,
         "cohortAgeMonths": 85,
         "paymentPct": 0.48
       },
@@ -2052,13 +2052,13 @@ const CASE_DATA = {
         "mrr": 6262,
         "arr": 75148,
         "arpc": 11.93,
-        "gtv30d": 1602.2,
-        "gtvAlltime": 5.44,
-        "revenueAlltime": 527.6,
+        "gtv30d": 1599,
+        "gtvAlltime": 5.5,
+        "revenueAlltime": 527.8,
         "npv": 5.06,
-        "ltv": 1004.97,
-        "cancelled30d": 14,
-        "churnRate30d": 2.6,
+        "ltv": 1005.24,
+        "cancelled30d": 11,
+        "churnRate30d": 2.1,
         "cohortAgeMonths": 86,
         "paymentPct": 0.5
       },
@@ -2073,11 +2073,11 @@ const CASE_DATA = {
         "mrr": 7064,
         "arr": 84768,
         "arpc": 15.56,
-        "gtv30d": 567.6,
-        "gtvAlltime": 1.83,
-        "revenueAlltime": 455,
+        "gtv30d": 563.4,
+        "gtvAlltime": 1.84,
+        "revenueAlltime": 455.1,
         "npv": 4.53,
-        "ltv": 1002.1,
+        "ltv": 1002.4,
         "cancelled30d": 19,
         "churnRate30d": 4,
         "cohortAgeMonths": 87,
@@ -2088,21 +2088,21 @@ const CASE_DATA = {
         "merchants": 112145,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 613,
-        "payingPct": 0.55,
+        "payingNow": 607,
+        "payingPct": 0.54,
         "activeToPayingPct": 0,
-        "mrr": 9913,
-        "arr": 118960,
-        "arpc": 16.17,
-        "gtv30d": 1282.3,
-        "gtvAlltime": 3.82,
-        "revenueAlltime": 469.3,
-        "npv": 4.18,
-        "ltv": 765.57,
-        "cancelled30d": 28,
-        "churnRate30d": 4.4,
+        "mrr": 9888,
+        "arr": 118652,
+        "arpc": 16.29,
+        "gtv30d": 1276.6,
+        "gtvAlltime": 3.9,
+        "revenueAlltime": 469.6,
+        "npv": 4.19,
+        "ltv": 773.7,
+        "cancelled30d": 34,
+        "churnRate30d": 5.3,
         "cohortAgeMonths": 88,
-        "paymentPct": 0.55
+        "paymentPct": 0.54
       },
       {
         "month": "2018-12",
@@ -2115,11 +2115,11 @@ const CASE_DATA = {
         "mrr": 11656,
         "arr": 139866,
         "arpc": 29.43,
-        "gtv30d": 1739.8,
-        "gtvAlltime": 4.8,
-        "revenueAlltime": 539.1,
+        "gtv30d": 1761.2,
+        "gtvAlltime": 4.85,
+        "revenueAlltime": 539.2,
         "npv": 5.7,
-        "ltv": 1361.35,
+        "ltv": 1361.57,
         "cancelled30d": 19,
         "churnRate30d": 4.6,
         "cohortAgeMonths": 89,
@@ -2133,16 +2133,16 @@ const CASE_DATA = {
         "payingNow": 401,
         "payingPct": 0.42,
         "activeToPayingPct": 0,
-        "mrr": 6955,
-        "arr": 83457,
-        "arpc": 17.34,
-        "gtv30d": 698.1,
-        "gtvAlltime": 2,
-        "revenueAlltime": 353.8,
-        "npv": 3.7,
-        "ltv": 882.3,
-        "cancelled30d": 12,
-        "churnRate30d": 2.9,
+        "mrr": 6826,
+        "arr": 81915,
+        "arpc": 17.02,
+        "gtv30d": 677.6,
+        "gtvAlltime": 2.01,
+        "revenueAlltime": 354.3,
+        "npv": 3.71,
+        "ltv": 883.47,
+        "cancelled30d": 17,
+        "churnRate30d": 4.1,
         "cohortAgeMonths": 90,
         "paymentPct": 0.42
       },
@@ -2157,11 +2157,11 @@ const CASE_DATA = {
         "mrr": 7377,
         "arr": 88523,
         "arpc": 20.16,
-        "gtv30d": 476.5,
-        "gtvAlltime": 1.6,
+        "gtv30d": 462.7,
+        "gtvAlltime": 1.61,
         "revenueAlltime": 626.4,
         "npv": 6.52,
-        "ltv": 1711.46,
+        "ltv": 1711.49,
         "cancelled30d": 16,
         "churnRate30d": 4.2,
         "cohortAgeMonths": 91,
@@ -2178,11 +2178,11 @@ const CASE_DATA = {
         "mrr": 8267,
         "arr": 99204,
         "arpc": 22.22,
-        "gtv30d": 1867.8,
-        "gtvAlltime": 5.64,
+        "gtv30d": 1867.5,
+        "gtvAlltime": 5.7,
         "revenueAlltime": 404.6,
         "npv": 4.86,
-        "ltv": 1087.72,
+        "ltv": 1087.76,
         "cancelled30d": 11,
         "churnRate30d": 2.9,
         "cohortAgeMonths": 92,
@@ -2199,11 +2199,11 @@ const CASE_DATA = {
         "mrr": 4488,
         "arr": 53850,
         "arpc": 14.02,
-        "gtv30d": 3142.2,
-        "gtvAlltime": 4.8,
+        "gtv30d": 1858,
+        "gtvAlltime": 4.97,
         "revenueAlltime": 254.4,
         "npv": 2.97,
-        "ltv": 795.11,
+        "ltv": 795.15,
         "cancelled30d": 19,
         "churnRate30d": 5.6,
         "cohortAgeMonths": 93,
@@ -2220,11 +2220,11 @@ const CASE_DATA = {
         "mrr": 5190,
         "arr": 62279,
         "arpc": 17.53,
-        "gtv30d": 483.6,
-        "gtvAlltime": 1.56,
+        "gtv30d": 474.8,
+        "gtvAlltime": 1.58,
         "revenueAlltime": 345.8,
         "npv": 4.34,
-        "ltv": 1168.36,
+        "ltv": 1168.14,
         "cancelled30d": 13,
         "churnRate30d": 4.2,
         "cohortAgeMonths": 94,
@@ -2235,21 +2235,21 @@ const CASE_DATA = {
         "merchants": 74432,
         "activeNow": 0,
         "activePct": 0,
-        "payingNow": 293,
-        "payingPct": 0.39,
+        "payingNow": 300,
+        "payingPct": 0.4,
         "activeToPayingPct": 0,
-        "mrr": 4231,
-        "arr": 50776,
-        "arpc": 14.44,
-        "gtv30d": 151.2,
-        "gtvAlltime": 0.5,
-        "revenueAlltime": 264.6,
-        "npv": 3.55,
-        "ltv": 902.98,
+        "mrr": 4267,
+        "arr": 51210,
+        "arpc": 14.22,
+        "gtv30d": 150.1,
+        "gtvAlltime": 0.51,
+        "revenueAlltime": 264.9,
+        "npv": 3.56,
+        "ltv": 882.85,
         "cancelled30d": 7,
         "churnRate30d": 2.3,
         "cohortAgeMonths": 95,
-        "paymentPct": 0.39
+        "paymentPct": 0.4
       },
       {
         "month": "2018-05",
@@ -2262,11 +2262,11 @@ const CASE_DATA = {
         "mrr": 7345,
         "arr": 88138,
         "arpc": 21.17,
-        "gtv30d": 396.4,
-        "gtvAlltime": 1.27,
-        "revenueAlltime": 374.5,
+        "gtv30d": 393.2,
+        "gtvAlltime": 1.28,
+        "revenueAlltime": 374.8,
         "npv": 4.7,
-        "ltv": 1079.3,
+        "ltv": 1080.24,
         "cancelled30d": 7,
         "churnRate30d": 2,
         "cohortAgeMonths": 96,
@@ -2280,14 +2280,14 @@ const CASE_DATA = {
         "payingNow": 310,
         "payingPct": 0.4,
         "activeToPayingPct": 0,
-        "mrr": 5050,
-        "arr": 60604,
-        "arpc": 16.29,
-        "gtv30d": 488.7,
-        "gtvAlltime": 1.38,
-        "revenueAlltime": 306.1,
-        "npv": 3.96,
-        "ltv": 987.35,
+        "mrr": 5037,
+        "arr": 60450,
+        "arpc": 16.25,
+        "gtv30d": 488.3,
+        "gtvAlltime": 1.4,
+        "revenueAlltime": 306.2,
+        "npv": 3.97,
+        "ltv": 987.7,
         "cancelled30d": 3,
         "churnRate30d": 1,
         "cohortAgeMonths": 97,
@@ -2304,8 +2304,8 @@ const CASE_DATA = {
         "mrr": 3582,
         "arr": 42985,
         "arpc": 14.56,
-        "gtv30d": 419.1,
-        "gtvAlltime": 1.27,
+        "gtv30d": 402.8,
+        "gtvAlltime": 1.28,
         "revenueAlltime": 207.6,
         "npv": 2.68,
         "ltv": 843.92,
@@ -2325,8 +2325,8 @@ const CASE_DATA = {
         "mrr": 3989,
         "arr": 47863,
         "arpc": 17.97,
-        "gtv30d": 242.3,
-        "gtvAlltime": 0.7,
+        "gtv30d": 244.4,
+        "gtvAlltime": 0.71,
         "revenueAlltime": 219.3,
         "npv": 3.47,
         "ltv": 987.86,
@@ -2346,13 +2346,13 @@ const CASE_DATA = {
         "mrr": 4780,
         "arr": 57365,
         "arpc": 23.09,
-        "gtv30d": 903.3,
-        "gtvAlltime": 2.51,
+        "gtv30d": 905.2,
+        "gtvAlltime": 2.55,
         "revenueAlltime": 290.9,
         "npv": 4.17,
         "ltv": 1405.53,
-        "cancelled30d": 4,
-        "churnRate30d": 1.9,
+        "cancelled30d": 0,
+        "churnRate30d": 0,
         "cohortAgeMonths": 100,
         "paymentPct": 0.3
       },
@@ -2367,11 +2367,11 @@ const CASE_DATA = {
         "mrr": 4678,
         "arr": 56136,
         "arpc": 23.27,
-        "gtv30d": 308.2,
-        "gtvAlltime": 1.01,
+        "gtv30d": 303.5,
+        "gtvAlltime": 1.02,
         "revenueAlltime": 237.9,
         "npv": 3.83,
-        "ltv": 1183.51,
+        "ltv": 1183.73,
         "cancelled30d": 6,
         "churnRate30d": 2.9,
         "cohortAgeMonths": 101,
@@ -2388,8 +2388,8 @@ const CASE_DATA = {
         "mrr": 3122,
         "arr": 37465,
         "arpc": 12.39,
-        "gtv30d": 300.9,
-        "gtvAlltime": 0.87,
+        "gtv30d": 296.7,
+        "gtvAlltime": 0.88,
         "revenueAlltime": 208.5,
         "npv": 3.01,
         "ltv": 827.49,
@@ -2411,9 +2411,9 @@ const CASE_DATA = {
         "arpc": 13.14,
         "gtv30d": 128.8,
         "gtvAlltime": 0.66,
-        "revenueAlltime": 208.4,
+        "revenueAlltime": 208.6,
         "npv": 2.97,
-        "ltv": 810.9,
+        "ltv": 811.85,
         "cancelled30d": 12,
         "churnRate30d": 4.5,
         "cohortAgeMonths": 103,
@@ -2430,11 +2430,11 @@ const CASE_DATA = {
         "mrr": 3981,
         "arr": 47769,
         "arpc": 21.63,
-        "gtv30d": 96.7,
+        "gtv30d": 95.6,
         "gtvAlltime": 0.3,
         "revenueAlltime": 370.2,
         "npv": 5.68,
-        "ltv": 2011.86,
+        "ltv": 2011.99,
         "cancelled30d": 6,
         "churnRate30d": 3.2,
         "cohortAgeMonths": 104,
@@ -2451,11 +2451,11 @@ const CASE_DATA = {
         "mrr": 3043,
         "arr": 36514,
         "arpc": 15.21,
-        "gtv30d": 174.4,
-        "gtvAlltime": 55.41,
+        "gtv30d": 174.9,
+        "gtvAlltime": 55.42,
         "revenueAlltime": 161.9,
         "npv": 2.46,
-        "ltv": 809.34,
+        "ltv": 809.51,
         "cancelled30d": 4,
         "churnRate30d": 2,
         "cohortAgeMonths": 105,
@@ -2469,16 +2469,16 @@ const CASE_DATA = {
         "payingNow": 233,
         "payingPct": 0.39,
         "activeToPayingPct": 0,
-        "mrr": 4739,
-        "arr": 56863,
-        "arpc": 20.34,
-        "gtv30d": 458.6,
-        "gtvAlltime": 1.61,
+        "mrr": 4721,
+        "arr": 56649,
+        "arpc": 20.26,
+        "gtv30d": 464.8,
+        "gtvAlltime": 1.64,
         "revenueAlltime": 229.1,
         "npv": 3.79,
-        "ltv": 983.2,
-        "cancelled30d": 0,
-        "churnRate30d": 0,
+        "ltv": 983.29,
+        "cancelled30d": 5,
+        "churnRate30d": 2.1,
         "cohortAgeMonths": 106,
         "paymentPct": 0.39
       },
@@ -2493,11 +2493,11 @@ const CASE_DATA = {
         "mrr": 6945,
         "arr": 83343,
         "arpc": 28,
-        "gtv30d": 97.7,
-        "gtvAlltime": 0.44,
-        "revenueAlltime": 356.4,
+        "gtv30d": 96.3,
+        "gtvAlltime": 0.45,
+        "revenueAlltime": 356.5,
         "npv": 8.17,
-        "ltv": 1437.22,
+        "ltv": 1437.58,
         "cancelled30d": 10,
         "churnRate30d": 3.9,
         "cohortAgeMonths": 107,
@@ -2514,11 +2514,11 @@ const CASE_DATA = {
         "mrr": 5841,
         "arr": 70090,
         "arpc": 24.04,
-        "gtv30d": 486.7,
-        "gtvAlltime": 1.6,
-        "revenueAlltime": 252.7,
-        "npv": 6.67,
-        "ltv": 1039.91,
+        "gtv30d": 486.1,
+        "gtvAlltime": 1.62,
+        "revenueAlltime": 252.8,
+        "npv": 6.68,
+        "ltv": 1040.29,
         "cancelled30d": 0,
         "churnRate30d": 0,
         "cohortAgeMonths": 108,
@@ -2535,11 +2535,11 @@ const CASE_DATA = {
         "mrr": 2829,
         "arr": 33951,
         "arpc": 15.13,
-        "gtv30d": 73.7,
+        "gtv30d": 73.3,
         "gtvAlltime": 0.65,
         "revenueAlltime": 180.8,
         "npv": 5.6,
-        "ltv": 966.65,
+        "ltv": 967.02,
         "cancelled30d": 4,
         "churnRate30d": 2.1,
         "cohortAgeMonths": 109,
@@ -2556,11 +2556,11 @@ const CASE_DATA = {
         "mrr": 3001,
         "arr": 36014,
         "arpc": 17.86,
-        "gtv30d": 100.2,
+        "gtv30d": 97,
         "gtvAlltime": 0.27,
-        "revenueAlltime": 159.3,
-        "npv": 5.41,
-        "ltv": 948.36,
+        "revenueAlltime": 159.7,
+        "npv": 5.43,
+        "ltv": 950.5,
         "cancelled30d": 0,
         "churnRate30d": 0,
         "cohortAgeMonths": 110,
@@ -2577,7 +2577,7 @@ const CASE_DATA = {
         "mrr": 2758,
         "arr": 33095,
         "arpc": 19.42,
-        "gtv30d": 38,
+        "gtv30d": 37.3,
         "gtvAlltime": 20.44,
         "revenueAlltime": 203.2,
         "npv": 8.96,
@@ -2598,11 +2598,11 @@ const CASE_DATA = {
         "mrr": 2226,
         "arr": 26713,
         "arpc": 18.1,
-        "gtv30d": 43,
+        "gtv30d": 42.6,
         "gtvAlltime": 42.73,
-        "revenueAlltime": 146.6,
+        "revenueAlltime": 146.7,
         "npv": 6.33,
-        "ltv": 1192.07,
+        "ltv": 1192.34,
         "cancelled30d": 0,
         "churnRate30d": 0,
         "cohortAgeMonths": 112,
@@ -2616,10 +2616,10 @@ const CASE_DATA = {
         "payingNow": 67,
         "payingPct": 0.33,
         "activeToPayingPct": 0,
-        "mrr": 1128,
-        "arr": 13540,
-        "arpc": 16.84,
-        "gtv30d": 22,
+        "mrr": 1107,
+        "arr": 13283,
+        "arpc": 16.52,
+        "gtv30d": 21.9,
         "gtvAlltime": 0.07,
         "revenueAlltime": 145.3,
         "npv": 7.07,
@@ -2661,7 +2661,7 @@ const CASE_DATA = {
         "mrr": 632,
         "arr": 7579,
         "arpc": 18.05,
-        "gtv30d": 16.4,
+        "gtv30d": 16.1,
         "gtvAlltime": 0.06,
         "revenueAlltime": 76.3,
         "npv": 3.55,
@@ -2682,11 +2682,11 @@ const CASE_DATA = {
         "mrr": 3562,
         "arr": 42745,
         "arpc": 29.93,
-        "gtv30d": 78.5,
+        "gtv30d": 76.2,
         "gtvAlltime": 0.24,
-        "revenueAlltime": 167.9,
-        "npv": 9.4,
-        "ltv": 1411.18,
+        "revenueAlltime": 168.1,
+        "npv": 9.41,
+        "ltv": 1412.64,
         "cancelled30d": 0,
         "churnRate30d": 0,
         "cohortAgeMonths": 116,
@@ -2703,7 +2703,7 @@ const CASE_DATA = {
         "mrr": 507,
         "arr": 6085,
         "arpc": 10.56,
-        "gtv30d": 62.1,
+        "gtv30d": 31.9,
         "gtvAlltime": 0.54,
         "revenueAlltime": 27.3,
         "npv": 1.66,
@@ -2724,7 +2724,7 @@ const CASE_DATA = {
         "mrr": 284,
         "arr": 3409,
         "arpc": 14.95,
-        "gtv30d": 31.1,
+        "gtv30d": 32.2,
         "gtvAlltime": 0.08,
         "revenueAlltime": 16.6,
         "npv": 1.47,
@@ -2745,7 +2745,7 @@ const CASE_DATA = {
         "mrr": 39,
         "arr": 462,
         "arpc": 4.28,
-        "gtv30d": 8.7,
+        "gtv30d": 9,
         "gtvAlltime": 0.04,
         "revenueAlltime": 1.8,
         "npv": 0.26,
@@ -2766,7 +2766,7 @@ const CASE_DATA = {
         "mrr": 102,
         "arr": 1229,
         "arpc": 8.54,
-        "gtv30d": 1,
+        "gtv30d": 0.9,
         "gtvAlltime": 0.01,
         "revenueAlltime": 4.8,
         "npv": 1.08,
@@ -2787,7 +2787,7 @@ const CASE_DATA = {
         "mrr": 48,
         "arr": 576,
         "arpc": 11.99,
-        "gtv30d": 1.6,
+        "gtv30d": 1.7,
         "gtvAlltime": 0.01,
         "revenueAlltime": 1.6,
         "npv": 0.59,
@@ -2898,7 +2898,7 @@ const CASE_DATA = {
     "label": "2026 target"
   },
   "arpc": {
-    "value": 10.85,
+    "value": 10.84,
     "unit": "€/mo",
     "delta": "→ €20/mo",
     "deltaClass": "up",
@@ -2912,9 +2912,9 @@ const CASE_DATA = {
     "label": "YoY"
   },
   "totalGTV": {
-    "value": 20672.7,
+    "value": 20496.4,
     "unit": "€B/yr",
-    "delta": "+88245%",
+    "delta": "+87491%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -3109,44 +3109,44 @@ const CASE_DATA = {
     {
       "cohortMonth": "2026-05",
       "ageMonths": 0,
-      "registrations": 228,
+      "registrations": 327,
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
       "cumulativeRevenue": 0,
       "revenuePerActive": 0,
-      "gtvKEur": 7.3
+      "gtvKEur": 63.9
     },
     {
       "cohortMonth": "2026-04",
       "ageMonths": 0,
-      "registrations": 3707,
+      "registrations": 3737,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2015,
-      "cumulativeRevenue": 2015,
+      "revenueEur": 2019,
+      "cumulativeRevenue": 2019,
       "revenuePerActive": 0,
-      "gtvKEur": 7729.4
+      "gtvKEur": 7729.6
     },
     {
       "cohortMonth": "2026-04",
       "ageMonths": 1,
-      "registrations": 3707,
+      "registrations": 3737,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 835,
-      "cumulativeRevenue": 2850,
+      "revenueEur": 1005,
+      "cumulativeRevenue": 3024,
       "revenuePerActive": 0,
-      "gtvKEur": 81.1
+      "gtvKEur": 100.9
     },
     {
       "cohortMonth": "2026-04",
       "ageMonths": 8,
-      "registrations": 3707,
+      "registrations": 3737,
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2850,
+      "cumulativeRevenue": 3024,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3167,10 +3167,10 @@ const CASE_DATA = {
       "registrations": 16039,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 12691,
-      "cumulativeRevenue": 23147,
+      "revenueEur": 12575,
+      "cumulativeRevenue": 23031,
       "revenuePerActive": 0,
-      "gtvKEur": 1074433.3
+      "gtvKEur": 1074433.4
     },
     {
       "cohortMonth": "2026-03",
@@ -3178,10 +3178,10 @@ const CASE_DATA = {
       "registrations": 16039,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1074,
-      "cumulativeRevenue": 24221,
+      "revenueEur": 1205,
+      "cumulativeRevenue": 24237,
       "revenuePerActive": 0,
-      "gtvKEur": 182.7
+      "gtvKEur": 236.4
     },
     {
       "cohortMonth": "2026-02",
@@ -3211,10 +3211,10 @@ const CASE_DATA = {
       "registrations": 177089,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 45690,
-      "cumulativeRevenue": 122354,
+      "revenueEur": 45746,
+      "cumulativeRevenue": 122409,
       "revenuePerActive": 0,
-      "gtvKEur": 247159.9
+      "gtvKEur": 247174.7
     },
     {
       "cohortMonth": "2026-02",
@@ -3222,10 +3222,21 @@ const CASE_DATA = {
       "registrations": 177089,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3914,
-      "cumulativeRevenue": 126268,
+      "revenueEur": 6025,
+      "cumulativeRevenue": 128434,
       "revenuePerActive": 0,
-      "gtvKEur": 884.7
+      "gtvKEur": 1203.3
+    },
+    {
+      "cohortMonth": "2026-02",
+      "ageMonths": 4,
+      "registrations": 177089,
+      "activeMerchants": 0,
+      "retentionPct": 0,
+      "revenueEur": 0,
+      "cumulativeRevenue": 128434,
+      "revenuePerActive": 0,
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2026-02",
@@ -3234,7 +3245,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 126268,
+      "cumulativeRevenue": 128434,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3245,7 +3256,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 126268,
+      "cumulativeRevenue": 128434,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3256,7 +3267,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 126268,
+      "cumulativeRevenue": 128434,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3269,7 +3280,7 @@ const CASE_DATA = {
       "revenueEur": 37565,
       "cumulativeRevenue": 37565,
       "revenuePerActive": 0.77,
-      "gtvKEur": 29.2
+      "gtvKEur": 29.7
     },
     {
       "cohortMonth": "2026-01",
@@ -3277,10 +3288,10 @@ const CASE_DATA = {
       "registrations": 200783,
       "activeMerchants": 21379,
       "retentionPct": 10.6,
-      "revenueEur": 68065,
-      "cumulativeRevenue": 105630,
+      "revenueEur": 68082,
+      "cumulativeRevenue": 105648,
       "revenuePerActive": 3.18,
-      "gtvKEur": 663473.9
+      "gtvKEur": 663474.1
     },
     {
       "cohortMonth": "2026-01",
@@ -3288,10 +3299,10 @@ const CASE_DATA = {
       "registrations": 200783,
       "activeMerchants": 10736,
       "retentionPct": 5.3,
-      "revenueEur": 49944,
-      "cumulativeRevenue": 155575,
+      "revenueEur": 49953,
+      "cumulativeRevenue": 155600,
       "revenuePerActive": 4.65,
-      "gtvKEur": 40941.7
+      "gtvKEur": 40941.9
     },
     {
       "cohortMonth": "2026-01",
@@ -3299,10 +3310,10 @@ const CASE_DATA = {
       "registrations": 200783,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 46389,
-      "cumulativeRevenue": 201964,
+      "revenueEur": 46345,
+      "cumulativeRevenue": 201945,
       "revenuePerActive": 0,
-      "gtvKEur": 11753.7
+      "gtvKEur": 11759.7
     },
     {
       "cohortMonth": "2026-01",
@@ -3310,10 +3321,10 @@ const CASE_DATA = {
       "registrations": 200783,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4409,
-      "cumulativeRevenue": 206373,
+      "revenueEur": 5876,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
-      "gtvKEur": 1080.9
+      "gtvKEur": 1369.3
     },
     {
       "cohortMonth": "2026-01",
@@ -3322,9 +3333,20 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
-      "gtvKEur": 1.5
+      "gtvKEur": 3.1
+    },
+    {
+      "cohortMonth": "2026-01",
+      "ageMonths": 6,
+      "registrations": 200783,
+      "activeMerchants": 0,
+      "retentionPct": 0,
+      "revenueEur": 0,
+      "cumulativeRevenue": 207821,
+      "revenuePerActive": 0,
+      "gtvKEur": 0
     },
     {
       "cohortMonth": "2026-01",
@@ -3333,7 +3355,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3344,7 +3366,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -3355,7 +3377,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3366,7 +3388,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3377,7 +3399,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 206373,
+      "cumulativeRevenue": 207821,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3409,8 +3431,8 @@ const CASE_DATA = {
       "registrations": 160714,
       "activeMerchants": 12811,
       "retentionPct": 8,
-      "revenueEur": 37383,
-      "cumulativeRevenue": 116916,
+      "revenueEur": 37452,
+      "cumulativeRevenue": 116984,
       "revenuePerActive": 2.92,
       "gtvKEur": 374115.3
     },
@@ -3421,9 +3443,9 @@ const CASE_DATA = {
       "activeMerchants": 7552,
       "retentionPct": 4.7,
       "revenueEur": 36513,
-      "cumulativeRevenue": 153428,
+      "cumulativeRevenue": 153497,
       "revenuePerActive": 4.83,
-      "gtvKEur": 740758.4
+      "gtvKEur": 740758.5
     },
     {
       "cohortMonth": "2025-12",
@@ -3431,10 +3453,10 @@ const CASE_DATA = {
       "registrations": 160714,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 35517,
-      "cumulativeRevenue": 188946,
+      "revenueEur": 35552,
+      "cumulativeRevenue": 189049,
       "revenuePerActive": 0,
-      "gtvKEur": 7941194.8
+      "gtvKEur": 7941197
     },
     {
       "cohortMonth": "2025-12",
@@ -3442,10 +3464,10 @@ const CASE_DATA = {
       "registrations": 160714,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2813,
-      "cumulativeRevenue": 191759,
+      "revenueEur": 4091,
+      "cumulativeRevenue": 193139,
       "revenuePerActive": 0,
-      "gtvKEur": 560.2
+      "gtvKEur": 1091.6
     },
     {
       "cohortMonth": "2025-12",
@@ -3454,7 +3476,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 191759,
+      "cumulativeRevenue": 193139,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3465,7 +3487,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 191759,
+      "cumulativeRevenue": 193139,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3476,7 +3498,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 191759,
+      "cumulativeRevenue": 193139,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3487,7 +3509,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 191759,
+      "cumulativeRevenue": 193139,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3530,10 +3552,10 @@ const CASE_DATA = {
       "registrations": 163604,
       "activeMerchants": 11816,
       "retentionPct": 7.2,
-      "revenueEur": 36405,
-      "cumulativeRevenue": 155322,
+      "revenueEur": 36434,
+      "cumulativeRevenue": 155351,
       "revenuePerActive": 3.08,
-      "gtvKEur": 1718.1
+      "gtvKEur": 1718.3
     },
     {
       "cohortMonth": "2025-11",
@@ -3541,10 +3563,10 @@ const CASE_DATA = {
       "registrations": 163604,
       "activeMerchants": 7344,
       "retentionPct": 4.5,
-      "revenueEur": 33737,
-      "cumulativeRevenue": 189059,
+      "revenueEur": 33746,
+      "cumulativeRevenue": 189097,
       "revenuePerActive": 4.59,
-      "gtvKEur": 5469.6
+      "gtvKEur": 5469.7
     },
     {
       "cohortMonth": "2025-11",
@@ -3552,10 +3574,10 @@ const CASE_DATA = {
       "registrations": 163604,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30703,
-      "cumulativeRevenue": 219763,
+      "revenueEur": 30802,
+      "cumulativeRevenue": 219898,
       "revenuePerActive": 0,
-      "gtvKEur": 4993.1
+      "gtvKEur": 4994.3
     },
     {
       "cohortMonth": "2025-11",
@@ -3563,10 +3585,10 @@ const CASE_DATA = {
       "registrations": 163604,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3002,
-      "cumulativeRevenue": 222765,
+      "revenueEur": 3886,
+      "cumulativeRevenue": 223784,
       "revenuePerActive": 0,
-      "gtvKEur": 556.7
+      "gtvKEur": 678
     },
     {
       "cohortMonth": "2025-11",
@@ -3575,7 +3597,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 222765,
+      "cumulativeRevenue": 223784,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3586,7 +3608,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 222765,
+      "cumulativeRevenue": 223784,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -3597,7 +3619,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 222765,
+      "cumulativeRevenue": 223784,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3621,7 +3643,7 @@ const CASE_DATA = {
       "revenueEur": 53817,
       "cumulativeRevenue": 75190,
       "revenuePerActive": 2.87,
-      "gtvKEur": 4.8
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2025-10",
@@ -3651,10 +3673,10 @@ const CASE_DATA = {
       "registrations": 165924,
       "activeMerchants": 11255,
       "retentionPct": 6.8,
-      "revenueEur": 34663,
-      "cumulativeRevenue": 191127,
+      "revenueEur": 34690,
+      "cumulativeRevenue": 191154,
       "revenuePerActive": 3.08,
-      "gtvKEur": 248103.9
+      "gtvKEur": 248104.4
     },
     {
       "cohortMonth": "2025-10",
@@ -3662,8 +3684,8 @@ const CASE_DATA = {
       "registrations": 165924,
       "activeMerchants": 7351,
       "retentionPct": 4.4,
-      "revenueEur": 32315,
-      "cumulativeRevenue": 223442,
+      "revenueEur": 32319,
+      "cumulativeRevenue": 223473,
       "revenuePerActive": 4.4,
       "gtvKEur": 1225518.6
     },
@@ -3673,10 +3695,10 @@ const CASE_DATA = {
       "registrations": 165924,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 29757,
-      "cumulativeRevenue": 253199,
+      "revenueEur": 29708,
+      "cumulativeRevenue": 253181,
       "revenuePerActive": 0,
-      "gtvKEur": 24155
+      "gtvKEur": 24155.5
     },
     {
       "cohortMonth": "2025-10",
@@ -3684,10 +3706,10 @@ const CASE_DATA = {
       "registrations": 165924,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2968,
-      "cumulativeRevenue": 256167,
+      "revenueEur": 3930,
+      "cumulativeRevenue": 257111,
       "revenuePerActive": 0,
-      "gtvKEur": 594.5
+      "gtvKEur": 755.7
     },
     {
       "cohortMonth": "2025-10",
@@ -3696,7 +3718,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 256167,
+      "cumulativeRevenue": 257111,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3707,7 +3729,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 256167,
+      "cumulativeRevenue": 257111,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3718,7 +3740,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 256167,
+      "cumulativeRevenue": 257111,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3729,7 +3751,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 256167,
+      "cumulativeRevenue": 257111,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3742,7 +3764,7 @@ const CASE_DATA = {
       "revenueEur": 21093,
       "cumulativeRevenue": 21093,
       "revenuePerActive": 0.52,
-      "gtvKEur": 2.4
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2025-09",
@@ -3753,7 +3775,7 @@ const CASE_DATA = {
       "revenueEur": 70077,
       "cumulativeRevenue": 91170,
       "revenuePerActive": 3.81,
-      "gtvKEur": 346.4
+      "gtvKEur": 346.8
     },
     {
       "cohortMonth": "2025-09",
@@ -3786,7 +3808,7 @@ const CASE_DATA = {
       "revenueEur": 41006,
       "cumulativeRevenue": 217640,
       "revenuePerActive": 3.74,
-      "gtvKEur": 384.4
+      "gtvKEur": 384.5
     },
     {
       "cohortMonth": "2025-09",
@@ -3794,10 +3816,10 @@ const CASE_DATA = {
       "registrations": 167023,
       "activeMerchants": 10285,
       "retentionPct": 6.2,
-      "revenueEur": 34737,
-      "cumulativeRevenue": 252377,
-      "revenuePerActive": 3.38,
-      "gtvKEur": 1955.3
+      "revenueEur": 34819,
+      "cumulativeRevenue": 252458,
+      "revenuePerActive": 3.39,
+      "gtvKEur": 1955.4
     },
     {
       "cohortMonth": "2025-09",
@@ -3806,9 +3828,9 @@ const CASE_DATA = {
       "activeMerchants": 6750,
       "retentionPct": 4,
       "revenueEur": 35531,
-      "cumulativeRevenue": 287908,
+      "cumulativeRevenue": 287989,
       "revenuePerActive": 5.26,
-      "gtvKEur": 253806.5
+      "gtvKEur": 253806.6
     },
     {
       "cohortMonth": "2025-09",
@@ -3816,10 +3838,10 @@ const CASE_DATA = {
       "registrations": 167023,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 31812,
-      "cumulativeRevenue": 319720,
+      "revenueEur": 31778,
+      "cumulativeRevenue": 319768,
       "revenuePerActive": 0,
-      "gtvKEur": 14712.1
+      "gtvKEur": 14863.9
     },
     {
       "cohortMonth": "2025-09",
@@ -3827,10 +3849,10 @@ const CASE_DATA = {
       "registrations": 167023,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4329,
-      "cumulativeRevenue": 324049,
+      "revenueEur": 4979,
+      "cumulativeRevenue": 324747,
       "revenuePerActive": 0,
-      "gtvKEur": 615.4
+      "gtvKEur": 790.3
     },
     {
       "cohortMonth": "2025-09",
@@ -3839,7 +3861,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 324049,
+      "cumulativeRevenue": 324747,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3850,7 +3872,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 324049,
+      "cumulativeRevenue": 324747,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -3896,7 +3918,7 @@ const CASE_DATA = {
       "revenueEur": 42919,
       "cumulativeRevenue": 187973,
       "revenuePerActive": 3.48,
-      "gtvKEur": 7.8
+      "gtvKEur": 8.1
     },
     {
       "cohortMonth": "2025-08",
@@ -3907,7 +3929,7 @@ const CASE_DATA = {
       "revenueEur": 37815,
       "cumulativeRevenue": 225789,
       "revenuePerActive": 3.37,
-      "gtvKEur": 17685.9
+      "gtvKEur": 17686
     },
     {
       "cohortMonth": "2025-08",
@@ -3926,10 +3948,10 @@ const CASE_DATA = {
       "registrations": 175191,
       "activeMerchants": 9940,
       "retentionPct": 5.7,
-      "revenueEur": 39290,
-      "cumulativeRevenue": 302906,
-      "revenuePerActive": 3.95,
-      "gtvKEur": 1348
+      "revenueEur": 39369,
+      "cumulativeRevenue": 302984,
+      "revenuePerActive": 3.96,
+      "gtvKEur": 1348.2
     },
     {
       "cohortMonth": "2025-08",
@@ -3938,9 +3960,9 @@ const CASE_DATA = {
       "activeMerchants": 6760,
       "retentionPct": 3.9,
       "revenueEur": 34745,
-      "cumulativeRevenue": 337651,
+      "cumulativeRevenue": 337729,
       "revenuePerActive": 5.14,
-      "gtvKEur": 4045.1
+      "gtvKEur": 4045.3
     },
     {
       "cohortMonth": "2025-08",
@@ -3948,10 +3970,10 @@ const CASE_DATA = {
       "registrations": 175191,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 37039,
-      "cumulativeRevenue": 374690,
+      "revenueEur": 36906,
+      "cumulativeRevenue": 374635,
       "revenuePerActive": 0,
-      "gtvKEur": 3520.8
+      "gtvKEur": 3543.5
     },
     {
       "cohortMonth": "2025-08",
@@ -3959,10 +3981,10 @@ const CASE_DATA = {
       "registrations": 175191,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4130,
-      "cumulativeRevenue": 378820,
+      "revenueEur": 5245,
+      "cumulativeRevenue": 379880,
       "revenuePerActive": 0,
-      "gtvKEur": 394.6
+      "gtvKEur": 482.1
     },
     {
       "cohortMonth": "2025-08",
@@ -3971,7 +3993,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 378820,
+      "cumulativeRevenue": 379880,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -3982,7 +4004,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 378820,
+      "cumulativeRevenue": 379880,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -4050,7 +4072,7 @@ const CASE_DATA = {
       "revenueEur": 39683,
       "cumulativeRevenue": 289134,
       "revenuePerActive": 3.52,
-      "gtvKEur": 115.7
+      "gtvKEur": 115.8
     },
     {
       "cohortMonth": "2025-07",
@@ -4061,7 +4083,7 @@ const CASE_DATA = {
       "revenueEur": 43816,
       "cumulativeRevenue": 332950,
       "revenuePerActive": 4.09,
-      "gtvKEur": 10.8
+      "gtvKEur": 11
     },
     {
       "cohortMonth": "2025-07",
@@ -4072,7 +4094,7 @@ const CASE_DATA = {
       "revenueEur": 44967,
       "cumulativeRevenue": 377917,
       "revenuePerActive": 4.45,
-      "gtvKEur": 9915.1
+      "gtvKEur": 9915.2
     },
     {
       "cohortMonth": "2025-07",
@@ -4083,7 +4105,7 @@ const CASE_DATA = {
       "revenueEur": 38319,
       "cumulativeRevenue": 416236,
       "revenuePerActive": 5.43,
-      "gtvKEur": 10815.4
+      "gtvKEur": 10815.6
     },
     {
       "cohortMonth": "2025-07",
@@ -4091,10 +4113,10 @@ const CASE_DATA = {
       "registrations": 184450,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34736,
-      "cumulativeRevenue": 450972,
+      "revenueEur": 34790,
+      "cumulativeRevenue": 451026,
       "revenuePerActive": 0,
-      "gtvKEur": 75766.1
+      "gtvKEur": 75767.6
     },
     {
       "cohortMonth": "2025-07",
@@ -4102,10 +4124,10 @@ const CASE_DATA = {
       "registrations": 184450,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3713,
-      "cumulativeRevenue": 454684,
+      "revenueEur": 5813,
+      "cumulativeRevenue": 456839,
       "revenuePerActive": 0,
-      "gtvKEur": 599.8
+      "gtvKEur": 3984.4
     },
     {
       "cohortMonth": "2025-07",
@@ -4114,7 +4136,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 454684,
+      "cumulativeRevenue": 456839,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4125,7 +4147,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 454684,
+      "cumulativeRevenue": 456839,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4136,7 +4158,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 454684,
+      "cumulativeRevenue": 456839,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4147,7 +4169,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 454684,
+      "cumulativeRevenue": 456839,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4226,7 +4248,7 @@ const CASE_DATA = {
       "revenueEur": 36052,
       "cumulativeRevenue": 298989,
       "revenuePerActive": 3.65,
-      "gtvKEur": 135.6
+      "gtvKEur": 135.7
     },
     {
       "cohortMonth": "2025-06",
@@ -4237,7 +4259,7 @@ const CASE_DATA = {
       "revenueEur": 40267,
       "cumulativeRevenue": 339255,
       "revenuePerActive": 4.24,
-      "gtvKEur": 32.6
+      "gtvKEur": 32.9
     },
     {
       "cohortMonth": "2025-06",
@@ -4267,10 +4289,10 @@ const CASE_DATA = {
       "registrations": 170907,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 32266,
-      "cumulativeRevenue": 445003,
+      "revenueEur": 32218,
+      "cumulativeRevenue": 444955,
       "revenuePerActive": 0,
-      "gtvKEur": 5207.4
+      "gtvKEur": 5208.6
     },
     {
       "cohortMonth": "2025-06",
@@ -4278,10 +4300,10 @@ const CASE_DATA = {
       "registrations": 170907,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3021,
-      "cumulativeRevenue": 448024,
+      "revenueEur": 4056,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
-      "gtvKEur": 491.8
+      "gtvKEur": 616.2
     },
     {
       "cohortMonth": "2025-06",
@@ -4290,7 +4312,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4301,7 +4323,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4312,7 +4334,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4323,7 +4345,18 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
+      "revenuePerActive": 0,
+      "gtvKEur": 0
+    },
+    {
+      "cohortMonth": "2025-06",
+      "ageMonths": 21,
+      "registrations": 170907,
+      "activeMerchants": 0,
+      "retentionPct": 0,
+      "revenueEur": 0,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4334,7 +4367,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4345,7 +4378,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 448024,
+      "cumulativeRevenue": 449011,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4391,7 +4424,7 @@ const CASE_DATA = {
       "revenueEur": 45441,
       "cumulativeRevenue": 190038,
       "revenuePerActive": 3.74,
-      "gtvKEur": 36.9
+      "gtvKEur": 37
     },
     {
       "cohortMonth": "2025-05",
@@ -4402,7 +4435,7 @@ const CASE_DATA = {
       "revenueEur": 38574,
       "cumulativeRevenue": 228612,
       "revenuePerActive": 3.46,
-      "gtvKEur": 2.4
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2025-05",
@@ -4413,7 +4446,7 @@ const CASE_DATA = {
       "revenueEur": 39277,
       "cumulativeRevenue": 267888,
       "revenuePerActive": 3.76,
-      "gtvKEur": 48.1
+      "gtvKEur": 48.4
     },
     {
       "cohortMonth": "2025-05",
@@ -4424,7 +4457,7 @@ const CASE_DATA = {
       "revenueEur": 36338,
       "cumulativeRevenue": 304226,
       "revenuePerActive": 3.7,
-      "gtvKEur": 5
+      "gtvKEur": 5.6
     },
     {
       "cohortMonth": "2025-05",
@@ -4435,7 +4468,7 @@ const CASE_DATA = {
       "revenueEur": 40547,
       "cumulativeRevenue": 344773,
       "revenuePerActive": 4.36,
-      "gtvKEur": 111.8
+      "gtvKEur": 112.1
     },
     {
       "cohortMonth": "2025-05",
@@ -4468,7 +4501,7 @@ const CASE_DATA = {
       "revenueEur": 38353,
       "cumulativeRevenue": 460549,
       "revenuePerActive": 6.33,
-      "gtvKEur": 4324.4
+      "gtvKEur": 4324.5
     },
     {
       "cohortMonth": "2025-05",
@@ -4476,10 +4509,10 @@ const CASE_DATA = {
       "registrations": 171748,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34166,
-      "cumulativeRevenue": 494715,
+      "revenueEur": 34168,
+      "cumulativeRevenue": 494717,
       "revenuePerActive": 0,
-      "gtvKEur": 90893
+      "gtvKEur": 90912.7
     },
     {
       "cohortMonth": "2025-05",
@@ -4487,10 +4520,10 @@ const CASE_DATA = {
       "registrations": 171748,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3649,
-      "cumulativeRevenue": 498364,
+      "revenueEur": 5323,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
-      "gtvKEur": 526.1
+      "gtvKEur": 681.3
     },
     {
       "cohortMonth": "2025-05",
@@ -4499,7 +4532,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 498364,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4510,7 +4543,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 498364,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4521,7 +4554,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 498364,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4532,7 +4565,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 498364,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4543,7 +4576,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 498364,
+      "cumulativeRevenue": 500040,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4622,7 +4655,7 @@ const CASE_DATA = {
       "revenueEur": 35302,
       "cumulativeRevenue": 280001,
       "revenuePerActive": 4.01,
-      "gtvKEur": 300066.8
+      "gtvKEur": 300066.9
     },
     {
       "cohortMonth": "2025-04",
@@ -4633,7 +4666,7 @@ const CASE_DATA = {
       "revenueEur": 32792,
       "cumulativeRevenue": 312793,
       "revenuePerActive": 3.96,
-      "gtvKEur": 20
+      "gtvKEur": 20.1
     },
     {
       "cohortMonth": "2025-04",
@@ -4644,7 +4677,7 @@ const CASE_DATA = {
       "revenueEur": 33405,
       "cumulativeRevenue": 346197,
       "revenuePerActive": 4.22,
-      "gtvKEur": 95.3
+      "gtvKEur": 95.4
     },
     {
       "cohortMonth": "2025-04",
@@ -4655,7 +4688,7 @@ const CASE_DATA = {
       "revenueEur": 36782,
       "cumulativeRevenue": 382979,
       "revenuePerActive": 4.86,
-      "gtvKEur": 13.8
+      "gtvKEur": 13.9
     },
     {
       "cohortMonth": "2025-04",
@@ -4677,7 +4710,7 @@ const CASE_DATA = {
       "revenueEur": 31988,
       "cumulativeRevenue": 446064,
       "revenuePerActive": 6.07,
-      "gtvKEur": 4459.2
+      "gtvKEur": 4459.3
     },
     {
       "cohortMonth": "2025-04",
@@ -4685,10 +4718,10 @@ const CASE_DATA = {
       "registrations": 153611,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 40695,
-      "cumulativeRevenue": 486759,
+      "revenueEur": 40663,
+      "cumulativeRevenue": 486727,
       "revenuePerActive": 0,
-      "gtvKEur": 518893
+      "gtvKEur": 518893.9
     },
     {
       "cohortMonth": "2025-04",
@@ -4696,10 +4729,10 @@ const CASE_DATA = {
       "registrations": 153611,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 5985,
-      "cumulativeRevenue": 492744,
+      "revenueEur": 6846,
+      "cumulativeRevenue": 493573,
       "revenuePerActive": 0,
-      "gtvKEur": 592.4
+      "gtvKEur": 743.6
     },
     {
       "cohortMonth": "2025-04",
@@ -4708,7 +4741,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 492744,
+      "cumulativeRevenue": 493573,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4719,7 +4752,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 492744,
+      "cumulativeRevenue": 493573,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4853,7 +4886,7 @@ const CASE_DATA = {
       "revenueEur": 29474,
       "cumulativeRevenue": 420230,
       "revenuePerActive": 4.19,
-      "gtvKEur": 1932.1
+      "gtvKEur": 1932.2
     },
     {
       "cohortMonth": "2025-03",
@@ -4864,7 +4897,7 @@ const CASE_DATA = {
       "revenueEur": 40267,
       "cumulativeRevenue": 460497,
       "revenuePerActive": 7.93,
-      "gtvKEur": 3581.6
+      "gtvKEur": 3582
     },
     {
       "cohortMonth": "2025-03",
@@ -4872,10 +4905,10 @@ const CASE_DATA = {
       "registrations": 171827,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 66643,
-      "cumulativeRevenue": 527140,
+      "revenueEur": 66632,
+      "cumulativeRevenue": 527130,
       "revenuePerActive": 0,
-      "gtvKEur": 4778.1
+      "gtvKEur": 4779.2
     },
     {
       "cohortMonth": "2025-03",
@@ -4883,10 +4916,10 @@ const CASE_DATA = {
       "registrations": 171827,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 5095,
-      "cumulativeRevenue": 532235,
+      "revenueEur": 6110,
+      "cumulativeRevenue": 533239,
       "revenuePerActive": 0,
-      "gtvKEur": 466
+      "gtvKEur": 573.2
     },
     {
       "cohortMonth": "2025-03",
@@ -4895,7 +4928,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 532235,
+      "cumulativeRevenue": 533239,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4906,7 +4939,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 532235,
+      "cumulativeRevenue": 533239,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -4952,7 +4985,7 @@ const CASE_DATA = {
       "revenueEur": 37968,
       "cumulativeRevenue": 157562,
       "revenuePerActive": 3.74,
-      "gtvKEur": 0.5
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2025-02",
@@ -4974,7 +5007,7 @@ const CASE_DATA = {
       "revenueEur": 33765,
       "cumulativeRevenue": 229592,
       "revenuePerActive": 3.92,
-      "gtvKEur": 2.2
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2025-02",
@@ -4996,7 +5029,7 @@ const CASE_DATA = {
       "revenueEur": 35099,
       "cumulativeRevenue": 297929,
       "revenuePerActive": 4.56,
-      "gtvKEur": 2.4
+      "gtvKEur": 2.5
     },
     {
       "cohortMonth": "2025-02",
@@ -5007,7 +5040,7 @@ const CASE_DATA = {
       "revenueEur": 33109,
       "cumulativeRevenue": 331038,
       "revenuePerActive": 4.43,
-      "gtvKEur": 36
+      "gtvKEur": 36.1
     },
     {
       "cohortMonth": "2025-02",
@@ -5018,7 +5051,7 @@ const CASE_DATA = {
       "revenueEur": 29860,
       "cumulativeRevenue": 360899,
       "revenuePerActive": 4.22,
-      "gtvKEur": 1.9
+      "gtvKEur": 2
     },
     {
       "cohortMonth": "2025-02",
@@ -5029,7 +5062,7 @@ const CASE_DATA = {
       "revenueEur": 31761,
       "cumulativeRevenue": 392659,
       "revenuePerActive": 4.65,
-      "gtvKEur": 215.3
+      "gtvKEur": 215.4
     },
     {
       "cohortMonth": "2025-02",
@@ -5040,7 +5073,7 @@ const CASE_DATA = {
       "revenueEur": 31811,
       "cumulativeRevenue": 424470,
       "revenuePerActive": 4.86,
-      "gtvKEur": 17.9
+      "gtvKEur": 18
     },
     {
       "cohortMonth": "2025-02",
@@ -5051,7 +5084,7 @@ const CASE_DATA = {
       "revenueEur": 46170,
       "cumulativeRevenue": 470640,
       "revenuePerActive": 7.1,
-      "gtvKEur": 1212.2
+      "gtvKEur": 1212.3
     },
     {
       "cohortMonth": "2025-02",
@@ -5062,7 +5095,7 @@ const CASE_DATA = {
       "revenueEur": 63579,
       "cumulativeRevenue": 534220,
       "revenuePerActive": 13.55,
-      "gtvKEur": 3734.7
+      "gtvKEur": 3735.1
     },
     {
       "cohortMonth": "2025-02",
@@ -5070,10 +5103,10 @@ const CASE_DATA = {
       "registrations": 142535,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 41926,
-      "cumulativeRevenue": 576146,
+      "revenueEur": 42064,
+      "cumulativeRevenue": 576284,
       "revenuePerActive": 0,
-      "gtvKEur": 2725.3
+      "gtvKEur": 2725.9
     },
     {
       "cohortMonth": "2025-02",
@@ -5081,10 +5114,10 @@ const CASE_DATA = {
       "registrations": 142535,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3777,
-      "cumulativeRevenue": 579923,
+      "revenueEur": 4908,
+      "cumulativeRevenue": 581192,
       "revenuePerActive": 0,
-      "gtvKEur": 292.5
+      "gtvKEur": 394.9
     },
     {
       "cohortMonth": "2025-02",
@@ -5093,7 +5126,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 579923,
+      "cumulativeRevenue": 581192,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5104,7 +5137,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 579923,
+      "cumulativeRevenue": 581192,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5115,7 +5148,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 579923,
+      "cumulativeRevenue": 581192,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5126,7 +5159,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 579923,
+      "cumulativeRevenue": 581192,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5279,9 +5312,9 @@ const CASE_DATA = {
       "registrations": 155807,
       "activeMerchants": 6792,
       "retentionPct": 4.4,
-      "revenueEur": 61183,
-      "cumulativeRevenue": 524784,
-      "revenuePerActive": 9.01,
+      "revenueEur": 61449,
+      "cumulativeRevenue": 525049,
+      "revenuePerActive": 9.05,
       "gtvKEur": 1432.9
     },
     {
@@ -5291,9 +5324,9 @@ const CASE_DATA = {
       "activeMerchants": 4864,
       "retentionPct": 3.1,
       "revenueEur": 41755,
-      "cumulativeRevenue": 566539,
+      "cumulativeRevenue": 566804,
       "revenuePerActive": 8.58,
-      "gtvKEur": 3224.2
+      "gtvKEur": 3224.3
     },
     {
       "cohortMonth": "2025-01",
@@ -5301,10 +5334,10 @@ const CASE_DATA = {
       "registrations": 155807,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 36459,
-      "cumulativeRevenue": 602998,
+      "revenueEur": 36426,
+      "cumulativeRevenue": 603230,
       "revenuePerActive": 0,
-      "gtvKEur": 60387.2
+      "gtvKEur": 60387.7
     },
     {
       "cohortMonth": "2025-01",
@@ -5312,10 +5345,10 @@ const CASE_DATA = {
       "registrations": 155807,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3364,
-      "cumulativeRevenue": 606362,
+      "revenueEur": 4287,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
-      "gtvKEur": 387.3
+      "gtvKEur": 472.2
     },
     {
       "cohortMonth": "2025-01",
@@ -5324,7 +5357,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 606362,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5335,7 +5368,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 606362,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -5346,7 +5379,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 606362,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5357,7 +5390,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 606362,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5368,7 +5401,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 606362,
+      "cumulativeRevenue": 607517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5535,7 +5568,7 @@ const CASE_DATA = {
       "revenueEur": 34440,
       "cumulativeRevenue": 465861,
       "revenuePerActive": 6.41,
-      "gtvKEur": 1975.9
+      "gtvKEur": 1976
     },
     {
       "cohortMonth": "2024-12",
@@ -5546,7 +5579,7 @@ const CASE_DATA = {
       "revenueEur": 27509,
       "cumulativeRevenue": 493370,
       "revenuePerActive": 6.97,
-      "gtvKEur": 1373968.6
+      "gtvKEur": 1373969
     },
     {
       "cohortMonth": "2024-12",
@@ -5554,10 +5587,10 @@ const CASE_DATA = {
       "registrations": 124860,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 27048,
-      "cumulativeRevenue": 520418,
+      "revenueEur": 26984,
+      "cumulativeRevenue": 520354,
       "revenuePerActive": 0,
-      "gtvKEur": 3018.6
+      "gtvKEur": 3048.8
     },
     {
       "cohortMonth": "2024-12",
@@ -5565,10 +5598,10 @@ const CASE_DATA = {
       "registrations": 124860,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2782,
-      "cumulativeRevenue": 523200,
+      "revenueEur": 3742,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
-      "gtvKEur": 415.6
+      "gtvKEur": 528.5
     },
     {
       "cohortMonth": "2024-12",
@@ -5577,7 +5610,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 523200,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5588,7 +5621,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 523200,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5599,7 +5632,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 523200,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5610,7 +5643,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 523200,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5621,7 +5654,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 523200,
+      "cumulativeRevenue": 524096,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5645,7 +5678,7 @@ const CASE_DATA = {
       "revenueEur": 38710,
       "cumulativeRevenue": 55324,
       "revenuePerActive": 2.64,
-      "gtvKEur": 2.9
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2024-11",
@@ -5656,7 +5689,7 @@ const CASE_DATA = {
       "revenueEur": 43542,
       "cumulativeRevenue": 98866,
       "revenuePerActive": 3.95,
-      "gtvKEur": 90.7
+      "gtvKEur": 92.9
     },
     {
       "cohortMonth": "2024-11",
@@ -5667,7 +5700,7 @@ const CASE_DATA = {
       "revenueEur": 33123,
       "cumulativeRevenue": 131989,
       "revenuePerActive": 3.39,
-      "gtvKEur": 7.2
+      "gtvKEur": 9.3
     },
     {
       "cohortMonth": "2024-11",
@@ -5766,7 +5799,7 @@ const CASE_DATA = {
       "revenueEur": 38132,
       "cumulativeRevenue": 416510,
       "revenuePerActive": 5.9,
-      "gtvKEur": 4.7
+      "gtvKEur": 4.9
     },
     {
       "cohortMonth": "2024-11",
@@ -5777,7 +5810,7 @@ const CASE_DATA = {
       "revenueEur": 47044,
       "cumulativeRevenue": 463554,
       "revenuePerActive": 7.55,
-      "gtvKEur": 89.1
+      "gtvKEur": 89.7
     },
     {
       "cohortMonth": "2024-11",
@@ -5788,7 +5821,7 @@ const CASE_DATA = {
       "revenueEur": 47401,
       "cumulativeRevenue": 510955,
       "revenuePerActive": 7.92,
-      "gtvKEur": 502
+      "gtvKEur": 502.6
     },
     {
       "cohortMonth": "2024-11",
@@ -5810,7 +5843,7 @@ const CASE_DATA = {
       "revenueEur": 30096,
       "cumulativeRevenue": 572998,
       "revenuePerActive": 7.14,
-      "gtvKEur": 3536.6
+      "gtvKEur": 3536.7
     },
     {
       "cohortMonth": "2024-11",
@@ -5818,10 +5851,10 @@ const CASE_DATA = {
       "registrations": 137654,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30473,
-      "cumulativeRevenue": 603471,
+      "revenueEur": 30430,
+      "cumulativeRevenue": 603429,
       "revenuePerActive": 0,
-      "gtvKEur": 45556.7
+      "gtvKEur": 45557.2
     },
     {
       "cohortMonth": "2024-11",
@@ -5829,10 +5862,10 @@ const CASE_DATA = {
       "registrations": 137654,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3755,
-      "cumulativeRevenue": 607226,
+      "revenueEur": 4491,
+      "cumulativeRevenue": 607919,
       "revenuePerActive": 0,
-      "gtvKEur": 373.6
+      "gtvKEur": 503.5
     },
     {
       "cohortMonth": "2024-11",
@@ -5841,7 +5874,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 607226,
+      "cumulativeRevenue": 607919,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -5852,7 +5885,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 607226,
+      "cumulativeRevenue": 607919,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6049,10 +6082,10 @@ const CASE_DATA = {
       "registrations": 149212,
       "activeMerchants": 4282,
       "retentionPct": 2.9,
-      "revenueEur": 33256,
-      "cumulativeRevenue": 650489,
+      "revenueEur": 33265,
+      "cumulativeRevenue": 650497,
       "revenuePerActive": 7.77,
-      "gtvKEur": 3419.7
+      "gtvKEur": 3420
     },
     {
       "cohortMonth": "2024-10",
@@ -6060,10 +6093,10 @@ const CASE_DATA = {
       "registrations": 149212,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 32012,
-      "cumulativeRevenue": 682501,
+      "revenueEur": 31999,
+      "cumulativeRevenue": 682497,
       "revenuePerActive": 0,
-      "gtvKEur": 6391.2
+      "gtvKEur": 6391.7
     },
     {
       "cohortMonth": "2024-10",
@@ -6071,10 +6104,10 @@ const CASE_DATA = {
       "registrations": 149212,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2959,
-      "cumulativeRevenue": 685460,
+      "revenueEur": 3948,
+      "cumulativeRevenue": 686445,
       "revenuePerActive": 0,
-      "gtvKEur": 335.7
+      "gtvKEur": 410.9
     },
     {
       "cohortMonth": "2024-10",
@@ -6083,7 +6116,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 685460,
+      "cumulativeRevenue": 686445,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6094,7 +6127,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 685460,
+      "cumulativeRevenue": 686445,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6105,7 +6138,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 685460,
+      "cumulativeRevenue": 686445,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6116,7 +6149,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 685460,
+      "cumulativeRevenue": 686445,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6327,7 +6360,7 @@ const CASE_DATA = {
       "revenueEur": 33294,
       "cumulativeRevenue": 728200,
       "revenuePerActive": 8.85,
-      "gtvKEur": 6920.8
+      "gtvKEur": 6920.9
     },
     {
       "cohortMonth": "2024-09",
@@ -6335,10 +6368,10 @@ const CASE_DATA = {
       "registrations": 132759,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30320,
-      "cumulativeRevenue": 758519,
+      "revenueEur": 30603,
+      "cumulativeRevenue": 758803,
       "revenuePerActive": 0,
-      "gtvKEur": 3062
+      "gtvKEur": 3062.4
     },
     {
       "cohortMonth": "2024-09",
@@ -6346,10 +6379,10 @@ const CASE_DATA = {
       "registrations": 132759,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2139,
-      "cumulativeRevenue": 760658,
+      "revenueEur": 3278,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
-      "gtvKEur": 357.2
+      "gtvKEur": 496.1
     },
     {
       "cohortMonth": "2024-09",
@@ -6358,7 +6391,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6369,7 +6402,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6380,7 +6413,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0.2
     },
@@ -6391,7 +6424,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6402,7 +6435,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6413,7 +6446,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6424,7 +6457,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6435,7 +6468,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 760658,
+      "cumulativeRevenue": 762081,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6569,7 +6602,7 @@ const CASE_DATA = {
       "revenueEur": 29959,
       "cumulativeRevenue": 407852,
       "revenuePerActive": 4.47,
-      "gtvKEur": 1.2
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2024-08",
@@ -6591,7 +6624,7 @@ const CASE_DATA = {
       "revenueEur": 63103,
       "cumulativeRevenue": 519028,
       "revenuePerActive": 10.03,
-      "gtvKEur": 0.9
+      "gtvKEur": 1.1
     },
     {
       "cohortMonth": "2024-08",
@@ -6602,7 +6635,7 @@ const CASE_DATA = {
       "revenueEur": 41796,
       "cumulativeRevenue": 560824,
       "revenuePerActive": 6.82,
-      "gtvKEur": 212.1
+      "gtvKEur": 212.2
     },
     {
       "cohortMonth": "2024-08",
@@ -6624,7 +6657,7 @@ const CASE_DATA = {
       "revenueEur": 50539,
       "cumulativeRevenue": 648861,
       "revenuePerActive": 8.83,
-      "gtvKEur": 78.9
+      "gtvKEur": 79
     },
     {
       "cohortMonth": "2024-08",
@@ -6635,7 +6668,7 @@ const CASE_DATA = {
       "revenueEur": 33534,
       "cumulativeRevenue": 682395,
       "revenuePerActive": 5.98,
-      "gtvKEur": 19.9
+      "gtvKEur": 20
     },
     {
       "cohortMonth": "2024-08",
@@ -6646,7 +6679,7 @@ const CASE_DATA = {
       "revenueEur": 28844,
       "cumulativeRevenue": 711239,
       "revenuePerActive": 5.27,
-      "gtvKEur": 1655.5
+      "gtvKEur": 1656
     },
     {
       "cohortMonth": "2024-08",
@@ -6657,7 +6690,7 @@ const CASE_DATA = {
       "revenueEur": 31309,
       "cumulativeRevenue": 742548,
       "revenuePerActive": 7.8,
-      "gtvKEur": 9360.8
+      "gtvKEur": 9361.8
     },
     {
       "cohortMonth": "2024-08",
@@ -6665,10 +6698,10 @@ const CASE_DATA = {
       "registrations": 138101,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30659,
-      "cumulativeRevenue": 773207,
+      "revenueEur": 30654,
+      "cumulativeRevenue": 773202,
       "revenuePerActive": 0,
-      "gtvKEur": 8382.1
+      "gtvKEur": 8388.2
     },
     {
       "cohortMonth": "2024-08",
@@ -6676,10 +6709,10 @@ const CASE_DATA = {
       "registrations": 138101,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1982,
-      "cumulativeRevenue": 775188,
+      "revenueEur": 2461,
+      "cumulativeRevenue": 775662,
       "revenuePerActive": 0,
-      "gtvKEur": 418.2
+      "gtvKEur": 537
     },
     {
       "cohortMonth": "2024-08",
@@ -6688,7 +6721,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 775188,
+      "cumulativeRevenue": 775662,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6699,7 +6732,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 775188,
+      "cumulativeRevenue": 775662,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6888,7 +6921,7 @@ const CASE_DATA = {
       "revenueEur": 34062,
       "cumulativeRevenue": 569996,
       "revenuePerActive": 5.88,
-      "gtvKEur": 19.4
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2024-07",
@@ -6899,7 +6932,7 @@ const CASE_DATA = {
       "revenueEur": 30660,
       "cumulativeRevenue": 600656,
       "revenuePerActive": 5.47,
-      "gtvKEur": 159.7
+      "gtvKEur": 159.8
     },
     {
       "cohortMonth": "2024-07",
@@ -6918,10 +6951,10 @@ const CASE_DATA = {
       "registrations": 140399,
       "activeMerchants": 5257,
       "retentionPct": 3.7,
-      "revenueEur": 30128,
-      "cumulativeRevenue": 661874,
+      "revenueEur": 30136,
+      "cumulativeRevenue": 661882,
       "revenuePerActive": 5.73,
-      "gtvKEur": 2174.3
+      "gtvKEur": 2174.4
     },
     {
       "cohortMonth": "2024-07",
@@ -6929,8 +6962,8 @@ const CASE_DATA = {
       "registrations": 140399,
       "activeMerchants": 3922,
       "retentionPct": 2.8,
-      "revenueEur": 30811,
-      "cumulativeRevenue": 692684,
+      "revenueEur": 30824,
+      "cumulativeRevenue": 692706,
       "revenuePerActive": 7.86,
       "gtvKEur": 5530.7
     },
@@ -6940,10 +6973,10 @@ const CASE_DATA = {
       "registrations": 140399,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30496,
-      "cumulativeRevenue": 723180,
+      "revenueEur": 30363,
+      "cumulativeRevenue": 723069,
       "revenuePerActive": 0,
-      "gtvKEur": 5313.5
+      "gtvKEur": 5314.4
     },
     {
       "cohortMonth": "2024-07",
@@ -6951,10 +6984,10 @@ const CASE_DATA = {
       "registrations": 140399,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2521,
-      "cumulativeRevenue": 725701,
+      "revenueEur": 4701,
+      "cumulativeRevenue": 727769,
       "revenuePerActive": 0,
-      "gtvKEur": 454.5
+      "gtvKEur": 647.3
     },
     {
       "cohortMonth": "2024-07",
@@ -6963,7 +6996,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 725701,
+      "cumulativeRevenue": 727769,
       "revenuePerActive": 0,
       "gtvKEur": 0.5
     },
@@ -6974,7 +7007,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 725701,
+      "cumulativeRevenue": 727769,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -6985,7 +7018,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 725701,
+      "cumulativeRevenue": 727769,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7218,7 +7251,7 @@ const CASE_DATA = {
       "revenueEur": 22217,
       "cumulativeRevenue": 617960,
       "revenuePerActive": 4.75,
-      "gtvKEur": 2433.5
+      "gtvKEur": 2433.6
     },
     {
       "cohortMonth": "2024-06",
@@ -7237,10 +7270,10 @@ const CASE_DATA = {
       "registrations": 126825,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30232,
-      "cumulativeRevenue": 674966,
+      "revenueEur": 30131,
+      "cumulativeRevenue": 674865,
       "revenuePerActive": 0,
-      "gtvKEur": 4459.4
+      "gtvKEur": 4459.7
     },
     {
       "cohortMonth": "2024-06",
@@ -7248,10 +7281,10 @@ const CASE_DATA = {
       "registrations": 126825,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2250,
-      "cumulativeRevenue": 677216,
+      "revenueEur": 2715,
+      "cumulativeRevenue": 677580,
       "revenuePerActive": 0,
-      "gtvKEur": 426.2
+      "gtvKEur": 615.9
     },
     {
       "cohortMonth": "2024-06",
@@ -7260,7 +7293,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 677216,
+      "cumulativeRevenue": 677580,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7271,7 +7304,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 677216,
+      "cumulativeRevenue": 677580,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7282,7 +7315,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 677216,
+      "cumulativeRevenue": 677580,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7534,10 +7567,10 @@ const CASE_DATA = {
       "registrations": 132946,
       "activeMerchants": 3683,
       "retentionPct": 2.8,
-      "revenueEur": 29026,
-      "cumulativeRevenue": 711384,
-      "revenuePerActive": 7.88,
-      "gtvKEur": 4060.7
+      "revenueEur": 29090,
+      "cumulativeRevenue": 711449,
+      "revenuePerActive": 7.9,
+      "gtvKEur": 4060.8
     },
     {
       "cohortMonth": "2024-05",
@@ -7545,10 +7578,10 @@ const CASE_DATA = {
       "registrations": 132946,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 28065,
-      "cumulativeRevenue": 739450,
+      "revenueEur": 27736,
+      "cumulativeRevenue": 739184,
       "revenuePerActive": 0,
-      "gtvKEur": 11180745.4
+      "gtvKEur": 11180746.4
     },
     {
       "cohortMonth": "2024-05",
@@ -7556,10 +7589,10 @@ const CASE_DATA = {
       "registrations": 132946,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1366,
-      "cumulativeRevenue": 740816,
+      "revenueEur": 2095,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
-      "gtvKEur": 432.5
+      "gtvKEur": 584.7
     },
     {
       "cohortMonth": "2024-05",
@@ -7568,7 +7601,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 740816,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7579,7 +7612,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 740816,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7590,7 +7623,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 740816,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7601,7 +7634,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 740816,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7612,7 +7645,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 740816,
+      "cumulativeRevenue": 741279,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -7864,8 +7897,8 @@ const CASE_DATA = {
       "registrations": 133555,
       "activeMerchants": 4404,
       "retentionPct": 3.3,
-      "revenueEur": 24740,
-      "cumulativeRevenue": 665270,
+      "revenueEur": 24753,
+      "cumulativeRevenue": 665283,
       "revenuePerActive": 5.62,
       "gtvKEur": 1732.2
     },
@@ -7876,9 +7909,9 @@ const CASE_DATA = {
       "activeMerchants": 3306,
       "retentionPct": 2.5,
       "revenueEur": 25683,
-      "cumulativeRevenue": 690954,
+      "cumulativeRevenue": 690966,
       "revenuePerActive": 7.77,
-      "gtvKEur": 7073.5
+      "gtvKEur": 7073.6
     },
     {
       "cohortMonth": "2024-04",
@@ -7887,9 +7920,9 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 39914,
-      "cumulativeRevenue": 730867,
+      "cumulativeRevenue": 730880,
       "revenuePerActive": 0,
-      "gtvKEur": 4508.8
+      "gtvKEur": 4509.6
     },
     {
       "cohortMonth": "2024-04",
@@ -7897,10 +7930,10 @@ const CASE_DATA = {
       "registrations": 133555,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 7418,
-      "cumulativeRevenue": 738285,
+      "revenueEur": 9384,
+      "cumulativeRevenue": 740264,
       "revenuePerActive": 0,
-      "gtvKEur": 409.9
+      "gtvKEur": 553.9
     },
     {
       "cohortMonth": "2024-04",
@@ -7909,7 +7942,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 738285,
+      "cumulativeRevenue": 740264,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -8175,7 +8208,7 @@ const CASE_DATA = {
       "revenueEur": 35699,
       "cumulativeRevenue": 962004,
       "revenuePerActive": 7.64,
-      "gtvKEur": 1234.2
+      "gtvKEur": 1234.4
     },
     {
       "cohortMonth": "2024-03",
@@ -8186,7 +8219,7 @@ const CASE_DATA = {
       "revenueEur": 63026,
       "cumulativeRevenue": 1025030,
       "revenuePerActive": 17.42,
-      "gtvKEur": 9378.7
+      "gtvKEur": 9379.1
     },
     {
       "cohortMonth": "2024-03",
@@ -8194,10 +8227,10 @@ const CASE_DATA = {
       "registrations": 140731,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 61844,
-      "cumulativeRevenue": 1086875,
+      "revenueEur": 62960,
+      "cumulativeRevenue": 1087991,
       "revenuePerActive": 0,
-      "gtvKEur": 5362.4
+      "gtvKEur": 5363.3
     },
     {
       "cohortMonth": "2024-03",
@@ -8205,10 +8238,10 @@ const CASE_DATA = {
       "registrations": 140731,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2511,
-      "cumulativeRevenue": 1089385,
+      "revenueEur": 6148,
+      "cumulativeRevenue": 1094138,
       "revenuePerActive": 0,
-      "gtvKEur": 340.2
+      "gtvKEur": 429.8
     },
     {
       "cohortMonth": "2024-03",
@@ -8217,7 +8250,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1089385,
+      "cumulativeRevenue": 1094138,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -8228,7 +8261,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1089385,
+      "cumulativeRevenue": 1094138,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -8524,10 +8557,10 @@ const CASE_DATA = {
       "registrations": 159370,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 37809,
-      "cumulativeRevenue": 947031,
+      "revenueEur": 37718,
+      "cumulativeRevenue": 946940,
       "revenuePerActive": 0,
-      "gtvKEur": 5909.4
+      "gtvKEur": 5909.7
     },
     {
       "cohortMonth": "2024-02",
@@ -8535,10 +8568,10 @@ const CASE_DATA = {
       "registrations": 159370,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3488,
-      "cumulativeRevenue": 950519,
+      "revenueEur": 4666,
+      "cumulativeRevenue": 951606,
       "revenuePerActive": 0,
-      "gtvKEur": 634
+      "gtvKEur": 857.4
     },
     {
       "cohortMonth": "2024-02",
@@ -8547,7 +8580,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 950519,
+      "cumulativeRevenue": 951606,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -8747,7 +8780,7 @@ const CASE_DATA = {
       "revenueEur": 32138,
       "cumulativeRevenue": 645604,
       "revenuePerActive": 5.73,
-      "gtvKEur": 20.1
+      "gtvKEur": 20.2
     },
     {
       "cohortMonth": "2024-01",
@@ -8854,10 +8887,10 @@ const CASE_DATA = {
       "registrations": 138545,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30275,
-      "cumulativeRevenue": 985601,
+      "revenueEur": 30095,
+      "cumulativeRevenue": 985422,
       "revenuePerActive": 0,
-      "gtvKEur": 4567.8
+      "gtvKEur": 4568.6
     },
     {
       "cohortMonth": "2024-01",
@@ -8865,10 +8898,10 @@ const CASE_DATA = {
       "registrations": 138545,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3614,
-      "cumulativeRevenue": 989216,
+      "revenueEur": 4147,
+      "cumulativeRevenue": 989568,
       "revenuePerActive": 0,
-      "gtvKEur": 379.7
+      "gtvKEur": 469.7
     },
     {
       "cohortMonth": "2024-01",
@@ -8877,7 +8910,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 989216,
+      "cumulativeRevenue": 989568,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -8888,7 +8921,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 989216,
+      "cumulativeRevenue": 989568,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9011,7 +9044,7 @@ const CASE_DATA = {
       "revenueEur": 27342,
       "cumulativeRevenue": 337392,
       "revenuePerActive": 5.01,
-      "gtvKEur": 1
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-12",
@@ -9143,7 +9176,7 @@ const CASE_DATA = {
       "revenueEur": 28369,
       "cumulativeRevenue": 728358,
       "revenuePerActive": 7.31,
-      "gtvKEur": 40.8
+      "gtvKEur": 40.9
     },
     {
       "cohortMonth": "2023-12",
@@ -9154,7 +9187,7 @@ const CASE_DATA = {
       "revenueEur": 28574,
       "cumulativeRevenue": 756932,
       "revenuePerActive": 7.55,
-      "gtvKEur": 18.2
+      "gtvKEur": 18.7
     },
     {
       "cohortMonth": "2023-12",
@@ -9165,7 +9198,7 @@ const CASE_DATA = {
       "revenueEur": 36671,
       "cumulativeRevenue": 793604,
       "revenuePerActive": 9.73,
-      "gtvKEur": 55.3
+      "gtvKEur": 55.6
     },
     {
       "cohortMonth": "2023-12",
@@ -9184,8 +9217,8 @@ const CASE_DATA = {
       "registrations": 109607,
       "activeMerchants": 3471,
       "retentionPct": 3.2,
-      "revenueEur": 33381,
-      "cumulativeRevenue": 867521,
+      "revenueEur": 33399,
+      "cumulativeRevenue": 867538,
       "revenuePerActive": 9.62,
       "gtvKEur": 5058.2
     },
@@ -9196,9 +9229,9 @@ const CASE_DATA = {
       "activeMerchants": 2601,
       "retentionPct": 2.4,
       "revenueEur": 35271,
-      "cumulativeRevenue": 902791,
+      "cumulativeRevenue": 902809,
       "revenuePerActive": 13.56,
-      "gtvKEur": 2588.5
+      "gtvKEur": 2588.7
     },
     {
       "cohortMonth": "2023-12",
@@ -9207,9 +9240,9 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 28126,
-      "cumulativeRevenue": 930917,
+      "cumulativeRevenue": 930935,
       "revenuePerActive": 0,
-      "gtvKEur": 2529.2
+      "gtvKEur": 2530.6
     },
     {
       "cohortMonth": "2023-12",
@@ -9217,10 +9250,10 @@ const CASE_DATA = {
       "registrations": 109607,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3115,
-      "cumulativeRevenue": 934033,
+      "revenueEur": 3883,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
-      "gtvKEur": 330.2
+      "gtvKEur": 478.2
     },
     {
       "cohortMonth": "2023-12",
@@ -9229,7 +9262,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9240,7 +9273,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9251,7 +9284,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9262,7 +9295,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9273,7 +9306,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9284,7 +9317,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 934033,
+      "cumulativeRevenue": 934817,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9396,7 +9429,7 @@ const CASE_DATA = {
       "revenueEur": 24267,
       "cumulativeRevenue": 289367,
       "revenuePerActive": 3.9,
-      "gtvKEur": 31.9
+      "gtvKEur": 32
     },
     {
       "cohortMonth": "2023-11",
@@ -9440,7 +9473,7 @@ const CASE_DATA = {
       "revenueEur": 51868,
       "cumulativeRevenue": 429367,
       "revenuePerActive": 9.4,
-      "gtvKEur": 0.4
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2023-11",
@@ -9572,7 +9605,7 @@ const CASE_DATA = {
       "revenueEur": 46984,
       "cumulativeRevenue": 827701,
       "revenuePerActive": 11.51,
-      "gtvKEur": 154.5
+      "gtvKEur": 154.6
     },
     {
       "cohortMonth": "2023-11",
@@ -9583,7 +9616,7 @@ const CASE_DATA = {
       "revenueEur": 43632,
       "cumulativeRevenue": 871333,
       "revenuePerActive": 10.98,
-      "gtvKEur": 15.7
+      "gtvKEur": 15.8
     },
     {
       "cohortMonth": "2023-11",
@@ -9591,10 +9624,10 @@ const CASE_DATA = {
       "registrations": 117238,
       "activeMerchants": 3826,
       "retentionPct": 3.3,
-      "revenueEur": 30511,
-      "cumulativeRevenue": 901844,
-      "revenuePerActive": 7.97,
-      "gtvKEur": 1686.1
+      "revenueEur": 30520,
+      "cumulativeRevenue": 901852,
+      "revenuePerActive": 7.98,
+      "gtvKEur": 1686.3
     },
     {
       "cohortMonth": "2023-11",
@@ -9603,9 +9636,9 @@ const CASE_DATA = {
       "activeMerchants": 2974,
       "retentionPct": 2.5,
       "revenueEur": 33481,
-      "cumulativeRevenue": 935325,
+      "cumulativeRevenue": 935333,
       "revenuePerActive": 11.26,
-      "gtvKEur": 3652.4
+      "gtvKEur": 3652.6
     },
     {
       "cohortMonth": "2023-11",
@@ -9613,10 +9646,10 @@ const CASE_DATA = {
       "registrations": 117238,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34511,
-      "cumulativeRevenue": 969836,
+      "revenueEur": 34058,
+      "cumulativeRevenue": 969391,
       "revenuePerActive": 0,
-      "gtvKEur": 3776.4
+      "gtvKEur": 3778.8
     },
     {
       "cohortMonth": "2023-11",
@@ -9624,10 +9657,10 @@ const CASE_DATA = {
       "registrations": 117238,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2611,
-      "cumulativeRevenue": 972447,
+      "revenueEur": 3126,
+      "cumulativeRevenue": 972517,
       "revenuePerActive": 0,
-      "gtvKEur": 438.2
+      "gtvKEur": 535.9
     },
     {
       "cohortMonth": "2023-11",
@@ -9636,7 +9669,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 972447,
+      "cumulativeRevenue": 972517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9647,7 +9680,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 972447,
+      "cumulativeRevenue": 972517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9658,7 +9691,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 972447,
+      "cumulativeRevenue": 972517,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -9998,10 +10031,10 @@ const CASE_DATA = {
       "registrations": 121477,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 27727,
-      "cumulativeRevenue": 892217,
+      "revenueEur": 28386,
+      "cumulativeRevenue": 892877,
       "revenuePerActive": 0,
-      "gtvKEur": 503574.8
+      "gtvKEur": 503575
     },
     {
       "cohortMonth": "2023-10",
@@ -10009,10 +10042,10 @@ const CASE_DATA = {
       "registrations": 121477,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3228,
-      "cumulativeRevenue": 895446,
+      "revenueEur": 4271,
+      "cumulativeRevenue": 897148,
       "revenuePerActive": 0,
-      "gtvKEur": 577.9
+      "gtvKEur": 722.1
     },
     {
       "cohortMonth": "2023-10",
@@ -10021,7 +10054,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 895446,
+      "cumulativeRevenue": 897148,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10032,7 +10065,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 895446,
+      "cumulativeRevenue": 897148,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10043,7 +10076,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 895446,
+      "cumulativeRevenue": 897148,
       "revenuePerActive": 0,
       "gtvKEur": 0.2
     },
@@ -10054,7 +10087,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 895446,
+      "cumulativeRevenue": 897148,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10375,7 +10408,7 @@ const CASE_DATA = {
       "revenueEur": 32751,
       "cumulativeRevenue": 926871,
       "revenuePerActive": 8.82,
-      "gtvKEur": 4.4
+      "gtvKEur": 4.5
     },
     {
       "cohortMonth": "2023-09",
@@ -10405,10 +10438,10 @@ const CASE_DATA = {
       "registrations": 121202,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 27342,
-      "cumulativeRevenue": 1009806,
+      "revenueEur": 27295,
+      "cumulativeRevenue": 1009759,
       "revenuePerActive": 0,
-      "gtvKEur": 3183.9
+      "gtvKEur": 3184
     },
     {
       "cohortMonth": "2023-09",
@@ -10416,10 +10449,10 @@ const CASE_DATA = {
       "registrations": 121202,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3521,
-      "cumulativeRevenue": 1013327,
+      "revenueEur": 4678,
+      "cumulativeRevenue": 1014437,
       "revenuePerActive": 0,
-      "gtvKEur": 333.5
+      "gtvKEur": 443.8
     },
     {
       "cohortMonth": "2023-09",
@@ -10428,7 +10461,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1013327,
+      "cumulativeRevenue": 1014437,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10439,7 +10472,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1013327,
+      "cumulativeRevenue": 1014437,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10782,7 +10815,7 @@ const CASE_DATA = {
       "revenueEur": 25527,
       "cumulativeRevenue": 851864,
       "revenuePerActive": 6.66,
-      "gtvKEur": 1046.6
+      "gtvKEur": 1046.7
     },
     {
       "cohortMonth": "2023-08",
@@ -10801,10 +10834,10 @@ const CASE_DATA = {
       "registrations": 137641,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30135,
-      "cumulativeRevenue": 915031,
+      "revenueEur": 29783,
+      "cumulativeRevenue": 914679,
       "revenuePerActive": 0,
-      "gtvKEur": 8110.9
+      "gtvKEur": 8112.1
     },
     {
       "cohortMonth": "2023-08",
@@ -10812,10 +10845,10 @@ const CASE_DATA = {
       "registrations": 137641,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2837,
-      "cumulativeRevenue": 917868,
+      "revenueEur": 4100,
+      "cumulativeRevenue": 918778,
       "revenuePerActive": 0,
-      "gtvKEur": 289
+      "gtvKEur": 367.9
     },
     {
       "cohortMonth": "2023-08",
@@ -10824,7 +10857,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 917868,
+      "cumulativeRevenue": 918778,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -10835,7 +10868,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 917868,
+      "cumulativeRevenue": 918778,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11186,9 +11219,9 @@ const CASE_DATA = {
       "registrations": 166326,
       "activeMerchants": 3571,
       "retentionPct": 2.1,
-      "revenueEur": 34428,
-      "cumulativeRevenue": 1154781,
-      "revenuePerActive": 9.64,
+      "revenueEur": 34478,
+      "cumulativeRevenue": 1154830,
+      "revenuePerActive": 9.65,
       "gtvKEur": 1261.7
     },
     {
@@ -11198,7 +11231,7 @@ const CASE_DATA = {
       "activeMerchants": 2795,
       "retentionPct": 1.7,
       "revenueEur": 39992,
-      "cumulativeRevenue": 1194773,
+      "cumulativeRevenue": 1194822,
       "revenuePerActive": 14.31,
       "gtvKEur": 3195.2
     },
@@ -11208,10 +11241,10 @@ const CASE_DATA = {
       "registrations": 166326,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 50300,
-      "cumulativeRevenue": 1245073,
+      "revenueEur": 50257,
+      "cumulativeRevenue": 1245079,
       "revenuePerActive": 0,
-      "gtvKEur": 3515.1
+      "gtvKEur": 3515.7
     },
     {
       "cohortMonth": "2023-07",
@@ -11219,10 +11252,10 @@ const CASE_DATA = {
       "registrations": 166326,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3825,
-      "cumulativeRevenue": 1248898,
+      "revenueEur": 5067,
+      "cumulativeRevenue": 1250147,
       "revenuePerActive": 0,
-      "gtvKEur": 370
+      "gtvKEur": 504.2
     },
     {
       "cohortMonth": "2023-07",
@@ -11231,7 +11264,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1248898,
+      "cumulativeRevenue": 1250147,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11242,7 +11275,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1248898,
+      "cumulativeRevenue": 1250147,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11596,7 +11629,7 @@ const CASE_DATA = {
       "revenueEur": 31150,
       "cumulativeRevenue": 1103899,
       "revenuePerActive": 9.29,
-      "gtvKEur": 216.5
+      "gtvKEur": 216.8
     },
     {
       "cohortMonth": "2023-06",
@@ -11607,7 +11640,7 @@ const CASE_DATA = {
       "revenueEur": 31988,
       "cumulativeRevenue": 1135887,
       "revenuePerActive": 9.74,
-      "gtvKEur": 1595.6
+      "gtvKEur": 1595.8
     },
     {
       "cohortMonth": "2023-06",
@@ -11615,8 +11648,8 @@ const CASE_DATA = {
       "registrations": 153103,
       "activeMerchants": 2534,
       "retentionPct": 1.7,
-      "revenueEur": 31166,
-      "cumulativeRevenue": 1167052,
+      "revenueEur": 31179,
+      "cumulativeRevenue": 1167065,
       "revenuePerActive": 12.3,
       "gtvKEur": 3089.1
     },
@@ -11626,10 +11659,10 @@ const CASE_DATA = {
       "registrations": 153103,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 32435,
-      "cumulativeRevenue": 1199488,
+      "revenueEur": 32760,
+      "cumulativeRevenue": 1199825,
       "revenuePerActive": 0,
-      "gtvKEur": 2826.6
+      "gtvKEur": 2828.5
     },
     {
       "cohortMonth": "2023-06",
@@ -11637,10 +11670,10 @@ const CASE_DATA = {
       "registrations": 153103,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3188,
-      "cumulativeRevenue": 1202675,
+      "revenueEur": 3709,
+      "cumulativeRevenue": 1203534,
       "revenuePerActive": 0,
-      "gtvKEur": 268
+      "gtvKEur": 365.4
     },
     {
       "cohortMonth": "2023-06",
@@ -11649,7 +11682,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1202675,
+      "cumulativeRevenue": 1203534,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11660,7 +11693,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1202675,
+      "cumulativeRevenue": 1203534,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11671,7 +11704,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1202675,
+      "cumulativeRevenue": 1203534,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11682,7 +11715,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1202675,
+      "cumulativeRevenue": 1203534,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -11849,7 +11882,7 @@ const CASE_DATA = {
       "revenueEur": 40705,
       "cumulativeRevenue": 595323,
       "revenuePerActive": 8.09,
-      "gtvKEur": 3.4
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2023-05",
@@ -12058,7 +12091,7 @@ const CASE_DATA = {
       "revenueEur": 34134,
       "cumulativeRevenue": 1243410,
       "revenuePerActive": 10.64,
-      "gtvKEur": 2192.8
+      "gtvKEur": 2192.9
     },
     {
       "cohortMonth": "2023-05",
@@ -12069,7 +12102,7 @@ const CASE_DATA = {
       "revenueEur": 34347,
       "cumulativeRevenue": 1277757,
       "revenuePerActive": 13.74,
-      "gtvKEur": 2523
+      "gtvKEur": 2523.3
     },
     {
       "cohortMonth": "2023-05",
@@ -12077,10 +12110,10 @@ const CASE_DATA = {
       "registrations": 161017,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 37168,
-      "cumulativeRevenue": 1314925,
+      "revenueEur": 37280,
+      "cumulativeRevenue": 1315036,
       "revenuePerActive": 0,
-      "gtvKEur": 2303.1
+      "gtvKEur": 2303.7
     },
     {
       "cohortMonth": "2023-05",
@@ -12088,10 +12121,10 @@ const CASE_DATA = {
       "registrations": 161017,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2579,
-      "cumulativeRevenue": 1317504,
+      "revenueEur": 4129,
+      "cumulativeRevenue": 1319165,
       "revenuePerActive": 0,
-      "gtvKEur": 331.9
+      "gtvKEur": 416.4
     },
     {
       "cohortMonth": "2023-04",
@@ -12421,7 +12454,7 @@ const CASE_DATA = {
       "revenueEur": 33329,
       "cumulativeRevenue": 1059528,
       "revenuePerActive": 11.34,
-      "gtvKEur": 0.8
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2023-04",
@@ -12432,7 +12465,7 @@ const CASE_DATA = {
       "revenueEur": 32698,
       "cumulativeRevenue": 1092227,
       "revenuePerActive": 11.34,
-      "gtvKEur": 20
+      "gtvKEur": 20.5
     },
     {
       "cohortMonth": "2023-04",
@@ -12443,7 +12476,7 @@ const CASE_DATA = {
       "revenueEur": 33636,
       "cumulativeRevenue": 1125862,
       "revenuePerActive": 11.93,
-      "gtvKEur": 3.8
+      "gtvKEur": 4
     },
     {
       "cohortMonth": "2023-04",
@@ -12487,7 +12520,7 @@ const CASE_DATA = {
       "revenueEur": 34261,
       "cumulativeRevenue": 1260996,
       "revenuePerActive": 16.31,
-      "gtvKEur": 2932.2
+      "gtvKEur": 2932.3
     },
     {
       "cohortMonth": "2023-04",
@@ -12495,10 +12528,10 @@ const CASE_DATA = {
       "registrations": 137383,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 38359,
-      "cumulativeRevenue": 1299355,
+      "revenueEur": 38243,
+      "cumulativeRevenue": 1299239,
       "revenuePerActive": 0,
-      "gtvKEur": 2259.5
+      "gtvKEur": 2260.1
     },
     {
       "cohortMonth": "2023-04",
@@ -12506,10 +12539,10 @@ const CASE_DATA = {
       "registrations": 137383,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4505,
-      "cumulativeRevenue": 1303860,
+      "revenueEur": 6375,
+      "cumulativeRevenue": 1305614,
       "revenuePerActive": 0,
-      "gtvKEur": 389.6
+      "gtvKEur": 468
     },
     {
       "cohortMonth": "2023-04",
@@ -12518,7 +12551,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1303860,
+      "cumulativeRevenue": 1305614,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -12905,7 +12938,7 @@ const CASE_DATA = {
       "revenueEur": 41736,
       "cumulativeRevenue": 1926666,
       "revenuePerActive": 12.66,
-      "gtvKEur": 9
+      "gtvKEur": 9.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12916,7 +12949,7 @@ const CASE_DATA = {
       "revenueEur": 38007,
       "cumulativeRevenue": 1964673,
       "revenuePerActive": 11.56,
-      "gtvKEur": 26591.8
+      "gtvKEur": 26592.2
     },
     {
       "cohortMonth": "2023-03",
@@ -12927,7 +12960,7 @@ const CASE_DATA = {
       "revenueEur": 56974,
       "cumulativeRevenue": 2021647,
       "revenuePerActive": 22.54,
-      "gtvKEur": 9448.8
+      "gtvKEur": 9449.3
     },
     {
       "cohortMonth": "2023-03",
@@ -12935,10 +12968,10 @@ const CASE_DATA = {
       "registrations": 175368,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 60246,
-      "cumulativeRevenue": 2081892,
+      "revenueEur": 59957,
+      "cumulativeRevenue": 2081604,
       "revenuePerActive": 0,
-      "gtvKEur": 8585.3
+      "gtvKEur": 8586.8
     },
     {
       "cohortMonth": "2023-03",
@@ -12946,10 +12979,10 @@ const CASE_DATA = {
       "registrations": 175368,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 5112,
-      "cumulativeRevenue": 2087004,
+      "revenueEur": 5458,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
-      "gtvKEur": 1345.1
+      "gtvKEur": 1675.5
     },
     {
       "cohortMonth": "2023-03",
@@ -12958,7 +12991,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -12969,7 +13002,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -12980,7 +13013,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -12991,7 +13024,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13002,7 +13035,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13013,7 +13046,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13024,7 +13057,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 2087004,
+      "cumulativeRevenue": 2087061,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13422,7 +13455,7 @@ const CASE_DATA = {
       "revenueEur": 34477,
       "cumulativeRevenue": 1357976,
       "revenuePerActive": 11.88,
-      "gtvKEur": 14.1
+      "gtvKEur": 14.2
     },
     {
       "cohortMonth": "2023-02",
@@ -13433,7 +13466,7 @@ const CASE_DATA = {
       "revenueEur": 40333,
       "cumulativeRevenue": 1398308,
       "revenuePerActive": 13.91,
-      "gtvKEur": 1223.1
+      "gtvKEur": 1223.3
     },
     {
       "cohortMonth": "2023-02",
@@ -13444,7 +13477,7 @@ const CASE_DATA = {
       "revenueEur": 67769,
       "cumulativeRevenue": 1466077,
       "revenuePerActive": 30.43,
-      "gtvKEur": 2516.8
+      "gtvKEur": 2517
     },
     {
       "cohortMonth": "2023-02",
@@ -13452,10 +13485,10 @@ const CASE_DATA = {
       "registrations": 161508,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 36878,
-      "cumulativeRevenue": 1502955,
+      "revenueEur": 36977,
+      "cumulativeRevenue": 1503055,
       "revenuePerActive": 0,
-      "gtvKEur": 3061.6
+      "gtvKEur": 3062.4
     },
     {
       "cohortMonth": "2023-02",
@@ -13463,10 +13496,10 @@ const CASE_DATA = {
       "registrations": 161508,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 6755,
-      "cumulativeRevenue": 1509710,
+      "revenueEur": 7654,
+      "cumulativeRevenue": 1510709,
       "revenuePerActive": 0,
-      "gtvKEur": 247.4
+      "gtvKEur": 316.8
     },
     {
       "cohortMonth": "2023-02",
@@ -13475,7 +13508,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1509710,
+      "cumulativeRevenue": 1510709,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13914,10 +13947,10 @@ const CASE_DATA = {
       "registrations": 163684,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 43568,
-      "cumulativeRevenue": 1566455,
+      "revenueEur": 43709,
+      "cumulativeRevenue": 1566596,
       "revenuePerActive": 0,
-      "gtvKEur": 2580.8
+      "gtvKEur": 2582
     },
     {
       "cohortMonth": "2023-01",
@@ -13925,10 +13958,10 @@ const CASE_DATA = {
       "registrations": 163684,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4243,
-      "cumulativeRevenue": 1570698,
+      "revenueEur": 6795,
+      "cumulativeRevenue": 1573392,
       "revenuePerActive": 0,
-      "gtvKEur": 328.4
+      "gtvKEur": 425.7
     },
     {
       "cohortMonth": "2023-01",
@@ -13937,7 +13970,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1570698,
+      "cumulativeRevenue": 1573392,
       "revenuePerActive": 0,
       "gtvKEur": 0.4
     },
@@ -13948,7 +13981,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1570698,
+      "cumulativeRevenue": 1573392,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -13959,7 +13992,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1570698,
+      "cumulativeRevenue": 1573392,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14409,10 +14442,10 @@ const CASE_DATA = {
       "registrations": 145574,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 36533,
-      "cumulativeRevenue": 1347114,
+      "revenueEur": 36477,
+      "cumulativeRevenue": 1347059,
       "revenuePerActive": 0,
-      "gtvKEur": 3752.8
+      "gtvKEur": 3802.1
     },
     {
       "cohortMonth": "2022-12",
@@ -14420,10 +14453,10 @@ const CASE_DATA = {
       "registrations": 145574,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4300,
-      "cumulativeRevenue": 1351414,
+      "revenueEur": 5738,
+      "cumulativeRevenue": 1352797,
       "revenuePerActive": 0,
-      "gtvKEur": 447.6
+      "gtvKEur": 600.2
     },
     {
       "cohortMonth": "2022-12",
@@ -14432,7 +14465,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1351414,
+      "cumulativeRevenue": 1352797,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14443,7 +14476,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1351414,
+      "cumulativeRevenue": 1352797,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14742,7 +14775,7 @@ const CASE_DATA = {
       "revenueEur": 50578,
       "cumulativeRevenue": 1120985,
       "revenuePerActive": 14.9,
-      "gtvKEur": 32.1
+      "gtvKEur": 33.1
     },
     {
       "cohortMonth": "2022-11",
@@ -14753,7 +14786,7 @@ const CASE_DATA = {
       "revenueEur": 36127,
       "cumulativeRevenue": 1157113,
       "revenuePerActive": 11.02,
-      "gtvKEur": 0
+      "gtvKEur": 1.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14764,7 +14797,7 @@ const CASE_DATA = {
       "revenueEur": 55484,
       "cumulativeRevenue": 1212597,
       "revenuePerActive": 17.43,
-      "gtvKEur": 0.2
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2022-11",
@@ -14775,7 +14808,7 @@ const CASE_DATA = {
       "revenueEur": 35343,
       "cumulativeRevenue": 1247940,
       "revenuePerActive": 11.24,
-      "gtvKEur": 20.3
+      "gtvKEur": 22.1
     },
     {
       "cohortMonth": "2022-11",
@@ -14786,7 +14819,7 @@ const CASE_DATA = {
       "revenueEur": 35626,
       "cumulativeRevenue": 1283566,
       "revenuePerActive": 11.37,
-      "gtvKEur": 0.6
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2022-11",
@@ -14797,7 +14830,7 @@ const CASE_DATA = {
       "revenueEur": 34032,
       "cumulativeRevenue": 1317598,
       "revenuePerActive": 10.99,
-      "gtvKEur": 20.1
+      "gtvKEur": 21.5
     },
     {
       "cohortMonth": "2022-11",
@@ -14808,7 +14841,7 @@ const CASE_DATA = {
       "revenueEur": 32129,
       "cumulativeRevenue": 1349728,
       "revenuePerActive": 10.75,
-      "gtvKEur": 1.4
+      "gtvKEur": 1.7
     },
     {
       "cohortMonth": "2022-11",
@@ -14819,7 +14852,7 @@ const CASE_DATA = {
       "revenueEur": 32870,
       "cumulativeRevenue": 1382598,
       "revenuePerActive": 11.15,
-      "gtvKEur": 425.9
+      "gtvKEur": 426.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14830,7 +14863,7 @@ const CASE_DATA = {
       "revenueEur": 28428,
       "cumulativeRevenue": 1411026,
       "revenuePerActive": 9.84,
-      "gtvKEur": 6.1
+      "gtvKEur": 7.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14841,7 +14874,7 @@ const CASE_DATA = {
       "revenueEur": 29912,
       "cumulativeRevenue": 1440937,
       "revenuePerActive": 10.4,
-      "gtvKEur": 141.8
+      "gtvKEur": 143.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14852,7 +14885,7 @@ const CASE_DATA = {
       "revenueEur": 43297,
       "cumulativeRevenue": 1484234,
       "revenuePerActive": 15.14,
-      "gtvKEur": 5.6
+      "gtvKEur": 7.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14863,7 +14896,7 @@ const CASE_DATA = {
       "revenueEur": 47263,
       "cumulativeRevenue": 1531497,
       "revenuePerActive": 16.67,
-      "gtvKEur": 41
+      "gtvKEur": 43.2
     },
     {
       "cohortMonth": "2022-11",
@@ -14874,7 +14907,7 @@ const CASE_DATA = {
       "revenueEur": 53855,
       "cumulativeRevenue": 1585353,
       "revenuePerActive": 19.73,
-      "gtvKEur": 14.7
+      "gtvKEur": 15.8
     },
     {
       "cohortMonth": "2022-11",
@@ -14885,7 +14918,7 @@ const CASE_DATA = {
       "revenueEur": 31849,
       "cumulativeRevenue": 1617201,
       "revenuePerActive": 12,
-      "gtvKEur": 1047.4
+      "gtvKEur": 1049.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14896,7 +14929,7 @@ const CASE_DATA = {
       "revenueEur": 49020,
       "cumulativeRevenue": 1666221,
       "revenuePerActive": 24.08,
-      "gtvKEur": 4830.2
+      "gtvKEur": 4831.6
     },
     {
       "cohortMonth": "2022-11",
@@ -14904,10 +14937,10 @@ const CASE_DATA = {
       "registrations": 158730,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 35739,
-      "cumulativeRevenue": 1701960,
+      "revenueEur": 35525,
+      "cumulativeRevenue": 1701746,
       "revenuePerActive": 0,
-      "gtvKEur": 3521.1
+      "gtvKEur": 3523.7
     },
     {
       "cohortMonth": "2022-11",
@@ -14915,10 +14948,10 @@ const CASE_DATA = {
       "registrations": 158730,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2731,
-      "cumulativeRevenue": 1704690,
+      "revenueEur": 3347,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
-      "gtvKEur": 296.9
+      "gtvKEur": 425.7
     },
     {
       "cohortMonth": "2022-11",
@@ -14927,9 +14960,20 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
+    },
+    {
+      "cohortMonth": "2022-11",
+      "ageMonths": 44,
+      "registrations": 158730,
+      "activeMerchants": 0,
+      "retentionPct": 0,
+      "revenueEur": 0,
+      "cumulativeRevenue": 1705093,
+      "revenuePerActive": 0,
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-11",
@@ -14938,7 +14982,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14949,7 +14993,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14960,7 +15004,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14971,7 +15015,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -14982,7 +15026,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0.2
     },
@@ -14993,7 +15037,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1704690,
+      "cumulativeRevenue": 1705093,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -15391,7 +15435,7 @@ const CASE_DATA = {
       "revenueEur": 28449,
       "cumulativeRevenue": 1338703,
       "revenuePerActive": 10.3,
-      "gtvKEur": 3.6
+      "gtvKEur": 3.7
     },
     {
       "cohortMonth": "2022-10",
@@ -15465,10 +15509,10 @@ const CASE_DATA = {
       "registrations": 158573,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 38768,
-      "cumulativeRevenue": 1625801,
+      "revenueEur": 38770,
+      "cumulativeRevenue": 1625803,
       "revenuePerActive": 0,
-      "gtvKEur": 3904
+      "gtvKEur": 3905.2
     },
     {
       "cohortMonth": "2022-10",
@@ -15476,10 +15520,10 @@ const CASE_DATA = {
       "registrations": 158573,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1570,
-      "cumulativeRevenue": 1627370,
+      "revenueEur": 2733,
+      "cumulativeRevenue": 1628535,
       "revenuePerActive": 0,
-      "gtvKEur": 475.1
+      "gtvKEur": 637.5
     },
     {
       "cohortMonth": "2022-10",
@@ -15488,7 +15532,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1627370,
+      "cumulativeRevenue": 1628535,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -15971,10 +16015,10 @@ const CASE_DATA = {
       "registrations": 156241,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 37321,
-      "cumulativeRevenue": 1501370,
+      "revenueEur": 37276,
+      "cumulativeRevenue": 1501325,
       "revenuePerActive": 0,
-      "gtvKEur": 3467.3
+      "gtvKEur": 3468.5
     },
     {
       "cohortMonth": "2022-09",
@@ -15982,10 +16026,10 @@ const CASE_DATA = {
       "registrations": 156241,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4256,
-      "cumulativeRevenue": 1505627,
+      "revenueEur": 5317,
+      "cumulativeRevenue": 1506642,
       "revenuePerActive": 0,
-      "gtvKEur": 472.4
+      "gtvKEur": 568.8
     },
     {
       "cohortMonth": "2022-09",
@@ -15994,7 +16038,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1505627,
+      "cumulativeRevenue": 1506642,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -16488,10 +16532,10 @@ const CASE_DATA = {
       "registrations": 158849,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 29290,
-      "cumulativeRevenue": 1478461,
+      "revenueEur": 29302,
+      "cumulativeRevenue": 1478473,
       "revenuePerActive": 0,
-      "gtvKEur": 2653.7
+      "gtvKEur": 2655.1
     },
     {
       "cohortMonth": "2022-08",
@@ -16499,10 +16543,10 @@ const CASE_DATA = {
       "registrations": 158849,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2539,
-      "cumulativeRevenue": 1481000,
+      "revenueEur": 2969,
+      "cumulativeRevenue": 1481442,
       "revenuePerActive": 0,
-      "gtvKEur": 352
+      "gtvKEur": 434.4
     },
     {
       "cohortMonth": "2022-08",
@@ -16511,7 +16555,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1481000,
+      "cumulativeRevenue": 1481442,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -16522,7 +16566,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1481000,
+      "cumulativeRevenue": 1481442,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -16533,7 +16577,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1481000,
+      "cumulativeRevenue": 1481442,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -17038,10 +17082,10 @@ const CASE_DATA = {
       "registrations": 161963,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34535,
-      "cumulativeRevenue": 1891914,
+      "revenueEur": 34673,
+      "cumulativeRevenue": 1892052,
       "revenuePerActive": 0,
-      "gtvKEur": 2091.6
+      "gtvKEur": 2092.1
     },
     {
       "cohortMonth": "2022-07",
@@ -17049,10 +17093,10 @@ const CASE_DATA = {
       "registrations": 161963,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3246,
-      "cumulativeRevenue": 1895161,
+      "revenueEur": 5248,
+      "cumulativeRevenue": 1897300,
       "revenuePerActive": 0,
-      "gtvKEur": 275.9
+      "gtvKEur": 403.4
     },
     {
       "cohortMonth": "2022-07",
@@ -17061,7 +17105,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1895161,
+      "cumulativeRevenue": 1897300,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -17151,7 +17195,7 @@ const CASE_DATA = {
       "revenueEur": 35785,
       "cumulativeRevenue": 299824,
       "revenuePerActive": 6.81,
-      "gtvKEur": 0
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-06",
@@ -17338,7 +17382,7 @@ const CASE_DATA = {
       "revenueEur": 33722,
       "cumulativeRevenue": 838077,
       "revenuePerActive": 10.27,
-      "gtvKEur": 75.1
+      "gtvKEur": 75.2
     },
     {
       "cohortMonth": "2022-06",
@@ -17404,7 +17448,7 @@ const CASE_DATA = {
       "revenueEur": 23330,
       "cumulativeRevenue": 1034211,
       "revenuePerActive": 8.2,
-      "gtvKEur": 3.4
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2022-06",
@@ -17555,9 +17599,9 @@ const CASE_DATA = {
       "registrations": 170947,
       "activeMerchants": 2273,
       "retentionPct": 1.3,
-      "revenueEur": 29367,
-      "cumulativeRevenue": 1454844,
-      "revenuePerActive": 12.92,
+      "revenueEur": 29384,
+      "cumulativeRevenue": 1454861,
+      "revenuePerActive": 12.93,
       "gtvKEur": 2376.2
     },
     {
@@ -17566,10 +17610,10 @@ const CASE_DATA = {
       "registrations": 170947,
       "activeMerchants": 1753,
       "retentionPct": 1,
-      "revenueEur": 29052,
-      "cumulativeRevenue": 1483896,
-      "revenuePerActive": 16.57,
-      "gtvKEur": 7607
+      "revenueEur": 29081,
+      "cumulativeRevenue": 1483942,
+      "revenuePerActive": 16.59,
+      "gtvKEur": 7607.3
     },
     {
       "cohortMonth": "2022-06",
@@ -17577,10 +17621,10 @@ const CASE_DATA = {
       "registrations": 170947,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34105,
-      "cumulativeRevenue": 1518001,
+      "revenueEur": 34137,
+      "cumulativeRevenue": 1518079,
       "revenuePerActive": 0,
-      "gtvKEur": 9543.1
+      "gtvKEur": 9544.5
     },
     {
       "cohortMonth": "2022-06",
@@ -17588,10 +17632,10 @@ const CASE_DATA = {
       "registrations": 170947,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 5635,
-      "cumulativeRevenue": 1523636,
+      "revenueEur": 6208,
+      "cumulativeRevenue": 1524287,
       "revenuePerActive": 0,
-      "gtvKEur": 1011.8
+      "gtvKEur": 1263.7
     },
     {
       "cohortMonth": "2022-06",
@@ -17600,7 +17644,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1523636,
+      "cumulativeRevenue": 1524287,
       "revenuePerActive": 0,
       "gtvKEur": 1.1
     },
@@ -17611,7 +17655,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1523636,
+      "cumulativeRevenue": 1524287,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -17622,7 +17666,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1523636,
+      "cumulativeRevenue": 1524287,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -17633,7 +17677,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1523636,
+      "cumulativeRevenue": 1524287,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -17811,7 +17855,7 @@ const CASE_DATA = {
       "revenueEur": 28317,
       "cumulativeRevenue": 533992,
       "revenuePerActive": 7.28,
-      "gtvKEur": 70.6
+      "gtvKEur": 70.8
     },
     {
       "cohortMonth": "2022-05",
@@ -17822,7 +17866,7 @@ const CASE_DATA = {
       "revenueEur": 28584,
       "cumulativeRevenue": 562576,
       "revenuePerActive": 7.64,
-      "gtvKEur": 0.2
+      "gtvKEur": 0.3
     },
     {
       "cohortMonth": "2022-05",
@@ -17833,7 +17877,7 @@ const CASE_DATA = {
       "revenueEur": 27050,
       "cumulativeRevenue": 589626,
       "revenuePerActive": 7.42,
-      "gtvKEur": 0.2
+      "gtvKEur": 0.4
     },
     {
       "cohortMonth": "2022-05",
@@ -17844,7 +17888,7 @@ const CASE_DATA = {
       "revenueEur": 28072,
       "cumulativeRevenue": 617698,
       "revenuePerActive": 7.99,
-      "gtvKEur": 0.3
+      "gtvKEur": 0.5
     },
     {
       "cohortMonth": "2022-05",
@@ -18086,7 +18130,7 @@ const CASE_DATA = {
       "revenueEur": 32489,
       "cumulativeRevenue": 1300527,
       "revenuePerActive": 13.69,
-      "gtvKEur": 6.8
+      "gtvKEur": 7.1
     },
     {
       "cohortMonth": "2022-05",
@@ -18097,7 +18141,7 @@ const CASE_DATA = {
       "revenueEur": 31079,
       "cumulativeRevenue": 1331606,
       "revenuePerActive": 13.33,
-      "gtvKEur": 48.9
+      "gtvKEur": 49.8
     },
     {
       "cohortMonth": "2022-05",
@@ -18108,7 +18152,7 @@ const CASE_DATA = {
       "revenueEur": 30798,
       "cumulativeRevenue": 1362404,
       "revenuePerActive": 13.51,
-      "gtvKEur": 2.9
+      "gtvKEur": 3.5
     },
     {
       "cohortMonth": "2022-05",
@@ -18119,7 +18163,7 @@ const CASE_DATA = {
       "revenueEur": 28610,
       "cumulativeRevenue": 1391014,
       "revenuePerActive": 12.83,
-      "gtvKEur": 63.5
+      "gtvKEur": 64.5
     },
     {
       "cohortMonth": "2022-05",
@@ -18130,7 +18174,7 @@ const CASE_DATA = {
       "revenueEur": 28982,
       "cumulativeRevenue": 1419996,
       "revenuePerActive": 13.23,
-      "gtvKEur": 18.7
+      "gtvKEur": 19.2
     },
     {
       "cohortMonth": "2022-05",
@@ -18163,7 +18207,7 @@ const CASE_DATA = {
       "revenueEur": 33226,
       "cumulativeRevenue": 1523356,
       "revenuePerActive": 0,
-      "gtvKEur": 10557.7
+      "gtvKEur": 10558.2
     },
     {
       "cohortMonth": "2022-05",
@@ -18171,10 +18215,10 @@ const CASE_DATA = {
       "registrations": 157128,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1898,
-      "cumulativeRevenue": 1525254,
+      "revenueEur": 2323,
+      "cumulativeRevenue": 1525679,
       "revenuePerActive": 0,
-      "gtvKEur": 319
+      "gtvKEur": 392.2
     },
     {
       "cohortMonth": "2022-05",
@@ -18183,7 +18227,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1525254,
+      "cumulativeRevenue": 1525679,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -18691,7 +18735,7 @@ const CASE_DATA = {
       "revenueEur": 22272,
       "cumulativeRevenue": 1378958,
       "revenuePerActive": 11.58,
-      "gtvKEur": 15.1
+      "gtvKEur": 15.4
     },
     {
       "cohortMonth": "2022-04",
@@ -18702,7 +18746,7 @@ const CASE_DATA = {
       "revenueEur": 22841,
       "cumulativeRevenue": 1401800,
       "revenuePerActive": 12.18,
-      "gtvKEur": 1255.2
+      "gtvKEur": 1255.7
     },
     {
       "cohortMonth": "2022-04",
@@ -18713,7 +18757,7 @@ const CASE_DATA = {
       "revenueEur": 22770,
       "cumulativeRevenue": 1424570,
       "revenuePerActive": 15.47,
-      "gtvKEur": 3350.2
+      "gtvKEur": 3350.9
     },
     {
       "cohortMonth": "2022-04",
@@ -18724,7 +18768,7 @@ const CASE_DATA = {
       "revenueEur": 30567,
       "cumulativeRevenue": 1455137,
       "revenuePerActive": 0,
-      "gtvKEur": 3349
+      "gtvKEur": 3349.7
     },
     {
       "cohortMonth": "2022-04",
@@ -18732,10 +18776,10 @@ const CASE_DATA = {
       "registrations": 146494,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 4418,
-      "cumulativeRevenue": 1459555,
+      "revenueEur": 6032,
+      "cumulativeRevenue": 1461169,
       "revenuePerActive": 0,
-      "gtvKEur": 371.1
+      "gtvKEur": 524.8
     },
     {
       "cohortMonth": "2022-04",
@@ -18744,7 +18788,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1459555,
+      "cumulativeRevenue": 1461169,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -19293,10 +19337,10 @@ const CASE_DATA = {
       "registrations": 154876,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 34478,
-      "cumulativeRevenue": 1551071,
+      "revenueEur": 34465,
+      "cumulativeRevenue": 1551058,
       "revenuePerActive": 0,
-      "gtvKEur": 2404.8
+      "gtvKEur": 2405.1
     },
     {
       "cohortMonth": "2022-03",
@@ -19304,10 +19348,10 @@ const CASE_DATA = {
       "registrations": 154876,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1650,
-      "cumulativeRevenue": 1552721,
+      "revenueEur": 3237,
+      "cumulativeRevenue": 1554295,
       "revenuePerActive": 0,
-      "gtvKEur": 296
+      "gtvKEur": 405.7
     },
     {
       "cohortMonth": "2022-03",
@@ -19316,7 +19360,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1552721,
+      "cumulativeRevenue": 1554295,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -19327,7 +19371,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1552721,
+      "cumulativeRevenue": 1554295,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -19769,7 +19813,7 @@ const CASE_DATA = {
       "revenueEur": 34212,
       "cumulativeRevenue": 1127301,
       "revenuePerActive": 15.04,
-      "gtvKEur": 1.9
+      "gtvKEur": 4.6
     },
     {
       "cohortMonth": "2022-02",
@@ -19780,7 +19824,7 @@ const CASE_DATA = {
       "revenueEur": 31792,
       "cumulativeRevenue": 1159093,
       "revenuePerActive": 14.52,
-      "gtvKEur": 19
+      "gtvKEur": 21.3
     },
     {
       "cohortMonth": "2022-02",
@@ -19791,7 +19835,7 @@ const CASE_DATA = {
       "revenueEur": 39299,
       "cumulativeRevenue": 1198392,
       "revenuePerActive": 18.17,
-      "gtvKEur": 2.4
+      "gtvKEur": 4.6
     },
     {
       "cohortMonth": "2022-02",
@@ -19802,7 +19846,7 @@ const CASE_DATA = {
       "revenueEur": 33913,
       "cumulativeRevenue": 1232305,
       "revenuePerActive": 15.9,
-      "gtvKEur": 22.5
+      "gtvKEur": 24.7
     },
     {
       "cohortMonth": "2022-02",
@@ -19813,7 +19857,7 @@ const CASE_DATA = {
       "revenueEur": 26114,
       "cumulativeRevenue": 1258419,
       "revenuePerActive": 12.39,
-      "gtvKEur": 1.3
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2022-02",
@@ -19824,7 +19868,7 @@ const CASE_DATA = {
       "revenueEur": 25572,
       "cumulativeRevenue": 1283990,
       "revenuePerActive": 12.2,
-      "gtvKEur": 39.4
+      "gtvKEur": 41.8
     },
     {
       "cohortMonth": "2022-02",
@@ -19835,7 +19879,7 @@ const CASE_DATA = {
       "revenueEur": 25185,
       "cumulativeRevenue": 1309176,
       "revenuePerActive": 12.27,
-      "gtvKEur": 1.8
+      "gtvKEur": 3.4
     },
     {
       "cohortMonth": "2022-02",
@@ -19857,7 +19901,7 @@ const CASE_DATA = {
       "revenueEur": 27034,
       "cumulativeRevenue": 1362475,
       "revenuePerActive": 13.56,
-      "gtvKEur": 5
+      "gtvKEur": 5.1
     },
     {
       "cohortMonth": "2022-02",
@@ -19879,7 +19923,7 @@ const CASE_DATA = {
       "revenueEur": 38407,
       "cumulativeRevenue": 1432130,
       "revenuePerActive": 26.67,
-      "gtvKEur": 2945.3
+      "gtvKEur": 2945.4
     },
     {
       "cohortMonth": "2022-02",
@@ -19887,10 +19931,10 @@ const CASE_DATA = {
       "registrations": 149622,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30133,
-      "cumulativeRevenue": 1462262,
+      "revenueEur": 30145,
+      "cumulativeRevenue": 1462275,
       "revenuePerActive": 0,
-      "gtvKEur": 2740.4
+      "gtvKEur": 2740.6
     },
     {
       "cohortMonth": "2022-02",
@@ -19898,10 +19942,10 @@ const CASE_DATA = {
       "registrations": 149622,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2948,
-      "cumulativeRevenue": 1465211,
+      "revenueEur": 3839,
+      "cumulativeRevenue": 1466114,
       "revenuePerActive": 0,
-      "gtvKEur": 318.7
+      "gtvKEur": 395.8
     },
     {
       "cohortMonth": "2022-02",
@@ -19910,7 +19954,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1465211,
+      "cumulativeRevenue": 1466114,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -19921,7 +19965,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1465211,
+      "cumulativeRevenue": 1466114,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -19932,7 +19976,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1465211,
+      "cumulativeRevenue": 1466114,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -20495,7 +20539,7 @@ const CASE_DATA = {
       "revenueEur": 37829,
       "cumulativeRevenue": 1495449,
       "revenuePerActive": 22.29,
-      "gtvKEur": 2336.8
+      "gtvKEur": 2532.6
     },
     {
       "cohortMonth": "2022-01",
@@ -20503,10 +20547,10 @@ const CASE_DATA = {
       "registrations": 152988,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 30119,
-      "cumulativeRevenue": 1525568,
+      "revenueEur": 30136,
+      "cumulativeRevenue": 1525585,
       "revenuePerActive": 0,
-      "gtvKEur": 2431.8
+      "gtvKEur": 2434.1
     },
     {
       "cohortMonth": "2022-01",
@@ -20514,10 +20558,10 @@ const CASE_DATA = {
       "registrations": 152988,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2829,
-      "cumulativeRevenue": 1528397,
+      "revenueEur": 3513,
+      "cumulativeRevenue": 1529098,
       "revenuePerActive": 0,
-      "gtvKEur": 258.8
+      "gtvKEur": 335.7
     },
     {
       "cohortMonth": "2022-01",
@@ -20526,7 +20570,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1528397,
+      "cumulativeRevenue": 1529098,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -20537,7 +20581,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1528397,
+      "cumulativeRevenue": 1529098,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -20548,7 +20592,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1528397,
+      "cumulativeRevenue": 1529098,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21122,7 +21166,7 @@ const CASE_DATA = {
       "revenueEur": 29040,
       "cumulativeRevenue": 1510105,
       "revenuePerActive": 18.75,
-      "gtvKEur": 5178.8
+      "gtvKEur": 5179
     },
     {
       "cohortMonth": "2021-12",
@@ -21130,10 +21174,10 @@ const CASE_DATA = {
       "registrations": 150984,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 22909,
-      "cumulativeRevenue": 1533014,
+      "revenueEur": 23031,
+      "cumulativeRevenue": 1533135,
       "revenuePerActive": 0,
-      "gtvKEur": 4260.6
+      "gtvKEur": 4262.7
     },
     {
       "cohortMonth": "2021-12",
@@ -21141,10 +21185,10 @@ const CASE_DATA = {
       "registrations": 150984,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1624,
-      "cumulativeRevenue": 1534638,
+      "revenueEur": 2121,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
-      "gtvKEur": 652.6
+      "gtvKEur": 740.3
     },
     {
       "cohortMonth": "2021-12",
@@ -21153,7 +21197,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21164,7 +21208,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21175,7 +21219,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21186,7 +21230,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21197,7 +21241,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21208,7 +21252,18 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
+      "revenuePerActive": 0,
+      "gtvKEur": 0
+    },
+    {
+      "cohortMonth": "2021-12",
+      "ageMonths": 65,
+      "registrations": 150984,
+      "activeMerchants": 0,
+      "retentionPct": 0,
+      "revenueEur": 0,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21219,7 +21274,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0.2
     },
@@ -21230,7 +21285,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0.1
     },
@@ -21241,7 +21296,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21252,7 +21307,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1534638,
+      "cumulativeRevenue": 1535257,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21727,7 +21782,7 @@ const CASE_DATA = {
       "revenueEur": 19379,
       "cumulativeRevenue": 948787,
       "revenuePerActive": 8.18,
-      "gtvKEur": 7.6
+      "gtvKEur": 7.7
     },
     {
       "cohortMonth": "2021-11",
@@ -21804,7 +21859,7 @@ const CASE_DATA = {
       "revenueEur": 26179,
       "cumulativeRevenue": 1104640,
       "revenuePerActive": 12.39,
-      "gtvKEur": 51.1
+      "gtvKEur": 51.4
     },
     {
       "cohortMonth": "2021-11",
@@ -21826,7 +21881,7 @@ const CASE_DATA = {
       "revenueEur": 23817,
       "cumulativeRevenue": 1149069,
       "revenuePerActive": 11.74,
-      "gtvKEur": 7116.5
+      "gtvKEur": 7116.6
     },
     {
       "cohortMonth": "2021-11",
@@ -21837,7 +21892,7 @@ const CASE_DATA = {
       "revenueEur": 19296,
       "cumulativeRevenue": 1168365,
       "revenuePerActive": 12.52,
-      "gtvKEur": 2887.1
+      "gtvKEur": 2887.4
     },
     {
       "cohortMonth": "2021-11",
@@ -21845,10 +21900,10 @@ const CASE_DATA = {
       "registrations": 161147,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 21171,
-      "cumulativeRevenue": 1189536,
+      "revenueEur": 20919,
+      "cumulativeRevenue": 1189284,
       "revenuePerActive": 0,
-      "gtvKEur": 2612.2
+      "gtvKEur": 2614.5
     },
     {
       "cohortMonth": "2021-11",
@@ -21856,10 +21911,10 @@ const CASE_DATA = {
       "registrations": 161147,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1980,
-      "cumulativeRevenue": 1191515,
+      "revenueEur": 2639,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
-      "gtvKEur": 223.9
+      "gtvKEur": 272
     },
     {
       "cohortMonth": "2021-11",
@@ -21868,7 +21923,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21879,7 +21934,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0.3
     },
@@ -21890,7 +21945,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21901,7 +21956,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21912,7 +21967,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21923,7 +21978,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21934,7 +21989,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -21945,7 +22000,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1191515,
+      "cumulativeRevenue": 1191922,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -22530,7 +22585,7 @@ const CASE_DATA = {
       "revenueEur": 22366,
       "cumulativeRevenue": 1379240,
       "revenuePerActive": 12.93,
-      "gtvKEur": 972.4
+      "gtvKEur": 972.6
     },
     {
       "cohortMonth": "2021-10",
@@ -22541,7 +22596,7 @@ const CASE_DATA = {
       "revenueEur": 26486,
       "cumulativeRevenue": 1405727,
       "revenuePerActive": 19.38,
-      "gtvKEur": 3904.8
+      "gtvKEur": 3905.2
     },
     {
       "cohortMonth": "2021-10",
@@ -22549,10 +22604,10 @@ const CASE_DATA = {
       "registrations": 156969,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 23610,
-      "cumulativeRevenue": 1429337,
+      "revenueEur": 22137,
+      "cumulativeRevenue": 1427864,
       "revenuePerActive": 0,
-      "gtvKEur": 3637
+      "gtvKEur": 3637.2
     },
     {
       "cohortMonth": "2021-10",
@@ -22560,10 +22615,10 @@ const CASE_DATA = {
       "registrations": 156969,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2003,
-      "cumulativeRevenue": 1431340,
+      "revenueEur": 2467,
+      "cumulativeRevenue": 1430331,
       "revenuePerActive": 0,
-      "gtvKEur": 220.3
+      "gtvKEur": 288.5
     },
     {
       "cohortMonth": "2021-09",
@@ -23176,10 +23231,10 @@ const CASE_DATA = {
       "registrations": 152540,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 23032,
-      "cumulativeRevenue": 1420849,
+      "revenueEur": 23141,
+      "cumulativeRevenue": 1420959,
       "revenuePerActive": 0,
-      "gtvKEur": 2213.4
+      "gtvKEur": 2214
     },
     {
       "cohortMonth": "2021-09",
@@ -23187,10 +23242,10 @@ const CASE_DATA = {
       "registrations": 152540,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2347,
-      "cumulativeRevenue": 1423197,
+      "revenueEur": 3727,
+      "cumulativeRevenue": 1424686,
       "revenuePerActive": 0,
-      "gtvKEur": 368.3
+      "gtvKEur": 424.8
     },
     {
       "cohortMonth": "2021-09",
@@ -23199,7 +23254,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1423197,
+      "cumulativeRevenue": 1424686,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -23825,10 +23880,10 @@ const CASE_DATA = {
       "registrations": 152662,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 25055,
-      "cumulativeRevenue": 1210725,
+      "revenueEur": 25346,
+      "cumulativeRevenue": 1211016,
       "revenuePerActive": 0,
-      "gtvKEur": 1985.8
+      "gtvKEur": 1985.9
     },
     {
       "cohortMonth": "2021-08",
@@ -23836,10 +23891,10 @@ const CASE_DATA = {
       "registrations": 152662,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2051,
-      "cumulativeRevenue": 1212776,
+      "revenueEur": 3106,
+      "cumulativeRevenue": 1214123,
       "revenuePerActive": 0,
-      "gtvKEur": 258.4
+      "gtvKEur": 332.2
     },
     {
       "cohortMonth": "2021-07",
@@ -24257,7 +24312,7 @@ const CASE_DATA = {
       "revenueEur": 44475,
       "cumulativeRevenue": 917986,
       "revenuePerActive": 22.69,
-      "gtvKEur": 33.2
+      "gtvKEur": 33.3
     },
     {
       "cohortMonth": "2021-07",
@@ -24477,7 +24532,7 @@ const CASE_DATA = {
       "revenueEur": 25761,
       "cumulativeRevenue": 1498950,
       "revenuePerActive": 0,
-      "gtvKEur": 2466.2
+      "gtvKEur": 2492.1
     },
     {
       "cohortMonth": "2021-07",
@@ -24485,10 +24540,10 @@ const CASE_DATA = {
       "registrations": 175489,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2441,
-      "cumulativeRevenue": 1501390,
+      "revenueEur": 2988,
+      "cumulativeRevenue": 1501938,
       "revenuePerActive": 0,
-      "gtvKEur": 254.3
+      "gtvKEur": 351.8
     },
     {
       "cohortMonth": "2021-07",
@@ -24497,7 +24552,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1501390,
+      "cumulativeRevenue": 1501938,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -25145,10 +25200,10 @@ const CASE_DATA = {
       "registrations": 137647,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 19894,
-      "cumulativeRevenue": 1228430,
+      "revenueEur": 21421,
+      "cumulativeRevenue": 1229957,
       "revenuePerActive": 0,
-      "gtvKEur": 2043.1
+      "gtvKEur": 2043.3
     },
     {
       "cohortMonth": "2021-06",
@@ -25156,10 +25211,10 @@ const CASE_DATA = {
       "registrations": 137647,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1928,
-      "cumulativeRevenue": 1230359,
+      "revenueEur": 2554,
+      "cumulativeRevenue": 1232511,
       "revenuePerActive": 0,
-      "gtvKEur": 236.4
+      "gtvKEur": 306.4
     },
     {
       "cohortMonth": "2021-05",
@@ -25819,7 +25874,7 @@ const CASE_DATA = {
       "revenueEur": 22825,
       "cumulativeRevenue": 1247298,
       "revenuePerActive": 0,
-      "gtvKEur": 1579.9
+      "gtvKEur": 1580.1
     },
     {
       "cohortMonth": "2021-05",
@@ -25827,10 +25882,10 @@ const CASE_DATA = {
       "registrations": 131847,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2190,
-      "cumulativeRevenue": 1249488,
+      "revenueEur": 2950,
+      "cumulativeRevenue": 1250248,
       "revenuePerActive": 0,
-      "gtvKEur": 185.9
+      "gtvKEur": 247.6
     },
     {
       "cohortMonth": "2021-05",
@@ -25839,7 +25894,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1249488,
+      "cumulativeRevenue": 1250248,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -26512,7 +26567,7 @@ const CASE_DATA = {
       "revenueEur": 21078,
       "cumulativeRevenue": 1085865,
       "revenuePerActive": 0,
-      "gtvKEur": 3369.7
+      "gtvKEur": 3369.8
     },
     {
       "cohortMonth": "2021-04",
@@ -26520,10 +26575,10 @@ const CASE_DATA = {
       "registrations": 139118,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3455,
-      "cumulativeRevenue": 1089320,
+      "revenueEur": 5870,
+      "cumulativeRevenue": 1091734,
       "revenuePerActive": 0,
-      "gtvKEur": 438.4
+      "gtvKEur": 513.3
     },
     {
       "cohortMonth": "2021-03",
@@ -26963,7 +27018,7 @@ const CASE_DATA = {
       "revenueEur": 28511,
       "cumulativeRevenue": 826758,
       "revenuePerActive": 15.98,
-      "gtvKEur": 71
+      "gtvKEur": 71.2
     },
     {
       "cohortMonth": "2021-03",
@@ -27180,10 +27235,10 @@ const CASE_DATA = {
       "registrations": 160274,
       "activeMerchants": 1322,
       "retentionPct": 0.8,
-      "revenueEur": 21224,
-      "cumulativeRevenue": 1315235,
-      "revenuePerActive": 16.05,
-      "gtvKEur": 1989.1
+      "revenueEur": 21271,
+      "cumulativeRevenue": 1315281,
+      "revenuePerActive": 16.09,
+      "gtvKEur": 1989.2
     },
     {
       "cohortMonth": "2021-03",
@@ -27192,7 +27247,7 @@ const CASE_DATA = {
       "activeMerchants": 1034,
       "retentionPct": 0.6,
       "revenueEur": 37865,
-      "cumulativeRevenue": 1353100,
+      "cumulativeRevenue": 1353146,
       "revenuePerActive": 36.62,
       "gtvKEur": 5817
     },
@@ -27202,10 +27257,10 @@ const CASE_DATA = {
       "registrations": 160274,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 23262,
-      "cumulativeRevenue": 1376362,
+      "revenueEur": 23133,
+      "cumulativeRevenue": 1376280,
       "revenuePerActive": 0,
-      "gtvKEur": 5436.4
+      "gtvKEur": 5436.6
     },
     {
       "cohortMonth": "2021-03",
@@ -27213,10 +27268,10 @@ const CASE_DATA = {
       "registrations": 160274,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1811,
-      "cumulativeRevenue": 1378173,
+      "revenueEur": 2019,
+      "cumulativeRevenue": 1378299,
       "revenuePerActive": 0,
-      "gtvKEur": 631.1
+      "gtvKEur": 801.9
     },
     {
       "cohortMonth": "2021-03",
@@ -27225,7 +27280,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1378173,
+      "cumulativeRevenue": 1378299,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -27236,7 +27291,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1378173,
+      "cumulativeRevenue": 1378299,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -27247,7 +27302,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1378173,
+      "cumulativeRevenue": 1378299,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -27258,7 +27313,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1378173,
+      "cumulativeRevenue": 1378299,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -27950,10 +28005,10 @@ const CASE_DATA = {
       "registrations": 135461,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 17894,
-      "cumulativeRevenue": 1111775,
+      "revenueEur": 17911,
+      "cumulativeRevenue": 1111792,
       "revenuePerActive": 0,
-      "gtvKEur": 1285.5
+      "gtvKEur": 1285.7
     },
     {
       "cohortMonth": "2021-02",
@@ -27961,10 +28016,10 @@ const CASE_DATA = {
       "registrations": 135461,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1223,
-      "cumulativeRevenue": 1112999,
+      "revenueEur": 2560,
+      "cumulativeRevenue": 1114353,
       "revenuePerActive": 0,
-      "gtvKEur": 135.4
+      "gtvKEur": 179.8
     },
     {
       "cohortMonth": "2021-01",
@@ -28580,7 +28635,7 @@ const CASE_DATA = {
       "revenueEur": 23372,
       "cumulativeRevenue": 1328604,
       "revenuePerActive": 18.48,
-      "gtvKEur": 29
+      "gtvKEur": 30.3
     },
     {
       "cohortMonth": "2021-01",
@@ -28591,7 +28646,7 @@ const CASE_DATA = {
       "revenueEur": 20787,
       "cumulativeRevenue": 1349391,
       "revenuePerActive": 16.71,
-      "gtvKEur": 0.4
+      "gtvKEur": 0.8
     },
     {
       "cohortMonth": "2021-01",
@@ -28657,7 +28712,7 @@ const CASE_DATA = {
       "revenueEur": 74292,
       "cumulativeRevenue": 1575416,
       "revenuePerActive": 80.66,
-      "gtvKEur": 4219.1
+      "gtvKEur": 4219.3
     },
     {
       "cohortMonth": "2021-01",
@@ -28665,8 +28720,8 @@ const CASE_DATA = {
       "registrations": 155254,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 24975,
-      "cumulativeRevenue": 1600392,
+      "revenueEur": 24950,
+      "cumulativeRevenue": 1600366,
       "revenuePerActive": 0,
       "gtvKEur": 4142.6
     },
@@ -28676,10 +28731,10 @@ const CASE_DATA = {
       "registrations": 155254,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3100,
-      "cumulativeRevenue": 1603491,
+      "revenueEur": 3786,
+      "cumulativeRevenue": 1604152,
       "revenuePerActive": 0,
-      "gtvKEur": 335.4
+      "gtvKEur": 530
     },
     {
       "cohortMonth": "2021-01",
@@ -28688,7 +28743,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1603491,
+      "cumulativeRevenue": 1604152,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -29295,7 +29350,7 @@ const CASE_DATA = {
       "revenueEur": 24367,
       "cumulativeRevenue": 887774,
       "revenuePerActive": 21.74,
-      "gtvKEur": 30.6
+      "gtvKEur": 30.7
     },
     {
       "cohortMonth": "2020-12",
@@ -29306,7 +29361,7 @@ const CASE_DATA = {
       "revenueEur": 16708,
       "cumulativeRevenue": 904482,
       "revenuePerActive": 14.9,
-      "gtvKEur": 9.3
+      "gtvKEur": 9.6
     },
     {
       "cohortMonth": "2020-12",
@@ -29317,7 +29372,7 @@ const CASE_DATA = {
       "revenueEur": 16222,
       "cumulativeRevenue": 920703,
       "revenuePerActive": 14.67,
-      "gtvKEur": 23.9
+      "gtvKEur": 24.1
     },
     {
       "cohortMonth": "2020-12",
@@ -29328,7 +29383,7 @@ const CASE_DATA = {
       "revenueEur": 20308,
       "cumulativeRevenue": 941011,
       "revenuePerActive": 18.98,
-      "gtvKEur": 11.3
+      "gtvKEur": 11.6
     },
     {
       "cohortMonth": "2020-12",
@@ -29402,10 +29457,10 @@ const CASE_DATA = {
       "registrations": 140260,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 17277,
-      "cumulativeRevenue": 1072260,
+      "revenueEur": 17265,
+      "cumulativeRevenue": 1072247,
       "revenuePerActive": 0,
-      "gtvKEur": 2082.8
+      "gtvKEur": 2084
     },
     {
       "cohortMonth": "2020-12",
@@ -29413,10 +29468,10 @@ const CASE_DATA = {
       "registrations": 140260,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1678,
-      "cumulativeRevenue": 1073938,
+      "revenueEur": 2041,
+      "cumulativeRevenue": 1074289,
       "revenuePerActive": 0,
-      "gtvKEur": 249.9
+      "gtvKEur": 312
     },
     {
       "cohortMonth": "2020-11",
@@ -30139,10 +30194,10 @@ const CASE_DATA = {
       "registrations": 139599,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 14214,
-      "cumulativeRevenue": 968972,
+      "revenueEur": 14278,
+      "cumulativeRevenue": 969036,
       "revenuePerActive": 0,
-      "gtvKEur": 1149.2
+      "gtvKEur": 1149.3
     },
     {
       "cohortMonth": "2020-11",
@@ -30150,10 +30205,10 @@ const CASE_DATA = {
       "registrations": 139599,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1006,
-      "cumulativeRevenue": 969978,
+      "revenueEur": 1104,
+      "cumulativeRevenue": 970141,
       "revenuePerActive": 0,
-      "gtvKEur": 141.7
+      "gtvKEur": 177.3
     },
     {
       "cohortMonth": "2020-10",
@@ -30898,10 +30953,10 @@ const CASE_DATA = {
       "registrations": 135595,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1625,
-      "cumulativeRevenue": 915137,
+      "revenueEur": 1863,
+      "cumulativeRevenue": 915375,
       "revenuePerActive": 0,
-      "gtvKEur": 278
+      "gtvKEur": 347.4
     },
     {
       "cohortMonth": "2020-09",
@@ -31657,10 +31712,10 @@ const CASE_DATA = {
       "registrations": 149866,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 3641,
-      "cumulativeRevenue": 995788,
+      "revenueEur": 4207,
+      "cumulativeRevenue": 996355,
       "revenuePerActive": 0,
-      "gtvKEur": 156.8
+      "gtvKEur": 211.2
     },
     {
       "cohortMonth": "2020-09",
@@ -31669,7 +31724,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 995788,
+      "cumulativeRevenue": 996355,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -31680,7 +31735,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 995788,
+      "cumulativeRevenue": 996355,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -32438,10 +32493,10 @@ const CASE_DATA = {
       "registrations": 159285,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 19671,
-      "cumulativeRevenue": 1163728,
+      "revenueEur": 19432,
+      "cumulativeRevenue": 1163488,
       "revenuePerActive": 0,
-      "gtvKEur": 1646.2
+      "gtvKEur": 1646.5
     },
     {
       "cohortMonth": "2020-08",
@@ -32449,10 +32504,10 @@ const CASE_DATA = {
       "registrations": 159285,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1851,
-      "cumulativeRevenue": 1165579,
+      "revenueEur": 2132,
+      "cumulativeRevenue": 1165621,
       "revenuePerActive": 0,
-      "gtvKEur": 188.1
+      "gtvKEur": 235.3
     },
     {
       "cohortMonth": "2020-08",
@@ -32461,7 +32516,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1165579,
+      "cumulativeRevenue": 1165621,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -32472,7 +32527,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1165579,
+      "cumulativeRevenue": 1165621,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -33241,8 +33296,8 @@ const CASE_DATA = {
       "registrations": 158133,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 14485,
-      "cumulativeRevenue": 946089,
+      "revenueEur": 14357,
+      "cumulativeRevenue": 945960,
       "revenuePerActive": 0,
       "gtvKEur": 1966.8
     },
@@ -33252,10 +33307,10 @@ const CASE_DATA = {
       "registrations": 158133,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2128,
-      "cumulativeRevenue": 948217,
+      "revenueEur": 2307,
+      "cumulativeRevenue": 948267,
       "revenuePerActive": 0,
-      "gtvKEur": 188.3
+      "gtvKEur": 241.8
     },
     {
       "cohortMonth": "2020-07",
@@ -33264,7 +33319,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 948217,
+      "cumulativeRevenue": 948267,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -33275,7 +33330,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 948217,
+      "cumulativeRevenue": 948267,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -34055,8 +34110,8 @@ const CASE_DATA = {
       "registrations": 142747,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 27561,
-      "cumulativeRevenue": 1075791,
+      "revenueEur": 27527,
+      "cumulativeRevenue": 1075756,
       "revenuePerActive": 0,
       "gtvKEur": 1451
     },
@@ -34066,10 +34121,10 @@ const CASE_DATA = {
       "registrations": 142747,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 673,
-      "cumulativeRevenue": 1076464,
+      "revenueEur": 1074,
+      "cumulativeRevenue": 1076830,
       "revenuePerActive": 0,
-      "gtvKEur": 201.2
+      "gtvKEur": 257.4
     },
     {
       "cohortMonth": "2020-06",
@@ -34078,7 +34133,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 1076464,
+      "cumulativeRevenue": 1076830,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -34869,10 +34924,10 @@ const CASE_DATA = {
       "registrations": 113638,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 11756,
-      "cumulativeRevenue": 761845,
+      "revenueEur": 11733,
+      "cumulativeRevenue": 761822,
       "revenuePerActive": 0,
-      "gtvKEur": 587.7
+      "gtvKEur": 587.8
     },
     {
       "cohortMonth": "2020-05",
@@ -34880,10 +34935,10 @@ const CASE_DATA = {
       "registrations": 113638,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 904,
-      "cumulativeRevenue": 762749,
+      "revenueEur": 2307,
+      "cumulativeRevenue": 764129,
       "revenuePerActive": 0,
-      "gtvKEur": 60.7
+      "gtvKEur": 81.2
     },
     {
       "cohortMonth": "2020-04",
@@ -35686,7 +35741,7 @@ const CASE_DATA = {
       "revenueEur": 6156,
       "cumulativeRevenue": 455218,
       "revenuePerActive": 0,
-      "gtvKEur": 634
+      "gtvKEur": 634.1
     },
     {
       "cohortMonth": "2020-04",
@@ -35694,10 +35749,10 @@ const CASE_DATA = {
       "registrations": 82083,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 625,
-      "cumulativeRevenue": 455843,
+      "revenueEur": 651,
+      "cumulativeRevenue": 455869,
       "revenuePerActive": 0,
-      "gtvKEur": 75.1
+      "gtvKEur": 98.3
     },
     {
       "cohortMonth": "2020-03",
@@ -36511,7 +36566,7 @@ const CASE_DATA = {
       "revenueEur": 8202,
       "cumulativeRevenue": 466695,
       "revenuePerActive": 0,
-      "gtvKEur": 711.4
+      "gtvKEur": 712.1
     },
     {
       "cohortMonth": "2020-03",
@@ -36519,10 +36574,10 @@ const CASE_DATA = {
       "registrations": 97757,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1628,
-      "cumulativeRevenue": 468323,
+      "revenueEur": 1654,
+      "cumulativeRevenue": 468349,
       "revenuePerActive": 0,
-      "gtvKEur": 81.3
+      "gtvKEur": 115.1
     },
     {
       "cohortMonth": "2020-02",
@@ -37344,8 +37399,8 @@ const CASE_DATA = {
       "registrations": 114096,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 10687,
-      "cumulativeRevenue": 831378,
+      "revenueEur": 10091,
+      "cumulativeRevenue": 830781,
       "revenuePerActive": 0,
       "gtvKEur": 1128.5
     },
@@ -37355,10 +37410,10 @@ const CASE_DATA = {
       "registrations": 114096,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2190,
-      "cumulativeRevenue": 833568,
+      "revenueEur": 2302,
+      "cumulativeRevenue": 833083,
       "revenuePerActive": 0,
-      "gtvKEur": 111.7
+      "gtvKEur": 154.1
     },
     {
       "cohortMonth": "2020-01",
@@ -38202,10 +38257,10 @@ const CASE_DATA = {
       "registrations": 109716,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2053,
-      "cumulativeRevenue": 703844,
+      "revenueEur": 2186,
+      "cumulativeRevenue": 703976,
       "revenuePerActive": 0,
-      "gtvKEur": 250.6
+      "gtvKEur": 350.5
     },
     {
       "cohortMonth": "2019-12",
@@ -39049,8 +39104,8 @@ const CASE_DATA = {
       "registrations": 92008,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 14594,
-      "cumulativeRevenue": 632874,
+      "revenueEur": 14612,
+      "cumulativeRevenue": 632891,
       "revenuePerActive": 0,
       "gtvKEur": 646.9
     },
@@ -39060,10 +39115,10 @@ const CASE_DATA = {
       "registrations": 92008,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1718,
-      "cumulativeRevenue": 634592,
+      "revenueEur": 1731,
+      "cumulativeRevenue": 634622,
       "revenuePerActive": 0,
-      "gtvKEur": 70.8
+      "gtvKEur": 89.1
     },
     {
       "cohortMonth": "2019-11",
@@ -39877,7 +39932,7 @@ const CASE_DATA = {
       "revenueEur": 15139,
       "cumulativeRevenue": 579855,
       "revenuePerActive": 27.33,
-      "gtvKEur": 5.8
+      "gtvKEur": 6.3
     },
     {
       "cohortMonth": "2019-11",
@@ -39888,7 +39943,7 @@ const CASE_DATA = {
       "revenueEur": 10015,
       "cumulativeRevenue": 589870,
       "revenuePerActive": 18.41,
-      "gtvKEur": 0.2
+      "gtvKEur": 1.3
     },
     {
       "cohortMonth": "2019-11",
@@ -39899,7 +39954,7 @@ const CASE_DATA = {
       "revenueEur": 8683,
       "cumulativeRevenue": 598553,
       "revenuePerActive": 16.63,
-      "gtvKEur": 219.1
+      "gtvKEur": 219.9
     },
     {
       "cohortMonth": "2019-11",
@@ -39910,7 +39965,7 @@ const CASE_DATA = {
       "revenueEur": 8946,
       "cumulativeRevenue": 607499,
       "revenuePerActive": 21.61,
-      "gtvKEur": 881.9
+      "gtvKEur": 883
     },
     {
       "cohortMonth": "2019-11",
@@ -39918,10 +39973,10 @@ const CASE_DATA = {
       "registrations": 101573,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 11123,
-      "cumulativeRevenue": 618623,
+      "revenueEur": 11204,
+      "cumulativeRevenue": 618703,
       "revenuePerActive": 0,
-      "gtvKEur": 493.5
+      "gtvKEur": 494.1
     },
     {
       "cohortMonth": "2019-11",
@@ -39929,10 +39984,10 @@ const CASE_DATA = {
       "registrations": 101573,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 615,
-      "cumulativeRevenue": 619237,
+      "revenueEur": 1069,
+      "cumulativeRevenue": 619771,
       "revenuePerActive": 0,
-      "gtvKEur": 58.1
+      "gtvKEur": 76.4
     },
     {
       "cohortMonth": "2019-11",
@@ -39941,7 +39996,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 619237,
+      "cumulativeRevenue": 619771,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -40812,7 +40867,7 @@ const CASE_DATA = {
       "revenueEur": 12379,
       "cumulativeRevenue": 873155,
       "revenuePerActive": 0,
-      "gtvKEur": 953.1
+      "gtvKEur": 953.2
     },
     {
       "cohortMonth": "2019-10",
@@ -40820,10 +40875,10 @@ const CASE_DATA = {
       "registrations": 112051,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 2123,
-      "cumulativeRevenue": 875278,
+      "revenueEur": 2311,
+      "cumulativeRevenue": 875467,
       "revenuePerActive": 0,
-      "gtvKEur": 95.8
+      "gtvKEur": 128.2
     },
     {
       "cohortMonth": "2019-09",
@@ -41692,7 +41747,7 @@ const CASE_DATA = {
       "revenueEur": 12520,
       "cumulativeRevenue": 673664,
       "revenuePerActive": 31.7,
-      "gtvKEur": 2095
+      "gtvKEur": 2095.1
     },
     {
       "cohortMonth": "2019-09",
@@ -41703,7 +41758,7 @@ const CASE_DATA = {
       "revenueEur": 9752,
       "cumulativeRevenue": 683416,
       "revenuePerActive": 0,
-      "gtvKEur": 1077.8
+      "gtvKEur": 1077.9
     },
     {
       "cohortMonth": "2019-09",
@@ -41711,10 +41766,10 @@ const CASE_DATA = {
       "registrations": 104093,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 434,
-      "cumulativeRevenue": 683850,
+      "revenueEur": 749,
+      "cumulativeRevenue": 684165,
       "revenuePerActive": 0,
-      "gtvKEur": 94
+      "gtvKEur": 189.5
     },
     {
       "cohortMonth": "2019-08",
@@ -42602,10 +42657,10 @@ const CASE_DATA = {
       "registrations": 108747,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 11823,
-      "cumulativeRevenue": 526622,
+      "revenueEur": 10860,
+      "cumulativeRevenue": 525659,
       "revenuePerActive": 0,
-      "gtvKEur": 870.7
+      "gtvKEur": 870.9
     },
     {
       "cohortMonth": "2019-08",
@@ -42613,10 +42668,10 @@ const CASE_DATA = {
       "registrations": 108747,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1353,
-      "cumulativeRevenue": 527976,
+      "revenueEur": 1878,
+      "cumulativeRevenue": 527537,
       "revenuePerActive": 0,
-      "gtvKEur": 117.3
+      "gtvKEur": 143.1
     },
     {
       "cohortMonth": "2019-07",
@@ -43515,10 +43570,10 @@ const CASE_DATA = {
       "registrations": 115150,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 7555,
-      "cumulativeRevenue": 548116,
+      "revenueEur": 7538,
+      "cumulativeRevenue": 548099,
       "revenuePerActive": 0,
-      "gtvKEur": 1197.3
+      "gtvKEur": 1197.5
     },
     {
       "cohortMonth": "2019-07",
@@ -43526,10 +43581,10 @@ const CASE_DATA = {
       "registrations": 115150,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 304,
-      "cumulativeRevenue": 548420,
+      "revenueEur": 1012,
+      "cumulativeRevenue": 549111,
       "revenuePerActive": 0,
-      "gtvKEur": 187.4
+      "gtvKEur": 228.6
     },
     {
       "cohortMonth": "2019-06",
@@ -44442,7 +44497,7 @@ const CASE_DATA = {
       "revenueEur": 9225,
       "cumulativeRevenue": 606843,
       "revenuePerActive": 0,
-      "gtvKEur": 1825.1
+      "gtvKEur": 1825.2
     },
     {
       "cohortMonth": "2019-06",
@@ -44450,10 +44505,10 @@ const CASE_DATA = {
       "registrations": 99877,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 767,
-      "cumulativeRevenue": 607610,
+      "revenueEur": 997,
+      "cumulativeRevenue": 607841,
       "revenuePerActive": 0,
-      "gtvKEur": 192.8
+      "gtvKEur": 269.2
     },
     {
       "cohortMonth": "2019-05",
@@ -45385,10 +45440,10 @@ const CASE_DATA = {
       "registrations": 104681,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 304,
-      "cumulativeRevenue": 635705,
+      "revenueEur": 387,
+      "cumulativeRevenue": 635787,
       "revenuePerActive": 0,
-      "gtvKEur": 571.6
+      "gtvKEur": 633
     },
     {
       "cohortMonth": "2019-04",
@@ -46320,8 +46375,8 @@ const CASE_DATA = {
       "registrations": 100376,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 11527,
-      "cumulativeRevenue": 504355,
+      "revenueEur": 11540,
+      "cumulativeRevenue": 504368,
       "revenuePerActive": 0,
       "gtvKEur": 847.4
     },
@@ -46331,10 +46386,10 @@ const CASE_DATA = {
       "registrations": 100376,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1251,
-      "cumulativeRevenue": 505606,
+      "revenueEur": 1526,
+      "cumulativeRevenue": 505894,
       "revenuePerActive": 0,
-      "gtvKEur": 96.8
+      "gtvKEur": 121.2
     },
     {
       "cohortMonth": "2019-03",
@@ -47280,7 +47335,7 @@ const CASE_DATA = {
       "revenueEur": 8157,
       "cumulativeRevenue": 525751,
       "revenuePerActive": 0,
-      "gtvKEur": 1542.3
+      "gtvKEur": 1542.7
     },
     {
       "cohortMonth": "2019-03",
@@ -47288,10 +47343,10 @@ const CASE_DATA = {
       "registrations": 104243,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1856,
-      "cumulativeRevenue": 527608,
+      "revenueEur": 2002,
+      "cumulativeRevenue": 527753,
       "revenuePerActive": 0,
-      "gtvKEur": 212.6
+      "gtvKEur": 276.9
     },
     {
       "cohortMonth": "2019-03",
@@ -47300,7 +47355,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 527608,
+      "cumulativeRevenue": 527753,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -48267,10 +48322,10 @@ const CASE_DATA = {
       "registrations": 100415,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 880,
-      "cumulativeRevenue": 454954,
+      "revenueEur": 1014,
+      "cumulativeRevenue": 455088,
       "revenuePerActive": 0,
-      "gtvKEur": 59.1
+      "gtvKEur": 70.5
     },
     {
       "cohortMonth": "2019-02",
@@ -48279,7 +48334,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 454954,
+      "cumulativeRevenue": 455088,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -49238,7 +49293,7 @@ const CASE_DATA = {
       "revenueEur": 19762,
       "cumulativeRevenue": 458613,
       "revenuePerActive": 60.81,
-      "gtvKEur": 1431.5
+      "gtvKEur": 1431.6
     },
     {
       "cohortMonth": "2019-01",
@@ -49246,10 +49301,10 @@ const CASE_DATA = {
       "registrations": 112145,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 9613,
-      "cumulativeRevenue": 468227,
+      "revenueEur": 9567,
+      "cumulativeRevenue": 468180,
       "revenuePerActive": 0,
-      "gtvKEur": 1298.9
+      "gtvKEur": 1299.4
     },
     {
       "cohortMonth": "2019-01",
@@ -49257,10 +49312,10 @@ const CASE_DATA = {
       "registrations": 112145,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 1068,
-      "cumulativeRevenue": 469295,
+      "revenueEur": 1456,
+      "cumulativeRevenue": 469637,
       "revenuePerActive": 0,
-      "gtvKEur": 111.2
+      "gtvKEur": 182.3
     },
     {
       "cohortMonth": "2018-12",
@@ -50239,7 +50294,7 @@ const CASE_DATA = {
       "revenueEur": 13626,
       "cumulativeRevenue": 538639,
       "revenuePerActive": 0,
-      "gtvKEur": 1787.6
+      "gtvKEur": 1787.7
     },
     {
       "cohortMonth": "2018-12",
@@ -50247,10 +50302,10 @@ const CASE_DATA = {
       "registrations": 94547,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 457,
-      "cumulativeRevenue": 539096,
+      "revenueEur": 543,
+      "cumulativeRevenue": 539181,
       "revenuePerActive": 0,
-      "gtvKEur": 73.6
+      "gtvKEur": 124.2
     },
     {
       "cohortMonth": "2018-11",
@@ -51237,8 +51292,8 @@ const CASE_DATA = {
       "registrations": 95600,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 9006,
-      "cumulativeRevenue": 353025,
+      "revenueEur": 9138,
+      "cumulativeRevenue": 353157,
       "revenuePerActive": 0,
       "gtvKEur": 681.4
     },
@@ -51248,10 +51303,10 @@ const CASE_DATA = {
       "registrations": 95600,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 777,
-      "cumulativeRevenue": 353802,
+      "revenueEur": 1113,
+      "cumulativeRevenue": 354271,
       "revenuePerActive": 0,
-      "gtvKEur": 85.6
+      "gtvKEur": 101.7
     },
     {
       "cohortMonth": "2018-10",
@@ -52252,7 +52307,7 @@ const CASE_DATA = {
       "revenueEur": 7579,
       "cumulativeRevenue": 625995,
       "revenuePerActive": 0,
-      "gtvKEur": 472.3
+      "gtvKEur": 472.6
     },
     {
       "cohortMonth": "2018-10",
@@ -52260,10 +52315,10 @@ const CASE_DATA = {
       "registrations": 96145,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 398,
-      "cumulativeRevenue": 626394,
+      "revenueEur": 411,
+      "cumulativeRevenue": 626407,
       "revenuePerActive": 0,
-      "gtvKEur": 41.7
+      "gtvKEur": 56.1
     },
     {
       "cohortMonth": "2018-09",
@@ -53283,10 +53338,10 @@ const CASE_DATA = {
       "registrations": 83197,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 824,
-      "cumulativeRevenue": 404630,
+      "revenueEur": 842,
+      "cumulativeRevenue": 404648,
       "revenuePerActive": 0,
-      "gtvKEur": 220.4
+      "gtvKEur": 279.8
     },
     {
       "cohortMonth": "2018-08",
@@ -54317,10 +54372,10 @@ const CASE_DATA = {
       "registrations": 85531,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 870,
-      "cumulativeRevenue": 254434,
+      "revenueEur": 883,
+      "cumulativeRevenue": 254447,
       "revenuePerActive": 0,
-      "gtvKEur": 120.3
+      "gtvKEur": 283.3
     },
     {
       "cohortMonth": "2018-07",
@@ -55351,8 +55406,8 @@ const CASE_DATA = {
       "registrations": 79638,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 6127,
-      "cumulativeRevenue": 345611,
+      "revenueEur": 6063,
+      "cumulativeRevenue": 345547,
       "revenuePerActive": 0,
       "gtvKEur": 484.2
     },
@@ -55363,9 +55418,9 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 223,
-      "cumulativeRevenue": 345834,
+      "cumulativeRevenue": 345770,
       "revenuePerActive": 0,
-      "gtvKEur": 64
+      "gtvKEur": 80.7
     },
     {
       "cohortMonth": "2018-06",
@@ -56385,9 +56440,9 @@ const CASE_DATA = {
       "registrations": 74432,
       "activeMerchants": 227,
       "retentionPct": 0.3,
-      "revenueEur": 4954,
-      "cumulativeRevenue": 254213,
-      "revenuePerActive": 21.83,
+      "revenueEur": 4967,
+      "cumulativeRevenue": 254226,
+      "revenuePerActive": 21.88,
       "gtvKEur": 49.7
     },
     {
@@ -56397,7 +56452,7 @@ const CASE_DATA = {
       "activeMerchants": 173,
       "retentionPct": 0.2,
       "revenueEur": 4585,
-      "cumulativeRevenue": 258799,
+      "cumulativeRevenue": 258812,
       "revenuePerActive": 26.51,
       "gtvKEur": 144.1
     },
@@ -56407,8 +56462,8 @@ const CASE_DATA = {
       "registrations": 74432,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 5591,
-      "cumulativeRevenue": 264390,
+      "revenueEur": 5535,
+      "cumulativeRevenue": 264347,
       "revenuePerActive": 0,
       "gtvKEur": 142.7
     },
@@ -56418,10 +56473,10 @@ const CASE_DATA = {
       "registrations": 74432,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 182,
-      "cumulativeRevenue": 264572,
+      "revenueEur": 509,
+      "cumulativeRevenue": 264856,
       "revenuePerActive": 0,
-      "gtvKEur": 25.4
+      "gtvKEur": 31.2
     },
     {
       "cohortMonth": "2018-06",
@@ -56430,7 +56485,7 @@ const CASE_DATA = {
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
-      "cumulativeRevenue": 264572,
+      "cumulativeRevenue": 264856,
       "revenuePerActive": 0,
       "gtvKEur": 0
     },
@@ -57496,10 +57551,10 @@ const CASE_DATA = {
       "registrations": 79742,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 603,
-      "cumulativeRevenue": 374516,
+      "revenueEur": 930,
+      "cumulativeRevenue": 374843,
       "revenuePerActive": 0,
-      "gtvKEur": 45.8
+      "gtvKEur": 58.5
     },
     {
       "cohortMonth": "2018-04",
@@ -58563,8 +58618,8 @@ const CASE_DATA = {
       "registrations": 77212,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 12419,
-      "cumulativeRevenue": 305802,
+      "revenueEur": 12402,
+      "cumulativeRevenue": 305784,
       "revenuePerActive": 0,
       "gtvKEur": 472.6
     },
@@ -58574,10 +58629,10 @@ const CASE_DATA = {
       "registrations": 77212,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 278,
-      "cumulativeRevenue": 306080,
+      "revenueEur": 403,
+      "cumulativeRevenue": 306187,
       "revenuePerActive": 0,
-      "gtvKEur": 63.6
+      "gtvKEur": 81.8
     },
     {
       "cohortMonth": "2018-03",
@@ -59655,7 +59710,7 @@ const CASE_DATA = {
       "revenueEur": 3868,
       "cumulativeRevenue": 206567,
       "revenuePerActive": 0,
-      "gtvKEur": 392.8
+      "gtvKEur": 392.9
     },
     {
       "cohortMonth": "2018-03",
@@ -59666,7 +59721,7 @@ const CASE_DATA = {
       "revenueEur": 1037,
       "cumulativeRevenue": 207604,
       "revenuePerActive": 0,
-      "gtvKEur": 71.3
+      "gtvKEur": 77.3
     },
     {
       "cohortMonth": "2018-02",
@@ -60766,7 +60821,7 @@ const CASE_DATA = {
       "revenueEur": 103,
       "cumulativeRevenue": 219304,
       "revenuePerActive": 0,
-      "gtvKEur": 31.8
+      "gtvKEur": 43.2
     },
     {
       "cohortMonth": "2018-01",
@@ -61866,7 +61921,7 @@ const CASE_DATA = {
       "revenueEur": 5381,
       "cumulativeRevenue": 290303,
       "revenuePerActive": 0,
-      "gtvKEur": 926.3
+      "gtvKEur": 928.8
     },
     {
       "cohortMonth": "2018-01",
@@ -61877,7 +61932,7 @@ const CASE_DATA = {
       "revenueEur": 642,
       "cumulativeRevenue": 290946,
       "revenuePerActive": 0,
-      "gtvKEur": 76.9
+      "gtvKEur": 114.4
     },
     {
       "cohortMonth": "2017-12",
@@ -62996,10 +63051,10 @@ const CASE_DATA = {
       "registrations": 62187,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 88,
-      "cumulativeRevenue": 237886,
+      "revenueEur": 131,
+      "cumulativeRevenue": 237929,
       "revenuePerActive": 0,
-      "gtvKEur": 36.5
+      "gtvKEur": 43.9
     },
     {
       "cohortMonth": "2017-11",
@@ -64132,7 +64187,7 @@ const CASE_DATA = {
       "revenueEur": 399,
       "cumulativeRevenue": 208527,
       "revenuePerActive": 0,
-      "gtvKEur": 28.3
+      "gtvKEur": 34.8
     },
     {
       "cohortMonth": "2017-10",
@@ -65273,10 +65328,10 @@ const CASE_DATA = {
       "registrations": 70180,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 397,
-      "cumulativeRevenue": 208400,
+      "revenueEur": 641,
+      "cumulativeRevenue": 208644,
       "revenuePerActive": 0,
-      "gtvKEur": 12.1
+      "gtvKEur": 17.6
     },
     {
       "cohortMonth": "2017-09",
@@ -66428,10 +66483,10 @@ const CASE_DATA = {
       "registrations": 65145,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 304,
-      "cumulativeRevenue": 370183,
+      "revenueEur": 327,
+      "cumulativeRevenue": 370206,
       "revenuePerActive": 0,
-      "gtvKEur": 8.8
+      "gtvKEur": 11.3
     },
     {
       "cohortMonth": "2017-08",
@@ -67594,10 +67649,10 @@ const CASE_DATA = {
       "registrations": 65773,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 402,
-      "cumulativeRevenue": 161868,
+      "revenueEur": 436,
+      "cumulativeRevenue": 161902,
       "revenuePerActive": 0,
-      "gtvKEur": 17.8
+      "gtvKEur": 25.5
     },
     {
       "cohortMonth": "2017-07",
@@ -68771,10 +68826,10 @@ const CASE_DATA = {
       "registrations": 60430,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 69,
-      "cumulativeRevenue": 229085,
+      "revenueEur": 90,
+      "cumulativeRevenue": 229106,
       "revenuePerActive": 0,
-      "gtvKEur": 49.4
+      "gtvKEur": 70.9
     },
     {
       "cohortMonth": "2017-06",
@@ -69959,10 +70014,10 @@ const CASE_DATA = {
       "registrations": 43627,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 420,
-      "cumulativeRevenue": 356430,
+      "revenueEur": 509,
+      "cumulativeRevenue": 356519,
       "revenuePerActive": 0,
-      "gtvKEur": 11.6
+      "gtvKEur": 15
     },
     {
       "cohortMonth": "2017-05",
@@ -71158,10 +71213,10 @@ const CASE_DATA = {
       "registrations": 37859,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 767,
-      "cumulativeRevenue": 252699,
+      "revenueEur": 859,
+      "cumulativeRevenue": 252791,
       "revenuePerActive": 0,
-      "gtvKEur": 60.7
+      "gtvKEur": 75.3
     },
     {
       "cohortMonth": "2017-04",
@@ -72360,7 +72415,7 @@ const CASE_DATA = {
       "revenueEur": 2617,
       "cumulativeRevenue": 180362,
       "revenuePerActive": 0,
-      "gtvKEur": 73.1
+      "gtvKEur": 73.2
     },
     {
       "cohortMonth": "2017-04",
@@ -72368,10 +72423,10 @@ const CASE_DATA = {
       "registrations": 32276,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 402,
-      "cumulativeRevenue": 180764,
+      "revenueEur": 470,
+      "cumulativeRevenue": 180832,
       "revenuePerActive": 0,
-      "gtvKEur": 7.1
+      "gtvKEur": 9.7
     },
     {
       "cohortMonth": "2017-03",
@@ -73589,10 +73644,10 @@ const CASE_DATA = {
       "registrations": 29431,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 0,
-      "cumulativeRevenue": 159325,
+      "revenueEur": 360,
+      "cumulativeRevenue": 159684,
       "revenuePerActive": 0,
-      "gtvKEur": 14.6
+      "gtvKEur": 15.8
     },
     {
       "cohortMonth": "2017-02",
@@ -74824,7 +74879,7 @@ const CASE_DATA = {
       "revenueEur": 476,
       "cumulativeRevenue": 203220,
       "revenuePerActive": 0,
-      "gtvKEur": 5.1
+      "gtvKEur": 5.9
     },
     {
       "cohortMonth": "2017-01",
@@ -76064,10 +76119,10 @@ const CASE_DATA = {
       "registrations": 23169,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 134,
-      "cumulativeRevenue": 146624,
+      "revenueEur": 169,
+      "cumulativeRevenue": 146658,
       "revenuePerActive": 0,
-      "gtvKEur": 4.4
+      "gtvKEur": 5.7
     },
     {
       "cohortMonth": "2016-12",
@@ -77321,7 +77376,7 @@ const CASE_DATA = {
       "revenueEur": 107,
       "cumulativeRevenue": 145262,
       "revenuePerActive": 0,
-      "gtvKEur": 2.3
+      "gtvKEur": 2.8
     },
     {
       "cohortMonth": "2016-11",
@@ -78586,7 +78641,7 @@ const CASE_DATA = {
       "revenueEur": 21,
       "cumulativeRevenue": 96259,
       "revenuePerActive": 0,
-      "gtvKEur": 1.9
+      "gtvKEur": 2.4
     },
     {
       "cohortMonth": "2016-10",
@@ -79862,7 +79917,7 @@ const CASE_DATA = {
       "revenueEur": 13,
       "cumulativeRevenue": 76342,
       "revenuePerActive": 0,
-      "gtvKEur": 1.8
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2016-09",
@@ -81146,10 +81201,10 @@ const CASE_DATA = {
       "registrations": 17857,
       "activeMerchants": 0,
       "retentionPct": 0,
-      "revenueEur": 0,
-      "cumulativeRevenue": 167930,
+      "revenueEur": 174,
+      "cumulativeRevenue": 168104,
       "revenuePerActive": 0,
-      "gtvKEur": 6.9
+      "gtvKEur": 9.1
     },
     {
       "cohortMonth": "2016-08",
@@ -82447,7 +82502,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 27330,
       "revenuePerActive": 0,
-      "gtvKEur": 0.5
+      "gtvKEur": 0.7
     },
     {
       "cohortMonth": "2016-07",
@@ -83756,7 +83811,7 @@ const CASE_DATA = {
       "revenueEur": 134,
       "cumulativeRevenue": 16583,
       "revenuePerActive": 0,
-      "gtvKEur": 0.9
+      "gtvKEur": 2.3
     },
     {
       "cohortMonth": "2016-06",
@@ -85076,7 +85131,7 @@ const CASE_DATA = {
       "revenueEur": 26,
       "cumulativeRevenue": 1775,
       "revenuePerActive": 0,
-      "gtvKEur": 1.7
+      "gtvKEur": 2.1
     },
     {
       "cohortMonth": "2016-05",
@@ -90679,7 +90734,7 @@ const CASE_DATA = {
     }
   ],
   "diagnostics": {
-    "runDate": "2026-05-04T08:40:48.165Z",
+    "runDate": "2026-05-05T08:21:06.078Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -90720,933 +90775,934 @@ const CASE_DATA = {
       {
         "source": "gtv_currency",
         "month": "VND",
-        "rows": 1495731,
-        "uniqueMerchants": 7287053164489
+        "rows": 1489733,
+        "uniqueMerchants": 7284880493066
       },
       {
         "source": "gtv_currency",
         "month": "RSD",
-        "rows": 78108,
-        "uniqueMerchants": 3980415782465
+        "rows": 76971,
+        "uniqueMerchants": 3980411630778
       },
       {
         "source": "gtv_currency",
         "month": "THB",
-        "rows": 38598567,
-        "uniqueMerchants": 3048641546960
+        "rows": 38452579,
+        "uniqueMerchants": 3246640383898
       },
       {
         "source": "gtv_currency",
         "month": "SAR",
-        "rows": 8347347,
-        "uniqueMerchants": 1302074645243
+        "rows": 8356278,
+        "uniqueMerchants": 1302122063366
       },
       {
         "source": "gtv_currency",
         "month": "USD",
-        "rows": 8937380,
-        "uniqueMerchants": 1116785598872
+        "rows": 8930997,
+        "uniqueMerchants": 1116761177833
       },
       {
         "source": "gtv_currency",
         "month": "JPY",
-        "rows": 494362,
-        "uniqueMerchants": 1003256140360
+        "rows": 501208,
+        "uniqueMerchants": 1003505512867
       },
       {
         "source": "gtv_currency",
         "month": "IDR",
-        "rows": 10773370,
-        "uniqueMerchants": 959923911379
+        "rows": 10695508,
+        "uniqueMerchants": 954843643548
       },
       {
         "source": "gtv_currency",
         "month": "LAK",
-        "rows": 1176871,
-        "uniqueMerchants": 419495365360
+        "rows": 1174732,
+        "uniqueMerchants": 416791042627
       },
       {
         "source": "gtv_currency",
         "month": "MMK",
-        "rows": 3616235,
-        "uniqueMerchants": 305868313022
+        "rows": 3611405,
+        "uniqueMerchants": 306771734126
       },
       {
         "source": "gtv_currency",
         "month": "MYR",
-        "rows": 32432397,
-        "uniqueMerchants": 298905519758
+        "rows": 32376618,
+        "uniqueMerchants": 298897851795
       },
       {
         "source": "gtv_currency",
         "month": "PHP",
-        "rows": 49538052,
-        "uniqueMerchants": 253782674454
+        "rows": 49770975,
+        "uniqueMerchants": 254107623322
       },
       {
         "source": "gtv_currency",
         "month": "COP",
-        "rows": 2812397,
-        "uniqueMerchants": 177366288004
+        "rows": 2808975,
+        "uniqueMerchants": 177827278504
       },
       {
         "source": "gtv_currency",
         "month": "HUF",
-        "rows": 60700,
-        "uniqueMerchants": 99308129839
+        "rows": 60595,
+        "uniqueMerchants": 99306688775
       },
       {
         "source": "gtv_currency",
         "month": "LBP",
-        "rows": 138292,
-        "uniqueMerchants": 64867827204
+        "rows": 137374,
+        "uniqueMerchants": 64018270220
       },
       {
         "source": "gtv_currency",
         "month": "NZD",
-        "rows": 603008,
-        "uniqueMerchants": 50072951760
+        "rows": 598030,
+        "uniqueMerchants": 50072739319
       },
       {
         "source": "gtv_currency",
         "month": "KRW",
-        "rows": 168077,
-        "uniqueMerchants": 46740175252
+        "rows": 165868,
+        "uniqueMerchants": 46725437823
       },
       {
         "source": "gtv_currency",
         "month": "PLN",
-        "rows": 653860,
-        "uniqueMerchants": 45800027266
+        "rows": 651822,
+        "uniqueMerchants": 45799954544
       },
       {
         "source": "gtv_currency",
         "month": "UZS",
-        "rows": 108100,
-        "uniqueMerchants": 45224997689
+        "rows": 108181,
+        "uniqueMerchants": 44857920349
       },
       {
         "source": "gtv_currency",
         "month": "CLP",
-        "rows": 3363556,
-        "uniqueMerchants": 30786446704
+        "rows": 3343529,
+        "uniqueMerchants": 30506849870
       },
       {
         "source": "gtv_currency",
         "month": "MGA",
-        "rows": 205180,
-        "uniqueMerchants": 24548440609
+        "rows": 203810,
+        "uniqueMerchants": 24556154707
       },
       {
         "source": "gtv_currency",
         "month": "EUR",
-        "rows": 7701969,
-        "uniqueMerchants": 23593447927
+        "rows": 7565315,
+        "uniqueMerchants": 23585738109
       },
       {
         "source": "gtv_currency",
         "month": "ARS",
-        "rows": 1007980,
-        "uniqueMerchants": 21783090798
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GBP",
-        "rows": 5672482,
-        "uniqueMerchants": 20556114667
+        "rows": 996483,
+        "uniqueMerchants": 21599574896
       },
       {
         "source": "gtv_currency",
         "month": "NGN",
-        "rows": 1123753,
-        "uniqueMerchants": 19666762946
+        "rows": 1122288,
+        "uniqueMerchants": 19410561617
       },
       {
         "source": "gtv_currency",
         "month": "INR",
-        "rows": 2224727,
-        "uniqueMerchants": 17056073026
+        "rows": 2213111,
+        "uniqueMerchants": 17049002874
       },
       {
         "source": "gtv_currency",
         "month": "XOF",
-        "rows": 1267038,
-        "uniqueMerchants": 15635109133
+        "rows": 1278878,
+        "uniqueMerchants": 16074042943
       },
       {
         "source": "gtv_currency",
         "month": "CRC",
-        "rows": 1686665,
-        "uniqueMerchants": 15442754189
+        "rows": 1686146,
+        "uniqueMerchants": 15354508003
       },
       {
         "source": "gtv_currency",
         "month": "KHR",
-        "rows": 398363,
-        "uniqueMerchants": 14167172317
-      },
-      {
-        "source": "gtv_currency",
-        "month": "PYG",
-        "rows": 119965,
-        "uniqueMerchants": 10110629137
+        "rows": 398420,
+        "uniqueMerchants": 14235017228
       },
       {
         "source": "gtv_currency",
         "month": "CAD",
-        "rows": 742525,
-        "uniqueMerchants": 10067019064
+        "rows": 733294,
+        "uniqueMerchants": 10065047249
       },
       {
         "source": "gtv_currency",
         "month": "BOB",
-        "rows": 733092,
-        "uniqueMerchants": 10052192937
+        "rows": 734727,
+        "uniqueMerchants": 10053278110
+      },
+      {
+        "source": "gtv_currency",
+        "month": "PYG",
+        "rows": 117974,
+        "uniqueMerchants": 9969640182
       },
       {
         "source": "gtv_currency",
         "month": "DZD",
-        "rows": 332686,
-        "uniqueMerchants": 9661301764
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TZS",
-        "rows": 191971,
-        "uniqueMerchants": 9071677042
+        "rows": 333039,
+        "uniqueMerchants": 9646436610
       },
       {
         "source": "gtv_currency",
         "month": "BDT",
-        "rows": 895183,
-        "uniqueMerchants": 8957250090
+        "rows": 898472,
+        "uniqueMerchants": 8958133489
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TZS",
+        "rows": 190856,
+        "uniqueMerchants": 8914602475
       },
       {
         "source": "gtv_currency",
         "month": "BRL",
-        "rows": 813851,
-        "uniqueMerchants": 8325203025
+        "rows": 806562,
+        "uniqueMerchants": 8324932648
       },
       {
         "source": "gtv_currency",
         "month": "GNF",
-        "rows": 73477,
-        "uniqueMerchants": 7908993929
+        "rows": 73121,
+        "uniqueMerchants": 7786402929
       },
       {
         "source": "gtv_currency",
         "month": "MXN",
-        "rows": 26068267,
-        "uniqueMerchants": 7649202327
+        "rows": 26156781,
+        "uniqueMerchants": 7568802258
       },
       {
         "source": "gtv_currency",
         "month": "IQD",
-        "rows": 304225,
-        "uniqueMerchants": 7141672783
+        "rows": 303735,
+        "uniqueMerchants": 7205771064
       },
       {
         "source": "gtv_currency",
         "month": "MKD",
-        "rows": 5769,
-        "uniqueMerchants": 5025642344
+        "rows": 5866,
+        "uniqueMerchants": 5025592780
       },
       {
         "source": "gtv_currency",
         "month": "CDF",
-        "rows": 107295,
-        "uniqueMerchants": 4987566467
+        "rows": 107433,
+        "uniqueMerchants": 4945519903
       },
       {
         "source": "gtv_currency",
         "month": "UGX",
-        "rows": 120396,
-        "uniqueMerchants": 4627941918
+        "rows": 121785,
+        "uniqueMerchants": 4689886422
       },
       {
         "source": "gtv_currency",
         "month": "AOA",
-        "rows": 47053,
-        "uniqueMerchants": 4011702396
+        "rows": 47439,
+        "uniqueMerchants": 4101394433
       },
       {
         "source": "gtv_currency",
         "month": "JMD",
-        "rows": 1190971,
-        "uniqueMerchants": 2628287029
+        "rows": 1192117,
+        "uniqueMerchants": 2596241535
       },
       {
         "source": "gtv_currency",
         "month": "LKR",
-        "rows": 558137,
-        "uniqueMerchants": 2022180221
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MWK",
-        "rows": 30906,
-        "uniqueMerchants": 1863205044
+        "rows": 551228,
+        "uniqueMerchants": 1983380554
       },
       {
         "source": "gtv_currency",
         "month": "TRY",
-        "rows": 156222,
-        "uniqueMerchants": 1824894703
+        "rows": 155350,
+        "uniqueMerchants": 1831276429
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MWK",
+        "rows": 31037,
+        "uniqueMerchants": 1796903140
       },
       {
         "source": "gtv_currency",
         "month": "XAF",
-        "rows": 103057,
-        "uniqueMerchants": 1747557762
+        "rows": 101642,
+        "uniqueMerchants": 1734477107
       },
       {
         "source": "gtv_currency",
         "month": "MNT",
-        "rows": 16076,
-        "uniqueMerchants": 1682629874
+        "rows": 15796,
+        "uniqueMerchants": 1654917738
       },
       {
         "source": "gtv_currency",
         "month": "BIF",
-        "rows": 2937,
-        "uniqueMerchants": 1484830305
+        "rows": 3000,
+        "uniqueMerchants": 1571985705
       },
       {
         "source": "gtv_currency",
         "month": "HTG",
-        "rows": 689008,
-        "uniqueMerchants": 1475866493
+        "rows": 691623,
+        "uniqueMerchants": 1474449703
       },
       {
         "source": "gtv_currency",
         "month": "PKR",
-        "rows": 1695289,
-        "uniqueMerchants": 1439311886
+        "rows": 1687039,
+        "uniqueMerchants": 1418315048
       },
       {
         "source": "gtv_currency",
         "month": "DOP",
-        "rows": 1174224,
-        "uniqueMerchants": 1041615624
+        "rows": 1188769,
+        "uniqueMerchants": 1057200871
       },
       {
         "source": "gtv_currency",
         "month": "SOS",
-        "rows": 6969,
-        "uniqueMerchants": 999605346
+        "rows": 6949,
+        "uniqueMerchants": 1018662316
       },
       {
         "source": "gtv_currency",
         "month": "KES",
-        "rows": 406879,
-        "uniqueMerchants": 767260849
+        "rows": 405333,
+        "uniqueMerchants": 761150906
       },
       {
         "source": "gtv_currency",
         "month": "SLE",
-        "rows": 24329,
-        "uniqueMerchants": 666807551
+        "rows": 23994,
+        "uniqueMerchants": 657172516
       },
       {
         "source": "gtv_currency",
         "month": "GYD",
-        "rows": 112776,
-        "uniqueMerchants": 621579672
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TWD",
-        "rows": 786760,
-        "uniqueMerchants": 582956904
+        "rows": 113248,
+        "uniqueMerchants": 631391818
       },
       {
         "source": "gtv_currency",
         "month": "VEF",
-        "rows": 281019,
-        "uniqueMerchants": 577411083
+        "rows": 283045,
+        "uniqueMerchants": 590500543
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TWD",
+        "rows": 763666,
+        "uniqueMerchants": 570802474
       },
       {
         "source": "gtv_currency",
         "month": "RWF",
-        "rows": 31787,
-        "uniqueMerchants": 572866937
+        "rows": 32117,
+        "uniqueMerchants": 568158862
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GBP",
+        "rows": 5586452,
+        "uniqueMerchants": 554047035
       },
       {
         "source": "gtv_currency",
         "month": "KZT",
-        "rows": 73864,
-        "uniqueMerchants": 511957674
+        "rows": 73940,
+        "uniqueMerchants": 501195117
       },
       {
         "source": "gtv_currency",
         "month": "YER",
-        "rows": 82681,
-        "uniqueMerchants": 449457106
+        "rows": 81788,
+        "uniqueMerchants": 446478765
       },
       {
         "source": "gtv_currency",
         "month": "CUP",
-        "rows": 35685,
-        "uniqueMerchants": 426621270
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MUR",
-        "rows": 555056,
-        "uniqueMerchants": 382611308
+        "rows": 35502,
+        "uniqueMerchants": 427847222
       },
       {
         "source": "gtv_currency",
         "month": "EGP",
-        "rows": 468973,
-        "uniqueMerchants": 376661671
+        "rows": 473127,
+        "uniqueMerchants": 377259488
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MUR",
+        "rows": 547676,
+        "uniqueMerchants": 377254742
       },
       {
         "source": "gtv_currency",
         "month": "ILS",
-        "rows": 52212,
-        "uniqueMerchants": 376056949
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ZAR",
-        "rows": 1978248,
-        "uniqueMerchants": 277481166
+        "rows": 52484,
+        "uniqueMerchants": 373378287
       },
       {
         "source": "gtv_currency",
         "month": "NIO",
-        "rows": 515739,
-        "uniqueMerchants": 273307799
+        "rows": 521203,
+        "uniqueMerchants": 275321913
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ZAR",
+        "rows": 1958113,
+        "uniqueMerchants": 272050633
       },
       {
         "source": "gtv_currency",
         "month": "AED",
-        "rows": 1863788,
-        "uniqueMerchants": 255871590
+        "rows": 1852490,
+        "uniqueMerchants": 254239262
       },
       {
         "source": "gtv_currency",
         "month": "SRD",
-        "rows": 271129,
-        "uniqueMerchants": 242283575
+        "rows": 270446,
+        "uniqueMerchants": 246385865
       },
       {
         "source": "gtv_currency",
         "month": "CNY",
-        "rows": 45493,
-        "uniqueMerchants": 239216718
+        "rows": 45302,
+        "uniqueMerchants": 243082647
       },
       {
         "source": "gtv_currency",
         "month": "ETB",
-        "rows": 108822,
-        "uniqueMerchants": 217994827
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SGD",
-        "rows": 4151550,
-        "uniqueMerchants": 210916916
+        "rows": 108483,
+        "uniqueMerchants": 217775497
       },
       {
         "source": "gtv_currency",
         "month": "XPF",
-        "rows": 42660,
-        "uniqueMerchants": 206904569
+        "rows": 42989,
+        "uniqueMerchants": 215338441
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SGD",
+        "rows": 4169236,
+        "uniqueMerchants": 207052822
       },
       {
         "source": "gtv_currency",
         "month": "TTD",
-        "rows": 2306764,
-        "uniqueMerchants": 171137886
+        "rows": 2289197,
+        "uniqueMerchants": 168476727
       },
       {
         "source": "gtv_currency",
         "month": "TND",
-        "rows": 127079,
-        "uniqueMerchants": 136654893
+        "rows": 127186,
+        "uniqueMerchants": 133846507
       },
       {
         "source": "gtv_currency",
         "month": "ISK",
-        "rows": 33807,
-        "uniqueMerchants": 126324938
+        "rows": 33499,
+        "uniqueMerchants": 124581984
       },
       {
         "source": "gtv_currency",
         "month": "GMD",
-        "rows": 80355,
-        "uniqueMerchants": 112201838
+        "rows": 80506,
+        "uniqueMerchants": 113576970
       },
       {
         "source": "gtv_currency",
         "month": "GTQ",
-        "rows": 982371,
-        "uniqueMerchants": 108777703
+        "rows": 983650,
+        "uniqueMerchants": 109003196
       },
       {
         "source": "gtv_currency",
         "month": "NPR",
-        "rows": 141593,
-        "uniqueMerchants": 108503119
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AMD",
-        "rows": 2918,
-        "uniqueMerchants": 106912765
+        "rows": 140411,
+        "uniqueMerchants": 107893420
       },
       {
         "source": "gtv_currency",
         "month": "HNL",
-        "rows": 287684,
-        "uniqueMerchants": 106133190
+        "rows": 289937,
+        "uniqueMerchants": 107688964
       },
       {
         "source": "gtv_currency",
-        "month": "VES",
-        "rows": 34398,
-        "uniqueMerchants": 101169366
-      },
-      {
-        "source": "gtv_currency",
-        "month": "HKD",
-        "rows": 367938,
-        "uniqueMerchants": 100136291
+        "month": "AMD",
+        "rows": 2879,
+        "uniqueMerchants": 106617790
       },
       {
         "source": "gtv_currency",
         "month": "AUD",
-        "rows": 2089682,
-        "uniqueMerchants": 99889595
+        "rows": 2090158,
+        "uniqueMerchants": 99272157
+      },
+      {
+        "source": "gtv_currency",
+        "month": "VES",
+        "rows": 34262,
+        "uniqueMerchants": 99216613
       },
       {
         "source": "gtv_currency",
         "month": "MAD",
-        "rows": 1106623,
-        "uniqueMerchants": 99707064
+        "rows": 1101245,
+        "uniqueMerchants": 98689349
+      },
+      {
+        "source": "gtv_currency",
+        "month": "HKD",
+        "rows": 367053,
+        "uniqueMerchants": 97649640
       },
       {
         "source": "gtv_currency",
         "month": "PGK",
-        "rows": 277861,
-        "uniqueMerchants": 67993269
+        "rows": 280057,
+        "uniqueMerchants": 70973204
       },
       {
         "source": "gtv_currency",
         "month": "MZN",
-        "rows": 44751,
-        "uniqueMerchants": 62497324
+        "rows": 44340,
+        "uniqueMerchants": 62758795
       },
       {
         "source": "gtv_currency",
         "month": "PEN",
-        "rows": 1630932,
-        "uniqueMerchants": 61938979
+        "rows": 1628423,
+        "uniqueMerchants": 62546179
       },
       {
         "source": "gtv_currency",
         "month": "ALL",
-        "rows": 10686,
-        "uniqueMerchants": 60191958
+        "rows": 10722,
+        "uniqueMerchants": 60637263
       },
       {
         "source": "gtv_currency",
         "month": "CZK",
-        "rows": 256605,
-        "uniqueMerchants": 58861591
+        "rows": 257541,
+        "uniqueMerchants": 58517629
       },
       {
         "source": "gtv_currency",
         "month": "GHS",
-        "rows": 246609,
-        "uniqueMerchants": 57616612
+        "rows": 243977,
+        "uniqueMerchants": 57544213
       },
       {
         "source": "gtv_currency",
         "month": "UYU",
-        "rows": 80342,
-        "uniqueMerchants": 53579868
+        "rows": 80460,
+        "uniqueMerchants": 53501027
       },
       {
         "source": "gtv_currency",
         "month": "VUV",
-        "rows": 45335,
-        "uniqueMerchants": 53505438
+        "rows": 45376,
+        "uniqueMerchants": 53059291
       },
       {
         "source": "gtv_currency",
         "month": "MVR",
-        "rows": 281045,
-        "uniqueMerchants": 53226650
+        "rows": 280509,
+        "uniqueMerchants": 51807375
       },
       {
         "source": "gtv_currency",
         "month": "KGS",
-        "rows": 41384,
-        "uniqueMerchants": 50314991
+        "rows": 41632,
+        "uniqueMerchants": 51452836
       },
       {
         "source": "gtv_currency",
         "month": "AFN",
-        "rows": 25825,
-        "uniqueMerchants": 44663275
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XCD",
-        "rows": 384626,
-        "uniqueMerchants": 36985299
+        "rows": 26012,
+        "uniqueMerchants": 43789657
       },
       {
         "source": "gtv_currency",
         "month": "ZMW",
-        "rows": 192095,
-        "uniqueMerchants": 34944387
+        "rows": 193601,
+        "uniqueMerchants": 34808808
       },
       {
         "source": "gtv_currency",
         "month": "RON",
-        "rows": 27172,
-        "uniqueMerchants": 30645498
+        "rows": 26861,
+        "uniqueMerchants": 30747309
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XCD",
+        "rows": 380777,
+        "uniqueMerchants": 28902569
       },
       {
         "source": "gtv_currency",
         "month": "BBD",
-        "rows": 833620,
-        "uniqueMerchants": 29219444
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CHF",
-        "rows": 492846,
-        "uniqueMerchants": 26173692
+        "rows": 825917,
+        "uniqueMerchants": 28678266
       },
       {
         "source": "gtv_currency",
         "month": "CVE",
-        "rows": 10985,
-        "uniqueMerchants": 25624724
+        "rows": 10787,
+        "uniqueMerchants": 25975671
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CHF",
+        "rows": 481590,
+        "uniqueMerchants": 25776618
       },
       {
         "source": "gtv_currency",
         "month": "OMR",
-        "rows": 1150457,
-        "uniqueMerchants": 22801262
+        "rows": 1153298,
+        "uniqueMerchants": 22706081
       },
       {
         "source": "gtv_currency",
         "month": "SCR",
-        "rows": 66648,
-        "uniqueMerchants": 22758135
+        "rows": 66388,
+        "uniqueMerchants": 22692792
       },
       {
         "source": "gtv_currency",
         "month": "DJF",
-        "rows": 10773,
-        "uniqueMerchants": 18958275
+        "rows": 10862,
+        "uniqueMerchants": 19401275
       },
       {
         "source": "gtv_currency",
         "month": "BTN",
-        "rows": 23449,
-        "uniqueMerchants": 17708193
+        "rows": 23336,
+        "uniqueMerchants": 17571584
       },
       {
         "source": "gtv_currency",
         "month": "GEL",
-        "rows": 301488,
-        "uniqueMerchants": 16810473
+        "rows": 299463,
+        "uniqueMerchants": 16646393
       },
       {
         "source": "gtv_currency",
         "month": "BSD",
-        "rows": 674787,
-        "uniqueMerchants": 16614315
+        "rows": 669016,
+        "uniqueMerchants": 16432968
       },
       {
         "source": "gtv_currency",
         "month": "QAR",
-        "rows": 264491,
-        "uniqueMerchants": 14326149
+        "rows": 266248,
+        "uniqueMerchants": 14391864
       },
       {
         "source": "gtv_currency",
         "month": "DKK",
-        "rows": 57720,
-        "uniqueMerchants": 11579332
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MRU",
-        "rows": 45050,
-        "uniqueMerchants": 11428941
+        "rows": 56469,
+        "uniqueMerchants": 11367112
       },
       {
         "source": "gtv_currency",
         "month": "JOD",
-        "rows": 336183,
-        "uniqueMerchants": 11156708
+        "rows": 335662,
+        "uniqueMerchants": 11136531
       },
       {
         "source": "gtv_currency",
         "month": "LYD",
-        "rows": 218612,
-        "uniqueMerchants": 10656541
+        "rows": 219420,
+        "uniqueMerchants": 10658390
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MRU",
+        "rows": 45549,
+        "uniqueMerchants": 10520599
       },
       {
         "source": "gtv_currency",
         "month": "ZWL",
-        "rows": 652101,
-        "uniqueMerchants": 9635320
+        "rows": 656333,
+        "uniqueMerchants": 9736474
       },
       {
         "source": "gtv_currency",
         "month": "LSL",
-        "rows": 112565,
-        "uniqueMerchants": 9377334
+        "rows": 111699,
+        "uniqueMerchants": 9224987
       },
       {
         "source": "gtv_currency",
         "month": "MDL",
-        "rows": 98582,
-        "uniqueMerchants": 8909659
+        "rows": 98744,
+        "uniqueMerchants": 8836416
       },
       {
         "source": "gtv_currency",
         "month": "BWP",
-        "rows": 64641,
-        "uniqueMerchants": 8814849
+        "rows": 63472,
+        "uniqueMerchants": 8776099
       },
       {
         "source": "gtv_currency",
         "month": "NAD",
-        "rows": 58573,
-        "uniqueMerchants": 8356139
+        "rows": 58018,
+        "uniqueMerchants": 8301963
       },
       {
         "source": "gtv_currency",
         "month": "PAB",
-        "rows": 376033,
-        "uniqueMerchants": 6614435
+        "rows": 377768,
+        "uniqueMerchants": 6603115
       },
       {
         "source": "gtv_currency",
         "month": "SEK",
-        "rows": 14509,
-        "uniqueMerchants": 6495811
+        "rows": 14700,
+        "uniqueMerchants": 6570014
       },
       {
         "source": "gtv_currency",
         "month": "LRD",
-        "rows": 10013,
-        "uniqueMerchants": 6323892
+        "rows": 9831,
+        "uniqueMerchants": 6288212
       },
       {
         "source": "gtv_currency",
         "month": "BZD",
-        "rows": 140340,
-        "uniqueMerchants": 6159421
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KWD",
-        "rows": 277968,
-        "uniqueMerchants": 5200484
+        "rows": 140537,
+        "uniqueMerchants": 6162160
       },
       {
         "source": "gtv_currency",
         "month": "MOP",
-        "rows": 45172,
-        "uniqueMerchants": 5105995
+        "rows": 45192,
+        "uniqueMerchants": 5057476
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KWD",
+        "rows": 278212,
+        "uniqueMerchants": 5032819
       },
       {
         "source": "gtv_currency",
         "month": "BND",
-        "rows": 384558,
-        "uniqueMerchants": 4252592
+        "rows": 386369,
+        "uniqueMerchants": 4245014
       },
       {
         "source": "gtv_currency",
         "month": "TJS",
-        "rows": 36210,
-        "uniqueMerchants": 4128310
+        "rows": 36249,
+        "uniqueMerchants": 4102197
       },
       {
         "source": "gtv_currency",
         "month": "BGN",
-        "rows": 2561,
-        "uniqueMerchants": 3743879
+        "rows": 2549,
+        "uniqueMerchants": 3763665
       },
       {
         "source": "gtv_currency",
         "month": "AWG",
-        "rows": 90407,
-        "uniqueMerchants": 3555641
+        "rows": 89772,
+        "uniqueMerchants": 3510500
       },
       {
         "source": "gtv_currency",
         "month": "ANG",
-        "rows": 66503,
-        "uniqueMerchants": 3433955
+        "rows": 65808,
+        "uniqueMerchants": 3379153
       },
       {
         "source": "gtv_currency",
         "month": "AZN",
-        "rows": 29530,
-        "uniqueMerchants": 3046740
+        "rows": 29582,
+        "uniqueMerchants": 2993183
       },
       {
         "source": "gtv_currency",
         "month": "BAM",
-        "rows": 2208,
-        "uniqueMerchants": 2290863
+        "rows": 2132,
+        "uniqueMerchants": 2291931
       },
       {
         "source": "gtv_currency",
         "month": "KYD",
-        "rows": 70033,
-        "uniqueMerchants": 2037970
+        "rows": 69547,
+        "uniqueMerchants": 2017543
       },
       {
         "source": "gtv_currency",
         "month": "STN",
-        "rows": 3683,
-        "uniqueMerchants": 1782931
+        "rows": 3759,
+        "uniqueMerchants": 1782566
       },
       {
         "source": "gtv_currency",
         "month": "BHD",
-        "rows": 104868,
-        "uniqueMerchants": 1750978
+        "rows": 104873,
+        "uniqueMerchants": 1752960
       },
       {
         "source": "gtv_currency",
         "month": "NOK",
-        "rows": 6515,
-        "uniqueMerchants": 1597020
+        "rows": 6528,
+        "uniqueMerchants": 1592669
       },
       {
         "source": "gtv_currency",
         "month": "XCG",
-        "rows": 50329,
-        "uniqueMerchants": 1477705
+        "rows": 49992,
+        "uniqueMerchants": 1457453
       },
       {
         "source": "gtv_currency",
         "month": "SZL",
-        "rows": 8630,
-        "uniqueMerchants": 1393056
+        "rows": 8815,
+        "uniqueMerchants": 1389435
       },
       {
         "source": "gtv_currency",
         "month": "SBD",
-        "rows": 42495,
-        "uniqueMerchants": 1283202
+        "rows": 42348,
+        "uniqueMerchants": 1286500
       },
       {
         "source": "gtv_currency",
         "month": "SVC",
-        "rows": 153,
-        "uniqueMerchants": 1062661
+        "rows": 163,
+        "uniqueMerchants": 1115611
       },
       {
         "source": "gtv_currency",
         "month": "WST",
-        "rows": 16729,
-        "uniqueMerchants": 964355
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TOP",
-        "rows": 20459,
-        "uniqueMerchants": 697161
+        "rows": 16765,
+        "uniqueMerchants": 971720
       },
       {
         "source": "gtv_currency",
         "month": "BMD",
-        "rows": 12175,
-        "uniqueMerchants": 671882
+        "rows": 12621,
+        "uniqueMerchants": 699695
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TOP",
+        "rows": 21334,
+        "uniqueMerchants": 699454
       },
       {
         "source": "gtv_currency",
         "month": "FJD",
-        "rows": 25556,
-        "uniqueMerchants": 603393
+        "rows": 25205,
+        "uniqueMerchants": 544495
       },
       {
         "source": "gtv_currency",
         "month": "KMF",
-        "rows": 346,
-        "uniqueMerchants": 537794
+        "rows": 345,
+        "uniqueMerchants": 537444
       },
       {
         "source": "gtv_currency",
         "month": "GIP",
-        "rows": 11395,
-        "uniqueMerchants": 260393
+        "rows": 11097,
+        "uniqueMerchants": 250139
       },
       {
         "source": "gtv_currency",
         "month": "TMT",
-        "rows": 1377,
-        "uniqueMerchants": 238041
+        "rows": 1357,
+        "uniqueMerchants": 246375
       },
       {
         "source": "gtv_currency",
         "month": "FKP",
-        "rows": 70,
-        "uniqueMerchants": 17444
+        "rows": 68,
+        "uniqueMerchants": 13433
       },
       {
         "source": "gtv_currency",
         "month": "HRK",
-        "rows": 2056,
-        "uniqueMerchants": 6790
+        "rows": 2067,
+        "uniqueMerchants": 6806
       },
       {
         "source": "gtv_null_pct",
         "month": "null_vs_total",
-        "uniqueMerchants": 251186500
+        "uniqueMerchants": 250860224
       }
     ],
     "revenueDiag": {
-      "totalRows": 1017925,
-      "currentYearRows": 87304,
-      "currentYearAmount": 216818307,
+      "totalRows": 1018605,
+      "currentYearRows": 87984,
+      "currentYearAmount": 218439712,
       "minDate": "2018-04-06 05:50:52.000",
-      "maxDate": "2026-05-03 11:07:17.000"
+      "maxDate": "2026-05-04 11:04:28.000"
     },
     "revenueSample": [
       {
-        "amount_paid": 1500,
-        "total": 1500,
-        "currency": "USD",
-        "date": "2026-05-03 11:07:17.000"
-      },
-      {
         "amount_paid": 500,
         "total": 500,
-        "currency": "GBP",
-        "date": "2026-05-03 11:01:13.000"
+        "currency": "USD",
+        "date": "2026-05-04 11:04:28.000"
       },
       {
-        "total": 442,
+        "amount_paid": 2500,
+        "total": 2500,
         "currency": "USD",
-        "date": "2026-05-03 10:57:06.000"
+        "date": "2026-05-04 11:03:11.000"
       },
       {
-        "amount_paid": 1000,
-        "total": 1000,
+        "amount_paid": 5600,
+        "total": 5600,
         "currency": "USD",
-        "date": "2026-05-03 10:56:41.000"
+        "date": "2026-05-04 10:58:22.000"
       },
       {
-        "amount_due": 2000,
-        "total": 2000,
-        "currency": "USD",
-        "date": "2026-05-03 10:55:24.000"
+        "amount_paid": 605,
+        "total": 605,
+        "currency": "EUR",
+        "date": "2026-05-04 10:57:36.000"
+      },
+      {
+        "amount_paid": 1815,
+        "total": 1815,
+        "currency": "EUR",
+        "date": "2026-05-04 10:56:12.000"
       }
     ],
     "incompleteMonthsNulled": [
