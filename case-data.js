@@ -91779,26 +91779,26 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Nov",
       "Dec",
       "Jan",
       "Feb",
       "Mar",
-      "Apr"
+      "Apr",
+      "May"
     ],
     "googlePlay": [
-      4.71,
       4.72,
       4.74,
       4.76,
       4.8,
+      4.9,
       4.9
     ],
     "appStore": [
-      4.76,
       4.77,
       4.78,
       4.79,
+      4.7,
       4.7,
       4.7
     ]
@@ -91806,43 +91806,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3078,
+      "mentions": 3142,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2124,
+      "mentions": 2187,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1689,
+      "mentions": 1724,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1356,
+      "mentions": 1398,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 1004,
+      "mentions": 1031,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 738,
+      "mentions": 762,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 552,
+      "mentions": 571,
       "type": "neg",
       "key": "sync"
     }
@@ -91851,343 +91851,343 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "10M+",
       "trend": [
-        960000,
         1010000,
         1045000,
         1070000,
         1095000,
-        1120000
+        1120000,
+        1148000
       ]
     },
     "appStore": {
       "total": "2M+",
       "trend": [
-        205000,
         215000,
         222000,
         228000,
         234000,
-        240000
+        240000,
+        247000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
       {
-        "author": "AccessoriesPH",
+        "author": "RetailPH",
         "country": "PH",
         "region": "asia",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "free-value"
         ],
-        "text": "Absolutely the best POS app out there. Free with API access and human support agents to help solve problems. Running two branches smoothly."
+        "text": "Loyverse has been a big help to our business. The system is easy to use, reliable, and perfect for managing sales and inventory. Support team is very fast and helpful."
       },
       {
-        "author": "BakeryTH",
+        "author": "CoffeeTH",
         "country": "TH",
         "region": "asia",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
           "ease-of-use"
         ],
-        "text": "Best POS app I have tried so far. Never had any issues and the features are quite complete. Barcode scanning and stock tracking work perfectly."
+        "text": "Downloaded several apps to test and Loyverse had so many features and was easy to set up. Barcode scanning and real-time stock updates work flawlessly across two devices."
       },
       {
-        "author": "JuiceBarUS",
+        "author": "SnackBarUS",
         "country": "US",
         "region": "north_america",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
           "reporting"
         ],
-        "text": "Compared 17 POS systems across 100 factors and Loyverse was the best based on price, features, support, and simplicity. Sales breakdowns are incredibly useful."
+        "text": "Compared over a dozen POS systems and Loyverse came out on top for price, features, and simplicity. Sales tracking by item and payment type is incredibly useful."
       },
       {
-        "author": "GadgetsMY",
+        "author": "AccessoriesMY",
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "inventory"
         ],
-        "text": "Set up 500 products using the back office in one sitting. Part-time staff have zero issues. The loyalty program builds repeat customers at no extra cost."
+        "text": "Loaded 600+ products through the back office CSV import. Part-time staff learn the register in minutes. Loyalty rewards keep customers coming back."
       },
       {
-        "author": "SpiceSA",
-        "country": "SA",
+        "author": "GroceryAE",
+        "country": "AE",
         "region": "middle_east",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "reporting",
           "free-value"
         ],
-        "text": "Real-time sales insights, hourly trends, profit margins — all free. My accountant is impressed with the export options. Great value for money."
+        "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. Export to Excel saves my accountant hours each month."
       },
       {
-        "author": "PubOwnerUK",
-        "country": "GB",
+        "author": "PubOwnerIE",
+        "country": "IE",
         "region": "europe",
         "rating": 4,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "ease-of-use"
         ],
-        "text": "Clean interface and rock solid day to day. Would love table management and tipping support on Android but cannot argue with the price."
+        "text": "Solid daily driver with a clean UI. Would love table-side ordering and tip splitting on Android. Still unbeatable at this price point."
       },
       {
-        "author": "TiendaMX",
+        "author": "FerreteriaMX",
         "country": "MX",
         "region": "north_america",
         "rating": 4,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
         ],
-        "text": "Inventory tracking works well but low-stock alerts need improvement. Auto reorder suggestions would save time. Still the best free option around."
+        "text": "Inventory management handles our hardware store well. Low-stock notifications could be smarter — would love automatic reorder points. Best free option available."
       },
       {
-        "author": "NoodleSG",
+        "author": "RamenSG",
         "country": "SG",
         "region": "asia",
         "rating": 3,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
         ],
-        "text": "Sync between tablet and phone lags during peak hours. A quick restart fixes it but costs valuable time during lunch rush."
+        "text": "Occasional lag when syncing between tablet and phone during peak lunch rush. A restart resolves it but costs valuable minutes during service."
       },
       {
-        "author": "VinylShopDE",
+        "author": "BookshopDE",
         "country": "DE",
         "region": "europe",
         "rating": 2,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
         ],
-        "text": "Receipt printer issue unresolved after multiple emails over 2 weeks. Responses are generic FAQ links that do not address the actual problem."
+        "text": "Barcode scanner pairing issue unresolved after two weeks of emails. Support responses feel templated and do not address the specific hardware problem."
       },
       {
-        "author": "ClinicMM",
+        "author": "SalonMM",
         "country": "MM",
         "region": "asia",
         "rating": 2,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support",
           "sync"
         ],
-        "text": "Inventory sync between registers keeps breaking during busy periods. Support ticket open 2 weeks with no meaningful resolution offered."
+        "text": "Product sync between locations breaks intermittently during peak hours. Support ticket sat open for 10 days before getting a meaningful reply."
       },
       {
-        "author": "TapasES",
+        "author": "TapasBCN",
         "country": "ES",
         "region": "europe",
         "rating": 1,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
         ],
-        "text": "Android version lacks integration with EFTPOS machines that iOS supports. Documentation is outdated and support sends copy-paste replies."
+        "text": "Android still missing EFTPOS integrations that iOS has had for months. Help docs reference old screens. Support replies feel copy-pasted."
       },
       {
-        "author": "DeliUS",
+        "author": "SandwichUS",
         "country": "US",
         "region": "north_america",
         "rating": 2,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
           "customer-support"
         ],
-        "text": "Add-on costs add up fast with multiple employees. Payment fees not transparent upfront. Support response took over a week to arrive."
+        "text": "Add-on costs pile up when you need employee management and analytics. Payment processing fees not clear upfront. Waited 8 days for a support reply."
       },
       {
-        "author": "CurryTH",
+        "author": "NoodleTH",
         "country": "TH",
         "region": "asia",
         "rating": 1,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
           "customer-support"
         ],
-        "text": "Kitchen display lost connection during dinner service. Orders disappeared and customers waited. Bug reported weeks ago with no fix yet."
+        "text": "Kitchen display dropped orders mid-service again. Customers left waiting while we scrambled. Bug reported three weeks ago with zero resolution."
       }
     ],
     "appStore": [
       {
-        "author": "BoutiqueNYC",
+        "author": "BoutiqueATX",
         "country": "US",
         "region": "north_america",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "free-value"
         ],
-        "text": "Stumbled on this app after hearing someone recommend it. Very user friendly for my boutique and can be easily integrated for further expansion."
+        "text": "A friend recommended this app for my boutique and it has been a life saver. Very user friendly and easily integrated for further expansion. Sharing it with other businesses."
       },
       {
-        "author": "CafeMelb",
+        "author": "CafeSydney",
         "country": "AU",
         "region": "oceania",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
           "ease-of-use"
         ],
-        "text": "Three years running my cafe on Loyverse. Free, reliable, staff picks it up instantly. Hands down the best value POS available."
+        "text": "Square dropped us after nearly 8 years and finding Loyverse has been great. Free, rock solid, and my baristas pick it up on day one."
       },
       {
-        "author": "ShopMY",
+        "author": "MartMY",
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
           "reporting"
         ],
-        "text": "Managing 5 locations with multi-store inventory sync and per-location reports. This would cost hundreds per month with any competitor."
+        "text": "Running 4 locations with per-store inventory and consolidated reports. Any competitor would charge hundreds per month for this functionality."
       },
       {
-        "author": "HealthFoodCA",
+        "author": "OrganicCA",
         "country": "CA",
         "region": "north_america",
         "rating": 5,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "free-value"
         ],
-        "text": "Simple, clean, and actually free. Set up my shop in under an hour. The loyalty program is a fantastic way to build customer relationships."
+        "text": "Set up our health food shop in under an hour. The built-in loyalty program drives repeat visits at no additional cost. Clean and intuitive."
       },
       {
-        "author": "BistroVA",
+        "author": "BistroSF",
         "country": "US",
         "region": "north_america",
         "rating": 4,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "positive",
         "themes": [
           "reporting"
         ],
-        "text": "New hires learn the system in 15 minutes. Sales reports are accurate and real-time. Would be 5 stars if the analytics add-on were included."
+        "text": "Staff training takes 10 minutes flat. Sales reports by time frame and payment type are accurate and real-time. Would be perfect with the analytics add-on included."
       },
       {
-        "author": "GroceryPH",
+        "author": "SariSariPH",
         "country": "PH",
         "region": "asia",
         "rating": 4,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
         ],
-        "text": "One of the best ERP software for small scale industries. Not as easy to configure for bulk imports but very solid once set up."
+        "text": "Suits our small church bingo operation very well. Suggestions we had for other apps were already available here. Would love more reporting options and offline access."
       },
       {
         "author": "BarberUK",
         "country": "GB",
         "region": "europe",
         "rating": 3,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "payment-integration"
         ],
-        "text": "POS features excellent for tracking sales. Setting up integrated card payments was confusing — needs better step-by-step guidance for SumUp."
+        "text": "POS tracking is excellent but setting up SumUp card payments was confusing. Needs clearer step-by-step onboarding for payment integrations."
       },
       {
-        "author": "MarketTH",
+        "author": "NightMarketTH",
         "country": "TH",
         "region": "asia",
         "rating": 3,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
         ],
-        "text": "Items sometimes take over a minute to sync across devices. During busy market nights this leads to duplicate entries and confusion."
+        "text": "Item sync across devices can take over a minute during busy market evenings. Leads to occasional duplicate entries and customer confusion."
       },
       {
-        "author": "PatisserieFR",
+        "author": "BoulangerieFR",
         "country": "FR",
         "region": "europe",
         "rating": 2,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
         ],
-        "text": "Chat support only available with paid add-ons. Free users rely on help section and peer forum. Register crashed Friday, not resolved until Thursday."
+        "text": "Chat support locked behind paid add-ons. Free users get help articles and a peer forum. Register crashed Friday and was not resolved until the following week."
       },
       {
-        "author": "FarmStandUS",
+        "author": "FarmMarketUS",
         "country": "US",
         "region": "north_america",
         "rating": 1,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
           "customer-support"
         ],
-        "text": "Card reader stopped working on a busy Saturday. No live support channel available. Lost an entire day of card sales waiting for email reply."
+        "text": "Card reader died on a busy Saturday morning. No phone or live chat support available. Lost an entire day of card sales waiting on email."
       },
       {
-        "author": "DumplingsSG",
+        "author": "DimSumSG",
         "country": "SG",
         "region": "asia",
         "rating": 2,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
           "customer-support"
         ],
-        "text": "Kitchen display updates unreliable — restarted the app multiple times this week. Support ticket open 10 days with no resolution in sight."
+        "text": "Kitchen display drops orders intermittently. Restarted the app several times this week alone. Support ticket open 12 days with no real resolution."
       },
       {
-        "author": "CocinaAR",
-        "country": "AR",
+        "author": "AsadoBR",
+        "country": "BR",
         "region": "south_america",
         "rating": 1,
-        "date": "Apr 2026",
+        "date": "May 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
         ],
-        "text": "Payment setup documentation references screens that no longer exist in the app. Requires their servers to fully use the app which feels limiting."
+        "text": "Payment setup docs reference UI screens that no longer exist in the current app version. Server dependency makes offline use very limited."
       }
     ]
   },
