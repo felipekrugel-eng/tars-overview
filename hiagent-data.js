@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-05-07T11:02:02Z
+// Last sync: 2026-05-29T11:02:13Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-05-07T11:02:02Z",
+  lastSync: "2026-05-29T11:02:13Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-01T15:36:24.764Z",
-      nextRunAt: "2026-05-08T15:39:14.000Z"
+      lastRunAt: "2026-05-22T15:39:20.437Z",
+      nextRunAt: "2026-05-29T15:39:14.000Z"
     },
     {
       id: "monday-action-reminder",
@@ -27,8 +27,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-04T09:05:10.062Z",
-      nextRunAt: "2026-05-11T09:05:39.000Z"
+      lastRunAt: "2026-05-27T09:10:11.273Z",
+      nextRunAt: "2026-06-01T09:05:39.000Z"
     },
     {
       id: "thursday-meeting-preview",
@@ -39,8 +39,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-30T15:03:45.867Z",
-      nextRunAt: "2026-05-07T15:03:32.000Z"
+      lastRunAt: "2026-05-28T15:04:18.156Z",
+      nextRunAt: "2026-06-04T15:03:32.000Z"
     },
     {
       id: "session-07-archive",
@@ -75,8 +75,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-04T08:05:39.253Z",
-      nextRunAt: "2026-05-11T08:06:26.000Z"
+      lastRunAt: "2026-05-27T09:10:11.392Z",
+      nextRunAt: "2026-06-01T08:06:26.000Z"
     },
     {
       id: "weekly-strategy-tracker-update",
@@ -87,8 +87,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-01T18:01:06.394Z",
-      nextRunAt: "2026-05-08T18:04:44.000Z"
+      lastRunAt: "2026-05-22T18:04:53.376Z",
+      nextRunAt: "2026-05-29T18:04:44.000Z"
     },
     {
       id: "daily-completion-check",
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-06T16:07:58.514Z",
-      nextRunAt: "2026-05-07T16:07:02.000Z"
+      lastRunAt: "2026-05-28T16:07:48.332Z",
+      nextRunAt: "2026-05-29T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-06T16:54:05.537Z",
-      nextRunAt: "2026-05-07T16:53:08.000Z"
+      lastRunAt: "2026-05-28T16:53:54.383Z",
+      nextRunAt: "2026-05-29T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -123,8 +123,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-05-03T19:05:31.654Z",
-      nextRunAt: "2026-05-10T19:06:11.000Z"
+      lastRunAt: "2026-05-27T09:10:11.459Z",
+      nextRunAt: "2026-05-31T19:06:11.000Z"
     },
     {
       id: "weekly-mem-update",
@@ -135,8 +135,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-05-01T19:04:32.597Z",
-      nextRunAt: "2026-05-08T19:09:01.000Z"
+      lastRunAt: "2026-05-22T19:13:06.967Z",
+      nextRunAt: "2026-05-29T19:09:01.000Z"
     },
     {
       id: "appstore-data-pull",
@@ -147,8 +147,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: "2026-05-04T08:05:39.453Z",
-      nextRunAt: "2026-05-11T08:00:58.000Z"
+      lastRunAt: "2026-05-27T09:10:12.021Z",
+      nextRunAt: "2026-06-01T08:00:58.000Z"
     },
     {
       id: "thursday-strategy-deck",
@@ -159,8 +159,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-30T15:32:24.501Z",
-      nextRunAt: "2026-05-07T15:32:11.000Z"
+      lastRunAt: "2026-05-28T15:32:57.399Z",
+      nextRunAt: "2026-06-04T15:32:11.000Z"
     },
     {
       id: "hiagent-monitor",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-05-07T11:01:00.198Z",
-      nextRunAt: "2026-05-08T11:00:45.000Z"
+      lastRunAt: "2026-05-29T11:00:46.660Z",
+      nextRunAt: "2026-05-30T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -183,8 +183,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-01T17:32:58.971Z",
-      nextRunAt: "2026-05-08T17:34:09.000Z"
+      lastRunAt: "2026-05-22T17:34:18.051Z",
+      nextRunAt: "2026-05-29T17:34:09.000Z"
     },
     {
       id: "case-snowflake-pull",
@@ -207,8 +207,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-06T15:01:27.887Z",
-      nextRunAt: "2026-05-07T15:01:14.000Z"
+      lastRunAt: "2026-05-28T15:02:00.319Z",
+      nextRunAt: "2026-06-01T15:01:14.000Z"
     },
     {
       id: "weekly-payments-briefing",
@@ -219,8 +219,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-04-30T18:02:54.297Z",
-      nextRunAt: "2026-05-07T18:09:02.000Z"
+      lastRunAt: "2026-05-28T18:09:48.457Z",
+      nextRunAt: "2026-06-04T18:09:02.000Z"
     }
   ],
 
