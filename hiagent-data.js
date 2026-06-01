@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-05-29T11:02:13Z
+// Last sync: 2026-06-01T11:02:38Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-05-29T11:02:13Z",
+  lastSync: "2026-06-01T11:02:38Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-22T15:39:20.437Z",
-      nextRunAt: "2026-05-29T15:39:14.000Z"
+      lastRunAt: "2026-05-29T15:41:07.406Z",
+      nextRunAt: "2026-06-05T15:39:14.000Z"
     },
     {
       id: "monday-action-reminder",
@@ -27,8 +27,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-27T09:10:11.273Z",
-      nextRunAt: "2026-06-01T09:05:39.000Z"
+      lastRunAt: "2026-06-01T09:15:00.219Z",
+      nextRunAt: "2026-06-08T09:05:39.000Z"
     },
     {
       id: "thursday-meeting-preview",
@@ -75,8 +75,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-27T09:10:11.392Z",
-      nextRunAt: "2026-06-01T08:06:26.000Z"
+      lastRunAt: "2026-06-01T08:03:01.189Z",
+      nextRunAt: "2026-06-08T08:06:26.000Z"
     },
     {
       id: "weekly-strategy-tracker-update",
@@ -87,8 +87,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-22T18:04:53.376Z",
-      nextRunAt: "2026-05-29T18:04:44.000Z"
+      lastRunAt: "2026-05-29T18:02:37.269Z",
+      nextRunAt: "2026-06-05T18:04:44.000Z"
     },
     {
       id: "daily-completion-check",
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-28T16:07:48.332Z",
-      nextRunAt: "2026-05-29T16:07:02.000Z"
+      lastRunAt: "2026-05-29T16:08:48.002Z",
+      nextRunAt: "2026-06-01T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-28T16:53:54.383Z",
-      nextRunAt: "2026-05-29T16:53:08.000Z"
+      lastRunAt: "2026-05-31T16:50:46.936Z",
+      nextRunAt: "2026-06-01T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -123,8 +123,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-05-27T09:10:11.459Z",
-      nextRunAt: "2026-05-31T19:06:11.000Z"
+      lastRunAt: "2026-05-31T19:03:07.849Z",
+      nextRunAt: "2026-06-07T19:06:11.000Z"
     },
     {
       id: "weekly-mem-update",
@@ -135,8 +135,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-05-22T19:13:06.967Z",
-      nextRunAt: "2026-05-29T19:09:01.000Z"
+      lastRunAt: "2026-05-29T19:01:20.520Z",
+      nextRunAt: "2026-06-05T19:09:01.000Z"
     },
     {
       id: "appstore-data-pull",
@@ -147,8 +147,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: "2026-05-27T09:10:12.021Z",
-      nextRunAt: "2026-06-01T08:00:58.000Z"
+      lastRunAt: "2026-06-01T08:03:01.380Z",
+      nextRunAt: "2026-06-08T08:00:58.000Z"
     },
     {
       id: "thursday-strategy-deck",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-05-29T11:00:46.660Z",
-      nextRunAt: "2026-05-30T11:00:45.000Z"
+      lastRunAt: "2026-06-01T11:01:17.372Z",
+      nextRunAt: "2026-06-02T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -183,8 +183,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-05-22T17:34:18.051Z",
-      nextRunAt: "2026-05-29T17:34:09.000Z"
+      lastRunAt: "2026-05-29T17:32:10.461Z",
+      nextRunAt: "2026-06-05T17:34:09.000Z"
     },
     {
       id: "case-snowflake-pull",
