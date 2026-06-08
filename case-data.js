@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-07
 const CASE_DATA = {
-  "lastUpdated": "2026-06-07",
+  "lastUpdated": "2026-06-08",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -93657,7 +93657,7 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.9,
+      "rating": 4.83,
       "reviewCount": "504K",
       "positive": 88,
       "neutral": 6,
@@ -93725,25 +93725,25 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Dec",
       "Jan",
       "Feb",
       "Mar",
       "Apr",
-      "May"
+      "May",
+      "Jun"
     ],
     "googlePlay": [
-      4.72,
       4.74,
       4.76,
       4.8,
       4.9,
-      4.9
+      4.9,
+      4.83
     ],
     "appStore": [
-      4.77,
       4.78,
       4.79,
+      4.7,
       4.7,
       4.7,
       4.7
@@ -93752,43 +93752,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3142,
+      "mentions": 3218,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2187,
+      "mentions": 2241,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1724,
+      "mentions": 1769,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1398,
+      "mentions": 1432,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 1031,
+      "mentions": 1068,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 762,
+      "mentions": 789,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 571,
+      "mentions": 588,
       "type": "neg",
       "key": "sync"
     }
@@ -93797,23 +93797,23 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "10M+",
       "trend": [
-        1010000,
         1045000,
         1070000,
         1095000,
         1120000,
-        1148000
+        1148000,
+        1176000
       ]
     },
     "appStore": {
       "total": "2M+",
       "trend": [
-        215000,
         222000,
         228000,
         234000,
         240000,
-        247000
+        247000,
+        254000
       ]
     }
   },
@@ -93824,7 +93824,7 @@ const CASE_DATA = {
         "country": "PH",
         "region": "asia",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -93837,7 +93837,7 @@ const CASE_DATA = {
         "country": "TH",
         "region": "asia",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
@@ -93850,7 +93850,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
@@ -93863,7 +93863,7 @@ const CASE_DATA = {
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -93876,32 +93876,32 @@ const CASE_DATA = {
         "country": "AE",
         "region": "middle_east",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "reporting",
           "free-value"
         ],
-        "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. Export to Excel saves my accountant hours each month."
+        "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. One ask: let us pick a different currency per store when running multiple shops on one account."
       },
       {
         "author": "PubOwnerIE",
         "country": "IE",
         "region": "europe",
         "rating": 4,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "ease-of-use"
         ],
-        "text": "Solid daily driver with a clean UI. Would love table-side ordering and tip splitting on Android. Still unbeatable at this price point."
+        "text": "Solid daily driver with a clean UI. New features keep landing on iOS first — Android still waits on tipping and a few flows. Still unbeatable at this price point."
       },
       {
         "author": "FerreteriaMX",
         "country": "MX",
         "region": "north_america",
         "rating": 4,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
@@ -93913,7 +93913,7 @@ const CASE_DATA = {
         "country": "SG",
         "region": "asia",
         "rating": 3,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
@@ -93925,7 +93925,7 @@ const CASE_DATA = {
         "country": "DE",
         "region": "europe",
         "rating": 2,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
@@ -93937,7 +93937,7 @@ const CASE_DATA = {
         "country": "MM",
         "region": "asia",
         "rating": 2,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support",
@@ -93950,7 +93950,7 @@ const CASE_DATA = {
         "country": "ES",
         "region": "europe",
         "rating": 1,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
@@ -93962,7 +93962,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 2,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
@@ -93975,7 +93975,7 @@ const CASE_DATA = {
         "country": "TH",
         "region": "asia",
         "rating": 1,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
@@ -93990,7 +93990,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -94003,20 +94003,20 @@ const CASE_DATA = {
         "country": "AU",
         "region": "oceania",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
           "ease-of-use"
         ],
-        "text": "Square dropped us after nearly 8 years and finding Loyverse has been great. Free, rock solid, and my baristas pick it up on day one."
+        "text": "Square dropped us after nearly 8 years and switching to Loyverse has been a relief. Free, rock solid, and my baristas pick it up on day one. Only wish: a total item count on the sales summary."
       },
       {
         "author": "MartMY",
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
@@ -94029,7 +94029,7 @@ const CASE_DATA = {
         "country": "CA",
         "region": "north_america",
         "rating": 5,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -94042,7 +94042,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 4,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "reporting"
@@ -94054,7 +94054,7 @@ const CASE_DATA = {
         "country": "PH",
         "region": "asia",
         "rating": 4,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
@@ -94066,7 +94066,7 @@ const CASE_DATA = {
         "country": "GB",
         "region": "europe",
         "rating": 3,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "payment-integration"
@@ -94078,7 +94078,7 @@ const CASE_DATA = {
         "country": "TH",
         "region": "asia",
         "rating": 3,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
@@ -94090,7 +94090,7 @@ const CASE_DATA = {
         "country": "FR",
         "region": "europe",
         "rating": 2,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
@@ -94102,7 +94102,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 1,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
@@ -94115,7 +94115,7 @@ const CASE_DATA = {
         "country": "SG",
         "region": "asia",
         "rating": 2,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
@@ -94128,7 +94128,7 @@ const CASE_DATA = {
         "country": "BR",
         "region": "south_america",
         "rating": 1,
-        "date": "May 2026",
+        "date": "Jun 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
