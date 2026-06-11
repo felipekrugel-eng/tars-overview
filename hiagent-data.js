@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-06-10T11:02:11Z
+// Last sync: 2026-06-11T16:53:44Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-06-10T11:02:11Z",
+  lastSync: "2026-06-11T16:53:44Z",
 
   tasks: [
     {
@@ -39,8 +39,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-04T15:04:11.888Z",
-      nextRunAt: "2026-06-11T15:03:32.000Z"
+      lastRunAt: "2026-06-11T16:44:42.335Z",
+      nextRunAt: "2026-06-18T15:03:32.000Z"
     },
     {
       id: "session-07-archive",
@@ -94,13 +94,13 @@ const HIAGENT_DATA = {
       id: "daily-completion-check",
       name: "Daily Completion Check",
       description: "Daily 5 PM — Scan #strategy-feed for completed actions and new signals, update tracker and initiative health indicators",
-      schedule: "Daily 5 PM (Mon-Fri)",
+      schedule: "Daily 5 PM (Mon–Fri)",
       cron: "0 17 * * 1-5",
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-09T16:07:46.959Z",
-      nextRunAt: "2026-06-10T16:07:02.000Z"
+      lastRunAt: "2026-06-11T16:44:42.819Z",
+      nextRunAt: "2026-06-12T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-09T16:53:52.921Z",
-      nextRunAt: "2026-06-10T16:53:08.000Z"
+      lastRunAt: "2026-06-11T16:49:48.144Z",
+      nextRunAt: "2026-06-12T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -159,8 +159,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-04T15:32:51.165Z",
-      nextRunAt: "2026-06-11T15:32:11.000Z"
+      lastRunAt: "2026-06-11T16:44:43.231Z",
+      nextRunAt: "2026-06-18T15:32:11.000Z"
     },
     {
       id: "hiagent-monitor",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-06-10T11:01:00.473Z",
-      nextRunAt: "2026-06-11T11:00:45.000Z"
+      lastRunAt: "2026-06-11T16:51:41.889Z",
+      nextRunAt: "2026-06-12T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -202,13 +202,13 @@ const HIAGENT_DATA = {
       id: "daily-simon-briefing",
       name: "Daily Simon Briefing",
       description: "Mon–Thu 4 PM — Fetch daily Felipe × Simon touchpoint transcript from Fireflies, generate briefing note in Mem, and save archive files locally for manual upload to Google Drive",
-      schedule: "Mon-Thu 4 PM",
+      schedule: "Mon–Thu 4 PM",
       cron: "0 16 * * 1-4",
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-09T15:01:58.300Z",
-      nextRunAt: "2026-06-10T15:01:14.000Z"
+      lastRunAt: "2026-06-10T15:01:40.249Z",
+      nextRunAt: "2026-06-15T15:01:14.000Z"
     },
     {
       id: "weekly-payments-briefing",
@@ -221,6 +221,18 @@ const HIAGENT_DATA = {
       enabled: true,
       lastRunAt: "2026-06-04T18:06:03.265Z",
       nextRunAt: "2026-06-11T18:09:02.000Z"
+    },
+    {
+      id: "daily-caio-kpi-digest",
+      name: "Daily Caio KPI Digest",
+      description: "Daily KPI digest for Caio — fetch live data from the Loyverse KPI dashboard and draft a short Gmail email with headline numbers and deltas.",
+      schedule: "Daily 8 AM (Mon–Fri)",
+      cron: "0 8 * * 1-5",
+      cadence: "weekday",
+      owner: "TARS",
+      enabled: true,
+      lastRunAt: "2026-06-11T07:02:43.431Z",
+      nextRunAt: "2026-06-12T07:02:02.000Z"
     }
   ],
 
