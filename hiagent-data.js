@@ -1,16 +1,16 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-06-11T16:53:44Z
+// Last sync: 2026-06-12T11:01:30Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-06-11T16:53:44Z",
+  lastSync: "2026-06-12T11:01:30Z",
 
   tasks: [
     {
       id: "friday-meeting-briefing",
       name: "Friday Meeting Briefing",
       description: "Friday 4:39 PM — Post-session strategic summary: narrative account of what was discussed, decided, and where the team landed, sent as email to leadership and posted to #strategy-feed",
-      schedule: "Friday 4:39 PM",
+      schedule: "Friday 4:30 PM",
       cron: "30 16 * * 5",
       cadence: "weekly-fri",
       owner: "TARS",
@@ -106,7 +106,7 @@ const HIAGENT_DATA = {
       id: "sync-tracker-to-html",
       name: "Sync Tracker to Dashboard",
       description: "Daily 5:53 PM — Regenerate tars-data.js from Google Drive Action Tracker, deploy to GitHub/Netlify. Data file only — never touches index.html.",
-      schedule: "Daily 5:53 PM",
+      schedule: "Daily 5:45 PM",
       cron: "45 17 * * *",
       cadence: "daily",
       owner: "TARS",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-06-11T16:51:41.889Z",
-      nextRunAt: "2026-06-12T11:00:45.000Z"
+      lastRunAt: "2026-06-12T11:00:53.545Z",
+      nextRunAt: "2026-06-13T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -190,7 +190,7 @@ const HIAGENT_DATA = {
       id: "case-snowflake-pull",
       name: "Case Snowflake Pull",
       description: "DISABLED — Snowflake pull now runs via GitHub Actions (daily 6 AM UTC). See .github/workflows/snowflake-pull.yml in tars-overview repo.",
-      schedule: "Daily 6:10 AM",
+      schedule: "Daily 6 AM",
       cron: "0 6 * * *",
       cadence: "daily",
       owner: "TARS",
@@ -207,7 +207,7 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-10T15:01:40.249Z",
+      lastRunAt: "2026-06-11T16:54:41.754Z",
       nextRunAt: "2026-06-15T15:01:14.000Z"
     },
     {
@@ -219,8 +219,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-thu",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-04T18:06:03.265Z",
-      nextRunAt: "2026-06-11T18:09:02.000Z"
+      lastRunAt: "2026-06-11T18:09:58.798Z",
+      nextRunAt: "2026-06-18T18:09:02.000Z"
     },
     {
       id: "daily-caio-kpi-digest",
@@ -231,8 +231,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-11T07:02:43.431Z",
-      nextRunAt: "2026-06-12T07:02:02.000Z"
+      lastRunAt: "2026-06-12T07:04:09.581Z",
+      nextRunAt: "2026-06-15T07:02:02.000Z"
     }
   ],
 
@@ -264,7 +264,6 @@ const HIAGENT_DATA = {
     { name: "skill-creator", category: "Meta" }
   ]
 };
-
 // ─── STATUS CALCULATION ───
 function hiagentCalcStatus(task) {
   if (!task.enabled) return { status: 'disabled', label: 'Disabled', color: '#888' };
