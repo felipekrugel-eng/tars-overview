@@ -1,9 +1,9 @@
 // ─── CASE DATA BLOCK ───────────────────────────────────────────────────────────────
 // Updated by CASE × Snowflake pull. Single source of truth for all dashboard numbers.
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
-// Last pull: 2026-06-14
+// Last pull: 2026-06-15
 const CASE_DATA = {
-  "lastUpdated": "2026-06-14",
+  "lastUpdated": "2026-06-15",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98288,11 +98288,11 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.83,
-      "reviewCount": "504K",
-      "positive": 88,
+      "rating": 4.7,
+      "reviewCount": "512K",
+      "positive": 87,
       "neutral": 6,
-      "negative": 6,
+      "negative": 7,
       "tags": [
         {
           "label": "Easy to use",
@@ -98311,7 +98311,7 @@ const CASE_DATA = {
           "type": "pos"
         },
         {
-          "label": "Support slow",
+          "label": "Android EFTPOS gap",
           "type": "neg"
         },
         {
@@ -98321,11 +98321,11 @@ const CASE_DATA = {
       ]
     },
     "appStore": {
-      "rating": 4.7,
-      "reviewCount": "132K",
-      "positive": 87,
+      "rating": 4.8,
+      "reviewCount": "134K",
+      "positive": 88,
       "neutral": 7,
-      "negative": 6,
+      "negative": 5,
       "tags": [
         {
           "label": "Simple & clean",
@@ -98369,7 +98369,7 @@ const CASE_DATA = {
       4.8,
       4.9,
       4.9,
-      4.83
+      4.7
     ],
     "appStore": [
       4.78,
@@ -98377,49 +98377,49 @@ const CASE_DATA = {
       4.7,
       4.7,
       4.7,
-      4.7
+      4.8
     ]
   },
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3218,
+      "mentions": 3296,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2241,
+      "mentions": 2298,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1769,
+      "mentions": 1811,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1432,
+      "mentions": 1467,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 1068,
+      "mentions": 1109,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 789,
+      "mentions": 831,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 588,
+      "mentions": 609,
       "type": "neg",
       "key": "sync"
     }
@@ -98433,7 +98433,7 @@ const CASE_DATA = {
         1095000,
         1120000,
         1148000,
-        1176000
+        1204000
       ]
     },
     "appStore": {
@@ -98444,7 +98444,7 @@ const CASE_DATA = {
         234000,
         240000,
         247000,
-        254000
+        261000
       ]
     }
   },
@@ -98461,7 +98461,7 @@ const CASE_DATA = {
           "ease-of-use",
           "free-value"
         ],
-        "text": "Loyverse has been a big help to our business. The system is easy to use, reliable, and perfect for managing sales and inventory. Support team is very fast and helpful."
+        "text": "Using Loyverse in my shop for a month and love it. Very easy to use — the free version is great for daily monitoring, and adding a photo to each item makes checkout fast. Back office is best for real-time gross profit and inventory. Advanced features need a subscription after the trial, but you only pay for what you need."
       },
       {
         "author": "CoffeeTH",
@@ -98627,7 +98627,7 @@ const CASE_DATA = {
           "ease-of-use",
           "free-value"
         ],
-        "text": "A friend recommended this app for my boutique and it has been a life saver. Very user friendly and easily integrated for further expansion. Sharing it with other businesses."
+        "text": "Was using another payment brand and POS, but with rising prices I moved to Loyverse. I was apprehensive about switching for all the usual reasons, but it was easy and quick, and it works better. I have it on the terminal, my phone and my iPad. Highly recommend."
       },
       {
         "author": "CafeSydney",
