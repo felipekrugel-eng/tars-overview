@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-06-12T11:01:30Z
+// Last sync: 2026-06-15T11:05:17Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-06-12T11:01:30Z",
+  lastSync: "2026-06-15T11:05:17Z",
 
   tasks: [
     {
@@ -15,8 +15,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-05T15:39:36.888Z",
-      nextRunAt: "2026-06-12T15:39:14.000Z"
+      lastRunAt: "2026-06-12T15:36:52.543Z",
+      nextRunAt: "2026-06-19T15:39:14.000Z"
     },
     {
       id: "monday-action-reminder",
@@ -27,8 +27,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-08T09:03:08.719Z",
-      nextRunAt: "2026-06-15T09:05:39.000Z"
+      lastRunAt: "2026-06-15T09:29:17.906Z",
+      nextRunAt: "2026-06-22T09:05:39.000Z"
     },
     {
       id: "thursday-meeting-preview",
@@ -75,8 +75,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-08T08:03:40.449Z",
-      nextRunAt: "2026-06-15T08:06:26.000Z"
+      lastRunAt: "2026-06-15T09:29:18.162Z",
+      nextRunAt: "2026-06-22T08:06:26.000Z"
     },
     {
       id: "weekly-strategy-tracker-update",
@@ -87,8 +87,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-05T18:05:07.844Z",
-      nextRunAt: "2026-06-12T18:04:44.000Z"
+      lastRunAt: "2026-06-12T18:05:13.913Z",
+      nextRunAt: "2026-06-19T18:04:44.000Z"
     },
     {
       id: "daily-completion-check",
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-11T16:44:42.819Z",
-      nextRunAt: "2026-06-12T16:07:02.000Z"
+      lastRunAt: "2026-06-12T16:07:31.955Z",
+      nextRunAt: "2026-06-15T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-11T16:49:48.144Z",
-      nextRunAt: "2026-06-12T16:53:08.000Z"
+      lastRunAt: "2026-06-14T19:13:05.943Z",
+      nextRunAt: "2026-06-15T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -123,8 +123,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-sun",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-06-07T19:09:56.218Z",
-      nextRunAt: "2026-06-14T19:06:11.000Z"
+      lastRunAt: "2026-06-14T19:06:16.972Z",
+      nextRunAt: "2026-06-21T19:06:11.000Z"
     },
     {
       id: "weekly-mem-update",
@@ -135,8 +135,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "Second Brain",
       enabled: true,
-      lastRunAt: "2026-06-05T19:04:55.547Z",
-      nextRunAt: "2026-06-12T19:09:01.000Z"
+      lastRunAt: "2026-06-12T19:09:31.475Z",
+      nextRunAt: "2026-06-19T19:09:01.000Z"
     },
     {
       id: "appstore-data-pull",
@@ -147,8 +147,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-mon",
       owner: "CASE",
       enabled: true,
-      lastRunAt: "2026-06-08T08:03:40.452Z",
-      nextRunAt: "2026-06-15T08:00:58.000Z"
+      lastRunAt: "2026-06-15T09:29:18.479Z",
+      nextRunAt: "2026-06-22T08:00:58.000Z"
     },
     {
       id: "thursday-strategy-deck",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-06-12T11:00:53.545Z",
-      nextRunAt: "2026-06-13T11:00:45.000Z"
+      lastRunAt: "2026-06-15T11:01:02.466Z",
+      nextRunAt: "2026-06-16T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -183,8 +183,8 @@ const HIAGENT_DATA = {
       cadence: "weekly-fri",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-05T17:34:32.585Z",
-      nextRunAt: "2026-06-12T17:34:09.000Z"
+      lastRunAt: "2026-06-12T17:34:38.676Z",
+      nextRunAt: "2026-06-19T17:34:09.000Z"
     },
     {
       id: "case-snowflake-pull",
@@ -231,8 +231,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-12T07:04:09.581Z",
-      nextRunAt: "2026-06-15T07:02:02.000Z"
+      lastRunAt: "2026-06-15T07:04:46.115Z",
+      nextRunAt: "2026-06-16T07:02:02.000Z"
     }
   ],
 
