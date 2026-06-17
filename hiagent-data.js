@@ -1,9 +1,9 @@
 // HIAgent — Live Agent Registry Data
 // Auto-updated by hiagent-monitor scheduled task
-// Last sync: 2026-06-15T11:05:17Z
+// Last sync: 2026-06-17T11:02:01Z
 
 const HIAGENT_DATA = {
-  lastSync: "2026-06-15T11:05:17Z",
+  lastSync: "2026-06-17T11:02:01Z",
 
   tasks: [
     {
@@ -99,8 +99,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-12T16:07:31.955Z",
-      nextRunAt: "2026-06-15T16:07:02.000Z"
+      lastRunAt: "2026-06-16T16:07:09.582Z",
+      nextRunAt: "2026-06-17T16:07:02.000Z"
     },
     {
       id: "sync-tracker-to-html",
@@ -111,8 +111,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-14T19:13:05.943Z",
-      nextRunAt: "2026-06-15T16:53:08.000Z"
+      lastRunAt: "2026-06-16T16:53:15.727Z",
+      nextRunAt: "2026-06-17T16:53:08.000Z"
     },
     {
       id: "weekly-memory-maintenance",
@@ -171,8 +171,8 @@ const HIAGENT_DATA = {
       cadence: "daily",
       owner: "HIAgent",
       enabled: true,
-      lastRunAt: "2026-06-15T11:01:02.466Z",
-      nextRunAt: "2026-06-16T11:00:45.000Z"
+      lastRunAt: "2026-06-17T11:02:01.000Z",
+      nextRunAt: "2026-06-18T11:00:45.000Z"
     },
     {
       id: "friday-session-archive",
@@ -207,8 +207,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-11T16:54:41.754Z",
-      nextRunAt: "2026-06-15T15:01:14.000Z"
+      lastRunAt: "2026-06-16T15:01:19.201Z",
+      nextRunAt: "2026-06-17T15:01:14.000Z"
     },
     {
       id: "weekly-payments-briefing",
@@ -231,8 +231,8 @@ const HIAGENT_DATA = {
       cadence: "weekday",
       owner: "TARS",
       enabled: true,
-      lastRunAt: "2026-06-15T07:04:46.115Z",
-      nextRunAt: "2026-06-16T07:02:02.000Z"
+      lastRunAt: "2026-06-17T07:02:23.593Z",
+      nextRunAt: "2026-06-18T07:02:02.000Z"
     }
   ],
 
