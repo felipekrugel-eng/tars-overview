@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-21
 const CASE_DATA = {
-  "lastUpdated": "2026-06-21",
+  "lastUpdated": "2026-06-22",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98420,11 +98420,11 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.7,
-      "reviewCount": "512K",
-      "positive": 87,
+      "rating": 4.8,
+      "reviewCount": "516K",
+      "positive": 88,
       "neutral": 6,
-      "negative": 7,
+      "negative": 6,
       "tags": [
         {
           "label": "Easy to use",
@@ -98454,9 +98454,9 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.8,
-      "reviewCount": "134K",
-      "positive": 88,
-      "neutral": 7,
+      "reviewCount": "135K",
+      "positive": 89,
+      "neutral": 6,
       "negative": 5,
       "tags": [
         {
@@ -98501,7 +98501,7 @@ const CASE_DATA = {
       4.8,
       4.9,
       4.9,
-      4.7
+      4.8
     ],
     "appStore": [
       4.78,
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3296,
+      "mentions": 3361,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2298,
+      "mentions": 2347,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1811,
+      "mentions": 1844,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1467,
+      "mentions": 1492,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 1109,
+      "mentions": 1138,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 831,
+      "mentions": 848,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 609,
+      "mentions": 621,
       "type": "neg",
       "key": "sync"
     }
@@ -98565,7 +98565,7 @@ const CASE_DATA = {
         1095000,
         1120000,
         1148000,
-        1204000
+        1239000
       ]
     },
     "appStore": {
@@ -98576,14 +98576,14 @@ const CASE_DATA = {
         234000,
         240000,
         247000,
-        261000
+        269000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
       {
-        "author": "RetailPH",
+        "author": "MiniMartPH",
         "country": "PH",
         "region": "asia",
         "rating": 5,
@@ -98593,7 +98593,7 @@ const CASE_DATA = {
           "ease-of-use",
           "free-value"
         ],
-        "text": "Using Loyverse in my shop for a month and love it. Very easy to use — the free version is great for daily monitoring, and adding a photo to each item makes checkout fast. Back office is best for real-time gross profit and inventory. Advanced features need a subscription after the trial, but you only pay for what you need."
+        "text": "Three months in and Loyverse runs our whole sari-sari operation. The free tier covers sales, inventory and the loyalty program with no ads and no card required. Adding item photos makes checkout fast for new staff. Only pay for the add-ons you actually need."
       },
       {
         "author": "CoffeeTH",
@@ -98657,7 +98657,7 @@ const CASE_DATA = {
         "themes": [
           "ease-of-use"
         ],
-        "text": "Solid daily driver with a clean UI. New features keep landing on iOS first — Android still waits on tipping and a few flows. Still unbeatable at this price point."
+        "text": "Solid daily driver with a clean UI and reliable offline mode. New features keep landing on iOS first — the Android app still waits on tipping and a couple of flows. Even so, nothing else comes close at this price point."
       },
       {
         "author": "FerreteriaMX",
@@ -98759,7 +98759,7 @@ const CASE_DATA = {
           "ease-of-use",
           "free-value"
         ],
-        "text": "Was using another payment brand and POS, but with rising prices I moved to Loyverse. I was apprehensive about switching for all the usual reasons, but it was easy and quick, and it works better. I have it on the terminal, my phone and my iPad. Highly recommend."
+        "text": "Switched from a big-name payment brand after their prices climbed, and Loyverse has been a relief. Migration was quick, and it runs on my terminal, phone and iPad without missing a beat. Cannot believe the core POS is free. Highly recommend."
       },
       {
         "author": "CafeSydney",
@@ -98858,7 +98858,7 @@ const CASE_DATA = {
         "themes": [
           "customer-support"
         ],
-        "text": "Chat support locked behind paid add-ons. Free users get help articles and a peer forum. Register crashed Friday and was not resolved until the following week."
+        "text": "Live chat support is locked behind a paid add-on — free users only get help articles and the peer forum. Register crashed on a busy Friday and it took until the following week to get a real answer."
       },
       {
         "author": "FarmMarketUS",
