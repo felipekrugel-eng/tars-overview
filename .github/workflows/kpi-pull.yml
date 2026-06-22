@@ -1,0 +1,52 @@
+name: kpi-pull
+
+on:
+  schedule:
+    - cron: '0 6,14 * * *'      # 06:00 & 14:00 UTC — tune as needed
+  workflow_dispatch: {}          # manual "Run workflow" button
+
+concurrency:
+  group: kpi-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r kpi-automation/requirements.txt
+
+      - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
+        env:
+          SNOWFLAKE_ACCOUNT:               ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER:                  ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PRIVATE_KEY:           ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE }}
+          SNOWFLAKE_WAREHOUSE:             ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_ROLE:                  ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_DATABASE:              ${{ secrets.SNOWFLAKE_DATABASE }}
+          SNOWFLAKE_SCHEMA:                ${{ secrets.SNOWFLAKE_SCHEMA }}
+          REPO_DIR:   ${{ github.workspace }}
+          SQL_DIR:    ${{ github.workspace }}/kpi-automation/sql
+          DAILY_DIR:  ${{ github.workspace }}/Daily DBs Dash Queries
+          KPIRUN_DIR: ${{ github.workspace }}/kpi_run
+        run: python kpi-automation/run.py
+
+      - name: Commit & push if the data changed
+        run: |
+          git config user.name  "facadash-bot"
+          git config user.email "facadash-bot@users.noreply.github.com"
+          git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js"
+          if git diff --cached --quiet; then
+            echo "No data change — nothing to commit."
+          else
+            git commit -m "chore(kpi): refresh data $(date -u +%FT%TZ)"
+            git push
+          fi
