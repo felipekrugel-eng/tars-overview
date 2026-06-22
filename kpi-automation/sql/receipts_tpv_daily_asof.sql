@@ -21,9 +21,9 @@
 -- =================================================================
 
 WITH snapshots AS (
-    SELECT DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE AS SNAPSHOT_DATE
-    FROM TABLE(GENERATOR(ROWCOUNT => 49))
-    WHERE DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE <= DATE '2026-06-18'
+    SELECT DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE AS SNAPSHOT_DATE
+    FROM TABLE(GENERATOR(ROWCOUNT => 70))
+    WHERE DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE <= CURRENT_DATE()
 ),
 account_meta AS (
     SELECT LOYVERSE_ID,
@@ -80,7 +80,7 @@ flagged AS (
     FROM rsrc r
     JOIN account_meta mm ON mm.LOYVERSE_ID = r.MERCHANT_ID
     WHERE r.RECEIPT_TS IS NOT NULL
-      AND r.RECEIPT_TS::DATE <= DATE '2026-06-18'
+      AND r.RECEIPT_TS::DATE <= CURRENT_DATE()
 ),
 -- ONE hash-aggregation pass, four grains at once (no window sorts):
 --   GID = GROUPING_ID(VIS_DATE, MERCHANT_ID, STORE_ID, EMPLOYEE_ID)
@@ -108,7 +108,7 @@ agg AS (
 events AS (
     SELECT
         COHORT_MONTH, COUNTRY, CALENDAR_MONTH,
-        CASE WHEN DAY < DATE '2026-05-01' THEN DATE '2026-05-01' ELSE DAY END AS EFF_DAY,
+        CASE WHEN DAY < DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())) THEN DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())) ELSE DAY END AS EFF_DAY,
         CASE WHEN GID = 7  THEN CNT ELSE 0 END                              AS INCR_RECEIPTS,
         CASE WHEN GID = 7  THEN AMT ELSE 0 END                              AS INCR_TPV_USD,
         CASE WHEN GID = 11 AND MERCHANT_ID IS NOT NULL THEN 1 ELSE 0 END    AS NEW_MERCHANTS,

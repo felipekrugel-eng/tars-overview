@@ -32,9 +32,9 @@
 
 WITH snapshots AS (
     -- One row per calendar day, 2026-05-01 .. 2026-06-18 (49 days)
-    SELECT DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE AS SNAPSHOT_DATE
-    FROM TABLE(GENERATOR(ROWCOUNT => 49))
-    WHERE DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE <= DATE '2026-06-18'
+    SELECT DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE AS SNAPSHOT_DATE
+    FROM TABLE(GENERATOR(ROWCOUNT => 70))
+    WHERE DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE <= CURRENT_DATE()
 ),
 merchants AS (
     SELECT
@@ -262,7 +262,7 @@ ORDER BY g.SNAPSHOT_DATE, g.COHORT_MONTH, g.MONTH_START;
 --   put it back to 49 for the full month range.
 --
 -- VALIDATION — compare one day to your live query:
---   Add  WHERE g.SNAPSHOT_DATE = DATE '2026-06-18'  is not needed; instead
+--   Add  WHERE g.SNAPSHOT_DATE = CURRENT_DATE()  is not needed; instead
 --   just filter the snapshots CTE to a single day, or run your original
 --   query and compare the 2026-06-18 slice. Small diffs are expected:
 --   this version defines "paid" by PAID_AT (point-in-time) rather than the

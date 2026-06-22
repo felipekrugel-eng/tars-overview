@@ -13,9 +13,9 @@
 -- =================================================================
 
 WITH snapshots AS (
-    SELECT DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE AS SNAPSHOT_DATE
-    FROM TABLE(GENERATOR(ROWCOUNT => 49))          -- TEST: set to 3 first
-    WHERE DATEADD('day', SEQ4(), DATE '2026-05-01')::DATE <= DATE '2026-06-18'
+    SELECT DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE AS SNAPSHOT_DATE
+    FROM TABLE(GENERATOR(ROWCOUNT => 70))          -- TEST: set to 3 first
+    WHERE DATEADD('day', SEQ4(), DATE_TRUNC('MONTH', DATEADD('month', -1, CURRENT_DATE())))::DATE <= CURRENT_DATE()
 ),
 -- Dedup by email x country; registration month = earliest account (OUTPUT-A convention).
 merchants AS (
