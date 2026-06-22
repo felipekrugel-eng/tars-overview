@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse — FACADASH</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="kpi-data.js"></script>
+<script src="daily-history.js"></script>
+<style>
+  :root {
+    --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+    --bg:#EEF2F6; --surface:#FFFFFF; --surface-2:#F4F7FA; --border:#E3E9F0;
+    --muted:#7E8A9A; --faint:#A9B4C2; --green:#1F9D6B; --red:#D2495B; --amber:#E8A317;
+    --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--ink); }
+  .font-num { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+  .pagenav { background:var(--near-black); display:flex; gap:2px; padding:0 24px; }
+  .pagenav a { color:#BBB; text-decoration:none; font-size:12px; font-weight:bold; letter-spacing:1px;
+    text-transform:uppercase; padding:12px 18px; border-bottom:3px solid transparent; }
+  .pagenav a:hover { color:#fff; } .pagenav a.on { color:#fff; border-bottom-color:var(--blue); }
+  .hero { background:linear-gradient(120deg,#1D8FE1,#1578C4); color:#fff; padding:26px 40px 24px; position:relative; overflow:hidden; }
+  .hero .deco { position:absolute; background:rgba(255,255,255,.12); width:120px; height:120px; }
+  .hero .d1 { right:-30px; top:-44px; transform:rotate(12deg); } .hero .d2 { right:74px; top:28px; width:58px; height:58px; background:rgba(180,225,255,.32); transform:rotate(-8deg); }
+  .hero img.logo { position:absolute; top:16px; right:22px; height:42px; }
+  .hero .label { font-size:11px; letter-spacing:4px; text-transform:uppercase; opacity:.9; margin-bottom:7px; }
+  .hero h1 { font-family:'Arial Black',Arial; font-size:30px; }
+  .hero .sub { margin-top:9px; font-size:13px; opacity:.95; }
+  .topbar { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:14px; }
+  .badge { background:rgba(0,0,0,.22); color:#fff; font-size:10px; letter-spacing:1.5px; padding:6px 11px; text-transform:uppercase; border-radius:4px; }
+  .pill { display:inline-flex; background:rgba(255,255,255,.16); border-radius:9px; padding:3px; }
+  .pill button { font-family:Arial; font-size:12px; font-weight:bold; color:#eaf4ff; background:transparent; border:none; padding:6px 13px; border-radius:6px; cursor:pointer; }
+  .pill button.on { background:#fff; color:var(--blue-deep); }
+  .wrap { max-width:1280px; margin:0 auto; padding:22px 24px 60px; }
+  .sec { color:var(--blue-deep); font-family:'Arial Black',Arial; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin:26px 2px 12px; }
+  .sec:first-child { margin-top:6px; }
+  .note-warn { background:#FFF6E5; border-left:3px solid var(--amber); border-radius:4px; padding:9px 13px; font-size:11.5px; color:#7a5a12; margin-bottom:14px; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(186px,1fr)); gap:14px; }
+  .tile { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:15px 17px 12px;
+    box-shadow:0 1px 2px rgba(20,40,70,.04); position:relative; overflow:hidden; }
+  .tile:before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--blue); }
+  .tile .tl { font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-weight:bold; }
+  .tile .tl .sub { color:var(--faint); font-weight:normal; letter-spacing:0; text-transform:none; }
+  .tile .tv { font-size:25px; color:var(--ink); margin-top:6px; font-weight:700; }
+  .tile .row { display:flex; align-items:flex-end; justify-content:space-between; gap:8px; }
+  .tile .td { font-size:12px; font-weight:bold; margin-top:4px; }
+  .tile .td.up { color:var(--green); } .tile .td.down { color:var(--red); } .tile .td.flat { color:var(--muted); }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px; box-shadow:0 1px 2px rgba(20,40,70,.04); display:flex; flex-direction:column; }
+  .panel h3 { font-size:14px; font-family:'Arial Black',Arial; color:var(--ink); }
+  .panel .ph { font-size:11px; color:var(--muted); margin:2px 0 12px; min-height:30px; }
+  .vtog-spacer { height:24px; margin:0 0 10px; }
+  .vtog { display:inline-flex; gap:2px; margin:0 0 10px; }
+  .vtog button { font-family:Arial; font-size:11px; font-weight:bold; color:var(--muted); background:#EEF2F6; border:none; padding:5px 11px; border-radius:6px; cursor:pointer; }
+  .vtog button.on { background:var(--blue); color:#fff; }
+  .mtdcmp { margin:2px 0 14px; font-size:11.5px; }
+  .mtdcmp .cmptop { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .mtdcmp .cmplabel { color:var(--muted); }
+  .mtdcmp .cmpval { font-family:'Arial Black',Arial; font-size:18px; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .mtdcmp .cmpval .pilld { font-family:Arial; font-size:11.5px; font-weight:bold; margin-left:8px; padding:1px 7px; border-radius:9px; vertical-align:middle; }
+  .mtdcmp .cmpval .pilld.up { color:#137a4e; background:#E3F4EB; } .mtdcmp .cmpval .pilld.down { color:#B23046; background:#FBE7EB; } .mtdcmp .cmpval .pilld.flat { color:var(--muted); background:#EEF2F6; }
+  .mtdcmp .bullet { position:relative; height:13px; background:#EEF2F6; border-radius:7px; margin:7px 0 6px; }
+  .mtdcmp .bullet .fill { display:block; height:100%; background:var(--blue); border-radius:7px; }
+  .mtdcmp .bullet .marker { position:absolute; top:-3px; width:2px; height:19px; background:#5B6B7E; border-radius:1px; }
+  .mtdcmp .cmpfoot { color:var(--muted); }
+  .mtdcmp .cmpfoot b { color:#5B6B7E; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; } @media(max-width:900px){ .grid2{grid-template-columns:1fr;} }
+  .chart-box { position:relative; height:230px; margin-top:auto; }
+  .rise { animation:rise .5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){ .rise{animation:none;} }
+  /* league */
+  table.league { width:100%; border-collapse:collapse; font-size:13px; }
+  table.league th { text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
+    font-weight:bold; padding:9px 10px; border-bottom:2px solid var(--border); }
+  table.league th:nth-child(-n+3), table.league td:nth-child(-n+3) { text-align:left; }
+  table.league td { text-align:right; padding:9px 10px; border-bottom:1px solid var(--surface-2); }
+  table.league tbody tr:hover { background:var(--surface-2); }
+  table.league tr.top td { background:#F0F7FD; }
+  table.league .pos { font-family:var(--mono); font-weight:700; color:var(--ink); width:26px; }
+  table.league .mv { font-size:11px; font-weight:bold; width:30px; }
+  table.league .mv.up { color:var(--green); } .mv.down { color:var(--red); } .mv.same { color:var(--faint); }
+  table.league .cc { font-weight:bold; color:var(--ink); }
+  table.league .pts { font-family:var(--mono); font-weight:700; color:var(--blue-deep); }
+  table.league .mom.up { color:var(--green); font-weight:bold; } table.league .mom.down { color:var(--red); font-weight:bold; }
+  .foot { background:var(--near-black); color:#AAA; padding:22px 40px; font-size:12px; line-height:1.7; margin-top:24px; }
+  .foot .label { color:var(--blue); font-family:'Arial Black',Arial; font-size:12px; margin-bottom:8px; letter-spacing:2px; }
+  .divpill { display:inline-flex; flex-wrap:wrap; background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:3px; }
+  .divpill button { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:transparent; border:none; padding:6px 11px; border-radius:6px; cursor:pointer; }
+  .divpill button.on { background:var(--blue); color:#fff; }
+  .promo { background:#EAF4FD; border:1px solid #CFE6FA; border-radius:10px; padding:11px 15px; font-size:12.5px; color:var(--ink); margin-bottom:14px; line-height:1.6; }
+  .promo .up { color:var(--green); font-weight:bold; } .promo .down { color:var(--red); font-weight:bold; }
+  .cflag { cursor:help; }
+</style>
+</head>
+<body>
+
+<div class="pagenav">
+  <a href="daily.html" class="on">FACADASH</a>
+  <a href="index.html">Study &amp; Trend</a>
+  <a href="retention.html">Churn</a>
+</div>
+
+<div class="hero">
+  <div class="deco d1"></div><div class="deco d2"></div>
+  <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
+  <div class="label">Loyverse &middot; Daily Monitoring</div>
+  <h1>FACADASH.</h1>
+  <div class="sub">First Activity All Day.</div>
+  <div class="topbar">
+    <span class="badge" id="badge"></span>
+    <span class="pill" id="pill" style="display:none"><button data-win="7">7d</button><button data-win="30" class="on">30d</button><button data-win="90">90d</button></span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="sec">Today at a glance</div>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="sec">Daily trends</div>
+  <div class="grid2">
+    <div class="panel rise"><h3>Registrations</h3><div class="ph">Daily new sign-ups (bars; toggle this/last month for seasonality). Accumulated total — this vs last month to date — on the right.</div><div class="vtog" data-c="c-reg"><button data-v="this" class="on">This month</button><button data-v="last">Last month</button></div><div class="mtdcmp" id="mtd-c-reg"></div><div class="chart-box"><canvas id="c-reg"></canvas></div></div>
+    <div class="panel rise" style="animation-delay:.05s"><h3>Active merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or the trailing 30-day trend</div><div class="vtog" data-c="c-act"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Rolling 30 days</button></div><div class="mtdcmp" id="mtd-c-act"></div><div class="chart-box"><canvas id="c-act"></canvas></div></div>
+    <div class="panel rise" style="animation-delay:.1s"><h3>Paying merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or active paid subscriptions as of each day</div><div class="vtog" data-c="c-pay"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Active subscriptions</button></div><div class="mtdcmp" id="mtd-c-pay"></div><div class="chart-box"><canvas id="c-pay"></canvas></div></div>
+    <div class="panel rise" style="animation-delay:.15s"><h3>Receipts (transactions)</h3><div class="ph">This month vs last month, aligned by day of month</div><div class="vtog-spacer"></div><div class="mtdcmp" id="mtd-c-rcpt"></div><div class="chart-box"><canvas id="c-rcpt"></canvas></div></div>
+  </div>
+
+  <div class="sec">Country leagues</div>
+  <div class="note-warn" id="league-note"></div>
+  <div id="promo-summary"></div>
+  <div class="panel rise" style="animation-delay:.1s">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+      <h3 id="div-title">Premier League</h3>
+      <span class="divpill" id="div-pill"></span>
+    </div>
+    <div class="ph" id="league-sub"></div>
+    <div style="overflow-x:auto"><table class="league" id="league"></table></div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="label">NOTES</div>
+  <div id="foot-notes"></div>
+  <div style="margin-top:10px">Daily source: saved Snowflake exports (Daily DBs) &middot; Monthly source: <span id="foot-source"></span> &middot; Prepared by Felipe Krugel &middot; Internal use only.</div>
+</div>
+
+<script>
+const D = KPI_DATA;
+const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().sort((a,b)=>a.date<b.date?-1:1);
+const BLUE='#1D8FE1', BLUE_DEEP='#1578C4', INK='#13233A', GRAY='#7E8A9A', GREEN='#1F9D6B', RED='#D2495B';
+const fmtN = n => n==null?'—':Math.round(n).toLocaleString('en-US');
+const fmtM = n => n==null?'—':'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n).toLocaleString('en-US'));
+const cur = H.length?H[H.length-1]:null, prev = H.length>1?H[H.length-2]:null;
+const CNAMES = D.countryNames || {};
+const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
+const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
+
+document.getElementById('badge').textContent = cur ? 'DATA THROUGH '+cur.date+' · '+H.length+' DAILY READINGS' : 'NO DAILY DATA';
+
+// ---------- sparkline ----------
+function spark(vals,color){
+  const v=vals.filter(x=>x!=null); if(v.length<2) return '';
+  const w=120,h=30,p=2,mn=Math.min(...v),mx=Math.max(...v),rg=(mx-mn)||1;
+  const pts=v.map((x,i)=>(p+i/(v.length-1)*(w-2*p)).toFixed(1)+','+(h-p-(x-mn)/rg*(h-2*p)).toFixed(1)).join(' ');
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><polyline fill="none" stroke="'+color+'" stroke-width="1.8" points="'+pts+'"/></svg>';
+}
+function ser(field){ return H.map(r=>r[field]).filter(x=>x!=null); }
+function deltaTile(d, money){
+  if(d==null) return '<div class="td flat">—</div>';
+  const cls=d>0?'up':(d<0?'down':'flat'), s=d>0?'+':'';
+  return '<div class="td '+cls+'">'+s+(money?fmtM(d):fmtN(d))+' vs prior day</div>';
+}
+
+// ---------- tiles ----------
+// active/receipts can lag (TPV query saved later than the MRR snapshot) — use the latest day that HAS the value
+function lastTwo(field){ const a=H.filter(r=>r[field]!=null); return [a[a.length-1]||null, a[a.length-2]||null]; }
+const aN=lastTwo('active'), rN=lastTwo('receipts');
+const a30=lastTwo('active30d'), p30=lastTwo('payingActive');
+const asOfSub = row => (row && cur && row.date < cur.date) ? ('as of '+row.date.slice(5)) : 'this month';
+const rollLine = (val,label,tip) => val!=null ? '<div class="td" style="color:var(--muted)" title="'+tip+'">'+label+': '+fmtN(val)+'</div>' : '';
+// end-of-month run-rate: project month-end registrations at the current daily pace
+// divide by the last FULL day of data (snapshot day - 1, the D-1 convention), not the snapshot day itself
+const rrDom = cur ? Math.max(+cur.date.slice(8,10) - 1, 1) : 1;
+const rrDim = cur ? new Date(+cur.date.slice(0,4), +cur.date.slice(5,7), 0).getDate() : 30;
+const regRR = cur ? Math.round(cur.regMTD / Math.max(rrDom,1) * rrDim) : 0;
+const tileDefs = cur ? [
+  ['Registrations','month-to-date', fmtN(cur.regMTD), deltaTile(prev?cur.regMTD-prev.regMTD:null)+'<div class="td" style="color:var(--blue)" title="Where the month would end if registrations kept the current daily pace: MTD \u00F7 '+rrDom+' days \u00D7 '+rrDim+' days in month.">run-rate ~'+fmtN(regRR)+' by month-end</div>', ser('regMTD'), BLUE],
+  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), deltaTile(aN[0]&&aN[1]?aN[0].active-aN[1].active:null)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
+  ['Paying merchants','this month', fmtN(cur.paying), deltaTile(prev?cur.paying-prev.paying:null)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
+  ['Total MRR','current', fmtM(cur.mrr), deltaTile(prev?cur.mrr-prev.mrr:null,true), ser('mrr'), INK],
+  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), deltaTile(rN[0]&&rN[1]?rN[0].receipts-rN[1].receipts:null), ser('receipts'), BLUE_DEEP],
+  ['ARPC','current', '$'+(cur.arpc!=null?cur.arpc.toFixed(2):'—'),
+    (prev?'<div class="td '+(cur.arpc>=prev.arpc?'up':'down')+'">'+(cur.arpc>=prev.arpc?'+':'')+(cur.arpc-prev.arpc).toFixed(2)+' vs prior day</div>':'<div class="td flat">—</div>'), ser('arpc'), BLUE],
+] : [];
+document.getElementById('tiles').innerHTML = cur ? tileDefs.map((t,i)=>
+  '<div class="tile rise" style="animation-delay:'+(i*0.04).toFixed(2)+'s"><div class="tl">'+t[0]+' <span class="sub">'+t[1]+'</span></div>'+
+  '<div class="row"><div class="tv font-num">'+t[2]+'</div></div>'+t[3]+'</div>').join('')
+  : '<div class="note-warn" style="display:block">No daily readings yet.</div>';
+
+// ---------- trend charts ----------
+Chart.defaults.font.family='Arial'; Chart.defaults.color=GRAY;
+let win=30, charts={};
+const baseOpts = yf => ({ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+  plugins:{legend:{display:false}, tooltip:{callbacks:{label:it=>it.dataset.label+': '+(yf?yf(it.parsed.y):fmtN(it.parsed.y))}}},
+  scales:{ x:{grid:{display:false}, ticks:{maxTicksLimit:7,font:{size:10}}}, y:{grid:{color:'#EEF2F6'}, ticks:{font:{size:11},callback:v=>yf?yf(v):fmtN(v)}} } });
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mLabel = m => MON[+m.slice(5,7)-1] || m;
+const dayOf = r => +r.date.slice(8,10);
+const months = [...new Set(H.map(r=>r.month))].sort();
+const CURM = months[months.length-1], PREVM = months[months.length-2] || CURM;
+// reference all graphs to the last COMPLETE day (exclude the in-progress current day) → "Jun to day 21"
+const todayStr = new Date().toISOString().slice(0,10);
+const _cmRows = H.filter(r=>r.month===CURM);
+const _complete = _cmRows.filter(r=>r.date < todayStr);
+const _lastComplete = (_complete.length ? _complete : _cmRows).slice(-1)[0];
+const CUTDAY = _lastComplete ? +_lastComplete.date.slice(8,10) : 31;
+function fillCmp(id, cur, prv){
+  const e=document.getElementById('mtd-'+id); if(!e) return;
+  if(!cur.length){ e.innerHTML=''; return; }
+  const curDay=cur[cur.length-1].x, curVal=cur[cur.length-1].y;
+  const prvAt=prv.filter(p=>p.x<=curDay).sort((a,b)=>a.x-b.x).pop();
+  const prvVal=prvAt?prvAt.y:null, mx=Math.max(curVal,prvVal||0)||1;
+  const delta=prvVal?(curVal/prvVal-1)*100:null, dcls=delta==null?'flat':(delta>0.05?'up':(delta<-0.05?'down':'flat'));
+  const pill=delta==null?'<span class="pilld flat">no prior</span>':('<span class="pilld '+dcls+'">'+(delta>=0?'\u25B2 +':'\u25BC ')+Math.abs(delta).toFixed(1)+'%</span>');
+  const markerPct=prvVal==null?null:Math.min(100,(prvVal/mx*100)).toFixed(1);
+  e.innerHTML=
+    '<div class="cmptop"><span class="cmplabel">'+mLabel(CURM)+' to day '+curDay+'</span><span class="cmpval">'+fmtN(curVal)+pill+'</span></div>'+
+    '<div class="bullet" title="Bar = this month so far. Tick = '+mLabel(PREVM)+' at the same day."><i class="fill" style="width:'+(curVal/mx*100).toFixed(1)+'%"></i>'+(markerPct==null?'':'<span class="marker" style="left:'+markerPct+'%"></span>')+'</div>'+
+    '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>';
+}
+function trend(id,label,field,color){
+  const cur = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY).map(r=>({x:dayOf(r),y:r[field]}));
+  const prv = H.filter(r=>r.month===PREVM && r[field]!=null).map(r=>({x:dayOf(r),y:r[field]}));
+  if(charts[id]) charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+    data:{datasets:[
+      {label:mLabel(PREVM)+' (last month)',data:prv,borderColor:'#B8C4D2',backgroundColor:'transparent',fill:false,borderWidth:2,borderDash:[5,4],pointRadius:0,pointHoverRadius:4,tension:.3},
+      {label:mLabel(CURM)+' (this month)',data:cur,borderColor:color,backgroundColor:'rgba(29,143,225,.08)',fill:true,borderWidth:2.6,pointRadius:2,pointHoverRadius:5,pointBackgroundColor:color,tension:.3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:18,font:{size:10},usePointStyle:false}},
+        tooltip:{callbacks:{title:it=>'Day '+it[0].parsed.x,label:it=>it.dataset.label+': '+fmtN(it.parsed.y)}}},
+      scales:{x:{type:'linear',min:1,max:31,grid:{display:false},title:{display:true,text:'Day of month',font:{size:10},color:GRAY},ticks:{stepSize:1,autoSkip:false,maxRotation:0,font:{size:9}}},
+        y:{grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
+  fillCmp(id,cur,prv);
+}
+// Registrations: one chart — a bar per day this month (left axis) + two accumulated bars at the right
+// (this month vs last month to the same day) on a separate right axis.
+const fmtK = v => (v>=1000 ? (v/1000).toFixed(1)+'K' : fmtN(v));
+const barValueLabels = { id:'barValueLabels', afterDatasetsDraw(c){
+  const ds=c.data.datasets[1], meta=c.getDatasetMeta(1); if(!ds||!meta) return;
+  const ctx=c.ctx; ctx.save(); ctx.font='bold 10px Arial'; ctx.fillStyle='#13233A'; ctx.textAlign='center';
+  (ds.data||[]).forEach((v,i)=>{ const el=meta.data[i]; if(el && v!=null) ctx.fillText(fmtK(v), el.x, el.y-6); });
+  ctx.restore(); } };
+function regCombo(focus){
+  focus = (focus==='last') ? 'last' : 'this';
+  const M = (focus==='last') ? PREVM : CURM;        // which month's daily bars to show
+  const isCur = (M===CURM);
+  const mRows = H.filter(r=>r.month===M && (!isCur || dayOf(r)<=CUTDAY)).slice().sort((a,b)=>a.date<b.date?-1:1);
+  const days    = mRows.map(r=>dayOf(r));
+  const dailyNew= mRows.map((r,i)=> i===0 ? r.regMTD : (r.regMTD - mRows[i-1].regMTD));
+  // accumulated comparison — CONSTANT, like-for-like to the last complete day (this month vs last month)
+  const cumAt = mm => { const rr=H.filter(r=>r.month===mm && dayOf(r)<=CUTDAY); return rr.length ? rr[rr.length-1].regMTD : null; };
+  const cumCur = cumAt(CURM)||0, cumPrev = cumAt(PREVM);
+  const dpct = (cumPrev ? (cumCur/cumPrev-1)*100 : null);
+  // header (constant): this month vs last month to the same completed day
+  const he=document.getElementById('mtd-c-reg');
+  if(he){ const dcls=dpct==null?'flat':(dpct>0.05?'up':(dpct<-0.05?'down':'flat'));
+    const pill=dpct==null?'':'<span class="pilld '+dcls+'">'+(dpct>=0?'\u25B2 +':'\u25BC ')+Math.abs(dpct).toFixed(1)+'%</span>';
+    he.innerHTML='<div class="cmptop"><span class="cmplabel">'+mLabel(CURM)+' to day '+CUTDAY+'</span><span class="cmpval">'+fmtN(cumCur)+pill+'</span></div>'; }
+  // chart: daily bars for the FOCUS month + two constant accumulated bars at the right
+  const labels    = days.map(String).concat(['', mLabel(CURM), '', mLabel(PREVM)]);
+  const dailyData = dailyNew.concat([null, null, null, null]);
+  const accumData = days.map(()=>null).concat([null, cumCur, null, cumPrev]);
+  const jIdx = days.length+1, mIdx = days.length+3;
+  const accumCols = labels.map((l,i)=> i===jIdx ? BLUE : (i===mIdx ? '#B8C4D2' : 'rgba(0,0,0,0)'));
+  const dailyCol  = (focus==='last') ? 'rgba(150,164,180,.85)' : 'rgba(29,143,225,.55)';
+  const maxDaily = Math.max(1, ...dailyNew.filter(v=>v!=null));
+  const maxAccum = Math.max(cumCur, cumPrev||0);
+  const FILL = 0.85;  // tallest bar on each axis reaches this share of the plot → bar tops align, bottoms both at 0
+  if(charts['c-reg']) charts['c-reg'].destroy();
+  charts['c-reg']=new Chart(document.getElementById('c-reg'),{type:'bar',
+    data:{labels, datasets:[
+      {label:mLabel(M)+' / day', data:dailyData, backgroundColor:dailyCol, yAxisID:'y',  grouped:false, order:2},
+      {label:'Accumulated',      data:accumData, backgroundColor:accumCols, yAxisID:'y1', grouped:false, order:1, barThickness:26}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false, layout:{padding:{top:16}},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{
+          title:it=>{const l=it[0].label; return /^\d+$/.test(l)?(mLabel(M)+' '+l):(l+' — accumulated to day '+CUTDAY);},
+          label:it=>fmtN(it.parsed.y)}}},
+      scales:{
+        x:{grid:{display:false}, title:{display:true,text:'Day of month — '+(focus==='last'?mLabel(PREVM)+' (last month)':mLabel(CURM)+' (this month)'),font:{size:10},color:GRAY}, ticks:{font:{size:9}, autoSkip:false, maxRotation:0, callback:function(v){return this.getLabelForValue(v);}}},
+        y:{position:'left', beginAtZero:true, suggestedMax: Math.round(maxDaily/FILL), grid:{color:'#EEF2F6'}, title:{display:true,text:'New / day',font:{size:10},color:GRAY}, ticks:{font:{size:10},callback:v=>fmtN(v)}},
+        y1:{position:'right', beginAtZero:true, suggestedMax: Math.round(maxAccum/FILL), grid:{display:false}, title:{display:true,text:'Accumulated'+(dpct!=null?('  ('+(dpct>=0?'+':'')+dpct.toFixed(1)+'%)'):''),font:{size:10},color:GRAY}, ticks:{font:{size:10},callback:v=>fmtN(v)}}
+      }},
+    plugins:[barValueLabels]});
+}
+function drawTrends(){ regCombo(); trend('c-act','Active merchants','active',BLUE_DEEP); trend('c-pay','Paying merchants','paying',BLUE); trend('c-rcpt','Receipts','receipts',INK); }
+document.querySelectorAll('#pill button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#pill button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); win=+b.dataset.win; drawTrends(); });
+drawTrends();
+
+// rolling / point-in-time trend view (single line over time) for Registrations, Active & Paying
+const ROLLMETA = {
+  reg30d:       { top:d=>'Trailing 30 days to '+d, foot:'new registrations in the last 30 days \u00B7 change vs prior day', tt:'Rolling 30-day' },
+  active30d:    { top:d=>'Trailing 30 days to '+d, foot:'distinct merchants active in the last 30 days \u00B7 change vs prior day', tt:'Rolling 30-day' },
+  payingActive: { top:d=>'Active subscriptions as of '+d, foot:'merchants with an active paid subscription \u00B7 change vs prior day', tt:'Active subscriptions' }
+};
+function rollChart(id, field, color){
+  const a=H.filter(r=>r[field]!=null), meta=ROLLMETA[field]||{tt:'Value'};
+  if(charts[id]) charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+    data:{labels:a.map(r=>r.date), datasets:[{label:meta.tt, data:a.map(r=>r[field]), borderColor:color, backgroundColor:'rgba(29,143,225,.08)', fill:true, borderWidth:2.6, pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:color, tension:.3}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false}, tooltip:{callbacks:{title:it=>it[0].label, label:it=>meta.tt+': '+fmtN(it.parsed.y)}}},
+      scales:{x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:10}}}, y:{grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
+  fillCmpRoll(id, field);
+}
+function fillCmpRoll(id, field){
+  const e=document.getElementById('mtd-'+id); if(!e) return;
+  const a=H.filter(r=>r[field]!=null); if(!a.length){ e.innerHTML=''; return; }
+  const meta=ROLLMETA[field]||{top:d=>d, foot:''};
+  const c=a[a.length-1], p=a[a.length-2]||null;
+  const d=p?(c[field]/p[field]-1)*100:null, dcls=d==null?'flat':(d>0.05?'up':(d<-0.05?'down':'flat'));
+  const pill=d==null?'':'<span class="pilld '+dcls+'">'+(d>=0?'\u25B2 +':'\u25BC ')+Math.abs(d).toFixed(1)+'%</span>';
+  e.innerHTML='<div class="cmptop"><span class="cmplabel">'+meta.top(c.date.slice(5))+'</span><span class="cmpval">'+fmtN(c[field])+pill+'</span></div>'+
+    '<div class="cmpfoot">'+meta.foot+'</div>';
+}
+const VT = {
+  'c-reg': { 'this':()=>regCombo('this'),                                   'last':()=>regCombo('last') },
+  'c-act': { mtd:()=>trend('c-act','Active merchants','active',BLUE_DEEP),  roll:()=>rollChart('c-act','active30d',BLUE_DEEP) },
+  'c-pay': { mtd:()=>trend('c-pay','Paying merchants','paying',BLUE),       roll:()=>rollChart('c-pay','payingActive',BLUE) }
+};
+document.querySelectorAll('.vtog').forEach(t=>{ const c=t.dataset.c;
+  t.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    t.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); (VT[c][b.dataset.v]||(()=>{}))(); }); });
+
+// ---------- country league pyramid (5 divisions of 20, promotion/relegation) ----------
+const F = (typeof COUNTRY_FUNNEL !== 'undefined') ? COUNTRY_FUNNEL : (D.countryFunnel || { rows:[], current:'', previous:'' });
+const DIVS = ['Premier League','Championship','League One','League Two','Conference'];
+// Scoring weights — paying matters most (revenue), then active and conversion (quality), then registrations.
+// Conversion = payment penetration (paying ÷ active): the share of a country's active base that actually pays.
+const WEIGHTS = { paying:3, active:2, conv:2, reg:1 };
+const WSUM = WEIGHTS.paying + WEIGHTS.active + WEIGHTS.conv + WEIGHTS.reg;
+function scoreSet(rows){
+  const N=rows.length;
+  ['reg','active','paying','conv'].forEach(k=>{ [...rows].sort((a,b)=>b[k]-a[k]).forEach((r,i)=> r[k+'Pts']= N>1 ? (N-1-i)/(N-1)*100 : 100); });
+  rows.forEach(r=> r.pts = Math.round((WEIGHTS.paying*r.payingPts + WEIGHTS.active*r.activePts + WEIGHTS.conv*r.convPts + WEIGHTS.reg*r.regPts)/WSUM));
+  rows.sort((a,b)=> b.pts-a.pts || b.paying-a.paying || b.conv-a.conv || b.active-a.active || b.reg-a.reg);
+  return rows;
+}
+function rankAll(sfx){
+  let rows = F.rows.map(r=>{ const active=r['active'+sfx]||0, paying=r['paying'+sfx]||0;
+    return { c:r.c, reg:r['reg'+sfx]||0, active, paying, receipts:r['receipts'+sfx]||0, conv:(active>0? paying/active : 0) }; });
+  scoreSet(rows);                 // rank the full pool to find the league
+  rows = rows.slice(0, 100);      // top 100 make the league
+  scoreSet(rows);                 // overall within-100 score (INVISIBLE) — sets division & promotion/relegation
+  rows.forEach((r,i)=>{ r.overallPos=i+1; r.div=Math.floor(i/20); });
+  for (let d=0; d<DIVS.length; d++){             // re-score WITHIN each 20-team tier — this becomes the shown points
+    const tier = rows.filter(r=> r.div===d);
+    scoreSet(tier);
+    tier.forEach((r,i)=> r.tierPos = i+1);
+  }
+  return rows;
+}
+const curR = rankAll(''), prevR = rankAll('P');
+const prevDivOf = Object.fromEntries(prevR.map(r=>[r.c,r.div]));
+curR.forEach(r=> r.prevDiv = (prevDivOf[r.c]==null ? null : prevDivOf[r.c]));
+const momOf = Object.fromEntries(F.rows.map(r=>[r.c, ((r.regPmtd||0)>0 ? r.reg/r.regPmtd - 1 : ((r.regP||0)>0 ? r.reg/r.regP - 1 : null))]));
+const convOf = Object.fromEntries(F.rows.map(r=>[r.c, ((r.active||0)>0 ? r.paying/r.active : null)]));
+
+// promotions & relegations vs prior month
+const movers = curR.filter(r=> r.prevDiv!=null && r.prevDiv!==r.div);
+const proms = movers.filter(r=> r.div < r.prevDiv).sort((a,b)=> a.div-b.div);
+const rels  = movers.filter(r=> r.div > r.prevDiv).sort((a,b)=> a.div-b.div);
+const tag = r => isoFlag(r.c)+' '+r.c+' → '+DIVS[r.div];
+document.getElementById('promo-summary').innerHTML =
+  '<div class="promo"><b>Promotions &amp; relegations vs '+F.previous+'</b><br>' +
+  '<span class="up">▲ Promoted:</span> ' + (proms.length? proms.map(tag).join(' · ') : 'none') + '<br>' +
+  '<span class="down">▼ Relegated:</span> ' + (rels.length? rels.map(tag).join(' · ') : 'none') + '</div>';
+document.getElementById('league-note').innerHTML = '⚑ The top 100 countries by the weighted score (paying ×3 · active ×2 · conversion ×2 · registrations ×1), month-to-date for ' + F.current + ', make the league — split into five divisions of 20. Points shown are each country\'s rank WITHIN its 20-team division (0–100); the overall league rank (hidden) sets the divisions and promotion/relegation vs ' + F.previous + ' (last full month). Built from the daily country exports.';
+
+let curDiv = 0;
+function renderDiv(){
+  const lo = curDiv*20+1, hi = curDiv*20+20;
+  document.getElementById('div-title').textContent = DIVS[curDiv] + ' · #' + lo + '–' + hi;
+  document.getElementById('league-sub').textContent = 'Month-to-date ' + F.current + ' · Points (0–100) = each country\'s weighted rank within its own 20-team division (paying ×3, active ×2, conversion ×2, registrations ×1). Conversion = paying ÷ active. Momentum = new registrations this month vs the prior month to the SAME day (fair like-for-like, shown not scored).';
+  const rows = curR.filter(r=> r.div===curDiv).sort((a,b)=> a.tierPos - b.tierPos);
+  document.getElementById('league').innerHTML =
+    '<thead><tr><th class="pos">#</th><th></th><th>Country</th><th>New regs (mo)</th><th>Active</th><th>Paying</th><th>Conv %</th><th>Receipts</th><th>Momentum</th><th>Pts</th></tr></thead><tbody>' +
+    rows.map(r=>{
+      let badge='<td class="mv same">—</td>';
+      if(r.prevDiv==null) badge='<td class="mv same" title="new entry">•</td>';
+      else if(r.div<r.prevDiv) badge='<td class="mv up" title="Promoted from '+DIVS[r.prevDiv]+'">▲</td>';
+      else if(r.div>r.prevDiv) badge='<td class="mv down" title="Relegated from '+DIVS[r.prevDiv]+'">▼</td>';
+      return '<tr'+((curDiv===0&&r.tierPos<=3)?' class="top"':'')+'><td class="pos">'+r.tierPos+'</td>'+badge+
+        '<td class="cc">'+cflag(r.c)+'</td><td class="font-num">'+fmtN(r.reg)+'</td><td class="font-num">'+fmtN(r.active)+
+        '</td><td class="font-num">'+fmtN(r.paying)+'</td><td class="font-num">'+((convOf[r.c]==null)?'—':(convOf[r.c]*100).toFixed(1)+'%')+'</td><td class="font-num" style="color:var(--faint)">'+fmtN(r.receipts)+'</td><td class="font-num '+((momOf[r.c]==null)?'':(momOf[r.c]>0.005?'mom up':(momOf[r.c]<-0.005?'mom down':'')))+'">'+((momOf[r.c]==null)?'—':((momOf[r.c]>=0?'+':'')+(momOf[r.c]*100).toFixed(0)+'%'))+'</td><td class="pts font-num">'+r.pts+'</td></tr>';
+    }).join('') + '</tbody>';
+}
+document.getElementById('div-pill').innerHTML = DIVS.map((d,i)=>'<button data-d="'+i+'"'+(i===0?' class="on"':'')+'>'+d+'</button>').join('');
+document.querySelectorAll('#div-pill button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#div-pill button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); curDiv=+b.dataset.d; renderDiv(); });
+renderDiv();
+
+// ---------- footer ----------
+document.getElementById('foot-notes').innerHTML =
+  '&rarr; Daily readings are month-to-date figures captured per saved export (every few days for now; denser as you save daily). Deltas compare the last two readings.<br>' +
+  '&rarr; Active merchants & receipts are current-month sums from the TPV/Receipts DB2 export (available on the dates that file was saved).<br>' +
+  '&rarr; GTV / avg-ticket are captured but not shown yet — the raw DB2 dollar values carry outliers; they need the workbook\'s TPV cleaning before display.';
+document.getElementById('foot-source').textContent = (D.meta && D.meta.source) || 'canonical workbook';
+</script>
+</body>
+</html>

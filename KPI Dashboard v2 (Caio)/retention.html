@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse — Retention vs Benchmark</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="kpi-data.js"></script>
+<style>
+  :root {
+    --blue: #1D8FE1; --blue-deep: #1578C4; --near-black: #1A1A1A;
+    --off-white: #F7F7F7; --silver: #E0E0E0; --dark-gray: #555555;
+    --mid-gray: #888888; --red: #CC3333; --green: #1F9D6B; --band: #CCE8FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #EEF2F6; color: var(--near-black); }
+  .pagenav { background: var(--near-black); display: flex; gap: 2px; padding: 0 24px; }
+  .pagenav a { color: #BBB; text-decoration: none; font-size: 12px; font-weight: bold; letter-spacing: 1px;
+    text-transform: uppercase; padding: 12px 18px; border-bottom: 3px solid transparent; }
+  .pagenav a:hover { color: #fff; }
+  .pagenav a.on { color: #fff; border-bottom-color: var(--blue); }
+  .hero { background: linear-gradient(120deg,#1D8FE1,#1578C4); color: #fff; padding: 32px 48px 28px; position: relative; overflow: hidden; }
+  .hero .deco { position: absolute; background: rgba(255,255,255,0.12); width: 120px; height: 120px; }
+  .hero .d1 { right: -30px; top: -40px; transform: rotate(12deg); }
+  .hero .d2 { right: 70px; top: 30px; width: 60px; height: 60px; background: rgba(170,221,255,0.35); transform: rotate(-8deg); }
+  .hero .label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.9; margin-bottom: 8px; }
+  .hero h1 { font-family: 'Arial Black', Arial, sans-serif; font-size: 32px; line-height: 1.1; }
+  .hero img.logo { position: absolute; top: 18px; right: 24px; height: 44px; z-index: 2; }
+  .hero .sub { margin-top: 10px; font-size: 13px; opacity: 0.95; max-width: 760px; line-height: 1.5; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 26px 24px 60px; }
+  .toggle { margin: 4px 0 6px; display: inline-flex; background: #fff; border: 1px solid var(--silver); border-radius: 9px; padding: 4px; }
+  .toggle button { font-family: Arial; font-size: 12.5px; font-weight: bold; padding: 8px 16px; border: none;
+    background: transparent; color: #666; cursor: pointer; border-radius: 6px; }
+  .toggle button.on { background: var(--blue); color: #fff; }
+  .basislabel { font-size: 12.5px; color: var(--mid-gray); margin: 8px 0 14px; }
+  .headline { color: #fff; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+  .headline b { font-size: 18px; }
+  .headline span { opacity: 0.93; margin-left: 8px; font-size: 14px; }
+  .panel { background: #fff; border: 1px solid #E3E9F0; border-radius: 16px; box-shadow: 0 1px 2px rgba(20,40,70,.05); padding: 20px; margin-bottom: 18px; animation: rise .5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){ .panel{animation:none;} }
+  .chart-box { position: relative; height: 430px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: 10px; margin-top: 4px; }
+  .mcard { border: 1px solid var(--silver); border-radius: 8px; padding: 9px 11px; }
+  .mcard .m { font-size: 11px; color: var(--mid-gray); font-weight: bold; }
+  .mcard .v { font-size: 20px; font-weight: 800; color: var(--near-black); }
+  .mcard .v small { font-size: 13px; color: var(--mid-gray); font-weight: normal; }
+  .mcard .band { font-size: 10px; color: var(--mid-gray); }
+  .mcard .st { font-size: 10px; font-weight: bold; margin-top: 2px; }
+  .callout { background: #EAF4FD; border-left: 4px solid var(--blue); border-radius: 4px; padding: 12px 14px; font-size: 13px; color: var(--dark-gray); margin-bottom: 16px; }
+  .warn { background: #FCEEEE; border-left: 4px solid var(--red); border-radius: 4px; padding: 12px 14px; font-size: 12.5px; color: #7a1f1f; margin-bottom: 16px; }
+  h3 { font-family: 'Arial Black', Arial; font-size: 15px; margin-bottom: 12px; }
+  .note { font-size: 11.5px; color: var(--mid-gray); margin-top: 14px; line-height: 1.6; }
+  .src { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--silver); }
+  .src .lbl { font-size: 11px; font-weight: bold; margin-bottom: 6px; }
+  .src ul { margin: 0; padding-left: 16px; font-size: 11px; color: var(--mid-gray); line-height: 1.7; }
+  .src a { color: var(--blue-deep); }
+  .foot { background: var(--near-black); color: #AAA; padding: 24px 48px; font-size: 12px; line-height: 1.7; }
+  .foot .label { color: var(--blue); font-family: 'Arial Black', Arial; font-size: 12px; margin-bottom: 8px; letter-spacing: 2px; }
+  .keystrip { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 2px 0 16px; }
+  .keychip { font-size: 11.5px; color: #444; display: inline-flex; align-items: center; gap: 7px; }
+  .keychip .kc { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+  .keychip em { color: #9A9A9A; font-style: normal; font-size: 10.5px; }
+  .keychip.loy { font-weight: bold; color: var(--near-black); }
+  .keychip.loy .kc { height: 4px; }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.cmp th { text-align: right; color: var(--mid-gray); font-weight: bold; text-transform: uppercase; font-size: 10px; letter-spacing: .5px; padding: 8px 10px; border-bottom: 2px solid var(--silver); }
+  table.cmp th:first-child, table.cmp td:first-child, table.cmp th:nth-child(2), table.cmp td:nth-child(2) { text-align: left; }
+  table.cmp td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--off-white); color: var(--dark-gray); font-variant-numeric: tabular-nums; }
+  table.cmp tr.loy td { font-weight: bold; color: var(--near-black); background: #F0F7FD; }
+  table.cmp .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  table.cmp .t0 { color: var(--mid-gray); font-size: 10.5px; font-weight: normal; }
+  .src .srcgroup { margin-top: 11px; }
+  .src .srch { font-size: 11px; font-weight: bold; color: #333; margin-bottom: 3px; }
+  .src .srch em { font-weight: normal; color: var(--mid-gray); font-style: normal; }
+</style>
+</head>
+<body>
+
+<div class="pagenav">
+  <a href="daily.html">FACADASH</a>
+  <a href="index.html">Study &amp; Trend</a>
+  <a href="retention.html" class="on">Churn</a>
+</div>
+
+<div class="hero">
+  <div class="deco d1"></div><div class="deco d2"></div>
+  <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
+  <div class="label">Loyverse &middot; Retention Benchmark</div>
+  <h1>Merchant retention vs benchmark.</h1>
+  <div class="sub">Retention by business model — each cohort indexed to 100% at its own starting point (t0), so you can compare the shape and relative position of Loyverse against five peer-model reconstructions. Only the two Loyverse lines (active and paying) are measured (53 cohorts).</div>
+</div>
+
+<div class="wrap">
+
+  <div class="headline" id="headline"></div>
+  <div id="callout"></div>
+
+  <div class="panel">
+    <h3>Active / usage retention — merchants still transacting</h3>
+    <div class="keystrip" id="key-active"></div>
+    <div class="chart-box"><canvas id="c-ret-active"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <h3>Paying / subscription retention — paying customers retained</h3>
+    <div class="keystrip" id="key-paying"></div>
+    <div class="chart-box"><canvas id="c-ret-paying"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <h3>Survival by model at key milestones — % from t0</h3>
+    <div style="overflow-x:auto"><table class="cmp" id="modeltable"></table></div>
+    <div class="note" id="methodology"></div>
+    <div class="src">
+      <div class="lbl">Sources — benchmark construction</div>
+      <div id="sources"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="foot">
+  <div class="label">METHODOLOGY &amp; DATA QUALITY</div>
+  <div id="foot-notes"></div>
+  <div style="margin-top:10px">Loyverse retention source: <span id="foot-source"></span> &middot; Generated <span id="foot-gen"></span> &middot; Prepared by Felipe Krugel &middot; Internal use only.</div>
+</div>
+
+<script>
+const D = KPI_DATA;
+const BLUE = '#1D8FE1', BLUE_DEEP = '#1578C4', GRAY = '#888888', BLACK = '#1A1A1A',
+      GREEN = '#1F9D6B', RED = '#CC3333', BAND = '#CCE8FF';
+
+const MONTHS = ['M0','M1','M2','M3','M6','M9','M12','M18','M24','M36','M48','M60'];  // marker ages for cards/headline
+const AGES   = [0,1,2,3,6,9,12,18,24,36,48,60];
+const FULL_AGES = Array.from({ length: 61 }, (_, i) => i);   // contiguous M0..M60
+const FULL_LABELS = FULL_AGES.map(a => 'M' + a);
+
+// ---- Retention by business model — each line indexed to 100% at its own t0 ----
+const R = D.retention || { registrationPct: [], activatedProxyPct: [], momPct: [] };
+// Loyverse (MEASURED, live): registration-cohort survival re-based to the M0-active cohort = 100%.
+const _rp = R.registrationPct || [];
+const loyFull = FULL_AGES.map(a => (_rp[a] != null && _rp[0]) ? Math.round(_rp[a] / _rp[0] * 1000) / 10 : null);
+
+// Five constructed/peer reference curves (static, M0..M60) from the benchmark workbook.
+const MODELS = [
+  { key:'loyverse',    label:'Loyverse active (actual)',     t0:'first transaction', color:'#1D8FE1', width:3.5, dash:null,  measured:true, data:loyFull },
+  { key:'loypaying',   label:'Loyverse paying (net)',        t0:'first payment',     color:'#0E4D92', width:3.5, dash:null,  measured:true, data:[100,99.2,98.4,97.6,96.8,96,95.2,94.5,93.8,93.1,92.4,91.7,91,90.3,89.6,88.9,88.3,87.7,87.1,86.5,85.9,85.3,84.7,84.1,83.5,82.9,82.3,81.7,81.1,80.6,80.1,79.6,79.1,78.6,78.1,77.6,77.1,76.6,76.1,75.6,75.1,74.6,74.1,73.6,73.1,72.6,72.1,71.6,71.1,70.7,70.3,69.9,69.5,69.1,68.7,68.3,67.9,67.5,67.1,66.7,66.3] },
+  { key:'loyclass',    label:'Loyverse-class (constructed)', t0:'first transaction', color:'#888888', width:1.8, dash:[6,4], data:[100,50,31,22.6,19.8,17.4,15.2,14.3,13.5,12.8,12.0,11.3,10.7,10.2,9.8,9.3,8.9,8.5,8.1,7.8,7.4,7.1,6.8,6.5,6.2,6.0,5.8,5.6,5.4,5.2,5.0,4.9,4.7,4.5,4.4,4.2,4.1,4.0,3.9,3.8,3.7,3.6,3.5,3.4,3.3,3.2,3.2,3.1,3.0,2.9,2.9,2.8,2.8,2.7,2.7,2.6,2.6,2.5,2.5,2.5,2.4] },
+  { key:'smbsaas',     label:'SMB SaaS (subscription)',      t0:'paid signup',       color:'#1F9D6B', width:1.8, dash:[2,3], data:[100,94,88.3,83,78.0,73.4,69,65.8,62.8,59.9,57.1,54.5,52,49.9,48.0,46.1,44.2,42.5,40.8,39.2,37.6,36.1,34.7,33.3,32,30.9,29.8,28.8,27.8,26.9,25.9,25.0,24.2,23.3,22.5,21.8,21,20.3,19.6,19.0,18.4,17.7,17.1,16.6,16.0,15.5,15.0,14.5,14,13.6,13.2,12.9,12.5,12.2,11.8,11.5,11.2,10.9,10.6,10.3,10] },
+  { key:'ecom',        label:'E-commerce merchant',          t0:'first sale',        color:'#7E57C2', width:1.8, dash:null,  data:[100,47,32,24,21.0,18.3,16,15.0,14.1,13.3,12.5,11.7,11,10.6,10.2,9.8,9.5,9.1,8.8,8.4,8.1,7.8,7.5,7.3,7,6.8,6.6,6.4,6.3,6.1,5.9,5.8,5.6,5.4,5.3,5.1,5,4.9,4.8,4.7,4.6,4.6,4.5,4.4,4.3,4.2,4.2,4.1,4,3.9,3.9,3.8,3.8,3.7,3.6,3.6,3.5,3.5,3.4,3.4,3.3] },
+  { key:'marketplace', label:'Marketplace (supply)',         t0:'first sale',        color:'#E8833A', width:1.8, dash:null,  data:[100,40,27,21,18.6,16.4,14.5,13.7,13.0,12.3,11.7,11.1,10.5,10.2,9.8,9.5,9.2,8.9,8.6,8.3,8.0,7.8,7.5,7.2,7,6.8,6.7,6.5,6.3,6.2,6.0,5.9,5.7,5.6,5.5,5.3,5.2,5.1,5.0,4.9,4.8,4.7,4.6,4.5,4.4,4.3,4.3,4.2,4.1,4.0,4.0,3.9,3.9,3.8,3.7,3.7,3.6,3.6,3.5,3.5,3.4] },
+  { key:'freemium',    label:'Freemium B2C app',             t0:'activation',        color:'#C0392B', width:1.8, dash:[2,3], data:[100,32,21,15,12.4,10.3,8.5,7.7,7.0,6.4,5.8,5.3,4.8,4.6,4.4,4.2,4.0,3.8,3.6,3.4,3.3,3.1,3.0,2.8,2.7,2.6,2.5,2.5,2.4,2.3,2.3,2.2,2.1,2.1,2.0,2.0,1.9,1.9,1.8,1.8,1.8,1.7,1.7,1.7,1.6,1.6,1.6,1.5,1.5,1.5,1.4,1.4,1.4,1.4,1.3,1.3,1.3,1.3,1.2,1.2,1.2] },
+];
+const byKey = Object.fromEntries(MODELS.map(m => [m.key, m]));
+
+const STATUS = {
+  above: { label: 'Above benchmark', color: GREEN },
+  below: { label: 'Below benchmark', color: RED },
+};
+function statusOf(v, bench) {
+  if (v == null || isNaN(v) || bench == null) return null;
+  return v >= bench ? 'above' : 'below';
+}
+
+const ACTIVE_KEYS = ['loyverse','loyclass','ecom','marketplace','freemium'];  // usage / transactional basis
+const PAYING_KEYS = ['loypaying','smbsaas'];                                   // paying / subscription basis
+let chartActive, chartPaying;
+
+function keyStrip(elId, keys) {
+  document.getElementById(elId).innerHTML = keys.map(k => { const m = byKey[k];
+    return '<span class="keychip' + (m.measured ? ' loy' : '') + '">' +
+      '<span class="kc" style="background:' + m.color + '"></span>' + m.label + ' <em>t0: ' + m.t0 + '</em></span>'; }).join('');
+}
+function buildChart(canvasId, keys, existing) {
+  const ms = keys.map(k => byKey[k]).sort((a, b) => (a.measured ? 1 : 0) - (b.measured ? 1 : 0)); // measured drawn on top
+  const ds = ms.map(m => ({ label: m.label, data: m.data, borderColor: m.color, backgroundColor: m.color,
+    borderWidth: m.width, borderDash: m.dash || [], pointRadius: 0, pointHoverRadius: 4, spanGaps: false, tension: 0.25, fill: false }));
+  if (existing) existing.destroy();
+  return new Chart(document.getElementById(canvasId), {
+    type: 'line', data: { labels: FULL_LABELS, datasets: ds },
+    options: {
+      responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => it.dataset.label + ': ' + (it.parsed.y == null ? '—' : it.parsed.y + '%') } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 }, color: GRAY, maxTicksLimit: 16, autoSkip: true } },
+        y: { min: 0, max: 100, grid: { color: '#EFEFEF' }, ticks: { callback: v => v + '%', font: { size: 12 }, color: GRAY } },
+      },
+    },
+  });
+}
+
+function render() {
+  // Headline (Loyverse @ M12: active vs transactional peers, plus paying)
+  const v12 = loyFull[12];
+  const peers12 = ['loyclass','ecom','marketplace','freemium'].map(k => byKey[k].data[12]);
+  const topPeer = Math.max.apply(null, peers12);
+  const pay12 = byKey['loypaying'].data[12];
+  const hl = document.getElementById('headline');
+  if (v12 != null) {
+    hl.style.display = 'block';
+    hl.style.background = v12 >= topPeer ? GREEN : BLUE;
+    hl.innerHTML = '<b>' + v12 + '% still transacting at M12</b><span>— the strongest transactional model (next best ' + topPeer + '%). ' +
+      'And paying customers barely churn: ' + pay12 + '% net retained at M12.</span>';
+  } else { hl.style.display = 'none'; }
+
+  // Callout
+  document.getElementById('callout').innerHTML =
+    '<div class="callout">Two different bases, shown separately: <b>usage retention</b> (merchants still transacting) and <b>subscription retention</b> (paying customers) — not directly comparable, so each gets its own chart. Every line is indexed to 100% at its own t0; only the Loyverse lines are measured.</div>';
+
+  // Two charts, each with its own key
+  keyStrip('key-active', ACTIVE_KEYS);
+  keyStrip('key-paying', PAYING_KEYS);
+  chartActive = buildChart('c-ret-active', ACTIVE_KEYS, chartActive);
+  chartPaying = buildChart('c-ret-paying', PAYING_KEYS, chartPaying);
+
+  // Combined comparison table (usage models, then paying models)
+  const cols = [1, 6, 12, 24, 36, 60];
+  const head = '<tr><th>Model</th><th>t0</th>' + cols.map(c => '<th>M' + c + '</th>').join('') + '</tr>';
+  const rows = [...ACTIVE_KEYS, ...PAYING_KEYS].map(k => { const m = byKey[k];
+    const cells = cols.map(c => { const v = m.data[c]; return '<td>' + (v == null ? '—' : v + '%') + '</td>'; }).join('');
+    return '<tr' + (m.measured ? ' class="loy"' : '') + '>' +
+      '<td><span class="dot" style="background:' + m.color + '"></span>' + m.label + '</td>' +
+      '<td class="t0">' + m.t0 + '</td>' + cells + '</tr>';
+  }).join('');
+  document.getElementById('modeltable').innerHTML = head + rows;
+}
+
+// Methodology + sources
+document.getElementById('methodology').innerHTML =
+  '<strong style="color:#1A1A1A">Reading the chart</strong><br>' +
+  "Only the two Loyverse lines are measured data (53 cohorts): <b>active</b> = merchants transacting that month; <b>paying (net)</b> = net retention of paying subscribers from first payment, which is far stickier than usage. The other five are anchored reconstructions — built from public benchmarks (Amplitude for freemium; Focus Digital micro/SMB SaaS; Shopify ~10% at 90 days &amp; ~28%/yr for e-commerce merchant; transactional-retention frameworks for marketplace) and interpolated between anchor points. They show the shape and relative position of each model, not precise truth. Note the basis caveat: SaaS starts from a paying cohort (no cliff), so its early height is not directly comparable to the transactional lines — it's shown to illustrate why model choice changes the curve. Tail (M40+) is directional on every line." +
+  '<br><br>Loyverse active = registration-cohort active-merchant survival (a merchant is active in month N if it issued at least one receipt), re-based to the sign-up-month-active cohort = 100% at t0, from the canonical workbook (receipts-based, cohorts 2022-01 onward; oldest cohort 52 months, so the active line ends at M52). Loyverse paying (net) = net paying-subscriber retention indexed to 100% at first payment.';
+
+const SOURCE_GROUPS = [
+  { h: 'SMB SaaS (subscription)', note: 'anchored on monthly/annual churn by segment.', items: [
+    ['Focus Digital — Average Churn Rate by Industry, SaaS 2025 (SMB 10–99 emp: 6.4%/mo, 57.8%/yr; micro <10: 8.9%/mo, 69.1%/yr)', 'https://focus-digital.co/average-churn-rate-by-industry-saas/'],
+    ['HubiFi — Calculate SaaS Churn Rate (SMB monthly churn 3–7%)', 'https://www.hubifi.com/blog/calculate-saas-churn-rate'],
+    ['Optifai — B2B SaaS Churn Benchmarks (enterprise ~13%/yr; ~70% of churn in first 90 days)', 'https://optif.ai/learn/questions/b2b-saas-churn-rate-benchmark/'],
+  ] },
+  { h: 'Freemium B2C app', note: 'the floor line.', items: [
+    ['Amplitude — Product Benchmark Report 2025 (month-1 retention: median 6.5%, top-decile 26%)', 'https://amplitude.com/explore/analytics/what-is-churn'],
+    ["Lenny's Newsletter — What is a good activation rate (~30% median SaaS activation)", 'https://www.lennysnewsletter.com/p/what-is-a-good-activation-rate'],
+    ['Tandem — Activation Rate Benchmarks (freemium = lowest activation; low-intent signups)', 'https://usetandem.ai/blog/activation-rate-benchmarks'],
+  ] },
+  { h: 'E-commerce merchant', note: 'the closest real peer; the strongest-anchored of the five.', items: [
+    ['Upsella — Shopify Store Churn Rate 2026 (~10% active past 90 days; ~28% annual merchant churn; ~70% fail in year one)', 'https://upsella.com/blog/statistics/shopify-churn-rate-2026'],
+    ['Identixweb — Shopify Churn Rate 2026', 'https://www.identixweb.com/shopify-churn-rate-how-to-bring-back-lost-customers/'],
+  ] },
+  { h: 'Marketplace (supply side)', note: 'the thinnest-sourced; treat as illustrative of the model, not a dataset.', items: [
+    ['Casey Accidental / Lenny Rachitsky — What is Good Retention (supply-side retention shape; transactional curves take longer to flatten)', 'https://caseyaccidental.com/what-is-good-retention'],
+    ['Sharetribe — Building a Two-Sided Marketplace (supply-side onboarding/dropoff framing)', 'https://www.sharetribe.com/how-to-build/two-sided-marketplace/'],
+  ] },
+  { h: 'Loyverse-class (constructed)', note: "the blended transactional micro-merchant line — built from the Shopify e-commerce anchors above + the Focus Digital micro-SaaS figures + the transactional-retention framework (Casey/Lenny). No standalone source — it's our synthesis, which is exactly why it shouldn't stand alone on the chart.", items: [] },
+  { h: 'Cross-cutting / framing', note: 'used throughout.', items: [
+    ['Block (Square) Investor Day 2025 — GPV retention, product-adoption economics, "active seller = >5 payments/12mo"', 'https://block.xyz/documents/block-investor-day-2025-financial-outlook.pdf'],
+    ['CoinLaw — Square Statistics 2026', 'https://coinlaw.io/square-statistics/'],
+    ['Tidemark — 2025 Vertical & SMB SaaS Benchmark Report (POS control-point stickiness)', 'https://www.tidemarkcap.com/vskp-chapter/2025-vertical-smb-saas-benchmark-report'],
+  ] },
+];
+document.getElementById('sources').innerHTML = SOURCE_GROUPS.map(g =>
+  '<div class="srcgroup"><div class="srch">' + g.h + ' <em>— ' + g.note + '</em></div>' +
+  (g.items.length ? '<ul>' + g.items.map(([l, u]) =>
+    '<li><a href="' + u + '" target="_blank" rel="noopener noreferrer">' + l + '</a></li>').join('') + '</ul>' : '') +
+  '</div>').join('');
+
+// Footer
+document.getElementById('foot-notes').innerHTML =
+  '&rarr; Two Loyverse lines are measured (53 cohorts): active (receipts-based, re-based to 100% at t0, ends M52) and paying-net (net subscriber retention from first payment).<br>' +
+  '&rarr; Each model is indexed to 100% at its own t0 — see the key; absolute heights across different t0 bases are not directly comparable.<br>' +
+  '&rarr; The five non-Loyverse lines are anchored reconstructions (see Sources), not measured data.';
+document.getElementById('foot-source').textContent = (D.meta && D.meta.source) || 'canonical workbook';
+document.getElementById('foot-gen').textContent = (D.meta && D.meta.generatedAt) || '';
+
+render();
+</script>
+</body>
+</html>

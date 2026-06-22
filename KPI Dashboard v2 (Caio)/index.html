@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse — KPI Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="kpi-data.js"></script>
+<script src="daily-history.js"></script>
+<style>
+  :root {
+    --blue: #1D8FE1; --blue-deep: #1578C4; --near-black: #1A1A1A;
+    --off-white: #F7F7F7; --silver: #E0E0E0; --dark-gray: #555555;
+    --mid-gray: #888888; --red: #CC3333;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #EEF2F6; color: var(--near-black); }
+  .hero { background: linear-gradient(120deg,#1D8FE1,#1578C4); color: #fff; padding: 36px 48px 30px; position: relative; overflow: hidden; }
+  .hero .deco { position: absolute; background: rgba(255,255,255,0.12); width: 120px; height: 120px; }
+  .hero .d1 { right: -30px; top: -40px; transform: rotate(12deg); }
+  .hero .d2 { right: 70px; top: 30px; width: 60px; height: 60px; background: rgba(170,221,255,0.35); transform: rotate(-8deg); }
+  .hero .label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.9; margin-bottom: 8px; }
+  .hero h1 { font-family: 'Arial Black', Arial, sans-serif; font-size: 34px; line-height: 1.1; }
+  .hero .sub { margin-top: 10px; font-size: 13px; opacity: 0.9; }
+  .hero img.logo { position: absolute; top: 18px; right: 24px; height: 44px; z-index: 2; }
+  .badge { display: inline-block; background: var(--near-black); color: #fff; font-size: 10px; letter-spacing: 2px; padding: 4px 10px; margin-top: 12px; text-transform: uppercase; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; }
+  .section-label { color: var(--blue); font-family: 'Arial Black', Arial; font-size: 13px; margin: 34px 0 6px; }
+  h2 { font-family: 'Arial Black', Arial; font-size: 24px; margin-bottom: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+  .card { background: #fff; border-left: 4px solid var(--blue); box-shadow: 0 2px 6px rgba(0,0,0,0.10); padding: 16px 18px; position: relative; display: flex; flex-direction: column; }
+  .card > .info { position: absolute; top: 10px; right: 10px; margin-left: 0; }
+  .card > .info:hover::after { left: auto; right: -6px; transform: none; }
+  .card .num { font-family: 'Arial Black', Arial; font-size: 26px; color: var(--near-black); }
+  .card .lbl { font-size: 11px; color: var(--mid-gray); margin-bottom: 7px; padding-right: 18px; text-transform: uppercase; letter-spacing: 1px; min-height: 26px; }
+  .card .delta { font-size: 12px; margin-top: 6px; font-weight: bold; }
+  .card .spark { margin-top: auto; padding-top: 10px; height: 34px; }
+  .card .spark svg { display: block; width: 100%; height: 34px; }
+  .card .cstat { margin-top: auto; padding-top: 12px; font-size: 12px; }
+  .card .num .cflag { font-size: 22px; }
+  .up { color: #2E8B57; } .down { color: var(--red); }
+  .panel { background: #fff; border: 1px solid #E3E9F0; border-radius: 16px; box-shadow: 0 1px 2px rgba(20,40,70,.05); padding: 20px; margin-bottom: 18px; animation: rise .5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){ .panel{animation:none;} }
+  .panel h3 { font-family: 'Arial Black', Arial; font-size: 15px; margin-bottom: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+  .chart-box { position: relative; height: 280px; }
+  select { font-family: Arial; font-size: 13px; padding: 6px 10px; border: 1px solid var(--silver); background: #fff; color: var(--near-black); margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { text-align: right; color: var(--mid-gray); font-weight: bold; text-transform: uppercase; font-size: 10.5px; letter-spacing: 1px; padding: 8px 10px; border-bottom: 2px solid var(--silver); }
+  th:first-child, td:first-child { text-align: left; }
+  td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--off-white); color: var(--dark-gray); font-variant-numeric: tabular-nums; }
+  td.k { font-weight: bold; color: var(--near-black); }
+  tr:hover td { background: #F0F7FD; }
+  .foot { background: var(--near-black); color: #AAAAAA; padding: 28px 48px; font-size: 12px; line-height: 1.7; }
+  .foot strong { color: #fff; }
+  .foot .label { color: var(--blue); font-family: 'Arial Black', Arial; font-size: 12px; margin-bottom: 8px; letter-spacing: 2px; }
+  .note { font-size: 11.5px; color: var(--mid-gray); margin-top: 8px; }
+  .partial { color: var(--red); font-weight: bold; }
+  .info { display: inline-block; width: 14px; height: 14px; line-height: 14px; border-radius: 50%;
+          background: var(--silver); color: var(--dark-gray); font-size: 10px; font-family: Arial;
+          font-weight: bold; font-style: normal; text-align: center; cursor: help; position: relative;
+          margin-left: 6px; vertical-align: middle; }
+  .info:hover { background: var(--blue); color: #fff; }
+  .info:hover::after { content: attr(data-tip); position: absolute; bottom: 145%; left: 50%;
+          transform: translateX(-50%); background: var(--near-black); color: #fff; padding: 9px 11px;
+          font-size: 11px; line-height: 1.55; width: 250px; z-index: 50; text-align: left;
+          font-weight: normal; box-shadow: 0 4px 12px rgba(0,0,0,0.25); white-space: normal; }
+  .info:hover::before { content: ''; position: absolute; bottom: 105%; left: 50%; transform: translateX(-50%);
+          border: 5px solid transparent; border-top-color: var(--near-black); z-index: 51; }
+  .panel .info::after { width: 270px; }
+  .toggle { margin-bottom: 10px; }
+  .toggle button { font-family: Arial; font-size: 12px; padding: 6px 14px; border: 1px solid var(--silver);
+          background: #fff; color: var(--dark-gray); cursor: pointer; margin-right: -1px; }
+  .toggle button.on { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: bold; }
+  .pagenav { background: var(--near-black); display: flex; gap: 2px; padding: 0 24px; }
+  .pagenav a { color: #BBB; text-decoration: none; font-size: 12px; font-weight: bold; letter-spacing: 1px;
+    text-transform: uppercase; padding: 12px 18px; border-bottom: 3px solid transparent; }
+  .pagenav a:hover { color: #fff; }
+  .pagenav a.on { color: #fff; border-bottom-color: var(--blue); }
+  .cflag { cursor:help; white-space:nowrap; }
+  #t-countries td:first-child { white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<div class="pagenav">
+  <a href="daily.html">FACADASH</a>
+  <a href="index.html" class="on">Study &amp; Trend</a>
+  <a href="retention.html">Churn</a>
+</div>
+
+<div class="hero">
+  <div class="deco d1"></div><div class="deco d2"></div>
+  <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
+  <div class="label">Loyverse &middot; KPI Trend &amp; Analysis</div>
+  <h1>Study &amp; Trend.</h1>
+  <div class="sub" id="meta-line"></div>
+  <span class="badge" id="status-badge"></span>
+</div>
+
+<div class="wrap">
+
+  <div class="section-label">00</div>
+  <h2>At a glance.</h2>
+  <div class="cards" id="study-tiles">
+    <div class="card"><div class="lbl">Registrations · all-time<span class="info" data-tip="Cumulative merchants registered to date (deduplicated by email), summed across every month. The sub-line shows the previous complete month's registrations — this tab refreshes daily, but the meaningful unit is the month. (The live month-to-date run-rate is on the FACADASH tab.)">i</span></div><div class="num" id="t-reg-num">—</div><div class="delta" id="t-reg-d"></div><div class="spark" id="t-reg-s"></div></div>
+    <div class="card"><div class="lbl">Active merchants<span class="info" data-tip="Merchants issuing at least one receipt in the latest complete month (receipts-based, corrected series). Delta is month-over-month vs the prior complete month.">i</span></div><div class="num" id="t-act-num">—</div><div class="delta" id="t-act-d"></div><div class="spark" id="t-act-s"></div></div>
+    <div class="card"><div class="lbl">Paying customers<span class="info" data-tip="Merchants with active paid subscription revenue (MRR over 0) in the latest complete month. Delta is month-over-month vs the prior complete month.">i</span></div><div class="num" id="t-pay-num">—</div><div class="delta" id="t-pay-d"></div><div class="spark" id="t-pay-s"></div></div>
+    <div class="card"><div class="lbl">Activation · 12-mo<span class="info" data-tip="Share of a registration cohort still active (issuing receipts) 12 months after signup, blended across cohorts. From the cohort-age activation curve. The sparkline is that curve from M0.">i</span></div><div class="num" id="t-actv-num">—</div><div class="delta" id="t-actv-d"></div><div class="spark" id="t-actv-s"></div></div>
+    <div class="card"><div class="lbl">Fastest-growing country<span class="info" data-tip="Country with the highest registration growth this month vs the prior month measured to the SAME day-of-month (a fair like-for-like, not vs the full prior month). Among countries with a meaningful base. Active and paying merchants for that country are shown below. Source: live daily country funnel.">i</span></div><div class="num" id="t-fg-num">—</div><div class="delta" id="t-fg-d"></div><div class="cstat" id="t-fg-stat"></div></div>
+  </div>
+
+  <div class="section-label">01</div>
+  <h2>Monthly evolution.</h2>
+  <div class="grid2">
+    <div class="panel"><h3>Registrations per month<span class="info" data-tip="Merchants (deduplicated by email) whose account was created in each calendar month. Source: canonical cohort grid — cohort size per registration month. The lighter bar is the current in-progress month. Day view: this month vs last month, aligned by day of month, from the daily snapshots.">i</span></h3>
+      <div class="toggle viewtoggle" data-key="reg"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="chart-box"><canvas id="c-reg"></canvas></div></div>
+    <div class="panel">
+      <h3>Paying customers<span class="info" data-tip="Paying now: merchants with active paid subscription revenue (MRR over 0) in the month, from paid Chargebee invoice line items. Ever paid: running total of merchants who have made at least one payment — never decreases. The gap between the two is the churned-payer pool. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month.">i</span></h3>
+      <div class="toggle viewtoggle" data-key="pay"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="toggle" id="pay-toggle">
+        <button data-mode="now" class="on">Paying now</button><button data-mode="ever">Ever paid</button><button data-mode="both">Both</button>
+      </div>
+      <div class="chart-box"><canvas id="c-pay"></canvas></div>
+    </div>
+    <div class="panel"><h3>Total MRR (USD)<span class="info" data-tip="Sum of paid Chargebee invoice line items (plan + add-on), spread evenly across each billing period (annual plans count 1/12 per month). GBP x1.34 and EUR x1.16 to USD. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month.">i</span></h3>
+      <div class="toggle viewtoggle" data-key="mrr"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="chart-box"><canvas id="c-mrr"></canvas></div></div>
+    <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date).">i</span></h3>
+      <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="chart-box"><canvas id="c-active"></canvas></div></div>
+  </div>
+  
+  <div class="section-label">02</div>
+  <h2>Cohorts.</h2>
+    <div class="panel">
+    <h3>Cohort comparison — last 24 cohorts by age<span class="info" data-tip="One line per registration cohort (always the most recent 24 complete cohorts). X-axis is cohort age: M0 = registration month, M1 = one month later, etc. — so cohorts are compared at the same point in their life. MRR and Paying customers come from Chargebee invoices; Active merchants (count) and Active % (active merchants ÷ cohort size) are receipts-based, from the clean cohort-age series (2022-01 onward), so they run from M0 like the others. Lines are coloured as a heat map — oldest cohorts blue (cold), newest cohorts red (hot). Use the dropdown to highlight a single cohort (others fade to grey). Newer cohorts have shorter lines — less history.">i</span></h3>
+    <div class="toggle" id="coh-toggle" style="display:inline-block; margin-right:12px">
+      <button data-mode="mrr" class="on">MRR</button><button data-mode="paying">Paying customers</button><button data-mode="active">Active merchants</button><button data-mode="activePct">Active %</button>
+    </div>
+    <select id="coh-select" style="margin-right:8px"></select>
+    <select id="coh-country" title="Cohort-level country split requires the country dimension in the canonical cohort query — coming with the Snowflake pull."><option value="ALL">All countries</option></select>
+    <div class="chart-box"><canvas id="c-coh24"></canvas></div>
+  </div>
+  <div class="panel">
+    <h3>Cohort summary — last 24 cohorts (snapshot at latest complete month)<span class="info" data-tip="One row per registration month. Ever paid = members who made at least one payment to date; Paying now = currently paying; Active now = members issuing at least one receipt in the snapshot month (receipts-based, from the clean cohort-age series, 2022-01 onward); MRR now = current monthly revenue; ARPC = MRR now / paying now. Snapshot month: latest complete calendar month. Young cohorts are still maturing.">i</span></h3>
+    <div style="overflow-x:auto"><table id="t-cohorts"></table></div>
+    <div class="note">Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.</div>
+  </div>
+
+  <div class="section-label">03</div>
+  <h2>Countries.</h2>
+  <div style="margin-bottom:14px">
+    <label style="font-size:13px; color:var(--dark-gray); margin-right:8px">Country filter:</label>
+    <select id="country-select"></select>
+    <span style="font-size:11.5px; color:var(--mid-gray); margin-left:10px">drives the three monthly charts below</span>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>Registrations per month — selected country<span class="info" data-tip="New registrations attributed to the selected country, by registration month. Country comes from the merchant profile; merchants without country attribution (about 2 percent) are excluded.">i</span></h3>
+      <div class="chart-box"><canvas id="c-country"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Active merchants per month — selected country<span class="info" data-tip="Merchants in the selected country that issued at least one receipt in the month. Corrected device-clock-filtered series (TPV Country Analysis), full months Jan 2022 to the latest complete month.">i</span></h3>
+      <div class="chart-box"><canvas id="c-active-country"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Receipts per month — selected country<span class="info" data-tip="Total receipts (transactions) issued by merchants in the selected country per month, from the corrected receipts series (TPV Country Analysis). Full months Jan 2022 to the latest complete month.">i</span></h3>
+      <div class="chart-box"><canvas id="c-receipts-country"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Top 20 countries — lifetime<span class="info" data-tip="All-time registrations and ever-paid merchants per country, with conversion (ever paid / registrations). Active merchants = merchants in that country issuing at least one receipt in the latest complete month (current activity, not lifetime). Based on Chargebee payment history and the clean receipts series joined to merchant country. The arrow by each country shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining — the angle steepens with the rate.">i</span></h3>
+      <div style="overflow-x:auto; max-height: 360px; overflow-y:auto"><table id="t-countries"></table></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="foot">
+  <div class="label">METHODOLOGY &amp; DATA QUALITY</div>
+  <div id="foot-notes"></div>
+  <div style="margin-top:10px">Source: <span id="foot-source"></span> &middot; Generated <span id="foot-gen"></span> &middot; Prepared by Felipe Krugel &middot; Internal use only.</div>
+</div>
+
+<script>
+const D = KPI_DATA;
+const CNAMES = D.countryNames || {};
+const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
+const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
+const BLUE = '#1D8FE1', BLUE_DEEP = '#1578C4', GRAY = '#888888', BLACK = '#1A1A1A';
+const fmtN = n => n.toLocaleString('en-US');
+
+// ---------- overview tiles (count-based; no payment-penetration, no TPV dollars) ----------
+(function(){
+  const MO = Object.keys(D.monthly).filter(k=>/^\d+$/.test(k)).map(n=>D.monthly[n]);
+  const AM = D.activeMonthly || [];
+  const el = id => document.getElementById(id);
+  const pct = (a,b) => b ? (a/b-1)*100 : 0;
+  const setDelta = (id,v,suffix) => { const e=el(id); if(!e) return; const up=v>=0; e.className='delta '+(up?'up':'down'); e.textContent=(up?'\u25B2 ':'\u25BC ')+(v>=0?'+':'')+v.toFixed(1)+'%'+(suffix||''); };
+  const muted = (id,txt) => { const e=el(id); if(!e) return; e.className='delta'; e.innerHTML='<span style="color:var(--mid-gray)">'+txt+'</span>'; };
+  function spark(id, vals, color){
+    const e=el(id); if(!e || !vals || vals.length<2) return;
+    const w=150,h=34, mn=Math.min(...vals), mx=Math.max(...vals), rng=(mx-mn)||1;
+    const pts=vals.map((v,i)=>[ (i/(vals.length-1))*w, h-2-((v-mn)/rng)*(h-4) ]);
+    const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+    const area='M0 '+h+' '+pts.map(p=>'L'+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ')+' L'+w+' '+h+' Z';
+    e.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><path d="'+area+'" fill="'+color+'22"/><path d="'+line+'" fill="none" stroke="'+color+'" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  }
+  // 1) registrations all-time + previous complete month (run-rate lives on the FACADASH tab)
+  const regAll = MO.reduce((s,m)=>s+(+m.registrations||0),0);
+  const MN3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const snapM=(D.meta&&D.meta.snapshotMonth)||null;
+  const pmRow = snapM ? MO.find(m=>m.month===snapM) : MO[MO.length-2];
+  const pmLbl = pmRow ? (MN3[+pmRow.month.slice(5,7)-1]+' '+pmRow.month.slice(0,4)) : '';
+  el('t-reg-num').textContent = (regAll/1e6).toFixed(2)+'M';
+  muted('t-reg-d', pmRow ? ('Previous month ('+pmLbl+'): '+fmtN(pmRow.registrations)) : '');
+  spark('t-reg-s', MO.slice(-24).map(m=>+m.registrations||0), BLUE);
+  // 2) active merchants — latest complete month, MoM
+  if(AM.length>=2){
+    const a=AM[AM.length-1], ap=AM[AM.length-2];
+    el('t-act-num').textContent = fmtN(a.active);
+    setDelta('t-act-d', pct(a.active,ap.active), ' MoM');
+    spark('t-act-s', AM.slice(-24).map(x=>+x.active||0), '#2E8B57');
+  }
+  // 3) paying customers — latest complete (snapshot) month, MoM
+  const snap = (D.meta&&D.meta.snapshotMonth)||null;
+  let pi = snap ? MO.findIndex(m=>m.month===snap) : MO.length-2;
+  if(pi>0){
+    const p=MO[pi], pp=MO[pi-1];
+    el('t-pay-num').textContent = fmtN(p.paying);
+    setDelta('t-pay-d', pct(p.paying,pp.paying), ' MoM');
+    spark('t-pay-s', MO.slice(Math.max(0,pi-23),pi+1).map(m=>+m.paying||0), BLUE_DEEP);
+  }
+  // 4) 12-month activation (from cohort-age activation curve)
+  const ap = D.retention && D.retention.activatedProxyPct;
+  if(ap && ap.length>12){
+    el('t-actv-num').textContent = ap[12].toFixed(1)+'%';
+    muted('t-actv-d', 'still active 12 mo after signup');
+    spark('t-actv-s', ap.slice(0,25), '#E07B00');
+  }
+  // 5) fastest-growing country — registrations this month vs prior month to the SAME day (like-for-like)
+  if(typeof COUNTRY_FUNNEL!=='undefined' && COUNTRY_FUNNEL.rows){
+    const cand=COUNTRY_FUNNEL.rows.filter(r=>(+r.regPmtd||0)>=200)
+      .map(r=>({c:r.c, g:(+r.reg)/(+r.regPmtd) - 1})).sort((a,b)=>b.g-a.g);
+    if(cand.length){
+      const top=cand[0], row=COUNTRY_FUNNEL.rows.find(r=>r.c===top.c);
+      el('t-fg-num').innerHTML=cflag(top.c); setDelta('t-fg-d', top.g*100, ' regs MoM');
+      if(row) el('t-fg-stat').innerHTML='<span style="color:var(--mid-gray)">Active <b style="color:var(--near-black)">'+fmtN(row.active)+'</b> · Paying <b style="color:var(--near-black)">'+fmtN(row.paying)+'</b> <span style="opacity:.7">(this month)</span></span>';
+    }
+  }
+})();
+const fmtM = n => '$' + (n >= 1e6 ? (n/1e6).toFixed(2) + 'M' : Math.round(n).toLocaleString('en-US'));
+
+// Trim leading empty months; keep from 2017 for readability
+const monthly = D.monthly.filter(m => m.month >= '2017-01');
+const lastIdx = monthly.length - 1;
+const latestPartial = monthly[lastIdx];
+// Latest COMPLETE month = second to last (current month is partial)
+const cur = monthly[lastIdx - 1], prev = monthly[lastIdx - 2];
+
+document.getElementById('meta-line').textContent =
+  'Registrations · Paying Merchants · MRR — by month, cohort and country · All revenue figures from paid Chargebee invoices (USD)';
+const genD = new Date(D.meta.generatedAt.replace(' UTC', 'Z').replace(' ', 'T'));
+const dMinus1 = new Date(genD.getTime() - 86400000);
+const d1Str = dMinus1.toISOString().slice(0, 10);
+document.getElementById('status-badge').textContent =
+  'DATA: ACTUAL · ALWAYS D-1 · THROUGH ' + d1Str + ' · LATEST COMPLETE MONTH ' + cur.month;
+
+
+const actArr = D.activeMonthly || [];
+
+// ---- Charts ----
+Chart.defaults.font.family = 'Arial';
+Chart.defaults.color = GRAY;
+const labels = monthly.map(m => m.month);
+const base = (extra) => Object.assign({
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false } },
+  scales: { x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } }, y: { grid: { color: '#EFEFEF' }, beginAtZero: true } }
+}, extra || {});
+
+const m22 = monthly.filter(m => m.month >= '2022-01');
+const labels22 = m22.map(m => m.month);
+// ---- day-of-month view helpers (this month vs last month, from the daily snapshots) ----
+const HH = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().sort((a,b)=>a.date<b.date?-1:1);
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mLab = m => MON[+m.slice(5,7)-1] || m;
+const dDay = r => +r.date.slice(8,10);
+const dMonths = [...new Set(HH.map(r=>r.month))].sort();
+const CURM = dMonths[dMonths.length-1], PREVM = dMonths[dMonths.length-2] || CURM;
+const inst = {};
+function dayChart(canvas, field, color, yf){
+  const cur = HH.filter(r=>r.month===CURM && r[field]!=null).map(r=>({x:dDay(r),y:r[field]}));
+  const prv = HH.filter(r=>r.month===PREVM && r[field]!=null).map(r=>({x:dDay(r),y:r[field]}));
+  return new Chart(document.getElementById(canvas), { type:'line',
+    data:{ datasets:[
+      { label:mLab(PREVM)+' (last month)', data:prv, borderColor:'#B8C4D2', backgroundColor:'transparent', fill:false, borderWidth:2, borderDash:[5,4], pointRadius:0, pointHoverRadius:4, tension:.3 },
+      { label:mLab(CURM)+' (this month)', data:cur, borderColor:color, backgroundColor:'rgba(29,143,225,0.08)', fill:true, borderWidth:2.6, pointRadius:2, pointHoverRadius:5, pointBackgroundColor:color, tension:.3 }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{display:true,position:'top',align:'end',labels:{boxWidth:18,font:{size:10}}},
+        tooltip:{callbacks:{title:it=>'Day '+it[0].parsed.x, label:it=>it.dataset.label+': '+(yf?yf(it.parsed.y):it.parsed.y.toLocaleString('en-US'))}} },
+      scales:{ x:{type:'linear',min:1,max:31,grid:{display:false},title:{display:true,text:'Day of month',font:{size:10},color:GRAY},ticks:{stepSize:3,font:{size:10}}},
+        y:{grid:{color:'#EFEFEF'},ticks:{callback:v=>yf?yf(v):v.toLocaleString('en-US')}} } }});
+}
+// ---- monthly chart builders (instances stored so the view toggle can swap) ----
+function drawRegMonth(){ inst.reg = new Chart(document.getElementById('c-reg'), { type:'bar',
+  data:{ labels, datasets:[{ data: monthly.map(m=>m.registrations), backgroundColor: labels.map((l,i)=>i===lastIdx?'#CCE8FF':BLUE) }] }, options: base() }); }
+let payMode = 'now';
+function drawPaying(mode){ payMode = mode; const ds=[];
+  if (mode==='now'||mode==='both') ds.push({ type:'bar', label:'Paying now', data:m22.map(m=>m.paying), backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLUE) });
+  if (mode==='ever'||mode==='both') ds.push({ type:'bar', label:'Ever paid (cumulative)', data:m22.map(m=>m.cumEverPaid), backgroundColor: BLUE_DEEP });
+  if (inst.pay) inst.pay.destroy();
+  inst.pay = new Chart(document.getElementById('c-pay'), { data:{ labels:labels22, datasets:ds },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:mode==='both',position:'bottom'}},
+      scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}}, y:{grid:{color:'#EFEFEF'},beginAtZero:true} } } });
+}
+function drawMrrMonth(){ inst.mrr = new Chart(document.getElementById('c-mrr'), { type:'bar',
+  data:{ labels:labels22, datasets:[{ data:m22.map(m=>m.mrr), backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLACK) }] },
+  options: base({ scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}}, y:{grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) }); }
+function drawActMonth(){ const actLabels = actArr.map(a=>a.month); inst.active = new Chart(document.getElementById('c-active'), { type:'line',
+  data:{ labels:actLabels, datasets:[{ data:actArr.map(a=>a.active), borderColor:BLUE_DEEP, backgroundColor:'rgba(21,120,196,0.08)', fill:true,
+    pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:BLUE_DEEP, pointBorderWidth:0, borderWidth:2.5, tension:0.35 }] },
+  options: base({ interaction:{mode:'index',intersect:false} }) }); }
+// ---- view toggle wiring ----
+const VIEWCFG = {
+  reg:    { build:drawRegMonth,           field:'regMTD', color:BLUE },
+  pay:    { build:()=>drawPaying(payMode), field:'paying', color:BLUE },
+  mrr:    { build:drawMrrMonth,           field:'mrr',    color:BLACK,    yf:v=>'$'+(v/1000).toFixed(0)+'K' },
+  active: { build:drawActMonth,           field:'active', color:BLUE_DEEP }
+};
+function setView(key, view){
+  if (inst[key]) { inst[key].destroy(); inst[key] = null; }
+  if (key==='pay') { const pt=document.getElementById('pay-toggle'); if(pt) pt.style.display = (view==='day') ? 'none' : ''; }
+  if (view==='day') inst[key] = dayChart('c-'+key, VIEWCFG[key].field, VIEWCFG[key].color, VIEWCFG[key].yf);
+  else VIEWCFG[key].build();
+}
+drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawActMonth();
+document.querySelectorAll('#pay-toggle button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#pay-toggle button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  const vt=document.querySelector('.viewtoggle[data-key="pay"]'); if(vt){ vt.querySelectorAll('button').forEach(x=>x.classList.remove('on')); const mb=vt.querySelector('[data-view="month"]'); if(mb) mb.classList.add('on'); }
+  drawPaying(b.dataset.mode);
+});
+document.querySelectorAll('.viewtoggle').forEach(t => { const key=t.dataset.key;
+  t.querySelectorAll('button').forEach(b => b.onclick = () => {
+    t.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); setView(key, b.dataset.view);
+  });
+});
+
+// ---- Cohort comparison: one line per cohort, x = cohort age (M0..M24) ----
+const CC = D.cohortCompare || {};
+const ccKeys = Object.keys(CC).sort();
+const ageLabels = Array.from({ length: 25 }, (_, i) => 'M' + i);
+const COH_FMT = { mrr: v => '$' + fmtN(v), paying: v => fmtN(v), active: v => fmtN(v), activePct: v => v.toFixed(1) + '%' };
+// Heat-map palette: cohorts run oldest -> newest, coloured cold (blue) -> hot (red)
+const cohColor = i => { const t = ccKeys.length > 1 ? i / (ccKeys.length - 1) : 0; return 'hsl(' + Math.round(240 * (1 - t)) + ', 75%, 50%)'; };
+let cohChart, cohMode = 'mrr', cohSel = 'ALL';
+function drawCoh() {
+  const ds = ccKeys.map((coh, i) => {
+    const focus = cohSel === 'ALL' || cohSel === coh;
+    return { label: coh, data: CC[coh][cohMode],
+      borderColor: focus ? cohColor(i) : '#E4E4E4',
+      backgroundColor: focus ? cohColor(i) : '#E4E4E4',
+      pointRadius: 0, pointHitRadius: 6,
+      borderWidth: cohSel === coh ? 3.5 : (focus && i === ccKeys.length - 1 ? 2.6 : 1.7),
+      order: focus ? 0 : 1, tension: 0.25, spanGaps: false };
+  });
+  if (cohChart) cohChart.destroy();
+  cohChart = new Chart(document.getElementById('c-coh24'), { type: 'line',
+    data: { labels: ageLabels, datasets: ds },
+    options: { responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'nearest', intersect: false },
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: {
+          title: items => items.length ? items[0].dataset.label + ' cohort — age ' + items[0].label : '',
+          label: item => COH_FMT[cohMode](item.parsed.y)
+        } } },
+      scales: { x: { grid: { display: false }, title: { display: true, text: 'Months since registration', font: { size: 11 } } },
+                y: { grid: { color: '#EFEFEF' }, ticks: { callback: COH_FMT[cohMode] }, beginAtZero: true } } }
+  });
+}
+const cohSelEl = document.getElementById('coh-select');
+cohSelEl.innerHTML = '<option value="ALL">All cohorts (24)</option>' +
+  ccKeys.slice().reverse().map(c => '<option value="' + c + '">' + c + ' cohort</option>').join('');
+cohSelEl.onchange = e => { cohSel = e.target.value; drawCoh(); };
+document.querySelectorAll('#coh-toggle button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#coh-toggle button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); cohMode = b.dataset.mode; drawCoh();
+});
+drawCoh();
+
+// ---- Cohort table ----
+const completeCohorts = D.cohorts.filter(c => c.cohort < D.meta.latestMonth);
+const recent = completeCohorts.slice(-24).reverse();
+document.getElementById('t-cohorts').innerHTML =
+  '<tr><th>Cohort</th><th>Registrations</th><th>Ever paid</th><th>Ever paid %</th><th>Paying now</th><th>Paying now %</th><th>Active now</th><th>MRR now</th><th>ARPC</th></tr>' +
+  recent.map(c => '<tr><td class="k">' + c.cohort + '</td><td>' + fmtN(c.registrations) + '</td><td>' + fmtN(c.everPaid) +
+    '</td><td>' + c.pctEverPaid.toFixed(2) + '%</td><td>' + fmtN(c.payingNow) + '</td><td>' + c.pctPayingNow.toFixed(2) +
+    '%</td><td>' + fmtN(c.active) + '</td><td>' + fmtM(c.mrr) + '</td><td>$' + c.arpc.toFixed(2) + '</td></tr>').join('');
+
+// ---- Trend helpers: linear-regression trendline + country momentum arrow ----
+function linReg(vals) {
+  const pts = []; vals.forEach((v, i) => { if (v != null && !isNaN(v)) pts.push([i, v]); });
+  if (pts.length < 2) return vals.map(() => null);
+  let sx = 0, sy = 0, sxx = 0, sxy = 0; const n = pts.length;
+  pts.forEach(([x, y]) => { sx += x; sy += y; sxx += x * x; sxy += x * y; });
+  const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx), b = (sy - slope * sx) / n;
+  return vals.map((v, i) => v == null ? null : Math.max(0, slope * i + b));
+}
+function trendArrow(ctry) {
+  const series = (D.activeByCountryByMonth || {})[ctry] || {};
+  const months = Object.keys(series).filter(m => m <= D.meta.snapshotMonth).sort();
+  if (months.length < 12) return '';
+  const last = months.slice(-6), prev = months.slice(-12, -6);
+  const avg = ms => ms.reduce((s, m) => s + (series[m] || 0), 0) / ms.length;
+  const recent = avg(last), basev = avg(prev);
+  if (basev <= 0) return '';
+  const chg = recent / basev - 1;
+  let color, deg;
+  if (chg > 0.025) { color = '#1F9D6B'; deg = -Math.min(70, Math.max(12, chg * 250)); }
+  else if (chg < -0.025) { color = '#CC3333'; deg = Math.min(70, Math.max(12, -chg * 250)); }
+  else { color = '#E8A317'; deg = 0; }
+  const pct = (chg >= 0 ? '+' : '') + (chg * 100).toFixed(0) + '%';
+  return '<span title="Active merchants ' + pct + ' (last 6mo vs prior 6mo)" style="display:inline-block;color:' + color +
+    ';font-weight:bold;font-size:15px;transform:rotate(' + deg + 'deg);margin-right:8px">\u2192</span>';
+}
+
+// ---- Country charts (one shared dropdown drives all three) ----
+const ctrSel = document.getElementById('country-select');
+const ctrKeys = Object.keys(D.countryRegistrationsByMonth).sort((a, b) => {
+  const ra = D.countries.find(c => c.country === a), rb = D.countries.find(c => c.country === b);
+  return (rb ? rb.registrations : 0) - (ra ? ra.registrations : 0);
+});
+ctrSel.innerHTML = ctrKeys.map(c => '<option value="' + c + '">' + (isoFlag(c)?isoFlag(c)+' ':'') + c + ' — ' + (CNAMES[c]||c) + '</option>').join('');
+const acLabels = (D.activeMonthly || []).map(a => a.month); // 2022-01..latest complete
+
+let ctrChart, actCtrChart, recCtrChart;
+function drawCountry(ctry) {
+  const series = D.countryRegistrationsByMonth[ctry] || {};
+  const data = labels.map(m => series[m] || 0);
+  if (ctrChart) ctrChart.destroy();
+  ctrChart = new Chart(document.getElementById('c-country'), { type: 'bar',
+    data: { labels, datasets: [
+      { data, backgroundColor: BLUE },
+      { type: 'line', label: 'Trend', data: linReg(data), borderColor: '#1A1A1A', borderDash: [6,4], borderWidth: 2, pointRadius: 0, fill: false, tension: 0 },
+    ] }, options: base() });
+}
+// Shared clean-line builder for the per-country active & receipts charts
+function countryLine(canvasId, dict, ctry, color, yfmt, withTrend) {
+  const series = (dict || {})[ctry] || {};
+  const data = acLabels.map(m => (series[m] != null ? series[m] : null));
+  const yticks = yfmt ? { callback: yfmt } : {};
+  const datasets = [{ data, borderColor: color, backgroundColor: 'rgba(21,120,196,0.08)',
+    fill: true, pointRadius: 1.5, pointHoverRadius: 5, pointBackgroundColor: color, pointBorderWidth: 0,
+    borderWidth: 2.5, tension: 0.35, spanGaps: true }];
+  if (withTrend) datasets.push({ label: 'Trend', data: linReg(data), borderColor: '#1A1A1A', borderDash: [6,4],
+    borderWidth: 2, pointRadius: 0, fill: false, tension: 0, spanGaps: true });
+  return new Chart(document.getElementById(canvasId), { type: 'line',
+    data: { labels: acLabels, datasets },
+    options: base({ interaction: { mode: 'index', intersect: false },
+      scales: { x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+                y: { grid: { color: '#EFEFEF' }, beginAtZero: true, ticks: yticks } } }) });
+}
+const recFmt = v => (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : (v >= 1e3 ? Math.round(v / 1e3) + 'K' : v));
+function drawActiveCountry(ctry) { if (actCtrChart) actCtrChart.destroy(); actCtrChart = countryLine('c-active-country', D.activeByCountryByMonth, ctry, BLUE_DEEP, null, true); }
+function drawReceiptsCountry(ctry) { if (recCtrChart) recCtrChart.destroy(); recCtrChart = countryLine('c-receipts-country', D.receiptsByCountryByMonth, ctry, BLACK, recFmt, false); }
+ctrSel.onchange = e => { drawCountry(e.target.value); drawActiveCountry(e.target.value); drawReceiptsCountry(e.target.value); };
+drawCountry(ctrKeys[0]); drawActiveCountry(ctrKeys[0]); drawReceiptsCountry(ctrKeys[0]);
+
+// ---- Country table ----
+document.getElementById('t-countries').innerHTML =
+  '<tr><th>Country</th><th>Registrations</th><th>Active merchants</th><th>Ever paid</th><th>Ever paid %</th></tr>' +
+  D.countries.slice(0, 20).map(c => '<tr><td class="k">' + trendArrow(c.country) + cflag(c.country) + '</td><td>' + fmtN(c.registrations) +
+    '</td><td>' + fmtN(c.active || 0) + '</td><td>' + fmtN(c.everPaid) + '</td><td>' + c.pctEverPaid.toFixed(2) + '%</td></tr>').join('');
+
+// ---- Footer ----
+document.getElementById('foot-notes').innerHTML = D.meta.notes.map(n => '&rarr; ' + n).join('<br>');
+document.getElementById('foot-source').textContent = D.meta.source;
+document.getElementById('foot-gen').textContent = D.meta.generatedAt;
+</script>
+</body>
+</html>
