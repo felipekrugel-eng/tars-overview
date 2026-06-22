@@ -2,8 +2,8 @@ name: kpi-pull
 
 on:
   schedule:
-    - cron: '0 6,14 * * *'      # 06:00 & 14:00 UTC — tune as needed
-  workflow_dispatch: {}          # manual "Run workflow" button
+    - cron: '0 6,14 * * *'
+  workflow_dispatch: {}
 
 concurrency:
   group: kpi-pull
@@ -13,6 +13,8 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -25,14 +27,13 @@ jobs:
 
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
         env:
-          SNOWFLAKE_ACCOUNT:               ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER:                  ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PRIVATE_KEY:           ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
-          SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE }}
-          SNOWFLAKE_WAREHOUSE:             ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_ROLE:                  ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_DATABASE:              ${{ secrets.SNOWFLAKE_DATABASE }}
-          SNOWFLAKE_SCHEMA:                ${{ secrets.SNOWFLAKE_SCHEMA }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
           REPO_DIR:   ${{ github.workspace }}
           SQL_DIR:    ${{ github.workspace }}/kpi-automation/sql
           DAILY_DIR:  ${{ github.workspace }}/Daily DBs Dash Queries
