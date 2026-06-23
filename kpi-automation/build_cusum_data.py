@@ -98,8 +98,13 @@ def main():
     best_cum  = cum(hourly["best"])
     lw_cum    = cum(hourly["lastweek"])
 
-    # today's line: cumulative through the current hour, null afterwards (don't draw the future)
-    h = min(cur_hour, 23)
+    # Cut the live line off at the LAST hour that actually has registrations today —
+    # NOT the runner's wall-clock hour. The data's hours can run ahead of UTC midnight,
+    # so a wall-clock cutoff (a) hid the Today line (only hour 0 plotted right after
+    # midnight) and (b) made todayTotal smaller than the per-country sum, so shares blew
+    # past 100%. A data-driven cutoff keeps the line visible and headline == country sum.
+    today_hours = [x for x in range(24) if hourly["today"][x] > 0]
+    h = today_hours[-1] if today_hours else min(cur_hour, 23)
     today_line  = [today_cum[x] if x <= h else None for x in range(24)]
     today_total = today_cum[h]
     country.sort(key=lambda x: x["regs"], reverse=True)
