@@ -1,9 +1,16 @@
+# FACADASH — server-side daily-history refresh.
+# Place at .github/workflows/kpi-pull.yml in the dashboard repo.
+# Runs the Snowflake "daily as-of" queries → regenerates daily-history.js → commits.
+# Netlify auto-deploys on push (no desktop, no manual exports).
 name: kpi-pull
 
 on:
   schedule:
-    - cron: '0 6,14 * * *'
-  workflow_dispatch: {}
+    # 04:00 UTC = 5am UK during British Summer Time (≈7am finish, 9am Cyprus for Alex).
+    # NOTE: GitHub cron is always UTC and ignores DST. In winter (GMT) this becomes 4am UK;
+    # nudge to '0 5 * * *' in late Oct if you want 5am UK year-round.
+    - cron: '0 4 * * *'
+  workflow_dispatch: {}          # manual "Run workflow" button
 
 concurrency:
   group: kpi-pull
@@ -27,6 +34,7 @@ jobs:
 
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
         env:
+          # Only the private key is a secret (reused from the CASE pull). The rest are plain config.
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
           SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
           SNOWFLAKE_USER:      "TARS_SERVICE_USER"
@@ -48,6 +56,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else
-            git commit -m "chore(kpi): refresh data $(date -u +%FT%TZ)"
+            git commit -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
             git push
           fi
