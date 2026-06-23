@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
 """
-Build cusum-data.js — the FACADASH "registrations today" CUSUM widget.
+Build cusum-data.js — FACADASH "registrations today" CUSUM, by POLLING (no timestamps).
 
-Runs cusum_hourly_registrations.sql (registrations only, cheap — merchants table,
-no receipts) and emits the CUSUM_DATA contract the widget expects. Completely
-independent of the daily KPI pull: it has its own hourly GitHub Action so the
-heavy receipts query can never block or delay this.
+The hourly GitHub Action runs on a UTC cron, so its OWN run-time is true UTC. At each
+run we record the cumulative registration count against the current UTC hour; today's
+accumulation = count now - count at the UTC-midnight baseline. The hour axis is true
+UTC by construction — we never trust CREATED_AT's (local) clock.
 
-Auth: Snowflake key-pair, all values from environment (same secret as the daily
-pull). Required env: SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PRIVATE_KEY (PEM),
-  SNOWFLAKE_PRIVATE_KEY_PASSPHRASE (optional), SNOWFLAKE_WAREHOUSE, SNOWFLAKE_ROLE,
-  SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA.
+Benchmarks (all-time best day, same weekday last week) are built from the per-day
+history we accumulate in cusum-state.json. They populate over the first ~week of runs;
+the "today" line is correct and live from the very first run.
 
-CUSUM_DATA shape (matches cusum-preview.html, the approved widget):
-  { sample:false, asOf:"YYYY-MM-DD HH:MM", hours:[0..23], todayHourOfData:int,
-    today:[24] cumulative (null beyond the current hour),
-    best:{date,total,cum:[24]}, lastWeek:{date,total,cum:[24]},
-    todayTotal:int, todayByCountry:[{c,regs}] sorted desc (all countries) }
+State file (cusum-state.json, committed so it persists across runs):
+  { "day":"YYYY-MM-DD", "baselineTotal":int, "baselineByCountry":{cc:int},
+    "todayCum":[24] (cumulative regs recorded at each UTC hour; null if not polled),
+    "complete":bool (whether this day started polling near midnight),
+    "history":{ "YYYY-MM-DD": {"total":int,"cum":[24],"complete":bool} } }
+
+Auth: Snowflake key-pair from env (same single secret as the daily pull).
 """
-import os, json, pathlib
+import os, json, pathlib, datetime
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
 
@@ -26,7 +27,9 @@ HERE   = pathlib.Path(__file__).resolve().parent
 SQLDIR = pathlib.Path(os.environ.get("SQL_DIR", HERE / "sql"))
 V2     = pathlib.Path(os.environ.get("V2_DIR", HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT    = pathlib.Path(os.environ.get("CUSUMDATA_OUT", V2 / "cusum-data.js"))
+STATE  = pathlib.Path(os.environ.get("CUSUM_STATE", HERE / "cusum-state.json"))
 SQL_FILE = "cusum_hourly_registrations.sql"
+HISTORY_KEEP = 60
 
 
 def _private_key():
@@ -48,89 +51,135 @@ def connect():
         client_session_keep_alive=True)
 
 
-def cum(arr):
-    out, run = [], 0
-    for v in arr:
-        run += v
-        out.append(run)
+def load_state():
+    if STATE.exists():
+        try:
+            return json.loads(STATE.read_text())
+        except Exception:
+            pass
+    return {}
+
+
+def ffill_to(cum, hour):
+    """Cumulative line through `hour`: forward-fill gaps (hold last value), 0 before the
+    first poll, null after the current hour (the future isn't drawn)."""
+    out, last = [None] * 24, 0
+    for x in range(24):
+        if x > hour:
+            out[x] = None
+        else:
+            if cum[x] is not None:
+                last = cum[x]
+            out[x] = last
     return out
 
 
+def archive_day(cum):
+    """Turn a day's recorded cumulative into a clean forward-filled 24-array + total."""
+    out, last = [0] * 24, 0
+    for x in range(24):
+        if cum[x] is not None:
+            last = cum[x]
+        out[x] = last
+    return out, last
+
+
+def best_day(hist):
+    cand = [(v["total"], k, v) for k, v in hist.items() if v.get("complete") and v.get("cum")]
+    if not cand:
+        return None
+    cand.sort(reverse=True)
+    total, date, v = cand[0]
+    return {"date": date, "total": total, "cum": v["cum"]}
+
+
+def last_week(hist, day):
+    d = (datetime.date.fromisoformat(day) - datetime.timedelta(days=7)).isoformat()
+    v = hist.get(d)
+    if not v or not v.get("cum"):
+        return None
+    return {"date": d, "total": v["total"], "cum": v["cum"]}
+
+
 def main():
+    now   = datetime.datetime.now(datetime.timezone.utc)
+    day   = now.strftime("%Y-%m-%d")
+    hour  = now.hour
+    as_of = now.strftime("%Y-%m-%d %H:%M")
+
     sql = (SQLDIR / SQL_FILE).read_text()
     conn = connect()
     try:
         cur = conn.cursor()
-        cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 600")
-        # Pin the session to UTC so "today", "now", and the hourly reg buckets all
-        # agree on one timezone — otherwise the live line breaks near the day boundary
-        # (the account's default TZ is behind UTC). The widget's asOf stamp is UTC.
-        cur.execute("ALTER SESSION SET TIMEZONE = 'UTC'")
-        # DB "now" in the SAME timezone basis the query uses (CURRENT_DATE / HOUR),
-        # so the live line truncates at the correct hour regardless of the runner's TZ.
-        cur.execute("SELECT HOUR(CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP())), "
-                    "TO_CHAR(CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP()), 'YYYY-MM-DD HH24:MI')")
-        cur_hour, as_of = cur.fetchone()
-        cur_hour = int(cur_hour)
+        cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 300")
         cur.execute(sql)
         rows = cur.fetchall()
-        cols = [c[0] for c in cur.description]
         cur.close()
     finally:
         conn.close()
 
-    i = {c: n for n, c in enumerate(cols)}
-    SERIES, REF, HOUR, COUNTRY, REGS = i["SERIES"], i["REF_DATE"], i["HOUR"], i["COUNTRY"], i["REGS"]
+    total_now, by_country_now = 0, {}
+    for cc, regs in rows:
+        regs = int(regs or 0)
+        if cc == "TOTAL":
+            total_now = regs
+        elif cc:
+            by_country_now[str(cc)] = regs
 
-    hourly = {"today": [0] * 24, "best": [0] * 24, "lastweek": [0] * 24}
-    ref_date = {}
-    country = []
-    for r in rows:
-        s = str(r[SERIES])
-        if s == "country":
-            if r[COUNTRY]:
-                country.append({"c": str(r[COUNTRY]), "regs": int(r[REGS] or 0)})
-        elif s in hourly:
-            hourly[s][int(r[HOUR])] = int(r[REGS] or 0)
-            ref_date[s] = str(r[REF])[:10]
+    st = load_state()
 
-    today_cum = cum(hourly["today"])
-    best_cum  = cum(hourly["best"])
-    lw_cum    = cum(hourly["lastweek"])
+    # ---- day rollover / first run ----
+    if st.get("day") != day:
+        hist = st.get("history", {})
+        if st.get("day") and st.get("todayCum"):
+            cum_arr, total = archive_day(st["todayCum"])
+            hist[st["day"]] = {"total": total, "cum": cum_arr, "complete": bool(st.get("complete", True))}
+        if len(hist) > HISTORY_KEEP:
+            for k in sorted(hist)[:-HISTORY_KEEP]:
+                hist.pop(k, None)
+        st = {"day": day, "baselineTotal": total_now, "baselineByCountry": dict(by_country_now),
+              "todayCum": [None] * 24, "complete": hour <= 1, "history": hist}
 
-    # Cut the live line off at the LAST hour that actually has registrations today —
-    # NOT the runner's wall-clock hour. The data's hours can run ahead of UTC midnight,
-    # so a wall-clock cutoff (a) hid the Today line (only hour 0 plotted right after
-    # midnight) and (b) made todayTotal smaller than the per-country sum, so shares blew
-    # past 100%. A data-driven cutoff keeps the line visible and headline == country sum.
-    today_hours = [x for x in range(24) if hourly["today"][x] > 0]
-    h = today_hours[-1] if today_hours else min(cur_hour, 23)
-    today_line  = [today_cum[x] if x <= h else None for x in range(24)]
-    today_total = today_cum[h]
-    country.sort(key=lambda x: x["regs"], reverse=True)
+    base_total = int(st.get("baselineTotal", total_now))
+    base_cc    = st.get("baselineByCountry", {})
 
+    cum = st.get("todayCum") or [None] * 24
+    cum[hour] = max(0, total_now - base_total)
+    st["todayCum"] = cum
+
+    today_line  = ffill_to(cum, hour)
+    today_total = today_line[hour] if today_line[hour] is not None else 0
+
+    today_cc = []
+    for cc, n in by_country_now.items():
+        d = n - int(base_cc.get(cc, 0))
+        if d > 0:
+            today_cc.append({"c": cc, "regs": d})
+    today_cc.sort(key=lambda x: x["regs"], reverse=True)
+
+    hist = st.get("history", {})
     data = {
-        "sample": False,
-        "asOf": as_of,
-        "hours": list(range(24)),
-        "todayHourOfData": h,
+        "sample": False, "asOf": as_of, "hours": list(range(24)),
+        "todayHourOfData": hour,
         "today": today_line,
-        "best":     {"date": ref_date.get("best", ""),     "total": best_cum[-1], "cum": best_cum},
-        "lastWeek": {"date": ref_date.get("lastweek", ""),  "total": lw_cum[-1],   "cum": lw_cum},
+        "best": best_day(hist),
+        "lastWeek": last_week(hist, day),
         "todayTotal": today_total,
-        "todayByCountry": country,
+        "todayByCountry": today_cc,
     }
 
+    STATE.write_text(json.dumps(st, separators=(",", ":")))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w") as f:
-        f.write("// FACADASH registrations CUSUM — auto-generated hourly. Do not edit by hand.\n")
+        f.write("// FACADASH registrations CUSUM — auto-generated hourly by polling. Do not edit by hand.\n")
         f.write("const CUSUM_DATA = ")
         json.dump(data, f, separators=(",", ":"))
         f.write(";\n")
-    print(f"cusum-data.js: today {today_total} thru {h:02d}:00 | "
-          f"best {data['best']['date']} ({data['best']['total']}) | "
-          f"lastWeek {data['lastWeek']['date']} ({data['lastWeek']['total']}) | "
-          f"{len(country)} countries")
+
+    b = data["best"]["date"] if data["best"] else "—"
+    lw = data["lastWeek"]["date"] if data["lastWeek"] else "—"
+    print(f"cusum-data.js: {day} {hour:02d}:00 UTC | today {today_total} | "
+          f"best {b} | lastWeek {lw} | history {len(hist)} days | {len(today_cc)} countries")
 
 
 if __name__ == "__main__":
