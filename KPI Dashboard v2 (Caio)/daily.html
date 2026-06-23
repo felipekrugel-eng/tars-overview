@@ -184,7 +184,13 @@ const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().so
 const BLUE='#1D8FE1', BLUE_DEEP='#1578C4', INK='#13233A', GRAY='#7E8A9A', GREEN='#1F9D6B', RED='#D2495B';
 const fmtN = n => n==null?'—':Math.round(n).toLocaleString('en-US');
 const fmtM = n => n==null?'—':'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n).toLocaleString('en-US'));
-const cur = H.length?H[H.length-1]:null, prev = H.length>1?H[H.length-2]:null;
+// Tiles reflect the last COMPLETE day (and the day before) — the same cutoff the graphs
+// use — so "+xx vs prior day" is the completed day's real move, not the partial current
+// day captured at the time the daily pull runs (e.g. 04:00 UTC).
+const _todayISO = new Date().toISOString().slice(0,10);
+const _completeDays = H.filter(r => r.date < _todayISO);
+const HB = _completeDays.length ? _completeDays : H;   // complete-day basis for all tiles
+const cur = HB.length?HB[HB.length-1]:null, prev = HB.length>1?HB[HB.length-2]:null;
 const CNAMES = D.countryNames || {};
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
@@ -204,7 +210,7 @@ function spark(vals,color){
   const pts=v.map((x,i)=>(p+i/(v.length-1)*(w-2*p)).toFixed(1)+','+(h-p-(x-mn)/rg*(h-2*p)).toFixed(1)).join(' ');
   return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><polyline fill="none" stroke="'+color+'" stroke-width="1.8" points="'+pts+'"/></svg>';
 }
-function ser(field){ return H.map(r=>r[field]).filter(x=>x!=null); }
+function ser(field){ return HB.map(r=>r[field]).filter(x=>x!=null); }
 function deltaTile(d, money){
   if(d==null) return '<div class="td flat">—</div>';
   const cls=d>0?'up':(d<0?'down':'flat'), s=d>0?'+':'';
@@ -212,15 +218,15 @@ function deltaTile(d, money){
 }
 
 // ---------- tiles ----------
-// active/receipts can lag (TPV query saved later than the MRR snapshot) — use the latest day that HAS the value
-function lastTwo(field){ const a=H.filter(r=>r[field]!=null); return [a[a.length-1]||null, a[a.length-2]||null]; }
+// active/receipts can lag (TPV query saved later than the MRR snapshot) — use the latest COMPLETE day that HAS the value
+function lastTwo(field){ const a=HB.filter(r=>r[field]!=null); return [a[a.length-1]||null, a[a.length-2]||null]; }
 const aN=lastTwo('active'), rN=lastTwo('receipts');
 const a30=lastTwo('active30d'), p30=lastTwo('payingActive');
 const asOfSub = row => (row && cur && row.date < cur.date) ? ('as of '+row.date.slice(5)) : 'this month';
 const rollLine = (val,label,tip) => val!=null ? '<div class="td" style="color:var(--muted)" title="'+tip+'">'+label+': '+fmtN(val)+'</div>' : '';
-// end-of-month run-rate: project month-end registrations at the current daily pace
-// divide by the last FULL day of data (snapshot day - 1, the D-1 convention), not the snapshot day itself
-const rrDom = cur ? Math.max(+cur.date.slice(8,10) - 1, 1) : 1;
+// end-of-month run-rate: project month-end registrations at the current daily pace.
+// cur is now the last COMPLETE day, so divide by its day number (all of it is finished).
+const rrDom = cur ? Math.max(+cur.date.slice(8,10), 1) : 1;
 const rrDim = cur ? new Date(+cur.date.slice(0,4), +cur.date.slice(5,7), 0).getDate() : 30;
 const regRR = cur ? Math.round(cur.regMTD / Math.max(rrDom,1) * rrDim) : 0;
 const tileDefs = cur ? [
