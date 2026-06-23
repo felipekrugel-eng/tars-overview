@@ -19,7 +19,12 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    # Six queries run sequentially. Each statement stays under Snowflake's 60m
+    # per-statement cap, but the SUM (cohort + receipts + four smaller) plus any
+    # warehouse queue wait pushed past the old 150m GitHub cap (exit 143 = SIGTERM).
+    # The GitHub runner only IDLE-WAITS on Snowflake, so extra headroom costs no
+    # warehouse credits. 330m sits safely under GitHub's 360m hosted-runner ceiling.
+    timeout-minutes: 330
     permissions:
       contents: write
     steps:
