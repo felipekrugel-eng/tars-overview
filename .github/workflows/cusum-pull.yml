@@ -6,7 +6,11 @@ name: cusum-pull
 
 on:
   schedule:
-    - cron: '0 * * * *'          # top of every hour (UTC)
+    # 23 min past each hour (UTC). GitHub cron is best-effort and the top of the hour
+    # ('0') is its most congested slot, so runs there get delayed/skipped. An off-peak
+    # minute lands far more reliably. (The hour bucket is still correct: the generator
+    # stamps each run with its real UTC hour, and the cumulative line forward-fills gaps.)
+    - cron: '23 * * * *'
   workflow_dispatch: {}          # manual "Run workflow" button
 
 concurrency:
