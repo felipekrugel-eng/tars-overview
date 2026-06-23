@@ -98,19 +98,30 @@ def main():
     write(DAILY / f"Registrations Month x Country_{TS}.csv", lr)
     lt = latest(dfs["receipts"])
     write(DAILY / f"TPV and Receipts DB2_{TS}.csv", lt[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]])
-    # global daily active/receipts ("49 days 1"): each merchant in one country → current-month sum = global distinct
-    g = dfs["receipts"][["SNAPSHOT_DATE","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]].copy()  # only the 4 cols this needs (not all 14) — keeps the copy small
-    g["S"] = g["SNAPSHOT_DATE"].astype(str).str[:10]; g["M"] = g["CALENDAR_MONTH"].astype(str).str[:7]
-    g = g[g["M"] == g["S"].str[:7]]
-    agg = g.groupby("S").agg(ACTIVE=("ACTIVE_MERCHANTS","sum"), RECEIPTS=("RECEIPT_COUNT","sum")).reset_index()
-    agg = agg.rename(columns={"S":"DATE"}); agg["GTV"] = 0; agg["AVG_TICKET"] = 0
+    # global daily active/receipts ("49 days 1"): each merchant in one country → current-month sum = global distinct.
+    # MEMORY: this used to .copy() 4 cols of the full ~26.5M-row grid AND build two full-length object-string
+    # Series (g["S"], g["M"]) while the full grid was still resident — the peak alloc that OOM-killed the runner
+    # right here (it surfaces as "The operation was canceled"). Now: no .copy(); compare months as compact
+    # int64 PeriodArrays (not GB-sized object strings); slice to current-month rows FIRST, then build DATE.
+    # Output is byte-identical.
+    rec = dfs["receipts"]
+    cur = rec.loc[
+        rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
+        == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
+        ["SNAPSHOT_DATE", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+    ]
+    agg = (cur.assign(DATE=cur["SNAPSHOT_DATE"].astype(str).str[:10])
+              .groupby("DATE")
+              .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+              .reset_index())
+    agg["GTV"] = 0; agg["AVG_TICKET"] = 0
     write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
 
-    # Release the big in-memory frames (esp. the ~26.5M-row receipts grid + its copy) BEFORE the
-    # generator subprocesses. They read the CSVs from disk, so keeping the frames resident just
-    # doubles RAM alongside the subprocess and OOMs the runner ("lost communication with the server").
+    # Release the big in-memory frames (esp. the ~26.5M-row receipts grid) BEFORE the generator
+    # subprocesses. They read the CSVs from disk, so keeping the frames resident just doubles RAM
+    # alongside the subprocess and OOMs the runner ("lost communication with the server").
     import gc
-    dfs.clear(); del g, agg; gc.collect()
+    dfs.clear(); del rec, cur, agg; gc.collect()
 
     # ---- regenerate both data files ----
     print("[backfill] daily-history.js", flush=True)
