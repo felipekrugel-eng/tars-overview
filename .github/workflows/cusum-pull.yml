@@ -1,0 +1,56 @@
+# FACADASH — hourly registrations CUSUM refresh.
+# Place at .github/workflows/cusum-pull.yml in the dashboard repo.
+# Runs ONE cheap registrations-only Snowflake query -> regenerates cusum-data.js -> commits.
+# Independent of kpi-pull: the heavy daily receipts query can never block this hourly run.
+name: cusum-pull
+
+on:
+  schedule:
+    - cron: '0 * * * *'          # top of every hour (UTC)
+  workflow_dispatch: {}          # manual "Run workflow" button
+
+concurrency:
+  group: cusum-pull
+  cancel-in-progress: true        # if a run is still going when the next hour fires, drop the stale one
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15           # registrations-only; should finish in 1-3 min
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r kpi-automation/requirements.txt
+
+      - name: Pull registrations CUSUM from Snowflake -> regenerate cusum-data.js
+        env:
+          # Same single secret as the daily pull. The rest are plain config.
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          SQL_DIR: ${{ github.workspace }}/kpi-automation/sql
+          V2_DIR:  ${{ github.workspace }}/KPI Dashboard v2 (Caio)
+        run: python kpi-automation/build_cusum_data.py
+
+      - name: Commit & push if the data changed
+        run: |
+          git config user.name  "facadash-bot"
+          git config user.email "facadash-bot@users.noreply.github.com"
+          git add "KPI Dashboard v2 (Caio)/cusum-data.js"
+          if git diff --cached --quiet; then
+            echo "No CUSUM change — nothing to commit."
+          else
+            git commit -m "chore(cusum): hourly registrations refresh [skip ci] $(date -u +%FT%TZ)"
+            git push
+          fi
