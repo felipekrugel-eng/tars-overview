@@ -28,6 +28,12 @@
 --   The spread-line x 49-day join is the heavy step (an inequality/range
 --   join). Run on a Medium+ warehouse. To test cheaply first, lower
 --   ROWCOUNT in the "snapshots" CTE (e.g. 3) or narrow the date bounds.
+--   OUTPUT TRIMMED (2026-06): emits only the 9 columns consumed downstream
+--   (build_kpi_data.py + backfill_daily.py). The 8 window functions, the
+--   plan/addon/UK/EU MRR splits, the PCT_*/BLENDED_ARPU scalars, and the final
+--   ORDER BY were removed (all unused) — this drops the window sort/partition
+--   pass and the output sort. The heavy spread x 49-snapshot join is unchanged,
+--   so the emitted values are identical; this just stops computing/sorting waste.
 -- =================================================================
 
 WITH snapshots AS (
@@ -130,13 +136,12 @@ spread_asof AS (
      AND (sp.VOID_DATE IS NULL OR sp.VOID_DATE > s.SNAPSHOT_DATE)
 ),
 merchant_month_mrr AS (
+    -- Only total MRR_USD is consumed downstream; the plan/addon/UK/EU splits were
+    -- never read by build_kpi_data.py or backfill_daily.py, so they're dropped here.
+    -- (ENTITY_TYPE / REGION are now unreferenced and get pruned from spread_asof.)
     SELECT
         SNAPSHOT_DATE, EMAIL_KEY, MONTH_START,
-        SUM(MONTHLY_AMOUNT_USD)                                          AS MRR_USD,
-        SUM(CASE WHEN ENTITY_TYPE = 'plan'  THEN MONTHLY_AMOUNT_USD END) AS PLAN_MRR_USD,
-        SUM(CASE WHEN ENTITY_TYPE = 'addon' THEN MONTHLY_AMOUNT_USD END) AS ADDON_MRR_USD,
-        SUM(CASE WHEN REGION = 'UK' THEN MONTHLY_AMOUNT_USD END)         AS MRR_USD_UK,
-        SUM(CASE WHEN REGION = 'EU' THEN MONTHLY_AMOUNT_USD END)         AS MRR_USD_EU
+        SUM(MONTHLY_AMOUNT_USD) AS MRR_USD
     FROM spread_asof
     GROUP BY SNAPSHOT_DATE, EMAIL_KEY, MONTH_START
 ),
@@ -154,11 +159,7 @@ paying_per_cohort_month AS (
         m.COHORT_MONTH,
         mm.MONTH_START,
         COUNT(DISTINCT m.EMAIL_KEY)         AS PAYING_CUSTOMERS,
-        SUM(mm.MRR_USD)                     AS MRR_USD,
-        SUM(mm.PLAN_MRR_USD)                AS PLAN_MRR_USD,
-        SUM(mm.ADDON_MRR_USD)               AS ADDON_MRR_USD,
-        SUM(mm.MRR_USD_UK)                  AS MRR_USD_UK,
-        SUM(mm.MRR_USD_EU)                  AS MRR_USD_EU
+        SUM(mm.MRR_USD)                     AS MRR_USD
     FROM merchants m
     JOIN merchant_month_mrr mm ON mm.EMAIL_KEY = m.EMAIL_KEY
     WHERE mm.MRR_USD > 0
@@ -207,42 +208,22 @@ cum_ever_paid AS (
     WHERE fp.FIRST_PAID_MONTH <= g.MONTH_START
     GROUP BY g.SNAPSHOT_DATE, m.COHORT_MONTH, g.MONTH_START
 )
+-- Only the 9 columns consumed by build_kpi_data.py + backfill_daily.py are emitted.
+-- The former window functions (CUM_REVENUE / LTV_* / PEAK_* / PCT_RETAINED_*), the
+-- plan/addon/UK/EU MRR splits, and the PCT_*/BLENDED_ARPU scalars were never read
+-- downstream, so they're dropped — that removes the whole window sort/partition pass.
+-- The final global ORDER BY is also removed (the pandas consumers re-group/sort);
+-- the 9 emitted columns are value-identical to before, just unsorted.
 SELECT
     g.SNAPSHOT_DATE,
     g.COHORT_MONTH,
     g.REGISTRATIONS,
     g.MONTH_START,
     g.MONTH_NUMBER,
-    -- ===== STATE AS OF SNAPSHOT_DATE =====
     COALESCE(p.PAYING_CUSTOMERS, 0)         AS PAYING_CUSTOMERS,
     COALESCE(cep.CUM_PAYING_EVER, 0)        AS CUM_PAYING_EVER,
     COALESCE(p.MRR_USD,       0)            AS MRR_USD,
-    COALESCE(p.PLAN_MRR_USD,  0)            AS PLAN_MRR_USD,
-    COALESCE(p.ADDON_MRR_USD, 0)            AS ADDON_MRR_USD,
-    COALESCE(p.MRR_USD_UK,    0)            AS MRR_USD_UK,
-    COALESCE(p.MRR_USD_EU,    0)            AS MRR_USD_EU,
-    -- ===== RATIOS =====
-    ROUND(100.0 * COALESCE(p.PAYING_CUSTOMERS, 0)  / g.REGISTRATIONS, 4) AS PCT_PAYING_NOW,
-    ROUND(100.0 * COALESCE(cep.CUM_PAYING_EVER, 0) / g.REGISTRATIONS, 4) AS PCT_EVER_PAID,
-    ROUND(COALESCE(p.MRR_USD, 0) / NULLIF(p.PAYING_CUSTOMERS, 0), 2)     AS ARPC_USD,
-    ROUND(COALESCE(p.MRR_USD, 0) / g.REGISTRATIONS, 4)                   AS BLENDED_ARPU_USD,
-    -- ===== CUMULATIVE / LTV (within each snapshot x cohort) =====
-    SUM(COALESCE(p.MRR_USD, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH ORDER BY g.MONTH_START)  AS CUM_REVENUE_USD,
-    ROUND(SUM(COALESCE(p.MRR_USD, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH ORDER BY g.MONTH_START)
-          / g.REGISTRATIONS, 2)                                                                            AS LTV_PER_REGISTERED_USD,
-    ROUND(SUM(COALESCE(p.MRR_USD, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH ORDER BY g.MONTH_START)
-          / NULLIF(cep.CUM_PAYING_EVER, 0), 2)                                                             AS LTV_PER_PAYING_USD,
-    -- ===== LIFETIME PEAKS / RETENTION (within each snapshot x cohort) =====
-    MAX(COALESCE(p.PAYING_CUSTOMERS, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH) AS PEAK_PAYING,
-    MAX(COALESCE(p.MRR_USD,          0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH) AS PEAK_MRR_USD,
-    ROUND(100.0 * MAX(COALESCE(p.PAYING_CUSTOMERS, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH)
-          / g.REGISTRATIONS, 2)                                             AS PEAK_PCT_PAYING,
-    ROUND(100.0 * COALESCE(p.PAYING_CUSTOMERS, 0)
-          / NULLIF(MAX(COALESCE(p.PAYING_CUSTOMERS, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH), 0), 2)
-                                                                            AS PCT_RETAINED_VS_PEAK_PAYING,
-    ROUND(100.0 * COALESCE(p.MRR_USD, 0)
-          / NULLIF(MAX(COALESCE(p.MRR_USD, 0)) OVER (PARTITION BY g.SNAPSHOT_DATE, g.COHORT_MONTH), 0), 2)
-                                                                            AS PCT_RETAINED_VS_PEAK_MRR
+    ROUND(COALESCE(p.MRR_USD, 0) / NULLIF(p.PAYING_CUSTOMERS, 0), 2)     AS ARPC_USD
 FROM cohort_month_grid g
 LEFT JOIN paying_per_cohort_month p
        ON p.SNAPSHOT_DATE = g.SNAPSHOT_DATE
@@ -251,8 +232,7 @@ LEFT JOIN paying_per_cohort_month p
 LEFT JOIN cum_ever_paid cep
        ON cep.SNAPSHOT_DATE = g.SNAPSHOT_DATE
       AND cep.COHORT_MONTH  = g.COHORT_MONTH
-      AND cep.MONTH_START   = g.MONTH_START
-ORDER BY g.SNAPSHOT_DATE, g.COHORT_MONTH, g.MONTH_START;
+      AND cep.MONTH_START   = g.MONTH_START;
 
 
 -- =================================================================
