@@ -62,5 +62,18 @@ jobs:
             echo "No data change — nothing to commit."
           else
             git commit -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
-            git push
+            # This job runs ~90 min. The cusum workflow (hourly) and any manual pushes
+            # can advance master while we run, so a bare push fails non-fast-forward
+            # ("! [rejected] ... fetch first"). Rebase our single generated-data commit
+            # onto the latest remote and retry. The files we touch (daily-history.js,
+            # kpi-data.js) are written only by this workflow, so rebasing on top of
+            # other commits (cusum-data.js, sql, etc.) does not conflict.
+            for i in 1 2 3 4 5; do
+              if git pull --rebase --autostash origin master && git push; then
+                echo "pushed on attempt $i"; exit 0
+              fi
+              echo "push attempt $i failed (remote moved) — retrying in 5s"
+              sleep 5
+            done
+            echo "push still failing after 5 attempts"; exit 1
           fi
