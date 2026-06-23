@@ -457,24 +457,33 @@ document.getElementById('foot-source').textContent = (D.meta && D.meta.source) |
   if(!C || !C.today) return;                       // gracefully hide if the hourly file isn't there yet
   var wrap = document.getElementById('cusum-wrap'); if(wrap) wrap.style.display = '';
   var lbl = h => String(h).padStart(2,'0')+':00';
-  var h = C.todayHourOfData, todayVal = C.today[h], lwVal = C.lastWeek.cum[h];
+  var h = C.todayHourOfData, todayVal = C.today[h];
   document.getElementById('cusum-total').textContent = fmtN(todayVal);
-  var dd = lwVal ? (todayVal/lwVal-1)*100 : null, pill = document.getElementById('cusum-delta');
-  if(dd!=null){ pill.className = 'cusum-pill '+(dd>=0?'up':'down'); pill.textContent = (dd>=0?'▲ +':'▼ ')+Math.abs(dd).toFixed(1)+'% vs last week'; }
-  document.getElementById('cusum-foot').innerHTML =
-    'Best day: <b>'+C.best.date+'</b> ('+fmtN(C.best.total)+') &middot; Same weekday last week: <b>'+C.lastWeek.date+'</b> ('+fmtN(C.lastWeek.total)+') &middot; as of '+C.asOf+' UTC';
+  // headline delta vs same weekday last week — only once that history exists
+  var lwVal = (C.lastWeek && C.lastWeek.cum) ? C.lastWeek.cum[h] : null;
+  var pill = document.getElementById('cusum-delta');
+  if(lwVal){ var dd=(todayVal/lwVal-1)*100; pill.className='cusum-pill '+(dd>=0?'up':'down'); pill.textContent=(dd>=0?'▲ +':'▼ ')+Math.abs(dd).toFixed(1)+'% vs last week'; }
+  else { pill.className='cusum-pill'; pill.textContent=''; }
+  // foot: show whichever benchmarks have accumulated so far
+  var foot=[];
+  if(C.best)     foot.push('Best day: <b>'+C.best.date+'</b> ('+fmtN(C.best.total)+')');
+  if(C.lastWeek) foot.push('Same weekday last week: <b>'+C.lastWeek.date+'</b> ('+fmtN(C.lastWeek.total)+')');
+  if(!C.best && !C.lastWeek) foot.push('Comparison lines build over the first week of hourly readings');
+  foot.push('as of '+C.asOf+' UTC');
+  document.getElementById('cusum-foot').innerHTML = foot.join(' &middot; ');
+  // chart: today always; best & last-week drawn only when present
+  var ds=[];
+  if(C.best)     ds.push({label:'All-time best ('+C.best.date+')',data:C.best.cum,borderColor:'#E0A21B',backgroundColor:'transparent',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:.3});
+  if(C.lastWeek) ds.push({label:'Same weekday last week',data:C.lastWeek.cum,borderColor:'#B8C4D2',backgroundColor:'transparent',borderDash:[4,4],borderWidth:2,pointRadius:0,tension:.3});
+  ds.push({label:'Today',data:C.today,borderColor:BLUE,backgroundColor:'rgba(29,143,225,.10)',fill:true,borderWidth:2.8,pointRadius:0,pointHoverRadius:4,tension:.3,spanGaps:true});
   new Chart(document.getElementById('c-cusum'),{type:'line',
-    data:{labels:C.hours.map(lbl),datasets:[
-      {label:'All-time best ('+C.best.date+')',data:C.best.cum,borderColor:'#E0A21B',backgroundColor:'transparent',borderDash:[6,4],borderWidth:2,pointRadius:0,tension:.3},
-      {label:'Same weekday last week',data:C.lastWeek.cum,borderColor:'#B8C4D2',backgroundColor:'transparent',borderDash:[4,4],borderWidth:2,pointRadius:0,tension:.3},
-      {label:'Today',data:C.today,borderColor:BLUE,backgroundColor:'rgba(29,143,225,.10)',fill:true,borderWidth:2.8,pointRadius:0,pointHoverRadius:4,tension:.3,spanGaps:false}
-    ]},
+    data:{labels:C.hours.map(lbl),datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:16,font:{size:10}}},
         tooltip:{callbacks:{label:it=>it.dataset.label+': '+fmtN(it.parsed.y)}}},
       scales:{x:{grid:{display:false},title:{display:true,text:'Hour of day (UTC)',font:{size:10},color:GRAY},ticks:{font:{size:10},maxTicksLimit:12}},
         y:{beginAtZero:true,grid:{color:'#EEF2F6'},title:{display:true,text:'Cumulative registrations',font:{size:10},color:GRAY},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
-  var arr = C.todayByCountry || [], tot = C.todayTotal || arr.reduce((s,r)=>s+r.regs,0);
+  var arr = C.todayByCountry || [], tot = C.todayTotal || arr.reduce((s,r)=>s+r.regs,0) || 1;
   var mx = Math.max.apply(null, arr.map(r=>r.regs).concat([1]));
   document.getElementById('cusum-ctry').innerHTML = arr.map(r =>
     '<div class="crow" title="'+(CNAMES[r.c]||r.c)+'"><span style="width:22px">'+isoFlag(r.c)+'</span>'+
