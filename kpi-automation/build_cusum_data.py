@@ -68,8 +68,8 @@ def main():
         cur.execute("ALTER SESSION SET TIMEZONE = 'UTC'")
         # DB "now" in the SAME timezone basis the query uses (CURRENT_DATE / HOUR),
         # so the live line truncates at the correct hour regardless of the runner's TZ.
-        cur.execute("SELECT HOUR(CURRENT_TIMESTAMP()), "
-                    "TO_CHAR(CURRENT_TIMESTAMP(), 'YYYY-MM-DD HH24:MI')")
+        cur.execute("SELECT HOUR(CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP())), "
+                    "TO_CHAR(CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP()), 'YYYY-MM-DD HH24:MI')")
         cur_hour, as_of = cur.fetchone()
         cur_hour = int(cur_hour)
         cur.execute(sql)
