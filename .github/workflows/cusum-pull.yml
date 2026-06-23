@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "KPI Dashboard v2 (Caio)/cusum-data.js"
+          git add "KPI Dashboard v2 (Caio)/cusum-data.js" "kpi-automation/cusum-state.json"
           if git diff --cached --quiet; then
             echo "No CUSUM change — nothing to commit."
           else
