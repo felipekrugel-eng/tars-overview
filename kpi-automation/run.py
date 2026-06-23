@@ -81,7 +81,7 @@ def main():
 
     # ---- inputs for build_kpi_data.py (tidy full as-of outputs) ----
     write(WORK / "cohort_grid.csv",      dfs["cohort"])
-    write(WORK / "receipts.csv",         dfs["receipts"])
+    write(WORK / "receipts.csv",         latest(dfs["receipts"]))   # latest snapshot only — build_kpi_data uses ONLY the latest; writing the full ~26.5M-row grid OOM'd the runner
     write(WORK / "paying_country.csv",   dfs["paying"])
     write(WORK / "country_lifetime.csv", dfs["clife"])
     write(WORK / "country_reg_month.csv",dfs["cregm"])
@@ -99,16 +99,23 @@ def main():
     lt = latest(dfs["receipts"])
     write(DAILY / f"TPV and Receipts DB2_{TS}.csv", lt[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]])
     # global daily active/receipts ("49 days 1"): each merchant in one country → current-month sum = global distinct
-    g = dfs["receipts"].copy()
+    g = dfs["receipts"][["SNAPSHOT_DATE","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]].copy()  # only the 4 cols this needs (not all 14) — keeps the copy small
     g["S"] = g["SNAPSHOT_DATE"].astype(str).str[:10]; g["M"] = g["CALENDAR_MONTH"].astype(str).str[:7]
     g = g[g["M"] == g["S"].str[:7]]
     agg = g.groupby("S").agg(ACTIVE=("ACTIVE_MERCHANTS","sum"), RECEIPTS=("RECEIPT_COUNT","sum")).reset_index()
     agg = agg.rename(columns={"S":"DATE"}); agg["GTV"] = 0; agg["AVG_TICKET"] = 0
     write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
 
+    # Release the big in-memory frames (esp. the ~26.5M-row receipts grid + its copy) BEFORE the
+    # generator subprocesses. They read the CSVs from disk, so keeping the frames resident just
+    # doubles RAM alongside the subprocess and OOMs the runner ("lost communication with the server").
+    import gc
+    dfs.clear(); del g, agg; gc.collect()
+
     # ---- regenerate both data files ----
     print("[backfill] daily-history.js", flush=True)
-    subprocess.run([sys.executable, str(KPIRUN / "backfill_daily.py")], check=True)
+    bf_env = {**os.environ, "DAILY_DIR": str(DAILY), "DAILYHIST_OUT": str(V2 / "daily-history.js")}
+    subprocess.run([sys.executable, str(KPIRUN / "backfill_daily.py")], check=True, env=bf_env)
     print("[build] kpi-data.js", flush=True)
     env = {**os.environ, "WORK_DIR": str(WORK), "KPIDATA_OUT": str(V2 / "kpi-data.js")}
     subprocess.run([sys.executable, str(HERE / "build_kpi_data.py")], check=True, env=env)
