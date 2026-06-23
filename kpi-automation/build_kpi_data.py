@@ -85,7 +85,12 @@ active_by_month = rcpt.groupby("CAL")["ACTIVE_MERCHANTS"].sum()
 active_monthly = [{"month": m, "active": int(active_by_month[m])}
                   for m in sorted(active_by_month.index) if m >= ACTIVE_FROM and m <= latest_complete]
 # cohort-age active + activation% (sum over countries)
-ca = rcpt.groupby(["COH","MN"]).agg(active=("ACTIVE_MERCHANTS","sum"),
+# MN<0 = receipts whose calendar month is BEFORE the cohort's registration month (backdated /
+# device-clock rows). They have no valid cohort age, and a cohort with only such rows made
+# mx=max(MN) negative -> arr=[None]*(mx+1) an EMPTY list -> arr[i] IndexError below. Cohort-age
+# curves only use MN>=0. The global active_by_month + per-country totals above keep ALL rows, so
+# this drops no real activity — it only excludes negative ages from the age-based curves.
+ca = rcpt[rcpt["MN"] >= 0].groupby(["COH","MN"]).agg(active=("ACTIVE_MERCHANTS","sum"),
                                     size=("COHORT_COUNTRY_SIZE","sum")).reset_index()
 cohort_active_age, cohort_active_pct = {}, {}
 for coh, g in ca.groupby("COH"):
