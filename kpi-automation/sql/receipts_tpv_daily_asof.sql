@@ -130,6 +130,17 @@ daily_incr AS (
     GROUP BY COHORT_MONTH, COUNTRY, CALENDAR_MONTH, EFF_DAY
 ),
 -- Cumulative (exact) state per bucket per snapshot.
+-- PRUNED FAN-OUT: nothing downstream consumes the full historical triangle for
+-- every snapshot. run.py only reads (a) the LATEST snapshot's full grid
+-- [receipts.csv + "TPV and Receipts DB2"] and (b) for EVERY snapshot, only the
+-- rows whose CALENDAR_MONTH is the snapshot's own month [the "49 days 1"
+-- current-month slice]. Every other (snapshot, bucket) pair is computed,
+-- transferred, then discarded. We therefore keep ONLY those two slices in the
+-- snapshot join condition. This prunes the range-join fan-out (the slow step)
+-- by ~an order of magnitude. The cumulative SUM for each SURVIVING (snapshot,
+-- bucket) pair is unchanged — all of that bucket's daily increments with
+-- EFF_DAY <= SNAPSHOT_DATE still contribute — so output is byte-identical to
+-- what downstream would have used.
 metrics AS (
     SELECT
         s.SNAPSHOT_DATE,
@@ -138,7 +149,12 @@ metrics AS (
         SUM(d.D_TPV_USD)   AS TPV_USD_APPROX,
         SUM(d.D_MERCHANTS) AS ACTIVE_MERCHANTS
     FROM daily_incr d
-    JOIN snapshots s ON d.EFF_DAY <= s.SNAPSHOT_DATE
+    JOIN snapshots s
+      ON d.EFF_DAY <= s.SNAPSHOT_DATE
+     AND (
+            s.SNAPSHOT_DATE = (SELECT MAX(SNAPSHOT_DATE) FROM snapshots)
+         OR DATE_TRUNC('MONTH', d.CALENDAR_MONTH) = DATE_TRUNC('MONTH', s.SNAPSHOT_DATE)
+         )
     GROUP BY s.SNAPSHOT_DATE, d.COHORT_MONTH, d.COUNTRY, d.CALENDAR_MONTH
 ),
 -- Cohort x country size, as of each snapshot (small; merchants table only).
