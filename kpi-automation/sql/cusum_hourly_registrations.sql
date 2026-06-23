@@ -3,9 +3,11 @@
 -- READ-ONLY single SELECT (works with DATA_VIEWER). Registrations only — cheap, no receipts.
 -- DRAFT: validate the dedup + column names against the canonical registration query on first run.
 --
--- Registration = a merchant's FIRST account creation (email-deduped):
---   reg_day  = DATE(MIN(CREATED_AT) per LOWER(TRIM(EMAIL)))
---   reg_hour = HOUR(that MIN CREATED_AT)
+-- Registration = a merchant's FIRST account creation (email-deduped), bucketed in TRUE UTC:
+--   reg_day  = DATE of MIN(CREATED_AT), converted to UTC
+--   reg_hour = HOUR of MIN(CREATED_AT), converted to UTC
+-- CREATED_AT is TIMESTAMP_LTZ, so HOUR()/::DATE would otherwise render in the session
+-- timezone (not reliably UTC on the runner). CONVERT_TIMEZONE('UTC', ts) pins it to UTC.
 --
 -- Output (long/tidy — build_cusum_data.py pivots it):
 --   SERIES   : 'today' | 'best' | 'lastweek' | 'country'
@@ -22,18 +24,18 @@ WITH first_reg AS (                                   -- one row per merchant: t
     WHERE EMAIL IS NOT NULL
     GROUP BY 1
 ),
-reg AS (                                              -- decorate with day/hour
+reg AS (                                              -- decorate with day/hour, in TRUE UTC
     SELECT email, country,
-           first_ts::DATE                AS reg_day,
-           HOUR(first_ts)                AS reg_hour
+           CONVERT_TIMEZONE('UTC', first_ts)::DATE  AS reg_day,
+           HOUR(CONVERT_TIMEZONE('UTC', first_ts))  AS reg_hour
     FROM first_reg
 ),
 best_day AS (                                         -- the single highest-registration day, all-time
     SELECT reg_day FROM reg GROUP BY reg_day ORDER BY COUNT(*) DESC LIMIT 1
 ),
-anchors AS (                                          -- the three dates we chart
-    SELECT 'today'    AS series, CURRENT_DATE()                       AS ref_date UNION ALL
-    SELECT 'lastweek',           DATEADD('day', -7, CURRENT_DATE())             UNION ALL
+anchors AS (                                          -- the three dates we chart (TRUE UTC "today")
+    SELECT 'today'    AS series, CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP())::DATE                     AS ref_date UNION ALL
+    SELECT 'lastweek',           DATEADD('day', -7, CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP())::DATE)             UNION ALL
     SELECT 'best',     (SELECT reg_day FROM best_day)
 ),
 hours AS ( SELECT SEQ4() AS hour FROM TABLE(GENERATOR(ROWCOUNT => 24)) ),
@@ -48,7 +50,7 @@ hourly AS (                                           -- registrations per (seri
 by_country AS (                                       -- today's registrations by country (for the side panel)
     SELECT 'country' AS series, NULL::DATE AS ref_date, NULL::INT AS hour,
            country, COUNT(*) AS regs
-    FROM reg WHERE reg_day = CURRENT_DATE() AND country IS NOT NULL AND country <> ''
+    FROM reg WHERE reg_day = CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP())::DATE AND country IS NOT NULL AND country <> ''
     GROUP BY country
 )
 SELECT series, ref_date, hour, NULL::STRING AS country, regs FROM hourly
