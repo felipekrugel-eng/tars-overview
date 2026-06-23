@@ -51,6 +51,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No CUSUM change — nothing to commit."
           else
-            git commit -m "chore(cusum): hourly registrations refresh [skip ci] $(date -u +%FT%TZ)"
+            git commit -m "chore(cusum): hourly registrations refresh $(date -u +%FT%TZ)"
             git push
           fi
