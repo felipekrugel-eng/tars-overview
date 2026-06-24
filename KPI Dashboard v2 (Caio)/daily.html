@@ -155,7 +155,7 @@
   <div class="grid2">
     <div class="panel rise"><h3>Registrations</h3><div class="ph">Daily new sign-ups (bars; toggle this/last month for seasonality). Accumulated total — this vs last month to date — on the right.</div><div class="vtog" data-c="c-reg"><button data-v="this" class="on">This month</button><button data-v="last">Last month</button></div><div class="mtdcmp" id="mtd-c-reg"></div><div class="chart-box"><canvas id="c-reg"></canvas></div></div>
     <div class="panel rise" style="animation-delay:.05s"><h3>Active merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or the trailing 30-day trend</div><div class="vtog" data-c="c-act"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Rolling 30 days</button></div><div class="mtdcmp" id="mtd-c-act"></div><div class="chart-box"><canvas id="c-act"></canvas></div></div>
-    <div class="panel rise" style="animation-delay:.1s"><h3>Paying merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or active paid subscriptions as of each day</div><div class="vtog" data-c="c-pay"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Active subscriptions</button></div><div class="mtdcmp" id="mtd-c-pay"></div><div class="chart-box"><canvas id="c-pay"></canvas></div></div>
+    <div class="panel rise" style="animation-delay:.1s"><h3>Paying merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or active paid subscriptions as of each day</div><div class="vtog" data-c="c-pay"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Rolling 30 days</button></div><div class="mtdcmp" id="mtd-c-pay"></div><div class="chart-box"><canvas id="c-pay"></canvas></div></div>
     <div class="panel rise" style="animation-delay:.15s"><h3>Receipts (transactions)</h3><div class="ph">This month vs last month, aligned by day of month</div><div class="vtog-spacer"></div><div class="mtdcmp" id="mtd-c-rcpt"></div><div class="chart-box"><canvas id="c-rcpt"></canvas></div></div>
   </div>
 
@@ -360,7 +360,7 @@ function rollChart(id, field, color){
     data:{labels:a.map(r=>r.date), datasets:[{label:meta.tt, data:a.map(r=>r[field]), borderColor:color, backgroundColor:'rgba(29,143,225,.08)', fill:true, borderWidth:2.6, pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:color, tension:.3}]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false}, tooltip:{callbacks:{title:it=>it[0].label, label:it=>meta.tt+': '+fmtN(it.parsed.y)}}},
-      scales:{x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:10}}}, y:{grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
+      scales:{x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:10}}}, y:{beginAtZero:true,grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
   fillCmpRoll(id, field);
 }
 function fillCmpRoll(id, field){
