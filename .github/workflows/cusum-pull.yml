@@ -1,21 +1,20 @@
 # FACADASH — hourly registrations CUSUM refresh.
-# Place at .github/workflows/cusum-pull.yml in the dashboard repo.
-# Runs ONE cheap registrations-only Snowflake query -> regenerates cusum-data.js -> commits.
-# Independent of kpi-pull: the heavy daily receipts query can never block this hourly run.
+# Regenerates cusum-data.js + cusum-state.json and pushes them to the gh-pages
+# branch (served by GitHub Pages), NOT to master. This means a data refresh no
+# longer triggers a Netlify deploy — the dashboard fetches cusum-data.js from
+# Pages at runtime, so refreshes are free and as frequent as we like.
+#
+# Triggering: fired hourly by the Cowork "trigger-cusum-pull-hourly" task via
+# workflow_dispatch. The GitHub schedule cron was REMOVED (it was redundant with
+# the Cowork trigger and caused duplicate runs).
 name: cusum-pull
 
 on:
-  schedule:
-    # 23 min past each hour (UTC). GitHub cron is best-effort and the top of the hour
-    # ('0') is its most congested slot, so runs there get delayed/skipped. An off-peak
-    # minute lands far more reliably. (The hour bucket is still correct: the generator
-    # stamps each run with its real UTC hour, and the cumulative line forward-fills gaps.)
-    - cron: '23 * * * *'
-  workflow_dispatch: {}          # manual "Run workflow" button
+  workflow_dispatch: {}          # manual "Run workflow" button + Cowork hourly trigger
 
 concurrency:
   group: cusum-pull
-  cancel-in-progress: true        # if a run is still going when the next hour fires, drop the stale one
+  cancel-in-progress: true        # if a run is still going when the next fires, drop the stale one
 
 jobs:
   refresh:
@@ -24,7 +23,15 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main repo (scripts + SQL live on master)
+        uses: actions/checkout@v4
+
+      - name: Checkout gh-pages (data + state live here)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages-dir
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -33,7 +40,7 @@ jobs:
       - name: Install deps
         run: pip install -r kpi-automation/requirements.txt
 
-      - name: Pull registrations CUSUM from Snowflake -> regenerate cusum-data.js
+      - name: Pull registrations CUSUM from Snowflake -> regenerate cusum-data.js into gh-pages/docs
         env:
           # Same single secret as the daily pull. The rest are plain config.
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
@@ -44,17 +51,27 @@ jobs:
           SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
           SNOWFLAKE_SCHEMA:    "PUBLIC"
           SQL_DIR: ${{ github.workspace }}/kpi-automation/sql
-          V2_DIR:  ${{ github.workspace }}/KPI Dashboard v2 (Caio)
+          # Write the generated data + state directly into the gh-pages checkout.
+          CUSUMDATA_OUT: ${{ github.workspace }}/gh-pages-dir/docs/cusum-data.js
+          CUSUM_STATE:   ${{ github.workspace }}/gh-pages-dir/docs/cusum-state.json
         run: python kpi-automation/build_cusum_data.py
 
-      - name: Commit & push if the data changed
+      - name: Commit & push to gh-pages if the data changed
         run: |
+          cd gh-pages-dir
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "KPI Dashboard v2 (Caio)/cusum-data.js" "kpi-automation/cusum-state.json"
+          git add docs/cusum-data.js docs/cusum-state.json
           if git diff --cached --quiet; then
             echo "No CUSUM change — nothing to commit."
           else
             git commit -m "chore(cusum): hourly registrations refresh $(date -u +%FT%TZ)"
-            git push
+            for i in 1 2 3 4 5; do
+              if git pull --rebase --autostash origin gh-pages && git push origin gh-pages; then
+                echo "pushed on attempt $i"; exit 0
+              fi
+              echo "push attempt $i failed (remote moved) — retrying in 5s"
+              sleep 5
+            done
+            echo "push still failing after 5 attempts"; exit 1
           fi
