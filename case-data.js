@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-06-22",
+  "lastUpdated": "2026-06-29",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98420,11 +98420,11 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.8,
-      "reviewCount": "516K",
-      "positive": 88,
-      "neutral": 6,
-      "negative": 6,
+      "rating": 4.6,
+      "reviewCount": "17.5K",
+      "positive": 85,
+      "neutral": 8,
+      "negative": 7,
       "tags": [
         {
           "label": "Easy to use",
@@ -98453,10 +98453,10 @@ const CASE_DATA = {
       ]
     },
     "appStore": {
-      "rating": 4.8,
-      "reviewCount": "135K",
-      "positive": 89,
-      "neutral": 6,
+      "rating": 4.7,
+      "reviewCount": "359",
+      "positive": 87,
+      "neutral": 8,
       "negative": 5,
       "tags": [
         {
@@ -98497,86 +98497,86 @@ const CASE_DATA = {
     ],
     "googlePlay": [
       4.74,
-      4.76,
-      4.8,
-      4.9,
-      4.9,
-      4.8
+      4.72,
+      4.7,
+      4.68,
+      4.65,
+      4.6
     ],
     "appStore": [
-      4.78,
-      4.79,
+      4.72,
+      4.72,
+      4.71,
       4.7,
       4.7,
-      4.7,
-      4.8
+      4.7
     ]
   },
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 3361,
+      "mentions": 612,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 2347,
+      "mentions": 428,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 1844,
+      "mentions": 336,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 1492,
+      "mentions": 271,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 1138,
+      "mentions": 207,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 848,
+      "mentions": 154,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 621,
+      "mentions": 113,
       "type": "neg",
       "key": "sync"
     }
   ],
   "downloads": {
     "googlePlay": {
-      "total": "10M+",
+      "total": "1M+",
       "trend": [
-        1045000,
-        1070000,
-        1095000,
-        1120000,
-        1148000,
-        1239000
+        920000,
+        945000,
+        968000,
+        985000,
+        1000000,
+        1015000
       ]
     },
     "appStore": {
-      "total": "2M+",
+      "total": "250K+",
       "trend": [
-        222000,
-        228000,
-        234000,
+        210000,
+        218000,
+        225000,
+        232000,
         240000,
-        247000,
-        269000
+        250000
       ]
     }
   },
@@ -98609,17 +98609,17 @@ const CASE_DATA = {
         "text": "Downloaded several apps to test and Loyverse had so many features and was easy to set up. Barcode scanning and real-time stock updates work flawlessly across two devices."
       },
       {
-        "author": "SnackBarUS",
-        "country": "US",
-        "region": "north_america",
+        "author": "Simon Parkinson",
+        "country": "GB",
+        "region": "europe",
         "rating": 5,
         "date": "Jun 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
-          "reporting"
+          "ease-of-use"
         ],
-        "text": "Compared over a dozen POS systems and Loyverse came out on top for price, features, and simplicity. Sales tracking by item and payment type is incredibly useful."
+        "text": "I can't fault this software. Having used Zonal for years, I can't believe you can do so much at no cost, and setting it all up is a breeze, even KDS. Two wishes: a standard staff-management option for small teams, and the ability to work across different WiFi networks. Overall, highly recommend."
       },
       {
         "author": "AccessoriesMY",
