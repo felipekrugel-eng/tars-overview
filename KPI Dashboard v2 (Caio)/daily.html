@@ -413,7 +413,9 @@ function rankAll(sfx){
 const curR = rankAll(''), prevR = rankAll('P');
 const prevDivOf = Object.fromEntries(prevR.map(r=>[r.c,r.div]));
 curR.forEach(r=> r.prevDiv = (prevDivOf[r.c]==null ? null : prevDivOf[r.c]));
-const momOf = Object.fromEntries(F.rows.map(r=>[r.c, ((r.regPmtd||0)>0 ? r.reg/r.regPmtd - 1 : ((r.regP||0)>0 ? r.reg/r.regP - 1 : null))]));
+const _lgNowYM = (d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))(new Date());
+const _lgDone = F.current && F.current < _lgNowYM;   // funnel month finished -> full month vs full month (June-end vs May-end); in-progress -> vs prior month to same day
+const momOf = Object.fromEntries(F.rows.map(r=>{ const base = _lgDone ? (+r.regP||0) : (+r.regPmtd||0); return [r.c, base>0 ? (+r.reg)/base - 1 : null]; }));
 const convOf = Object.fromEntries(F.rows.map(r=>[r.c, ((r.active||0)>0 ? r.paying/r.active : null)]));
 
 // promotions & relegations vs prior month
@@ -431,7 +433,7 @@ let curDiv = 0;
 function renderDiv(){
   const lo = curDiv*20+1, hi = curDiv*20+20;
   document.getElementById('div-title').textContent = DIVS[curDiv] + ' · #' + lo + '–' + hi;
-  document.getElementById('league-sub').textContent = 'Month-to-date ' + F.current + ' · Points (0–100) = each country\'s weighted rank within its own 20-team division (paying ×3, active ×2, conversion ×2, registrations ×1). Conversion = paying ÷ active. Momentum = new registrations this month vs the prior month to the SAME day (fair like-for-like, shown not scored).';
+  document.getElementById('league-sub').textContent = (_lgDone ? (F.current + ' (final)') : ('Month-to-date ' + F.current)) + ' · Points (0–100) = each country\'s weighted rank within its own 20-team division (paying ×3, active ×2, conversion ×2, registrations ×1). Conversion = paying ÷ active. Momentum = ' + (_lgDone ? ('registrations ' + F.current + ' vs ' + F.previous + ', full month vs full month') : 'new registrations this month vs the prior month to the SAME day (fair like-for-like)') + ' (shown not scored).';
   const rows = curR.filter(r=> r.div===curDiv).sort((a,b)=> a.tierPos - b.tierPos);
   document.getElementById('league').innerHTML =
     '<thead><tr><th class="pos">#</th><th></th><th>Country</th><th>New regs (mo)</th><th>Active</th><th>Paying</th><th>Conv %</th><th>Receipts</th><th>Momentum</th><th>Pts</th></tr></thead><tbody>' +
