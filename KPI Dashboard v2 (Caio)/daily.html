@@ -182,6 +182,22 @@
 <script>
 const D = KPI_DATA;
 const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().filter(r => r.month === r.date.slice(0,7)).sort((a,b)=>a.date<b.date?-1:1);
+// Live-patch TODAY's registrations from the hourly CUSUM. The daily kpi-pull only captures the
+// ~04:00 snapshot, so today's registration total would otherwise sit frozen/low all day. The
+// cusum (hourly) carries today's live count; we rebase today's month-to-date on it.
+(function(){
+  try{
+    if(typeof CUSUM_DATA==='undefined' || !CUSUM_DATA.today) return;
+    const th=CUSUM_DATA.todayHourOfData;
+    const liveToday=(th!=null && CUSUM_DATA.today[th]!=null)?CUSUM_DATA.today[th]:null;
+    if(liveToday==null) return;
+    const todayISO=new Date().toISOString().slice(0,10);
+    const tr=H.find(r=>r.date===todayISO); if(!tr) return;
+    const prior=H.filter(r=>r.month===tr.month && r.date<todayISO).sort((a,b)=>a.date<b.date?-1:1);
+    const mtdPrior=prior.length?prior[prior.length-1].regMTD:0;
+    tr.regMTD=mtdPrior+liveToday; tr._liveReg=true;
+  }catch(e){}
+})();
 const BLUE='#1D8FE1', BLUE_DEEP='#1578C4', INK='#13233A', GRAY='#7E8A9A', GREEN='#1F9D6B', RED='#D2495B';
 const fmtN = n => n==null?'—':Math.round(n).toLocaleString('en-US');
 const fmtM = n => n==null?'—':'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n).toLocaleString('en-US'));
@@ -227,11 +243,12 @@ const asOfSub = row => (row && cur && row.date < cur.date) ? ('as of '+row.date.
 const rollLine = (val,label,tip) => val!=null ? '<div class="td" style="color:var(--muted)" title="'+tip+'">'+label+': '+fmtN(val)+'</div>' : '';
 // end-of-month run-rate: project month-end registrations at the current daily pace.
 // cur is now the last COMPLETE day, so divide by its day number (all of it is finished).
-const rrDom = cur ? Math.max(+cur.date.slice(8,10), 1) : 1;
-const rrDim = cur ? new Date(+cur.date.slice(0,4), +cur.date.slice(5,7), 0).getDate() : 30;
-const regRR = cur ? Math.round(cur.regMTD / Math.max(rrDom,1) * rrDim) : 0;
+const regLiveRow = (typeof H!=='undefined' && H.length) ? H[H.length-1] : cur;   // today's row, rebased to the live hourly CUSUM
+const rrDom = regLiveRow ? Math.max(+regLiveRow.date.slice(8,10), 1) : 1;
+const rrDim = regLiveRow ? new Date(+regLiveRow.date.slice(0,4), +regLiveRow.date.slice(5,7), 0).getDate() : 30;
+const regRR = regLiveRow ? Math.round(regLiveRow.regMTD / Math.max(rrDom,1) * rrDim) : 0;
 const tileDefs = cur ? [
-  ['Registrations','month-to-date', fmtN(cur.regMTD), deltaTile(prev?cur.regMTD-prev.regMTD:null)+'<div class="td" style="color:var(--blue)" title="Where the month would end if registrations kept the current daily pace: MTD \u00F7 '+rrDom+' days \u00D7 '+rrDim+' days in month.">run-rate ~'+fmtN(regRR)+' by month-end</div>', ser('regMTD'), BLUE],
+  ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=3?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace: MTD \u00F7 '+rrDom+' days \u00D7 '+rrDim+' days in month.">run-rate ~'+fmtN(regRR)+' by month-end</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly</div>'), ser('regMTD'), BLUE],
   ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), deltaTile(aN[0]&&aN[1]?aN[0].active-aN[1].active:null)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
   ['Paying merchants','this month', fmtN(cur.paying), deltaTile(prev?cur.paying-prev.paying:null)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
   ['Total MRR','current', fmtM(cur.mrr), deltaTile(prev?cur.mrr-prev.mrr:null,true), ser('mrr'), INK],
@@ -385,6 +402,20 @@ document.querySelectorAll('.vtog').forEach(t=>{ const c=t.dataset.c;
 
 // ---------- country league pyramid (5 divisions of 20, promotion/relegation) ----------
 const F = (typeof COUNTRY_FUNNEL !== 'undefined') ? COUNTRY_FUNNEL : (D.countryFunnel || { rows:[], current:'', previous:'' });
+// Live-patch per-country registrations for the IN-PROGRESS funnel month from the hourly CUSUM.
+(function(){ try{
+  if(typeof CUSUM_DATA==='undefined' || !CUSUM_DATA.todayByCountry || !F.rows) return;
+  const nowYM=(dd=>dd.getFullYear()+'-'+String(dd.getMonth()+1).padStart(2,'0'))(new Date());
+  if(F.current!==nowYM) return;                       // only when the funnel month is the live current month
+  const cc=Object.fromEntries(CUSUM_DATA.todayByCountry.map(x=>[x.c,+x.regs||0]));
+  const liveTotal=(CUSUM_DATA.todayTotal!=null)?CUSUM_DATA.todayTotal:(CUSUM_DATA.today?CUSUM_DATA.today[CUSUM_DATA.todayHourOfData]:0);
+  if(!liveTotal) return;
+  const funnelTotal=F.rows.reduce((s,r)=>s+(+r.reg||0),0);
+  const todayStr=new Date().toISOString().slice(0,10);
+  let mtdPrior=0; if(typeof H!=='undefined'){ const pr=H.filter(r=>r.month===F.current && r.date<todayStr); if(pr.length) mtdPrior=+pr[pr.length-1].regMTD||0; }
+  const ratio=Math.min(1,Math.max(0,(funnelTotal-mtdPrior)/liveTotal));
+  F.rows.forEach(r=>{ const live=cc[r.c]; if(mtdPrior===0){ if(live!=null) r.reg=live; } else { r.reg=Math.round((+r.reg||0)+(live||0)*(1-ratio)); } });
+}catch(e){} })();
 const DIVS = ['Premier League','Championship','League One','League Two','Conference'];
 // Scoring weights — paying matters most (revenue), then active and conversion (quality), then registrations.
 // Conversion = payment penetration (paying ÷ active): the share of a country's active base that actually pays.
