@@ -244,8 +244,11 @@ const fmtN = n => n.toLocaleString('en-US');
   }
   // 5) fastest-growing country — registrations this month vs prior month to the SAME day (like-for-like)
   if(typeof COUNTRY_FUNNEL!=='undefined' && COUNTRY_FUNNEL.rows){
-    const cand=COUNTRY_FUNNEL.rows.filter(r=>(+r.regPmtd||0)>=200)
-      .map(r=>({c:r.c, g:(+r.reg)/(+r.regPmtd) - 1})).sort((a,b)=>b.g-a.g);
+    const _fgNowYM = (d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))(new Date());
+    const _fgDone = COUNTRY_FUNNEL.current && COUNTRY_FUNNEL.current < _fgNowYM;
+    const _fgBase = r => _fgDone ? (+r.regP||0) : (+r.regPmtd||0);
+    const cand=COUNTRY_FUNNEL.rows.filter(r=>_fgBase(r)>=200)
+      .map(r=>({c:r.c, g:(+r.reg)/_fgBase(r) - 1})).sort((a,b)=>b.g-a.g);
     if(cand.length){
       const top=cand[0], row=COUNTRY_FUNNEL.rows.find(r=>r.c===top.c);
       el('t-fg-num').innerHTML=cflag(top.c); setDelta('t-fg-d', top.g*100, ' regs MoM');
