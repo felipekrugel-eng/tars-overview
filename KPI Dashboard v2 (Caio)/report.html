@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse — Report</title>
+<script src="kpi-data.js"></script>
+<style>
+  :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+    --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
+    --green:#1F9D6B; --red:#D2495B; --mono:'SFMono-Regular',Menlo,Consolas,monospace; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); }
+  .pagenav{ background:var(--near-black); padding:10px 24px; display:flex; gap:22px; align-items:center; }
+  .pagenav a{ color:#BBB; text-decoration:none; font-size:12px; font-weight:bold; letter-spacing:1px;
+    padding-bottom:2px; border-bottom:2px solid transparent; text-transform:uppercase; }
+  .pagenav a:hover{ color:#fff; }
+  .pagenav a.on{ color:#fff; border-bottom-color:var(--blue); }
+  .controls{ background:var(--surface); border-bottom:1px solid var(--border); padding:14px 24px;
+    display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .controls .grp{ display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .controls .grp button{ background:#fff; border:0; padding:8px 16px; font-size:13px; font-weight:bold;
+    color:var(--muted); cursor:pointer; }
+  .controls .grp button.on{ background:var(--blue); color:#fff; }
+  .controls select{ padding:8px 12px; font-size:13px; border:1px solid var(--border); border-radius:8px;
+    background:#fff; color:var(--ink); font-weight:bold; }
+  .controls .spacer{ flex:1; }
+  .btn-print{ background:var(--ink); color:#fff; border:0; padding:9px 18px; border-radius:8px;
+    font-size:13px; font-weight:bold; cursor:pointer; }
+  .btn-print:hover{ background:var(--blue-deep); }
+  .sheet{ max-width:920px; margin:26px auto; background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:34px 40px 42px; box-shadow:0 2px 14px rgba(19,35,58,.06); }
+  .rhead{ display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--ink);
+    padding-bottom:16px; margin-bottom:24px; }
+  .rhead .label{ font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-deep); font-weight:bold; }
+  .rhead h1{ font-family:'Arial Black',Arial,sans-serif; font-size:30px; margin:6px 0 4px; }
+  .rhead .period{ font-size:15px; color:var(--muted); }
+  .rhead .cmp{ font-size:12px; color:var(--faint); margin-top:4px; }
+  .rhead img{ height:40px; }
+  .rhead .gen{ font-size:10px; color:var(--faint); text-align:right; margin-top:8px; }
+  h2.sec{ font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+    margin:30px 0 12px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  th{ text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
+    padding:8px 10px; border-bottom:1px solid var(--border); font-weight:bold; }
+  th:first-child, td:first-child{ text-align:left; }
+  td{ text-align:right; padding:9px 10px; border-bottom:1px solid #F1F4F8; font-variant-numeric:tabular-nums; }
+  tbody tr:hover{ background:#F7FAFD; }
+  .metric td:first-child{ font-weight:bold; color:var(--ink); }
+  .big{ font-family:var(--mono); font-weight:700; color:var(--ink); }
+  .chg{ font-weight:bold; }
+  .chg.up{ color:var(--green); } .chg.down{ color:var(--red); } .chg.flat{ color:var(--faint); }
+  .cc{ font-weight:bold; color:var(--ink); }
+  .note{ font-size:11px; color:var(--muted); margin-top:18px; line-height:1.5; }
+  @media print{
+    .no-print{ display:none !important; }
+    body{ background:#fff; }
+    .sheet{ margin:0; border:0; box-shadow:none; border-radius:0; max-width:none; padding:0 6px; }
+    tbody tr:hover{ background:transparent; }
+    @page{ margin:14mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pagenav no-print">
+  <a href="daily.html">FACADASH</a>
+  <a href="index.html">Study &amp; Trend</a>
+  <a href="retention.html">Churn</a>
+  <a href="report.html" class="on">Report</a>
+</div>
+
+<div class="controls no-print">
+  <div class="grp" id="mode">
+    <button data-m="month" class="on">Month-end</button>
+    <button data-m="sem">Semester</button>
+  </div>
+  <select id="picker"></select>
+  <div class="spacer"></div>
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="sheet" id="sheet"></div>
+
+<script>
+const D = (typeof KPI_DATA !== 'undefined') ? KPI_DATA : {monthly:[],activeMonthly:[]};
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthly = Object.fromEntries((D.monthly||[]).map(m=>[m.month,m]));
+const activeM = Object.fromEntries((D.activeMonthly||[]).map(a=>[a.month,a.active]));
+const cregm = D.countryRegistrationsByMonth||{};
+const cpaym = D.payingByCountryByMonth||{};
+const CN = D.countryNames||{};
+const allMonths = (D.monthly||[]).map(m=>m.month).sort();
+const latestMonth = allMonths[allMonths.length-1] || '';
+
+const mLabel = m => (MON[+m.slice(5,7)-1]||'') + ' ' + m.slice(0,4);
+const fmtN = n => (n==null) ? '—' : Math.round(n).toLocaleString('en-US');
+const fmtM = n => (n==null) ? '—' : '$' + (Math.abs(n)>=1e6 ? (n/1e6).toFixed(2)+'M' : Math.round(n).toLocaleString('en-US'));
+const fmtC = n => (n==null) ? '—' : '$' + (+n).toFixed(2);
+const prevMonth = m => { let y=+m.slice(0,4), mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
+const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
+
+function pctCell(cur, prev){
+  if(cur==null || prev==null || prev===0) return '<td class="chg flat">—</td>';
+  const p=(cur/prev-1)*100, cls=p>0.05?'up':(p<-0.05?'down':'flat'), s=p>=0?'+':'';
+  return '<td class="chg '+cls+'">'+s+p.toFixed(1)+'%</td>';
+}
+
+function renderReport(kind, period, cmpLabel, curCol, prevCol, rows, countries){
+  const gen = (D.meta && D.meta.generatedAt) ? D.meta.generatedAt : '';
+  let h = '<div class="rhead"><div>'
+    + '<div class="label">Loyverse · '+kind+'</div>'
+    + '<h1>'+period+'</h1>'
+    + '<div class="period">Reporting period</div>'
+    + '<div class="cmp">Compared '+cmpLabel+'</div>'
+    + '</div><div><img src="loyverse_icon_orange.png" alt="Loyverse"><div class="gen">Data '+gen+'</div></div></div>';
+
+  h += '<h2 class="sec">Key metrics</h2><table><thead><tr><th>Metric</th><th>'+curCol+'</th><th>'+prevCol+'</th><th>Change</th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    h += '<tr class="metric"><td>'+r.label+'</td><td class="big">'+r.fmt(r.cur)+'</td><td>'+r.fmt(r.prev)+'</td>'+pctCell(r.cur,r.prev)+'</tr>';
+  });
+  h += '</tbody></table>';
+
+  h += '<h2 class="sec">Country breakdown — top markets by registrations</h2>'
+    + '<table><thead><tr><th>Country</th><th>Registrations</th><th>vs '+prevCol+'</th><th>Change</th><th>Paying (end)</th></tr></thead><tbody>';
+  countries.slice(0,25).forEach(x=>{
+    h += '<tr><td class="cc">'+(isoFlag(x.c)?isoFlag(x.c)+' ':'')+(CN[x.c]||x.c)+'</td>'
+      + '<td class="big">'+fmtN(x.reg)+'</td><td>'+fmtN(x.regP)+'</td>'+pctCell(x.reg,x.regP)
+      + '<td>'+fmtN(x.pay)+'</td></tr>';
+  });
+  h += '</tbody></table>';
+
+  h += '<div class="note">Registrations & new paying customers are totals for the period. Paying merchants, MRR and ARPC are end-of-period (point-in-time). '
+    + 'Active merchants are receipts-based and can lag by a month; shown as “—” where not yet available. '
+    + 'Country breakdown covers the top registration markets (per-country monthly data available for '+Object.keys(cregm).length+' countries).</div>';
+
+  document.getElementById('sheet').innerHTML = h;
+}
+
+// ---------- MONTH ----------
+function renderMonth(M){
+  const P = prevMonth(M);
+  const cM = monthly[M]||{}, cP = monthly[P]||{};
+  const rows = [
+    {label:'Registrations',                 cur:cM.registrations, prev:cP.registrations, fmt:fmtN},
+    {label:'New paying customers',           cur:cM.newPayers,     prev:cP.newPayers,     fmt:fmtN},
+    {label:'Paying customers (end of month)',cur:cM.paying,        prev:cP.paying,        fmt:fmtN},
+    {label:'MRR (end of month)',             cur:cM.mrr,           prev:cP.mrr,           fmt:fmtM},
+    {label:'ARPC',                           cur:cM.arpc,          prev:cP.arpc,          fmt:fmtC},
+    {label:'Active merchants',               cur:activeM[M]!=null?activeM[M]:null, prev:activeM[P]!=null?activeM[P]:null, fmt:fmtN},
+  ];
+  const countries = Object.keys(cregm).map(c=>({
+    c, reg:(cregm[c]&&cregm[c][M]!=null)?cregm[c][M]:null, regP:(cregm[c]&&cregm[c][P]!=null)?cregm[c][P]:null,
+    pay:(cpaym[c]&&cpaym[c][M]!=null)?cpaym[c][M]:null
+  })).filter(x=>x.reg!=null).sort((a,b)=>b.reg-a.reg);
+  renderReport('Month-End Report', mLabel(M), 'vs '+mLabel(P)+' (previous month)', mLabel(M), mLabel(P), rows, countries);
+}
+
+// ---------- SEMESTER ----------
+function semMonths(half, year){ const start = half===1?1:7; return Array.from({length:6},(_,i)=>year+'-'+String(start+i).padStart(2,'0')); }
+function sumFlow(months, field){ return months.reduce((s,m)=> s + ((monthly[m]&&monthly[m][field]!=null)?monthly[m][field]:0), 0); }
+function endPI(months, getter){ for(let i=months.length-1;i>=0;i--){ const v=getter(months[i]); if(v!=null) return v; } return null; }
+function renderSemester(half, year){
+  const cur = semMonths(half, year), prev = semMonths(half, year-1);
+  const rows = [
+    {label:'Registrations (total)',           cur:sumFlow(cur,'registrations'), prev:sumFlow(prev,'registrations'), fmt:fmtN},
+    {label:'New paying customers (total)',     cur:sumFlow(cur,'newPayers'),     prev:sumFlow(prev,'newPayers'),     fmt:fmtN},
+    {label:'Paying customers (end of period)', cur:endPI(cur,m=>monthly[m]?monthly[m].paying:null), prev:endPI(prev,m=>monthly[m]?monthly[m].paying:null), fmt:fmtN},
+    {label:'MRR (end of period)',              cur:endPI(cur,m=>monthly[m]?monthly[m].mrr:null),    prev:endPI(prev,m=>monthly[m]?monthly[m].mrr:null),    fmt:fmtM},
+    {label:'ARPC (end of period)',             cur:endPI(cur,m=>monthly[m]?monthly[m].arpc:null),   prev:endPI(prev,m=>monthly[m]?monthly[m].arpc:null),   fmt:fmtC},
+    {label:'Active merchants (end of period)', cur:endPI(cur,m=>activeM[m]!=null?activeM[m]:null),  prev:endPI(prev,m=>activeM[m]!=null?activeM[m]:null),  fmt:fmtN},
+  ];
+  const countries = Object.keys(cregm).map(c=>({
+    c,
+    reg: cur.reduce((s,m)=> s+((cregm[c]&&cregm[c][m]!=null)?cregm[c][m]:0),0),
+    regP: prev.reduce((s,m)=> s+((cregm[c]&&cregm[c][m]!=null)?cregm[c][m]:0),0),
+    pay: endPI(cur, m=>(cpaym[c]&&cpaym[c][m]!=null)?cpaym[c][m]:null)
+  })).filter(x=>x.reg>0).sort((a,b)=>b.reg-a.reg);
+  const span = half===1 ? 'Jan–Jun' : 'Jul–Dec';
+  renderReport('Semester Report', 'H'+half+' '+year, 'vs H'+half+' '+(year-1)+' (same half, year-over-year)',
+    'H'+half+' '+year, 'H'+half+' '+(year-1), rows, countries);
+  document.querySelectorAll('.rhead .period').forEach(e=> e.textContent = span+' '+year);
+}
+
+// ---------- controls ----------
+function completeSemesters(){
+  const out=[];
+  const years=[...new Set(allMonths.map(m=>+m.slice(0,4)))].sort((a,b)=>a-b);
+  years.forEach(y=>{
+    [1,2].forEach(h=>{
+      const ms=semMonths(h,y);
+      if(ms.every(m=>monthly[m])) out.push({half:h, year:y});   // all 6 months present = complete
+    });
+  });
+  return out;
+}
+function fillPicker(mode){
+  const sel=document.getElementById('picker'); sel.innerHTML='';
+  if(mode==='month'){
+    const ms=allMonths.filter(m=>m>='2022-01').slice().reverse();
+    ms.forEach(m=>{ const o=document.createElement('option'); o.value=m; o.textContent=mLabel(m); sel.appendChild(o); });
+    sel.value = latestMonth;
+  } else {
+    const ss=completeSemesters().reverse();
+    ss.forEach(s=>{ const o=document.createElement('option'); o.value=s.half+'|'+s.year; o.textContent='H'+s.half+' '+s.year; sel.appendChild(o); });
+    if(ss.length) sel.value = ss[0].half+'|'+ss[0].year;
+  }
+}
+let mode='month';
+function draw(){
+  if(mode==='month'){ renderMonth(document.getElementById('picker').value); }
+  else { const [h,y]=document.getElementById('picker').value.split('|'); renderSemester(+h,+y); }
+}
+document.querySelectorAll('#mode button').forEach(b=> b.onclick=()=>{
+  document.querySelectorAll('#mode button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); mode=b.dataset.m; fillPicker(mode); draw();
+});
+document.getElementById('picker').onchange = draw;
+fillPicker('month'); draw();
+</script>
+</body>
+</html>
