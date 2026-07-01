@@ -286,7 +286,7 @@ const base = (extra) => Object.assign({
 const m22 = monthly.filter(m => m.month >= '2022-01');
 const labels22 = m22.map(m => m.month);
 // ---- day-of-month view helpers (this month vs last month, from the daily snapshots) ----
-const HH = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().sort((a,b)=>a.date<b.date?-1:1);
+const HH = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().filter(r => r.month === r.date.slice(0,7)).sort((a,b)=>a.date<b.date?-1:1);
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const mLab = m => MON[+m.slice(5,7)-1] || m;
 const dDay = r => +r.date.slice(8,10);
