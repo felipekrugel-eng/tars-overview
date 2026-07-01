@@ -180,7 +180,7 @@
 
 <script>
 const D = KPI_DATA;
-const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().sort((a,b)=>a.date<b.date?-1:1);
+const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().filter(r => r.month === r.date.slice(0,7)).sort((a,b)=>a.date<b.date?-1:1);
 const BLUE='#1D8FE1', BLUE_DEEP='#1578C4', INK='#13233A', GRAY='#7E8A9A', GREEN='#1F9D6B', RED='#D2495B';
 const fmtN = n => n==null?'—':Math.round(n).toLocaleString('en-US');
 const fmtM = n => n==null?'—':'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n).toLocaleString('en-US'));
