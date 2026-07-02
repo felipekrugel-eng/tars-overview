@@ -247,14 +247,16 @@ const regLiveRow = (typeof H!=='undefined' && H.length) ? H[H.length-1] : cur;  
 const rrDom = regLiveRow ? Math.max(+regLiveRow.date.slice(8,10), 1) : 1;
 const rrDim = regLiveRow ? new Date(+regLiveRow.date.slice(0,4), +regLiveRow.date.slice(5,7), 0).getDate() : 30;
 const regRR = regLiveRow ? Math.round(regLiveRow.regMTD / Math.max(rrDom,1) * rrDim) : 0;
+const sameMonth = (a,b) => !!(a && b && a.month===b.month);
+const newMonthNote = '<div class="td flat" title="Day-over-day resumes once there are two days in the new month; these are month-to-date figures that reset on the 1st.">\u2014 new month</div>';
 const tileDefs = cur ? [
   ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=3?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace: MTD \u00F7 '+rrDom+' days \u00D7 '+rrDim+' days in month.">run-rate ~'+fmtN(regRR)+' by month-end</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly</div>'), ser('regMTD'), BLUE],
-  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), deltaTile(aN[0]&&aN[1]?aN[0].active-aN[1].active:null)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
-  ['Paying merchants','this month', fmtN(cur.paying), deltaTile(prev?cur.paying-prev.paying:null)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
-  ['LTV','current', fmtM(cur.mrr), deltaTile(prev?cur.mrr-prev.mrr:null,true), ser('mrr'), INK],
-  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), deltaTile(rN[0]&&rN[1]?rN[0].receipts-rN[1].receipts:null), ser('receipts'), BLUE_DEEP],
+  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
+  ['Paying merchants','this month', fmtN(cur.paying), (sameMonth(cur,prev)?deltaTile(cur.paying-prev.paying):newMonthNote)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
+  ['MRR','current', fmtM(cur.mrr), (sameMonth(cur,prev)?deltaTile(cur.mrr-prev.mrr,true):newMonthNote), ser('mrr'), INK],
+  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote), ser('receipts'), BLUE_DEEP],
   ['ARPC','current', '$'+(cur.arpc!=null?cur.arpc.toFixed(2):'—'),
-    (prev?'<div class="td '+(cur.arpc>=prev.arpc?'up':'down')+'">'+(cur.arpc>=prev.arpc?'+':'')+(cur.arpc-prev.arpc).toFixed(2)+' vs prior day</div>':'<div class="td flat">—</div>'), ser('arpc'), BLUE],
+    (sameMonth(cur,prev)?'<div class="td '+(cur.arpc>=prev.arpc?'up':'down')+'">'+(cur.arpc>=prev.arpc?'+':'')+(cur.arpc-prev.arpc).toFixed(2)+' vs prior day</div>':newMonthNote), ser('arpc'), BLUE],
 ] : [];
 document.getElementById('tiles').innerHTML = cur ? tileDefs.map((t,i)=>
   '<div class="tile rise" style="animation-delay:'+(i*0.04).toFixed(2)+'s"><div class="tl">'+t[0]+' <span class="sub">'+t[1]+'</span></div>'+
