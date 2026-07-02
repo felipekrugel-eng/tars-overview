@@ -68,7 +68,9 @@ jobs:
             git commit -m "chore(cusum): hourly registrations refresh $(date -u +%FT%TZ)"
             for i in 1 2 3 4 5; do
               if git pull --rebase --autostash origin gh-pages && git push origin gh-pages; then
-                echo "pushed on attempt $i"; exit 0
+                echo "pushed on attempt $i"
+                curl -sf "https://purge.jsdelivr.net/gh/felipekrugel-eng/tars-overview@gh-pages/docs/cusum-data.js" >/dev/null || true   # refresh CDN
+                exit 0
               fi
               echo "push attempt $i failed (remote moved) — retrying in 5s"
               sleep 5
