@@ -244,16 +244,27 @@ const rollLine = (val,label,tip) => val!=null ? '<div class="td" style="color:va
 // end-of-month run-rate: project month-end registrations at the current daily pace.
 // cur is now the last COMPLETE day, so divide by its day number (all of it is finished).
 const regLiveRow = (typeof H!=='undefined' && H.length) ? H[H.length-1] : cur;   // today's row, rebased to the live hourly CUSUM
-const rrDom = regLiveRow ? Math.max(+regLiveRow.date.slice(8,10), 1) : 1;
-const rrDim = regLiveRow ? new Date(+regLiveRow.date.slice(0,4), +regLiveRow.date.slice(5,7), 0).getDate() : 30;
-const regRR = regLiveRow ? Math.round(regLiveRow.regMTD / Math.max(rrDom,1) * rrDim) : 0;
+// Run-rate = registrations over COMPLETE days this month / (complete days) x (days in month).
+// The in-progress current day is EXCLUDED (it still drives the live MTD number shown above).
+const _rrToday = new Date().toISOString().slice(0,10);
+const _rrMonth = _rrToday.slice(0,7);
+const _rrDone = H.filter(r => r.month===_rrMonth && r.date < _rrToday);   // complete days in the current month
+const _rrRow = _rrDone.length ? _rrDone[_rrDone.length-1] : null;
+const rrDom = _rrRow ? +_rrRow.date.slice(8,10) : 0;                      // complete days elapsed this month
+const rrDim = new Date(+_rrMonth.slice(0,4), +_rrMonth.slice(5,7), 0).getDate();  // days in this month
+const regRR = (_rrRow && rrDom>0) ? Math.round(_rrRow.regMTD / rrDom * rrDim) : 0;
 const sameMonth = (a,b) => !!(a && b && a.month===b.month);
 const newMonthNote = '<div class="td flat" title="Day-over-day resumes once there are two days in the new month; these are month-to-date figures that reset on the 1st.">\u2014 new month</div>';
 const _tNowYM = (d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))(new Date());
 const _byMo = Object.fromEntries((D.monthly||[]).map(m=>[m.month,m]));
 const _mrrRow = _byMo[_tNowYM] || ((D.monthly||[]).slice(-1)[0]) || null;   // current-month bottom-up MRR (from KPI_DATA.monthly)
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const _regCurM = regLiveRow ? regLiveRow.date.slice(0,7) : _tNowYM;
+const _regPrevM = (function(m){var y=+m.slice(0,4),mo=+m.slice(5,7)-1;if(mo<1){mo=12;y--;}return y+'-'+String(mo).padStart(2,'0');})(_regCurM);
+const _regPrevEnd = (_byMo[_regPrevM]||{}).registrations;
+const _regPrevLbl = MON3[+_regPrevM.slice(5,7)-1]||_regPrevM;
 const tileDefs = cur ? [
-  ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=3?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace: MTD \u00F7 '+rrDom+' days \u00D7 '+rrDim+' days in month.">run-rate ~'+fmtN(regRR)+' by month-end</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly</div>'), ser('regMTD'), BLUE],
+  ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=1?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace (MTD \u00F7 '+rrDom+' \u00D7 '+rrDim+' days), vs last month final.">run-rate ~'+fmtN(regRR)+' by month-end'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' '+fmtN(_regPrevEnd)+' ('+(regRR>=_regPrevEnd?'+':'')+Math.round((regRR/_regPrevEnd-1)*100)+'%)'):'')+'</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' ended '+fmtN(_regPrevEnd)):'')+'</div>'), ser('regMTD'), BLUE],
   ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
   ['Paying merchants','this month', fmtN(cur.paying), (sameMonth(cur,prev)?deltaTile(cur.paying-prev.paying):newMonthNote)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
   ['MRR','month-to-date', fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), '<div class="td" style="color:var(--muted)">bottom-up \u00b7 updates daily</div>', ser('mrr'), INK],
