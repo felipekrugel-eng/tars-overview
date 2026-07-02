@@ -257,7 +257,13 @@ const sameMonth = (a,b) => !!(a && b && a.month===b.month);
 const newMonthNote = '<div class="td flat" title="Day-over-day resumes once there are two days in the new month; these are month-to-date figures that reset on the 1st.">\u2014 new month</div>';
 const _tNowYM = (d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))(new Date());
 const _byMo = Object.fromEntries((D.monthly||[]).map(m=>[m.month,m]));
-const _mrrRow = _byMo[_tNowYM] || ((D.monthly||[]).slice(-1)[0]) || null;   // current-month bottom-up MRR (from KPI_DATA.monthly)
+const _MONX=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const _prevKey = m => { var y=+m.slice(0,4),mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
+const _lcMonth = ((D.monthly||[]).map(m=>m.month).filter(m=> m < _tNowYM).sort().slice(-1)[0]) || _tNowYM;   // last COMPLETE calendar month
+const _mrrRow = _byMo[_lcMonth] || ((D.monthly||[]).slice(-1)[0]) || null;   // MRR/ARPC = last complete month (stable full figure)
+const _mrrPrev = _byMo[_prevKey(_lcMonth)] || null;
+const _lcLbl = _lcMonth ? (_MONX[+_lcMonth.slice(5,7)-1]+' '+_lcMonth.slice(0,4)) : 'monthly';
+const momTile = (d, fmt) => (d==null) ? '<div class="td flat">\u2014</div>' : ('<div class="td '+(d>0?'up':(d<0?'down':'flat'))+'">'+(d>=0?'+':'-')+fmt(Math.abs(d))+' vs prior month</div>');
 const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const _regCurM = regLiveRow ? regLiveRow.date.slice(0,7) : _tNowYM;
 const _regPrevM = (function(m){var y=+m.slice(0,4),mo=+m.slice(5,7)-1;if(mo<1){mo=12;y--;}return y+'-'+String(mo).padStart(2,'0');})(_regCurM);
@@ -267,10 +273,10 @@ const tileDefs = cur ? [
   ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=1?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace (MTD \u00F7 '+rrDom+' \u00D7 '+rrDim+' days), vs last month final.">run-rate ~'+fmtN(regRR)+' by month-end'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' '+fmtN(_regPrevEnd)+' ('+(regRR>=_regPrevEnd?'+':'')+Math.round((regRR/_regPrevEnd-1)*100)+'%)'):'')+'</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' ended '+fmtN(_regPrevEnd)):'')+'</div>'), ser('regMTD'), BLUE],
   ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
   ['Paying merchants','this month', fmtN(cur.paying), (sameMonth(cur,prev)?deltaTile(cur.paying-prev.paying):newMonthNote)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
-  ['MRR','month-to-date', fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), '<div class="td" style="color:var(--muted)">bottom-up \u00b7 updates daily</div>', ser('mrr'), INK],
+  ['MRR', _lcLbl, fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), momTile((_mrrRow && _mrrPrev) ? _mrrRow.mrr - _mrrPrev.mrr : null, v=>fmtM(v)), ser('mrr'), INK],
   ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote), ser('receipts'), BLUE_DEEP],
-  ['ARPC','current', '$'+(cur.arpc!=null?cur.arpc.toFixed(2):'—'),
-    (sameMonth(cur,prev)?'<div class="td '+(cur.arpc>=prev.arpc?'up':'down')+'">'+(cur.arpc>=prev.arpc?'+':'')+(cur.arpc-prev.arpc).toFixed(2)+' vs prior day</div>':newMonthNote), ser('arpc'), BLUE],
+  ['ARPC', _lcLbl, (_mrrRow && _mrrRow.arpc!=null ? '$'+(+_mrrRow.arpc).toFixed(2) : '—'),
+    momTile((_mrrRow && _mrrPrev && _mrrRow.arpc!=null && _mrrPrev.arpc!=null) ? _mrrRow.arpc - _mrrPrev.arpc : null, v=>'$'+v.toFixed(2)), ser('arpc'), BLUE],
 ] : [];
 document.getElementById('tiles').innerHTML = cur ? tileDefs.map((t,i)=>
   '<div class="tile rise" style="animation-delay:'+(i*0.04).toFixed(2)+'s"><div class="tl">'+t[0]+' <span class="sub">'+t[1]+'</span></div>'+
