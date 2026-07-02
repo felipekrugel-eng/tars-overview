@@ -35,6 +35,7 @@ QUERY_FILES = {
     "clife":    "country_registrations_daily_asof.sql",     # country lifetime reg + ever-paid
     "cregm":    "country_month_registrations_daily_asof.sql",# reg by country×month (+ regPmtd momentum)
     "rolling":  "rolling_30d_active_paying_49days.sql",      # REG_30D / ACTIVE_30D / PAYING_ACTIVE
+    "mrrbu":    "mrr_bottomup_monthly.sql",                 # bottom-up current-state MRR by country x month (dashboard source of truth)
 }
 
 def _private_key():
@@ -85,6 +86,7 @@ def main():
     write(WORK / "paying_country.csv",   dfs["paying"])
     write(WORK / "country_lifetime.csv", dfs["clife"])
     write(WORK / "country_reg_month.csv",dfs["cregm"])
+    write(WORK / "mrr_bottomup.csv",     dfs["mrrbu"])            # bottom-up MRR (no SNAPSHOT_DATE column; write as-is)
 
     # ---- inputs for backfill_daily.py (CSV filenames it globs) ----
     write(DAILY / f"MRR QR_DB 49 Days_{TS}.csv",                 dfs["cohort"])

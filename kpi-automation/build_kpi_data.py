@@ -67,14 +67,32 @@ mo = grid.groupby("CAL").agg(paying=("PAYING_CUSTOMERS","sum"), mrr=("MRR_USD","
                              cum=("CUM_PAYING_EVER","sum")).sort_index()
 mo["new_payers"] = mo["cum"].diff().fillna(mo["cum"]).clip(lower=0)
 mo["arpc"] = (mo["mrr"] / mo["paying"].replace(0, pd.NA)).fillna(0)
+# ---- bottom-up current-state MRR is the source of truth for mrr/paying/arpc ----
+# (amortized Chargebee line items, VOID_DATE IS NULL, per country x month). Falls back to
+# the as-of cohort grid if the CSV is missing so the pull can never break.
+try:
+    _bu = pd.read_csv(WORK / "mrr_bottomup.csv")
+    _bu["M"] = _bu["MONTH"].astype(str).str[:7]
+    for _c in ("PAYING_MERCHANTS","MRR_USD"): _bu[_c] = pd.to_numeric(_bu[_c], errors="coerce").fillna(0)
+    bu_m = _bu.groupby("M").agg(mrr=("MRR_USD","sum"), pay=("PAYING_MERCHANTS","sum"))
+    print(f"   [mrr] bottom-up source: {len(bu_m)} months")
+except Exception as _e:
+    bu_m = None; print("   [mrr][warn] bottom-up CSV unavailable, using as-of grid:", _e)
+
+def _bu_mrr(m): return float(bu_m.loc[m,"mrr"]) if (bu_m is not None and m in bu_m.index) else (float(mo.loc[m,"mrr"]) if m in mo.index else 0.0)
+def _bu_pay(m): return int(bu_m.loc[m,"pay"]) if (bu_m is not None and m in bu_m.index) else (int(mo.loc[m,"paying"]) if m in mo.index else 0)
+
 months = sorted(set(mo.index) | set(reg_by_month.index))
-monthly_out = [{"month": m,
-    "registrations": int(reg_by_month.get(m, 0)),
-    "paying": int(mo.loc[m,"paying"]) if m in mo.index else 0,
-    "mrr": round(float(mo.loc[m,"mrr"]),2) if m in mo.index else 0,
-    "newPayers": int(mo.loc[m,"new_payers"]) if m in mo.index else 0,
-    "cumEverPaid": int(mo.loc[m,"cum"]) if m in mo.index else 0,
-    "arpc": round(float(mo.loc[m,"arpc"]),2) if m in mo.index else 0} for m in months]
+monthly_out = []
+for m in months:
+    _mrr = _bu_mrr(m); _pay = _bu_pay(m)
+    monthly_out.append({"month": m,
+        "registrations": int(reg_by_month.get(m, 0)),
+        "paying": _pay,
+        "mrr": round(_mrr, 2),
+        "newPayers": int(mo.loc[m,"new_payers"]) if m in mo.index else 0,
+        "cumEverPaid": int(mo.loc[m,"cum"]) if m in mo.index else 0,
+        "arpc": round(_mrr/_pay, 2) if _pay else 0})
 
 # ---- receipts/active by cohort x country x month (latest snapshot) ----
 rcpt["COH"] = rcpt["COHORT_MONTH"].map(ym); rcpt["CAL"] = rcpt["CALENDAR_MONTH"].map(ym)
