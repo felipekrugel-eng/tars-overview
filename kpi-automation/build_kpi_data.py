@@ -67,6 +67,34 @@ mo = grid.groupby("CAL").agg(paying=("PAYING_CUSTOMERS","sum"), mrr=("MRR_USD","
                              cum=("CUM_PAYING_EVER","sum")).sort_index()
 mo["new_payers"] = mo["cum"].diff().fillna(mo["cum"]).clip(lower=0)
 mo["arpc"] = (mo["mrr"] / mo["paying"].replace(0, pd.NA)).fillna(0)
+
+# ---- semester (H1/H2) new-payer cohort split (for the report page) ----
+# For each calendar half: new payers first paying in the half (any cohort) vs those whose
+# REGISTRATION cohort is also in the same half (fresh same-period conversions), + conversion %s.
+# Derived from the cohort grid: per-cohort first payers/month = diff of CUM_PAYING_EVER.
+def _halfkey(m): return m[:4] + ("-H1" if int(m[5:7]) <= 6 else "-H2")
+_gg = grid[["COHORT", "CAL", "CUM_PAYING_EVER"]].sort_values(["COHORT", "CAL"]).copy()
+_gg["newp"] = _gg.groupby("COHORT")["CUM_PAYING_EVER"].diff()
+_gg["newp"] = _gg["newp"].fillna(_gg["CUM_PAYING_EVER"]).clip(lower=0)   # first month of a cohort = its own cum
+_gg["calH"] = _gg["CAL"].map(_halfkey)
+_gg["cohH"] = _gg["COHORT"].map(_halfkey)
+_reg_half = {}
+for _coh, _r in reg_by_month.items():
+    _reg_half[_halfkey(_coh)] = _reg_half.get(_halfkey(_coh), 0) + int(_r)
+semester_split = {}
+for H in sorted(_gg["calH"].unique()):
+    _sub = _gg[_gg["calH"] == H]
+    _total = int(_sub["newp"].sum())
+    _same  = int(_sub[_sub["cohH"] == H]["newp"].sum())
+    _regs  = int(_reg_half.get(H, 0))
+    semester_split[H] = {
+        "newPayersTotal": _total,
+        "newPayersSameHalfCohort": _same,
+        "registrations": _regs,
+        "pctSameHalfOfTotal":  round(100.0 * _same  / _total, 1) if _total else 0,
+        "convAllCohorts":      round(100.0 * _total / _regs, 1)  if _regs else 0,
+        "convSameHalfCohort":  round(100.0 * _same  / _regs, 1)  if _regs else 0,
+    }
 # ---- bottom-up current-state MRR is the source of truth for mrr/paying/arpc ----
 # (amortized Chargebee line items, VOID_DATE IS NULL, per country x month). Falls back to
 # the as-of cohort grid if the CSV is missing so the pull can never break.
@@ -238,6 +266,7 @@ data = {
     "payingByCountryByMonth": {c: paying_country_all.get(c, {}) for c in top},
     "mrrByCountryByMonth": {c: mrr_country.get(c, {}) for c in top100},
     "arpcByCountryByMonth": {c: arpc_country.get(c, {}) for c in top100},
+    "semesterCohortSplit": semester_split,
     "countryFunnel": country_funnel, "countryNames": COUNTRY_NAMES, "retention": retention,
 }
 OUT.parent.mkdir(parents=True, exist_ok=True)
