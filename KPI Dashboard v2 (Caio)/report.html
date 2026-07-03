@@ -98,6 +98,7 @@ const mLabel = m => (MON[+m.slice(5,7)-1]||'') + ' ' + m.slice(0,4);
 const fmtN = n => (n==null) ? '—' : Math.round(n).toLocaleString('en-US');
 const fmtM = n => (n==null) ? '—' : '$' + (Math.abs(n)>=1e6 ? (n/1e6).toFixed(2)+'M' : Math.round(n).toLocaleString('en-US'));
 const fmtC = n => (n==null) ? '—' : '$' + (+n).toFixed(2);
+const fmtP = n => (n==null) ? '—' : (+n).toFixed(1) + '%';
 const prevMonth = m => { let y=+m.slice(0,4), mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 
@@ -163,9 +164,18 @@ function sumFlow(months, field){ return months.reduce((s,m)=> s + ((monthly[m]&&
 function endPI(months, getter){ for(let i=months.length-1;i>=0;i--){ const v=getter(months[i]); if(v!=null) return v; } return null; }
 function renderSemester(half, year){
   const cur = semMonths(half, year), prev = semMonths(half, year-1);
+  // same-half-cohort new-payer split + conversion %s (from the cohort grid, via kpi-data.js)
+  const SC = D.semesterCohortSplit || {};
+  const sc = SC[year+'-H'+half] || {}, scP = SC[(year-1)+'-H'+half] || {};
+  const splitRows = (sc.newPayersTotal != null) ? [
+    {label:'New payers — same-half cohort (registered & first-paid in the half)', cur:sc.newPayersSameHalfCohort, prev:scP.newPayersSameHalfCohort, fmt:fmtN},
+    {label:'Conversion — all cohorts (new payers ÷ registrations)',               cur:sc.convAllCohorts,          prev:scP.convAllCohorts,          fmt:fmtP},
+    {label:'Conversion — same-half cohort (÷ same-half registrations)',           cur:sc.convSameHalfCohort,      prev:scP.convSameHalfCohort,      fmt:fmtP},
+  ] : [];
   const rows = [
     {label:'Registrations (total)',           cur:sumFlow(cur,'registrations'), prev:sumFlow(prev,'registrations'), fmt:fmtN},
     {label:'New paying customers (total)',     cur:sumFlow(cur,'newPayers'),     prev:sumFlow(prev,'newPayers'),     fmt:fmtN},
+    ...splitRows,
     {label:'Paying customers (end of period)', cur:endPI(cur,m=>monthly[m]?monthly[m].paying:null), prev:endPI(prev,m=>monthly[m]?monthly[m].paying:null), fmt:fmtN},
     {label:'MRR (end of period)',              cur:endPI(cur,m=>monthly[m]?monthly[m].mrr:null),    prev:endPI(prev,m=>monthly[m]?monthly[m].mrr:null),    fmt:fmtM},
     {label:'ARPC (end of period)',             cur:endPI(cur,m=>monthly[m]?monthly[m].arpc:null),   prev:endPI(prev,m=>monthly[m]?monthly[m].arpc:null),   fmt:fmtC},
