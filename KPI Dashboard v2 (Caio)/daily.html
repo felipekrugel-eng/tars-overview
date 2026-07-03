@@ -131,7 +131,13 @@
 </div>
 
 <div class="wrap">
-  <div class="sec">Today at a glance</div>
+  <div class="sec" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <span>Today at a glance</span>
+    <span style="font-size:12px;font-weight:normal;color:var(--muted)">Country&nbsp;
+      <select id="fac-country" style="font-size:12px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;max-width:230px"></select>
+      <span style="color:var(--faint)">&nbsp;· filters the tiles &amp; the 4 graphs below (cusum &amp; league stay global)</span>
+    </span>
+  </div>
   <div class="tiles" id="tiles"></div>
 
   <div class="sec">Registrations today &middot; CUSUM</div>
@@ -184,7 +190,7 @@
   function _boot(){ if(_cusumBooted) return; _cusumBooted=true;
 
 const D = KPI_DATA;
-const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().filter(r => r.month === r.date.slice(0,7)).sort((a,b)=>a.date<b.date?-1:1);
+let H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().filter(r => r.month === r.date.slice(0,7)).sort((a,b)=>a.date<b.date?-1:1);
 // Live-patch TODAY's registrations from the hourly CUSUM. The daily kpi-pull only captures the
 // ~04:00 snapshot, so today's registration total would otherwise sit frozen/low all day. The
 // cusum (hourly) carries today's live count; we rebase today's month-to-date on it.
@@ -201,16 +207,41 @@ const H = (typeof DAILY_HISTORY !== 'undefined' ? DAILY_HISTORY : []).slice().fi
     tr.regMTD=mtdPrior+liveToday; tr._liveReg=true;
   }catch(e){}
 })();
+
+// ===== country filter infrastructure (tiles + 4 trend charts re-render per country) =====
+const GLOBAL_H = H;
+const DHBC = (typeof DAILY_HISTORY_BY_COUNTRY!=='undefined') ? DAILY_HISTORY_BY_COUNTRY : {};
+const MRRC = D.mrrByCountryByMonth||{}, ARPCC = D.arpcByCountryByMonth||{};
+let SEL = null;   // selected country code; null = All (global)
+function countryHist(code){
+  const rows=(DHBC[code]||[]).map(r=>({date:r.date,month:r.month,regMTD:r.regMTD,paying:r.paying,active:r.active,receipts:r.receipts,newReg:r.newReg}));
+  try{ if(typeof CUSUM_DATA!=='undefined' && CUSUM_DATA.todayByCountry){
+    const todayISO=new Date().toISOString().slice(0,10);
+    const cc=CUSUM_DATA.todayByCountry.find(x=>x.c===code);
+    const tr=rows.find(r=>r.date===todayISO);
+    if(cc && tr){ const prior=rows.filter(r=>r.month===tr.month && r.date<todayISO); const mtdPrior=prior.length?prior[prior.length-1].regMTD:0; tr.regMTD=mtdPrior+(+cc.regs||0); }
+  } }catch(e){}
+  return rows;
+}
 const BLUE='#1D8FE1', BLUE_DEEP='#1578C4', INK='#13233A', GRAY='#7E8A9A', GREEN='#1F9D6B', RED='#D2495B';
 const fmtN = n => n==null?'—':Math.round(n).toLocaleString('en-US');
 const fmtM = n => n==null?'—':'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n).toLocaleString('en-US'));
 // Tiles reflect the last COMPLETE day (and the day before) — the same cutoff the graphs
 // use — so "+xx vs prior day" is the completed day's real move, not the partial current
 // day captured at the time the daily pull runs (e.g. 04:00 UTC).
-const _todayISO = new Date().toISOString().slice(0,10);
-const _completeDays = H.filter(r => r.date < _todayISO);
-const HB = _completeDays.length ? _completeDays : H;   // complete-day basis for all tiles
-const cur = HB.length?HB[HB.length-1]:null, prev = HB.length>1?HB[HB.length-2]:null;
+let HB, cur, prev, months, CURM, PREVM, CUTDAY, todayStr;
+function recompute(){
+  const _t = new Date().toISOString().slice(0,10);
+  const comp = H.filter(r => r.date < _t);
+  HB = comp.length ? comp : H;
+  cur = HB.length?HB[HB.length-1]:null; prev = HB.length>1?HB[HB.length-2]:null;
+  months = [...new Set(H.map(r=>r.month))].sort();
+  CURM = months[months.length-1]; PREVM = months[months.length-2] || CURM;
+  const _cm = H.filter(r=>r.month===CURM); const _cc = _cm.filter(r=>r.date < _t);
+  const _lc = (_cc.length ? _cc : _cm).slice(-1)[0]; CUTDAY = _lc ? +_lc.date.slice(8,10) : 31;
+  todayStr = _t;
+}
+recompute();
 const CNAMES = D.countryNames || {};
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
@@ -237,7 +268,8 @@ function deltaTile(d, money){
   return '<div class="td '+cls+'">'+s+(money?fmtM(d):fmtN(d))+' vs prior day</div>';
 }
 
-// ---------- tiles ----------
+// ---------- tiles (re-rendered per selected country) ----------
+function renderTiles(){
 // active/receipts can lag (TPV query saved later than the MRR snapshot) — use the latest COMPLETE day that HAS the value
 function lastTwo(field){ const a=HB.filter(r=>r[field]!=null); return [a[a.length-1]||null, a[a.length-2]||null]; }
 const aN=lastTwo('active'), rN=lastTwo('receipts');
@@ -262,15 +294,18 @@ const _tNowYM = (d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))(
 const _byMo = Object.fromEntries((D.monthly||[]).map(m=>[m.month,m]));
 const _MONX=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const _prevKey = m => { var y=+m.slice(0,4),mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
-const _lcMonth = ((D.monthly||[]).map(m=>m.month).filter(m=> m < _tNowYM).sort().slice(-1)[0]) || _tNowYM;   // last COMPLETE calendar month
-const _mrrRow = _byMo[_lcMonth] || ((D.monthly||[]).slice(-1)[0]) || null;   // MRR/ARPC = last complete month (stable full figure)
-const _mrrPrev = _byMo[_prevKey(_lcMonth)] || null;
+// MRR/ARPC: global monthly, or per-country (bottom-up) when a country is selected
+const _mrrMonths = SEL ? Object.keys(MRRC[SEL]||{}) : (D.monthly||[]).map(m=>m.month);
+const _lcMonth = (_mrrMonths.filter(m=> m < _tNowYM).sort().slice(-1)[0]) || _tNowYM;   // last COMPLETE calendar month
+const _mrrAt = m => { if(!m) return null; if(SEL){ const v=(MRRC[SEL]||{})[m]; return (v==null)?null:{mrr:v, arpc:(ARPCC[SEL]||{})[m]}; } return _byMo[m]||null; };
+const _mrrRow = _mrrAt(_lcMonth) || (SEL ? null : ((D.monthly||[]).slice(-1)[0]||null));
+const _mrrPrev = _mrrAt(_prevKey(_lcMonth));
 const _lcLbl = _lcMonth ? (_MONX[+_lcMonth.slice(5,7)-1]+' '+_lcMonth.slice(0,4)) : 'monthly';
 const momTile = (d, fmt) => (d==null) ? '<div class="td flat">\u2014</div>' : ('<div class="td '+(d>0?'up':(d<0?'down':'flat'))+'">'+(d>=0?'+':'-')+fmt(Math.abs(d))+' vs prior month</div>');
 const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const _regCurM = regLiveRow ? regLiveRow.date.slice(0,7) : _tNowYM;
 const _regPrevM = (function(m){var y=+m.slice(0,4),mo=+m.slice(5,7)-1;if(mo<1){mo=12;y--;}return y+'-'+String(mo).padStart(2,'0');})(_regCurM);
-const _regPrevEnd = (_byMo[_regPrevM]||{}).registrations;
+const _regPrevEnd = SEL ? ((D.countryRegistrationsByMonth&&D.countryRegistrationsByMonth[SEL]||{})[_regPrevM]) : (_byMo[_regPrevM]||{}).registrations;
 const _regPrevLbl = MON3[+_regPrevM.slice(5,7)-1]||_regPrevM;
 const tileDefs = cur ? [
   ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=1?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace (MTD \u00F7 '+rrDom+' \u00D7 '+rrDim+' days), vs last month final.">run-rate ~'+fmtN(regRR)+' by month-end'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' '+fmtN(_regPrevEnd)+' ('+(regRR>=_regPrevEnd?'+':'')+Math.round((regRR/_regPrevEnd-1)*100)+'%)'):'')+'</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' ended '+fmtN(_regPrevEnd)):'')+'</div>'), ser('regMTD'), BLUE],
@@ -285,6 +320,7 @@ document.getElementById('tiles').innerHTML = cur ? tileDefs.map((t,i)=>
   '<div class="tile rise" style="animation-delay:'+(i*0.04).toFixed(2)+'s"><div class="tl">'+t[0]+' <span class="sub">'+t[1]+'</span></div>'+
   '<div class="row"><div class="tv font-num">'+t[2]+'</div></div>'+t[3]+'</div>').join('')
   : '<div class="note-warn" style="display:block">No daily readings yet.</div>';
+}
 
 // ---------- trend charts ----------
 Chart.defaults.font.family='Arial'; Chart.defaults.color=GRAY;
@@ -295,14 +331,7 @@ const baseOpts = yf => ({ responsive:true, maintainAspectRatio:false, interactio
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const mLabel = m => MON[+m.slice(5,7)-1] || m;
 const dayOf = r => +r.date.slice(8,10);
-const months = [...new Set(H.map(r=>r.month))].sort();
-const CURM = months[months.length-1], PREVM = months[months.length-2] || CURM;
-// reference all graphs to the last COMPLETE day (exclude the in-progress current day) → "Jun to day 21"
-const todayStr = new Date().toISOString().slice(0,10);
-const _cmRows = H.filter(r=>r.month===CURM);
-const _complete = _cmRows.filter(r=>r.date < todayStr);
-const _lastComplete = (_complete.length ? _complete : _cmRows).slice(-1)[0];
-const CUTDAY = _lastComplete ? +_lastComplete.date.slice(8,10) : 31;
+// months / CURM / PREVM / CUTDAY are (re)computed in recompute() so they follow the selected country
 function fillCmp(id, cur, prv){
   const e=document.getElementById('mtd-'+id); if(!e) return;
   if(!cur.length){ e.innerHTML=''; return; }
@@ -398,6 +427,13 @@ function drawTrends(){ regCombo(); trend('c-act','Active merchants','active',BLU
 document.querySelectorAll('#pill button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#pill button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); win=+b.dataset.win; drawTrends(); });
 drawTrends();
+renderTiles();
+function applyCountry(code){ SEL = code || null; H = SEL ? countryHist(SEL) : GLOBAL_H; recompute(); renderTiles(); drawTrends(); }
+(function(){ var sel=document.getElementById('fac-country'); if(!sel) return;
+  var codes=Object.keys(DHBC).filter(function(c){return c && c.length===2;}).map(function(c){var rs=DHBC[c]||[];var mx=0;rs.forEach(function(r){if((+r.active||0)>mx)mx=+r.active;});return {c:c,a:mx};}).filter(function(x){return x.a>0;}).sort(function(a,b){return b.a-a.a;});
+  sel.innerHTML='<option value="">All countries (global)</option>'+codes.map(function(x){return '<option value="'+x.c+'">'+(isoFlag(x.c)?isoFlag(x.c)+' ':'')+x.c+' — '+(CNAMES[x.c]||x.c)+'</option>';}).join('');
+  sel.onchange=function(e){ applyCountry(e.target.value||null); };
+})();
 
 // rolling / point-in-time trend view (single line over time) for Registrations, Active & Paying
 const ROLLMETA = {
