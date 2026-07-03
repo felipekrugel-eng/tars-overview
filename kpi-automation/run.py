@@ -119,11 +119,38 @@ def main():
     agg["GTV"] = 0; agg["AVG_TICKET"] = 0
     write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
 
+    # ---- by-country daily active/receipts (current-month rows -> DATE x COUNTRY) ----
+    # Same derivation as "49 days 1" above but KEEPS the country dimension so FACADASH can
+    # filter the daily graphs/tiles per country. Output is tiny (~25 countries x ~49 days).
+    recc = rec.loc[
+        rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
+        == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
+        ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+    ]
+    recc = (recc.assign(DATE=recc["SNAPSHOT_DATE"].astype(str).str[:10])
+                .groupby(["DATE", "COUNTRY"])
+                .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+                .reset_index())
+    write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS"]])
+
+    # ---- by-country daily paying (current-month rows per snapshot -> DATE x COUNTRY) ----
+    pay = dfs["paying"]
+    payc = pay.loc[
+        pay["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
+        == pay["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
+        ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_PAYING_CUSTOMERS"],
+    ]
+    payc = (payc.assign(DATE=payc["SNAPSHOT_DATE"].astype(str).str[:10])
+                .groupby(["DATE", "COUNTRY"])
+                .agg(PAYING=("ACTIVE_PAYING_CUSTOMERS", "sum"))
+                .reset_index())
+    write(DAILY / f"Paying by country 49 Days_{TS}.csv", payc[["DATE","COUNTRY","PAYING"]])
+
     # Release the big in-memory frames (esp. the ~26.5M-row receipts grid) BEFORE the generator
     # subprocesses. They read the CSVs from disk, so keeping the frames resident just doubles RAM
     # alongside the subprocess and OOMs the runner ("lost communication with the server").
     import gc
-    dfs.clear(); del rec, cur, agg; gc.collect()
+    dfs.clear(); del rec, cur, agg, recc, pay, payc; gc.collect()
 
     # ---- regenerate both data files ----
     print("[backfill] daily-history.js", flush=True)
