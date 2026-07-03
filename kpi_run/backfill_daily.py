@@ -151,10 +151,60 @@ cf_rows=[{"c":c,"reg":gi(regC,c),"active":gi(actC,c),"paying":gi(payC,c),"receip
           "regPmtd":gi(regPmtd,c)} for c in codes]
 country_funnel={"current":CUR,"previous":PREV,"asOf":ld,"rows":cf_rows}
 
+# ---------------- per-country daily MTD history (for the FACADASH country filter) ----------------
+# Same daily series as DAILY_HISTORY, but keyed by country. Sources (all "49-day" by-country files):
+#   registrations -> Registration Month x Country_49 Days   (SNAPSHOT_DATE,COUNTRY,CALENDAR_MONTH,REGISTRATIONS)
+#   active/receipts-> 49 days by country                     (DATE,COUNTRY,ACTIVE,RECEIPTS)
+#   paying        -> Paying by country 49 Days               (DATE,COUNTRY,PAYING)
+# MRR/ARPC per country are NOT daily; the front-end reads those from kpi-data.js (monthly bottom-up).
+_bycountry = {}   # code -> { date -> row }
+def _bcrow(code, d):
+    return _bycountry.setdefault(code, {}).setdefault(
+        d, {"date": d, "month": d[:7], "regMTD": None, "paying": None, "active": None, "receipts": None})
+
+_regbc = sorted(glob.glob(SRC + "/Registration Month x Country_49 Days_*.csv"))
+if _regbc:
+    _rr = pd.read_csv(_regbc[-1], usecols=["SNAPSHOT_DATE","COUNTRY","CALENDAR_MONTH","REGISTRATIONS"])
+    _rr["snap"] = _rr["SNAPSHOT_DATE"].map(lambda x: str(x)[:10])
+    _rr["cm"]   = _rr["CALENDAR_MONTH"].map(ym)
+    _rr["REGISTRATIONS"] = pd.to_numeric(_rr["REGISTRATIONS"], errors="coerce").fillna(0)
+    _cur = _rr[_rr["cm"] == _rr["snap"].str[:7]]   # current-month rows only -> regMTD per day
+    for _, x in _cur.iterrows():
+        _bcrow(str(x["COUNTRY"]), x["snap"])["regMTD"] = int(x["REGISTRATIONS"])
+
+_arbc = sorted(glob.glob(SRC + "/49 days by country_*.csv"))
+if _arbc:
+    _ar = pd.read_csv(_arbc[-1])
+    for _, x in _ar.iterrows():
+        d = str(x["DATE"])[:10]
+        if d == SKIP_DATE: continue
+        r = _bcrow(str(x["COUNTRY"]), d)
+        r["active"]   = int(pd.to_numeric(x["ACTIVE"],   errors="coerce") or 0)
+        r["receipts"] = int(pd.to_numeric(x["RECEIPTS"], errors="coerce") or 0)
+
+_pybc = sorted(glob.glob(SRC + "/Paying by country 49 Days_*.csv"))
+if _pybc:
+    _py = pd.read_csv(_pybc[-1])
+    for _, x in _py.iterrows():
+        _bcrow(str(x["COUNTRY"]), str(x["DATE"])[:10])["paying"] = int(pd.to_numeric(x["PAYING"], errors="coerce") or 0)
+
+DAILY_HISTORY_BY_COUNTRY = {}
+for code, dd in _bycountry.items():
+    if not (isinstance(code, str) and len(code) == 2): continue
+    lst = [dd[k] for k in sorted(dd)]
+    for i, r in enumerate(lst):
+        p = lst[i-1] if i > 0 else None
+        r["newReg"] = (max(0, r["regMTD"] - p["regMTD"])
+                       if (p and p["month"] == r["month"] and r["regMTD"] is not None and p["regMTD"] is not None)
+                       else None)
+    DAILY_HISTORY_BY_COUNTRY[code] = lst
+
 with open(OUT,"w") as f:
     f.write("// Loyverse daily KPI history — REAL, from dated CSV snapshots in 'Daily DBs Dash Queries'.\n")
     f.write("const DAILY_SAMPLE = false;\n")
     f.write("const DAILY_HISTORY = "); json.dump(rows,f,separators=(",",":")); f.write(";\n")
     f.write("const COUNTRY_FUNNEL = "); json.dump(country_funnel,f,separators=(",",":")); f.write(";\n")
+    f.write("const DAILY_HISTORY_BY_COUNTRY = "); json.dump(DAILY_HISTORY_BY_COUNTRY,f,separators=(",",":")); f.write(";\n")
 print(f"daily rows {len(rows)} | COUNTRY_FUNNEL {len(cf_rows)} countries, current {CUR} (as of {ld}) vs {PREV}")
+print(f"per-country daily: {len(DAILY_HISTORY_BY_COUNTRY)} countries")
 print("sample:", json.dumps(cf_rows[0]))
