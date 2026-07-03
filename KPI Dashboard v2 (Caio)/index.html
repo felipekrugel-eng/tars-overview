@@ -86,7 +86,17 @@
   table.tri th { font-size:10px; color:var(--mid-gray); font-weight:600; padding:3px 5px; text-align:center; position:sticky; top:0; }
   table.tri td { padding:3px 6px; text-align:center; border:1px solid #F0F2F5; white-space:nowrap; font-variant-numeric:tabular-nums; }
   table.tri td.k { text-align:left; font-weight:600; color:var(--near-black); background:#fff; position:sticky; left:0; }
+  table.tri td.sz { text-align:right; color:var(--mid-gray); font-weight:600; background:#F7F9FB; }
+  table.tri th.sz { text-align:right; }
   table.tri td.tri-e { background:#FAFBFC; }
+  .cohpick { margin:2px 0 10px; }
+  .cohpick-lbl { font-size:12px; color:var(--mid-gray); margin-right:8px; }
+  .cohchips { display:inline-flex; flex-wrap:wrap; gap:5px; vertical-align:middle; }
+  .cohchip { font-size:11px; padding:2px 8px; border:1px solid var(--border,#D9DEE5); border-radius:999px;
+    background:#fff; color:var(--dark-gray,#42505F); cursor:pointer; line-height:1.6; transition:all .12s; }
+  .cohchip:hover { border-color:#9AA7B5; }
+  .cohchip.on { color:#fff; font-weight:600; }
+  .cohchip.cohclear { border-color:#E0E0E0; color:var(--mid-gray); margin-left:4px; }
 </style>
 </head>
 <body>
@@ -148,9 +158,9 @@
     <div class="toggle" id="coh-toggle" style="display:inline-block; margin-right:12px">
       <button data-mode="mrr" class="on">MRR</button><button data-mode="paying">Paying customers</button><button data-mode="active">Active merchants</button><button data-mode="activePct">Active %</button>
     </div>
-    <span style="font-size:12px;color:var(--mid-gray);margin-right:6px">Compare cohorts (Ctrl/Cmd-click for several; none = all):</span>
-    <select id="coh-select" multiple size="4" style="margin-right:8px;vertical-align:middle;min-width:120px"></select>
-    <button id="coh-clear" style="font-size:12px;padding:2px 8px;cursor:pointer">Clear</button>
+    <div class="cohpick"><span class="cohpick-lbl">Compare cohorts — click to highlight (none = all):</span>
+      <span id="coh-chips" class="cohchips"></span>
+      <button id="coh-clear" class="cohchip cohclear">Clear</button></div>
     <div class="chart-box"><canvas id="c-coh24"></canvas></div>
   </div>
   <div class="panel">
@@ -160,6 +170,9 @@
     </div>
     <div class="toggle" id="tri-metric" style="display:none">
       <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
+    </div>
+    <div class="toggle" id="tri-mode" style="display:none;margin-left:8px">
+      <button data-pct="0" class="on">Absolute</button><button data-pct="1">% of cohort</button>
     </div>
     <div id="cohsum-table" style="overflow-x:auto"><table id="t-cohorts"></table></div>
     <div id="cohsum-tri" style="display:none;overflow-x:auto"></div>
@@ -406,10 +419,20 @@ function drawCoh() {
                 y: { grid: { color: '#EFEFEF' }, ticks: { callback: COH_FMT[cohMode] }, beginAtZero: true } } }
   });
 }
-const cohSelEl = document.getElementById('coh-select');
-cohSelEl.innerHTML = ccKeys.slice().reverse().map(c => '<option value="' + c + '">' + c + '</option>').join('');
-cohSelEl.onchange = () => { cohSel = new Set(Array.from(cohSelEl.selectedOptions).map(o => o.value)); drawCoh(); };
-document.getElementById('coh-clear').onclick = () => { cohSelEl.selectedIndex = -1; cohSel = new Set(); drawCoh(); };
+const cohChipWrap = document.getElementById('coh-chips');
+const _MONc = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const chipLabel = c => (_MONc[+c.slice(5,7)-1] || '') + " '" + c.slice(2,4);
+function renderCohChips(){
+  cohChipWrap.innerHTML = ccKeys.slice().reverse().map(c => {
+    const i = ccKeys.indexOf(c), on = cohSel.has(c), col = cohColor(i);
+    return '<button class="cohchip' + (on ? ' on' : '') + '" data-c="' + c + '"' +
+      (on ? (' style="background:' + col + ';border-color:' + col + '"') : '') + '>' + chipLabel(c) + '</button>';
+  }).join('');
+}
+cohChipWrap.onclick = e => { const b = e.target.closest('.cohchip'); if (!b) return;
+  const c = b.dataset.c; if (cohSel.has(c)) cohSel.delete(c); else cohSel.add(c); renderCohChips(); drawCoh(); };
+document.getElementById('coh-clear').onclick = () => { cohSel.clear(); renderCohChips(); drawCoh(); };
+renderCohChips();
 document.querySelectorAll('#coh-toggle button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#coh-toggle button').forEach(x => x.classList.remove('on'));
   b.classList.add('on'); cohMode = b.dataset.mode; drawCoh();
@@ -431,24 +454,30 @@ document.getElementById('t-cohorts').innerHTML =
   const tblWrap = document.getElementById('cohsum-table');
   const noteEl  = document.getElementById('cohsum-note');
   const triCohorts = ccKeys.slice();   // oldest..newest (the last 24 in cohortCompare)
+  const cohSize = Object.fromEntries((D.cohorts || []).map(c => [c.cohort, +c.registrations || 0]));
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
-  let triMetric = 'paying';
-  function drawTri(metric){
+  let triMetric = 'paying', triPct = false;
+  function drawTri(metric, pct){
+    const sizeOf = c => cohSize[c] || 0;
     let mx = 0, nAges = 1;
-    triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || []; nAges = Math.max(nAges, a.length);
-      a.forEach(v => { if (v != null && v > mx) mx = v; }); });
-    let h = '<table class="tri"><thead><tr><th>Cohort</th>';
+    triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || [], s = sizeOf(c); nAges = Math.max(nAges, a.length);
+      a.forEach(v => { if (v != null){ const dv = pct ? (s ? v/s*100 : 0) : v; if (dv > mx) mx = dv; } }); });
+    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
     for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
     h += '</tr></thead><tbody>';
     triCohorts.slice().reverse().forEach(c => {
-      h += '<tr><td class="k">' + c + '</td>';
+      const s = sizeOf(c);
+      h += '<tr><td class="k">' + c + '</td><td class="sz">' + fmtN(s) + '</td>';
       const arr = (CC[c] && CC[c][metric]) || [];
       for (let i = 0; i < nAges; i++){
         const v = arr[i];
-        if (v == null){ h += '<td class="tri-e"></td>'; }
-        else { const t = mx ? v/mx : 0;
-          h += '<td style="background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A') +
-               '" title="' + c + ' · M' + i + ': ' + fmtN(v) + '">' + triFmt(v) + '</td>'; }
+        if (v == null){ h += '<td class="tri-e"></td>'; continue; }
+        const dv = pct ? (s ? v/s*100 : 0) : v;
+        const t = mx ? dv/mx : 0;
+        const cell = pct ? dv.toFixed(1) + '%' : triFmt(v);
+        const tip = c + ' · M' + i + ': ' + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v));
+        h += '<td style="background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A') +
+             '" title="' + tip + '">' + cell + '</td>';
       }
       h += '</tr>';
     });
@@ -460,14 +489,19 @@ document.getElementById('t-cohorts').innerHTML =
     tblWrap.style.display = tri ? 'none' : '';
     triWrap.style.display = tri ? '' : 'none';
     document.getElementById('tri-metric').style.display = tri ? 'inline-block' : 'none';
+    document.getElementById('tri-mode').style.display = tri ? 'inline-block' : 'none';
     noteEl.textContent = tri
-      ? 'Each cell = the cohort’s value at that age (M0 = registration month). Colour scales with the value; newer cohorts have fewer ages.'
+      ? 'Each cell = the cohort’s value at that age (M0 = registration month); “Size” is the cohort’s total registrations. Toggle “% of cohort” to normalise by size. Colour scales with the displayed value.'
       : 'Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.';
-    if (tri) drawTri(triMetric);
+    if (tri) drawTri(triMetric, triPct);
   });
   document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#tri-metric button').forEach(x => x.classList.remove('on')); b.classList.add('on');
-    triMetric = b.dataset.metric; drawTri(triMetric);
+    triMetric = b.dataset.metric; drawTri(triMetric, triPct);
+  });
+  document.querySelectorAll('#tri-mode button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#tri-mode button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+    triPct = b.dataset.pct === '1'; drawTri(triMetric, triPct);
   });
 })();
 
