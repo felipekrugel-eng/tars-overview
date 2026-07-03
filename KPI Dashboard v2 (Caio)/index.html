@@ -82,6 +82,11 @@
   .pagenav a.on { color: #fff; border-bottom-color: var(--blue); }
   .cflag { cursor:help; white-space:nowrap; }
   #t-countries td:first-child { white-space:nowrap; }
+  table.tri { border-collapse:collapse; font-size:11px; }
+  table.tri th { font-size:10px; color:var(--mid-gray); font-weight:600; padding:3px 5px; text-align:center; position:sticky; top:0; }
+  table.tri td { padding:3px 6px; text-align:center; border:1px solid #F0F2F5; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  table.tri td.k { text-align:left; font-weight:600; color:var(--near-black); background:#fff; position:sticky; left:0; }
+  table.tri td.tri-e { background:#FAFBFC; }
 </style>
 </head>
 <body>
@@ -107,7 +112,7 @@
   <div class="section-label">00</div>
   <h2>At a glance.</h2>
   <div class="cards" id="study-tiles">
-    <div class="card"><div class="lbl">Registrations · all-time<span class="info" data-tip="Cumulative merchants registered to date (deduplicated by email), summed across every month. The sub-line shows the previous complete month's registrations — this tab refreshes daily, but the meaningful unit is the month. (The live month-to-date run-rate is on the FACADASH tab.)">i</span></div><div class="num" id="t-reg-num">—</div><div class="delta" id="t-reg-d"></div><div class="spark" id="t-reg-s"></div></div>
+    <div class="card"><div class="lbl">Registrations · last month<span class="info" data-tip="Registrations in the latest complete calendar month (deduplicated by email). The sub-line shows the all-time cumulative total. This tab refreshes daily, but the meaningful unit is the month. (The live month-to-date run-rate is on the FACADASH tab.)">i</span></div><div class="num" id="t-reg-num">—</div><div class="delta" id="t-reg-d"></div><div class="spark" id="t-reg-s"></div></div>
     <div class="card"><div class="lbl">Active merchants<span class="info" data-tip="Merchants issuing at least one receipt in the latest complete month (receipts-based, corrected series). Delta is month-over-month vs the prior complete month.">i</span></div><div class="num" id="t-act-num">—</div><div class="delta" id="t-act-d"></div><div class="spark" id="t-act-s"></div></div>
     <div class="card"><div class="lbl">Paying customers<span class="info" data-tip="Merchants with active paid subscription revenue (MRR over 0) in the latest complete month. Delta is month-over-month vs the prior complete month.">i</span></div><div class="num" id="t-pay-num">—</div><div class="delta" id="t-pay-d"></div><div class="spark" id="t-pay-s"></div></div>
     <div class="card"><div class="lbl">Activation · 12-mo<span class="info" data-tip="Share of a registration cohort still active (issuing receipts) 12 months after signup, blended across cohorts. From the cohort-age activation curve. The sparkline is that curve from M0.">i</span></div><div class="num" id="t-actv-num">—</div><div class="delta" id="t-actv-d"></div><div class="spark" id="t-actv-s"></div></div>
@@ -139,18 +144,26 @@
   <div class="section-label">02</div>
   <h2>Cohorts.</h2>
     <div class="panel">
-    <h3>Cohort comparison — last 24 cohorts by age<span class="info" data-tip="One line per registration cohort (always the most recent 24 complete cohorts). X-axis is cohort age: M0 = registration month, M1 = one month later, etc. — so cohorts are compared at the same point in their life. MRR and Paying customers come from Chargebee invoices; Active merchants (count) and Active % (active merchants ÷ cohort size) are receipts-based, from the clean cohort-age series (2022-01 onward), so they run from M0 like the others. Lines are coloured as a heat map — oldest cohorts blue (cold), newest cohorts red (hot). Use the dropdown to highlight a single cohort (others fade to grey). Newer cohorts have shorter lines — less history.">i</span></h3>
+    <h3>Cohort comparison — last 24 cohorts by age<span class="info" data-tip="One line per registration cohort (always the most recent 24 complete cohorts). X-axis is cohort age: M0 = registration month, M1 = one month later, etc. — so cohorts are compared at the same point in their life. MRR and Paying customers come from Chargebee invoices; Active merchants (count) and Active % (active merchants ÷ cohort size) are receipts-based, from the clean cohort-age series (2022-01 onward), so they run from M0 like the others. Lines are coloured as a heat map — oldest cohorts blue (cold), newest cohorts red (hot). Select one or more cohorts in the list to compare them (others fade to grey); clear the selection to show all. Newer cohorts have shorter lines — less history.">i</span></h3>
     <div class="toggle" id="coh-toggle" style="display:inline-block; margin-right:12px">
       <button data-mode="mrr" class="on">MRR</button><button data-mode="paying">Paying customers</button><button data-mode="active">Active merchants</button><button data-mode="activePct">Active %</button>
     </div>
-    <select id="coh-select" style="margin-right:8px"></select>
-    <select id="coh-country" title="Cohort-level country split requires the country dimension in the canonical cohort query — coming with the Snowflake pull."><option value="ALL">All countries</option></select>
+    <span style="font-size:12px;color:var(--mid-gray);margin-right:6px">Compare cohorts (Ctrl/Cmd-click for several; none = all):</span>
+    <select id="coh-select" multiple size="4" style="margin-right:8px;vertical-align:middle;min-width:120px"></select>
+    <button id="coh-clear" style="font-size:12px;padding:2px 8px;cursor:pointer">Clear</button>
     <div class="chart-box"><canvas id="c-coh24"></canvas></div>
   </div>
   <div class="panel">
-    <h3>Cohort summary — last 24 cohorts (snapshot at latest complete month)<span class="info" data-tip="One row per registration month. Ever paid = members who made at least one payment to date; Paying now = currently paying; Active now = members issuing at least one receipt in the snapshot month (receipts-based, from the clean cohort-age series, 2022-01 onward); MRR now = current monthly revenue; ARPC = MRR now / paying now. Snapshot month: latest complete calendar month. Young cohorts are still maturing.">i</span></h3>
-    <div style="overflow-x:auto"><table id="t-cohorts"></table></div>
-    <div class="note">Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.</div>
+    <h3>Cohort summary — last 24 cohorts (snapshot at latest complete month)<span class="info" data-tip="One row per registration month. Ever paid = members who made at least one payment to date; Paying now = currently paying; Active now = members issuing at least one receipt in the snapshot month (receipts-based, from the clean cohort-age series, 2022-01 onward); MRR now = current monthly revenue; ARPC = MRR now / paying now. Snapshot month: latest complete calendar month. Young cohorts are still maturing. Switch to the Triangle view to see each cohort's value by age (M0, M1, …).">i</span></h3>
+    <div class="toggle" id="cohsum-view" style="display:inline-block;margin-right:12px">
+      <button data-view="table" class="on">Table</button><button data-view="triangle">Triangle</button>
+    </div>
+    <div class="toggle" id="tri-metric" style="display:none">
+      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
+    </div>
+    <div id="cohsum-table" style="overflow-x:auto"><table id="t-cohorts"></table></div>
+    <div id="cohsum-tri" style="display:none;overflow-x:auto"></div>
+    <div class="note" id="cohsum-note">Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.</div>
   </div>
 
   <div class="section-label">03</div>
@@ -158,7 +171,7 @@
   <div style="margin-bottom:14px">
     <label style="font-size:13px; color:var(--dark-gray); margin-right:8px">Country filter:</label>
     <select id="country-select"></select>
-    <span style="font-size:11.5px; color:var(--mid-gray); margin-left:10px">drives the three monthly charts below</span>
+    <span style="font-size:11.5px; color:var(--mid-gray); margin-left:10px">drives the four monthly charts below</span>
   </div>
   <div class="grid2">
     <div class="panel">
@@ -172,6 +185,10 @@
     <div class="panel">
       <h3>Receipts per month — selected country<span class="info" data-tip="Total receipts (transactions) issued by merchants in the selected country per month, from the corrected receipts series (TPV Country Analysis). Full months Jan 2022 to the latest complete month.">i</span></h3>
       <div class="chart-box"><canvas id="c-receipts-country"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Paying customers per month — selected country<span class="info" data-tip="Merchants in the selected country with active paid subscription revenue (MRR over 0) in the month, from paid Chargebee invoice line items. Full months to the latest complete month.">i</span></h3>
+      <div class="chart-box"><canvas id="c-paying-country"></canvas></div>
     </div>
     <div class="panel">
       <h3>Top 20 countries — lifetime<span class="info" data-tip="All-time registrations and ever-paid merchants per country, with conversion (ever paid / registrations). Active merchants = merchants in that country issuing at least one receipt in the latest complete month (current activity, not lifetime). Based on Chargebee payment history and the clean receipts series joined to merchant country. The arrow by each country shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining — the angle steepens with the rate.">i</span></h3>
@@ -217,8 +234,8 @@ const fmtN = n => n.toLocaleString('en-US');
   const snapM=(D.meta&&D.meta.snapshotMonth)||null;
   const pmRow = snapM ? MO.find(m=>m.month===snapM) : MO[MO.length-2];
   const pmLbl = pmRow ? (MN3[+pmRow.month.slice(5,7)-1]+' '+pmRow.month.slice(0,4)) : '';
-  el('t-reg-num').textContent = (regAll/1e6).toFixed(2)+'M';
-  muted('t-reg-d', pmRow ? ('Previous month ('+pmLbl+'): '+fmtN(pmRow.registrations)) : '');
+  el('t-reg-num').textContent = pmRow ? fmtN(pmRow.registrations) : (regAll/1e6).toFixed(2)+'M';
+  muted('t-reg-d', (pmLbl?(pmLbl+' · '):'')+'All-time: '+(regAll/1e6).toFixed(2)+'M');
   spark('t-reg-s', MO.slice(-24).map(m=>+m.registrations||0), BLUE);
   // 2) active merchants — latest complete month, MoM
   if(AM.length>=2){
@@ -363,15 +380,16 @@ const ageLabels = Array.from({ length: 25 }, (_, i) => 'M' + i);
 const COH_FMT = { mrr: v => '$' + fmtN(v), paying: v => fmtN(v), active: v => fmtN(v), activePct: v => v.toFixed(1) + '%' };
 // Heat-map palette: cohorts run oldest -> newest, coloured cold (blue) -> hot (red)
 const cohColor = i => { const t = ccKeys.length > 1 ? i / (ccKeys.length - 1) : 0; return 'hsl(' + Math.round(240 * (1 - t)) + ', 75%, 50%)'; };
-let cohChart, cohMode = 'mrr', cohSel = 'ALL';
+let cohChart, cohMode = 'mrr', cohSel = new Set();   // empty = show all; otherwise highlight the selected cohorts
 function drawCoh() {
+  const any = cohSel.size > 0;
   const ds = ccKeys.map((coh, i) => {
-    const focus = cohSel === 'ALL' || cohSel === coh;
+    const focus = !any || cohSel.has(coh);
     return { label: coh, data: CC[coh][cohMode],
       borderColor: focus ? cohColor(i) : '#E4E4E4',
       backgroundColor: focus ? cohColor(i) : '#E4E4E4',
       pointRadius: 0, pointHitRadius: 6,
-      borderWidth: cohSel === coh ? 3.5 : (focus && i === ccKeys.length - 1 ? 2.6 : 1.7),
+      borderWidth: (any && cohSel.has(coh)) ? 3.5 : (focus && i === ccKeys.length - 1 ? 2.6 : 1.7),
       order: focus ? 0 : 1, tension: 0.25, spanGaps: false };
   });
   if (cohChart) cohChart.destroy();
@@ -389,9 +407,9 @@ function drawCoh() {
   });
 }
 const cohSelEl = document.getElementById('coh-select');
-cohSelEl.innerHTML = '<option value="ALL">All cohorts (24)</option>' +
-  ccKeys.slice().reverse().map(c => '<option value="' + c + '">' + c + ' cohort</option>').join('');
-cohSelEl.onchange = e => { cohSel = e.target.value; drawCoh(); };
+cohSelEl.innerHTML = ccKeys.slice().reverse().map(c => '<option value="' + c + '">' + c + '</option>').join('');
+cohSelEl.onchange = () => { cohSel = new Set(Array.from(cohSelEl.selectedOptions).map(o => o.value)); drawCoh(); };
+document.getElementById('coh-clear').onclick = () => { cohSelEl.selectedIndex = -1; cohSel = new Set(); drawCoh(); };
 document.querySelectorAll('#coh-toggle button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#coh-toggle button').forEach(x => x.classList.remove('on'));
   b.classList.add('on'); cohMode = b.dataset.mode; drawCoh();
@@ -406,6 +424,52 @@ document.getElementById('t-cohorts').innerHTML =
   recent.map(c => '<tr><td class="k">' + c.cohort + '</td><td>' + fmtN(c.registrations) + '</td><td>' + fmtN(c.everPaid) +
     '</td><td>' + c.pctEverPaid.toFixed(2) + '%</td><td>' + fmtN(c.payingNow) + '</td><td>' + c.pctPayingNow.toFixed(2) +
     '%</td><td>' + fmtN(c.active) + '</td><td>' + fmtM(c.mrr) + '</td><td>$' + c.arpc.toFixed(2) + '</td></tr>').join('');
+
+// ---- Cohort triangle view (last 24 cohorts x age; toggle Paying/Active) ----
+(function(){
+  const triWrap = document.getElementById('cohsum-tri');
+  const tblWrap = document.getElementById('cohsum-table');
+  const noteEl  = document.getElementById('cohsum-note');
+  const triCohorts = ccKeys.slice();   // oldest..newest (the last 24 in cohortCompare)
+  const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
+  let triMetric = 'paying';
+  function drawTri(metric){
+    let mx = 0, nAges = 1;
+    triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || []; nAges = Math.max(nAges, a.length);
+      a.forEach(v => { if (v != null && v > mx) mx = v; }); });
+    let h = '<table class="tri"><thead><tr><th>Cohort</th>';
+    for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
+    h += '</tr></thead><tbody>';
+    triCohorts.slice().reverse().forEach(c => {
+      h += '<tr><td class="k">' + c + '</td>';
+      const arr = (CC[c] && CC[c][metric]) || [];
+      for (let i = 0; i < nAges; i++){
+        const v = arr[i];
+        if (v == null){ h += '<td class="tri-e"></td>'; }
+        else { const t = mx ? v/mx : 0;
+          h += '<td style="background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A') +
+               '" title="' + c + ' · M' + i + ': ' + fmtN(v) + '">' + triFmt(v) + '</td>'; }
+      }
+      h += '</tr>';
+    });
+    triWrap.innerHTML = h + '</tbody></table>';
+  }
+  document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#cohsum-view button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+    const tri = b.dataset.view === 'triangle';
+    tblWrap.style.display = tri ? 'none' : '';
+    triWrap.style.display = tri ? '' : 'none';
+    document.getElementById('tri-metric').style.display = tri ? 'inline-block' : 'none';
+    noteEl.textContent = tri
+      ? 'Each cell = the cohort’s value at that age (M0 = registration month). Colour scales with the value; newer cohorts have fewer ages.'
+      : 'Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.';
+    if (tri) drawTri(triMetric);
+  });
+  document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#tri-metric button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+    triMetric = b.dataset.metric; drawTri(triMetric);
+  });
+})();
 
 // ---- Trend helpers: linear-regression trendline + country momentum arrow ----
 function linReg(vals) {
@@ -443,7 +507,7 @@ const ctrKeys = Object.keys(D.countryRegistrationsByMonth).sort((a, b) => {
 ctrSel.innerHTML = ctrKeys.map(c => '<option value="' + c + '">' + (isoFlag(c)?isoFlag(c)+' ':'') + c + ' — ' + (CNAMES[c]||c) + '</option>').join('');
 const acLabels = (D.activeMonthly || []).map(a => a.month); // 2022-01..latest complete
 
-let ctrChart, actCtrChart, recCtrChart;
+let ctrChart, actCtrChart, recCtrChart, payCtrChart;
 function drawCountry(ctry) {
   const series = D.countryRegistrationsByMonth[ctry] || {};
   const data = labels.map(m => series[m] || 0);
@@ -473,8 +537,9 @@ function countryLine(canvasId, dict, ctry, color, yfmt, withTrend) {
 const recFmt = v => (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : (v >= 1e3 ? Math.round(v / 1e3) + 'K' : v));
 function drawActiveCountry(ctry) { if (actCtrChart) actCtrChart.destroy(); actCtrChart = countryLine('c-active-country', D.activeByCountryByMonth, ctry, BLUE_DEEP, null, true); }
 function drawReceiptsCountry(ctry) { if (recCtrChart) recCtrChart.destroy(); recCtrChart = countryLine('c-receipts-country', D.receiptsByCountryByMonth, ctry, BLACK, recFmt, false); }
-ctrSel.onchange = e => { drawCountry(e.target.value); drawActiveCountry(e.target.value); drawReceiptsCountry(e.target.value); };
-drawCountry(ctrKeys[0]); drawActiveCountry(ctrKeys[0]); drawReceiptsCountry(ctrKeys[0]);
+function drawPayingCountry(ctry) { if (payCtrChart) payCtrChart.destroy(); payCtrChart = countryLine('c-paying-country', D.payingByCountryByMonth, ctry, BLUE, null, true); }
+ctrSel.onchange = e => { drawCountry(e.target.value); drawActiveCountry(e.target.value); drawReceiptsCountry(e.target.value); drawPayingCountry(e.target.value); };
+drawCountry(ctrKeys[0]); drawActiveCountry(ctrKeys[0]); drawReceiptsCountry(ctrKeys[0]); drawPayingCountry(ctrKeys[0]);
 
 // ---- Country table ----
 document.getElementById('t-countries').innerHTML =
