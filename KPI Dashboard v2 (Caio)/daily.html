@@ -345,9 +345,13 @@ function regCombo(focus){
   focus = (focus==='last') ? 'last' : 'this';
   const M = (focus==='last') ? PREVM : CURM;        // which month's daily bars to show
   const isCur = (M===CURM);
-  const mRows = H.filter(r=>r.month===M && (!isCur || dayOf(r)<=CUTDAY)).slice().sort((a,b)=>a.date<b.date?-1:1);
+  // daily bars INCLUDE the current in-progress day (today's row is live-patched from the
+  // cusum above, so today's bar grows through the day). The accumulated comparison below
+  // stays complete-days-only (CUTDAY) so the like-for-like total is unaffected.
+  const mRows = H.filter(r=>r.month===M).slice().sort((a,b)=>a.date<b.date?-1:1);
   const days    = mRows.map(r=>dayOf(r));
   const dailyNew= mRows.map((r,i)=> i===0 ? r.regMTD : (r.regMTD - mRows[i-1].regMTD));
+  const _todayDayNum = isCur && days.length ? days[days.length-1] : -1;  // last daily bar = live current day
   // accumulated comparison — CONSTANT, like-for-like to the last complete day (this month vs last month)
   const cumAt = mm => { const rr=H.filter(r=>r.month===mm && dayOf(r)<=CUTDAY); return rr.length ? rr[rr.length-1].regMTD : null; };
   const cumCur = cumAt(CURM)||0, cumPrev = cumAt(PREVM);
@@ -363,20 +367,25 @@ function regCombo(focus){
   const accumData = days.map(()=>null).concat([null, cumCur, null, cumPrev]);
   const jIdx = days.length+1, mIdx = days.length+3;
   const accumCols = labels.map((l,i)=> i===jIdx ? BLUE : (i===mIdx ? '#B8C4D2' : 'rgba(0,0,0,0)'));
-  const dailyCol  = (focus==='last') ? 'rgba(150,164,180,.85)' : 'rgba(29,143,225,.55)';
+  const _dailyBase = (focus==='last') ? 'rgba(150,164,180,.85)' : 'rgba(29,143,225,.55)';
+  // current in-progress day rendered as a distinct deeper-blue dashed bar ("live so far today")
+  const _isTodayBar = (i)=> isCur && i===days.length-1;
+  const dailyCol    = days.map((d,i)=> _isTodayBar(i) ? BLUE_DEEP : _dailyBase).concat(['rgba(0,0,0,0)','rgba(0,0,0,0)','rgba(0,0,0,0)','rgba(0,0,0,0)']);
+  const dailyBorder = days.map((d,i)=> _isTodayBar(i) ? BLUE : 'rgba(0,0,0,0)').concat(['rgba(0,0,0,0)','rgba(0,0,0,0)','rgba(0,0,0,0)','rgba(0,0,0,0)']);
+  const dailyBW     = days.map((d,i)=> _isTodayBar(i) ? 1.5 : 0).concat([0,0,0,0]);
   const maxDaily = Math.max(1, ...dailyNew.filter(v=>v!=null));
   const maxAccum = Math.max(cumCur, cumPrev||0);
   const FILL = 0.85;  // tallest bar on each axis reaches this share of the plot → bar tops align, bottoms both at 0
   if(charts['c-reg']) charts['c-reg'].destroy();
   charts['c-reg']=new Chart(document.getElementById('c-reg'),{type:'bar',
     data:{labels, datasets:[
-      {label:mLabel(M)+' / day', data:dailyData, backgroundColor:dailyCol, yAxisID:'y',  grouped:false, order:2},
+      {label:mLabel(M)+' / day', data:dailyData, backgroundColor:dailyCol, borderColor:dailyBorder, borderWidth:dailyBW, borderDash:[3,2], yAxisID:'y',  grouped:false, order:2},
       {label:'Accumulated',      data:accumData, backgroundColor:accumCols, yAxisID:'y1', grouped:false, order:1, barThickness:26}
     ]},
     options:{responsive:true,maintainAspectRatio:false, layout:{padding:{top:16}},
       plugins:{legend:{display:false},
         tooltip:{callbacks:{
-          title:it=>{const l=it[0].label; return /^\d+$/.test(l)?(mLabel(M)+' '+l):(l+' — accumulated to day '+CUTDAY);},
+          title:it=>{const l=it[0].label; if(/^\d+$/.test(l)){ return mLabel(M)+' '+l+((isCur && +l===_todayDayNum)?'  ·  live so far today':''); } return l+' — accumulated to day '+CUTDAY;},
           label:it=>fmtN(it.parsed.y)}}},
       scales:{
         x:{grid:{display:false}, title:{display:true,text:'Day of month — '+(focus==='last'?mLabel(PREVM)+' (last month)':mLabel(CURM)+' (this month)'),font:{size:10},color:GRAY}, ticks:{font:{size:9}, autoSkip:false, maxRotation:0, callback:function(v){return this.getLabelForValue(v);}}},
