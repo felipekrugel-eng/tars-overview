@@ -79,6 +79,18 @@ try:
 except Exception as _e:
     bu_m = None; print("   [mrr][warn] bottom-up CSV unavailable, using as-of grid:", _e)
 
+# per-country MRR/ARPC by month (bottom-up) — powers the FACADASH country-filter MRR/ARPC tiles
+mrr_country = {}; arpc_country = {}
+if bu_m is not None:
+    try:
+        for _c, _g in _bu.groupby("COUNTRY"):
+            _mm = {m: round(float(v), 2) for m, v in zip(_g["M"], _g["MRR_USD"])}
+            _pp = {m: float(v) for m, v in zip(_g["M"], _g["PAYING_MERCHANTS"])}
+            mrr_country[str(_c)]  = _mm
+            arpc_country[str(_c)] = {m: (round(_mm[m] / _pp[m], 2) if _pp.get(m) else 0) for m in _mm}
+    except Exception as _e:
+        print("   [mrr-country][warn]", _e)
+
 def _bu_mrr(m): return float(bu_m.loc[m,"mrr"]) if (bu_m is not None and m in bu_m.index) else (float(mo.loc[m,"mrr"]) if m in mo.index else 0.0)
 def _bu_pay(m): return int(bu_m.loc[m,"pay"]) if (bu_m is not None and m in bu_m.index) else (int(mo.loc[m,"paying"]) if m in mo.index else 0)
 
@@ -224,6 +236,8 @@ data = {
     "activeByCountryByMonth": {c: active_country_all.get(c, {}) for c in top},
     "receiptsByCountryByMonth": {c: receipts_country_all.get(c, {}) for c in top},
     "payingByCountryByMonth": {c: paying_country_all.get(c, {}) for c in top},
+    "mrrByCountryByMonth": {c: mrr_country.get(c, {}) for c in top100},
+    "arpcByCountryByMonth": {c: arpc_country.get(c, {}) for c in top100},
     "countryFunnel": country_funnel, "countryNames": COUNTRY_NAMES, "retention": retention,
 }
 OUT.parent.mkdir(parents=True, exist_ok=True)
