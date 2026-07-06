@@ -8,6 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="kpi-data.js"></script>
 <script src="daily-history.js"></script>
+<script src="daily-flow.js"></script>
 <style>
   :root {
     --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
@@ -163,6 +164,14 @@
     <div class="panel rise" style="animation-delay:.05s"><h3>Active merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or the trailing 30-day trend</div><div class="vtog" data-c="c-act"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Rolling 30 days</button></div><div class="mtdcmp" id="mtd-c-act"></div><div class="chart-box"><canvas id="c-act"></canvas></div></div>
     <div class="panel rise" style="animation-delay:.1s"><h3>Paying merchants</h3><div class="ph">Month-to-date (this month vs last, by day) or active paid subscriptions as of each day</div><div class="vtog" data-c="c-pay"><button data-v="mtd" class="on">Month-to-date</button><button data-v="roll">Rolling 30 days</button></div><div class="mtdcmp" id="mtd-c-pay"></div><div class="chart-box"><canvas id="c-pay"></canvas></div></div>
     <div class="panel rise" style="animation-delay:.15s"><h3>Receipts (transactions)</h3><div class="ph">This month vs last month, aligned by day of month</div><div class="vtog-spacer"></div><div class="mtdcmp" id="mtd-c-rcpt"></div><div class="chart-box"><canvas id="c-rcpt"></canvas></div></div>
+  </div>
+
+  <div class="sec">Paying base — gross adds</div>
+  <div class="panel rise">
+    <h3>Gross adds — daily, vs day-7</h3>
+    <div class="ph">New paying merchants per day (grace-adjusted, so renewal-timing lag isn't miscounted). The dashed line is the same weekday a week earlier — the weekday cycle cancels, so react to the gap, not the sawtooth. The smooth monthly flow (adds vs churn) is on the Study &amp; Trend tab.</div>
+    <div class="mtdcmp" id="mtd-c-gadds"></div>
+    <div class="chart-box"><canvas id="c-gadds"></canvas></div>
   </div>
 
   <div class="sec">Country leagues</div>
@@ -428,6 +437,39 @@ document.querySelectorAll('#pill button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#pill button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); win=+b.dataset.win; drawTrends(); });
 drawTrends();
 renderTiles();
+
+// ---- Paying base: daily gross adds vs day-7 (grace-adjusted; global, not country-filtered) ----
+(function(){
+  const FL = (typeof DAILY_FLOW!=='undefined'?DAILY_FLOW:[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+  const cv = document.getElementById('c-gadds'); if(!cv || FL.length<8) return;
+  const SHOW = Math.min(56, FL.length-7);               // up to 8 weeks shown; keep 7 days back for the -7d line
+  const start = FL.length - SHOW;
+  const shown = FL.slice(start);
+  const labels = shown.map(r=>r.date.slice(5));         // MM-DD
+  const adds   = shown.map(r=>r.adds);
+  const prev7  = shown.map((r,i)=> FL[start+i-7] ? FL[start+i-7].adds : null);
+  const last = FL[FL.length-1], back = FL[FL.length-8];
+  const e=document.getElementById('mtd-c-gadds');
+  if(e && back){
+    const d=(last.adds/back.adds-1)*100, cls=d>0.05?'up':(d<-0.05?'down':'flat');
+    e.innerHTML='<div class="cmptop"><span class="cmplabel">'+last.date.slice(5)+' vs same weekday \u22127d</span>'+
+      '<span class="cmpval">'+fmtN(last.adds)+'<span class="pilld '+cls+'">'+(d>=0?'\u25B2 +':'\u25BC ')+Math.abs(d).toFixed(1)+'%</span></span></div>'+
+      '<div class="cmpfoot">new paying merchants (D-1) \u00B7 vs '+fmtN(back.adds)+' a week earlier</div>';
+  }
+  if(charts['c-gadds']) charts['c-gadds'].destroy();
+  charts['c-gadds']=new Chart(cv,{
+    data:{labels, datasets:[
+      {type:'bar',  label:'Gross adds',        data:adds,  backgroundColor:'#639922', borderRadius:2, order:2, barPercentage:.72, categoryPercentage:.9},
+      {type:'line', label:'Same weekday \u22127d', data:prev7, borderColor:BLUE, borderDash:[5,4], borderWidth:2, pointRadius:0, tension:.25, order:1, spanGaps:true}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:it=>it.dataset.type==='line'?('\u22127d: '+fmtN(it.parsed.y)):('Gross adds: '+fmtN(it.parsed.y))}}},
+      scales:{x:{grid:{display:false},ticks:{maxTicksLimit:14,maxRotation:60,minRotation:60,font:{size:9}}},
+        y:{beginAtZero:true,grid:{color:'#EEF2F6'},title:{display:true,text:'Gross adds / day'},ticks:{font:{size:10},callback:v=>fmtN(v)}}}}
+  });
+})();
+
 function applyCountry(code){ SEL = code || null; H = SEL ? countryHist(SEL) : GLOBAL_H; recompute(); renderTiles(); drawTrends(); }
 (function(){ var sel=document.getElementById('fac-country'); if(!sel) return;
   var codes=Object.keys(DHBC).filter(function(c){return c && c.length===2;}).map(function(c){var rs=DHBC[c]||[];var mx=0;rs.forEach(function(r){if((+r.active||0)>mx)mx=+r.active;});return {c:c,a:mx};}).filter(function(x){return x.a>0;}).sort(function(a,b){return b.a-a.a;});
