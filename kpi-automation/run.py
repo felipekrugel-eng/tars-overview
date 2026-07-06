@@ -13,7 +13,7 @@ Required env: SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PRIVATE_KEY (PEM),
   SNOWFLAKE_PRIVATE_KEY_PASSPHRASE (optional), SNOWFLAKE_WAREHOUSE, SNOWFLAKE_ROLE,
   SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA
 """
-import os, sys, subprocess, datetime, pathlib
+import os, sys, subprocess, datetime, pathlib, re
 import pandas as pd
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
@@ -37,6 +37,13 @@ QUERY_FILES = {
     "rolling":  "rolling_30d_active_paying_49days.sql",      # REG_30D / ACTIVE_30D / PAYING_ACTIVE
     "mrrbu":    "mrr_bottomup_monthly.sql",                 # bottom-up current-state MRR by country x month (dashboard source of truth)
 }
+
+# Paying-base flow charts (Study & Trend monthly + FACADASH daily gross adds).
+# Kept OUT of QUERY_FILES and run in its own guarded step at the very end: it is a
+# heavier ~4.5-year grid query, and it must never be able to break the critical
+# daily-history.js / kpi-data.js refresh above. Only the small aggregated daily
+# result (~1.6k rows) comes back to the runner — the grid stays server-side.
+GRACE_SQL = "daily_paying_flow_grace_vs_raw.sql"
 
 def _private_key():
     pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
@@ -160,6 +167,38 @@ def main():
     env = {**os.environ, "WORK_DIR": str(WORK), "KPIDATA_OUT": str(V2 / "kpi-data.js")}
     subprocess.run([sys.executable, str(HERE / "build_kpi_data.py")], check=True, env=env)
     print("[done] daily-history.js + kpi-data.js regenerated", flush=True)
+
+    # ---- paying-base flow charts (flow-data.js + daily-flow.js) ----
+    # GUARDED: a failure here (e.g. the heavy grace query spilling/timing out) must NOT
+    # fail the run — the two files above are the critical deliverables and are already done.
+    try:
+        print("[flow] grace query -> flow_grace.csv", flush=True)
+        gsql = (SQLDIR / GRACE_SQL).read_text()
+        # make the window end today (the checked-in SQL has a fixed D_END for manual use)
+        gsql = re.sub(r"DATE\s*'\d{4}-\d{2}-\d{2}'\s*AS\s+D_END", "CURRENT_DATE AS D_END", gsql, count=1)
+        gconn = connect()
+        try:
+            cur = gconn.cursor()
+            # Measured ~1 min on the smallest warehouse (full 4.5-yr window, 6 Jul 2026),
+            # so this is NOT a tight cap — it's a generous backstop (~10x observed) purely
+            # so a pathological hang can't eat into the daily job's 150-min GitHub budget.
+            # A normal run finishes long before this; if it ever trips, the flow charts are
+            # dropped for the day (guarded) and the critical deploy is unaffected.
+            cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 600")
+            cur.execute(gsql)
+            gdf = cur.fetch_pandas_all() if hasattr(cur, "fetch_pandas_all") else \
+                  pd.DataFrame(cur.fetchall(), columns=[c[0] for c in cur.description])
+            cur.close()
+        finally:
+            gconn.close()
+        grace_csv = WORK / "flow_grace.csv"
+        write(grace_csv, gdf)
+        print("[flow] build flow-data.js + daily-flow.js", flush=True)
+        fenv = {**os.environ, "FLOW_GRACE_CSV": str(grace_csv), "FLOW_OUT_DIR": str(V2)}
+        subprocess.run([sys.executable, str(HERE / "build_flow_charts.py")], check=True, env=fenv)
+        print("[done] flow-data.js + daily-flow.js regenerated", flush=True)
+    except Exception as e:
+        print(f"[flow] WARNING — paying-base flow charts skipped this run: {e}", flush=True)
 
 if __name__ == "__main__":
     main()
