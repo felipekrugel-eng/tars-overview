@@ -443,7 +443,11 @@ renderTiles();
 // PRIMARY = a line of week-over-week % variance ((adds - adds[-7d]) / adds[-7d]), always visible and
 // sign-coloured. TOGGLE "+ Bars" overlays the two raw counts (this day vs a week ago) on a right-hand
 // count axis. Comparing like weekdays cancels the weekly sawtooth, so the line reads as a clean trend.
-const FL = (typeof DAILY_FLOW!=='undefined'?DAILY_FLOW:[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+const _flTodayISO = new Date().toISOString().slice(0,10);
+// Cut the in-progress current day: its gross adds are still accumulating, so a D-0 point makes
+// the week-over-week variance crash to ~-100% (today's ~0 vs a full day -7d). End at D-1, which
+// is what the tile label already claims. Safe if today isn't present (then nothing is dropped).
+const FL = (typeof DAILY_FLOW!=='undefined'?DAILY_FLOW:[]).slice().sort((a,b)=>a.date<b.date?-1:1).filter(r=>r.date < _flTodayISO);
 function drawGadds(showBars){
   const cv = document.getElementById('c-gadds'); if(!cv || FL.length<8) return;
   const SHOW = Math.min(56, FL.length-7);               // up to 8 weeks shown; keep 7 days back for the -7d compare
