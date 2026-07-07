@@ -168,8 +168,8 @@
 
   <div class="sec">Paying base — gross adds</div>
   <div class="panel rise">
-    <h3>Gross adds — week-over-week variance</h3>
-    <div class="ph">The line is the % change in new paying merchants vs the same weekday a week earlier (grace-adjusted, so renewal-timing lag isn't miscounted). Comparing like weekdays cancels the weekly cycle, so the line reads clean: green above zero = up on the week, red below = down. Toggle "+ Bars" to also see the raw counts (this day vs a week ago). The smooth monthly flow (adds vs churn) is on the Study &amp; Trend tab.</div>
+    <h3>Gross adds — variance vs 30 days earlier</h3>
+    <div class="ph">The line is the % change in new paying merchants vs 30 days earlier (grace-adjusted, so renewal-timing lag isn't miscounted): green above zero = up on the month, red below = down. This is a month-over-month comparison, so a slower-moving trend than the day-to-day noise. Toggle "+ Bars" to also see the raw counts (this day vs 30 days ago). The smooth monthly flow (adds vs churn) is on the Study &amp; Trend tab.</div>
     <div class="vtog" data-c="c-gadds"><button data-v="line" class="on">Variance %</button><button data-v="bars">+ Bars</button></div>
     <div class="mtdcmp" id="mtd-c-gadds"></div>
     <div class="chart-box"><canvas id="c-gadds"></canvas></div>
@@ -439,36 +439,37 @@ document.querySelectorAll('#pill button').forEach(b=>b.onclick=()=>{
 drawTrends();
 renderTiles();
 
-// ---- Paying base: daily gross adds — % variance vs same weekday -7d (grace-adjusted; global, not country-filtered) ----
-// PRIMARY = a line of week-over-week % variance ((adds - adds[-7d]) / adds[-7d]), always visible and
-// sign-coloured. TOGGLE "+ Bars" overlays the two raw counts (this day vs a week ago) on a right-hand
-// count axis. Comparing like weekdays cancels the weekly sawtooth, so the line reads as a clean trend.
+// ---- Paying base: daily gross adds — % variance vs 30 days earlier (grace-adjusted; global, not country-filtered) ----
+// PRIMARY = a line of month-over-month % variance ((adds - adds[-30d]) / adds[-30d]), always visible and
+// sign-coloured. TOGGLE "+ Bars" overlays the two raw counts (this day vs 30 days ago) on a right-hand
+// count axis. The 30-day lookback gives a slower month-over-month trend.
 const _flTodayISO = new Date().toISOString().slice(0,10);
 // Cut the in-progress current day: its gross adds are still accumulating, so a D-0 point makes
-// the week-over-week variance crash to ~-100% (today's ~0 vs a full day -7d). End at D-1, which
+// the variance crash to ~-100% (today's ~0 vs a full day -30d). End at D-1, which
 // is what the tile label already claims. Safe if today isn't present (then nothing is dropped).
 const FL = (typeof DAILY_FLOW!=='undefined'?DAILY_FLOW:[]).slice().sort((a,b)=>a.date<b.date?-1:1).filter(r=>r.date < _flTodayISO);
+const GADDS_BACK = 30;                                   // days of lookback for the comparison
 function drawGadds(showBars){
-  const cv = document.getElementById('c-gadds'); if(!cv || FL.length<8) return;
-  const SHOW = Math.min(56, FL.length-7);               // up to 8 weeks shown; keep 7 days back for the -7d compare
+  const cv = document.getElementById('c-gadds'); if(!cv || FL.length<GADDS_BACK+1) return;
+  const SHOW = Math.min(56, FL.length-GADDS_BACK);       // up to 8 weeks shown; keep 30 days back for the -30d compare
   const start = FL.length - SHOW;
   const shown = FL.slice(start);
   const labels = shown.map(r=>r.date.slice(5));         // MM-DD
   const adds   = shown.map(r=>r.adds);
-  const prev7  = shown.map((r,i)=> FL[start+i-7] ? FL[start+i-7].adds : null);
-  const pct    = shown.map((r,i)=> (prev7[i]!=null && prev7[i]!==0) ? (adds[i]-prev7[i])/prev7[i]*100 : null);
-  // tile: latest completed day's WoW move (vs the same weekday a week earlier)
-  const last = FL[FL.length-1], back = FL[FL.length-8];
+  const prev30 = shown.map((r,i)=> FL[start+i-GADDS_BACK] ? FL[start+i-GADDS_BACK].adds : null);
+  const pct    = shown.map((r,i)=> (prev30[i]!=null && prev30[i]!==0) ? (adds[i]-prev30[i])/prev30[i]*100 : null);
+  // tile: latest completed day's move vs 30 days earlier
+  const last = FL[FL.length-1], back = FL[FL.length-1-GADDS_BACK];
   const e=document.getElementById('mtd-c-gadds');
   if(e && back){
     const d=(last.adds/back.adds-1)*100, cls=d>0.05?'up':(d<-0.05?'down':'flat');
-    e.innerHTML='<div class="cmptop"><span class="cmplabel">'+last.date.slice(5)+' vs same weekday \u22127d</span>'+
+    e.innerHTML='<div class="cmptop"><span class="cmplabel">'+last.date.slice(5)+' vs 30 days earlier</span>'+
       '<span class="cmpval">'+(d>=0?'+':'')+d.toFixed(1)+'%<span class="pilld '+cls+'">'+(d>=0?'\u25B2':'\u25BC')+' '+fmtN(last.adds)+' vs '+fmtN(back.adds)+'</span></span></div>'+
-      '<div class="cmpfoot">week-over-week change in new paying merchants (D-1)</div>';
+      '<div class="cmpfoot">change in new paying merchants vs 30 days earlier (D-1)</div>';
   }
   const sign = v => v==null?GRAY:(v>=0?GREEN:RED);
   const datasets = [
-    {type:'line', label:'WoW variance %', data:pct, yAxisID:'yPct', borderColor:GRAY, borderWidth:2.4,
+    {type:'line', label:'variance % vs \u221230d', data:pct, yAxisID:'yPct', borderColor:GRAY, borderWidth:2.4,
      pointRadius:2, pointHoverRadius:5,
      pointBackgroundColor:pct.map(sign), pointBorderColor:pct.map(sign),
      tension:.2, spanGaps:true, order:0,
@@ -476,8 +477,8 @@ function drawGadds(showBars){
   ];
   if(showBars){
     datasets.push(
-      {type:'bar', label:'Gross adds (this day)', data:adds,  yAxisID:'yCnt', backgroundColor:'#639922', borderRadius:2, order:2, barPercentage:.72, categoryPercentage:.9},
-      {type:'bar', label:'Same weekday \u22127d',   data:prev7, yAxisID:'yCnt', backgroundColor:'#C7D8B0', borderRadius:2, order:3, barPercentage:.72, categoryPercentage:.9}
+      {type:'bar', label:'Gross adds (this day)', data:adds,   yAxisID:'yCnt', backgroundColor:'#639922', borderRadius:2, order:2, barPercentage:.72, categoryPercentage:.9},
+      {type:'bar', label:'30 days earlier',       data:prev30, yAxisID:'yCnt', backgroundColor:'#C7D8B0', borderRadius:2, order:3, barPercentage:.72, categoryPercentage:.9}
     );
   }
   if(charts['c-gadds']) charts['c-gadds'].destroy();
@@ -486,11 +487,11 @@ function drawGadds(showBars){
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:showBars, labels:{boxWidth:12,font:{size:10}}},
         tooltip:{callbacks:{label:it=> it.dataset.yAxisID==='yPct'
-          ? ('WoW: '+(it.parsed.y==null?'\u2014':(it.parsed.y>=0?'+':'')+it.parsed.y.toFixed(1)+'%'))
+          ? ('vs \u221230d: '+(it.parsed.y==null?'\u2014':(it.parsed.y>=0?'+':'')+it.parsed.y.toFixed(1)+'%'))
           : (it.dataset.label+': '+fmtN(it.parsed.y)) }}},
       scales:{
         x:{grid:{display:false},ticks:{maxTicksLimit:14,maxRotation:60,minRotation:60,font:{size:9}}},
-        yPct:{position:'left',grid:{color:'#EEF2F6'},title:{display:true,text:'WoW variance %'},ticks:{font:{size:10},callback:v=>(v>0?'+':'')+v+'%'}},
+        yPct:{position:'left',grid:{color:'#EEF2F6'},title:{display:true,text:'variance % vs −30d'},ticks:{font:{size:10},callback:v=>(v>0?'+':'')+v+'%'}},
         yCnt:{position:'right',display:showBars,beginAtZero:true,grid:{display:false},title:{display:showBars,text:'Gross adds / day'},ticks:{font:{size:10},callback:v=>fmtN(v)}}
       }}
   });
