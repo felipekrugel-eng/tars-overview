@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-06-29",
+  "lastUpdated": "2026-07-13",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98420,11 +98420,11 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.6,
-      "reviewCount": "17.5K",
-      "positive": 85,
+      "rating": 4.8,
+      "reviewCount": "17.6K",
+      "positive": 87,
       "neutral": 8,
-      "negative": 7,
+      "negative": 5,
       "tags": [
         {
           "label": "Easy to use",
@@ -98454,7 +98454,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "359",
+      "reviewCount": "363",
       "positive": 87,
       "neutral": 8,
       "negative": 5,
@@ -98488,25 +98488,25 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Jan",
       "Feb",
       "Mar",
       "Apr",
       "May",
-      "Jun"
+      "Jun",
+      "Jul"
     ],
     "googlePlay": [
-      4.74,
       4.72,
       4.7,
       4.68,
-      4.65,
-      4.6
+      4.72,
+      4.76,
+      4.8
     ],
     "appStore": [
       4.72,
-      4.72,
       4.71,
+      4.7,
       4.7,
       4.7,
       4.7
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 612,
+      "mentions": 641,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 428,
+      "mentions": 449,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 336,
+      "mentions": 352,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 271,
+      "mentions": 284,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 207,
+      "mentions": 219,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 154,
+      "mentions": 163,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 113,
+      "mentions": 121,
       "type": "neg",
       "key": "sync"
     }
@@ -98560,23 +98560,23 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "1M+",
       "trend": [
-        920000,
         945000,
         968000,
         985000,
         1000000,
-        1015000
+        1015000,
+        1032000
       ]
     },
     "appStore": {
       "total": "250K+",
       "trend": [
-        210000,
         218000,
         225000,
         232000,
         240000,
-        250000
+        250000,
+        259000
       ]
     }
   },
@@ -98587,20 +98587,20 @@ const CASE_DATA = {
         "country": "PH",
         "region": "asia",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "free-value"
         ],
-        "text": "Three months in and Loyverse runs our whole sari-sari operation. The free tier covers sales, inventory and the loyalty program with no ads and no card required. Adding item photos makes checkout fast for new staff. Only pay for the add-ons you actually need."
+        "text": "Half a year in and Loyverse still runs our whole sari-sari operation on the free tier — sales, inventory and the loyalty program, no ads and no card required. Item photos keep checkout fast for new staff. You only pay for the add-ons you actually need."
       },
       {
         "author": "CoffeeTH",
         "country": "TH",
         "region": "asia",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
@@ -98613,7 +98613,7 @@ const CASE_DATA = {
         "country": "GB",
         "region": "europe",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
@@ -98626,7 +98626,7 @@ const CASE_DATA = {
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -98639,32 +98639,32 @@ const CASE_DATA = {
         "country": "AE",
         "region": "middle_east",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "reporting",
           "free-value"
         ],
-        "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. One ask: let us pick a different currency per store when running multiple shops on one account."
+        "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. Still my one ask after the latest update: let us pick a different currency per store when running multiple shops on one account."
       },
       {
         "author": "PubOwnerIE",
         "country": "IE",
         "region": "europe",
         "rating": 4,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "ease-of-use"
         ],
-        "text": "Solid daily driver with a clean UI and reliable offline mode. New features keep landing on iOS first — the Android app still waits on tipping and a couple of flows. Even so, nothing else comes close at this price point."
+        "text": "Solid daily driver with a clean UI and reliable offline mode. New features still keep landing on iOS first — the Android app is waiting on tipping and a couple of payment flows. Even so, nothing else comes close at this price point."
       },
       {
         "author": "FerreteriaMX",
         "country": "MX",
         "region": "north_america",
         "rating": 4,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
@@ -98676,7 +98676,7 @@ const CASE_DATA = {
         "country": "SG",
         "region": "asia",
         "rating": 3,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
@@ -98688,7 +98688,7 @@ const CASE_DATA = {
         "country": "DE",
         "region": "europe",
         "rating": 2,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
@@ -98700,7 +98700,7 @@ const CASE_DATA = {
         "country": "MM",
         "region": "asia",
         "rating": 2,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support",
@@ -98713,7 +98713,7 @@ const CASE_DATA = {
         "country": "ES",
         "region": "europe",
         "rating": 1,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
@@ -98725,7 +98725,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 2,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
@@ -98738,7 +98738,7 @@ const CASE_DATA = {
         "country": "TH",
         "region": "asia",
         "rating": 1,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
@@ -98753,20 +98753,20 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
           "free-value"
         ],
-        "text": "Switched from a big-name payment brand after their prices climbed, and Loyverse has been a relief. Migration was quick, and it runs on my terminal, phone and iPad without missing a beat. Cannot believe the core POS is free. Highly recommend."
+        "text": "Switched from a big-name payment brand after their prices climbed again this year, and Loyverse has been a relief. Migration was quick, and it runs on my terminal, phone and iPad without missing a beat. Cannot believe the core POS is free. Highly recommend."
       },
       {
         "author": "CafeSydney",
         "country": "AU",
         "region": "oceania",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "free-value",
@@ -98779,7 +98779,7 @@ const CASE_DATA = {
         "country": "MY",
         "region": "asia",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "inventory",
@@ -98792,7 +98792,7 @@ const CASE_DATA = {
         "country": "CA",
         "region": "north_america",
         "rating": 5,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
@@ -98805,7 +98805,7 @@ const CASE_DATA = {
         "country": "US",
         "region": "north_america",
         "rating": 4,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "reporting"
@@ -98817,7 +98817,7 @@ const CASE_DATA = {
         "country": "PH",
         "region": "asia",
         "rating": 4,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "inventory"
@@ -98829,7 +98829,7 @@ const CASE_DATA = {
         "country": "GB",
         "region": "europe",
         "rating": 3,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "payment-integration"
@@ -98841,7 +98841,7 @@ const CASE_DATA = {
         "country": "TH",
         "region": "asia",
         "rating": 3,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "sync"
@@ -98853,19 +98853,19 @@ const CASE_DATA = {
         "country": "FR",
         "region": "europe",
         "rating": 2,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
         ],
-        "text": "Live chat support is locked behind a paid add-on — free users only get help articles and the peer forum. Register crashed on a busy Friday and it took until the following week to get a real answer."
+        "text": "Live chat support is still locked behind a paid add-on — free users only get help articles and the peer forum. Register crashed on a busy Friday and it took until the following week to get a real answer."
       },
       {
         "author": "FarmMarketUS",
         "country": "US",
         "region": "north_america",
         "rating": 1,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration",
@@ -98878,7 +98878,7 @@ const CASE_DATA = {
         "country": "SG",
         "region": "asia",
         "rating": 2,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "sync",
@@ -98891,7 +98891,7 @@ const CASE_DATA = {
         "country": "BR",
         "region": "south_america",
         "rating": 1,
-        "date": "Jun 2026",
+        "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "payment-integration"
