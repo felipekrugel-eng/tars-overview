@@ -1004,7 +1004,14 @@ window.showPage=function(pg){
   document.getElementById('tab-map').classList.toggle('on',pg==='map');
   document.getElementById('tab-merchants').classList.toggle('on',pg==='merchants');
   document.getElementById('tab-calc').classList.toggle('on',pg==='calc');
-  if(pg==='map'){ setTimeout(function(){ map.invalidateSize(); },60); }
+  if(pg==='map'){ setTimeout(function(){
+      // The map is initialised while #page-map is display:none (Overview is the landing
+      // page), so it starts at 0x0 and the cluster renders no pins. On first reveal, size
+      // it, rebuild the cluster, and fit bounds; on later visits just re-size + re-cluster.
+      map.invalidateSize();
+      try { refresh(); } catch(e){}
+      if(!window.__mapShown){ window.__mapShown=true; try { map.fitBounds(bothBounds(),{padding:[30,30]}); } catch(e){} }
+    },60); }
 };
 document.getElementById('tab-overview').addEventListener('click',function(){showPage('overview');});
 document.getElementById('tab-map').addEventListener('click',function(){showPage('map');});
