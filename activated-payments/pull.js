@@ -33,6 +33,7 @@ const STRIPE_SHARE_DB = 'GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659';
 const STRIPE_SCHEMA   = 'STRIPE';
 
 const OUTPUT_FILE    = path.join(__dirname, 'activation-data.js');
+const OVERVIEW_FILE  = path.join(__dirname, 'overview-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const SQL_DIR        = path.join(__dirname, 'sql');
 
@@ -186,6 +187,56 @@ async function fetchSales(conn, merchantIds) {
   return by;
 }
 
+// ── FX / currency conversion (fixed map — mirrors the FACADASH TPV layer) ──────
+// Stripe AMOUNT is in each currency's minor unit; ZERO_DECIMAL currencies have no
+// minor unit (amount is already whole). Convert minor→major→USD for a single,
+// comparable daily volume number.
+const USD_RATE = {
+  USD: 1.0, EUR: 1.16, GBP: 1.34, CAD: 0.74, AUD: 0.66, NZD: 0.60, CHF: 1.12,
+  JPY: 0.0066, KRW: 0.00072, CNY: 0.14, HKD: 0.128, SGD: 0.74, INR: 0.012,
+  IDR: 0.000063, PHP: 0.018, MYR: 0.21, THB: 0.028, VND: 0.000040, BRL: 0.17,
+  MXN: 0.058, ARS: 0.00081, CLP: 0.0010, COP: 0.00023, PEN: 0.27, ZAR: 0.054,
+  AED: 0.27, SAR: 0.27, TRY: 0.029, PLN: 0.25, SEK: 0.094, NOK: 0.093, DKK: 0.15,
+};
+const ZERO_DECIMAL = new Set(['BIF','CLP','DJF','GNF','JPY','KMF','KRW','MGA','PYG',
+  'RWF','UGX','VND','VUV','XAF','XOF','XPF']);
+function minorToUsd(amountMinor, ccy) {
+  const c = String(ccy || '').toUpperCase().trim();
+  const rate = USD_RATE[c];
+  if (rate == null) return null; // unknown currency — excluded (logged in summary)
+  const major = ZERO_DECIMAL.has(c) ? Number(amountMinor) : Number(amountMinor) / 100;
+  return major * rate;
+}
+
+// Stripe connected-account ids look like acct_XXXX — keep only those so the IN-list
+// is safe and fully runtime-derived (never hardcoded).
+function sanitizeAccts(ids) {
+  return [...new Set(ids.map(v => String(v == null ? '' : v).trim())
+    .filter(v => /^acct_[A-Za-z0-9]+$/.test(v)))];
+}
+async function fetchDailyVolume(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return { byDay: {}, unknownCcy: {} };
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('charges_daily.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const byDay = {};        // 'YYYY-MM-DD' -> { usd, cnt }
+  const unknownCcy = {};   // ccy -> count of skipped day-rows
+  for (const r of rows) {
+    const d = r.D != null ? String(r.D) : (r.d != null ? String(r.d) : null);
+    if (!d) continue;
+    const ccy = r.CCY != null ? r.CCY : r.ccy;
+    const amt = r.AMOUNT_MINOR != null ? r.AMOUNT_MINOR : r.amount_minor;
+    const cnt = r.CNT != null ? Number(r.CNT) : Number(r.cnt || 0);
+    const usd = minorToUsd(amt, ccy);
+    if (usd == null) { unknownCcy[String(ccy).toUpperCase()] = (unknownCcy[String(ccy).toUpperCase()] || 0) + 1; continue; }
+    if (!byDay[d]) byDay[d] = { usd: 0, cnt: 0 };
+    byDay[d].usd += usd;
+    byDay[d].cnt += cnt;
+  }
+  return { byDay, unknownCcy };
+}
+
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
 const PRESERVE_KEYS = ['vol_gbp', 'bal_gbp', 'processing', 'pos_gtv_usd', 'pos_receipts',
   'pos_active_days', 'last_sale', 'days_since_sale', 'pos_active', 'card_vol_usd',
@@ -198,6 +249,83 @@ function readExisting() {
     if (m) { for (const r of JSON.parse(m[1])) byAcct[r.acct] = r; }
   } catch (e) { console.log('No existing activation-data.js to merge (first run) —', e.message); }
   return byAcct;
+}
+
+// ── Overview page (FACADASH-style daily report) ───────────────────────────────
+// Read the previously-committed enabled snapshot so the "enabled per day" curve
+// grows forward from the first run (Stripe has NO historical KYC-pass timestamp,
+// so it cannot be backfilled — we snapshot the as-of enabled count each morning).
+function readExistingSnapshot() {
+  try {
+    const txt = fs.readFileSync(OVERVIEW_FILE, 'utf8');
+    const m = txt.match(/window\.__PAY_ENABLED_SNAP\s*=\s*(\[[\s\S]*?\]);/);
+    if (m) { const a = JSON.parse(m[1]); if (Array.isArray(a)) return a; }
+  } catch (e) { console.log('No existing overview-data.js snapshot (first run) —', e.message); }
+  return [];
+}
+
+// Prod-only daily activations from the account population (CONNECTED_ACCOUNTS.CREATED).
+// All accounts are Loyverse-Payments activations; env='prod' excludes test accounts.
+function buildActivationsDaily(accountRows, meta) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const byDay = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    const env = (meta[acct] && meta[acct].environment) || null;
+    if (env === 'test') continue; // prod + unknown counted as real activations
+    const d = toDate(get(r, 'stripe_connected_at'));
+    if (!d) continue;
+    byDay[d] = (byDay[d] || 0) + 1;
+  }
+  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d] }));
+}
+
+// Densify a sparse per-day map into a continuous daily series between min→max date,
+// filling gaps with zeros so bars/lines render an honest calendar (no skipped days).
+function denseDailyVolume(byDay) {
+  const days = Object.keys(byDay).sort();
+  if (!days.length) return [];
+  const out = [];
+  const start = new Date(days[0] + 'T00:00:00Z');
+  const end = new Date(days[days.length - 1] + 'T00:00:00Z');
+  for (let t = new Date(start); t <= end; t.setUTCDate(t.getUTCDate() + 1)) {
+    const d = t.toISOString().slice(0, 10);
+    const v = byDay[d];
+    out.push({ d, usd: v ? Math.round(v.usd * 100) / 100 : 0, cnt: v ? v.cnt : 0 });
+  }
+  return out;
+}
+
+// Append (or replace) today's enabled snapshot. Prod-only, monotonic history.
+function buildEnabledSnapshot(prevSnap, act) {
+  const today = new Date().toISOString().slice(0, 10);
+  const prod = act.filter(r => r.env !== 'test');
+  const enabled = prod.filter(r => r.status === 'Enabled').length;
+  const total = prod.length;
+  const snap = prevSnap.filter(s => s.d !== today);
+  snap.push({ d: today, enabled, total });
+  snap.sort((a, b) => a.d.localeCompare(b.d));
+  return snap;
+}
+
+function writeOverview(actDaily, volDaily, enabledSnap) {
+  const today = new Date().toISOString().slice(0, 10);
+  const out =
+`// Payments Activation OVERVIEW (first page) — regenerated daily by activated-payments/pull.js.
+// FACADASH-style daily report for Loyverse Payments.
+//   __PAY_ACT_DAILY   : prod activations per day (CONNECTED_ACCOUNTS.CREATED), all-time, backfilled.
+//   __PAY_VOL_DAILY   : prod terminal volume in USD per day (CONNECTED_ACCOUNT_CHARGES, succeeded/paid/captured
+//                       + fixed FX map), zero-filled calendar, all-time, backfilled.
+//   __PAY_ENABLED_SNAP: forward-only daily snapshot of enabled (passed-KYC) count. Stripe has no
+//                       historical KYC-pass timestamp, so this curve GROWS from the first run onward.
+// Do NOT edit by hand; overwritten each morning (snapshot array is preserved + appended). Last pull: ${today}
+window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(today)};
+window.__PAY_ACT_DAILY = ${JSON.stringify(actDaily)};
+window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
+window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
+`;
+  fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
+  console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, vol days: ${volDaily.length}, snapshots: ${enabledSnap.length}`);
 }
 
 // ── Schema discovery (self-committing, so we can wire volume/POS/subs next) ────
@@ -421,18 +549,32 @@ async function main() {
   // Merchant ids drive the subscription + POS lookups (runtime-derived, never hardcoded).
   const merchantIds = Object.values(meta).map(x => x.owner_id).filter(Boolean);
 
-  let subs = {}, sales = {};
-  const [subsR, salesR] = await Promise.allSettled([
+  // Prod Stripe account ids drive the daily terminal-volume layer (runtime-derived).
+  const prodAccts = Object.keys(meta).filter(a => meta[a] && meta[a].environment === 'prod');
+
+  let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} };
+  const [subsR, salesR, volR] = await Promise.allSettled([
     fetchSubscriptions(conn, merchantIds),
     fetchSales(conn, merchantIds),
+    fetchDailyVolume(conn, prodAccts),
   ]);
   if (subsR.status === 'fulfilled') { subs = subsR.value; console.log(`✓ subscriptions: ${Object.keys(subs).length} merchants`); }
   else console.error(`✗ subscriptions query failed: ${subsR.reason && subsR.reason.message}`);
   if (salesR.status === 'fulfilled') { sales = salesR.value; console.log(`✓ sales_monthly: ${Object.keys(sales).length} merchants`); }
   else console.error(`✗ sales_monthly query failed: ${salesR.reason && salesR.reason.message}`);
+  if (volR.status === 'fulfilled') { vol = volR.value; console.log(`✓ daily_volume: ${Object.keys(vol.byDay).length} days${Object.keys(vol.unknownCcy).length ? '  (unknown ccy skipped: ' + JSON.stringify(vol.unknownCcy) + ')' : ''}`); }
+  else console.error(`✗ daily_volume query failed: ${volR.reason && volR.reason.message}`);
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
+
+  // Overview (first page) — daily activations, forward enabled snapshot, daily volume.
+  try {
+    const actDaily = buildActivationsDaily(accountRows, meta);
+    const volDaily = denseDailyVolume(vol.byDay);
+    const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
+    writeOverview(actDaily, volDaily, enabledSnap);
+  } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)
   try { await discover(conn); } catch (e) { console.log('discovery skipped:', e.message); }
