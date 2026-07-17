@@ -207,6 +207,14 @@ function minorToUsd(amountMinor, ccy) {
   const major = ZERO_DECIMAL.has(c) ? Number(amountMinor) : Number(amountMinor) / 100;
   return major * rate;
 }
+// ICPLUS TOTAL_AMOUNT is already in the fee currency's MAJOR unit (0.675 = $0.675),
+// so convert straight to USD without the minor-unit division.
+function majorToUsd(amountMajor, ccy) {
+  const c = String(ccy || '').toUpperCase().trim();
+  const rate = USD_RATE[c];
+  if (rate == null) return null;
+  return Number(amountMajor) * rate;
+}
 
 // Stripe connected-account ids look like acct_XXXX — keep only those so the IN-list
 // is safe and fully runtime-derived (never hardcoded).
@@ -261,12 +269,14 @@ async function fetchTxnByAccount(conn, acctIds) {
   return by;
 }
 
-// Per-account captured application-fee revenue (Loyverse's take, net of refunds).
+// Per-account captured application-fee revenue (Loyverse's take). Sourced from the
+// balance-transaction fee-detail lines (TYPE='application_fee') — the dedicated
+// APPLICATION_FEES view is empty in this share. AMOUNT is in the currency's minor unit.
 async function fetchAppFeesByAccount(conn, acctIds) {
   const ids = sanitizeAccts(acctIds);
   if (!ids.length) return {};
   const inList = ids.map(a => `'${a}'`).join(',');
-  const sql = loadSql('application_fees_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const sql = loadSql('app_fees_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
   const rows = await executeQuery(conn, sql);
   const by = {}; // acct -> { capturedUsd, feeCnt, usdKnown }
   for (const r of rows) {
@@ -274,13 +284,34 @@ async function fetchAppFeesByAccount(conn, acctIds) {
     if (!acct) continue;
     const ccy = r.CCY != null ? r.CCY : r.ccy;
     const feeMinor = r.FEE_MINOR != null ? r.FEE_MINOR : r.fee_minor;
-    const refundMinor = r.REFUND_MINOR != null ? r.REFUND_MINOR : r.refund_minor;
     const feeCnt = Number(r.FEE_CNT != null ? r.FEE_CNT : r.fee_cnt || 0);
-    const grossUsd = minorToUsd(feeMinor, ccy);
-    const refundUsd = minorToUsd(refundMinor, ccy) || 0;
+    const usd = minorToUsd(feeMinor, ccy);
     if (!by[acct]) by[acct] = { capturedUsd: 0, feeCnt: 0, usdKnown: true };
     by[acct].feeCnt += feeCnt;
-    if (grossUsd == null) by[acct].usdKnown = false; else by[acct].capturedUsd += (grossUsd - refundUsd);
+    if (usd == null) by[acct].usdKnown = false; else by[acct].capturedUsd += usd;
+  }
+  return by;
+}
+
+// Per-account Stripe cost (interchange++). ICPLUS TOTAL_AMOUNT is in the fee currency's
+// MAJOR unit; convert straight to USD. Netted against captured fees to get margin.
+async function fetchIcplusCostByAccount(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return {};
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('icplus_cost_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const by = {}; // acct -> { costUsd, costCnt, usdKnown }
+  for (const r of rows) {
+    const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
+    if (!acct) continue;
+    const ccy = r.CCY != null ? r.CCY : r.ccy;
+    const costMajor = r.COST_MAJOR != null ? r.COST_MAJOR : r.cost_major;
+    const costCnt = Number(r.COST_CNT != null ? r.COST_CNT : r.cost_cnt || 0);
+    const usd = majorToUsd(costMajor, ccy);
+    if (!by[acct]) by[acct] = { costUsd: 0, costCnt: 0, usdKnown: true };
+    by[acct].costCnt += costCnt;
+    if (usd == null) by[acct].usdKnown = false; else by[acct].costUsd += usd;
   }
   return by;
 }
@@ -354,7 +385,7 @@ function buildEnabledDaily(accountRows, meta) {
 // name/linkage with the charge aggregation (started / txns / volume) and the captured
 // application-fee revenue (captured / effective take-rate). margin (net after Stripe
 // cost) is left null until the fee-detail columns are confirmed via _discovery.json.
-function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct) {
+function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const nameByAcct = {};
   for (const r of accountRows) {
@@ -366,9 +397,12 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct) {
     const t = txnByAcct[acct];
     if (!t || !t.cnt) continue;
     const f = (feeByAcct && feeByAcct[acct]) || null;
+    const c = (costByAcct && costByAcct[acct]) || null;
     const volume = Math.round(t.usd * 100) / 100;
     const captured = (f && f.usdKnown) ? Math.round(f.capturedUsd * 100) / 100 : null;
+    const cost = (c && c.usdKnown) ? Math.round(c.costUsd * 100) / 100 : null;
     const take = (captured != null && volume > 0) ? Math.round((captured / volume) * 10000) / 100 : null;
+    const margin = (captured != null && cost != null) ? Math.round((captured - cost) * 100) / 100 : null;
     out.push({
       acct,
       name: String(nameByAcct[acct] || acct),
@@ -376,9 +410,10 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct) {
       started: t.started,       // 'YYYY-MM-DD' — first successful charge
       txns: t.cnt,              // number of successful charges
       volume,                   // gross processed, USD
-      captured,                 // application fees net of refunds, USD ("amount we captured")
+      captured,                 // application fees, USD ("amount we captured")
       take,                     // effective take-rate %, captured/volume ("fee applied")
-      margin: null,             // net after Stripe cost — pending fee-detail schema
+      cost,                     // Stripe interchange++ cost, USD
+      margin,                   // captured − cost, USD ("our margin")
     });
   }
   out.sort((a, b) => b.volume - a.volume);
@@ -677,13 +712,14 @@ async function main() {
   // Prod Stripe account ids drive the daily terminal-volume layer (runtime-derived).
   const prodAccts = Object.keys(meta).filter(a => meta[a] && meta[a].environment === 'prod');
 
-  let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} }, txnByAcct = {}, feeByAcct = {};
-  const [subsR, salesR, volR, txnR, feeR] = await Promise.allSettled([
+  let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} }, txnByAcct = {}, feeByAcct = {}, costByAcct = {};
+  const [subsR, salesR, volR, txnR, feeR, costR] = await Promise.allSettled([
     fetchSubscriptions(conn, merchantIds),
     fetchSales(conn, merchantIds),
     fetchDailyVolume(conn, prodAccts),
     fetchTxnByAccount(conn, prodAccts),
     fetchAppFeesByAccount(conn, prodAccts),
+    fetchIcplusCostByAccount(conn, prodAccts),
   ]);
   if (subsR.status === 'fulfilled') { subs = subsR.value; console.log(`✓ subscriptions: ${Object.keys(subs).length} merchants`); }
   else console.error(`✗ subscriptions query failed: ${subsR.reason && subsR.reason.message}`);
@@ -695,6 +731,8 @@ async function main() {
   else console.error(`✗ txn_by_account query failed: ${txnR.reason && txnR.reason.message}`);
   if (feeR.status === 'fulfilled') { feeByAcct = feeR.value; console.log(`✓ app_fees_by_account: ${Object.keys(feeByAcct).length} merchants with captured fees`); }
   else console.error(`✗ app_fees_by_account query failed (captured/take-rate will be blank): ${feeR.reason && feeR.reason.message}`);
+  if (costR.status === 'fulfilled') { costByAcct = costR.value; console.log(`✓ icplus_cost_by_account: ${Object.keys(costByAcct).length} merchants with Stripe cost`); }
+  else console.error(`✗ icplus_cost_by_account query failed (margin will be blank): ${costR.reason && costR.reason.message}`);
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
@@ -705,7 +743,7 @@ async function main() {
     const enabledDaily = buildEnabledDaily(accountRows, meta);
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
-    const txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct);
+    const txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct);
     writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
