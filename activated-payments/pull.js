@@ -130,6 +130,59 @@ function parseReqList(v) {
   return s.replace(/^[\[{]|[\]}]$/g, '').split(',').map(x => x.replace(/^["'\s]+|["'\s]+$/g, '')).filter(Boolean);
 }
 
+// ── Runtime-parameterized lookups (linkage / subscription / POS) ──────────────
+// owner_id values are numeric Loyverse merchant ids; keep only digit strings so the
+// IN-lists are safe and automation-derived (never hardcoded).
+function sanitizeIds(ids) {
+  return [...new Set(ids.map(v => String(v == null ? '' : v).trim()).filter(v => /^\d+$/.test(v)))];
+}
+async function fetchAccountMeta(conn) {
+  // acct -> { owner_id (real Loyverse merchant id), environment ('prod'|'test'), release_date }
+  const rows = await executeQuery(conn, loadSql('account_metadata.sql'));
+  const by = {};
+  for (const r of rows) {
+    const acct = r.ACCT !== undefined ? r.ACCT : r.acct;
+    by[acct] = {
+      owner_id: (r.OWNER_ID != null && String(r.OWNER_ID).trim() !== '') ? String(r.OWNER_ID).trim() : null,
+      environment: (r.ENVIRONMENT ? String(r.ENVIRONMENT).toLowerCase() : null),
+      release_date: r.RELEASE_DATE || null,
+    };
+  }
+  return by;
+}
+async function fetchSubscriptions(conn, merchantIds) {
+  const ids = sanitizeIds(merchantIds);
+  if (!ids.length) return {};
+  const sql = loadSql('subscriptions.sql').replace('/*MERCHANT_IDS*/', ids.join(','));
+  const rows = await executeQuery(conn, sql);
+  const rank = s => { const x = String(s || '').toLowerCase(); return x === 'active' ? 3 : x === 'non_renewing' ? 2 : x === 'in_trial' ? 1 : 0; };
+  const by = {};
+  for (const r of rows) {
+    const m = String(r.MERCHANT_ID);
+    const cand = { status: r.STATUS || null, plan: r.PLAN_ID || null, mrr: r.MRR != null ? Number(r.MRR) : null };
+    const cur = by[m];
+    if (!cur || rank(cand.status) > rank(cur.status) ||
+        (rank(cand.status) === rank(cur.status) && (cand.mrr || 0) > (cur.mrr || 0))) by[m] = cand;
+  }
+  return by;
+}
+async function fetchSales(conn, merchantIds) {
+  const ids = sanitizeIds(merchantIds);
+  if (!ids.length) return {};
+  const sql = loadSql('sales_monthly.sql').replace('/*MERCHANT_IDS*/', ids.join(','));
+  const rows = await executeQuery(conn, sql);
+  const by = {};
+  for (const r of rows) {
+    const m = String(r.MERCHANT_ID);
+    by[m] = {
+      receipts: r.RECEIPTS != null ? Number(r.RECEIPTS) : null,
+      active_months: r.ACTIVE_MONTHS != null ? Number(r.ACTIVE_MONTHS) : null,
+      last_month: r.LAST_MONTH != null ? r.LAST_MONTH : null,
+    };
+  }
+  return by;
+}
+
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
 const PRESERVE_KEYS = ['vol_gbp', 'bal_gbp', 'processing', 'pos_gtv_usd', 'pos_receipts',
   'pos_active_days', 'last_sale', 'days_since_sale', 'pos_active', 'card_vol_usd',
@@ -219,31 +272,30 @@ async function discover(conn) {
 }
 
 // ── Build activation-data.js from account rows ────────────────────────────────
-function buildData(accountRows, existingByAcct) {
-  const G = k => r => r[k] !== undefined ? r[k] : r[k.toLowerCase()];
+function buildData(accountRows, existingByAcct, meta, subs, sales) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  meta = meta || {}; subs = subs || {}; sales = sales || {};
 
   const act = [];
   const kyc = {};
-  let linked = 0, enabled = 0;
+  let linked = 0, enabled = 0, prodN = 0, testN = 0, withSub = 0, withPos = 0;
 
-  // MERCHANT_ID on CONNECTED_ACCOUNTS turns out to be a platform-level constant
-  // (the Loyverse master/platform Stripe account id) — identical for every row — so
-  // it is NOT a per-merchant Loyverse identifier. Detect that and refuse to present
-  // it as linkage; leave mid null (honest "unlinked") until the real linkage
-  // (account metadata key or email→LOYVERSE_MERCHANTS join) is wired.
-  const midValues = new Set(accountRows
-    .map(r => get(r, 'merchant_id'))
-    .filter(v => v !== null && v !== undefined && String(v).trim() !== '')
-    .map(v => String(v).trim()));
-  const merchantIdIsPerMerchant = midValues.size > 1; // constant across rows ⇒ platform id, not usable
-  if (!merchantIdIsPerMerchant) {
-    console.log(`⚠ MERCHANT_ID is constant across ${accountRows.length} rows (${[...midValues][0] || 'null'}) — treating as platform id, NOT per-merchant linkage. mid left null until metadata/email linkage is wired.`);
-  }
+  const today = new Date();
+  const daysSince = (ym) => {
+    // SALES_PER_ACCOUNT_MONTHLY.MONTH may be a Date or 'YYYY-MM'/'YYYY-MM-DD' string.
+    if (!ym) return null;
+    let d = (ym instanceof Date) ? ym : new Date(/^\d{4}-\d{2}$/.test(String(ym)) ? `${ym}-01` : String(ym));
+    if (isNaN(d.getTime())) return null;
+    return Math.max(0, Math.round((today - d) / 86400000));
+  };
+  const fmtMonth = (ym) => {
+    if (!ym) return null;
+    if (ym instanceof Date) return ym.toISOString().slice(0, 10);
+    return /^\d{4}-\d{2}$/.test(String(ym)) ? `${ym}-01` : String(ym).slice(0, 10);
+  };
 
   for (const r of accountRows) {
     const acct   = get(r, 'stripe_account_id');
-    const mid    = get(r, 'merchant_id');
     const name   = get(r, 'business_name') || get(r, 'contact_name') || get(r, 'email') || acct;
     const email  = get(r, 'email') || '';
     const country = get(r, 'country') || '';
@@ -252,9 +304,13 @@ function buildData(accountRows, existingByAcct) {
     const status = statusOf(chargesEnabled, disabledReason);
     if (status === 'Enabled') enabled++;
 
-    const midStr = (merchantIdIsPerMerchant && mid !== null && mid !== undefined && String(mid).trim() !== '')
-      ? String(mid).trim() : null;
+    // Real per-merchant linkage comes from account metadata owner_id, NOT the
+    // platform-constant CONNECTED_ACCOUNTS.MERCHANT_ID.
+    const m = meta[acct] || {};
+    const midStr = m.owner_id || null;
+    const env = m.environment || null;
     if (midStr) linked++;
+    if (env === 'prod') prodN++; else if (env === 'test') testN++;
 
     const prev = existingByAcct[acct] || {};
     const rec = {
@@ -266,10 +322,33 @@ function buildData(accountRows, existingByAcct) {
       connected: toDate(get(r, 'stripe_connected_at')),
       btype: btypeOf(get(r, 'legal_entity_type')),
       mid: midStr,
-      match: midStr ? 'stripe-metadata' : '',
+      match: midStr ? 'stripe-metadata-owner_id' : '',
+      env, // 'prod' | 'test' | null  (real-vs-test signal)
     };
-    // preserve transaction / POS / subscription layer from existing file (until wired)
+    // start from preserved values, then overlay any live layers we now compute
     for (const k of PRESERVE_KEYS) rec[k] = (prev[k] !== undefined ? prev[k] : defaultFor(k));
+
+    // subscription / MRR layer (live from Chargebee, keyed by Loyverse merchant id)
+    const sub = midStr ? subs[midStr] : null;
+    if (sub) {
+      withSub++;
+      rec.sub_status = sub.status;
+      rec.plan = sub.plan;
+      rec.mrr = sub.mrr;
+      rec.is_paying = String(sub.status || '').toLowerCase() === 'active' && (sub.mrr || 0) > 0;
+    }
+
+    // POS receipts layer (live from SALES_PER_ACCOUNT_MONTHLY; monthly granularity)
+    const sal = midStr ? sales[midStr] : null;
+    if (sal) {
+      withPos++;
+      rec.pos_receipts = sal.receipts;
+      rec.last_sale = fmtMonth(sal.last_month);
+      rec.days_since_sale = daysSince(sal.last_month);
+      rec.pos_active = (sal.receipts || 0) > 0 && (daysSince(sal.last_month) == null || daysSince(sal.last_month) <= 90);
+      // NOTE: pos_gtv_usd (money) and pos_active_days (daily granularity) still pending
+      // the heavier LOYVERSE_RECEIPTS per-receipt query.
+    }
 
     act.push(rec);
 
@@ -284,7 +363,7 @@ function buildData(accountRows, existingByAcct) {
       }
     }
   }
-  return { act, kyc, linked, enabled };
+  return { act, kyc, linked, enabled, prodN, testN, withSub, withPos };
 }
 function defaultFor(k) {
   if (k === 'vol_gbp' || k === 'bal_gbp' || k === 'card_vol_usd') return 0;
@@ -296,8 +375,10 @@ function writeData(act, kyc) {
   const today = new Date().toISOString().slice(0, 10);
   const out =
 `// Payments Activation data — regenerated daily by activated-payments/pull.js (Snowflake → CI → Netlify).
-// Account/status/KYC/linkage layer is LIVE from STRIPE.CONNECTED_ACCOUNTS.
-// Volume/POS/subscription fields are preserved pending the transaction-layer wiring.
+// LIVE: account/status/KYC (CONNECTED_ACCOUNTS), linkage + real-vs-test (CONNECTED_ACCOUNTS_METADATA
+//       owner_id/environment), subscription/MRR (CHARGEBEE_SUBSCRIPTIONS_V), POS receipts
+//       (SALES_PER_ACCOUNT_MONTHLY, monthly granularity).
+// PENDING: payment volume $ (CONNECTED_ACCOUNT_CHARGES + FX) and per-receipt POS GTV.
 // Do NOT edit by hand; changes are overwritten each morning. Last pull: ${today}
 window.__ACT_LAST_UPDATED = ${JSON.stringify(today)};
 window.__ACT = ${JSON.stringify(act)};
@@ -326,16 +407,39 @@ async function main() {
     process.exit(1);
   }
 
-  const { act, kyc, linked, enabled } = buildData(accountRows, existingByAcct);
+  // Real per-merchant linkage (owner_id) + real-vs-test (environment) from metadata.
+  let meta = {};
+  try {
+    meta = await fetchAccountMeta(conn);
+    const owners = Object.values(meta).filter(x => x.owner_id).length;
+    console.log(`✓ account_metadata: ${Object.keys(meta).length} accounts (${owners} with owner_id)`);
+  } catch (e) { console.error(`✗ account_metadata query failed (linkage will be empty): ${e.message}`); }
+
+  // Merchant ids drive the subscription + POS lookups (runtime-derived, never hardcoded).
+  const merchantIds = Object.values(meta).map(x => x.owner_id).filter(Boolean);
+
+  let subs = {}, sales = {};
+  const [subsR, salesR] = await Promise.allSettled([
+    fetchSubscriptions(conn, merchantIds),
+    fetchSales(conn, merchantIds),
+  ]);
+  if (subsR.status === 'fulfilled') { subs = subsR.value; console.log(`✓ subscriptions: ${Object.keys(subs).length} merchants`); }
+  else console.error(`✗ subscriptions query failed: ${subsR.reason && subsR.reason.message}`);
+  if (salesR.status === 'fulfilled') { sales = salesR.value; console.log(`✓ sales_monthly: ${Object.keys(sales).length} merchants`); }
+  else console.error(`✗ sales_monthly query failed: ${salesR.reason && salesR.reason.message}`);
+
+  const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
 
-  // Discovery for the next layer (non-fatal)
+  // Discovery refresh for the remaining volume layer (non-fatal)
   try { await discover(conn); } catch (e) { console.log('discovery skipped:', e.message); }
 
   console.log('\n── Summary ──────────────────────────────');
   console.log(`accounts:        ${act.length}`);
   console.log(`enabled:         ${enabled}`);
+  console.log(`environment:     prod=${prodN}  test=${testN}  unknown=${act.length - prodN - testN}`);
   console.log(`linked (mid):    ${linked}  |  unlinked: ${act.length - linked}`);
+  console.log(`with subscription: ${withSub}  |  with POS receipts: ${withPos}`);
   console.log(`KYC pending map: ${Object.keys(kyc).length} merchants`);
 
   conn.destroy(() => console.log('✓ Connection closed'));
