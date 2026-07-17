@@ -1,0 +1,76 @@
+# PAYMENTS ACTIVATION — daily Snowflake refresh for the activated-payments dashboard.
+# Pulls the live payments-activated merchant population from the Stripe data share in
+# Snowflake (CONNECTED_ACCOUNTS), regenerates activated-payments/activation-data.js,
+# and commits it. Netlify auto-deploys the activated-payments site on push — no manual
+# uploads. Fully isolated: only touches files under activated-payments/.
+name: "PAYMENTS: Daily Activation Pull"
+
+on:
+  schedule:
+    # 05:30 UTC — offset from the CASE (06:00) and FACADASH (04:00) pulls so the
+    # single shared warehouse isn't hit by three jobs at once.
+    - cron: "30 5 * * *"
+  workflow_dispatch: {}
+  push:
+    # Auto-run when the dashboard code or pull script changes (e.g. this first commit),
+    # so the seed activation-data.js is immediately replaced with a live pull.
+    branches: [master]
+    paths:
+      - "activated-payments/**"
+
+concurrency:
+  group: activated-payments-pull
+  cancel-in-progress: false
+
+jobs:
+  pull-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install snowflake-sdk
+
+      - name: Write Snowflake private key
+        run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
+
+      - name: Run payments activation pull
+        run: node activated-payments/pull.js
+
+      - name: Commit & push if the data changed
+        run: |
+          git config user.name  "payments-bot"
+          git config user.email "payments-bot@users.noreply.github.com"
+          # Only the generated data + discovery artifact — never the dashboard source.
+          git add activated-payments/activation-data.js activated-payments/_discovery.json
+          if git diff --cached --quiet; then
+            echo "No data change — nothing to commit."
+          else
+            git commit -m "chore(payments): daily activation pull $(date -u +%FT%TZ)"
+            # Other daily pulls (CASE 06:00, FACADASH 04:00, cusum hourly) can advance
+            # master while we run, causing a non-fast-forward push. We only write files
+            # under activated-payments/, which no other workflow touches, so rebasing on
+            # top of their commits never conflicts. Retry up to 5 times.
+            for i in 1 2 3 4 5; do
+              if git pull --rebase --autostash origin master && git push; then
+                echo "pushed on attempt $i"; exit 0
+              fi
+              echo "push attempt $i failed (remote moved) — retrying in 5s"
+              sleep 5
+            done
+            echo "push still failing after 5 attempts"; exit 1
+          fi
+
+      - name: Clean up key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
