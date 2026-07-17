@@ -1,0 +1,1229 @@
+{
+  "ranAt": "2026-07-17T08:47:52.286Z",
+  "stripeShare": {
+    "tables": [],
+    "views": [
+      {
+        "name": "ACCEPTANCE_REPORTING_V3_ITEMIZED"
+      },
+      {
+        "name": "ACCOUNTS"
+      },
+      {
+        "name": "ACCOUNTS_METADATA"
+      },
+      {
+        "name": "ACTIVITY_REPORT_ITEMIZED"
+      },
+      {
+        "name": "ANALYTICS_ACCEPTANCE_ITEMIZED"
+      },
+      {
+        "name": "ANALYTICS_ACCEPTANCE_SUMMARIZED"
+      },
+      {
+        "name": "APPLICATION_FEES"
+      },
+      {
+        "name": "APPLICATION_FEE_REFUNDS"
+      },
+      {
+        "name": "APPLICATION_FEE_REFUNDS_METADATA"
+      },
+      {
+        "name": "BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "BALANCE_TRANSACTION_FEE_DETAILS"
+      },
+      {
+        "name": "BILLING_SCHEDULES"
+      },
+      {
+        "name": "BILLING_SCHEDULE_APPLIES_TOS"
+      },
+      {
+        "name": "CAPTURES"
+      },
+      {
+        "name": "CHARGES"
+      },
+      {
+        "name": "CHARGES_METADATA"
+      },
+      {
+        "name": "CHARGE_GROUPS"
+      },
+      {
+        "name": "CHECKOUT_CUSTOM_FIELDS"
+      },
+      {
+        "name": "CHECKOUT_LINE_ITEMS"
+      },
+      {
+        "name": "CHECKOUT_SESSIONS"
+      },
+      {
+        "name": "CHECKOUT_SESSIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ACTIVITY_REPORT_ITEMIZED"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_APPLICATION_FEES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_APPLICATION_FEE_REFUNDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_APPLICATION_FEE_REFUNDS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_BALANCE_TRANSACTION_FEE_DETAILS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_BILLING_SCHEDULES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_BILLING_SCHEDULE_APPLIES_TOS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CAPTURES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CHARGES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CHARGES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CHECKOUT_SESSIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_COUPONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_COUPONS_CURRENCY_OPTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_COUPONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTE_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTE_LINE_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTE_LINE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTE_LINE_ITEM_TAX_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CREDIT_NOTE_TAX_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CRYPTO_ONRAMP_SESSIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMERS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMER_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMER_BALANCE_TRANSACTIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMER_CASH_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_CUSTOMER_TAX_IDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_DISCOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_DISPUTES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_DISPUTES_ENHANCED_ELIGIBILITY"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_DISPUTES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_DRAFT_TAX_FORMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_EARLY_FRAUD_WARNINGS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_EXTERNAL_ACCOUNT_BANK_ACCOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_EXTERNAL_ACCOUNT_CARDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_FINANCING_BALANCES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_FINANCING_OFFERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_FINANCING_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_CUSTOMER_TAX_IDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_CUSTOM_FIELDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_ITEMS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_LINE_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_LINE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_LINE_ITEM_TAX_AMOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_INVOICE_SHIPPING_COST_TAXES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_AUTHORIZATIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_AUTHORIZATIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_AUTHORIZATIONS_REQUEST_HISTORY"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CARDHOLDERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CARDHOLDERS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CARDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CARDS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_LEDGER_ADJUSTMENTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_LEDGER_ENTRIES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_POLICIES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_POLICY_ARCHIVE"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_REPAYMENTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_UNDERWRITING_RECORDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_CREDIT_UNDERWRITING_RECORDS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_DISPUTES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_FUNDING_OBLIGATIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_FUNDING_OBLIGATIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_NETWORK_TOKENS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_PERSONALIZATION_DESIGNS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_PERSONALIZATION_DESIGNS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_PROGRAMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_PROGRAMS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_TRANSACTIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ISSUING_TRANSACTION_AMOUNT_DETAILS_TAX"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_ITEMIZED_FEES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_EVALUATIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_INTENTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_INTENTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_INTENT_LINE_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_METHODS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_METHODS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_METHOD_DETAILS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYMENT_REVIEWS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PAYOUT_MINIMUM_BALANCE_SETTINGS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PLANS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PLANS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PLATFORM_TAX_SETTINGS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRICES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRICES_CURRENCY_OPTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRICES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRICE_TIERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRODUCTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PRODUCTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_PROMOTION_CODES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_QUOTES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_QUOTE_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_REFUNDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_REFUNDS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_RULE_DECISIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SETUP_ATTEMPTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SETUP_INTENTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SETUP_INTENTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SOURCES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SOURCES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTIONS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_ITEMS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASE_ADD_INVOICE_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASE_ADD_INVOICE_ITEMS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASE_CONFIGURATION_ITEMS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUBSCRIPTION_SCHEDULE_PHASE_CONFIGURATION_ITEMS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_SUMMARIZED_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TAX_RATES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TAX_RATES_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TOPUPS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TOPUPS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TRANSFERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TRANSFERS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TRANSFER_REVERSALS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TRANSFER_REVERSALS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_FINANCIAL_ACCOUNTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_FINANCIAL_ACCOUNTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_INBOUND_TRANSFERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_INBOUND_TRANSFERS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_OUTBOUND_PAYMENTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_OUTBOUND_PAYMENTS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_OUTBOUND_TRANSFERS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_OUTBOUND_TRANSFERS_METADATA"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_RECEIVED_CREDITS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_RECEIVED_DEBITS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_TRANSACTIONS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_TREASURY_TRANSACTION_ENTRIES"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_USAGE_RECORDS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_VERIFICATION_REPORTS"
+      },
+      {
+        "name": "CONNECTED_ACCOUNT_VERIFICATION_SESSIONS"
+      },
+      {
+        "name": "COUPONS"
+      },
+      {
+        "name": "COUPONS_CURRENCY_OPTIONS"
+      },
+      {
+        "name": "COUPONS_METADATA"
+      },
+      {
+        "name": "CREDIT_NOTES"
+      },
+      {
+        "name": "CREDIT_NOTES_METADATA"
+      },
+      {
+        "name": "CREDIT_NOTE_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CREDIT_NOTE_LINE_ITEMS"
+      },
+      {
+        "name": "CREDIT_NOTE_LINE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "CREDIT_NOTE_LINE_ITEM_TAX_AMOUNTS"
+      },
+      {
+        "name": "CREDIT_NOTE_TAX_AMOUNTS"
+      },
+      {
+        "name": "CRYPTO_ONRAMP_SESSIONS"
+      },
+      {
+        "name": "CUSTOMERS"
+      },
+      {
+        "name": "CUSTOMERS_METADATA"
+      },
+      {
+        "name": "CUSTOMER_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CUSTOMER_BALANCE_TRANSACTIONS_METADATA"
+      },
+      {
+        "name": "CUSTOMER_CASH_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "CUSTOMER_TAX_IDS"
+      },
+      {
+        "name": "DATA_LOAD_TIMES"
+      },
+      {
+        "name": "DISCOUNTS"
+      },
+      {
+        "name": "DISPUTES"
+      },
+      {
+        "name": "DISPUTES_ENHANCED_ELIGIBILITY"
+      },
+      {
+        "name": "DISPUTES_METADATA"
+      },
+      {
+        "name": "DISPUTES_REPORTING_V1_ITEMIZED"
+      },
+      {
+        "name": "DISPUTES_REPORTING_V1_ITEMIZED_V2"
+      },
+      {
+        "name": "DRAFT_TAX_FORMS"
+      },
+      {
+        "name": "EARLY_FRAUD_WARNINGS"
+      },
+      {
+        "name": "EXCHANGE_RATES_FROM_USD"
+      },
+      {
+        "name": "EXTERNAL_ACCOUNT_BANK_ACCOUNTS"
+      },
+      {
+        "name": "EXTERNAL_ACCOUNT_CARDS"
+      },
+      {
+        "name": "FINANCIAL_REPORT_ACTIVITY_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_BALANCE_CHANGE_FROM_ACTIVITY_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_CONNECT_ACTIVITY_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_CONNECT_BALANCE_CHANGE_FROM_ACTIVITY_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_CONNECT_ENDING_BALANCE_RECONCILIATION_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_CONNECT_PAYOUTS_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_CONNECT_PAYOUT_RECONCILIATION_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_ENDING_BALANCE_RECONCILIATION_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_PAYOUTS_ITEMIZED"
+      },
+      {
+        "name": "FINANCIAL_REPORT_PAYOUT_RECONCILIATION_ITEMIZED"
+      },
+      {
+        "name": "FINANCING_BALANCES"
+      },
+      {
+        "name": "FINANCING_OFFERS"
+      },
+      {
+        "name": "FINANCING_TRANSACTIONS"
+      },
+      {
+        "name": "ICPLUS_FEES"
+      },
+      {
+        "name": "INVOICES"
+      },
+      {
+        "name": "INVOICES_METADATA"
+      },
+      {
+        "name": "INVOICE_CUSTOMER_TAX_IDS"
+      },
+      {
+        "name": "INVOICE_CUSTOM_FIELDS"
+      },
+      {
+        "name": "INVOICE_ITEMS"
+      },
+      {
+        "name": "INVOICE_ITEMS_METADATA"
+      },
+      {
+        "name": "INVOICE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "INVOICE_LINE_ITEMS"
+      },
+      {
+        "name": "INVOICE_LINE_ITEM_DISCOUNT_AMOUNTS"
+      },
+      {
+        "name": "INVOICE_LINE_ITEM_TAX_AMOUNTS"
+      },
+      {
+        "name": "INVOICE_PAYMENTS"
+      },
+      {
+        "name": "INVOICE_SHIPPING_COST_TAXES"
+      },
+      {
+        "name": "ISSUING_AUTHORIZATIONS"
+      },
+      {
+        "name": "ISSUING_AUTHORIZATIONS_METADATA"
+      },
+      {
+        "name": "ISSUING_AUTHORIZATIONS_REQUEST_HISTORY"
+      },
+      {
+        "name": "ISSUING_CARDHOLDERS"
+      },
+      {
+        "name": "ISSUING_CARDHOLDERS_METADATA"
+      },
+      {
+        "name": "ISSUING_CARDS"
+      },
+      {
+        "name": "ISSUING_CARDS_METADATA"
+      },
+      {
+        "name": "ISSUING_CREDIT_LEDGER_ADJUSTMENTS"
+      },
+      {
+        "name": "ISSUING_CREDIT_LEDGER_ENTRIES"
+      },
+      {
+        "name": "ISSUING_CREDIT_POLICIES"
+      },
+      {
+        "name": "ISSUING_CREDIT_POLICY_ARCHIVE"
+      },
+      {
+        "name": "ISSUING_CREDIT_REPAYMENTS"
+      },
+      {
+        "name": "ISSUING_CREDIT_UNDERWRITING_RECORDS"
+      },
+      {
+        "name": "ISSUING_CREDIT_UNDERWRITING_RECORDS_METADATA"
+      },
+      {
+        "name": "ISSUING_DISPUTES"
+      },
+      {
+        "name": "ISSUING_FUNDING_OBLIGATIONS"
+      },
+      {
+        "name": "ISSUING_NETWORK_TOKENS"
+      },
+      {
+        "name": "ISSUING_PERSONALIZATION_DESIGNS"
+      },
+      {
+        "name": "ISSUING_PERSONALIZATION_DESIGNS_METADATA"
+      },
+      {
+        "name": "ISSUING_PROGRAMS"
+      },
+      {
+        "name": "ISSUING_PROGRAMS_METADATA"
+      },
+      {
+        "name": "ISSUING_TRANSACTIONS"
+      },
+      {
+        "name": "ISSUING_TRANSACTIONS_METADATA"
+      },
+      {
+        "name": "ISSUING_TRANSACTION_AMOUNT_DETAILS_TAX"
+      },
+      {
+        "name": "ITEMIZED_FEES"
+      },
+      {
+        "name": "NETWORK_COST_INSIGHTS_REPORT"
+      },
+      {
+        "name": "PAYINS_INSIGHTS_LIGHTNING_ASTRO_DEDUPED_AGGREGATED_WITH_ATTEMPTS_V2"
+      },
+      {
+        "name": "PAYINS_INSIGHTS_LIGHTNING_ASTRO_RAW_AGGREGATED_WITH_ATTEMPTS_V2"
+      },
+      {
+        "name": "PAYMENT_EVALUATIONS"
+      },
+      {
+        "name": "PAYMENT_INTENTS"
+      },
+      {
+        "name": "PAYMENT_INTENTS_METADATA"
+      },
+      {
+        "name": "PAYMENT_INTENT_LINE_ITEMS"
+      },
+      {
+        "name": "PAYMENT_LINKS"
+      },
+      {
+        "name": "PAYMENT_METHODS"
+      },
+      {
+        "name": "PAYMENT_METHODS_METADATA"
+      },
+      {
+        "name": "PAYMENT_METHOD_DETAILS"
+      },
+      {
+        "name": "PAYMENT_REVIEWS"
+      },
+      {
+        "name": "PAYOUT_MINIMUM_BALANCE_SETTINGS"
+      },
+      {
+        "name": "PLANS"
+      },
+      {
+        "name": "PLANS_METADATA"
+      },
+      {
+        "name": "PLATFORM_TAX_SETTINGS"
+      },
+      {
+        "name": "PRICES"
+      },
+      {
+        "name": "PRICES_CURRENCY_OPTIONS"
+      },
+      {
+        "name": "PRICES_METADATA"
+      },
+      {
+        "name": "PRICE_TIERS"
+      },
+      {
+        "name": "PRODUCTS"
+      },
+      {
+        "name": "PRODUCTS_METADATA"
+      },
+      {
+        "name": "PROMOTION_CODES"
+      },
+      {
+        "name": "PURCHASE_DETAILS_RECEIPTS"
+      },
+      {
+        "name": "QUOTES"
+      },
+      {
+        "name": "QUOTE_METADATA"
+      },
+      {
+        "name": "RADAR_RULES"
+      },
+      {
+        "name": "REFUNDS"
+      },
+      {
+        "name": "REFUNDS_METADATA"
+      },
+      {
+        "name": "RULE_DECISIONS"
+      },
+      {
+        "name": "SETUP_ATTEMPTS"
+      },
+      {
+        "name": "SETUP_INTENTS"
+      },
+      {
+        "name": "SETUP_INTENTS_METADATA"
+      },
+      {
+        "name": "SOURCES"
+      },
+      {
+        "name": "SOURCES_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTIONS"
+      },
+      {
+        "name": "SUBSCRIPTIONS_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTION_ITEMS"
+      },
+      {
+        "name": "SUBSCRIPTION_ITEMS_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULES"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULES_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASES"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASES_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASE_ADD_INVOICE_ITEMS"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASE_ADD_INVOICE_ITEMS_METADATA"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASE_CONFIGURATION_ITEMS"
+      },
+      {
+        "name": "SUBSCRIPTION_SCHEDULE_PHASE_CONFIGURATION_ITEMS_METADATA"
+      },
+      {
+        "name": "SUMMARIZED_BALANCE_TRANSACTIONS"
+      },
+      {
+        "name": "TAX_FORMS"
+      },
+      {
+        "name": "TAX_RATES"
+      },
+      {
+        "name": "TAX_RATES_METADATA"
+      },
+      {
+        "name": "TERMINAL_HARDWARE_ORDERS"
+      },
+      {
+        "name": "TERMINAL_HARDWARE_ORDER_ITEMS"
+      },
+      {
+        "name": "TERMINAL_HARDWARE_ORDER_METADATA"
+      },
+      {
+        "name": "TERMINAL_HARDWARE_ORDER_SHIPMENT_TRACKING"
+      },
+      {
+        "name": "TERMINAL_HARDWARE_ORDER_TAX_AMOUNTS"
+      },
+      {
+        "name": "TOPUPS"
+      },
+      {
+        "name": "TOPUPS_METADATA"
+      },
+      {
+        "name": "TRANSFERS"
+      },
+      {
+        "name": "TRANSFERS_METADATA"
+      },
+      {
+        "name": "TRANSFER_REVERSALS"
+      },
+      {
+        "name": "TRANSFER_REVERSALS_METADATA"
+      },
+      {
+        "name": "TREASURY_FINANCIAL_ACCOUNTS"
+      },
+      {
+        "name": "TREASURY_FINANCIAL_ACCOUNTS_METADATA"
+      },
+      {
+        "name": "TREASURY_INBOUND_TRANSFERS"
+      },
+      {
+        "name": "TREASURY_INBOUND_TRANSFERS_METADATA"
+      },
+      {
+        "name": "TREASURY_OUTBOUND_PAYMENTS"
+      },
+      {
+        "name": "TREASURY_OUTBOUND_PAYMENTS_METADATA"
+      },
+      {
+        "name": "TREASURY_OUTBOUND_TRANSFERS"
+      },
+      {
+        "name": "TREASURY_OUTBOUND_TRANSFERS_METADATA"
+      },
+      {
+        "name": "TREASURY_RECEIVED_CREDITS"
+      },
+      {
+        "name": "TREASURY_RECEIVED_DEBITS"
+      },
+      {
+        "name": "TREASURY_TRANSACTIONS"
+      },
+      {
+        "name": "TREASURY_TRANSACTION_ENTRIES"
+      },
+      {
+        "name": "USAGE_RECORDS"
+      },
+      {
+        "name": "VERIFICATION_REPORTS"
+      },
+      {
+        "name": "VERIFICATION_SESSIONS"
+      }
+    ]
+  },
+  "loyverseLake": {
+    "tables": [
+      {
+        "name": "CHARGEBEE-EU-CREDIT_NOTE",
+        "rows": 135032
+      },
+      {
+        "name": "CHARGEBEE-EU-CUSTOMER",
+        "rows": 59320
+      },
+      {
+        "name": "CHARGEBEE-EU-INVOICE",
+        "rows": 1069914
+      },
+      {
+        "name": "CHARGEBEE-EU-SUBSCRIPTION",
+        "rows": 100763
+      },
+      {
+        "name": "CHARGEBEE-EU-TRANSACTION",
+        "rows": 1704370
+      },
+      {
+        "name": "CHARGEBEE-UK-CREDIT_NOTE",
+        "rows": 36937
+      },
+      {
+        "name": "CHARGEBEE-UK-CUSTOMER",
+        "rows": 58278
+      },
+      {
+        "name": "CHARGEBEE-UK-INVOICE",
+        "rows": 413823
+      },
+      {
+        "name": "CHARGEBEE-UK-SUBSCRIPTION",
+        "rows": 83441
+      },
+      {
+        "name": "CHARGEBEE-UK-TRANSACTION",
+        "rows": 748908
+      },
+      {
+        "name": "CURRENCY_RATES",
+        "rows": 280938
+      },
+      {
+        "name": "HISTORICAL_RATES",
+        "rows": 1656
+      },
+      {
+        "name": "LOYVERSE_RECEIPTS_UNIQUE",
+        "rows": 9065548703
+      },
+      {
+        "name": "SALES_PER_ACCOUNT_MONTHLY",
+        "rows": 14296460
+      }
+    ],
+    "views": [
+      {
+        "name": "CHARGEBEE_CUSTOMERS_V"
+      },
+      {
+        "name": "CHARGEBEE_INVOICES_V"
+      },
+      {
+        "name": "CHARGEBEE_SUBSCRIPTIONS_V"
+      },
+      {
+        "name": "LOYVERSE_MERCHANTS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPTS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_LINE_DISCOUNTS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_LINE_ITEMS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_LINE_MODIFIERS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_LINE_TAXES"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_PAYMENTS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_TOTAL_DISCOUNTS"
+      },
+      {
+        "name": "LOYVERSE_RECEIPT_TOTAL_TAXES"
+      }
+    ]
+  },
+  "connectedAccountsColumns": [
+    "SUPPORT_EMAIL",
+    "LEGAL_ENTITY_ADDRESS_POSTAL_CODE",
+    "CAPABILITIES_AU_BECS_DEBIT_PAYMENTS",
+    "LEGAL_ENTITY_ADDRESS_STATE",
+    "CAPABILITIES_DETAILS_CARD_PAYMENTS_CURRENT_DEADLINE",
+    "CAPABILITIES_ZIP_PAYMENTS",
+    "LEGAL_ENTITY_ADDRESS_KANJI_LINE1",
+    "PAYOUT_SCHEDULE_DELAY_DAYS",
+    "CAPABILITIES_DETAILS_PAYOUTS_CURRENT_DEADLINE",
+    "DECLINE_CHARGE_ON_CVC_FAILURE",
+    "CAPABILITIES_US_BANK_ACCOUNT_ACH_PAYMENTS",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_LINE2",
+    "LEGAL_ENTITY_FIRST_NAME",
+    "CAPABILITIES_P24_PAYMENTS",
+    "CAPABILITIES_EPS_PAYMENTS",
+    "DEBIT_NEGATIVE_BALANCES",
+    "CAPABILITIES_REVOLUT_PAY_PAYMENTS",
+    "BUSINESS_NAME",
+    "LEGAL_ENTITY_MAIDEN_NAME",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_LINE2",
+    "PAYOUT_SCHEDULE_WEEKLY_ANCHOR",
+    "CAPABILITIES_CASHAPP_PAYMENTS",
+    "CAPABILITIES_SOFORT_PAYMENTS",
+    "CONTROLLER_FEES_PAYER",
+    "CAPABILITIES_CARTES_BANCAIRES_PAYMENTS",
+    "CAPABILITIES_TAX_REPORTING_US_1099_K",
+    "DETAILS_SUBMITTED",
+    "EMAIL",
+    "LEGAL_ENTITY_SSN_LAST_4_PROVIDED",
+    "CAPABILITIES_AMAZON_PAY_PAYMENTS",
+    "LEGAL_ENTITY_ADDRESS_KANA_POSTAL_CODE",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_POSTAL_CODE",
+    "CAPABILITIES_BOLETO_PAYMENTS",
+    "TOS_ACCEPTANCE_DATE",
+    "TOS_ACCEPTANCE_USER_AGENT",
+    "PRODUCT_DESCRIPTION",
+    "CHARGES_ENABLED",
+    "CAPABILITIES_FPX_PAYMENTS",
+    "LEGAL_ENTITY_FIRST_NAME_KANJI",
+    "LEGAL_ENTITY_BUSINESS_NAME_KANA",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_LINE1",
+    "CONTROLLER_REQUIREMENT_COLLECTION",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_LINE1",
+    "PAYOUT_SCHEDULE_INTERVAL",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_STATE",
+    "FUTURE_REQUIREMENTS_EVENTUALLY_DUE",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_POSTAL_CODE",
+    "TIMEZONE",
+    "CAPABILITIES_KLARNA_PAYMENTS",
+    "LEGAL_ENTITY_VERIFICATION_DETAILS",
+    "DISPLAY_NAME",
+    "LEGAL_ENTITY_DOB_MONTH",
+    "CAPABILITIES_LINK_PAYMENTS",
+    "REQUIREMENTS_PENDING_VERIFICATION",
+    "LEGAL_ENTITY_BUSINESS_NAME",
+    "CONTROLLER_LOSSES_PAYMENTS",
+    "LEGAL_ENTITY_GENDER",
+    "LEGAL_ENTITY_ADDRESS_KANA_LINE1",
+    "BATCH_TIMESTAMP",
+    "CONTROLLER_STRIPE_DASHBOARD_TYPE",
+    "LEGAL_ENTITY_ADDRESS_KANJI_CITY",
+    "LEGAL_ENTITY_VERIFICATION_STATUS",
+    "CAPABILITIES_LEGACY_PAYMENTS",
+    "BUSINESS_PROFILE_MCC",
+    "VERIFICATION_DUE_BY",
+    "CAPABILITIES_KONBINI_PAYMENTS",
+    "CAPABILITIES_BLIK_PAYMENTS",
+    "REQUIREMENTS_CURRENTLY_DUE",
+    "LEGAL_ENTITY_FIRST_NAME_KANA",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_COUNTRY",
+    "COUNTRY",
+    "FUTURE_REQUIREMENTS_PENDING_VERIFICATION",
+    "LEGAL_ENTITY_ADDRESS_KANJI_LINE2",
+    "CAPABILITIES_IDEAL_PAYMENTS",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_POSTAL_CODE",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_STATE",
+    "LEGAL_ENTITY_DOB_DAY",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_STATE",
+    "TOS_ACCEPTANCE_IP",
+    "DECLINE_CHARGE_ON_AVS_FAILURE",
+    "LEGAL_ENTITY_ADDRESS_KANJI_COUNTRY",
+    "CAPABILITIES_BANCONTACT_PAYMENTS",
+    "LEGAL_ENTITY_TAX_ID_REGISTRAR",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANJI_CITY",
+    "LEGAL_ENTITY_ADDRESS_LINE2",
+    "LEGAL_ENTITY_DOB_YEAR",
+    "ID",
+    "DEFAULT_CURRENCY",
+    "LEGAL_ENTITY_PERSONAL_ID_NUMBER_PROVIDED",
+    "CAPABILITIES_SEPA_DEBIT_PAYMENTS",
+    "LEGAL_ENTITY_ADDRESS_KANA_LINE2",
+    "STATEMENT_DESCRIPTOR",
+    "CAPABILITIES_CARD_PAYMENTS",
+    "LEGAL_ENTITY_VERIFICATION_DETAILS_CODE",
+    "REQUIREMENTS_PAST_DUE",
+    "MERCHANT_ID",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_CITY",
+    "LEGAL_ENTITY_VERIFICATION_DOCUMENT_ID",
+    "SUPPORT_PHONE",
+    "LEGAL_ENTITY_BUSINESS_TAX_ID_PROVIDED",
+    "BUSINESS_URL",
+    "LEGAL_ENTITY_LAST_NAME_KANA",
+    "CAPABILITIES_TWINT_PAYMENTS",
+    "LEGAL_ENTITY_ADDRESS_KANJI_STATE",
+    "CAPABILITIES_SWISH_PAYMENTS",
+    "CAPABILITIES_BACS_DEBIT_PAYMENTS",
+    "REQUIREMENTS_EVENTUALLY_DUE",
+    "LEGAL_ENTITY_LAST_NAME",
+    "LEGAL_ENTITY_ADDRESS_KANA_STATE",
+    "CAPABILITIES_MULTIBANCO_PAYMENTS",
+    "CAPABILITIES_GRABPAY_PAYMENTS",
+    "PAYOUT_SCHEDULE_MONTHLY_ANCHOR",
+    "CAPABILITIES_PAYNOW_PAYMENTS",
+    "REQUIREMENTS_CURRENT_DEADLINE",
+    "CAPABILITIES_TAX_REPORTING_US_1099_MISC",
+    "LEGAL_ENTITY_LAST_NAME_KANJI",
+    "LEGAL_ENTITY_BUSINESS_VAT_ID_PROVIDED",
+    "CAPABILITIES_JCB_PAYMENTS",
+    "CAPABILITIES_OXXO_PAYMENTS",
+    "TYPE",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_CITY",
+    "CAPABILITIES_INDIA_INTERNATIONAL_PAYMENTS",
+    "VERIFICATION_FIELDS_NEEDED",
+    "LEGAL_ENTITY_ADDRESS_KANJI_POSTAL_CODE",
+    "CAPABILITIES_BANK_TRANSFER_PAYMENTS",
+    "CAPABILITIES_ACSS_DEBIT_PAYMENTS",
+    "FUTURE_REQUIREMENTS_CURRENT_DEADLINE",
+    "CAPABILITIES_MOBILEPAY_PAYMENTS",
+    "PAYOUTS_ENABLED",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_LINE1",
+    "CAPABILITIES_TRANSFERS",
+    "CAPABILITIES_DETAILS_TRANSFERS_CURRENT_DEADLINE",
+    "LEGAL_ENTITY_TYPE",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_COUNTRY",
+    "LEGAL_ENTITY_ADDRESS_CITY",
+    "CAPABILITIES_AFFIRM_PAYMENTS",
+    "VERIFICATION_DISABLED_REASON",
+    "LEGAL_ENTITY_ADDRESS_KANA_COUNTRY",
+    "LEGAL_ENTITY_ADDRESS_LINE1",
+    "LEGAL_ENTITY_BUSINESS_NAME_KANJI",
+    "LEGAL_ENTITY_ADDRESS_KANA_CITY",
+    "LEGAL_ENTITY_ADDRESS_COUNTRY",
+    "CAPABILITIES_GIROPAY_PAYMENTS",
+    "FUTURE_REQUIREMENTS_CURRENTLY_DUE",
+    "CAPABILITIES_AFTERPAY_CLEARPAY_PAYMENTS",
+    "LEGAL_ENTITY_PHONE_NUMBER",
+    "CREATED",
+    "PAYOUT_STATEMENT_DESCRIPTOR",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_KANA_LINE2",
+    "LEGAL_ENTITY_PERSONAL_ADDRESS_COUNTRY",
+    "FUTURE_REQUIREMENTS_PAST_DUE",
+    "CAPABILITIES_PROMPTPAY_PAYMENTS",
+    "CAPABILITIES_CARD_ISSUING"
+  ],
+  "notes": [],
+  "chargeCandidates": {}
+}
