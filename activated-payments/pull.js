@@ -207,15 +207,6 @@ function minorToUsd(amountMinor, ccy) {
   const major = ZERO_DECIMAL.has(c) ? Number(amountMinor) : Number(amountMinor) / 100;
   return major * rate;
 }
-// ICPLUS TOTAL_AMOUNT is already in the fee currency's MAJOR unit (0.675 = $0.675),
-// so convert straight to USD without the minor-unit division.
-function majorToUsd(amountMajor, ccy) {
-  const c = String(ccy || '').toUpperCase().trim();
-  const rate = USD_RATE[c];
-  if (rate == null) return null;
-  return Number(amountMajor) * rate;
-}
-
 // Stripe connected-account ids look like acct_XXXX — keep only those so the IN-list
 // is safe and fully runtime-derived (never hardcoded).
 function sanitizeAccts(ids) {
@@ -306,33 +297,14 @@ async function fetchIcplusCostByAccount(conn, acctIds) {
     const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
     if (!acct) continue;
     const ccy = r.CCY != null ? r.CCY : r.ccy;
-    const costMajor = r.COST_MAJOR != null ? r.COST_MAJOR : r.cost_major;
+    const costMinor = r.COST_MINOR != null ? r.COST_MINOR : r.cost_minor;
     const costCnt = Number(r.COST_CNT != null ? r.COST_CNT : r.cost_cnt || 0);
-    const usd = majorToUsd(costMajor, ccy);
+    const usd = minorToUsd(costMinor, ccy);
     if (!by[acct]) by[acct] = { costUsd: 0, costCnt: 0, usdKnown: true };
     by[acct].costCnt += costCnt;
     if (usd == null) by[acct].usdKnown = false; else by[acct].costUsd += usd;
   }
   return by;
-}
-
-// TEMP DIAGNOSTIC — fee composition breakdown (removed after cost model validated).
-async function fetchIcplusDebug(conn, acctIds) {
-  const ids = sanitizeAccts(acctIds);
-  if (!ids.length) return [];
-  const inList = ids.map(a => `'${a}'`).join(',');
-  const sql = loadSql('icplus_debug_breakdown.sql').replace('/*ACCOUNT_IDS*/', inList);
-  const rows = await executeQuery(conn, sql);
-  return rows.map(r => ({
-    cat: r.FEE_CATEGORY != null ? r.FEE_CATEGORY : r.fee_category,
-    name: r.FEE_NAME != null ? r.FEE_NAME : r.fee_name,
-    event: r.EVENT_TYPE != null ? r.EVENT_TYPE : r.event_type,
-    ccy: r.CCY != null ? r.CCY : r.ccy,
-    n: Number(r.N != null ? r.N : r.n),
-    total: Number(r.TOTAL_MAJOR != null ? r.TOTAL_MAJOR : r.total_major),
-    min: Number(r.MIN_MAJOR != null ? r.MIN_MAJOR : r.min_major),
-    max: Number(r.MAX_MAJOR != null ? r.MAX_MAJOR : r.max_major),
-  }));
 }
 
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
@@ -433,7 +405,6 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct) 
       take,                     // effective take-rate %, captured/volume ("fee applied")
       cost,                     // Stripe interchange++ cost, USD
       margin,                   // captured − cost, USD ("our margin")
-      _dbg: { feeCnt: f ? f.feeCnt : null, costCnt: c ? c.costCnt : null },
     });
   }
   out.sort((a, b) => b.volume - a.volume);
@@ -481,7 +452,8 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //   __PAY_VOL_DAILY     : prod terminal volume in USD per day (CONNECTED_ACCOUNT_CHARGES, succeeded/paid/
 //                         captured + fixed FX map), zero-filled calendar, all-time, backfilled.
 //   __PAY_TXN_MERCHANTS : per-merchant transacting table — name, started, txns, volume(USD),
-//                         captured(USD, application fees net of refunds), take-rate %, margin (pending).
+//                         captured(USD, application fees net of refunds), take-rate %,
+//                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
 // Do NOT edit by hand; overwritten each morning (snapshot array is preserved + appended). Last pull: ${today}
 window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(today)};
@@ -490,7 +462,6 @@ window.__PAY_ENABLED_DAILY = ${JSON.stringify(enabledDaily)};
 window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
 window.__PAY_TXN_MERCHANTS = ${JSON.stringify(txnMerchants)};
 window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
-window.__ICPLUS_DEBUG = ${JSON.stringify(global.__ICPLUS_DBG || [])};
 `;
   fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
   console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, enabled days: ${enabledDaily.length}, vol days: ${volDaily.length}, txn merchants: ${txnMerchants.length}, snapshots: ${enabledSnap.length}`);
@@ -754,9 +725,6 @@ async function main() {
   else console.error(`✗ app_fees_by_account query failed (captured/take-rate will be blank): ${feeR.reason && feeR.reason.message}`);
   if (costR.status === 'fulfilled') { costByAcct = costR.value; console.log(`✓ icplus_cost_by_account: ${Object.keys(costByAcct).length} merchants with Stripe cost`); }
   else console.error(`✗ icplus_cost_by_account query failed (margin will be blank): ${costR.reason && costR.reason.message}`);
-
-  try { global.__ICPLUS_DBG = await fetchIcplusDebug(conn, prodAccts); console.log(`✓ icplus_debug: ${global.__ICPLUS_DBG.length} fee-composition rows`); }
-  catch (e) { console.error(`✗ icplus_debug failed: ${e.message}`); global.__ICPLUS_DBG = []; }
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
