@@ -77,6 +77,23 @@
 </style>
 </head>
 <body>
+<!-- ==== Unified master nav (POS / Payments / Merchant Map) — injected ==== -->
+<style>
+.lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;font-family:Arial,Helvetica,sans-serif;}
+.lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px;}
+.lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px;}
+.lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1;}
+.lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;transition:color .12s;}
+.lvmn a.lvmn-tab:hover{color:#fff;}
+.lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+</style>
+<nav class="lvmn">
+  <span class="lvmn-brand"><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab on" href="daily.html">POS</a>
+  <a class="lvmn-tab" href="../activated-payments/index.html#payments">Payments</a>
+  <a class="lvmn-tab" href="../activated-payments/index.html#map">Merchant Map</a>
+</nav>
+
 
 <div class="pagenav">
   <a href="daily.html">FACADASH</a>

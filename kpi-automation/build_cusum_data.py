@@ -25,7 +25,7 @@ from cryptography.hazmat.primitives import serialization
 
 HERE   = pathlib.Path(__file__).resolve().parent
 SQLDIR = pathlib.Path(os.environ.get("SQL_DIR", HERE / "sql"))
-V2     = pathlib.Path(os.environ.get("V2_DIR", HERE.parent / "KPI Dashboard v2 (Caio)"))
+V2     = pathlib.Path(os.environ.get("V2_DIR", HERE.parent / "pos"))
 OUT    = pathlib.Path(os.environ.get("CUSUMDATA_OUT", V2 / "cusum-data.js"))
 STATE  = pathlib.Path(os.environ.get("CUSUM_STATE", HERE / "cusum-state.json"))
 SQL_FILE = "cusum_hourly_registrations.sql"

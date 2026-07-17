@@ -312,12 +312,21 @@
 </head>
 <body>
 <div id="shell">
-<nav id="topnav">
-  <span class="brand">Loyverse Payments</span>
-  <button class="tab on" data-pg="overview" id="tab-overview">Overview</button>
-  <button class="tab" data-pg="map" id="tab-map">Merchant Map</button>
-  <button class="tab" data-pg="merchants" id="tab-merchants">Merchants</button>
-  <button class="tab" data-pg="calc" id="tab-calc">Acquisition Pricing Calculator</button>
+<!-- ==== Unified master nav (POS / Payments / Merchant Map) — shared with the POS pages ==== -->
+<style>
+.lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;font-family:Arial,Helvetica,sans-serif;}
+.lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px;}
+.lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px;}
+.lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1;}
+.lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;transition:color .12s;cursor:pointer;}
+.lvmn a.lvmn-tab:hover{color:#fff;}
+.lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+</style>
+<nav class="lvmn">
+  <span class="lvmn-brand"><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab" href="../pos/daily.html">POS</a>
+  <a class="lvmn-tab" href="#payments" id="lvmn-payments">Payments</a>
+  <a class="lvmn-tab" href="#map" id="lvmn-map">Merchant Map</a>
 </nav>
 <div id="page-overview" class="on">
   <div class="ov-wrap">
@@ -995,28 +1004,40 @@ function postMerchants(){
     frame.srcdoc = raw.split('@@ENDSCRIPT@@').join('</'+'script>');
   }catch(e){ if(window.console)console.error('calc inject failed',e); }
 })();
+// Null-safe: the old internal tab buttons (tab-overview/map/merchants/calc) were
+// replaced by the unified master nav (POS · Payments · Merchant Map). Pages still
+// exist and are reachable via in-page buttons, so keep switching them but guard the
+// (now-removed) tab elements. Master-nav active states are driven by the hash below.
+function _tg(id, cls, on){ var el=document.getElementById(id); if(el) el.classList.toggle(cls, on); }
 window.showPage=function(pg){
-  document.getElementById('page-overview').classList.toggle('on',pg==='overview');
-  document.getElementById('page-map').style.display = pg==='map'?'block':'none';
-  document.getElementById('page-calc').style.display = pg==='calc'?'block':'none';
-  document.getElementById('page-merchants').classList.toggle('on',pg==='merchants');
-  document.getElementById('tab-overview').classList.toggle('on',pg==='overview');
-  document.getElementById('tab-map').classList.toggle('on',pg==='map');
-  document.getElementById('tab-merchants').classList.toggle('on',pg==='merchants');
-  document.getElementById('tab-calc').classList.toggle('on',pg==='calc');
+  _tg('page-overview','on',pg==='overview');
+  var pm=document.getElementById('page-map'); if(pm) pm.style.display = pg==='map'?'block':'none';
+  var pc=document.getElementById('page-calc'); if(pc) pc.style.display = pg==='calc'?'block':'none';
+  _tg('page-merchants','on',pg==='merchants');
+  _tg('tab-overview','on',pg==='overview');
+  _tg('tab-map','on',pg==='map');
+  _tg('tab-merchants','on',pg==='merchants');
+  _tg('tab-calc','on',pg==='calc');
+  // Unified master-nav highlight: Merchant Map for the map, Payments for everything else.
+  _tg('lvmn-map','on',pg==='map');
+  _tg('lvmn-payments','on',pg!=='map');
   if(pg==='map'){ setTimeout(function(){
-      // The map is initialised while #page-map is display:none (Overview is the landing
-      // page), so it starts at 0x0 and the cluster renders no pins. On first reveal, size
+      // The map is initialised while #page-map is display:none (Payments is the landing
+      // view), so it starts at 0x0 and the cluster renders no pins. On first reveal, size
       // it, rebuild the cluster, and fit bounds; on later visits just re-size + re-cluster.
       map.invalidateSize();
       try { refresh(); } catch(e){}
       if(!window.__mapShown){ window.__mapShown=true; try { map.fitBounds(bothBounds(),{padding:[30,30]}); } catch(e){} }
     },60); }
 };
-document.getElementById('tab-overview').addEventListener('click',function(){showPage('overview');});
-document.getElementById('tab-map').addEventListener('click',function(){showPage('map');});
-document.getElementById('tab-merchants').addEventListener('click',function(){showPage('merchants');});
-document.getElementById('tab-calc').addEventListener('click',function(){showPage('calc');});
+// Hash routing so the unified master nav (and deep links from the POS pages) land on
+// the right view: #map -> Merchant Map, #payments/#overview/none -> Payments Overview.
+function applyMasterHash(){
+  var h=(location.hash||'').replace('#','').toLowerCase();
+  showPage(h==='map' ? 'map' : 'overview');
+}
+window.addEventListener('hashchange', applyMasterHash);
+applyMasterHash();
 
 // ===== Overview page (FACADASH-style daily report) ==========================
 (function(){
