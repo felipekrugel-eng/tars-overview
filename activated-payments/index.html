@@ -1047,7 +1047,12 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
     var totalReg = latest.total||totalAct;
     var rate = totalReg?Math.round(enabled/totalReg*100):0;
     var volTotal = VOL.reduce(function(a,r){return a+(Number(r.usd)||0);},0);
-    var last7 = 0; if(ACT.length){ var cut=ACT.slice(-7); last7=cut.reduce(function(a,r){return a+(Number(r.n)||0);},0); }
+    var last7 = 0;
+    if(ACT.length){
+      var maxd=ACT[ACT.length-1].d;
+      var cutoff=new Date(maxd+'T00:00:00Z'); cutoff.setUTCDate(cutoff.getUTCDate()-6);
+      ACT.forEach(function(r){ if(new Date(r.d+'T00:00:00Z')>=cutoff) last7+=Number(r.n)||0; });
+    }
     var kpis=[
       {num:fmtInt(totalReg), lbl:'Total activated', sub:'Merchants connected to Loyverse Payments', cls:''},
       {num:fmtInt(enabled), lbl:'Enabled (passed KYC)', sub:rate+'% of activated are live to transact', cls:'green'},
