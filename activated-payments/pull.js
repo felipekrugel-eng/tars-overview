@@ -414,6 +414,7 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct) 
       take,                     // effective take-rate %, captured/volume ("fee applied")
       cost,                     // Stripe interchange++ cost, USD
       margin,                   // captured − cost, USD ("our margin")
+      _dbg: { feeCnt: f ? f.feeCnt : null, costCnt: c ? c.costCnt : null },
     });
   }
   out.sort((a, b) => b.volume - a.volume);
