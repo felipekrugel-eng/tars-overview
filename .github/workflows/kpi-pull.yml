@@ -51,16 +51,13 @@ jobs:
           SQL_DIR:    ${{ github.workspace }}/kpi-automation/sql
           DAILY_DIR:  ${{ github.workspace }}/Daily DBs Dash Queries
           KPIRUN_DIR: ${{ github.workspace }}/kpi_run
-          # Dashboard folder was renamed 'KPI Dashboard v2 (Caio)' -> 'pos' (URL-safe,
-          # for the unified single-site dashboard). run.py honors V2_DIR over its default.
-          V2_DIR:     ${{ github.workspace }}/pos
         run: python kpi-automation/run.py
 
       - name: Commit & push if the data changed
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "pos/daily-history.js" "pos/kpi-data.js" "pos/flow-data.js" "pos/daily-flow.js"
+          git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js"
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else
