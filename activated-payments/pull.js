@@ -159,7 +159,10 @@ async function fetchSubscriptions(conn, merchantIds) {
   const by = {};
   for (const r of rows) {
     const m = String(r.MERCHANT_ID);
-    const cand = { status: r.STATUS || null, plan: r.PLAN_ID || null, mrr: r.MRR != null ? Number(r.MRR) : null };
+    // Chargebee MRR is stored in the currency's minor unit (cents); convert to major
+    // unit for display (e.g. 417 → 4.17). Values remain per-merchant in each
+    // subscription's own currency (see CURRENCY_CODE) — cross-currency totals need FX.
+    const cand = { status: r.STATUS || null, plan: r.PLAN_ID || null, mrr: r.MRR != null ? Math.round(Number(r.MRR)) / 100 : null };
     const cur = by[m];
     if (!cur || rank(cand.status) > rank(cur.status) ||
         (rank(cand.status) === rank(cur.status) && (cand.mrr || 0) > (cur.mrr || 0))) by[m] = cand;
