@@ -132,6 +132,25 @@
   .ov-legend span{display:inline-flex;align-items:center;gap:6px;}
   .ov-legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
   .ov-legend i.line{height:3px;border-radius:2px;width:16px;}
+  /* range selector */
+  .ov-range{display:inline-flex;border:1px solid var(--silver);border-radius:9px;overflow:hidden;background:#fff;}
+  .ov-range button{border:0;background:transparent;padding:7px 14px;font-size:12px;font-weight:bold;color:var(--midgray);cursor:pointer;font-family:inherit;border-right:1px solid var(--silver);letter-spacing:.2px;}
+  .ov-range button:last-child{border-right:0;}
+  .ov-range button:hover{color:var(--charcoal);background:var(--offwhite);}
+  .ov-range button.on{background:var(--blue);color:#fff;}
+  /* transacting-merchants table */
+  .ov-tablecard{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:16px 18px 8px;margin-top:18px;}
+  .ov-tablewrap{overflow-x:auto;margin-top:8px;}
+  table.ov-table{width:100%;border-collapse:collapse;font-size:13px;}
+  table.ov-table th{text-align:right;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--midgray);border-bottom:2px solid var(--silver);white-space:nowrap;cursor:pointer;user-select:none;}
+  table.ov-table th.l,table.ov-table td.l{text-align:left;}
+  table.ov-table th:hover{color:var(--charcoal);}
+  table.ov-table td{text-align:right;padding:9px 12px;border-bottom:1px solid var(--offwhite);color:var(--charcoal);white-space:nowrap;}
+  table.ov-table tr:hover td{background:var(--offwhite);}
+  table.ov-table td.name{font-weight:bold;max-width:280px;overflow:hidden;text-overflow:ellipsis;}
+  table.ov-table td.muted{color:var(--midgray);}
+  table.ov-table tfoot td{font-weight:bold;border-top:2px solid var(--silver);border-bottom:0;color:var(--charcoal);}
+  .ov-tnote{font-size:12px;color:var(--midgray);margin:8px 2px 4px;line-height:1.45;}
   .msub{display:flex;gap:4px;padding:10px 24px 0;background:var(--offwhite);border-bottom:1px solid var(--silver);flex:0 0 auto;}
   .msub-btn{border:0;background:transparent;padding:11px 16px;font-size:13px;font-weight:bold;color:var(--midgray);cursor:pointer;font-family:inherit;border-bottom:3px solid transparent;margin-bottom:-1px;}
   .msub-btn:hover{color:var(--charcoal);}
@@ -307,19 +326,28 @@
       <div class="ov-updated" id="ovUpdated">&nbsp;</div>
     </div>
     <p class="ov-sub">A daily report on Loyverse Payments activation &mdash; how many merchants are activating each day, how many pass KYC and go live, and how much real volume is flowing through our terminals. Refreshes automatically every morning from Snowflake. Prod accounts only; volume converted to USD.</p>
+    <div class="ov-head" style="margin-bottom:16px">
+      <div class="ov-range" id="ovRange">
+        <button data-r="30" class="on">Month</button>
+        <button data-r="60">60 days</button>
+        <button data-r="90">90 days</button>
+        <button data-r="all">All time</button>
+      </div>
+      <div class="ov-updated" id="ovRangeNote">&nbsp;</div>
+    </div>
     <div class="ov-kpis" id="ovKpis"></div>
     <div class="ov-grid">
       <div class="ov-card">
         <div class="ov-ctitle"><h2>Activated per day</h2><span class="tot" id="ovActTot">&nbsp;</span></div>
-        <p class="ov-cnote">New Stripe connections per day (all-time). Bars = daily; line = cumulative.</p>
+        <p class="ov-cnote">New Stripe connections in the selected window. Bars = daily; line = cumulative.</p>
         <div class="ov-chart" id="ovActChart"></div>
         <div class="ov-legend"><span><i class="pc-bar" style="background:#1D8FE1;opacity:.85"></i> Activated / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative</span></div>
       </div>
       <div class="ov-card">
         <div class="ov-ctitle"><h2>Enabled (passed KYC) per day</h2><span class="tot" id="ovEnTot">&nbsp;</span></div>
-        <p class="ov-cnote">Merchants cleared to transact. Stripe carries no historical KYC-pass date, so this curve is a daily snapshot that <b>builds forward</b> from the first pull.</p>
+        <p class="ov-cnote">Merchants cleared to transact, dated by when they <b>accepted Terms</b> (the KYC-pass moment). Bars = newly enabled / day; line = cumulative enabled.</p>
         <div class="ov-chart" id="ovEnChart"></div>
-        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly enabled / day</span><span><i class="line" style="background:#CC3333"></i> Total enabled</span></div>
+        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly enabled / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative enabled</span></div>
       </div>
     </div>
     <div class="ov-card full">
@@ -327,6 +355,27 @@
       <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars = daily; line = cumulative.</p>
       <div class="ov-chart" id="ovVolChart"></div>
       <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
+    </div>
+    <div class="ov-tablecard">
+      <div class="ov-ctitle"><h2>Merchants transacting through Loyverse Payments</h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
+      <p class="ov-tnote" id="ovTxnNote">Every merchant that has processed at least one successful charge. Volume and captured revenue converted to USD.</p>
+      <div class="ov-tablewrap">
+        <table class="ov-table" id="ovTxnTable">
+          <thead>
+            <tr>
+              <th class="l" data-k="name">Merchant</th>
+              <th data-k="started">Started</th>
+              <th data-k="txns">Transactions</th>
+              <th data-k="volume">Volume (USD)</th>
+              <th data-k="take">Fee applied</th>
+              <th data-k="captured">Captured (USD)</th>
+              <th data-k="margin">Our margin</th>
+            </tr>
+          </thead>
+          <tbody id="ovTxnBody"></tbody>
+          <tfoot id="ovTxnFoot"></tfoot>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -964,9 +1013,11 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
 
 // ===== Overview page (FACADASH-style daily report) ==========================
 (function(){
-  var ACT = window.__PAY_ACT_DAILY || [];        // [{d,n}] prod activations/day
-  var VOL = window.__PAY_VOL_DAILY || [];        // [{d,usd,cnt}] prod terminal volume/day (USD)
-  var SNAP = window.__PAY_ENABLED_SNAP || [];    // [{d,enabled,total}] forward daily snapshot
+  var ACT = window.__PAY_ACT_DAILY || [];         // [{d,n}] prod activations/day
+  var VOL = window.__PAY_VOL_DAILY || [];         // [{d,usd,cnt}] prod terminal volume/day (USD)
+  var ENA = window.__PAY_ENABLED_DAILY || [];     // [{d,n}] prod enabled/day (backfilled from Terms-accepted)
+  var SNAP = window.__PAY_ENABLED_SNAP || [];     // [{d,enabled,total}] legacy forward snapshot (fallback)
+  var TXN = window.__PAY_TXN_MERCHANTS || [];     // [{acct,name,mid,started,txns,volume,captured,take,margin}]
   var UPD = window.__PAY_OVERVIEW_UPDATED || null;
 
   function fmtInt(v){ return (Math.round(v)||0).toLocaleString('en-US'); }
@@ -978,6 +1029,12 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
     return '$'+v.toFixed(0);
   }
   function fmtUsdFull(v){ return '$'+(Math.round(Number(v)||0)).toLocaleString('en-US'); }
+  function fmtDate(d){
+    if(!d) return '—';
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var p=String(d).slice(0,10).split('-'); if(p.length<3) return String(d);
+    return (+p[2])+' '+mo[(+p[1])-1]+' '+p[0];
+  }
   // Fill a sparse [{d,val}] into a continuous daily calendar (zeros in gaps).
   function densify(rows, key){
     if(!rows.length) return [];
@@ -989,11 +1046,23 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
     }
     return out;
   }
+  // Slice a densified series to the last `range` days, keeping the TRUE running
+  // cumulative (line reflects the real total up to each day, not just the window).
+  function windowSeries(dense, range){
+    if(!dense.length) return {days:[],bars:[],line:[]};
+    var cum=0, lineFull=dense.map(function(r){ cum+=r.v; return cum; });
+    var start = (range==='all') ? 0 : Math.max(0, dense.length - Number(range));
+    return {
+      days: dense.slice(start).map(function(r){return r.d;}),
+      bars: dense.slice(start).map(function(r){return r.v;}),
+      line: lineFull.slice(start)
+    };
+  }
   // Generic bar + cumulative-line SVG chart. days aligned to bars[] and line[].
   function chart(el, days, bars, line, opt){
     opt=opt||{};
     if(!days.length){ el.innerHTML='<div class="pc-empty">'+(opt.empty||'No data yet — populates on the next daily pull.')+'</div>'; return; }
-    var W=920,H=300,m={t:14,r:60,b:30,l:58};
+    var W=920,H=300,m={t:14,r:60,b:34,l:58};
     var iw=W-m.l-m.r, ih=H-m.t-m.b, n=days.length;
     var maxB=Math.max(1,Math.max.apply(null,bars));
     var maxL=Math.max(1,Math.max.apply(null,line));
@@ -1016,7 +1085,7 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
     for(var i=0;i<n;i++){
       var bv=bars[i]||0; if(bv>0){
         var h=Math.max(0,ih-(yB(bv)-m.t));
-        s+='<rect class="pc-bar '+(opt.barClass||'')+'" x="'+xB(i).toFixed(1)+'" y="'+yB(bv).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"><title>'+days[i]+'  •  '+fmtB(bv)+'</title></rect>';
+        s+='<rect class="pc-bar '+(opt.barClass||'')+'" x="'+xB(i).toFixed(1)+'" y="'+yB(bv).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"><title>'+fmtDate(days[i])+'  •  '+fmtB(bv)+'</title></rect>';
       }
     }
     // cumulative line
@@ -1024,30 +1093,60 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
     s+='<polyline class="pc-line '+(opt.lineClass||'')+'" points="'+pts+'"/>';
     // last point marker
     s+='<circle cx="'+xC(n-1).toFixed(1)+'" cy="'+yC(line[n-1]||0).toFixed(1)+'" r="3.5" fill="'+(opt.lineClass==='red'?'#CC3333':'#1A1A1A')+'"><title>Cumulative '+fmtL(line[n-1]||0)+'</title></circle>';
-    // x-axis month ticks (first of month + first + last)
-    var seen={};
+    // x-axis ticks — adaptive: aim for ~14 labels so short windows show EVERY date and
+    // long windows thin out (never overlapping). Long ranges collapse to month labels.
+    var target=14, step=Math.max(1,Math.ceil(n/target)), monthMode=n>140, seenMo={};
     for(var k=0;k<n;k++){
-      var d=days[k], mo=d.slice(0,7), show=false;
-      if(k===0||k===n-1){show=true;} else if(!seen[mo] && d.slice(8,10)==='01'){show=true;}
-      if(show){ seen[mo]=1;
-        s+='<text class="pc-axis" x="'+xC(k).toFixed(1)+'" y="'+(H-10)+'" text-anchor="middle">'+d.slice(5)+'</text>';
-      }
+      var showTick = (k%step===0) || (k===n-1);
+      if(!showTick) continue;
+      var d=days[k], lbl;
+      if(monthMode){ var mo=d.slice(0,7); if(seenMo[mo]&&k!==n-1) continue; seenMo[mo]=1; lbl=d.slice(2,7); }
+      else { lbl=d.slice(5); }
+      s+='<text class="pc-axis" x="'+xC(k).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+lbl+'</text>';
     }
     s+='</svg>';
     el.innerHTML=s;
   }
 
-  function renderOverview(){
-    if(window.__ovDone) return; window.__ovDone=true;
+  // Pre-densify the full series once; charts just window-slice on range change.
+  var aDense=densify(ACT,'n');
+  var eDense=ENA.length ? densify(ENA,'n') : null;
+  var vDense=densify(VOL,'usd');
+
+  function renderCharts(range){
+    // ---- Activations ----
+    var a=windowSeries(aDense, range);
+    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:''});
+    // ---- Enabled (backfilled from Terms-accepted; fallback to legacy snapshot) ----
+    if(eDense){
+      var e=windowSeries(eDense, range);
+      chart(document.getElementById('ovEnChart'), e.days, e.bars, e.line,
+        {barClass:'green',lineClass:'red',empty:'No enabled merchants in this window.'});
+    } else {
+      var eDays=SNAP.map(function(r){return r.d;});
+      var eLine=SNAP.map(function(r){return Number(r.enabled)||0;});
+      var eBars=eLine.map(function(v,i){ return i===0?v:Math.max(0,v-eLine[i-1]); });
+      chart(document.getElementById('ovEnChart'), eDays, eBars, eLine,
+        {barClass:'green',lineClass:'red',empty:'Enabled curve populates on the next daily pull.'});
+    }
+    // ---- Volume ----
+    var v=windowSeries(vDense, range);
+    if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
+    chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:''});
+    // range note
+    var lbl = range==='all' ? 'all time' : ('last '+range+' days');
+    var rn=document.getElementById('ovRangeNote'); if(rn) rn.textContent='Showing '+lbl;
+  }
+
+  function renderStatic(){
     if(UPD){ document.getElementById('ovUpdated').textContent='Updated '+UPD; }
-    // ---- KPIs ----
     var totalAct = ACT.reduce(function(a,r){return a+(Number(r.n)||0);},0);
-    var latest = SNAP.length?SNAP[SNAP.length-1]:{enabled:0,total:totalAct};
-    var enabled = latest.enabled||0;
-    var totalReg = latest.total||totalAct;
+    var enabled = eDense ? ENA.reduce(function(a,r){return a+(Number(r.n)||0);},0)
+                         : (SNAP.length?(SNAP[SNAP.length-1].enabled||0):0);
+    var totalReg = totalAct || (SNAP.length?SNAP[SNAP.length-1].total:0);
     var rate = totalReg?Math.round(enabled/totalReg*100):0;
     var volTotal = VOL.reduce(function(a,r){return a+(Number(r.usd)||0);},0);
-    var last7 = 0;
+    var last7=0;
     if(ACT.length){
       var maxd=ACT[ACT.length-1].d;
       var cutoff=new Date(maxd+'T00:00:00Z'); cutoff.setUTCDate(cutoff.getUTCDate()-6);
@@ -1057,36 +1156,91 @@ document.getElementById('tab-calc').addEventListener('click',function(){showPage
       {num:fmtInt(totalReg), lbl:'Total activated', sub:'Merchants connected to Loyverse Payments', cls:''},
       {num:fmtInt(enabled), lbl:'Enabled (passed KYC)', sub:rate+'% of activated are live to transact', cls:'green'},
       {num:fmtUsd(volTotal), lbl:'Volume processed (all-time)', sub:'Successful card charges, USD', cls:'accent'},
-      {num:fmtInt(last7), lbl:'Activated (last 7 days)', sub:'Recent activation momentum', cls:''}
+      {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'Have processed at least one charge', cls:''}
     ];
     document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
       return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';
     }).join('');
-
-    // ---- Activations chart ----
-    var aDense=densify(ACT,'n');
-    var aDays=aDense.map(function(r){return r.d;}), aBars=aDense.map(function(r){return r.v;});
-    var cum=0, aLine=aBars.map(function(v){ cum+=v; return cum; });
     document.getElementById('ovActTot').textContent=fmtInt(totalAct)+' total';
-    chart(document.getElementById('ovActChart'), aDays, aBars, aLine, {barClass:'',lineClass:''});
-
-    // ---- Enabled chart (forward snapshot; bars=daily new, line=total enabled) ----
-    var eDays=SNAP.map(function(r){return r.d;});
-    var eLine=SNAP.map(function(r){return Number(r.enabled)||0;});
-    var eBars=eLine.map(function(v,i){ return i===0?v:Math.max(0,v-eLine[i-1]); });
     document.getElementById('ovEnTot').textContent=fmtInt(enabled)+' enabled';
-    chart(document.getElementById('ovEnChart'), eDays, eBars, eLine,
-      {barClass:'green',lineClass:'red',empty:'Enabled snapshot starts building from the first daily pull.'});
-
-    // ---- Volume chart ----
-    var vDense=densify(VOL,'usd');
-    var vDays=vDense.map(function(r){return r.d;}), vBars=vDense.map(function(r){return r.v;});
-    var vc=0, vLine=vBars.map(function(v){ vc+=v; return vc; });
     document.getElementById('ovVolTot').textContent=fmtUsdFull(volTotal)+' total';
-    if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
-    chart(document.getElementById('ovVolChart'), vDays, vBars, vLine, {money:true,barClass:'warn',lineClass:''});
+    renderTable();
   }
-  renderOverview();
+
+  // ---- Transacting-merchants table (sortable) ----
+  var txnSort={k:'volume',dir:-1};
+  function renderTable(){
+    var tot=document.getElementById('ovTxnTot');
+    if(!TXN.length){
+      tot.textContent='—';
+      document.getElementById('ovTxnBody').innerHTML='<tr><td class="l muted" colspan="7">No merchants have transacted yet — this table fills in as charges appear.</td></tr>';
+      var anyCap0=false; return;
+    }
+    tot.textContent=fmtInt(TXN.length)+' merchants';
+    var rows=TXN.slice().sort(function(a,b){
+      var k=txnSort.k, av=a[k], bv=b[k];
+      if(k==='name'){ av=String(av||'').toLowerCase(); bv=String(bv||'').toLowerCase(); return av<bv?-txnSort.dir:av>bv?txnSort.dir:0; }
+      if(k==='started'){ av=av||''; bv=bv||''; return (av<bv?-1:av>bv?1:0)*txnSort.dir; }
+      av=Number(av)||0; bv=Number(bv)||0; return (av-bv)*txnSort.dir;
+    });
+    var anyCap=false;
+    var body=rows.map(function(r){
+      if(r.captured!=null) anyCap=true;
+      var take = (r.take!=null) ? r.take.toFixed(2)+'%' : '<span class="muted">—</span>';
+      var cap  = (r.captured!=null) ? fmtUsdFull(r.captured) : '<span class="muted">—</span>';
+      var mgn  = (r.margin!=null) ? fmtUsdFull(r.margin) : '<span class="muted">—</span>';
+      return '<tr>'+
+        '<td class="l name" title="'+String(r.name).replace(/"/g,'&quot;')+'">'+String(r.name)+'</td>'+
+        '<td>'+fmtDate(r.started)+'</td>'+
+        '<td>'+fmtInt(r.txns)+'</td>'+
+        '<td>'+fmtUsdFull(r.volume)+'</td>'+
+        '<td>'+take+'</td>'+
+        '<td>'+cap+'</td>'+
+        '<td>'+mgn+'</td></tr>';
+    }).join('');
+    document.getElementById('ovTxnBody').innerHTML=body;
+    // footer totals
+    var tTx=0,tVol=0,tCap=0,tMgn=0,hasCap=false,hasMgn=false;
+    TXN.forEach(function(r){ tTx+=Number(r.txns)||0; tVol+=Number(r.volume)||0;
+      if(r.captured!=null){hasCap=true;tCap+=Number(r.captured)||0;}
+      if(r.margin!=null){hasMgn=true;tMgn+=Number(r.margin)||0;} });
+    var blended = (hasCap && tVol>0) ? (tCap/tVol*100).toFixed(2)+'%' : '<span class="muted">—</span>';
+    document.getElementById('ovTxnFoot').innerHTML='<tr>'+
+      '<td class="l">Total ('+TXN.length+')</td>'+
+      '<td></td>'+
+      '<td>'+fmtInt(tTx)+'</td>'+
+      '<td>'+fmtUsdFull(tVol)+'</td>'+
+      '<td>'+blended+'</td>'+
+      '<td>'+(hasCap?fmtUsdFull(tCap):'<span class="muted">—</span>')+'</td>'+
+      '<td>'+(hasMgn?fmtUsdFull(tMgn):'<span class="muted">—</span>')+'</td></tr>';
+    if(!anyCap){
+      document.getElementById('ovTxnNote').innerHTML='Every merchant that has processed at least one successful charge. Volume in USD. <b>Fee applied, captured revenue and margin populate on the next daily pull</b> (application-fee layer).';
+    }
+  }
+
+  // sortable headers
+  var ths=document.querySelectorAll('#ovTxnTable thead th');
+  for(var ti=0;ti<ths.length;ti++){ (function(th){
+    th.addEventListener('click',function(){
+      var k=th.getAttribute('data-k'); if(!k) return;
+      if(txnSort.k===k){ txnSort.dir=-txnSort.dir; } else { txnSort.k=k; txnSort.dir=(k==='name')?1:-1; }
+      renderTable();
+    });
+  })(ths[ti]); }
+
+  // range selector
+  var curRange='30';
+  var rangeBtns=document.querySelectorAll('#ovRange button');
+  for(var ri=0;ri<rangeBtns.length;ri++){ (function(btn){
+    btn.addEventListener('click',function(){
+      curRange=btn.getAttribute('data-r');
+      for(var q=0;q<rangeBtns.length;q++) rangeBtns[q].classList.toggle('on', rangeBtns[q]===btn);
+      renderCharts(curRange);
+    });
+  })(rangeBtns[ri]); }
+
+  renderStatic();
+  renderCharts(curRange);
 })();
 // ---- Merchants sub-nav ----
 (function(){

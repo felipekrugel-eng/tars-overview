@@ -20,6 +20,7 @@ SELECT
     a.COUNTRY                                AS country,
     a.DEFAULT_CURRENCY                       AS default_currency,
     a.CREATED                                AS stripe_connected_at,
+    a.TOS_ACCEPTANCE_DATE                    AS tos_accepted_at,
     a.TIMEZONE                               AS timezone,
     -- contact
     COALESCE(a.SUPPORT_PHONE, a.LEGAL_ENTITY_PHONE_NUMBER) AS phone,

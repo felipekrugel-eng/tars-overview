@@ -237,6 +237,54 @@ async function fetchDailyVolume(conn, acctIds) {
   return { byDay, unknownCcy };
 }
 
+// Per-account transacting aggregation (started / txns / volume) for the merchants table.
+async function fetchTxnByAccount(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return {};
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('charges_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const by = {}; // acct -> { started, cnt, usd, usdKnown }
+  for (const r of rows) {
+    const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
+    if (!acct) continue;
+    const ccy = r.CCY != null ? r.CCY : r.ccy;
+    const cnt = Number(r.CNT != null ? r.CNT : r.cnt || 0);
+    const amt = r.AMOUNT_MINOR != null ? r.AMOUNT_MINOR : r.amount_minor;
+    const usd = minorToUsd(amt, ccy);
+    if (!by[acct]) by[acct] = { started: null, cnt: 0, usd: 0, usdKnown: true };
+    by[acct].cnt += cnt;
+    if (usd == null) by[acct].usdKnown = false; else by[acct].usd += usd;
+    const sd = toDate(r.STARTED != null ? r.STARTED : r.started);
+    if (sd && (!by[acct].started || sd < by[acct].started)) by[acct].started = sd;
+  }
+  return by;
+}
+
+// Per-account captured application-fee revenue (Loyverse's take, net of refunds).
+async function fetchAppFeesByAccount(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return {};
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('application_fees_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const by = {}; // acct -> { capturedUsd, feeCnt, usdKnown }
+  for (const r of rows) {
+    const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
+    if (!acct) continue;
+    const ccy = r.CCY != null ? r.CCY : r.ccy;
+    const feeMinor = r.FEE_MINOR != null ? r.FEE_MINOR : r.fee_minor;
+    const refundMinor = r.REFUND_MINOR != null ? r.REFUND_MINOR : r.refund_minor;
+    const feeCnt = Number(r.FEE_CNT != null ? r.FEE_CNT : r.fee_cnt || 0);
+    const grossUsd = minorToUsd(feeMinor, ccy);
+    const refundUsd = minorToUsd(refundMinor, ccy) || 0;
+    if (!by[acct]) by[acct] = { capturedUsd: 0, feeCnt: 0, usdKnown: true };
+    by[acct].feeCnt += feeCnt;
+    if (grossUsd == null) by[acct].usdKnown = false; else by[acct].capturedUsd += (grossUsd - refundUsd);
+  }
+  return by;
+}
+
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
 const PRESERVE_KEYS = ['vol_gbp', 'bal_gbp', 'processing', 'pos_gtv_usd', 'pos_receipts',
   'pos_active_days', 'last_sale', 'days_since_sale', 'pos_active', 'card_vol_usd',
@@ -280,6 +328,63 @@ function buildActivationsDaily(accountRows, meta) {
   return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d] }));
 }
 
+// Prod-only ENABLED-per-day, BACKFILLED from the "Terms accepted" date.
+// Stripe has no explicit "charges_enabled_at" timestamp, but for accounts that are
+// currently Enabled (passed KYC), TOS_ACCEPTANCE_DATE is the moment the merchant
+// completed onboarding — the practical KYC-pass date Felipe pointed to. Fall back to
+// the connected date when TOS is null. This replaces the forward-only snapshot with a
+// true historical curve.
+function buildEnabledDaily(accountRows, meta) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const byDay = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    const env = (meta[acct] && meta[acct].environment) || null;
+    if (env === 'test') continue;
+    const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
+    if (status !== 'Enabled') continue;
+    const d = toDate(get(r, 'tos_accepted_at')) || toDate(get(r, 'stripe_connected_at'));
+    if (!d) continue;
+    byDay[d] = (byDay[d] || 0) + 1;
+  }
+  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d] }));
+}
+
+// Per-merchant "transacting through Loyverse Payments" table rows. Joins the account
+// name/linkage with the charge aggregation (started / txns / volume) and the captured
+// application-fee revenue (captured / effective take-rate). margin (net after Stripe
+// cost) is left null until the fee-detail columns are confirmed via _discovery.json.
+function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const nameByAcct = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    nameByAcct[acct] = get(r, 'business_name') || get(r, 'contact_name') || get(r, 'email') || acct;
+  }
+  const out = [];
+  for (const acct of Object.keys(txnByAcct)) {
+    const t = txnByAcct[acct];
+    if (!t || !t.cnt) continue;
+    const f = (feeByAcct && feeByAcct[acct]) || null;
+    const volume = Math.round(t.usd * 100) / 100;
+    const captured = (f && f.usdKnown) ? Math.round(f.capturedUsd * 100) / 100 : null;
+    const take = (captured != null && volume > 0) ? Math.round((captured / volume) * 10000) / 100 : null;
+    out.push({
+      acct,
+      name: String(nameByAcct[acct] || acct),
+      mid: (meta[acct] && meta[acct].owner_id) || null,
+      started: t.started,       // 'YYYY-MM-DD' — first successful charge
+      txns: t.cnt,              // number of successful charges
+      volume,                   // gross processed, USD
+      captured,                 // application fees net of refunds, USD ("amount we captured")
+      take,                     // effective take-rate %, captured/volume ("fee applied")
+      margin: null,             // net after Stripe cost — pending fee-detail schema
+    });
+  }
+  out.sort((a, b) => b.volume - a.volume);
+  return out;
+}
+
 // Densify a sparse per-day map into a continuous daily series between min→max date,
 // filling gaps with zeros so bars/lines render an honest calendar (no skipped days).
 function denseDailyVolume(byDay) {
@@ -308,24 +413,31 @@ function buildEnabledSnapshot(prevSnap, act) {
   return snap;
 }
 
-function writeOverview(actDaily, volDaily, enabledSnap) {
+function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants) {
   const today = new Date().toISOString().slice(0, 10);
+  enabledDaily = enabledDaily || [];
+  txnMerchants = txnMerchants || [];
   const out =
 `// Payments Activation OVERVIEW (first page) — regenerated daily by activated-payments/pull.js.
 // FACADASH-style daily report for Loyverse Payments.
-//   __PAY_ACT_DAILY   : prod activations per day (CONNECTED_ACCOUNTS.CREATED), all-time, backfilled.
-//   __PAY_VOL_DAILY   : prod terminal volume in USD per day (CONNECTED_ACCOUNT_CHARGES, succeeded/paid/captured
-//                       + fixed FX map), zero-filled calendar, all-time, backfilled.
-//   __PAY_ENABLED_SNAP: forward-only daily snapshot of enabled (passed-KYC) count. Stripe has no
-//                       historical KYC-pass timestamp, so this curve GROWS from the first run onward.
+//   __PAY_ACT_DAILY     : prod activations per day (CONNECTED_ACCOUNTS.CREATED), all-time, backfilled.
+//   __PAY_ENABLED_DAILY : prod enabled (passed-KYC) per day, BACKFILLED from TOS_ACCEPTANCE_DATE
+//                         (fallback CREATED) for currently-Enabled accounts — a true historical curve.
+//   __PAY_VOL_DAILY     : prod terminal volume in USD per day (CONNECTED_ACCOUNT_CHARGES, succeeded/paid/
+//                         captured + fixed FX map), zero-filled calendar, all-time, backfilled.
+//   __PAY_TXN_MERCHANTS : per-merchant transacting table — name, started, txns, volume(USD),
+//                         captured(USD, application fees net of refunds), take-rate %, margin (pending).
+//   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
 // Do NOT edit by hand; overwritten each morning (snapshot array is preserved + appended). Last pull: ${today}
 window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(today)};
 window.__PAY_ACT_DAILY = ${JSON.stringify(actDaily)};
+window.__PAY_ENABLED_DAILY = ${JSON.stringify(enabledDaily)};
 window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
+window.__PAY_TXN_MERCHANTS = ${JSON.stringify(txnMerchants)};
 window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
 `;
   fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
-  console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, vol days: ${volDaily.length}, snapshots: ${enabledSnap.length}`);
+  console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, enabled days: ${enabledDaily.length}, vol days: ${volDaily.length}, txn merchants: ${txnMerchants.length}, snapshots: ${enabledSnap.length}`);
 }
 
 // ── Schema discovery (self-committing, so we can wire volume/POS/subs next) ────
@@ -386,6 +498,19 @@ async function discover(conn) {
   for (const name of ['CONNECTED_ACCOUNT_CHARGES', 'CONNECTED_ACCOUNT_SUMMARIZED_BALANCE_TRANSACTIONS',
                        'CONNECTED_ACCOUNT_BALANCE_TRANSACTIONS', 'CONNECTED_ACCOUNT_PAYMENT_INTENTS']) {
     if (stripeObjs.includes(name)) await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
+  }
+
+  // ── FEE / CAPTURED-REVENUE / COST candidates (for the transacting-merchants table) ──
+  // APPLICATION_FEES = Loyverse's captured take; ITEMIZED_FEES / ICPLUS / BALANCE_TXN_FEE_DETAILS
+  // = Stripe's cost to Loyverse, needed to compute the true net margin. Describe + sample so the
+  // exact column names are confirmed and the margin math can be wired in a fast follow.
+  for (const name of ['CONNECTED_ACCOUNT_APPLICATION_FEES', 'CONNECTED_ACCOUNT_APPLICATION_FEE_REFUNDS',
+                       'CONNECTED_ACCOUNT_ITEMIZED_FEES', 'ICPLUS_FEES',
+                       'CONNECTED_ACCOUNT_BALANCE_TRANSACTION_FEE_DETAILS']) {
+    if (stripeObjs.includes(name)) {
+      await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
+      await sampleObj(name, STRIPE_SHARE_DB, STRIPE_SCHEMA, name, null, 5);
+    }
   }
 
   // ── POS GTV / receipts candidates ───────────────────────────────────────────
@@ -552,11 +677,13 @@ async function main() {
   // Prod Stripe account ids drive the daily terminal-volume layer (runtime-derived).
   const prodAccts = Object.keys(meta).filter(a => meta[a] && meta[a].environment === 'prod');
 
-  let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} };
-  const [subsR, salesR, volR] = await Promise.allSettled([
+  let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} }, txnByAcct = {}, feeByAcct = {};
+  const [subsR, salesR, volR, txnR, feeR] = await Promise.allSettled([
     fetchSubscriptions(conn, merchantIds),
     fetchSales(conn, merchantIds),
     fetchDailyVolume(conn, prodAccts),
+    fetchTxnByAccount(conn, prodAccts),
+    fetchAppFeesByAccount(conn, prodAccts),
   ]);
   if (subsR.status === 'fulfilled') { subs = subsR.value; console.log(`✓ subscriptions: ${Object.keys(subs).length} merchants`); }
   else console.error(`✗ subscriptions query failed: ${subsR.reason && subsR.reason.message}`);
@@ -564,16 +691,22 @@ async function main() {
   else console.error(`✗ sales_monthly query failed: ${salesR.reason && salesR.reason.message}`);
   if (volR.status === 'fulfilled') { vol = volR.value; console.log(`✓ daily_volume: ${Object.keys(vol.byDay).length} days${Object.keys(vol.unknownCcy).length ? '  (unknown ccy skipped: ' + JSON.stringify(vol.unknownCcy) + ')' : ''}`); }
   else console.error(`✗ daily_volume query failed: ${volR.reason && volR.reason.message}`);
+  if (txnR.status === 'fulfilled') { txnByAcct = txnR.value; console.log(`✓ txn_by_account: ${Object.keys(txnByAcct).length} transacting merchants`); }
+  else console.error(`✗ txn_by_account query failed: ${txnR.reason && txnR.reason.message}`);
+  if (feeR.status === 'fulfilled') { feeByAcct = feeR.value; console.log(`✓ app_fees_by_account: ${Object.keys(feeByAcct).length} merchants with captured fees`); }
+  else console.error(`✗ app_fees_by_account query failed (captured/take-rate will be blank): ${feeR.reason && feeR.reason.message}`);
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
 
-  // Overview (first page) — daily activations, forward enabled snapshot, daily volume.
+  // Overview (first page) — daily activations, backfilled enabled curve, daily volume, txn table.
   try {
     const actDaily = buildActivationsDaily(accountRows, meta);
+    const enabledDaily = buildEnabledDaily(accountRows, meta);
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
-    writeOverview(actDaily, volDaily, enabledSnap);
+    const txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct);
+    writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)
