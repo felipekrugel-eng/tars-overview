@@ -316,6 +316,25 @@ async function fetchIcplusCostByAccount(conn, acctIds) {
   return by;
 }
 
+// TEMP DIAGNOSTIC — fee composition breakdown (removed after cost model validated).
+async function fetchIcplusDebug(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return [];
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('icplus_debug_breakdown.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  return rows.map(r => ({
+    cat: r.FEE_CATEGORY != null ? r.FEE_CATEGORY : r.fee_category,
+    name: r.FEE_NAME != null ? r.FEE_NAME : r.fee_name,
+    event: r.EVENT_TYPE != null ? r.EVENT_TYPE : r.event_type,
+    ccy: r.CCY != null ? r.CCY : r.ccy,
+    n: Number(r.N != null ? r.N : r.n),
+    total: Number(r.TOTAL_MAJOR != null ? r.TOTAL_MAJOR : r.total_major),
+    min: Number(r.MIN_MAJOR != null ? r.MIN_MAJOR : r.min_major),
+    max: Number(r.MAX_MAJOR != null ? r.MAX_MAJOR : r.max_major),
+  }));
+}
+
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
 const PRESERVE_KEYS = ['vol_gbp', 'bal_gbp', 'processing', 'pos_gtv_usd', 'pos_receipts',
   'pos_active_days', 'last_sale', 'days_since_sale', 'pos_active', 'card_vol_usd',
@@ -471,6 +490,7 @@ window.__PAY_ENABLED_DAILY = ${JSON.stringify(enabledDaily)};
 window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
 window.__PAY_TXN_MERCHANTS = ${JSON.stringify(txnMerchants)};
 window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
+window.__ICPLUS_DEBUG = ${JSON.stringify(global.__ICPLUS_DBG || [])};
 `;
   fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
   console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, enabled days: ${enabledDaily.length}, vol days: ${volDaily.length}, txn merchants: ${txnMerchants.length}, snapshots: ${enabledSnap.length}`);
@@ -734,6 +754,9 @@ async function main() {
   else console.error(`✗ app_fees_by_account query failed (captured/take-rate will be blank): ${feeR.reason && feeR.reason.message}`);
   if (costR.status === 'fulfilled') { costByAcct = costR.value; console.log(`✓ icplus_cost_by_account: ${Object.keys(costByAcct).length} merchants with Stripe cost`); }
   else console.error(`✗ icplus_cost_by_account query failed (margin will be blank): ${costR.reason && costR.reason.message}`);
+
+  try { global.__ICPLUS_DBG = await fetchIcplusDebug(conn, prodAccts); console.log(`✓ icplus_debug: ${global.__ICPLUS_DBG.length} fee-composition rows`); }
+  catch (e) { console.error(`✗ icplus_debug failed: ${e.message}`); global.__ICPLUS_DBG = []; }
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
