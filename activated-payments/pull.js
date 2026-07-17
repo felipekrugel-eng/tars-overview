@@ -159,21 +159,63 @@ async function discover(conn) {
   const lkViews  = await safe('lake SHOW VIEWS',  `SHOW VIEWS IN SCHEMA ${DATABASE}.${SCHEMA}`);
   out.loyverseLake.tables = lkTables.map(t => ({ name: t.name, rows: t.rows }));
   out.loyverseLake.views  = lkViews.map(v => ({ name: v.name }));
+  // The Stripe share exposes VIEWS (not tables), so build the object universe from both.
+  const stripeObjs = [...out.stripeShare.tables.map(t => t.name), ...out.stripeShare.views.map(v => v.name)];
+  const lakeObjs   = [...out.loyverseLake.tables.map(t => t.name), ...out.loyverseLake.views.map(v => v.name)];
+
   // Confirm CONNECTED_ACCOUNTS columns actually exist as referenced
   const cols = await safe('describe CONNECTED_ACCOUNTS',
-    `DESCRIBE TABLE ${STRIPE_SHARE_DB}.${STRIPE_SCHEMA}.CONNECTED_ACCOUNTS`);
+    `DESCRIBE VIEW ${STRIPE_SHARE_DB}.${STRIPE_SCHEMA}.CONNECTED_ACCOUNTS`);
   out.connectedAccountsColumns = cols.map(c => c.name);
-  // Peek at charge-like tables' columns to plan the volume layer
-  const chargeLike = out.stripeShare.tables
-    .map(t => t.name)
-    .filter(n => /CHARGE|PAYMENT_INTENT|BALANCE_TRANSACTION|TRANSFER|PAYOUT/i.test(n));
-  out.chargeCandidates = {};
-  for (const name of chargeLike.slice(0, 8)) {
-    const c = await safe(`describe ${name}`, `DESCRIBE TABLE ${STRIPE_SHARE_DB}.${STRIPE_SCHEMA}.${name}`);
-    out.chargeCandidates[name] = c.map(x => x.name);
+
+  // Helper: describe an object (view or table) in a given db.schema and record its columns.
+  out.describe = {};
+  async function describeObj(db, schema, name) {
+    const c = await safe(`describe ${name}`, `DESCRIBE VIEW ${db}.${schema}."${name}"`);
+    out.describe[name] = c.map(x => x.name);
+    return out.describe[name];
   }
+  // Helper: sample a few rows (guarded LIMIT) so we can see key names / value shapes.
+  out.samples = {};
+  async function sampleObj(label, db, schema, name, cols, limit) {
+    const collist = cols ? cols.map(c => `"${c}"`).join(', ') : '*';
+    const rows = await safe(`sample ${name}`, `SELECT ${collist} FROM ${db}.${schema}."${name}" LIMIT ${limit || 5}`);
+    out.samples[label] = rows;
+    return rows;
+  }
+
+  // ── LINKAGE candidates ──────────────────────────────────────────────────────
+  // MERCHANT_ID on CONNECTED_ACCOUNTS is a platform-level constant (same for every
+  // row), so it is NOT a per-merchant Loyverse id. The real linkage is likely in the
+  // account metadata (a loyverse merchant/owner id key) or via an email join to the
+  // LOYVERSE_MERCHANTS view. Describe + sample both to decide.
+  if (stripeObjs.includes('CONNECTED_ACCOUNTS_METADATA')) {
+    await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, 'CONNECTED_ACCOUNTS_METADATA');
+    await sampleObj('CONNECTED_ACCOUNTS_METADATA', STRIPE_SHARE_DB, STRIPE_SCHEMA, 'CONNECTED_ACCOUNTS_METADATA', null, 25);
+  }
+  if (lakeObjs.includes('LOYVERSE_MERCHANTS')) {
+    await describeObj(DATABASE, SCHEMA, 'LOYVERSE_MERCHANTS');
+    await sampleObj('LOYVERSE_MERCHANTS', DATABASE, SCHEMA, 'LOYVERSE_MERCHANTS', null, 3);
+  }
+
+  // ── VOLUME (real vs test) candidates ────────────────────────────────────────
+  for (const name of ['CONNECTED_ACCOUNT_CHARGES', 'CONNECTED_ACCOUNT_SUMMARIZED_BALANCE_TRANSACTIONS',
+                       'CONNECTED_ACCOUNT_BALANCE_TRANSACTIONS', 'CONNECTED_ACCOUNT_PAYMENT_INTENTS']) {
+    if (stripeObjs.includes(name)) await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
+  }
+
+  // ── POS GTV / receipts candidates ───────────────────────────────────────────
+  for (const name of ['SALES_PER_ACCOUNT_MONTHLY', 'LOYVERSE_RECEIPTS']) {
+    if (lakeObjs.includes(name)) await describeObj(DATABASE, SCHEMA, name);
+  }
+
+  // ── SUBSCRIPTION / MRR candidates (Chargebee) ───────────────────────────────
+  for (const name of ['CHARGEBEE_SUBSCRIPTIONS_V', 'CHARGEBEE_CUSTOMERS_V']) {
+    if (lakeObjs.includes(name)) await describeObj(DATABASE, SCHEMA, name);
+  }
+
   fs.writeFileSync(DISCOVERY_FILE, JSON.stringify(out, null, 2), 'utf8');
-  console.log(`✓ Wrote ${DISCOVERY_FILE} — stripe tables: ${out.stripeShare.tables.length}, lake tables: ${out.loyverseLake.tables.length}, charge candidates: ${chargeLike.length}`);
+  console.log(`✓ Wrote ${DISCOVERY_FILE} — stripe views: ${out.stripeShare.views.length}, lake objs: ${lakeObjs.length}, described: ${Object.keys(out.describe).length}, sampled: ${Object.keys(out.samples).length}`);
 }
 
 // ── Build activation-data.js from account rows ────────────────────────────────
@@ -184,6 +226,20 @@ function buildData(accountRows, existingByAcct) {
   const act = [];
   const kyc = {};
   let linked = 0, enabled = 0;
+
+  // MERCHANT_ID on CONNECTED_ACCOUNTS turns out to be a platform-level constant
+  // (the Loyverse master/platform Stripe account id) — identical for every row — so
+  // it is NOT a per-merchant Loyverse identifier. Detect that and refuse to present
+  // it as linkage; leave mid null (honest "unlinked") until the real linkage
+  // (account metadata key or email→LOYVERSE_MERCHANTS join) is wired.
+  const midValues = new Set(accountRows
+    .map(r => get(r, 'merchant_id'))
+    .filter(v => v !== null && v !== undefined && String(v).trim() !== '')
+    .map(v => String(v).trim()));
+  const merchantIdIsPerMerchant = midValues.size > 1; // constant across rows ⇒ platform id, not usable
+  if (!merchantIdIsPerMerchant) {
+    console.log(`⚠ MERCHANT_ID is constant across ${accountRows.length} rows (${[...midValues][0] || 'null'}) — treating as platform id, NOT per-merchant linkage. mid left null until metadata/email linkage is wired.`);
+  }
 
   for (const r of accountRows) {
     const acct   = get(r, 'stripe_account_id');
@@ -196,7 +252,8 @@ function buildData(accountRows, existingByAcct) {
     const status = statusOf(chargesEnabled, disabledReason);
     if (status === 'Enabled') enabled++;
 
-    const midStr = (mid !== null && mid !== undefined && String(mid).trim() !== '') ? String(mid).trim() : null;
+    const midStr = (merchantIdIsPerMerchant && mid !== null && mid !== undefined && String(mid).trim() !== '')
+      ? String(mid).trim() : null;
     if (midStr) linked++;
 
     const prev = existingByAcct[acct] || {};
