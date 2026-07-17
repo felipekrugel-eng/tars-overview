@@ -110,9 +110,15 @@
 .lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;transition:color .12s;}
 .lvmn a.lvmn-tab:hover{color:#fff;}
 .lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+.lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block;}
+/* POS sub-nav: light secondary bar, clearly distinct from the dark master nav */
+.pagenav{background:#fff !important;border-bottom:1px solid #E0E0E0 !important;padding:0 24px !important;display:flex !important;gap:4px !important;align-items:center !important;}
+.pagenav a{color:#6A6A6A !important;font-size:11px !important;font-weight:bold !important;letter-spacing:1px !important;text-transform:uppercase !important;padding:11px 16px !important;border-bottom:3px solid transparent !important;text-decoration:none !important;}
+.pagenav a:hover{color:#1A1A1A !important;}
+.pagenav a.on{color:#1578C4 !important;border-bottom-color:#1D8FE1 !important;}
 </style>
 <nav class="lvmn">
-  <span class="lvmn-brand"><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
   <a class="lvmn-tab on" href="daily.html">POS</a>
   <a class="lvmn-tab" href="https://activated-payments.netlify.app/#payments">Payments</a>
   <a class="lvmn-tab" href="https://activated-payments.netlify.app/#map">Merchant Map</a>
