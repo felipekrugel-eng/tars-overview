@@ -443,7 +443,7 @@
     <p class="lp-note" id="fnBotsNote" style="margin:0 0 10px"></p>
     <div id="funnelStages" class="fn-stages"></div>
     <h2 class="lp-h2" style="margin-top:28px">How long each step takes.</h2>
-    <p class="ov-sub" style="margin-top:2px">Median days between stages, for merchants who reached each step (average and sample size below each).</p>
+    <p class="ov-sub" style="margin-top:2px">Median days between consecutive stages. Each step is measured only for merchants that have both dates on record (Enabled uses the Terms/KYC-acceptance date, which Stripe doesn't always populate), so the steps use different samples and won't add up to the overall Register&rarr;Transacting figure.</p>
     <div id="funnelTimings" class="ov-kpis"></div>
     <div class="ov-head" style="margin-top:28px;margin-bottom:14px;gap:12px;flex-wrap:wrap">
       <div class="ov-range" id="funnelDrill">
@@ -1583,7 +1583,9 @@ applyMasterHash();
   }
   function computeStages(rs){
     var s={entered:rs.length,signed_up:0,enabled:0,transacting:0};
-    rs.forEach(function(m){ if(m.connected_at)s.signed_up++; if(m.enabled_at)s.enabled++; if(m.first_txn_at)s.transacting++; });
+    // Enabled STAGE = KYC-passed status flag (m.enabled); enabled_at is only the (often-null)
+    // Terms timestamp used for timings, so never use it to count the stage.
+    rs.forEach(function(m){ if(m.connected_at)s.signed_up++; if(m.enabled)s.enabled++; if(m.first_txn_at)s.transacting++; });
     return s;
   }
   function renderStages(S){
@@ -1618,7 +1620,7 @@ applyMasterHash();
   }
   var drill='kyc';
   function renderKyc(rs){
-    var stuck=rs.filter(function(m){ return m.connected_at && !m.enabled_at; }); // signed up, not enabled
+    var stuck=rs.filter(function(m){ return m.connected_at && !m.enabled; }); // signed up, not enabled
     var byBlk={};
     stuck.forEach(function(m){ (m.kyc&&m.kyc.length?m.kyc:['(reason not captured)']).forEach(function(b){ byBlk[b]=(byBlk[b]||0)+1; }); });
     var br=Object.keys(byBlk).map(function(k){return [k,byBlk[k]];}).sort(function(a,b){return b[1]-a[1];});

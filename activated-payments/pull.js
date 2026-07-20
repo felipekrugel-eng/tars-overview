@@ -534,10 +534,10 @@ async function discover(conn) {
   }
 
   // ── TERMINAL / hardware acquisition (for the enablement / terminal drill-down) ──
-  for (const name of ['TERMINAL_HARDWARE_ORDERS', 'TERMINAL_HARDWARE_ORDER_ITEMS']) {
+  for (const name of ['TERMINAL_HARDWARE_ORDERS', 'TERMINAL_HARDWARE_ORDER_ITEMS', 'TERMINAL_HARDWARE_ORDER_METADATA']) {
     if (stripeObjs.includes(name)) {
       await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
-      await sampleObj(name, STRIPE_SHARE_DB, STRIPE_SCHEMA, name, null, 5);
+      await sampleObj(name, STRIPE_SHARE_DB, STRIPE_SCHEMA, name, null, 8);
     }
   }
 
@@ -696,17 +696,18 @@ function readPilot() {
     return JSON.parse(m[1]);
   } catch (e) { console.error(`✗ readPilot failed: ${e.message}`); return []; }
 }
-async function fetchTerminalOrders(conn, acctIds) {
-  const ids = [...new Set((acctIds || []).map(a => String(a || '').trim()).filter(Boolean))];
-  if (!ids.length) return {};
-  const inList = ids.map(a => `'${a}'`).join(',');
-  const sql = loadSql('terminal_orders.sql').replace('/*ACCOUNT_IDS*/', inList);
-  const rows = await executeQuery(conn, sql);
+async function fetchTerminalOrders(conn) {
+  // Attributed by shipping email (orders are placed platform-side; see terminal_orders.sql).
+  const rows = await executeQuery(conn, loadSql('terminal_orders.sql'));
   const by = {};
   for (const r of rows) {
-    const acct = r.ACCOUNT !== undefined ? r.ACCOUNT : r.account;
-    if (!acct) continue;
-    by[acct] = { first_order: toDate(r.FIRST_ORDER != null ? r.FIRST_ORDER : r.first_order), orders: Number(r.ORDERS != null ? r.ORDERS : r.orders || 0) };
+    const email = String(r.SHIP_EMAIL != null ? r.SHIP_EMAIL : r.ship_email || '').trim().toLowerCase();
+    if (!email) continue;
+    by[email] = {
+      first_order: toDate(r.FIRST_ORDER != null ? r.FIRST_ORDER : r.first_order),
+      orders: Number(r.ORDERS != null ? r.ORDERS : r.orders || 0),
+      status: r.LAST_STATUS != null ? r.LAST_STATUS : r.last_status,
+    };
   }
   return by;
 }
@@ -754,8 +755,8 @@ function isBotName(nameRaw, freqMap) {
 // accounts = the payments book) ∪ (pilot 500), with bots excluded from the registration mass.
 // Every merchant carries its stage timestamps so the UI can slice by date range / pilot and
 // recompute stages, timings, and the KYC / terminal drill-downs entirely client-side.
-function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
-  termByAcct = termByAcct || {};
+function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
+  termByEmail = termByEmail || {};
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
 
@@ -773,13 +774,17 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
     const owner = acctToOwner[acct] || null;
     const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
     const connected_at = toDate(get(r, 'stripe_connected_at'));
-    const enabled_at = (status === 'Enabled') ? (toDate(get(r, 'tos_accepted_at')) || connected_at) : null;
+    // Real KYC/Terms-acceptance timestamp — may be null. Do NOT fall back to connected_at,
+    // or the Signed-up→Enabled timing collapses to a fake 0 days. The Enabled STAGE is driven
+    // by status (charges_enabled), independent of whether this timestamp exists.
+    const enabled_at = toDate(get(r, 'tos_accepted_at'));
+    const email = String(get(r, 'email') || '').trim().toLowerCase();
     const codes = [...parseReqList(get(r, 'requirements_currently_due')), ...parseReqList(get(r, 'requirements_past_due'))];
     const blockers = [...new Set(codes.map(labelFor).filter(Boolean))];
     const first_txn_at = (txnByAcct[acct] && txnByAcct[acct].started) ? toDate(txnByAcct[acct].started) : null;
     const bname = get(r, 'business_name') || get(r, 'contact_name') || '';
     if (owner) connectedOwners.add(owner);
-    connAccts.push({ acct, owner, status, connected_at, enabled_at, first_txn_at, blockers, bname });
+    connAccts.push({ acct, owner, status, connected_at, enabled_at, first_txn_at, blockers, bname, email });
   }
 
   // Name-frequency map for bulk-cluster detection over the registration mass.
@@ -798,15 +803,18 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
     stages.entered++; stages.signed_up++;
     if (c.status === 'Enabled') stages.enabled++;
     if (c.first_txn_at) stages.transacting++;
+    const email = c.email || (reg && reg.email) || (p && p.email) || '';
+    const term = termByEmail[email] || null;
     merchants.push({
       oid: c.owner || ('acct:' + c.acct),
       name: c.bname || (reg && reg.name) || (p && p.name) || (c.owner || c.acct),
-      email: (reg && reg.email) || (p && p.email) || '',
+      email: email,
       coh: p ? p.coh : '', pilot: p ? 1 : 0, stage,
+      enabled: (c.status === 'Enabled') ? 1 : 0,
       registered_at: reg ? reg.registered_at : null,
       connected_at: c.connected_at, enabled_at: c.enabled_at, first_txn_at: c.first_txn_at,
       kyc: (c.status !== 'Enabled') ? c.blockers : [],
-      terminal_at: (termByAcct[c.acct] ? termByAcct[c.acct].first_order : null),
+      terminal_at: term ? term.first_order : null,
     });
   });
 
@@ -823,7 +831,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
       oid,
       name: (reg && reg.name) || (p && p.name) || oid,
       email: (reg && reg.email) || (p && p.email) || '',
-      coh: p ? p.coh : '', pilot: p ? 1 : 0, stage: 'entered',
+      coh: p ? p.coh : '', pilot: p ? 1 : 0, stage: 'entered', enabled: 0,
       registered_at: reg ? reg.registered_at : null,
       connected_at: null, enabled_at: null, first_txn_at: null, kyc: [], terminal_at: null,
     });
@@ -929,10 +937,10 @@ async function main() {
     const regIds = [...pilot.map(p => p.oid), ...connOwners];
     const regs = await fetchUsRegistrations(conn, regIds);
     console.log(`✓ us_registrations: ${Object.keys(regs).length} rows (US since ${LAUNCH_START} + pilot + connected owners)`);
-    let termByAcct = {}, terminalReady = false;
-    try { termByAcct = await fetchTerminalOrders(conn, prodAccts); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByAcct).length} accounts with a terminal order`); }
+    let termByEmail = {}, terminalReady = false;
+    try { termByEmail = await fetchTerminalOrders(conn); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByEmail).length} merchant emails with a terminal order`); }
     catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }
-    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct);
+    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail);
     writeFunnel(funnel, terminalReady);
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
