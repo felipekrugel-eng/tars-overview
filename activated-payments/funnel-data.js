@@ -4,8 +4,8 @@
 // Stages: entered -> signed_up (connected) -> enabled (passed KYC) -> transacting. Each merchant
 // carries its stage timestamps; the UI recomputes stages/timings/drill-downs by date range + pilot.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
-// Do NOT edit by hand; overwritten each morning. Last pull: 2026-07-20 13:10 UTC
-window.__FUNNEL_UPDATED = "2026-07-20 13:10 UTC";
+// Do NOT edit by hand; overwritten each morning. Last pull: 2026-07-20 13:12 UTC
+window.__FUNNEL_UPDATED = "2026-07-20 13:12 UTC";
 window.__FUNNEL_STAGES = {"entered":1867,"signed_up":268,"enabled":55,"transacting":10};
 window.__FUNNEL_ENTERED_TOTAL = 1867;
 window.__FUNNEL_BOTS_EXCLUDED = 10059;
