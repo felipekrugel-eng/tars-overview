@@ -441,6 +441,8 @@ function buildEnabledSnapshot(prevSnap, act) {
 
 function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants) {
   const today = new Date().toISOString().slice(0, 10);
+  // Date + hour (UTC) of this pull, e.g. "2026-07-17 13:56 UTC" — shown as the "Updated" stamp.
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   enabledDaily = enabledDaily || [];
   txnMerchants = txnMerchants || [];
   const out =
@@ -456,7 +458,7 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
 // Do NOT edit by hand; overwritten each morning (snapshot array is preserved + appended). Last pull: ${today}
-window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(today)};
+window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(stamp)};
 window.__PAY_ACT_DAILY = ${JSON.stringify(actDaily)};
 window.__PAY_ENABLED_DAILY = ${JSON.stringify(enabledDaily)};
 window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};

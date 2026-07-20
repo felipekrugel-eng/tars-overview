@@ -128,6 +128,15 @@
   .pc-grid{stroke:var(--silver);stroke-width:1;}
   .pc-axis{fill:var(--midgray);font:11px Arial;}
   .pc-axis.r{fill:var(--darkgray);}
+  .pc-hit{fill:transparent;cursor:crosshair;}
+  .pc-guide{stroke:var(--blue);stroke-width:1;stroke-dasharray:3 3;opacity:.65;pointer-events:none;}
+  .pc-bar.hot{opacity:1;}
+  .pc-col{fill:var(--blue);opacity:.09;pointer-events:none;}
+  .pc-tip{position:absolute;z-index:20;pointer-events:none;background:var(--charcoal);color:#fff;border-radius:6px;padding:8px 10px;font:12px Arial;box-shadow:0 4px 14px rgba(0,0,0,.22);min-width:130px;}
+  .pc-tip .pc-tip-d{font-weight:bold;letter-spacing:.3px;margin-bottom:5px;font-size:12px;}
+  .pc-tip .pc-tip-r{display:flex;justify-content:space-between;gap:14px;line-height:1.5;}
+  .pc-tip .pc-tip-r span{color:#B8C4CE;}
+  .pc-tip .pc-tip-r b{font-variant-numeric:tabular-nums;}
   .ov-legend{display:flex;gap:16px;font-size:12px;color:var(--darkgray);margin-top:4px;flex-wrap:wrap;}
   .ov-legend span{display:inline-flex;align-items:center;gap:6px;}
   .ov-legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
@@ -1119,7 +1128,7 @@ applyMasterHash();
     for(var i=0;i<n;i++){
       var bv=bars[i]||0; if(bv>0){
         var h=Math.max(0,ih-(yB(bv)-m.t));
-        s+='<rect class="pc-bar '+(opt.barClass||'')+'" x="'+xB(i).toFixed(1)+'" y="'+yB(bv).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"><title>'+fmtDate(days[i])+'  •  '+fmtB(bv)+'</title></rect>';
+        s+='<rect class="pc-bar '+(opt.barClass||'')+'" data-i="'+i+'" x="'+xB(i).toFixed(1)+'" y="'+yB(bv).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"/>';
       }
     }
     // cumulative line
@@ -1138,8 +1147,41 @@ applyMasterHash();
       else { lbl=d.slice(5); }
       s+='<text class="pc-axis" x="'+xC(k).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+lbl+'</text>';
     }
+    // full-height hover hit-areas (cover zero-days too) + guide line + highlight column
+    s+='<rect class="pc-col" x="0" y="'+m.t+'" width="'+bw.toFixed(1)+'" height="'+ih+'" style="display:none"/>';
+    s+='<line class="pc-guide" x1="0" y1="'+m.t+'" x2="0" y2="'+(m.t+ih)+'" style="display:none"/>';
+    s+='<g>';
+    for(var q=0;q<n;q++){ s+='<rect class="pc-hit" data-i="'+q+'" x="'+(m.l+q*bw).toFixed(1)+'" y="'+m.t+'" width="'+bw.toFixed(1)+'" height="'+ih+'"/>'; }
+    s+='</g>';
     s+='</svg>';
+    el.style.position='relative';
     el.innerHTML=s;
+    // Interactive tooltip: hovering anywhere in a day's column shows the date, that day's
+    // bar value, and the running cumulative — works on zero-days too (full-height hit rects).
+    var tip=el.querySelector('.pc-tip'); if(!tip){ tip=document.createElement('div'); tip.className='pc-tip'; el.appendChild(tip); }
+    tip.style.display='none';
+    var svg=el.querySelector('svg'), guide=svg.querySelector('.pc-guide'), col=svg.querySelector('.pc-col');
+    var barLbl=opt.barLabel||'Value';
+    function pcShow(i,ev){
+      var r=el.getBoundingClientRect();
+      tip.innerHTML='<div class="pc-tip-d">'+fmtDate(days[i])+'</div>'
+        +'<div class="pc-tip-r"><span>'+barLbl+'</span><b>'+fmtB(bars[i]||0)+'</b></div>'
+        +'<div class="pc-tip-r"><span>Cumulative</span><b>'+fmtL(line[i]||0)+'</b></div>';
+      tip.style.display='block';
+      var x=ev.clientX-r.left, y=ev.clientY-r.top, tw=tip.offsetWidth, th=tip.offsetHeight;
+      var left=x+14; if(left+tw>r.width) left=x-tw-14; if(left<4) left=4;
+      var top=y-th-12; if(top<4) top=y+18;
+      tip.style.left=left+'px'; tip.style.top=top+'px';
+      guide.setAttribute('x1',xC(i)); guide.setAttribute('x2',xC(i)); guide.style.display='';
+      col.setAttribute('x',(m.l+i*bw).toFixed(1)); col.style.display='';
+      var pb=svg.querySelector('.pc-bar.hot'); if(pb) pb.classList.remove('hot');
+      var nb=svg.querySelector('.pc-bar[data-i="'+i+'"]'); if(nb) nb.classList.add('hot');
+    }
+    function pcHide(){ tip.style.display='none'; guide.style.display='none'; col.style.display='none'; var pb=svg.querySelector('.pc-bar.hot'); if(pb) pb.classList.remove('hot'); }
+    var hits=svg.querySelectorAll('.pc-hit');
+    for(var hh=0;hh<hits.length;hh++){ (function(rct){ var idx=+rct.getAttribute('data-i');
+      rct.addEventListener('mousemove',function(ev){ pcShow(idx,ev); }); })(hits[hh]); }
+    svg.addEventListener('mouseleave',pcHide);
   }
 
   // Pre-densify the full series once; charts just window-slice on range change.
@@ -1150,23 +1192,23 @@ applyMasterHash();
   function renderCharts(range){
     // ---- Activations ----
     var a=windowSeries(aDense, range);
-    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:''});
+    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:'',barLabel:'Activated'});
     // ---- Enabled (backfilled from Terms-accepted; fallback to legacy snapshot) ----
     if(eDense){
       var e=windowSeries(eDense, range);
       chart(document.getElementById('ovEnChart'), e.days, e.bars, e.line,
-        {barClass:'green',lineClass:'red',empty:'No enabled merchants in this window.'});
+        {barClass:'green',lineClass:'red',empty:'No enabled merchants in this window.',barLabel:'Newly enabled'});
     } else {
       var eDays=SNAP.map(function(r){return r.d;});
       var eLine=SNAP.map(function(r){return Number(r.enabled)||0;});
       var eBars=eLine.map(function(v,i){ return i===0?v:Math.max(0,v-eLine[i-1]); });
       chart(document.getElementById('ovEnChart'), eDays, eBars, eLine,
-        {barClass:'green',lineClass:'red',empty:'Enabled curve populates on the next daily pull.'});
+        {barClass:'green',lineClass:'red',empty:'Enabled curve populates on the next daily pull.',barLabel:'Newly enabled'});
     }
     // ---- Volume ----
     var v=windowSeries(vDense, range);
     if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
-    chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:''});
+    chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:'',barLabel:'Volume (USD)'});
     // range note
     var lbl = range==='all' ? 'all time' : ('last '+range+' days');
     var rn=document.getElementById('ovRangeNote'); if(rn) rn.textContent='Showing '+lbl;
