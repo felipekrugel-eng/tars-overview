@@ -96,6 +96,9 @@
   /* ===== Overview (first page — FACADASH-style daily report) ===== */
   #page-overview{flex:1;min-height:0;display:none;overflow-y:auto;background:var(--offwhite);}
   #page-overview.on{display:block;}
+  /* Pilot + Funnel are toggled via inline display; they need the same scroll container as
+     Overview or their content is clipped by #shell's height:100vh; overflow:hidden. */
+  #page-pilot,#page-funnel{flex:1;min-height:0;overflow-y:auto;background:var(--offwhite);}
   .ov-wrap{max-width:1240px;margin:0 auto;padding:26px 28px 60px;}
   .ov-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:6px;}
   .ov-h1{font-family:"Arial Black",Arial,sans-serif;font-size:30px;color:var(--charcoal);margin:0;letter-spacing:-.3px;}
