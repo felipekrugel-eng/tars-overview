@@ -761,17 +761,16 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
 
   const acctToOwner = {};
   Object.keys(meta || {}).forEach(a => { if (meta[a] && meta[a].owner_id) acctToOwner[a] = String(meta[a].owner_id); });
-  const connByOwner = {};
+  // One record per PROD connected account (the payments book). NOT deduped by owner — signed_up
+  // counts accounts (matches the book: a merchant with two Stripe accounts shows both). MERCHANT_ID
+  // on CONNECTED_ACCOUNTS is a platform-level constant, so linkage is via metadata owner_id only.
+  const connAccts = [];
+  const connectedOwners = new Set();
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
-    // CONNECTED_ACCOUNTS.MERCHANT_ID is a platform-level constant (same for every row), so it
-    // is NOT a per-merchant id — never use it as the owner key. Use the real owner_id from
-    // metadata; fall back to the unique Stripe acct so unlinked accounts are each counted once
-    // (this is what makes signed_up = the full connected book, not a collapsed subset).
-    const owner = acctToOwner[acct] || ('acct:' + acct);
     if (!acct) continue;
-    // Only prod accounts count as real signups (test accounts are excluded).
-    if (meta[acct] && meta[acct].environment && meta[acct].environment !== 'prod') continue;
+    if (meta[acct] && meta[acct].environment && meta[acct].environment !== 'prod') continue; // prod only
+    const owner = acctToOwner[acct] || null;
     const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
     const connected_at = toDate(get(r, 'stripe_connected_at'));
     const enabled_at = (status === 'Enabled') ? (toDate(get(r, 'tos_accepted_at')) || connected_at) : null;
@@ -779,46 +778,54 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
     const blockers = [...new Set(codes.map(labelFor).filter(Boolean))];
     const first_txn_at = (txnByAcct[acct] && txnByAcct[acct].started) ? toDate(txnByAcct[acct].started) : null;
     const bname = get(r, 'business_name') || get(r, 'contact_name') || '';
-    const prev = connByOwner[owner];
-    const rank = first_txn_at ? 3 : (status === 'Enabled' ? 2 : 1);
-    if (!prev || rank > prev._rank) {
-      connByOwner[owner] = { _rank: rank, acct, status, connected_at, enabled_at, first_txn_at, blockers, bname };
-    }
+    if (owner) connectedOwners.add(owner);
+    connAccts.push({ acct, owner, status, connected_at, enabled_at, first_txn_at, blockers, bname });
   }
 
   // Name-frequency map for bulk-cluster detection over the registration mass.
   const freq = {};
   Object.keys(regs).forEach(oid => { const n = normName(regs[oid].name); if (n) freq[n] = (freq[n] || 0) + 1; });
 
-  const universe = new Set([...Object.keys(regs), ...Object.keys(pilotByOid), ...Object.keys(connByOwner)]);
   const merchants = [];
   const stages = { entered: 0, signed_up: 0, enabled: 0, transacting: 0 };
   let botsExcluded = 0;
-  universe.forEach(oid => {
+
+  // 1) Signed-up onward: one funnel row per connected account.
+  connAccts.forEach(c => {
+    const reg = c.owner ? (regs[c.owner] || null) : null;
+    const p = c.owner ? (pilotByOid[c.owner] || null) : null;
+    let stage = 'signed_up'; if (c.status === 'Enabled') stage = 'enabled'; if (c.first_txn_at) stage = 'transacting';
+    stages.entered++; stages.signed_up++;
+    if (c.status === 'Enabled') stages.enabled++;
+    if (c.first_txn_at) stages.transacting++;
+    merchants.push({
+      oid: c.owner || ('acct:' + c.acct),
+      name: c.bname || (reg && reg.name) || (p && p.name) || (c.owner || c.acct),
+      email: (reg && reg.email) || (p && p.email) || '',
+      coh: p ? p.coh : '', pilot: p ? 1 : 0, stage,
+      registered_at: reg ? reg.registered_at : null,
+      connected_at: c.connected_at, enabled_at: c.enabled_at, first_txn_at: c.first_txn_at,
+      kyc: (c.status !== 'Enabled') ? c.blockers : [],
+      terminal_at: (termByAcct[c.acct] ? termByAcct[c.acct].first_order : null),
+    });
+  });
+
+  // 2) Entered-only: everyone in (registrations ∪ pilot) who did NOT connect. Bots excluded here
+  //    (registration-only, not pilot, matching the US fraud signatures).
+  const enteredOnly = new Set([...Object.keys(regs), ...Object.keys(pilotByOid)]);
+  enteredOnly.forEach(oid => {
+    if (connectedOwners.has(oid)) return;         // already emitted as a connected account
     const reg = regs[oid] || null;
     const p = pilotByOid[oid] || null;
-    const c = connByOwner[oid] || null;
-    // Bot filter: registration-only accounts (never connected, not pilot) matching the signatures.
-    if (!c && !p && isBotName(reg && reg.name, freq)) { botsExcluded++; return; }
-    let stage = 'entered';
-    if (c) { stage = 'signed_up'; if (c.status === 'Enabled') stage = 'enabled'; if (c.first_txn_at) stage = 'transacting'; }
+    if (!p && isBotName(reg && reg.name, freq)) { botsExcluded++; return; }
     stages.entered++;
-    if (c) stages.signed_up++;
-    if (c && (c.status === 'Enabled')) stages.enabled++;
-    if (c && c.first_txn_at) stages.transacting++;
     merchants.push({
       oid,
-      name: (c && c.bname) || (reg && reg.name) || (p && p.name) || oid,
+      name: (reg && reg.name) || (p && p.name) || oid,
       email: (reg && reg.email) || (p && p.email) || '',
-      coh: p ? p.coh : '',                    // pilot cohort (active/churning) or '' if not pilot
-      pilot: p ? 1 : 0,
-      stage,
+      coh: p ? p.coh : '', pilot: p ? 1 : 0, stage: 'entered',
       registered_at: reg ? reg.registered_at : null,
-      connected_at: c ? c.connected_at : null,
-      enabled_at: c ? c.enabled_at : null,
-      first_txn_at: c ? c.first_txn_at : null,
-      kyc: (c && c.status !== 'Enabled') ? c.blockers : [],
-      terminal_at: (c && termByAcct[c.acct]) ? termByAcct[c.acct].first_order : null,
+      connected_at: null, enabled_at: null, first_txn_at: null, kyc: [], terminal_at: null,
     });
   });
   return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };
