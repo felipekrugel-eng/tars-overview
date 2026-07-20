@@ -764,8 +764,12 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
   const connByOwner = {};
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
-    const owner = acctToOwner[acct] || (get(r, 'merchant_id') != null ? String(get(r, 'merchant_id')) : null);
-    if (!owner) continue;
+    // CONNECTED_ACCOUNTS.MERCHANT_ID is a platform-level constant (same for every row), so it
+    // is NOT a per-merchant id — never use it as the owner key. Use the real owner_id from
+    // metadata; fall back to the unique Stripe acct so unlinked accounts are each counted once
+    // (this is what makes signed_up = the full connected book, not a collapsed subset).
+    const owner = acctToOwner[acct] || ('acct:' + acct);
+    if (!acct) continue;
     // Only prod accounts count as real signups (test accounts are excluded).
     if (meta[acct] && meta[acct].environment && meta[acct].environment !== 'prod') continue;
     const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
