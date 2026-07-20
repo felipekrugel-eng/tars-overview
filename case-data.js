@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-07-13",
+  "lastUpdated": "2026-07-20",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98420,10 +98420,10 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.8,
-      "reviewCount": "17.6K",
-      "positive": 87,
-      "neutral": 8,
+      "rating": 4.7,
+      "reviewCount": "17.5K",
+      "positive": 86,
+      "neutral": 9,
       "negative": 5,
       "tags": [
         {
@@ -98454,7 +98454,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "363",
+      "reviewCount": "362",
       "positive": 87,
       "neutral": 8,
       "negative": 5,
@@ -98500,8 +98500,8 @@ const CASE_DATA = {
       4.7,
       4.68,
       4.72,
-      4.76,
-      4.8
+      4.75,
+      4.7
     ],
     "appStore": [
       4.72,
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 641,
+      "mentions": 658,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 449,
+      "mentions": 461,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 352,
+      "mentions": 361,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 284,
+      "mentions": 292,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 219,
+      "mentions": 227,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 163,
+      "mentions": 169,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 121,
+      "mentions": 126,
       "type": "neg",
       "key": "sync"
     }
@@ -98560,23 +98560,23 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "1M+",
       "trend": [
-        945000,
         968000,
         985000,
         1000000,
-        1015000,
-        1032000
+        1017000,
+        1034000,
+        1051000
       ]
     },
     "appStore": {
-      "total": "250K+",
+      "total": "260K+",
       "trend": [
-        218000,
         225000,
         232000,
         240000,
         250000,
-        259000
+        259000,
+        268000
       ]
     }
   },
@@ -98596,17 +98596,17 @@ const CASE_DATA = {
         "text": "Half a year in and Loyverse still runs our whole sari-sari operation on the free tier — sales, inventory and the loyalty program, no ads and no card required. Item photos keep checkout fast for new staff. You only pay for the add-ons you actually need."
       },
       {
-        "author": "CoffeeTH",
-        "country": "TH",
-        "region": "asia",
+        "author": "Gioele Glaurs",
+        "country": "IT",
+        "region": "europe",
         "rating": 5,
         "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
-          "inventory",
+          "free-value",
           "ease-of-use"
         ],
-        "text": "Downloaded several apps to test and Loyverse had so many features and was easy to set up. Barcode scanning and real-time stock updates work flawlessly across two devices."
+        "text": "Using Loyverse for my laundry shop and I love it. Very easy to use, and the free version is great for daily monitoring \u2014 the photo-per-item feature keeps checkout quick. The back office is best for tracking real-time gross profit and inventory. Advanced features need a subscription after the trial, but you only pay for what you need."
       },
       {
         "author": "Simon Parkinson",
