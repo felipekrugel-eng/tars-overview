@@ -34,8 +34,12 @@ const STRIPE_SCHEMA   = 'STRIPE';
 
 const OUTPUT_FILE    = path.join(__dirname, 'activation-data.js');
 const OVERVIEW_FILE  = path.join(__dirname, 'overview-data.js');
+const FUNNEL_FILE    = path.join(__dirname, 'funnel-data.js');
+const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const SQL_DIR        = path.join(__dirname, 'sql');
+// Loyverse Payments launch — start of the funnel entry cohort (US registrations on/after).
+const LAUNCH_START   = '2026-07-01';
 
 // ── Snowflake helpers (mirrors snowflake-pull.js) ─────────────────────────────
 function readPrivateKey() {
@@ -529,6 +533,14 @@ async function discover(conn) {
     if (stripeObjs.includes(name)) await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
   }
 
+  // ── TERMINAL / hardware acquisition (for the enablement / terminal drill-down) ──
+  for (const name of ['TERMINAL_HARDWARE_ORDERS', 'TERMINAL_HARDWARE_ORDER_ITEMS']) {
+    if (stripeObjs.includes(name)) {
+      await describeObj(STRIPE_SHARE_DB, STRIPE_SCHEMA, name);
+      await sampleObj(name, STRIPE_SHARE_DB, STRIPE_SCHEMA, name, null, 5);
+    }
+  }
+
   // ── FEE / CAPTURED-REVENUE / COST candidates (for the transacting-merchants table) ──
   // APPLICATION_FEES = Loyverse's captured take; ITEMIZED_FEES / ICPLUS / BALANCE_TXN_FEE_DETAILS
   // = Stripe's cost to Loyverse, needed to compute the true net margin. Describe + sample so the
@@ -673,6 +685,121 @@ window.__ACT_KYC = ${JSON.stringify(kyc)};
   console.log(`✓ Wrote ${OUTPUT_FILE} (${(out.length / 1024).toFixed(1)} KB)`);
 }
 
+// ── Funnel: entry cohort (US-since-launch + pilot 500) → stage progression ──────
+// Reads the chosen pilot cohort (owner ids) from pilot500-data.js — a selected list,
+// not hardcoded infrastructure — so the entry query can also pull their registration dates.
+function readPilot() {
+  try {
+    const txt = fs.readFileSync(PILOT_FILE, 'utf8');
+    const m = txt.match(/window\.__PILOT500\s*=\s*(\[[\s\S]*?\]);/);
+    if (!m) return [];
+    return JSON.parse(m[1]);
+  } catch (e) { console.error(`✗ readPilot failed: ${e.message}`); return []; }
+}
+async function fetchUsRegistrations(conn, pilotIds) {
+  const ids = sanitizeIds(pilotIds);
+  const inList = ids.length ? ids.join(',') : '0';
+  const sql = loadSql('us_registrations.sql').replace('/*PILOT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const by = {};
+  for (const r of rows) {
+    const oid = String(r.OWNER_ID != null ? r.OWNER_ID : (r.owner_id != null ? r.owner_id : '')).trim();
+    if (!oid) continue;
+    by[oid] = {
+      oid,
+      name: r.NAME || r.name || '',
+      email: String(r.EMAIL || r.email || '').trim().toLowerCase(),
+      country: String(r.COUNTRY || r.country || '').trim().toUpperCase(),
+      registered_at: toDate(r.REGISTERED_AT != null ? r.REGISTERED_AT : r.registered_at),
+    };
+  }
+  return by;
+}
+// Build the funnel: for every entrant (US-since-launch ∪ pilot) determine the furthest
+// stage reached and the timestamps at each stage, so the UI can render conversion + timings
+// and drill into KYC blockers / terminal acquisition. accountRows = CONNECTED_ACCOUNTS.
+function buildFunnel(accountRows, meta, txnByAcct, regs, pilot) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
+
+  // owner_id -> connected-account facts (connect date, KYC/enable, first-txn, blockers).
+  // Map Stripe acct -> owner_id via metadata so we can attach first-transaction date.
+  const acctToOwner = {};
+  Object.keys(meta || {}).forEach(a => { if (meta[a] && meta[a].owner_id) acctToOwner[a] = String(meta[a].owner_id); });
+  const connByOwner = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    const owner = acctToOwner[acct] || (get(r, 'merchant_id') != null ? String(get(r, 'merchant_id')) : null);
+    if (!owner) continue;
+    const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
+    const connected_at = toDate(get(r, 'stripe_connected_at'));
+    const enabled_at = (status === 'Enabled') ? (toDate(get(r, 'tos_accepted_at')) || connected_at) : null;
+    const codes = [...parseReqList(get(r, 'requirements_currently_due')), ...parseReqList(get(r, 'requirements_past_due'))];
+    const blockers = [...new Set(codes.map(labelFor).filter(Boolean))];
+    const first_txn_at = (txnByAcct[acct] && txnByAcct[acct].started) ? toDate(txnByAcct[acct].started) : null;
+    // Keep the most-progressed account if an owner somehow has several.
+    const prev = connByOwner[owner];
+    const rank = first_txn_at ? 3 : (status === 'Enabled' ? 2 : 1);
+    if (!prev || rank > prev._rank) {
+      connByOwner[owner] = { _rank: rank, acct, status, connected_at, enabled_at, first_txn_at, blockers };
+    }
+  }
+
+  // Universe = every owner in registrations (US-since-launch) ∪ pilot.
+  const universe = new Set([...Object.keys(regs), ...Object.keys(pilotByOid)]);
+  const merchants = [];
+  const stages = { entered: 0, signed_up: 0, enabled: 0, transacting: 0 };
+  universe.forEach(oid => {
+    const reg = regs[oid] || null;
+    const p = pilotByOid[oid] || null;
+    const c = connByOwner[oid] || null;
+    let stage = 'entered';
+    if (c) { stage = 'signed_up'; if (c.status === 'Enabled') stage = 'enabled'; if (c.first_txn_at) stage = 'transacting'; }
+    stages.entered++;
+    if (stage !== 'entered') stages.signed_up++;
+    if (stage === 'enabled' || stage === 'transacting') stages.enabled++;
+    if (stage === 'transacting') stages.transacting++;
+    // Emit per-merchant detail only for the actionable set: anyone who signed up, plus
+    // the whole pilot (so pilot laggards at "entered" are visible). The "entered" mass of
+    // brand-new US registrants is represented by the stage counts alone.
+    if (c || p) {
+      merchants.push({
+        oid,
+        name: (c && meta && meta[c.acct] && '') || (reg && reg.name) || (p && p.name) || oid,
+        email: (reg && reg.email) || (p && p.email) || '',
+        coh: p ? p.coh : '',                  // pilot cohort (active/churning) or '' if new US entrant
+        src: reg && p ? 'both' : (p ? 'pilot' : 'reg'),
+        stage,
+        registered_at: reg ? reg.registered_at : null,
+        connected_at: c ? c.connected_at : null,
+        enabled_at: c ? c.enabled_at : null,
+        first_txn_at: c ? c.first_txn_at : null,
+        kyc: (c && c.status !== 'Enabled') ? c.blockers : [],
+        terminal_at: null,                    // populated once TERMINAL_HARDWARE_ORDERS is wired
+      });
+    }
+  });
+  return { entered_total: stages.entered, stages, merchants, launch_start: LAUNCH_START };
+}
+function writeFunnel(funnel) {
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const out =
+`// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
+// Entry cohort = US merchants registered since ${LAUNCH_START} (LOYVERSE_MERCHANTS) ∪ pilot 500.
+// Stages: entered -> signed_up (connected a payments account) -> enabled (passed KYC) -> transacting.
+// Per-merchant timestamps drive the timing metrics; kyc[] drives the KYC drill-down;
+// terminal_at (pending TERMINAL_HARDWARE_ORDERS) drives the enablement/terminal drill-down.
+// Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
+window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
+window.__FUNNEL_STAGES = ${JSON.stringify(funnel.stages)};
+window.__FUNNEL_ENTERED_TOTAL = ${JSON.stringify(funnel.entered_total)};
+window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
+window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
+`;
+  fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
+  console.log(`✓ Wrote ${FUNNEL_FILE} — entered ${funnel.entered_total}, signed_up ${funnel.stages.signed_up}, enabled ${funnel.stages.enabled}, transacting ${funnel.stages.transacting}, detail rows ${funnel.merchants.length}`);
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`Payments Activation × Snowflake pull — ${new Date().toISOString()}`);
@@ -740,6 +867,15 @@ async function main() {
     const txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct);
     writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
+
+  // Funnel (Payments sub-tab) — entry cohort (US-since-launch ∪ pilot) → stage progression.
+  try {
+    const pilot = readPilot();
+    const regs = await fetchUsRegistrations(conn, pilot.map(p => p.oid));
+    console.log(`✓ us_registrations: ${Object.keys(regs).length} entrants (US since ${LAUNCH_START} + pilot)`);
+    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot);
+    writeFunnel(funnel);
+  } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)
   try { await discover(conn); } catch (e) { console.log('discovery skipped:', e.message); }
