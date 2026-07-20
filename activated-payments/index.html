@@ -405,8 +405,9 @@
 .fn-stages{display:flex;flex-direction:column;gap:10px;margin:10px 0 4px;}
 .fn-row{display:flex;align-items:center;gap:14px;}
 .fn-lbl{width:118px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--charcoal);text-align:right;flex:none;}
-.fn-barwrap{flex:1;background:#F2F4F6;border-radius:8px;overflow:hidden;height:46px;}
-.fn-bar{height:100%;display:flex;align-items:center;padding-left:14px;color:#fff;font-weight:800;font-size:16px;font-family:"Arial Black",Arial,sans-serif;min-width:2px;white-space:nowrap;}
+.fn-barwrap{flex:1;background:#F2F4F6;border-radius:8px;height:46px;display:flex;align-items:center;}
+.fn-bar{height:100%;flex:none;display:flex;align-items:center;padding:0 14px;color:#fff;font-weight:800;font-size:16px;font-family:"Arial Black",Arial,sans-serif;min-width:6px;white-space:nowrap;border-radius:8px;overflow:hidden;}
+.fn-out{padding-left:10px;font-family:"Arial Black",Arial,sans-serif;font-size:15px;color:var(--charcoal);white-space:nowrap;}
 .fn-bar.b0{background:#8FC4EC;color:#0B3B5E;} .fn-bar.b1{background:var(--blue);} .fn-bar.b2{background:var(--blue-deep);} .fn-bar.b3{background:var(--green);}
 .fn-conv{width:190px;flex:none;font-size:12px;color:var(--darkgray);line-height:1.35;}
 .fn-conv b{color:var(--charcoal);}
@@ -1595,11 +1596,12 @@ applyMasterHash();
     var STG=[{lbl:'Entered',c:'b0',n:S.entered},{lbl:'Signed up',c:'b1',n:S.signed_up},{lbl:'Enabled',c:'b2',n:S.enabled},{lbl:'Transacting',c:'b3',n:S.transacting}];
     var max=STG[0].n||1;
     $('funnelStages').innerHTML=STG.map(function(s,i){
-      var w=Math.max(2, s.n/max*100);
+      var w=Math.max(0.5, s.n/max*100);
+      var inside = w>=10;                       // label fits inside only on wide bars
       var conv= i===0 ? (num(s.n)+' merchants') :
         ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,STG[0].n)+' of entered') : ''));
       return '<div class="fn-row"><div class="fn-lbl">'+s.lbl+'</div>'+
-        '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+num(s.n)+'</div></div>'+
+        '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+(inside?num(s.n):'')+'</div>'+(inside?'':'<span class="fn-out">'+num(s.n)+'</span>')+'</div>'+
         '<div class="fn-conv">'+conv+'</div></div>';
     }).join('');
   }
