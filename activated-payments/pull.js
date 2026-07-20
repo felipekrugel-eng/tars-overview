@@ -696,6 +696,20 @@ function readPilot() {
     return JSON.parse(m[1]);
   } catch (e) { console.error(`✗ readPilot failed: ${e.message}`); return []; }
 }
+async function fetchTerminalOrders(conn, acctIds) {
+  const ids = [...new Set((acctIds || []).map(a => String(a || '').trim()).filter(Boolean))];
+  if (!ids.length) return {};
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const sql = loadSql('terminal_orders.sql').replace('/*ACCOUNT_IDS*/', inList);
+  const rows = await executeQuery(conn, sql);
+  const by = {};
+  for (const r of rows) {
+    const acct = r.ACCOUNT !== undefined ? r.ACCOUNT : r.account;
+    if (!acct) continue;
+    by[acct] = { first_order: toDate(r.FIRST_ORDER != null ? r.FIRST_ORDER : r.first_order), orders: Number(r.ORDERS != null ? r.ORDERS : r.orders || 0) };
+  }
+  return by;
+}
 async function fetchUsRegistrations(conn, pilotIds) {
   const ids = sanitizeIds(pilotIds);
   const inList = ids.length ? ids.join(',') : '0';
@@ -718,7 +732,8 @@ async function fetchUsRegistrations(conn, pilotIds) {
 // Build the funnel: for every entrant (US-since-launch ∪ pilot) determine the furthest
 // stage reached and the timestamps at each stage, so the UI can render conversion + timings
 // and drill into KYC blockers / terminal acquisition. accountRows = CONNECTED_ACCOUNTS.
-function buildFunnel(accountRows, meta, txnByAcct, regs, pilot) {
+function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
+  termByAcct = termByAcct || {};
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
 
@@ -775,7 +790,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot) {
         enabled_at: c ? c.enabled_at : null,
         first_txn_at: c ? c.first_txn_at : null,
         kyc: (c && c.status !== 'Enabled') ? c.blockers : [],
-        terminal_at: null,                    // populated once TERMINAL_HARDWARE_ORDERS is wired
+        terminal_at: (c && termByAcct[c.acct]) ? termByAcct[c.acct].first_order : null,
       });
     }
   });
@@ -873,7 +888,10 @@ async function main() {
     const pilot = readPilot();
     const regs = await fetchUsRegistrations(conn, pilot.map(p => p.oid));
     console.log(`✓ us_registrations: ${Object.keys(regs).length} entrants (US since ${LAUNCH_START} + pilot)`);
-    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot);
+    let termByAcct = {};
+    try { termByAcct = await fetchTerminalOrders(conn, prodAccts); console.log(`✓ terminal_orders: ${Object.keys(termByAcct).length} accounts with a terminal order`); }
+    catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }
+    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct);
     writeFunnel(funnel);
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
