@@ -1621,15 +1621,43 @@ applyMasterHash();
     }).join('');
   }
   var drill='kyc';
+  // Ordered Stripe KYC onboarding phases. A merchant's EARLIEST-stuck stage = the first phase
+  // (top to bottom) that appears in their currently-due requirements.
+  var KYC_PHASES=[
+    {k:'Business profile', items:['Business category','Business website URL','Product description']},
+    {k:'Legal entity details', items:['Legal company name','Company address','Company tax ID']},
+    {k:'Representative identity', items:['Legal name','Date of birth','Home address','Email','Phone number','Business representatives']},
+    {k:'Identity documents', items:['ID document','ID/Tax number','Company document']},
+    {k:'Payout bank account', items:['Bank account for payouts']},
+    {k:'Terms of Service acceptance', items:['Terms of Service acceptance']}
+  ];
+  var PHASE_OF={}; KYC_PHASES.forEach(function(p,i){ p.items.forEach(function(it){ PHASE_OF[it]=i; }); });
+  function earliestPhase(kyc){
+    var best=null;
+    (kyc||[]).forEach(function(b){ var idx=PHASE_OF[b]; if(idx!=null && (best==null||idx<best)) best=idx; });
+    return best; // index into KYC_PHASES, or null if no mapped blocker
+  }
   function renderKyc(rs){
     var stuck=rs.filter(function(m){ return m.connected_at && !m.enabled; }); // signed up, not enabled
+    // (1) earliest-stuck distribution across the ordered phases
+    var earliest=new Array(KYC_PHASES.length).fill(0); var unknown=0;
+    stuck.forEach(function(m){ var e=earliestPhase(m.kyc); if(e==null) unknown++; else earliest[e]++; });
+    var emax=Math.max(1,Math.max.apply(null,earliest),unknown);
+    var head='<div class="fn-drillcard"><div><div class="k-lbl">Signed up but not yet enabled</div><div style="color:var(--darkgray);font-size:12px;margin-top:2px">Where each account <b>first</b> gets stuck in the KYC sequence (earliest outstanding stage), then every pending item below.</div></div><div class="n">'+num(stuck.length)+'</div></div>';
+    var order='<div style="font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6A6A6A;margin:6px 0 6px">Earliest stage where accounts are stuck</div>';
+    order+=KYC_PHASES.map(function(p,i){
+      var n=earliest[i]; var pctv=stuck.length?Math.round(n/stuck.length*100):0;
+      return '<div class="fn-bk-row"><div class="fn-bk-lbl"><b>'+(i+1)+'.</b> '+esc(p.k)+'</div><div class="fn-bk-bar"><i style="width:'+(n/emax*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+n+(n?' · '+pctv+'%':'')+'</div></div>';
+    }).join('');
+    if(unknown) order+='<div class="fn-bk-row"><div class="fn-bk-lbl" style="color:var(--darkgray)">Other / not captured</div><div class="fn-bk-bar"><i style="width:'+(unknown/emax*100).toFixed(1)+'%;background:#C2C8CF"></i></div><div class="fn-bk-n">'+unknown+'</div></div>';
+    // (2) every pending item (a merchant can be blocked on several)
     var byBlk={};
     stuck.forEach(function(m){ (m.kyc&&m.kyc.length?m.kyc:['(reason not captured)']).forEach(function(b){ byBlk[b]=(byBlk[b]||0)+1; }); });
     var br=Object.keys(byBlk).map(function(k){return [k,byBlk[k]];}).sort(function(a,b){return b[1]-a[1];});
-    var max=br.length?br[0][1]:1;
-    var head='<div class="fn-drillcard"><div><div class="k-lbl">Signed up but not yet enabled</div><div style="color:var(--darkgray);font-size:12px;margin-top:2px">Each can be blocked on several KYC items; bars count how many merchants are stuck on each.</div></div><div class="n">'+num(stuck.length)+'</div></div>';
-    var bars=br.map(function(r){ return '<div class="fn-bk-row"><div class="fn-bk-lbl">'+esc(r[0])+'</div><div class="fn-bk-bar"><i style="width:'+(r[1]/max*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+r[1]+'</div></div>'; }).join('');
-    $('funnelDrillBody').innerHTML=head+(bars||'<p class="lp-note">No signed-up-but-blocked merchants in this selection.</p>');
+    var imax=br.length?br[0][1]:1;
+    var items='<div style="font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6A6A6A;margin:18px 0 6px">All pending items (any stage)</div>';
+    items+=br.map(function(r){ return '<div class="fn-bk-row"><div class="fn-bk-lbl">'+esc(r[0])+'</div><div class="fn-bk-bar"><i style="width:'+(r[1]/imax*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+r[1]+'</div></div>'; }).join('');
+    $('funnelDrillBody').innerHTML=head+(stuck.length?(order+items):'<p class="lp-note">No signed-up-but-blocked merchants in this selection.</p>');
   }
   function renderTerminal(rs){
     var ready = (window.__FUNNEL_TERMINAL_READY !== false);
