@@ -443,7 +443,7 @@
     <p class="lp-note" id="fnBotsNote" style="margin:0 0 10px"></p>
     <div id="funnelStages" class="fn-stages"></div>
     <h2 class="lp-h2" style="margin-top:28px">How long each step takes.</h2>
-    <p class="ov-sub" style="margin-top:2px">Median days between consecutive stages. Each step is measured only for merchants that have both dates on record (Enabled uses the Terms/KYC-acceptance date, which Stripe doesn't always populate), so the steps use different samples and won't add up to the overall Register&rarr;Transacting figure.</p>
+    <p class="ov-sub" style="margin-top:2px">Median days between stages, over merchants with both real dates on record (average and sample size below each). Stripe has no "KYC-passed" timestamp &mdash; Terms are accepted at signup &mdash; so the Enabled step isn't timeable and is shown as a count only; the steps use different samples so they won't sum.</p>
     <div id="funnelTimings" class="ov-kpis"></div>
     <div class="ov-head" style="margin-top:28px;margin-bottom:14px;gap:12px;flex-wrap:wrap">
       <div class="ov-range" id="funnelDrill">
@@ -1603,14 +1603,16 @@ applyMasterHash();
   function daysBetween(a,b){ if(!a||!b) return null; var d=(new Date(b)-new Date(a))/86400000; return (isFinite(d)&&d>=0)? d:null; }
   function stat(arr){ if(!arr.length) return null; arr.sort(function(x,y){return x-y;}); var mid=Math.floor(arr.length/2); var med=arr.length%2?arr[mid]:(arr[mid-1]+arr[mid])/2; var avg=arr.reduce(function(a,b){return a+b;},0)/arr.length; return {med:med,avg:avg,n:arr.length}; }
   function renderTimings(rs){
-    var t1=[],t2=[],t3=[],t4=[];
+    // Only steps with real, distinct timestamps are shown. There is no "KYC passed"
+    // timestamp in the Stripe data (Terms are accepted at signup), so the Signed up→Enabled
+    // duration can't be measured and is intentionally omitted.
+    var t1=[],tST=[],t4=[];
     rs.forEach(function(m){
       var a=daysBetween(m.registered_at,m.connected_at); if(a!=null)t1.push(a);
-      var b=daysBetween(m.connected_at,m.enabled_at); if(b!=null)t2.push(b);
-      var c=daysBetween(m.enabled_at,m.first_txn_at); if(c!=null)t3.push(c);
+      var b=daysBetween(m.connected_at,m.first_txn_at); if(b!=null)tST.push(b);
       var d=daysBetween(m.registered_at,m.first_txn_at); if(d!=null)t4.push(d);
     });
-    var defs=[['Register → Signed up',stat(t1)],['Signed up → Enabled',stat(t2)],['Enabled → Transacting',stat(t3)],['Register → Transacting',stat(t4)]];
+    var defs=[['Register → Signed up',stat(t1)],['Signed up → Transacting',stat(tST)],['Register → Transacting',stat(t4)]];
     $('funnelTimings').innerHTML=defs.map(function(d){
       var s=d[1];
       var v = s? (s.med.toFixed(s.med<10?1:0)+'d') : '—';
