@@ -710,8 +710,8 @@ async function fetchTerminalOrders(conn, acctIds) {
   }
   return by;
 }
-async function fetchUsRegistrations(conn, pilotIds) {
-  const ids = sanitizeIds(pilotIds);
+async function fetchUsRegistrations(conn, extraIds) {
+  const ids = sanitizeIds(extraIds);
   const inList = ids.length ? ids.join(',') : '0';
   const sql = loadSql('us_registrations.sql').replace('/*PILOT_IDS*/', inList);
   const rows = await executeQuery(conn, sql);
@@ -729,16 +729,36 @@ async function fetchUsRegistrations(conn, pilotIds) {
   }
   return by;
 }
-// Build the funnel: for every entrant (US-since-launch ∪ pilot) determine the furthest
-// stage reached and the timestamps at each stage, so the UI can render conversion + timings
-// and drill into KYC blockers / terminal acquisition. accountRows = CONNECTED_ACCOUNTS.
+// ── Bot / fraud exclusion ──────────────────────────────────────────────────────
+// US-only bot campaign (confirmed Apr–Jul 2026; see Second Brain note). Detect on the
+// BUSINESS NAME using the documented high-confidence signatures. Applied ONLY to
+// registration-only accounts (never to accounts that actually connected Stripe or to the
+// chosen pilot) so genuine merchants are never dropped.
+const ZW = /[​‌‍⁠﻿]/g;
+function normName(s) { return String(s || '').toLowerCase().replace(ZW, '').replace(/\s+/g, ' ').trim(); }
+function leet(s) { return s.replace(/0/g, 'o').replace(/1/g, 'i').replace(/3/g, 'e').replace(/4/g, 'a').replace(/5/g, 's').replace(/@/g, 'a'); }
+function isBotName(nameRaw, freqMap) {
+  const s = String(nameRaw || '');
+  if (!s.trim()) return false;
+  if (/[​‌‍⁠﻿]/.test(s)) return true;                          // zero-width chars
+  if (/[Ѐ-ӿ]/.test(s)) return true;                                            // Cyrillic homoglyphs (US context)
+  if (/^(order|sale|invoice|receipt|payment|txn|transaction|cart|checkout)[\s_#:.\-]+[0-9a-fx]{6,}/i.test(s)) return true; // transaction-id names
+  const L = leet(s.toLowerCase());
+  if (/(poshmark|posh|vinted|depop|etsy)/.test(L)) return true;                                   // marketplace impersonation
+  if (/seller\s*kyc/.test(L)) return true;                                                        // placeholder
+  if (/^[A-Z][a-z]{2,}[A-Z][a-z]{2,}\d{1,3}$/.test(s)) return true;                               // template FirstLastNN
+  if (freqMap && freqMap[normName(s)] >= 3) return true;                                          // bulk cluster (same name >=3x)
+  return false;
+}
+// Build the funnel population: (genuine US registrations since launch) ∪ (all prod connected
+// accounts = the payments book) ∪ (pilot 500), with bots excluded from the registration mass.
+// Every merchant carries its stage timestamps so the UI can slice by date range / pilot and
+// recompute stages, timings, and the KYC / terminal drill-downs entirely client-side.
 function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
   termByAcct = termByAcct || {};
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
 
-  // owner_id -> connected-account facts (connect date, KYC/enable, first-txn, blockers).
-  // Map Stripe acct -> owner_id via metadata so we can attach first-transaction date.
   const acctToOwner = {};
   Object.keys(meta || {}).forEach(a => { if (meta[a] && meta[a].owner_id) acctToOwner[a] = String(meta[a].owner_id); });
   const connByOwner = {};
@@ -746,74 +766,79 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
     const acct = get(r, 'stripe_account_id');
     const owner = acctToOwner[acct] || (get(r, 'merchant_id') != null ? String(get(r, 'merchant_id')) : null);
     if (!owner) continue;
+    // Only prod accounts count as real signups (test accounts are excluded).
+    if (meta[acct] && meta[acct].environment && meta[acct].environment !== 'prod') continue;
     const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
     const connected_at = toDate(get(r, 'stripe_connected_at'));
     const enabled_at = (status === 'Enabled') ? (toDate(get(r, 'tos_accepted_at')) || connected_at) : null;
     const codes = [...parseReqList(get(r, 'requirements_currently_due')), ...parseReqList(get(r, 'requirements_past_due'))];
     const blockers = [...new Set(codes.map(labelFor).filter(Boolean))];
     const first_txn_at = (txnByAcct[acct] && txnByAcct[acct].started) ? toDate(txnByAcct[acct].started) : null;
-    // Keep the most-progressed account if an owner somehow has several.
+    const bname = get(r, 'business_name') || get(r, 'contact_name') || '';
     const prev = connByOwner[owner];
     const rank = first_txn_at ? 3 : (status === 'Enabled' ? 2 : 1);
     if (!prev || rank > prev._rank) {
-      connByOwner[owner] = { _rank: rank, acct, status, connected_at, enabled_at, first_txn_at, blockers };
+      connByOwner[owner] = { _rank: rank, acct, status, connected_at, enabled_at, first_txn_at, blockers, bname };
     }
   }
 
-  // Universe = every owner in registrations (US-since-launch) ∪ pilot.
-  const universe = new Set([...Object.keys(regs), ...Object.keys(pilotByOid)]);
+  // Name-frequency map for bulk-cluster detection over the registration mass.
+  const freq = {};
+  Object.keys(regs).forEach(oid => { const n = normName(regs[oid].name); if (n) freq[n] = (freq[n] || 0) + 1; });
+
+  const universe = new Set([...Object.keys(regs), ...Object.keys(pilotByOid), ...Object.keys(connByOwner)]);
   const merchants = [];
   const stages = { entered: 0, signed_up: 0, enabled: 0, transacting: 0 };
+  let botsExcluded = 0;
   universe.forEach(oid => {
     const reg = regs[oid] || null;
     const p = pilotByOid[oid] || null;
     const c = connByOwner[oid] || null;
+    // Bot filter: registration-only accounts (never connected, not pilot) matching the signatures.
+    if (!c && !p && isBotName(reg && reg.name, freq)) { botsExcluded++; return; }
     let stage = 'entered';
     if (c) { stage = 'signed_up'; if (c.status === 'Enabled') stage = 'enabled'; if (c.first_txn_at) stage = 'transacting'; }
     stages.entered++;
-    if (stage !== 'entered') stages.signed_up++;
-    if (stage === 'enabled' || stage === 'transacting') stages.enabled++;
-    if (stage === 'transacting') stages.transacting++;
-    // Emit per-merchant detail only for the actionable set: anyone who signed up, plus
-    // the whole pilot (so pilot laggards at "entered" are visible). The "entered" mass of
-    // brand-new US registrants is represented by the stage counts alone.
-    if (c || p) {
-      merchants.push({
-        oid,
-        name: (c && meta && meta[c.acct] && '') || (reg && reg.name) || (p && p.name) || oid,
-        email: (reg && reg.email) || (p && p.email) || '',
-        coh: p ? p.coh : '',                  // pilot cohort (active/churning) or '' if new US entrant
-        src: reg && p ? 'both' : (p ? 'pilot' : 'reg'),
-        stage,
-        registered_at: reg ? reg.registered_at : null,
-        connected_at: c ? c.connected_at : null,
-        enabled_at: c ? c.enabled_at : null,
-        first_txn_at: c ? c.first_txn_at : null,
-        kyc: (c && c.status !== 'Enabled') ? c.blockers : [],
-        terminal_at: (c && termByAcct[c.acct]) ? termByAcct[c.acct].first_order : null,
-      });
-    }
+    if (c) stages.signed_up++;
+    if (c && (c.status === 'Enabled')) stages.enabled++;
+    if (c && c.first_txn_at) stages.transacting++;
+    merchants.push({
+      oid,
+      name: (c && c.bname) || (reg && reg.name) || (p && p.name) || oid,
+      email: (reg && reg.email) || (p && p.email) || '',
+      coh: p ? p.coh : '',                    // pilot cohort (active/churning) or '' if not pilot
+      pilot: p ? 1 : 0,
+      stage,
+      registered_at: reg ? reg.registered_at : null,
+      connected_at: c ? c.connected_at : null,
+      enabled_at: c ? c.enabled_at : null,
+      first_txn_at: c ? c.first_txn_at : null,
+      kyc: (c && c.status !== 'Enabled') ? c.blockers : [],
+      terminal_at: (c && termByAcct[c.acct]) ? termByAcct[c.acct].first_order : null,
+    });
   });
-  return { entered_total: stages.entered, stages, merchants, launch_start: LAUNCH_START };
+  return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
 function writeFunnel(funnel, terminalReady) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
-// Entry cohort = US merchants registered since ${LAUNCH_START} (LOYVERSE_MERCHANTS) ∪ pilot 500.
-// Stages: entered -> signed_up (connected a payments account) -> enabled (passed KYC) -> transacting.
-// Per-merchant timestamps drive the timing metrics; kyc[] drives the KYC drill-down;
-// terminal_at (pending TERMINAL_HARDWARE_ORDERS) drives the enablement/terminal drill-down.
+// Population = genuine US registrations since ${LAUNCH_START} (LOYVERSE_MERCHANTS, BOTS EXCLUDED)
+// ∪ all prod connected accounts (the payments book) ∪ pilot 500.
+// Stages: entered -> signed_up (connected) -> enabled (passed KYC) -> transacting. Each merchant
+// carries its stage timestamps; the UI recomputes stages/timings/drill-downs by date range + pilot.
+// Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
 // Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
 window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
 window.__FUNNEL_STAGES = ${JSON.stringify(funnel.stages)};
 window.__FUNNEL_ENTERED_TOTAL = ${JSON.stringify(funnel.entered_total)};
+window.__FUNNEL_BOTS_EXCLUDED = ${JSON.stringify(funnel.botsExcluded)};
 window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
 window.__FUNNEL_TERMINAL_READY = ${JSON.stringify(!!terminalReady)};
 window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
 `;
   fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
-  console.log(`✓ Wrote ${FUNNEL_FILE} — entered ${funnel.entered_total}, signed_up ${funnel.stages.signed_up}, enabled ${funnel.stages.enabled}, transacting ${funnel.stages.transacting}, detail rows ${funnel.merchants.length}`);
+  console.log(`✓ Wrote ${FUNNEL_FILE} — entered ${funnel.entered_total} (bots excluded ${funnel.botsExcluded}), signed_up ${funnel.stages.signed_up}, enabled ${funnel.stages.enabled}, transacting ${funnel.stages.transacting}, rows ${funnel.merchants.length}`);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -887,8 +912,12 @@ async function main() {
   // Funnel (Payments sub-tab) — entry cohort (US-since-launch ∪ pilot) → stage progression.
   try {
     const pilot = readPilot();
-    const regs = await fetchUsRegistrations(conn, pilot.map(p => p.oid));
-    console.log(`✓ us_registrations: ${Object.keys(regs).length} entrants (US since ${LAUNCH_START} + pilot)`);
+    // Registration dates for the pilot AND every connected owner (so pre-launch signups still
+    // get a registered_at for the timing clock + date-range slicing), plus all US-since-launch regs.
+    const connOwners = Object.values(meta).map(x => x.owner_id).filter(Boolean).map(String);
+    const regIds = [...pilot.map(p => p.oid), ...connOwners];
+    const regs = await fetchUsRegistrations(conn, regIds);
+    console.log(`✓ us_registrations: ${Object.keys(regs).length} rows (US since ${LAUNCH_START} + pilot + connected owners)`);
     let termByAcct = {}, terminalReady = false;
     try { termByAcct = await fetchTerminalOrders(conn, prodAccts); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByAcct).length} accounts with a terminal order`); }
     catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }

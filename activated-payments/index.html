@@ -421,7 +421,26 @@
       <h1 class="ov-h1">Activation Funnel<span class="dot">.</span></h1>
       <div class="ov-updated" id="funnelUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">Every US merchant that came into Loyverse since the payments launch (<span id="funnelLaunch">2026-07-01</span>) plus the pilot 500, tracked through the funnel: <b>Entered</b> &rarr; <b>Signed up</b> (connected a payments account) &rarr; <b>Enabled</b> (passed KYC) &rarr; <b>Transacting</b>. Refreshes automatically each morning.</p>
+    <p class="ov-sub">US merchants that came into Loyverse since the payments launch (<span id="funnelLaunch">2026-07-01</span>) plus the pilot 500, tracked through the funnel: <b>Entered</b> &rarr; <b>Signed up</b> (connected a payments account) &rarr; <b>Enabled</b> (passed KYC) &rarr; <b>Transacting</b>. Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
+    <div class="ov-head" style="margin:6px 0 10px;gap:12px;flex-wrap:wrap">
+      <div class="ov-range" id="fnPop">
+        <button data-p="all" class="on">All US + pilot</button>
+        <button data-p="pilot">Pilot 500 only</button>
+      </div>
+      <div class="ov-range" id="fnRange">
+        <button data-r="all" class="on">All time</button>
+        <button data-r="month">This month</button>
+        <button data-r="30">Last 30d</button>
+        <button data-r="90">Last 90d</button>
+        <button data-r="custom">Custom</button>
+      </div>
+      <div id="fnCustom" style="display:none;align-items:center;gap:6px;font-size:12px;color:var(--darkgray)">
+        <input type="date" id="fnFrom" class="lp-tsearch" style="width:148px">
+        <span>to</span>
+        <input type="date" id="fnTo" class="lp-tsearch" style="width:148px">
+      </div>
+    </div>
+    <p class="lp-note" id="fnBotsNote" style="margin:0 0 10px"></p>
     <div id="funnelStages" class="fn-stages"></div>
     <h2 class="lp-h2" style="margin-top:28px">How long each step takes.</h2>
     <p class="ov-sub" style="margin-top:2px">Median days between stages, for merchants who reached each step (average and sample size below each).</p>
@@ -1534,25 +1553,46 @@ applyMasterHash();
 (function(){
   var $=function(id){return document.getElementById(id);};
   if(!$('funnelStages')) return;
-  var S=window.__FUNNEL_STAGES||{entered:0,signed_up:0,enabled:0,transacting:0};
-  var ENT=window.__FUNNEL_ENTERED_TOTAL||S.entered||0;
   var M=window.__FUNNEL_MERCHANTS||[];
+  var BOTS=window.__FUNNEL_BOTS_EXCLUDED||0;
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function num(v){ return (Math.round(Number(v)||0)).toLocaleString('en-US'); }
-  function pct(a,b){ return b? Math.round(a/b*100):0; }
   function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; return (v>0&&v<1)?'<1%':Math.round(v)+'%'; }
-  var STG=[
-    {lbl:'Entered',c:'b0',n:ENT},
-    {lbl:'Signed up',c:'b1',n:S.signed_up||0},
-    {lbl:'Enabled',c:'b2',n:S.enabled||0},
-    {lbl:'Transacting',c:'b3',n:S.transacting||0}
-  ];
-  function renderStages(){
+  var state={pop:'all',range:'all',from:null,to:null};
+  function inRange(d){
+    if(state.range==='all') return true;
+    if(!d) return false;
+    var t=new Date(d).getTime(); if(isNaN(t)) return false;
+    var now=new Date(), lo=null, hi=null;
+    if(state.range==='month'){ lo=new Date(now.getFullYear(),now.getMonth(),1).getTime(); }
+    else if(state.range==='30'){ lo=now.getTime()-30*864e5; }
+    else if(state.range==='90'){ lo=now.getTime()-90*864e5; }
+    else if(state.range==='custom'){ lo=state.from?new Date(state.from).getTime():null; hi=state.to?new Date(state.to).getTime()+864e5:null; }
+    if(lo!=null && t<lo) return false;
+    if(hi!=null && t>hi) return false;
+    return true;
+  }
+  // Date range filters the ENTRY cohort by registration date (a proper nested funnel);
+  // "All time" includes everyone, even records with no registration date on file.
+  function rows(){
+    return M.filter(function(m){
+      if(state.pop==='pilot' && !m.pilot) return false;
+      if(state.range==='all') return true;
+      return inRange(m.registered_at);
+    });
+  }
+  function computeStages(rs){
+    var s={entered:rs.length,signed_up:0,enabled:0,transacting:0};
+    rs.forEach(function(m){ if(m.connected_at)s.signed_up++; if(m.enabled_at)s.enabled++; if(m.first_txn_at)s.transacting++; });
+    return s;
+  }
+  function renderStages(S){
+    var STG=[{lbl:'Entered',c:'b0',n:S.entered},{lbl:'Signed up',c:'b1',n:S.signed_up},{lbl:'Enabled',c:'b2',n:S.enabled},{lbl:'Transacting',c:'b3',n:S.transacting}];
     var max=STG[0].n||1;
     $('funnelStages').innerHTML=STG.map(function(s,i){
       var w=Math.max(2, s.n/max*100);
-      var conv= i===0 ? (num(s.n)+' entrants') :
-        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,ENT)+' of entered') : ''));
+      var conv= i===0 ? (num(s.n)+' merchants') :
+        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,STG[0].n)+' of entered') : ''));
       return '<div class="fn-row"><div class="fn-lbl">'+s.lbl+'</div>'+
         '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+num(s.n)+'</div></div>'+
         '<div class="fn-conv">'+conv+'</div></div>';
@@ -1560,9 +1600,9 @@ applyMasterHash();
   }
   function daysBetween(a,b){ if(!a||!b) return null; var d=(new Date(b)-new Date(a))/86400000; return (isFinite(d)&&d>=0)? d:null; }
   function stat(arr){ if(!arr.length) return null; arr.sort(function(x,y){return x-y;}); var mid=Math.floor(arr.length/2); var med=arr.length%2?arr[mid]:(arr[mid-1]+arr[mid])/2; var avg=arr.reduce(function(a,b){return a+b;},0)/arr.length; return {med:med,avg:avg,n:arr.length}; }
-  function renderTimings(){
+  function renderTimings(rs){
     var t1=[],t2=[],t3=[],t4=[];
-    M.forEach(function(m){
+    rs.forEach(function(m){
       var a=daysBetween(m.registered_at,m.connected_at); if(a!=null)t1.push(a);
       var b=daysBetween(m.connected_at,m.enabled_at); if(b!=null)t2.push(b);
       var c=daysBetween(m.enabled_at,m.first_txn_at); if(c!=null)t3.push(c);
@@ -1572,39 +1612,53 @@ applyMasterHash();
     $('funnelTimings').innerHTML=defs.map(function(d){
       var s=d[1];
       var v = s? (s.med.toFixed(s.med<10?1:0)+'d') : '—';
-      var sub = s? ('avg '+s.avg.toFixed(1)+'d · n='+s.n) : 'no dated pairs yet';
+      var sub = s? ('avg '+s.avg.toFixed(1)+'d · n='+s.n) : 'no dated pairs';
       return '<div class="ov-kpi"><div class="k-num">'+v+'</div><div class="k-lbl">'+esc(d[0])+'</div><div class="k-sub">'+sub+'</div></div>';
     }).join('');
   }
   var drill='kyc';
-  function renderKyc(){
-    var stuck=M.filter(function(m){ return m.stage==='signed_up'; }); // connected, not yet enabled
+  function renderKyc(rs){
+    var stuck=rs.filter(function(m){ return m.connected_at && !m.enabled_at; }); // signed up, not enabled
     var byBlk={};
     stuck.forEach(function(m){ (m.kyc&&m.kyc.length?m.kyc:['(reason not captured)']).forEach(function(b){ byBlk[b]=(byBlk[b]||0)+1; }); });
-    var rows=Object.keys(byBlk).map(function(k){return [k,byBlk[k]];}).sort(function(a,b){return b[1]-a[1];});
-    var max=rows.length?rows[0][1]:1;
+    var br=Object.keys(byBlk).map(function(k){return [k,byBlk[k]];}).sort(function(a,b){return b[1]-a[1];});
+    var max=br.length?br[0][1]:1;
     var head='<div class="fn-drillcard"><div><div class="k-lbl">Signed up but not yet enabled</div><div style="color:var(--darkgray);font-size:12px;margin-top:2px">Each can be blocked on several KYC items; bars count how many merchants are stuck on each.</div></div><div class="n">'+num(stuck.length)+'</div></div>';
-    var bars=rows.map(function(r){ return '<div class="fn-bk-row"><div class="fn-bk-lbl">'+esc(r[0])+'</div><div class="fn-bk-bar"><i style="width:'+(r[1]/max*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+r[1]+'</div></div>'; }).join('');
-    $('funnelDrillBody').innerHTML=head+(bars||'<p class="lp-note">No signed-up-but-blocked merchants right now.</p>');
+    var bars=br.map(function(r){ return '<div class="fn-bk-row"><div class="fn-bk-lbl">'+esc(r[0])+'</div><div class="fn-bk-bar"><i style="width:'+(r[1]/max*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+r[1]+'</div></div>'; }).join('');
+    $('funnelDrillBody').innerHTML=head+(bars||'<p class="lp-note">No signed-up-but-blocked merchants in this selection.</p>');
   }
-  function renderTerminal(){
-    var ready = (window.__FUNNEL_TERMINAL_READY !== false); // false only before the query is wired
+  function renderTerminal(rs){
+    var ready = (window.__FUNNEL_TERMINAL_READY !== false);
     if(!ready){ $('funnelDrillBody').innerHTML='<p class="lp-note">Terminal acquisition populates on the next pull once the terminal-orders query is wired.</p>'; return; }
-    var pool=M.filter(function(m){return m.stage!=='entered';});           // signed up / enabled / transacting
+    var pool=rs.filter(function(m){return m.connected_at;});               // signed up onward
     var acq=pool.filter(function(m){return m.terminal_at;});
     var no=pool.length-acq.length;
-    var note = acq.length? '' : '<p class="lp-note">No merchant in the signed-up cohort has ordered a Stripe Terminal card reader yet &mdash; they may be using Tap to Pay or existing hardware. This is a common reason enabled merchants stall before transacting.</p>';
+    var note = acq.length? '' : '<p class="lp-note">No merchant in this selection has ordered a Stripe Terminal card reader yet &mdash; they may be using Tap to Pay or existing hardware. This is a common reason enabled merchants stall before transacting.</p>';
     $('funnelDrillBody').innerHTML=
       '<div class="fn-drillcard"><div class="k-lbl">Ordered a Stripe Terminal reader</div><div class="n">'+num(acq.length)+'</div></div>'+
       '<div class="fn-drillcard"><div class="k-lbl">No terminal yet (of '+num(pool.length)+' signed up)</div><div class="n">'+num(no)+'</div></div>'+note;
   }
-  function renderDrill(){ if(drill==='kyc') renderKyc(); else renderTerminal(); }
+  function renderDrill(rs){ if(drill==='kyc') renderKyc(rs); else renderTerminal(rs); }
+  function renderBots(rs){
+    var extra = (state.pop==='pilot') ? ' · showing the pilot 500 only' : '';
+    var rng = state.range==='all' ? 'all time' : (state.range==='month'?'this month':(state.range==='custom'?'custom range':'last '+state.range+' days'));
+    $('fnBotsNote').textContent = num(BOTS)+' confirmed US bot/fraud registrations excluded from the entry count. Date range: '+rng+extra+'.';
+  }
+  function renderAll(){ var rs=rows(); renderStages(computeStages(rs)); renderTimings(rs); renderDrill(rs); renderBots(rs); }
+
+  var pb=$('fnPop').querySelectorAll('button');
+  for(var i=0;i<pb.length;i++){ (function(b){ b.addEventListener('click',function(){ state.pop=b.getAttribute('data-p'); for(var j=0;j<pb.length;j++) pb[j].classList.toggle('on',pb[j]===b); renderAll(); }); })(pb[i]); }
+  var rb=$('fnRange').querySelectorAll('button');
+  for(var k=0;k<rb.length;k++){ (function(b){ b.addEventListener('click',function(){ state.range=b.getAttribute('data-r'); for(var j=0;j<rb.length;j++) rb[j].classList.toggle('on',rb[j]===b); $('fnCustom').style.display=(state.range==='custom')?'flex':'none'; renderAll(); }); })(rb[k]); }
+  var ff=$('fnFrom'), ft=$('fnTo');
+  if(ff) ff.addEventListener('change',function(){ state.from=ff.value||null; if(state.range==='custom') renderAll(); });
+  if(ft) ft.addEventListener('change',function(){ state.to=ft.value||null; if(state.range==='custom') renderAll(); });
   var db=$('funnelDrill').querySelectorAll('button');
-  for(var i=0;i<db.length;i++){ (function(b){ b.addEventListener('click',function(){ drill=b.getAttribute('data-d'); for(var j=0;j<db.length;j++) db[j].classList.toggle('on',db[j]===b); renderDrill(); }); })(db[i]); }
+  for(var d2=0;d2<db.length;d2++){ (function(b){ b.addEventListener('click',function(){ drill=b.getAttribute('data-d'); for(var j=0;j<db.length;j++) db[j].classList.toggle('on',db[j]===b); renderDrill(rows()); }); })(db[d2]); }
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
   var ls=$('funnelLaunch'); if(ls&&window.__FUNNEL_LAUNCH_START) ls.textContent=window.__FUNNEL_LAUNCH_START;
   var inited=false;
-  window.__FUNNEL_INIT=function(){ if(inited)return; inited=true; renderStages(); renderTimings(); renderDrill(); };
+  window.__FUNNEL_INIT=function(){ if(inited)return; inited=true; renderAll(); };
   window.__FUNNEL_INIT();
 })();
 
