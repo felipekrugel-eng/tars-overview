@@ -796,7 +796,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct) {
   });
   return { entered_total: stages.entered, stages, merchants, launch_start: LAUNCH_START };
 }
-function writeFunnel(funnel) {
+function writeFunnel(funnel, terminalReady) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
@@ -809,6 +809,7 @@ window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
 window.__FUNNEL_STAGES = ${JSON.stringify(funnel.stages)};
 window.__FUNNEL_ENTERED_TOTAL = ${JSON.stringify(funnel.entered_total)};
 window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
+window.__FUNNEL_TERMINAL_READY = ${JSON.stringify(!!terminalReady)};
 window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
 `;
   fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
@@ -888,11 +889,11 @@ async function main() {
     const pilot = readPilot();
     const regs = await fetchUsRegistrations(conn, pilot.map(p => p.oid));
     console.log(`✓ us_registrations: ${Object.keys(regs).length} entrants (US since ${LAUNCH_START} + pilot)`);
-    let termByAcct = {};
-    try { termByAcct = await fetchTerminalOrders(conn, prodAccts); console.log(`✓ terminal_orders: ${Object.keys(termByAcct).length} accounts with a terminal order`); }
+    let termByAcct = {}, terminalReady = false;
+    try { termByAcct = await fetchTerminalOrders(conn, prodAccts); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByAcct).length} accounts with a terminal order`); }
     catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByAcct);
-    writeFunnel(funnel);
+    writeFunnel(funnel, terminalReady);
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)

@@ -1540,6 +1540,7 @@ applyMasterHash();
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function num(v){ return (Math.round(Number(v)||0)).toLocaleString('en-US'); }
   function pct(a,b){ return b? Math.round(a/b*100):0; }
+  function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; return (v>0&&v<1)?'<1%':Math.round(v)+'%'; }
   var STG=[
     {lbl:'Entered',c:'b0',n:ENT},
     {lbl:'Signed up',c:'b1',n:S.signed_up||0},
@@ -1551,7 +1552,7 @@ applyMasterHash();
     $('funnelStages').innerHTML=STG.map(function(s,i){
       var w=Math.max(2, s.n/max*100);
       var conv= i===0 ? (num(s.n)+' entrants') :
-        ('<b>'+pct(s.n,STG[i-1].n)+'%</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pct(s.n,ENT)+'% of entered') : ''));
+        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,ENT)+' of entered') : ''));
       return '<div class="fn-row"><div class="fn-lbl">'+s.lbl+'</div>'+
         '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+num(s.n)+'</div></div>'+
         '<div class="fn-conv">'+conv+'</div></div>';
@@ -1587,14 +1588,15 @@ applyMasterHash();
     $('funnelDrillBody').innerHTML=head+(bars||'<p class="lp-note">No signed-up-but-blocked merchants right now.</p>');
   }
   function renderTerminal(){
-    var haveData=M.some(function(m){return m.terminal_at;});
-    if(!haveData){ $('funnelDrillBody').innerHTML='<p class="lp-note">Terminal acquisition populates on the next pull once the terminal-orders query is wired. It will show, among signed-up / enabled merchants, who has ordered a card reader and who hasn’t &mdash; a common reason enabled merchants never start transacting.</p>'; return; }
-    var pool=M.filter(function(m){return m.stage!=='entered';});
+    var ready = (window.__FUNNEL_TERMINAL_READY !== false); // false only before the query is wired
+    if(!ready){ $('funnelDrillBody').innerHTML='<p class="lp-note">Terminal acquisition populates on the next pull once the terminal-orders query is wired.</p>'; return; }
+    var pool=M.filter(function(m){return m.stage!=='entered';});           // signed up / enabled / transacting
     var acq=pool.filter(function(m){return m.terminal_at;});
     var no=pool.length-acq.length;
+    var note = acq.length? '' : '<p class="lp-note">No merchant in the signed-up cohort has ordered a Stripe Terminal card reader yet &mdash; they may be using Tap to Pay or existing hardware. This is a common reason enabled merchants stall before transacting.</p>';
     $('funnelDrillBody').innerHTML=
-      '<div class="fn-drillcard"><div class="k-lbl">Ordered a terminal</div><div class="n">'+num(acq.length)+'</div></div>'+
-      '<div class="fn-drillcard"><div class="k-lbl">No terminal yet (signed up / enabled)</div><div class="n">'+num(no)+'</div></div>';
+      '<div class="fn-drillcard"><div class="k-lbl">Ordered a Stripe Terminal reader</div><div class="n">'+num(acq.length)+'</div></div>'+
+      '<div class="fn-drillcard"><div class="k-lbl">No terminal yet (of '+num(pool.length)+' signed up)</div><div class="n">'+num(no)+'</div></div>'+note;
   }
   function renderDrill(){ if(drill==='kyc') renderKyc(); else renderTerminal(); }
   var db=$('funnelDrill').querySelectorAll('button');
