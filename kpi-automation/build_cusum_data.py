@@ -30,6 +30,10 @@ OUT    = pathlib.Path(os.environ.get("CUSUMDATA_OUT", V2 / "cusum-data.js"))
 STATE  = pathlib.Path(os.environ.get("CUSUM_STATE", HERE / "cusum-state.json"))
 SQL_FILE = "cusum_hourly_registrations.sql"
 HISTORY_KEEP = 60
+# Bump whenever the counting basis of the SQL changes (e.g. new fraud filter).
+# On mismatch we drop today's mixed-basis progress and rebaseline at the next
+# poll, so the discontinuous total drop never shows as negative/zero regs.
+FILTER_VERSION = 2
 
 
 def _private_key():
@@ -128,6 +132,13 @@ def main():
 
     st = load_state()
 
+    # ---- filter-version rebaseline (counting basis changed) ----
+    if st.get("filterVersion") != FILTER_VERSION:
+        # Discard today's mixed-basis progress WITHOUT archiving it; force the
+        # rollover below to rebaseline against the newly-filtered totals.
+        st.pop("day", None)
+        st.pop("todayCum", None)
+
     # ---- day rollover / first run ----
     if st.get("day") != day:
         hist = st.get("history", {})
@@ -139,6 +150,8 @@ def main():
                 hist.pop(k, None)
         st = {"day": day, "baselineTotal": total_now, "baselineByCountry": dict(by_country_now),
               "todayCum": [None] * 24, "complete": hour <= 1, "history": hist}
+
+    st["filterVersion"] = FILTER_VERSION
 
     base_total = int(st.get("baselineTotal", total_now))
     base_cc    = st.get("baselineByCountry", {})
