@@ -29,11 +29,13 @@ V2     = pathlib.Path(os.environ.get("V2_DIR", HERE.parent / "KPI Dashboard v2 (
 OUT    = pathlib.Path(os.environ.get("CUSUMDATA_OUT", V2 / "cusum-data.js"))
 STATE  = pathlib.Path(os.environ.get("CUSUM_STATE", HERE / "cusum-state.json"))
 SQL_FILE = "cusum_hourly_registrations.sql"
+RECON_SQL_FILE = "cusum_today_reconstruct.sql"
 HISTORY_KEEP = 60
 # Bump whenever the counting basis of the SQL changes (e.g. new fraud filter).
-# On mismatch we drop today's mixed-basis progress and rebaseline at the next
-# poll, so the discontinuous total drop never shows as negative/zero regs.
-FILTER_VERSION = 2
+# On mismatch we RECONSTRUCT today's line from a country x hour query of today's
+# registrations on the new basis (instead of zeroing it), and back-derive the
+# midnight baseline as (count now - regs today).
+FILTER_VERSION = 3
 
 
 def _private_key():
@@ -111,13 +113,19 @@ def main():
     hour  = now.hour
     as_of = now.strftime("%Y-%m-%d %H:%M")
 
-    sql = (SQLDIR / SQL_FILE).read_text()
+    st = load_state()
+    need_recon = st.get("filterVersion") != FILTER_VERSION and st.get("day")
+
     conn = connect()
     try:
         cur = conn.cursor()
         cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 300")
-        cur.execute(sql)
+        cur.execute((SQLDIR / SQL_FILE).read_text())
         rows = cur.fetchall()
+        recon_rows = []
+        if need_recon:
+            cur.execute((SQLDIR / RECON_SQL_FILE).read_text())
+            recon_rows = cur.fetchall()
         cur.close()
     finally:
         conn.close()
@@ -130,14 +138,29 @@ def main():
         elif cc:
             by_country_now[str(cc)] = regs
 
-    st = load_state()
-
     # ---- filter-version rebaseline (counting basis changed) ----
-    if st.get("filterVersion") != FILTER_VERSION:
-        # Discard today's mixed-basis progress WITHOUT archiving it; force the
-        # rollover below to rebaseline against the newly-filtered totals.
-        st.pop("day", None)
-        st.pop("todayCum", None)
+    if need_recon:
+        # Rebuild today's cumulative line on the NEW counting basis from the
+        # reconstruction query (country x CREATED_AT-hour of today's filtered
+        # registrations), then back-derive the midnight baseline. Counts whose
+        # CREATED_AT hour sits past the current UTC poll hour (clock skew) are
+        # folded into the current hour so the line stays consistent with "now".
+        hourly, cc_today = [0] * 24, {}
+        for cc, hr, n in recon_rows:
+            n = int(n or 0)
+            if cc:
+                cc_today[str(cc)] = cc_today.get(str(cc), 0) + n
+            h = int(hr) if hr is not None else hour
+            hourly[min(max(h, 0), 23) if h <= hour else hour] += n
+        run, cum_recon = 0, [None] * 24
+        for h in range(hour + 1):
+            run += hourly[h]
+            cum_recon[h] = run
+        st["day"] = day
+        st["todayCum"] = cum_recon
+        st["baselineTotal"] = total_now - run
+        st["baselineByCountry"] = {cc: n - cc_today.get(cc, 0) for cc, n in by_country_now.items()}
+        st["complete"] = False   # reconstructed day: keep out of ATH candidacy
 
     # ---- day rollover / first run ----
     if st.get("day") != day:

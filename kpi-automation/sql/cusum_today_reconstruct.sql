@@ -1,12 +1,9 @@
--- LOYVERSE PAYMENTS FUNNEL — top-of-funnel entry cohort (automation-safe)
--- Source: LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
---
--- The funnel begins with everyone who came into Loyverse in the US since the Loyverse
--- Payments launch (2026-07-01), PLUS the chosen pilot 500 (owner ids injected at runtime
--- from pilot500-data.js — a selected cohort, not hardcoded infrastructure).
--- LOYVERSE_ID is the Loyverse owner id and joins CONNECTED_ACCOUNTS.MERCHANT_ID, so each
--- entrant can be tracked forward through Signed up -> Enabled (KYC) -> Transacting.
--- CREATED_AT is the merchant's Loyverse registration timestamp (start of the timing clock).
+-- =================================================================
+-- CUSUM today-line RECONSTRUCTION (one-shot, used on FILTER_VERSION bumps).
+-- Returns today's filtered registrations per country x hour so the CUSUM can
+-- rebuild today's cumulative line after the counting basis changes, instead
+-- of zeroing it. READ-ONLY single SELECT (works with DATA_VIEWER).
+-- =================================================================
 WITH -- ----------------------------------------------------------------
     -- US BOT/FAKE-ACCOUNT FILTER (added 2026-07-21)
     -- Excludes the US registration bot campaign quantified in the July 2026
@@ -71,14 +68,21 @@ WITH -- ----------------------------------------------------------------
                 AND p.CREATED_AT < '2026-03-01'
                 AND TRANSLATE(LOWER(TRIM(p.BUSINESS_NAME)), '01345@', 'oieasa') = c.NORM_NAME
           )
-    )
-SELECT
-    LOYVERSE_ID   AS owner_id,
-    BUSINESS_NAME AS name,
-    EMAIL         AS email,
-    COUNTRY       AS country,
-    CREATED_AT    AS registered_at
-FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
-WHERE ((UPPER(TRIM(COUNTRY)) = 'US' AND CREATED_AT >= '2026-07-01')
-   OR LOYVERSE_ID IN (/*PILOT_IDS*/))
-  AND LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts);   -- [US-bot-filter]
+    ),
+first_reg AS (                                   -- one row per merchant (email-deduped) + country + first-seen time
+    SELECT LOWER(TRIM(EMAIL))        AS email,
+           MAX(UPPER(TRIM(COUNTRY))) AS country,
+           MIN(CREATED_AT)           AS first_at
+    FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+    WHERE EMAIL IS NOT NULL
+      AND LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]
+    GROUP BY 1
+)
+-- Today's NEW registrations (filtered basis), broken down by country x hour of
+-- CREATED_AT. Same TO_DATE(...) day convention as the daily as-of queries.
+SELECT country                AS country,
+       HOUR(first_at)         AS hr,
+       COUNT(*)               AS regs
+FROM first_reg
+WHERE TO_DATE(first_at) = TO_DATE(CONVERT_TIMEZONE('UTC', CURRENT_TIMESTAMP()))
+GROUP BY 1, 2;
