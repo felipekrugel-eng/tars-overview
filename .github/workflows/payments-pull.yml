@@ -103,6 +103,7 @@ jobs:
           # queries, or template.
           git add payments-automation/data/transactions.csv \
                   payments-automation/data/icplus_costs.csv \
+                  payments-automation/data/platform_fees.csv \
                   payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx \
                   activated-payments/margins-data.js
           if git diff --cached --quiet; then

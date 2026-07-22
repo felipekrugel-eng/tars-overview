@@ -30,8 +30,14 @@ MIN_ROWS = int(os.environ.get("MIN_ROWS", "100"))
 
 Q1 = "query1_transactions.sql"
 Q2 = "query2_icplus_costs.sql"
+Q3 = "query3_platform_fees.sql"
 OUT1 = "transactions.csv"
 OUT2 = "icplus_costs.csv"
+OUT3 = "platform_fees.csv"
+
+# Stable header for platform_fees.csv so refresh_workbook can rely on it even when the
+# fee query is skipped/errors (it then just sees zero rows -> every Stripe-fee bucket 0).
+PF_HEADER = ["FEE_CATEGORY", "CURRENCY", "N", "TOTAL_AMOUNT_MINOR"]
 
 
 def _private_key():
@@ -87,6 +93,27 @@ def main():
             print(f"Running {Q2} ...")
             c2, r2 = run_query(cur, Q2)
             print(f"  icplus rows       = {len(r2):,}  cols = {c2}")
+
+            # Query 3 — Stripe platform fees from balance-transaction actuals.
+            # NON-FATAL: if the table/grant is missing or the query errors, keep going
+            # with an empty result so the (existing) transactions + icplus pull still
+            # succeeds and refresh falls back to zero for every Stripe-fee bucket.
+            print(f"Running {Q3} ...")
+            try:
+                c3, r3 = run_query(cur, Q3)
+                print(f"  platform-fee rows = {len(r3):,}  cols = {c3}")
+                print("  --- Stripe platform-fee buckets (minor units, negative = cost) ---")
+                for row in r3:
+                    cat, curr, n, amt = row
+                    major = (float(amt) / 100.0) if amt is not None else 0.0
+                    print(f"    {str(cat):14s} {str(curr):4s} n={int(n):5d}  "
+                          f"total={amt}  ({major:,.2f} {str(curr).upper()})")
+                tot_minor = sum(int(x[3]) for x in r3 if x[3] is not None)
+                print(f"  --- platform-fee grand total = {tot_minor} minor "
+                      f"({tot_minor / 100.0:,.2f} in stated currency) ---")
+            except Exception as e:
+                c3, r3 = PF_HEADER, []
+                print(f"  !! platform-fee query skipped (non-fatal): {e}", file=sys.stderr)
         finally:
             cur.close()
     finally:
@@ -102,8 +129,12 @@ def main():
 
     write_csv(DATA_DIR / OUT1, c1, r1)
     write_csv(DATA_DIR / OUT2, c2, r2)
-    print(f"Wrote {DATA_DIR / OUT1} ({len(r1):,} rows) and "
-          f"{DATA_DIR / OUT2} ({len(r2):,} rows).")
+    # platform_fees.csv is NOT gated: always (re)written, even when empty, so the header
+    # is present and refresh_workbook sees a well-formed file (empty -> all buckets 0).
+    write_csv(DATA_DIR / OUT3, c3 or PF_HEADER, r3)
+    print(f"Wrote {DATA_DIR / OUT1} ({len(r1):,} rows), "
+          f"{DATA_DIR / OUT2} ({len(r2):,} rows), and "
+          f"{DATA_DIR / OUT3} ({len(r3):,} rows).")
 
 
 if __name__ == "__main__":
