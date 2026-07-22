@@ -1,0 +1,109 @@
+# FACADASH — server-side daily rebuild of the Embedded Payments true-cost / margin
+# workbook (loyverse_payments_analysis_ful_V2.xlsx). Modelled on kpi-pull.yml.
+#
+# Runs entirely on the GitHub runner — no desktop, no manual exports:
+#   pull_payments.py  Snowflake Stripe share -> payments-automation/data/*.csv
+#   refresh_workbook.py  rebuilds every sheet of the V2 workbook from those CSVs
+#   LibreOffice headless  recalculates so the file opens with live values
+#   verify  zero genuine formula errors + all 13 sheets + headline cells populated
+# then commits the finished .xlsx to payments-automation/output/. That committed file
+# is the source of truth, refreshed daily with zero dependence on anyone's computer.
+#
+# Fully isolated: only writes under payments-automation/ (data/ + output/), which no
+# other workflow touches, so the rebase-retry push never conflicts with the CASE,
+# FACADASH (kpi), activation, or cusum pulls sharing this repo.
+#
+# OPEN ITEM: role DATA_VIEWER needs SELECT / IMPORTED PRIVILEGES on the Stripe share
+# GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659. Until that grant lands the
+# pull fails its <100-row sanity gate and run.py rebuilds from the last-good committed
+# CSVs (so the workbook still refreshes daily, just not with same-day data).
+name: payments-pull
+
+on:
+  schedule:
+    # 04:30 UTC weekdays — slots between the FACADASH kpi (04:00) and activation (05:30)
+    # pulls so the shared warehouse isn't hit by several jobs at once. GitHub cron is
+    # always UTC and ignores DST. The Cowork "trigger-payments-pull-daily" task also
+    # dispatches this each weekday morning (belt-and-suspenders vs GitHub's flaky cron).
+    - cron: '30 4 * * 1-5'
+  workflow_dispatch: {}          # manual "Run workflow" button + Cowork trigger
+  push:
+    # First install / whenever the pipeline code changes: rebuild immediately so the
+    # committed output workbook reflects the new logic.
+    branches: [master]
+    paths:
+      - 'payments-automation/pull_payments.py'
+      - 'payments-automation/refresh_workbook.py'
+      - 'payments-automation/run.py'
+      - 'payments-automation/queries/**'
+
+concurrency:
+  group: payments-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install LibreOffice (headless recalc)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-calc
+
+      - name: Install Python deps
+        run: pip install -r payments-automation/requirements.txt
+
+      - name: Pull -> rebuild -> recalc -> verify
+        env:
+          # Only the private key is a secret (reused from the CASE/kpi pulls). The rest
+          # are plain config, identical to kpi-pull.yml.
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          SQL_DIR:   ${{ github.workspace }}/payments-automation/queries
+          DATA_DIR:  ${{ github.workspace }}/payments-automation/data
+          TEMPLATE:  ${{ github.workspace }}/payments-automation/template/loyverse_payments_analysis_ful_V2.xlsx
+          OUT_DIR:   ${{ github.workspace }}/payments-automation/output
+          # Dashboard "Summary of Margins" page reads this; committed below so Netlify redeploys.
+          MARGINS_OUT: ${{ github.workspace }}/activated-payments/margins-data.js
+        run: python payments-automation/run.py
+
+      - name: Commit & push if the workbook (or CSVs) changed
+        run: |
+          git config user.name  "payments-bot"
+          git config user.email "payments-bot@users.noreply.github.com"
+          # Only the generated data + finished workbook + dashboard data — never the scripts,
+          # queries, or template.
+          git add payments-automation/data/transactions.csv \
+                  payments-automation/data/icplus_costs.csv \
+                  payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx \
+                  activated-payments/margins-data.js
+          if git diff --cached --quiet; then
+            echo "No change — nothing to commit."
+          else
+            git commit -m "chore(payments): daily true-cost rebuild $(date -u +%FT%TZ)"
+            # Other daily pulls can advance master while we run (~5-10 min). We only write
+            # under payments-automation/, which no other workflow touches, so rebasing on
+            # top of their commits never conflicts. Retry up to 5 times.
+            for i in 1 2 3 4 5; do
+              if git pull --rebase --autostash origin master && git push; then
+                echo "pushed on attempt $i"; exit 0
+              fi
+              echo "push attempt $i failed (remote moved) — retrying in 5s"
+              sleep 5
+            done
+            echo "push still failing after 5 attempts"; exit 1
+          fi
