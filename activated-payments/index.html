@@ -527,32 +527,15 @@
     </div>
     <p class="ov-sub" id="mgSub">A daily mirror of the true-cost &amp; margin workbook &mdash; every network and platform fee Loyverse pays per dollar processed, what we keep, and how many transactions actually turn a profit. Refreshes automatically each morning from the same Snowflake pipeline that builds the analysis workbook.</p>
     <div class="ov-kpis" id="mgKpis"></div>
-    <div class="ov-grid">
-      <div class="ov-card">
-        <div class="ov-ctitle"><h2>Cost breakdown</h2><span class="tot" id="mgFeeTot">&nbsp;</span></div>
-        <p class="ov-cnote">Network pass-through (interchange, scheme, Amex) plus Stripe's markup, over the reporting window.</p>
-        <div class="ov-tablewrap"><table class="ov-table" id="mgFeeTable"><tbody id="mgFeeBody"></tbody></table></div>
-      </div>
-      <div class="ov-card">
-        <div class="ov-ctitle"><h2>Additional platform fees</h2></div>
-        <p class="ov-cnote">Payout, account-volume, tap-to-pay and terminal-use fees layered on top of per-transaction costs.</p>
-        <div class="ov-tablewrap"><table class="ov-table" id="mgExtraTable"><tbody id="mgExtraBody"></tbody></table></div>
-      </div>
+    <div class="ov-card full">
+      <div class="ov-ctitle"><h2>Margin P&amp;L</h2><span class="tot" id="mgFeeTot">&nbsp;</span></div>
+      <p class="ov-cnote">Gross revenue less every fee Loyverse pays, over the reporting window. Network fees are pass-through (interchange, scheme, Amex); Stripe fees are Loyverse&rsquo;s platform cost &mdash; per-transaction charges plus payout, tap-to-pay and terminal fees, all in one bucket.</p>
+      <div class="ov-tablewrap"><table class="ov-table" id="mgPnlTable"><tbody id="mgPnlBody"></tbody></table></div>
     </div>
     <div class="ov-card full">
       <div class="ov-ctitle"><h2>Profitability of transactions</h2></div>
       <p class="ov-cnote" id="mgProfNote">How many charges cover their true cost, and how much of the cost base is measured vs. estimated.</p>
       <div class="ov-kpis" id="mgProfKpis" style="margin-bottom:0"></div>
-    </div>
-    <div class="ov-tablecard">
-      <div class="ov-ctitle"><h2>Pricing scenario comparison</h2><span class="tot" id="mgScenTot">&nbsp;</span></div>
-      <p class="ov-tnote" id="mgScenSub">&nbsp;</p>
-      <div class="ov-tablewrap">
-        <table class="ov-table" id="mgScenTable">
-          <thead><tr><th class="l" data-k="name">Scenario</th><th data-k="revenue">Revenue (period)</th><th data-k="delta">vs current mix</th></tr></thead>
-          <tbody id="mgScenBody"></tbody>
-        </table>
-      </div>
     </div>
     <p class="ov-tnote" id="mgSettleNote" style="margin-top:14px">&nbsp;</p>
   </div>
@@ -1773,24 +1756,26 @@ applyMasterHash();
       kpi(fmtUsd0(k.netMargin),'Net Margin', fmtPct(k.netTakeRate,3)+' net take rate', (num(k.netMargin)>=0?'green':''))
     );
 
-    // Cost breakdown table
-    var f=M.fees||{}, rows='';
-    function grp(g){
-      if(!g) return '';
-      var h='<tr><td class="l" style="font-weight:bold">'+esc(g.label)+'</td><td style="font-weight:bold">'+fmtUsd(g.total)+'</td></tr>';
-      (g.items||[]).forEach(function(it){ h+='<tr><td class="l muted" style="padding-left:30px">'+esc(it.label)+'</td><td class="muted">'+fmtUsd(it.value)+'</td></tr>'; });
+    // Margin P&L: gross revenue less network + Stripe fees -> net margin.
+    // Stripe fees consolidate the per-transaction charges AND the payout / tap-to-pay /
+    // terminal fees into ONE bucket so nothing looks double-counted.
+    function negUsd(v){ v=num(v); if(v==null||isNaN(v)) return '\u2014'; return '\u2212$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    var f=M.fees||{}, net=f.network||{}, st=f.stripe||{}, rows='';
+    function grp(label,total,items){
+      var h='<tr><td class="l" style="font-weight:bold;padding-top:10px">'+esc(label)+'</td><td style="font-weight:bold;padding-top:10px">'+negUsd(total)+'</td></tr>';
+      (items||[]).forEach(function(it){ var v=num(it.value); if(v==null) return; h+='<tr><td class="l muted" style="padding-left:30px">'+esc(it.label)+'</td><td class="muted">'+fmtUsd(v)+'</td></tr>'; });
       return h;
     }
-    rows+=grp(f.network)+grp(f.stripe);
-    rows+='<tr style="border-top:2px solid var(--silver)"><td class="l" style="font-weight:bold">Total true cost</td><td style="font-weight:bold">'+fmtUsd(f.total)+'</td></tr>';
-    set('mgFeeBody',rows);
-    setTxt('mgFeeTot', fmtUsd0(f.total)+' total');
-
-    // Additional platform fees
-    var ex=(M.extraFees||[]), erows='', etot=0, any=false;
-    ex.forEach(function(it){ var v=num(it.value); if(v!=null){ etot+=v; any=true; } erows+='<tr><td class="l">'+esc(it.label)+'</td><td>'+fmtUsd(it.value)+'</td></tr>'; });
-    if(any) erows+='<tr style="border-top:2px solid var(--silver)"><td class="l" style="font-weight:bold">Total additional fees</td><td style="font-weight:bold">'+fmtUsd(etot)+'</td></tr>';
-    set('mgExtraBody',erows);
+    rows+='<tr><td class="l" style="font-weight:bold">Gross revenue</td><td style="font-weight:bold">'+fmtUsd(k.revenue)+'</td></tr>';
+    rows+=grp('Network fees (pass-through)', net.total, net.items);
+    // Merge Stripe's per-transaction items with the additional platform fees under Stripe fees.
+    var stripeItems=(st.items||[]).concat(M.extraFees||[]);
+    rows+=grp('Stripe fees', st.total, stripeItems);
+    rows+='<tr style="border-top:1px solid var(--silver)"><td class="l" style="font-weight:bold">Total cost of payments</td><td style="font-weight:bold">'+negUsd(f.total)+'</td></tr>';
+    rows+='<tr style="border-top:2px solid var(--silver)"><td class="l" style="font-weight:bold">Net margin</td><td style="font-weight:bold;color:'+(num(k.netMargin)>=0?'var(--green)':'var(--red)')+'">'+fmtUsd(k.netMargin)+'</td></tr>';
+    rows+='<tr><td class="l muted">Net take rate</td><td class="muted">'+fmtPct(k.netTakeRate,3)+'</td></tr>';
+    set('mgPnlBody',rows);
+    setTxt('mgFeeTot', fmtUsd0(k.revenue)+' revenue \u2192 '+fmtUsd0(k.netMargin)+' margin');
 
     // Profitability KPIs
     set('mgProfKpis',
@@ -1800,19 +1785,7 @@ applyMasterHash();
       kpi(fmtInt(k.withEstimated),'Cost Estimated','Still settling '+(num(k.failed)!=null?'\u00b7 '+fmtInt(k.failed)+' failed':''))
     );
 
-    // Pricing scenarios
-    var sc=M.scenarios||{}, srows='', base=null;
-    (sc.rows||[]).forEach(function(r,i){ if(i===0) base=num(r.revenue); });
-    (sc.rows||[]).forEach(function(r){
-      var rev=num(r.revenue), delta=(rev!=null&&base!=null)?(rev-base):null, isBase=(base!=null&&rev===base);
-      var dcell='\u2014', dcls='muted';
-      if(delta!=null && !isBase){ var pos=delta>=0; dcell=(pos?'+':'\u2212')+'$'+Math.abs(delta).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' ('+(pos?'+':'\u2212')+(base?Math.abs(delta/base*100).toFixed(1):'0')+'%)'; dcls=pos?'':''; }
-      var style=isBase?' style="background:var(--offwhite)"':'';
-      srows+='<tr'+style+'><td class="l name">'+esc(r.name)+(isBase?' <span style="color:var(--midgray);font-weight:normal">(current)</span>':'')+'</td><td>'+fmtUsd(rev)+'</td><td class="'+dcls+'"'+(delta!=null&&!isBase?' style="color:'+(delta>=0?'var(--green)':'var(--red)')+';font-weight:bold"':'')+'>'+dcell+'</td></tr>';
-    });
-    set('mgScenBody',srows);
-    setTxt('mgScenTot', (sc.rows?sc.rows.length:0)+' scenarios');
-    if(M.notes){ if(M.notes.scenario) setTxt('mgScenSub', trim(M.notes.scenario)); if(M.notes.settlement) setTxt('mgSettleNote', trim(M.notes.settlement)); }
+    if(M.notes && M.notes.settlement) setTxt('mgSettleNote', trim(M.notes.settlement));
   }
 
   window.__MARGINS_INIT=function(){ if(inited) return; inited=true; render(); };
