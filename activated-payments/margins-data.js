@@ -10,9 +10,9 @@ window.MARGINS = {
     "avgTicket": 16.4001082325849,
     "revenue": 3966.56,
     "takeRate": 0.0278482231957973,
-    "totalFees": 3806.09237,
-    "netMargin": 160.46763,
-    "netTakeRate": 0.00112660299502355,
+    "totalFees": 3676.8362,
+    "netMargin": 289.7238,
+    "netTakeRate": 0.00203407815526162,
     "pctProfitable": 0.396660909614277,
     "profitableTxns": 3445.0,
     "unprofitableTxns": 5240.0,
@@ -21,7 +21,7 @@ window.MARGINS = {
     "failed": 125.0
   },
   "fees": {
-    "total": 3806.09237,
+    "total": 3676.8362,
     "network": {
       "label": "    Network Fees (pass-through)",
       "total": 3077.4262,
@@ -42,43 +42,39 @@ window.MARGINS = {
     },
     "stripe": {
       "label": "    Stripe Fees (markup)",
-      "total": 728.66617,
+      "total": 599.41,
       "items": [
         {
-          "label": "        Per Auth Fee ($0.05/txn)",
-          "value": 429.47
+          "label": "        Per Auth Fee",
+          "value": 438.11
         },
         {
           "label": "        Volume Fee",
-          "value": 137.8787
+          "value": 140.23
         }
       ]
     }
   },
   "extraFees": [
     {
-      "label": "Account Volume Fee (0,05% Monthly Payout)",
-      "value": 71.21747
+      "label": "        Radar (Fraud) Fee",
+      "value": 0.07
     },
     {
-      "label": "Standard Payout Fee (0,05 USD per payout)",
-      "value": 5.95
+      "label": "        Tap to Pay Fee",
+      "value": 5.71
     },
     {
-      "label": "Android Tap to Pay (0,04 USD per trx)",
-      "value": 8.6
+      "label": "        Standard Payout Fee",
+      "value": 4.27
     },
     {
-      "label": "IOS Tap to Pay (0,07 USD per trx)",
-      "value": 15.05
+      "label": "        Terminal Use Fee",
+      "value": 11.02
     },
     {
-      "label": "Terminal Use Fee MPOS (1,50 USD per terminal)",
-      "value": null
-    },
-    {
-      "label": "Terminal Use Fee Smart (5,50 USD per terminal)",
-      "value": 60.5
+      "label": "        Account Volume Fee",
+      "value": 0.0
     }
   ],
   "scenarios": {
