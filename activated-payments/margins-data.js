@@ -3,54 +3,54 @@
 window.MARGINS = {
   "updated": "2026-07-22",
   "title": "Loyverse Embedded Payments — Full True-Cost & Margin Analysis",
-  "subtitle": "Apr 13–Jul 21, 2026 · 8,608 succeeded transactions · 14 merchants · USD (29 EUR txns at face value)",
+  "subtitle": "Apr 13–Jul 22, 2026 · 8,664 succeeded transactions · 15 merchants · USD (29 EUR txns at face value)",
   "kpis": {
-    "txns": 8608.0,
-    "tpv": 139784.26,
-    "avgTicket": 16.2388777881041,
-    "revenue": 3895.52,
-    "takeRate": 0.0278680875801038,
-    "totalFees": 3749.28483,
-    "netMargin": 146.23517,
-    "netTakeRate": 0.00104614904424862,
-    "pctProfitable": 0.399047397769517,
-    "profitableTxns": 3435.0,
-    "unprofitableTxns": 5173.0,
-    "withActual": 8433.0,
-    "withEstimated": 175.0,
+    "txns": 8664.0,
+    "tpv": 141219.06,
+    "avgTicket": 16.2995221606648,
+    "revenue": 3934.56,
+    "takeRate": 0.0278613949136894,
+    "totalFees": 3805.48443,
+    "netMargin": 129.07557,
+    "netTakeRate": 0.000914009553667897,
+    "pctProfitable": 0.396698984302862,
+    "profitableTxns": 3437.0,
+    "unprofitableTxns": 5227.0,
+    "withActual": 8576.0,
+    "withEstimated": 88.0,
     "failed": 125.0
   },
   "fees": {
-    "total": 3749.28483,
+    "total": 3805.48443,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 3031.3422,
+      "total": 3077.4262,
       "items": [
         {
           "label": "        Interchange",
-          "value": 2477.0196
+          "value": 2515.066
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 386.579
+          "value": 393.4939
         },
         {
           "label": "        Amex Discount",
-          "value": 167.7436
+          "value": 168.8663
         }
       ]
     },
     "stripe": {
       "label": "    Stripe Fees (markup)",
-      "total": 717.94263,
+      "total": 728.05823,
       "items": [
         {
           "label": "        Per Auth Fee ($0.05/txn)",
-          "value": 422.32
+          "value": 429.47
         },
         {
           "label": "        Volume Fee",
-          "value": 135.6305
+          "value": 137.8787
         }
       ]
     }
@@ -58,7 +58,7 @@ window.MARGINS = {
   "extraFees": [
     {
       "label": "Account Volume Fee (0,05% Monthly Payout)",
-      "value": 69.89213
+      "value": 70.60953
     },
     {
       "label": "Standard Payout Fee (0,05 USD per payout)",
@@ -89,27 +89,27 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 3895.52
+        "revenue": 3934.56
       },
       {
         "name": "All 2.5% flat",
-        "revenue": 3494.6065
+        "revenue": 3530.4765
       },
       {
         "name": "All 2.5% + 5¢",
-        "revenue": 3925.0065
+        "revenue": 3963.6765
       },
       {
         "name": "All 2.6% + 10¢",
-        "revenue": 4495.19076
+        "revenue": 4538.09556
       },
       {
         "name": "All 2.6% + 15¢",
-        "revenue": 4925.59076
+        "revenue": 4971.29556
       },
       {
         "name": "All 2.8% + 15¢",
-        "revenue": 5205.15928
+        "revenue": 5253.73368
       }
     ]
   },
