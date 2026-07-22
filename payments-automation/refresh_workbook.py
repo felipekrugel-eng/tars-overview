@@ -495,14 +495,19 @@ def _grab(ws, r):
 def refresh_by_merchant(wb, D, last):
     BM = wb["By Merchant"]
     merchants = D["merchants"]
+    # Columns A..M (1..13) are all part of the merchant table. K/L/M in the template
+    # carry HARDCODED merchant names (e.g. "Adriana Espinheira"); if we don't rewrite
+    # them per-row they point at the wrong merchant/row whenever the merchant set or
+    # order changes. So capture the style for and rewrite every column 1..13.
+    NCOL = 13
     data_tmpl = {c: dict(font=copy.copy(BM.cell(4, c).font), fmt=BM.cell(4, c).number_format,
                          align=copy.copy(BM.cell(4, c).alignment), fill=copy.copy(BM.cell(4, c).fill),
-                         border=copy.copy(BM.cell(4, c).border)) for c in range(1, 11)}
+                         border=copy.copy(BM.cell(4, c).border)) for c in range(1, NCOL + 1)}
     tot_tmpl = {c: dict(font=copy.copy(BM.cell(18, c).font), fmt=BM.cell(18, c).number_format,
                         align=copy.copy(BM.cell(18, c).alignment), fill=copy.copy(BM.cell(18, c).fill),
-                        border=copy.copy(BM.cell(18, c).border)) for c in range(1, 11)}
+                        border=copy.copy(BM.cell(18, c).border)) for c in range(1, NCOL + 1)}
     for r in range(4, BM.max_row + 1):
-        for c in range(1, 11):
+        for c in range(1, NCOL + 1):
             BM.cell(r, c).value = None
 
     def sty(cell, t):
@@ -519,13 +524,21 @@ def refresh_by_merchant(wb, D, last):
         BM.cell(r, 1, m)
         BM.cell(r, 2, f'=COUNTIFS({rng("C")},"{me}",{rng("J")},"succeeded")')
         BM.cell(r, 10, f'=SUMIFS({rng("E")},{rng("C")},"{me}",{rng("J")},"succeeded")')
-        for c in range(1, 11):
+        # K = avg ticket (volume / count), L = revenue (col L), M = cost (col T),
+        # all keyed to THIS row's merchant so no hardcoded names survive.
+        BM.cell(r, 11, f"=IFERROR(J{r}/B{r},0)")
+        BM.cell(r, 12, f'=SUMIFS({rng("L")},{rng("C")},"{me}",{rng("J")},"succeeded")')
+        BM.cell(r, 13, f'=SUMIFS({rng("T")},{rng("C")},"{me}",{rng("J")},"succeeded")')
+        for c in range(1, NCOL + 1):
             sty(BM.cell(r, c), data_tmpl[c])
     tot = start + len(merchants)
     BM.cell(tot, 1, "TOTAL")
     BM.cell(tot, 2, f"=SUM(B{start}:B{tot-1})")
     BM.cell(tot, 10, f"=SUM(J{start}:J{tot-1})")
-    for c in range(1, 11):
+    BM.cell(tot, 11, f"=IFERROR(J{tot}/B{tot},0)")
+    BM.cell(tot, 12, f"=SUM(L{start}:L{tot-1})")
+    BM.cell(tot, 13, f"=SUM(M{start}:M{tot-1})")
+    for c in range(1, NCOL + 1):
         sty(BM.cell(tot, c), tot_tmpl[c])
     return tot
 

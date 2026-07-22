@@ -21,11 +21,11 @@ name: payments-pull
 
 on:
   schedule:
-    # 04:30 UTC weekdays — slots between the FACADASH kpi (04:00) and activation (05:30)
-    # pulls so the shared warehouse isn't hit by several jobs at once. GitHub cron is
-    # always UTC and ignores DST. The Cowork "trigger-payments-pull-daily" task also
+    # 06:00 UTC weekdays == 07:00 UK (BST). GitHub cron is always UTC and ignores DST,
+    # so in winter (GMT) this lands at 06:00 local; adjust to '0 7 * * 1-5' if a hard
+    # 7am year-round is required. The Cowork "trigger-payments-pull-daily" task also
     # dispatches this each weekday morning (belt-and-suspenders vs GitHub's flaky cron).
-    - cron: '30 4 * * 1-5'
+    - cron: '0 6 * * 1-5'
   workflow_dispatch: {}          # manual "Run workflow" button + Cowork trigger
   push:
     # First install / whenever the pipeline code changes: rebuild immediately so the
@@ -80,6 +80,20 @@ jobs:
           # Dashboard "Summary of Margins" page reads this; committed below so Netlify redeploys.
           MARGINS_OUT: ${{ github.workspace }}/activated-payments/margins-data.js
         run: python payments-automation/run.py
+
+      # If VERIFY fails, run.py exits BEFORE tidying scratch, so the half-built workbook
+      # + LibreOffice recalc output survive. Grab them so we can open the exact file the
+      # runner produced and see the offending cells (also printed in the run log above).
+      - name: Upload build artifacts on failure (for debugging)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: payments-build-debug
+          path: |
+            payments-automation/_build.xlsx
+            payments-automation/_recalc/**
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Commit & push if the workbook (or CSVs) changed
         run: |

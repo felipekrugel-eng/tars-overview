@@ -67,10 +67,16 @@ def recalc(src, out_dir):
 
 
 def verify(path):
+    # data_only=True gives the LibreOffice-cached VALUES; a second load with
+    # data_only=False lets us print the offending FORMULA next to each error cell,
+    # which is what actually pinpoints the root cause on the runner.
     wb = openpyxl.load_workbook(path, data_only=True)
+    fwb = openpyxl.load_workbook(path, data_only=False)
     sheets = [ws.title for ws in wb.worksheets]
     genuine, na = 0, 0
+    err_cells = []   # [(sheet, coord, err_value, formula)]
     for ws in wb.worksheets:
+        fws = fwb[ws.title]
         for row in ws.iter_rows():
             for c in row:
                 v = c.value
@@ -79,11 +85,25 @@ def verify(path):
                         na += 1
                     elif v in GENUINE_ERRS:
                         genuine += 1
+                        formula = fws[c.coordinate].value
+                        err_cells.append((ws.title, c.coordinate, v, formula))
     problems = []
     if len(sheets) != EXPECTED_SHEETS:
         problems.append(f"sheet count {len(sheets)} != {EXPECTED_SHEETS} ({sheets})")
     if genuine:
         problems.append(f"{genuine} genuine formula errors")
+        # Group by sheet+error-type so the log is scannable, then dump the first
+        # ~40 concrete cells with their formulas.
+        from collections import Counter
+        by_sheet = Counter((s, e) for s, _, e, _ in err_cells)
+        print("VERIFY: genuine error breakdown (sheet, type -> count):", flush=True)
+        for (sheet, etype), n in sorted(by_sheet.items(), key=lambda x: -x[1]):
+            print(f"    {sheet!r:28} {etype:8} x{n}", flush=True)
+        print("VERIFY: first offending cells (sheet!cell = err  <- formula):", flush=True)
+        for sheet, coord, ev, formula in err_cells[:40]:
+            print(f"    {sheet}!{coord} = {ev}   <- {formula}", flush=True)
+        if len(err_cells) > 40:
+            print(f"    ... +{len(err_cells)-40} more", flush=True)
     s = wb["Summary"]
     blanks = [a for a in HEADLINE if s[a].value in (None, "")]
     if blanks:
