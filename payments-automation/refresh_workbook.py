@@ -542,6 +542,59 @@ def refresh_by_merchant(wb, D, last):
         sty(BM.cell(tot, c), tot_tmpl[c])
     return tot
 
+# ------------------------------------------------------------------ Pricing Model
+def _cost_of_rec(rec):
+    """Total true cost of a succeeded charge (matches Transaction Detail col T)."""
+    if rec["kind"] == "actual":
+        return sum((rec.get(k) or 0) for k in ("M", "N", "O", "Q", "R"))
+    if rec["kind"] == "est":
+        return rec.get("Tval") or 0
+    return None  # failed -> no cost
+
+def _ols(pairs):
+    """Ordinary least squares of y on x -> (intercept, slope), matching Excel
+    INTERCEPT()/SLOPE(). Returns (0,0) for degenerate input so no #DIV/0! leaks."""
+    n = len(pairs)
+    if n < 2:
+        return 0.0, 0.0
+    mx = sum(x for x, _ in pairs) / n
+    my = sum(y for _, y in pairs) / n
+    sxx = sum((x - mx) ** 2 for x, _ in pairs)
+    if sxx == 0:
+        return 0.0, 0.0
+    sxy = sum((x - mx) * (y - my) for x, y in pairs)
+    slope = sxy / sxx
+    return my - slope * mx, slope
+
+def refresh_pricing_model(wb, D):
+    """B11:C14 originally held _xlfn._xlws.FILTER + INTERCEPT/SLOPE dynamic-array
+    formulas. FILTER is unsupported by the (older) LibreOffice on the CI runner, so it
+    recalced to #NAME? and cascaded into every downstream =$B$11+$C$11*$A19 cell.
+    We precompute the same per-card-type cost-vs-volume regression in Python and write
+    plain numbers, so the workbook is engine-independent. x = charge volume (col E),
+    y = true cost (col T), over succeeded charges with a known cost."""
+    PM = wb["Pricing Model"]
+    groups = {"Debit": [], "Credit": [], "Prepaid": []}
+    allp = []
+    for rec in D["recs"]:
+        if rec["J"] != "succeeded":
+            continue
+        cost = _cost_of_rec(rec)
+        if cost is None:
+            continue
+        pair = (rec["E"], cost)
+        allp.append(pair)
+        if rec["G"] in groups:
+            groups[rec["G"]].append(pair)
+    for label, r in (("Debit", 11), ("Credit", 12), ("Prepaid", 13)):
+        b, m = _ols(groups[label])
+        PM.cell(r, 2).value = round(b, 6)
+        PM.cell(r, 3).value = round(m, 6)
+    b, m = _ols(allp)
+    PM.cell(14, 2).value = round(b, 6)
+    PM.cell(14, 3).value = round(m, 6)
+    return {lbl: len(groups[lbl]) for lbl in groups} | {"ALL": len(allp)}
+
 # ------------------------------------------------------------------ range bumping
 def bump_ranges(wb, old_last, new_last):
     if old_last == new_last:
@@ -612,6 +665,8 @@ def main():
     print(f"Fee Breakdown rebuilt -> total row {tr}")
     bmtot = refresh_by_merchant(wb, D, new_last)
     print(f"By Merchant rebuilt -> total row {bmtot}")
+    pm = refresh_pricing_model(wb, D)
+    print(f"Pricing Model regression precomputed -> n by type {pm}")
     bump_ranges(wb, old_last, new_last)
     print(f"Ranges bumped {old_last} -> {new_last}")
     refresh_text(wb, D, new_last)
