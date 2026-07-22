@@ -161,8 +161,10 @@ def emit_margins(xlsx_path, out_path):
             "stripe":  {"label": B(16), "total": _num(C(16)),
                         "items": [pair(17), pair(18)]},
         },
-        # Extra per-payout / hardware fees (rows 19-24; some may be null).
-        "extraFees": [pair(r) for r in range(19, 25)],
+        # Additional Stripe platform fees from actuals (rows 19-23): Radar, Tap to Pay,
+        # payout, terminal-use, account-volume. Merged under "Stripe fees" in the P&L.
+        # Zero-value buckets render as $0.00 ("0 until it appears"); row 24 is unused.
+        "extraFees": [pair(r) for r in range(19, 24)],
         "scenarios": {
             "headers": {"name": B(38), "revenue": C(38)},
             "rows": [{"name": B(r), "revenue": _num(C(r))} for r in range(39, 45)],
@@ -190,6 +192,7 @@ def main():
 
     tx = DATA_DIR / "transactions.csv"
     ic = DATA_DIR / "icplus_costs.csv"
+    fees = DATA_DIR / "platform_fees.csv"   # Stripe platform-fee actuals (may be absent)
 
     # 1. PULL
     if args.no_pull:
@@ -210,7 +213,7 @@ def main():
 
     # 2. REBUILD
     sh([sys.executable, str(HERE / "refresh_workbook.py"),
-        "--tx", str(tx), "--ic", str(ic),
+        "--tx", str(tx), "--ic", str(ic), "--fees", str(fees),
         "--template", str(TEMPLATE), "--out", str(BUILD_XLSX)])
 
     # 3. RECALC

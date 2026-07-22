@@ -22,7 +22,7 @@ Usage:
   python3 refresh_workbook.py --tx transactions.csv --ic icplus_costs.csv \
       --template loyverse_payments_analysis_ful_V2.xlsx --out refreshed.xlsx
 """
-import csv, copy, argparse, re, sys
+import csv, copy, argparse, re, sys, os
 from datetime import datetime
 from collections import defaultdict, Counter
 import openpyxl
@@ -39,6 +39,25 @@ def norm(fn): return "card_scheme" if fn == "non_transactional_card_scheme" else
 NETWORK = ["interchange", "card_scheme", "discount"]
 STRIPE  = ["per_auth_fee", "volume_fee"]
 CATS    = NETWORK + STRIPE
+
+# --- Stripe platform fees, sourced from balance-transaction actuals ----------------
+# Stripe debits the platform balance in GBP; the rest of this model is USD, so we
+# convert the (small) platform-fee actuals to USD to keep the P&L single-currency.
+# Spot GBP/USD on 2026-07-22 = 1.3373 (source: xe.com / Wise). Update if it drifts.
+FX_GBP_USD = 1.3373
+# Which platform_fees.csv buckets feed the Summary "Stripe Fees" section, and where.
+# Everything not listed here (notably the 'other' bucket = terminal hardware purchases
+# and any non-processing charges) is intentionally NEVER read. Categories with no
+# actual rows stay at 0 ("0 until it appears"). (fee_category, Summary row, label)
+PLATFORM_FEE_ROWS = [
+    ("per_auth",       17, "        Per Auth Fee"),
+    ("volume",         18, "        Volume Fee"),
+    ("radar",          19, "        Radar (Fraud) Fee"),
+    ("tap_to_pay",     20, "        Tap to Pay Fee"),
+    ("payout",         21, "        Standard Payout Fee"),
+    ("terminal_use",   22, "        Terminal Use Fee"),
+    ("account_volume", 23, "        Account Volume Fee"),
+]
 
 def fnum(x):
     x = (x or "").strip()
@@ -638,14 +657,48 @@ def refresh_text(wb, D, new_last):
     RM["B22"] = (f"Refreshed {datetime.today().strftime('%B %-d, %Y')}. "
                  f"All formulas recalculated and verified error-free.")
 
+# ------------------------------------------------------------------ Stripe platform fees
+def refresh_platform_fees(wb, fees_path):
+    """Source the Summary 'Stripe Fees' section (rows 17-23) from Stripe balance-
+    transaction actuals in platform_fees.csv instead of the old modeled formulas/constants.
+    CSV amounts are minor units (pence), NEGATIVE, in GBP; we flip sign, /100, and convert
+    GBP->USD. Missing categories stay 0. The 'other' bucket (terminal hardware etc.) is
+    never read. C16 keeps its =SUM(C17:C24) template formula, so subtotal/total/net-margin
+    all recalc downstream. Returns the per-bucket USD dict for logging."""
+    S = wb["Summary"]
+    minor = {cat: 0.0 for cat, _, _ in PLATFORM_FEE_ROWS}
+    if fees_path and os.path.exists(fees_path):
+        for r in csv.DictReader(open(fees_path, encoding="utf-8-sig")):
+            cat = (r.get("FEE_CATEGORY") or "").strip()
+            if cat in minor:
+                minor[cat] += fnum(r.get("TOTAL_AMOUNT_MINOR"))
+    usd = {}
+    for cat, row, label in PLATFORM_FEE_ROWS:
+        v = round(-minor[cat] / 100.0 * FX_GBP_USD, 2) + 0.0   # neg pence GBP -> +USD; kill -0.0
+        S.cell(row, 2).value = label
+        S.cell(row, 3).value = v
+        usd[cat] = v
+    # Row 24 previously held a modeled 'Terminal Smart' constant; no actual bucket -> blank.
+    S.cell(24, 2).value = None
+    S.cell(24, 3).value = None
+    # Provenance / FX note (row 36, between the settlement note and the scenario table).
+    S["B36"] = (f"Stripe platform fees (rows 17\u201323) are actuals from Stripe balance "
+                f"transactions, converted GBP\u2192USD at {FX_GBP_USD} (22 Jul 2026). Terminal "
+                f"hardware and other non-processing charges are excluded.")
+    return usd
+
 # ------------------------------------------------------------------ main
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tx", required=True)
     ap.add_argument("--ic", required=True)
+    ap.add_argument("--fees", default=None,
+                    help="platform_fees.csv (defaults to platform_fees.csv beside --ic)")
     ap.add_argument("--template", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    fees_path = args.fees or os.path.join(os.path.dirname(os.path.abspath(args.ic)),
+                                          "platform_fees.csv")
 
     print("Loading data ...")
     D = build_data(args.tx, args.ic)
@@ -669,6 +722,9 @@ def main():
     print(f"Pricing Model regression precomputed -> n by type {pm}")
     bump_ranges(wb, old_last, new_last)
     print(f"Ranges bumped {old_last} -> {new_last}")
+    pf = refresh_platform_fees(wb, fees_path)
+    src = fees_path if os.path.exists(fees_path) else f"{fees_path} (missing -> all 0)"
+    print(f"Stripe platform fees from actuals ({src}) -> USD {pf}")
     refresh_text(wb, D, new_last)
     print("Summary / Read Me text refreshed")
 
