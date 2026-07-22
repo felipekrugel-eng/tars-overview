@@ -1,0 +1,32 @@
+# One-off READ-ONLY diagnostic. Confirms whether the Stripe share exposes a
+# balance-transactions table (source of the platform-cost fees: per-auth, volume,
+# tap-to-pay, payout, terminal, radar) and prints its columns + a fee/payout
+# rollup. Writes nothing, commits nothing, touches no CSV or workbook. Manual
+# trigger only. Delete this file (and probe_fees.py) once the schema is confirmed
+# and query3_platform_fees.sql is wired in.
+name: payments-fees-probe
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python deps
+        run: pip install -r payments-automation/requirements.txt
+      - name: Probe Stripe share for balance-transaction fees
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+        run: python payments-automation/probe_fees.py
