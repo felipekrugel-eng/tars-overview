@@ -76,27 +76,33 @@ WITH -- ----------------------------------------------------------------
                 AND TRANSLATE(LOWER(TRIM(p.BUSINESS_NAME)), '01345@', 'oieasa') = c.NORM_NAME
           )
     )
-SELECT
-    (SELECT COUNT(DISTINCT m.LOYVERSE_ID)
-       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-       JOIN LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
-         ON r.LOYVERSE_ID = m.LOYVERSE_ID
-      WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
-        AND m.LOYVERSE_ID IS NOT NULL
-        AND TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
-        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
-    ) AS active_us,
-    (SELECT COUNT(DISTINCT s.LOYVERSE_MERCHANT_ID)
-       FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
-       JOIN LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-         ON m.LOYVERSE_ID = s.LOYVERSE_MERCHANT_ID
-      WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
-        AND LOWER(s.STATUS) = 'active'
-        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
-    ) AS paying_us,
-    -- Set-based (MINUS) rather than correlated NOT EXISTS: Snowflake cannot compile
-    -- correlated subqueries inside a scalar SELECT-list subquery.
-    (SELECT COUNT(*) FROM (
+-- NOTE on structure: the three counts are computed as FROM-clause derived tables
+-- CROSS JOINed together, NOT as scalar SELECT-list subqueries. Snowflake inlines
+-- the us_bot_accounts CTE at each reference, and its S7 branch contains a
+-- correlated NOT EXISTS — which Snowflake cannot compile once inlined inside a
+-- scalar SELECT-list subquery ("error line 70"). Derived tables compile fine.
+SELECT a.active_us, p.paying_us, d.dormant_us
+FROM (
+    SELECT COUNT(DISTINCT m.LOYVERSE_ID) AS active_us
+      FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+      JOIN LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
+        ON r.LOYVERSE_ID = m.LOYVERSE_ID
+     WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+       AND m.LOYVERSE_ID IS NOT NULL
+       AND TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
+       AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
+) a
+CROSS JOIN (
+    SELECT COUNT(DISTINCT s.LOYVERSE_MERCHANT_ID) AS paying_us
+      FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
+      JOIN LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+        ON m.LOYVERSE_ID = s.LOYVERSE_MERCHANT_ID
+     WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+       AND LOWER(s.STATUS) = 'active'
+       AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
+) p
+CROSS JOIN (
+    SELECT COUNT(*) AS dormant_us FROM (
         SELECT m.LOYVERSE_ID
           FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
          WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
@@ -113,4 +119,5 @@ SELECT
         SELECT s.LOYVERSE_MERCHANT_ID
           FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
          WHERE LOWER(s.STATUS) = 'active'
-    )) AS dormant_us;   -- [US-bot-filter]
+    )
+) d;   -- [US-bot-filter]
