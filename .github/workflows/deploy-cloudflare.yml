@@ -14,6 +14,17 @@
 name: deploy-cloudflare
 
 on:
+  # NOTE: the scheduled data-refresh workflows push with the built-in GITHUB_TOKEN,
+  # and GitHub deliberately does NOT fire `push` workflows for those commits
+  # (anti-recursion rule). `workflow_run` is exempt, so we trigger on the pull
+  # workflows completing instead. The push trigger still covers human commits.
+  workflow_run:
+    workflows:
+      - kpi-pull
+      - payments-pull
+      - "PAYMENTS: Daily Activation Pull"
+      - "CASE: Daily Snowflake Pull"
+    types: [completed]
   push:
     branches: [master]
     paths:
