@@ -5,8 +5,8 @@
 // carries its stage timestamps; the UI recomputes the group funnels + origin split client-side.
 // __FUNNEL_BASES = US denominators (active last 30d / paying subs) from sql/us_bases.sql.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
-// Do NOT edit by hand; overwritten each morning. Last pull: 2026-07-23 23:44 UTC
-window.__FUNNEL_UPDATED = "2026-07-23 23:44 UTC";
+// Do NOT edit by hand; overwritten each morning. Last pull: 2026-07-23 23:47 UTC
+window.__FUNNEL_UPDATED = "2026-07-23 23:47 UTC";
 window.__FUNNEL_STAGES = {"entered":2098,"signed_up":329,"enabled":79,"transacting":16};
 window.__FUNNEL_ENTERED_TOTAL = 2098;
 window.__FUNNEL_BOTS_EXCLUDED = 425;
