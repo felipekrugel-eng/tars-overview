@@ -721,8 +721,11 @@ async function fetchUsBases(conn) {
   const r = rows[0];
   const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const active = Number(g('active_us')), paying = Number(g('paying_us'));
+  const dormant = Number(g('dormant_us'));
   if (!isFinite(active) || !isFinite(paying)) return null;
-  return { active_us: active, paying_us: paying, asof: new Date().toISOString().slice(0, 10) };
+  const out = { active_us: active, paying_us: paying, asof: new Date().toISOString().slice(0, 10) };
+  if (isFinite(dormant)) out.dormant_us = dormant;
+  return out;
 }
 // If the bases query fails, carry the previously-committed bases forward so the
 // Funnel page never renders without denominators.

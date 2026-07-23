@@ -2,11 +2,14 @@
 -- Sources: LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS, LOYVERSE_RECEIPTS,
 --          CHARGEBEE_SUBSCRIPTIONS_V
 --
--- One row, two columns:
---   ACTIVE_US : distinct genuine US merchants with >=1 receipt in the trailing 30 days
---   PAYING_US : distinct genuine US merchants with an active Chargebee subscription
--- These are the funnel BASES for the "Active customers" and "Paying customers" funnels
--- on the dashboard's Funnel page (window.__FUNNEL_BASES). Refreshed every morning.
+-- One row, three columns:
+--   ACTIVE_US  : distinct genuine US merchants with >=1 receipt in the trailing 30 days
+--   PAYING_US  : distinct genuine US merchants with an active Chargebee subscription
+--   DORMANT_US : distinct genuine US merchants registered BEFORE the payments launch
+--                (2026-07-01) that are neither active (no receipt in 30d) nor paying —
+--                the "existing dormant / other" group base
+-- These are the funnel BASES for the group funnels on the dashboard's Funnel page
+-- (window.__FUNNEL_BASES). Refreshed every morning.
 -- US bot/fraud accounts are excluded via the shared business-name signature filter.
 WITH -- ----------------------------------------------------------------
     -- US BOT/FAKE-ACCOUNT FILTER (added 2026-07-21)
@@ -90,4 +93,23 @@ SELECT
       WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
         AND LOWER(s.STATUS) = 'active'
         AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
-    ) AS paying_us;   -- [US-bot-filter]
+    ) AS paying_us,
+    (SELECT COUNT(DISTINCT m.LOYVERSE_ID)
+       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+      WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+        AND m.LOYVERSE_ID IS NOT NULL
+        AND m.CREATED_AT < '2026-07-01'
+        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
+        -- not POS-active in the trailing 30 days
+        AND NOT EXISTS (
+            SELECT 1 FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
+            WHERE r.LOYVERSE_ID = m.LOYVERSE_ID
+              AND TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
+        )
+        -- no active Chargebee subscription
+        AND NOT EXISTS (
+            SELECT 1 FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
+            WHERE s.LOYVERSE_MERCHANT_ID = m.LOYVERSE_ID
+              AND LOWER(s.STATUS) = 'active'
+        )
+    ) AS dormant_us;   -- [US-bot-filter]

@@ -440,6 +440,10 @@
     <p class="ov-sub" id="fnNewSub" style="margin-top:2px"></p>
     <div id="fnNew" class="fn-stages"></div>
 
+    <h2 class="lp-h2" style="margin-top:28px">Dormant &amp; other existing customers.</h2>
+    <p class="ov-sub" id="fnDormantSub" style="margin-top:2px"></p>
+    <div id="fnDormant" class="fn-stages"></div>
+
     <h2 class="lp-h2" style="margin-top:32px">Who is initiating KYC.</h2>
     <p class="ov-sub" style="margin-top:2px">Every merchant that has initiated KYC, split into mutually exclusive groups (priority: new &rarr; paying &rarr; active free &rarr; other existing).</p>
     <div class="pilot-funnel" id="fnOriginBar" style="margin:12px 0 6px"></div>
@@ -1637,6 +1641,14 @@ applyMasterHash();
   var segNew=book.filter(function(r){return r.isNew;});
   renderFunnel('fnNew', newAll.length, agg(segNew));
   $('fnNewSub').innerHTML='Of <b>'+num(newAll.length)+'</b> US merchants registered since '+esc(LAUNCH)+' ('+num(BOTS)+' confirmed bot/fraud registrations excluded).';
+
+  // FUNNEL 4: dormant & other existing customers (registered pre-launch, not paying, not POS-active)
+  var segDormant=book.filter(function(r){return !r.isNew&&!r.isPaying&&!r.isActive;});
+  var baseDormant=BASES&&isFinite(BASES.dormant_us)?BASES.dormant_us:null;
+  renderFunnel('fnDormant', baseDormant, agg(segDormant));
+  $('fnDormantSub').innerHTML = baseDormant!=null
+    ? 'Of <b>'+num(baseDormant)+'</b> genuine US merchants registered before '+esc(LAUNCH)+' with no POS sale in the last 30 days and no paid subscription'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'. Lapsed and free-idle accounts re-entering through payments.'
+    : 'Base count pending the next morning data pull.';
 
   // ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC
   var GROUPS=[
