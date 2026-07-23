@@ -403,22 +403,40 @@
   </div>
 </div>
 <style>
-.fn-stages{display:flex;flex-direction:column;gap:10px;margin:10px 0 4px;}
-.fn-row{display:flex;align-items:center;gap:14px;}
-.fn-lbl{width:118px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--charcoal);text-align:right;flex:none;}
-.fn-barwrap{flex:1;background:#F2F4F6;border-radius:8px;height:46px;display:flex;align-items:center;}
-.fn-bar{height:100%;flex:none;display:flex;align-items:center;padding:0 14px;color:#fff;font-weight:800;font-size:16px;font-family:"Arial Black",Arial,sans-serif;min-width:6px;white-space:nowrap;border-radius:8px;overflow:hidden;}
-.fn-out{padding-left:10px;font-family:"Arial Black",Arial,sans-serif;font-size:15px;color:var(--charcoal);white-space:nowrap;}
-.fn-bar.b0{background:#8FC4EC;color:#0B3B5E;} .fn-bar.b1{background:var(--blue);} .fn-bar.b2{background:var(--blue-deep);} .fn-bar.b3{background:var(--green);}
-.fn-conv{width:190px;flex:none;font-size:12px;color:var(--darkgray);line-height:1.35;}
-.fn-conv b{color:var(--charcoal);}
-.fn-drillcard{border:1px solid var(--silver);border-radius:8px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.fn-drillcard .n{font-weight:800;font-size:20px;font-family:"Arial Black",Arial,sans-serif;color:var(--charcoal);}
-.fn-bk-row{display:flex;align-items:center;gap:12px;margin:7px 0;}
-.fn-bk-lbl{width:210px;font-size:12px;color:var(--charcoal);flex:none;}
-.fn-bk-bar{flex:1;background:#F2F4F6;border-radius:5px;overflow:hidden;height:20px;}
-.fn-bk-bar i{display:block;height:100%;background:var(--blue);}
-.fn-bk-n{width:42px;text-align:right;font-weight:700;font-size:12px;flex:none;color:var(--charcoal);}
+/* ===== Activation Funnel page (FACADASH card language) ===== */
+.fn-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:2px 0 20px;}
+@media(max-width:900px){.fn-kpis{grid-template-columns:repeat(2,1fr);}}
+.fn-kpi{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:14px 16px;}
+.fn-kpi .k{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--midgray);font-weight:bold;}
+.fn-kpi .v{font-family:"Arial Black",Arial,sans-serif;font-size:25px;margin-top:5px;color:var(--charcoal);white-space:nowrap;}
+.fn-kpi .v .u{color:var(--midgray);font-size:12.5px;font-family:Arial,sans-serif;font-weight:bold;}
+.fn-kpi .s{font-size:11.5px;color:var(--darkgray);margin-top:4px;line-height:1.4;}
+.fn-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;}
+.fn-cmp{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch;}
+@media(max-width:1050px){.fn-cmp{grid-template-columns:repeat(2,1fr);}}
+.fn-card{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:16px 18px 10px;border-top:3px solid var(--blue);}
+.fn-card h3{font-family:"Arial Black",Arial,sans-serif;font-size:16px;margin:0;color:var(--charcoal);letter-spacing:-.2px;}
+.fn-card .d{font-size:11.5px;color:var(--midgray);margin:3px 0 0;line-height:1.45;min-height:33px;}
+.fn-card .base{display:flex;align-items:baseline;gap:8px;margin:10px 0 16px;padding-bottom:12px;border-bottom:1px solid #EFF1F3;}
+.fn-card .base .n{font-family:"Arial Black",Arial,sans-serif;font-size:24px;color:var(--charcoal);}
+.fn-card .base .l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--midgray);font-weight:bold;}
+.fn-st{margin:0 0 14px;}
+.fn-st .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+.fn-st .t .l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--midgray);font-weight:bold;}
+.fn-st .t .n{font-family:"Arial Black",Arial,sans-serif;font-size:15px;color:var(--charcoal);}
+.fn-st .bar{height:20px;background:#EFF3F6;border-radius:3px;overflow:hidden;}
+.fn-st .bar i{display:block;height:100%;}
+.fn-st .c{font-size:11px;color:var(--darkgray);margin-top:4px;text-align:right;}
+.fn-st .c b{color:var(--charcoal);}
+.fn-card.big{max-width:780px;padding:22px 26px 14px;}
+.fn-card.big .d{min-height:0;font-size:12.5px;}
+.fn-card.big .base .n{font-size:32px;}
+.fn-card.big .fn-st{margin-bottom:18px;}
+.fn-card.big .fn-st .t .n{font-size:20px;}
+.fn-card.big .fn-st .bar{height:30px;border-radius:4px;}
+.fn-card.big .fn-st .c{font-size:12px;}
+.fn-best{grid-template-columns:repeat(3,1fr);}
+@media(max-width:900px){.fn-best{grid-template-columns:1fr;}}
 </style>
 <div id="page-funnel" style="display:none">
   <div class="ov-wrap">
@@ -428,23 +446,23 @@
     </div>
     <p class="ov-sub">How each US customer group moves through payments activation: <b>Base</b> &rarr; <b>Initiated KYC</b> (opened a payments account) &rarr; <b>Passed KYC</b> &rarr; <b>Transacting</b>. Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
 
-    <h2 class="lp-h2" style="margin-top:20px">Active customers (POS sale in last 30 days).</h2>
-    <p class="ov-sub" id="fnActiveSub" style="margin-top:2px"></p>
-    <div id="fnActive" class="fn-stages"></div>
+    <div class="fn-kpis" id="fnKpis"></div>
 
-    <h2 class="lp-h2" style="margin-top:28px">Paying customers (active Chargebee subscription).</h2>
-    <p class="ov-sub" id="fnPayingSub" style="margin-top:2px"></p>
-    <div id="fnPaying" class="fn-stages"></div>
+    <div class="fn-toolbar">
+      <div class="ov-range" id="fnPick">
+        <button data-g="compare" class="on">Compare all</button>
+        <button data-g="new">New</button>
+        <button data-g="paying">Paying</button>
+        <button data-g="active">Active</button>
+        <button data-g="dormant">Dormant / other</button>
+      </div>
+    </div>
 
-    <h2 class="lp-h2" style="margin-top:28px">New customers (registered since <span id="funnelLaunch">2026-07-01</span>).</h2>
-    <p class="ov-sub" id="fnNewSub" style="margin-top:2px"></p>
-    <div id="fnNew" class="fn-stages"></div>
+    <div id="fnCompare"></div>
+    <div class="fn-kpis fn-best" id="fnBest" style="margin-top:14px;margin-bottom:0"></div>
+    <div id="fnSingle" style="display:none"></div>
 
-    <h2 class="lp-h2" style="margin-top:28px">Dormant &amp; other existing customers.</h2>
-    <p class="ov-sub" id="fnDormantSub" style="margin-top:2px"></p>
-    <div id="fnDormant" class="fn-stages"></div>
-
-    <h2 class="lp-h2" style="margin-top:32px">Who is initiating KYC.</h2>
+    <h2 class="lp-h2" style="margin-top:36px">Who is initiating KYC.</h2>
     <p class="ov-sub" style="margin-top:2px">Every merchant that has initiated KYC, split into mutually exclusive groups (priority: new &rarr; paying &rarr; active free &rarr; other existing).</p>
     <div class="pilot-funnel" id="fnOriginBar" style="margin:12px 0 6px"></div>
     <div id="fnOriginLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--darkgray);margin-bottom:12px"></div>
@@ -1577,7 +1595,7 @@ applyMasterHash();
 // active/paying groups come from __FUNNEL_BASES (us_bases.sql, refreshed daily by pull.js).
 (function(){
   var $=function(id){return document.getElementById(id);};
-  if(!$('fnActive')) return;
+  if(!$('fnKpis')) return;
   var M=window.__FUNNEL_MERCHANTS||[];
   var ACT=window.__ACT||[];
   var BASES=window.__FUNNEL_BASES||null;
@@ -1603,52 +1621,98 @@ applyMasterHash();
   });
   function agg(rs){ return { init:rs.length, passed:rs.filter(function(r){return r.passed;}).length, txn:rs.filter(function(r){return r.txn;}).length }; }
 
-  // Render a 4-stage funnel: base (may be null) -> initiated -> passed -> transacting
-  function renderFunnel(elId, base, S){
-    var STG=[{lbl:'Base',c:'b0',n:base},{lbl:'Initiated KYC',c:'b1',n:S.init},{lbl:'Passed KYC',c:'b2',n:S.passed},{lbl:'Transacting',c:'b3',n:S.txn}];
-    if(base==null) STG.shift();
-    var max=STG[0].n||1;
-    $(elId).innerHTML=STG.map(function(s,i){
-      var w=Math.max(0.5, s.n/max*100);
-      var inside=w>=10;
-      var conv= i===0 ? (num(s.n)+' merchants') :
-        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,STG[0].n)+' of '+STG[0].lbl.toLowerCase()) : ''));
-      return '<div class="fn-row"><div class="fn-lbl">'+s.lbl+'</div>'+
-        '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+(inside?num(s.n):'')+'</div>'+(inside?'':'<span class="fn-out">'+num(s.n)+'</span>')+'</div>'+
-        '<div class="fn-conv">'+conv+'</div></div>';
-    }).join('');
-  }
-
-  // FUNNEL 1: active customers (POS sale <=30d)
-  var segActive=book.filter(function(r){return r.isActive;});
-  var baseActive=BASES&&isFinite(BASES.active_us)?BASES.active_us:null;
-  renderFunnel('fnActive', baseActive, agg(segActive));
-  $('fnActiveSub').innerHTML = baseActive!=null
-    ? 'Of <b>'+num(baseActive)+'</b> US merchants with a POS sale in the last 30 days'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'. Treat these numerators as a floor &mdash; POS activity for paying merchants comes from a monthly table that lags, so some initiators are undercounted here.'
-    : 'Base count pending the next morning data pull.';
-
-  // FUNNEL 2: paying customers (active Chargebee subscription)
-  var segPaying=book.filter(function(r){return r.isPaying;});
-  var basePaying=BASES&&isFinite(BASES.paying_us)?BASES.paying_us:null;
-  renderFunnel('fnPaying', basePaying, agg(segPaying));
-  $('fnPayingSub').innerHTML = basePaying!=null
-    ? 'Of <b>'+num(basePaying)+'</b> US merchants with an active paid subscription'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'.'
-    : 'Base count pending the next morning data pull.';
-
-  // FUNNEL 3: new customers since launch (full FACADASH population, bots excluded)
+  // ---- Group definitions (funnels may overlap; the origin split below is exclusive) ----
   var isNewM=function(m){ return m.registered_at && m.registered_at>=LAUNCH; };
   var newAll=M.filter(isNewM);
-  var segNew=book.filter(function(r){return r.isNew;});
-  renderFunnel('fnNew', newAll.length, agg(segNew));
-  $('fnNewSub').innerHTML='Of <b>'+num(newAll.length)+'</b> US merchants registered since '+esc(LAUNCH)+' ('+num(BOTS)+' confirmed bot/fraud registrations excluded).';
-
-  // FUNNEL 4: dormant & other existing customers (registered pre-launch, not paying, not POS-active)
-  var segDormant=book.filter(function(r){return !r.isNew&&!r.isPaying&&!r.isActive;});
+  var baseActive=BASES&&isFinite(BASES.active_us)?BASES.active_us:null;
+  var basePaying=BASES&&isFinite(BASES.paying_us)?BASES.paying_us:null;
   var baseDormant=BASES&&isFinite(BASES.dormant_us)?BASES.dormant_us:null;
-  renderFunnel('fnDormant', baseDormant, agg(segDormant));
-  $('fnDormantSub').innerHTML = baseDormant!=null
-    ? 'Of <b>'+num(baseDormant)+'</b> genuine US merchants registered before '+esc(LAUNCH)+' with no POS sale in the last 30 days and no paid subscription'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'. Lapsed and free-idle accounts re-entering through payments.'
-    : 'Base count pending the next morning data pull.';
+  var GS=[
+    {id:'new', name:'New', accent:'var(--green)', base:newAll.length,
+     desc:'Registered since '+esc(LAUNCH)+' &middot; '+num(BOTS)+' bot/fraud registrations excluded',
+     a:agg(book.filter(function(r){return r.isNew;}))},
+    {id:'paying', name:'Paying', accent:'var(--blue-deep)', base:basePaying,
+     desc:'Existing customers with an active paid subscription',
+     a:agg(book.filter(function(r){return r.isPaying;}))},
+    {id:'active', name:'Active', accent:'var(--blue)', base:baseActive,
+     desc:'POS sale in the last 30 days &middot; numerators are a floor*',
+     a:agg(book.filter(function(r){return r.isActive;}))},
+    {id:'dormant', name:'Dormant / other', accent:'#8E99A4', base:baseDormant,
+     desc:'Registered before '+esc(LAUNCH)+' &middot; no recent sale, no subscription',
+     a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}))}
+  ];
+  var T=agg(book);
+
+  // ---- Headline KPIs ----
+  var bestOverall=GS.filter(function(g){return g.base;}).sort(function(x,y){return y.a.txn/y.base - x.a.txn/x.base;})[0];
+  $('fnKpis').innerHTML=[
+    {k:'Initiated KYC', v:num(T.init), s:'US merchants that opened a payments account'},
+    {k:'Passed KYC', v:num(T.passed), s:'<b>'+pctL(T.passed,T.init)+'</b> of initiated'},
+    {k:'Transacting', v:num(T.txn), s:'<b>'+pctL(T.txn,T.passed)+'</b> of passed KYC'},
+    {k:'Best converting group', v:bestOverall?bestOverall.name:'&mdash;', accent:bestOverall?bestOverall.accent:null,
+     s:bestOverall?('<b>'+pctL(bestOverall.a.txn,bestOverall.base)+'</b> of its base is already transacting'):''}
+  ].map(function(x){
+    return '<div class="fn-kpi"><div class="k">'+x.k+'</div><div class="v"'+(x.accent?' style="color:'+x.accent+'"':'')+'>'+x.v+'</div><div class="s">'+x.s+'</div></div>';
+  }).join('');
+
+  // ---- Funnel card renderer (compare + single views) ----
+  var MAXINIT=Math.max.apply(null, GS.map(function(g){return g.a.init;}))||1;
+  function stageRows(g, big){
+    // single view: bars scaled to the group's own initiators; compare view: shared
+    // scale across groups so relative volume is visible at a glance
+    var a=g.a, mx=(big ? a.init : MAXINIT)||1;
+    var st=[
+      {l:'Initiated KYC', n:a.init, c:'var(--blue)', p: g.base!=null ? '<b>'+pctL(a.init,g.base)+'</b> of base' : '&nbsp;'},
+      {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p:'<b>'+pctL(a.passed,a.init)+'</b> of initiated'+(big&&g.base!=null?' &middot; '+pctL(a.passed,g.base)+' of base':'')},
+      {l:'Transacting', n:a.txn, c:'var(--green)', p:'<b>'+pctL(a.txn,a.passed)+'</b> of passed'+(big&&g.base!=null?' &middot; '+pctL(a.txn,g.base)+' of base':'')}
+    ];
+    return st.map(function(s){
+      var w=Math.max(1.2, s.n/mx*100);
+      return '<div class="fn-st"><div class="t"><span class="l">'+s.l+'</span><span class="n">'+num(s.n)+'</span></div>'
+        +'<div class="bar"><i style="width:'+w.toFixed(1)+'%;background:'+s.c+'"></i></div>'
+        +'<div class="c">'+s.p+'</div></div>';
+    }).join('');
+  }
+  function card(g, big){
+    var base = g.base!=null
+      ? '<div class="base"><span class="n">'+num(g.base)+'</span><span class="l">base &middot; US merchants</span></div>'
+      : '<div class="base"><span class="l">Base count pending the next morning data pull</span></div>';
+    return '<div class="fn-card'+(big?' big':'')+'" style="border-top-color:'+g.accent+'">'
+      +'<h3>'+g.name+'</h3><div class="d">'+g.desc+'</div>'+base+stageRows(g,big)+'</div>';
+  }
+
+  // ---- Compare view + conversion leaderboard ----
+  $('fnCompare').innerHTML='<div class="fn-cmp">'+GS.map(function(g){return card(g,false);}).join('')+'</div>';
+  var METRICS=[
+    {k:'Base &rarr; Initiated KYC', f:function(g){return g.base? g.a.init/g.base : null;}, fmt:function(g){return pctL(g.a.init,g.base);}},
+    {k:'Initiated &rarr; Passed KYC', f:function(g){return g.a.init? g.a.passed/g.a.init : null;}, fmt:function(g){return pctL(g.a.passed,g.a.init);}},
+    {k:'Passed KYC &rarr; Transacting', f:function(g){return g.a.passed? g.a.txn/g.a.passed : null;}, fmt:function(g){return pctL(g.a.txn,g.a.passed);}}
+  ];
+  $('fnBest').innerHTML=METRICS.map(function(mt){
+    var rank=GS.filter(function(g){return mt.f(g)!=null;}).sort(function(x,y){return mt.f(y)-mt.f(x);});
+    if(!rank.length) return '';
+    var w=rank[0];
+    return '<div class="fn-kpi"><div class="k">'+mt.k+'</div>'
+      +'<div class="v" style="color:'+w.accent+'">'+w.name+' <span class="u">'+mt.fmt(w)+'</span></div>'
+      +'<div class="s">'+rank.slice(1).map(function(g){return g.name+' '+mt.fmt(g);}).join(' &middot; ')+'</div></div>';
+  }).join('');
+
+  // ---- View toggle ----
+  $('fnPick').addEventListener('click', function(e){
+    var b=e.target.closest?e.target.closest('button'):null; if(!b) return;
+    var btns=$('fnPick').querySelectorAll('button');
+    for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+    b.classList.add('on');
+    var v=b.getAttribute('data-g');
+    var cmp=v==='compare';
+    $('fnCompare').style.display=cmp?'':'none';
+    $('fnBest').style.display=cmp?'':'none';
+    $('fnSingle').style.display=cmp?'none':'';
+    if(!cmp){
+      var g=GS.filter(function(x){return x.id===v;})[0];
+      if(g) $('fnSingle').innerHTML=card(g,true);
+    }
+  });
 
   // ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC
   var GROUPS=[
@@ -1667,7 +1731,6 @@ applyMasterHash();
   $('fnOriginLegend').innerHTML=segs.map(function(s){
     return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+s.g.k+' &middot; <b>'+num(s.a.init)+'</b></span>';
   }).join('');
-  var T=agg(book);
   var thead='<tr><th>Group</th><th style="text-align:right">Initiated KYC</th><th style="text-align:right">Passed KYC</th><th style="text-align:right">Transacting</th><th style="text-align:right">% of initiators</th></tr>';
   var rowsHtml=segs.map(function(s){
     return '<tr><td>'+s.g.k+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
@@ -1676,8 +1739,10 @@ applyMasterHash();
   $('fnOriginTable').innerHTML=thead+rowsHtml;
 
   var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
-  $('fnFootnote').textContent='Groups are assigned by priority (new > paying > active free > other), so each merchant is counted once. '
+  $('fnFootnote').textContent='* Active-customer numerators are a floor — POS activity for paying merchants comes from a monthly table that lags, so some initiators are undercounted there. '
+    +'In the origin split, groups are assigned by priority (new > paying > active free > other), so each merchant is counted once. '
     +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
+    +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')
     +'Data refreshes automatically every morning from Snowflake.';
 
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
