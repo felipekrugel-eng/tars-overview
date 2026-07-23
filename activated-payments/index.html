@@ -1585,7 +1585,7 @@ applyMasterHash();
   var LAUNCH=window.__FUNNEL_LAUNCH_START||'2026-07-01';
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function num(v){ return (Math.round(Number(v)||0)).toLocaleString('en-US'); }
-  function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; if(v>0&&v<0.1) return '<0.1%'; return (v<10? v.toFixed(1) : Math.round(v))+'%'; }
+  function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; if(v>0&&v<0.1) return '&lt;0.1%'; return (v<10? v.toFixed(1) : Math.round(v))+'%'; }
 
   // Join: funnel merchants (book of KYC initiators) <- ACT flags (US prod accounts)
   var actById={};
