@@ -17,7 +17,12 @@ WITH -- ----------------------------------------------------------------
     -- fraud investigation (Mem note 08de7ff9 / July_2026_US_bot_fraud_full_report.xlsx).
     -- Signature-based on BUSINESS_NAME, US rows only, applied ALL-TIME.
     -- Deliberately does NOT use email randomness (47% false-positive rate).
-    -- Keep this block IDENTICAL across all kpi-automation/sql files.
+    -- Keep this block SEMANTICALLY IDENTICAL across all kpi-automation/sql files.
+    -- LOCAL DIVERGENCE (this file only): S7's pre-attack-name exclusion is written
+    -- as a MINUS instead of the canonical correlated NOT EXISTS, because this
+    -- statement references the CTE from multiple derived tables and Snowflake
+    -- fails to compile the inlined correlated subquery here ("error line 76").
+    -- Same rows are flagged; do NOT copy the NOT EXISTS form back into this file.
     us_bot_accounts AS (
         -- S1-S6: per-account business-name signatures
         SELECT LOYVERSE_ID
@@ -54,27 +59,29 @@ WITH -- ----------------------------------------------------------------
         SELECT m.LOYVERSE_ID
         FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
         JOIN (
-            SELECT TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa') AS NORM_NAME
+            -- attack-era clusters (>=3 same normalized name) ...
+            SELECT NORM_NAME FROM (
+                SELECT TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa') AS NORM_NAME
+                FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+                WHERE UPPER(TRIM(COUNTRY)) = 'US'
+                  AND BUSINESS_NAME IS NOT NULL
+                  AND LENGTH(TRIM(BUSINESS_NAME)) >= 4
+                  AND CREATED_AT >= '2026-03-01'
+                GROUP BY 1
+                HAVING COUNT(*) >= 3
+            )
+            MINUS
+            -- ... excluding names already established in the US pre-attack
+            SELECT DISTINCT TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa')
             FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
             WHERE UPPER(TRIM(COUNTRY)) = 'US'
               AND BUSINESS_NAME IS NOT NULL
-              AND LENGTH(TRIM(BUSINESS_NAME)) >= 4
-              AND CREATED_AT >= '2026-03-01'
-            GROUP BY 1
-            HAVING COUNT(*) >= 3
+              AND CREATED_AT < '2026-03-01'
         ) c
           ON TRANSLATE(LOWER(TRIM(m.BUSINESS_NAME)), '01345@', 'oieasa') = c.NORM_NAME
         WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
           AND m.LOYVERSE_ID IS NOT NULL
           AND m.CREATED_AT >= '2026-03-01'
-          AND NOT EXISTS (
-              SELECT 1
-              FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS p
-              WHERE UPPER(TRIM(p.COUNTRY)) = 'US'
-                AND p.BUSINESS_NAME IS NOT NULL
-                AND p.CREATED_AT < '2026-03-01'
-                AND TRANSLATE(LOWER(TRIM(p.BUSINESS_NAME)), '01345@', 'oieasa') = c.NORM_NAME
-          )
     )
 -- NOTE on structure: the three counts are computed as FROM-clause derived tables
 -- CROSS JOINed together, NOT as scalar SELECT-list subqueries. Snowflake inlines
