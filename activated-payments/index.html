@@ -377,15 +377,15 @@
       <h1 class="ov-h1">Pilot Cross-Check<span class="dot">.</span></h1>
       <div class="ov-updated" id="pilotUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">The 500 US merchants selected for the Loyverse Payments pilot (100 active &middot; 400 churning), cross-checked live against the payments book &mdash; who has <b>activated</b> a payments account, who has <b>passed KYC (enabling)</b>, who is already <b>processing</b>, and who is <b>doing nothing</b> yet. Refreshes automatically each morning; join is by Loyverse owner&nbsp;ID.</p>
+    <p class="ov-sub">The 500 US merchants selected for the Loyverse Payments pilot (100 active &middot; 400 churning), cross-checked live against the payments book &mdash; who has <b>initiated KYC</b> (opened a payments account), who has <b>passed KYC</b>, who is already <b>processing</b>, and who is <b>doing nothing</b> yet. Refreshes automatically each morning; join is by Loyverse owner&nbsp;ID.</p>
     <div id="pilotFunnel" class="pilot-funnel"></div>
     <div id="pilotCards" class="ov-kpis"></div>
     <div class="ov-head" style="margin-bottom:12px;gap:12px;flex-wrap:wrap">
       <div class="ov-range" id="pilotSeg">
         <button data-f="all" class="on">All 500</button>
         <button data-f="nothing">Doing nothing</button>
-        <button data-f="activating">Activating</button>
-        <button data-f="enabling">Enabling</button>
+        <button data-f="activating">Initiated KYC</button>
+        <button data-f="enabling">Passed KYC</button>
         <button data-f="processing">Processing</button>
       </div>
       <div class="ov-range" id="pilotCoh">
@@ -426,37 +426,26 @@
       <h1 class="ov-h1">Activation Funnel<span class="dot">.</span></h1>
       <div class="ov-updated" id="funnelUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">US merchants that came into Loyverse since the payments launch (<span id="funnelLaunch">2026-07-01</span>) plus the pilot 500, tracked through the funnel: <b>Entered</b> &rarr; <b>Signed up</b> (connected a payments account) &rarr; <b>Enabled</b> (passed KYC) &rarr; <b>Transacting</b>. Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
-    <div class="ov-head" style="margin:6px 0 10px;gap:12px;flex-wrap:wrap">
-      <div class="ov-range" id="fnPop">
-        <button data-p="all" class="on">All US + pilot</button>
-        <button data-p="pilot">Pilot 500 only</button>
-      </div>
-      <div class="ov-range" id="fnRange">
-        <button data-r="all" class="on">All time</button>
-        <button data-r="month">This month</button>
-        <button data-r="30">Last 30d</button>
-        <button data-r="90">Last 90d</button>
-        <button data-r="custom">Custom</button>
-      </div>
-      <div id="fnCustom" style="display:none;align-items:center;gap:6px;font-size:12px;color:var(--darkgray)">
-        <input type="date" id="fnFrom" class="lp-tsearch" style="width:148px">
-        <span>to</span>
-        <input type="date" id="fnTo" class="lp-tsearch" style="width:148px">
-      </div>
-    </div>
-    <p class="lp-note" id="fnBotsNote" style="margin:0 0 10px"></p>
-    <div id="funnelStages" class="fn-stages"></div>
-    <h2 class="lp-h2" style="margin-top:28px">How long each step takes.</h2>
-    <p class="ov-sub" style="margin-top:2px">Median days between stages, over merchants with both real dates on record (average and sample size below each). Stripe has no "KYC-passed" timestamp &mdash; Terms are accepted at signup &mdash; so the Enabled step isn't timeable and is shown as a count only; the steps use different samples so they won't sum.</p>
-    <div id="funnelTimings" class="ov-kpis"></div>
-    <div class="ov-head" style="margin-top:28px;margin-bottom:14px;gap:12px;flex-wrap:wrap">
-      <div class="ov-range" id="funnelDrill">
-        <button data-d="kyc" class="on">KYC &mdash; where signups are stuck</button>
-        <button data-d="terminal">Terminal &mdash; acquired vs not</button>
-      </div>
-    </div>
-    <div id="funnelDrillBody"></div>
+    <p class="ov-sub">How each US customer group moves through payments activation: <b>Base</b> &rarr; <b>Initiated KYC</b> (opened a payments account) &rarr; <b>Passed KYC</b> &rarr; <b>Transacting</b>. Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
+
+    <h2 class="lp-h2" style="margin-top:20px">Active customers (POS sale in last 30 days).</h2>
+    <p class="ov-sub" id="fnActiveSub" style="margin-top:2px"></p>
+    <div id="fnActive" class="fn-stages"></div>
+
+    <h2 class="lp-h2" style="margin-top:28px">Paying customers (active Chargebee subscription).</h2>
+    <p class="ov-sub" id="fnPayingSub" style="margin-top:2px"></p>
+    <div id="fnPaying" class="fn-stages"></div>
+
+    <h2 class="lp-h2" style="margin-top:28px">New customers (registered since <span id="funnelLaunch">2026-07-01</span>).</h2>
+    <p class="ov-sub" id="fnNewSub" style="margin-top:2px"></p>
+    <div id="fnNew" class="fn-stages"></div>
+
+    <h2 class="lp-h2" style="margin-top:32px">Who is initiating KYC.</h2>
+    <p class="ov-sub" style="margin-top:2px">Every merchant that has initiated KYC, split into mutually exclusive groups (priority: new &rarr; paying &rarr; active free &rarr; other existing).</p>
+    <div class="pilot-funnel" id="fnOriginBar" style="margin:12px 0 6px"></div>
+    <div id="fnOriginLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--darkgray);margin-bottom:12px"></div>
+    <div class="lp-table-scroll"><table id="fnOriginTable" class="lp-table"></table></div>
+    <p class="lp-note" id="fnFootnote" style="margin-top:12px"></p>
   </div>
 </div>
 <div id="page-overview" class="on">
@@ -478,16 +467,16 @@
     <div class="ov-kpis" id="ovKpis"></div>
     <div class="ov-grid">
       <div class="ov-card">
-        <div class="ov-ctitle"><h2>Activated per day</h2><span class="tot" id="ovActTot">&nbsp;</span></div>
+        <div class="ov-ctitle"><h2>Initiated KYC per day</h2><span class="tot" id="ovActTot">&nbsp;</span></div>
         <p class="ov-cnote">New Stripe connections in the selected window. Bars = daily; line = cumulative.</p>
         <div class="ov-chart" id="ovActChart"></div>
-        <div class="ov-legend"><span><i class="pc-bar" style="background:#1D8FE1;opacity:.85"></i> Activated / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative</span></div>
+        <div class="ov-legend"><span><i class="pc-bar" style="background:#1D8FE1;opacity:.85"></i> Initiated KYC / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative</span></div>
       </div>
       <div class="ov-card">
-        <div class="ov-ctitle"><h2>Enabled (passed KYC) per day</h2><span class="tot" id="ovEnTot">&nbsp;</span></div>
-        <p class="ov-cnote">Merchants cleared to transact, dated by when they <b>accepted Terms</b> (the KYC-pass moment). Bars = newly enabled / day; line = cumulative enabled.</p>
+        <div class="ov-ctitle"><h2>Passed KYC per day</h2><span class="tot" id="ovEnTot">&nbsp;</span></div>
+        <p class="ov-cnote">Merchants cleared to transact, dated by when they <b>accepted Terms</b> (the KYC-pass moment). Bars = newly passed / day; line = cumulative passed.</p>
         <div class="ov-chart" id="ovEnChart"></div>
-        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly enabled / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative enabled</span></div>
+        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly passed / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative passed</span></div>
       </div>
     </div>
     <div class="ov-card full">
@@ -570,7 +559,7 @@
       <label class="toggle"><input type="checkbox" id="f-non" checked><span class="dot" style="background:var(--red)"></span><span class="name">Non-paying merchants</span><span class="count" id="c-non">6981</span></label>
 
       <div class="section-label">Loyverse Payments</div>
-      <label class="toggle"><input type="checkbox" id="f-payact"><span class="dot" style="background:#1578C4"></span><span class="name">Activated payments</span><span class="count">135</span></label>
+      <label class="toggle"><input type="checkbox" id="f-payact"><span class="dot" style="background:#1578C4"></span><span class="name">Initiated KYC</span><span class="count">135</span></label>
 
       <div class="section-label">Launch cohort <span style="color:var(--midgray);font-weight:normal;text-transform:none;letter-spacing:0">(Alex\u2019s 500)</span></div>
       <label class="toggle"><input type="checkbox" id="f-launch500"><span class="dot" style="background:#E8A400"></span><span class="name">Only the launch 500</span><span class="count">500</span></label>
@@ -578,7 +567,7 @@
         <label style="display:flex;align-items:center;gap:3px"><input type="radio" name="l5seg" value="all" checked> All 500</label>
         <label style="display:flex;align-items:center;gap:3px"><input type="radio" name="l5seg" value="active"> Active 100</label>
         <label style="display:flex;align-items:center;gap:3px"><input type="radio" name="l5seg" value="churning"> Churning 400</label>
-        <label style="display:flex;align-items:center;gap:3px"><input type="radio" name="l5seg" value="activated"> Activated 6</label>
+        <label style="display:flex;align-items:center;gap:3px"><input type="radio" name="l5seg" value="activated"> Initiated KYC 6</label>
       </div>
       <div class="legend-note" style="margin-top:2px">Gold-ringed pins are the 500 US merchants Alex selected for the payments launch. 302 of the 500 are geocoded onto the map.</div>
 
@@ -650,7 +639,7 @@
         <div class="ib-market seg" id="actFilter">
           <button class="on" data-f="all">All</button>
           <button data-f="processing">Processing</button>
-          <button data-f="enabled">Enabled</button>
+          <button data-f="enabled">Passed KYC</button>
           <button data-f="restricted">Restricted</button>
           <button data-f="gap">Activation gap</button>
         </div>
@@ -671,7 +660,7 @@
         <button class="on" data-f="all">All 500</button>
         <button data-f="active">Active (100)</button>
         <button data-f="churning">Churning (400)</button>
-        <button data-f="activated">Activated (6)</button>
+        <button data-f="activated">Initiated KYC (6)</button>
       </div>
       <input id="l5search" class="lp-tsearch" placeholder="Filter by name...">
       <button id="l5export" class="lp-export">Download (CSV)</button>
@@ -1344,7 +1333,7 @@ applyMasterHash();
   function renderCharts(range){
     // ---- Activations ----
     var a=windowSeries(aDense, range);
-    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:'',barLabel:'Activated'});
+    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:'',barLabel:'Initiated KYC'});
     // ---- Enabled (backfilled from Terms-accepted; fallback to legacy snapshot) ----
     if(eDense){
       var e=windowSeries(eDense, range);
@@ -1355,7 +1344,7 @@ applyMasterHash();
       var eLine=SNAP.map(function(r){return Number(r.enabled)||0;});
       var eBars=eLine.map(function(v,i){ return i===0?v:Math.max(0,v-eLine[i-1]); });
       chart(document.getElementById('ovEnChart'), eDays, eBars, eLine,
-        {barClass:'green',lineClass:'red',empty:'Enabled curve populates on the next daily pull.',barLabel:'Newly enabled'});
+        {barClass:'green',lineClass:'red',empty:'Passed-KYC curve populates on the next daily pull.',barLabel:'Newly passed'});
     }
     // ---- Volume ----
     var v=windowSeries(vDense, range);
@@ -1382,7 +1371,7 @@ applyMasterHash();
     }
     var kpis=[
       {num:fmtInt(totalReg), lbl:'Total activated', sub:'Merchants connected to Loyverse Payments', cls:''},
-      {num:fmtInt(enabled), lbl:'Enabled (passed KYC)', sub:rate+'% of activated are live to transact', cls:'green'},
+      {num:fmtInt(enabled), lbl:'Passed KYC', sub:rate+'% of initiators are live to transact', cls:'green'},
       {num:fmtUsd(volTotal), lbl:'Volume processed (all-time)', sub:'Successful card charges, USD', cls:'accent'},
       {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'Have processed at least one charge', cls:''}
     ];
@@ -1494,8 +1483,8 @@ applyMasterHash();
   // Exclusive, furthest-stage classification.
   function stateOf(r){ if(!r) return 'nothing'; if(r.processing===true) return 'processing'; if(r.status==='Enabled') return 'enabling'; return 'activating'; }
   var STATES={ nothing:{lbl:'Doing nothing',sub:'Not connected to Loyverse Payments',cls:''},
-               activating:{lbl:'Activating',sub:'Connected — KYC in progress',cls:'accent'},
-               enabling:{lbl:'Enabling',sub:'Passed KYC — cleared to transact',cls:'green'},
+               activating:{lbl:'Initiated KYC',sub:'Connected — KYC in progress',cls:'accent'},
+               enabling:{lbl:'Passed KYC',sub:'Cleared to transact',cls:'green'},
                processing:{lbl:'Processing',sub:'Already taking card payments',cls:''} };
   var ORDER=['nothing','activating','enabling','processing'];
   // Pre-join once.
@@ -1577,151 +1566,112 @@ applyMasterHash();
 })();
 
 // ===== Activation Funnel (Payments sub-tab) ================================
-// Entered (US since launch ∪ pilot) -> Signed up (connected) -> Enabled (KYC) -> Transacting.
-// Reads window.__FUNNEL_* (regenerated daily by pull.js). Timings are computed from the
-// per-merchant timestamps; KYC drill groups the signed-up-but-not-enabled by blocker.
+// Three group funnels: Base -> Initiated KYC (connected) -> Passed KYC -> Transacting,
+// for (1) US active customers, (2) US paying customers, (3) new US customers since launch.
+// Plus an origin split of everyone who has initiated KYC. Joins __FUNNEL_MERCHANTS
+// (stages, per-merchant) to __ACT (paying/active flags) by merchant id. Bases for the
+// active/paying groups come from __FUNNEL_BASES (us_bases.sql, refreshed daily by pull.js).
 (function(){
   var $=function(id){return document.getElementById(id);};
-  if(!$('funnelStages')) return;
+  if(!$('fnActive')) return;
   var M=window.__FUNNEL_MERCHANTS||[];
+  var ACT=window.__ACT||[];
+  var BASES=window.__FUNNEL_BASES||null;
   var BOTS=window.__FUNNEL_BOTS_EXCLUDED||0;
+  var LAUNCH=window.__FUNNEL_LAUNCH_START||'2026-07-01';
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function num(v){ return (Math.round(Number(v)||0)).toLocaleString('en-US'); }
-  function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; return (v>0&&v<1)?'<1%':Math.round(v)+'%'; }
-  var state={pop:'all',range:'all',from:null,to:null};
-  function inRange(d){
-    if(state.range==='all') return true;
-    if(!d) return false;
-    var t=new Date(d).getTime(); if(isNaN(t)) return false;
-    var now=new Date(), lo=null, hi=null;
-    if(state.range==='month'){ lo=new Date(now.getFullYear(),now.getMonth(),1).getTime(); }
-    else if(state.range==='30'){ lo=now.getTime()-30*864e5; }
-    else if(state.range==='90'){ lo=now.getTime()-90*864e5; }
-    else if(state.range==='custom'){ lo=state.from?new Date(state.from).getTime():null; hi=state.to?new Date(state.to).getTime()+864e5:null; }
-    if(lo!=null && t<lo) return false;
-    if(hi!=null && t>hi) return false;
-    return true;
-  }
-  // Date range filters the ENTRY cohort by registration date (a proper nested funnel);
-  // "All time" includes everyone, even records with no registration date on file.
-  function rows(){
-    return M.filter(function(m){
-      if(state.pop==='pilot' && !m.pilot) return false;
-      if(state.range==='all') return true;
-      return inRange(m.registered_at);
-    });
-  }
-  function computeStages(rs){
-    var s={entered:rs.length,signed_up:0,enabled:0,transacting:0};
-    // Enabled STAGE = KYC-passed status flag (m.enabled); enabled_at is only the (often-null)
-    // Terms timestamp used for timings, so never use it to count the stage.
-    rs.forEach(function(m){ if(m.connected_at)s.signed_up++; if(m.enabled)s.enabled++; if(m.first_txn_at)s.transacting++; });
-    return s;
-  }
-  function renderStages(S){
-    var STG=[{lbl:'Entered',c:'b0',n:S.entered},{lbl:'Signed up',c:'b1',n:S.signed_up},{lbl:'Enabled',c:'b2',n:S.enabled},{lbl:'Transacting',c:'b3',n:S.transacting}];
+  function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; if(v>0&&v<0.1) return '<0.1%'; return (v<10? v.toFixed(1) : Math.round(v))+'%'; }
+
+  // Join: funnel merchants (book of KYC initiators) <- ACT flags (US prod accounts)
+  var actById={};
+  ACT.forEach(function(a){ if(a.env==='prod' && a.mid!=null) actById[String(a.mid)]=a; });
+  var book=M.filter(function(m){ return m.connected_at; }).map(function(m){
+    var a=actById[String(m.oid)]||null;
+    return {
+      m:m,
+      isNew: !!(m.registered_at && m.registered_at>=LAUNCH),
+      isPaying: !!(a&&a.is_paying),
+      isActive: !!(a&&a.pos_active),
+      passed: m.stage==='enabled'||m.stage==='transacting'||!!m.enabled,
+      txn: m.stage==='transacting'||!!m.first_txn_at
+    };
+  });
+  function agg(rs){ return { init:rs.length, passed:rs.filter(function(r){return r.passed;}).length, txn:rs.filter(function(r){return r.txn;}).length }; }
+
+  // Render a 4-stage funnel: base (may be null) -> initiated -> passed -> transacting
+  function renderFunnel(elId, base, S){
+    var STG=[{lbl:'Base',c:'b0',n:base},{lbl:'Initiated KYC',c:'b1',n:S.init},{lbl:'Passed KYC',c:'b2',n:S.passed},{lbl:'Transacting',c:'b3',n:S.txn}];
+    if(base==null) STG.shift();
     var max=STG[0].n||1;
-    $('funnelStages').innerHTML=STG.map(function(s,i){
+    $(elId).innerHTML=STG.map(function(s,i){
       var w=Math.max(0.5, s.n/max*100);
-      var inside = w>=10;                       // label fits inside only on wide bars
+      var inside=w>=10;
       var conv= i===0 ? (num(s.n)+' merchants') :
-        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,STG[0].n)+' of entered') : ''));
+        ('<b>'+pctL(s.n,STG[i-1].n)+'</b> of '+STG[i-1].lbl.toLowerCase() + (i>1 ? (' &middot; '+pctL(s.n,STG[0].n)+' of '+STG[0].lbl.toLowerCase()) : ''));
       return '<div class="fn-row"><div class="fn-lbl">'+s.lbl+'</div>'+
         '<div class="fn-barwrap"><div class="fn-bar '+s.c+'" style="width:'+w.toFixed(1)+'%">'+(inside?num(s.n):'')+'</div>'+(inside?'':'<span class="fn-out">'+num(s.n)+'</span>')+'</div>'+
         '<div class="fn-conv">'+conv+'</div></div>';
     }).join('');
   }
-  function daysBetween(a,b){ if(!a||!b) return null; var d=(new Date(b)-new Date(a))/86400000; return (isFinite(d)&&d>=0)? d:null; }
-  function stat(arr){ if(!arr.length) return null; arr.sort(function(x,y){return x-y;}); var mid=Math.floor(arr.length/2); var med=arr.length%2?arr[mid]:(arr[mid-1]+arr[mid])/2; var avg=arr.reduce(function(a,b){return a+b;},0)/arr.length; return {med:med,avg:avg,n:arr.length}; }
-  function renderTimings(rs){
-    // Only steps with real, distinct timestamps are shown. There is no "KYC passed"
-    // timestamp in the Stripe data (Terms are accepted at signup), so the Signed up→Enabled
-    // duration can't be measured and is intentionally omitted.
-    var t1=[],tST=[],t4=[];
-    rs.forEach(function(m){
-      var a=daysBetween(m.registered_at,m.connected_at); if(a!=null)t1.push(a);
-      var b=daysBetween(m.connected_at,m.first_txn_at); if(b!=null)tST.push(b);
-      var d=daysBetween(m.registered_at,m.first_txn_at); if(d!=null)t4.push(d);
-    });
-    var defs=[['Register → Signed up',stat(t1)],['Signed up → Transacting',stat(tST)],['Register → Transacting',stat(t4)]];
-    $('funnelTimings').innerHTML=defs.map(function(d){
-      var s=d[1];
-      var v = s? (s.med.toFixed(s.med<10?1:0)+'d') : '—';
-      var sub = s? ('avg '+s.avg.toFixed(1)+'d · n='+s.n) : 'no dated pairs';
-      return '<div class="ov-kpi"><div class="k-num">'+v+'</div><div class="k-lbl">'+esc(d[0])+'</div><div class="k-sub">'+sub+'</div></div>';
-    }).join('');
-  }
-  var drill='kyc';
-  // Ordered Stripe KYC onboarding phases. A merchant's EARLIEST-stuck stage = the first phase
-  // (top to bottom) that appears in their currently-due requirements.
-  var KYC_PHASES=[
-    {k:'Business profile', items:['Business category','Business website URL','Product description']},
-    {k:'Legal entity details', items:['Legal company name','Company address','Company tax ID']},
-    {k:'Representative identity', items:['Legal name','Date of birth','Home address','Email','Phone number','Business representatives']},
-    {k:'Identity documents', items:['ID document','ID/Tax number','Company document']},
-    {k:'Payout bank account', items:['Bank account for payouts']},
-    {k:'Terms of Service acceptance', items:['Terms of Service acceptance']}
-  ];
-  var PHASE_OF={}; KYC_PHASES.forEach(function(p,i){ p.items.forEach(function(it){ PHASE_OF[it]=i; }); });
-  function earliestPhase(kyc){
-    var best=null;
-    (kyc||[]).forEach(function(b){ var idx=PHASE_OF[b]; if(idx!=null && (best==null||idx<best)) best=idx; });
-    return best; // index into KYC_PHASES, or null if no mapped blocker
-  }
-  function renderKyc(rs){
-    var stuck=rs.filter(function(m){ return m.connected_at && !m.enabled; }); // signed up, not enabled
-    // (1) earliest-stuck distribution across the ordered phases
-    var earliest=new Array(KYC_PHASES.length).fill(0); var unknown=0;
-    stuck.forEach(function(m){ var e=earliestPhase(m.kyc); if(e==null) unknown++; else earliest[e]++; });
-    var emax=Math.max(1,Math.max.apply(null,earliest),unknown);
-    var head='<div class="fn-drillcard"><div><div class="k-lbl">Signed up but not yet enabled</div><div style="color:var(--darkgray);font-size:12px;margin-top:2px">Where each account <b>first</b> gets stuck in the KYC sequence (earliest outstanding stage), then every pending item below.</div></div><div class="n">'+num(stuck.length)+'</div></div>';
-    var order='<div style="font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6A6A6A;margin:6px 0 6px">Earliest stage where accounts are stuck</div>';
-    order+=KYC_PHASES.map(function(p,i){
-      var n=earliest[i]; var pctv=stuck.length?Math.round(n/stuck.length*100):0;
-      return '<div class="fn-bk-row"><div class="fn-bk-lbl"><b>'+(i+1)+'.</b> '+esc(p.k)+'</div><div class="fn-bk-bar"><i style="width:'+(n/emax*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+n+(n?' · '+pctv+'%':'')+'</div></div>';
-    }).join('');
-    if(unknown) order+='<div class="fn-bk-row"><div class="fn-bk-lbl" style="color:var(--darkgray)">Other / not captured</div><div class="fn-bk-bar"><i style="width:'+(unknown/emax*100).toFixed(1)+'%;background:#C2C8CF"></i></div><div class="fn-bk-n">'+unknown+'</div></div>';
-    // (2) every pending item (a merchant can be blocked on several)
-    var byBlk={};
-    stuck.forEach(function(m){ (m.kyc&&m.kyc.length?m.kyc:['(reason not captured)']).forEach(function(b){ byBlk[b]=(byBlk[b]||0)+1; }); });
-    var br=Object.keys(byBlk).map(function(k){return [k,byBlk[k]];}).sort(function(a,b){return b[1]-a[1];});
-    var imax=br.length?br[0][1]:1;
-    var items='<div style="font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6A6A6A;margin:18px 0 6px">All pending items (any stage)</div>';
-    items+=br.map(function(r){ return '<div class="fn-bk-row"><div class="fn-bk-lbl">'+esc(r[0])+'</div><div class="fn-bk-bar"><i style="width:'+(r[1]/imax*100).toFixed(1)+'%"></i></div><div class="fn-bk-n">'+r[1]+'</div></div>'; }).join('');
-    $('funnelDrillBody').innerHTML=head+(stuck.length?(order+items):'<p class="lp-note">No signed-up-but-blocked merchants in this selection.</p>');
-  }
-  function renderTerminal(rs){
-    var ready = (window.__FUNNEL_TERMINAL_READY !== false);
-    if(!ready){ $('funnelDrillBody').innerHTML='<p class="lp-note">Terminal acquisition populates on the next pull once the terminal-orders query is wired.</p>'; return; }
-    var pool=rs.filter(function(m){return m.connected_at;});               // signed up onward
-    var acq=pool.filter(function(m){return m.terminal_at;});
-    var no=pool.length-acq.length;
-    var note = acq.length? '' : '<p class="lp-note">No merchant in this selection has ordered a Stripe Terminal card reader yet &mdash; they may be using Tap to Pay or existing hardware. This is a common reason enabled merchants stall before transacting.</p>';
-    $('funnelDrillBody').innerHTML=
-      '<div class="fn-drillcard"><div class="k-lbl">Ordered a Stripe Terminal reader</div><div class="n">'+num(acq.length)+'</div></div>'+
-      '<div class="fn-drillcard"><div class="k-lbl">No terminal yet (of '+num(pool.length)+' signed up)</div><div class="n">'+num(no)+'</div></div>'+note;
-  }
-  function renderDrill(rs){ if(drill==='kyc') renderKyc(rs); else renderTerminal(rs); }
-  function renderBots(rs){
-    var extra = (state.pop==='pilot') ? ' · showing the pilot 500 only' : '';
-    var rng = state.range==='all' ? 'all time' : (state.range==='month'?'this month':(state.range==='custom'?'custom range':'last '+state.range+' days'));
-    $('fnBotsNote').textContent = num(BOTS)+' confirmed US bot/fraud registrations excluded from the entry count. Date range: '+rng+extra+'.';
-  }
-  function renderAll(){ var rs=rows(); renderStages(computeStages(rs)); renderTimings(rs); renderDrill(rs); renderBots(rs); }
 
-  var pb=$('fnPop').querySelectorAll('button');
-  for(var i=0;i<pb.length;i++){ (function(b){ b.addEventListener('click',function(){ state.pop=b.getAttribute('data-p'); for(var j=0;j<pb.length;j++) pb[j].classList.toggle('on',pb[j]===b); renderAll(); }); })(pb[i]); }
-  var rb=$('fnRange').querySelectorAll('button');
-  for(var k=0;k<rb.length;k++){ (function(b){ b.addEventListener('click',function(){ state.range=b.getAttribute('data-r'); for(var j=0;j<rb.length;j++) rb[j].classList.toggle('on',rb[j]===b); $('fnCustom').style.display=(state.range==='custom')?'flex':'none'; renderAll(); }); })(rb[k]); }
-  var ff=$('fnFrom'), ft=$('fnTo');
-  if(ff) ff.addEventListener('change',function(){ state.from=ff.value||null; if(state.range==='custom') renderAll(); });
-  if(ft) ft.addEventListener('change',function(){ state.to=ft.value||null; if(state.range==='custom') renderAll(); });
-  var db=$('funnelDrill').querySelectorAll('button');
-  for(var d2=0;d2<db.length;d2++){ (function(b){ b.addEventListener('click',function(){ drill=b.getAttribute('data-d'); for(var j=0;j<db.length;j++) db[j].classList.toggle('on',db[j]===b); renderDrill(rows()); }); })(db[d2]); }
+  // FUNNEL 1: active customers (POS sale <=30d)
+  var segActive=book.filter(function(r){return r.isActive;});
+  var baseActive=BASES&&isFinite(BASES.active_us)?BASES.active_us:null;
+  renderFunnel('fnActive', baseActive, agg(segActive));
+  $('fnActiveSub').innerHTML = baseActive!=null
+    ? 'Of <b>'+num(baseActive)+'</b> US merchants with a POS sale in the last 30 days'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'. Treat these numerators as a floor &mdash; POS activity for paying merchants comes from a monthly table that lags, so some initiators are undercounted here.'
+    : 'Base count pending the next morning data pull.';
+
+  // FUNNEL 2: paying customers (active Chargebee subscription)
+  var segPaying=book.filter(function(r){return r.isPaying;});
+  var basePaying=BASES&&isFinite(BASES.paying_us)?BASES.paying_us:null;
+  renderFunnel('fnPaying', basePaying, agg(segPaying));
+  $('fnPayingSub').innerHTML = basePaying!=null
+    ? 'Of <b>'+num(basePaying)+'</b> US merchants with an active paid subscription'+(BASES&&BASES.asof?' (as of '+esc(BASES.asof)+')':'')+'.'
+    : 'Base count pending the next morning data pull.';
+
+  // FUNNEL 3: new customers since launch (full FACADASH population, bots excluded)
+  var isNewM=function(m){ return m.registered_at && m.registered_at>=LAUNCH; };
+  var newAll=M.filter(isNewM);
+  var segNew=book.filter(function(r){return r.isNew;});
+  renderFunnel('fnNew', newAll.length, agg(segNew));
+  $('fnNewSub').innerHTML='Of <b>'+num(newAll.length)+'</b> US merchants registered since '+esc(LAUNCH)+' ('+num(BOTS)+' confirmed bot/fraud registrations excluded).';
+
+  // ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC
+  var GROUPS=[
+    {k:'New (since '+LAUNCH+')', color:'var(--green)', f:function(r){return r.isNew;}},
+    {k:'Existing &mdash; paying', color:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
+    {k:'Existing &mdash; active free', color:'var(--blue)', f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
+    {k:'Existing &mdash; dormant / other', color:'#C2C8CF', tcol:'#3a3a3a', f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
+  ];
+  var segs=GROUPS.map(function(g){ var rs=book.filter(g.f); return {g:g, rs:rs, a:agg(rs)}; });
+  var tot=book.length||1;
+  $('fnOriginBar').innerHTML=segs.map(function(s){
+    var w=s.a.init/tot*100;
+    var lbl=(w>=7)?(num(s.a.init)+' · '+Math.round(w)+'%'):'';
+    return '<div class="seg" style="width:'+w.toFixed(2)+'%;background:'+s.g.color+(s.g.tcol?';color:'+s.g.tcol:'')+'" title="'+esc(s.g.k.replace(/&mdash;/g,'-'))+': '+s.a.init+'">'+lbl+'</div>';
+  }).join('');
+  $('fnOriginLegend').innerHTML=segs.map(function(s){
+    return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+s.g.k+' &middot; <b>'+num(s.a.init)+'</b></span>';
+  }).join('');
+  var T=agg(book);
+  var thead='<tr><th>Group</th><th style="text-align:right">Initiated KYC</th><th style="text-align:right">Passed KYC</th><th style="text-align:right">Transacting</th><th style="text-align:right">% of initiators</th></tr>';
+  var rowsHtml=segs.map(function(s){
+    return '<tr><td>'+s.g.k+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
+  }).join('');
+  rowsHtml+='<tr style="font-weight:800"><td>Total</td><td style="text-align:right">'+num(T.init)+'</td><td style="text-align:right">'+num(T.passed)+'</td><td style="text-align:right">'+num(T.txn)+'</td><td style="text-align:right">100%</td></tr>';
+  $('fnOriginTable').innerHTML=thead+rowsHtml;
+
+  var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
+  $('fnFootnote').textContent='Groups are assigned by priority (new > paying > active free > other), so each merchant is counted once. '
+    +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
+    +'Data refreshes automatically every morning from Snowflake.';
+
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
-  var ls=$('funnelLaunch'); if(ls&&window.__FUNNEL_LAUNCH_START) ls.textContent=window.__FUNNEL_LAUNCH_START;
+  var ls=$('funnelLaunch'); if(ls) ls.textContent=LAUNCH;
   var inited=false;
-  window.__FUNNEL_INIT=function(){ if(inited)return; inited=true; renderAll(); };
+  window.__FUNNEL_INIT=function(){ if(inited)return; inited=true; };
   window.__FUNNEL_INIT();
 })();
 
@@ -2010,12 +1960,12 @@ window.__ACT=window.__ACT||[];
     var mrr=ACT.reduce(function(a,r){return a+(r.is_paying?(r.mrr||0):0);},0);
     var gap=ACT.filter(function(r){return (r.pos_active===true||r.is_paying===true)&&!r.processing;}).length;
     var cards=[
-      {k:'Activated accounts',v:num(n),s:enabled+' enabled / '+restricted+' restricted'},
+      {k:'Initiated KYC',v:num(n),s:enabled+' passed KYC / '+restricted+' restricted'},
       {k:'Processing on Payments',v:num(processing),s:moneyG(vol)+' volume to date',hl:true},
       {k:'Activation gap',v:num(gap),s:'engaged (POS/paying) but not yet processing',hl:true},
       {k:'Active on POS',v:num(posActive),s:'sold in the last 30 days'},
       {k:'Paying a software plan',v:num(paying),s:money0(mrr)+' combined MRR'},
-      {k:'Enabled & processing',v:num(ACT.filter(function(r){return r.status==='Enabled'&&r.processing;}).length),s:'fully live'}
+      {k:'Passed KYC & processing',v:num(ACT.filter(function(r){return r.status==='Enabled'&&r.processing;}).length),s:'fully live'}
     ];
     $('actCards').innerHTML=cards.map(function(c){
       return '<div class="ib-pc'+(c.hl?' hl':'')+'"><div class="k">'+esc(c.k)+'</div><div class="v">'+c.v+'</div>'+(c.s?'<div class="s">'+esc(c.s)+'</div>':'')+'</div>';
@@ -2150,7 +2100,7 @@ window.__ACT=window.__ACT||[];
       {k:'Launch cohort',v:num(T.length),s:active+' active \u00b7 '+churn+' churning',hl:true},
       {k:'Geocoded on map',v:num(onmap),s:'gold-ringed pins on the map'},
       {k:'Connected payments',v:num(act.length),s:'have a Stripe account',hl:true},
-      {k:'Enabled to process',v:num(enabled),s:'cleared KYC \u2014 live',hl:true},
+      {k:'Passed KYC',v:num(enabled),s:'cleared to transact \u2014 live',hl:true},
       {k:'Still in KYC',v:num(act.length-enabled),s:'connected but blocked'},
       {k:'Total POS GTV',v:money(gtvSum),s:'trailing 12mo, whole cohort'}
     ];

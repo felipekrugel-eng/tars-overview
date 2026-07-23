@@ -711,6 +711,29 @@ async function fetchTerminalOrders(conn) {
   }
   return by;
 }
+// ── US funnel bases (Active / Paying customer counts) ─────────────────────────
+// One-row query (sql/us_bases.sql): genuine US merchants active in the trailing 30 days
+// + genuine US merchants with an active Chargebee subscription. These are the BASES for
+// the group funnels on the Funnel page (window.__FUNNEL_BASES). Bot filter applied.
+async function fetchUsBases(conn) {
+  const rows = await executeQuery(conn, loadSql('us_bases.sql'));
+  if (!rows || !rows.length) return null;
+  const r = rows[0];
+  const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const active = Number(g('active_us')), paying = Number(g('paying_us'));
+  if (!isFinite(active) || !isFinite(paying)) return null;
+  return { active_us: active, paying_us: paying, asof: new Date().toISOString().slice(0, 10) };
+}
+// If the bases query fails, carry the previously-committed bases forward so the
+// Funnel page never renders without denominators.
+function readExistingBases() {
+  try {
+    const txt = fs.readFileSync(FUNNEL_FILE, 'utf8');
+    const m = txt.match(/window\.__FUNNEL_BASES\s*=\s*(\{[\s\S]*?\});/);
+    if (m) return JSON.parse(m[1]);
+  } catch (e) { /* first run */ }
+  return null;
+}
 async function fetchUsRegistrations(conn, extraIds) {
   const ids = sanitizeIds(extraIds);
   const inList = ids.length ? ids.join(',') : '0';
@@ -838,14 +861,15 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
   });
   return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
-function writeFunnel(funnel, terminalReady) {
+function writeFunnel(funnel, terminalReady, bases) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
 // Population = genuine US registrations since ${LAUNCH_START} (LOYVERSE_MERCHANTS, BOTS EXCLUDED)
 // ∪ all prod connected accounts (the payments book) ∪ pilot 500.
-// Stages: entered -> signed_up (connected) -> enabled (passed KYC) -> transacting. Each merchant
-// carries its stage timestamps; the UI recomputes stages/timings/drill-downs by date range + pilot.
+// Stages: entered -> initiated KYC (connected) -> passed KYC -> transacting. Each merchant
+// carries its stage timestamps; the UI recomputes the group funnels + origin split client-side.
+// __FUNNEL_BASES = US denominators (active last 30d / paying subs) from sql/us_bases.sql.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
 // Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
 window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
@@ -854,6 +878,7 @@ window.__FUNNEL_ENTERED_TOTAL = ${JSON.stringify(funnel.entered_total)};
 window.__FUNNEL_BOTS_EXCLUDED = ${JSON.stringify(funnel.botsExcluded)};
 window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
 window.__FUNNEL_TERMINAL_READY = ${JSON.stringify(!!terminalReady)};
+window.__FUNNEL_BASES = ${JSON.stringify(bases || null)};
 window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
 `;
   fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
@@ -940,8 +965,15 @@ async function main() {
     let termByEmail = {}, terminalReady = false;
     try { termByEmail = await fetchTerminalOrders(conn); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByEmail).length} merchant emails with a terminal order`); }
     catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }
+    let bases = null;
+    try {
+      bases = await fetchUsBases(conn);
+      if (bases) console.log(`✓ us_bases: active_us=${bases.active_us}  paying_us=${bases.paying_us}`);
+      else console.error('✗ us_bases returned no usable row (carrying previous bases forward)');
+    } catch (e) { console.error(`✗ us_bases query failed (carrying previous bases forward): ${e.message}`); }
+    if (!bases) bases = readExistingBases();
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail);
-    writeFunnel(funnel, terminalReady);
+    writeFunnel(funnel, terminalReady, bases);
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)
