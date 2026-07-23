@@ -94,22 +94,23 @@ SELECT
         AND LOWER(s.STATUS) = 'active'
         AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
     ) AS paying_us,
-    (SELECT COUNT(DISTINCT m.LOYVERSE_ID)
-       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-      WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
-        AND m.LOYVERSE_ID IS NOT NULL
-        AND m.CREATED_AT < '2026-07-01'
-        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
-        -- not POS-active in the trailing 30 days
-        AND NOT EXISTS (
-            SELECT 1 FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
-            WHERE r.LOYVERSE_ID = m.LOYVERSE_ID
-              AND TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
-        )
-        -- no active Chargebee subscription
-        AND NOT EXISTS (
-            SELECT 1 FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
-            WHERE s.LOYVERSE_MERCHANT_ID = m.LOYVERSE_ID
-              AND LOWER(s.STATUS) = 'active'
-        )
-    ) AS dormant_us;   -- [US-bot-filter]
+    -- Set-based (MINUS) rather than correlated NOT EXISTS: Snowflake cannot compile
+    -- correlated subqueries inside a scalar SELECT-list subquery.
+    (SELECT COUNT(*) FROM (
+        SELECT m.LOYVERSE_ID
+          FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+         WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+           AND m.LOYVERSE_ID IS NOT NULL
+           AND m.CREATED_AT < '2026-07-01'
+           AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)
+        MINUS
+        -- POS-active in the trailing 30 days
+        SELECT r.LOYVERSE_ID
+          FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
+         WHERE TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
+        MINUS
+        -- active Chargebee subscription
+        SELECT s.LOYVERSE_MERCHANT_ID
+          FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
+         WHERE LOWER(s.STATUS) = 'active'
+    )) AS dormant_us;   -- [US-bot-filter]
