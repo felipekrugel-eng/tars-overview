@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- FACADASH mark: sibling of the Loyverse gift icon (2x2 square geometry,
-       gift stroke weight, flat brand blue) - the gift becomes a dashboard. -->
+  <!-- FACADASH mark: F monogram built from the Loyverse gift icon's chunky
+       rectangle vocabulary, flat brand blue. -->
   <rect x="0" y="0" width="512" height="512" rx="100" fill="#1D8FE1"/>
-  <rect x="104" y="104" width="128" height="128" fill="none" stroke="#fff" stroke-width="30"/>
-  <rect x="280" y="104" width="128" height="128" fill="#fff"/>
-  <rect x="104" y="280" width="128" height="128" fill="none" stroke="#fff" stroke-width="30"/>
-  <rect x="280" y="336" width="32" height="72" fill="#fff"/>
-  <rect x="328" y="308" width="32" height="100" fill="#fff"/>
-  <rect x="376" y="280" width="32" height="128" fill="#fff"/>
+  <rect x="140" y="104" width="76" height="304" fill="#fff"/>
+  <rect x="248" y="104" width="152" height="76" fill="#fff"/>
+  <rect x="248" y="218" width="104" height="76" fill="#fff"/>
 </svg>
