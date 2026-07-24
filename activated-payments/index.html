@@ -454,10 +454,9 @@
     <div class="fn-toolbar">
       <div class="ov-range" id="fnPick">
         <button data-g="compare" class="on">Compare all</button>
-        <button data-g="new">New</button>
-        <button data-g="paying">Paying</button>
-        <button data-g="active">Active</button>
-        <button data-g="dormant">Dormant / other</button>
+        <button data-g="new">New merchants</button>
+        <button data-g="paying">Paying merchants</button>
+        <button data-g="active">Non paying</button>
       </div>
     </div>
 
@@ -466,7 +465,7 @@
     <div id="fnSingle" style="display:none"></div>
 
     <h2 class="lp-h2" style="margin-top:36px">Who is initiating KYC.</h2>
-    <p class="ov-sub" style="margin-top:2px">Every merchant that has initiated KYC, split into mutually exclusive groups (priority: new &rarr; paying &rarr; active free &rarr; other existing).</p>
+    <p class="ov-sub" style="margin-top:2px">Every merchant that has initiated KYC, split into mutually exclusive groups (priority: new &rarr; paying &rarr; non paying &rarr; other existing).</p>
     <div class="pilot-funnel" id="fnOriginBar" style="margin:12px 0 6px"></div>
     <div id="fnOriginLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--darkgray);margin-bottom:12px"></div>
     <div class="lp-table-scroll"><table id="fnOriginTable" class="lp-table"></table></div>
@@ -475,10 +474,9 @@
     <p class="ov-sub" style="margin-top:2px">Every merchant that has <b>passed KYC</b> in the selected bucket &mdash; and of these, who has <b>ordered a terminal</b>, who has <b>received it</b>, and who is already <b>transacting</b>. Buckets are the same mutually exclusive groups as the origin split above.</p>
     <div class="fn-toolbar">
       <div class="ov-range" id="fnDeepPick">
-        <button data-b="new" class="on">New</button>
-        <button data-b="paying">Paying</button>
-        <button data-b="activefree">Active free</button>
-        <button data-b="dormant">Dormant / other</button>
+        <button data-b="new" class="on">New merchants</button>
+        <button data-b="paying">Paying merchants</button>
+        <button data-b="activefree">Non paying</button>
       </div>
     </div>
     <div class="fn-kpis" id="fnDeepKpis"></div>
@@ -1650,18 +1648,15 @@ applyMasterHash();
   var basePaying=BASES&&isFinite(BASES.paying_us)?BASES.paying_us:null;
   var baseDormant=BASES&&isFinite(BASES.dormant_us)?BASES.dormant_us:null;
   var GS=[
-    {id:'new', name:'New', accent:'var(--green)', base:newAll.length,
+    {id:'new', name:'New merchants', accent:'var(--green)', base:newAll.length,
      desc:'Registered since '+esc(LAUNCH)+' &middot; '+num(BOTS)+' bot/fraud registrations excluded',
      a:agg(book.filter(function(r){return r.isNew;}))},
-    {id:'paying', name:'Paying', accent:'var(--blue-deep)', base:basePaying,
+    {id:'paying', name:'Paying merchants', accent:'var(--blue-deep)', base:basePaying,
      desc:'Existing customers with an active paid subscription',
      a:agg(book.filter(function(r){return r.isPaying;}))},
-    {id:'active', name:'Active', accent:'var(--blue)', base:baseActive,
-     desc:'POS sale in the last 30 days &middot; numerators are a floor*',
-     a:agg(book.filter(function(r){return r.isActive;}))},
-    {id:'dormant', name:'Dormant / other', accent:'#8E99A4', base:baseDormant,
-     desc:'Registered before '+esc(LAUNCH)+' &middot; no recent sale, no subscription',
-     a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}))}
+    {id:'active', name:'Non paying', accent:'var(--blue)', base:baseActive,
+     desc:'Existing free-plan merchants &middot; POS sale in the last 30 days &middot; numerators are a floor*',
+     a:agg(book.filter(function(r){return r.isActive;}))}
   ];
   var T=agg(book);
 
@@ -1740,7 +1735,7 @@ applyMasterHash();
   var GROUPS=[
     {k:'New (since '+LAUNCH+')', color:'var(--green)', f:function(r){return r.isNew;}},
     {k:'Existing &mdash; paying', color:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
-    {k:'Existing &mdash; active free', color:'var(--blue)', f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
+    {k:'Existing &mdash; non paying', color:'var(--blue)', f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
     {k:'Existing &mdash; dormant / other', color:'#C2C8CF', tcol:'#3a3a3a', f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
   ];
   var segs=GROUPS.map(function(g){ var rs=book.filter(g.f); return {g:g, rs:rs, a:agg(rs)}; });
@@ -1762,7 +1757,7 @@ applyMasterHash();
 
   var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
   $('fnFootnote').textContent='* Active-customer numerators are a floor — POS activity for paying merchants comes from a monthly table that lags, so some initiators are undercounted there. '
-    +'In the origin split, groups are assigned by priority (new > paying > active free > other), so each merchant is counted once. '
+    +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once. The dormant / other group appears only in the origin split below. '
     +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
     +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')
     +'Data refreshes automatically every morning from Snowflake.';
@@ -1770,12 +1765,11 @@ applyMasterHash();
   // ===== Deep dive: passed-KYC merchants per bucket (terminal ordered / received / transacting) =====
   (function(){
     if(!$('fnDeepPick')) return;
-    // Same mutually exclusive bucket assignment as the origin split (priority: new > paying > active free > dormant)
+    // Same mutually exclusive bucket assignment as the origin split (priority: new > paying > non paying)
     var BUCKETS={
-      'new':      {name:'New',                     accent:'var(--green)',     f:function(r){return r.isNew;}},
-      'paying':   {name:'Existing — paying',       accent:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
-      'activefree':{name:'Existing — active free', accent:'var(--blue)',      f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
-      'dormant':  {name:'Existing — dormant / other', accent:'#8E99A4',       f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
+      'new':      {name:'New merchants',           accent:'var(--green)',     f:function(r){return r.isNew;}},
+      'paying':   {name:'Paying merchants',        accent:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
+      'activefree':{name:'Non paying',             accent:'var(--blue)',      f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}}
     };
     function isDelivered(st){ return String(st||'').toLowerCase()==='delivered'; }
     function isOrdered(r){ return !!r.m.terminal_at; }
