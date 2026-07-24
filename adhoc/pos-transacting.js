@@ -22,11 +22,15 @@ const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, comple
 const fd = fs.readFileSync(path.join(__dirname, '..', 'activated-payments', 'funnel-data.js'), 'utf8');
 const merchants = JSON.parse(fd.match(/__FUNNEL_MERCHANTS = (\[[\s\S]*?\]);/)[1]);
 const cohort = merchants.filter(r => (r.registered_at || '') >= '2026-07-01' && r.oid != null && r.connected_at);
-const ids = [...new Set(cohort.map(r => String(r.oid)))];
-console.log(`initiated-KYC cohort: ${ids.length} unique owner ids`);
-const idList = ids.map(id => `'${id.replace(/'/g, "''")}'`).join(',');
+const oids = new Set(cohort.map(r => String(r.oid)));
+// Map Loyverse owner ids -> Stripe account ids via activation-data.js (metadata-based linkage)
+const ad = fs.readFileSync(path.join(__dirname, '..', 'activated-payments', 'activation-data.js'), 'utf8');
+const acts = JSON.parse(ad.match(/=\s*(\[[\s\S]*\]);/)[1]);
+const accts = [...new Set(acts.filter(a => a.mid != null && oids.has(String(a.mid)) && a.acct).map(a => a.acct))];
+console.log(`initiated-KYC cohort: ${oids.size} owner ids -> ${accts.length} stripe accounts`);
+const idList = accts.map(id => `'${id.replace(/'/g, "''")}'`).join(',');
 
-const base = `SELECT * FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNTS WHERE MERCHANT_ID IN (${idList})`;
+const base = `SELECT * FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNTS WHERE ID IN (${idList})`;
 
 const queries = {
   STATUS_SPLIT: `
