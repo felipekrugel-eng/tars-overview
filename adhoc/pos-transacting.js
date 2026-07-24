@@ -1,6 +1,7 @@
-// AD-HOC v2 (2026-07-24): July-2026 US new-merchant cohort (bot-filtered, deduped,
-// pilot excluded) vs Loyverse POS receipts (LOYVERSE_RECEIPTS per-receipt table).
-// Also reports SALES_PER_ACCOUNT_MONTHLY coverage (suspected to lag July).
+// AD-HOC v3 (2026-07-24): POS receipts for the EXACT dashboard "New" cohort.
+// Reads the checked-out activated-payments/funnel-data.js, takes merchants with
+// registered_at >= 2026-07-01 (the dashboard's bot-filtered July cohort), and
+// matches them against LOYVERSE_RECEIPTS_UNIQUE (cancelled/refund rows excluded).
 const snowflake = require('snowflake-sdk');
 const fs = require('fs');
 const path = require('path');
@@ -18,49 +19,39 @@ const conn = snowflake.createConnection({
 });
 const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, complete: (e, s, r) => e ? rej(e) : res(r) }));
 
-let regSql = fs.readFileSync(path.join(__dirname, '..', 'activated-payments', 'sql', 'us_registrations.sql'), 'utf8');
-regSql = regSql.replace('/*PILOT_IDS*/', 'NULL').replace(/;\s*(--[^\n]*)?\s*$/m, '');
+// Extract the dashboard cohort from funnel-data.js
+const fd = fs.readFileSync(path.join(__dirname, '..', 'activated-payments', 'funnel-data.js'), 'utf8');
+const m = fd.match(/__FUNNEL_MERCHANTS = (\[[\s\S]*?\]);/);
+const merchants = JSON.parse(m[1]);
+const cohort = merchants.filter(r => (r.registered_at || '') >= '2026-07-01' && r.owner_id != null);
+const ids = [...new Set(cohort.map(r => String(r.owner_id)))];
+console.log(`dashboard July "New" cohort: ${cohort.length} rows, ${ids.length} unique owner ids`);
+const idList = ids.map(id => `'${id.replace(/'/g, "''")}'`).join(',');
 
-const main = (receiptsTable) => `
-WITH regs AS (${regSql}),
-july AS (SELECT DISTINCT owner_id FROM regs),
-rcpt AS (
+const sql = `
+WITH rcpt AS (
   SELECT MERCHANT_ID AS owner_id,
          COUNT(*) AS receipts,
-         MIN(RECEIPT_DATE) AS first_receipt,
-         MAX(RECEIPT_DATE) AS last_receipt
-  FROM LOYVERSE_DATA_LAKE.PUBLIC.${receiptsTable}
+         MIN(RECEIPT_DATE) AS first_receipt
+  FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS_UNIQUE
   WHERE CANCELLED_AT IS NULL
     AND (REFUND_FOR IS NULL OR REFUND_FOR = '')
+    AND MERCHANT_ID IN (${idList})
   GROUP BY 1
 )
 SELECT
-  COUNT(*)                              AS JULY_NEW_MERCHANTS,
-  COUNT_IF(COALESCE(r.receipts,0) > 0)  AS POS_TRANSACTING,
-  COUNT_IF(COALESCE(r.receipts,0) >= 5) AS POS_5_PLUS_RECEIPTS,
-  SUM(COALESCE(r.receipts,0))           AS TOTAL_RECEIPTS,
-  MEDIAN(IFF(COALESCE(r.receipts,0) > 0, r.receipts, NULL)) AS MEDIAN_RECEIPTS_PER_TRANSACTOR,
-  MAX(r.last_receipt)                   AS MOST_RECENT_RECEIPT
-FROM july j
-LEFT JOIN rcpt r ON r.owner_id = j.owner_id`;
+  COUNT(*)                          AS POS_TRANSACTING,
+  COUNT_IF(receipts >= 5)           AS POS_5_PLUS_RECEIPTS,
+  COUNT_IF(receipts >= 20)          AS POS_20_PLUS_RECEIPTS,
+  SUM(receipts)                     AS TOTAL_RECEIPTS,
+  MEDIAN(receipts)                  AS MEDIAN_RECEIPTS
+FROM rcpt`;
 
 (async () => {
   await new Promise((res, rej) => conn.connect((e, c) => e ? rej(e) : res(c)));
-  console.log('=== DIAG: SALES_PER_ACCOUNT_MONTHLY coverage ===');
-  try {
-    console.log(JSON.stringify(await q(
-      `SELECT MAX(MONTH) AS MAX_MONTH, COUNT(*) AS ROWS_TOTAL FROM LOYVERSE_DATA_LAKE.PUBLIC.SALES_PER_ACCOUNT_MONTHLY`)));
-  } catch (e) { console.log('diag failed:', e.message); }
-  console.log('=== DIAG: LOYVERSE_RECEIPTS coverage ===');
-  try {
-    console.log(JSON.stringify(await q(
-      `SELECT MAX(RECEIPT_DATE) AS MAX_DATE, COUNT(*) AS ROWS_TOTAL FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS WHERE RECEIPT_DATE >= '2026-07-01'`)));
-  } catch (e) { console.log('diag failed:', e.message); }
-  let rows;
-  try { rows = await q(main('LOYVERSE_RECEIPTS_UNIQUE')); console.log('source: LOYVERSE_RECEIPTS_UNIQUE'); }
-  catch (e) { console.log('UNIQUE view failed (' + e.message + '), falling back'); rows = await q(main('LOYVERSE_RECEIPTS')); console.log('source: LOYVERSE_RECEIPTS'); }
+  const rows = await q(sql);
   console.log('=== RESULT ===');
-  console.log(JSON.stringify(rows, null, 2));
+  console.log(JSON.stringify({ COHORT: ids.length, ...rows[0] }, null, 2));
   console.log('=== END ===');
   process.exit(0);
 })().catch(e => { console.error('FAILED:', e.message); process.exit(1); });
