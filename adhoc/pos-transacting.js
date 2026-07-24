@@ -23,8 +23,8 @@ const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, comple
 const fd = fs.readFileSync(path.join(__dirname, '..', 'activated-payments', 'funnel-data.js'), 'utf8');
 const m = fd.match(/__FUNNEL_MERCHANTS = (\[[\s\S]*?\]);/);
 const merchants = JSON.parse(m[1]);
-const cohort = merchants.filter(r => (r.registered_at || '') >= '2026-07-01' && r.owner_id != null);
-const ids = [...new Set(cohort.map(r => String(r.owner_id)))];
+const cohort = merchants.filter(r => (r.registered_at || '') >= '2026-07-01' && r.oid != null);
+const ids = [...new Set(cohort.map(r => String(r.oid)))];
 console.log(`dashboard July "New" cohort: ${cohort.length} rows, ${ids.length} unique owner ids`);
 const idList = ids.map(id => `'${id.replace(/'/g, "''")}'`).join(',');
 
