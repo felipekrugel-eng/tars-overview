@@ -5,12 +5,16 @@
 # Pages at runtime, so refreshes are free and as frequent as we like.
 #
 # Triggering: fired hourly by the Cowork "trigger-cusum-pull-hourly" task via
-# workflow_dispatch. The GitHub schedule cron was REMOVED (it was redundant with
-# the Cowork trigger and caused duplicate runs).
+# workflow_dispatch, with a 2-hourly GitHub schedule cron as a FAIL-SAFE — the
+# Cowork trigger stops when the user's Claude usage limit runs out (this
+# happened on 2026-07-24 and the graph went stale). The concurrency group
+# below cancels overlapping runs, so the two triggers cannot collide.
 name: cusum-pull
 
 on:
   workflow_dispatch: {}          # manual "Run workflow" button + Cowork hourly trigger
+  schedule:
+    - cron: '17 */2 * * *'       # fail-safe: every 2 hours at :17 (off the hour to dodge GitHub's cron congestion)
 
 concurrency:
   group: cusum-pull
