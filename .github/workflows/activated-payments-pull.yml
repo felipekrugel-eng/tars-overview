@@ -7,9 +7,10 @@ name: "PAYMENTS: Daily Activation Pull"
 
 on:
   schedule:
-    # 05:30 UTC — offset from the CASE (06:00) and FACADASH (04:00) pulls so the
-    # single shared warehouse isn't hit by three jobs at once.
-    - cron: "30 5 * * *"
+    # Every 3 hours at :30 — matches Stripe Data Pipeline's ~3h delivery cadence into
+    # Snowflake (fresher runs buy nothing). Offset from the CASE (06:00) and FACADASH
+    # (04:00) pulls so the single shared warehouse isn't hit by three jobs at once.
+    - cron: "30 */3 * * *"
   workflow_dispatch: {}
   push:
     # Auto-run when the dashboard code or pull script changes (e.g. this first commit),
