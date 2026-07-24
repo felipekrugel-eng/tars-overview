@@ -1,6 +1,8 @@
-// AD-HOC v7 (2026-07-24): profile enabled (passed-KYC) merchants — payments transactors
-// vs not-yet — by their Loyverse POS activity and GMV (LOYVERSE_RECEIPTS_UNIQUE, last 90d).
-// Groups precomputed from funnel-data.js into adhoc/enabled-groups.json.
+// AD-HOC v8 (2026-07-24): enabled (passed-KYC) merchants, transacting vs not,
+// broken by origin bucket. New/Paying come from dashboard flags; ACTIVE is
+// recomputed FRESH as any POS receipt in the last 30 days (the dashboard's
+// pos_active flag is stale — monthly table only loaded through March).
+// Priority: new > paying > active > dormant (matches the funnel origin split).
 const snowflake = require('snowflake-sdk');
 const fs = require('fs');
 const path = require('path');
@@ -19,13 +21,12 @@ const conn = snowflake.createConnection({
 const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, complete: (e, s, r) => e ? rej(e) : res(r) }));
 
 const groups = JSON.parse(fs.readFileSync(path.join(__dirname, 'enabled-groups.json'), 'utf8'));
-const lit = (ids) => ids.map(id => `('${String(id).replace(/'/g, "''")}')`).join(',');
+const vals = groups.map(g => `('${g.oid.replace(/'/g, "''")}',${g.is_new},${g.is_paying},'${g.grp}')`).join(',');
 
 const sql = `
 WITH g AS (
-  SELECT column1 AS owner_id, 'transacting' AS grp FROM VALUES ${lit(groups.txn)}
-  UNION ALL
-  SELECT column1, 'not_yet' FROM VALUES ${lit(groups.non)}
+  SELECT column1 AS owner_id, column2 AS is_new, column3 AS is_paying, column4 AS grp
+  FROM VALUES ${vals}
 ),
 rcpt AS (
   SELECT MERCHANT_ID AS owner_id,
@@ -38,18 +39,24 @@ rcpt AS (
     AND TRY_TO_TIMESTAMP(RECEIPT_DATE::string) >= DATEADD('day', -90, CURRENT_DATE)
     AND MERCHANT_ID IN (SELECT owner_id FROM g)
   GROUP BY 1
+),
+b AS (
+  SELECT g.*, r.receipts_90d, r.gmv_90d, r.active_days_90d, r.last_receipt,
+    CASE WHEN g.is_new = 1 THEN 'a. New'
+         WHEN g.is_paying = 1 THEN 'b. Paying'
+         WHEN r.last_receipt >= DATEADD('day', -30, CURRENT_DATE) THEN 'c. Active (POS last 30d)'
+         ELSE 'd. Dormant/other' END AS bucket
+  FROM g LEFT JOIN rcpt r ON r.owner_id = g.owner_id
 )
-SELECT g.grp,
-  COUNT(*)                                       AS MERCHANTS,
-  COUNT_IF(COALESCE(r.receipts_90d,0) > 0)       AS POS_ACTIVE_90D,
-  COUNT_IF(DATEDIFF('day', r.last_receipt, CURRENT_DATE) <= 7) AS POS_ACTIVE_LAST_7D,
-  MEDIAN(IFF(r.receipts_90d>0, r.receipts_90d, NULL))     AS MEDIAN_RECEIPTS_90D,
-  MEDIAN(IFF(r.receipts_90d>0, r.gmv_90d, NULL))          AS MEDIAN_GMV_90D,
-  AVG(IFF(r.receipts_90d>0, r.gmv_90d, NULL))             AS AVG_GMV_90D,
-  MEDIAN(IFF(r.receipts_90d>0, r.active_days_90d, NULL))  AS MEDIAN_ACTIVE_DAYS_90D,
-  MEDIAN(IFF(r.receipts_90d>0, r.gmv_90d / NULLIF(r.receipts_90d,0), NULL)) AS MEDIAN_TICKET
-FROM g LEFT JOIN rcpt r ON r.owner_id = g.owner_id
-GROUP BY 1 ORDER BY 1 DESC`;
+SELECT bucket, grp,
+  COUNT(*)                                        AS MERCHANTS,
+  COUNT_IF(COALESCE(receipts_90d,0) > 0)          AS POS_ACTIVE_90D,
+  COUNT_IF(DATEDIFF('day', last_receipt, CURRENT_DATE) <= 7) AS POS_LAST_7D,
+  MEDIAN(IFF(receipts_90d>0, receipts_90d, NULL)) AS MED_RECEIPTS_90D,
+  MEDIAN(IFF(receipts_90d>0, gmv_90d, NULL))      AS MED_GMV_90D,
+  SUM(COALESCE(gmv_90d,0))                        AS TOTAL_GMV_90D,
+  MEDIAN(IFF(receipts_90d>0, active_days_90d, NULL)) AS MED_ACTIVE_DAYS
+FROM b GROUP BY 1,2 ORDER BY 1,2 DESC`;
 
 (async () => {
   await new Promise((res, rej) => conn.connect((e, c) => e ? rej(e) : res(c)));
