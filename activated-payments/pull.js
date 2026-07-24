@@ -841,6 +841,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
       connected_at: c.connected_at, enabled_at: c.enabled_at, first_txn_at: c.first_txn_at,
       kyc: (c.status !== 'Enabled') ? c.blockers : [],
       terminal_at: term ? term.first_order : null,
+      terminal_status: term ? (term.status || null) : null,
     });
   });
 
@@ -859,7 +860,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
       email: (reg && reg.email) || (p && p.email) || '',
       coh: p ? p.coh : '', pilot: p ? 1 : 0, stage: 'entered', enabled: 0,
       registered_at: reg ? reg.registered_at : null,
-      connected_at: null, enabled_at: null, first_txn_at: null, kyc: [], terminal_at: null,
+      connected_at: null, enabled_at: null, first_txn_at: null, kyc: [], terminal_at: null, terminal_status: null,
     });
   });
   return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };

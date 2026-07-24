@@ -470,6 +470,25 @@
     <div class="pilot-funnel" id="fnOriginBar" style="margin:12px 0 6px"></div>
     <div id="fnOriginLegend" style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--darkgray);margin-bottom:12px"></div>
     <div class="lp-table-scroll"><table id="fnOriginTable" class="lp-table"></table></div>
+
+    <h2 class="lp-h2" style="margin-top:36px">Deep dive: inside each bucket.</h2>
+    <p class="ov-sub" style="margin-top:2px">Every merchant that has <b>passed KYC</b> in the selected bucket &mdash; and of these, who has <b>ordered a terminal</b>, who has <b>received it</b>, and who is already <b>transacting</b>. Buckets are the same mutually exclusive groups as the origin split above.</p>
+    <div class="fn-toolbar">
+      <div class="ov-range" id="fnDeepPick">
+        <button data-b="new" class="on">New</button>
+        <button data-b="paying">Paying</button>
+        <button data-b="activefree">Active free</button>
+        <button data-b="dormant">Dormant / other</button>
+      </div>
+    </div>
+    <div class="fn-kpis" id="fnDeepKpis"></div>
+    <div class="ov-head" style="margin-bottom:10px;gap:12px;flex-wrap:wrap">
+      <input id="fnDeepSearch" class="lp-tsearch" placeholder="Filter by name or email...">
+      <button id="fnDeepExport" class="lp-export">Download (CSV)</button>
+    </div>
+    <div class="lp-table-scroll"><table id="fnDeepTable" class="lp-table"></table></div>
+    <p class="lp-note" id="fnDeepNote" style="margin-top:12px"></p>
+
     <p class="lp-note" id="fnFootnote" style="margin-top:12px"></p>
   </div>
 </div>
@@ -1747,6 +1766,87 @@ applyMasterHash();
     +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
     +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')
     +'Data refreshes automatically every morning from Snowflake.';
+
+  // ===== Deep dive: passed-KYC merchants per bucket (terminal ordered / received / transacting) =====
+  (function(){
+    if(!$('fnDeepPick')) return;
+    // Same mutually exclusive bucket assignment as the origin split (priority: new > paying > active free > dormant)
+    var BUCKETS={
+      'new':      {name:'New',                     accent:'var(--green)',     f:function(r){return r.isNew;}},
+      'paying':   {name:'Existing — paying',       accent:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
+      'activefree':{name:'Existing — active free', accent:'var(--blue)',      f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
+      'dormant':  {name:'Existing — dormant / other', accent:'#8E99A4',       f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
+    };
+    function isDelivered(st){ return String(st||'').toLowerCase()==='delivered'; }
+    function isOrdered(r){ return !!r.m.terminal_at; }
+    var hasStatus=book.some(function(r){ return r.m.terminal_status!=null; });
+    var cur='new', q='';
+    function rowsFor(b){
+      return book.filter(BUCKETS[b].f).filter(function(r){return r.passed;})
+        .sort(function(x,y){
+          // transacting first, then received, then ordered, then by enabled date desc
+          var kx=(x.txn?4:0)+(isDelivered(x.m.terminal_status)?2:0)+(isOrdered(x)?1:0);
+          var ky=(y.txn?4:0)+(isDelivered(y.m.terminal_status)?2:0)+(isOrdered(y)?1:0);
+          if(kx!==ky) return ky-kx;
+          return String(y.m.enabled_at||'').localeCompare(String(x.m.enabled_at||''));
+        });
+    }
+    function chip(k,v,s,color){
+      return '<div class="fn-kpi"><div class="k">'+k+'</div><div class="v"'+(color?' style="color:'+color+'"':'')+'>'+v+'</div><div class="s">'+s+'</div></div>';
+    }
+    function tick(on,label){
+      return on ? '<span style="color:var(--green);font-weight:800">&#10003;'+(label?' <span style="font-weight:400;color:var(--darkgray)">'+label+'</span>':'')+'</span>'
+                : '<span style="color:#C2C8CF">&mdash;</span>';
+    }
+    function fmtStatus(st){ if(!st) return ''; var t=String(st).toLowerCase().replace(/_/g,' '); return t.charAt(0).toUpperCase()+t.slice(1); }
+    function render(){
+      var B=BUCKETS[cur], rs=rowsFor(cur);
+      var ordered=rs.filter(isOrdered);
+      var received=rs.filter(function(r){return isDelivered(r.m.terminal_status);});
+      var txn=rs.filter(function(r){return r.txn;});
+      $('fnDeepKpis').innerHTML=
+        chip('Passed KYC', num(rs.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
+        +chip('Terminal ordered', num(ordered.length), '<b>'+pctL(ordered.length,rs.length)+'</b> of passed KYC')
+        +chip('Terminal received', hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
+        +chip('Transacting', num(txn.length), '<b>'+pctL(txn.length,rs.length)+'</b> of passed KYC', 'var(--green)');
+      var f=q? rs.filter(function(r){ return (String(r.m.name||'')+' '+String(r.m.email||'')).toLowerCase().indexOf(q)>=0; }) : rs;
+      var thead='<tr><th>Merchant</th><th>Email</th><th>Passed KYC on</th><th>Terminal ordered</th><th>Terminal received</th><th>Transacting since</th></tr>';
+      $('fnDeepTable').innerHTML=thead+f.map(function(r){
+        var m=r.m, st=m.terminal_status;
+        var recCell = !isOrdered(r) ? tick(false)
+          : isDelivered(st) ? tick(true)
+          : (hasStatus && st) ? '<span style="color:var(--darkgray)">'+esc(fmtStatus(st))+'</span>'
+          : '<span style="color:#C2C8CF">&mdash;</span>';
+        return '<tr><td>'+esc(m.name)+'</td><td>'+esc(m.email)+'</td>'
+          +'<td>'+(m.enabled_at?esc(m.enabled_at):'&mdash;')+'</td>'
+          +'<td>'+(isOrdered(r)? tick(true, esc(m.terminal_at)) : tick(false))+'</td>'
+          +'<td>'+recCell+'</td>'
+          +'<td>'+(r.txn? tick(true, esc(m.first_txn_at||'')) : tick(false))+'</td></tr>';
+      }).join('') || (thead+'<tr><td colspan="6" style="color:var(--midgray)">No merchants match.</td></tr>');
+      $('fnDeepNote').textContent=(f.length!==rs.length? f.length+' of ':'')+rs.length+' passed-KYC merchant'+(rs.length===1?'':'s')+' shown. '
+        +'Terminal orders are attributed by shipping email; "received" means the Stripe hardware order status is delivered.'
+        +(hasStatus?'':' Received status appears after the next scheduled data refresh.');
+    }
+    $('fnDeepPick').addEventListener('click', function(e){
+      var b=e.target.closest?e.target.closest('button'):null; if(!b) return;
+      var btns=$('fnDeepPick').querySelectorAll('button');
+      for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+      b.classList.add('on'); cur=b.getAttribute('data-b'); render();
+    });
+    $('fnDeepSearch').addEventListener('input', function(){ q=this.value.trim().toLowerCase(); render(); });
+    $('fnDeepExport').addEventListener('click', function(){
+      var rs=rowsFor(cur);
+      var lines=[['Merchant','Email','Owner ID','Bucket','Passed KYC on','Terminal ordered','Terminal status','Terminal received','Transacting since'].join(',')];
+      rs.forEach(function(r){ var m=r.m;
+        lines.push([m.name,m.email,m.oid,BUCKETS[cur].name,m.enabled_at||'',m.terminal_at||'',m.terminal_status||'',isDelivered(m.terminal_status)?'yes':'no',m.first_txn_at||''].map(function(v){
+          v=String(v==null?'':v); return /[",\n]/.test(v)? '"'+v.replace(/"/g,'""')+'"' : v; }).join(','));
+      });
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));
+      a.download='funnel-deep-dive-'+cur+'.csv'; a.click();
+    });
+    render();
+  })();
 
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
   var ls=$('funnelLaunch'); if(ls) ls.textContent=LAUNCH;
