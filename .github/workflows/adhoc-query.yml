@@ -1,0 +1,22 @@
+# AD-HOC Snowflake query runner — manual dispatch only, prints results to the job log.
+# Added 2026-07-24 for one-off cohort questions; safe to delete when no longer needed.
+name: "ADHOC: Snowflake query"
+on:
+  workflow_dispatch: {}
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install snowflake-sdk
+      - name: Write Snowflake private key
+        run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
+      - name: Run ad-hoc query
+        run: node adhoc/pos-transacting.js
+      - name: Clean up key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
