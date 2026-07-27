@@ -15,14 +15,27 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55}
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 22px}
-.hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-h1{font-size:18px;font-weight:bold;margin:0}
-nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:5px;font-size:13px}
-nav a:hover{background:var(--bg);color:var(--ink)}
-nav a.on{background:var(--blue);color:#fff}
-.stamp{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* product bar + page tabs — copied from daily.html so this page sits in the
+   same chrome as the rest of FACADASH rather than inventing its own. */
+.lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;font-family:Arial,Helvetica,sans-serif}
+.lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px}
+.lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px}
+.lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1}
+.lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;transition:color .12s}
+.lvmn a.lvmn-tab:hover{color:#fff}
+.lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1}
+.lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block}
+.pagenav{background:#fff;border-bottom:1px solid #E0E0E0;padding:0 24px;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.pagenav a{color:#6A6A6A;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;padding:11px 16px;border-bottom:3px solid transparent;text-decoration:none}
+.pagenav a:hover{color:#1A1A1A}
+.pagenav a.on{color:#1578C4;border-bottom-color:#1D8FE1}
+.hero{background:linear-gradient(120deg,#1D8FE1,#1578C4);color:#fff;padding:26px 40px 24px;position:relative;overflow:hidden}
+.hero .label{font-size:11px;letter-spacing:4px;text-transform:uppercase;opacity:.9;margin-bottom:7px}
+.hero h1{font-family:'Arial Black',Arial;font-size:30px;margin:0}
+.hero .sub{margin-top:9px;font-size:13px;opacity:.95}
+.hero .logo{height:22px;position:absolute;top:26px;right:40px;opacity:.9}
+.stamp{font-family:var(--mono);font-size:11px;opacity:.9}
 main{padding:20px 22px 44px;max-width:1180px;margin:0 auto}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:16px}
 .banner{border-left:4px solid var(--faint);border-radius:0 8px 8px 0}
@@ -57,19 +70,28 @@ ul.notes li{margin-bottom:5px}
 </style>
 </head>
 <body>
-<header>
-  <div class="hrow">
-    <h1>Sales-history pricing pilot</h1>
-    <span class="stamp" id="stamp"></span>
-    <nav>
-      <a href="daily.html">Daily</a>
-      <a href="index.html">Study &amp; Trend</a>
-      <a href="retention.html">Retention</a>
-      <a href="report.html">Report</a>
-      <a href="pilot.html" class="on">Pilot</a>
-    </nav>
-  </div>
-</header>
+<nav class="lvmn">
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab on" href="daily.html">POS</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#payments">Payments</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#map">Merchant Map</a>
+</nav>
+
+<div class="pagenav">
+  <a href="daily.html">FACADASH</a>
+  <a href="index.html">Study &amp; Trend</a>
+  <a href="retention.html">Churn</a>
+  <a href="report.html">Report</a>
+  <a href="pilot.html" class="on">Pilot</a>
+</div>
+
+<div class="hero">
+  <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
+  <div class="label">Loyverse &middot; Pricing Experiment</div>
+  <h1>SALES-HISTORY PILOT.</h1>
+  <div class="sub">Free history cut 30 days &rarr; 15 days on 16 July in Australia, Belgium, Colombia, Indonesia, India, Nigeria and Singapore.</div>
+  <div class="sub stamp" id="stamp"></div>
+</div>
 
 <main>
   <div class="card banner" id="banner">
