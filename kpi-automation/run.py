@@ -200,5 +200,34 @@ def main():
     except Exception as e:
         print(f"[flow] WARNING — paying-base flow charts skipped this run: {e}", flush=True)
 
+    # ---- pilot tracker (pilot-data.js + pilot-status.md) ----
+    # GUARDED, same rationale as the flow charts above: a new query must never
+    # be able to break the critical deliverables, which are already written.
+    # Cost is trivial — the Chargebee invoice tables hold ~1.5M line items in
+    # total, nothing like the receipts grid.
+    try:
+        print("[pilot] history adoption -> pilot_adoption.csv", flush=True)
+        pconn = connect()
+        try:
+            cur = pconn.cursor()
+            cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 600")
+            cur.execute((SQLDIR / "pilot_history_adoption_daily.sql").read_text())
+            pdf = cur.fetch_pandas_all() if hasattr(cur, "fetch_pandas_all") else \
+                  pd.DataFrame(cur.fetchall(), columns=[c[0] for c in cur.description])
+            cur.close()
+        finally:
+            pconn.close()
+        pilot_csv = WORK / "pilot_adoption.csv"
+        write(pilot_csv, pdf)
+        print("[pilot] build pilot-data.js", flush=True)
+        penv = {**os.environ, "PILOT_CSV": str(pilot_csv),
+                "PILOTDATA_OUT": str(V2 / "pilot-data.js")}
+        subprocess.run([sys.executable, str(HERE / "build_pilot_data.py")],
+                       check=True, env=penv)
+        print("[done] pilot-data.js + pilot-status.md regenerated", flush=True)
+    except Exception as e:
+        print(f"[pilot] WARNING — pilot tracker skipped this run: {e}", flush=True)
+
+
 if __name__ == "__main__":
     main()

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sales-history pricing pilot — Loyverse</title>
+<link rel="icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+  --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A;
+  --faint:#B8C4D2; --green:#1F9D6B; --red:#D2495B; --amber:#C98500;
+  --mono:'SFMono-Regular',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 22px}
+.hrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h1{font-size:18px;font-weight:bold;margin:0}
+nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:5px;font-size:13px}
+nav a:hover{background:var(--bg);color:var(--ink)}
+nav a.on{background:var(--blue);color:#fff}
+.stamp{font-family:var(--mono);font-size:11px;color:var(--muted)}
+main{padding:20px 22px 44px;max-width:1180px;margin:0 auto}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:16px}
+.banner{border-left:4px solid var(--faint);border-radius:0 8px 8px 0}
+.banner.wait{border-left-color:var(--amber)}
+.banner.win{border-left-color:var(--green)}
+.banner.flat{border-left-color:var(--muted)}
+.banner.lose{border-left-color:var(--red)}
+.banner h2{margin:0 0 6px;font-size:16px}
+.banner p{margin:0;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 15px}
+.tile .lab{font-size:12px;color:var(--muted);margin-bottom:5px}
+.tile .val{font-size:23px;font-weight:bold;font-family:var(--mono)}
+.tile .sub{font-size:11px;color:var(--faint);margin-top:3px}
+h3{font-size:14px;margin:0 0 12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:normal;font-size:12px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+td.n{font-family:var(--mono)}
+tr.dim td{color:var(--faint)}
+.pill{display:inline-block;padding:1px 7px;border-radius:9px;font-size:11px}
+.pill.up{background:#E6F4EE;color:var(--green)}
+.pill.dn{background:#FBEBEE;color:var(--red)}
+.pill.na{background:var(--bg);color:var(--muted)}
+.wrap{position:relative;height:300px}
+ul.notes{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:12px}
+ul.notes li{margin-bottom:5px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.legend span{display:flex;align-items:center;gap:5px}
+.sw{width:11px;height:11px;border-radius:2px;display:inline-block}
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <h1>Sales-history pricing pilot</h1>
+    <span class="stamp" id="stamp"></span>
+    <nav>
+      <a href="daily.html">Daily</a>
+      <a href="index.html">Study &amp; Trend</a>
+      <a href="retention.html">Retention</a>
+      <a href="report.html">Report</a>
+      <a href="pilot.html" class="on">Pilot</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="card banner" id="banner">
+    <h2 id="bTitle">Loading…</h2>
+    <p id="bBody"></p>
+  </div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card">
+    <h3>Adoption rate, indexed to each cohort's own pre-launch baseline (100)</h3>
+    <div class="legend">
+      <span><span class="sw" style="background:#1D8FE1"></span>Pilot markets (7)</span>
+      <span><span class="sw" style="background:#7E8A9A"></span>Control markets</span>
+      <span><span class="sw" style="background:#C98500"></span>16 Jul — paywall change</span>
+      <span><span class="sw" style="background:#1F9D6B"></span>30 Jul — first treated billing</span>
+    </div>
+    <div class="wrap"><canvas id="chart"></canvas></div>
+    <ul class="notes">
+      <li>Indexed because the cohorts are not comparable in absolute terms — pilot markets run about 3.5 adoptions a day against roughly 56 in controls. Both lines are 7-day trailing averages.</li>
+      <li>The band between the two markers is the trial dead zone: those merchants started their 14-day trial under the old 30-day rule.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Pilot markets individually</h3>
+    <table id="ctab"><thead><tr>
+      <th>Market</th><th>Baseline /day</th><th>Signal /day</th><th>Change</th>
+      <th>Signal count</th><th>Upsell base</th>
+    </tr></thead><tbody></tbody></table>
+    <ul class="notes">
+      <li>Individually these markets are far too small to read — India's whole baseline is about 14 new payers in 45 days. Only the pooled seven will produce an answer; this table is for spotting anomalies, not ranking markets.</li>
+      <li>Indonesia and Colombia are roughly 60% of pilot new payers, so the pooled figure is largely their story.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>What this page cannot tell you</h3>
+    <ul class="notes" id="caveats"></ul>
+  </div>
+</main>
+
+<script src="pilot-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  var D = window.PILOT_DATA;
+  var f1 = function(x){ return (x==null) ? '—' : (Math.round(x*100)/100).toFixed(2); };
+  var pct = function(x){ return (x==null) ? '—' : ((x-1)*100>=0?'+':'') + ((x-1)*100).toFixed(0) + '%'; };
+
+  document.getElementById('stamp').textContent =
+    'data to ' + D.meta.lastDataDate + ' · built ' + D.meta.generatedAt;
+
+  var np = D.verdict.NEW_PAYER, up = D.verdict.UPSELL;
+  var sd = D.meta.days.SIGNAL;
+
+  // ---- verdict banner ----
+  var b = document.getElementById('banner'), t = document.getElementById('bTitle'), p = document.getElementById('bBody');
+  if (sd <= 0) {
+    b.className = 'card banner wait';
+    t.textContent = 'No signal yet — nothing has been measured';
+    p.textContent = 'The paywall changed on ' + D.meta.launchDate + ', but adoption runs through a 14-day '
+      + 'trial, so the first genuinely affected merchant bills ' + D.meta.signalDate + '. Everything below '
+      + 'that date comes from merchants who signed up under the old 30-day rule. This is not evidence the '
+      + 'pilot is failing — there is no treated customer in the data yet.';
+  } else if (!np.readable) {
+    b.className = 'card banner wait';
+    t.textContent = 'Too early to call — ' + sd + ' of ' + np.daysNeeded + ' days needed';
+    p.textContent = 'Pilot new-payer adoption is running at ' + f1(np.signalPilotPerDay) + '/day against a '
+      + f1(np.baselinePilotPerDay) + '/day baseline (' + pct(np.did) + ' after correcting for how the control '
+      + 'markets moved). Directional only. A 25% effect needs roughly 37 days of signal to confirm.';
+  } else {
+    var sig = (np.p != null && np.p < 0.05);
+    var upDir = (np.did > 1);
+    b.className = 'card banner ' + (sig ? (upDir ? 'win' : 'lose') : 'flat');
+    t.textContent = sig
+      ? (upDir ? 'Working — adoption is up ' + pct(np.did) + ' vs control' : 'Adoption is DOWN ' + pct(np.did) + ' vs control')
+      : 'No detectable effect after ' + sd + ' days';
+    p.textContent = 'Pilot new payers: ' + np.pilotSignalCount + ' observed against '
+      + f1(np.expected) + ' expected (null range ' + np.null95[0] + '–' + np.null95[1] + '), p = '
+      + (np.p==null?'—':np.p.toFixed(3)) + '. '
+      + (sig ? 'This is outside what a normal fluctuation produces.'
+             : 'Still inside normal fluctuation. Either the effect is small, or there is none.');
+  }
+
+  // ---- tiles ----
+  var tiles = [
+    ['Days of real signal', sd, sd <= 0 ? 'starts ' + D.meta.signalDate : 'since ' + D.meta.signalDate],
+    ['New payers /day — pilot', f1(np.signalPilotPerDay), 'baseline ' + f1(np.baselinePilotPerDay)],
+    ['Change vs control', pct(np.did), np.readable ? 'p = ' + (np.p==null?'—':np.p.toFixed(3)) : 'not yet readable'],
+    ['Upsells /day — pilot', f1(up.signalPilotPerDay), up.readable ? pct(up.did) + ' vs control' : 'needs a full billing month']
+  ];
+  document.getElementById('tiles').innerHTML = tiles.map(function(r){
+    return '<div class="tile"><div class="lab">' + r[0] + '</div><div class="val">' + r[1]
+         + '</div><div class="sub">' + r[2] + '</div></div>';
+  }).join('');
+
+  // ---- per-country table ----
+  var rows = D.countries.map(function(c){
+    var bp = c['BASELINE_NEW_PAYER_perDay'], sp = c['SIGNAL_NEW_PAYER_perDay'];
+    var ratio = (bp && sp != null) ? sp / bp : null;
+    var cls = ratio == null ? 'na' : (ratio > 1 ? 'up' : 'dn');
+    return '<tr' + (sd <= 0 ? ' class="dim"' : '') + '><td>' + c.country
+      + '</td><td class="n">' + f1(bp)
+      + '</td><td class="n">' + (sd <= 0 ? '—' : f1(sp))
+      + '</td><td><span class="pill ' + cls + '">' + (sd <= 0 ? 'pending' : pct(ratio)) + '</span>'
+      + '</td><td class="n">' + (c['SIGNAL_NEW_PAYER'] || 0)
+      + '</td><td class="n">' + (c.upsellBase == null ? '—' : c.upsellBase) + '</td></tr>';
+  }).join('');
+  document.querySelector('#ctab tbody').innerHTML = rows;
+
+  // ---- caveats ----
+  document.getElementById('caveats').innerHTML =
+    D.meta.notes.map(function(n){ return '<li>' + n + '</li>'; }).join('');
+
+  // ---- chart: indexed 7-day trailing averages ----
+  function idx(key, baseRate){
+    var s = D.series[key] || [];
+    var byDate = {}; s.forEach(function(r){ byDate[r.d] = r.n; });
+    var dates = Object.keys(byDate).sort();
+    if (!dates.length) return [];
+    var out = [], win = [];
+    var d0 = new Date(dates[0] + 'T00:00:00Z'), dN = new Date(D.meta.lastDataDate + 'T00:00:00Z');
+    for (var d = new Date(d0); d <= dN; d.setUTCDate(d.getUTCDate() + 1)) {
+      var iso = d.toISOString().slice(0, 10);
+      win.push(byDate[iso] || 0);
+      if (win.length > 7) win.shift();
+      if (win.length === 7) {
+        var avg = win.reduce(function(a, b){ return a + b; }, 0) / 7;
+        out.push({ x: iso, y: baseRate ? Math.round(avg / baseRate * 1000) / 10 : null });
+      }
+    }
+    return out;
+  }
+  var pilotLine   = idx('PILOT_NEW_PAYER',   np.baselinePilotPerDay);
+  var controlLine = idx('CONTROL_NEW_PAYER', np.baselineControlPerDay);
+
+  var marker = function(x, color, label){
+    return { type:'line', xMin:x, xMax:x, borderColor:color, borderWidth:2, borderDash:[4,3] };
+  };
+
+  new Chart(document.getElementById('chart'), {
+    type: 'line',
+    data: { datasets: [
+      { label:'Pilot',   data:pilotLine,   borderColor:'#1D8FE1', backgroundColor:'#1D8FE1',
+        borderWidth:2, pointRadius:0, tension:0.25 },
+      { label:'Control', data:controlLine, borderColor:'#7E8A9A', backgroundColor:'#7E8A9A',
+        borderWidth:2, pointRadius:0, borderDash:[5,4], tension:0.25 }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label:function(c){ return c.dataset.label + ': ' + c.parsed.y + ' (100 = baseline)'; } } } },
+      scales:{
+        x:{ type:'category', grid:{display:false},
+            ticks:{ color:'#7E8A9A', maxTicksLimit:10, font:{size:11} } },
+        y:{ grid:{color:'#E3E9F0'}, ticks:{ color:'#7E8A9A', font:{size:11},
+            callback:function(v){ return v; } },
+            title:{ display:true, text:'index (100 = own baseline)', color:'#7E8A9A', font:{size:11} } }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
