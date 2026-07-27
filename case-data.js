@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-07-20",
+  "lastUpdated": "2026-07-27",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98421,7 +98421,7 @@ const CASE_DATA = {
   "appStores": {
     "googlePlay": {
       "rating": 4.7,
-      "reviewCount": "17.5K",
+      "reviewCount": "17.6K",
       "positive": 86,
       "neutral": 9,
       "negative": 5,
@@ -98454,7 +98454,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "362",
+      "reviewCount": "365",
       "positive": 87,
       "neutral": 8,
       "negative": 5,
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 658,
+      "mentions": 671,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 461,
+      "mentions": 471,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 361,
+      "mentions": 368,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 292,
+      "mentions": 298,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 227,
+      "mentions": 233,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 169,
+      "mentions": 174,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 126,
+      "mentions": 129,
       "type": "neg",
       "key": "sync"
     }
@@ -98565,35 +98565,35 @@ const CASE_DATA = {
         1000000,
         1017000,
         1034000,
-        1051000
+        1071000
       ]
     },
     "appStore": {
-      "total": "260K+",
+      "total": "265K+",
       "trend": [
         225000,
         232000,
         240000,
         250000,
         259000,
-        268000
+        271000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
       {
-        "author": "MiniMartPH",
-        "country": "PH",
-        "region": "asia",
+        "author": "MarketStallGB",
+        "country": "GB",
+        "region": "europe",
         "rating": 5,
         "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
           "ease-of-use",
-          "free-value"
+          "payment-integration"
         ],
-        "text": "Half a year in and Loyverse still runs our whole sari-sari operation on the free tier — sales, inventory and the loyalty program, no ads and no card required. Item photos keep checkout fast for new staff. You only pay for the add-ons you actually need."
+        "text": "Works really well. The sequence for making sales, saving and reopening tickets is logical and straightforward, and finding items via categories or tabbed pages is quick. Only wish: integration with more payment providers with lower rates than PayPal."
       },
       {
         "author": "Gioele Glaurs",
@@ -98672,8 +98672,8 @@ const CASE_DATA = {
         "text": "Inventory management handles our hardware store well. Low-stock notifications could be smarter — would love automatic reorder points. Best free option available."
       },
       {
-        "author": "RamenSG",
-        "country": "SG",
+        "author": "WarungID",
+        "country": "ID",
         "region": "asia",
         "rating": 3,
         "date": "Jul 2026",
@@ -98681,19 +98681,19 @@ const CASE_DATA = {
         "themes": [
           "sync"
         ],
-        "text": "Occasional lag when syncing between tablet and phone during peak lunch rush. A restart resolves it but costs valuable minutes during service."
+        "text": "Receipts sometimes take a while to load and item photos go missing after edits until the app resyncs. A restart usually fixes it, but it slows the queue during the evening rush."
       },
       {
-        "author": "BookshopDE",
-        "country": "DE",
-        "region": "europe",
+        "author": "CantinaCO",
+        "country": "CO",
+        "region": "south_america",
         "rating": 2,
         "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
           "customer-support"
         ],
-        "text": "Barcode scanner pairing issue unresolved after two weeks of emails. Support responses feel templated and do not address the specific hardware problem."
+        "text": "Could not open and close shifts properly for almost three weeks. On the free tier you only get help articles and email — live chat is reserved for paying subscribers, so a register-blocking issue drags on."
       },
       {
         "author": "SalonMM",
@@ -98810,19 +98810,20 @@ const CASE_DATA = {
         "themes": [
           "reporting"
         ],
-        "text": "Staff training takes 10 minutes flat. Sales reports by time frame and payment type are accurate and real-time. Would be perfect with the analytics add-on included."
+        "text": "Sales reports by item, payment type and time frame are accurate and real-time — genuinely useful for loss prevention. Staff training takes 10 minutes flat. Would be perfect with the analytics add-on included."
       },
       {
-        "author": "SariSariPH",
-        "country": "PH",
-        "region": "asia",
+        "author": "DeliNYC",
+        "country": "US",
+        "region": "north_america",
         "rating": 4,
         "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
-          "inventory"
+          "ease-of-use",
+          "sync"
         ],
-        "text": "Suits our small church bingo operation very well. Suggestions we had for other apps were already available here. Would love more reporting options and offline access."
+        "text": "Great day-to-day register, but when WiFi drops most management features are disabled — you cannot create or edit items or add customers until you are back online. Selling keeps working offline, thankfully."
       },
       {
         "author": "BarberUK",
@@ -98887,8 +98888,8 @@ const CASE_DATA = {
         "text": "Kitchen display drops orders intermittently. Restarted the app several times this week alone. Support ticket open 12 days with no real resolution."
       },
       {
-        "author": "AsadoBR",
-        "country": "BR",
+        "author": "PanaderiaAR",
+        "country": "AR",
         "region": "south_america",
         "rating": 1,
         "date": "Jul 2026",
@@ -98896,7 +98897,7 @@ const CASE_DATA = {
         "themes": [
           "payment-integration"
         ],
-        "text": "Payment setup docs reference UI screens that no longer exist in the current app version. Server dependency makes offline use very limited."
+        "text": "Add-ons are billed in US dollars, which gets steeper every month against our currency. Payment setup docs also reference screens that no longer exist in the current app version."
       }
     ]
   },
