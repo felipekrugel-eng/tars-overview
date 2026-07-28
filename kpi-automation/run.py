@@ -45,6 +45,11 @@ QUERY_FILES = {
 # result (~1.6k rows) comes back to the runner — the grid stays server-side.
 GRACE_SQL = "daily_paying_flow_grace_vs_raw.sql"
 
+# Per-country twin of the rolling series (REG_30D / ACTIVE_30D / PAYING_ACTIVE by country).
+# Also kept OUT of QUERY_FILES and run in its own guarded step: it takes ~12 min and only
+# feeds the FACADASH country filter's "Rolling 30 days" views, which degrade gracefully.
+ROLLING_BY_COUNTRY_SQL = "rolling_30d_by_country_49days.sql"
+
 def _private_key():
     pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
     pw  = os.environ.get("SNOWFLAKE_PRIVATE_KEY_PASSPHRASE") or None
@@ -158,6 +163,22 @@ def main():
     # alongside the subprocess and OOMs the runner ("lost communication with the server").
     import gc
     dfs.clear(); del rec, cur, agg, recc, pay, payc; gc.collect()
+
+    # ---- per-country rolling series (optional, GUARDED) ----
+    # Own connection, after the main loop: a failure here — or the ~12 min runtime — must
+    # never put daily-history.js / kpi-data.js at risk. Verified 2026-07-28 against the
+    # global series: reg30d 0.00%, active30d +0.25%, payingActive -0.84% (the -0.84% is the
+    # known Chargebee-email-without-country gap, same as country_month_mrr_daily_asof.sql).
+    try:
+        print("[rollingc] " + ROLLING_BY_COUNTRY_SQL, flush=True)
+        _cx = connect()
+        try:
+            _rc = run_sql(_cx, ROLLING_BY_COUNTRY_SQL)
+        finally:
+            _cx.close()
+        write(DAILY / f"Rolling 30 Days by Country_{TS}.csv", _rc)
+    except Exception as _e:
+        print(f"[rollingc] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
     # ---- regenerate both data files ----
     print("[backfill] daily-history.js", flush=True)
