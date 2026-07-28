@@ -198,10 +198,16 @@ if _rollbc:
     _rcols = set(_rb.columns)
     _rpay = "PAYING_ACTIVE" if "PAYING_ACTIVE" in _rcols else "PAYING_30D"
     def _rgv(x, col):
-        return int(pd.to_numeric(x.get(col), errors="coerce") or 0) if col in _rcols else None
+        # NOTE: float('nan') is truthy, so `... or 0` would pass nan into int() and raise.
+        # This module runs unguarded under check=True, so that would kill the whole pull.
+        if col not in _rcols: return None
+        v = pd.to_numeric(x.get(col), errors="coerce")
+        return None if pd.isna(v) else int(v)
     for _, x in _rb.iterrows():
+        # No SKIP_DATE here: that guard exists for the bad "49 days 1" active/receipts
+        # export, not for this query. The global rolling loader doesn't skip it either,
+        # and skipping would leave per-country lines with a hole the global line lacks.
         _d = str(x["SNAPSHOT_DATE"])[:10]
-        if _d == SKIP_DATE: continue
         r = _bcrow(str(x["COUNTRY"]), _d)
         r["reg30d"]       = _rgv(x, "REG_30D")
         r["active30d"]    = _rgv(x, "ACTIVE_30D")
