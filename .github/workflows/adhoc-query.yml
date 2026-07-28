@@ -11,7 +11,7 @@ on:
 jobs:
   query:
     runs-on: ubuntu-latest
-    timeout-minutes: 45   # raised 2026-07-28: the per-country rolling query needs ~15-25m
+    timeout-minutes: 360   # GitHub max for hosted jobs — effectively uncapped; ad-hoc analytical queries can run long
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
