@@ -2,7 +2,12 @@
 # Added 2026-07-24 for one-off cohort questions; safe to delete when no longer needed.
 name: "ADHOC: Snowflake query"
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      script:
+        description: "Script under adhoc/ to run"
+        required: false
+        default: "pos-transacting.js"
 jobs:
   query:
     runs-on: ubuntu-latest
@@ -16,7 +21,7 @@ jobs:
       - name: Write Snowflake private key
         run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
       - name: Run ad-hoc query
-        run: node adhoc/pos-transacting.js
+        run: node "adhoc/${{ inputs.script || 'pos-transacting.js' }}"
       - name: Clean up key
         if: always()
         run: rm -f snowflake_tars_key.p8
