@@ -541,6 +541,17 @@ const ROLLMETA = {
 function rollChart(id, field, color){
   const a=H.filter(r=>r[field]!=null), meta=ROLLMETA[field]||{tt:'Value'};
   if(charts[id]) charts[id].destroy();
+  // Rolling / point-in-time fields exist only on the GLOBAL daily series; the per-country
+  // rows carry MTD figures only. Rather than draw an empty canvas, say so.
+  const _cv=document.getElementById(id), _box=_cv?_cv.parentNode:null;
+  if(_box){ const _old=_box.querySelector('.nodata'); if(_old) _old.remove(); }
+  if(!a.length){
+    if(_cv) _cv.style.display='none';
+    if(_box) _box.insertAdjacentHTML('beforeend','<div class="nodata" style="display:flex;align-items:center;justify-content:center;height:100%;padding:24px;text-align:center;color:var(--muted);font-size:13px;line-height:1.55">This view isn\u2019t available for a single country yet \u2014 the trailing-30-day series is global only.<br>Switch to <b>Month-to-date</b>, or clear the country filter.</div>');
+    const _c=document.getElementById('mtd-'+id); if(_c) _c.innerHTML='';
+    return;
+  }
+  if(_cv) _cv.style.display='';
   charts[id]=new Chart(document.getElementById(id),{type:'line',
     data:{labels:a.map(r=>r.date), datasets:[{label:meta.tt, data:a.map(r=>r[field]), borderColor:color, backgroundColor:'rgba(29,143,225,.08)', fill:true, borderWidth:2.6, pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:color, tension:.3}]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
