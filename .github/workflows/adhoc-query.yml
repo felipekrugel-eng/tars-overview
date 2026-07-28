@@ -11,7 +11,7 @@ on:
 jobs:
   query:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45   # raised 2026-07-28: the per-country rolling query needs ~15-25m
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
