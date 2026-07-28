@@ -1465,24 +1465,28 @@ applyMasterHash();
       document.getElementById('ovVolTot').textContent=fmtUsdFull(volTotal)+' total';
       if(rn) rn.textContent='Showing all time';
     } else {
-      var initC=sumRange(ACT,'n',P.curA,P.curB),  initP=sumRange(ACT,'n',P.prvA,P.prvB);
+      // KYC tiles stay ALL-TIME by design (clearly marked); volume and newly-
+      // transacting follow the selected window with % vs the previous period.
+      var totalActW = ACT.reduce(function(a,r){return a+(Number(r.n)||0);},0);
+      var enabledW = haveEna ? ENA.reduce(function(a,r){return a+(Number(r.n)||0);},0)
+                             : (SNAP.length?(SNAP[SNAP.length-1].enabled||0):0);
+      var totalRegW = totalActW || (SNAP.length?SNAP[SNAP.length-1].total:0);
+      var rateAll = totalRegW?Math.round(enabledW/totalRegW*100):0;
+      var initC=sumRange(ACT,'n',P.curA,P.curB);
       var enC = haveEna? sumRange(ENA,'n',P.curA,P.curB) : null;
-      var enP = haveEna? sumRange(ENA,'n',P.prvA,P.prvB) : null;
       var volC=sumRange(VOL,'usd',P.curA,P.curB), volP=sumRange(VOL,'usd',P.prvA,P.prvB);
       var txC=TXN.filter(function(r){return r.started>=P.curA && r.started<=P.curB;}).length;
       var txP=TXN.filter(function(r){return r.started>=P.prvA && r.started<=P.prvB;}).length;
-      var rate2 = initC?Math.round((enC||0)/initC*100):0;
       kpis=[
-        {num:fmtInt(initC), lbl:'Initiated KYC', sub:'Merchants connected in this period', cls:'', d:deltaPill(initC,initP)},
-        haveEna ? {num:fmtInt(enC), lbl:'Passed KYC', sub:rate2+'% of the period’s initiators', cls:'green', d:deltaPill(enC,enP)}
-                : {num:'&mdash;', lbl:'Passed KYC', sub:'Daily passed-KYC series pending', cls:'green', d:''},
-        {num:fmtUsd(volC), lbl:'Volume processed', sub:'Successful card charges, USD', cls:'accent', d:deltaPill(volC,volP)},
+        {num:fmtInt(totalRegW), lbl:'Initiated KYC · all time', sub:'+'+fmtInt(initC)+' in the selected period', cls:'', d:''},
+        {num:fmtInt(enabledW), lbl:'Passed KYC · all time', sub:rateAll+'% of initiators are live'+(haveEna?(' · +'+fmtInt(enC)+' in the period'):''), cls:'green', d:''},
+        {num:fmtUsd(volC), lbl:'Volume processed', sub:'Successful card charges in this period, USD', cls:'accent', d:deltaPill(volC,volP)},
         {num:fmtInt(txC), lbl:'Newly transacting', sub:'Merchants whose first charge is in this period', cls:'', d:deltaPill(txC,txP)}
       ];
-      document.getElementById('ovActTot').textContent=fmtInt(initC)+' in period';
-      document.getElementById('ovEnTot').textContent=haveEna?(fmtInt(enC)+' in period'):'—';
+      document.getElementById('ovActTot').textContent=fmtInt(initC)+' in period · '+fmtInt(totalActW)+' all time';
+      document.getElementById('ovEnTot').textContent=haveEna?(fmtInt(enC)+' in period · '+fmtInt(enabledW)+' all time'):'—';
       document.getElementById('ovVolTot').textContent=fmtUsdFull(volC)+' in period';
-      if(rn) rn.textContent='Showing '+fmtShort(P.curA)+' – '+fmtShort(P.curB)+' · % vs '+fmtShort(P.prvA)+' – '+fmtShort(P.prvB);
+      if(rn) rn.textContent='Showing '+fmtShort(P.curA)+' – '+fmtShort(P.curB)+' · % vs '+fmtShort(P.prvA)+' – '+fmtShort(P.prvB)+' · KYC tiles are all-time';
     }
     document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
       return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+(k.d||'')+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';
