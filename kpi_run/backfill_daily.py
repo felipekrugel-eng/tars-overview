@@ -188,6 +188,28 @@ if _pybc:
     for _, x in _py.iterrows():
         _bcrow(str(x["COUNTRY"]), str(x["DATE"])[:10])["paying"] = int(pd.to_numeric(x["PAYING"], errors="coerce") or 0)
 
+# per-country rolling / point-in-time series (same three metrics as the global series,
+# from rolling_30d_by_country_49days.sql). OPTIONAL: the file is written by a guarded step
+# in run.py, so if that query fails these keys stay absent and the dashboard falls back to
+# its "trailing-30-day series is global only" note instead of drawing an empty chart.
+_rollbc = sorted(glob.glob(SRC + "/Rolling 30 Days by Country_*.csv"))
+if _rollbc:
+    _rb = pd.read_csv(_rollbc[-1])
+    _rcols = set(_rb.columns)
+    _rpay = "PAYING_ACTIVE" if "PAYING_ACTIVE" in _rcols else "PAYING_30D"
+    def _rgv(x, col):
+        return int(pd.to_numeric(x.get(col), errors="coerce") or 0) if col in _rcols else None
+    for _, x in _rb.iterrows():
+        _d = str(x["SNAPSHOT_DATE"])[:10]
+        if _d == SKIP_DATE: continue
+        r = _bcrow(str(x["COUNTRY"]), _d)
+        r["reg30d"]       = _rgv(x, "REG_30D")
+        r["active30d"]    = _rgv(x, "ACTIVE_30D")
+        r["payingActive"] = _rgv(x, _rpay)
+    print(f"[bycountry] rolling fields attached from {_rollbc[-1].split('/')[-1]} ({len(_rb)} rows)", flush=True)
+else:
+    print("[bycountry] no per-country rolling CSV found — rolling views stay global-only", flush=True)
+
 DAILY_HISTORY_BY_COUNTRY = {}
 for code, dd in _bycountry.items():
     if not (isinstance(code, str) and len(code) == 2): continue
