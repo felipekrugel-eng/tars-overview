@@ -1,6 +1,8 @@
 // AD-HOC TEST (2026-07-28): validate rolling_30d_by_country_49days.sql before wiring
-// it into kpi-pull. Runs BOTH the global and the new per-country rolling queries and
-// reconciles them day by day. Read-only SELECTs. Delete this file once verified.
+// it into kpi-pull. Runs ONLY the new per-country query (~9 min) and reconciles its
+// rollup against the global reg30d/active30d/payingActive already committed in
+// 'KPI Dashboard v2 (Caio)/daily-history.js' — no need to re-run the global query,
+// which would blow the 15-min job cap. Read-only SELECT. Delete once verified.
 const snowflake = require('snowflake-sdk');
 const fs = require('fs');
 const path = require('path');
@@ -18,69 +20,79 @@ const conn = snowflake.createConnection({
 });
 const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, complete: (e, s, r) => e ? rej(e) : res(r) }));
 
-const SQL_DIR = path.join(__dirname, '..', 'kpi-automation', 'sql');
-const read = (f) => fs.readFileSync(path.join(SQL_DIR, f), 'utf8').replace(/;\s*$/, '');
+const ROOT = path.join(__dirname, '..');
+const SQL = fs.readFileSync(path.join(ROOT, 'kpi-automation', 'sql', 'rolling_30d_by_country_49days.sql'), 'utf8').replace(/;\s*$/, '');
+
+// ---- global baseline straight from the committed dashboard data ----
+function loadGlobal() {
+  const src = fs.readFileSync(path.join(ROOT, 'KPI Dashboard v2 (Caio)', 'daily-history.js'), 'utf8');
+  const m = src.match(/const\s+DAILY_HISTORY\s*=\s*(\[[\s\S]*?\]);/);
+  if (!m) throw new Error('could not parse DAILY_HISTORY out of daily-history.js');
+  const rows = JSON.parse(m[1]);
+  const by = {};
+  for (const r of rows) by[r.date] = r;
+  return by;
+}
 
 (async () => {
+  const G = loadGlobal();
+  console.log('global baseline rows parsed: ' + Object.keys(G).length);
+
   await new Promise((res, rej) => conn.connect((e) => e ? rej(e) : res()));
-  console.log('connected');
+  console.log('connected; running per-country rolling query...');
 
   const t0 = Date.now();
-  const globalRows = await q(read('rolling_30d_active_paying_49days.sql'));
-  console.log('global query: ' + globalRows.length + ' rows in ' + ((Date.now()-t0)/1000).toFixed(1) + 's');
+  const rows = await q(SQL);
+  console.log('country query: ' + rows.length + ' rows in ' + ((Date.now() - t0) / 1000).toFixed(1) + 's');
 
-  const t1 = Date.now();
-  const cRows = await q(read('rolling_30d_by_country_49days.sql'));
-  console.log('country query: ' + cRows.length + ' rows in ' + ((Date.now()-t1)/1000).toFixed(1) + 's');
-
-  const countries = new Set(cRows.map(r => r.COUNTRY));
+  const countries = new Set(rows.map(r => r.COUNTRY));
   console.log('distinct countries: ' + countries.size);
+  const days = new Set(rows.map(r => String(r.SNAPSHOT_DATE).slice(0, 10)));
+  console.log('distinct days: ' + days.size + '  (expect 49)');
 
-  // roll the per-country result up to a global total per day and compare
   const up = {};
-  for (const r of cRows) {
+  for (const r of rows) {
     const d = String(r.SNAPSHOT_DATE).slice(0, 10);
-    up[d] = up[d] || { REG_30D: 0, ACTIVE_30D: 0, PAYING_ACTIVE: 0 };
-    up[d].REG_30D       += Number(r.REG_30D || 0);
-    up[d].ACTIVE_30D    += Number(r.ACTIVE_30D || 0);
-    up[d].PAYING_ACTIVE += Number(r.PAYING_ACTIVE || 0);
+    up[d] = up[d] || { reg30d: 0, active30d: 0, payingActive: 0 };
+    up[d].reg30d       += Number(r.REG_30D || 0);
+    up[d].active30d    += Number(r.ACTIVE_30D || 0);
+    up[d].payingActive += Number(r.PAYING_ACTIVE || 0);
   }
 
-  const F = ['REG_30D', 'ACTIVE_30D', 'PAYING_ACTIVE'];
-  const worst = { REG_30D: 0, ACTIVE_30D: 0, PAYING_ACTIVE: 0 };
+  const F = ['reg30d', 'active30d', 'payingActive'];
+  const worst = { reg30d: 0, active30d: 0, payingActive: 0 };
+  const dates = Object.keys(up).sort();
   console.log('');
-  console.log('date        metric          global    sum(country)     diff      diff%');
-  for (const g of globalRows) {
-    const d = String(g.SNAPSHOT_DATE).slice(0, 10);
-    const u = up[d];
-    if (!u) { console.log(d + '  MISSING from country result'); continue; }
+  console.log('date        metric          global   sum(country)      diff     diff%');
+  for (const d of dates) {
+    const g = G[d];
+    if (!g) { console.log(d + '  (no global row in daily-history.js — skipped)'); continue; }
     for (const f of F) {
-      const gv = Number(g[f] || 0), cv = u[f];
+      if (g[f] == null) continue;
+      const gv = Number(g[f]), cv = up[d][f];
       const pct = gv ? ((cv - gv) / gv) * 100 : 0;
       if (Math.abs(pct) > Math.abs(worst[f])) worst[f] = pct;
-      // print the last 5 days in full; flag any day off by >1%
-      const recent = globalRows.indexOf(g) >= globalRows.length - 5;
+      const recent = dates.indexOf(d) >= dates.length - 5;
       if (recent || Math.abs(pct) > 1) {
-        console.log(d + '  ' + f.padEnd(15) + String(gv).padStart(8) + String(cv).padStart(15) + String(cv - gv).padStart(10) + '   ' + pct.toFixed(2) + '%');
+        console.log(d + '  ' + f.padEnd(14) + String(gv).padStart(8) + String(cv).padStart(14) + String(cv - gv).padStart(10) + '   ' + pct.toFixed(2) + '%');
       }
     }
   }
 
   console.log('');
-  console.log('WORST daily gap vs global (country sum - global):');
-  for (const f of F) console.log('  ' + f.padEnd(15) + worst[f].toFixed(2) + '%');
+  console.log('WORST daily gap (country sum - global):');
+  for (const f of F) console.log('  ' + f.padEnd(14) + worst[f].toFixed(2) + '%');
   console.log('');
-  console.log('Expected: REG_30D and ACTIVE_30D ~0% (every merchant has a country).');
-  console.log('PAYING_ACTIVE may sit slightly NEGATIVE — Chargebee emails with no');
-  console.log('LOYVERSE_MERCHANTS row have no country and drop out (known gap, same as');
-  console.log('country_month_mrr_daily_asof.sql). A large gap means something is wrong.');
+  console.log('PASS looks like: reg30d and active30d within ~0.5% (every merchant has a');
+  console.log('country); payingActive slightly NEGATIVE (Chargebee emails with no');
+  console.log('LOYVERSE_MERCHANTS row have no country — known gap, same as the MRR-by-');
+  console.log('country query). Positive gaps or large negatives mean double-counting.');
 
-  // top countries on the latest day, as an eyeball check
-  const last = String(globalRows[globalRows.length - 1].SNAPSHOT_DATE).slice(0, 10);
-  const top = cRows.filter(r => String(r.SNAPSHOT_DATE).slice(0,10) === last)
-                   .sort((a, b) => Number(b.ACTIVE_30D) - Number(a.ACTIVE_30D)).slice(0, 12);
+  const last = dates[dates.length - 1];
+  const top = rows.filter(r => String(r.SNAPSHOT_DATE).slice(0, 10) === last)
+                  .sort((a, b) => Number(b.ACTIVE_30D) - Number(a.ACTIVE_30D)).slice(0, 12);
   console.log('');
-  console.log('Top 12 countries by ACTIVE_30D on ' + last + ':');
+  console.log('Top 12 countries by active30d on ' + last + ':');
   for (const r of top) console.log('  ' + r.COUNTRY + '  active30d=' + r.ACTIVE_30D + '  payingActive=' + r.PAYING_ACTIVE + '  reg30d=' + r.REG_30D);
 
   conn.destroy(() => {});
