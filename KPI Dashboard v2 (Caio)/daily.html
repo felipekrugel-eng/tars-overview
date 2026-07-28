@@ -547,7 +547,7 @@ function rollChart(id, field, color){
   if(_box){ const _old=_box.querySelector('.nodata'); if(_old) _old.remove(); }
   if(!a.length){
     if(_cv) _cv.style.display='none';
-    if(_box) _box.insertAdjacentHTML('beforeend','<div class="nodata" style="display:flex;align-items:center;justify-content:center;height:100%;padding:24px;text-align:center;color:var(--muted);font-size:13px;line-height:1.55">This view isn\u2019t available for a single country yet \u2014 the trailing-30-day series is global only.<br>Switch to <b>Month-to-date</b>, or clear the country filter.</div>');
+    if(_box) _box.insertAdjacentHTML('beforeend','<div class="nodata" style="display:grid;place-items:center;height:100%;padding:24px;color:var(--muted);font-size:13px;line-height:1.55"><span style="text-align:center;max-width:34ch">This view isn\u2019t available for a single country yet \u2014 the trailing-30-day series is global only.<br>Switch to <b>Month-to-date</b>, or clear the country filter.</span></div>');
     const _c=document.getElementById('mtd-'+id); if(_c) _c.innerHTML='';
     return;
   }
