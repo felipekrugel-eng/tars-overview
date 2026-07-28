@@ -386,7 +386,18 @@ function fillCmp(id, cur, prv){
     '<div class="bullet" title="Bar = this month so far. Tick = '+mLabel(PREVM)+' at the same day."><i class="fill" style="width:'+(curVal/mx*100).toFixed(1)+'%"></i>'+(markerPct==null?'':'<span class="marker" style="left:'+markerPct+'%"></span>')+'</div>'+
     '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>';
 }
+// The rolling views can leave a ".nodata" note + a hidden canvas in a panel (see
+// rollChart). Any renderer that draws into that panel must clear it first, otherwise
+// Chart.js builds into a display:none canvas (measured 0x0) under a stale message.
+function clearNoData(id){
+  const cv = document.getElementById(id); if(!cv) return;
+  const box = cv.parentNode;
+  if(box){ const n = box.querySelector('.nodata'); if(n) n.remove(); }
+  if(cv.style.display === 'none') cv.style.display = '';
+  const c = document.getElementById('mtd-' + id); if(c) c.innerHTML = '';
+}
 function trend(id,label,field,color){
+  clearNoData(id);
   const cur = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY).map(r=>({x:dayOf(r),y:r[field]}));
   const prv = H.filter(r=>r.month===PREVM && r[field]!=null).map(r=>({x:dayOf(r),y:r[field]}));
   if(charts[id]) charts[id].destroy();
@@ -411,6 +422,7 @@ const barValueLabels = { id:'barValueLabels', afterDatasetsDraw(c){
   (ds.data||[]).forEach((v,i)=>{ const el=meta.data[i]; if(el && v!=null) ctx.fillText(fmtK(v), el.x, el.y-6); });
   ctx.restore(); } };
 function regCombo(focus){
+  clearNoData('c-reg');
   focus = (focus==='last') ? 'last' : 'this';
   const M = (focus==='last') ? PREVM : CURM;        // which month's daily bars to show
   const isCur = (M===CURM);
@@ -528,7 +540,10 @@ function drawGadds(showBars){
 }
 drawGadds(false);
 
-function applyCountry(code){ SEL = code || null; H = SEL ? countryHist(SEL) : GLOBAL_H; recompute(); renderTiles(); drawTrends(); }
+function applyCountry(code){ SEL = code || null; H = SEL ? countryHist(SEL) : GLOBAL_H; recompute(); renderTiles(); drawTrends();
+  // drawTrends() always renders the month-to-date view, so a panel left on "Rolling 30
+  // days" would show MTD numbers under the rolling label. Re-fire whichever toggle is on.
+  if(typeof redrawActiveViews === 'function') redrawActiveViews(); }
 (function(){ var sel=document.getElementById('fac-country'); if(!sel) return;
   var codes=Object.keys(DHBC).filter(function(c){return c && c.length===2;}).map(function(c){var rs=DHBC[c]||[];var mx=0;rs.forEach(function(r){if((+r.active||0)>mx)mx=+r.active;});return {c:c,a:mx};}).filter(function(x){return x.a>0;}).sort(function(a,b){return b.a-a.a;});
   sel.innerHTML='<option value="">All countries (global)</option>'+codes.map(function(x){return '<option value="'+x.c+'">'+(isoFlag(x.c)?isoFlag(x.c)+' ':'')+x.c+' — '+(CNAMES[x.c]||x.c)+'</option>';}).join('');
@@ -546,8 +561,8 @@ function rollChart(id, field, color){
   if(charts[id]) charts[id].destroy();
   // Rolling / point-in-time fields exist only on the GLOBAL daily series; the per-country
   // rows carry MTD figures only. Rather than draw an empty canvas, say so.
+  clearNoData(id);
   const _cv=document.getElementById(id), _box=_cv?_cv.parentNode:null;
-  if(_box){ const _old=_box.querySelector('.nodata'); if(_old) _old.remove(); }
   if(!a.length){
     if(_cv) _cv.style.display='none';
     if(_box) _box.insertAdjacentHTML('beforeend','<div class="nodata" style="display:grid;place-items:center;height:100%;padding:24px;color:var(--muted);font-size:13px;line-height:1.55"><span style="text-align:center;max-width:34ch">This view isn\u2019t available for a single country yet \u2014 the trailing-30-day series is global only.<br>Switch to <b>Month-to-date</b>, or clear the country filter.</span></div>');
@@ -581,6 +596,14 @@ const VT = {
 document.querySelectorAll('.vtog').forEach(t=>{ const c=t.dataset.c;
   t.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     t.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); (VT[c][b.dataset.v]||(()=>{}))(); }); });
+// Re-render every panel through whichever view is currently selected.
+function redrawActiveViews(){
+  document.querySelectorAll('.vtog').forEach(t=>{
+    const c = t.dataset.c, on = t.querySelector('button.on');
+    if(!c || !on || !VT[c]) return;
+    (VT[c][on.dataset.v] || (()=>{}))();
+  });
+}
 
 // ---------- country league pyramid (5 divisions of 20, promotion/relegation) ----------
 const F = (typeof COUNTRY_FUNNEL !== 'undefined') ? COUNTRY_FUNNEL : (D.countryFunnel || { rows:[], current:'', previous:'' });
