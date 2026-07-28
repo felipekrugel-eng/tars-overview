@@ -251,7 +251,10 @@ const DHBC = (typeof DAILY_HISTORY_BY_COUNTRY!=='undefined') ? DAILY_HISTORY_BY_
 const MRRC = D.mrrByCountryByMonth||{}, ARPCC = D.arpcByCountryByMonth||{};
 let SEL = null;   // selected country code; null = All (global)
 function countryHist(code){
-  const rows=(DHBC[code]||[]).map(r=>({date:r.date,month:r.month,regMTD:r.regMTD,paying:r.paying,active:r.active,receipts:r.receipts,newReg:r.newReg}));
+  const rows=(DHBC[code]||[]).map(r=>({date:r.date,month:r.month,regMTD:r.regMTD,paying:r.paying,active:r.active,receipts:r.receipts,newReg:r.newReg,
+    // rolling / point-in-time fields — present once the per-country rolling query lands
+    // in daily-history.js; rollChart() falls back to its "global only" note if absent.
+    reg30d:r.reg30d,active30d:r.active30d,payingActive:r.payingActive}));
   try{ if(typeof CUSUM_DATA!=='undefined' && CUSUM_DATA.todayByCountry){
     const todayISO=new Date().toISOString().slice(0,10);
     const cc=CUSUM_DATA.todayByCountry.find(x=>x.c===code);
