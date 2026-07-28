@@ -116,6 +116,10 @@
   .ov-kpi .k-sub{font-size:12px;color:var(--darkgray);margin-top:5px;}
   .ov-kpi.accent .k-num{color:var(--blue-deep);}
   .ov-kpi.green .k-num{color:var(--green);}
+  .k-delta{display:inline-block;vertical-align:middle;font-family:Arial,sans-serif;font-size:12px;font-weight:bold;border-radius:20px;padding:3px 9px;margin-left:8px;white-space:nowrap;}
+  .k-delta.up{background:rgba(30,158,90,.13);color:#1E7A46;}
+  .k-delta.down{background:rgba(204,51,51,.12);color:#B3372A;}
+  .k-delta.flat{background:#EFF3F7;color:var(--midgray);}
   .ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
   @media(max-width:900px){.ov-grid{grid-template-columns:1fr;}}
   .ov-card{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:16px 18px 12px;}
@@ -501,7 +505,7 @@
     <p class="ov-sub">A daily report on Loyverse Payments activation &mdash; how many merchants are activating each day, how many pass KYC and go live, and how much real volume is flowing through our terminals. Refreshes automatically every morning from Snowflake. Prod accounts only; volume converted to USD.</p>
     <div class="ov-head" style="margin-bottom:16px">
       <div class="ov-range" id="ovRange">
-        <button data-r="30" class="on">Month</button>
+        <button data-r="month" class="on">Current month</button>
         <button data-r="60">60 days</button>
         <button data-r="90">90 days</button>
         <button data-r="all">All time</button>
@@ -1279,7 +1283,13 @@ applyMasterHash();
   function windowSeries(dense, range){
     if(!dense.length) return {days:[],bars:[],line:[]};
     var cum=0, lineFull=dense.map(function(r){ cum+=r.v; return cum; });
-    var start = (range==='all') ? 0 : Math.max(0, dense.length - Number(range));
+    var start;
+    if(range==='all'){ start=0; }
+    else if(range==='month'){
+      var mStart=dense[dense.length-1].d.slice(0,8)+'01';
+      start=0; while(start<dense.length-1 && dense[start].d<mStart) start++;
+    }
+    else { start=Math.max(0, dense.length - Number(range)); }
     return {
       days: dense.slice(start).map(function(r){return r.d;}),
       bars: dense.slice(start).map(function(r){return r.v;}),
@@ -1394,37 +1404,93 @@ applyMasterHash();
     var v=windowSeries(vDense, range);
     if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
     chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:'',barLabel:'Volume (USD)'});
-    // range note
-    var lbl = range==='all' ? 'all time' : ('last '+range+' days');
-    var rn=document.getElementById('ovRangeNote'); if(rn) rn.textContent='Showing '+lbl;
+    // range note is owned by renderKpis (shows the compared periods too)
+  }
+
+  // ---- Windowed KPI tiles with % evolution vs the previous period ----------
+  function isoAddDays(iso, n){ var t=new Date(iso+'T00:00:00Z'); t.setUTCDate(t.getUTCDate()+n); return t.toISOString().slice(0,10); }
+  function sumRange(rows, key, a, b){ var s=0; rows.forEach(function(r){ if(r.d>=a && r.d<=b) s+=Number(r[key])||0; }); return s; }
+  function fmtShort(d){ var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; var p=String(d).split('-'); return (+p[2])+' '+mo[(+p[1])-1]; }
+  function maxDay(){
+    var m='';
+    [ACT,ENA,VOL].forEach(function(rows){ rows.forEach(function(r){ if(r.d>m) m=r.d; }); });
+    return m || new Date().toISOString().slice(0,10);
+  }
+  // Current + comparison periods for a range. month = calendar month-to-date vs
+  // the SAME day-span of the previous month (1st..same day), so it is like-for-like.
+  function periods(range){
+    if(range==='all') return null;
+    var maxd=maxDay();
+    if(range==='month'){
+      var curA=maxd.slice(0,8)+'01';
+      var pm=new Date(curA+'T00:00:00Z'); pm.setUTCMonth(pm.getUTCMonth()-1);
+      var prvA=pm.toISOString().slice(0,10);
+      return {curA:curA, curB:maxd, prvA:prvA, prvB:isoAddDays(prvA, (+maxd.slice(8,10))-1)};
+    }
+    var n=Number(range);
+    var curA=isoAddDays(maxd,-(n-1));
+    var prvB=isoAddDays(curA,-1);
+    return {curA:curA, curB:maxd, prvA:isoAddDays(prvB,-(n-1)), prvB:prvB};
+  }
+  function deltaPill(cur, prv){
+    cur=Number(cur)||0; prv=Number(prv)||0;
+    if(prv>0){
+      var p=(cur/prv-1)*100;
+      if(Math.abs(p)<0.05) return '<span class="k-delta flat">&plusmn;0%</span>';
+      var up=p>0;
+      return '<span class="k-delta '+(up?'up':'down')+'">'+(up?'&#9650; +':'&#9660; &minus;')+Math.abs(p).toFixed(Math.abs(p)>=100?0:1)+'%</span>';
+    }
+    if(cur>0) return '<span class="k-delta up">new</span>';
+    return '';
+  }
+  function renderKpis(range){
+    var P=periods(range), kpis;
+    var haveEna=!!eDense;
+    var rn=document.getElementById('ovRangeNote');
+    if(!P){
+      var totalAct = ACT.reduce(function(a,r){return a+(Number(r.n)||0);},0);
+      var enabled = haveEna ? ENA.reduce(function(a,r){return a+(Number(r.n)||0);},0)
+                            : (SNAP.length?(SNAP[SNAP.length-1].enabled||0):0);
+      var totalReg = totalAct || (SNAP.length?SNAP[SNAP.length-1].total:0);
+      var rate = totalReg?Math.round(enabled/totalReg*100):0;
+      var volTotal = VOL.reduce(function(a,r){return a+(Number(r.usd)||0);},0);
+      kpis=[
+        {num:fmtInt(totalReg), lbl:'Total activated', sub:'Merchants connected to Loyverse Payments', cls:'', d:''},
+        {num:fmtInt(enabled), lbl:'Passed KYC', sub:rate+'% of initiators are live to transact', cls:'green', d:''},
+        {num:fmtUsd(volTotal), lbl:'Volume processed', sub:'Successful card charges, USD', cls:'accent', d:''},
+        {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'Have processed at least one charge', cls:'', d:''}
+      ];
+      document.getElementById('ovActTot').textContent=fmtInt(totalAct)+' total';
+      document.getElementById('ovEnTot').textContent=fmtInt(enabled)+' enabled';
+      document.getElementById('ovVolTot').textContent=fmtUsdFull(volTotal)+' total';
+      if(rn) rn.textContent='Showing all time';
+    } else {
+      var initC=sumRange(ACT,'n',P.curA,P.curB),  initP=sumRange(ACT,'n',P.prvA,P.prvB);
+      var enC = haveEna? sumRange(ENA,'n',P.curA,P.curB) : null;
+      var enP = haveEna? sumRange(ENA,'n',P.prvA,P.prvB) : null;
+      var volC=sumRange(VOL,'usd',P.curA,P.curB), volP=sumRange(VOL,'usd',P.prvA,P.prvB);
+      var txC=TXN.filter(function(r){return r.started>=P.curA && r.started<=P.curB;}).length;
+      var txP=TXN.filter(function(r){return r.started>=P.prvA && r.started<=P.prvB;}).length;
+      var rate2 = initC?Math.round((enC||0)/initC*100):0;
+      kpis=[
+        {num:fmtInt(initC), lbl:'Initiated KYC', sub:'Merchants connected in this period', cls:'', d:deltaPill(initC,initP)},
+        haveEna ? {num:fmtInt(enC), lbl:'Passed KYC', sub:rate2+'% of the period’s initiators', cls:'green', d:deltaPill(enC,enP)}
+                : {num:'&mdash;', lbl:'Passed KYC', sub:'Daily passed-KYC series pending', cls:'green', d:''},
+        {num:fmtUsd(volC), lbl:'Volume processed', sub:'Successful card charges, USD', cls:'accent', d:deltaPill(volC,volP)},
+        {num:fmtInt(txC), lbl:'Newly transacting', sub:'Merchants whose first charge is in this period', cls:'', d:deltaPill(txC,txP)}
+      ];
+      document.getElementById('ovActTot').textContent=fmtInt(initC)+' in period';
+      document.getElementById('ovEnTot').textContent=haveEna?(fmtInt(enC)+' in period'):'—';
+      document.getElementById('ovVolTot').textContent=fmtUsdFull(volC)+' in period';
+      if(rn) rn.textContent='Showing '+fmtShort(P.curA)+' – '+fmtShort(P.curB)+' · % vs '+fmtShort(P.prvA)+' – '+fmtShort(P.prvB);
+    }
+    document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
+      return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+(k.d||'')+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';
+    }).join('');
   }
 
   function renderStatic(){
     if(UPD){ document.getElementById('ovUpdated').textContent='Updated '+UPD; }
-    var totalAct = ACT.reduce(function(a,r){return a+(Number(r.n)||0);},0);
-    var enabled = eDense ? ENA.reduce(function(a,r){return a+(Number(r.n)||0);},0)
-                         : (SNAP.length?(SNAP[SNAP.length-1].enabled||0):0);
-    var totalReg = totalAct || (SNAP.length?SNAP[SNAP.length-1].total:0);
-    var rate = totalReg?Math.round(enabled/totalReg*100):0;
-    var volTotal = VOL.reduce(function(a,r){return a+(Number(r.usd)||0);},0);
-    var last7=0;
-    if(ACT.length){
-      var maxd=ACT[ACT.length-1].d;
-      var cutoff=new Date(maxd+'T00:00:00Z'); cutoff.setUTCDate(cutoff.getUTCDate()-6);
-      ACT.forEach(function(r){ if(new Date(r.d+'T00:00:00Z')>=cutoff) last7+=Number(r.n)||0; });
-    }
-    var kpis=[
-      {num:fmtInt(totalReg), lbl:'Total activated', sub:'Merchants connected to Loyverse Payments', cls:''},
-      {num:fmtInt(enabled), lbl:'Passed KYC', sub:rate+'% of initiators are live to transact', cls:'green'},
-      {num:fmtUsd(volTotal), lbl:'Volume processed (all-time)', sub:'Successful card charges, USD', cls:'accent'},
-      {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'Have processed at least one charge', cls:''}
-    ];
-    document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
-      return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';
-    }).join('');
-    document.getElementById('ovActTot').textContent=fmtInt(totalAct)+' total';
-    document.getElementById('ovEnTot').textContent=fmtInt(enabled)+' enabled';
-    document.getElementById('ovVolTot').textContent=fmtUsdFull(volTotal)+' total';
     renderTable();
   }
 
@@ -1490,17 +1556,19 @@ applyMasterHash();
   })(ths[ti]); }
 
   // range selector
-  var curRange='30';
+  var curRange='month';
   var rangeBtns=document.querySelectorAll('#ovRange button');
   for(var ri=0;ri<rangeBtns.length;ri++){ (function(btn){
     btn.addEventListener('click',function(){
       curRange=btn.getAttribute('data-r');
       for(var q=0;q<rangeBtns.length;q++) rangeBtns[q].classList.toggle('on', rangeBtns[q]===btn);
+      renderKpis(curRange);
       renderCharts(curRange);
     });
   })(rangeBtns[ri]); }
 
   renderStatic();
+  renderKpis(curRange);
   renderCharts(curRange);
 })();
 
