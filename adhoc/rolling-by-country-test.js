@@ -23,6 +23,14 @@ const q = (sql) => new Promise((res, rej) => conn.execute({ sqlText: sql, comple
 const ROOT = path.join(__dirname, '..');
 const SQL = fs.readFileSync(path.join(ROOT, 'kpi-automation', 'sql', 'rolling_30d_by_country_49days.sql'), 'utf8').replace(/;\s*$/, '');
 
+// Snowflake DATE columns come back as JS Date objects — String(d).slice(0,10) yields
+// "Fri Jul 03", which silently broke the join in the first run. Normalise to YYYY-MM-DD.
+const dkey = (v) => {
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  const p = new Date(v);
+  return isNaN(p.getTime()) ? String(v).slice(0, 10) : p.toISOString().slice(0, 10);
+};
+
 // ---- global baseline straight from the committed dashboard data ----
 function loadGlobal() {
   const src = fs.readFileSync(path.join(ROOT, 'KPI Dashboard v2 (Caio)', 'daily-history.js'), 'utf8');
@@ -47,12 +55,12 @@ function loadGlobal() {
 
   const countries = new Set(rows.map(r => r.COUNTRY));
   console.log('distinct countries: ' + countries.size);
-  const days = new Set(rows.map(r => String(r.SNAPSHOT_DATE).slice(0, 10)));
+  const days = new Set(rows.map(r => dkey(r.SNAPSHOT_DATE)));
   console.log('distinct days: ' + days.size + '  (expect 49)');
 
   const up = {};
   for (const r of rows) {
-    const d = String(r.SNAPSHOT_DATE).slice(0, 10);
+    const d = dkey(r.SNAPSHOT_DATE);
     up[d] = up[d] || { reg30d: 0, active30d: 0, payingActive: 0 };
     up[d].reg30d       += Number(r.REG_30D || 0);
     up[d].active30d    += Number(r.ACTIVE_30D || 0);
@@ -89,7 +97,7 @@ function loadGlobal() {
   console.log('country query). Positive gaps or large negatives mean double-counting.');
 
   const last = dates[dates.length - 1];
-  const top = rows.filter(r => String(r.SNAPSHOT_DATE).slice(0, 10) === last)
+  const top = rows.filter(r => dkey(r.SNAPSHOT_DATE) === last)
                   .sort((a, b) => Number(b.ACTIVE_30D) - Number(a.ACTIVE_30D)).slice(0, 12);
   console.log('');
   console.log('Top 12 countries by active30d on ' + last + ':');
