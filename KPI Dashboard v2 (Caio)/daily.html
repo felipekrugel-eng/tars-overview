@@ -351,7 +351,7 @@ const tileDefs = cur ? [
   ['MRR', _lcLbl, fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), momTile((_mrrRow && _mrrPrev) ? _mrrRow.mrr - _mrrPrev.mrr : null, v=>fmtM(v)), ser('mrr'), INK],
   ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote), ser('receipts'), BLUE_DEEP],
   ['ARPC', _lcLbl, (_mrrRow && _mrrRow.arpc!=null ? '$'+(+_mrrRow.arpc).toFixed(2) : '—'),
-    momTile((_mrrRow && _mrrPrev && _mrrRow.arpc!=null && _mrrPrev.arpc!=null) ? _mrrRow.arpc - _mrrPrev.arpc : null, v=>'$'+v.toFixed(2)), ser('arpc'), BLUE],
+    momTile((_mrrRow && _mrrPrev && _mrrRow.arpc!=null && _mrrPrev.arpc!=null) ? _mrrRow.arpc - _mrrPrev.arpc : null, v=>'$'+v.toFixed(2)) + (function(){ const lm=(D.meta||{}).latestMonth; if(!lm || lm===_lcMonth) return ''; const r=_mrrAt(lm); if(!r || r.arpc==null) return ''; return '<div class="td" style="color:var(--muted)" title="Current month so far — partial: MRR accrues through the month, so this reads low until the month completes.">'+_MONX[+lm.slice(5,7)-1]+' '+lm.slice(0,4)+' MTD: $'+(+r.arpc).toFixed(2)+'</div>'; })(), ser('arpc'), BLUE],
 ] : [];
 document.getElementById('tiles').innerHTML = cur ? tileDefs.map((t,i)=>
   '<div class="tile rise" style="animation-delay:'+(i*0.04).toFixed(2)+'s"><div class="tl">'+t[0]+' <span class="sub">'+t[1]+'</span></div>'+
