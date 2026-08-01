@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-01T19:51:33.288Z",
+  "ranAt": "2026-08-01T22:36:19.148Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1004,23 +1004,23 @@
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
-        "rows": 38724
+        "rows": 38838
       },
       {
         "name": "CHARGEBEE-UK-CUSTOMER",
-        "rows": 59691
+        "rows": 59795
       },
       {
         "name": "CHARGEBEE-UK-INVOICE",
-        "rows": 432379
+        "rows": 433742
       },
       {
         "name": "CHARGEBEE-UK-SUBSCRIPTION",
-        "rows": 85867
+        "rows": 86045
       },
       {
         "name": "CHARGEBEE-UK-TRANSACTION",
-        "rows": 782156
+        "rows": 784399
       },
       {
         "name": "CURRENCY_RATES",
@@ -1032,7 +1032,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9204208243
+        "rows": 9205175346
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1885,6 +1885,33 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
+        "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 1738,
+        "SHIPPING_ADDRESS_STATE": "PA",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "19468",
+        "BATCH_TIMESTAMP": "2026-08-01 18:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "14 Major Rd",
+        "AMOUNT": 30704,
+        "SHIPPING_AMOUNT": 1300,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1TyjWm7e4AMQfKY3BuwoKtDQ",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-01 16:15:09.000",
+        "SHIPPING_NAME": "Shawn Kulp",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Royersford",
+        "SHIPPING_PHONE": "14842805551",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "sweetmollysllc@gmail.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-07-30 02:16:56.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
         "SHIPPING_ADDRESS_LINE2": "",
         "TAX": 7014,
         "SHIPPING_ADDRESS_STATE": null,
@@ -2072,40 +2099,27 @@
         "LIVEMODE": true,
         "CREATED": "2026-05-18 15:22:42.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1921,
-        "SHIPPING_ADDRESS_STATE": "PA",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
-        "BATCH_TIMESTAMP": "2026-07-01 15:00:00.000",
-        "SHIPPING_COMPANY": "Polarbear icecream",
-        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
-        "AMOUNT": 33934,
-        "SHIPPING_AMOUNT": 6000,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-07-01 12:08:55.000",
-        "SHIPPING_NAME": "Sean hunter",
-        "SHIPPING_METHOD_NAME": "priority",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Matamoras",
-        "SHIPPING_PHONE": "18458498613",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-06-16 13:28:54.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Ttumq7e4AMQfKY3OHcPVzOX",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TyjWm7e4AMQfKY3BuwoKtDQ",
+        "BATCH_TIMESTAMP": "2026-08-01 18:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 1653,
+        "AMOUNT": 1653,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_case",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CYquMteEfBN",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_ONVygSCbdoi9CP",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TyjWm7e4AMQfKY3BuwoKtDQ",
+        "BATCH_TIMESTAMP": "2026-08-01 18:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
         "AMOUNT": 26013,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
@@ -2118,22 +2132,36 @@
       },
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Ttv4P7e4AMQfKY3TAnVRZCE",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Sx7K17e4AMQfKY3yau6je2Q",
+        "BATCH_TIMESTAMP": "2026-02-24 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 29900,
+        "AMOUNT": 29900,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_devkit",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "NL",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Noyx23q165dwVZ",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "eur",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_NpOukBVhPMPhoJ",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "eur"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 1653,
+        "AMOUNT": 1653,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_case",
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CYquMteEfBN",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_ONVygSCbdoi9CP",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       },
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Ttxf97e4AMQfKY3qiz097DU",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
         "AMOUNT": 4263,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
@@ -2146,10 +2174,24 @@
       },
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Ttxf97e4AMQfKY3qiz097DU",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 3393,
+        "AMOUNT": 3393,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_hub",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6ClPRnoqxoTO",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 2,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
+        "AMOUNT": 52026,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
         "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
@@ -2160,22 +2202,8 @@
       },
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Tu5dC7e4AMQfKY3CRKh0146",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 2400,
-        "AMOUNT": 2400,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_charger",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CNrEaQLfFb3",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_ONQtzegMZBlnsQ",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Tu5dC7e4AMQfKY3CRKh0146",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
         "AMOUNT": 4263,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
@@ -2184,34 +2212,6 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Tu5dC7e4AMQfKY3CRKh0146",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 1900,
-        "AMOUNT": 1900,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_cable",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_OfwuiQs9CSKe2M",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_OitTJkJTBEE3id",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1Tu5dC7e4AMQfKY3CRKh0146",
-        "BATCH_TIMESTAMP": "2026-08-01 15:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],
