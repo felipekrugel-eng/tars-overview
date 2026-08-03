@@ -1,30 +1,17 @@
--- LOYVERSE PAYMENTS FUNNEL — US group bases (automation-safe)
--- Sources: LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS, LOYVERSE_RECEIPTS,
---          CHARGEBEE_SUBSCRIPTIONS_V
+-- LOYVERSE PAYMENTS FUNNEL — group tag per merchant (automation-safe)
+-- Companion to us_bases.sql. That query returns the four group SIZES; this one returns which
+-- group each merchant in the payments book belongs to, using the IDENTICAL CASE ladder and the
+-- identical definitions of "active" (>=1 receipt in the trailing 30 days) and "paying" (active
+-- Chargebee subscription).
 --
--- REWRITTEN 2026-08-03. The previous version returned ACTIVE_US = "every genuine US
--- merchant with a receipt in the trailing 30 days", and the dashboard used that as the
--- denominator for the "Non paying" group — whose numerator counts only merchants that are
--- pre-launch AND non-paying AND active. Paying merchants (~1.3k) and post-launch
--- registrations were therefore inside the denominator but unreachable by the numerator, so
--- the non-paying conversion rate read several times worse than reality.
+-- WHY THIS EXISTS: the Funnel page used to decide group membership from activation-data.js's
+-- `pos_active` flag, which is derived from SALES_PER_ACCOUNT_MONTHLY (monthly granularity,
+-- 90-day window) while the bases came from LOYVERSE_RECEIPTS (daily, 30-day window). Numerator
+-- and denominator were therefore measuring different things. Tagging each merchant server-side
+-- with the same rule that sizes the base makes every group ratio internally consistent.
 --
--- Each base below is now scoped to EXACTLY the population its numerator draws from, using
--- the same four mutually-exclusive groups the UI renders, in the same priority order:
---     new       : registered on/after the launch date
---     paying    : pre-launch AND an active Chargebee subscription
---     nonpaying : pre-launch AND no active subscription AND >=1 receipt in the last 30 days
---     dormant   : pre-launch AND no active subscription AND no receipt in the last 30 days
--- The four are disjoint and sum to TOTAL_US, so the group funnels can no longer drift apart
--- from their denominators. ACTIVE_US / PAYING_US are still emitted for reference and for
--- backwards compatibility, but they are NOT group bases:
---     ACTIVE_US = all genuine US merchants active in 30d (any plan, any registration date)
---     PAYING_US = all genuine US merchants with an active subscription (any registration date)
---
--- "Active" is defined identically on both sides of every ratio: >=1 LOYVERSE_RECEIPTS row in
--- the trailing 30 days. The dashboard numerator must use the same rule — do NOT pair these
--- bases with the monthly SALES_PER_ACCOUNT_MONTHLY 90-day 'pos_active' flag.
---
+-- Merchant id list is injected at runtime — NO hardcoded ids.
+-- Merchants absent from the result (e.g. non-US, or bot-filtered) get no tag; the UI falls back.
 -- US bot/fraud accounts are excluded via the shared business-name signature filter.
 WITH -- ----------------------------------------------------------------
     -- US BOT/FAKE-ACCOUNT FILTER (added 2026-07-21)
@@ -100,54 +87,34 @@ WITH -- ----------------------------------------------------------------
     ),
 -- ----------------------------------------------------------------
 params AS (SELECT DATE '2026-07-01' AS LAUNCH),
--- Genuine US merchants (bots removed) — the universe every base is carved from
 us AS (
     SELECT m.LOYVERSE_ID, m.CREATED_AT
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
      WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
        AND m.LOYVERSE_ID IS NOT NULL
+       AND m.LOYVERSE_ID IN (/*MERCHANT_IDS*/)
        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]
 ),
--- POS-active in the trailing 30 days (daily receipts — the canonical definition)
 active_ids AS (
     SELECT DISTINCT r.MERCHANT_ID AS LOYVERSE_ID
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
      WHERE TRY_TO_DATE(r.RECEIPT_DATE) >= DATEADD('day', -30, CURRENT_DATE())
 ),
--- Merchants with an active Chargebee subscription
 paying_ids AS (
     SELECT DISTINCT s.LOYVERSE_MERCHANT_ID AS LOYVERSE_ID
       FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
      WHERE LOWER(s.STATUS) = 'active'
-),
--- One row per genuine US merchant, tagged with its group AND its raw flags.
--- NOTE on structure: every count below comes from THIS single pass via COUNT_IF. The
--- reference counts are deliberately NOT written as scalar SELECT-list subqueries — the
--- us_bot_accounts CTE is inlined at each reference and Snowflake has failed to compile it
--- inside a scalar SELECT-list subquery in this file before (see the LOCAL DIVERGENCE note
--- above). One pass also means the group bases and the reference counts can never disagree.
-tagged AS (
-    SELECT u.LOYVERSE_ID,
-           IFF(a.LOYVERSE_ID IS NOT NULL, 1, 0) AS IS_ACTIVE,
-           IFF(p.LOYVERSE_ID IS NOT NULL, 1, 0) AS IS_PAYING,
-           CASE
-             WHEN u.CREATED_AT >= (SELECT LAUNCH FROM params)            THEN 'new'
-             WHEN p.LOYVERSE_ID IS NOT NULL                             THEN 'paying'
-             WHEN a.LOYVERSE_ID IS NOT NULL                             THEN 'nonpaying'
-             ELSE                                                            'dormant'
-           END AS GRP
-      FROM us u
-      LEFT JOIN paying_ids p ON p.LOYVERSE_ID = u.LOYVERSE_ID
-      LEFT JOIN active_ids a ON a.LOYVERSE_ID = u.LOYVERSE_ID
 )
 SELECT
-    -- group bases (disjoint; sum = TOTAL_US)
-    COUNT_IF(GRP = 'new')       AS new_us,
-    COUNT_IF(GRP = 'paying')    AS paying_base_us,
-    COUNT_IF(GRP = 'nonpaying') AS nonpaying_us,
-    COUNT_IF(GRP = 'dormant')   AS dormant_us,
-    COUNT(*)                    AS total_us,
-    -- reference counts (NOT group bases — see header)
-    COUNT_IF(IS_ACTIVE = 1)     AS active_us,
-    COUNT_IF(IS_PAYING = 1)     AS paying_us
-FROM tagged;   -- [US-bot-filter]
+    u.LOYVERSE_ID                            AS merchant_id,
+    CASE
+      WHEN u.CREATED_AT >= (SELECT LAUNCH FROM params) THEN 'new'
+      WHEN p.LOYVERSE_ID IS NOT NULL                  THEN 'paying'
+      WHEN a.LOYVERSE_ID IS NOT NULL                  THEN 'nonpaying'
+      ELSE                                                 'dormant'
+    END                                      AS grp,
+    IFF(a.LOYVERSE_ID IS NOT NULL, TRUE, FALSE) AS pos_active_30d,
+    IFF(p.LOYVERSE_ID IS NOT NULL, TRUE, FALSE) AS has_active_sub
+FROM us u
+LEFT JOIN paying_ids p ON p.LOYVERSE_ID = u.LOYVERSE_ID
+LEFT JOIN active_ids a ON a.LOYVERSE_ID = u.LOYVERSE_ID;   -- [US-bot-filter]

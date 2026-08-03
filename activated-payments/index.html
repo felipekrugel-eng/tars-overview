@@ -1758,38 +1758,67 @@ applyMasterHash();
   // Join: funnel merchants (book of KYC initiators) <- ACT flags (US prod accounts)
   var actById={};
   ACT.forEach(function(a){ if(a.env==='prod' && a.mid!=null) actById[String(a.mid)]=a; });
+  // m.grp is the server-side group tag (sql/us_group_tags.sql) — the SAME rule that sizes the
+  // group bases, so numerator and denominator agree. isPaying/isActive from activation-data.js
+  // are the fallback for data files written before the tag existed; they come from a monthly
+  // 90-day pos_active flag and disagree with the receipts-30d bases, which is what made the
+  // "Non paying" group read 3 against a base of 4,941.
   var book=M.filter(function(m){ return m.connected_at; }).map(function(m){
     var a=actById[String(m.oid)]||null;
+    var isNew=!!(m.registered_at && m.registered_at>=LAUNCH);
+    var tag=m.grp||null;
     return {
-      m:m,
-      isNew: !!(m.registered_at && m.registered_at>=LAUNCH),
-      isPaying: !!(a&&a.is_paying),
-      isActive: !!(a&&a.pos_active),
+      m:m, tag:tag,
+      isNew: tag? tag==='new' : isNew,
+      isPaying: tag? tag==='paying' : !!(a&&a.is_paying),
+      isActive: tag? tag==='nonpaying' : !!(a&&a.pos_active),
+      isDormant: tag? tag==='dormant' : !(a&&(a.is_paying||a.pos_active)),
       passed: m.stage==='enabled'||m.stage==='transacting'||!!m.enabled,
       txn: m.stage==='transacting'||!!m.first_txn_at
     };
   });
+  // True once every book merchant carries a server tag — drives the "floor" caveat below.
+  var TAGGED = book.length>0 && book.every(function(r){ return !!r.tag; });
   function agg(rs){ return { init:rs.length, passed:rs.filter(function(r){return r.passed;}).length, txn:rs.filter(function(r){return r.txn;}).length }; }
 
   // ---- Group definitions (mutually exclusive, priority: new > paying > non paying > dormant) ----
   var isNewM=function(m){ return m.registered_at && m.registered_at>=LAUNCH; };
   var newAll=M.filter(isNewM);
-  var baseActive=BASES&&isFinite(BASES.active_us)?BASES.active_us:null;
-  var basePaying=BASES&&isFinite(BASES.paying_us)?BASES.paying_us:null;
-  var baseDormant=BASES&&isFinite(BASES.dormant_us)?BASES.dormant_us:null;
+  // Group bases come from sql/us_bases.sql and are scoped to EXACTLY the population each
+  // numerator draws from (see that file's header). Until 2026-08-03 the "Non paying" row used
+  // active_us — all US merchants active in 30d, paying and post-launch included — as its
+  // denominator while its numerator excluded both, so the rate read several times too low.
+  // active_us / paying_us are still published but are reference-only; do not use them here.
+  var fin=function(v){ return isFinite(v)?v:null; };
+  var baseNew=BASES?fin(BASES.new_us):null;
+  var basePaying=BASES?fin(BASES.paying_base_us):null;
+  var baseActive=BASES?fin(BASES.nonpaying_us):null;
+  var baseDormant=BASES?fin(BASES.dormant_us):null;
+  // Pre-2026-08-03 funnel-data.js files carry only the old keys. Fall back so an old data file
+  // still renders, but make the shape explicit rather than silently mixing populations.
+  var LEGACY_BASES = (baseActive==null && BASES && isFinite(BASES.active_us));
+  if (LEGACY_BASES){
+    baseNew=newAll.length;
+    basePaying=fin(BASES.paying_us);
+    baseActive=fin(BASES.active_us);
+    baseDormant=fin(BASES.dormant_us);
+  }
+  // The caveat belongs to the OLD numerator source: an untagged book means membership came from
+  // the monthly pos_active flag, which undercounts. With tags, base and numerator match exactly.
+  var floorNote = (LEGACY_BASES || !TAGGED) ? ' &middot; numerators are a floor*' : '';
   var GS=[
-    {id:'new', name:'New merchants', accent:'var(--green)', base:newAll.length,
+    {id:'new', name:'New merchants', accent:'var(--green)', base:baseNew!=null?baseNew:newAll.length,
      desc:'Registered since '+esc(LAUNCH)+' &middot; '+num(BOTS)+' bot/fraud registrations excluded',
      a:agg(book.filter(function(r){return r.isNew;}))},
     {id:'paying', name:'Paying merchants', accent:'var(--blue-deep)', base:basePaying,
      desc:'Existing customers (pre-'+esc(LAUNCH)+') with an active paid subscription',
      a:agg(book.filter(function(r){return !r.isNew&&r.isPaying;}))},
     {id:'active', name:'Non paying', accent:'var(--blue)', base:baseActive,
-     desc:'Existing free-plan merchants &middot; POS sale in the last 30 days &middot; numerators are a floor*',
+     desc:'Existing free-plan merchants &middot; POS sale in the last 30 days'+floorNote,
      a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&r.isActive;}))},
     {id:'dormant', name:'Dormant / other', accent:'#8E99A4', base:baseDormant,
      desc:'Registered before '+esc(LAUNCH)+' &middot; no recent sale, no subscription',
-     a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}))}
+     a:agg(book.filter(function(r){return r.isDormant&&!r.isNew&&!r.isPaying&&!r.isActive;}))}
   ];
   var T=agg(book);
 
@@ -1889,7 +1918,9 @@ applyMasterHash();
   $('fnOriginTable').innerHTML=thead+rowsHtml;
 
   var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
-  $('fnFootnote').textContent='* Active-customer numerators are a floor — POS activity for paying merchants comes from a monthly table that lags, so some initiators are undercounted there. '
+  $('fnFootnote').textContent=(TAGGED
+      ? 'Groups are assigned server-side (sql/us_group_tags.sql) with the same rule that sizes each base — "non paying" means registered before launch, no active subscription, and at least one POS receipt in the last 30 days. '
+      : '* Active-customer numerators are a floor — group membership is falling back to a monthly POS table that lags, so non-paying initiators are undercounted and land under other. ')
     +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once.'
     +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
     +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')

@@ -249,6 +249,35 @@ def main():
     except Exception as e:
         print(f"[pilot] WARNING — pilot tracker skipped this run: {e}", flush=True)
 
+    # ---- per-country cohort files (cohort-country/<CC>.json) ----
+    # GUARDED, same rationale as the two steps above. Feeds the country filter on the Study &
+    # Trend "Cohorts" section. If this is skipped the section still works — the front end falls
+    # back to the all-countries data embedded in kpi-data.js and the picker reports no data.
+    # Cheaper than its 49-snapshot sibling: a single as-of, and COUNTRY only widens the GROUP BY.
+    try:
+        print("[cohctry] cohort x country snapshot -> cohort_country.csv", flush=True)
+        ccconn = connect()
+        try:
+            cur = ccconn.cursor()
+            cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 600")
+            cur.execute((SQLDIR / "cohort_country_snapshot.sql").read_text())
+            ccdf = cur.fetch_pandas_all() if hasattr(cur, "fetch_pandas_all") else \
+                   pd.DataFrame(cur.fetchall(), columns=[c[0] for c in cur.description])
+            cur.close()
+        finally:
+            ccconn.close()
+        cc_csv = WORK / "cohort_country.csv"
+        write(cc_csv, ccdf)
+        print("[cohctry] build cohort-country/*.json", flush=True)
+        ccenv = {**os.environ, "COHORT_COUNTRY_CSV": str(cc_csv),
+                 "RECEIPTS_CSV": str(WORK / "receipts.csv"),
+                 "COHORT_COUNTRY_OUT": str(V2)}
+        subprocess.run([sys.executable, str(HERE / "build_cohort_country.py")],
+                       check=True, env=ccenv)
+        print("[done] cohort-country/*.json regenerated", flush=True)
+    except Exception as e:
+        print(f"[cohctry] WARNING — per-country cohort files skipped this run: {e}", flush=True)
+
 
 if __name__ == "__main__":
     main()

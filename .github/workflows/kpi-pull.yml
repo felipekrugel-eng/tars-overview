@@ -57,7 +57,7 @@ jobs:
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js" "KPI Dashboard v2 (Caio)/pilot-data.js" "KPI Dashboard v2 (Caio)/pilot-status.md"
+          git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js" "KPI Dashboard v2 (Caio)/pilot-data.js" "KPI Dashboard v2 (Caio)/pilot-status.md" "KPI Dashboard v2 (Caio)/cohort-country"
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else

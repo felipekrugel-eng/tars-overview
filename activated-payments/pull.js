@@ -312,8 +312,14 @@ async function fetchIcplusCostByAccount(conn, acctIds) {
 }
 
 // ── Read existing data file to preserve transaction / POS / subscription fields ─
+// last_sale / pos_receipts / pos_gtv_usd are OBSERVATIONS — safe to carry forward when a
+// day's query returns no row for a merchant. days_since_sale and pos_active are DERIVED from
+// last_sale and must NOT be preserved: doing so froze them at whatever they were on the run
+// that last saw a sales row, so a merchant stayed "active" indefinitely (48 of 193 accounts
+// had a days_since_sale that contradicted their own last_sale — e.g. 2 days since a 12 Jul
+// sale, read on 3 Aug). They are recomputed from the preserved last_sale on every run below.
 const PRESERVE_KEYS = ['vol_gbp', 'bal_gbp', 'processing', 'pos_gtv_usd', 'pos_receipts',
-  'pos_active_days', 'last_sale', 'days_since_sale', 'pos_active', 'card_vol_usd',
+  'pos_active_days', 'last_sale', 'card_vol_usd',
   'sub_status', 'plan', 'mrr', 'is_paying'];
 function readExisting() {
   const byAcct = {};
@@ -578,6 +584,7 @@ function buildData(accountRows, existingByAcct, meta, subs, sales) {
   let linked = 0, enabled = 0, prodN = 0, testN = 0, withSub = 0, withPos = 0;
 
   const today = new Date();
+  const POS_ACTIVE_WINDOW_DAYS = 30;   // must match sql/us_bases.sql's trailing-30-day rule
   const daysSince = (ym) => {
     // SALES_PER_ACCOUNT_MONTHLY.MONTH may be a Date or 'YYYY-MM'/'YYYY-MM-DD' string.
     if (!ym) return null;
@@ -641,11 +648,20 @@ function buildData(accountRows, existingByAcct, meta, subs, sales) {
       withPos++;
       rec.pos_receipts = sal.receipts;
       rec.last_sale = fmtMonth(sal.last_month);
-      rec.days_since_sale = daysSince(sal.last_month);
-      rec.pos_active = (sal.receipts || 0) > 0 && (daysSince(sal.last_month) == null || daysSince(sal.last_month) <= 90);
       // NOTE: pos_gtv_usd (money) and pos_active_days (daily granularity) still pending
       // the heavier LOYVERSE_RECEIPTS per-receipt query.
     }
+    // Recency is ALWAYS derived from whatever last_sale we ended up with (fresh this run or
+    // preserved from an earlier one), never carried over. POS_ACTIVE_WINDOW_DAYS is 30 to match
+    // the "receipt in the trailing 30 days" definition used by sql/us_bases.sql — the funnel
+    // group bases and this flag have to mean the same thing or the ratios are nonsense.
+    // CAVEAT: last_sale comes from a MONTHLY table, so for merchants without the daily layer it
+    // is a month-start and this flag is only accurate to within a month. The funnel UI therefore
+    // derives group membership from the SQL bases, not from this flag.
+    rec.days_since_sale = daysSince(rec.last_sale);
+    rec.pos_active = (rec.pos_receipts || 0) > 0 &&
+                     rec.days_since_sale != null &&
+                     rec.days_since_sale <= POS_ACTIVE_WINDOW_DAYS;
 
     act.push(rec);
 
@@ -711,21 +727,56 @@ async function fetchTerminalOrders(conn) {
   }
   return by;
 }
-// ── US funnel bases (Active / Paying customer counts) ─────────────────────────
-// One-row query (sql/us_bases.sql): genuine US merchants active in the trailing 30 days
-// + genuine US merchants with an active Chargebee subscription. These are the BASES for
-// the group funnels on the Funnel page (window.__FUNNEL_BASES). Bot filter applied.
+// ── US funnel bases (one base per funnel group) ────────────────────────────────
+// One-row query (sql/us_bases.sql). Returns FOUR disjoint group bases — new_us,
+// paying_base_us, nonpaying_us, dormant_us — each scoped to exactly the population its
+// numerator on the Funnel page draws from, plus total_us and the two legacy reference
+// counts (active_us / paying_us, which are NOT group bases). Bot filter applied.
+// Before 2026-08-03 the page used active_us as the "Non paying" denominator; that count
+// includes paying and post-launch merchants, which the numerator excludes, so the group's
+// conversion rate read several times too low.
 async function fetchUsBases(conn) {
   const rows = await executeQuery(conn, loadSql('us_bases.sql'));
   if (!rows || !rows.length) return null;
   const r = rows[0];
   const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
-  const active = Number(g('active_us')), paying = Number(g('paying_us'));
-  const dormant = Number(g('dormant_us'));
-  if (!isFinite(active) || !isFinite(paying)) return null;
-  const out = { active_us: active, paying_us: paying, asof: new Date().toISOString().slice(0, 10) };
-  if (isFinite(dormant)) out.dormant_us = dormant;
+  const n = k => { const v = Number(g(k)); return isFinite(v) ? v : null; };
+  const out = { asof: new Date().toISOString().slice(0, 10) };
+  for (const k of ['new_us', 'paying_base_us', 'nonpaying_us', 'dormant_us',
+                   'total_us', 'active_us', 'paying_us']) {
+    const v = n(k);
+    if (v !== null) out[k] = v;
+  }
+  // The four group bases are the contract with the UI; without them there is nothing to render.
+  if (out.nonpaying_us == null || out.paying_base_us == null || out.dormant_us == null) return null;
+  // Disjoint groups must account for every genuine US merchant. A mismatch means the CASE
+  // ladder and the counts have drifted apart — log loudly rather than ship a silent error.
+  if (out.total_us != null) {
+    const sum = (out.new_us || 0) + out.paying_base_us + out.nonpaying_us + out.dormant_us;
+    if (sum !== out.total_us) {
+      console.error(`✗ us_bases: group bases sum to ${sum} but total_us is ${out.total_us} — groups are not disjoint`);
+    }
+  }
   return out;
+}
+// ── Group tag per merchant (sql/us_group_tags.sql) ────────────────────────────
+// Same CASE ladder as us_bases.sql, evaluated per merchant, so the Funnel page's group
+// numerators are drawn with the exact rule that sizes the group bases. Replaces deciding
+// membership from activation-data.js's monthly-granularity `pos_active` flag.
+async function fetchUsGroupTags(conn, merchantIds) {
+  const ids = sanitizeIds(merchantIds);
+  if (!ids.length) return {};
+  const sql = loadSql('us_group_tags.sql').replace('/*MERCHANT_IDS*/', ids.join(','));
+  const rows = await executeQuery(conn, sql);
+  const by = {};
+  for (const r of rows || []) {
+    const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+    const mid = g('merchant_id');
+    if (mid == null) continue;
+    by[String(mid)] = { grp: String(g('grp') || ''),
+                        pos30: g('pos_active_30d') === true || String(g('pos_active_30d')) === 'true' };
+  }
+  return by;
 }
 // If the bases query fails, carry the previously-committed bases forward so the
 // Funnel page never renders without denominators.
@@ -781,7 +832,8 @@ function isBotName(nameRaw, freqMap) {
 // accounts = the payments book) ∪ (pilot 500), with bots excluded from the registration mass.
 // Every merchant carries its stage timestamps so the UI can slice by date range / pilot and
 // recompute stages, timings, and the KYC / terminal drill-downs entirely client-side.
-function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
+function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags) {
+  groupTags = groupTags || {};
   termByEmail = termByEmail || {};
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
@@ -832,6 +884,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
     const email = c.email || (reg && reg.email) || (p && p.email) || '';
     const term = termByEmail[email] || null;
     merchants.push({
+      grp: (groupTags[String(c.owner)] || {}).grp || null,
       oid: c.owner || ('acct:' + c.acct),
       name: c.bname || (reg && reg.name) || (p && p.name) || (c.owner || c.acct),
       email: email,
@@ -855,6 +908,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail) {
     if (!p && isBotName(reg && reg.name, freq)) { botsExcluded++; return; }
     stages.entered++;
     merchants.push({
+      grp: (groupTags[String(oid)] || {}).grp || null,
       oid,
       name: (reg && reg.name) || (p && p.name) || oid,
       email: (reg && reg.email) || (p && p.email) || '',
@@ -873,7 +927,8 @@ function writeFunnel(funnel, terminalReady, bases) {
 // ∪ all prod connected accounts (the payments book) ∪ pilot 500.
 // Stages: entered -> initiated KYC (connected) -> passed KYC -> transacting. Each merchant
 // carries its stage timestamps; the UI recomputes the group funnels + origin split client-side.
-// __FUNNEL_BASES = US denominators (active last 30d / paying subs) from sql/us_bases.sql.
+// __FUNNEL_BASES = per-group US denominators from sql/us_bases.sql (new / paying / nonpaying /
+// dormant, disjoint and summing to total_us; active_us + paying_us are reference-only).
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
 // Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
 window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
@@ -972,11 +1027,20 @@ async function main() {
     let bases = null;
     try {
       bases = await fetchUsBases(conn);
-      if (bases) console.log(`✓ us_bases: active_us=${bases.active_us}  paying_us=${bases.paying_us}`);
+      if (bases) console.log(`✓ us_bases: new=${bases.new_us}  paying=${bases.paying_base_us}  nonpaying=${bases.nonpaying_us}  dormant=${bases.dormant_us}  total=${bases.total_us}`);
       else console.error('✗ us_bases returned no usable row (carrying previous bases forward)');
     } catch (e) { console.error(`✗ us_bases query failed (carrying previous bases forward): ${e.message}`); }
     if (!bases) bases = readExistingBases();
-    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail);
+    // Group tags for every owner in the book, drawn with the same rule that sizes the bases.
+    // Non-fatal: without them the UI falls back to the legacy pos_active/is_paying split.
+    let groupTags = {};
+    try {
+      groupTags = await fetchUsGroupTags(conn, connOwners);
+      const tally = {};
+      Object.values(groupTags).forEach(function(t){ tally[t.grp] = (tally[t.grp] || 0) + 1; });
+      console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged ${JSON.stringify(tally)}`);
+    } catch (e) { console.error(`✗ us_group_tags query failed (funnel groups fall back to pos_active): ${e.message}`); }
+    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags);
     writeFunnel(funnel, terminalReady, bases);
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 

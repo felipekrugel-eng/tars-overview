@@ -180,7 +180,7 @@
   </div>
 
   <div class="panel">
-    <h3>Paying base — gross adds vs churn<span class="info" data-tip="Per calendar month, the paying base gains gross adds (green, up) and loses churn (red, down); the net of the two is the visible balance. The dashed line is net growth of the paying base as a percent of the prior month's base (right axis). Grace-adjusted so renewal-timing lag isn't miscounted as churn+re-add. Complete months only — the current in-progress month is excluded. This is the smooth monthly read; the daily version is on the FACADASH tab.">i</span></h3>
+    <h3>Paying base — gross adds vs churn<span class="info" data-tip="Per calendar month, the paying base gains gross adds (green, up) and loses churn (red, down); the net of the two is the visible balance. The dashed line is net growth of the paying base as a percent of the prior month's base (right axis). Churn uses a 30-day grace period (the definition Alex and the team use): a merchant counts as churned only once it is 30 days past period end with no payment, so renewal-timing lag isn't miscounted as churn+re-add. Because of that grace, churn in the most recent month reads low and settles upward over the following weeks. Settled months only: the in-progress month is excluded, and so is the newest complete month, whose churn is still inside the 30-day grace window. Nothing on this chart revises after it is published. This is the smooth monthly read; the daily version is on the FACADASH tab.">i</span></h3>
     <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Churn</span>
@@ -191,6 +191,11 @@
 
   <div class="section-label">02</div>
   <h2>Cohorts.</h2>
+  <div class="cohctry" id="cohctry-wrap" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:-4px 0 14px">
+    <span style="font-size:12px;color:var(--faint)">Country</span>
+    <select id="cohctry" style="font-size:12px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;max-width:260px"></select>
+    <span id="cohctry-note" style="font-size:12px;color:var(--faint)">filters the comparison chart, the summary table and the triangle</span>
+  </div>
     <div class="panel">
     <h3>Cohort comparison — last 24 cohorts by age<span class="info" data-tip="One line per registration cohort (always the most recent 24 complete cohorts). X-axis is cohort age: M0 = registration month, M1 = one month later, etc. — so cohorts are compared at the same point in their life. MRR and Paying customers come from Chargebee invoices; Active merchants (count) and Active % (active merchants ÷ cohort size) are receipts-based, from the clean cohort-age series (2022-01 onward), so they run from M0 like the others. Lines are coloured as a heat map — oldest cohorts blue (cold), newest cohorts red (hot). Select one or more cohorts in the list to compare them (others fade to grey); clear the selection to show all. Newer cohorts have shorter lines — less history.">i</span></h3>
     <div class="toggle" id="coh-toggle" style="display:inline-block; margin-right:12px">
@@ -449,8 +454,13 @@ document.querySelectorAll('.viewtoggle').forEach(t => { const key=t.dataset.key;
 });
 
 // ---- Cohort comparison: one line per cohort, x = cohort age (M0..M24) ----
-const CC = D.cohortCompare || {};
-const ccKeys = Object.keys(CC).sort();
+// COUNTRY-FILTERABLE: CC / ccKeys / cohRows are reassigned by applyCohortCountry() below,
+// which swaps in a lazily-fetched cohort-country/<CC>.json payload. All-countries uses the
+// data embedded in kpi-data.js, so the default render is unchanged.
+let CC = D.cohortCompare || {};
+let ccKeys = Object.keys(CC).sort();
+let cohRows = (D.cohorts || []).filter(c => c.cohort < D.meta.latestMonth).slice(-24);
+let cohCountry = null;                 // null = all countries
 const ageLabels = Array.from({ length: 25 }, (_, i) => 'M' + i);
 const COH_FMT = { mrr: v => '$' + fmtN(v), paying: v => fmtN(v), active: v => fmtN(v), activePct: v => v.toFixed(1) + '%' };
 // Heat-map palette: cohorts run oldest -> newest, coloured cold (blue) -> hot (red)
@@ -502,24 +512,29 @@ document.querySelectorAll('#coh-toggle button').forEach(b => b.onclick = () => {
 drawCoh();
 
 // ---- Cohort table ----
-const completeCohorts = D.cohorts.filter(c => c.cohort < D.meta.latestMonth);
-const recent = completeCohorts.slice(-24).reverse();
-document.getElementById('t-cohorts').innerHTML =
-  '<tr><th>Cohort</th><th>Registrations</th><th>Ever paid</th><th>Ever paid %</th><th>Paying now</th><th>Paying now %</th><th>Active now</th><th>MRR now</th><th>ARPC</th></tr>' +
-  recent.map(c => '<tr><td class="k">' + c.cohort + '</td><td>' + fmtN(c.registrations) + '</td><td>' + fmtN(c.everPaid) +
-    '</td><td>' + c.pctEverPaid.toFixed(2) + '%</td><td>' + fmtN(c.payingNow) + '</td><td>' + c.pctPayingNow.toFixed(2) +
-    '%</td><td>' + fmtN(c.active) + '</td><td>' + fmtM(c.mrr) + '</td><td>$' + c.arpc.toFixed(2) + '</td></tr>').join('');
+function renderCohTable(){
+  const recent = cohRows.slice().reverse();
+  const n = v => (v == null ? 0 : v);
+  document.getElementById('t-cohorts').innerHTML =
+    '<tr><th>Cohort</th><th>Registrations</th><th>Ever paid</th><th>Ever paid %</th><th>Paying now</th><th>Paying now %</th><th>Active now</th><th>MRR now</th><th>ARPC</th></tr>' +
+    recent.map(c => '<tr><td class="k">' + c.cohort + '</td><td>' + fmtN(n(c.registrations)) + '</td><td>' + fmtN(n(c.everPaid)) +
+      '</td><td>' + n(c.pctEverPaid).toFixed(2) + '%</td><td>' + fmtN(n(c.payingNow)) + '</td><td>' + n(c.pctPayingNow).toFixed(2) +
+      '%</td><td>' + fmtN(n(c.active)) + '</td><td>' + fmtM(n(c.mrr)) + '</td><td>$' + n(c.arpc).toFixed(2) + '</td></tr>').join('');
+}
+renderCohTable();
 
 // ---- Cohort triangle view (last 24 cohorts x age; toggle Paying/Active) ----
 (function(){
   const triWrap = document.getElementById('cohsum-tri');
   const tblWrap = document.getElementById('cohsum-table');
   const noteEl  = document.getElementById('cohsum-note');
-  const triCohorts = ccKeys.slice();   // oldest..newest (the last 24 in cohortCompare)
-  const cohSize = Object.fromEntries((D.cohorts || []).map(c => [c.cohort, +c.registrations || 0]));
+  // Read live so the country filter re-shapes the triangle too (cohort set AND sizes change).
+  const triCohortsNow = () => ccKeys.slice();       // oldest..newest
+  const cohSizeNow = () => Object.fromEntries(cohRows.map(c => [c.cohort, +c.registrations || 0]));
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
   let triMetric = 'paying', triPct = false;
   function drawTri(metric, pct){
+    const triCohorts = triCohortsNow(), cohSize = cohSizeNow();
     const sizeOf = c => cohSize[c] || 0;
     let mx = 0, nAges = 1;
     triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || [], s = sizeOf(c); nAges = Math.max(nAges, a.length);
@@ -545,6 +560,7 @@ document.getElementById('t-cohorts').innerHTML =
     });
     triWrap.innerHTML = h + '</tbody></table>';
   }
+  window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#cohsum-view button').forEach(x => x.classList.remove('on')); b.classList.add('on');
     const tri = b.dataset.view === 'triangle';
@@ -565,6 +581,57 @@ document.getElementById('t-cohorts').innerHTML =
     document.querySelectorAll('#tri-mode button').forEach(x => x.classList.remove('on')); b.classList.add('on');
     triPct = b.dataset.pct === '1'; drawTri(triMetric, triPct);
   });
+})();
+
+// ---- Cohorts country filter ----
+// Per-country cohort data lives in cohort-country/<CC>.json (one small file each, written by
+// build_cohort_country.py) and is fetched only when that country is picked — embedding ~250
+// countries x 25 cohorts x 25 ages in kpi-data.js would add megabytes to every page load.
+// All-countries reuses what is already embedded. If the files are absent (e.g. the guarded
+// pipeline step was skipped) the selector stays hidden and the section behaves exactly as before.
+(function(){
+  const wrap = document.getElementById('cohctry-wrap');
+  const sel  = document.getElementById('cohctry');
+  const note = document.getElementById('cohctry-note');
+  if (!wrap || !sel) return;
+  const GLOBAL = { CC: CC, keys: ccKeys, rows: cohRows };
+  const cache = {};
+  const NOTE_DEFAULT = 'filters the comparison chart, the summary table and the triangle';
+
+  function repaint(){
+    renderCohChips(); drawCoh(); renderCohTable();
+    if (window._cohRedrawTri) window._cohRedrawTri();
+  }
+  function useGlobal(){
+    CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null; repaint();
+  }
+  function usePayload(p){
+    CC = p.cohortCompare || {}; ccKeys = Object.keys(CC).sort();
+    cohRows = (p.cohorts || []).slice(); cohCountry = p.country; repaint();
+  }
+
+  fetch('cohort-country/_index.json', {cache:'no-cache'})
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(ix => {
+      const list = (ix.countries || []).filter(c => c.reg > 0);
+      if (!list.length) return;
+      sel.innerHTML = '<option value="">All countries</option>' +
+        list.map(c => '<option value="' + c.c + '">' + (c.n || c.c) +
+          ' (' + c.c + ') \u00b7 ' + fmtN(c.reg) + ' regs</option>').join('');
+      wrap.style.display = 'flex';
+      sel.onchange = () => {
+        const code = sel.value;
+        if (!code){ note.textContent = NOTE_DEFAULT; useGlobal(); return; }
+        if (cache[code]){ note.textContent = NOTE_DEFAULT; usePayload(cache[code]); return; }
+        note.textContent = 'loading ' + code + '\u2026';
+        fetch('cohort-country/' + code + '.json', {cache:'no-cache'})
+          .then(r => r.ok ? r.json() : Promise.reject(r.status))
+          .then(p => { cache[code] = p; note.textContent = NOTE_DEFAULT; usePayload(p); })
+          .catch(() => { note.textContent = 'no cohort data for ' + code + ' \u2014 showing all countries';
+                         sel.value = ''; useGlobal(); });
+      };
+    })
+    .catch(() => { /* files not generated yet — leave the section all-countries only */ });
 })();
 
 // ---- Trend helpers: linear-regression trendline + country momentum arrow ----
