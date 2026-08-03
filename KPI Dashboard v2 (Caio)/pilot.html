@@ -141,12 +141,38 @@ ul.notes li{margin-bottom:5px}
   var D = window.PILOT_DATA;
   var f1 = function(x){ return (x==null) ? '—' : (Math.round(x*100)/100).toFixed(2); };
   var pct = function(x){ return (x==null) ? '—' : ((x-1)*100>=0?'+':'') + ((x-1)*100).toFixed(0) + '%'; };
-
-  document.getElementById('stamp').textContent =
-    'data to ' + D.meta.lastDataDate + ' · built ' + D.meta.generatedAt;
+  // Short calendar label for the projected dates. Guarded: data files written before the
+  // readableEta/confirmEta fields existed simply get no date and the copy degrades to prose.
+  var MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dLab = function(iso){
+    if(!iso) return null;
+    var p = String(iso).split('-');
+    if(p.length < 3) return null;
+    return (+p[2]) + ' ' + (MONS[(+p[1])-1] || '');
+  };
+  // The tracker is gated on SIGNAL DAYS, and those only advance as invoices land. Saying so
+  // explicitly is the difference between "the page is broken" and "the clock is running".
+  var lag = (D.meta.dataLagDays != null) ? D.meta.dataLagDays : null;
+  var lagNote = (lag && lag > 0)
+    ? ' Chargebee data runs about ' + lag + ' day' + (lag>1?'s':'') + ' behind, so today\'s page counts signal through '
+      + D.meta.lastDataDate + '.'
+    : '';
+  var etaNote = function(v){
+    var r = dLab(v && v.readableEta), c = dLab(v && v.confirmEta);
+    if(!r && !c) return '';
+    var bits = [];
+    if(r) bits.push('a p-value should appear around ' + r);
+    if(c) bits.push('enough power to confirm a 25% effect around ' + c);
+    return ' Next milestones: ' + bits.join(', ') + '.';
+  };
 
   var np = D.verdict.NEW_PAYER, up = D.verdict.UPSELL;
   var sd = D.meta.days.SIGNAL;
+
+  document.getElementById('stamp').textContent =
+    'data to ' + D.meta.lastDataDate + (lag ? ' (' + lag + 'd behind)' : '')
+      + ' · built ' + D.meta.generatedAt + ' · signal day ' + sd
+      + ' of ' + (np.daysNeeded || 7) + ' needed for a p-value';
 
   // ---- verdict banner ----
   var b = document.getElementById('banner'), t = document.getElementById('bTitle'), p = document.getElementById('bBody');
@@ -156,13 +182,14 @@ ul.notes li{margin-bottom:5px}
     p.textContent = 'The paywall changed on ' + D.meta.launchDate + ', but adoption runs through a 14-day '
       + 'trial, so the first genuinely affected merchant bills ' + D.meta.signalDate + '. Everything below '
       + 'that date comes from merchants who signed up under the old 30-day rule. This is not evidence the '
-      + 'pilot is failing — there is no treated customer in the data yet.';
+      + 'pilot is failing — there is no treated customer in the data yet.' + lagNote + etaNote(np);
   } else if (!np.readable) {
     b.className = 'card banner wait';
     t.textContent = 'Too early to call — ' + sd + ' of ' + np.daysNeeded + ' days needed';
     p.textContent = 'Pilot new-payer adoption is running at ' + f1(np.signalPilotPerDay) + '/day against a '
       + f1(np.baselinePilotPerDay) + '/day baseline (' + pct(np.did) + ' after correcting for how the control '
-      + 'markets moved). Directional only. A 25% effect needs roughly 37 days of signal to confirm.';
+      + 'markets moved). Directional only — at this few days a point estimate carries almost no information.'
+      + lagNote + etaNote(np);
   } else {
     var sig = (np.p != null && np.p < 0.05);
     var upDir = (np.did > 1);
@@ -179,10 +206,15 @@ ul.notes li{margin-bottom:5px}
 
   // ---- tiles ----
   var tiles = [
-    ['Days of real signal', sd, sd <= 0 ? 'starts ' + D.meta.signalDate : 'since ' + D.meta.signalDate],
+    ['Days of real signal', sd + ' / ' + (np.daysNeeded || 7),
+      sd <= 0 ? 'starts ' + D.meta.signalDate : 'since ' + D.meta.signalDate],
     ['New payers /day — pilot', f1(np.signalPilotPerDay), 'baseline ' + f1(np.baselinePilotPerDay)],
-    ['Change vs control', pct(np.did), np.readable ? 'p = ' + (np.p==null?'—':np.p.toFixed(3)) : 'not yet readable'],
-    ['Upsells /day — pilot', f1(up.signalPilotPerDay), up.readable ? pct(up.did) + ' vs control' : 'needs a full billing month']
+    ['Change vs control', pct(np.did), np.readable
+        ? 'p = ' + (np.p==null?'—':np.p.toFixed(3))
+        : (dLab(np.readableEta) ? 'p-value ~' + dLab(np.readableEta) : 'not yet readable')],
+    ['Upsells /day — pilot', f1(up.signalPilotPerDay), up.readable
+        ? pct(up.did) + ' vs control'
+        : (dLab(up.readableEta) ? 'full billing month ~' + dLab(up.readableEta) : 'needs a full billing month')]
   ];
   document.getElementById('tiles').innerHTML = tiles.map(function(r){
     return '<div class="tile"><div class="lab">' + r[0] + '</div><div class="val">' + r[1]

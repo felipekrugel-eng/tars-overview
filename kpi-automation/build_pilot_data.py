@@ -44,6 +44,11 @@ LAUNCH = datetime.date(2026, 7, 16)
 SIGNAL = datetime.date(2026, 7, 30)
 PILOT_COUNTRIES = ["AU", "BE", "CO", "ID", "IN", "NG", "SG"]
 
+# Signal days needed to CONFIRM a 25% effect at the pilot's ~3.6 adoptions/day baseline
+# (Poisson power calc; the page has quoted this as prose since the tracker was built).
+# Kept here so the projected date and the copy can never drift apart.
+CONFIRM_DAYS = 37
+
 # ---------- Poisson helpers (avoid a scipy dependency) ----------
 
 def _pmf(k, lam):
@@ -103,6 +108,20 @@ days = {
     "SIGNAL":     max(0, (last_date + datetime.timedelta(days=1) - SIGNAL).days),
 }
 
+# ---------- projected readability dates ----------
+# The tracker is gated on SIGNAL DAYS, but a reader wants a calendar date. Signal days only
+# advance as data lands, and Chargebee ingestion runs 1-2 days behind, so the date a threshold
+# is reached is the signal day PLUS the observed lag — not today plus the shortfall. Measuring
+# the lag from the data itself keeps the projection honest if ingestion speeds up or slows down.
+DATA_LAG_DAYS = max(0, (datetime.date.today() - last_date).days)
+
+def _eta(need):
+    """Calendar date the Nth signal day should be visible on the page."""
+    shortfall = need - days["SIGNAL"]
+    if shortfall <= 0:
+        return None                      # already there
+    return (datetime.date.today() + datetime.timedelta(days=shortfall)).isoformat()
+
 def total(period, cohort, atype):
     m = df[(df.PERIOD == period) & (df.COHORT == cohort) & (df.ADOPTION_TYPE == atype)]
     return int(m.ADOPTERS.sum())
@@ -140,6 +159,10 @@ for atype in ["NEW_PAYER", "UPSELL"]:
             need = 28 if atype == "UPSELL" else 7
             entry["readable"] = days["SIGNAL"] >= need
             entry["daysNeeded"] = need
+            entry["readableEta"] = _eta(need)
+            if atype == "NEW_PAYER":
+                entry["confirmDays"] = CONFIRM_DAYS
+                entry["confirmEta"] = _eta(CONFIRM_DAYS)
     verdict[atype] = entry
 
 # ---------- daily series (for the chart) ----------
@@ -178,6 +201,7 @@ payload = {
         "launchDate": LAUNCH.isoformat(),
         "signalDate": SIGNAL.isoformat(),
         "lastDataDate": last_date.isoformat(),
+        "dataLagDays": DATA_LAG_DAYS,
         "pilotCountries": PILOT_COUNTRIES,
         "days": days,
         "source": "Chargebee invoice line items, SKU family S_SALESHISTORY%",
@@ -231,6 +255,10 @@ GENERATED: {payload['meta']['generatedAt']}
 LAST_DATA_DATE: {last_date.isoformat()}
 SIGNAL_DAYS: {days['SIGNAL']}
 SIGNAL_DAYS_NEEDED: {np.get('daysNeeded', 7)}
+SIGNAL_DAYS_READABLE_ETA: {np.get('readableEta') or 'reached'}
+SIGNAL_DAYS_CONFIRM: {np.get('confirmDays', CONFIRM_DAYS)}
+SIGNAL_DAYS_CONFIRM_ETA: {np.get('confirmEta') or 'reached'}
+DATA_LAG_DAYS: {DATA_LAG_DAYS}
 
 ## New payers (the primary metric)
 BASELINE_PILOT_PER_DAY: {_r(np['baselinePilotPerDay'])}
