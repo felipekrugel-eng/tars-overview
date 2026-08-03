@@ -6,8 +6,8 @@
 // __FUNNEL_BASES = per-group US denominators from sql/us_bases.sql (new / paying / nonpaying /
 // dormant, disjoint and summing to total_us; active_us + paying_us are reference-only).
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
-// Do NOT edit by hand; overwritten each morning. Last pull: 2026-08-03 17:09 UTC
-window.__FUNNEL_UPDATED = "2026-08-03 17:09 UTC";
+// Do NOT edit by hand; overwritten each morning. Last pull: 2026-08-03 17:23 UTC
+window.__FUNNEL_UPDATED = "2026-08-03 17:23 UTC";
 window.__FUNNEL_STAGES = {"entered":2967,"signed_up":490,"enabled":132,"transacting":36};
 window.__FUNNEL_ENTERED_TOTAL = 2967;
 window.__FUNNEL_BOTS_EXCLUDED = 671;
