@@ -1777,8 +1777,15 @@ applyMasterHash();
       txn: m.stage==='transacting'||!!m.first_txn_at
     };
   });
-  // True once every book merchant carries a server tag — drives the "floor" caveat below.
-  var TAGGED = book.length>0 && book.every(function(r){ return !!r.tag; });
+  // Is the server-side tag layer present? Deliberately NOT book.every(): us_group_tags.sql only
+  // returns US, non-bot merchants, so a handful of book entries (non-US, bot-filtered, or with no
+  // resolvable owner id) can never carry a tag — on 3 Aug 2026, 7 of 490. Requiring every merchant
+  // to be tagged let those unavoidable gaps suppress the corrected footnote. A clear majority
+  // being tagged means the layer ran and the group ratios are base-consistent; the untagged
+  // remainder falls back to the legacy flags and is reported separately.
+  var taggedN = book.filter(function(r){ return !!r.tag; }).length;
+  var TAGGED = book.length>0 && taggedN >= book.length*0.9;
+  var UNTAGGED_N = book.length - taggedN;
   function agg(rs){ return { init:rs.length, passed:rs.filter(function(r){return r.passed;}).length, txn:rs.filter(function(r){return r.txn;}).length }; }
 
   // ---- Group definitions (mutually exclusive, priority: new > paying > non paying > dormant) ----
@@ -1923,6 +1930,7 @@ applyMasterHash();
       : '* Active-customer numerators are a floor — group membership is falling back to a monthly POS table that lags, so non-paying initiators are undercounted and land under other. ')
     +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once.'
     +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
+    +(TAGGED&&UNTAGGED_N? UNTAGGED_N+' initiator'+(UNTAGGED_N>1?'s are':' is')+' outside the US population these bases measure (non-US or filtered), so '+(UNTAGGED_N>1?'they are':'it is')+' grouped by the legacy flags. ':'')
     +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')
     +'Data refreshes automatically every morning from Snowflake.';
 
