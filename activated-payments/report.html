@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse Payments — Report</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="report-data.js"></script>
+<style>
+  :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+    --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
+    --green:#1F9D6B; --red:#D2495B; --mono:'SFMono-Regular',Menlo,Consolas,monospace; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); }
+  .controls{ background:var(--surface); border-bottom:1px solid var(--border); padding:14px 24px;
+    display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+  .controls select{ padding:8px 12px; font-size:13px; border:1px solid var(--border); border-radius:8px;
+    background:#fff; color:var(--ink); font-weight:bold; }
+  .controls .spacer{ flex:1; }
+  .btn-print{ background:var(--ink); color:#fff; border:0; padding:9px 18px; border-radius:8px;
+    font-size:13px; font-weight:bold; cursor:pointer; }
+  .btn-print:hover{ background:var(--blue-deep); }
+  .sheet{ max-width:920px; margin:26px auto; background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:34px 40px 42px; box-shadow:0 2px 14px rgba(19,35,58,.06); }
+  .rhead{ display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--ink);
+    padding-bottom:16px; margin-bottom:24px; }
+  .rhead .label{ font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--blue-deep); font-weight:bold; }
+  .rhead h1{ font-family:'Arial Black',Arial,sans-serif; font-size:30px; margin:6px 0 4px; }
+  .rhead .period{ font-size:15px; color:var(--muted); }
+  .rhead .cmp{ font-size:12px; color:var(--faint); margin-top:4px; }
+  .rhead img{ height:40px; }
+  .rhead .gen{ font-size:10px; color:var(--faint); text-align:right; margin-top:8px; }
+  h2.sec{ font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+    margin:30px 0 12px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  th{ text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
+    padding:8px 10px; border-bottom:1px solid var(--border); font-weight:bold; }
+  th:first-child, td:first-child{ text-align:left; }
+  td{ text-align:right; padding:9px 10px; border-bottom:1px solid #F1F4F8; font-variant-numeric:tabular-nums; }
+  tbody tr:hover{ background:#F7FAFD; }
+  .metric td:first-child{ font-weight:bold; color:var(--ink); }
+  .big{ font-family:var(--mono); font-weight:700; color:var(--ink); }
+  .chg{ font-weight:bold; }
+  .chg.up{ color:var(--green); } .chg.down{ color:var(--red); } .chg.flat{ color:var(--faint); }
+  .cc{ font-weight:bold; color:var(--ink); }
+  .note{ font-size:11px; color:var(--muted); margin-top:18px; line-height:1.5; }
+  .warn{ font-size:11px; color:#8a6100; background:#FFF8E6; border:1px solid #F0DCA8;
+    border-radius:6px; padding:9px 12px; margin-top:14px; line-height:1.5; }
+  @media print{
+    .no-print{ display:none !important; }
+    body{ background:#fff; }
+    .sheet{ margin:0; border:0; box-shadow:none; border-radius:0; max-width:none; padding:0 6px; }
+    tbody tr:hover{ background:transparent; }
+    @page{ margin:14mm; }
+  }
+  .lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;font-family:Arial,Helvetica,sans-serif;}
+  .lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px;}
+  .lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px;}
+  .lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1;}
+  .lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;
+    text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;}
+  .lvmn a.lvmn-tab:hover{color:#fff;}
+  .lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+  .lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block;}
+  .paysub{background:#fff;border-bottom:1px solid #E0E0E0;padding:0 24px;display:flex;gap:4px;align-items:center;}
+  .paysub a{color:#6A6A6A;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;
+    padding:11px 16px;border-bottom:3px solid transparent;text-decoration:none;cursor:pointer;}
+  .paysub a:hover{color:#1A1A1A;}
+  .paysub a.on{color:#1578C4;border-bottom-color:#1D8FE1;}
+</style>
+</head>
+<body>
+<nav class="lvmn no-print">
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab" href="https://facadash.pages.dev/daily.html">POS</a>
+  <a class="lvmn-tab on" href="index.html#payments">Payments</a>
+  <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
+</nav>
+<div class="paysub no-print">
+  <a href="index.html#payments">Overview</a>
+  <a href="index.html#margins">Summary of Margins</a>
+  <a href="index.html#pilot">Pilot</a>
+  <a href="index.html#funnel">Funnel</a>
+  <a href="report.html" class="on">Report</a>
+</div>
+
+<div class="controls no-print">
+  <select id="picker"></select>
+  <div class="spacer"></div>
+  <button class="btn-print" onclick="window.print()">&#128424; Print / Save as PDF</button>
+</div>
+
+<div class="sheet" id="sheet"></div>
+
+<script>
+// Loyverse Payments month-end report — the payments twin of the POS report.html.
+// Data: report-data.js (__PAY_MONTHLY), written by activated-payments/pull.js.
+// Columns are Month / previous month / since launch, because volume history only starts
+// 13 Apr 2026 — a single month in isolation says little this early.
+const M   = (typeof __PAY_MONTHLY !== 'undefined') ? (__PAY_MONTHLY || []) : [];
+const GRP = (typeof __PAY_REPORT_GROUPS !== 'undefined') ? (__PAY_REPORT_GROUPS || []) : [];
+const NOTES = (typeof __PAY_REPORT_NOTES !== 'undefined') ? (__PAY_REPORT_NOTES || {}) : {};
+const UPD = (typeof __PAY_REPORT_UPDATED !== 'undefined') ? __PAY_REPORT_UPDATED : '';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const byMonth = Object.fromEntries(M.map(r => [r.m, r]));
+const months = M.map(r => r.m).sort();
+// The cumulative column sums EVERY month in the series, which begins with the first charge —
+// earlier than the payments launch date. Label it from the data so the header can't overstate
+// what it covers.
+const firstMonth = months.length ? months[0] : null;
+
+const mLabel = m => (MON[+String(m).slice(5,7)-1] || '') + ' ' + String(m).slice(0,4);
+const prevMonth = m => { let y=+m.slice(0,4), mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
+const fmtN = n => (n==null) ? '&mdash;' : Math.round(n).toLocaleString('en-US');
+const fmtM = n => (n==null) ? '&mdash;' : '$' + (Math.abs(n)>=1e6 ? (n/1e6).toFixed(2)+'M' : Math.round(n).toLocaleString('en-US'));
+const fmtC = n => (n==null) ? '&mdash;' : '$' + (+n).toFixed(2);
+const fmtP = n => (n==null) ? '&mdash;' : (+n).toFixed(2) + '%';
+
+// Change cell. higherIsBetter=false flips the colour (used for cost, where up is bad).
+function pctCell(cur, prev, higherIsBetter){
+  if(cur==null || prev==null || prev===0) return '<td class="chg flat">&mdash;</td>';
+  const p=(cur/prev-1)*100;
+  const good = (higherIsBetter===false) ? (p<0) : (p>0);
+  const cls = Math.abs(p)<0.05 ? 'flat' : (good ? 'up' : 'down');
+  return '<td class="chg '+cls+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</td>';
+}
+
+// Cumulative column: flows sum, point-in-time takes the last value, ratios are recomputed from
+// the summed components — never averaged, which would weight small months equally.
+function cumulative(){
+  const s = {initiated:0,passed:0,newTransacting:0,tpv:0,txns:0,revenue:0,cost:0};
+  M.forEach(r => Object.keys(s).forEach(k => { s[k] += (r[k]||0); }));
+  const last = M.length ? M[M.length-1] : {};
+  const r2 = v => Math.round(v*100)/100;
+  return Object.assign(s, {
+    passRate:       s.initiated ? r2(s.passed/s.initiated*100) : null,
+    activationRate: s.passed ? r2(s.newTransacting/s.passed*100) : null,
+    avgTicket:      s.txns ? r2(s.tpv/s.txns) : null,
+    takeRate:       s.tpv ? r2(s.revenue/s.tpv*100) : null,
+    netMargin:      r2(s.revenue - s.cost),
+    netTakeRate:    s.tpv ? r2((s.revenue-s.cost)/s.tpv*100) : null,
+    activeMerchants: null,       // distinct merchants can't be summed across months
+    tpvPerActive:    null,
+    liveCum:        last.liveCum!=null?last.liveCum:null,
+    transactingCum: last.transactingCum!=null?last.transactingCum:null
+  });
+}
+
+const BLOCKS = [
+  {sec:'Activation funnel', rows:[
+    {k:'initiated',      label:'Initiated KYC',                 fmt:fmtN},
+    {k:'passed',         label:'Passed KYC',                    fmt:fmtN},
+    {k:'passRate',       label:'KYC pass rate',                 fmt:fmtP},
+    {k:'newTransacting', label:'Newly transacting merchants',   fmt:fmtN},
+    {k:'activationRate', label:'Activation rate (transacting ÷ passed)', fmt:fmtP}
+  ]},
+  {sec:'Volume &amp; usage', rows:[
+    {k:'tpv',             label:'Total payment volume (TPV)',   fmt:fmtM},
+    {k:'txns',            label:'Transactions',                 fmt:fmtN},
+    {k:'avgTicket',       label:'Average ticket',               fmt:fmtC},
+    {k:'activeMerchants', label:'Merchants transacting in period', fmt:fmtN},
+    {k:'tpvPerActive',    label:'TPV per transacting merchant', fmt:fmtM}
+  ]},
+  {sec:'Economics', rows:[
+    {k:'revenue',     label:'Revenue (captured application fees)', fmt:fmtM},
+    {k:'takeRate',    label:'Take rate (revenue ÷ TPV)',      fmt:fmtP},
+    {k:'cost',        label:'Cost (Stripe IC+ fees)',              fmt:fmtM, better:false},
+    {k:'netMargin',   label:'Net margin (revenue − cost)',    fmt:fmtM},
+    {k:'netTakeRate', label:'Net take rate',                       fmt:fmtP}
+  ]},
+  {sec:'Base at period end', rows:[
+    {k:'liveCum',        label:'Merchants live (passed KYC, cumulative)', fmt:fmtN},
+    {k:'transactingCum', label:'Merchants transacting (cumulative)',      fmt:fmtN}
+  ]}
+];
+
+const CUM_COL = firstMonth ? ('Since '+mLabel(firstMonth)) : 'Cumulative';
+function render(m){
+  const cur = byMonth[m] || {}, prv = byMonth[prevMonth(m)] || {}, sl = cumulative();
+  const curCol = mLabel(m), prevCol = mLabel(prevMonth(m));
+  const isPartial = (m === new Date().toISOString().slice(0,7));
+
+  let h = '<div class="rhead"><div>'
+    + '<div class="label">Loyverse &middot; Payments Month-End Report</div>'
+    + '<h1>'+curCol+'</h1>'
+    + '<div class="period">Reporting period</div>'
+    + '<div class="cmp">Compared vs '+prevCol+' (previous month) &middot; cumulative column covers '
+    + (firstMonth?mLabel(firstMonth):'')+' to '+mLabel(months[months.length-1])+'</div>'
+    + '</div><div><img src="loyverse_icon_white.png" alt="Loyverse" style="filter:invert(1)">'
+    + '<div class="gen">Data '+(UPD||'')+'</div></div></div>';
+
+  if(isPartial){
+    h += '<div class="warn"><b>'+curCol+' is still in progress.</b> Its figures cover part of the month only, '
+      + 'so the change column against a complete '+prevCol+' is not like-for-like. Pick the last complete month '
+      + 'for a fair comparison.</div>';
+  }
+
+  BLOCKS.forEach(function(b){
+    h += '<h2 class="sec">'+b.sec+'</h2><table><thead><tr><th>Metric</th><th>'+curCol+'</th><th>'+prevCol
+      + '</th><th>Change</th><th>'+CUM_COL+'</th></tr></thead><tbody>';
+    b.rows.forEach(function(r){
+      const c = cur[r.k]!=null?cur[r.k]:null, p = prv[r.k]!=null?prv[r.k]:null, s = sl[r.k]!=null?sl[r.k]:null;
+      h += '<tr class="metric"><td>'+r.label+'</td>'
+        + '<td class="big">'+r.fmt(c)+'</td><td>'+r.fmt(p)+'</td>'
+        + pctCell(c,p,r.better)
+        + '<td>'+r.fmt(s)+'</td></tr>';
+    });
+    h += '</tbody></table>';
+  });
+
+  if(GRP.length){
+    h += '<h2 class="sec">Activation by merchant group &mdash; current snapshot</h2>'
+      + '<table><thead><tr><th>Group</th><th>Base</th><th>Initiated KYC</th><th>% of base</th>'
+      + '<th>Passed KYC</th><th>Transacting</th></tr></thead><tbody>';
+    GRP.forEach(function(g){
+      const pct = (g.base && g.initiated!=null) ? (g.initiated/g.base*100) : null;
+      h += '<tr><td class="cc">'+g.label+'</td><td>'+fmtN(g.base)+'</td>'
+        + '<td class="big">'+fmtN(g.initiated)+'</td>'
+        + '<td>'+(pct==null?'&mdash;':(pct<0.1&&pct>0?'&lt;0.1%':pct.toFixed(2)+'%'))+'</td>'
+        + '<td>'+fmtN(g.passed)+'</td><td>'+fmtN(g.transacting)+'</td></tr>';
+    });
+    h += '</tbody></table>';
+  }
+
+  h += '<div class="note">'
+    + '<b>Flow vs point-in-time.</b> Initiated, passed, newly transacting, TPV, transactions, revenue and cost are totals '
+    + 'for the period. Merchants live and merchants transacting are cumulative at period end. Rates are recomputed from '
+    + 'the underlying totals, so the cumulative column is a true blended rate rather than an average of monthly rates.'
+    + '<br><b>Merchants transacting in period</b> is a distinct count, so it cannot be summed across months &mdash; the '
+    + 'cumulative cell is left blank rather than shown as a misleading total.'
+    + (NOTES.volumeFrom ? '<br><b>Volume history starts '+mLabel(NOTES.volumeFrom)+'</b> (first charge on the platform). '
+        + 'Earlier months show activation figures against zero TPV.' : '')
+    + '<br><b>Cost timing.</b> Stripe IC+ cost is dated by when the fee hit the balance, which can lag the underlying '
+    + 'charge by a day or two, so costs around a month boundary may land in the following month. Immaterial at monthly '
+    + 'grain, but it means margin for the newest month can move slightly after publication.'
+    + '<br><b>Group snapshot</b> is point-in-time, not per-month &mdash; per-group history is not retained, so that table '
+    + 'is not comparable across periods.'
+    + (NOTES.untaggedInitiators ? '<br>'+NOTES.untaggedInitiators+' initiator'+(NOTES.untaggedInitiators>1?'s are':' is')
+        + ' outside the US population the group bases measure (non-US or filtered) and so appear in no group row.' : '')
+    + '<br>Volume converted to USD at a fixed FX map. Prod accounts only. Refreshes automatically every morning from Snowflake.'
+    + '</div>';
+
+  document.getElementById('sheet').innerHTML = h;
+}
+
+const picker = document.getElementById('picker');
+if(!months.length){
+  document.getElementById('sheet').innerHTML =
+    '<div class="rhead"><div><div class="label">Loyverse &middot; Payments Month-End Report</div>'
+    + '<h1>No data yet</h1><div class="period">report-data.js has no monthly rows</div></div></div>'
+    + '<div class="note">This page fills in on the next payments pull. If it stays empty, the monthly '
+    + 'queries (charges_monthly / app_fees_monthly / icplus_cost_monthly) failed &mdash; the pull log will say so.</div>';
+  picker.style.display='none';
+} else {
+  // Default to the latest COMPLETE month, since a part-month comparison is misleading.
+  const nowYm = new Date().toISOString().slice(0,7);
+  const complete = months.filter(m => m < nowYm);
+  const def = complete.length ? complete[complete.length-1] : months[months.length-1];
+  picker.innerHTML = months.slice().reverse().map(m =>
+    '<option value="'+m+'"'+(m===def?' selected':'')+'>'+mLabel(m)+(m>=nowYm?' (in progress)':'')+'</option>').join('');
+  picker.onchange = () => render(picker.value);
+  render(def);
+}
+</script>
+</body>
+</html>

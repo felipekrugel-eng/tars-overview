@@ -378,6 +378,7 @@
   <a href="#margins" id="paysub-margins">Summary of Margins</a>
   <a href="#pilot" id="paysub-pilot">Pilot</a>
   <a href="#funnel" id="paysub-funnel">Funnel</a>
+  <a href="report.html" id="paysub-report">Report</a>
 </div>
 <div id="page-pilot" style="display:none">
   <div class="ov-wrap">
@@ -1443,17 +1444,6 @@ applyMasterHash();
     var prvB=isoAddDays(curA,-1);
     return {curA:curA, curB:maxd, prvA:isoAddDays(prvB,-(n-1)), prvB:prvB};
   }
-  function deltaPill(cur, prv){
-    cur=Number(cur)||0; prv=Number(prv)||0;
-    if(prv>0){
-      var p=(cur/prv-1)*100;
-      if(Math.abs(p)<0.05) return '<span class="k-delta flat">&plusmn;0%</span>';
-      var up=p>0;
-      return '<span class="k-delta '+(up?'up':'down')+'">'+(up?'&#9650; +':'&#9660; &minus;')+Math.abs(p).toFixed(Math.abs(p)>=100?0:1)+'%</span>';
-    }
-    if(cur>0) return '<span class="k-delta up">new</span>';
-    return '';
-  }
   // ---- KPI tiles: accumulated by default; optional per-month view -----------
   // The tiles are DECOUPLED from the chart range selector (people misread
   // windowed tiles as totals). Default = all-time accumulated. The Monthly
@@ -1493,19 +1483,24 @@ applyMasterHash();
       ];
       if(tn) tn.textContent='Tiles: accumulated · all time';
     } else {
-      var mb=monthBounds(tileMonth), pm=prevYm(tileMonth), pb=monthBounds(pm), ml=monthShort(tileMonth);
-      var initC=sumRange(ACT,'n',mb.a,mb.b), initP=sumRange(ACT,'n',pb.a,pb.b);
-      var enC=haveEna?sumRange(ENA,'n',mb.a,mb.b):null, enP=haveEna?sumRange(ENA,'n',pb.a,pb.b):null;
-      var volC=sumRange(VOL,'usd',mb.a,mb.b), volP=sumRange(VOL,'usd',pb.a,pb.b);
+      // prior-month sums dropped along with the delta pills — nothing reads them now
+      var mb=monthBounds(tileMonth), ml=monthShort(tileMonth);
+      var initC=sumRange(ACT,'n',mb.a,mb.b);
+      var enC=haveEna?sumRange(ENA,'n',mb.a,mb.b):null;
+      var volC=sumRange(VOL,'usd',mb.a,mb.b);
       var txC=TXN.filter(function(r){return r.started>=mb.a && r.started<=mb.b;}).length;
-      var txP=TXN.filter(function(r){return r.started>=pb.a && r.started<=pb.b;}).length;
+      // NO month-over-month delta pill here (removed 3 Aug 2026). It compared the selected
+      // month against the previous calendar month, so viewing the in-progress month measured a
+      // part-month against a full one and always read as a collapse. A like-for-like monthly
+      // comparison belongs on the payments report, not on a tile whose window the reader picks.
       kpis=[
-        {num:fmtInt(initC), lbl:'Initiated KYC · '+ml, sub:'New connections in '+ml+' · '+fmtInt(T.reg)+' all time', cls:'', d:deltaPill(initC,initP)},
-        {num:haveEna?fmtInt(enC):'—', lbl:'Passed KYC · '+ml, sub:(haveEna?('Newly live in '+ml+' · '+fmtInt(T.ena)+' all time'):'Populates on the next daily pull'), cls:'green', d:haveEna?deltaPill(enC,enP):''},
-        {num:fmtUsd(volC), lbl:'Volume processed · '+ml, sub:'Card charges in '+ml+', USD · '+fmtUsd(T.vol)+' all time', cls:'accent', d:deltaPill(volC,volP)},
-        {num:fmtInt(txC), lbl:'Newly transacting · '+ml, sub:'First charge in '+ml+' · '+fmtInt(TXN.length)+' transacting all time', cls:'', d:deltaPill(txC,txP)}
+        {num:fmtInt(initC), lbl:'Initiated KYC · '+ml, sub:'New connections in '+ml+' · '+fmtInt(T.reg)+' all time', cls:'', d:''},
+        {num:haveEna?fmtInt(enC):'—', lbl:'Passed KYC · '+ml, sub:(haveEna?('Newly live in '+ml+' · '+fmtInt(T.ena)+' all time'):'Populates on the next daily pull'), cls:'green', d:''},
+        {num:fmtUsd(volC), lbl:'Volume processed · '+ml, sub:'Card charges in '+ml+', USD · '+fmtUsd(T.vol)+' all time', cls:'accent', d:''},
+        {num:fmtInt(txC), lbl:'Newly transacting · '+ml, sub:'First charge in '+ml+' · '+fmtInt(TXN.length)+' transacting all time', cls:'', d:''}
       ];
-      if(tn) tn.textContent='Tiles: '+monthLabel(tileMonth)+' only · % vs '+monthShort(pm);
+      var _isPartial = (tileMonth === new Date().toISOString().slice(0,7));
+      if(tn) tn.textContent='Tiles: '+monthLabel(tileMonth)+' only'+(_isPartial?' · month still in progress':'');
     }
     document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
       return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+(k.d||'')+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';

@@ -37,6 +37,7 @@ const OVERVIEW_FILE  = path.join(__dirname, 'overview-data.js');
 const FUNNEL_FILE    = path.join(__dirname, 'funnel-data.js');
 const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
+const REPORT_FILE    = path.join(__dirname, 'report-data.js');
 const SQL_DIR        = path.join(__dirname, 'sql');
 // Loyverse Payments launch — start of the funnel entry cohort (US registrations on/after).
 const LAUNCH_START   = '2026-07-01';
@@ -727,6 +728,131 @@ async function fetchTerminalOrders(conn) {
   }
   return by;
 }
+// ── MONTHLY series for the Report page ────────────────────────────────────────
+// Three monthly twins of existing queries. The per-account fee/cost queries group by ACCOUNT
+// only and carry NO time dimension, so revenue/cost/margin previously existed as all-time
+// totals only — these give them a month grain without touching the originals (the margins tab
+// keeps reading those unchanged).
+async function fetchChargesMonthly(conn, acctIds) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return { byMonth: {}, unknownCcy: {} };
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const rows = await executeQuery(conn, loadSql('charges_monthly.sql').replace('/*ACCOUNT_IDS*/', inList));
+  const byMonth = {}, unknownCcy = {};
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  for (const r of rows || []) {
+    const m = g(r, 'month'); if (!m) continue;
+    if (!byMonth[m]) byMonth[m] = { tpv: 0, txns: 0, accounts: null };
+    if (String(g(r, 'row_kind')) === 'accts') {
+      byMonth[m].accounts = Number(g(r, 'accounts')) || 0;
+      continue;
+    }
+    const ccy = g(r, 'ccy');
+    const usd = minorToUsd(g(r, 'amount_minor'), ccy);
+    if (usd == null) { unknownCcy[String(ccy).toUpperCase()] = (unknownCcy[String(ccy).toUpperCase()] || 0) + 1; continue; }
+    byMonth[m].tpv  += usd;
+    byMonth[m].txns += Number(g(r, 'cnt')) || 0;
+  }
+  return { byMonth, unknownCcy };
+}
+// Generic minor-unit monthly roll-up used by both the revenue and cost queries.
+async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return {};
+  const inList = ids.map(a => `'${a}'`).join(',');
+  const rows = await executeQuery(conn, loadSql(sqlFile).replace('/*ACCOUNT_IDS*/', inList));
+  const byMonth = {};
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  for (const r of rows || []) {
+    const m = g(r, 'month'); if (!m) continue;
+    const usd = minorToUsd(g(r, amtCol), g(r, 'ccy'));
+    if (usd == null) continue;              // unknown currency — excluded, same as the daily layer
+    if (!byMonth[m]) byMonth[m] = { usd: 0, cnt: 0 };
+    byMonth[m].usd += usd;
+    byMonth[m].cnt += Number(g(r, cntCol)) || 0;
+  }
+  return byMonth;
+}
+
+// Assemble the monthly report series. Everything is per calendar month; the Report page adds
+// the since-launch column by summing flows and taking the last point-in-time value.
+//   FLOW  (sum over the month): initiated, passed, tpv, txns, revenue, cost, newTransacting
+//   RATIO (derived, never stored pre-rounded): passRate, avgTicket, takeRate, netTakeRate
+//   POINT-IN-TIME (end of month): liveCum, transactingCum
+// activeMerchants = COUNT(DISTINCT ACCOUNT) that charged in the month (not just first charge).
+function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth, costByMonth, txnMerchants) {
+  const ym = d => String(d || '').slice(0, 7);
+  const months = {};
+  const touch = m => (months[m] = months[m] || {
+    m, initiated: 0, passed: 0, tpv: 0, txns: 0, activeMerchants: null,
+    revenue: 0, cost: 0, newTransacting: 0 });
+
+  (actDaily || []).forEach(r => { const m = ym(r.d); if (m) touch(m).initiated += Number(r.n) || 0; });
+  (enabledDaily || []).forEach(r => { const m = ym(r.d); if (m) touch(m).passed += Number(r.n) || 0; });
+  Object.keys(chargesByMonth || {}).forEach(m => {
+    const o = touch(m), c = chargesByMonth[m];
+    o.tpv = c.tpv; o.txns = c.txns; o.activeMerchants = c.accounts;
+  });
+  Object.keys(revByMonth  || {}).forEach(m => { touch(m).revenue = revByMonth[m].usd; });
+  Object.keys(costByMonth || {}).forEach(m => { touch(m).cost    = costByMonth[m].usd; });
+  (txnMerchants || []).forEach(t => { const m = ym(t.started); if (m) touch(m).newTransacting += 1; });
+
+  const keys = Object.keys(months).sort();
+  // Running cumulatives: merchants live (passed KYC) and merchants ever transacting, at month end.
+  let liveCum = 0, txCum = 0;
+  return keys.map(m => {
+    const o = months[m];
+    liveCum += o.passed;
+    txCum   += o.newTransacting;
+    const r2 = v => Math.round(v * 100) / 100;
+    return {
+      m,
+      initiated: o.initiated,
+      passed: o.passed,
+      // Null rather than 0 when there is nothing to divide by — the report renders "—".
+      passRate: o.initiated ? r2(o.passed / o.initiated * 100) : null,
+      newTransacting: o.newTransacting,
+      activationRate: o.passed ? r2(o.newTransacting / o.passed * 100) : null,
+      tpv: r2(o.tpv),
+      txns: o.txns,
+      avgTicket: o.txns ? r2(o.tpv / o.txns) : null,
+      activeMerchants: o.activeMerchants,
+      tpvPerActive: (o.activeMerchants ? r2(o.tpv / o.activeMerchants) : null),
+      revenue: r2(o.revenue),
+      takeRate: o.tpv ? r2(o.revenue / o.tpv * 100) : null,
+      cost: r2(o.cost),
+      netMargin: r2(o.revenue - o.cost),
+      netTakeRate: o.tpv ? r2((o.revenue - o.cost) / o.tpv * 100) : null,
+      liveCum, transactingCum: txCum
+    };
+  });
+}
+
+function writeReport(monthly, groups, bases, notes) {
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const out =
+`// Loyverse Payments REPORT data — regenerated daily by activated-payments/pull.js.
+// Monthly series behind report.html (the payments twin of the POS month-end report).
+//   __PAY_MONTHLY : one row per calendar month. FLOW fields (initiated, passed, tpv, txns,
+//                   revenue, cost, newTransacting) are sums over the month; liveCum /
+//                   transactingCum are point-in-time at month end; rates are derived.
+//   __PAY_REPORT_GROUPS : funnel-group snapshot (base + initiated/passed/transacting). NOTE:
+//                   point-in-time only — there is no per-group history, so the report shows it
+//                   as a current snapshot, not a month-over-month comparison.
+// CAVEATS: volume history starts 13 Apr 2026 (first charge), so earlier months carry activation
+// figures with zero TPV. Cost is dated by BALANCE_TRANSACTION_CREATED_AT, which can lag the
+// charge by a day or two, so month-boundary costs may land in the following month.
+// Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
+window.__PAY_REPORT_UPDATED = ${JSON.stringify(stamp)};
+window.__PAY_MONTHLY = ${JSON.stringify(monthly || [])};
+window.__PAY_REPORT_GROUPS = ${JSON.stringify(groups || [])};
+window.__PAY_REPORT_BASES = ${JSON.stringify(bases || null)};
+window.__PAY_REPORT_NOTES = ${JSON.stringify(notes || {})};
+`;
+  fs.writeFileSync(REPORT_FILE, out, 'utf8');
+  console.log(`\u2713 report-data.js written — ${(monthly || []).length} months`);
+}
+
 // ── US funnel bases (one base per funnel group) ────────────────────────────────
 // One-row query (sql/us_bases.sql). Returns FOUR disjoint group bases — new_us,
 // paying_base_us, nonpaying_us, dormant_us — each scoped to exactly the population its
@@ -1003,12 +1129,15 @@ async function main() {
   writeData(act, kyc);
 
   // Overview (first page) — daily activations, backfilled enabled curve, daily volume, txn table.
+  // Hoisted out of the try: the Report step below reuses these three daily series rather than
+  // rebuilding them, and must still get them if a later part of the overview write fails.
+  let actDaily = [], enabledDaily = [], txnMerchants = [];
   try {
-    const actDaily = buildActivationsDaily(accountRows, meta);
-    const enabledDaily = buildEnabledDaily(accountRows, meta);
+    actDaily = buildActivationsDaily(accountRows, meta);
+    enabledDaily = buildEnabledDaily(accountRows, meta);
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
-    const txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct);
+    txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct);
     writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
@@ -1042,6 +1171,48 @@ async function main() {
     } catch (e) { console.error(`✗ us_group_tags query failed (funnel groups fall back to pos_active): ${e.message}`); }
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags);
     writeFunnel(funnel, terminalReady, bases);
+
+    // ---- Report page (monthly series) ----
+    // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
+    // be able to break activation-data.js / overview-data.js / funnel-data.js, all already written.
+    try {
+      const [cmR, revR, costR2] = await Promise.allSettled([
+        fetchChargesMonthly(conn, prodAccts),
+        fetchMinorMonthly(conn, prodAccts, 'app_fees_monthly.sql', 'fee_minor', 'fee_cnt'),
+        fetchMinorMonthly(conn, prodAccts, 'icplus_cost_monthly.sql', 'cost_minor', 'cost_cnt'),
+      ]);
+      const cm = cmR.status === 'fulfilled' ? cmR.value : { byMonth: {}, unknownCcy: {} };
+      const rev = revR.status === 'fulfilled' ? revR.value : {};
+      const cst = costR2.status === 'fulfilled' ? costR2.value : {};
+      if (cmR.status !== 'fulfilled')   console.error(`✗ charges_monthly failed: ${cmR.reason && cmR.reason.message}`);
+      if (revR.status !== 'fulfilled')  console.error(`✗ app_fees_monthly failed (revenue/take rate blank): ${revR.reason && revR.reason.message}`);
+      if (costR2.status !== 'fulfilled') console.error(`✗ icplus_cost_monthly failed (cost/margin blank): ${costR2.reason && costR2.reason.message}`);
+      if (Object.keys(cm.unknownCcy || {}).length) console.log(`  charges_monthly: unknown ccy skipped ${JSON.stringify(cm.unknownCcy)}`);
+
+      const monthly = buildPaymentsMonthly(actDaily, enabledDaily, cm.byMonth, rev, cst, txnMerchants);
+      // Funnel-group snapshot: base + numerators, straight from the tagged book.
+      const GRP_LABEL = { new: 'New merchants', paying: 'Paying merchants',
+                          nonpaying: 'Non paying', dormant: 'Dormant / other' };
+      const GRP_BASE  = { new: 'new_us', paying: 'paying_base_us',
+                          nonpaying: 'nonpaying_us', dormant: 'dormant_us' };
+      const bk = (funnel.merchants || []).filter(m => m.connected_at);
+      const groups = Object.keys(GRP_LABEL).map(g => {
+        const rs = bk.filter(m => m.grp === g);
+        return {
+          g, label: GRP_LABEL[g],
+          base: (bases && bases[GRP_BASE[g]] != null) ? bases[GRP_BASE[g]] : null,
+          initiated: rs.length,
+          passed: rs.filter(m => m.stage === 'enabled' || m.stage === 'transacting' || m.enabled).length,
+          transacting: rs.filter(m => m.stage === 'transacting' || m.first_txn_at).length
+        };
+      });
+      const untagged = bk.filter(m => !m.grp).length;
+      writeReport(monthly, groups, bases, {
+        volumeFrom: (monthly.find(x => x.tpv > 0) || {}).m || null,
+        untaggedInitiators: untagged,
+        launch: LAUNCH_START
+      });
+    } catch (e) { console.error(`✗ report build skipped this run: ${e.message}`); }
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 
   // Discovery refresh for the remaining volume layer (non-fatal)
