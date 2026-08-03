@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-07-27",
+  "lastUpdated": "2026-08-03",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98420,7 +98420,7 @@ const CASE_DATA = {
   },
   "appStores": {
     "googlePlay": {
-      "rating": 4.7,
+      "rating": 4.6,
       "reviewCount": "17.6K",
       "positive": 86,
       "neutral": 9,
@@ -98454,7 +98454,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "365",
+      "reviewCount": "366",
       "positive": 87,
       "neutral": 8,
       "negative": 5,
@@ -98488,24 +98488,24 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Feb",
       "Mar",
       "Apr",
       "May",
       "Jun",
-      "Jul"
+      "Jul",
+      "Aug"
     ],
     "googlePlay": [
-      4.72,
       4.7,
       4.68,
       4.72,
       4.75,
-      4.7
+      4.7,
+      4.6
     ],
     "appStore": [
-      4.72,
       4.71,
+      4.7,
       4.7,
       4.7,
       4.7,
@@ -98560,23 +98560,23 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "1M+",
       "trend": [
-        968000,
         985000,
         1000000,
         1017000,
         1034000,
-        1071000
+        1071000,
+        1089000
       ]
     },
     "appStore": {
-      "total": "265K+",
+      "total": "279K+",
       "trend": [
-        225000,
         232000,
         240000,
         250000,
         259000,
-        271000
+        271000,
+        279000
       ]
     }
   },
