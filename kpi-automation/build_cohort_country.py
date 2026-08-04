@@ -115,7 +115,16 @@ def main():
             act = active.get((ctry, coh), {})
             if not ages and not act and not regs:
                 continue
-            n_ages = max([*ages.keys(), *act.keys(), 0]) + 1
+            # Cap the age series at the SNAPSHOT month, exactly as build_kpi_data.py caps the
+            # global cohortCompare (CAL <= latest_complete, n = mdiff(coh, latest_complete)+1).
+            # The SQL grid runs to DATE_TRUNC('MONTH', CURRENT_DATE), so without this the
+            # in-progress month is emitted as a trailing point and the per-country comparison
+            # chart shows one extra, partial data point that the global chart does not.
+            age_at_snap = (int(snapshot_month[:4]) - int(coh[:4])) * 12 + \
+                          (int(snapshot_month[5:7]) - int(coh[5:7]))
+            n_ages = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_snap + 1, 25)
+            if n_ages <= 0:
+                continue
             mrr_s, pay_s, act_s, actpct_s = [], [], [], []
             for i in range(n_ages):
                 r = ages.get(i)
@@ -126,9 +135,7 @@ def main():
                 actpct_s.append(round(100.0 * a / regs, 2) if (a is not None and regs) else None)
             compare[coh] = {"mrr": mrr_s, "paying": pay_s, "active": act_s, "activePct": actpct_s}
 
-            # summary row = the cohort's value at the snapshot month
-            age_at_snap = (int(snapshot_month[:4]) - int(coh[:4])) * 12 + \
-                          (int(snapshot_month[5:7]) - int(coh[5:7]))
+            # summary row = the cohort's value at the snapshot month (age computed above)
             snap = ages.get(age_at_snap)
             paying = int(_f(snap, "PAYING_CUSTOMERS")) if snap else 0
             ever = int(_f(snap, "CUM_PAYING_EVER")) if snap else 0
