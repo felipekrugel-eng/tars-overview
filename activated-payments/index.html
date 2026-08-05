@@ -455,6 +455,22 @@
     </div>
     <p class="ov-sub">How each US customer group moves through payments activation: <b>Base</b> &rarr; <b>Initiated KYC</b> (opened a payments account) &rarr; <b>Passed KYC</b> &rarr; <b>Transacting</b>. Groups are mutually exclusive (priority: new &rarr; paying &rarr; non paying &rarr; dormant). Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
 
+    <!-- Month filter (added 2026-08-05). Drives EVERYTHING below it: the headline KPIs, the
+         group cards, the conversion leaderboard, the origin split and the deep dive. In
+         Monthly mode each stage is counted by ITS OWN date falling inside the selected month
+         (initiated in August / passed in August / first transacted in August), and the
+         denominators come from __FUNNEL_BASES_MONTHLY as of that month. -->
+    <div class="ov-head" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="ov-range" id="fnMode">
+          <button data-m="all" class="on">All time</button>
+          <button data-m="month">Monthly</button>
+        </div>
+        <select id="fnMonth" class="ov-mselect" style="display:none"></select>
+      </div>
+      <div class="ov-updated" id="fnModeNote">&nbsp;</div>
+    </div>
+
     <div class="fn-kpis" id="fnKpis"></div>
 
     <div class="fn-toolbar">
@@ -1733,22 +1749,45 @@ applyMasterHash();
 })();
 
 // ===== Activation Funnel (Payments sub-tab) ================================
-// Three group funnels: Base -> Initiated KYC (connected) -> Passed KYC -> Transacting,
-// for (1) US active customers, (2) US paying customers, (3) new US customers since launch.
-// Plus an origin split of everyone who has initiated KYC. Joins __FUNNEL_MERCHANTS
-// (stages, per-merchant) to __ACT (paying/active flags) by merchant id. Bases for the
-// active/paying groups come from __FUNNEL_BASES (us_bases.sql, refreshed daily by pull.js).
+// Four group funnels: Base -> Initiated KYC (connected) -> Passed KYC -> Transacting, for
+// new / paying / non paying / dormant US merchants. Plus an origin split of everyone who has
+// initiated KYC and a per-bucket deep dive. Joins __FUNNEL_MERCHANTS (stages, per-merchant)
+// to __ACT (paying/active flags) by merchant id. Bases come from __FUNNEL_BASES (us_bases.sql)
+// for All time and from __FUNNEL_BASES_MONTHLY (us_bases_monthly.sql) for a selected month.
+//
+// MONTH FILTER (added 2026-08-05, requested by Felipe). One control at the top of the page
+// drives every number on it. Two modes:
+//
+//   All time  — unchanged behaviour. A merchant counts at a stage if it has EVER reached it.
+//   Monthly   — FLOW within the selected month. Each stage is counted by its OWN date falling
+//               inside that month: initiated = connected_at in month, passed = enabled_at in
+//               month, transacting = first_txn_at in month. "August" therefore means "what
+//               happened in August", which is what was asked for, and the newest month is
+//               naturally month-to-date.
+//
+// TWO CONSEQUENCES OF THE FLOW READING, both surfaced in the UI rather than hidden:
+//   1. The stage-to-stage percentages are RATIOS OF TWO FLOWS, not a cohort conversion. A
+//      merchant that initiated on 30 July and passed on 2 August sits in July's "initiated"
+//      and August's "passed". Monthly captions say "of initiated in <Month>" and the footnote
+//      spells this out. Do NOT relabel them as conversion rates.
+//   2. A stage with no date cannot be attributed to any month. All-time "passed" also accepts
+//      the stage/enabled flag with a null enabled_at; those merchants are counted in All time
+//      and reported as an undated residual in Monthly. Same for transacting.
 (function(){
   var $=function(id){return document.getElementById(id);};
   if(!$('fnKpis')) return;
   var M=window.__FUNNEL_MERCHANTS||[];
   var ACT=window.__ACT||[];
   var BASES=window.__FUNNEL_BASES||null;
+  var BASES_M=window.__FUNNEL_BASES_MONTHLY||[];
   var BOTS=window.__FUNNEL_BOTS_EXCLUDED||0;
   var LAUNCH=window.__FUNNEL_LAUNCH_START||'2026-07-01';
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function num(v){ return (Math.round(Number(v)||0)).toLocaleString('en-US'); }
   function pctL(a,b){ if(!b) return '0%'; var v=a/b*100; if(v>0&&v<0.1) return '&lt;0.1%'; return (v<10? v.toFixed(1) : Math.round(v))+'%'; }
+  function ym(d){ return d? String(d).slice(0,7) : null; }
+  function monthLabel(m){ var mo=['January','February','March','April','May','June','July','August','September','October','November','December']; var p=String(m).split('-'); return mo[(+p[1])-1]+' '+p[0]; }
+  function monthShort(m){ var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; var p=String(m).split('-'); return mo[(+p[1])-1]+' '+p[0]; }
 
   // Join: funnel merchants (book of KYC initiators) <- ACT flags (US prod accounts)
   var actById={};
@@ -1781,71 +1820,158 @@ applyMasterHash();
   var taggedN = book.filter(function(r){ return !!r.tag; }).length;
   var TAGGED = book.length>0 && taggedN >= book.length*0.9;
   var UNTAGGED_N = book.length - taggedN;
-  function agg(rs){ return { init:rs.length, passed:rs.filter(function(r){return r.passed;}).length, txn:rs.filter(function(r){return r.txn;}).length }; }
 
-  // ---- Group definitions (mutually exclusive, priority: new > paying > non paying > dormant) ----
-  var isNewM=function(m){ return m.registered_at && m.registered_at>=LAUNCH; };
-  var newAll=M.filter(isNewM);
-  // Group bases come from sql/us_bases.sql and are scoped to EXACTLY the population each
-  // numerator draws from (see that file's header). Until 2026-08-03 the "Non paying" row used
-  // active_us — all US merchants active in 30d, paying and post-launch included — as its
-  // denominator while its numerator excluded both, so the rate read several times too low.
-  // active_us / paying_us are still published but are reference-only; do not use them here.
-  var fin=function(v){ return isFinite(v)?v:null; };
-  var baseNew=BASES?fin(BASES.new_us):null;
-  var basePaying=BASES?fin(BASES.paying_base_us):null;
-  var baseActive=BASES?fin(BASES.nonpaying_us):null;
-  var baseDormant=BASES?fin(BASES.dormant_us):null;
-  // Pre-2026-08-03 funnel-data.js files carry only the old keys. Fall back so an old data file
-  // still renders, but make the shape explicit rather than silently mixing populations.
-  var LEGACY_BASES = (baseActive==null && BASES && isFinite(BASES.active_us));
-  if (LEGACY_BASES){
-    baseNew=newAll.length;
-    basePaying=fin(BASES.paying_us);
-    baseActive=fin(BASES.active_us);
-    baseDormant=fin(BASES.dormant_us);
+  // ---- Month-filter state ---------------------------------------------------
+  // MODE 'all' keeps the page exactly as it was before the filter existed. Anything that reads
+  // a stage must go through inMonth()/aggregation below rather than testing r.passed / r.txn
+  // directly, or it will silently ignore the selected month.
+  var MODE='all', MONTH=null;
+  // Months offered = every month in which SOMETHING happened, from the earliest stage date on
+  // file to the latest, with no gaps (a quiet month should still be selectable and read zero).
+  var MONTHS=(function(){
+    var all=[];
+    book.forEach(function(r){
+      [r.m.connected_at, r.m.enabled_at, r.m.first_txn_at].forEach(function(d){ if(d) all.push(ym(d)); });
+    });
+    if(!all.length) return [];
+    all.sort();
+    var out=[], cur=all[0], last=all[all.length-1];
+    while(cur<=last && out.length<600){
+      out.push(cur);
+      var p=cur.split('-'), y=+p[0], mo=+p[1]+1;
+      if(mo>12){ mo=1; y++; }
+      cur=y+'-'+(mo<10?'0':'')+mo;
+    }
+    return out.reverse();   // newest first — the month people want is the one at the top
+  })();
+  if(MONTHS.length) MONTH=MONTHS[0];
+  function monthly(){ return MODE==='month' && MONTH; }
+
+  // Stage membership under the current selection. All time = "has ever reached this stage";
+  // Monthly = "reached this stage IN the selected month", which needs the stage's own date.
+  // The monthly test is deliberately "counts as passed today AND its pass date is in the month",
+  // not the date alone: 4 merchants carry an enabled_at but have since dropped out of the passed
+  // set, so date-only monthly buckets would sum to 145 against an all-time headline of 141.
+  // Anchoring on the same r.passed / r.txn membership keeps the months summing to the all-time
+  // number minus the undated residual below, which the footnote reports.
+  function selInit(r){ return monthly()? ym(r.m.connected_at)===MONTH : true; }
+  function selPassed(r){ return r.passed && (monthly()? ym(r.m.enabled_at)===MONTH : true); }
+  function selTxn(r){ return r.txn && (monthly()? ym(r.m.first_txn_at)===MONTH : true); }
+  function agg(rs){
+    return { init:rs.filter(selInit).length,
+             passed:rs.filter(selPassed).length,
+             txn:rs.filter(selTxn).length };
   }
-  // The caveat belongs to the OLD numerator source: an untagged book means membership came from
-  // the monthly pos_active flag, which undercounts. With tags, base and numerator match exactly.
-  var floorNote = (LEGACY_BASES || !TAGGED) ? ' &middot; numerators are a floor*' : '';
-  var GS=[
-    {id:'new', name:'New merchants', accent:'var(--green)', base:baseNew!=null?baseNew:newAll.length,
-     desc:'Registered since '+esc(LAUNCH)+' &middot; '+num(BOTS)+' bot/fraud registrations excluded',
-     a:agg(book.filter(function(r){return r.isNew;}))},
-    {id:'paying', name:'Paying merchants', accent:'var(--blue-deep)', base:basePaying,
-     desc:'Existing customers (pre-'+esc(LAUNCH)+') with an active paid subscription',
-     a:agg(book.filter(function(r){return !r.isNew&&r.isPaying;}))},
-    {id:'active', name:'Non paying', accent:'var(--blue)', base:baseActive,
-     desc:'Existing free-plan merchants &middot; POS sale in the last 30 days'+floorNote,
-     a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&r.isActive;}))},
-    {id:'dormant', name:'Dormant / other', accent:'#8E99A4', base:baseDormant,
-     desc:'Registered before '+esc(LAUNCH)+' &middot; no recent sale, no subscription',
-     a:agg(book.filter(function(r){return r.isDormant&&!r.isNew&&!r.isPaying&&!r.isActive;}))}
-  ];
-  var T=agg(book);
+  // Undated residual — merchants the all-time view counts as passed/transacting from the
+  // stage flag alone, which no month can claim. Reported in the footnote in Monthly mode.
+  var NO_PASS_DATE=book.filter(function(r){ return r.passed && !r.m.enabled_at; }).length;
+  var NO_TXN_DATE=book.filter(function(r){ return r.txn && !r.m.first_txn_at; }).length;
 
-  // ---- Headline KPIs ----
-  var bestOverall=GS.filter(function(g){return g.base;}).sort(function(x,y){return y.a.txn/y.base - x.a.txn/x.base;})[0];
-  $('fnKpis').innerHTML=[
-    {k:'Initiated KYC', v:num(T.init), s:'US merchants that opened a payments account'},
-    {k:'Passed KYC', v:num(T.passed), s:'<b>'+pctL(T.passed,T.init)+'</b> of initiated'},
-    {k:'Transacting', v:num(T.txn), s:'<b>'+pctL(T.txn,T.passed)+'</b> of passed KYC'},
-    {k:'Best converting group', v:bestOverall?bestOverall.name:'&mdash;', accent:bestOverall?bestOverall.accent:null,
-     s:bestOverall?('<b>'+pctL(bestOverall.a.txn,bestOverall.base)+'</b> of its base is already transacting'):''}
-  ].map(function(x){
-    return '<div class="fn-kpi"><div class="k">'+x.k+'</div><div class="v"'+(x.accent?' style="color:'+x.accent+'"':'')+'>'+x.v+'</div><div class="s">'+x.s+'</div></div>';
-  }).join('');
+  // ---- Bases ----------------------------------------------------------------
+  // Group bases come from sql/us_bases.sql (all time) or sql/us_bases_monthly.sql (a selected
+  // month) and are scoped to EXACTLY the population each numerator draws from. Until
+  // 2026-08-03 the "Non paying" row used active_us — all US merchants active in 30d, paying
+  // and post-launch included — as its denominator while its numerator excluded both, so the
+  // rate read several times too low. active_us / paying_us are still published but are
+  // reference-only; do not use them here.
+  var fin=function(v){ return isFinite(v)?v:null; };
+  var basesByMonth={};
+  (BASES_M||[]).forEach(function(b){ if(b&&b.month) basesByMonth[b.month]=b; });
+  // Which base row applies, and is it the one belonging to the selected month? A month with no
+  // banked row (anything before us_bases_monthly.sql started running) falls back to the
+  // all-time row so the page still renders — but says so instead of implying it is as-of.
+  function baseRow(){
+    if(!monthly()) return {row:BASES, exact:true, monthly:false};
+    var b=basesByMonth[MONTH];
+    if(b) return {row:b, exact:true, monthly:true};
+    return {row:BASES, exact:false, monthly:false};
+  }
+  var newAll=M.filter(function(m){ return m.registered_at && m.registered_at>=LAUNCH; });
+  function bases(){
+    var br=baseRow(), B=br.row;
+    var out={ src:br, newB:null, payingB:null, activeB:null, dormantB:null, legacy:false };
+    if(!B) return out;
+    out.newB=fin(B.new_us); out.payingB=fin(B.paying_base_us);
+    out.activeB=fin(B.nonpaying_us); out.dormantB=fin(B.dormant_us);
+    // Pre-2026-08-03 funnel-data.js files carry only the old keys. Fall back so an old data file
+    // still renders, but make the shape explicit rather than silently mixing populations.
+    if(out.activeB==null && isFinite(B.active_us)){
+      out.legacy=true;
+      out.newB=newAll.length; out.payingB=fin(B.paying_us);
+      out.activeB=fin(B.active_us); out.dormantB=fin(B.dormant_us);
+    }
+    return out;
+  }
 
-  // ---- Funnel card renderer (compare + single views) ----
-  var MAXINIT=Math.max.apply(null, GS.map(function(g){return g.a.init;}))||1;
-  function stageRows(g, big){
+  // ---- Groups under the current selection ------------------------------------
+  function groups(){
+    var b=bases();
+    // The caveat belongs to the OLD numerator source: an untagged book means membership came from
+    // the monthly pos_active flag, which undercounts. With tags, base and numerator match exactly.
+    var floorNote = (b.legacy || !TAGGED) ? ' &middot; numerators are a floor*' : '';
+    return { legacy:b.legacy, src:b.src, GS:[
+      {id:'new', name:'New merchants', accent:'var(--green)', base:b.newB!=null?b.newB:newAll.length,
+       desc:'Registered since '+esc(LAUNCH)+' &middot; '+num(BOTS)+' bot/fraud registrations excluded',
+       a:agg(book.filter(function(r){return r.isNew;}))},
+      {id:'paying', name:'Paying merchants', accent:'var(--blue-deep)', base:b.payingB,
+       desc:'Existing customers (pre-'+esc(LAUNCH)+') with an active paid subscription',
+       a:agg(book.filter(function(r){return !r.isNew&&r.isPaying;}))},
+      {id:'active', name:'Non paying', accent:'var(--blue)', base:b.activeB,
+       desc:'Existing free-plan merchants &middot; POS sale in the last 30 days'+floorNote,
+       a:agg(book.filter(function(r){return !r.isNew&&!r.isPaying&&r.isActive;}))},
+      {id:'dormant', name:'Dormant / other', accent:'#8E99A4', base:b.dormantB,
+       desc:'Registered before '+esc(LAUNCH)+' &middot; no recent sale, no subscription',
+       a:agg(book.filter(function(r){return r.isDormant&&!r.isNew&&!r.isPaying&&!r.isActive;}))}
+    ]};
+  }
+
+  // ---- Wording that has to change with the mode ------------------------------
+  // Kept in one place so a caption can never say "of initiated" while the numbers underneath
+  // are a monthly flow.
+  function ofInit(){ return monthly()? 'of initiated in '+monthShort(MONTH) : 'of initiated'; }
+  function ofPassed(){ return monthly()? 'of passed in '+monthShort(MONTH) : 'of passed'; }
+  function baseLabel(){
+    var br=baseRow();
+    if(!monthly()) return 'base &middot; US merchants';
+    if(!br.monthly) return 'base &middot; US merchants today';
+    var b=br.row;
+    return 'base &middot; US merchants '+(b.partial? ('as of '+esc(b.asof||'')) : ('at '+monthShort(MONTH)+' end'));
+  }
+
+  // ---- Headline KPIs ---------------------------------------------------------
+  function renderKpis(g){
+    var GS=g.GS, T=agg(book);
+    var suffix = monthly()? ' in '+monthShort(MONTH) : '';
+    var bestOverall=GS.filter(function(x){return x.base;}).sort(function(x,y){return y.a.txn/y.base - x.a.txn/x.base;})[0];
+    $('fnKpis').innerHTML=[
+      {k:'Initiated KYC'+suffix, v:num(T.init), s: monthly()? 'US merchants that opened a payments account in '+monthShort(MONTH) : 'US merchants that opened a payments account'},
+      {k:'Passed KYC'+suffix, v:num(T.passed), s: monthly()? 'cleared KYC in '+monthShort(MONTH)+' &mdash; mostly merchants that initiated earlier' : '<b>'+pctL(T.passed,T.init)+'</b> '+ofInit()},
+      {k:'Transacting'+suffix, v:num(T.txn), s: monthly()? 'took their first payment in '+monthShort(MONTH) : '<b>'+pctL(T.txn,T.passed)+'</b> '+ofPassed()},
+      {k:'Best converting group', v:bestOverall?bestOverall.name:'&mdash;', accent:bestOverall?bestOverall.accent:null,
+       s:bestOverall?('<b>'+pctL(bestOverall.a.txn,bestOverall.base)+'</b> of its base '+(monthly()? ('transacted in '+monthShort(MONTH)) : 'is already transacting')):''}
+    ].map(function(x){
+      return '<div class="fn-kpi"><div class="k">'+x.k+'</div><div class="v"'+(x.accent?' style="color:'+x.accent+'"':'')+'>'+x.v+'</div><div class="s">'+x.s+'</div></div>';
+    }).join('');
+    return T;
+  }
+
+  // ---- Funnel card renderer (compare + single views) ------------------------
+  function stageRows(g, big, maxInit){
     // single view: bars scaled to the group's own initiators; compare view: shared
     // scale across groups so relative volume is visible at a glance
-    var a=g.a, mx=(big ? a.init : MAXINIT)||1;
-    var st=[
+    var a=g.a, mx=(big ? a.init : maxInit)||1;
+    // Monthly: every caption is a share of the month-end base, for the same reason the
+    // leaderboard switches (see renderCards) — within one month the merchants that passed are
+    // not the ones that initiated, so passed/initiated is not a conversion rate and can pass 100%.
+    var st = monthly()
+      ? [
       {l:'Initiated KYC', n:a.init, c:'var(--blue)', p: g.base!=null ? '<b>'+pctL(a.init,g.base)+'</b> of base' : '&nbsp;'},
-      {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p:'<b>'+pctL(a.passed,a.init)+'</b> of initiated'+(big&&g.base!=null?' &middot; '+pctL(a.passed,g.base)+' of base':'')},
-      {l:'Transacting', n:a.txn, c:'var(--green)', p:'<b>'+pctL(a.txn,a.passed)+'</b> of passed'+(big&&g.base!=null?' &middot; '+pctL(a.txn,g.base)+' of base':'')}
+      {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p: g.base!=null ? '<b>'+pctL(a.passed,g.base)+'</b> of base' : '&nbsp;'},
+      {l:'Transacting', n:a.txn, c:'var(--green)', p: g.base!=null ? '<b>'+pctL(a.txn,g.base)+'</b> of base' : '&nbsp;'}
+    ] : [
+      {l:'Initiated KYC', n:a.init, c:'var(--blue)', p: g.base!=null ? '<b>'+pctL(a.init,g.base)+'</b> of base' : '&nbsp;'},
+      {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p:'<b>'+pctL(a.passed,a.init)+'</b> '+ofInit()+(big&&g.base!=null?' &middot; '+pctL(a.passed,g.base)+' of base':'')},
+      {l:'Transacting', n:a.txn, c:'var(--green)', p:'<b>'+pctL(a.txn,a.passed)+'</b> '+ofPassed()+(big&&g.base!=null?' &middot; '+pctL(a.txn,g.base)+' of base':'')}
     ];
     return st.map(function(s){
       var w=Math.max(1.2, s.n/mx*100);
@@ -1854,85 +1980,133 @@ applyMasterHash();
         +'<div class="c">'+s.p+'</div></div>';
     }).join('');
   }
-  function card(g, big){
+  function card(g, big, maxInit){
     var base = g.base!=null
-      ? '<div class="base"><span class="n">'+num(g.base)+'</span><span class="l">base &middot; US merchants</span></div>'
+      ? '<div class="base"><span class="n">'+num(g.base)+'</span><span class="l">'+baseLabel()+'</span></div>'
       : '<div class="base"><span class="l">Base count pending the next morning data pull</span></div>';
     return '<div class="fn-card'+(big?' big':'')+'" style="border-top-color:'+g.accent+'">'
-      +'<h3>'+g.name+'</h3><div class="d">'+g.desc+'</div>'+base+stageRows(g,big)+'</div>';
+      +'<h3>'+g.name+'</h3><div class="d">'+g.desc+'</div>'+base+stageRows(g,big,maxInit)+'</div>';
   }
 
-  // ---- Compare view + conversion leaderboard ----
-  $('fnCompare').innerHTML='<div class="fn-cmp">'+GS.map(function(g){return card(g,false);}).join('')+'</div>';
-  var METRICS=[
-    {k:'Base &rarr; Initiated KYC', f:function(g){return g.base? g.a.init/g.base : null;}, fmt:function(g){return pctL(g.a.init,g.base);}},
-    {k:'Initiated &rarr; Passed KYC', f:function(g){return g.a.init? g.a.passed/g.a.init : null;}, fmt:function(g){return pctL(g.a.passed,g.a.init);}},
-    {k:'Passed KYC &rarr; Transacting', f:function(g){return g.a.passed? g.a.txn/g.a.passed : null;}, fmt:function(g){return pctL(g.a.txn,g.a.passed);}}
-  ];
-  $('fnBest').innerHTML=METRICS.map(function(mt){
-    var rank=GS.filter(function(g){return mt.f(g)!=null;}).sort(function(x,y){return mt.f(y)-mt.f(x);});
-    if(!rank.length) return '';
-    var w=rank[0];
-    return '<div class="fn-kpi"><div class="k">'+mt.k+'</div>'
-      +'<div class="v" style="color:'+w.accent+'">'+w.name+' <span class="u">'+mt.fmt(w)+'</span></div>'
-      +'<div class="s">'+rank.slice(1).map(function(g){return g.name+' '+mt.fmt(g);}).join(' &middot; ')+'</div></div>';
-  }).join('');
-
-  // ---- View toggle ----
+  // ---- Compare view + conversion leaderboard --------------------------------
+  var view='compare';   // survives a month change, so switching months keeps your group in view
+  function renderCards(g){
+    var GS=g.GS;
+    var maxInit=Math.max.apply(null, GS.map(function(x){return x.a.init;}))||1;
+    $('fnCompare').innerHTML='<div class="fn-cmp">'+GS.map(function(x){return card(x,false,maxInit);}).join('')+'</div>';
+    // All time, a merchant that passed KYC necessarily initiated first, so stage-to-stage ratios
+    // are true conversion rates. Monthly they are NOT: the merchants that passed in August are
+    // mostly the ones that initiated in July, so passed/initiated within one month can exceed
+    // 100% (August's paying group read 300% off 3 transacting vs 1 pass) and would crown a
+    // "best converting group" on a timing artifact. In Monthly mode the leaderboard therefore
+    // ranks each stage against the month-end base instead — three well-defined monthly flows.
+    var METRICS=monthly()? [
+      {k:'Base &rarr; Initiated KYC', f:function(x){return x.base? x.a.init/x.base : null;}, fmt:function(x){return pctL(x.a.init,x.base);}},
+      {k:'Base &rarr; Passed KYC', f:function(x){return x.base? x.a.passed/x.base : null;}, fmt:function(x){return pctL(x.a.passed,x.base);}},
+      {k:'Base &rarr; Transacting', f:function(x){return x.base? x.a.txn/x.base : null;}, fmt:function(x){return pctL(x.a.txn,x.base);}}
+    ] : [
+      {k:'Base &rarr; Initiated KYC', f:function(x){return x.base? x.a.init/x.base : null;}, fmt:function(x){return pctL(x.a.init,x.base);}},
+      {k:'Initiated &rarr; Passed KYC', f:function(x){return x.a.init? x.a.passed/x.a.init : null;}, fmt:function(x){return pctL(x.a.passed,x.a.init);}},
+      {k:'Passed KYC &rarr; Transacting', f:function(x){return x.a.passed? x.a.txn/x.a.passed : null;}, fmt:function(x){return pctL(x.a.txn,x.a.passed);}}
+    ];
+    $('fnBest').innerHTML=METRICS.map(function(mt){
+      var rank=GS.filter(function(x){return mt.f(x)!=null;}).sort(function(x,y){return mt.f(y)-mt.f(x);});
+      if(!rank.length) return '';
+      var w=rank[0];
+      return '<div class="fn-kpi"><div class="k">'+mt.k+'</div>'
+        +'<div class="v" style="color:'+w.accent+'">'+w.name+' <span class="u">'+mt.fmt(w)+'</span></div>'
+        +'<div class="s">'+rank.slice(1).map(function(x){return x.name+' '+mt.fmt(x);}).join(' &middot; ')+'</div></div>';
+    }).join('');
+    var cmp=view==='compare';
+    $('fnCompare').style.display=cmp?'':'none';
+    $('fnBest').style.display=cmp?'':'none';
+    $('fnSingle').style.display=cmp?'none':'';
+    if(!cmp){
+      var one=GS.filter(function(x){return x.id===view;})[0];
+      $('fnSingle').innerHTML=one? card(one,true,maxInit) : '';
+    }
+  }
   $('fnPick').addEventListener('click', function(e){
     var b=e.target.closest?e.target.closest('button'):null; if(!b) return;
     var btns=$('fnPick').querySelectorAll('button');
     for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
     b.classList.add('on');
-    var v=b.getAttribute('data-g');
-    var cmp=v==='compare';
-    $('fnCompare').style.display=cmp?'':'none';
-    $('fnBest').style.display=cmp?'':'none';
-    $('fnSingle').style.display=cmp?'none':'';
-    if(!cmp){
-      var g=GS.filter(function(x){return x.id===v;})[0];
-      if(g) $('fnSingle').innerHTML=card(g,true);
-    }
+    view=b.getAttribute('data-g');
+    renderCards(groups());
   });
 
-  // ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC
+  // ---- ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC ----
   var GROUPS=[
     {k:'New (since '+LAUNCH+')', color:'var(--green)', f:function(r){return r.isNew;}},
     {k:'Existing &mdash; paying', color:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
     {k:'Existing &mdash; non paying', color:'var(--blue)', f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
     {k:'Existing &mdash; dormant / other', color:'#C2C8CF', tcol:'#3a3a3a', f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
   ];
-  var segs=GROUPS.map(function(g){ var rs=book.filter(g.f); return {g:g, rs:rs, a:agg(rs)}; });
-  var tot=book.length||1;
-  $('fnOriginBar').innerHTML=segs.map(function(s){
-    var w=s.a.init/tot*100;
-    var lbl=(w>=7)?(num(s.a.init)+' · '+Math.round(w)+'%'):'';
-    return '<div class="seg" style="width:'+w.toFixed(2)+'%;background:'+s.g.color+(s.g.tcol?';color:'+s.g.tcol:'')+'" title="'+esc(s.g.k.replace(/&mdash;/g,'-'))+': '+s.a.init+'">'+lbl+'</div>';
-  }).join('');
-  $('fnOriginLegend').innerHTML=segs.map(function(s){
-    return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+s.g.k+' &middot; <b>'+num(s.a.init)+'</b></span>';
-  }).join('');
-  var thead='<tr><th>Group</th><th style="text-align:right">Initiated KYC</th><th style="text-align:right">Passed KYC</th><th style="text-align:right">Transacting</th><th style="text-align:right">% of initiators</th></tr>';
-  var rowsHtml=segs.map(function(s){
-    return '<tr><td>'+s.g.k+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
-  }).join('');
-  rowsHtml+='<tr style="font-weight:800"><td>Total</td><td style="text-align:right">'+num(T.init)+'</td><td style="text-align:right">'+num(T.passed)+'</td><td style="text-align:right">'+num(T.txn)+'</td><td style="text-align:right">100%</td></tr>';
-  $('fnOriginTable').innerHTML=thead+rowsHtml;
+  function renderOrigin(T){
+    var segs=GROUPS.map(function(g){ var rs=book.filter(g.f); return {g:g, rs:rs, a:agg(rs)}; });
+    var tot=T.init||1;
+    $('fnOriginBar').innerHTML=segs.map(function(s){
+      var w=s.a.init/tot*100;
+      var lbl=(w>=7)?(num(s.a.init)+' · '+Math.round(w)+'%'):'';
+      return '<div class="seg" style="width:'+w.toFixed(2)+'%;background:'+s.g.color+(s.g.tcol?';color:'+s.g.tcol:'')+'" title="'+esc(s.g.k.replace(/&mdash;/g,'-'))+': '+s.a.init+'">'+lbl+'</div>';
+    }).join('');
+    $('fnOriginLegend').innerHTML=segs.map(function(s){
+      return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+s.g.k+' &middot; <b>'+num(s.a.init)+'</b></span>';
+    }).join('');
+    var thead='<tr><th>Group</th><th style="text-align:right">Initiated KYC</th><th style="text-align:right">Passed KYC</th><th style="text-align:right">Transacting</th><th style="text-align:right">% of initiators</th></tr>';
+    var rowsHtml=segs.map(function(s){
+      return '<tr><td>'+s.g.k+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
+    }).join('');
+    rowsHtml+='<tr style="font-weight:800"><td>Total</td><td style="text-align:right">'+num(T.init)+'</td><td style="text-align:right">'+num(T.passed)+'</td><td style="text-align:right">'+num(T.txn)+'</td><td style="text-align:right">'+(T.init?'100%':'0%')+'</td></tr>';
+    $('fnOriginTable').innerHTML=thead+rowsHtml;
+  }
 
-  var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
-  $('fnFootnote').textContent=(TAGGED
-      ? 'Groups are assigned server-side (sql/us_group_tags.sql) with the same rule that sizes each base — "non paying" means registered before launch, no active subscription, and at least one POS receipt in the last 30 days. '
-      : '* Active-customer numerators are a floor — group membership is falling back to a monthly POS table that lags, so non-paying initiators are undercounted and land under other. ')
-    +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once.'
-    +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
-    +(TAGGED&&UNTAGGED_N? UNTAGGED_N+' initiator'+(UNTAGGED_N>1?'s are':' is')+' outside the US population these bases measure (non-US or filtered), so '+(UNTAGGED_N>1?'they are':'it is')+' grouped by the legacy flags. ':'')
-    +(BASES&&BASES.asof? 'Bases as of '+BASES.asof+'. ':'')
-    +'Data refreshes automatically every morning from Snowflake.';
+  // ---- Footnote -------------------------------------------------------------
+  function renderFootnote(g){
+    var noReg=book.filter(function(r){return !r.m.registered_at;}).length;
+    var br=g.src;
+    var txt=(TAGGED
+        ? 'Groups are assigned server-side (sql/us_group_tags.sql) with the same rule that sizes each base — "non paying" means registered before launch, no active subscription, and at least one POS receipt in the last 30 days. '
+        : '* Active-customer numerators are a floor — group membership is falling back to a monthly POS table that lags, so non-paying initiators are undercounted and land under other. ')
+      +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once. '
+      +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
+      +(TAGGED&&UNTAGGED_N? UNTAGGED_N+' initiator'+(UNTAGGED_N>1?'s are':' is')+' outside the US population these bases measure (non-US or filtered), so '+(UNTAGGED_N>1?'they are':'it is')+' grouped by the legacy flags. ':'');
+    if(monthly()){
+      txt+='Showing '+monthLabel(MONTH)+' only: each stage is counted by its own date falling in the month, so a merchant that initiated in one month and passed in the next appears in both. Because the merchants at each stage in a single month are not the same people, stage-to-stage conversion rates are not meaningful here and are not shown — every percentage in Monthly view is a share of the group\u2019s base. ';
+      if(NO_PASS_DATE||NO_TXN_DATE){
+        var bits=[];
+        if(NO_PASS_DATE) bits.push(NO_PASS_DATE+' passed KYC');
+        if(NO_TXN_DATE) bits.push(NO_TXN_DATE+' transacting');
+        txt+=bits.join(' and ')+' with no date on file appear under All time but in no single month. ';
+      }
+      if(br && br.monthly && br.row){
+        txt+='Bases are as of '+(br.row.partial? (br.row.asof||MONTH)+' (month still in progress)' : monthLabel(MONTH)+' month end')+'. ';
+      } else {
+        txt+='No month-end base is on file for '+monthLabel(MONTH)+', so the "% of base" figures use today\u2019s bases'+(BASES&&BASES.asof? ' (as of '+BASES.asof+')':'')+' and are not as-of the month. ';
+      }
+    } else if(BASES&&BASES.asof){
+      txt+='Bases as of '+BASES.asof+'. ';
+    }
+    $('fnFootnote').textContent=txt+'Data refreshes automatically every morning from Snowflake.';
+  }
 
-  // ===== Deep dive: passed-KYC merchants per bucket (terminal ordered / received / transacting) =====
+  // ---- Mode note beside the picker ------------------------------------------
+  function renderModeNote(g){
+    var el=$('fnModeNote'); if(!el) return;
+    if(!monthly()){ el.textContent='All time \u00b7 every stage a merchant has ever reached'; return; }
+    var br=g.src;
+    el.textContent=monthLabel(MONTH)+(br&&br.row&&br.row.partial?' \u00b7 month still in progress':'')
+      +' \u00b7 each stage counted in the month it happened';
+  }
+
+  // ---- Deep dive: passed-KYC merchants per bucket ---------------------------
+  // Same mutually exclusive bucket assignment as the origin split (priority: new > paying >
+  // non paying > dormant). In Monthly mode the list is the merchants that PASSED KYC in the
+  // selected month; the terminal and transacting columns are their status TO DATE, which the
+  // chips and note say explicitly — a tick there is not a claim that it happened that month.
+  var deepRender=function(){};
   (function(){
     if(!$('fnDeepPick')) return;
-    // Same mutually exclusive bucket assignment as the origin split (priority: new > paying > non paying > dormant)
     var BUCKETS={
       'new':      {name:'New merchants',           accent:'var(--green)',     f:function(r){return r.isNew;}},
       'paying':   {name:'Paying merchants',        accent:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
@@ -1944,7 +2118,7 @@ applyMasterHash();
     var hasStatus=book.some(function(r){ return r.m.terminal_status!=null; });
     var cur='new', q='';
     function rowsFor(b){
-      return book.filter(BUCKETS[b].f).filter(function(r){return r.passed;})
+      return book.filter(BUCKETS[b].f).filter(selPassed)
         .sort(function(x,y){
           // transacting first, then received, then ordered, then by enabled date desc
           var kx=(x.txn?4:0)+(isDelivered(x.m.terminal_status)?2:0)+(isOrdered(x)?1:0);
@@ -1966,11 +2140,13 @@ applyMasterHash();
       var ordered=rs.filter(isOrdered);
       var received=rs.filter(function(r){return isDelivered(r.m.terminal_status);});
       var txn=rs.filter(function(r){return r.txn;});
+      var when = monthly()? ' in '+monthShort(MONTH) : '';
+      var toDate = monthly()? ' to date' : '';
       $('fnDeepKpis').innerHTML=
-        chip('Passed KYC', num(rs.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
-        +chip('Terminal ordered', num(ordered.length), '<b>'+pctL(ordered.length,rs.length)+'</b> of passed KYC')
-        +chip('Terminal received', hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
-        +chip('Transacting', num(txn.length), '<b>'+pctL(txn.length,rs.length)+'</b> of passed KYC', 'var(--green)');
+        chip('Passed KYC'+when, num(rs.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
+        +chip('Terminal ordered'+toDate, num(ordered.length), '<b>'+pctL(ordered.length,rs.length)+'</b> of those merchants')
+        +chip('Terminal received'+toDate, hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
+        +chip('Transacting'+toDate, num(txn.length), '<b>'+pctL(txn.length,rs.length)+'</b> of those merchants', 'var(--green)');
       var f=q? rs.filter(function(r){ return (String(r.m.name||'')+' '+String(r.m.email||'')).toLowerCase().indexOf(q)>=0; }) : rs;
       var thead='<tr><th>Merchant</th><th>Email</th><th>Passed KYC on</th><th>Terminal ordered</th><th>Terminal received</th><th>Transacting since</th></tr>';
       $('fnDeepTable').innerHTML=thead+f.map(function(r){
@@ -1985,8 +2161,10 @@ applyMasterHash();
           +'<td>'+recCell+'</td>'
           +'<td>'+(r.txn? tick(true, esc(m.first_txn_at||'')) : tick(false))+'</td></tr>';
       }).join('') || (thead+'<tr><td colspan="6" style="color:var(--midgray)">No merchants match.</td></tr>');
-      $('fnDeepNote').textContent=(f.length!==rs.length? f.length+' of ':'')+rs.length+' passed-KYC merchant'+(rs.length===1?'':'s')+' shown. '
+      $('fnDeepNote').textContent=(f.length!==rs.length? f.length+' of ':'')+rs.length+' merchant'+(rs.length===1?'':'s')
+        +(monthly()? ' that passed KYC in '+monthLabel(MONTH) : ' that have passed KYC')+' shown. '
         +'Terminal orders are attributed by shipping email; "received" means the Stripe hardware order status is delivered.'
+        +(monthly()? ' Terminal and transacting ticks are status to date, not necessarily reached in '+monthShort(MONTH)+'.' : '')
         +(hasStatus?'':' Received status appears after the next scheduled data refresh.');
     }
     $('fnDeepPick').addEventListener('click', function(e){
@@ -2005,13 +2183,49 @@ applyMasterHash();
       });
       var a=document.createElement('a');
       a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));
-      a.download='funnel-deep-dive-'+cur+'.csv'; a.click();
+      a.download='funnel-deep-dive-'+cur+(monthly()? '-'+MONTH : '')+'.csv'; a.click();
     });
-    render();
+    deepRender=render;
   })();
+
+  // ---- One entry point: everything on the page redraws from MODE / MONTH ----
+  function renderAll(){
+    var g=groups();
+    var T=renderKpis(g);
+    renderCards(g);
+    renderOrigin(T);
+    renderFootnote(g);
+    renderModeNote(g);
+    deepRender();
+  }
+
+  // ---- Month filter controls ------------------------------------------------
+  var mSel=$('fnMonth');
+  if(mSel){
+    mSel.innerHTML=MONTHS.map(function(m){return '<option value="'+m+'">'+monthLabel(m)+'</option>';}).join('');
+    if(MONTH) mSel.value=MONTH;
+    mSel.addEventListener('change', function(){ MONTH=mSel.value; renderAll(); });
+  }
+  var mBtns=$('fnMode')? $('fnMode').querySelectorAll('button') : [];
+  for(var mi=0;mi<mBtns.length;mi++){ (function(btn){
+    btn.addEventListener('click', function(){
+      // No months on file (a seed data file with no stage dates) — keep All time selected
+      // rather than switching to a month picker with nothing in it.
+      if(btn.getAttribute('data-m')==='month' && !MONTHS.length) return;
+      MODE=btn.getAttribute('data-m');
+      for(var q2=0;q2<mBtns.length;q2++) mBtns[q2].classList.toggle('on', mBtns[q2]===btn);
+      if(mSel) mSel.style.display=(MODE==='month')?'':'none';
+      renderAll();
+    });
+  })(mBtns[mi]); }
+  if(!MONTHS.length && $('fnMode')){
+    var mb=$('fnMode').querySelector('button[data-m="month"]');
+    if(mb){ mb.disabled=true; mb.style.opacity='.45'; mb.style.cursor='default'; mb.title='No dated stage activity on file yet'; }
+  }
 
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
   var ls=$('funnelLaunch'); if(ls) ls.textContent=LAUNCH;
+  renderAll();
   var inited=false;
   window.__FUNNEL_INIT=function(){ if(inited)return; inited=true; };
   window.__FUNNEL_INIT();

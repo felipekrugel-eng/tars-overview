@@ -885,6 +885,67 @@ async function fetchUsBases(conn) {
   }
   return out;
 }
+// ── US funnel bases AT EACH MONTH END (sql/us_bases_monthly.sql) ──────────────
+// The same four disjoint groups as fetchUsBases, evaluated as of a series of month ends so
+// the Funnel page's month filter has a denominator belonging to the month on screen rather
+// than to today. One row per month; the newest row is the month in progress (as_of = today,
+// is_partial = true). GUARDED at the call site — this must never be able to break a page
+// that rendered fine before it existed.
+async function fetchUsBasesMonthly(conn) {
+  const rows = await executeQuery(conn, loadSql('us_bases_monthly.sql'));
+  if (!rows || !rows.length) return null;
+  const out = [];
+  for (const r of rows) {
+    const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+    const n = k => { const v = Number(g(k)); return isFinite(v) ? v : null; };
+    const month = String(g('month') || '').slice(0, 7);
+    if (!/^\d{4}-\d{2}$/.test(month)) continue;
+    const row = { month, asof: toDate(g('as_of')), partial: g('is_partial') === true || String(g('is_partial')).toLowerCase() === 'true' };
+    for (const k of ['new_us', 'paying_base_us', 'nonpaying_us', 'dormant_us',
+                     'total_us', 'active_us', 'paying_us']) {
+      const v = n(k);
+      if (v !== null) row[k] = v;
+    }
+    // Same contract as the all-time bases: without the group bases there is nothing to divide by.
+    if (row.nonpaying_us == null || row.paying_base_us == null || row.dormant_us == null) continue;
+    // Disjointness is the whole point of these four numbers — a mismatch means the CASE ladder
+    // and the counts have drifted apart for that month. Log loudly, keep the row.
+    if (row.total_us != null) {
+      const sum = (row.new_us || 0) + row.paying_base_us + row.nonpaying_us + row.dormant_us;
+      if (sum !== row.total_us) {
+        console.error(`✗ us_bases_monthly ${month}: group bases sum to ${sum} but total_us is ${row.total_us} — groups are not disjoint`);
+      }
+    }
+    out.push(row);
+  }
+  out.sort((a, b) => a.month.localeCompare(b.month));
+  return out.length ? out : null;
+}
+// The monthly file reconstructs paying status from ACTIVATED_AT / CANCELLED_AT, while
+// us_bases.sql reads LOWER(STATUS) = 'active'. Those are close but not identical (paused and
+// non-renewing subscriptions differ), so compare the newest monthly row against the live
+// all-time row on every run and report the gap. A small, stable gap is expected; a widening
+// one means the reconstruction needs revisiting.
+function reportMonthlyBaseGap(bases, monthly) {
+  if (!bases || !monthly || !monthly.length) return;
+  const cur = monthly[monthly.length - 1];
+  const keys = ['new_us', 'paying_base_us', 'nonpaying_us', 'dormant_us', 'total_us'];
+  const diffs = keys
+    .filter(k => bases[k] != null && cur[k] != null && bases[k] !== cur[k])
+    .map(k => `${k} ${cur[k]} vs ${bases[k]} (${cur[k] - bases[k] >= 0 ? '+' : ''}${cur[k] - bases[k]})`);
+  if (!diffs.length) { console.log(`✓ us_bases_monthly: newest row ${cur.month} matches us_bases exactly`); return; }
+  console.log(`  us_bases_monthly: newest row ${cur.month} differs from live us_bases — ${diffs.join(', ')} (expected: paying status is reconstructed from ACTIVATED_AT/CANCELLED_AT)`);
+}
+// If the monthly query fails, carry the previously-committed series forward so the month
+// filter keeps working on yesterday's denominators rather than losing them entirely.
+function readExistingBasesMonthly() {
+  try {
+    const txt = fs.readFileSync(FUNNEL_FILE, 'utf8');
+    const m = txt.match(/window\.__FUNNEL_BASES_MONTHLY\s*=\s*(\[[\s\S]*?\]);/);
+    if (m) return JSON.parse(m[1]);
+  } catch (e) { /* first run, or no monthly series committed yet */ }
+  return null;
+}
 // ── Group tag per merchant (sql/us_group_tags.sql) ────────────────────────────
 // Same CASE ladder as us_bases.sql, evaluated per merchant, so the Funnel page's group
 // numerators are drawn with the exact rule that sizes the group bases. Replaces deciding
@@ -1045,7 +1106,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
   });
   return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
-function writeFunnel(funnel, terminalReady, bases) {
+function writeFunnel(funnel, terminalReady, bases, basesMonthly) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
@@ -1055,6 +1116,11 @@ function writeFunnel(funnel, terminalReady, bases) {
 // carries its stage timestamps; the UI recomputes the group funnels + origin split client-side.
 // __FUNNEL_BASES = per-group US denominators from sql/us_bases.sql (new / paying / nonpaying /
 // dormant, disjoint and summing to total_us; active_us + paying_us are reference-only).
+// __FUNNEL_BASES_MONTHLY = the same four bases AS OF each month end (sql/us_bases_monthly.sql),
+// so the Funnel page's month filter divides a month's numerators by that month's denominators.
+// Newest row is the month in progress (partial:true, asof = pull date). Paying status in past
+// months is reconstructed from ACTIVATED_AT/CANCELLED_AT, so it can differ slightly from the
+// all-time row above — pull.js logs the gap on every run.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
 // Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
 window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
@@ -1064,6 +1130,7 @@ window.__FUNNEL_BOTS_EXCLUDED = ${JSON.stringify(funnel.botsExcluded)};
 window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
 window.__FUNNEL_TERMINAL_READY = ${JSON.stringify(!!terminalReady)};
 window.__FUNNEL_BASES = ${JSON.stringify(bases || null)};
+window.__FUNNEL_BASES_MONTHLY = ${JSON.stringify(basesMonthly || [])};
 window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
 `;
   fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
@@ -1160,6 +1227,21 @@ async function main() {
       else console.error('✗ us_bases returned no usable row (carrying previous bases forward)');
     } catch (e) { console.error(`✗ us_bases query failed (carrying previous bases forward): ${e.message}`); }
     if (!bases) bases = readExistingBases();
+    // Month-end bases for the Funnel page's month filter. GUARDED: an extra Snowflake
+    // round-trip added after the page was already working must not be able to break it —
+    // on failure the previously-committed series is carried forward, and if there is none
+    // the UI falls back to the all-time bases and says so.
+    let basesMonthly = null;
+    try {
+      basesMonthly = await fetchUsBasesMonthly(conn);
+      if (basesMonthly) {
+        console.log(`✓ us_bases_monthly: ${basesMonthly.length} months (${basesMonthly[0].month} → ${basesMonthly[basesMonthly.length - 1].month})`);
+        reportMonthlyBaseGap(bases, basesMonthly);
+      } else {
+        console.error('✗ us_bases_monthly returned no usable rows (carrying previous series forward)');
+      }
+    } catch (e) { console.error(`✗ us_bases_monthly query failed (carrying previous series forward): ${e.message}`); }
+    if (!basesMonthly) basesMonthly = readExistingBasesMonthly();
     // Group tags for every owner in the book, drawn with the same rule that sizes the bases.
     // Non-fatal: without them the UI falls back to the legacy pos_active/is_paying split.
     let groupTags = {};
@@ -1170,7 +1252,7 @@ async function main() {
       console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged ${JSON.stringify(tally)}`);
     } catch (e) { console.error(`✗ us_group_tags query failed (funnel groups fall back to pos_active): ${e.message}`); }
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags);
-    writeFunnel(funnel, terminalReady, bases);
+    writeFunnel(funnel, terminalReady, bases, basesMonthly);
 
     // ---- Report page (monthly series) ----
     // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
