@@ -18,7 +18,18 @@ on:
 
 concurrency:
   group: cusum-pull
-  cancel-in-progress: true        # if a run is still going when the next fires, drop the stale one
+  # Let an in-flight run FINISH; do not let the next trigger kill it.
+  #
+  # This used to be `true`, on the reasoning that a still-running job must be stale. That holds
+  # only while runs are fast. A run normally takes ~0.7 min, but during GitHub Actions congestion
+  # on 2026-08-06 runs stretched to 7-16 min — longer than the ~10 min trigger interval — so every
+  # run was cancelled by its successor before it could commit, and the graph froze for 90 minutes
+  # while the workflow list looked busy. Cancelling on a timer that can be shorter than the job is
+  # a starvation loop: the slower things get, the less likely anything ever completes.
+  #
+  # With `false`, GitHub queues at most ONE pending run per group and drops older pending ones, so
+  # a backlog still cannot build up. Under normal timings this changes nothing.
+  cancel-in-progress: false
 
 jobs:
   refresh:
