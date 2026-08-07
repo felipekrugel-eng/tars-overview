@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-07T07:59:17.245Z",
+  "ranAt": "2026-08-07T10:37:14.688Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -996,23 +996,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 136473
+        "rows": 136520
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59465
+        "rows": 59469
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1083750
+        "rows": 1084415
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 101287
+        "rows": 101308
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1727373
+        "rows": 1728471
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
@@ -1044,7 +1044,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9253620061
+        "rows": 9254581733
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1897,33 +1897,6 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1741,
-        "SHIPPING_ADDRESS_STATE": "PA",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "18618",
-        "BATCH_TIMESTAMP": "2026-08-07 00:00:00.000",
-        "SHIPPING_COMPANY": null,
-        "SHIPPING_ADDRESS_LINE1": "32 E. Hemlock St.",
-        "AMOUNT": 30754,
-        "SHIPPING_AMOUNT": 3000,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1TyB5l7e4AMQfKY3Jr6jg2C4",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-06 22:15:34.000",
-        "SHIPPING_NAME": "Nicole Acacio",
-        "SHIPPING_METHOD_NAME": "express",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Harveys Lake",
-        "SHIPPING_PHONE": "13107297007",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "nixpixlyfe@gmail.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-07-28 13:30:45.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
         "SHIPPING_ADDRESS_LINE2": "",
         "TAX": 7014,
         "SHIPPING_ADDRESS_STATE": null,
@@ -2110,6 +2083,33 @@
         "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
         "LIVEMODE": true,
         "CREATED": "2026-05-18 15:22:42.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 1921,
+        "SHIPPING_ADDRESS_STATE": "PA",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
+        "BATCH_TIMESTAMP": "2026-07-01 15:00:00.000",
+        "SHIPPING_COMPANY": "Polarbear icecream",
+        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
+        "AMOUNT": 33934,
+        "SHIPPING_AMOUNT": 6000,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-07-01 12:08:55.000",
+        "SHIPPING_NAME": "Sean hunter",
+        "SHIPPING_METHOD_NAME": "priority",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Matamoras",
+        "SHIPPING_PHONE": "18458498613",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-06-16 13:28:54.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
