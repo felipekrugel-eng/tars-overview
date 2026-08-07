@@ -31,7 +31,7 @@ WITH -- ----------------------------------------------------------------
           AND (
                -- S1: transaction-ID business names (Order_/Sale#/... + hex id) - July flood
                REGEXP_LIKE(TRIM(BUSINESS_NAME),
-                   '(order|sale|invoice|receipt|payment|txn|transaction|cart|checkout)[[:space:]_#:.\\-]+[0-9a-fx]{6,}.*', 'i')
+                   '.*(order|sale|invoice|receipt|payment|txn|transaction|cart|checkout)[[:space:]_#:.\\-]+[0-9a-fx]{6,}.*', 'i')
                -- S2: marketplace-brand impersonation (leet-normalized) + lure keyword
             OR (    REGEXP_LIKE(TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa'),
                         '.*(poshmark|posh|vinted|depop|etsy).*')
@@ -50,6 +50,34 @@ WITH -- ----------------------------------------------------------------
                -- S6: Cyrillic homoglyphs in a US business name
             OR REGEXP_LIKE(BUSINESS_NAME, '.*[\u0400-\u04FF].*')
           )
+        UNION
+        -- S8: explosive name clusters (added 2026-08-07)
+        -- S7 exempts any name that also existed in the US before the attack, on the reasoning
+        -- that it is an organic duplicate. That protection was load-bearing in the wrong
+        -- direction: 7 US "Poshmark" accounts dating from 2025-11 exempted the entire 787-account
+        -- attack-era cluster, leaving 374 registrations on 2 July and 216 on 30 July in the
+        -- published figures. S8 restores the catch for names whose attack-era cohort is both
+        -- large (>= 20) and dwarfs any pre-attack presence (>= 10x), which is the shape of a
+        -- scripted wave rather than a popular name. Genuinely long-standing duplicates are left
+        -- alone by the ratio test: depop (85 attack-era vs 129 before), test (57 vs 906) and
+        -- walmart (14 vs 132) are all untouched. Brand-agnostic on purpose, so the next wave
+        -- does not need a new signature.
+        SELECT m.LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+        JOIN (
+            SELECT TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa') AS NORM_NAME
+            FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+            WHERE UPPER(TRIM(COUNTRY)) = 'US'
+              AND BUSINESS_NAME IS NOT NULL
+              AND LENGTH(TRIM(BUSINESS_NAME)) >= 4
+            GROUP BY 1
+            HAVING COUNT_IF(CREATED_AT >= '2026-03-01') >= 20
+               AND COUNT_IF(CREATED_AT >= '2026-03-01') >= 10 * COUNT_IF(CREATED_AT < '2026-03-01')
+        ) c8
+          ON TRANSLATE(LOWER(TRIM(m.BUSINESS_NAME)), '01345@', 'oieasa') = c8.NORM_NAME
+        WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+          AND m.LOYVERSE_ID IS NOT NULL
+          AND m.CREATED_AT >= '2026-03-01'
         UNION
         -- S7: bulk clusters - same normalized name >= 3x among US signups in the
         -- attack era (>= 2026-03-01). Names already established in the US before
