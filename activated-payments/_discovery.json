@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-07T13:59:51.890Z",
+  "ranAt": "2026-08-07T16:27:09.190Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1036,7 +1036,7 @@
       },
       {
         "name": "CURRENCY_RATES",
-        "rows": 284550
+        "rows": 284722
       },
       {
         "name": "HISTORICAL_RATES",
@@ -1044,7 +1044,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9255862055
+        "rows": 9256805943
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2116,20 +2116,6 @@
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TyB5l7e4AMQfKY3Jr6jg2C4",
-        "BATCH_TIMESTAMP": "2026-08-07 00:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1Sx7K17e4AMQfKY3yau6je2Q",
         "BATCH_TIMESTAMP": "2026-02-24 15:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 29900,
@@ -2224,6 +2210,20 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
+        "AMOUNT": 26013,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],
