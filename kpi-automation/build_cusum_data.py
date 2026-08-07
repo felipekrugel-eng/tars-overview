@@ -35,7 +35,7 @@ HISTORY_KEEP = 60
 # On mismatch we RECONSTRUCT today's line from a country x hour query of today's
 # registrations on the new basis (instead of zeroing it), and back-derive the
 # midnight baseline as (count now - regs today).
-FILTER_VERSION = 3
+FILTER_VERSION = 4   # 4 = 2026-08-07 S1 left-anchoring + S8 explosive-cluster rule
 
 
 def _private_key():
