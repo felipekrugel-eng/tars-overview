@@ -8,20 +8,20 @@ window.MARGINS = {
     "txns": 12316.0,
     "tpv": 247064.56,
     "avgTicket": 20.0604546930822,
-    "revenue": 7005.3,
-    "takeRate": 0.0283541273584524,
-    "totalFees": 5951.3856,
-    "netMargin": 1053.9144,
-    "netTakeRate": 0.00426574495346479,
-    "pctProfitable": 0.463624553426437,
-    "profitableTxns": 5710.0,
-    "unprofitableTxns": 6606.0,
+    "revenue": 7006.49,
+    "takeRate": 0.0283589439132832,
+    "totalFees": 5973.2456,
+    "netMargin": 1033.2444,
+    "netTakeRate": 0.00418208261031044,
+    "pctProfitable": 0.463705748619682,
+    "profitableTxns": 5711.0,
+    "unprofitableTxns": 6605.0,
     "withActual": 11884.0,
     "withEstimated": 432.0,
     "failed": 266.0
   },
   "fees": {
-    "total": 5951.3856,
+    "total": 5973.2456,
     "network": {
       "label": "    Network Fees (pass-through)",
       "total": 5060.1256,
@@ -42,15 +42,15 @@ window.MARGINS = {
     },
     "stripe": {
       "label": "    Stripe Fees (markup)",
-      "total": 891.26,
+      "total": 913.12,
       "items": [
         {
           "label": "        Per Auth Fee",
-          "value": 606.67
+          "value": 622.98
         },
         {
           "label": "        Volume Fee",
-          "value": 234.13
+          "value": 239.68
         }
       ]
     }
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 7005.3
+        "revenue": 7006.49
       },
       {
         "name": "All 2.5% flat",
