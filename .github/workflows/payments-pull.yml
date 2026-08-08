@@ -1,4 +1,4 @@
-# FACADASH — server-side daily rebuild of the Embedded Payments true-cost / margin
+# FACADASH — server-side rebuild of the Embedded Payments true-cost / margin
 # workbook (loyverse_payments_analysis_ful_V2.xlsx). Modelled on kpi-pull.yml.
 #
 # Runs entirely on the GitHub runner — no desktop, no manual exports:
@@ -7,7 +7,7 @@
 #   LibreOffice headless  recalculates so the file opens with live values
 #   verify  zero genuine formula errors + all 13 sheets + headline cells populated
 # then commits the finished .xlsx to payments-automation/output/. That committed file
-# is the source of truth, refreshed daily with zero dependence on anyone's computer.
+# is the source of truth, refreshed every 3 hours with zero dependence on anyone's computer.
 #
 # Fully isolated: only writes under payments-automation/ (data/ + output/), which no
 # other workflow touches, so the rebase-retry push never conflicts with the CASE,
@@ -16,16 +16,24 @@
 # OPEN ITEM: role DATA_VIEWER needs SELECT / IMPORTED PRIVILEGES on the Stripe share
 # GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659. Until that grant lands the
 # pull fails its <100-row sanity gate and run.py rebuilds from the last-good committed
-# CSVs (so the workbook still refreshes daily, just not with same-day data).
+# CSVs (so the workbook still refreshes on schedule, just not with same-day data).
 name: payments-pull
 
 on:
   schedule:
-    # 06:00 UTC weekdays == 07:00 UK (BST). GitHub cron is always UTC and ignores DST,
-    # so in winter (GMT) this lands at 06:00 local; adjust to '0 7 * * 1-5' if a hard
-    # 7am year-round is required. The Cowork "trigger-payments-pull-daily" task also
-    # dispatches this each weekday morning (belt-and-suspenders vs GitHub's flaky cron).
-    - cron: '0 6 * * 1-5'
+    # Every 3 hours, all seven days — deliberately the same FREQUENCY as
+    # activated-payments-pull ('30 */3 * * *'), because the Payments tab shows Overview and
+    # Summary of Margins side by side and they must not disagree. Until 2026-08-07 this ran
+    # '0 6 * * 1-5': once a weekday, nothing at weekends, so margins could sit three days
+    # behind an Overview that had refreshed ~24 times.
+    #
+    # Offset to :45 rather than :30 on purpose. activated-payments-pull fires at :30 and this
+    # job takes ~7-8 minutes; starting both on the same minute would have them racing to push
+    # to master. 15 minutes of separation keeps the pushes clear of each other.
+    #
+    # Note this run commits the full 11.7 MB workbook each time, which is a deliberate choice
+    # to keep the downloadable file as fresh as the dashboard.
+    - cron: '45 */3 * * *'
   workflow_dispatch: {}          # manual "Run workflow" button + Cowork trigger
   push:
     # First install / whenever the pipeline code changes: rebuild immediately so the
@@ -109,11 +117,18 @@ jobs:
           if git diff --cached --quiet; then
             echo "No change — nothing to commit."
           else
-            git commit -m "chore(payments): daily true-cost rebuild $(date -u +%FT%TZ)"
-            # Other daily pulls can advance master while we run (~5-10 min). We only write
+            git commit -m "chore(payments): true-cost rebuild $(date -u +%FT%TZ)"
+            # Other pulls can advance master while we run (~5-10 min). We only write
             # under payments-automation/, which no other workflow touches, so rebasing on
             # top of their commits never conflicts. Retry up to 5 times.
             for i in 1 2 3 4 5; do
+              # Reset before each attempt. `git pull --rebase` leaves the tree in an UNMERGED
+              # state when it hits a conflict, and every later attempt then dies on "Pulling is
+              # not possible because you have unmerged files" — so all 5 retries fail for the
+              # same reason and the whole run is thrown away at the final step. That is exactly
+              # how kpi-pull lost 105 minutes of work on 2026-08-07 when a human commit landed
+              # mid-run. Aborting any in-progress rebase makes the retries actually independent.
+              git rebase --abort 2>/dev/null || true
               if git pull --rebase --autostash origin master && git push; then
                 echo "pushed on attempt $i"; exit 0
               fi

@@ -63,6 +63,13 @@ jobs:
             # under activated-payments/, which no other workflow touches, so rebasing on
             # top of their commits never conflicts. Retry up to 5 times.
             for i in 1 2 3 4 5; do
+              # Reset before each attempt. `git pull --rebase` leaves the tree in an UNMERGED
+              # state when it hits a conflict, and every later attempt then dies on "Pulling is
+              # not possible because you have unmerged files" — so all 5 retries fail for the
+              # same reason and the whole run is thrown away at the final step. That is exactly
+              # how kpi-pull lost 105 minutes of work on 2026-08-07 when a human commit landed
+              # mid-run. Aborting any in-progress rebase makes the retries actually independent.
+              git rebase --abort 2>/dev/null || true
               if git pull --rebase --autostash origin master && git push; then
                 echo "pushed on attempt $i"; exit 0
               fi
