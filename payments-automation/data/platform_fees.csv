@@ -1,8 +1,8 @@
 FEE_CATEGORY,CURRENCY,N,TOTAL_AMOUNT_MINOR
 other,gbp,14,-1669896
 payout,gbp,6,-671
-per_auth,gbp,114,-46585
+per_auth,gbp,115,-48116
 radar,gbp,2,-10
 tap_to_pay,gbp,34,-2576
 terminal_use,gbp,2,-824
-volume,gbp,217,-17923
+volume,gbp,219,-18491
