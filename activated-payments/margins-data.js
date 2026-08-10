@@ -8,14 +8,14 @@ window.MARGINS = {
     "txns": 13037.0,
     "tpv": 267831.76,
     "avgTicket": 20.5439717726471,
-    "revenue": 7605.66,
-    "takeRate": 0.0283971549901326,
+    "revenue": 7607.97,
+    "takeRate": 0.0284057798074433,
     "totalFees": 6540.4699,
-    "netMargin": 1065.1901,
-    "netTakeRate": 0.00397708658599712,
-    "pctProfitable": 0.461992789752244,
-    "profitableTxns": 6023.0,
-    "unprofitableTxns": 7014.0,
+    "netMargin": 1067.5001,
+    "netTakeRate": 0.00398571140330781,
+    "pctProfitable": 0.462299608805707,
+    "profitableTxns": 6027.0,
+    "unprofitableTxns": 7010.0,
     "withActual": 12609.0,
     "withEstimated": 428.0,
     "failed": 278.0
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 7605.66
+        "revenue": 7607.97
       },
       {
         "name": "All 2.5% flat",
