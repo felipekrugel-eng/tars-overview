@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-08-03",
+  "lastUpdated": "2026-08-10",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98421,7 +98421,7 @@ const CASE_DATA = {
   "appStores": {
     "googlePlay": {
       "rating": 4.6,
-      "reviewCount": "17.6K",
+      "reviewCount": "17.8K",
       "positive": 86,
       "neutral": 9,
       "negative": 5,
@@ -98447,7 +98447,7 @@ const CASE_DATA = {
           "type": "neg"
         },
         {
-          "label": "Add-on costs",
+          "label": "Back office slow",
           "type": "neg"
         }
       ]
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 671,
+      "mentions": 679,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 471,
+      "mentions": 476,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 368,
+      "mentions": 372,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 298,
+      "mentions": 301,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 233,
+      "mentions": 236,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 174,
+      "mentions": 176,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 129,
+      "mentions": 131,
       "type": "neg",
       "key": "sync"
     }
@@ -98565,18 +98565,18 @@ const CASE_DATA = {
         1017000,
         1034000,
         1071000,
-        1089000
+        1093000
       ]
     },
     "appStore": {
-      "total": "279K+",
+      "total": "281K+",
       "trend": [
         232000,
         240000,
         250000,
         259000,
         271000,
-        279000
+        281000
       ]
     }
   },
@@ -98622,17 +98622,17 @@ const CASE_DATA = {
         "text": "I can't fault this software. Having used Zonal for years, I can't believe you can do so much at no cost, and setting it all up is a breeze, even KDS. Two wishes: a standard staff-management option for small teams, and the ability to work across different WiFi networks. Overall, highly recommend."
       },
       {
-        "author": "AccessoriesMY",
+        "author": "Ziggy Idris",
         "country": "MY",
         "region": "asia",
         "rating": 5,
         "date": "Jul 2026",
         "sentiment": "positive",
         "themes": [
-          "ease-of-use",
-          "inventory"
+          "free-value",
+          "ease-of-use"
         ],
-        "text": "Loaded 600+ products through the back office CSV import. Part-time staff learn the register in minutes. Loyalty rewards keep customers coming back."
+        "text": "This is an awesome app for small business. For small FnB outlet the free standard features are enough to automate the sales. I'm still learning to use and discovering the app and if I find everything is good surely I will go for the premium. P/S: The CSR bot is also resolving my questions spot on. I hope the LIVE human CSR is also the same if I need them."
       },
       {
         "author": "GroceryAE",
@@ -98648,16 +98648,16 @@ const CASE_DATA = {
         "text": "Real-time sales dashboards, profit margins per item, and hourly breakdowns — all completely free. Still my one ask after the latest update: let us pick a different currency per store when running multiple shops on one account."
       },
       {
-        "author": "PubOwnerIE",
-        "country": "IE",
-        "region": "europe",
+        "author": "Usman Lawan",
+        "country": "NG",
+        "region": "africa",
         "rating": 4,
         "date": "Jul 2026",
         "sentiment": "neutral",
         "themes": [
           "ease-of-use"
         ],
-        "text": "Solid daily driver with a clean UI and reliable offline mode. New features still keep landing on iOS first — the Android app is waiting on tipping and a couple of payment flows. Even so, nothing else comes close at this price point."
+        "text": "Absolutely fantastic app, just what I need. But a few modifications: ability to choose your own theme colour, and the save button also at the top would reduce workflow. The ticket flow needs simplifying — after you save there's no need for a second page asking you to confirm again. Also add more quota for favourites and more icons, and let us sort by colour."
       },
       {
         "author": "FerreteriaMX",
@@ -98696,17 +98696,16 @@ const CASE_DATA = {
         "text": "Could not open and close shifts properly for almost three weeks. On the free tier you only get help articles and email — live chat is reserved for paying subscribers, so a register-blocking issue drags on."
       },
       {
-        "author": "SalonMM",
-        "country": "MM",
+        "author": "Muhammad Firdaus bin Rohani",
+        "country": "MY",
         "region": "asia",
         "rating": 2,
         "date": "Jul 2026",
         "sentiment": "negative",
         "themes": [
-          "customer-support",
           "sync"
         ],
-        "text": "Product sync between locations breaks intermittently during peak hours. Support ticket sat open for 10 days before getting a meaningful reply."
+        "text": "Please check your back office website — so slow to respond! The only thing I don't like about the app is the back office website. So slow to respond."
       },
       {
         "author": "TapasBCN",
