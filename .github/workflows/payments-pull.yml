@@ -117,21 +117,26 @@ jobs:
           if git diff --cached --quiet; then
             echo "No change — nothing to commit."
           else
-            git commit -m "chore(payments): true-cost rebuild $(date -u +%FT%TZ)"
-            # Other pulls can advance master while we run (~5-10 min). We only write
-            # under payments-automation/, which no other workflow touches, so rebasing on
-            # top of their commits never conflicts. Retry up to 5 times.
+            # Other pulls can advance master while we run (~8 min), so a bare push is rejected
+            # non-fast-forward. Generated files: the newest generation wins, so re-parent rather
+            # than merge. `git pull --rebase` tries to MERGE our regenerated files with the remote
+            # copy; an 11.7 MB binary workbook is unmergeable and the rebase then fails identically
+            # on every attempt. `reset --soft` moves HEAD to the current remote while KEEPING our
+            # index, rebuilding the commit on top of origin/master with our content — no conflict
+            # is possible. This job now pushes 8x a day, so that mattered more than it used to.
             for i in 1 2 3 4 5; do
-              # Reset before each attempt. `git pull --rebase` leaves the tree in an UNMERGED
-              # state when it hits a conflict, and every later attempt then dies on "Pulling is
-              # not possible because you have unmerged files" — so all 5 retries fail for the
-              # same reason and the whole run is thrown away at the final step. That is exactly
-              # how kpi-pull lost 105 minutes of work on 2026-08-07 when a human commit landed
-              # mid-run. Aborting any in-progress rebase makes the retries actually independent.
-              git rebase --abort 2>/dev/null || true
-              if git pull --rebase --autostash origin master && git push; then
-                echo "pushed on attempt $i"; exit 0
+              git fetch -q origin master || { sleep 5; continue; }
+              git reset -q --soft origin/master
+              git add payments-automation/data/transactions.csv \
+                      payments-automation/data/icplus_costs.csv \
+                      payments-automation/data/platform_fees.csv \
+                      payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx \
+                      activated-payments/margins-data.js
+              if git diff --cached --quiet; then
+                echo "Remote already has this data — nothing to push."; exit 0
               fi
+              git commit -q -m "chore(payments): true-cost rebuild $(date -u +%FT%TZ)"
+              if git push; then echo "pushed on attempt $i"; exit 0; fi
               echo "push attempt $i failed (remote moved) — retrying in 5s"
               sleep 5
             done

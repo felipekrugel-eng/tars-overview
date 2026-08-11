@@ -9,7 +9,9 @@ on:
     # 04:00 UTC = 5am UK during British Summer Time (≈7am finish, 9am Cyprus for Alex).
     # NOTE: GitHub cron is always UTC and ignores DST. In winter (GMT) this becomes 4am UK;
     # nudge to '0 5 * * *' in late Oct if you want 5am UK year-round.
-    - cron: '0 4 * * *'
+    # 09:00 UTC, deliberately AFTER the dispatched run (~04:13 + ~96 min) has published, so the
+    # guard above can see today's data and skip. Was '0 4 * * *', which raced the dispatch.
+    - cron: '0 9 * * *'
   workflow_dispatch: {}          # manual "Run workflow" button
 
 concurrency:
@@ -30,14 +32,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The cron below is a FAIL-SAFE, not the primary trigger — an external task dispatches this
+      # job each morning, and the cron only matters on the days that task does not fire (which has
+      # happened: the equivalent cusum trigger stopped on 2026-07-24 and the graph went stale).
+      #
+      # Without this guard both ran every day: the dispatch succeeded, then the cron run queued
+      # behind it, spent ~2 hours on Snowflake, regenerated the same files and died trying to
+      # reconcile them with what the first run had already published. Every day from at least
+      # 8 Aug. Reading generatedAt out of the checked-out kpi-data.js costs nothing and turns the
+      # cron back into what it is meant to be: insurance that fires only when needed.
+      - name: Skip the cron run if today's data is already published
+        id: guard
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Dispatched run — always proceeds."
+            exit 0
+          fi
+          LAST=$(grep -o '"generatedAt":"[0-9-]\{10\}' "KPI Dashboard v2 (Caio)/kpi-data.js" \
+                 | head -1 | grep -o '[0-9-]\{10\}' || true)
+          TODAY=$(date -u +%F)
+          if [ "$LAST" = "$TODAY" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "kpi-data.js already generated today ($LAST) — cron fail-safe not needed, exiting."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "No refresh yet today (last generated $LAST) — cron fail-safe proceeding."
+          fi
+
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.skip != 'true'
         with:
           python-version: '3.12'
 
       - name: Install deps
+        if: steps.guard.outputs.skip != 'true'
         run: pip install -r kpi-automation/requirements.txt
 
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
+        if: steps.guard.outputs.skip != 'true'
         env:
           # Only the private key is a secret (reused from the CASE pull). The rest are plain config.
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
@@ -54,6 +87,7 @@ jobs:
         run: python kpi-automation/run.py
 
       - name: Commit & push if the data changed
+        if: steps.guard.outputs.skip != 'true'
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
@@ -68,17 +102,23 @@ jobs:
             # onto the latest remote and retry. The files we touch (daily-history.js,
             # kpi-data.js) are written only by this workflow, so rebasing on top of
             # other commits (cusum-data.js, sql, etc.) does not conflict.
+            # Generated files: the newest generation simply wins, so re-parent rather than merge.
+            # `git pull --rebase` replays our commit and tries to MERGE our regenerated
+            # daily-history.js with whatever the remote now has. For a large machine-written file
+            # that is unmergeable, and rebase fails with "could not apply ... refresh
+            # daily-history.js" on every attempt — which is how the scheduled run failed every
+            # single day from at least 8 Aug, each time after ~2 hours of completed Snowflake work.
+            # `reset --soft` moves HEAD to the current remote while KEEPING our index, so the
+            # commit is rebuilt on top of origin/master with our content and cannot conflict.
             for i in 1 2 3 4 5; do
-              # Reset before each attempt. `git pull --rebase` leaves the tree in an UNMERGED
-              # state when it hits a conflict, and every later attempt then dies on "Pulling is
-              # not possible because you have unmerged files" — so all 5 retries fail for the
-              # same reason and the whole run is thrown away at the final step. That is exactly
-              # how kpi-pull lost 105 minutes of work on 2026-08-07 when a human commit landed
-              # mid-run. Aborting any in-progress rebase makes the retries actually independent.
-              git rebase --abort 2>/dev/null || true
-              if git pull --rebase --autostash origin master && git push; then
-                echo "pushed on attempt $i"; exit 0
+              git fetch -q origin master || { sleep 5; continue; }
+              git reset -q --soft origin/master
+              git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js" "KPI Dashboard v2 (Caio)/pilot-data.js" "KPI Dashboard v2 (Caio)/pilot-status.md" "KPI Dashboard v2 (Caio)/cohort-country"
+              if git diff --cached --quiet; then
+                echo "Remote already has this data — nothing to push."; exit 0
               fi
+              git commit -q -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
+              if git push; then echo "pushed on attempt $i"; exit 0; fi
               echo "push attempt $i failed (remote moved) — retrying in 5s"
               sleep 5
             done

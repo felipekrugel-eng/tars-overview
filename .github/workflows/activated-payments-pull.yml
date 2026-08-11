@@ -62,17 +62,20 @@ jobs:
             # master while we run, causing a non-fast-forward push. We only write files
             # under activated-payments/, which no other workflow touches, so rebasing on
             # top of their commits never conflicts. Retry up to 5 times.
+            # Generated files: the newest generation wins, so re-parent rather than merge.
+            # `git pull --rebase` tries to MERGE our regenerated files with the remote copy;
+            # machine-written files are unmergeable and the rebase fails identically on every
+            # attempt. `reset --soft` moves HEAD to the current remote while KEEPING our index,
+            # rebuilding the commit on top of origin/master with our content — cannot conflict.
             for i in 1 2 3 4 5; do
-              # Reset before each attempt. `git pull --rebase` leaves the tree in an UNMERGED
-              # state when it hits a conflict, and every later attempt then dies on "Pulling is
-              # not possible because you have unmerged files" — so all 5 retries fail for the
-              # same reason and the whole run is thrown away at the final step. That is exactly
-              # how kpi-pull lost 105 minutes of work on 2026-08-07 when a human commit landed
-              # mid-run. Aborting any in-progress rebase makes the retries actually independent.
-              git rebase --abort 2>/dev/null || true
-              if git pull --rebase --autostash origin master && git push; then
-                echo "pushed on attempt $i"; exit 0
+              git fetch -q origin master || { sleep 5; continue; }
+              git reset -q --soft origin/master
+              git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json
+              if git diff --cached --quiet; then
+                echo "Remote already has this data — nothing to push."; exit 0
               fi
+              git commit -q -m "chore(payments): daily activation pull $(date -u +%FT%TZ)"
+              if git push; then echo "pushed on attempt $i"; exit 0; fi
               echo "push attempt $i failed (remote moved) — retrying in 5s"
               sleep 5
             done
