@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-11T16:35:37.370Z",
+  "ranAt": "2026-08-11T14:01:06.446Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1042,15 +1042,15 @@
       },
       {
         "name": "CURRENCY_RATES",
-        "rows": 285410
+        "rows": 285238
       },
       {
         "name": "HISTORICAL_RATES",
-        "rows": 1682
+        "rows": 1681
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9292565451
+        "rows": 9291602338
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1903,33 +1903,6 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1659,
-        "SHIPPING_ADDRESS_STATE": null,
-        "SHIPPING_ADDRESS_POSTAL_CODE": "8044 VA",
-        "BATCH_TIMESTAMP": "2026-08-11 12:00:00.000",
-        "SHIPPING_COMPANY": "Loyverse UK Connect",
-        "SHIPPING_ADDRESS_LINE1": "Breezichtlaan 135",
-        "AMOUNT": 9559,
-        "SHIPPING_AMOUNT": 2000,
-        "SHIPPING_CURRENCY": "eur",
-        "PO_NUMBER": null,
-        "ID": "thor_1U2qpj7e4AMQfKY339r75kE1",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 10:25:47.000",
-        "SHIPPING_NAME": "Yulian Nikolaev",
-        "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "shipped",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Zwolle",
-        "SHIPPING_PHONE": "31625230278",
-        "CURRENCY": "eur",
-        "SHIPPING_EMAIL": "u.nikolaiev@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-08-10 10:53:31.000",
-        "SHIPPING_ADDRESS_COUNTRY": "NL"
-      },
-      {
         "SHIPPING_ADDRESS_LINE2": "Apt 1A",
         "TAX": 1665,
         "SHIPPING_ADDRESS_STATE": "ME",
@@ -1943,10 +1916,10 @@
         "PO_NUMBER": null,
         "ID": "thor_1U3BUR7e4AMQfKY3Xi1qWkZz",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 09:27:01.000",
+        "UPDATED": "2026-08-11 08:56:55.000",
         "SHIPPING_NAME": "Marc Londo",
         "SHIPPING_METHOD_NAME": "express",
-        "STATUS": "ready_to_ship",
+        "STATUS": "pending",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "SHIPPING_ADDRESS_CITY": "Madison",
         "SHIPPING_PHONE": "12076128548",
@@ -2117,23 +2090,36 @@
         "LIVEMODE": true,
         "CREATED": "2026-04-28 15:49:25.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": "Delta, CO 81416",
+        "TAX": 1042,
+        "SHIPPING_ADDRESS_STATE": "CO",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "81416",
+        "BATCH_TIMESTAMP": "2026-06-01 15:00:00.000",
+        "SHIPPING_COMPANY": "Delta Builders llc",
+        "SHIPPING_ADDRESS_LINE1": "318 Main Street",
+        "AMOUNT": 18842,
+        "SHIPPING_AMOUNT": 2200,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1TYT0A7e4AMQfKY3zZkhxobL",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-06-01 12:10:53.000",
+        "SHIPPING_NAME": "Charles Mason",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Delta",
+        "SHIPPING_PHONE": "19705100014",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-05-18 15:22:42.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1U2qpj7e4AMQfKY339r75kE1",
-        "BATCH_TIMESTAMP": "2026-08-11 12:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
-        "AMOUNT": 5900,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "bbpos_wisepad_3",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "NL",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfogEfM2vh0cs",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "eur",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_JB23Ov4JujGReT",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "eur"
-      },
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1U3BUR7e4AMQfKY3Xi1qWkZz",
@@ -2230,6 +2216,20 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
+        "BATCH_TIMESTAMP": "2026-05-01 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
+        "AMOUNT": 4263,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CPcP2UVJHmg",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],
