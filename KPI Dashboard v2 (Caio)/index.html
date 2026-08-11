@@ -539,26 +539,54 @@ renderCohTable();
     let mx = 0, nAges = 1;
     triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || [], s = sizeOf(c); nAges = Math.max(nAges, a.length);
       a.forEach(v => { if (v != null){ const dv = pct ? (s ? v/s*100 : 0) : v; if (dv > mx) mx = dv; } }); });
+    // The newest diagonal is the CURRENT, in-progress month (July cohort's M1 = August-to-date).
+    // Each cohort reaches it at a different age, so the partial cell is per-row, not a column.
+    //
+    // ALL THREE metrics are month-based, including paying: it counts merchants with paid invoice
+    // line items IN that month, not a point-in-time subscription count. Verified on real data —
+    // on 8 August every cohort's trailing cell sat ~45% below the prior month at once (Jun cohort
+    // 961 -> 549, May 1.2k -> 678, Apr 1.3k -> 677). Simultaneous across every cohort is a
+    // billing-cycle artefact, not churn. So the partial marking applies to every metric.
+    const LATEST = (D.meta && D.meta.latestMonth) || null;
+    const ageOfLatest = c => {
+      if (!LATEST) return -1;
+      return (+LATEST.slice(0,4) - +c.slice(0,4)) * 12 + (+LATEST.slice(5,7) - +c.slice(5,7));
+    };
+    let sawPartial = false;
     let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
     for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
     h += '</tr></thead><tbody>';
     triCohorts.slice().reverse().forEach(c => {
       const s = sizeOf(c);
+      const pIdx = ageOfLatest(c);
       h += '<tr><td class="k">' + c + '</td><td class="sz">' + fmtN(s) + '</td>';
       const arr = (CC[c] && CC[c][metric]) || [];
       for (let i = 0; i < nAges; i++){
         const v = arr[i];
         if (v == null){ h += '<td class="tri-e"></td>'; continue; }
+        const isPartial = (i === pIdx);
+        if (isPartial) sawPartial = true;
         const dv = pct ? (s ? v/s*100 : 0) : v;
         const t = mx ? dv/mx : 0;
-        const cell = pct ? dv.toFixed(1) + '%' : triFmt(v);
-        const tip = c + ' · M' + i + ': ' + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v));
-        h += '<td style="background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A') +
-             '" title="' + tip + '">' + cell + '</td>';
+        const cell = (pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
+        const tip = c + ' · M' + i + ': ' + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v))
+                  + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
+        const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
+                    + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
+        h += '<td style="' + style + '" title="' + tip + '">' + cell + '</td>';
       }
       h += '</tr>';
     });
-    triWrap.innerHTML = h + '</tbody></table>';
+    let foot = '';
+    if (sawPartial){
+      foot = '<div style="font-size:11.5px;color:var(--faint);margin-top:7px">'
+           + '<b>*</b> ' + LATEST + ' is still in progress'
+           + (D.meta && D.meta.generatedAt ? ' (as of ' + D.meta.generatedAt + ')' : '') + '. '
+           + 'All three metrics are counted within the calendar month, so these cells accumulate and '
+           + 'will read low until the month closes — read them as month-to-date, not as a decline. '
+           + 'Refreshed every morning by the KPI pull.</div>';
+    }
+    triWrap.innerHTML = h + '</tbody></table>' + foot;
   }
   window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {

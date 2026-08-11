@@ -221,11 +221,19 @@ for coh, g in grid.groupby("COHORT"):
     g = g.sort_values("MN")
     tri[coh] = {"mrr": [round(float(x),0) for x in g["MRR_USD"]], "paying": [int(x) for x in g["PAYING_CUSTOMERS"]]}
 compare_cohorts = [c["cohort"] for c in cohorts_out][-24:]
-gridc = grid[(grid["COHORT"].isin(compare_cohorts)) & (grid["CAL"] <= latest_complete) & (grid["MN"] <= 24)]
+# Carry the compare series through the CURRENT (partial) calendar month, not just the last
+# complete one, so the Triangle view shows every cohort's latest figure — e.g. the July cohort's
+# M1 is August-to-date. Until 2026-08-08 this cut at latest_complete, so the newest diagonal was
+# computed, thrown away here, and the view lagged by up to a month.
+# The partial column is genuinely partial for MRR and active (both accumulate within a month);
+# the dashboard marks that column rather than the data hiding it. The summary TABLE still uses
+# latest_complete via active_snap(), which is what its "snapshot at latest complete month"
+# heading promises.
+gridc = grid[(grid["COHORT"].isin(compare_cohorts)) & (grid["CAL"] <= latest_cal) & (grid["MN"] <= 24)]
 compare_series = {}
 for coh in compare_cohorts:
     g = gridc[gridc["COHORT"] == coh].sort_values("MN")
-    n = min(mdiff(coh, latest_complete) + 1, 25)
+    n = min(mdiff(coh, latest_cal) + 1, 25)
     mrr_a, pay_a, act_a, pct_a = [None]*n, [None]*n, [None]*n, [None]*n
     for _, r in g.iterrows():
         i = int(r["MN"])

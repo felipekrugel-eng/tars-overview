@@ -80,6 +80,12 @@ def main():
     months = sorted({ym(r["MONTH_START"]) for r in cc})
     if snapshot_month not in months:      # fixture / partial-grid safety net
         snapshot_month = months[-2] if len(months) > 1 else months[-1]
+    # The CURRENT, in-progress month. The age series runs to here so the Triangle view can show
+    # each cohort's latest figure (July cohort's M1 = August-to-date). snapshot_month stays the
+    # last COMPLETE month and still drives the summary table and which cohorts are listed.
+    current_month = f"{y:04d}-{m:02d}"
+    if current_month not in months:
+        current_month = months[-1] if months else snapshot_month
 
     # active merchants by (country, cohort, calendar month) — the country dimension that
     # build_kpi_data.py sums away.
@@ -115,14 +121,15 @@ def main():
             act = active.get((ctry, coh), {})
             if not ages and not act and not regs:
                 continue
-            # Cap the age series at the SNAPSHOT month, exactly as build_kpi_data.py caps the
-            # global cohortCompare (CAL <= latest_complete, n = mdiff(coh, latest_complete)+1).
-            # The SQL grid runs to DATE_TRUNC('MONTH', CURRENT_DATE), so without this the
-            # in-progress month is emitted as a trailing point and the per-country comparison
-            # chart shows one extra, partial data point that the global chart does not.
-            age_at_snap = (int(snapshot_month[:4]) - int(coh[:4])) * 12 + \
-                          (int(snapshot_month[5:7]) - int(coh[5:7]))
-            n_ages = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_snap + 1, 25)
+            # Cap the age series at the CURRENT month, matching build_kpi_data.py's global
+            # cohortCompare (CAL <= latest_cal, n = mdiff(coh, latest_cal)+1). Both sides must use
+            # the same bound: the Triangle is country-filterable, so a country capped a month
+            # earlier than the global view would lose its newest column the moment you filtered.
+            # Changed 2026-08-08 from snapshot_month; the trailing point is the in-progress month
+            # and the dashboard marks it as partial rather than dropping it.
+            age_at_cap = (int(current_month[:4]) - int(coh[:4])) * 12 + \
+                         (int(current_month[5:7]) - int(coh[5:7]))
+            n_ages = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_cap + 1, 25)
             if n_ages <= 0:
                 continue
             mrr_s, pay_s, act_s, actpct_s = [], [], [], []
