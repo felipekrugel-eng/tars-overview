@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-12T10:49:51.974Z",
+  "ranAt": "2026-08-12T08:13:05.818Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1002,23 +1002,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 136848
+        "rows": 136784
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59489
+        "rows": 59485
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1087433
+        "rows": 1086855
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 101411
+        "rows": 101386
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1733645
+        "rows": 1732614
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
@@ -1050,7 +1050,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9299621147
+        "rows": 9298658772
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1905,6 +1905,60 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
+        "SHIPPING_ADDRESS_LINE2": "Unit 137",
+        "TAX": 1895,
+        "SHIPPING_ADDRESS_STATE": "KY",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "40356",
+        "BATCH_TIMESTAMP": "2026-08-12 03:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "137 Orchard Dr",
+        "AMOUNT": 33471,
+        "SHIPPING_AMOUNT": 1300,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1TyGZy7e4AMQfKY3THzaNOga",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-12 00:15:00.000",
+        "SHIPPING_NAME": "Oleksandr Khomych",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Nicholasville",
+        "SHIPPING_PHONE": "18594759829",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "khomutch199@gmail.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-07-28 19:22:18.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": "6G",
+        "TAX": 1331,
+        "SHIPPING_ADDRESS_STATE": "NY",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "10021",
+        "BATCH_TIMESTAMP": "2026-08-12 00:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "245 E 72nd Street",
+        "AMOUNT": 16331,
+        "SHIPPING_AMOUNT": 2200,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1U3Nf97e4AMQfKY33tvTuSG5",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-11 22:26:53.000",
+        "SHIPPING_NAME": "Alisa Coleman",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "ready_to_ship",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "New York",
+        "SHIPPING_PHONE": "19175123375",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "alisa@cailleblancvilla.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-08-11 21:56:47.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
         "SHIPPING_ADDRESS_LINE2": "",
         "TAX": 7014,
         "SHIPPING_ADDRESS_STATE": null,
@@ -2065,63 +2119,65 @@
         "LIVEMODE": true,
         "CREATED": "2026-04-28 15:49:25.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": "Delta, CO 81416",
-        "TAX": 1042,
-        "SHIPPING_ADDRESS_STATE": "CO",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "81416",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "Delta Builders llc",
-        "SHIPPING_ADDRESS_LINE1": "318 Main Street",
-        "AMOUNT": 18842,
-        "SHIPPING_AMOUNT": 2200,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1TYT0A7e4AMQfKY3zZkhxobL",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:05.000",
-        "SHIPPING_NAME": "Charles Mason",
-        "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Delta",
-        "SHIPPING_PHONE": "19705100014",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-05-18 15:22:42.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1921,
-        "SHIPPING_ADDRESS_STATE": "PA",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "Polarbear icecream",
-        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
-        "AMOUNT": 33934,
-        "SHIPPING_AMOUNT": 6000,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:10.000",
-        "SHIPPING_NAME": "Sean hunter",
-        "SHIPPING_METHOD_NAME": "priority",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Matamoras",
-        "SHIPPING_PHONE": "18458498613",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-06-16 13:28:54.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TyGZy7e4AMQfKY3THzaNOga",
+        "BATCH_TIMESTAMP": "2026-08-12 03:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
+        "AMOUNT": 4263,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CPcP2UVJHmg",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TyGZy7e4AMQfKY3THzaNOga",
+        "BATCH_TIMESTAMP": "2026-08-12 03:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
+        "AMOUNT": 26013,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 2,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1U3Nf97e4AMQfKY33tvTuSG5",
+        "BATCH_TIMESTAMP": "2026-08-12 00:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
+        "AMOUNT": 11800,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 2,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1U3Nf97e4AMQfKY33tvTuSG5",
+        "BATCH_TIMESTAMP": "2026-08-12 00:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 500,
+        "AMOUNT": 1000,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2_mount",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfofA37JmVcjZ",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_KFGV5dfkxwiGMW",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1Sx7K17e4AMQfKY3yau6je2Q",
@@ -2176,62 +2232,6 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 2,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 52026,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
-        "AMOUNT": 4263,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CPcP2UVJHmg",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 3393,
-        "AMOUNT": 3393,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_hub",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6ClPRnoqxoTO",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],
