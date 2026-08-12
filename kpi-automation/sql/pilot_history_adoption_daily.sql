@@ -1,31 +1,14 @@
 -- =================================================================
--- PILOT TRACKER v2 — sales-history adoption + REVENUE, daily x country
--- Unlimited-sales-history pricing pilot, live 2026-07-16 in
--- AU, BE, CO, ID, IN, NG, SG. Two changes shipped together:
---     free history 30d -> 15d
---     add-on price  $5 -> $9
+-- PILOT TRACKER — sales-history adoption, daily x country x path
+-- Unlimited-sales-history pricing pilot: free history 30d -> 15d,
+-- live 2026-07-16 in AU, BE, CO, ID, IN, NG, SG.
 -- READ-ONLY (single SELECT — DATA_VIEWER is sufficient)
 -- =================================================================
 -- Feeds build_pilot_data.py -> pilot-data.js -> pilot.html
 --
--- WHAT CHANGED FROM v1
--- v1 counted adopters and nothing else, which made the page unreadable:
--- adoption fell while revenue rose, and a page showing only the first
--- number says the pilot failed when it may have succeeded. v2 adds:
---
---   1. AMOUNT_USD    — the actual invoice line amount, so revenue is
---                      measured rather than modelled from list price.
---                      Chargebee amounts are in minor units; /100 here.
---   2. LINES         — line-item count, so unit price can be derived and
---                      the $5->$9 change verified in the data instead of
---                      taken on trust. Watch for annual SKUs skewing this.
---   3. IS_ANNUAL     — splits S_SALESHISTORY_12_* out, because a $54/yr
---                      line and a $9/mo line are not comparable revenue.
---   4. CURRENCY_CODE — pilot markets are not all USD; the page needs to
---                      know when it is mixing currencies.
---
--- Everything about the measurement WINDOWS is unchanged from v1 and is
--- still the thing most likely to be got wrong. See below.
+-- Cheap by design: the Chargebee invoice tables hold ~1.5M line items
+-- in total, so this is nothing like the receipts grid. Expect well
+-- under a minute.
 --
 -- WHY THE SKU MATCH IS A LIKE, NOT AN ENUM
 -- Loyverse has never billed a Chargebee `addon` — across every invoice
@@ -45,16 +28,9 @@
 -- THE 14-DAY TRIAL LAG — the thing that makes naive reads wrong
 -- Adoption runs through a 14-day trial, so a merchant who hit the new
 -- 15-day wall on 16 Jul bills no earlier than 30 Jul. Rows dated
--- 16-29 Jul came from trials started under the OLD rules: they are
--- baseline wearing a post-launch date. build_pilot_data.py buckets them
--- separately as LAUNCH_LAG and excludes them from the verdict.
---
--- THE CONTROL COHORT KEEPS THE OLD PRICE
--- The price rise applied to the 7 pilot markets only. That is what makes
--- the control group usable: it supplies the seasonal correction for
--- adoption without being contaminated by the price change. If the price
--- ever goes up globally, the DiD in build_pilot_data.py becomes invalid
--- and this comment is where to start reading.
+-- 16-29 Jul came from trials started under the OLD 30-day rule: they
+-- are baseline wearing a post-launch date. build_pilot_data.py buckets
+-- them separately as LAUNCH_LAG and excludes them from the verdict.
 -- =================================================================
 
 WITH params AS (
@@ -90,11 +66,9 @@ merchant_country AS (
 ),
 
 inv_lines AS (
-    SELECT LOWER(TRIM(c.EMAIL))            AS EMAIL_KEY,
-           li.value:entity_id::STRING      AS PLAN_ID,
-           TO_TIMESTAMP(i.PAID_AT)::DATE   AS PAID_DATE,
-           li.value:amount::NUMBER / 100.0 AS AMOUNT,      -- Chargebee minor units
-           UPPER(COALESCE(i.CURRENCY_CODE, 'USD'))::STRING AS CURRENCY_CODE
+    SELECT LOWER(TRIM(c.EMAIL))          AS EMAIL_KEY,
+           li.value:entity_id::STRING    AS PLAN_ID,
+           TO_TIMESTAMP(i.PAID_AT)::DATE AS PAID_DATE
     FROM LOYVERSE_DATA_LAKE.PUBLIC."CHARGEBEE-UK-INVOICE" i
     JOIN LOYVERSE_DATA_LAKE.PUBLIC."CHARGEBEE-UK-CUSTOMER" c ON c.ID = i.CUSTOMER_ID
     CROSS JOIN LATERAL FLATTEN(input => i.LINE_ITEMS) li
@@ -109,9 +83,7 @@ inv_lines AS (
 
     SELECT LOWER(TRIM(c.EMAIL)),
            li.value:entity_id::STRING,
-           TO_TIMESTAMP(i.PAID_AT)::DATE,
-           li.value:amount::NUMBER / 100.0,
-           UPPER(COALESCE(i.CURRENCY_CODE, 'EUR'))::STRING
+           TO_TIMESTAMP(i.PAID_AT)::DATE
     FROM LOYVERSE_DATA_LAKE.PUBLIC."CHARGEBEE-EU-INVOICE" i
     JOIN LOYVERSE_DATA_LAKE.PUBLIC."CHARGEBEE-EU-CUSTOMER" c ON c.ID = i.CUSTOMER_ID
     CROSS JOIN LATERAL FLATTEN(input => i.LINE_ITEMS) li
@@ -128,43 +100,23 @@ first_any_paid AS (
     FROM inv_lines GROUP BY EMAIL_KEY
 ),
 
-history_lines AS (
-    SELECT * FROM inv_lines WHERE PLAN_ID ILIKE 'S_SALESHISTORY%'
-),
-
 first_history AS (
     SELECT EMAIL_KEY, MIN(PAID_DATE) AS FIRST_SH_DATE
-    FROM history_lines GROUP BY EMAIL_KEY
-),
-
--- The amount, currency and term of each merchant's FIRST sales-history
--- line. Ties broken by highest amount so an annual purchase isn't lost
--- behind a same-day $0.01 proration.
-first_history_detail AS (
-    SELECT EMAIL_KEY, PAID_DATE AS FIRST_SH_DATE, PLAN_ID, AMOUNT, CURRENCY_CODE
-    FROM (
-        SELECT h.*, ROW_NUMBER() OVER (
-                 PARTITION BY h.EMAIL_KEY
-                 ORDER BY h.PAID_DATE ASC, h.AMOUNT DESC) AS RN
-        FROM history_lines h
-    )
-    WHERE RN = 1
+    FROM inv_lines
+    WHERE PLAN_ID ILIKE 'S_SALESHISTORY%'
+    GROUP BY EMAIL_KEY
 ),
 
 adopters AS (
     SELECT fh.EMAIL_KEY,
            fh.FIRST_SH_DATE,
            mc.COUNTRY,
-           fd.AMOUNT,
-           fd.CURRENCY_CODE,
-           IFF(fd.PLAN_ID ILIKE 'S_SALESHISTORY_12%', TRUE, FALSE)          AS IS_ANNUAL,
            IFF(pc.COUNTRY IS NOT NULL, 'PILOT', 'CONTROL')                  AS COHORT,
            IFF(fa.FIRST_ANY_DATE < fh.FIRST_SH_DATE, 'UPSELL', 'NEW_PAYER') AS ADOPTION_TYPE
     FROM first_history fh
-    JOIN first_any_paid fa        ON fa.EMAIL_KEY = fh.EMAIL_KEY
-    JOIN merchant_country mc      ON mc.EMAIL_KEY = fh.EMAIL_KEY
-    JOIN first_history_detail fd  ON fd.EMAIL_KEY = fh.EMAIL_KEY
-    LEFT JOIN pilot_countries pc  ON pc.COUNTRY = mc.COUNTRY
+    JOIN first_any_paid fa   ON fa.EMAIL_KEY = fh.EMAIL_KEY
+    JOIN merchant_country mc ON mc.EMAIL_KEY = fh.EMAIL_KEY
+    LEFT JOIN pilot_countries pc ON pc.COUNTRY = mc.COUNTRY
 ),
 
 -- Upsell exposure, frozen at the day before launch: merchants paying
@@ -189,17 +141,11 @@ SELECT
     a.COUNTRY,
     a.COHORT,
     a.ADOPTION_TYPE,
-    a.IS_ANNUAL,
-    a.CURRENCY_CODE,
     CASE WHEN a.FIRST_SH_DATE >= p.SIGNAL_DATE THEN 'SIGNAL'
          WHEN a.FIRST_SH_DATE >= p.LAUNCH_DATE THEN 'LAUNCH_LAG'
          ELSE 'BASELINE' END                               AS PERIOD,
     DATEDIFF('day', p.SIGNAL_DATE, a.FIRST_SH_DATE)        AS DAYS_FROM_SIGNAL,
     COUNT(DISTINCT a.EMAIL_KEY)                            AS ADOPTERS,
-    -- Revenue actually invoiced on that first sales-history line. This is
-    -- what lets the page show the $5 -> $9 effect instead of assuming it.
-    ROUND(SUM(a.AMOUNT), 2)                                AS AMOUNT,
-    ROUND(AVG(a.AMOUNT), 2)                                AS AVG_UNIT_AMOUNT,
     -- Constant per country (a fixed pre-launch snapshot), repeated on
     -- every row so the builder can pick it up without a second query.
     MAX(ub.PAYERS_WITHOUT_HISTORY)                         AS UPSELL_BASE_COUNTRY
@@ -209,5 +155,5 @@ LEFT JOIN upsell_base_country ub ON ub.COUNTRY = a.COUNTRY
 WHERE a.FIRST_SH_DATE >= p.WINDOW_START
   AND a.FIRST_SH_DATE <  CURRENT_DATE()          -- today is partial; exclude
 GROUP BY a.FIRST_SH_DATE, a.COUNTRY, a.COHORT, a.ADOPTION_TYPE,
-         a.IS_ANNUAL, a.CURRENCY_CODE, p.SIGNAL_DATE, p.LAUNCH_DATE
+         p.SIGNAL_DATE, p.LAUNCH_DATE
 ORDER BY a.FIRST_SH_DATE, a.COHORT, a.ADOPTION_TYPE, a.COUNTRY;

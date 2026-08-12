@@ -10,9 +10,6 @@
 # repo source properly and this rewrite step becomes a no-op.
 #
 # Added 2026-07-23 (Cowork session, Felipe).
-# 2026-08-12: added pilot-pull to the workflow_run list. pilot-pull commits with the
-# built-in GITHUB_TOKEN, which does not fire `push` workflows, so without it a pilot
-# data refresh would never reach Cloudflare.
 
 name: deploy-cloudflare
 
@@ -24,7 +21,6 @@ on:
   workflow_run:
     workflows:
       - kpi-pull
-      - pilot-pull
       - payments-pull
       - "PAYMENTS: Daily Activation Pull"
       - "CASE: Daily Snowflake Pull"
