@@ -466,11 +466,26 @@ const COH_FMT = { mrr: v => '$' + fmtN(v), paying: v => fmtN(v), active: v => fm
 // Heat-map palette: cohorts run oldest -> newest, coloured cold (blue) -> hot (red)
 const cohColor = i => { const t = ccKeys.length > 1 ? i / (ccKeys.length - 1) : 0; return 'hsl(' + Math.round(240 * (1 - t)) + ', 75%, 50%)'; };
 let cohChart, cohMode = 'mrr', cohSel = new Set();   // empty = show all; otherwise highlight the selected cohorts
+// The series now run into the CURRENT, in-progress month so the Triangle can show each cohort's
+// latest figure. The chart deliberately drops that last point: every metric accumulates within a
+// calendar month, so mid-month every curve nose-dives at its own right-hand end, and 24 curves
+// each falling off a cliff at a different age makes the chart unreadable. A table cell can carry
+// an asterisk explaining itself; a line on a chart cannot. The Triangle keeps the value, marked.
+const cohAgeOfLatest = coh => {
+  const L = D.meta && D.meta.latestMonth;
+  if (!L) return -1;
+  return (+L.slice(0,4) - +coh.slice(0,4)) * 12 + (+L.slice(5,7) - +coh.slice(5,7));
+};
+const cohCompleteSeries = (coh, mode) => {
+  const arr = (CC[coh] && CC[coh][mode]) || [];
+  const partialIdx = cohAgeOfLatest(coh);
+  return (partialIdx >= 0 && partialIdx === arr.length - 1) ? arr.slice(0, -1) : arr.slice();
+};
 function drawCoh() {
   const any = cohSel.size > 0;
   const ds = ccKeys.map((coh, i) => {
     const focus = !any || cohSel.has(coh);
-    return { label: coh, data: CC[coh][cohMode],
+    return { label: coh, data: cohCompleteSeries(coh, cohMode),
       borderColor: focus ? cohColor(i) : '#E4E4E4',
       backgroundColor: focus ? cohColor(i) : '#E4E4E4',
       pointRadius: 0, pointHitRadius: 6,

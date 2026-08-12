@@ -129,6 +129,11 @@ def main():
             # and the dashboard marks it as partial rather than dropping it.
             age_at_cap = (int(current_month[:4]) - int(coh[:4])) * 12 + \
                          (int(current_month[5:7]) - int(coh[5:7]))
+            # The SUMMARY ROW is a separate thing and still reads at the snapshot (last complete)
+            # month, matching its "snapshot at latest complete month" heading. Only the age series
+            # above extends into the in-progress month.
+            age_at_snap = (int(snapshot_month[:4]) - int(coh[:4])) * 12 + \
+                          (int(snapshot_month[5:7]) - int(coh[5:7]))
             n_ages = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_cap + 1, 25)
             if n_ages <= 0:
                 continue
