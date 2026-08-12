@@ -38,35 +38,72 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,
 .stamp{font-family:var(--mono);font-size:11px;opacity:.9}
 main{padding:20px 22px 44px;max-width:1180px;margin:0 auto}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:16px}
-.banner{border-left:4px solid var(--faint);border-radius:0 8px 8px 0}
+h3{font-size:14px;margin:0 0 4px}
+p.sub2{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+.banner{border-left:5px solid var(--faint);border-radius:0 8px 8px 0;padding:20px 22px}
 .banner.wait{border-left-color:var(--amber)}
 .banner.win{border-left-color:var(--green)}
 .banner.flat{border-left-color:var(--muted)}
 .banner.lose{border-left-color:var(--red)}
-.banner h2{margin:0 0 6px;font-size:16px}
-.banner p{margin:0;color:var(--muted)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:16px}
-.tile{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 15px}
-.tile .lab{font-size:12px;color:var(--muted);margin-bottom:5px}
-.tile .val{font-size:23px;font-weight:bold;font-family:var(--mono)}
-.tile .sub{font-size:11px;color:var(--faint);margin-top:3px}
-h3{font-size:14px;margin:0 0 12px}
+.banner .kicker{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);font-weight:bold;margin-bottom:7px}
+.banner h2{margin:0 0 9px;font-size:21px;line-height:1.3}
+.banner p{margin:0;color:#48566A;max-width:82ch}
+.banner p + p{margin-top:9px}
+.stale{background:#FFF6E5;border:1px solid #F0DCAF;border-radius:6px;padding:10px 13px;font-size:12.5px;color:#7A5A00;margin-bottom:16px}
+
+/* the price panel gets its own visual weight — it is the finding, not a footnote */
+.alert{border-left:5px solid var(--red);border-radius:0 8px 8px 0;background:#FFF8F9}
+.alert h3{font-size:16px;margin-bottom:8px}
+.alert .flagline{font-size:13px;color:#8A2A38;font-weight:bold;margin:0 0 12px}
+.pricegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0 4px}
+.pricebox{border:1px solid var(--border);border-radius:7px;padding:12px 14px;background:#fff}
+.pricebox .lab{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px}
+.pricebox .big{font-size:22px;font-weight:bold;font-family:var(--mono)}
+.pricebox .note{font-size:11.5px;color:var(--muted);margin-top:5px}
+.pricebox.want{border-color:#F0C2C9;background:#FFF8F9}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.tile .lab{font-size:11.5px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.tile .val{font-size:26px;font-weight:bold;font-family:var(--mono);line-height:1.1}
+.tile .val.pos{color:var(--green)} .tile .val.neg{color:var(--red)}
+.tile .sub{font-size:11.5px;color:var(--muted);margin-top:5px}
+
+.betrack{position:relative;height:38px;background:#E6F4EE;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.bedanger{position:absolute;top:0;bottom:0;right:0;background:#FBEBEE}
+.beline{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--ink);border-radius:2px}
+.belabels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:7px}
+.becap{font-size:12.5px;color:#48566A;margin-top:10px;max-width:80ch}
+
+.wrap{position:relative;height:300px}
+.toggle{display:flex;margin-bottom:12px;border:1px solid var(--border);border-radius:6px;overflow:hidden;width:max-content}
+.toggle button{border:0;background:#fff;color:var(--muted);font-size:12px;font-weight:bold;padding:7px 15px;cursor:pointer;font-family:inherit}
+.toggle button.on{background:var(--blue);color:#fff}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:10px}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:12px;height:3px;border-radius:2px;display:inline-block}
+.sw.box{width:11px;height:11px;border-radius:2px}
+.sw.dash{background:repeating-linear-gradient(90deg,var(--muted) 0 4px,transparent 4px 7px)}
+
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)}
-th{color:var(--muted);font-weight:normal;font-size:12px;text-align:right}
+th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:normal;font-size:11.5px;text-align:right}
 th:first-child,td:first-child{text-align:left}
 td.n{font-family:var(--mono)}
 tr.dim td{color:var(--faint)}
-.pill{display:inline-block;padding:1px 7px;border-radius:9px;font-size:11px}
+tr.hit td{background:#FFF3F5}
+.pill{display:inline-block;padding:1px 8px;border-radius:9px;font-size:11px}
 .pill.up{background:#E6F4EE;color:var(--green)}
 .pill.dn{background:#FBEBEE;color:var(--red)}
 .pill.na{background:var(--bg);color:var(--muted)}
-.wrap{position:relative;height:300px}
-ul.notes{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:12px}
-ul.notes li{margin-bottom:5px}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
-.legend span{display:flex;align-items:center;gap:5px}
-.sw{width:11px;height:11px;border-radius:2px;display:inline-block}
+ul.notes{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:12px}
+ul.notes li{margin-bottom:6px}
+details{margin-bottom:16px}
+details > summary{cursor:pointer;font-size:12px;font-weight:bold;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);padding:11px 0;list-style:none}
+details > summary::-webkit-details-marker{display:none}
+details > summary::before{content:"\25B8 ";color:var(--faint)}
+details[open] > summary::before{content:"\25BE "}
 </style>
 </head>
 <body>
@@ -89,49 +126,113 @@ ul.notes li{margin-bottom:5px}
   <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
   <div class="label">Loyverse &middot; Pricing Experiment</div>
   <h1>SALES-HISTORY PILOT.</h1>
-  <div class="sub">Free history cut 30 days &rarr; 15 days on 16 July in Australia, Belgium, Colombia, Indonesia, India, Nigeria and Singapore.</div>
+  <div class="sub" id="heroSub">Free history cut 30 days &rarr; 15 days on 16 July in Australia, Belgium, Colombia, Indonesia, India, Nigeria and Singapore.</div>
   <div class="sub stamp" id="stamp"></div>
 </div>
 
 <main>
+
+  <div id="staleBox"></div>
+
+  <!-- 1. THE ANSWER -->
   <div class="card banner" id="banner">
+    <div class="kicker" id="bKicker">Loading</div>
     <h2 id="bTitle">Loading…</h2>
     <p id="bBody"></p>
+    <p id="bBody2"></p>
   </div>
 
+  <!-- 2. THE NUMBERS -->
   <div class="tiles" id="tiles"></div>
 
+  <!-- 3. WHAT MERCHANTS WERE ACTUALLY CHARGED -->
+  <div class="card" id="priceCard">
+    <h3 id="priceH">What merchants were actually charged</h3>
+    <p class="flagline" id="priceFlag" style="display:none"></p>
+    <p class="sub2" id="priceIntro"></p>
+    <div class="pricegrid" id="priceGrid"></div>
+    <div id="priceTiers"></div>
+    <ul class="notes" id="priceNotes"></ul>
+  </div>
+
+  <!-- 4. THE DECISION VISUAL -->
   <div class="card">
-    <h3>Adoption rate, indexed to each cohort's own pre-launch baseline (100)</h3>
-    <div class="legend">
-      <span><span class="sw" style="background:#1D8FE1"></span>Pilot markets (7)</span>
-      <span><span class="sw" style="background:#7E8A9A"></span>Control markets</span>
-      <span><span class="sw" style="background:#C98500"></span>16 Jul — paywall change</span>
-      <span><span class="sw" style="background:#1F9D6B"></span>30 Jul — first treated billing</span>
+    <h3>Is the pilot ahead or behind?</h3>
+    <p class="sub2">Pilot markets only, counted from <b id="sigDateA"></b> — the first day a merchant who
+      actually met the new rules could appear in billing. The dashed line is what these markets would have
+      produced without the change: their own pre-launch rate, adjusted for how the control markets moved
+      over the same days. Above the dashed line is better than doing nothing.</p>
+    <div class="toggle">
+      <button id="btnCust" class="on">Paying customers</button>
+      <button id="btnRev">Revenue</button>
     </div>
-    <div class="wrap"><canvas id="chart"></canvas></div>
-    <ul class="notes">
-      <li>Indexed because the cohorts are not comparable in absolute terms — pilot markets run about 3.5 adoptions a day against roughly 56 in controls. Both lines are 7-day trailing averages.</li>
-      <li>The band between the two markers is the trial dead zone: those merchants started their 14-day trial under the old 30-day rule.</li>
-    </ul>
+    <div class="legend">
+      <span><span class="sw" style="background:#1D8FE1"></span><span id="lgA">Actual</span></span>
+      <span><span class="sw dash"></span><span id="lgB">Without the change (counterfactual)</span></span>
+    </div>
+    <div class="wrap"><canvas id="curve"></canvas></div>
+    <ul class="notes" id="curveNotes"></ul>
   </div>
 
-  <div class="card">
-    <h3>Pilot markets individually</h3>
-    <table id="ctab"><thead><tr>
-      <th>Market</th><th>Baseline /day</th><th>Signal /day</th><th>Change</th>
-      <th>Signal count</th><th>Upsell base</th>
-    </tr></thead><tbody></tbody></table>
-    <ul class="notes">
-      <li>Individually these markets are far too small to read — India's whole baseline is about 14 new payers in 45 days. Only the pooled seven will produce an answer; this table is for spotting anomalies, not ranking markets.</li>
-      <li>Indonesia and Colombia are roughly 60% of pilot new payers, so the pooled figure is largely their story.</li>
-    </ul>
+  <!-- 5. BREAK-EVEN — only rendered when a price change is actually detected -->
+  <div class="card" id="beCard" style="display:none">
+    <h3>The trade-off: fewer customers, each worth more</h3>
+    <p class="sub2" id="bePreamble"></p>
+    <div class="betrack">
+      <div class="bedanger" id="bedanger"></div>
+      <div class="beline" id="beline"></div>
+    </div>
+    <div class="belabels">
+      <span>No drop in adoption</span>
+      <span id="beMaxLab"></span>
+    </div>
+    <p class="becap" id="beCap"></p>
   </div>
 
+  <!-- 6. SECONDARY: daily detail -->
+  <details>
+    <summary>Daily detail — pilot vs control, indexed to each cohort's own baseline</summary>
+    <div class="card">
+      <p class="sub2">The cohorts are not comparable in absolute terms — pilot markets run about
+        <b id="pbRate"></b> new add-on payers a day against roughly <b id="cbRate"></b> in controls — so both
+        lines are indexed to their own pre-launch average (100) and smoothed over 7 days. The shaded band is
+        the trial dead zone: those merchants started a 14-day trial under the old rules, so they say nothing
+        about the pilot.</p>
+      <div class="legend">
+        <span><span class="sw box" style="background:#1D8FE1"></span>Pilot markets (7)</span>
+        <span><span class="sw dash"></span>Control markets</span>
+        <span><span class="sw box" style="background:#C98500"></span>16 Jul — paywall change</span>
+        <span><span class="sw box" style="background:#1F9D6B"></span>30 Jul — first treated billing</span>
+      </div>
+      <div class="wrap"><canvas id="chart"></canvas></div>
+    </div>
+  </details>
+
+  <!-- 7. SECONDARY: per market -->
+  <details>
+    <summary>Per-market breakdown — anomaly spotting only, not a ranking</summary>
+    <div class="card">
+      <table id="ctab"><thead><tr>
+        <th>Market</th><th>Baseline /day</th><th>Since 30 Jul /day</th><th>Change</th>
+        <th>Adopters since 30 Jul</th><th>Price paid</th><th>Upsell pool</th>
+      </tr></thead><tbody></tbody></table>
+      <ul class="notes">
+        <li>Individually these markets are far too small to read — India's entire baseline is about 38 new
+          payers in 196 days. Only the pooled seven can produce an answer.</li>
+        <li>Indonesia and Colombia are roughly 60% of pilot new payers, so the pooled figure is largely
+          their story. If they diverge, report them separately.</li>
+        <li>"Price paid" is the modal monthly unit price new arrivals in that market were charged since
+          30 July, straight off their invoices.</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- 8. LIMITS -->
   <div class="card">
     <h3>What this page cannot tell you</h3>
     <ul class="notes" id="caveats"></ul>
   </div>
+
 </main>
 
 <script src="pilot-data.js"></script>
@@ -139,171 +240,461 @@ ul.notes li{margin-bottom:5px}
 <script>
 (function(){
   // pilot-data.js declares `const PILOT_DATA`, and a top-level const in a classic script does
-  // NOT become a property of window — so `window.PILOT_DATA` was always undefined and the very
-  // next line threw, leaving this page blank from the day it was created (29 Jul 2026). Read the
-  // binding directly, the same way index.html/daily.html read KPI_DATA and DAILY_FLOW.
+  // NOT become a property of window — reading window.PILOT_DATA first is what left this page
+  // blank for its first fortnight. Read the binding directly, the same way index.html and
+  // daily.html read KPI_DATA and DAILY_FLOW.
   var D = (typeof PILOT_DATA !== 'undefined') ? PILOT_DATA
         : (window.PILOT_DATA || null);          // tolerate a future `window.PILOT_DATA =` form
   if (!D || !D.meta || !D.verdict) {
-    // Fail loudly in the page rather than silently rendering nothing.
-    var w = document.getElementById('banner');
-    if (w) {
-      w.className = 'card banner wait';
-      var wt = document.getElementById('bTitle'), wb = document.getElementById('bBody');
-      if (wt) wt.textContent = 'Pilot data unavailable';
-      if (wb) wb.textContent = 'pilot-data.js did not load or is missing its meta/verdict blocks. '
-        + 'It is regenerated by kpi-automation/build_pilot_data.py inside the daily kpi-pull; '
-        + 'if that step was skipped the pull log will say so.';
+    var bx = document.getElementById('banner');
+    if (bx) {
+      bx.className = 'card banner wait';
+      var xt = document.getElementById('bTitle'), xb = document.getElementById('bBody');
+      if (xt) xt.textContent = 'Pilot data unavailable';
+      if (xb) xb.textContent = 'pilot-data.js did not load or is missing its meta/verdict blocks. '
+        + 'It is regenerated by kpi-automation/build_pilot_data.py — from the pilot-pull workflow, '
+        + 'or as the last step of the daily kpi-pull. If that step was skipped the run log says so.';
     }
     return;
   }
-  var f1 = function(x){ return (x==null) ? '—' : (Math.round(x*100)/100).toFixed(2); };
-  var pct = function(x){ return (x==null) ? '—' : ((x-1)*100>=0?'+':'') + ((x-1)*100).toFixed(0) + '%'; };
-  // Short calendar label for the projected dates. Guarded: data files written before the
-  // readableEta/confirmEta fields existed simply get no date and the copy degrades to prose.
-  var MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var dLab = function(iso){
-    if(!iso) return null;
-    var p = String(iso).split('-');
-    if(p.length < 3) return null;
-    return (+p[2]) + ' ' + (MONS[(+p[1])-1] || '');
-  };
-  // The tracker is gated on SIGNAL DAYS, and those only advance as invoices land. Saying so
-  // explicitly is the difference between "the page is broken" and "the clock is running".
-  var lag = (D.meta.dataLagDays != null) ? D.meta.dataLagDays : null;
-  var lagNote = (lag && lag > 0)
-    ? ' Chargebee data runs about ' + lag + ' day' + (lag>1?'s':'') + ' behind, so today\'s page counts signal through '
-      + D.meta.lastDataDate + '.'
-    : '';
-  var etaNote = function(v){
-    var r = dLab(v && v.readableEta), c = dLab(v && v.confirmEta);
-    if(!r && !c) return '';
-    var bits = [];
-    if(r) bits.push('a p-value should appear around ' + r);
-    if(c) bits.push('enough power to confirm a 25% effect around ' + c);
-    return ' Next milestones: ' + bits.join(', ') + '.';
-  };
 
-  var np = D.verdict.NEW_PAYER, up = D.verdict.UPSELL;
-  var sd = D.meta.days.SIGNAL;
-
-  document.getElementById('stamp').textContent =
-    'data to ' + D.meta.lastDataDate + (lag ? ' (' + lag + 'd behind)' : '')
-      + ' · built ' + D.meta.generatedAt + ' · signal day ' + sd
-      + ' of ' + (np.daysNeeded || 7) + ' needed for a p-value';
-
-  // ---- verdict banner ----
-  var b = document.getElementById('banner'), t = document.getElementById('bTitle'), p = document.getElementById('bBody');
-  if (sd <= 0) {
-    b.className = 'card banner wait';
-    t.textContent = 'No signal yet — nothing has been measured';
-    p.textContent = 'The paywall changed on ' + D.meta.launchDate + ', but adoption runs through a 14-day '
-      + 'trial, so the first genuinely affected merchant bills ' + D.meta.signalDate + '. Everything below '
-      + 'that date comes from merchants who signed up under the old 30-day rule. This is not evidence the '
-      + 'pilot is failing — there is no treated customer in the data yet.' + lagNote + etaNote(np);
-  } else if (!np.readable) {
-    b.className = 'card banner wait';
-    t.textContent = 'Too early to call — ' + sd + ' of ' + np.daysNeeded + ' days needed';
-    p.textContent = 'Pilot new-payer adoption is running at ' + f1(np.signalPilotPerDay) + '/day against a '
-      + f1(np.baselinePilotPerDay) + '/day baseline (' + pct(np.did) + ' after correcting for how the control '
-      + 'markets moved). Directional only — at this few days a point estimate carries almost no information.'
-      + lagNote + etaNote(np);
-  } else {
-    var sig = (np.p != null && np.p < 0.05);
-    var upDir = (np.did > 1);
-    b.className = 'card banner ' + (sig ? (upDir ? 'win' : 'lose') : 'flat');
-    t.textContent = sig
-      ? (upDir ? 'Working — adoption is up ' + pct(np.did) + ' vs control' : 'Adoption is DOWN ' + pct(np.did) + ' vs control')
-      : 'No detectable effect after ' + sd + ' days';
-    p.textContent = 'Pilot new payers: ' + np.pilotSignalCount + ' observed against '
-      + f1(np.expected) + ' expected (null range ' + np.null95[0] + '–' + np.null95[1] + '), p = '
-      + (np.p==null?'—':np.p.toFixed(3)) + '. '
-      + (sig ? 'This is outside what a normal fluctuation produces.'
-             : 'Still inside normal fluctuation. Either the effect is small, or there is none.');
+  // ---------- older-schema compatibility ----------
+  // The page can be deployed before the pipeline has rerun. Derive what is missing rather
+  // than rendering blank, and leave the price panel explicitly unavailable rather than
+  // inventing a price — that mistake is the reason this page was rewritten.
+  if ((D.meta.schemaVersion || 1) < 3 || !D.curve || !D.headline || !D.meta.price) {
+    var v0 = D.verdict.NEW_PAYER;
+    if (!D.meta.price || !D.meta.price.observed || !D.meta.price.observed.pilotSignal) {
+      D.meta.price = { available: false, changeDetected: false,
+        changeReason: 'this data file predates price measurement — rerun the pilot pull',
+        observed: {}, intended: null, catalogue: null,
+        catalogueNote: 'Price data is not present in this build.' };
+    }
+    if (v0.baselinePilotPerDay != null && v0.controlMove) {
+      if (v0.counterfactualPerDay == null) {
+        v0.counterfactualPerDay = v0.baselinePilotPerDay * v0.controlMove;
+      }
+      // Recompute revenue unconditionally on pre-v3 files. Schema 2 built its
+      // counterfactual by multiplying adopters by an ASSUMED $5 list price, which
+      // inflated the revenue gain to +100% off a price rise no merchant received.
+      // Rebuild it from observed baseline revenue so no list price is involved.
+      if (v0.revenueBaselinePerDay != null) {
+        v0.counterfactualRevenuePerDay = v0.revenueBaselinePerDay * v0.controlMove;
+        v0.didRevenue = (v0.counterfactualRevenuePerDay && v0.revenueSignalPerDay != null)
+          ? v0.revenueSignalPerDay / v0.counterfactualRevenuePerDay : null;
+      } else {
+        // No observed revenue at all — better to show nothing than a modelled figure.
+        v0.counterfactualRevenuePerDay = null;
+        v0.didRevenue = null;
+      }
+    }
+    // Any curve/headline carried by a pre-v3 file was built on the same assumption.
+    if ((D.meta.schemaVersion || 1) < 3) { D.curve = null; D.headline = null; }
+    if (!D.curve) {
+      var byD = {};
+      (D.series.PILOT_NEW_PAYER || []).forEach(function(r){ byD[r.d] = r; });
+      var cfN = v0.counterfactualPerDay || 0, cfR = v0.counterfactualRevenuePerDay || 0;
+      var c1 = 0, r1 = 0, c2 = 0, r2 = 0, out = [];
+      var dd = new Date(D.meta.signalDate + 'T00:00:00Z');
+      var end = new Date(D.meta.lastDataDate + 'T00:00:00Z');
+      for (; dd <= end; dd.setUTCDate(dd.getUTCDate() + 1)) {
+        var iso = dd.toISOString().slice(0, 10), row = byD[iso];
+        c1 += row ? row.n : 0;
+        r1 += (row && row.r != null) ? row.r : 0;
+        c2 += cfN; r2 += cfR;
+        out.push({ d: iso, actual: c1, counterfactual: +c2.toFixed(2),
+                   actualRevenue: +r1.toFixed(2), counterfactualRevenue: +r2.toFixed(2) });
+      }
+      D.curve = out;
+    }
+    if (!D.headline) {
+      var lp = D.curve.length ? D.curve[D.curve.length - 1] : null;
+      D.headline = {
+        signalDays: D.meta.days.SIGNAL, daysNeeded: v0.daysNeeded || 7, readable: !!v0.readable,
+        adoptersActual: lp ? lp.actual : 0, adoptersCounterfactual: lp ? lp.counterfactual : 0,
+        revenueActual: lp ? lp.actualRevenue : 0,
+        revenueCounterfactual: lp ? lp.counterfactualRevenue : 0,
+        adoptionChange: v0.did, revenueChange: v0.didRevenue, p: v0.p,
+        priceChanged: false
+      };
+    }
   }
 
-  // ---- tiles ----
+  var M = D.meta, H = D.headline, NP = D.verdict.NEW_PAYER, PR = M.price;
+  var OB = PR.observed || {}, INT = PR.intended || null;
+  var sd = M.days.SIGNAL, need = H.daysNeeded || 7;
+  var priceOn = !!PR.available, priceChanged = !!PR.changeDetected;
+
+  var f2  = function(x){ return (x == null) ? '—' : (Math.round(x * 100) / 100).toFixed(2); };
+  var pct = function(r){ return (r == null) ? '—' : ((r - 1) >= 0 ? '+' : '') + ((r - 1) * 100).toFixed(0) + '%'; };
+  var usd = function(x){ return (x == null) ? '—' : '$' + Math.round(x).toLocaleString('en-US'); };
+  var money = function(x){ return (x == null) ? '—' : '$' + Number(x).toFixed(2); };
+  var MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dLab = function(iso){
+    if (!iso) return null;
+    var p = String(iso).split('-');
+    return (p.length < 3) ? null : (+p[2]) + ' ' + (MONS[(+p[1]) - 1] || '');
+  };
+
+  var lag = (M.dataLagDays != null) ? M.dataLagDays
+          : Math.floor((new Date() - new Date(M.lastDataDate + 'T00:00:00Z')) / 86400000);
+  var etaNote = function(v){
+    var r = dLab(v && v.readableEta), c = dLab(v && v.confirmEta), bits = [];
+    if (r) bits.push('a p-value should appear around ' + r);
+    if (c) bits.push('enough power to confirm a 25% effect around ' + c);
+    return bits.length ? ' Next milestones: ' + bits.join(', ') + '.' : '';
+  };
+
+  // The hero states what shipped, not what was planned.
+  document.getElementById('heroSub').innerHTML = priceOn && !priceChanged
+    ? 'Free history cut 30 days &rarr; 15 days on ' + dLab(M.launchDate) + ' in Australia, Belgium, '
+      + 'Colombia, Indonesia, India, Nigeria and Singapore. <b>The price rise that was meant to ship '
+      + 'alongside it has not reached any merchant.</b>'
+    : 'Free history cut 30 days &rarr; 15 days on ' + dLab(M.launchDate) + ' in Australia, Belgium, '
+      + 'Colombia, Indonesia, India, Nigeria and Singapore.';
+  document.getElementById('stamp').textContent =
+    'data to ' + M.lastDataDate + (lag ? ' (' + lag + 'd behind)' : '')
+      + ' · built ' + M.generatedAt + ' · signal day ' + sd + ' of ' + need + ' needed for a p-value';
+  document.getElementById('sigDateA').textContent = dLab(M.signalDate);
+
+  if (lag > 3) {
+    document.getElementById('staleBox').innerHTML =
+      '<div class="stale"><b>This page is ' + lag + ' days behind.</b> Latest data is ' + M.lastDataDate
+      + '. Run the <code>pilot-pull</code> workflow to refresh — everything below describes the world as '
+      + 'of ' + dLab(M.lastDataDate) + ', not today.</div>';
+  }
+
+  // ---------- 1. verdict ----------
+  var adoptR = H.adoptionChange, revR = H.revenueChange;
+  var b  = document.getElementById('banner');
+  var bk = document.getElementById('bKicker'), bt = document.getElementById('bTitle');
+  var p1 = document.getElementById('bBody'),   p2 = document.getElementById('bBody2');
+
+  if (sd <= 0) {
+    b.className = 'card banner wait';
+    bk.textContent = 'Nothing measured yet';
+    bt.textContent = 'No treated customer exists in the data yet';
+    p1.textContent = 'The rules changed on ' + dLab(M.launchDate) + ', but adoption runs through a '
+      + '14-day trial, so the first merchant who genuinely faced the new terms bills on '
+      + dLab(M.signalDate) + '. This is not evidence of failure — there is nobody to measure.'
+      + etaNote(NP);
+    p2.textContent = '';
+  } else {
+    var sig = (H.p != null && H.p < 0.05);
+    var adoptUp = (adoptR != null && adoptR > 1);
+    b.className = 'card banner ' + (!H.readable ? 'wait' : (sig ? (adoptUp ? 'win' : 'lose') : 'flat'));
+
+    bk.textContent = H.readable
+      ? (sig ? 'Statistically readable' : 'Readable — no statistically clear effect')
+      : ('Directional only — ' + sd + ' of ' + need + ' days needed');
+
+    // Headline is adoption, because adoption is the only half of the pilot that shipped.
+    bt.textContent = !H.readable
+      ? 'Too early to call — adoption is running ' + pct(adoptR) + ' vs counterfactual'
+      : (sig ? (adoptUp ? 'Adoption is up ' + pct(adoptR) + ' vs counterfactual'
+                        : 'Adoption is down ' + pct(adoptR) + ' vs counterfactual')
+             : 'No detectable effect on adoption after ' + sd + ' days');
+
+    p1.innerHTML = 'Since ' + dLab(M.signalDate) + ', pilot markets produced <b>' + H.adoptersActual
+      + '</b> new add-on payers against <b>' + f2(H.adoptersCounterfactual)
+      + '</b> expected had they tracked the control markets — <b>' + pct(adoptR) + '</b>.'
+      + (H.readable
+          ? ' That is ' + (sig ? '' : 'not ') + 'outside normal fluctuation (p = '
+            + (H.p == null ? '—' : H.p.toFixed(3)) + ', null range '
+            + (NP.null95 ? NP.null95[0] + '–' + NP.null95[1] : '—') + ' adopters).'
+            + (sig ? '' : ' Read the direction, not the magnitude.')
+          : ' Treat every number here as a direction, not a result.')
+      + etaNote(NP);
+
+    p2.innerHTML = !priceOn
+      ? '<b>Price could not be verified in this build.</b> ' + (PR.changeReason || '')
+      : (priceChanged
+          ? '<b>The price rise is present in billing</b> (' + (PR.changeReason || '') + '), so the '
+            + 'revenue view and the break-even below are meaningful.'
+          : '<b>This pilot only half shipped.</b> The paywall narrowed, but the price merchants pay '
+            + 'did not change — ' + (PR.changeReason || '') + '. So there is no revenue upside to set '
+            + 'against the lost adopters, and this is a test of the paywall alone.');
+  }
+
+  // ---------- 2. tiles ----------
+  var adoptCls = (adoptR == null) ? '' : (adoptR >= 1 ? 'pos' : 'neg');
+  var revCls   = (revR   == null) ? '' : (revR   >= 1 ? 'pos' : 'neg');
+  var sigP = OB.pilotSignal, baseP = OB.pilotBaseline;
   var tiles = [
-    ['Days of real signal', sd + ' / ' + (np.daysNeeded || 7),
-      sd <= 0 ? 'starts ' + D.meta.signalDate : 'since ' + D.meta.signalDate],
-    ['New payers /day — pilot', f1(np.signalPilotPerDay), 'baseline ' + f1(np.baselinePilotPerDay)],
-    ['Change vs control', pct(np.did), np.readable
-        ? 'p = ' + (np.p==null?'—':np.p.toFixed(3))
-        : (dLab(np.readableEta) ? 'p-value ~' + dLab(np.readableEta) : 'not yet readable')],
-    ['Upsells /day — pilot', f1(up.signalPilotPerDay), up.readable
-        ? pct(up.did) + ' vs control'
-        : (dLab(up.readableEta) ? 'full billing month ~' + dLab(up.readableEta) : 'needs a full billing month')]
+    ['New add-on payers', (H.adoptersActual != null ? H.adoptersActual : '—'), '',
+     'vs ' + f2(H.adoptersCounterfactual) + ' expected without the change'],
+    ['Adoption vs counterfactual', pct(adoptR), adoptCls,
+     H.readable ? 'p = ' + (H.p == null ? '—' : H.p.toFixed(3))
+                : (dLab(NP.readableEta) ? 'p-value ~' + dLab(NP.readableEta) : 'not yet readable')],
+    ['Price merchants pay', priceOn ? (sigP ? money(sigP.weightedAvg) : '—') : 'unknown',
+     (priceOn && priceChanged) ? 'pos' : '',
+     priceOn
+       ? (baseP ? 'was ' + money(baseP.weightedAvg) + ' before · '
+                  + (priceChanged ? pct(PR.changeRatio) : 'unchanged')
+                : 'no baseline to compare')
+       : 'not measured in this build'],
+    ['Revenue vs counterfactual', pct(revR), revCls,
+     priceChanged ? 'price rose, so this reflects both effects'
+                  : 'price flat — this is volume and term mix only']
   ];
   document.getElementById('tiles').innerHTML = tiles.map(function(r){
-    return '<div class="tile"><div class="lab">' + r[0] + '</div><div class="val">' + r[1]
-         + '</div><div class="sub">' + r[2] + '</div></div>';
+    return '<div class="tile"><div class="lab">' + r[0] + '</div><div class="val ' + r[2] + '">' + r[1]
+         + '</div><div class="sub">' + r[3] + '</div></div>';
   }).join('');
 
-  // ---- per-country table ----
-  var rows = D.countries.map(function(c){
-    var bp = c['BASELINE_NEW_PAYER_perDay'], sp = c['SIGNAL_NEW_PAYER_perDay'];
-    var ratio = (bp && sp != null) ? sp / bp : null;
-    var cls = ratio == null ? 'na' : (ratio > 1 ? 'up' : 'dn');
-    return '<tr' + (sd <= 0 ? ' class="dim"' : '') + '><td>' + c.country
-      + '</td><td class="n">' + f1(bp)
-      + '</td><td class="n">' + (sd <= 0 ? '—' : f1(sp))
-      + '</td><td><span class="pill ' + cls + '">' + (sd <= 0 ? 'pending' : pct(ratio)) + '</span>'
-      + '</td><td class="n">' + (c['SIGNAL_NEW_PAYER'] || 0)
-      + '</td><td class="n">' + (c.upsellBase == null ? '—' : c.upsellBase) + '</td></tr>';
-  }).join('');
-  document.querySelector('#ctab tbody').innerHTML = rows;
+  // ---------- 3. price panel ----------
+  var pc = document.getElementById('priceCard');
+  var flag = document.getElementById('priceFlag');
+  var grid = document.getElementById('priceGrid');
+  var intro = document.getElementById('priceIntro');
 
-  // ---- caveats ----
-  document.getElementById('caveats').innerHTML =
-    D.meta.notes.map(function(n){ return '<li>' + n + '</li>'; }).join('');
+  if (!priceOn) {
+    intro.textContent = PR.changeReason || 'Price was not measured in this build.';
+    grid.innerHTML = '';
+  } else {
+    if (!priceChanged && INT) {
+      pc.className = 'card alert';
+      document.getElementById('priceH').textContent = 'The price rise has not been applied';
+      flag.style.display = '';
+      flag.textContent = 'Intended $' + INT.before + ' → $' + INT.after
+        + '. Merchants arriving since ' + dLab(M.signalDate) + ' are paying '
+        + (sigP ? money(sigP.weightedAvg) : '—') + ' on average.';
+    }
+    intro.innerHTML = 'Read from <code>unit_amount</code> on the invoice line — the per-unit list price, '
+      + 'which carries neither quantity nor mid-cycle proration. Monthly ' + (PR.currency || 'USD')
+      + ' SKUs only, since mixing terms compares $9/month with $54/year and mixing currencies compares '
+      + 'dollars with rupiah. Nothing on this page multiplies by an assumed price.';
 
-  // ---- chart: indexed 7-day trailing averages ----
-  function idx(key, baseRate){
-    var s = D.series[key] || [];
-    var byDate = {}; s.forEach(function(r){ byDate[r.d] = r.n; });
+    var boxes = [];
+    boxes.push(['Before ' + dLab(M.launchDate), baseP ? money(baseP.weightedAvg) : '—',
+      baseP ? 'modal ' + money(baseP.modalUnit) + ' · ' + baseP.adopters + ' adopters' : '', '']);
+    boxes.push(['Since ' + dLab(M.signalDate), sigP ? money(sigP.weightedAvg) : '—',
+      sigP ? 'modal ' + money(sigP.modalUnit) + ' · ' + sigP.adopters + ' adopters' : '', '']);
+    if (INT) boxes.push(['Intended', '$' + INT.after.toFixed(2), INT.source, 'want']);
+    if (PR.intendedTier) {
+      boxes.push(['That tier exists', PR.intendedTier.itemPriceId,
+        PR.intendedTier.subscriptions.toLocaleString('en-US') + ' subscriptions globally · '
+        + PR.intendedTier.pilotSubsSinceLaunch + ' attached to a pilot merchant since launch', 'want']);
+    }
+    grid.innerHTML = boxes.map(function(x){
+      return '<div class="pricebox ' + x[3] + '"><div class="lab">' + x[0] + '</div><div class="big">'
+        + x[1] + '</div>' + (x[2] ? '<div class="note">' + x[2] + '</div>' : '') + '</div>';
+    }).join('');
+
+    // Tier table: every price new arrivals actually landed on, plus the catalogue rows so a
+    // provisioned-but-unused tier is visible rather than absent.
+    var html = '';
+    if (sigP && sigP.tiers && sigP.tiers.length) {
+      html += '<table><thead><tr><th>Plan attached since ' + dLab(M.signalDate) + '</th>'
+        + '<th>Price</th><th>Merchants</th></tr></thead><tbody>'
+        + sigP.tiers.map(function(t){
+            return '<tr><td>' + t.plan + '</td><td class="n">' + money(t.unit)
+              + '</td><td class="n">' + t.adopters + '</td></tr>'; }).join('')
+        + '</tbody></table>';
+    }
+    if (PR.catalogue && PR.catalogue.length) {
+      var monthly = PR.catalogue.filter(function(r){
+        return r.term === 'MONTHLY' && r.currency === (PR.currency || 'USD'); });
+      if (monthly.length) {
+        html += '<table style="margin-top:16px"><thead><tr><th>Monthly ' + (PR.currency || 'USD')
+          + ' tier in the catalogue</th><th>Price</th><th>Subscriptions</th>'
+          + '<th>Pilot merchants since launch</th></tr></thead><tbody>'
+          + monthly.map(function(r){
+              var hit = INT && Math.abs(r.unitPrice - INT.after) < 0.005;
+              return '<tr class="' + (hit ? 'hit' : '') + '"><td>' + r.itemPriceId + (hit ? ' ←' : '')
+                + '</td><td class="n">' + money(r.unitPrice) + '</td><td class="n">'
+                + r.subscriptions.toLocaleString('en-US') + '</td><td class="n">'
+                + r.pilotSubsSinceLaunch + '</td></tr>'; }).join('')
+          + '</tbody></table>';
+      }
+    }
+    document.getElementById('priceTiers').innerHTML = html;
+  }
+
+  var pn = [];
+  if (PR.catalogueNote) pn.push(PR.catalogueNote);
+  if (priceOn && OB.controlBaseline && OB.controlSignal) {
+    pn.push('Control markets moved ' + money(OB.controlBaseline.weightedAvg) + ' → '
+      + money(OB.controlSignal.weightedAvg) + ' over the same days, so the pilot markets are not '
+      + 'diverging from the rest of the world in either direction.');
+  }
+  if (priceOn) {
+    pn.push('A move of more than ' + ((PR.tolerance || 0.02) * 100).toFixed(0) + '% in the '
+      + 'adopter-weighted average is required before this page will call it a price change, so that '
+      + 'ordinary tier-mix wobble is not reported as a repricing.');
+  }
+  document.getElementById('priceNotes').innerHTML = pn.map(function(n){ return '<li>' + n + '</li>'; }).join('');
+
+  // ---------- 4. the decision curve ----------
+  var curve = D.curve || [];
+  var mode = 'cust';
+
+  var chartCurve = new Chart(document.getElementById('curve'), {
+    type: 'line',
+    data: { labels: curve.map(function(r){ return r.d; }), datasets: [
+      { label: 'Actual', data: curve.map(function(r){ return r.actual; }),
+        borderColor: '#1D8FE1', backgroundColor: 'rgba(29,143,225,.10)',
+        borderWidth: 2.5, pointRadius: 2, tension: 0, fill: '+1' },
+      { label: 'Without the change', data: curve.map(function(r){ return r.counterfactual; }),
+        borderColor: '#7E8A9A', backgroundColor: 'transparent',
+        borderWidth: 2, borderDash: [5,4], pointRadius: 0, tension: 0, fill: false }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: function(c){
+          return c.dataset.label + ': ' + (mode === 'cust' ? c.parsed.y.toFixed(1) : usd(c.parsed.y));
+        } } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#7E8A9A', maxTicksLimit: 12, font: { size: 11 } } },
+        y: { beginAtZero: true, grid: { color: '#E3E9F0' },
+             ticks: { color: '#7E8A9A', font: { size: 11 },
+               callback: function(v){ return mode === 'cust' ? v : '$' + v; } },
+             title: { display: true, color: '#7E8A9A', font: { size: 11 },
+                      text: 'cumulative new add-on payers' } }
+      }
+    }
+  });
+
+  function setMode(m){
+    mode = m;
+    var cust = (m === 'cust');
+    chartCurve.data.datasets[0].data = curve.map(function(r){ return cust ? r.actual : r.actualRevenue; });
+    chartCurve.data.datasets[1].data = curve.map(function(r){ return cust ? r.counterfactual : r.counterfactualRevenue; });
+    chartCurve.options.scales.y.title.text = cust
+      ? 'cumulative new add-on payers' : 'cumulative first-invoice revenue (USD)';
+    chartCurve.update();
+    document.getElementById('btnCust').className = cust ? 'on' : '';
+    document.getElementById('btnRev').className  = cust ? '' : 'on';
+    document.getElementById('lgA').textContent = cust ? 'Actual customers' : 'Actual revenue';
+    document.getElementById('lgB').textContent = 'Without the change (counterfactual)';
+    document.getElementById('curveNotes').innerHTML = cust
+      ? '<li>Counting only merchants whose <b>first ever</b> sales-history payment falls in the window. '
+        + 'Existing payers and renewals are excluded — this is the acquisition curve.</li>'
+        + '<li>Merchants who hit the new 15-day wall and simply walked away never appear anywhere in the '
+        + 'data. This curve cannot see them.</li>'
+      : '<li>Both lines are invoiced amounts. The counterfactual is this cohort\'s own observed baseline '
+        + 'revenue per day moved by the control cohort\'s movement — <b>no list price is assumed on '
+        + 'either side</b>.</li>'
+        + (priceChanged
+            ? '<li>The price rose, so this gap reflects volume and price together.</li>'
+            : '<li>With the price flat, this gap is <b>volume and monthly/annual mix</b>, not pricing. '
+              + 'A $50/year purchase and a $5/month purchase both count once here, so the mix moves the '
+              + 'total on its own.</li>');
+  }
+  document.getElementById('btnCust').onclick = function(){ setMode('cust'); };
+  document.getElementById('btnRev').onclick  = function(){ setMode('rev'); };
+  setMode('cust');
+
+  // ---------- 5. break-even, only if a price change is real ----------
+  if (priceChanged && INT && PR.changeRatio) {
+    var beDrop = 1 - (1 / PR.changeRatio);      // from the OBSERVED ratio, not the intended one
+    var actualDrop = (adoptR == null) ? null : (1 - adoptR);
+    document.getElementById('beCard').style.display = '';
+    document.getElementById('bePreamble').innerHTML =
+      'The observed price moved ' + money(baseP ? baseP.weightedAvg : null) + ' → '
+      + money(sigP ? sigP.weightedAvg : null) + ' (' + pct(PR.changeRatio) + '), so adoption can fall '
+      + 'a long way before revenue is worse off. This bar shows how far.';
+    var axisMax = Math.ceil(Math.max(beDrop * 1.5, (actualDrop || 0) * 1.25, 0.6) * 10) / 10;
+    document.getElementById('bedanger').style.left = (beDrop / axisMax * 100) + '%';
+    document.getElementById('beMaxLab').textContent = '−' + (axisMax * 100).toFixed(0) + '% adoption';
+    var bl = document.getElementById('beline');
+    if (actualDrop == null) { bl.style.display = 'none'; }
+    else { bl.style.left = 'calc(' + (Math.max(0, Math.min(1, actualDrop / axisMax)) * 100) + '% - 1.5px)'; }
+    document.getElementById('beCap').innerHTML =
+      'At the observed prices, adoption could fall by up to <b>' + (beDrop * 100).toFixed(0)
+      + '%</b> and revenue would still break even. '
+      + (actualDrop == null ? '' :
+         'It has moved <b>' + (actualDrop * 100).toFixed(0) + '%</b> — the black line — which is '
+         + (actualDrop < beDrop ? 'inside the zone where the pilot makes money.'
+                                : 'past the point where the price rise stops covering the losses.'));
+  }
+
+  // ---------- 6. daily detail chart ----------
+  document.getElementById('pbRate').textContent = f2(NP.baselinePilotPerDay);
+  document.getElementById('cbRate').textContent = f2(NP.baselineControlPerDay);
+
+  function indexed(key, baseRate){
+    var s = D.series[key] || [], byDate = {};
+    s.forEach(function(r){ byDate[r.d] = r.n; });
     var dates = Object.keys(byDate).sort();
-    if (!dates.length) return [];
-    var out = [], win = [];
-    var d0 = new Date(dates[0] + 'T00:00:00Z'), dN = new Date(D.meta.lastDataDate + 'T00:00:00Z');
+    if (!dates.length) return { pts: [], labels: [] };
+    var pts = [], lab = [], win = [];
+    var d0 = new Date(dates[0] + 'T00:00:00Z'), dN = new Date(M.lastDataDate + 'T00:00:00Z');
     for (var d = new Date(d0); d <= dN; d.setUTCDate(d.getUTCDate() + 1)) {
       var iso = d.toISOString().slice(0, 10);
       win.push(byDate[iso] || 0);
       if (win.length > 7) win.shift();
       if (win.length === 7) {
-        var avg = win.reduce(function(a, b){ return a + b; }, 0) / 7;
-        out.push({ x: iso, y: baseRate ? Math.round(avg / baseRate * 1000) / 10 : null });
+        var avg = win.reduce(function(a, x){ return a + x; }, 0) / 7;
+        lab.push(iso);
+        pts.push(baseRate ? Math.round(avg / baseRate * 1000) / 10 : null);
       }
     }
-    return out;
+    return { pts: pts, labels: lab };
   }
-  var pilotLine   = idx('PILOT_NEW_PAYER',   np.baselinePilotPerDay);
-  var controlLine = idx('CONTROL_NEW_PAYER', np.baselineControlPerDay);
+  var pl = indexed('PILOT_NEW_PAYER', NP.baselinePilotPerDay);
+  var cl = indexed('CONTROL_NEW_PAYER', NP.baselineControlPerDay);
 
-  var marker = function(x, color, label){
-    return { type:'line', xMin:x, xMax:x, borderColor:color, borderWidth:2, borderDash:[4,3] };
+  var deadZone = {
+    id: 'deadZone',
+    beforeDatasetsDraw: function(chart){
+      var xs = chart.scales.x, ya = chart.scales.y, ctx = chart.ctx;
+      var i0 = pl.labels.indexOf(M.launchDate), i1 = pl.labels.indexOf(M.signalDate);
+      if (i0 < 0) return;
+      var x0 = xs.getPixelForValue(i0);
+      var x1 = (i1 >= 0) ? xs.getPixelForValue(i1) : xs.right;
+      ctx.save();
+      ctx.fillStyle = 'rgba(201,133,0,.09)';
+      ctx.fillRect(x0, ya.top, x1 - x0, ya.bottom - ya.top);
+      [[x0, '#C98500'], [x1, '#1F9D6B']].forEach(function(m){
+        ctx.beginPath(); ctx.setLineDash([4,3]); ctx.strokeStyle = m[1]; ctx.lineWidth = 2;
+        ctx.moveTo(m[0], ya.top); ctx.lineTo(m[0], ya.bottom); ctx.stroke();
+      });
+      ctx.restore();
+    }
   };
 
   new Chart(document.getElementById('chart'), {
     type: 'line',
-    data: { datasets: [
-      { label:'Pilot',   data:pilotLine,   borderColor:'#1D8FE1', backgroundColor:'#1D8FE1',
-        borderWidth:2, pointRadius:0, tension:0.25 },
-      { label:'Control', data:controlLine, borderColor:'#7E8A9A', backgroundColor:'#7E8A9A',
-        borderWidth:2, pointRadius:0, borderDash:[5,4], tension:0.25 }
+    plugins: [deadZone],
+    data: { labels: pl.labels, datasets: [
+      { label: 'Pilot',   data: pl.pts, borderColor: '#1D8FE1', borderWidth: 2, pointRadius: 0, tension: .25 },
+      { label: 'Control', data: cl.pts, borderColor: '#7E8A9A', borderWidth: 2, pointRadius: 0,
+        borderDash: [5,4], tension: .25 }
     ]},
     options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false},
-        tooltip:{ callbacks:{ label:function(c){ return c.dataset.label + ': ' + c.parsed.y + ' (100 = baseline)'; } } } },
-      scales:{
-        x:{ type:'category', grid:{display:false},
-            ticks:{ color:'#7E8A9A', maxTicksLimit:10, font:{size:11} } },
-        y:{ grid:{color:'#E3E9F0'}, ticks:{ color:'#7E8A9A', font:{size:11},
-            callback:function(v){ return v; } },
-            title:{ display:true, text:'index (100 = own baseline)', color:'#7E8A9A', font:{size:11} } }
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: function(c){
+          return c.dataset.label + ': ' + c.parsed.y + ' (100 = own baseline)'; } } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#7E8A9A', maxTicksLimit: 10, font: { size: 11 } } },
+        y: { grid: { color: '#E3E9F0' }, ticks: { color: '#7E8A9A', font: { size: 11 } },
+             title: { display: true, text: 'index (100 = own baseline)', color: '#7E8A9A', font: { size: 11 } } }
       }
     }
   });
+
+  // ---------- 7. per-market table ----------
+  document.querySelector('#ctab tbody').innerHTML = D.countries.map(function(c){
+    var bp = c['BASELINE_NEW_PAYER_perDay'], sp = c['SIGNAL_NEW_PAYER_perDay'];
+    var ratio = (bp && sp != null) ? sp / bp : null;
+    var cls = ratio == null ? 'na' : (ratio > 1 ? 'up' : 'dn');
+    return '<tr' + (sd <= 0 ? ' class="dim"' : '') + '><td>' + c.country
+      + '</td><td class="n">' + f2(bp)
+      + '</td><td class="n">' + (sd <= 0 ? '—' : f2(sp))
+      + '</td><td><span class="pill ' + cls + '">' + (sd <= 0 ? 'pending' : pct(ratio)) + '</span></td>'
+      + '<td class="n">' + (c['SIGNAL_NEW_PAYER'] || 0) + '</td>'
+      + '<td class="n">' + (c.signalModalUnit == null ? '—' : money(c.signalModalUnit)) + '</td>'
+      + '<td class="n">' + (c.upsellBase == null ? '—' : c.upsellBase) + '</td></tr>';
+  }).join('');
+
+  // ---------- 8. caveats ----------
+  document.getElementById('caveats').innerHTML =
+    (M.notes || []).map(function(n){ return '<li>' + n + '</li>'; }).join('');
 })();
 </script>
 </body>
