@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-13T10:47:19.152Z",
+  "ranAt": "2026-08-13T08:13:38.588Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1002,23 +1002,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 136896
+        "rows": 136848
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59493
+        "rows": 59489
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1088021
+        "rows": 1087433
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 101431
+        "rows": 101411
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1734655
+        "rows": 1733645
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
@@ -1050,7 +1050,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9308534639
+        "rows": 9307577152
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1905,6 +1905,87 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
+        "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 2213,
+        "SHIPPING_ADDRESS_STATE": "ME",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "04101",
+        "BATCH_TIMESTAMP": "2026-08-12 21:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "70 Washington Avenue",
+        "AMOUNT": 45042,
+        "SHIPPING_AMOUNT": 2600,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1U3hQm7e4AMQfKY3coBGzM17",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-12 19:33:20.000",
+        "SHIPPING_NAME": "ERLINDA C ALVAREZ",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "ready_to_ship",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Portland",
+        "SHIPPING_PHONE": "12076305414",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "help@tucasarestaurantes.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-08-12 19:03:16.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 786,
+        "SHIPPING_ADDRESS_STATE": "GA",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "30008",
+        "BATCH_TIMESTAMP": "2026-08-12 21:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "2379 June Springs Dr SW",
+        "AMOUNT": 13886,
+        "SHIPPING_AMOUNT": 1300,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1U3hf07e4AMQfKY3n7IgeIqs",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-12 19:48:01.000",
+        "SHIPPING_NAME": "Eddison Bernard",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "ready_to_ship",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Marietta",
+        "SHIPPING_PHONE": "16787799987",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "osbornebands@gmail.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-08-12 19:17:58.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": "6G",
+        "TAX": 1331,
+        "SHIPPING_ADDRESS_STATE": "NY",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "10021",
+        "BATCH_TIMESTAMP": "2026-08-12 18:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "245 E 72nd Street",
+        "AMOUNT": 16331,
+        "SHIPPING_AMOUNT": 2200,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1U3Nf97e4AMQfKY33tvTuSG5",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-12 16:31:05.000",
+        "SHIPPING_NAME": "Alisa Coleman",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "shipped",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "New York",
+        "SHIPPING_PHONE": "19175123375",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "alisa@cailleblancvilla.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-08-11 21:56:47.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
         "SHIPPING_ADDRESS_LINE2": "",
         "TAX": 7014,
         "SHIPPING_ADDRESS_STATE": null,
@@ -2037,87 +2118,6 @@
         "SHIPPING_EMAIL": "simon.perry@loyverse.com",
         "LIVEMODE": true,
         "CREATED": "2026-04-21 16:15:35.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 2092,
-        "SHIPPING_ADDRESS_STATE": "NJ",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "07643",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "ICLOUD SMOKE & TOBACCO",
-        "SHIPPING_ADDRESS_LINE1": "27 Van Buren Street",
-        "AMOUNT": 33668,
-        "SHIPPING_AMOUNT": 1300,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1TRDt37e4AMQfKY3lkvMZ1Vc",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:03.000",
-        "SHIPPING_NAME": "FAIZ MAFLAHI",
-        "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Little Ferry",
-        "SHIPPING_PHONE": "13472083850",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-04-28 15:49:25.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": "Delta, CO 81416",
-        "TAX": 1042,
-        "SHIPPING_ADDRESS_STATE": "CO",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "81416",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "Delta Builders llc",
-        "SHIPPING_ADDRESS_LINE1": "318 Main Street",
-        "AMOUNT": 18842,
-        "SHIPPING_AMOUNT": 2200,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1TYT0A7e4AMQfKY3zZkhxobL",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:05.000",
-        "SHIPPING_NAME": "Charles Mason",
-        "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Delta",
-        "SHIPPING_PHONE": "19705100014",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-05-18 15:22:42.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1921,
-        "SHIPPING_ADDRESS_STATE": "PA",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "Polarbear icecream",
-        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
-        "AMOUNT": 33934,
-        "SHIPPING_AMOUNT": 6000,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:10.000",
-        "SHIPPING_NAME": "Sean hunter",
-        "SHIPPING_METHOD_NAME": "priority",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Matamoras",
-        "SHIPPING_PHONE": "18458498613",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-06-16 13:28:54.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
