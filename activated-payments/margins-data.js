@@ -3,21 +3,21 @@
 window.MARGINS = {
   "updated": "2026-08-13",
   "title": "Loyverse Embedded Payments — Full True-Cost & Margin Analysis",
-  "subtitle": "Apr 13–Aug 13, 2026 · 13,811 succeeded transactions · 52 merchants · USD (29 EUR txns at face value)",
+  "subtitle": "Apr 13–Aug 13, 2026 · 13,853 succeeded transactions · 52 merchants · USD (29 EUR txns at face value)",
   "kpis": {
-    "txns": 13811.0,
-    "tpv": 288076.71,
-    "avgTicket": 20.8584975743972,
-    "revenue": 8207.48,
-    "takeRate": 0.0284906058528647,
+    "txns": 13853.0,
+    "tpv": 288563.69,
+    "avgTicket": 20.830411463221,
+    "revenue": 8220.7,
+    "takeRate": 0.0284883382243968,
     "totalFees": 7019.8018,
-    "netMargin": 1187.6782,
-    "netTakeRate": 0.00412278451805423,
-    "pctProfitable": 0.468756788067482,
-    "profitableTxns": 6474.0,
-    "unprofitableTxns": 7337.0,
+    "netMargin": 1200.8982,
+    "netTakeRate": 0.00416164001784147,
+    "pctProfitable": 0.468851512307803,
+    "profitableTxns": 6495.0,
+    "unprofitableTxns": 7358.0,
     "withActual": 13421.0,
-    "withEstimated": 390.0,
+    "withEstimated": 432.0,
     "failed": 313.0
   },
   "fees": {
@@ -85,27 +85,27 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 8207.48
+        "revenue": 8220.7
       },
       {
         "name": "All 2.5% flat",
-        "revenue": 7201.91775
+        "revenue": 7214.09225
       },
       {
         "name": "All 2.5% + 5¢",
-        "revenue": 7892.46775
+        "revenue": 7906.74225
       },
       {
         "name": "All 2.6% + 10¢",
-        "revenue": 8871.09446
+        "revenue": 8887.95594
       },
       {
         "name": "All 2.6% + 15¢",
-        "revenue": 9561.64446
+        "revenue": 9580.60594
       },
       {
         "name": "All 2.8% + 15¢",
-        "revenue": 10137.79788
+        "revenue": 10157.73332
       }
     ]
   },
