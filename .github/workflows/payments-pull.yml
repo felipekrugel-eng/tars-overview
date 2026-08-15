@@ -126,7 +126,7 @@ jobs:
             # is possible. This job now pushes 8x a day, so that mattered more than it used to.
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
-              git reset -q --soft origin/master
+               git reset -q --mixed origin/master
               git add payments-automation/data/transactions.csv \
                       payments-automation/data/icplus_costs.csv \
                       payments-automation/data/platform_fees.csv \
