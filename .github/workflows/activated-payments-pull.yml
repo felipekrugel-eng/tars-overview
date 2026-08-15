@@ -69,7 +69,7 @@ jobs:
             # rebuilding the commit on top of origin/master with our content — cannot conflict.
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
-              git reset -q --soft origin/master
+              git reset -q --mixed origin/master
               git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json
               if git diff --cached --quiet; then
                 echo "Remote already has this data — nothing to push."; exit 0
