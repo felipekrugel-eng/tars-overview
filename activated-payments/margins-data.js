@@ -3,40 +3,40 @@
 window.MARGINS = {
   "updated": "2026-08-15",
   "title": "Loyverse Embedded Payments — Full True-Cost & Margin Analysis",
-  "subtitle": "Apr 13–Aug 14, 2026 · 14,330 succeeded transactions · 53 merchants · USD (29 EUR txns at face value)",
+  "subtitle": "Apr 13–Aug 15, 2026 · 14,417 succeeded transactions · 53 merchants · USD (29 EUR txns at face value)",
   "kpis": {
-    "txns": 14330.0,
-    "tpv": 304418.32,
-    "avgTicket": 21.2434277739009,
-    "revenue": 8587.52,
-    "takeRate": 0.0282096031539758,
-    "totalFees": 7216.822,
-    "netMargin": 1370.698,
-    "netTakeRate": 0.00450267907660748,
-    "pctProfitable": 0.469993021632938,
-    "profitableTxns": 6735.0,
-    "unprofitableTxns": 7595.0,
-    "withActual": 13754.0,
-    "withEstimated": 576.0,
+    "txns": 14417.0,
+    "tpv": 306101.16,
+    "avgTicket": 21.2319594922661,
+    "revenue": 8727.29,
+    "takeRate": 0.0285111301113658,
+    "totalFees": 7334.6492,
+    "netMargin": 1392.6408,
+    "netTakeRate": 0.00454960967805545,
+    "pctProfitable": 0.474301172227232,
+    "profitableTxns": 6838.0,
+    "unprofitableTxns": 7579.0,
+    "withActual": 14024.0,
+    "withEstimated": 393.0,
     "failed": 323.0
   },
   "fees": {
-    "total": 7216.822,
+    "total": 7334.6492,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 6145.662,
+      "total": 6263.4892,
       "items": [
         {
           "label": "        Interchange",
-          "value": 5109.1541
+          "value": 5209.6342
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 758.9678
+          "value": 773.9084
         },
         {
           "label": "        Amex Discount",
-          "value": 277.5401
+          "value": 279.9466
         }
       ]
     },
@@ -85,27 +85,27 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 8587.52
+        "revenue": 8727.29
       },
       {
         "name": "All 2.5% flat",
-        "revenue": 7610.458
+        "revenue": 7652.529
       },
       {
         "name": "All 2.5% + 5¢",
-        "revenue": 8326.958
+        "revenue": 8373.379
       },
       {
         "name": "All 2.6% + 10¢",
-        "revenue": 9347.87632
+        "revenue": 9400.33016
       },
       {
         "name": "All 2.6% + 15¢",
-        "revenue": 10064.37632
+        "revenue": 10121.18016
       },
       {
         "name": "All 2.8% + 15¢",
-        "revenue": 10673.21296
+        "revenue": 10733.38248
       }
     ]
   },
