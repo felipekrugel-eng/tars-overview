@@ -8,35 +8,35 @@ window.MARGINS = {
     "txns": 14330.0,
     "tpv": 304418.32,
     "avgTicket": 21.2434277739009,
-    "revenue": 8676.11,
-    "takeRate": 0.0285006171770477,
-    "totalFees": 7334.6492,
-    "netMargin": 1341.4608,
-    "netTakeRate": 0.0044066362366102,
-    "pctProfitable": 0.472156315422191,
-    "profitableTxns": 6766.0,
-    "unprofitableTxns": 7564.0,
-    "withActual": 14024.0,
-    "withEstimated": 306.0,
+    "revenue": 8587.52,
+    "takeRate": 0.0282096031539758,
+    "totalFees": 7216.822,
+    "netMargin": 1370.698,
+    "netTakeRate": 0.00450267907660748,
+    "pctProfitable": 0.469993021632938,
+    "profitableTxns": 6735.0,
+    "unprofitableTxns": 7595.0,
+    "withActual": 13754.0,
+    "withEstimated": 576.0,
     "failed": 323.0
   },
   "fees": {
-    "total": 7334.6492,
+    "total": 7216.822,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 6263.4892,
+      "total": 6145.662,
       "items": [
         {
           "label": "        Interchange",
-          "value": 5209.6342
+          "value": 5109.1541
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 773.9084
+          "value": 758.9678
         },
         {
           "label": "        Amex Discount",
-          "value": 279.9466
+          "value": 277.5401
         }
       ]
     },
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 8676.11
+        "revenue": 8587.52
       },
       {
         "name": "All 2.5% flat",
