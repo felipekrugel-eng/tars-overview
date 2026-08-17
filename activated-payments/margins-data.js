@@ -8,20 +8,20 @@ window.MARGINS = {
     "txns": 15223.0,
     "tpv": 323170.38,
     "avgTicket": 21.2290862510675,
-    "revenue": 9236.62,
-    "takeRate": 0.0285812703503335,
-    "totalFees": 7802.0964,
-    "netMargin": 1434.5236,
-    "netTakeRate": 0.00443890804596634,
-    "pctProfitable": 0.481639624252775,
-    "profitableTxns": 7332.0,
-    "unprofitableTxns": 7891.0,
+    "revenue": 9247.17,
+    "takeRate": 0.0286139156688803,
+    "totalFees": 7830.4964,
+    "netMargin": 1416.6736,
+    "netTakeRate": 0.0043836740235909,
+    "pctProfitable": 0.482165144846614,
+    "profitableTxns": 7340.0,
+    "unprofitableTxns": 7883.0,
     "withActual": 14813.0,
     "withEstimated": 410.0,
     "failed": 335.0
   },
   "fees": {
-    "total": 7802.0964,
+    "total": 7830.4964,
     "network": {
       "label": "    Network Fees (pass-through)",
       "total": 6667.6164,
@@ -42,15 +42,15 @@ window.MARGINS = {
     },
     "stripe": {
       "label": "    Stripe Fees (markup)",
-      "total": 1134.48,
+      "total": 1162.88,
       "items": [
         {
           "label": "        Per Auth Fee",
-          "value": 755.52
+          "value": 773.25
         },
         {
           "label": "        Volume Fee",
-          "value": 306.55
+          "value": 317.22
         }
       ]
     }
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 9236.62
+        "revenue": 9247.17
       },
       {
         "name": "All 2.5% flat",
@@ -112,5 +112,92 @@ window.MARGINS = {
   "notes": {
     "settlement": "Note: Apr–Jul 19 have complete IC+ cost data; the most recent charges are still settling, so their cost is estimated from each charge’s card-brand × funding blended rate. Amounts are net of Amex/network discounts.",
     "scenario": "Monthly/annual scaled from the 99-day sample (Apr 13–Jul 21); cost held constant across scenarios."
-  }
+  },
+  "byCountry": {
+    "NL": {
+      "kpis": {
+        "txns": 24,
+        "tpv": 29.11,
+        "avgTicket": 1.2129166666666669,
+        "revenue": 1.03,
+        "takeRate": 0.03538302988663689,
+        "totalFees": 1.1644,
+        "netMargin": -0.1344,
+        "netTakeRate": -0.004618617525626356,
+        "pctProfitable": 0.125,
+        "profitableTxns": 3,
+        "unprofitableTxns": 21,
+        "withActual": 24,
+        "withEstimated": 0,
+        "failed": 5
+      },
+      "fees": {
+        "total": 1.1644,
+        "network": {
+          "total": 1.0597,
+          "items": [
+            0.0168,
+            0.9079,
+            0.135
+          ]
+        },
+        "stripe": {
+          "total": 0.1047
+        }
+      },
+      "scenarios": [
+        1.03,
+        0.72775,
+        1.92775,
+        3.15686,
+        4.35686,
+        4.41508
+      ],
+      "tpvShare": 9e-05,
+      "stripeFeesBasis": "apportioned_by_tpv"
+    },
+    "US": {
+      "kpis": {
+        "txns": 15199,
+        "tpv": 323141.27,
+        "avgTicket": 21.26069280873733,
+        "revenue": 9246.14,
+        "takeRate": 0.028613305877024327,
+        "totalFees": 7829.332,
+        "netMargin": 1416.808,
+        "netTakeRate": 0.004384484989974331,
+        "pctProfitable": 0.4827291269162445,
+        "profitableTxns": 7337,
+        "unprofitableTxns": 7862,
+        "withActual": 14789,
+        "withEstimated": 410,
+        "failed": 330
+      },
+      "fees": {
+        "total": 7829.332,
+        "network": {
+          "total": 6666.5567,
+          "items": [
+            5519.5529,
+            829.5728,
+            317.431
+          ]
+        },
+        "stripe": {
+          "total": 1162.7753
+        }
+      },
+      "scenarios": [
+        9246.14,
+        8078.53175,
+        8838.48175,
+        9921.57302,
+        10681.52302,
+        11327.80556
+      ],
+      "tpvShare": 0.99991,
+      "stripeFeesBasis": "apportioned_by_tpv"
+    }
+  },
+  "countrySplitNote": "Transactions, volume, revenue and network fees are actuals for the selected country. Stripe's platform fees are billed to the Loyverse platform account with no merchant attribution, so they are apportioned by share of volume — net margin for a single country is therefore an estimate. The all-countries view is exact."
 };
