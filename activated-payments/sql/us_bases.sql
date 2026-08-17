@@ -127,12 +127,17 @@ WITH -- ----------------------------------------------------------------
           AND m.CREATED_AT >= '2026-03-01'
     ),
 -- ----------------------------------------------------------------
-params AS (SELECT DATE '2026-07-01' AS LAUNCH),
--- Genuine US merchants (bots removed) — the universe every base is carved from
+params AS (SELECT /*LAUNCH*/DATE '2026-07-01' AS LAUNCH),
+-- Genuine merchants in the market being measured (bots removed) — the universe every base
+-- is carved from. COUNTRY and LAUNCH are tokenised (2026-08-17, UK launch): pull.js
+-- substitutes the market it is pulling, defaulting to US so this file still runs unchanged
+-- on its own. The bot CTE above is deliberately NOT tokenised — it describes one specific
+-- US registration-fraud campaign, so it stays hard-scoped to US. For any other market it
+-- returns only US ids, which no local merchant can match: inert rather than wrong.
 us AS (
     SELECT m.LOYVERSE_ID, m.CREATED_AT
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-     WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+     WHERE UPPER(TRIM(m.COUNTRY)) = /*COUNTRY*/'US'
        AND m.LOYVERSE_ID IS NOT NULL
        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]
 ),

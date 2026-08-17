@@ -143,8 +143,8 @@ WITH -- ----------------------------------------------------------------
     ),
 -- ----------------------------------------------------------------
 params AS (
-    SELECT DATE '2026-07-01' AS LAUNCH,          -- must match us_bases.sql / us_group_tags.sql
-           DATE '2026-04-01' AS FIRST_MONTH,     -- earliest month the Funnel page can offer
+    SELECT /*LAUNCH*/DATE '2026-07-01' AS LAUNCH,          -- must match us_bases.sql / us_group_tags.sql
+           /*FIRST_MONTH*/DATE '2026-04-01' AS FIRST_MONTH,     -- earliest month the Funnel page can offer
            30                AS POS_WINDOW_DAYS  -- must match us_bases.sql's trailing-30-day rule
 ),
 -- One row per month from FIRST_MONTH to the month in progress. AS_OF is the last day of a
@@ -159,13 +159,16 @@ months AS (
       )
      WHERE m_start <= DATE_TRUNC('month', CURRENT_DATE())
 ),
--- Genuine US merchants (bots removed) — the universe every base is carved from.
--- CREATED_AT is a timestamp, so membership at an as-of DATE is "< the next day", not "<= the
--- date", or every merchant that registered on the as-of day itself would be dropped.
+-- Genuine merchants in the market being measured (bots removed) — the universe every base
+-- is carved from. CREATED_AT is a timestamp, so membership at an as-of DATE is "< the next
+-- day", not "<= the date", or every merchant that registered on the as-of day itself would
+-- be dropped. COUNTRY / LAUNCH / FIRST_MONTH are tokenised (2026-08-17, UK launch) and
+-- substituted by pull.js, defaulting to US. The bot CTE stays hard-scoped to US on purpose
+-- (see us_bases.sql) — for another market it is inert rather than wrong.
 us AS (
     SELECT m.LOYVERSE_ID, m.CREATED_AT
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-     WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+     WHERE UPPER(TRIM(m.COUNTRY)) = /*COUNTRY*/'US'
        AND m.LOYVERSE_ID IS NOT NULL
        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]
 ),

@@ -9,6 +9,9 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="report-data.js"></script>
+<!-- Country filter, shared verbatim with index.html. Loaded AFTER the data file because it
+     discovers the live markets from it. -->
+<script src="country-filter.js"></script>
 <style>
   :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
     --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
@@ -70,6 +73,16 @@
     padding:11px 16px;border-bottom:3px solid transparent;text-decoration:none;cursor:pointer;}
   .paysub a:hover{color:#1A1A1A;}
   .paysub a.on{color:#1578C4;border-bottom-color:#1D8FE1;}
+  /* Country filter — same control, same position and same styling as on index.html, so it
+     reads as one page-wide setting rather than two unrelated pickers. */
+  .ccpick{margin-left:auto;display:flex;align-items:center;gap:8px;padding:6px 0;}
+  .ccpick-lbl{color:#8A8A8A;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;}
+  .ccpick-sel{font:12px Arial;color:#1A1A1A;background:#fff;border:1px solid #D8DEE6;border-radius:5px;
+    padding:5px 26px 5px 9px;cursor:pointer;appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5L9 0z' fill='%236A6A6A'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 9px center;background-size:9px 5px;}
+  .ccpick-sel:hover{border-color:#1D8FE1;}
+  .ccpick-sel:focus{outline:none;border-color:#1D8FE1;box-shadow:0 0 0 2px rgba(29,143,225,.18);}
 </style>
 </head>
 <body>
@@ -100,17 +113,36 @@
 // Data: report-data.js (__PAY_MONTHLY), written by activated-payments/pull.js.
 // Columns are Month / previous month / since launch, because volume history only starts
 // 13 Apr 2026 — a single month in isolation says little this early.
-const M   = (typeof __PAY_MONTHLY !== 'undefined') ? (__PAY_MONTHLY || []) : [];
-const GRP = (typeof __PAY_REPORT_GROUPS !== 'undefined') ? (__PAY_REPORT_GROUPS || []) : [];
+// Raw, all-markets data. Each monthly row keeps its blended fields and carries a `by` object
+// keyed by merchant country; __PAY_REPORT_GROUPS_BY holds the same group table per market.
+const RAW_M    = (typeof __PAY_MONTHLY !== 'undefined') ? (__PAY_MONTHLY || []) : [];
+const RAW_GRP  = (typeof __PAY_REPORT_GROUPS !== 'undefined') ? (__PAY_REPORT_GROUPS || []) : [];
+const GRP_BY   = (typeof __PAY_REPORT_GROUPS_BY !== 'undefined') ? (__PAY_REPORT_GROUPS_BY || {}) : {};
 const NOTES = (typeof __PAY_REPORT_NOTES !== 'undefined') ? (__PAY_REPORT_NOTES || {}) : {};
 const UPD = (typeof __PAY_REPORT_UPDATED !== 'undefined') ? __PAY_REPORT_UPDATED : '';
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const byMonth = Object.fromEntries(M.map(r => [r.m, r]));
-const months = M.map(r => r.m).sort();
-// The cumulative column sums EVERY month in the series, which begins with the first charge —
-// earlier than the payments launch date. Label it from the data so the header can't overstate
-// what it covers.
-const firstMonth = months.length ? months[0] : null;
+
+// Rebuilt by loadData() on every country change. With "All countries" M is RAW_M itself, so
+// every figure is read straight off the row that pull.js wrote, not re-summed from its parts.
+let M = RAW_M, GRP = RAW_GRP, byMonth = {}, months = [], firstMonth = null;
+function loadData(){
+  const F = window.LVCC;
+  if(!F || F.isAll()){
+    M = RAW_M;
+    GRP = RAW_GRP;
+  } else {
+    // Every country slice has the same shape as the blended row and was produced by the same
+    // code, so the table below needs no special cases — only the row it reads changes.
+    M = RAW_M.map(r => Object.assign({m:r.m}, (r.by||{})[F.cc] || {}));
+    GRP = GRP_BY[F.cc] || [];
+  }
+  byMonth = Object.fromEntries(M.map(r => [r.m, r]));
+  months = M.map(r => r.m).sort();
+  // The cumulative column sums EVERY month in the series, which begins with the first charge —
+  // earlier than the payments launch date. Label it from the data so the header can't overstate
+  // what it covers.
+  firstMonth = months.length ? months[0] : null;
+}
 
 const mLabel = m => (MON[+String(m).slice(5,7)-1] || '') + ' ' + String(m).slice(0,4);
 const prevMonth = m => { let y=+m.slice(0,4), mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
@@ -177,14 +209,15 @@ const BLOCKS = [
   ]}
 ];
 
-const CUM_COL = firstMonth ? ('Since '+mLabel(firstMonth)) : 'Cumulative';
+const cumCol = () => firstMonth ? ('Since '+mLabel(firstMonth)) : 'Cumulative';
 function render(m){
   const cur = byMonth[m] || {}, prv = byMonth[prevMonth(m)] || {}, sl = cumulative();
-  const curCol = mLabel(m), prevCol = mLabel(prevMonth(m));
+  const curCol = mLabel(m), prevCol = mLabel(prevMonth(m)), CUM_COL = cumCol();
   const isPartial = (m === new Date().toISOString().slice(0,7));
+  const F = window.LVCC, ccSuffix = F ? F.suffix() : '';
 
   let h = '<div class="rhead"><div>'
-    + '<div class="label">Loyverse &middot; Payments Month-End Report</div>'
+    + '<div class="label">Loyverse &middot; Payments Month-End Report'+ccSuffix+'</div>'
     + '<h1>'+curCol+'</h1>'
     + '<div class="period">Reporting period</div>'
     + '<div class="cmp">Compared vs '+prevCol+' (previous month) &middot; cumulative column covers '
@@ -212,7 +245,7 @@ function render(m){
   });
 
   if(GRP.length){
-    h += '<h2 class="sec">Activation by merchant group &mdash; current snapshot</h2>'
+    h += '<h2 class="sec">Activation by merchant group &mdash; current snapshot'+ccSuffix+'</h2>'
       + '<table><thead><tr><th>Group</th><th>Base</th><th>Initiated KYC</th><th>% of base</th>'
       + '<th>Passed KYC</th><th>Transacting</th></tr></thead><tbody>';
     GRP.forEach(function(g){
@@ -238,8 +271,17 @@ function render(m){
     + 'grain, but it means margin for the newest month can move slightly after publication.'
     + '<br><b>Group snapshot</b> is point-in-time, not per-month &mdash; per-group history is not retained, so that table '
     + 'is not comparable across periods.'
-    + (NOTES.untaggedInitiators ? '<br>'+NOTES.untaggedInitiators+' initiator'+(NOTES.untaggedInitiators>1?'s are':' is')
-        + ' outside the US population the group bases measure (non-US or filtered) and so appear in no group row.' : '')
+    // NOTES.untaggedInitiators counts initiators the US group tags could not place, so it
+    // describes the blended table only. Under a single country the group rows are that
+    // market's own and the figure would not be about them, so the line is dropped there.
+    + (NOTES.untaggedInitiators && (!F || F.isAll())
+        ? '<br>'+NOTES.untaggedInitiators+' initiator'+(NOTES.untaggedInitiators>1?'s are':' is')
+          + ' outside the US population the group bases measure (non-US or filtered) and so appear in no group row.' : '')
+    + (F && !F.isAll()
+        ? '<br><b>Country</b> is the merchant\u2019s country of registration as held by Stripe, not the country the '
+          + 'card was issued in. Every figure above is that market\u2019s own actuals; the country slices add up to '
+          + 'the all-countries view, which is unchanged.'
+        : '')
     + '<br>Volume converted to USD at a fixed FX map. Prod accounts only. Refreshes automatically every morning from Snowflake.'
     + '</div>';
 
@@ -247,22 +289,43 @@ function render(m){
 }
 
 const picker = document.getElementById('picker');
-if(!months.length){
-  document.getElementById('sheet').innerHTML =
-    '<div class="rhead"><div><div class="label">Loyverse &middot; Payments Month-End Report</div>'
-    + '<h1>No data yet</h1><div class="period">report-data.js has no monthly rows</div></div></div>'
-    + '<div class="note">This page fills in on the next payments pull. If it stays empty, the monthly '
-    + 'queries (charges_monthly / app_fees_monthly / icplus_cost_monthly) failed &mdash; the pull log will say so.</div>';
-  picker.style.display='none';
-} else {
+picker.onchange = () => render(picker.value);
+
+// Redraw for the current country. A market that only launched last month has a shorter month
+// list, so the picker is rebuilt every time; the reader's chosen month is kept when that market
+// has it, and otherwise falls back to that market's latest complete month.
+function redraw(){
+  const prevSel = picker.value;
+  loadData();
+  if(!months.length){
+    document.getElementById('sheet').innerHTML =
+      '<div class="rhead"><div><div class="label">Loyverse &middot; Payments Month-End Report'
+      + (window.LVCC ? window.LVCC.suffix() : '') + '</div>'
+      + '<h1>No data yet</h1><div class="period">no monthly rows for this selection</div></div></div>'
+      + '<div class="note">This page fills in on the next payments pull. If it stays empty for all '
+      + 'countries, the monthly queries (charges_monthly / app_fees_monthly / icplus_cost_monthly) '
+      + 'failed &mdash; the pull log will say so.</div>';
+    picker.style.display='none';
+    return;
+  }
+  picker.style.display='';
   // Default to the latest COMPLETE month, since a part-month comparison is misleading.
   const nowYm = new Date().toISOString().slice(0,7);
   const complete = months.filter(m => m < nowYm);
-  const def = complete.length ? complete[complete.length-1] : months[months.length-1];
+  const def = (prevSel && months.indexOf(prevSel)>=0) ? prevSel
+            : (complete.length ? complete[complete.length-1] : months[months.length-1]);
   picker.innerHTML = months.slice().reverse().map(m =>
     '<option value="'+m+'"'+(m===def?' selected':'')+'>'+mLabel(m)+(m>=nowYm?' (in progress)':'')+'</option>').join('');
-  picker.onchange = () => render(picker.value);
   render(def);
+}
+
+// Mount the same picker, in the same place, as index.html — then subscribe. LVCC.on fires on
+// subscribe, so this is also the initial draw.
+if(window.LVCC){
+  window.LVCC.mount(document.querySelector('.paysub'));
+  window.LVCC.on(redraw);
+} else {
+  redraw();
 }
 </script>
 </body>

@@ -11,9 +11,15 @@
 --
 -- The application-fee lines are exactly what Loyverse (the platform) captured on each connected
 -- account charge. Amounts are in the currency's MINOR unit; pull.js converts to USD.
+--
+-- ACCOUNT IN THE GRAIN (added 2026-08-17, UK launch): fd.ACCOUNT joins to CONNECTED_ACCOUNTS and
+-- therefore to the merchant's country, letting pull.js split monthly revenue by market. The month
+-- and currency totals are unchanged — this only narrows the grain, so summing over ACCT reproduces
+-- exactly what this query returned before.
 SELECT
     TO_VARCHAR(TO_DATE(TRY_TO_TIMESTAMP(TO_VARCHAR(bt.CREATED))), 'YYYY-MM') AS month,
     UPPER(TRIM(fd.CURRENCY))                                                 AS ccy,
+    fd.ACCOUNT                                                               AS acct,
     SUM(fd.AMOUNT)                                                           AS fee_minor,
     COUNT(*)                                                                 AS fee_cnt
 FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_BALANCE_TRANSACTION_FEE_DETAILS fd
@@ -22,5 +28,5 @@ JOIN GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCO
 WHERE fd.ACCOUNT IN (/*ACCOUNT_IDS*/)
   AND LOWER(fd.TYPE) = 'application_fee'
   AND TRY_TO_TIMESTAMP(TO_VARCHAR(bt.CREATED)) IS NOT NULL
-GROUP BY 1, 2
+GROUP BY 1, 2, 3
 ORDER BY 1, 2;

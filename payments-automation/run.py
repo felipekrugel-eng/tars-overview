@@ -124,7 +124,113 @@ def _num(v):
         return None
 
 
-def emit_margins(xlsx_path, out_path):
+def margins_by_country(tx_path, ic_path, stripe_fees_total):
+    """Split the Summary KPIs by MERCHANT country for the dashboard's country filter.
+
+    Deliberately NOT a per-country rebuild of the 13-sheet workbook: the workbook stays the
+    single source of truth and its Summary is untouched, so the all-countries view can never
+    restate. This recomputes the same KPIs from the same records that built the workbook — it
+    imports refresh_workbook.build_data rather than reimplementing the cost model, so a country
+    slice cannot drift from the total by using a different definition of "cost".
+
+    WHAT SPLITS EXACTLY, AND WHAT DOES NOT:
+      * txns, tpv, revenue, network fees (interchange / card scheme / Amex discount) and the
+        profitability counts are per-charge, join to the merchant, and split exactly. Summing
+        them across countries reproduces the workbook Summary to the cent.
+      * Stripe's own platform fees (per-auth, volume, Radar, Tap to Pay, payout, terminal use)
+        come from query3, which reads the PLATFORM account's balance transactions. Those rows
+        carry no connected-account id at all, so they genuinely cannot be attributed to a
+        merchant, let alone a country. They are apportioned pro-rata by each country's share of
+        TPV and flagged as such (stripeFeesBasis). Any figure downstream of them — totalFees,
+        netMargin, netTakeRate — is therefore part-actual, part-apportioned PER COUNTRY, and is
+        exact only for the all-countries total. The dashboard must say so.
+    """
+    sys.path.insert(0, str(HERE))
+    from refresh_workbook import build_data          # same cost model as the workbook
+    D = build_data(tx_path, ic_path)
+
+    tpv_total = sum(r["E"] for r in D["recs"] if r["J"] == "succeeded")
+    by = {}
+    def slot(cc):
+        return by.setdefault(cc, dict(
+            txns=0, tpv=0.0, revenue=0.0, interchange=0.0, cardScheme=0.0, amexDiscount=0.0,
+            profitableTxns=0, withActual=0, withEstimated=0, failed=0))
+
+    for r in D["recs"]:
+        o = slot(r.get("cc") or "ZZ")
+        if r["kind"] == "failed":
+            o["failed"] += 1
+            continue
+        if r["kind"] == "actual":
+            o["withActual"] += 1
+        elif r["kind"] == "est":
+            o["withEstimated"] += 1
+        if r["J"] != "succeeded":
+            continue
+        o["txns"] += 1
+        o["tpv"] += r["E"]
+        o["revenue"] += r["L"] or 0
+        o["interchange"]  += r.get("M") or 0
+        o["cardScheme"]   += r.get("N") or 0
+        o["amexDiscount"] += r.get("O") or 0
+        # Same test as Transaction Detail col Y: revenue minus per-charge true cost > 0.
+        # The margin is rounded to 6dp before the comparison because the fee components are
+        # stored to 4dp and binary floats do not sum back exactly — 0.27 comes out as
+        # 0.26999999999999996, which would score two exactly-break-even charges as profitable
+        # and put this count 2 above the workbook's.
+        cost = (sum(r.get(k) or 0 for k in ("M", "N", "O", "Q", "R"))
+                if r["kind"] == "actual" else r.get("Tval"))
+        if cost is not None and round((r["L"] or 0) - cost, 6) > 0:
+            o["profitableTxns"] += 1
+
+    out = {}
+    for cc, o in sorted(by.items()):
+        network = o["interchange"] + o["cardScheme"] + o["amexDiscount"]
+        share = (o["tpv"] / tpv_total) if tpv_total else 0.0
+        stripe = (stripe_fees_total or 0.0) * share
+        total_fees = network + stripe
+        net = o["revenue"] - total_fees
+        out[cc] = {
+            "kpis": {
+                "txns": o["txns"],
+                "tpv": round(o["tpv"], 2),
+                "avgTicket": (o["tpv"] / o["txns"]) if o["txns"] else None,
+                "revenue": round(o["revenue"], 2),
+                "takeRate": (o["revenue"] / o["tpv"]) if o["tpv"] else None,
+                "totalFees": round(total_fees, 4),
+                "netMargin": round(net, 4),
+                "netTakeRate": (net / o["tpv"]) if o["tpv"] else None,
+                "pctProfitable": (o["profitableTxns"] / o["txns"]) if o["txns"] else None,
+                "profitableTxns": o["profitableTxns"],
+                "unprofitableTxns": o["txns"] - o["profitableTxns"],
+                "withActual": o["withActual"],
+                "withEstimated": o["withEstimated"],
+                "failed": o["failed"],
+            },
+            "fees": {
+                "total": round(total_fees, 4),
+                "network": {"total": round(network, 4),
+                            "items": [round(o["interchange"], 4),
+                                      round(o["cardScheme"], 4),
+                                      round(o["amexDiscount"], 4)]},
+                "stripe": {"total": round(stripe, 4)},
+            },
+            # Scenario revenue is a pure function of this country's own volume and count,
+            # exactly as the Summary's formulas are of C6/C5 — so these are exact.
+            "scenarios": [round(x, 5) for x in (
+                o["revenue"],
+                o["tpv"] * 0.025,
+                o["tpv"] * 0.025 + o["txns"] * 0.05,
+                o["tpv"] * 0.026 + o["txns"] * 0.10,
+                o["tpv"] * 0.026 + o["txns"] * 0.15,
+                o["tpv"] * 0.028 + o["txns"] * 0.15)],
+            "tpvShare": round(share, 6),
+            "stripeFeesBasis": "apportioned_by_tpv",
+        }
+    return out
+
+
+def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
     """Serialize the workbook's Summary sheet into margins-data.js for the dashboard's
     'Summary of Margins' page. The dashboard mirrors the Summary tab exactly, so we read
     label (col B) + value (col C) straight from the deterministic Summary layout."""
@@ -174,6 +280,27 @@ def emit_margins(xlsx_path, out_path):
             "scenario": B(45),
         },
     }
+
+    # COUNTRY FILTER (added 2026-08-17, UK launch). Everything above is the workbook Summary
+    # and stays all-countries and untouched; `byCountry` is purely additive, so a reader that
+    # ignores it sees precisely the numbers it saw before. Guarded: the country split must never
+    # be able to stop margins-data.js being written, since the page worked without it.
+    data["byCountry"] = {}
+    data["countrySplitNote"] = None
+    if tx_path and ic_path:
+        try:
+            data["byCountry"] = margins_by_country(tx_path, ic_path, _num(C(16)) or 0.0)
+            data["countrySplitNote"] = (
+                "Transactions, volume, revenue and network fees are actuals for the selected "
+                "country. Stripe's platform fees are billed to the Loyverse platform account "
+                "with no merchant attribution, so they are apportioned by share of volume — "
+                "net margin for a single country is therefore an estimate. The all-countries "
+                "view is exact.")
+            ccs = {cc: v["kpis"]["txns"] for cc, v in data["byCountry"].items()}
+            print(f"   country split: {ccs}", flush=True)
+        except Exception as e:
+            print(f"   !! country split skipped (non-fatal): {e}", file=sys.stderr, flush=True)
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     js = ("// AUTO-GENERATED by payments-automation/run.py — do not edit by hand.\n"
           "// Mirrors the Summary tab of loyverse_payments_analysis_ful_V2.xlsx.\n"
@@ -230,8 +357,9 @@ def main():
     shutil.copyfile(recalced, OUT_XLSX)
     print(f"OK -> {OUT_XLSX}")
 
-    # emit the dashboard's "Summary of Margins" data file from the finished workbook
-    emit_margins(OUT_XLSX, MARGINS_OUT)
+    # emit the dashboard's "Summary of Margins" data file from the finished workbook.
+    # The CSVs go along for the ride so the same records can be split by merchant country.
+    emit_margins(OUT_XLSX, MARGINS_OUT, tx, ic)
 
     # tidy scratch (leave nothing to accidentally commit)
     for p in (BUILD_XLSX,):

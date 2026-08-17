@@ -131,7 +131,14 @@ def build_data(tx_path, ic_path):
         br = brand(t["CARD_BRAND"]); fn = fund(t["CARD_FUNDING"])
         rec = dict(A=cid, B=t["CREATED_AT"][:10], C=t["MERCHANT_NAME"],
                    D=t["CURRENCY"].upper(), E=tv, F=br, G=fn,
-                   H=t["CARD_COUNTRY"], I=t["CARD_LAST4"], J=st)
+                   H=t["CARD_COUNTRY"], I=t["CARD_LAST4"], J=st,
+                   # cc = the MERCHANT's country (CONNECTED_ACCOUNTS.COUNTRY), added 2026-08-17
+                   # for the UK launch. NOT column H, which is the CARDHOLDER's card country.
+                   # No workbook column consumes it — every writer names its keys explicitly —
+                   # it exists purely so run.py can split the margins KPIs by market using the
+                   # same records, and therefore the same cost model, as the workbook itself.
+                   # "ZZ" when the pull predates the MERCHANT_COUNTRY column or Stripe has none.
+                   cc=(t.get("MERCHANT_COUNTRY") or "").strip().upper() or "ZZ")
         if st == "failed":
             rec.update(K="No fee (failed)", L=0, M=None, N=None, O=None,
                        Q=None, R=None, Tval=None, kind="failed")

@@ -107,6 +107,11 @@ SELECT
     COUNTRY       AS country,
     CREATED_AT    AS registered_at
 FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
-WHERE ((UPPER(TRIM(COUNTRY)) = 'US' AND CREATED_AT >= '2026-07-01')
+-- The market clause is tokenised (2026-08-17, UK launch). pull.js expands /*MARKETS*/ into
+-- one OR-ed (country, launch date) pair per live Loyverse Payments market, so the funnel's
+-- entry cohort covers every launched market instead of only the US. The literal below is the
+-- US default, left in place so this file still runs standalone exactly as it always did.
+-- COUNTRY is already in the SELECT list, so each registration row carries its own market.
+WHERE (/*MARKETS*/(UPPER(TRIM(COUNTRY)) = 'US' AND CREATED_AT >= '2026-07-01')
    OR LOYVERSE_ID IN (/*PILOT_IDS*/))
   AND LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts);   -- [US-bot-filter]

@@ -114,11 +114,13 @@ WITH -- ----------------------------------------------------------------
           AND m.CREATED_AT >= '2026-03-01'
     ),
 -- ----------------------------------------------------------------
-params AS (SELECT DATE '2026-07-01' AS LAUNCH),
+-- COUNTRY / LAUNCH tokenised 2026-08-17 for the UK launch; pull.js substitutes the market
+-- it is pulling and defaults to US. The bot CTE stays hard-scoped to US (see us_bases.sql).
+params AS (SELECT /*LAUNCH*/DATE '2026-07-01' AS LAUNCH),
 us AS (
     SELECT m.LOYVERSE_ID, m.CREATED_AT
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
-     WHERE UPPER(TRIM(m.COUNTRY)) = 'US'
+     WHERE UPPER(TRIM(m.COUNTRY)) = /*COUNTRY*/'US'
        AND m.LOYVERSE_ID IS NOT NULL
        AND m.LOYVERSE_ID IN (/*MERCHANT_IDS*/)
        AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]

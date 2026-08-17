@@ -42,6 +42,25 @@ const SQL_DIR        = path.join(__dirname, 'sql');
 // Loyverse Payments launch — start of the funnel entry cohort (US registrations on/after).
 const LAUNCH_START   = '2026-07-01';
 
+// ── LIVE MARKETS ──────────────────────────────────────────────────────────────
+// Every market Loyverse Payments has launched in, in launch order. Adding a market here is
+// the ONLY change needed to give it a full funnel: its entry cohort, its four group bases,
+// its month-end base series and its slice of every Overview / Report series all follow.
+//   cc         ISO-2 country as Stripe writes it on CONNECTED_ACCOUNTS.COUNTRY
+//   launch     first day of the entry cohort — merchants registering on/after this date
+//              count as "new" for that market
+//   firstMonth earliest month the Funnel page's month filter can offer for this market
+// NOTE — the UK launch date below is provisional. The first UK connected account appeared
+// on 2026-08-11; 2026-08-01 is used so no August registrant is missed, which errs towards a
+// slightly larger "new" group rather than silently dropping merchants. Confirm the real
+// go-live date and correct it here; nothing else needs to change.
+const MARKETS = [
+  { cc: 'US', launch: '2026-07-01', firstMonth: '2026-04-01' },
+  { cc: 'GB', launch: '2026-08-01', firstMonth: '2026-08-01' },
+];
+const MARKET_CCS = MARKETS.map(m => m.cc);
+function marketFor(cc) { return MARKETS.find(m => m.cc === cc) || null; }
+
 // ── Snowflake helpers (mirrors snowflake-pull.js) ─────────────────────────────
 function readPrivateKey() {
   const keyContent = fs.readFileSync(KEY_PATH, 'utf8');
@@ -218,13 +237,51 @@ function sanitizeAccts(ids) {
   return [...new Set(ids.map(v => String(v == null ? '' : v).trim())
     .filter(v => /^acct_[A-Za-z0-9]+$/.test(v)))];
 }
-async function fetchDailyVolume(conn, acctIds) {
+// ── COUNTRY DIMENSION (added 2026-08-17, UK launch) ───────────────────────────
+// Loyverse Payments went live in the UK in August 2026, so every Overview / Funnel /
+// Report series now carries a per-country breakdown alongside its blended total.
+// The country is the MERCHANT's country of incorporation as Stripe holds it on the
+// connected account (CONNECTED_ACCOUNTS.COUNTRY) — NOT the card's issuing country.
+// Shape convention: each row keeps its existing blended field(s) untouched and gains
+// a `by` object keyed by ISO-2 country, e.g. { d:'2026-08-17', n:9, by:{US:7,GB:2} }.
+// Any consumer that ignores `by` therefore behaves exactly as it did before.
+const CC_UNKNOWN = 'ZZ';   // account with no usable country on the Stripe record
+function normCountry(v) {
+  const c = String(v == null ? '' : v).trim().toUpperCase();
+  return /^[A-Z]{2}$/.test(c) ? c : CC_UNKNOWN;
+}
+// acct_XXXX -> 'US' | 'GB' | ... built once from connected_accounts.sql.
+function buildCountryByAcct(accountRows) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const byAcct = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    if (!acct) continue;
+    byAcct[acct] = normCountry(get(r, 'country'));
+  }
+  return byAcct;
+}
+// Loyverse owner id -> country, via the account-metadata linkage. Used by the funnel,
+// whose rows are keyed on owner id rather than on the Stripe account id.
+function buildCountryByMid(countryByAcct, meta) {
+  const byMid = {};
+  for (const acct of Object.keys(countryByAcct)) {
+    const oid = meta[acct] && meta[acct].owner_id;
+    if (oid) byMid[String(oid)] = countryByAcct[acct];
+  }
+  return byMid;
+}
+// Add `v` to bucket `cc` of a `by` map, creating the bucket on first sight.
+function bump(by, cc, v) { by[cc] = (by[cc] || 0) + v; }
+
+async function fetchDailyVolume(conn, acctIds, countryByAcct) {
   const ids = sanitizeAccts(acctIds);
   if (!ids.length) return { byDay: {}, unknownCcy: {} };
   const inList = ids.map(a => `'${a}'`).join(',');
   const sql = loadSql('charges_daily.sql').replace('/*ACCOUNT_IDS*/', inList);
   const rows = await executeQuery(conn, sql);
-  const byDay = {};        // 'YYYY-MM-DD' -> { usd, cnt }
+  const cba = countryByAcct || {};
+  const byDay = {};        // 'YYYY-MM-DD' -> { usd, cnt, by:{ CC:{usd,cnt} } }
   const unknownCcy = {};   // ccy -> count of skipped day-rows
   for (const r of rows) {
     const d = r.D != null ? String(r.D) : (r.d != null ? String(r.d) : null);
@@ -234,9 +291,17 @@ async function fetchDailyVolume(conn, acctIds) {
     const cnt = r.CNT != null ? Number(r.CNT) : Number(r.cnt || 0);
     const usd = minorToUsd(amt, ccy);
     if (usd == null) { unknownCcy[String(ccy).toUpperCase()] = (unknownCcy[String(ccy).toUpperCase()] || 0) + 1; continue; }
-    if (!byDay[d]) byDay[d] = { usd: 0, cnt: 0 };
+    if (!byDay[d]) byDay[d] = { usd: 0, cnt: 0, by: {} };
     byDay[d].usd += usd;
     byDay[d].cnt += cnt;
+    // charges_daily.sql now also groups by ACCOUNT so each day can be split by country.
+    // If that column is ever absent the whole day lands in ZZ — the blended total stays
+    // exact, the page simply cannot split that day, which is the safe failure mode.
+    const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
+    const cc = acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN;
+    if (!byDay[d].by[cc]) byDay[d].by[cc] = { usd: 0, cnt: 0 };
+    byDay[d].by[cc].usd += usd;
+    byDay[d].by[cc].cnt += cnt;
   }
   return { byDay, unknownCcy };
 }
@@ -350,6 +415,7 @@ function readExistingSnapshot() {
 function buildActivationsDaily(accountRows, meta) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const byDay = {};
+  const byDayC = {};   // d -> { CC: n }  (country split, added for the UK launch)
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
     const env = (meta[acct] && meta[acct].environment) || null;
@@ -357,8 +423,10 @@ function buildActivationsDaily(accountRows, meta) {
     const d = toDate(get(r, 'stripe_connected_at'));
     if (!d) continue;
     byDay[d] = (byDay[d] || 0) + 1;
+    if (!byDayC[d]) byDayC[d] = {};
+    bump(byDayC[d], normCountry(get(r, 'country')), 1);
   }
-  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d] }));
+  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d], by: byDayC[d] || {} }));
 }
 
 // Prod-only ENABLED-per-day, BACKFILLED from the "Terms accepted" date.
@@ -370,6 +438,7 @@ function buildActivationsDaily(accountRows, meta) {
 function buildEnabledDaily(accountRows, meta) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const byDay = {};
+  const byDayC = {};   // d -> { CC: n }  (country split, added for the UK launch)
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
     const env = (meta[acct] && meta[acct].environment) || null;
@@ -379,16 +448,19 @@ function buildEnabledDaily(accountRows, meta) {
     const d = toDate(get(r, 'tos_accepted_at')) || toDate(get(r, 'stripe_connected_at'));
     if (!d) continue;
     byDay[d] = (byDay[d] || 0) + 1;
+    if (!byDayC[d]) byDayC[d] = {};
+    bump(byDayC[d], normCountry(get(r, 'country')), 1);
   }
-  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d] }));
+  return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d], by: byDayC[d] || {} }));
 }
 
 // Per-merchant "transacting through Loyverse Payments" table rows. Joins the account
 // name/linkage with the charge aggregation (started / txns / volume) and the captured
 // application-fee revenue (captured / effective take-rate). margin (net after Stripe
 // cost) is left null until the fee-detail columns are confirmed via _discovery.json.
-function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct) {
+function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const cba = countryByAcct || {};
   const nameByAcct = {};
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
@@ -408,6 +480,7 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct) 
     out.push({
       acct,
       name: String(nameByAcct[acct] || acct),
+      country: cba[acct] || CC_UNKNOWN,   // merchant country (Stripe account), for the page filter
       mid: (meta[acct] && meta[acct].owner_id) || null,
       started: t.started,       // 'YYYY-MM-DD' — first successful charge
       txns: t.cnt,              // number of successful charges
@@ -433,7 +506,15 @@ function denseDailyVolume(byDay) {
   for (let t = new Date(start); t <= end; t.setUTCDate(t.getUTCDate() + 1)) {
     const d = t.toISOString().slice(0, 10);
     const v = byDay[d];
-    out.push({ d, usd: v ? Math.round(v.usd * 100) / 100 : 0, cnt: v ? v.cnt : 0 });
+    // `by` carries the same {usd,cnt} shape per country so the page can re-derive an
+    // exact filtered series. Zero-filled days get an empty map, not a fabricated split.
+    const by = {};
+    if (v && v.by) {
+      for (const cc of Object.keys(v.by)) {
+        by[cc] = { usd: Math.round(v.by[cc].usd * 100) / 100, cnt: v.by[cc].cnt };
+      }
+    }
+    out.push({ d, usd: v ? Math.round(v.usd * 100) / 100 : 0, cnt: v ? v.cnt : 0, by });
   }
   return out;
 }
@@ -444,8 +525,18 @@ function buildEnabledSnapshot(prevSnap, act) {
   const prod = act.filter(r => r.env !== 'test');
   const enabled = prod.filter(r => r.status === 'Enabled').length;
   const total = prod.length;
+  // Country split, added 2026-08-17. This series is forward-only by construction —
+  // rows banked before today CANNOT be retro-split, so they simply have no `by` and the
+  // page falls back to the blended value for them rather than inventing a breakdown.
+  const by = {};
+  for (const r of prod) {
+    const cc = normCountry(r.country);
+    if (!by[cc]) by[cc] = { enabled: 0, total: 0 };
+    by[cc].total += 1;
+    if (r.status === 'Enabled') by[cc].enabled += 1;
+  }
   const snap = prevSnap.filter(s => s.d !== today);
-  snap.push({ d: today, enabled, total });
+  snap.push({ d: today, enabled, total, by });
   snap.sort((a, b) => a.d.localeCompare(b.d));
   return snap;
 }
@@ -468,6 +559,13 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //                         captured(USD, application fees net of refunds), take-rate %,
 //                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
+//
+// COUNTRY SPLIT (added 2026-08-17 for the UK launch): every row above keeps its blended
+// value AND carries a \`by\` map keyed by the merchant's ISO-2 country from Stripe
+// (CONNECTED_ACCOUNTS.COUNTRY — the merchant's country, not the card's). Counts use
+// { CC: n }; money uses { CC: {usd,cnt} }. \`by\` always sums to the blended value for the
+// same row, except on __PAY_ENABLED_SNAP rows banked before 2026-08-17, which are
+// forward-only and have no \`by\` at all. __PAY_TXN_MERCHANTS carries a scalar \`country\`.
 // Do NOT edit by hand; overwritten each morning (snapshot array is preserved + appended). Last pull: ${today}
 window.__PAY_OVERVIEW_UPDATED = ${JSON.stringify(stamp)};
 window.__PAY_ACT_DAILY = ${JSON.stringify(actDaily)};
@@ -733,32 +831,60 @@ async function fetchTerminalOrders(conn) {
 // only and carry NO time dimension, so revenue/cost/margin previously existed as all-time
 // totals only — these give them a month grain without touching the originals (the margins tab
 // keeps reading those unchanged).
-async function fetchChargesMonthly(conn, acctIds) {
+// Country split (added 2026-08-17, UK launch): each month keeps its blended tpv/txns/accounts
+// exactly as before and gains `by`, keyed by the MERCHANT's ISO-2 country from
+// CONNECTED_ACCOUNTS.COUNTRY. `by` always sums back to the blended figure, so nothing restates.
+// activeMerchants is counted from a Set per country AND a Set for the month, because a distinct
+// count is not additive — summing per-country distincts would double-count a merchant only if it
+// somehow appeared under two countries, which cannot happen, but the month Set is what the
+// blended figure has always been and is kept as the authority.
+async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
   const ids = sanitizeAccts(acctIds);
   if (!ids.length) return { byMonth: {}, unknownCcy: {} };
+  const cba = countryByAcct || {};
   const inList = ids.map(a => `'${a}'`).join(',');
   const rows = await executeQuery(conn, loadSql('charges_monthly.sql').replace('/*ACCOUNT_IDS*/', inList));
   const byMonth = {}, unknownCcy = {};
+  const acctSets = {};                       // m -> { all:Set, cc:{ CC:Set } }
   const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const slot = (o, cc) => (o.by[cc] || (o.by[cc] = { tpv: 0, txns: 0, accounts: 0 }));
   for (const r of rows || []) {
     const m = g(r, 'month'); if (!m) continue;
-    if (!byMonth[m]) byMonth[m] = { tpv: 0, txns: 0, accounts: null };
+    if (!byMonth[m]) byMonth[m] = { tpv: 0, txns: 0, accounts: null, by: {} };
+    const acct = g(r, 'acct');
+    const cc = acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN;
     if (String(g(r, 'row_kind')) === 'accts') {
-      byMonth[m].accounts = Number(g(r, 'accounts')) || 0;
+      // One row per (month, account) since 2026-08-17 — pull.js does the distinct count itself.
+      const s = acctSets[m] || (acctSets[m] = { all: new Set(), cc: {} });
+      if (acct) {
+        s.all.add(acct);
+        (s.cc[cc] || (s.cc[cc] = new Set())).add(acct);
+      }
       continue;
     }
     const ccy = g(r, 'ccy');
     const usd = minorToUsd(g(r, 'amount_minor'), ccy);
     if (usd == null) { unknownCcy[String(ccy).toUpperCase()] = (unknownCcy[String(ccy).toUpperCase()] || 0) + 1; continue; }
+    const cnt = Number(g(r, 'cnt')) || 0;
     byMonth[m].tpv  += usd;
-    byMonth[m].txns += Number(g(r, 'cnt')) || 0;
+    byMonth[m].txns += cnt;
+    const b = slot(byMonth[m], cc);
+    b.tpv += usd; b.txns += cnt;
   }
+  Object.keys(acctSets).forEach(m => {
+    const s = acctSets[m], o = byMonth[m];
+    if (!o) return;
+    o.accounts = s.all.size;
+    Object.keys(s.cc).forEach(cc => { slot(o, cc).accounts = s.cc[cc].size; });
+  });
   return { byMonth, unknownCcy };
 }
 // Generic minor-unit monthly roll-up used by both the revenue and cost queries.
-async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol) {
+// Same additive convention: `usd`/`cnt` unchanged, plus `by` keyed by merchant country.
+async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol, countryByAcct) {
   const ids = sanitizeAccts(acctIds);
   if (!ids.length) return {};
+  const cba = countryByAcct || {};
   const inList = ids.map(a => `'${a}'`).join(',');
   const rows = await executeQuery(conn, loadSql(sqlFile).replace('/*ACCOUNT_IDS*/', inList));
   const byMonth = {};
@@ -767,9 +893,14 @@ async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol) {
     const m = g(r, 'month'); if (!m) continue;
     const usd = minorToUsd(g(r, amtCol), g(r, 'ccy'));
     if (usd == null) continue;              // unknown currency — excluded, same as the daily layer
-    if (!byMonth[m]) byMonth[m] = { usd: 0, cnt: 0 };
+    if (!byMonth[m]) byMonth[m] = { usd: 0, cnt: 0, by: {} };
+    const cnt = Number(g(r, cntCol)) || 0;
     byMonth[m].usd += usd;
-    byMonth[m].cnt += Number(g(r, cntCol)) || 0;
+    byMonth[m].cnt += cnt;
+    const acct = g(r, 'acct');
+    const cc = acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN;
+    const b = byMonth[m].by[cc] || (byMonth[m].by[cc] = { usd: 0, cnt: 0 });
+    b.usd += usd; b.cnt += cnt;
   }
   return byMonth;
 }
@@ -780,33 +911,62 @@ async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol) {
 //   RATIO (derived, never stored pre-rounded): passRate, avgTicket, takeRate, netTakeRate
 //   POINT-IN-TIME (end of month): liveCum, transactingCum
 // activeMerchants = COUNT(DISTINCT ACCOUNT) that charged in the month (not just first charge).
+// COUNTRY SPLIT (added 2026-08-17, UK launch): every month row keeps its existing fields exactly
+// as they were and gains `by`, an object keyed by ISO-2 merchant country whose values have the
+// IDENTICAL shape as the row itself. Ratios are recomputed from that country's own numerator and
+// denominator — never apportioned from the blended rate — and liveCum / transactingCum run their
+// own per-country cumulative. Summing the FLOW fields across `by` reproduces the blended figure;
+// the RATIO fields deliberately do not sum, which is why they are recomputed rather than split.
 function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth, costByMonth, txnMerchants) {
   const ym = d => String(d || '').slice(0, 7);
   const months = {};
-  const touch = m => (months[m] = months[m] || {
-    m, initiated: 0, passed: 0, tpv: 0, txns: 0, activeMerchants: null,
-    revenue: 0, cost: 0, newTransacting: 0 });
+  const blank = () => ({ initiated: 0, passed: 0, tpv: 0, txns: 0, activeMerchants: null,
+                         revenue: 0, cost: 0, newTransacting: 0 });
+  const touch = m => (months[m] = months[m] || Object.assign({ m }, blank(), { by: {} }));
+  // Country slot for a month. Created lazily so a month with no activity in a market simply has
+  // no key for it, rather than a row of fabricated zeros.
+  const cslot = (o, cc) => (o.by[cc] || (o.by[cc] = blank()));
+  // Daily rows carry `by` as {CC: n}; a row with no `by` (e.g. a zero-filled day) contributes to
+  // the blended total only, which is the honest thing to do — its country is genuinely unknown.
+  const addDaily = (rows, field) => (rows || []).forEach(r => {
+    const m = ym(r.d); if (!m) return;
+    const o = touch(m), n = Number(r.n) || 0;
+    o[field] += n;
+    Object.keys(r.by || {}).forEach(cc => { cslot(o, cc)[field] += Number(r.by[cc]) || 0; });
+  });
+  addDaily(actDaily, 'initiated');
+  addDaily(enabledDaily, 'passed');
 
-  (actDaily || []).forEach(r => { const m = ym(r.d); if (m) touch(m).initiated += Number(r.n) || 0; });
-  (enabledDaily || []).forEach(r => { const m = ym(r.d); if (m) touch(m).passed += Number(r.n) || 0; });
   Object.keys(chargesByMonth || {}).forEach(m => {
     const o = touch(m), c = chargesByMonth[m];
     o.tpv = c.tpv; o.txns = c.txns; o.activeMerchants = c.accounts;
+    Object.keys(c.by || {}).forEach(cc => {
+      const b = cslot(o, cc), s = c.by[cc];
+      b.tpv = s.tpv; b.txns = s.txns; b.activeMerchants = s.accounts;
+    });
   });
-  Object.keys(revByMonth  || {}).forEach(m => { touch(m).revenue = revByMonth[m].usd; });
-  Object.keys(costByMonth || {}).forEach(m => { touch(m).cost    = costByMonth[m].usd; });
-  (txnMerchants || []).forEach(t => { const m = ym(t.started); if (m) touch(m).newTransacting += 1; });
+  const addMinor = (src, field) => Object.keys(src || {}).forEach(m => {
+    const o = touch(m), s = src[m];
+    o[field] = s.usd;
+    Object.keys(s.by || {}).forEach(cc => { cslot(o, cc)[field] = s.by[cc].usd; });
+  });
+  addMinor(revByMonth, 'revenue');
+  addMinor(costByMonth, 'cost');
+
+  (txnMerchants || []).forEach(t => {
+    const m = ym(t.started); if (!m) return;
+    const o = touch(m);
+    o.newTransacting += 1;
+    cslot(o, t.country || CC_UNKNOWN).newTransacting += 1;
+  });
 
   const keys = Object.keys(months).sort();
-  // Running cumulatives: merchants live (passed KYC) and merchants ever transacting, at month end.
-  let liveCum = 0, txCum = 0;
-  return keys.map(m => {
-    const o = months[m];
-    liveCum += o.passed;
-    txCum   += o.newTransacting;
-    const r2 = v => Math.round(v * 100) / 100;
+  const r2 = v => Math.round(v * 100) / 100;
+  // Derive one month's presentation row from one accumulator, given that market's running totals.
+  const derive = (o, cum) => {
+    cum.live += o.passed;
+    cum.tx   += o.newTransacting;
     return {
-      m,
       initiated: o.initiated,
       passed: o.passed,
       // Null rather than 0 when there is nothing to divide by — the report renders "—".
@@ -823,12 +983,28 @@ function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth
       cost: r2(o.cost),
       netMargin: r2(o.revenue - o.cost),
       netTakeRate: o.tpv ? r2((o.revenue - o.cost) / o.tpv * 100) : null,
-      liveCum, transactingCum: txCum
+      liveCum: cum.live, transactingCum: cum.tx
     };
+  };
+  // Running cumulatives: merchants live (passed KYC) and merchants ever transacting, at month end.
+  const cumAll = { live: 0, tx: 0 };
+  const cumCc = {};                          // one independent cumulative pair per market
+  return keys.map(m => {
+    const o = months[m];
+    const row = Object.assign({ m }, derive(o, cumAll));
+    const by = {};
+    // Every market seen so far gets a row each month, even a month it was inactive, so its
+    // cumulative columns keep advancing correctly instead of resetting to null.
+    Object.keys(o.by).forEach(cc => { cumCc[cc] = cumCc[cc] || { live: 0, tx: 0 }; });
+    Object.keys(cumCc).sort().forEach(cc => {
+      by[cc] = derive(o.by[cc] || blank(), cumCc[cc]);
+    });
+    row.by = by;
+    return row;
   });
 }
 
-function writeReport(monthly, groups, bases, notes) {
+function writeReport(monthly, groups, bases, notes, groupsBy, basesByCc, markets) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments REPORT data — regenerated daily by activated-payments/pull.js.
@@ -839,6 +1015,14 @@ function writeReport(monthly, groups, bases, notes) {
 //   __PAY_REPORT_GROUPS : funnel-group snapshot (base + initiated/passed/transacting). NOTE:
 //                   point-in-time only — there is no per-group history, so the report shows it
 //                   as a current snapshot, not a month-over-month comparison.
+// COUNTRY FILTER (added 2026-08-17, UK launch). Every __PAY_MONTHLY row gained a "by" object
+// keyed by ISO-2 merchant country (from Stripe CONNECTED_ACCOUNTS.COUNTRY, i.e. where the
+// business is incorporated — NOT the card's issuing country) whose values have the same shape as
+// the row. The top-level fields are untouched and still all-countries, so any reader that ignores
+// "by" sees exactly the numbers it saw before. Companions:
+//   __PAY_REPORT_GROUPS_BY : per-country group snapshot, each against its OWN country bases.
+//   __PAY_REPORT_BASES_BY_CC : the group bases per market.
+//   __PAY_REPORT_MARKETS : the live markets, in launch order, for the selector.
 // CAVEATS: volume history starts 13 Apr 2026 (first charge), so earlier months carry activation
 // figures with zero TPV. Cost is dated by BALANCE_TRANSACTION_CREATED_AT, which can lag the
 // charge by a day or two, so month-boundary costs may land in the following month.
@@ -848,9 +1032,14 @@ window.__PAY_MONTHLY = ${JSON.stringify(monthly || [])};
 window.__PAY_REPORT_GROUPS = ${JSON.stringify(groups || [])};
 window.__PAY_REPORT_BASES = ${JSON.stringify(bases || null)};
 window.__PAY_REPORT_NOTES = ${JSON.stringify(notes || {})};
+window.__PAY_REPORT_GROUPS_BY = ${JSON.stringify(groupsBy || {})};
+window.__PAY_REPORT_BASES_BY_CC = ${JSON.stringify(basesByCc || {})};
+window.__PAY_REPORT_MARKETS = ${JSON.stringify(markets || [])};
 `;
   fs.writeFileSync(REPORT_FILE, out, 'utf8');
-  console.log(`\u2713 report-data.js written — ${(monthly || []).length} months`);
+  const ccs = Object.keys(groupsBy || {});
+  console.log(`\u2713 report-data.js written — ${(monthly || []).length} months` +
+              (ccs.length ? `, split across ${ccs.length} countries (${ccs.join(', ')})` : ''));
 }
 
 // ── US funnel bases (one base per funnel group) ────────────────────────────────
@@ -861,8 +1050,18 @@ window.__PAY_REPORT_NOTES = ${JSON.stringify(notes || {})};
 // Before 2026-08-03 the page used active_us as the "Non paying" denominator; that count
 // includes paying and post-launch merchants, which the numerator excludes, so the group's
 // conversion rate read several times too low.
-async function fetchUsBases(conn) {
-  const rows = await executeQuery(conn, loadSql('us_bases.sql'));
+// `market` is a MARKETS entry; omitted means US, which is what the raw SQL already says.
+// The substitution is deliberately narrow — only the population clause and the launch date
+// carry tokens, so the US-specific bot CTE can never be rewritten by accident.
+function applyMarket(sql, market) {
+  if (!market || market.cc === 'US') return sql;
+  return sql
+    .replace("/*COUNTRY*/'US'", `/*COUNTRY*/'${market.cc}'`)
+    .replace("/*LAUNCH*/DATE '2026-07-01'", `/*LAUNCH*/DATE '${market.launch}'`)
+    .replace("/*FIRST_MONTH*/DATE '2026-04-01'", `/*FIRST_MONTH*/DATE '${market.firstMonth}'`);
+}
+async function fetchUsBases(conn, market) {
+  const rows = await executeQuery(conn, applyMarket(loadSql('us_bases.sql'), market));
   if (!rows || !rows.length) return null;
   const r = rows[0];
   const g = k => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
@@ -891,8 +1090,8 @@ async function fetchUsBases(conn) {
 // than to today. One row per month; the newest row is the month in progress (as_of = today,
 // is_partial = true). GUARDED at the call site — this must never be able to break a page
 // that rendered fine before it existed.
-async function fetchUsBasesMonthly(conn) {
-  const rows = await executeQuery(conn, loadSql('us_bases_monthly.sql'));
+async function fetchUsBasesMonthly(conn, market) {
+  const rows = await executeQuery(conn, applyMarket(loadSql('us_bases_monthly.sql'), market));
   if (!rows || !rows.length) return null;
   const out = [];
   for (const r of rows) {
@@ -950,10 +1149,11 @@ function readExistingBasesMonthly() {
 // Same CASE ladder as us_bases.sql, evaluated per merchant, so the Funnel page's group
 // numerators are drawn with the exact rule that sizes the group bases. Replaces deciding
 // membership from activation-data.js's monthly-granularity `pos_active` flag.
-async function fetchUsGroupTags(conn, merchantIds) {
+async function fetchUsGroupTags(conn, merchantIds, market) {
   const ids = sanitizeIds(merchantIds);
   if (!ids.length) return {};
-  const sql = loadSql('us_group_tags.sql').replace('/*MERCHANT_IDS*/', ids.join(','));
+  const sql = applyMarket(loadSql('us_group_tags.sql'), market)
+    .replace('/*MERCHANT_IDS*/', ids.join(','));
   const rows = await executeQuery(conn, sql);
   const by = {};
   for (const r of rows || []) {
@@ -975,20 +1175,32 @@ function readExistingBases() {
   } catch (e) { /* first run */ }
   return null;
 }
+// Entry cohort across EVERY live market. The /*MARKETS*/ token expands to one OR-ed
+// (country, launch date) pair per MARKETS entry, so a market goes live on the funnel purely
+// by being added to that list. Each row carries its own country, which becomes the `cc` the
+// Funnel page filters on.
 async function fetchUsRegistrations(conn, extraIds) {
   const ids = sanitizeIds(extraIds);
   const inList = ids.length ? ids.join(',') : '0';
-  const sql = loadSql('us_registrations.sql').replace('/*PILOT_IDS*/', inList);
+  const marketClause = MARKETS
+    .map(m => `(UPPER(TRIM(COUNTRY)) = '${m.cc}' AND CREATED_AT >= '${m.launch}')`)
+    .join('\n   OR ');
+  const sql = loadSql('us_registrations.sql')
+    .replace("/*MARKETS*/(UPPER(TRIM(COUNTRY)) = 'US' AND CREATED_AT >= '2026-07-01')",
+             `/*MARKETS*/${marketClause}`)
+    .replace('/*PILOT_IDS*/', inList);
   const rows = await executeQuery(conn, sql);
   const by = {};
   for (const r of rows) {
     const oid = String(r.OWNER_ID != null ? r.OWNER_ID : (r.owner_id != null ? r.owner_id : '')).trim();
     if (!oid) continue;
+    const country = String(r.COUNTRY || r.country || '').trim().toUpperCase();
     by[oid] = {
       oid,
       name: r.NAME || r.name || '',
       email: String(r.EMAIL || r.email || '').trim().toLowerCase(),
-      country: String(r.COUNTRY || r.country || '').trim().toUpperCase(),
+      country,
+      cc: normCountry(country),
       registered_at: toDate(r.REGISTERED_AT != null ? r.REGISTERED_AT : r.registered_at),
     };
   }
@@ -1019,9 +1231,10 @@ function isBotName(nameRaw, freqMap) {
 // accounts = the payments book) ∪ (pilot 500), with bots excluded from the registration mass.
 // Every merchant carries its stage timestamps so the UI can slice by date range / pilot and
 // recompute stages, timings, and the KYC / terminal drill-downs entirely client-side.
-function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags) {
+function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags, countryByAcct) {
   groupTags = groupTags || {};
   termByEmail = termByEmail || {};
+  const cba = countryByAcct || {};
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const pilotByOid = {}; pilot.forEach(p => { if (p.oid) pilotByOid[String(p.oid)] = p; });
 
@@ -1049,7 +1262,8 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
     const first_txn_at = (txnByAcct[acct] && txnByAcct[acct].started) ? toDate(txnByAcct[acct].started) : null;
     const bname = get(r, 'business_name') || get(r, 'contact_name') || '';
     if (owner) connectedOwners.add(owner);
-    connAccts.push({ acct, owner, status, connected_at, enabled_at, first_txn_at, blockers, bname, email });
+    connAccts.push({ acct, owner, status, connected_at, enabled_at, first_txn_at, blockers, bname, email,
+                     cc: cba[acct] || normCountry(get(r, 'country')) });
   }
 
   // Name-frequency map for bulk-cluster detection over the registration mass.
@@ -1058,6 +1272,11 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
 
   const merchants = [];
   const stages = { entered: 0, signed_up: 0, enabled: 0, transacting: 0 };
+  // Per-country stage counts, e.g. stagesBy.GB = { entered, signed_up, enabled, transacting }.
+  // Added 2026-08-17 so the Funnel headline can be filtered without the page having to
+  // re-derive stages from the merchant rows (it still can — these must agree).
+  const stagesBy = {};
+  const stg = cc => (stagesBy[cc] || (stagesBy[cc] = { entered: 0, signed_up: 0, enabled: 0, transacting: 0 }));
   let botsExcluded = 0;
 
   // 1) Signed-up onward: one funnel row per connected account.
@@ -1065,13 +1284,16 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
     const reg = c.owner ? (regs[c.owner] || null) : null;
     const p = c.owner ? (pilotByOid[c.owner] || null) : null;
     let stage = 'signed_up'; if (c.status === 'Enabled') stage = 'enabled'; if (c.first_txn_at) stage = 'transacting';
+    const cc = c.cc || CC_UNKNOWN;
     stages.entered++; stages.signed_up++;
-    if (c.status === 'Enabled') stages.enabled++;
-    if (c.first_txn_at) stages.transacting++;
+    stg(cc).entered++; stg(cc).signed_up++;
+    if (c.status === 'Enabled') { stages.enabled++; stg(cc).enabled++; }
+    if (c.first_txn_at) { stages.transacting++; stg(cc).transacting++; }
     const email = c.email || (reg && reg.email) || (p && p.email) || '';
     const term = termByEmail[email] || null;
     merchants.push({
       grp: (groupTags[String(c.owner)] || {}).grp || null,
+      cc,                                   // merchant country — drives the page's country filter
       oid: c.owner || ('acct:' + c.acct),
       name: c.bname || (reg && reg.name) || (p && p.name) || (c.owner || c.acct),
       email: email,
@@ -1093,9 +1315,15 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
     const reg = regs[oid] || null;
     const p = pilotByOid[oid] || null;
     if (!p && isBotName(reg && reg.name, freq)) { botsExcluded++; return; }
+    // Entered-only rows have no Stripe account, so their country comes from the
+    // registration row. The pilot 500 is a US cohort by construction, so a pilot row with
+    // no registration record falls back to US rather than to unknown.
+    const cc = (reg && reg.cc) ? reg.cc : (p ? 'US' : CC_UNKNOWN);
     stages.entered++;
+    stg(cc).entered++;
     merchants.push({
       grp: (groupTags[String(oid)] || {}).grp || null,
+      cc,
       oid,
       name: (reg && reg.name) || (p && p.name) || oid,
       email: (reg && reg.email) || (p && p.email) || '',
@@ -1104,13 +1332,14 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
       connected_at: null, enabled_at: null, first_txn_at: null, kyc: [], terminal_at: null, terminal_status: null,
     });
   });
-  return { entered_total: stages.entered, stages, merchants, botsExcluded, launch_start: LAUNCH_START };
+  return { entered_total: stages.entered, stages, stagesBy, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
-function writeFunnel(funnel, terminalReady, bases, basesMonthly) {
+function writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
 `// Loyverse Payments FUNNEL — regenerated daily by activated-payments/pull.js.
-// Population = genuine US registrations since ${LAUNCH_START} (LOYVERSE_MERCHANTS, BOTS EXCLUDED)
+// Population = genuine registrations in every live market since that market's launch
+// (${MARKETS.map(m => m.cc + ' ' + m.launch).join(', ')}; LOYVERSE_MERCHANTS, BOTS EXCLUDED)
 // ∪ all prod connected accounts (the payments book) ∪ pilot 500.
 // Stages: entered -> initiated KYC (connected) -> passed KYC -> transacting. Each merchant
 // carries its stage timestamps; the UI recomputes the group funnels + origin split client-side.
@@ -1121,20 +1350,36 @@ function writeFunnel(funnel, terminalReady, bases, basesMonthly) {
 // Newest row is the month in progress (partial:true, asof = pull date). Paying status in past
 // months is reconstructed from ACTIVATED_AT/CANCELLED_AT, so it can differ slightly from the
 // all-time row above — pull.js logs the gap on every run.
+//
+// COUNTRY (added 2026-08-17, UK launch):
+//   __FUNNEL_MERCHANTS[].cc      the merchant's ISO-2 market
+//   __FUNNEL_STAGES_BY           stage counts per market; each market's stages sum to __FUNNEL_STAGES
+//   __FUNNEL_BASES_BY_CC         the four group bases per market (US entry is identical to __FUNNEL_BASES)
+//   __FUNNEL_BASES_MONTHLY_BY_CC the month-end series per market
+//   __FUNNEL_MARKETS             the live markets and their launch dates, in launch order
+// __FUNNEL_BASES / __FUNNEL_BASES_MONTHLY still hold the US series unchanged, so anything
+// that read this file before the UK launch reads exactly the same numbers it read then.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
 // Do NOT edit by hand; overwritten each morning. Last pull: ${stamp}
 window.__FUNNEL_UPDATED = ${JSON.stringify(stamp)};
 window.__FUNNEL_STAGES = ${JSON.stringify(funnel.stages)};
+window.__FUNNEL_STAGES_BY = ${JSON.stringify(funnel.stagesBy || {})};
 window.__FUNNEL_ENTERED_TOTAL = ${JSON.stringify(funnel.entered_total)};
 window.__FUNNEL_BOTS_EXCLUDED = ${JSON.stringify(funnel.botsExcluded)};
 window.__FUNNEL_LAUNCH_START = ${JSON.stringify(funnel.launch_start)};
+window.__FUNNEL_MARKETS = ${JSON.stringify(MARKETS)};
 window.__FUNNEL_TERMINAL_READY = ${JSON.stringify(!!terminalReady)};
 window.__FUNNEL_BASES = ${JSON.stringify(bases || null)};
 window.__FUNNEL_BASES_MONTHLY = ${JSON.stringify(basesMonthly || [])};
+window.__FUNNEL_BASES_BY_CC = ${JSON.stringify(basesByCc || {})};
+window.__FUNNEL_BASES_MONTHLY_BY_CC = ${JSON.stringify(basesMonthlyByCc || {})};
 window.__FUNNEL_MERCHANTS = ${JSON.stringify(funnel.merchants)};
 `;
   fs.writeFileSync(FUNNEL_FILE, out, 'utf8');
+  const sb = funnel.stagesBy || {};
+  const perCc = Object.keys(sb).sort().map(cc => `${cc} ${sb[cc].entered}/${sb[cc].signed_up}/${sb[cc].enabled}/${sb[cc].transacting}`).join('  ');
   console.log(`✓ Wrote ${FUNNEL_FILE} — entered ${funnel.entered_total} (bots excluded ${funnel.botsExcluded}), signed_up ${funnel.stages.signed_up}, enabled ${funnel.stages.enabled}, transacting ${funnel.stages.transacting}, rows ${funnel.merchants.length}`);
+  console.log(`  by market (entered/signed_up/enabled/transacting): ${perCc || 'none'}`);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -1170,11 +1415,22 @@ async function main() {
   // Prod Stripe account ids drive the daily terminal-volume layer (runtime-derived).
   const prodAccts = Object.keys(meta).filter(a => meta[a] && meta[a].environment === 'prod');
 
+  // Country dimension (UK launch, Aug 2026). Built once from connected_accounts.sql and
+  // threaded into every downstream layer so there is exactly one answer to "what country
+  // is this merchant" across Overview, Funnel and Report.
+  const countryByAcct = buildCountryByAcct(accountRows);
+  const countryByMid = buildCountryByMid(countryByAcct, meta);
+  {
+    const tally = {};
+    for (const a of prodAccts) bump(tally, countryByAcct[a] || CC_UNKNOWN, 1);
+    console.log(`✓ country map: ${Object.keys(countryByAcct).length} accounts, ${Object.keys(countryByMid).length} owner ids — prod split ${JSON.stringify(tally)}`);
+  }
+
   let subs = {}, sales = {}, vol = { byDay: {}, unknownCcy: {} }, txnByAcct = {}, feeByAcct = {}, costByAcct = {};
   const [subsR, salesR, volR, txnR, feeR, costR] = await Promise.allSettled([
     fetchSubscriptions(conn, merchantIds),
     fetchSales(conn, merchantIds),
-    fetchDailyVolume(conn, prodAccts),
+    fetchDailyVolume(conn, prodAccts, countryByAcct),
     fetchTxnByAccount(conn, prodAccts),
     fetchAppFeesByAccount(conn, prodAccts),
     fetchIcplusCostByAccount(conn, prodAccts),
@@ -1204,7 +1460,7 @@ async function main() {
     enabledDaily = buildEnabledDaily(accountRows, meta);
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
-    txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct);
+    txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct);
     writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
@@ -1216,52 +1472,79 @@ async function main() {
     const connOwners = Object.values(meta).map(x => x.owner_id).filter(Boolean).map(String);
     const regIds = [...pilot.map(p => p.oid), ...connOwners];
     const regs = await fetchUsRegistrations(conn, regIds);
-    console.log(`✓ us_registrations: ${Object.keys(regs).length} rows (US since ${LAUNCH_START} + pilot + connected owners)`);
+    {
+      const rt = {}; Object.values(regs).forEach(r => bump(rt, r.cc || CC_UNKNOWN, 1));
+      console.log(`✓ us_registrations: ${Object.keys(regs).length} rows (${MARKETS.map(m => m.cc + ' since ' + m.launch).join(' + ')} + pilot + connected owners) — by market ${JSON.stringify(rt)}`);
+    }
     let termByEmail = {}, terminalReady = false;
     try { termByEmail = await fetchTerminalOrders(conn); terminalReady = true; console.log(`✓ terminal_orders: ${Object.keys(termByEmail).length} merchant emails with a terminal order`); }
     catch (e) { console.error(`✗ terminal_orders query failed (terminal drill-down will be empty): ${e.message}`); }
-    let bases = null;
-    try {
-      bases = await fetchUsBases(conn);
-      if (bases) console.log(`✓ us_bases: new=${bases.new_us}  paying=${bases.paying_base_us}  nonpaying=${bases.nonpaying_us}  dormant=${bases.dormant_us}  total=${bases.total_us}`);
-      else console.error('✗ us_bases returned no usable row (carrying previous bases forward)');
-    } catch (e) { console.error(`✗ us_bases query failed (carrying previous bases forward): ${e.message}`); }
-    if (!bases) bases = readExistingBases();
-    // Month-end bases for the Funnel page's month filter. GUARDED: an extra Snowflake
-    // round-trip added after the page was already working must not be able to break it —
-    // on failure the previously-committed series is carried forward, and if there is none
-    // the UI falls back to the all-time bases and says so.
-    let basesMonthly = null;
-    try {
-      basesMonthly = await fetchUsBasesMonthly(conn);
-      if (basesMonthly) {
-        console.log(`✓ us_bases_monthly: ${basesMonthly.length} months (${basesMonthly[0].month} → ${basesMonthly[basesMonthly.length - 1].month})`);
-        reportMonthlyBaseGap(bases, basesMonthly);
-      } else {
-        console.error('✗ us_bases_monthly returned no usable rows (carrying previous series forward)');
-      }
-    } catch (e) { console.error(`✗ us_bases_monthly query failed (carrying previous series forward): ${e.message}`); }
-    if (!basesMonthly) basesMonthly = readExistingBasesMonthly();
+
+    // ── Group bases, ONE SET PER LIVE MARKET (2026-08-17) ──────────────────────
+    // basesByCc / basesMonthlyByCc are keyed by ISO-2 country. `bases` / `basesMonthly`
+    // stay bound to the US so every existing consumer — including the previously-committed
+    // file the failure path falls back to — is untouched by the UK going live.
+    // Each market is fetched independently and guarded independently: a market whose query
+    // fails must not be able to take down a market whose query succeeded.
+    const basesByCc = {}, basesMonthlyByCc = {};
+    for (const mkt of MARKETS) {
+      try {
+        const b = await fetchUsBases(conn, mkt);
+        if (b) {
+          basesByCc[mkt.cc] = b;
+          console.log(`✓ us_bases[${mkt.cc}]: new=${b.new_us}  paying=${b.paying_base_us}  nonpaying=${b.nonpaying_us}  dormant=${b.dormant_us}  total=${b.total_us}`);
+        } else {
+          console.error(`✗ us_bases[${mkt.cc}] returned no usable row`);
+        }
+      } catch (e) { console.error(`✗ us_bases[${mkt.cc}] query failed: ${e.message}`); }
+      // Month-end bases for the Funnel page's month filter. GUARDED: an extra Snowflake
+      // round-trip added after the page was already working must not be able to break it —
+      // on failure the previously-committed series is carried forward, and if there is none
+      // the UI falls back to the all-time bases and says so.
+      try {
+        const bm = await fetchUsBasesMonthly(conn, mkt);
+        if (bm) {
+          basesMonthlyByCc[mkt.cc] = bm;
+          console.log(`✓ us_bases_monthly[${mkt.cc}]: ${bm.length} months (${bm[0].month} → ${bm[bm.length - 1].month})`);
+          reportMonthlyBaseGap(basesByCc[mkt.cc], bm);
+        } else {
+          console.error(`✗ us_bases_monthly[${mkt.cc}] returned no usable rows`);
+        }
+      } catch (e) { console.error(`✗ us_bases_monthly[${mkt.cc}] query failed: ${e.message}`); }
+    }
+    // US remains the file's primary series; if its query failed, carry yesterday's forward
+    // exactly as before rather than shipping a page with no denominators.
+    let bases = basesByCc.US || null;
+    if (!bases) { bases = readExistingBases(); if (bases) { basesByCc.US = bases; console.error('  us_bases[US]: carrying previously-committed bases forward'); } }
+    let basesMonthly = basesMonthlyByCc.US || null;
+    if (!basesMonthly) { basesMonthly = readExistingBasesMonthly(); if (basesMonthly) { basesMonthlyByCc.US = basesMonthly; console.error('  us_bases_monthly[US]: carrying previously-committed series forward'); } }
+
     // Group tags for every owner in the book, drawn with the same rule that sizes the bases.
     // Non-fatal: without them the UI falls back to the legacy pos_active/is_paying split.
+    // Tagged per market and merged — a merchant only ever matches its own market's query,
+    // so the merge cannot produce a conflicting tag for the same owner id.
     let groupTags = {};
-    try {
-      groupTags = await fetchUsGroupTags(conn, connOwners);
-      const tally = {};
-      Object.values(groupTags).forEach(function(t){ tally[t.grp] = (tally[t.grp] || 0) + 1; });
-      console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged ${JSON.stringify(tally)}`);
-    } catch (e) { console.error(`✗ us_group_tags query failed (funnel groups fall back to pos_active): ${e.message}`); }
-    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags);
-    writeFunnel(funnel, terminalReady, bases, basesMonthly);
+    for (const mkt of MARKETS) {
+      try {
+        const t = await fetchUsGroupTags(conn, connOwners, mkt);
+        Object.assign(groupTags, t);
+        const tally = {};
+        Object.values(t).forEach(function(x){ tally[x.grp] = (tally[x.grp] || 0) + 1; });
+        console.log(`✓ us_group_tags[${mkt.cc}]: ${Object.keys(t).length} owners tagged ${JSON.stringify(tally)}`);
+      } catch (e) { console.error(`✗ us_group_tags[${mkt.cc}] query failed (that market's funnel groups fall back to pos_active): ${e.message}`); }
+    }
+    console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged across ${MARKETS.length} markets`);
+    const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags, countryByAcct);
+    writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc);
 
     // ---- Report page (monthly series) ----
     // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
     // be able to break activation-data.js / overview-data.js / funnel-data.js, all already written.
     try {
       const [cmR, revR, costR2] = await Promise.allSettled([
-        fetchChargesMonthly(conn, prodAccts),
-        fetchMinorMonthly(conn, prodAccts, 'app_fees_monthly.sql', 'fee_minor', 'fee_cnt'),
-        fetchMinorMonthly(conn, prodAccts, 'icplus_cost_monthly.sql', 'cost_minor', 'cost_cnt'),
+        fetchChargesMonthly(conn, prodAccts, countryByAcct),
+        fetchMinorMonthly(conn, prodAccts, 'app_fees_monthly.sql', 'fee_minor', 'fee_cnt', countryByAcct),
+        fetchMinorMonthly(conn, prodAccts, 'icplus_cost_monthly.sql', 'cost_minor', 'cost_cnt', countryByAcct),
       ]);
       const cm = cmR.status === 'fulfilled' ? cmR.value : { byMonth: {}, unknownCcy: {} };
       const rev = revR.status === 'fulfilled' ? revR.value : {};
@@ -1278,22 +1561,31 @@ async function main() {
       const GRP_BASE  = { new: 'new_us', paying: 'paying_base_us',
                           nonpaying: 'nonpaying_us', dormant: 'dormant_us' };
       const bk = (funnel.merchants || []).filter(m => m.connected_at);
-      const groups = Object.keys(GRP_LABEL).map(g => {
-        const rs = bk.filter(m => m.grp === g);
+      // One group snapshot from an arbitrary slice of the book against an arbitrary bases object.
+      // Factored out so the per-country snapshots are computed by the SAME code as the blended
+      // one — a country's rate can then never drift from the all-countries rate by construction.
+      const groupsFrom = (rows, bs) => Object.keys(GRP_LABEL).map(g => {
+        const rs = rows.filter(m => m.grp === g);
         return {
           g, label: GRP_LABEL[g],
-          base: (bases && bases[GRP_BASE[g]] != null) ? bases[GRP_BASE[g]] : null,
+          base: (bs && bs[GRP_BASE[g]] != null) ? bs[GRP_BASE[g]] : null,
           initiated: rs.length,
           passed: rs.filter(m => m.stage === 'enabled' || m.stage === 'transacting' || m.enabled).length,
           transacting: rs.filter(m => m.stage === 'transacting' || m.first_txn_at).length
         };
       });
+      const groups = groupsFrom(bk, bases);
+      // Per-market snapshots, each against ITS OWN bases (basesByCc), so a UK numerator is never
+      // divided by a US denominator — the defect that adding the filter exists to remove.
+      const groupsBy = {};
+      Array.from(new Set(bk.map(m => m.cc).filter(Boolean).concat(MARKET_CCS))).sort()
+        .forEach(cc => { groupsBy[cc] = groupsFrom(bk.filter(m => m.cc === cc), (basesByCc || {})[cc] || null); });
       const untagged = bk.filter(m => !m.grp).length;
       writeReport(monthly, groups, bases, {
         volumeFrom: (monthly.find(x => x.tpv > 0) || {}).m || null,
         untaggedInitiators: untagged,
         launch: LAUNCH_START
-      });
+      }, groupsBy, basesByCc, MARKETS);
     } catch (e) { console.error(`✗ report build skipped this run: ${e.message}`); }
   } catch (e) { console.error(`✗ funnel build failed: ${e.message}`); }
 

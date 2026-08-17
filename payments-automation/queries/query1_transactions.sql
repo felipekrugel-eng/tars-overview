@@ -12,7 +12,14 @@
 --   CONNECTED_ACCOUNT_CHARGES:  ID, CREATED, ACCOUNT (=acct_ id), MERCHANT_ID,
 --     CURRENCY, STATUS, AMOUNT (cents), CARD_BRAND, CARD_FUNDING, CARD_COUNTRY,
 --     CARD_LAST4, APPLICATION_FEE_ID.
---   CONNECTED_ACCOUNTS:         ID (=acct_ id), BUSINESS_NAME, LEGAL_ENTITY_BUSINESS_NAME.
+--   CONNECTED_ACCOUNTS:         ID (=acct_ id), BUSINESS_NAME, LEGAL_ENTITY_BUSINESS_NAME,
+--     COUNTRY (ISO-2 country of INCORPORATION of the merchant).
+--
+-- MERCHANT_COUNTRY (added 2026-08-17, UK launch) is the merchant's own country, taken from
+-- CONNECTED_ACCOUNTS.COUNTRY. It is deliberately NOT the same thing as CARD_COUNTRY below, which
+-- is where the CARDHOLDER's card was issued — a US merchant routinely takes foreign cards, so
+-- CARD_COUNTRY cannot answer "how is the UK business doing". The margins page splits on
+-- MERCHANT_COUNTRY; CARD_COUNTRY stays exactly where it was, feeding the card-mix analysis.
 --   APPLICATION_FEES (platform): CHARGE_ID (= connected charge ID, join key),
 --     AMOUNT (cents, = Loyverse revenue), CURRENCY, CREATED.
 -- Window filter is >= '2026-04-01' so a fresh run picks up all charges through today.
@@ -22,6 +29,7 @@ SELECT
     c.ACCOUNT                                               AS charge_account_id,
     c.MERCHANT_ID                                           AS platform_merchant_id,
     COALESCE(a.BUSINESS_NAME, a.LEGAL_ENTITY_BUSINESS_NAME) AS merchant_name,
+    UPPER(TRIM(a.COUNTRY))                                  AS merchant_country,
     c.CURRENCY                                              AS currency,
     c.STATUS                                                AS status,
     c.AMOUNT                                                AS amount,
