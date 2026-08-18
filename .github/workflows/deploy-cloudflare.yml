@@ -13,6 +13,7 @@
 # 2026-08-12: added pilot-pull to the workflow_run list. pilot-pull commits with the
 # built-in GITHUB_TOKEN, which does not fire `push` workflows, so without it a pilot
 # data refresh would never reach Cloudflare.
+# 2026-08-18: added ads-pull for the Marketing tab, same reason.
 
 name: deploy-cloudflare
 
@@ -25,6 +26,7 @@ on:
     workflows:
       - kpi-pull
       - pilot-pull
+      - ads-pull
       - payments-pull
       - "PAYMENTS: Daily Activation Pull"
       - "CASE: Daily Snowflake Pull"
