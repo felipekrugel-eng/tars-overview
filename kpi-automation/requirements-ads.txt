@@ -1,0 +1,8 @@
+# Deps for build_ads_data.py only. Kept out of requirements.txt so the Snowflake
+# pulls don't carry Google client libraries they never import.
+#
+# Both are optional at runtime: build_ads_data.py imports them lazily and only
+# when GOOGLE_SERVICE_ACCOUNT_JSON is set. Without a service account it falls
+# back to the public CSV export using nothing but the standard library.
+google-auth>=2.30
+google-api-python-client>=2.140
