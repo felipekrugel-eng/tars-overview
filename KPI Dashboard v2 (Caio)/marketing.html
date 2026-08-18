@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse — Marketing</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="ads-data.js"></script>
+<style>
+  :root {
+    --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+    --bg:#EEF2F6; --surface:#FFFFFF; --surface-2:#F4F7FA; --border:#E3E9F0;
+    --muted:#7E8A9A; --faint:#A9B4C2; --green:#1F9D6B; --red:#D2495B; --amber:#E8A317;
+    --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--ink); }
+  .font-num { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+  .hero { background:linear-gradient(120deg,#1D8FE1,#1578C4); color:#fff; padding:26px 40px 24px; position:relative; overflow:hidden; }
+  .hero .deco { position:absolute; background:rgba(255,255,255,.12); width:120px; height:120px; }
+  .hero .d1 { right:-30px; top:-44px; transform:rotate(12deg); }
+  .hero .d2 { right:74px; top:28px; width:58px; height:58px; background:rgba(180,225,255,.32); transform:rotate(-8deg); }
+  .hero img.logo { position:absolute; top:16px; right:22px; height:42px; }
+  .hero .label { font-size:11px; letter-spacing:4px; text-transform:uppercase; opacity:.9; margin-bottom:7px; }
+  .hero h1 { font-family:'Arial Black',Arial; font-size:30px; }
+  .hero .sub { margin-top:9px; font-size:13px; opacity:.95; }
+  .topbar { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:14px; }
+  .badge { background:rgba(0,0,0,.22); color:#fff; font-size:10px; letter-spacing:1.5px; padding:6px 11px; text-transform:uppercase; border-radius:4px; }
+  .wrap { max-width:1280px; margin:0 auto; padding:22px 24px 60px; }
+  .sec { color:var(--blue-deep); font-family:'Arial Black',Arial; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin:26px 2px 12px; }
+  .sec:first-child { margin-top:6px; }
+  .note-warn { background:#FFF6E5; border-left:3px solid var(--amber); border-radius:4px; padding:9px 13px; font-size:11.5px; color:#7a5a12; margin-bottom:14px; line-height:1.6; }
+
+  /* ---- filter bar ---- */
+  .filters { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px 18px 14px; box-shadow:0 1px 2px rgba(20,40,70,.04); }
+  .frow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:11px; }
+  .frow:last-child { margin-bottom:0; }
+  .flab { font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:var(--muted); min-width:78px; }
+  .fdate { font-size:12px; padding:5px 8px; border:1px solid var(--border); border-radius:7px; color:var(--ink); font-family:Arial; background:var(--surface); }
+  .chip { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:var(--surface-2);
+    border:1px solid var(--border); padding:5px 12px; border-radius:20px; cursor:pointer; transition:all .12s; }
+  .chip:hover { color:var(--ink); border-color:var(--faint); }
+  .chip.on { background:var(--blue); border-color:var(--blue); color:#fff; }
+  .chip.ghost { background:transparent; border-style:dashed; }
+  .divpill { display:inline-flex; flex-wrap:wrap; background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:3px; }
+  .divpill button { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:transparent; border:none; padding:6px 11px; border-radius:6px; cursor:pointer; }
+  .divpill button.on { background:var(--blue); color:#fff; }
+  .msel { position:relative; }
+  .msel-btn { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--ink); background:var(--surface-2);
+    border:1px solid var(--border); padding:6px 13px; border-radius:8px; cursor:pointer; }
+  .msel-pop { display:none; position:absolute; z-index:40; top:calc(100% + 5px); left:0; width:430px; max-height:290px; overflow-y:auto;
+    background:var(--surface); border:1px solid var(--border); border-radius:11px; box-shadow:0 8px 26px rgba(20,40,70,.16); padding:9px; }
+  .msel-pop.open { display:block; }
+  .msel-pop label { display:flex; align-items:center; gap:8px; font-size:12px; padding:5px 7px; border-radius:6px; cursor:pointer; }
+  .msel-pop label:hover { background:var(--surface-2); }
+  .msel-acts { display:flex; gap:6px; padding:3px 4px 8px; border-bottom:1px solid var(--border); margin-bottom:5px; }
+  .msel-acts button { font-size:11px; font-weight:bold; color:var(--blue-deep); background:transparent; border:none; cursor:pointer; padding:3px 6px; }
+
+  /* ---- tiles ---- */
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(186px,1fr)); gap:14px; }
+  .tile { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:15px 17px 12px;
+    box-shadow:0 1px 2px rgba(20,40,70,.04); position:relative; overflow:hidden; }
+  .tile:before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--blue); }
+  .tile .tl { font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-weight:bold; }
+  .tile .tv { font-size:25px; color:var(--ink); margin-top:6px; font-weight:700; }
+  .tile .td { font-size:12px; font-weight:bold; margin-top:4px; }
+  .tile .td.up { color:var(--green); } .tile .td.down { color:var(--red); } .tile .td.flat { color:var(--muted); }
+
+  /* ---- panels & charts ---- */
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px; box-shadow:0 1px 2px rgba(20,40,70,.04); display:flex; flex-direction:column; }
+  .panel h3 { font-size:14px; font-family:'Arial Black',Arial; color:var(--ink); }
+  .panel .ph { font-size:11px; color:var(--muted); margin:2px 0 12px; min-height:30px; line-height:1.5; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; } @media(max-width:900px){ .grid2{grid-template-columns:1fr;} }
+  .chart-box { position:relative; height:250px; margin-top:auto; }
+  .vtog { display:inline-flex; gap:2px; margin:0 0 10px; }
+  .vtog button { font-family:Arial; font-size:11px; font-weight:bold; color:var(--muted); background:#EEF2F6; border:none; padding:5px 11px; border-radius:6px; cursor:pointer; }
+  .vtog button.on { background:var(--blue); color:#fff; }
+  .rise { animation:rise .5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){ .rise{animation:none;} }
+
+  /* ---- funnel ---- */
+  .fn-row { margin:0 0 13px; }
+  .fn-top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:12.5px; margin-bottom:5px; }
+  .fn-name { font-weight:bold; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .fn-name .cat { font-weight:normal; color:var(--faint); font-size:11px; margin-left:7px; letter-spacing:.5px; }
+  .fn-meta { color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .fn-meta b { color:var(--ink); }
+  .fn-bar { height:15px; background:#EEF2F6; border-radius:8px; overflow:hidden; }
+  .fn-bar i { display:block; height:100%; background:linear-gradient(90deg,#1D8FE1,#1578C4); border-radius:8px; }
+  .fn-step { font-size:11px; font-weight:bold; margin-left:9px; }
+  .fn-step.down { color:var(--red); } .fn-step.up { color:var(--green); } .fn-step.flat { color:var(--muted); }
+
+  /* ---- tables ---- */
+  table.league { width:100%; border-collapse:collapse; font-size:13px; }
+  table.league th { text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
+    font-weight:bold; padding:9px 10px; border-bottom:2px solid var(--border); }
+  table.league th:nth-child(-n+2), table.league td:nth-child(-n+2) { text-align:left; }
+  table.league td { text-align:right; padding:9px 10px; border-bottom:1px solid var(--surface-2); }
+  table.league tbody tr:hover { background:var(--surface-2); }
+  table.league .cc { font-weight:bold; color:var(--ink); }
+  table.league .num { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+  .stat { font-size:10px; font-weight:bold; letter-spacing:1px; padding:3px 9px; border-radius:11px; text-transform:uppercase; }
+  .stat.enabled { color:#137a4e; background:#E3F4EB; }
+  .stat.paused  { color:#8a6300; background:#FCF3DC; }
+  .stat.removed { color:#B23046; background:#FBE7EB; }
+  .stat.other   { color:var(--muted); background:#EEF2F6; }
+  .empty { text-align:center; color:var(--muted); font-size:13px; padding:34px 10px; }
+
+  .foot { background:var(--near-black); color:#AAA; padding:22px 40px; font-size:12px; line-height:1.7; margin-top:24px; }
+  .foot .label { color:var(--blue); font-family:'Arial Black',Arial; font-size:12px; margin-bottom:8px; letter-spacing:2px; }
+</style>
+</head>
+<body>
+<!-- ==== Unified master nav (POS / Payments / Merchant Map / Marketing) ==== -->
+<style>
+.lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;font-family:Arial,Helvetica,sans-serif;}
+.lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px;}
+.lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px;}
+.lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1;}
+.lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;transition:color .12s;}
+.lvmn a.lvmn-tab:hover{color:#fff;}
+.lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+.lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block;}
+.pagenav{background:#fff !important;border-bottom:1px solid #E0E0E0 !important;padding:0 24px !important;display:flex !important;gap:4px !important;align-items:center !important;}
+.pagenav a{color:#6A6A6A !important;font-size:11px !important;font-weight:bold !important;letter-spacing:1px !important;text-transform:uppercase !important;padding:11px 16px !important;border-bottom:3px solid transparent !important;text-decoration:none !important;}
+.pagenav a:hover{color:#1A1A1A !important;}
+.pagenav a.on{color:#1578C4 !important;border-bottom-color:#1D8FE1 !important;}
+</style>
+<nav class="lvmn">
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab" href="daily.html">POS</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#payments">Payments</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#map">Merchant Map</a>
+  <a class="lvmn-tab on" href="marketing.html">Marketing</a>
+</nav>
+
+<div class="pagenav">
+  <a href="marketing.html" class="on">Google Ads</a>
+</div>
+
+<div class="hero">
+  <div class="deco d1"></div><div class="deco d2"></div>
+  <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
+  <div class="label">Loyverse &middot; Marketing</div>
+  <h1>PAID ACQUISITION.</h1>
+  <div class="sub">Google Ads app campaigns &mdash; spend, traffic and conversion events.</div>
+  <div class="topbar">
+    <span class="badge" id="badge-range">&mdash;</span>
+    <span class="badge" id="badge-updated">&mdash;</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec">Filters</div>
+  <div class="filters">
+    <div class="frow">
+      <span class="flab">Period</span>
+      <input type="date" id="f-from" class="fdate">
+      <span style="color:var(--faint);font-size:12px">to</span>
+      <input type="date" id="f-to" class="fdate">
+      <span class="divpill" id="f-preset">
+        <button data-days="7">7d</button><button data-days="14">14d</button>
+        <button data-days="30">30d</button><button data-days="0" class="on">All</button>
+      </span>
+      <button class="chip ghost" id="f-clear" style="margin-left:auto">Clear filters</button>
+    </div>
+    <div class="frow">
+      <span class="flab">Platform</span>
+      <span id="f-platforms" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+    </div>
+    <div class="frow">
+      <span class="flab">Campaign</span>
+      <span id="f-campaigns" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+    </div>
+    <div class="frow">
+      <span class="flab">Events</span>
+      <span class="msel">
+        <button class="msel-btn" id="f-events-btn">All conversion events</button>
+        <div class="msel-pop" id="f-events-pop">
+          <div class="msel-acts">
+            <button id="f-events-all">Select all</button>
+            <button id="f-events-none">Clear</button>
+          </div>
+          <div id="f-events-list"></div>
+        </div>
+      </span>
+      <span class="flab" style="margin-left:16px">Metric</span>
+      <span class="divpill" id="f-metric">
+        <button data-metric="conversions" class="on">Conversions</button>
+        <button data-metric="allConversions">All conversions</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="sec">Headline</div>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="sec">Spend &amp; traffic</div>
+  <div class="grid2">
+    <div class="panel rise">
+      <h3>Cost vs conversions</h3>
+      <div class="ph">Daily spend (bars, left axis) against conversions (line, right axis). Divergence between the two is the story &mdash; flat bars with a falling line means efficiency is decaying.</div>
+      <div class="chart-box"><canvas id="c-cost"></canvas></div>
+    </div>
+    <div class="panel rise">
+      <h3>Clicks vs impressions</h3>
+      <div class="ph">Reach (impressions, right axis) against engagement (clicks, left axis). Impressions climbing while clicks stay flat means the auction is serving weaker inventory.</div>
+      <div class="chart-box"><canvas id="c-traffic"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sec">Conversion events</div>
+  <div class="grid2">
+    <div class="panel rise">
+      <h3>Blended cost per event</h3>
+      <div class="ph">Total spend in the period divided by each event&rsquo;s volume. This is a blended figure, not attributed cost &mdash; Google Ads does not split spend across events, so read it as &ldquo;what each event cost us on average&rdquo;, not as its true marginal cost.</div>
+      <div class="chart-box"><canvas id="c-cpa"></canvas></div>
+    </div>
+    <div class="panel rise">
+      <h3>Event volume trend</h3>
+      <div class="ph">The five highest-volume events over time. Cumulative smooths out daily noise; daily shows the actual shape.</div>
+      <div class="vtog" id="t-trend">
+        <button data-mode="cum" class="on">Cumulative</button>
+        <button data-mode="daily">Daily</button>
+      </div>
+      <div class="chart-box"><canvas id="c-trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sec">Funnel</div>
+  <div class="panel rise">
+    <h3>Where volume falls away</h3>
+    <div class="ph">Every conversion event ranked by volume, with the step-over-step drop to the next one. Ordering is by volume, not by a fixed funnel definition &mdash; events are not guaranteed to be sequential stages.</div>
+    <div id="funnel"></div>
+  </div>
+
+  <div class="sec">Detail</div>
+  <div class="panel rise" style="margin-bottom:18px">
+    <h3>Event performance</h3>
+    <div class="ph">Volume and blended cost for every conversion event in the filtered period.</div>
+    <div style="overflow-x:auto"><table class="league" id="t-events"></table></div>
+  </div>
+  <div class="panel rise">
+    <h3>Campaign settings</h3>
+    <div class="ph">Current state of each campaign as of the last export &mdash; status, bid strategy and daily budget.</div>
+    <div style="overflow-x:auto"><table class="league" id="t-campaigns"></table></div>
+  </div>
+
+</div>
+
+<div class="foot">
+  <div class="label">NOTES</div>
+  <div id="foot-notes"></div>
+  <div style="margin-top:10px">Source: Google Ads export sheet &rarr; <code>ads-pull</code> GitHub Action &rarr; <code>ads-data.js</code> &middot; Prepared by Felipe Krugel &middot; Internal use only.</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var D = window.ADS_DATA || null;
+  if (!D || !D.daily || !D.daily.length) {
+    document.querySelector('.wrap').innerHTML =
+      '<div class="note-warn">No ad data loaded. <b>ads-data.js</b> is missing or empty &mdash; ' +
+      'check the latest <b>ads-pull</b> run in the Actions tab.</div>';
+    return;
+  }
+
+  // ---------- formatting ----------
+  var CUR = D.currency || 'USD';
+  var fInt  = new Intl.NumberFormat('en-GB', {maximumFractionDigits:0});
+  // en-US for money: en-GB renders USD as "US$0.53", which reads badly in a
+  // dashboard where every figure is already in one currency.
+  var fCur  = new Intl.NumberFormat('en-US', {style:'currency', currency:CUR, maximumFractionDigits:2});
+  var fCur0 = new Intl.NumberFormat('en-US', {style:'currency', currency:CUR, maximumFractionDigits:0});
+  var fPct  = new Intl.NumberFormat('en-GB', {maximumFractionDigits:2});
+  function money(v){ return (Math.abs(v) >= 1000) ? fCur0.format(v) : fCur.format(v); }
+  function pct(v){ return fPct.format(v) + '%'; }
+  function dash(v){ return (v == null || !isFinite(v)) ? '\u2014' : v; }
+  function esc(s){ return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  // ---------- classification ----------
+  // Platform is inferred from the campaign name; the export has no platform column.
+  function platformOf(name){
+    var n = String(name || '').toLowerCase();
+    if (/\bios\b|iphone|ipad|app\s*store/.test(n)) return 'iOS';
+    if (/android|google\s*play/.test(n))           return 'Android';
+    if (/website|web\b|site/.test(n))              return 'Website';
+    return 'Other';
+  }
+  // Conversion events get the same treatment so the labels stay readable.
+  function eventPlatform(action){
+    var n = String(action || '').toLowerCase();
+    if (/\bios\b|iphone|ipad|app\s*store/.test(n)) return 'iOS';
+    if (/android|google\s*play/.test(n))           return 'Android';
+    if (/website|web\b/.test(n))                   return 'Website';
+    return 'Other';
+  }
+  // The raw action names are long and repeat the bundle id. Trim for display.
+  function shortEvent(action){
+    var s = String(action || '');
+    s = s.replace(/^loyverse-pos-\w+\s*-\s*/i, '')
+         .replace(/\(com\.[\w.]+\)/gi, '')
+         .replace(/com\.loyverse\.\w+/gi, '')
+         .replace(/\s*\(\s*\)\s*/g, ' ')
+         .replace(/\s{2,}/g, ' ')
+         .trim();
+    return s || action;
+  }
+
+  // ---------- state ----------
+  var allDaily  = D.daily.slice();
+  var allEvents = (D.events || []).slice();
+  var campaigns = (D.campaigns || []).slice();
+
+  var campaignName = {};
+  campaigns.forEach(function(c){ campaignName[c.campaignId] = c.campaign; });
+
+  var dateMin = D.dateMin || allDaily[0].date;
+  var dateMax = D.dateMax || allDaily[allDaily.length-1].date;
+
+  var platformList = [];
+  var campaignList = [];
+  allDaily.forEach(function(r){
+    var p = platformOf(r.campaign);
+    if (platformList.indexOf(p) < 0) platformList.push(p);
+    if (campaignList.indexOf(r.campaign) < 0) campaignList.push(r.campaign);
+  });
+  platformList.sort(); campaignList.sort();
+
+  var eventList = [];
+  allEvents.forEach(function(r){ if (eventList.indexOf(r.action) < 0) eventList.push(r.action); });
+  eventList.sort();
+
+  var S = {
+    from: dateMin,
+    to: dateMax,
+    platforms: new Set(platformList),
+    campaigns: new Set(campaignList),
+    events: new Set(eventList),
+    metric: 'conversions',
+    trend: 'cum'
+  };
+
+  // ---------- filtering ----------
+  function inRange(d){ return d >= S.from && d <= S.to; }
+  function keepCampaign(name){
+    return S.campaigns.has(name) && S.platforms.has(platformOf(name));
+  }
+  function filteredDaily(){
+    return allDaily.filter(function(r){ return inRange(r.date) && keepCampaign(r.campaign); });
+  }
+  function filteredEvents(){
+    return allEvents.filter(function(r){
+      return inRange(r.date) && keepCampaign(r.campaign) && S.events.has(r.action);
+    });
+  }
+  // Previous window of identical length, for the tile deltas.
+  function priorDaily(){
+    var from = new Date(S.from + 'T00:00:00Z'), to = new Date(S.to + 'T00:00:00Z');
+    var days = Math.round((to - from) / 86400000) + 1;
+    var pTo = new Date(from.getTime() - 86400000);
+    var pFrom = new Date(pTo.getTime() - (days-1) * 86400000);
+    var a = pFrom.toISOString().slice(0,10), b = pTo.toISOString().slice(0,10);
+    return allDaily.filter(function(r){ return r.date >= a && r.date <= b && keepCampaign(r.campaign); });
+  }
+
+  function totals(rows){
+    var t = {impressions:0, clicks:0, cost:0, conversions:0, allConversions:0};
+    rows.forEach(function(r){
+      t.impressions    += r.impressions    || 0;
+      t.clicks         += r.clicks         || 0;
+      t.cost           += r.cost           || 0;
+      t.conversions    += r.conversions    || 0;
+      t.allConversions += r.allConversions || 0;
+    });
+    t.conv = S.metric === 'allConversions' ? t.allConversions : t.conversions;
+    t.ctr  = t.impressions ? (t.clicks / t.impressions) * 100 : null;
+    t.cpc  = t.clicks ? t.cost / t.clicks : null;
+    t.cpa  = t.conv ? t.cost / t.conv : null;
+    return t;
+  }
+
+  // ---------- tiles ----------
+  // Direction matters per metric: cheaper CPC/CPA is good, more volume is good.
+  var TILES = [
+    {k:'impressions',    label:'Impressions',       fmt:fInt.format,  good:1},
+    {k:'clicks',         label:'Clicks',            fmt:fInt.format,  good:1},
+    {k:'ctr',            label:'CTR',               fmt:pct,          good:1},
+    {k:'cpc',            label:'Avg. CPC',          fmt:money,        good:-1},
+    {k:'cost',           label:'Total cost',        fmt:money,        good:0},
+    {k:'conv',           label:'Conversions',       fmt:fInt.format,  good:1},
+    {k:'cpa',            label:'Cost per conv.',    fmt:money,        good:-1},
+    {k:'allConversions', label:'All conversions',   fmt:fInt.format,  good:1}
+  ];
+
+  function renderTiles(cur, prev){
+    document.getElementById('tiles').innerHTML = TILES.map(function(t){
+      var v = cur[t.k], p = prev[t.k];
+      var val = (v == null || !isFinite(v)) ? '\u2014' : t.fmt(v);
+      var delta = '';
+      if (v != null && p != null && isFinite(v) && isFinite(p) && p !== 0) {
+        var ch = ((v - p) / Math.abs(p)) * 100;
+        var cls = 'flat';
+        if (Math.abs(ch) >= 0.5) {
+          var better = t.good === 0 ? 0 : (ch > 0 ? t.good : -t.good);
+          cls = better > 0 ? 'up' : (better < 0 ? 'down' : 'flat');
+        }
+        delta = '<div class="td ' + cls + '">' + (ch >= 0 ? '+' : '') +
+                fPct.format(ch) + '% vs prior period</div>';
+      }
+      return '<div class="tile"><div class="tl">' + t.label + '</div>' +
+             '<div class="tv font-num">' + val + '</div>' + delta + '</div>';
+    }).join('');
+  }
+
+  // ---------- charts ----------
+  var charts = {};
+  function destroy(id){ if (charts[id]) { charts[id].destroy(); charts[id] = null; } }
+  var GRID = {color:'#EEF2F6'}, TICK = {color:'#7E8A9A', font:{size:10}};
+
+  function baseOpts(extra){
+    var o = {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{ legend:{ labels:{ boxWidth:11, boxHeight:11, font:{size:11}, color:'#13233A' } } },
+      scales:{ x:{ grid:{display:false}, ticks:TICK } }
+    };
+    return Object.assign(o, extra || {});
+  }
+
+  function daysBetween(){
+    var out = [], d = new Date(S.from + 'T00:00:00Z'), end = new Date(S.to + 'T00:00:00Z');
+    while (d <= end) { out.push(d.toISOString().slice(0,10)); d = new Date(d.getTime() + 86400000); }
+    return out;
+  }
+
+  function byDay(rows, field){
+    var m = {};
+    rows.forEach(function(r){ m[r.date] = (m[r.date] || 0) + (r[field] || 0); });
+    return m;
+  }
+
+  function renderCostChart(rows){
+    var days = daysBetween();
+    var cost = byDay(rows, 'cost');
+    var conv = byDay(rows, S.metric);
+    destroy('cost');
+    charts.cost = new Chart(document.getElementById('c-cost'), {
+      data:{
+        labels: days,
+        datasets:[
+          {type:'bar',  label:'Cost', data:days.map(function(d){ return +(cost[d]||0).toFixed(2); }),
+           backgroundColor:'rgba(29,143,225,.55)', borderColor:'#1D8FE1', borderWidth:1, yAxisID:'y', order:2},
+          {type:'line', label:'Conversions', data:days.map(function(d){ return conv[d]||0; }),
+           borderColor:'#E8A317', backgroundColor:'#E8A317', borderWidth:2, tension:.3,
+           pointRadius:2, pointHoverRadius:4, yAxisID:'y1', order:1}
+        ]
+      },
+      options: baseOpts({
+        scales:{
+          x:{grid:{display:false}, ticks:TICK},
+          y:{position:'left', beginAtZero:true, grid:GRID,
+             ticks:Object.assign({}, TICK, {callback:function(v){ return fCur0.format(v); }})},
+          y1:{position:'right', beginAtZero:true, grid:{display:false}, ticks:TICK}
+        },
+        plugins:{ legend:{labels:{boxWidth:11, boxHeight:11, font:{size:11}, color:'#13233A'}},
+          tooltip:{callbacks:{label:function(c){
+            return c.dataset.label + ': ' + (c.dataset.yAxisID === 'y' ? money(c.parsed.y) : fInt.format(c.parsed.y));
+          }}} }
+      })
+    });
+  }
+
+  function renderTrafficChart(rows){
+    var days = daysBetween();
+    var clicks = byDay(rows, 'clicks'), impr = byDay(rows, 'impressions');
+    destroy('traffic');
+    charts.traffic = new Chart(document.getElementById('c-traffic'), {
+      type:'line',
+      data:{
+        labels: days,
+        datasets:[
+          {label:'Clicks', data:days.map(function(d){ return clicks[d]||0; }),
+           borderColor:'#1D8FE1', backgroundColor:'rgba(29,143,225,.12)', borderWidth:2,
+           tension:.3, fill:true, pointRadius:2, pointHoverRadius:4, yAxisID:'y'},
+          {label:'Impressions', data:days.map(function(d){ return impr[d]||0; }),
+           borderColor:'#7E8A9A', backgroundColor:'#7E8A9A', borderWidth:2, borderDash:[5,4],
+           tension:.3, pointRadius:0, pointHoverRadius:4, yAxisID:'y1'}
+        ]
+      },
+      options: baseOpts({
+        scales:{
+          x:{grid:{display:false}, ticks:TICK},
+          y:{position:'left', beginAtZero:true, grid:GRID, ticks:TICK},
+          y1:{position:'right', beginAtZero:true, grid:{display:false},
+              ticks:Object.assign({}, TICK, {callback:function(v){ return fInt.format(v); }})}
+        }
+      })
+    });
+  }
+
+  // Blended: the period's whole cost over each event's volume. Not attributed.
+  function eventAgg(evRows, metric){
+    var m = {};
+    evRows.forEach(function(r){
+      if (!m[r.action]) m[r.action] = {action:r.action, category:r.category || '\u2014', volume:0};
+      m[r.action].volume += r[metric] || 0;
+    });
+    return Object.keys(m).map(function(k){ return m[k]; })
+      .filter(function(e){ return e.volume > 0; })
+      .sort(function(a,b){ return b.volume - a.volume; });
+  }
+
+  function renderCpaChart(events, cost){
+    var top = events.slice(0, 10);
+    destroy('cpa');
+    if (!top.length) { return; }
+    var vals = top.map(function(e){ return +(cost / e.volume).toFixed(2); });
+    var max = Math.max.apply(null, vals);
+    charts.cpa = new Chart(document.getElementById('c-cpa'), {
+      type:'bar',
+      data:{
+        labels: top.map(function(e){ return shortEvent(e.action); }),
+        datasets:[{
+          label:'Blended cost per event', data:vals,
+          backgroundColor: vals.map(function(v){
+            // cheapest = brand blue, most expensive = amber; a quick efficiency read
+            var t = max ? v / max : 0;
+            return t < .34 ? 'rgba(31,157,107,.75)' : (t < .67 ? 'rgba(29,143,225,.75)' : 'rgba(232,163,23,.8)');
+          }),
+          borderWidth:0, borderRadius:4
+        }]
+      },
+      options: baseOpts({
+        indexAxis:'y',
+        plugins:{ legend:{display:false},
+          tooltip:{callbacks:{label:function(c){ return money(c.parsed.x); }}} },
+        scales:{
+          x:{beginAtZero:true, grid:GRID, ticks:Object.assign({}, TICK, {callback:function(v){ return fCur0.format(v); }})},
+          y:{grid:{display:false}, ticks:Object.assign({}, TICK, {font:{size:10}, autoSkip:false,
+             callback:function(v){ var s = this.getLabelForValue(v); return s.length > 34 ? s.slice(0,33) + '\u2026' : s; }})}
+        }
+      })
+    });
+  }
+
+  var TREND_COLORS = ['#1D8FE1','#E8A317','#1F9D6B','#D2495B','#7E8A9A'];
+
+  function renderTrendChart(evRows, events){
+    var days = daysBetween();
+    var top = events.slice(0, 5);
+    destroy('trend');
+    if (!top.length) return;
+    var metric = S.metric;
+    var sets = top.map(function(e, i){
+      var m = {};
+      evRows.forEach(function(r){ if (r.action === e.action) m[r.date] = (m[r.date]||0) + (r[metric]||0); });
+      var run = 0;
+      var data = days.map(function(d){
+        var v = m[d] || 0;
+        if (S.trend === 'cum') { run += v; return run; }
+        return v;
+      });
+      return {
+        label: shortEvent(e.action), data: data,
+        borderColor: TREND_COLORS[i], backgroundColor: TREND_COLORS[i],
+        borderWidth:2, tension:.3, pointRadius: S.trend === 'cum' ? 0 : 2, pointHoverRadius:4, fill:false
+      };
+    });
+    charts.trend = new Chart(document.getElementById('c-trend'), {
+      type:'line',
+      data:{labels:days, datasets:sets},
+      options: baseOpts({
+        plugins:{ legend:{labels:{boxWidth:11, boxHeight:11, font:{size:10}, color:'#13233A'}} },
+        scales:{ x:{grid:{display:false}, ticks:TICK}, y:{beginAtZero:true, grid:GRID, ticks:TICK} }
+      })
+    });
+  }
+
+  // ---------- funnel ----------
+  function renderFunnel(events, cost){
+    var el = document.getElementById('funnel');
+    if (!events.length) { el.innerHTML = '<div class="empty">No conversion events in this selection.</div>'; return; }
+    var topVol = events[0].volume;
+    el.innerHTML = events.map(function(e, i){
+      var share = topVol ? (e.volume / topVol) * 100 : 0;
+      var step = '';
+      if (i > 0) {
+        var prev = events[i-1].volume;
+        var ch = prev ? ((e.volume - prev) / prev) * 100 : 0;
+        var cls = ch > 0 ? 'up' : (ch < 0 ? 'down' : 'flat');
+        step = '<span class="fn-step ' + cls + '">' + (ch >= 0 ? '+' : '') + fPct.format(ch) + '%</span>';
+      }
+      return '<div class="fn-row">' +
+        '<div class="fn-top">' +
+          '<span class="fn-name">' + esc(shortEvent(e.action)) +
+            '<span class="cat">' + esc(e.category) + ' \u00b7 ' + esc(eventPlatform(e.action)) + '</span></span>' +
+          '<span class="fn-meta"><b>' + fInt.format(e.volume) + '</b> \u00b7 ' + pct(share) + step +
+            ' \u00b7 ' + money(cost / e.volume) + ' ea.</span>' +
+        '</div>' +
+        '<div class="fn-bar"><i style="width:' + Math.max(share, 0.6).toFixed(2) + '%"></i></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ---------- tables ----------
+  function renderEventTable(events, cost){
+    var total = events.reduce(function(s, e){ return s + e.volume; }, 0);
+    var t = document.getElementById('t-events');
+    if (!events.length) { t.innerHTML = '<tbody><tr><td class="empty">No events in this selection.</td></tr></tbody>'; return; }
+    t.innerHTML =
+      '<thead><tr><th>Event</th><th>Category</th><th>Platform</th><th>Volume</th><th>% of total</th><th>Blended cost</th></tr></thead><tbody>' +
+      events.map(function(e){
+        return '<tr>' +
+          '<td class="cc" title="' + esc(e.action) + '">' + esc(shortEvent(e.action)) + '</td>' +
+          '<td>' + esc(e.category) + '</td>' +
+          '<td>' + esc(eventPlatform(e.action)) + '</td>' +
+          '<td class="num">' + fInt.format(e.volume) + '</td>' +
+          '<td class="num">' + pct(total ? (e.volume/total)*100 : 0) + '</td>' +
+          '<td class="num">' + money(cost / e.volume) + '</td>' +
+        '</tr>';
+      }).join('') + '</tbody>';
+  }
+
+  function statusClass(s){
+    s = String(s || '').toUpperCase();
+    if (s === 'ENABLED') return 'enabled';
+    if (s === 'PAUSED')  return 'paused';
+    if (s === 'REMOVED') return 'removed';
+    return 'other';
+  }
+
+  function renderCampaignTable(){
+    var t = document.getElementById('t-campaigns');
+    var rows = campaigns.filter(function(c){ return keepCampaign(c.campaign); });
+    if (!rows.length) { t.innerHTML = '<tbody><tr><td class="empty">No campaigns in this selection.</td></tr></tbody>'; return; }
+    t.innerHTML =
+      '<thead><tr><th>Campaign</th><th>Status</th><th>Platform</th><th>Channel</th><th>Subtype</th>' +
+      '<th>Bid strategy</th><th>Daily budget</th><th>Updated</th></tr></thead><tbody>' +
+      rows.map(function(c){
+        return '<tr>' +
+          '<td class="cc">' + esc(c.campaign) + '</td>' +
+          '<td><span class="stat ' + statusClass(c.status) + '">' + esc(c.status || '\u2014') + '</span></td>' +
+          '<td>' + esc(platformOf(c.campaign)) + '</td>' +
+          '<td>' + esc((c.channel || '\u2014').replace(/_/g,' ')) + '</td>' +
+          '<td>' + esc((c.subtype || '\u2014').replace(/_/g,' ')) + '</td>' +
+          '<td>' + esc((c.bidStrategy || '\u2014').replace(/_/g,' ')) + '</td>' +
+          '<td class="num">' + (c.dailyBudget ? money(c.dailyBudget) : '\u2014') + '</td>' +
+          '<td>' + esc(c.updatedAt || '\u2014') + '</td>' +
+        '</tr>';
+      }).join('') + '</tbody>';
+  }
+
+  // ---------- footer notes ----------
+  function renderNotes(rows){
+    var notes = [];
+    notes.push('Platform is inferred from the campaign name \u2014 the export has no platform column.');
+    notes.push('&ldquo;Blended cost&rdquo; is total period spend \u00f7 event volume. Google Ads does not attribute spend to individual conversion events, so it is an average, not a marginal cost.');
+    notes.push('&ldquo;Conversions&rdquo; counts Google&rsquo;s primary conversion actions; &ldquo;All conversions&rdquo; includes secondary ones. The metric toggle drives the tiles, both event charts and the funnel.');
+    notes.push('Recent days restate as late conversions land, so the last 2\u20133 days move after the fact.');
+    if (D.dateMin && D.dateMax) {
+      notes.push('Data held: ' + D.dateMin + ' \u2192 ' + D.dateMax + ' (' + fInt.format(allDaily.length) + ' campaign-days). History accumulates on each pull, so it outlives the export sheet\u2019s own rolling window.');
+    }
+    document.getElementById('foot-notes').innerHTML =
+      notes.map(function(n){ return '\u2192 ' + n; }).join('<br>');
+  }
+
+  // ---------- render ----------
+  function render(){
+    var rows = filteredDaily();
+    var evRows = filteredEvents();
+    var cur = totals(rows), prev = totals(priorDaily());
+
+    renderTiles(cur, prev);
+    renderCostChart(rows);
+    renderTrafficChart(rows);
+
+    var events = eventAgg(evRows, S.metric);
+    renderCpaChart(events, cur.cost);
+    renderTrendChart(evRows, events);
+    renderFunnel(events, cur.cost);
+    renderEventTable(events, cur.cost);
+    renderCampaignTable();
+
+    document.getElementById('badge-range').textContent = S.from + '  \u2192  ' + S.to;
+    var nSel = S.campaigns.size, nAll = campaignList.length;
+    document.getElementById('f-events-btn').textContent =
+      S.events.size === eventList.length ? 'All conversion events'
+        : S.events.size + ' of ' + eventList.length + ' events';
+    if (nSel !== nAll) {
+      document.getElementById('badge-range').textContent += '  \u00b7  ' + nSel + '/' + nAll + ' campaigns';
+    }
+  }
+
+  // ---------- filter UI ----------
+  function chipHtml(list, sel){
+    return list.map(function(v){
+      return '<button class="chip' + (sel.has(v) ? ' on' : '') + '" data-v="' + esc(v) + '">' + esc(v) + '</button>';
+    }).join('');
+  }
+
+  function wireChips(containerId, list, set){
+    var el = document.getElementById(containerId);
+    el.innerHTML = chipHtml(list, set);
+    el.addEventListener('click', function(e){
+      var b = e.target.closest('.chip'); if (!b) return;
+      var v = b.getAttribute('data-v');
+      // Clicking the only selected chip re-selects everything, so you can never
+      // filter yourself into an empty dashboard with no way back.
+      if (set.has(v)) {
+        if (set.size === 1) { list.forEach(function(x){ set.add(x); }); }
+        else set.delete(v);
+      } else set.add(v);
+      el.innerHTML = chipHtml(list, set);
+      render();
+    });
+  }
+
+  wireChips('f-platforms', platformList, S.platforms);
+  wireChips('f-campaigns', campaignList, S.campaigns);
+
+  // events multiselect
+  var evPop = document.getElementById('f-events-pop');
+  function paintEvents(){
+    document.getElementById('f-events-list').innerHTML = eventList.map(function(a, i){
+      return '<label><input type="checkbox" data-i="' + i + '"' + (S.events.has(a) ? ' checked' : '') + '>' +
+             '<span>' + esc(shortEvent(a)) + '</span></label>';
+    }).join('');
+  }
+  paintEvents();
+  document.getElementById('f-events-btn').addEventListener('click', function(e){
+    e.stopPropagation(); evPop.classList.toggle('open');
+  });
+  evPop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('click', function(){ evPop.classList.remove('open'); });
+  document.getElementById('f-events-list').addEventListener('change', function(e){
+    var cb = e.target; if (cb.type !== 'checkbox') return;
+    var a = eventList[+cb.getAttribute('data-i')];
+    if (cb.checked) S.events.add(a); else S.events.delete(a);
+    render();
+  });
+  document.getElementById('f-events-all').addEventListener('click', function(){
+    eventList.forEach(function(a){ S.events.add(a); }); paintEvents(); render();
+  });
+  document.getElementById('f-events-none').addEventListener('click', function(){
+    S.events.clear(); paintEvents(); render();
+  });
+
+  // dates + presets
+  var elFrom = document.getElementById('f-from'), elTo = document.getElementById('f-to');
+  elFrom.min = elTo.min = dateMin; elFrom.max = elTo.max = dateMax;
+  function syncDates(){ elFrom.value = S.from; elTo.value = S.to; }
+  syncDates();
+  elFrom.addEventListener('change', function(){
+    S.from = elFrom.value || dateMin;
+    if (S.from > S.to) S.to = S.from;
+    setPreset(null); syncDates(); render();
+  });
+  elTo.addEventListener('change', function(){
+    S.to = elTo.value || dateMax;
+    if (S.to < S.from) S.from = S.to;
+    setPreset(null); syncDates(); render();
+  });
+
+  function setPreset(days){
+    document.querySelectorAll('#f-preset button').forEach(function(b){
+      b.classList.toggle('on', days !== null && +b.getAttribute('data-days') === days);
+    });
+  }
+  document.getElementById('f-preset').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var days = +b.getAttribute('data-days');
+    if (days === 0) { S.from = dateMin; S.to = dateMax; }
+    else {
+      // Anchor to the latest day we actually hold, not to today — the export
+      // can be a day or two behind and an empty chart looks like a bug.
+      S.to = dateMax;
+      var d = new Date(dateMax + 'T00:00:00Z');
+      d = new Date(d.getTime() - (days-1) * 86400000);
+      var f = d.toISOString().slice(0,10);
+      S.from = f < dateMin ? dateMin : f;
+    }
+    setPreset(days); syncDates(); render();
+  });
+
+  document.getElementById('f-metric').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    S.metric = b.getAttribute('data-metric');
+    document.querySelectorAll('#f-metric button').forEach(function(x){ x.classList.toggle('on', x === b); });
+    render();
+  });
+
+  document.getElementById('t-trend').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    S.trend = b.getAttribute('data-mode');
+    document.querySelectorAll('#t-trend button').forEach(function(x){ x.classList.toggle('on', x === b); });
+    render();
+  });
+
+  document.getElementById('f-clear').addEventListener('click', function(){
+    S.from = dateMin; S.to = dateMax;
+    S.platforms = new Set(platformList);
+    S.campaigns = new Set(campaignList);
+    S.events = new Set(eventList);
+    S.metric = 'conversions';
+    document.getElementById('f-platforms').innerHTML = chipHtml(platformList, S.platforms);
+    document.getElementById('f-campaigns').innerHTML = chipHtml(campaignList, S.campaigns);
+    document.querySelectorAll('#f-metric button').forEach(function(x){
+      x.classList.toggle('on', x.getAttribute('data-metric') === 'conversions');
+    });
+    paintEvents(); setPreset(0); syncDates(); render();
+  });
+
+  // ---------- boot ----------
+  var gen = D.generatedAt ? new Date(D.generatedAt) : null;
+  document.getElementById('badge-updated').textContent =
+    gen ? 'Updated ' + gen.toUTCString().replace(' GMT','') + ' UTC' : 'Update time unknown';
+
+  // Stale-data warning: the pull is 3-hourly, so half a day behind means something broke.
+  if (gen && (Date.now() - gen.getTime()) > 12 * 3600 * 1000) {
+    var w = document.createElement('div');
+    w.className = 'note-warn';
+    var hrs = Math.floor((Date.now() - gen.getTime()) / 3600000);
+    w.innerHTML = '<b>Data is ' + hrs + ' hours old.</b> The <b>ads-pull</b> Action runs every 3 hours \u2014 ' +
+                  'check its latest run in the Actions tab, and confirm the export sheet is still being written.';
+    var wrap = document.querySelector('.wrap');
+    wrap.insertBefore(w, wrap.firstChild);
+  }
+
+  renderNotes(allDaily);
+  render();
+})();
+</script>
+</body>
+</html>
