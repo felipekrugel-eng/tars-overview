@@ -1,0 +1,124 @@
+# MARKETING — refresh the Google Ads data behind the Marketing tab.
+#
+# Reads the Google Ads export sheet, merges it into the history already in
+# "KPI Dashboard v2 (Caio)/ads-data.js", and commits. deploy-cloudflare then
+# ships it to facadash.pages.dev.
+#
+# Why server-side instead of the browser fetching the sheet directly (which is
+# what the original standalone page did):
+#   * the sheet can be locked down — only this job needs to read it
+#   * the page is static at serve time, like every other FACADASH page
+#   * history accumulates beyond the sheet's own rolling window
+#   * a broken pull is a red run here, not a silently stale page
+#
+# Fully isolated: writes exactly one file. The rebase-retry below handles the
+# case where another pull advances master mid-run.
+#
+# SOURCE — sheet today, Google Ads API as soon as the developer token lands.
+# Add the five GOOGLE_ADS_* secrets and this job switches to the API on its own;
+# no edit here or in the builder. Until then it reads the sheet. Setup steps are
+# in "Marketing Tab — Google Ads API Setup.md".
+#
+# AUTH (sheet path) — currently running on the public CSV fallback, which only
+# works while the sheet stays link-readable. To lock the sheet down: create a
+# service account, add its key as the GOOGLE_SERVICE_ACCOUNT_JSON secret, share
+# the sheet with the service account's email as Viewer, then remove public link
+# sharing. build_ads_data.py picks up the secret automatically.
+#
+# Added 2026-08-18 (Cowork session, Felipe) with the Marketing tab.
+name: ads-pull
+
+on:
+  workflow_dispatch:             # manual "Run workflow" button
+    inputs:
+      source:
+        description: 'Where to read from'
+        type: choice
+        required: false
+        default: 'auto'
+        options: ['auto', 'api', 'sheet']
+      lookback_days:
+        description: 'API only — days to re-query. Raise for a one-off backfill.'
+        type: string
+        required: false
+        default: ''
+  schedule:
+    # Every 3 hours at :40. Off the top of the hour deliberately — GitHub's ':00'
+    # slot is congested and delays runs (the same reason cusum-pull sits at :23).
+    # The export sheet itself only refreshes a few times a day, so there is no
+    # value in going faster.
+    - cron: '40 */3 * * *'
+  push:
+    # Rebuild immediately when the builder changes, so an edit shows up on the
+    # page without waiting for a cron.
+    branches: [master]
+    paths:
+      - 'kpi-automation/build_ads_data.py'
+
+concurrency:
+  group: ads-pull
+  cancel-in-progress: true       # a queued run has nothing to add over a fresher one
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10          # three small sheet reads; seconds, not minutes
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r kpi-automation/requirements-ads.txt
+
+      - name: Pull Google Ads -> regenerate ads-data.js
+        env:
+          # --- source selection -------------------------------------------
+          # "auto" (the scheduled default) uses the API when the secrets below
+          # are present and the sheet when they are not, so the cutover is a
+          # matter of adding secrets. The dispatch input can force either.
+          ADS_SOURCE: ${{ github.event.inputs.source || 'auto' }}
+          ADS_API_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
+
+          # --- Google Ads API (unset until the developer token is approved) --
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+          GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+          # Bump when a version sunsets — v25 goes dark in August 2027, and a
+          # sunset shows up as a 404 that the builder explains in the log.
+          ADS_API_VERSION: 'v25'
+
+          # --- export sheet (the interim path) ------------------------------
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          ADS_SHEET_ID: "1xgbK3Ic9NP2Wv_kiF3nZMoA6ozaHbmRA6tdqLysQRck"
+
+          V2_DIR: ${{ github.workspace }}/KPI Dashboard v2 (Caio)
+        run: python kpi-automation/build_ads_data.py
+
+      - name: Commit & push if the data changed
+        run: |
+          git config user.name  "facadash-bot"
+          git config user.email "facadash-bot@users.noreply.github.com"
+          git add "KPI Dashboard v2 (Caio)/ads-data.js"
+          if git diff --cached --quiet; then
+            echo "No ad data change — nothing to commit."
+          else
+            git commit -m "chore(ads): refresh ads-data.js $(date -u +%FT%TZ)"
+            # Other pulls can advance master while we run. We only write one file,
+            # so rebasing on their commits never conflicts. Retry 5 times.
+            for i in 1 2 3 4 5; do
+              if git pull --rebase --autostash origin master && git push; then
+                echo "pushed on attempt $i"; exit 0
+              fi
+              echo "push attempt $i failed (remote moved) — retrying in 5s"
+              sleep 5
+            done
+            echo "push still failing after 5 attempts"; exit 1
+          fi
