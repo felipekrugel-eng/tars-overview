@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-19T16:15:20.251Z",
+  "ranAt": "2026-08-19T19:22:02.952Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1050,7 +1050,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9364147115
+        "rows": 9365424285
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1906,6 +1906,33 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 512,
+        "SHIPPING_ADDRESS_STATE": "AL",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "35007",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "204 11th St SW",
+        "AMOUNT": 8212,
+        "SHIPPING_AMOUNT": 1300,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1U5AzY7e4AMQfKY3LylEdO9l",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-08-19 14:14:03.000",
+        "SHIPPING_NAME": "Kylie Gautney",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Alabaster",
+        "SHIPPING_PHONE": "12054479355",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "csecreativedesigns@gmail.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-08-16 20:49:16.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": null,
         "TAX": 4823,
         "SHIPPING_ADDRESS_STATE": null,
         "SHIPPING_ADDRESS_POSTAL_CODE": "CH42 1PJ",
@@ -2092,33 +2119,6 @@
         "LIVEMODE": true,
         "CREATED": "2026-04-21 16:15:35.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 2092,
-        "SHIPPING_ADDRESS_STATE": "NJ",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "07643",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "SHIPPING_COMPANY": "ICLOUD SMOKE & TOBACCO",
-        "SHIPPING_ADDRESS_LINE1": "27 Van Buren Street",
-        "AMOUNT": 33668,
-        "SHIPPING_AMOUNT": 1300,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1TRDt37e4AMQfKY3lkvMZ1Vc",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-08-11 18:56:03.000",
-        "SHIPPING_NAME": "FAIZ MAFLAHI",
-        "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "delivered",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Little Ferry",
-        "SHIPPING_PHONE": "13472083850",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-04-28 15:49:25.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
@@ -2149,6 +2149,34 @@
         "CURRENCY": "gbp",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjjUHNWGKtgBR",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "gbp"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1U5AzY7e4AMQfKY3LylEdO9l",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
+        "AMOUNT": 5900,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1U5AzY7e4AMQfKY3LylEdO9l",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 500,
+        "AMOUNT": 500,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2_mount",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfofA37JmVcjZ",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_KFGV5dfkxwiGMW",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       },
       {
         "QUANTITY": 1,
@@ -2204,34 +2232,6 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 2,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 52026,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
-        "BATCH_TIMESTAMP": "2026-08-11 21:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
-        "AMOUNT": 4263,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CPcP2UVJHmg",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],
@@ -2631,61 +2631,61 @@
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-19 12:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U67Qz6xrVvfynTx0nhxvxSd",
-        "AMOUNT": 24,
-        "ID": "fee_1U67RC6xrVvfynTxCxcFdzwN",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "gbp",
-        "ACCOUNT": "acct_1U4NBD6xrVvfynTx",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-19 12:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U67Za9uALOIzRNR1rjF3RO2",
-        "AMOUNT": 58,
-        "ID": "fee_1U67Zh9uALOIzRNRBiC4oikv",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TMaEu9uALOIzRNR",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-19 12:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U67kw6xrVvfynTx1XXDZkXo",
-        "AMOUNT": 37,
-        "ID": "fee_1U67l86xrVvfynTxzDzhnbxX",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "gbp",
-        "ACCOUNT": "acct_1U4NBD6xrVvfynTx",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-19 12:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U67sS9uALOIzRNR0GEZu4oB",
-        "AMOUNT": 49,
-        "ID": "fee_1U67sY9uALOIzRNRnq4uh1SB",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TMaEu9uALOIzRNR",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-19 12:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U682p9uALOIzRNR0epmEgGU",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U6A124P02Q3CMCv0hK4PL0n",
         "AMOUNT": 17,
-        "ID": "fee_1U682y9uALOIzRNRwUQaNTLX",
+        "ID": "fee_1U6A1D4P02Q3CMCvgfZFNgYG",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "ACCOUNT": "acct_1TyyLY4P02Q3CMCv",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U6A1e4P02Q3CMCv0mG7e3Q0",
+        "AMOUNT": 24,
+        "ID": "fee_1U6A1o4P02Q3CMCvGGC7EpCq",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "ACCOUNT": "acct_1TyyLY4P02Q3CMCv",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U6A2u4P02Q3CMCv0Oh7SqCI",
+        "AMOUNT": 22,
+        "ID": "fee_1U6A3K4P02Q3CMCvJAPXpXK8",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "ACCOUNT": "acct_1TyyLY4P02Q3CMCv",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U6A549uALOIzRNR0VVaph2L",
+        "AMOUNT": 81,
+        "ID": "fee_1U6A5B9uALOIzRNRUC2IpLul",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "ACCOUNT": "acct_1TMaEu9uALOIzRNR",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-19 15:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U6A5h4P02Q3CMCv0Ghhxm7v",
+        "AMOUNT": 125,
+        "ID": "fee_1U6A5o4P02Q3CMCvwQeTQnTE",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "ACCOUNT": "acct_1TyyLY4P02Q3CMCv",
         "TYPE": "application_fee"
       }
     ]
