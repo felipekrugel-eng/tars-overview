@@ -15916,74 +15916,112 @@ ch_3U5tqF5XZgMuE7ip0oBVgFwn,2026-08-18 20:42:45,acct_1Tty3q5XZgMuE7ip,acct_1SSKs
 ch_3U5tsH6xaKj8hHOI0WUIBAip,2026-08-18 20:44:50,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,644,Visa,credit,US,7825,32
 ch_3U5u166xaKj8hHOI0sgy3JPf,2026-08-18 20:54:03,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2686,MasterCard,debit,US,7396,85
 ch_3U5u3UQJfvlGDJJG11caT8f0,2026-08-18 20:56:24,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,Discover,debit,US,1695,18
-ch_3U5u4pQJfvlGDJJG0DdJ0Pzw,2026-08-18 20:57:46,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,875,Visa,debit,US,9891,
-ch_3U5u8x7C646Nqh7e10r0NFwY,2026-08-18 21:02:04,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4639,Visa,debit,US,7864,
-ch_3U5u9P6xaKj8hHOI0yjD028x,2026-08-18 21:02:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,0711,
-ch_3U5u9Q9MtEGnBEj318MzllyY,2026-08-18 21:02:36,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3016,MasterCard,debit,US,6880,
-ch_3U5uAG6xaKj8hHOI0GJOFUNI,2026-08-18 21:03:30,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2457,MasterCard,debit,US,3404,
-ch_3U5uKCQJfvlGDJJG1s1dBWw0,2026-08-18 21:13:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,MasterCard,debit,US,4640,
-ch_3U5uKf7C646Nqh7e1pc9NuD3,2026-08-18 21:14:27,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4263,Visa,credit,US,6647,
-ch_3U5uO95XZgMuE7ip1QrOhIar,2026-08-18 21:17:49,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1203,MasterCard,debit,US,2003,
-ch_3U5uRH6xaKj8hHOI0NWb1BBE,2026-08-18 21:22:09,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,credit,US,6426,
-ch_3U5uSuQJfvlGDJJG0o8Y24Vn,2026-08-18 21:22:39,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2100,Visa,debit,US,2952,
-ch_3U5uU26xaKj8hHOI01gKFAGS,2026-08-18 21:23:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3225,Visa,debit,US,2078,
-ch_3U5uVfG9cKTLUhQ70esKWCzI,2026-08-18 21:25:36,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5176,Visa,credit,US,3940,
-ch_3U5uWKQJfvlGDJJG1rQME2GX,2026-08-18 21:26:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,credit,US,3339,
-ch_3U5uXDQJfvlGDJJG0OV5Tbok,2026-08-18 21:27:09,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,MasterCard,debit,US,8227,
-ch_3U5uYJQJfvlGDJJG1fYH5m08,2026-08-18 21:28:14,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,600,Visa,debit,US,6448,
-ch_3U5uYcQJfvlGDJJG0gymefSp,2026-08-18 21:28:34,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,MasterCard,debit,US,7545,
-ch_3U5ufQQJfvlGDJJG1oKPKKIZ,2026-08-18 21:35:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,700,MasterCard,debit,US,9245,
-ch_3U5ug3QJfvlGDJJG1txTCN02,2026-08-18 21:36:17,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1275,MasterCard,debit,US,3069,
-ch_3U5ug56xaKj8hHOI0L2EBcck,2026-08-18 21:36:22,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1525,Visa,debit,US,2043,
-ch_3U5umf7C646Nqh7e0vEsa1Gn,2026-08-18 21:43:13,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,3996,MasterCard,debit,US,7226,
-ch_3U5une6xaKj8hHOI0Wkp9hEo,2026-08-18 21:44:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3984,Visa,debit,US,7584,
-ch_3U5ur26xaKj8hHOI1krzddhG,2026-08-18 21:47:41,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4942,Visa,debit,US,4096,
-ch_3U5usJG9cKTLUhQ714K7SFWI,2026-08-18 21:49:19,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,17509,Visa,debit,US,9043,
-ch_3U5usb7C646Nqh7e0WgGZqHu,2026-08-18 21:49:22,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2375,Visa,debit,US,8440,
-ch_3U5utZQJfvlGDJJG1KEAbdMg,2026-08-18 21:50:12,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,9249,
-ch_3U5v3X7C646Nqh7e0T2BiZ4T,2026-08-18 22:00:35,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5759,Discover,credit,US,4767,
-ch_3U5v4XQJfvlGDJJG1eaag9zV,2026-08-18 22:01:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1725,Visa,debit,US,0664,
-ch_3U5v6e6xaKj8hHOI0qs6AmZ5,2026-08-18 22:03:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,MasterCard,debit,US,0950,
-ch_3U5vCl9MtEGnBEj30dQDVWWr,2026-08-18 22:10:04,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3510,Visa,prepaid,US,4615,
-ch_3U5vMQQJfvlGDJJG1VJSCB1s,2026-08-18 22:20:19,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,Visa,debit,US,7011,
-ch_3U5vMgG9cKTLUhQ71ltKpfcm,2026-08-18 22:20:58,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,4998,Visa,prepaid,US,0281,
-ch_3U5vQH7C646Nqh7e1e6EzH2d,2026-08-18 22:24:03,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6865,Visa,credit,US,6696,
-ch_3U5vSfQJfvlGDJJG0ZWdpqPk,2026-08-18 22:26:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1900,Visa,debit,US,0859,
-ch_3U5vTa7C646Nqh7e1b8sj1TS,2026-08-18 22:27:31,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,12999,MasterCard,debit,US,4656,
-ch_3U5vVe7C646Nqh7e0jNVp1jy,2026-08-18 22:29:38,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2603,MasterCard,debit,US,5034,
-ch_3U5vaC6kYqKNQLle1dszOoDV,2026-08-18 22:34:20,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,5266,Visa,credit,US,7901,
-ch_3U5vaeQJfvlGDJJG19f13tbx,2026-08-18 22:34:44,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,prepaid,US,9393,
-ch_3U5vaj7C646Nqh7e0Y6Dg4Yf,2026-08-18 22:34:53,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,3373,MasterCard,credit,US,5647,
-ch_3U5vb97C646Nqh7e0ndzJUev,2026-08-18 22:35:19,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,474,MasterCard,credit,US,5647,
-ch_3U5vbK7sg7EIYCuY0034THKb,2026-08-18 22:35:49,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,858,MasterCard,credit,US,5200,
-ch_3U5vfY7dzWyoeYnh0WszC44O,2026-08-18 22:39:47,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,3870,Visa,credit,US,2642,
-ch_3U5vi67sg7EIYCuY1JjtbE9O,2026-08-18 22:42:32,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,2462,Visa,debit,US,8013,
-ch_3U5vit6kYqKNQLle08UdwIp4,2026-08-18 22:43:19,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,4542,MasterCard,credit,US,8367,
-ch_3U5vmQ6xaKj8hHOI0Hg5FDqX,2026-08-18 22:47:10,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,8591,MasterCard,credit,US,8369,
-ch_3U5vmmQJfvlGDJJG1xHW6XwN,2026-08-18 22:47:15,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,Visa,debit,US,5917,
-ch_3U5voG7sg7EIYCuY0k06Sbpw,2026-08-18 22:48:55,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,801,MasterCard,debit,US,2623,
-ch_3U5vr76kYqKNQLle1iqKixJj,2026-08-18 22:51:50,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1870,Visa,credit,US,0019,
-ch_3U5vtjQJfvlGDJJG1oJwylgo,2026-08-18 22:54:28,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,Visa,debit,US,5289,
-ch_3U5vuRQJfvlGDJJG11x2JDBz,2026-08-18 22:55:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,Visa,debit,US,5415,
-ch_3U5vv5QJfvlGDJJG1NelHBGa,2026-08-18 22:55:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,900,Visa,debit,US,9981,
-ch_3U5vv6QJfvlGDJJG0RD5rooE,2026-08-18 22:55:51,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,700,Visa,debit,US,2724,
-ch_3U5vyO7C646Nqh7e0aIp3X9w,2026-08-18 22:59:23,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,1896,Visa,credit,US,7506,
-ch_3U5w0qQJfvlGDJJG0CNUGd66,2026-08-18 23:01:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1225,Visa,debit,US,8291,
-ch_3U5w227C646Nqh7e1dhf2v8h,2026-08-18 23:03:10,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,1484,Visa,credit,US,7506,
-ch_3U5w415XZgMuE7ip1Sk1J835,2026-08-18 23:05:10,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,15825,MasterCard,debit,US,0285,
-ch_3U5wBZQJfvlGDJJG1Wo48B9Q,2026-08-18 23:13:00,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1425,Visa,debit,US,8664,
-ch_3U5wCeQJfvlGDJJG1nsBdri8,2026-08-18 23:14:03,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,875,Visa,debit,US,1283,
-ch_3U5wDgQJfvlGDJJG0myBN1wO,2026-08-18 23:15:05,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,MasterCard,credit,US,8463,
-ch_3U5wEFQJfvlGDJJG12Gcx3di,2026-08-18 23:15:38,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1825,Visa,debit,US,6271,
-ch_3U5wOa6xaKj8hHOI0Ice3416,2026-08-18 23:26:28,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1408,Visa,debit,US,6856,
-ch_3U5wPMQJfvlGDJJG09XpPHsk,2026-08-18 23:27:07,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,MasterCard,credit,US,5982,
-ch_3U5wU87C646Nqh7e0o8zAyV9,2026-08-18 23:32:11,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2371,Visa,credit,US,3154,
-ch_3U5wXFQJfvlGDJJG1NyctjR2,2026-08-18 23:35:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,300,Visa,debit,US,0504,
-ch_3U5wZKQJfvlGDJJG088q7AIA,2026-08-18 23:37:26,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,MasterCard,debit,US,2470,
-ch_3U5wdQQJfvlGDJJG13u8ej8J,2026-08-18 23:41:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,Visa,credit,US,9454,
-ch_3U5wfaQJfvlGDJJG1cT0KIIK,2026-08-18 23:43:56,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,MasterCard,credit,US,6215,
-ch_3U5wgGQJfvlGDJJG1vJkFMIM,2026-08-18 23:44:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1200,Visa,debit,US,3431,
-ch_3U5wgxQJfvlGDJJG1sNiBioa,2026-08-18 23:45:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,7550,Visa,debit,US,5162,
-ch_3U5wi2QJfvlGDJJG1GW2ROG0,2026-08-18 23:46:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,Visa,credit,US,0593,
-ch_3U5wiqQJfvlGDJJG0AJ8PC8M,2026-08-18 23:47:16,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,5844,
-ch_3U5wnoQJfvlGDJJG1bPPHarC,2026-08-18 23:52:25,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,Visa,debit,US,9086,
+ch_3U5u4pQJfvlGDJJG0DdJ0Pzw,2026-08-18 20:57:46,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,875,Visa,debit,US,9891,27
+ch_3U5u8x7C646Nqh7e10r0NFwY,2026-08-18 21:02:04,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4639,Visa,debit,US,7864,136
+ch_3U5u9P6xaKj8hHOI0yjD028x,2026-08-18 21:02:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,0711,155
+ch_3U5u9Q9MtEGnBEj318MzllyY,2026-08-18 21:02:36,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3016,MasterCard,debit,US,6880,93
+ch_3U5uAG6xaKj8hHOI0GJOFUNI,2026-08-18 21:03:30,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2457,MasterCard,debit,US,3404,79
+ch_3U5uKCQJfvlGDJJG1s1dBWw0,2026-08-18 21:13:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,MasterCard,debit,US,4640,24
+ch_3U5uKf7C646Nqh7e1pc9NuD3,2026-08-18 21:14:27,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4263,Visa,credit,US,6647,126
+ch_3U5uO95XZgMuE7ip1QrOhIar,2026-08-18 21:17:49,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1203,MasterCard,debit,US,2003,46
+ch_3U5uRH6xaKj8hHOI0NWb1BBE,2026-08-18 21:22:09,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,credit,US,6426,85
+ch_3U5uSuQJfvlGDJJG0o8Y24Vn,2026-08-18 21:22:39,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2100,Visa,debit,US,2952,58
+ch_3U5uU26xaKj8hHOI01gKFAGS,2026-08-18 21:23:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3225,Visa,debit,US,2078,99
+ch_3U5uVfG9cKTLUhQ70esKWCzI,2026-08-18 21:25:36,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5176,Visa,credit,US,3940,150
+ch_3U5uWKQJfvlGDJJG1rQME2GX,2026-08-18 21:26:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,credit,US,3339,29
+ch_3U5uXDQJfvlGDJJG0OV5Tbok,2026-08-18 21:27:09,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,MasterCard,debit,US,8227,19
+ch_3U5uYJQJfvlGDJJG1fYH5m08,2026-08-18 21:28:14,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,600,Visa,debit,US,6448,20
+ch_3U5uYcQJfvlGDJJG0gymefSp,2026-08-18 21:28:34,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,MasterCard,debit,US,7545,15
+ch_3U5ufQQJfvlGDJJG1oKPKKIZ,2026-08-18 21:35:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,700,MasterCard,debit,US,9245,23
+ch_3U5ug3QJfvlGDJJG1txTCN02,2026-08-18 21:36:17,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1275,MasterCard,debit,US,3069,37
+ch_3U5ug56xaKj8hHOI0L2EBcck,2026-08-18 21:36:22,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1525,Visa,debit,US,2043,55
+ch_3U5umf7C646Nqh7e0vEsa1Gn,2026-08-18 21:43:13,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,3996,MasterCard,debit,US,7226,119
+ch_3U5une6xaKj8hHOI0Wkp9hEo,2026-08-18 21:44:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3984,Visa,debit,US,7584,119
+ch_3U5ur26xaKj8hHOI1krzddhG,2026-08-18 21:47:41,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4942,Visa,debit,US,4096,143
+ch_3U5usJG9cKTLUhQ714K7SFWI,2026-08-18 21:49:19,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,17509,Visa,debit,US,9043,470
+ch_3U5usb7C646Nqh7e0WgGZqHu,2026-08-18 21:49:22,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2375,Visa,debit,US,8440,77
+ch_3U5utZQJfvlGDJJG1KEAbdMg,2026-08-18 21:50:12,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,9249,19
+ch_3U5v3X7C646Nqh7e0T2BiZ4T,2026-08-18 22:00:35,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5759,Discover,credit,US,4767,165
+ch_3U5v4XQJfvlGDJJG1eaag9zV,2026-08-18 22:01:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1725,Visa,debit,US,0664,48
+ch_3U5v6e6xaKj8hHOI0qs6AmZ5,2026-08-18 22:03:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,MasterCard,debit,US,0950,85
+ch_3U5vCl9MtEGnBEj30dQDVWWr,2026-08-18 22:10:04,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3510,Visa,prepaid,US,4615,106
+ch_3U5vMQQJfvlGDJJG1VJSCB1s,2026-08-18 22:20:19,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,Visa,debit,US,7011,24
+ch_3U5vMgG9cKTLUhQ71ltKpfcm,2026-08-18 22:20:58,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,4998,Visa,prepaid,US,0281,145
+ch_3U5vQH7C646Nqh7e1e6EzH2d,2026-08-18 22:24:03,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6865,Visa,credit,US,6696,193
+ch_3U5vSfQJfvlGDJJG0ZWdpqPk,2026-08-18 22:26:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1900,Visa,debit,US,0859,53
+ch_3U5vTa7C646Nqh7e1b8sj1TS,2026-08-18 22:27:31,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,12999,MasterCard,debit,US,4656,353
+ch_3U5vVe7C646Nqh7e0jNVp1jy,2026-08-18 22:29:38,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2603,MasterCard,debit,US,5034,83
+ch_3U5vaC6kYqKNQLle1dszOoDV,2026-08-18 22:34:20,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,5266,Visa,credit,US,7901,152
+ch_3U5vaeQJfvlGDJJG19f13tbx,2026-08-18 22:34:44,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,prepaid,US,9393,29
+ch_3U5vaj7C646Nqh7e0Y6Dg4Yf,2026-08-18 22:34:53,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,3373,MasterCard,credit,US,5647,103
+ch_3U5vb97C646Nqh7e0ndzJUev,2026-08-18 22:35:19,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,474,MasterCard,credit,US,5647,27
+ch_3U5vbK7sg7EIYCuY0034THKb,2026-08-18 22:35:49,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,858,MasterCard,credit,US,5200,37
+ch_3U5vfY7dzWyoeYnh0WszC44O,2026-08-18 22:39:47,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,3870,Visa,credit,US,2642,116
+ch_3U5vi67sg7EIYCuY1JjtbE9O,2026-08-18 22:42:32,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,2462,Visa,debit,US,8013,79
+ch_3U5vit6kYqKNQLle08UdwIp4,2026-08-18 22:43:19,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,4542,MasterCard,credit,US,8367,133
+ch_3U5vmQ6xaKj8hHOI0Hg5FDqX,2026-08-18 22:47:10,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,8591,MasterCard,credit,US,8369,238
+ch_3U5vmmQJfvlGDJJG1xHW6XwN,2026-08-18 22:47:15,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,Visa,debit,US,5917,18
+ch_3U5voG7sg7EIYCuY0k06Sbpw,2026-08-18 22:48:55,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,801,MasterCard,debit,US,2623,36
+ch_3U5vr76kYqKNQLle1iqKixJj,2026-08-18 22:51:50,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1870,Visa,credit,US,0019,64
+ch_3U5vtjQJfvlGDJJG1oJwylgo,2026-08-18 22:54:28,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,Visa,debit,US,5289,18
+ch_3U5vuRQJfvlGDJJG11x2JDBz,2026-08-18 22:55:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,Visa,debit,US,5415,32
+ch_3U5vv5QJfvlGDJJG1NelHBGa,2026-08-18 22:55:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,900,Visa,debit,US,9981,28
+ch_3U5vv6QJfvlGDJJG0RD5rooE,2026-08-18 22:55:51,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,700,Visa,debit,US,2724,23
+ch_3U5vyO7C646Nqh7e0aIp3X9w,2026-08-18 22:59:23,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,1896,Visa,credit,US,7506,64
+ch_3U5w0qQJfvlGDJJG0CNUGd66,2026-08-18 23:01:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1225,Visa,debit,US,8291,36
+ch_3U5w227C646Nqh7e1dhf2v8h,2026-08-18 23:03:10,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,1484,Visa,credit,US,7506,54
+ch_3U5w415XZgMuE7ip1Sk1J835,2026-08-18 23:05:10,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,15825,MasterCard,debit,US,0285,426
+ch_3U5wBZQJfvlGDJJG1Wo48B9Q,2026-08-18 23:13:00,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1425,Visa,debit,US,8664,41
+ch_3U5wCeQJfvlGDJJG1nsBdri8,2026-08-18 23:14:03,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,875,Visa,debit,US,1283,27
+ch_3U5wDgQJfvlGDJJG0myBN1wO,2026-08-18 23:15:05,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,MasterCard,credit,US,8463,18
+ch_3U5wEFQJfvlGDJJG12Gcx3di,2026-08-18 23:15:38,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1825,Visa,debit,US,6271,51
+ch_3U5wOa6xaKj8hHOI0Ice3416,2026-08-18 23:26:28,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1408,Visa,debit,US,6856,52
+ch_3U5wPMQJfvlGDJJG09XpPHsk,2026-08-18 23:27:07,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,MasterCard,credit,US,5982,18
+ch_3U5wU87C646Nqh7e0o8zAyV9,2026-08-18 23:32:11,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2371,Visa,credit,US,3154,77
+ch_3U5wXFQJfvlGDJJG1NyctjR2,2026-08-18 23:35:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,300,Visa,debit,US,0504,13
+ch_3U5wZKQJfvlGDJJG088q7AIA,2026-08-18 23:37:26,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,MasterCard,debit,US,2470,28
+ch_3U5wdQQJfvlGDJJG13u8ej8J,2026-08-18 23:41:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,775,Visa,credit,US,9454,24
+ch_3U5wfaQJfvlGDJJG1cT0KIIK,2026-08-18 23:43:56,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,MasterCard,credit,US,6215,28
+ch_3U5wgGQJfvlGDJJG1vJkFMIM,2026-08-18 23:44:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1200,Visa,debit,US,3431,35
+ch_3U5wgxQJfvlGDJJG1sNiBioa,2026-08-18 23:45:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,7550,Visa,debit,US,5162,194
+ch_3U5wi2QJfvlGDJJG1GW2ROG0,2026-08-18 23:46:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,Visa,credit,US,0593,17
+ch_3U5wiqQJfvlGDJJG0AJ8PC8M,2026-08-18 23:47:16,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,5844,25
+ch_3U5wnoQJfvlGDJJG1bPPHarC,2026-08-18 23:52:25,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,Visa,debit,US,9086,29
+ch_3U5wuZQJfvlGDJJG0DMiM6EP,2026-08-18 23:59:23,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,500,MasterCard,debit,US,7527,18
+ch_3U5wwZQJfvlGDJJG0SQw8oCT,2026-08-19 00:01:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1025,MasterCard,debit,US,4094,31
+ch_3U5x2hQJfvlGDJJG1P8rfNid,2026-08-19 00:07:49,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,Visa,prepaid,US,9926,29
+ch_3U5x2i7sg7EIYCuY0NC18GRR,2026-08-19 00:07:53,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,905,Visa,debit,US,0841,39
+ch_3U5x4GQJfvlGDJJG0UZkSKLo,2026-08-19 00:09:24,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1200,Visa,debit,US,4413,35
+ch_3U5x4yQJfvlGDJJG1jDf5Uch,2026-08-19 00:10:09,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,MasterCard,debit,US,5163,32
+ch_3U5x9pQJfvlGDJJG07gcqn22,2026-08-19 00:15:08,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,Visa,debit,US,0506,28
+ch_3U5xCM7C646Nqh7e08BdWKNj,2026-08-19 00:17:58,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,9194,Visa,debit,US,5636,254
+ch_3U5xEKQJfvlGDJJG0pLQHC9X,2026-08-19 00:19:47,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1450,Visa,debit,US,2169,41
+ch_3U5xG4QJfvlGDJJG085WorPH,2026-08-19 00:21:37,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,9524,25
+ch_3U5xGjQJfvlGDJJG1SsGFtkB,2026-08-19 00:22:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Discover,credit,US,2288,29
+ch_3U5xHFQJfvlGDJJG05tpFo7s,2026-08-19 00:22:49,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2200,Visa,debit,US,6158,60
+ch_3U5xJyQJfvlGDJJG0pvE6iUU,2026-08-19 00:25:38,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,MasterCard,credit,US,5515,25
+ch_3U5xLoQJfvlGDJJG1gPoDbwu,2026-08-19 00:27:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1450,Visa,debit,US,1559,41
+ch_3U5xMk6xaKj8hHOI1SJ2cxCl,2026-08-19 00:28:32,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5151,MasterCard,debit,US,3002,149
+ch_3U5xO7QJfvlGDJJG0Xbipcmg,2026-08-19 00:29:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,5692,19
+ch_3U5xRJQJfvlGDJJG0FJCFvXQ,2026-08-19 00:33:17,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,credit,US,6531,18
+ch_3U5xSMQJfvlGDJJG14MZabT5,2026-08-19 00:34:17,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,325,Visa,debit,US,0693,13
+ch_3U5xSS7dzWyoeYnh1LY2mdbi,2026-08-19 00:34:25,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,3195,Visa,debit,US,9123,98
+ch_3U5xWAQJfvlGDJJG17K8Ip33,2026-08-19 00:38:15,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,6687,19
+ch_3U5xY2QJfvlGDJJG1HnG2LSw,2026-08-19 00:40:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,Visa,debit,US,6915,31
+ch_3U5xZAQJfvlGDJJG1TdK5Cp6,2026-08-19 00:41:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,7832,30
+ch_3U5xaiQJfvlGDJJG0ikNDGyh,2026-08-19 00:42:58,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1475,Visa,debit,US,4373,42
+ch_3U5xgmQJfvlGDJJG0IESIYg5,2026-08-19 00:49:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,debit,US,4111,16
+ch_3U5xiJQJfvlGDJJG1ErpBhWi,2026-08-19 00:50:49,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1375,Visa,debit,US,2348,39
+ch_3U5xj47C646Nqh7e0SaOdybB,2026-08-19 00:51:36,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6736,Visa,debit,US,8016,190
+ch_3U5xjGQJfvlGDJJG13rS6pL9,2026-08-19 00:51:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,3395,30
+ch_3U5xq26xaKj8hHOI1OVTmUzM,2026-08-19 00:58:50,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1624,Visa,debit,US,1319,57
+ch_3U5xrdQJfvlGDJJG0YgjtIKL,2026-08-19 01:00:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,850,MasterCard,credit,US,6791,26
+ch_3U5y3CQJfvlGDJJG0vFYxyaG,2026-08-19 01:12:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,Visa,debit,US,6513,17
+ch_3U5y7EQJfvlGDJJG0rXwVaMQ,2026-08-19 01:16:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,550,MasterCard,debit,US,8134,19
+ch_3U5yBRQJfvlGDJJG0xV9veLV,2026-08-19 01:20:56,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1575,Visa,debit,US,9221,44
+ch_3U5yGBQJfvlGDJJG16V18fwb,2026-08-19 01:25:47,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2200,Visa,debit,US,9409,60
+ch_3U5yHsQJfvlGDJJG1XUsJEyQ,2026-08-19 01:27:34,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1325,Visa,debit,US,8927,38
+ch_3U5ykpG9cKTLUhQ71ccjaUMw,2026-08-19 01:58:03,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,7156,MasterCard,debit,GB,1322,201
+ch_3U5yy7G9cKTLUhQ71da0jte3,2026-08-19 02:11:16,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,9590,Visa,debit,US,5606,264
+ch_3U5z4o6xaKj8hHOI1tYYkl7Y,2026-08-19 02:18:06,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,737,Visa,debit,US,0488,34
+ch_3U5zJD7C646Nqh7e06gn5MlY,2026-08-19 02:33:05,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2333,Visa,debit,US,0013,76
