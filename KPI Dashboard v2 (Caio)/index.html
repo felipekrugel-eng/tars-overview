@@ -101,6 +101,26 @@
   .cohchip:hover { border-color:#9AA7B5; }
   .cohchip.on { color:#fff; font-weight:600; }
   .cohchip.cohclear { border-color:#E0E0E0; color:var(--mid-gray); margin-left:4px; }
+  /* Cohort country multiselect. There are 232 markets, so the list is a searchable dropdown
+     rather than a wall of checkboxes, and the current selection reads back as chips. */
+  .ccms { position:relative; display:inline-block; }
+  .ccms-btn { font-size:12px; padding:4px 24px 4px 9px; border:1px solid var(--border,#D9DEE5); border-radius:6px;
+    background:#fff; color:var(--near-black,#1A1A1A); cursor:pointer; min-width:150px; text-align:left;
+    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5' viewBox='0 0 9 5'%3E%3Cpath fill='%236A6A6A' d='M0 0l4.5 5L9 0z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 8px center; }
+  .ccms-btn:hover { border-color:#9AA7B5; }
+  .ccms-pop { position:absolute; z-index:40; top:calc(100% + 4px); left:0; width:290px; background:#fff;
+    border:1px solid var(--border,#D9DEE5); border-radius:8px; box-shadow:0 6px 22px rgba(16,24,40,.13); padding:8px; }
+  .ccms-pop input.ccms-q { width:100%; box-sizing:border-box; font-size:12px; padding:5px 8px; margin-bottom:6px;
+    border:1px solid var(--border,#D9DEE5); border-radius:5px; }
+  .ccms-list { max-height:250px; overflow-y:auto; }
+  .ccms-opt { display:flex; align-items:center; gap:7px; font-size:12px; padding:4px 6px; border-radius:5px; cursor:pointer; }
+  .ccms-opt:hover { background:#F3F7FB; }
+  .ccms-opt input { margin:0; }
+  .ccms-opt .ccms-reg { margin-left:auto; color:var(--faint,#98A2B3); font-size:11px; font-variant-numeric:tabular-nums; }
+  .ccms-foot { display:flex; justify-content:space-between; align-items:center; margin-top:7px;
+    padding-top:7px; border-top:1px solid #EEF1F4; font-size:11.5px; color:var(--mid-gray); }
+  .ccms-foot button { font-size:11.5px; border:0; background:none; color:#1578C4; cursor:pointer; padding:0; }
 </style>
 </head>
 <body>
@@ -194,7 +214,13 @@
   <h2>Cohorts.</h2>
   <div class="cohctry" id="cohctry-wrap" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:-4px 0 14px">
     <span style="font-size:12px;color:var(--faint)">Country</span>
-    <select id="cohctry" style="font-size:12px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;max-width:260px"></select>
+    <!-- Multiselect: pick any number of markets and they are pooled into one cohort set.
+         Nothing selected = All countries, which reads the data embedded in kpi-data.js
+         untouched, so the default page is exactly what it always was. -->
+    <div class="ccms" id="cohctry-ms">
+      <button type="button" class="ccms-btn" id="cohctry-btn">All countries</button>
+    </div>
+    <span id="cohctry-chips" class="cohchips"></span>
     <span id="cohctry-note" style="font-size:12px;color:var(--faint)">filters the comparison chart, the summary table and the triangle</span>
   </div>
     <div class="panel">
@@ -633,47 +659,170 @@ renderCohTable();
 // countries x 25 cohorts x 25 ages in kpi-data.js would add megabytes to every page load.
 // All-countries reuses what is already embedded. If the files are absent (e.g. the guarded
 // pipeline step was skipped) the selector stays hidden and the section behaves exactly as before.
+//
+// The control is a MULTISELECT: pick any number of markets and they are pooled into a single
+// cohort set. Counts and money add up; every ratio (Ever paid %, Paying now %, Active %, ARPC)
+// is recomputed from the pooled numerator and denominator rather than averaged across markets,
+// because an average of two rates weights a market with 300 registrations the same as one with
+// 300,000. Selecting nothing means All countries and reads the embedded data by reference, so
+// the default view is not merely equal to the old page — it IS the old page.
 (function(){
-  const wrap = document.getElementById('cohctry-wrap');
-  const sel  = document.getElementById('cohctry');
-  const note = document.getElementById('cohctry-note');
-  if (!wrap || !sel) return;
+  const wrap  = document.getElementById('cohctry-wrap');
+  const host  = document.getElementById('cohctry-ms');
+  const btn   = document.getElementById('cohctry-btn');
+  const chips = document.getElementById('cohctry-chips');
+  const note  = document.getElementById('cohctry-note');
+  if (!wrap || !host || !btn) return;
   const GLOBAL = { CC: CC, keys: ccKeys, rows: cohRows };
-  const cache = {};
+  const cache = {};                 // code -> payload, so a market is fetched at most once
   const NOTE_DEFAULT = 'filters the comparison chart, the summary table and the triangle';
+  const NOTE_POOLED  = 'pooled from the selected markets \u2014 counts add up and every rate is '
+                     + 'recomputed from the pooled totals, not averaged. Merchants with no country '
+                     + 'on file sit in All countries but in no market, so the markets do not sum to it.';
+  let INDEX = [], NAME = {}, sel = [], busy = false;
 
   function repaint(){
     renderCohChips(); drawCoh(); renderCohTable();
     if (window._cohRedrawTri) window._cohRedrawTri();
   }
-  function useGlobal(){
-    CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null; repaint();
+
+  // ---- pooling ------------------------------------------------------------
+  // Age arrays are per cohort and the same length in every market's file, but a small market
+  // simply has no row for a month in which nobody registered, so the cohort set is a union and
+  // a missing series contributes nothing rather than zeroing the pool.
+  function addSeries(into, from){
+    if (!from) return into;
+    for (let i = 0; i < from.length; i++){
+      const v = from[i];
+      if (v == null) continue;                       // no data is not the same as zero
+      into[i] = (into[i] == null ? 0 : into[i]) + v;
+    }
+    return into;
   }
-  function usePayload(p){
-    CC = p.cohortCompare || {}; ccKeys = Object.keys(CC).sort();
-    cohRows = (p.cohorts || []).slice(); cohCountry = p.country; repaint();
+  function poolPayloads(ps){
+    // cohortCompare: sum mrr / paying / active; activePct is a ratio and is rebuilt at the end.
+    const size = {}, rows = {}, cmp = {};
+    ps.forEach(p => {
+      (p.cohorts || []).forEach(r => {
+        const c = r.cohort, t = rows[c] || (rows[c] = { cohort:c, registrations:0, everPaid:0, payingNow:0, active:0, mrr:0 });
+        t.registrations += +r.registrations || 0;
+        t.everPaid      += +r.everPaid || 0;
+        t.payingNow     += +r.payingNow || 0;
+        t.active        += +r.active || 0;
+        t.mrr           += +r.mrr || 0;
+        size[c] = t.registrations;
+      });
+      Object.entries(p.cohortCompare || {}).forEach(([c, m]) => {
+        const t = cmp[c] || (cmp[c] = { mrr:[], paying:[], active:[], activePct:[] });
+        addSeries(t.mrr, m.mrr); addSeries(t.paying, m.paying); addSeries(t.active, m.active);
+      });
+    });
+    Object.values(rows).forEach(t => {
+      t.pctEverPaid  = t.registrations ? +(t.everPaid  / t.registrations * 100).toFixed(2) : 0;
+      t.pctPayingNow = t.registrations ? +(t.payingNow / t.registrations * 100).toFixed(2) : 0;
+      t.arpc         = t.payingNow ? +(t.mrr / t.payingNow).toFixed(2) : 0;
+    });
+    Object.entries(cmp).forEach(([c, m]) => {
+      const s = size[c] || 0;
+      m.activePct = m.active.map(v => v == null ? null : (s ? +(v / s * 100).toFixed(2) : 0));
+    });
+    return { cohortCompare: cmp, cohorts: Object.values(rows).sort((a,b) => a.cohort < b.cohort ? -1 : 1) };
   }
+
+  // ---- what the section renders ------------------------------------------
+  function apply(){
+    if (!sel.length){
+      CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null;
+      note.textContent = NOTE_DEFAULT;
+    } else if (sel.length === 1){
+      const p = cache[sel[0]];
+      CC = p.cohortCompare || {}; ccKeys = Object.keys(CC).sort();
+      cohRows = (p.cohorts || []).slice(); cohCountry = p.country;
+      note.textContent = NOTE_DEFAULT;
+    } else {
+      const p = poolPayloads(sel.map(c => cache[c]));
+      CC = p.cohortCompare; ccKeys = Object.keys(CC).sort();
+      cohRows = p.cohorts; cohCountry = sel.join('+');
+      note.textContent = NOTE_POOLED;
+    }
+    renderBtn(); renderChips(); repaint();
+  }
+  function renderBtn(){
+    btn.textContent = !sel.length ? 'All countries'
+      : sel.length === 1 ? (NAME[sel[0]] || sel[0])
+      : sel.length + ' countries pooled';
+  }
+  function renderChips(){
+    if (!chips) return;
+    chips.innerHTML = sel.map(c =>
+      '<button class="cohchip" data-x="' + c + '" title="Remove ' + (NAME[c] || c) + '">'
+      + (NAME[c] || c) + ' \u00d7</button>').join('')
+      + (sel.length ? '<button class="cohchip cohclear" data-x="*">Clear</button>' : '');
+  }
+  if (chips) chips.onclick = e => {
+    const b = e.target.closest('.cohchip'); if (!b) return;
+    sel = b.dataset.x === '*' ? [] : sel.filter(c => c !== b.dataset.x);
+    syncBoxes(); apply();
+  };
+
+  // A market is only added once its file is in hand, so the view never renders a half-pool.
+  function toggle(code, on){
+    if (!on){ sel = sel.filter(c => c !== code); apply(); return; }
+    if (cache[code]){ if (sel.indexOf(code) < 0) sel.push(code); apply(); return; }
+    busy = true; note.textContent = 'loading ' + code + '\u2026';
+    fetch('cohort-country/' + code + '.json', {cache:'no-cache'})
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(p => { cache[code] = p; if (sel.indexOf(code) < 0) sel.push(code); busy = false; apply(); })
+      .catch(() => { busy = false;
+        note.textContent = 'no cohort data for ' + code + ' \u2014 leaving it out of the selection';
+        syncBoxes(); });
+  }
+
+  // ---- the dropdown -------------------------------------------------------
+  let pop = null;
+  function syncBoxes(){
+    if (!pop) return;
+    pop.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = sel.indexOf(cb.value) >= 0; });
+  }
+  function optionsHtml(q){
+    const needle = (q || '').trim().toLowerCase();
+    const list = !needle ? INDEX : INDEX.filter(c =>
+      (c.n || '').toLowerCase().indexOf(needle) >= 0 || c.c.toLowerCase().indexOf(needle) === 0);
+    if (!list.length) return '<div style="font-size:12px;color:var(--faint);padding:6px">no market matches</div>';
+    return list.slice(0, 400).map(c =>
+      '<label class="ccms-opt"><input type="checkbox" value="' + c.c + '"' +
+      (sel.indexOf(c.c) >= 0 ? ' checked' : '') + '>' +
+      '<span>' + (c.n || c.c) + ' <span style="color:var(--faint)">(' + c.c + ')</span></span>' +
+      '<span class="ccms-reg">' + fmtN(c.reg) + '</span></label>').join('');
+  }
+  function openPop(){
+    if (pop) return;
+    pop = document.createElement('div');
+    pop.className = 'ccms-pop';
+    pop.innerHTML = '<input class="ccms-q" type="search" placeholder="Search markets\u2026" autocomplete="off">'
+      + '<div class="ccms-list">' + optionsHtml('') + '</div>'
+      + '<div class="ccms-foot"><span>sorted by registrations</span>'
+      + '<button type="button" data-act="clear">Clear all</button></div>';
+    host.appendChild(pop);
+    const q = pop.querySelector('.ccms-q'), list = pop.querySelector('.ccms-list');
+    q.oninput = () => { list.innerHTML = optionsHtml(q.value); };
+    list.onchange = e => { const cb = e.target; if (cb && cb.type === 'checkbox') toggle(cb.value, cb.checked); };
+    pop.querySelector('[data-act=clear]').onclick = () => { sel = []; syncBoxes(); apply(); };
+    q.focus();
+  }
+  function closePop(){ if (pop){ pop.remove(); pop = null; } }
+  btn.onclick = e => { e.stopPropagation(); pop ? closePop() : openPop(); };
+  document.addEventListener('click', e => { if (pop && !host.contains(e.target)) closePop(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
 
   fetch('cohort-country/_index.json', {cache:'no-cache'})
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(ix => {
-      const list = (ix.countries || []).filter(c => c.reg > 0);
-      if (!list.length) return;
-      sel.innerHTML = '<option value="">All countries</option>' +
-        list.map(c => '<option value="' + c.c + '">' + (c.n || c.c) +
-          ' (' + c.c + ') \u00b7 ' + fmtN(c.reg) + ' regs</option>').join('');
+      INDEX = (ix.countries || []).filter(c => c.reg > 0);
+      if (!INDEX.length) return;
+      INDEX.forEach(c => { NAME[c.c] = c.n || c.c; });
       wrap.style.display = 'flex';
-      sel.onchange = () => {
-        const code = sel.value;
-        if (!code){ note.textContent = NOTE_DEFAULT; useGlobal(); return; }
-        if (cache[code]){ note.textContent = NOTE_DEFAULT; usePayload(cache[code]); return; }
-        note.textContent = 'loading ' + code + '\u2026';
-        fetch('cohort-country/' + code + '.json', {cache:'no-cache'})
-          .then(r => r.ok ? r.json() : Promise.reject(r.status))
-          .then(p => { cache[code] = p; note.textContent = NOTE_DEFAULT; usePayload(p); })
-          .catch(() => { note.textContent = 'no cohort data for ' + code + ' \u2014 showing all countries';
-                         sel.value = ''; useGlobal(); });
-      };
+      renderBtn();
     })
     .catch(() => { /* files not generated yet — leave the section all-countries only */ });
 })();
