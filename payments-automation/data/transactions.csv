@@ -17813,3 +17813,47 @@ ch_3U7Zbm6xrVvfynTx1YhewhXa,2026-08-23 11:30:50,acct_1U4NBD6xrVvfynTx,acct_1SSKs
 ch_3U7ZdD6xrVvfynTx19pINfmJ,2026-08-23 11:32:12,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2620,Visa,debit,GB,8308,26
 ch_3U7Zsg6xrVvfynTx1qHttu9u,2026-08-23 11:48:11,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1840,MasterCard,debit,GB,3758,18
 ch_3U7Zu66xrVvfynTx1eT24D32,2026-08-23 11:49:40,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,780,Visa,debit,GB,1937,8
+ch_3U7ab76xrVvfynTx1T3DjdUA,2026-08-23 12:34:06,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,830,MasterCard,credit,GB,4519,8
+ch_3U7abz6xrVvfynTx0bSPOBKO,2026-08-23 12:35:07,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2500,Visa,debit,GB,0614,25
+ch_3U7act7sg7EIYCuY1i7lFYKq,2026-08-23 12:35:57,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,2496,MasterCard,debit,US,5150,80
+ch_3U7b2G9uALOIzRNR1Bsm6edr,2026-08-23 13:02:12,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2052,Visa,credit,US,8583,51
+ch_3U7b2x9uALOIzRNR1cIsC0Xo,2026-08-23 13:03:05,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1895,Visa,debit,US,7036,47
+ch_3U7b4L9uALOIzRNR1KcbAI07,2026-08-23 13:04:22,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1903,Visa,debit,US,2306,48
+ch_3U7bBK7sg7EIYCuY14jC4v57,2026-08-23 13:11:35,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,1586,Visa,credit,US,9667,56
+ch_3U7bDb5XZgMuE7ip0nZmH06f,2026-08-23 13:13:53,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,18039,MasterCard,debit,US,5591,484
+ch_3U7bEb9uALOIzRNR0DEjZSRc,2026-08-23 13:14:54,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,4835,Visa,debit,US,9274,121
+ch_3U7bGz6xrVvfynTx1jOLQ7pK,2026-08-23 13:17:37,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,4450,MasterCard,credit,ES,4900,89
+ch_3U7bGz6xrVvfynTx1t8aZ67q,2026-08-23 13:17:24,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,failed,4450,MasterCard,credit,ES,4900,
+ch_3U7bHf6xrVvfynTx104RqiYD,2026-08-23 13:18:07,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,4209,MasterCard,debit,GB,9956,42
+ch_3U7bIT5XZgMuE7ip0FfszQLV,2026-08-23 13:19:02,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,16838,MasterCard,debit,US,2127,453
+ch_3U7bR79uALOIzRNR11HmXHs6,2026-08-23 13:27:57,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,880,Visa,credit,US,2654,22
+ch_3U7bS26xrVvfynTx1zoV0jbL,2026-08-23 13:28:48,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1980,MasterCard,debit,GB,8086,20
+ch_3U7bSu6xrVvfynTx13i5ElRl,2026-08-23 13:29:53,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3634,Visa,debit,GB,0416,36
+ch_3U7bYY5XZgMuE7ip0EQRbYDW,2026-08-23 13:35:32,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2849,American Express,credit,US,1007,89
+ch_3U7bYp6xrVvfynTx1qsFaIlf,2026-08-23 13:35:47,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2800,Visa,debit,GB,4132,28
+ch_3U7bZU9uALOIzRNR0zqXO6zv,2026-08-23 13:36:39,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,430,Visa,debit,US,9811,11
+ch_3U7bZz7sg7EIYCuY14dBgqO1,2026-08-23 13:37:09,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,4025,American Express,credit,US,2004,120
+ch_3U7bcA6xrVvfynTx07lsA3QK,2026-08-23 13:39:23,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,720,Visa,credit,GB,2663,7
+ch_3U7bfx9uALOIzRNR19xm26d3,2026-08-23 13:43:12,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,3960,MasterCard,credit,US,8111,99
+ch_3U7biY6xrVvfynTx0ZsjmehH,2026-08-23 13:45:50,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,460,Visa,debit,GB,5688,5
+ch_3U7blb9uALOIzRNR1hnylOZO,2026-08-23 13:49:03,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1690,Visa,debit,US,3538,42
+ch_3U7bmv9uALOIzRNR0EqjAkma,2026-08-23 13:50:23,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1827,Visa,credit,US,4300,46
+ch_3U7bpb9uALOIzRNR1kJ2JzSM,2026-08-23 13:53:12,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2458,MasterCard,credit,US,9350,61
+ch_3U7bqq9uALOIzRNR07UapzC4,2026-08-23 13:54:29,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2025,Visa,credit,US,2728,51
+ch_3U7bsd9uALOIzRNR03PfjV2B,2026-08-23 13:56:21,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1758,Visa,debit,US,1194,44
+ch_3U7bus9uALOIzRNR1Jqhhgq7,2026-08-23 13:58:36,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,failed,1748,Visa,debit,US,2732,
+ch_3U7bv99uALOIzRNR00qxqGhP,2026-08-23 13:58:51,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1748,MasterCard,credit,US,6975,44
+ch_3U7bvl9uALOIzRNR083vBxnx,2026-08-23 13:59:30,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1300,MasterCard,credit,US,1966,33
+ch_3U7byC7sg7EIYCuY03N7gqSv,2026-08-23 14:02:17,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,936,MasterCard,debit,US,1359,39
+ch_3U7c4C9uALOIzRNR0uEhTrqr,2026-08-23 14:08:13,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,675,Visa,credit,US,5488,17
+ch_3U7c699uALOIzRNR1cZyFajU,2026-08-23 14:10:19,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,430,Visa,credit,US,9158,11
+ch_3U7cA26xrVvfynTx1EsilnWC,2026-08-23 14:14:18,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1250,Visa,debit,GB,0078,12
+ch_3U7cBp5XZgMuE7ip0RWAKmiG,2026-08-23 14:16:21,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3417,Visa,debit,US,8555,104
+ch_3U7cDD9uALOIzRNR16L8doKd,2026-08-23 14:17:33,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,475,MasterCard,credit,US,3409,12
+ch_3U7cKE9uALOIzRNR0vpiMTfW,2026-08-23 14:24:56,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1810,MasterCard,debit,US,2123,45
+ch_3U7cNB7sg7EIYCuY0Xapdsbq,2026-08-23 14:27:52,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,1916,Visa,credit,US,0087,65
+ch_3U7cUZ5XZgMuE7ip01gHLCJg,2026-08-23 14:35:33,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2954,MasterCard,debit,US,8609,92
+ch_3U7cV3GG9H7vamtE11MQ5agh,2026-08-23 14:36:00,acct_1U2j3ZGG9H7vamtE,acct_1SSKsA7e4AMQfKY3,Wax On Wax OFF LLC,US,usd,succeeded,9788,MasterCard,credit,US,1450,225
+ch_3U7cYt9uALOIzRNR0OfqaWIn,2026-08-23 14:39:57,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2858,Visa,debit,US,9611,71
+ch_3U7ce89uALOIzRNR0VzkEf7k,2026-08-23 14:45:21,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1529,Visa,debit,US,3549,38
+ch_3U7ch67sg7EIYCuY1sqIELVh,2026-08-23 14:48:34,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,1685,Visa,credit,US,6727,59
