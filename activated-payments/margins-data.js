@@ -8,11 +8,11 @@ window.MARGINS = {
     "txns": 18094.0,
     "tpv": 402666.66,
     "avgTicket": 22.2541538631591,
-    "revenue": 11519.78,
-    "takeRate": 0.0286087256392173,
+    "revenue": 11521.04,
+    "takeRate": 0.028611854778342,
     "totalFees": 9512.4473,
-    "netMargin": 2007.3327,
-    "netTakeRate": 0.0049850978474354,
+    "netMargin": 2008.5927,
+    "netTakeRate": 0.00498822698656005,
     "pctProfitable": 0.501879075936775,
     "profitableTxns": 9081.0,
     "unprofitableTxns": 9013.0,
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 11519.78
+        "revenue": 11521.04
       },
       {
         "name": "All 2.5% flat",
@@ -119,11 +119,11 @@ window.MARGINS = {
         "txns": 221,
         "tpv": 3014.56,
         "avgTicket": 13.640542986425334,
-        "revenue": 29.48,
-        "takeRate": 0.009779204925428586,
+        "revenue": 30.74,
+        "takeRate": 0.01019717637068096,
         "totalFees": 20.2797,
-        "netMargin": 9.2003,
-        "netTakeRate": 0.0030519570106735784,
+        "netMargin": 10.4603,
+        "netTakeRate": 0.003469928455925953,
         "pctProfitable": 0.6018099547511312,
         "profitableTxns": 133,
         "unprofitableTxns": 88,
@@ -146,7 +146,7 @@ window.MARGINS = {
         }
       },
       "scenarios": [
-        29.48,
+        30.74,
         75.364,
         86.414,
         100.47856,
