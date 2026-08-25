@@ -1744,6 +1744,10 @@ async function main() {
         const flags = flagsR.status === 'fulfilled' ? flagsR.value : {};
         if (flagsR.status !== 'fulfilled') console.error(`✗ merchant_month_flags failed (paying/active intersections unavailable): ${flagsR.reason && flagsR.reason.message}`);
         else console.log(`✓ merchant_month_flags: ${Object.keys(flags).length} of ${connOwners.length} connected owners have paying/active history`);
+        // Taken BEFORE the receipts months are merged in, so the reconciliation below compares
+        // the monthly table against itself rather than against a union that includes another
+        // source and would always look inflated.
+        const flagMerchants = Object.keys(flags).filter(m => (flags[m].act || []).length).length;
         if (recentR.status !== 'fulfilled') console.error(`✗ merchant_month_active_recent failed — Active will stop at the monthly table's lagged last month, which covers NONE of the payments window: ${recentR.reason && recentR.reason.message}`);
         else {
           const rec = recentR.value;
@@ -1757,8 +1761,7 @@ async function main() {
         // month-level query is dropping merchants the collapsed one keeps, which is exactly the
         // kind of silent loss a cohort view would render as a wall of honest-looking zeros.
         const salesMerchants = Object.keys(sales).filter(m => (sales[m] || {}).receipts > 0).length;
-        const flagMerchants = Object.keys(flags).filter(m => (flags[m].act || []).length).length;
-        console.log(`  active-month coverage: ${flagMerchants} merchants vs ${salesMerchants} in the collapsed sales read`
+        console.log(`  active-month coverage (monthly table only): ${flagMerchants} merchants vs ${salesMerchants} in the collapsed sales read`
                   + (salesMerchants && flagMerchants < salesMerchants * 0.95 ? '  ← GAP, investigate' : ''));
         writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
       } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
