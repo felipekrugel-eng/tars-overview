@@ -253,7 +253,7 @@
          on the data: no merchant finalized without initiating, none transacted without
          finalizing. Intersecting two of them would only ever return the innermost.
          One from each group DOES combine: a payments condition already restricts the population
-         to merchants holding an account, and the Pay. base column names that population.
+         to merchants holding an account, and every cell's tooltip names that population.
          The payments group appears only once payments-cohort.json has loaded. -->
     <div class="toggle" id="tri-metric" style="display:none">
       <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
@@ -786,23 +786,21 @@ renderCohTable();
       return (+LATEST.slice(0,4) - +c.slice(0,4)) * 12 + (+LATEST.slice(5,7) - +c.slice(5,7));
     };
     let sawPartial = false;
-    // Size is ALWAYS the cohort's full registrations — it is the one number that means the same
-    // thing in every view, and it anchors every other column. Membership mode adds a SECOND
-    // column beside it for the payments base, because a cell counting payments merchants next to
-    // a registration count alone reads as 6-in-114,847 rather than 6-in-261.
-    const baseCol = !series;
-    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>'
-          + (baseCol ? '<th class="sz" title="Merchants of this cohort holding a Loyverse Payments account — the population every cell in this row is counted from.">Pay. base</th>' : '');
+    // Size is ALWAYS the cohort's full registrations, and it is the only count in the header.
+    // A "Pay. base" column briefly sat beside it showing the merchants with a payments account;
+    // it was removed because it read as a count of transacting merchants — 261 connected
+    // accounts looked like 261 merchants taking payments, when the real figure was 10. The base
+    // still exists, as the denominator of "% of payments base" and spelled out in every cell's
+    // tooltip, where it is attached to the number it actually describes.
+    const membership = !series;
+    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
     for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
     h += '</tr></thead><tbody>';
     triCohorts.slice().reverse().forEach(c => {
       const pIdx = ageOfLatest(c);
-      const regs = sizeOf(c), base = baseCol ? baseOf(c) : null;
+      const regs = sizeOf(c), base = membership ? baseOf(c) : null;
       h += '<tr><td class="k">' + c + '</td>'
-         + '<td class="sz">' + (regs == null ? '—' : fmtN(regs)) + '</td>'
-         + (baseCol ? '<td class="sz" title="' + fmtN(base) + ' of this cohort hold a Loyverse Payments account'
-                    + (regs == null ? '' : ', out of ' + fmtN(regs) + ' registrations') + '">'
-                    + fmtN(base) + '</td>' : '');
+         + '<td class="sz">' + (regs == null ? '—' : fmtN(regs)) + '</td>';
       for (let i = 0; i < nAges; i++){
         const v = valOf(c, i);
         if (v == null){ h += '<td class="tri-e"></td>'; continue; }
@@ -819,8 +817,8 @@ renderCohTable();
         const tip = c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
                   + triSel.map(k => LABEL[k]).join(' + ') + ': '
                   + (pct ? dv.toFixed(1) + '% — ' + fmtN(v) + ' of ' + fmtN(den)
-                           + (pct === 'base' ? ' payments merchants' : ' registrations')
-                     : fmtN(v) + (baseCol ? ' of ' + fmtN(base) + ' payments merchants' : ''))
+                           + (pct === 'base' ? ' merchants holding a payments account' : ' registrations')
+                     : fmtN(v) + (membership ? ' of the ' + fmtN(base) + ' merchants in this cohort holding a payments account' : ''))
                   + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
         const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
                     + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
@@ -858,7 +856,7 @@ renderCohTable();
     }
     if (!useSeries()){
       s += ' This counts merchants holding a Loyverse Payments account — the only population where '
-         + 'a payments condition can be satisfied, and the one the Pay. base column shows. It is a '
+         + 'a payments condition can be satisfied. It is a '
          + 'small slice of the cohort, so these figures are much smaller than the dashboard-wide '
          + 'Paying and Active views and are not their intersection. '
          + 'Every cohort with registrations is listed, not just the last 24, and the age axis runs '
@@ -869,11 +867,11 @@ renderCohTable();
          + (hasPay() ? '' : ' (the only population where these can be intersected)') + '. '
          + 'Initiated and Finalized KYC are cumulative — reached by that month and never lost. '
          + 'Paying, Active and Transacting are in-month states. '
-         + '“Size” is always the cohort’s full registrations. “Pay. base” beside it is the subset '
-         + 'holding a payments account, which is the population every cell is counted from — a cell '
-         + 'reading 6 means 6 of that base, not 6 of Size. “% of cohort” divides by Size and answers '
-         + 'how far payments has reached into the cohort; “% of payments base” divides by the base '
-         + 'and answers how those merchants behave. '
+         + '“Size” is the cohort’s full registrations. The cells count only the subset holding a '
+         + 'payments account, so a cell reading 6 means 6 of that subset, not 6 of Size — hover any '
+         + 'cell to see both numbers. “% of cohort” divides by Size and answers how far payments has '
+         + 'reached into the cohort; “% of payments base” divides by that subset and answers how '
+         + 'those merchants behave. '
          + (hasPay() && payFrom
              ? 'Cells before ' + payFrom + ' are blank rather than zero: Loyverse Payments did not exist yet, '
                + 'so the question has no answer at those ages. '
