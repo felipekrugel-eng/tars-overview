@@ -18445,4 +18445,34 @@ ch_3U8A816xaKj8hHOI0im4ehIq,2026-08-25 02:30:33,acct_1TvKXT6xaKj8hHOI,acct_1SSKs
 ch_3U8ADo7oXMe4RLzo1zsmC7ib,2026-08-25 02:36:24,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,3178,MasterCard,credit,US,0274,98
 ch_3U8APn7oXMe4RLzo0nfe9O2i,2026-08-25 02:49:21,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,9646,Visa,prepaid,US,0794,266
 ch_3U8AXk7oXMe4RLzo1hxCrfgC,2026-08-25 02:57:00,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,6300,Visa,debit,US,0911,179
-ch_3U8AYQ7oXMe4RLzo0dtNeLbl,2026-08-25 02:57:42,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,454,Visa,debit,US,0066,
+ch_3U8AYQ7oXMe4RLzo0dtNeLbl,2026-08-25 02:57:42,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,454,Visa,debit,US,0066,27
+ch_3U8AYv7oXMe4RLzo1fICxWSH,2026-08-25 02:58:13,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,1135,American Express,credit,US,6931,45
+ch_3U8Aa27oXMe4RLzo1OoCvUQL,2026-08-25 02:59:22,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,625,Visa,debit,US,1430,31
+ch_3U8Al5G9cKTLUhQ71CtcKSNr,2026-08-25 03:11:00,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3303,Visa,credit,US,5319,101
+ch_3U8AmTG9cKTLUhQ71h90AniB,2026-08-25 03:12:23,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2535,Visa,debit,US,0888,81
+ch_3U8AzdG9cKTLUhQ71L6LLvto,2026-08-25 03:25:53,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1211,Visa,prepaid,US,1520,46
+ch_3U8B847oXMe4RLzo17vjRZwh,2026-08-25 03:34:33,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,failed,2838,Visa,debit,US,1907,
+ch_3U8B8H7oXMe4RLzo0jlr5vYl,2026-08-25 03:34:44,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,failed,2838,Visa,debit,US,1907,
+ch_3U8B8j7oXMe4RLzo0ssmvxMW,2026-08-25 03:35:13,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,2520,Visa,debit,US,4228,81
+ch_3U8B907oXMe4RLzo094Wdy6i,2026-08-25 03:35:29,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,227,MasterCard,credit,US,6826,21
+ch_3U8B9B7oXMe4RLzo1xCIaWxH,2026-08-25 03:35:40,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,failed,2838,Visa,debit,US,3830,
+ch_3U8B9g6saaIjhYUI07RmSwgd,2026-08-25 03:36:14,acct_1TvgVy6saaIjhYUI,acct_1SSKsA7e4AMQfKY3,strictly needs,US,usd,failed,15000,Visa,credit,US,3469,
+ch_3U8BHO7oXMe4RLzo1N7ySeuD,2026-08-25 03:44:14,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,5923,Visa,debit,US,4263,169
+ch_3U8BHy7oXMe4RLzo0naZciim,2026-08-25 03:44:55,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,6300,MasterCard,debit,US,8891,179
+ch_3U8BNN7oXMe4RLzo0TSssez2,2026-08-25 03:50:22,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,1816,Visa,credit,US,8013,62
+ch_3U8BNeG9cKTLUhQ71PJwVOML,2026-08-25 03:50:44,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3845,MasterCard,credit,US,6289,115
+ch_3U8BYUG9cKTLUhQ70tYzKne3,2026-08-25 04:02:03,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1979,Visa,credit,US,4200,66
+ch_3U8BpD7oXMe4RLzo1V1ISoUJ,2026-08-25 04:19:10,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,4427,Visa,debit,US,1615,130
+ch_3U8Bpu7oXMe4RLzo01e9r2di,2026-08-25 04:19:51,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,1135,Visa,debit,US,3609,45
+ch_3U8BrmG9cKTLUhQ71pn5qIks,2026-08-25 04:21:52,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3584,Visa,debit,US,6340,108
+ch_3U8Byb7oXMe4RLzo1nF0P2GC,2026-08-25 04:28:50,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,5040,MasterCard,credit,US,4755,146
+ch_3U8BzR7oXMe4RLzo1cZA5bbF,2026-08-25 04:29:40,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,1815,Visa,debit,US,1881,62
+ch_3U8C5P5OXLQpNJWb1jhayA2z,2026-08-25 04:36:00,acct_1U6ey35OXLQpNJWb,acct_1SSKsA7e4AMQfKY3,Your Tech Type,US,usd,failed,19000,American Express,credit,US,2500,
+ch_3U8C7j4yu1rGqQyt1pRUMlYS,2026-08-25 04:38:17,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,6330,Visa,debit,US,1394,180
+ch_3U8CCe7oXMe4RLzo04vJlCoD,2026-08-25 04:43:19,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,2520,Visa,debit,US,1686,81
+ch_3U8CKS7oXMe4RLzo1BLKpDwc,2026-08-25 04:51:23,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,4877,Visa,debit,US,5057,142
+ch_3U8CfN7oXMe4RLzo1KKppcbm,2026-08-25 05:13:01,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,1815,Visa,credit,US,4674,62
+ch_3U8D9y7oXMe4RLzo05sRzYfe,2026-08-25 05:44:47,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,9080,Visa,debit,US,9030,251
+ch_3U8DJ17oXMe4RLzo1Y9UwZ3a,2026-08-25 05:55:24,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,failed,3404,Visa,prepaid,US,0148,
+ch_3U8DKc7oXMe4RLzo1drPRQDh,2026-08-25 05:55:39,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,failed,3404,Visa,prepaid,US,0148,
+ch_3U8DKp7oXMe4RLzo02jls9PG,2026-08-25 05:56:37,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,3404,Visa,prepaid,US,0148,104
