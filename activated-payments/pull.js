@@ -38,6 +38,11 @@ const FUNNEL_FILE    = path.join(__dirname, 'funnel-data.js');
 const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const REPORT_FILE    = path.join(__dirname, 'report-data.js');
+// The cohort triangle lives on the KPI dashboard, which is a SEPARATE Cloudflare Pages site.
+// A cross-origin fetch between the two would have to survive Cloudflare Access, so the payments
+// pull writes the cohort membership straight into the other site's folder instead. Same repo,
+// same deploy, no network hop.
+const PAY_COHORT_FILE = path.join(__dirname, '..', 'KPI Dashboard v2 (Caio)', 'payments-cohort.js');
 const SQL_DIR        = path.join(__dirname, 'sql');
 // Loyverse Payments launch — start of the funnel entry cohort (US registrations on/after).
 const LAUNCH_START   = '2026-07-01';
@@ -846,6 +851,10 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
   const rows = await executeQuery(conn, loadSql('charges_monthly.sql').replace('/*ACCOUNT_IDS*/', inList));
   const byMonth = {}, unknownCcy = {};
   const acctSets = {};                       // m -> { all:Set, cc:{ CC:Set } }
+  // acct -> [months it transacted in]. The sets below are collapsed to counts, and a count
+  // cannot say WHICH merchants transacted, which is exactly what the cohort triangle needs to
+  // intersect "transacting" with "active". Same rows, kept rather than discarded.
+  const acctMonths = {};
   const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const slot = (o, cc) => (o.by[cc] || (o.by[cc] = { tpv: 0, txns: 0, accounts: 0 }));
   for (const r of rows || []) {
@@ -859,6 +868,7 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
       if (acct) {
         s.all.add(acct);
         (s.cc[cc] || (s.cc[cc] = new Set())).add(acct);
+        (acctMonths[acct] || (acctMonths[acct] = [])).push(m);
       }
       continue;
     }
@@ -877,7 +887,30 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
     o.accounts = s.all.size;
     Object.keys(s.cc).forEach(cc => { slot(o, cc).accounts = s.cc[cc].size; });
   });
-  return { byMonth, unknownCcy };
+  return { byMonth, unknownCcy, acctMonths };
+}
+
+// Per-merchant monthly paying / active membership, for the merchants holding a connected
+// account. Returns { [merchantId]: { pay:[months], act:[months] } } with months as 'YYYY-MM'.
+// Absence of a month means the merchant was neither paying nor active in it — the query emits
+// no row for an empty month, so nothing here has to represent a zero.
+async function fetchMerchantMonthFlags(conn, merchantIds) {
+  const ids = sanitizeIds(merchantIds);
+  if (!ids.length) return {};
+  const sql = loadSql('merchant_month_flags.sql').split('/*MERCHANT_IDS*/').join(ids.join(','));
+  const rows = await executeQuery(conn, sql);
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const by = {};
+  for (const r of rows || []) {
+    const mid = String(g(r, 'merchant_id') || '');
+    const ms = toDate(g(r, 'month_start'));
+    if (!mid || !ms) continue;
+    const m = String(ms).slice(0, 7);
+    const rec = by[mid] || (by[mid] = { pay: [], act: [] });
+    if (Number(g(r, 'is_paying'))) rec.pay.push(m);
+    if (Number(g(r, 'is_active')))  rec.act.push(m);
+  }
+  return by;
 }
 // Generic minor-unit monthly roll-up used by both the revenue and cost queries.
 // Same additive convention: `usd`/`cnt` unchanged, plus `by` keyed by merchant country.
@@ -1334,6 +1367,115 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
   });
   return { entered_total: stages.entered, stages, stagesBy, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
+// ── COHORT MEMBERSHIP FOR THE KPI DASHBOARD TRIANGLE ─────────────────────────
+// The triangle needs to answer questions like "of the July cohort, how many were active AND
+// transacting in month M?". A pre-summed total cannot answer that, so this ships the MEMBERSHIP:
+// one compact record per merchant holding a connected account, from which the dashboard counts
+// any intersection it likes, at any cohort age, for any country selection.
+//
+// SHAPE. `months` is the month axis; every other month reference is an INDEX into it, so the
+// file stays small as history grows. Per merchant:
+//   c    ISO-2 market (CONNECTED_ACCOUNTS.COUNTRY, the same field the payments pages filter on)
+//   h    registration cohort, as an index into `months`
+//   k    month index the merchant INITIATED KYC (connected a Stripe account)
+//   f    month index the merchant FINALIZED KYC — see the proxy caveat below
+//   p    months the merchant was PAYING          (sorted indices)
+//   a    months the merchant was ACTIVE          (sorted indices)
+//   t    months the merchant TRANSACTED on Loyverse Payments (sorted indices)
+//
+// KYC steps are one-way doors and are stored as the single month they were crossed; the
+// dashboard reads them cumulatively (reached by month M). Paying, active and transacting are
+// in-month states and are stored as the explicit set of months they held.
+//
+// CAVEAT, carried into the file itself so nobody has to come here to find it: Stripe exposes
+// no `charges_enabled_at`, so FINALIZED KYC is dated by TOS_ACCEPTANCE_DATE — the moment the
+// merchant accepted terms, which is the same proxy the payments funnel already uses. A merchant
+// enabled weeks after accepting terms is booked at the earlier month.
+function buildPayCohort(funnel, flags, acctMonths, meta, accountRows) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  // Transacting months are keyed by STRIPE ACCOUNT; everything else is keyed by owner. Fold the
+  // account months onto the owner, so a merchant with two accounts transacting in the same month
+  // counts once rather than twice.
+  const acctToOwner = {};
+  Object.keys(meta || {}).forEach(a => { if (meta[a] && meta[a].owner_id) acctToOwner[a] = String(meta[a].owner_id); });
+  const txnByOwner = {};
+  Object.keys(acctMonths || {}).forEach(a => {
+    const o = acctToOwner[a]; if (!o) return;
+    const s = txnByOwner[o] || (txnByOwner[o] = new Set());
+    acctMonths[a].forEach(m => s.add(m));
+  });
+
+  const rows = (funnel.merchants || []).filter(m => m.connected_at);
+  const mo = d => (d ? String(d).slice(0, 7) : null);
+
+  // The month axis spans every month any record references, so no index can fall outside it.
+  const seen = new Set();
+  const note = m => { if (m) seen.add(m); };
+  rows.forEach(m => {
+    note(mo(m.registered_at)); note(mo(m.connected_at)); note(mo(m.enabled_at));
+    const f = flags[String(m.oid)] || {};
+    (f.pay || []).forEach(note); (f.act || []).forEach(note);
+    (txnByOwner[String(m.oid)] ? [...txnByOwner[String(m.oid)]] : []).forEach(note);
+  });
+  const months = [...seen].sort();
+  const idx = {}; months.forEach((m, i) => { idx[m] = i; });
+  const ix = m => (m && idx[m] !== undefined ? idx[m] : null);
+  const ixs = arr => [...new Set((arr || []).map(ix).filter(v => v !== null))].sort((x, y) => x - y);
+
+  const merchants = rows.map(m => {
+    const f = flags[String(m.oid)] || {};
+    const t = txnByOwner[String(m.oid)] ? [...txnByOwner[String(m.oid)]] : [];
+    return {
+      c: m.cc || CC_UNKNOWN,
+      h: ix(mo(m.registered_at)),
+      k: ix(mo(m.connected_at)),
+      f: ix(mo(m.enabled_at)),
+      p: ixs(f.pay), a: ixs(f.act), t: ixs(t),
+    };
+  }).filter(r => r.h !== null);   // no registration month = no cohort to sit in
+
+  const withFlags = merchants.filter(r => r.p.length || r.a.length).length;
+  return {
+    months, merchants,
+    coverage: {
+      connected: rows.length,
+      placed: merchants.length,
+      withMonthlyFlags: withFlags,
+      transacting: merchants.filter(r => r.t.length).length,
+    },
+  };
+}
+function writePayCohort(pc) {
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const out =
+`// Loyverse Payments COHORT MEMBERSHIP — regenerated by activated-payments/pull.js.
+// Written into the KPI dashboard folder on purpose: the cohort triangle lives on a different
+// Cloudflare Pages site, and a cross-origin fetch would have to clear Cloudflare Access.
+//
+// One record per merchant holding a PROD Stripe connected account. Month values are INDICES
+// into __PAY_COHORT.months.
+//   c  market (ISO-2)                       h  registration cohort month
+//   k  month KYC was INITIATED              f  month KYC was FINALIZED (see caveat)
+//   p  months PAYING     a  months ACTIVE   t  months TRANSACTING on Loyverse Payments
+//
+// k and f are one-way doors: the dashboard reads "had reached this step by month M".
+// p, a and t are in-month states: the merchant held them in exactly the months listed.
+//
+// CAVEAT — Stripe publishes no charges_enabled_at, so FINALIZED KYC is dated by
+// TOS_ACCEPTANCE_DATE, the moment terms were accepted. It is the same proxy the payments
+// funnel uses. A merchant enabled some weeks after accepting terms is booked at the earlier
+// month, so finalized-KYC counts lead reality slightly rather than lagging it.
+//
+// This file covers ONLY merchants with a connected account. It can never stand in for the
+// dashboard's own Paying / Active series, which cover every merchant; it exists to make
+// intersections with the payments funnel countable.
+// Generated ${stamp}
+window.__PAY_COHORT = ${JSON.stringify({ generatedAt: stamp, months: pc.months, merchants: pc.merchants, coverage: pc.coverage })};
+`;
+  fs.writeFileSync(PAY_COHORT_FILE, out);
+  console.log(`✓ payments-cohort.js: ${pc.merchants.length} merchants over ${pc.months.length} months `
+            + `(${pc.coverage.withMonthlyFlags} with paying/active history, ${pc.coverage.transacting} transacting)`);
+}
 function writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
@@ -1541,10 +1683,11 @@ async function main() {
     // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
     // be able to break activation-data.js / overview-data.js / funnel-data.js, all already written.
     try {
-      const [cmR, revR, costR2] = await Promise.allSettled([
+      const [cmR, revR, costR2, flagsR] = await Promise.allSettled([
         fetchChargesMonthly(conn, prodAccts, countryByAcct),
         fetchMinorMonthly(conn, prodAccts, 'app_fees_monthly.sql', 'fee_minor', 'fee_cnt', countryByAcct),
         fetchMinorMonthly(conn, prodAccts, 'icplus_cost_monthly.sql', 'cost_minor', 'cost_cnt', countryByAcct),
+        fetchMerchantMonthFlags(conn, connOwners),
       ]);
       const cm = cmR.status === 'fulfilled' ? cmR.value : { byMonth: {}, unknownCcy: {} };
       const rev = revR.status === 'fulfilled' ? revR.value : {};
@@ -1553,6 +1696,17 @@ async function main() {
       if (revR.status !== 'fulfilled')  console.error(`✗ app_fees_monthly failed (revenue/take rate blank): ${revR.reason && revR.reason.message}`);
       if (costR2.status !== 'fulfilled') console.error(`✗ icplus_cost_monthly failed (cost/margin blank): ${costR2.reason && costR2.reason.message}`);
       if (Object.keys(cm.unknownCcy || {}).length) console.log(`  charges_monthly: unknown ccy skipped ${JSON.stringify(cm.unknownCcy)}`);
+
+      // Cohort membership for the KPI dashboard's triangle. Written from data already in hand,
+      // and guarded separately: a failure here must not cost the Report page its monthly series.
+      // If the flags query failed we still write the file — KYC and transacting membership are
+      // intact and useful on their own; only intersections WITH paying/active go quiet.
+      try {
+        const flags = flagsR.status === 'fulfilled' ? flagsR.value : {};
+        if (flagsR.status !== 'fulfilled') console.error(`✗ merchant_month_flags failed (paying/active intersections unavailable): ${flagsR.reason && flagsR.reason.message}`);
+        else console.log(`✓ merchant_month_flags: ${Object.keys(flags).length} of ${connOwners.length} connected owners have paying/active history`);
+        writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
+      } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
 
       const monthly = buildPaymentsMonthly(actDaily, enabledDaily, cm.byMonth, rev, cst, txnMerchants);
       // Funnel-group snapshot: base + numerators, straight from the tagged book.
