@@ -140,6 +140,9 @@ FROM paying_months p
 FULL OUTER JOIN active_months a
   ON a.merchant_id = p.merchant_id
  AND a.month_start = p.month_start
-WHERE COALESCE(p.month_start, a.month_start) >= '2019-01'
-  AND COALESCE(p.month_start, a.month_start) <= TO_VARCHAR(CURRENT_DATE(), 'YYYY-MM')
+-- No lower bound. An earlier version floored this at 2019-01 and lost the early months of the
+-- 2017 and 2018 cohorts, which would have made those cohorts read zero at the very ages where
+-- they were in fact trading. The row count is bounded by each merchant's own history anyway, so
+-- the floor bought nothing.
+WHERE COALESCE(p.month_start, a.month_start) <= TO_VARCHAR(CURRENT_DATE(), 'YYYY-MM')
 ORDER BY MERCHANT_ID, MONTH_START;

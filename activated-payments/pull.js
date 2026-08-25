@@ -1706,6 +1706,14 @@ async function main() {
         const flags = flagsR.status === 'fulfilled' ? flagsR.value : {};
         if (flagsR.status !== 'fulfilled') console.error(`✗ merchant_month_flags failed (paying/active intersections unavailable): ${flagsR.reason && flagsR.reason.message}`);
         else console.log(`✓ merchant_month_flags: ${Object.keys(flags).length} of ${connOwners.length} connected owners have paying/active history`);
+        // Standing reconciliation against the collapsed read of the SAME monthly sales table that
+        // activation-data.js uses. The two counts should agree closely; a widening gap means the
+        // month-level query is dropping merchants the collapsed one keeps, which is exactly the
+        // kind of silent loss a cohort view would render as a wall of honest-looking zeros.
+        const salesMerchants = Object.keys(sales).filter(m => (sales[m] || {}).receipts > 0).length;
+        const flagMerchants = Object.keys(flags).filter(m => (flags[m].act || []).length).length;
+        console.log(`  active-month coverage: ${flagMerchants} merchants vs ${salesMerchants} in the collapsed sales read`
+                  + (salesMerchants && flagMerchants < salesMerchants * 0.95 ? '  ← GAP, investigate' : ''));
         writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
       } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
 
