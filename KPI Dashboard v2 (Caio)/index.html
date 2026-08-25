@@ -734,9 +734,15 @@ renderCohTable();
     // Under a country filter the per-country files carry only the last 24 cohorts, so an older
     // cohort has no per-country denominator. Absolute counts are still exact; the percentage is
     // left blank rather than divided by a zero that would read as 0.0%.
+    // Size is always that cohort's registrations for whatever population is selected. With a
+    // market chosen it comes from that market's own file — the 24-row summary first, then the
+    // full-range sizes map for older cohorts. Only if the file predates that map is it unknown,
+    // and then the cell says so rather than borrowing the all-countries figure.
+    const ccSizes = window._cohSizes || null;
     const sizeOf = c => {
       if (cohSize[c] != null) return cohSize[c];
-      return (ccFilter() ? null : (ALL_SIZE[c] != null ? ALL_SIZE[c] : null));
+      if (ccFilter()) return (ccSizes && ccSizes[c] != null) ? ccSizes[c] : null;
+      return ALL_SIZE[c] != null ? ALL_SIZE[c] : null;
     };
     // Where the numbers come from in series mode: the all-cohort triangle when it has this
     // metric and no country is selected, the trimmed per-country series otherwise.
@@ -989,6 +995,14 @@ renderCohTable();
     }
     return into;
   }
+  // Registrations for every cohort in the selected markets, pooled. Separate from `cohorts`,
+  // which is the 24-row summary table — the Triangle spans the full cohort range and needs a
+  // denominator for cohorts that table never lists.
+  function poolSizes(ps){
+    const out = {};
+    ps.forEach(p => Object.entries(p.sizes || {}).forEach(([c, n]) => { out[c] = (out[c] || 0) + (+n || 0); }));
+    return out;
+  }
   function poolPayloads(ps){
     // cohortCompare: sum mrr / paying / active; activePct is a ratio and is rebuilt at the end.
     const size = {}, rows = {}, cmp = {};
@@ -1026,16 +1040,19 @@ renderCohTable();
     window._cohCountrySel = sel.slice();
     if (!sel.length){
       CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null;
+      window._cohSizes = null;
       note.textContent = NOTE_DEFAULT;
     } else if (sel.length === 1){
       const p = cache[sel[0]];
       CC = p.cohortCompare || {}; ccKeys = Object.keys(CC).sort();
       cohRows = (p.cohorts || []).slice(); cohCountry = p.country;
+      window._cohSizes = p.sizes || null;
       note.textContent = NOTE_DEFAULT;
     } else {
       const p = poolPayloads(sel.map(c => cache[c]));
       CC = p.cohortCompare; ccKeys = Object.keys(CC).sort();
       cohRows = p.cohorts; cohCountry = sel.join('+');
+      window._cohSizes = poolSizes(sel.map(c => cache[c]));
       note.textContent = NOTE_POOLED;
     }
     renderBtn(); renderChips(); repaint();

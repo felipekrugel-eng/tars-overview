@@ -161,8 +161,15 @@ def main():
 
         if not rows_out:
             continue
+        # Registrations for EVERY cohort this market has, not just the 24 the table lists.
+        # The Triangle now runs the full cohort range, and without this a market selection left
+        # the Size column blank on ~104 of 128 rows — a table that reads as broken rather than as
+        # missing a denominator. Costs roughly a line per cohort per market.
+        sizes = {c: size[(ctry, c)] for c in all_cohorts
+                 if c <= snapshot_month and size.get((ctry, c))}
         payload = {"country": ctry, "name": COUNTRY_NAMES.get(ctry, ctry),
                    "snapshotMonth": snapshot_month, "cohorts": rows_out,
+                   "sizes": sizes,
                    "cohortCompare": compare}
         with open(out_dir / f"{ctry}.json", "w", encoding="utf-8") as f:
             json.dump(payload, f, separators=(",", ":"))
