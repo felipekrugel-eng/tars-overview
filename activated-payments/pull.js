@@ -903,9 +903,10 @@ async function fetchMerchantMonthFlags(conn, merchantIds) {
   const by = {};
   for (const r of rows || []) {
     const mid = String(g(r, 'merchant_id') || '');
-    const ms = toDate(g(r, 'month_start'));
-    if (!mid || !ms) continue;
-    const m = String(ms).slice(0, 7);
+    // The query returns MONTH_START as a 'YYYY-MM' string, deliberately: the lake stores the
+    // monthly sales month as VARCHAR, so both sides of the join are normalised to that shape.
+    const m = String(g(r, 'month_start') || '').slice(0, 7);
+    if (!mid || !/^\d{4}-\d{2}$/.test(m)) continue;
     const rec = by[mid] || (by[mid] = { pay: [], act: [] });
     if (Number(g(r, 'is_paying'))) rec.pay.push(m);
     if (Number(g(r, 'is_active')))  rec.act.push(m);

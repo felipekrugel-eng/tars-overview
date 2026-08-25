@@ -53,7 +53,7 @@ jobs:
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
           # Only the generated data + discovery artifact — never the dashboard source.
-          git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json
+          git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.js"
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else
@@ -70,7 +70,7 @@ jobs:
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
               git reset -q --mixed origin/master
-              git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json
+              git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.js"
               if git diff --cached --quiet; then
                 echo "Remote already has this data — nothing to push."; exit 0
               fi

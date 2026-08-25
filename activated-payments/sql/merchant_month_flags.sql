@@ -95,7 +95,7 @@ scoped_lines AS (
 paying_months AS (
     SELECT DISTINCT
         s.merchant_id,
-        DATEADD('MONTH', g.SEQ, DATE_TRUNC('MONTH', sl.period_start))::DATE AS month_start
+        TO_VARCHAR(DATEADD('MONTH', g.SEQ, DATE_TRUNC('MONTH', sl.period_start)), 'YYYY-MM') AS month_start
     FROM scoped_lines sl
     JOIN scope s ON s.email_key = sl.email_key
     CROSS JOIN (SELECT SEQ4() AS SEQ FROM TABLE(GENERATOR(ROWCOUNT => 24))) g
@@ -116,14 +116,18 @@ paying_months AS (
 -- whose only activity in a month was later refunded could show as active here and not there.
 -- That is why a single-KPI Active view keeps reading the dashboard's own series; this column is
 -- used only to intersect Active with a payments KPI, where the population is small and known.
+-- MONTH is a VARCHAR here, not a date — DATE_TRUNC on it fails outright, which is how the first
+-- run of this query found out. LEFT(...,7) normalises whether the lake writes 'YYYY-MM' or
+-- 'YYYY-MM-DD', and both sides of the join below are the same 'YYYY-MM' string.
 active_months AS (
     SELECT DISTINCT
-        LOYVERSE_MERCHANT_ID              AS merchant_id,
-        DATE_TRUNC('MONTH', MONTH)::DATE  AS month_start
+        LOYVERSE_MERCHANT_ID          AS merchant_id,
+        LEFT(TO_VARCHAR(MONTH), 7)    AS month_start
     FROM LOYVERSE_DATA_LAKE.PUBLIC.SALES_PER_ACCOUNT_MONTHLY
     WHERE LOYVERSE_MERCHANT_ID IN (/*MERCHANT_IDS*/)
       AND TOTAL_SALES_COUNT > 0
       AND MONTH IS NOT NULL
+      AND LEFT(TO_VARCHAR(MONTH), 7) RLIKE '^[0-9]{4}-[0-9]{2}$'
 )
 -- A merchant-month appears once, carrying whichever flags apply. A month where the merchant
 -- was neither paying nor active produces no row at all — absence is the zero.
@@ -136,6 +140,6 @@ FROM paying_months p
 FULL OUTER JOIN active_months a
   ON a.merchant_id = p.merchant_id
  AND a.month_start = p.month_start
-WHERE COALESCE(p.month_start, a.month_start) >= DATE '2019-01-01'
-  AND COALESCE(p.month_start, a.month_start) <= DATE_TRUNC('MONTH', CURRENT_DATE())
+WHERE COALESCE(p.month_start, a.month_start) >= '2019-01'
+  AND COALESCE(p.month_start, a.month_start) <= TO_VARCHAR(CURRENT_DATE(), 'YYYY-MM')
 ORDER BY MERCHANT_ID, MONTH_START;

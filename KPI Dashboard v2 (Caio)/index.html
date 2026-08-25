@@ -12,6 +12,9 @@
 <script src="kpi-data.js"></script>
 <script src="daily-history.js"></script>
 <script src="flow-data.js"></script>
+<!-- Loyverse Payments cohort membership, written by activated-payments/pull.js. Optional:
+     if it is absent the triangle simply keeps its two original metrics. -->
+<script src="payments-cohort.js" onerror="window.__PAY_COHORT=null"></script>
 <style>
   :root {
     --blue: #1D8FE1; --blue-deep: #1578C4; --near-black: #1A1A1A;
@@ -238,8 +241,11 @@
     <div class="toggle" id="cohsum-view" style="display:inline-block;margin-right:12px">
       <button data-view="table" class="on">Table</button><button data-view="triangle">Triangle</button>
     </div>
+    <!-- Multi-toggle: each button is independent, and the cell counts merchants meeting EVERY
+         button that is on. The three payments buttons only appear once payments-cohort.js is
+         present, so a dashboard without that file behaves exactly as it always did. -->
     <div class="toggle" id="tri-metric" style="display:none">
-      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
+      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="kyc0" class="tri-pay" style="display:none">Initiated KYC</button><button data-metric="kyc1" class="tri-pay" style="display:none">Finalized KYC</button><button data-metric="txn" class="tri-pay" style="display:none">Transacting</button>
     </div>
     <div class="toggle" id="tri-mode" style="display:none;margin-left:8px">
       <button data-pct="0" class="on">Absolute</button><button data-pct="1">% of cohort</button>
@@ -565,7 +571,21 @@ function renderCohTable(){
 }
 renderCohTable();
 
-// ---- Cohort triangle view (last 24 cohorts x age; toggle Paying/Active) ----
+// ---- Cohort triangle view (last 24 cohorts x age) ----
+//
+// The metric buttons are a MULTI-TOGGLE, not a choice of one. Every button that is on adds a
+// condition, and the cell counts the merchants meeting ALL of them — so Active + Transacting on
+// the July cohort answers "how many of July's active merchants also took a card payment that
+// month", which no pair of separate totals can answer. Turning on more buttons can only make a
+// number smaller.
+//
+// TWO SOURCES, AND WHY. Paying and Active on their own come from the dashboard's own cohort
+// series, which covers EVERY merchant. That series is pre-summed, so it cannot be intersected.
+// Any other selection is computed from payments-cohort.js, a per-merchant membership file that
+// covers only merchants holding a Loyverse Payments account. That restriction is not a
+// limitation to work around: every payments KPI is unsatisfiable without such an account, so
+// the population is already the right one. It does mean a selection of Paying + Active alone
+// reads "among payments merchants", which the note under the table says out loud.
 (function(){
   const triWrap = document.getElementById('cohsum-tri');
   const tblWrap = document.getElementById('cohsum-table');
@@ -575,12 +595,81 @@ renderCohTable();
   const cohSizeNow = () => Object.fromEntries(cohRows.map(c => [c.cohort, +c.registrations || 0]));
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
   let triMetric = 'paying', triPct = false;
+
+  // ── payments membership ────────────────────────────────────────────────────
+  const PC = window.__PAY_COHORT || null;
+  const LABEL = { paying:'Paying', active:'Active', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
+  const PAY_KEYS = ['kyc0','kyc1','txn'];
+  // Selection is an ordered list; 'paying' alone is the page as it has always been.
+  let triSel = ['paying'];
+  const hasPay = () => triSel.some(k => PAY_KEYS.indexOf(k) >= 0);
+  // One selection, and it is one of the two original metrics -> read the embedded series by
+  // reference. Not "equal to" the old behaviour, the SAME data path.
+  const useSeries = () => triSel.length === 1 && (triSel[0] === 'paying' || triSel[0] === 'active');
+
+  // Merchants regrouped by registration cohort, month indices resolved to 'YYYY-MM' strings once.
+  // Strings rather than indices because the month axis is sparse: a calendar month in which no
+  // merchant did anything has no index, and a numeric comparison against a missing index would
+  // silently drop a cumulative KYC test that should have passed.
+  const byCohort = (() => {
+    if (!PC || !Array.isArray(PC.merchants)) return null;
+    const M = PC.months || [], at = i => (i == null ? null : (M[i] || null));
+    const out = {};
+    PC.merchants.forEach(r => {
+      const coh = at(r.h); if (!coh) return;
+      (out[coh] || (out[coh] = [])).push({
+        c: r.c || 'ZZ',
+        kyc0: at(r.k), kyc1: at(r.f),
+        paying: new Set((r.p || []).map(at).filter(Boolean)),
+        active: new Set((r.a || []).map(at).filter(Boolean)),
+        txn:    new Set((r.t || []).map(at).filter(Boolean)),
+      });
+    });
+    return out;
+  })();
+
+  // The country selection the Cohorts filter is showing. Null means all countries, in which case
+  // no country test is applied at all rather than a test that happens to match everything.
+  const ccFilter = () => (window._cohCountrySel && window._cohCountrySel.length ? window._cohCountrySel : null);
+
+  // Calendar month a cohort reaches at age i. Plain arithmetic on the YYYY-MM string.
+  function monthAt(coh, i){
+    const y = +coh.slice(0,4), m = +coh.slice(5,7) - 1 + i;
+    const yy = y + Math.floor(m / 12), mm = (m % 12 + 12) % 12 + 1;
+    return yy + '-' + (mm < 10 ? '0' : '') + mm;
+  }
+  // How many merchants of this cohort met every selected condition in that calendar month.
+  function countAt(coh, cal){
+    const list = byCohort && byCohort[coh]; if (!list) return 0;
+    const ccs = ccFilter();
+    let n = 0;
+    for (const r of list){
+      if (ccs && ccs.indexOf(r.c) < 0) continue;
+      let ok = true;
+      for (const k of triSel){
+        // KYC steps are one-way doors: reached BY this month, and never un-reached.
+        if (k === 'kyc0' || k === 'kyc1'){ const d = r[k]; if (!d || d > cal){ ok = false; break; } }
+        else if (!r[k].has(cal)){ ok = false; break; }   // in-month states
+      }
+      if (ok) n++;
+    }
+    return n;
+  }
+
   function drawTri(metric, pct){
     const triCohorts = triCohortsNow(), cohSize = cohSizeNow();
     const sizeOf = c => cohSize[c] || 0;
+    const series = useSeries();
+    // Age span is taken from the embedded series in BOTH modes, so the grid keeps exactly the
+    // shape it has today; only the numbers inside it change.
     let mx = 0, nAges = 1;
-    triCohorts.forEach(c => { const a = (CC[c] && CC[c][metric]) || [], s = sizeOf(c); nAges = Math.max(nAges, a.length);
-      a.forEach(v => { if (v != null){ const dv = pct ? (s ? v/s*100 : 0) : v; if (dv > mx) mx = dv; } }); });
+    triCohorts.forEach(c => { const a = (CC[c] && CC[c][triSel[0]]) || (CC[c] && CC[c].paying) || []; nAges = Math.max(nAges, a.length); });
+    const valOf = series
+      ? (c, i) => { const a = (CC[c] && CC[c][metric]) || []; return i < a.length ? a[i] : undefined; }
+      : (c, i) => { const a = (CC[c] && CC[c].paying) || []; return i < a.length ? countAt(c, monthAt(c, i)) : undefined; };
+    triCohorts.forEach(c => { const s = sizeOf(c);
+      for (let i = 0; i < nAges; i++){ const v = valOf(c, i);
+        if (v == null) continue; const dv = pct ? (s ? v/s*100 : 0) : v; if (dv > mx) mx = dv; } });
     // The newest diagonal is the CURRENT, in-progress month (July cohort's M1 = August-to-date).
     // Each cohort reaches it at a different age, so the partial cell is per-row, not a column.
     //
@@ -602,16 +691,17 @@ renderCohTable();
       const s = sizeOf(c);
       const pIdx = ageOfLatest(c);
       h += '<tr><td class="k">' + c + '</td><td class="sz">' + fmtN(s) + '</td>';
-      const arr = (CC[c] && CC[c][metric]) || [];
       for (let i = 0; i < nAges; i++){
-        const v = arr[i];
+        const v = valOf(c, i);
         if (v == null){ h += '<td class="tri-e"></td>'; continue; }
         const isPartial = (i === pIdx);
         if (isPartial) sawPartial = true;
         const dv = pct ? (s ? v/s*100 : 0) : v;
         const t = mx ? dv/mx : 0;
         const cell = (pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
-        const tip = c + ' · M' + i + ': ' + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v))
+        const tip = c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
+                  + triSel.map(k => LABEL[k]).join(' + ') + ': '
+                  + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v))
                   + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
         const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
                     + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
@@ -629,6 +719,30 @@ renderCohTable();
            + 'Refreshed every morning by the KPI pull.</div>';
     }
     triWrap.innerHTML = h + '</tbody></table>' + foot;
+    setNote();
+  }
+
+  // What the numbers mean changes with the selection, so the note under the table is rewritten
+  // rather than left to describe a view that is no longer on screen.
+  const NOTE_TRI = 'Each cell = the cohort’s value at that age (M0 = registration month); “Size” is the '
+                 + 'cohort’s total registrations. Toggle “% of cohort” to normalise by size. Colour scales '
+                 + 'with the displayed value.';
+  function setNote(){
+    if (triWrap.style.display === 'none') return;
+    let s = NOTE_TRI;
+    if (!useSeries()){
+      s += ' Showing ' + triSel.map(k => LABEL[k]).join(' + ') + ' — each cell counts merchants meeting '
+         + (triSel.length > 1 ? 'ALL of those conditions at once' : 'that condition')
+         + ', among merchants holding a Loyverse Payments account'
+         + (hasPay() ? '' : ' (the only population where these can be intersected)') + '. '
+         + 'Initiated and Finalized KYC are cumulative — reached by that month and never lost. '
+         + 'Paying, Active and Transacting are in-month states. '
+         + '“% of cohort” still divides by the cohort’s full registrations, so it reads as the share of '
+         + 'the whole cohort, not the share of payments merchants. '
+         + 'Loyverse Payments only has history from 2026-04, so older cohorts read zero at the ages that '
+         + 'predate it. Finalized KYC is dated from terms acceptance, the closest timestamp Stripe publishes.';
+    }
+    noteEl.textContent = s;
   }
   window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
@@ -639,14 +753,24 @@ renderCohTable();
     document.getElementById('tri-metric').style.display = tri ? 'inline-block' : 'none';
     document.getElementById('tri-mode').style.display = tri ? 'inline-block' : 'none';
     noteEl.textContent = tri
-      ? 'Each cell = the cohort’s value at that age (M0 = registration month); “Size” is the cohort’s total registrations. Toggle “% of cohort” to normalise by size. Colour scales with the displayed value.'
+      ? NOTE_TRI
       : 'Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.';
     if (tri) drawTri(triMetric, triPct);
   });
+  // Multi-toggle. A button adds or removes its condition; the last one on cannot be switched off,
+  // because an empty selection has no meaning — a triangle of nothing is not a view of anything.
   document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => {
-    document.querySelectorAll('#tri-metric button').forEach(x => x.classList.remove('on')); b.classList.add('on');
-    triMetric = b.dataset.metric; drawTri(triMetric, triPct);
+    const k = b.dataset.metric, at = triSel.indexOf(k);
+    if (at >= 0){ if (triSel.length === 1) return; triSel.splice(at, 1); }
+    else triSel.push(k);
+    document.querySelectorAll('#tri-metric button').forEach(x =>
+      x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
+    // triMetric still drives the single-series path and must follow the one selected metric.
+    triMetric = useSeries() ? triSel[0] : 'paying';
+    drawTri(triMetric, triPct);
   });
+  // The payments conditions only exist if the membership file loaded.
+  if (byCohort) document.querySelectorAll('#tri-metric button.tri-pay').forEach(b => { b.style.display = ''; });
   document.querySelectorAll('#tri-mode button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#tri-mode button').forEach(x => x.classList.remove('on')); b.classList.add('on');
     triPct = b.dataset.pct === '1'; drawTri(triMetric, triPct);
@@ -731,6 +855,9 @@ renderCohTable();
 
   // ---- what the section renders ------------------------------------------
   function apply(){
+    // The triangle's payments conditions filter a per-merchant list, so they need the selected
+    // markets themselves, not the joined label that cohCountry carries.
+    window._cohCountrySel = sel.slice();
     if (!sel.length){
       CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null;
       note.textContent = NOTE_DEFAULT;
