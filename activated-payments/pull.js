@@ -913,6 +913,41 @@ async function fetchMerchantMonthFlags(conn, merchantIds) {
   }
   return by;
 }
+
+// The monthly sales table lags — on 2026-08-25 it ended at 2026-03, while Loyverse Payments has
+// only existed since 2026-04. Reading it alone would have shown zero active merchants in every
+// month the payments KPIs cover, which looks like a finding rather than a gap. This fills the
+// tail from the raw receipts table and merges it in, bounded to the connected-account merchants
+// and to months from `from` onward so the scan stays small.
+async function fetchRecentActive(conn, merchantIds, from) {
+  const ids = sanitizeIds(merchantIds);
+  if (!ids.length) return {};
+  const sql = loadSql('merchant_month_active_recent.sql')
+    .split('/*MERCHANT_IDS*/').join(ids.join(','))
+    .split('/*RECENT_FROM*/').join(from);
+  const rows = await executeQuery(conn, sql);
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const by = {};
+  for (const r of rows || []) {
+    const mid = String(g(r, 'merchant_id') || '');
+    const m = String(g(r, 'month_start') || '').slice(0, 7);
+    if (!mid || !/^\d{4}-\d{2}$/.test(m)) continue;
+    (by[mid] || (by[mid] = [])).push(m);
+  }
+  return by;
+}
+// Fold the recent receipts months into the flags map. The monthly table keeps ownership of every
+// month up to its own last one; the receipts query owns everything after. Where the two overlap
+// the union is harmless — a merchant active by either reading was active.
+function mergeRecentActive(flags, recent) {
+  Object.keys(recent || {}).forEach(mid => {
+    const rec = flags[mid] || (flags[mid] = { pay: [], act: [] });
+    const seen = new Set(rec.act);
+    recent[mid].forEach(m => { if (!seen.has(m)) { rec.act.push(m); seen.add(m); } });
+    rec.act.sort();
+  });
+  return flags;
+}
 // Generic minor-unit monthly roll-up used by both the revenue and cost queries.
 // Same additive convention: `usd`/`cnt` unchanged, plus `by` keyed by merchant country.
 async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol, countryByAcct) {
@@ -1684,11 +1719,14 @@ async function main() {
     // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
     // be able to break activation-data.js / overview-data.js / funnel-data.js, all already written.
     try {
-      const [cmR, revR, costR2, flagsR] = await Promise.allSettled([
+      const [cmR, revR, costR2, flagsR, recentR] = await Promise.allSettled([
         fetchChargesMonthly(conn, prodAccts, countryByAcct),
         fetchMinorMonthly(conn, prodAccts, 'app_fees_monthly.sql', 'fee_minor', 'fee_cnt', countryByAcct),
         fetchMinorMonthly(conn, prodAccts, 'icplus_cost_monthly.sql', 'cost_minor', 'cost_cnt', countryByAcct),
         fetchMerchantMonthFlags(conn, connOwners),
+        // Start one month BEFORE the launch window so the two sources overlap and the seam can
+        // be inspected rather than merely trusted.
+        fetchRecentActive(conn, connOwners, '2026-01-01'),
       ]);
       const cm = cmR.status === 'fulfilled' ? cmR.value : { byMonth: {}, unknownCcy: {} };
       const rev = revR.status === 'fulfilled' ? revR.value : {};
@@ -1706,6 +1744,14 @@ async function main() {
         const flags = flagsR.status === 'fulfilled' ? flagsR.value : {};
         if (flagsR.status !== 'fulfilled') console.error(`✗ merchant_month_flags failed (paying/active intersections unavailable): ${flagsR.reason && flagsR.reason.message}`);
         else console.log(`✓ merchant_month_flags: ${Object.keys(flags).length} of ${connOwners.length} connected owners have paying/active history`);
+        if (recentR.status !== 'fulfilled') console.error(`✗ merchant_month_active_recent failed — Active will stop at the monthly table's lagged last month, which covers NONE of the payments window: ${recentR.reason && recentR.reason.message}`);
+        else {
+          const rec = recentR.value;
+          mergeRecentActive(flags, rec);
+          const months = new Set(); Object.values(rec).forEach(a => a.forEach(m => months.add(m)));
+          const ms = [...months].sort();
+          console.log(`✓ merchant_month_active_recent: ${Object.keys(rec).length} merchants active in ${ms.length} recent months (${ms[0] || '-'} → ${ms[ms.length - 1] || '-'})`);
+        }
         // Standing reconciliation against the collapsed read of the SAME monthly sales table that
         // activation-data.js uses. The two counts should agree closely; a widening gap means the
         // month-level query is dropping merchants the collapsed one keeps, which is exactly the
