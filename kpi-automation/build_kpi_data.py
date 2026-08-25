@@ -216,10 +216,21 @@ for _, r in last.sort_values("COHORT").iterrows():
         "active": int(active_snap(r["COHORT"])),
         "pctEverPaid": round(100.0*r["CUM_PAYING_EVER"]/regs,2) if regs else 0,
         "pctPayingNow": round(100.0*r["PAYING_CUSTOMERS"]/regs,2) if regs else 0})
+# cohortTriangle carries EVERY cohort, not the last 24 that cohortCompare is trimmed to, and it
+# is what the dashboard's Triangle view reads so a merchant from a 2017 cohort can be seen at all.
+# ACTIVE was computed for every cohort above but only ever exported inside the 24-cohort
+# compare_series, so the Triangle could show Paying back to 2015 and Active only back to 2024.
+# The arrays are aligned by age index with mrr/paying, and None-padded where a cohort has no
+# receipts row for that age — absence of receipts is not zero receipts.
 tri = {}
 for coh, g in grid.groupby("COHORT"):
     g = g.sort_values("MN")
-    tri[coh] = {"mrr": [round(float(x),0) for x in g["MRR_USD"]], "paying": [int(x) for x in g["PAYING_CUSTOMERS"]]}
+    n = len(g)
+    act_src = cohort_active_age.get(coh, [])
+    act = [int(act_src[i]) if i < len(act_src) and act_src[i] is not None else None for i in range(n)]
+    tri[coh] = {"mrr": [round(float(x),0) for x in g["MRR_USD"]],
+                "paying": [int(x) for x in g["PAYING_CUSTOMERS"]],
+                "active": act}
 compare_cohorts = [c["cohort"] for c in cohorts_out][-24:]
 # Carry the compare series through the CURRENT (partial) calendar month, not just the last
 # complete one, so the Triangle view shows every cohort's latest figure — e.g. the July cohort's

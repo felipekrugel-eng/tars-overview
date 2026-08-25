@@ -624,6 +624,19 @@ renderCohTable();
   const ALL_ROWS  = (D.cohorts || []).map(c => c.cohort)
     .filter(c => LATEST_M && c <= LATEST_M).sort();
   const ALL_SIZE  = Object.fromEntries((D.cohorts || []).map(c => [c.cohort, +c.registrations || 0]));
+
+  // The dashboard-wide Paying and Active views were reading cohortCompare, which is trimmed to
+  // the last 24 cohorts for the comparison chart above. cohortTriangle holds the SAME numbers —
+  // verified cell for cell, zero differences in the overlap — for all 129 cohorts, so the
+  // Triangle reads that instead and Paying now runs back to 2015 like everything else.
+  //
+  // Two things keep this honest. `active` only appeared in cohortTriangle from the pull that
+  // added it, so a dashboard on older data falls back to the 24-cohort series rather than
+  // rendering a column of blanks. And a country filter still uses the per-country files, which
+  // carry 24 cohorts each — widening those means regenerating 233 files, which is its own job.
+  const TRI = D.cohortTriangle || {};
+  const triHas = m => ALL_ROWS.some(c => TRI[c] && Array.isArray(TRI[c][m]) && TRI[c][m].length);
+  const wideSeries = m => !ccFilter() && triHas(m);
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
   // triPct is a MODE, not a flag: false = absolute, true = share of cohort registrations,
   // 'base' = share of the cohort's payments merchants. Kept truthy-compatible so every existing
@@ -715,7 +728,8 @@ renderCohTable();
     //   Anything counted from the membership — EVERY cohort with registrations, and enough age
     //     columns for the oldest of them to reach the current month. A 2017 cohort meets the
     //     payments era at roughly M111, so a 25-column grid could not have shown it at all.
-    const triCohorts = series ? triCohortsNow() : ALL_ROWS.slice();
+    const wide = series ? wideSeries(metric) : true;
+    const triCohorts = wide ? ALL_ROWS.slice() : triCohortsNow();
     const cohSize = cohSizeNow();
     // Under a country filter the per-country files carry only the last 24 cohorts, so an older
     // cohort has no per-country denominator. Absolute counts are still exact; the percentage is
@@ -724,8 +738,11 @@ renderCohTable();
       if (cohSize[c] != null) return cohSize[c];
       return (ccFilter() ? null : (ALL_SIZE[c] != null ? ALL_SIZE[c] : null));
     };
+    // Where the numbers come from in series mode: the all-cohort triangle when it has this
+    // metric and no country is selected, the trimmed per-country series otherwise.
+    const src = wide ? TRI : CC;
     let mx = 0, nAges = 1;
-    if (series) triCohorts.forEach(c => { const a = (CC[c] && CC[c].paying) || []; nAges = Math.max(nAges, a.length); });
+    if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
     else triCohorts.forEach(c => { nAges = Math.max(nAges, (LATEST_M ? mAge(c, LATEST_M) : 0) + 1); });
     // Cells that predate Loyverse Payments are left BLANK, not zero, whenever a payments
     // condition is selected. "How many merchants of the 2024-10 cohort had started KYC in
@@ -734,7 +751,7 @@ renderCohTable();
     // condition, so those cells are real and stay.
     const blankBefore = hasPay() ? payFrom : null;
     const valOf = series
-      ? (c, i) => { const a = (CC[c] && CC[c][metric]) || []; return i < a.length ? a[i] : undefined; }
+      ? (c, i) => { const a = (src[c] && src[c][metric]) || []; return i < a.length ? a[i] : undefined; }
       : (c, i) => {
           if (!LATEST_M || i > mAge(c, LATEST_M)) return undefined;   // age the cohort has not reached
           const cal = monthAt(c, i);
@@ -826,6 +843,13 @@ renderCohTable();
   function setNote(){
     if (triWrap.style.display === 'none') return;
     let s = NOTE_TRI;
+    if (useSeries() && !wideSeries(triSel[0])){
+      s += ccFilter()
+        ? ' Showing the last 24 cohorts: the per-country cohort files carry 24 each, so a market '
+          + 'selection cannot reach further back. Clear the country filter for the full range.'
+        : ' Showing the last 24 cohorts for this metric until the next KPI pull, which is the '
+          + 'first to carry it for every cohort.';
+    }
     if (!useSeries()){
       s += ' This counts merchants holding a Loyverse Payments account — the only population where '
          + 'a payments condition can be satisfied, and the one the Pay. base column shows. It is a '
