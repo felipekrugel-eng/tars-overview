@@ -243,13 +243,17 @@
     <div class="toggle" id="cohsum-view" style="display:inline-block;margin-right:12px">
       <button data-view="table" class="on">Table</button><button data-view="triangle">Triangle</button>
     </div>
-    <!-- TWO groups, because the two behave differently.
-         POS (Paying, Active) are independent states: a merchant can be either, both or neither,
-         so these are free toggles.
+    <!-- TWO groups, one condition from each at most.
+         POS (Paying, Active) come from the dashboard's own cohort series, which covers EVERY
+         merchant but arrives pre-summed. A total cannot be intersected — there is no way to ask
+         which of 23,182 active merchants are among the 810 paying — so combining these two would
+         have to fall back on the payments merchants alone and answer about 261 merchants while
+         sitting beside numbers about 114,847. They are exclusive instead.
          Loyverse Payments (Initiated / Finalized KYC, Transacting) are nested stages — verified
-         on the data: no merchant finalized without initiating, and none transacted without
-         finalizing. Intersecting them would only ever return the innermost one, so at most one
-         may be picked at a time. It can also be switched off entirely.
+         on the data: no merchant finalized without initiating, none transacted without
+         finalizing. Intersecting two of them would only ever return the innermost.
+         One from each group DOES combine: a payments condition already restricts the population
+         to merchants holding an account, and the Pay. base column names that population.
          The payments group appears only once payments-cohort.json has loaded. -->
     <div class="toggle" id="tri-metric" style="display:none">
       <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
@@ -629,6 +633,7 @@ renderCohTable();
   // ── payments membership ────────────────────────────────────────────────────
   const LABEL = { paying:'Paying', active:'Active', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
   const PAY_KEYS = ['kyc0','kyc1','txn'];
+  const POS_KEYS = ['paying','active'];
   // Selection is an ordered list; 'paying' alone is the page as it has always been.
   let triSel = ['paying'];
   const hasPay = () => triSel.some(k => PAY_KEYS.indexOf(k) >= 0);
@@ -822,7 +827,11 @@ renderCohTable();
     if (triWrap.style.display === 'none') return;
     let s = NOTE_TRI;
     if (!useSeries()){
-      s += ' Every cohort with registrations is listed, not just the last 24, and the age axis runs '
+      s += ' This counts merchants holding a Loyverse Payments account — the only population where '
+         + 'a payments condition can be satisfied, and the one the Pay. base column shows. It is a '
+         + 'small slice of the cohort, so these figures are much smaller than the dashboard-wide '
+         + 'Paying and Active views and are not their intersection. '
+         + 'Every cohort with registrations is listed, not just the last 24, and the age axis runs '
          + 'far enough for the oldest of them to reach the payments era — a 2017 cohort meets it at '
          + 'roughly M111. Showing ' + triSel.map(k => LABEL[k]).join(' + ') + ' — each cell counts merchants meeting '
          + (triSel.length > 1 ? 'ALL of those conditions at once' : 'that condition')
@@ -859,6 +868,17 @@ renderCohTable();
       : 'Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.';
     if (tri) drawTri(triMetric, triPct);
   });
+  // Each group holds at most one condition. Clicking the one already on switches it off, unless
+  // it is the only condition left — a triangle of nothing is not a view of anything.
+  function pickIn(group, k){
+    const wasOn = triSel.indexOf(k) >= 0;
+    triSel = triSel.filter(x => group.indexOf(x) < 0);
+    if (!wasOn) triSel.push(k);
+    if (!triSel.length) triSel = [k];
+    // POS first, so the label and the single-series test read in a stable order.
+    triSel.sort((a, b) => (POS_KEYS.indexOf(a) >= 0 ? 0 : 1) - (POS_KEYS.indexOf(b) >= 0 ? 0 : 1));
+    paintButtons();
+  }
   function paintButtons(){
     document.querySelectorAll('#tri-metric button, #tri-stage button').forEach(x =>
       x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
@@ -875,24 +895,8 @@ renderCohTable();
     }
     drawTri(triMetric, triPct);
   }
-  // POS conditions are independent, so these are free toggles. The last remaining condition of
-  // any kind cannot be switched off — a triangle of nothing is not a view of anything.
-  document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => {
-    const k = b.dataset.metric, at = triSel.indexOf(k);
-    if (at >= 0){ if (triSel.length === 1) return; triSel.splice(at, 1); }
-    else triSel.push(k);
-    paintButtons();
-  });
-  // Payments stages are nested — nothing finalizes without initiating, nothing transacts without
-  // finalizing — so intersecting two of them would only ever return the innermost. Picking one
-  // replaces the other; picking the one already on switches the group off.
-  document.querySelectorAll('#tri-stage button').forEach(b => b.onclick = () => {
-    const k = b.dataset.metric, wasOn = triSel.indexOf(k) >= 0;
-    triSel = triSel.filter(x => PAY_KEYS.indexOf(x) < 0);   // drop whichever stage was on
-    if (!wasOn) triSel.push(k);
-    if (!triSel.length) triSel = ['paying'];                // switching the last one off falls back
-    paintButtons();
-  });
+  document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => pickIn(POS_KEYS, b.dataset.metric));
+  document.querySelectorAll('#tri-stage button').forEach(b => b.onclick = () => pickIn(PAY_KEYS, b.dataset.metric));
   // The membership file is fetched, not script-tagged, and with cache:'no-cache' — it is
   // rewritten several times a day and a cached copy renders a stale triangle inside a current
   // page, which is indistinguishable from a bug in the numbers. Until it arrives the section is
