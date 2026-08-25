@@ -257,8 +257,13 @@
     <div class="toggle" id="tri-stage" style="display:none;margin-left:8px">
       <button data-metric="kyc0">Initiated KYC</button><button data-metric="kyc1">Finalized KYC</button><button data-metric="txn">Transacting</button>
     </div>
+    <!-- Two denominators, because the counts have two honest readings. "% of cohort" divides by
+         the cohort's total registrations, which answers how far Loyverse Payments has reached
+         into that cohort. "% of payments base" divides by the merchants in that cohort who hold
+         a payments account, which answers how those merchants are behaving. The second only
+         exists while the membership is being counted, since it is the only mode with a base. -->
     <div class="toggle" id="tri-mode" style="display:none;margin-left:8px">
-      <button data-pct="0" class="on">Absolute</button><button data-pct="1">% of cohort</button>
+      <button data-pct="0" class="on">Absolute</button><button data-pct="1">% of cohort</button><button data-pct="base" id="tri-pct-base" style="display:none">% of payments base</button>
     </div>
     <div id="cohsum-table" style="overflow-x:auto"><table id="t-cohorts"></table></div>
     <div id="cohsum-tri" style="display:none;overflow-x:auto"></div>
@@ -616,6 +621,9 @@ renderCohTable();
     .filter(c => LATEST_M && c <= LATEST_M).sort();
   const ALL_SIZE  = Object.fromEntries((D.cohorts || []).map(c => [c.cohort, +c.registrations || 0]));
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
+  // triPct is a MODE, not a flag: false = absolute, true = share of cohort registrations,
+  // 'base' = share of the cohort's payments merchants. Kept truthy-compatible so every existing
+  // `pct ? ... : ...` still means "some percentage" versus "a count".
   let triMetric = 'paying', triPct = false;
 
   // ── payments membership ────────────────────────────────────────────────────
@@ -669,6 +677,14 @@ renderCohTable();
     const yy = y + Math.floor(m / 12), mm = (m % 12 + 12) % 12 + 1;
     return yy + '-' + (mm < 10 ? '0' : '') + mm;
   }
+  // How many merchants of this cohort hold a payments account at all — the population every
+  // membership count is drawn from. Without this on screen a row reads "6" beside a Size of
+  // 114,847 registrations, and 6-in-114,847 is not what the cell means.
+  function baseOf(coh){
+    const list = byCohort && byCohort[coh]; if (!list) return 0;
+    const ccs = ccFilter();
+    return ccs ? list.filter(r => ccs.indexOf(r.c) >= 0).length : list.length;
+  }
   // How many merchants of this cohort met every selected condition in that calendar month.
   function countAt(coh, cal){
     const list = byCohort && byCohort[coh]; if (!list) return 0;
@@ -720,7 +736,11 @@ renderCohTable();
           if (blankBefore && cal < blankBefore) return undefined;
           return countAt(c, cal);
         };
-    triCohorts.forEach(c => { const s = sizeOf(c);
+    // The number a cell is divided by, and the number shown in the second column, are the SAME
+    // number — that is the point. A count of payments merchants beside a denominator of total
+    // registrations reads as a rate that was never computed.
+    const denomOf = pct === 'base' ? (c => baseOf(c)) : sizeOf;
+    triCohorts.forEach(c => { const s = denomOf(c);
       for (let i = 0; i < nAges; i++){ const v = valOf(c, i);
         if (v == null) continue; const dv = pct ? (s ? v/s*100 : null) : v;
         if (dv != null && dv > mx) mx = dv; } });
@@ -738,13 +758,23 @@ renderCohTable();
       return (+LATEST.slice(0,4) - +c.slice(0,4)) * 12 + (+LATEST.slice(5,7) - +c.slice(5,7));
     };
     let sawPartial = false;
-    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
+    // Size is ALWAYS the cohort's full registrations — it is the one number that means the same
+    // thing in every view, and it anchors every other column. Membership mode adds a SECOND
+    // column beside it for the payments base, because a cell counting payments merchants next to
+    // a registration count alone reads as 6-in-114,847 rather than 6-in-261.
+    const baseCol = !series;
+    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>'
+          + (baseCol ? '<th class="sz" title="Merchants of this cohort holding a Loyverse Payments account — the population every cell in this row is counted from.">Pay. base</th>' : '');
     for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
     h += '</tr></thead><tbody>';
     triCohorts.slice().reverse().forEach(c => {
-      const s = sizeOf(c);
       const pIdx = ageOfLatest(c);
-      h += '<tr><td class="k">' + c + '</td><td class="sz">' + (s == null ? '—' : fmtN(s)) + '</td>';
+      const regs = sizeOf(c), base = baseCol ? baseOf(c) : null;
+      h += '<tr><td class="k">' + c + '</td>'
+         + '<td class="sz">' + (regs == null ? '—' : fmtN(regs)) + '</td>'
+         + (baseCol ? '<td class="sz" title="' + fmtN(base) + ' of this cohort hold a Loyverse Payments account'
+                    + (regs == null ? '' : ', out of ' + fmtN(regs) + ' registrations') + '">'
+                    + fmtN(base) + '</td>' : '');
       for (let i = 0; i < nAges; i++){
         const v = valOf(c, i);
         if (v == null){ h += '<td class="tri-e"></td>'; continue; }
@@ -752,14 +782,17 @@ renderCohTable();
         if (isPartial) sawPartial = true;
         // No denominator for this cohort in this market — see sizeOf. The count is exact, the
         // percentage is unknown, and printing 0.0% would claim otherwise.
-        if (pct && !s){ h += '<td class="tri-e" title="' + c + ' · M' + i + ': ' + fmtN(v)
-              + ' merchants, but this market has no registration count for a cohort this old, so the share cannot be computed">—</td>'; continue; }
-        const dv = pct ? v/s*100 : v;
+        const den = pct === 'base' ? base : regs;
+        if (pct && !den){ h += '<td class="tri-e" title="' + c + ' · M' + i + ': ' + fmtN(v)
+              + ' merchants, but there is no denominator for a cohort this old in this market, so the share cannot be computed">—</td>'; continue; }
+        const dv = pct ? v/den*100 : v;
         const t = mx ? dv/mx : 0;
         const cell = (pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
         const tip = c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
                   + triSel.map(k => LABEL[k]).join(' + ') + ': '
-                  + (pct ? dv.toFixed(1) + '% (' + fmtN(v) + ')' : fmtN(v))
+                  + (pct ? dv.toFixed(1) + '% — ' + fmtN(v) + ' of ' + fmtN(den)
+                           + (pct === 'base' ? ' payments merchants' : ' registrations')
+                     : fmtN(v) + (baseCol ? ' of ' + fmtN(base) + ' payments merchants' : ''))
                   + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
         const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
                     + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
@@ -797,8 +830,11 @@ renderCohTable();
          + (hasPay() ? '' : ' (the only population where these can be intersected)') + '. '
          + 'Initiated and Finalized KYC are cumulative — reached by that month and never lost. '
          + 'Paying, Active and Transacting are in-month states. '
-         + '“% of cohort” still divides by the cohort’s full registrations, so it reads as the share of '
-         + 'the whole cohort, not the share of payments merchants. '
+         + '“Size” is always the cohort’s full registrations. “Pay. base” beside it is the subset '
+         + 'holding a payments account, which is the population every cell is counted from — a cell '
+         + 'reading 6 means 6 of that base, not 6 of Size. “% of cohort” divides by Size and answers '
+         + 'how far payments has reached into the cohort; “% of payments base” divides by the base '
+         + 'and answers how those merchants behave. '
          + (hasPay() && payFrom
              ? 'Cells before ' + payFrom + ' are blank rather than zero: Loyverse Payments did not exist yet, '
                + 'so the question has no answer at those ages. '
@@ -828,6 +864,15 @@ renderCohTable();
       x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
     // triMetric still drives the single-series path and must follow the one selected metric.
     triMetric = useSeries() ? triSel[0] : 'paying';
+    // "% of payments base" has no base to divide by in single-series mode, where the cells cover
+    // every merchant. Hide it there, and fall back rather than leaving a dead mode selected.
+    const baseBtn = document.getElementById('tri-pct-base');
+    const showBase = !useSeries() && !!byCohort;
+    baseBtn.style.display = showBase ? '' : 'none';
+    if (!showBase && triPct === 'base'){
+      triPct = false;
+      document.querySelectorAll('#tri-mode button').forEach(x => x.classList.toggle('on', x.dataset.pct === '0'));
+    }
     drawTri(triMetric, triPct);
   }
   // POS conditions are independent, so these are free toggles. The last remaining condition of
@@ -865,7 +910,8 @@ renderCohTable();
     .catch(() => { /* not generated yet — the payments conditions simply are not offered */ });
   document.querySelectorAll('#tri-mode button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#tri-mode button').forEach(x => x.classList.remove('on')); b.classList.add('on');
-    triPct = b.dataset.pct === '1'; drawTri(triMetric, triPct);
+    triPct = b.dataset.pct === 'base' ? 'base' : b.dataset.pct === '1';
+    drawTri(triMetric, triPct);
   });
 })();
 
