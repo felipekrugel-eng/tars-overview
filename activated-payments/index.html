@@ -2248,33 +2248,33 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     }
     function fmtStatus(st){ if(!st) return ''; var t=String(st).toLowerCase().replace(/_/g,' '); return t.charAt(0).toUpperCase()+t.slice(1); }
     var ORDER=['new','paying','activefree','dormant'];
-    // One bucket's four chips. Shared by the single view and by Compare all, so the two can
-    // never drift into counting the same thing differently.
-    function chipsFor(b){
-      var B=BUCKETS[b], rs=rowsFor(b);
+    // Four chips over whatever set of merchants it is handed. One code path for a single bucket
+    // and for Compare all, so the consolidated figures cannot drift from the per-bucket ones.
+    function chipsOver(rs, where, accent){
       var passed=rs.filter(didPass), ordered=rs.filter(isOrdered),
           received=rs.filter(isReceived), txn=rs.filter(didTxn);
       var when = monthly()? ' in '+monthShort(MONTH) : '';
-      return chip('Passed KYC'+when, num(passed.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
+      return chip('Passed KYC'+when, num(passed.length), where, accent)
         +chip('Terminal ordered'+when, num(ordered.length), '<b>'+pctL(ordered.length,passed.length)+'</b> of those merchants')
         +chip('Terminal received'+when, hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
         +chip('Transacting'+when, num(txn.length), '<b>'+pctL(txn.length,passed.length)+'</b> of those merchants', 'var(--green)');
     }
+    function chipsFor(b){
+      return chipsOver(rowsFor(b), 'in the <b>'+BUCKETS[b].name.replace(/—/g,'-')+'</b> bucket', BUCKETS[b].accent);
+    }
     function render(){
       var all = cur==='compare';
       var buckets = all? ORDER : [cur];
-      // Compare all shows the four buckets stacked, each headed by its own name, rather than one
-      // undifferentiated row of sixteen chips.
-      $('fnDeepKpis').innerHTML = all
-        ? ORDER.map(function(b){
-            return '<div style="flex:0 0 100%;font-weight:800;font-size:13px;margin:10px 0 -4px;color:'+BUCKETS[b].accent+'">'
-                 + BUCKETS[b].name.replace(/—/g,'-') + '</div>' + chipsFor(b);
-          }).join('')
-        : chipsFor(cur);
       // The table is every selected bucket's merchants at once, with the bucket named per row so
       // the list still reconciles against the chips above it.
       var rs=[];
       buckets.forEach(function(b){ rowsFor(b).forEach(function(r){ rs.push({r:r, b:b}); }); });
+      // Compare all consolidates: ONE set of four figures totalling every bucket, not four sets
+      // side by side. The buckets are mutually exclusive, so the total is a real count of
+      // distinct merchants rather than a sum that could double-count anyone.
+      $('fnDeepKpis').innerHTML = all
+        ? chipsOver(rs.map(function(x){return x.r;}), 'across <b>all four buckets</b>', 'var(--blue-deep)')
+        : chipsFor(cur);
       if (all) rs.sort(function(x,y){
         var kx=(didTxn(x.r)?4:0)+(isReceived(x.r)?2:0)+(isOrdered(x.r)?1:0);
         var ky=(didTxn(y.r)?4:0)+(isReceived(y.r)?2:0)+(isOrdered(y.r)?1:0);
