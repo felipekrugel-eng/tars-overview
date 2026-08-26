@@ -77,7 +77,9 @@ def main():
     asof = max(str(r.get("SNAPSHOT_DATE", ""))[:10] for r in cc)
     y, m = int(asof[:4]), int(asof[5:7])
     snapshot_month = f"{y - 1:04d}-12" if m == 1 else f"{y:04d}-{m - 1:02d}"
-    months = sorted({ym(r["MONTH_START"]) for r in cc})
+    # Only the age-grid rows carry a MONTH_START; the all-cohort size rows leave it null and must
+    # not contribute a "None" month here, which would corrupt the snapshot-month derivation below.
+    months = sorted({ym(r["MONTH_START"]) for r in cc if r.get("MONTH_START")})
     if snapshot_month not in months:      # fixture / partial-grid safety net
         snapshot_month = months[-2] if len(months) > 1 else months[-1]
     # The CURRENT, in-progress month. The age series runs to here so the Triangle view can show
@@ -98,15 +100,27 @@ def main():
         active[(ctry, ym(r["COHORT_MONTH"]))][mn] = int(_f(r, "ACTIVE_MERCHANTS"))
 
     # index the cohort x country grid
+    #
+    # The query returns TWO grains. Rows with a MONTH_START carry the age grid for the recent
+    # cohort window; rows without one carry a cohort's registrations for EVERY cohort the market
+    # has, however old. Splitting on that here keeps the null out of int(MONTH_NUMBER), which
+    # would otherwise raise, and keeps the ancient cohorts out of `shown` — the summary table is
+    # still the last 24, only the Triangle spans the full range.
     by_country = collections.defaultdict(lambda: collections.defaultdict(dict))
-    size = {}
+    size = {}                       # (country, cohort) -> registrations, recent window
+    all_size = collections.defaultdict(dict)   # country -> {cohort: registrations}, every cohort
     for r in cc:
         ctry = (r.get("COUNTRY") or "ZZ").strip().upper() or "ZZ"
-        coh, mn = ym(r["COHORT_MONTH"]), int(_f(r, "MONTH_NUMBER"))
+        coh = ym(r["COHORT_MONTH"])
+        if not r.get("MONTH_START"):
+            all_size[ctry][coh] = int(_f(r, "REGISTRATIONS"))
+            continue
+        mn = int(_f(r, "MONTH_NUMBER"))
         by_country[ctry][coh][mn] = r
         size[(ctry, coh)] = int(_f(r, "REGISTRATIONS"))
 
-    all_cohorts = sorted({ym(r["COHORT_MONTH"]) for r in cc})
+    grid_cohorts = sorted({ym(r["COHORT_MONTH"]) for r in cc if r.get("MONTH_START")})
+    all_cohorts = grid_cohorts
     shown = [c for c in all_cohorts if c <= snapshot_month][-N_SHOWN:]
 
     out_dir = OUT_DIR / "cohort-country"
@@ -162,11 +176,14 @@ def main():
         if not rows_out:
             continue
         # Registrations for EVERY cohort this market has, not just the 24 the table lists.
-        # The Triangle now runs the full cohort range, and without this a market selection left
-        # the Size column blank on ~104 of 128 rows — a table that reads as broken rather than as
-        # missing a denominator. Costs roughly a line per cohort per market.
-        sizes = {c: size[(ctry, c)] for c in all_cohorts
-                 if c <= snapshot_month and size.get((ctry, c))}
+        # The Triangle runs the full cohort range, and without these a market selection left the
+        # Size column blank on ~104 of 128 rows — a table that reads as broken rather than as
+        # missing a denominator. Falls back to the windowed sizes if the query predates the
+        # all-cohort grain, so an older CSV still produces a valid file.
+        sizes = {c: n for c, n in sorted(all_size.get(ctry, {}).items())
+                 if c <= snapshot_month and n} \
+                or {c: size[(ctry, c)] for c in all_cohorts
+                    if c <= snapshot_month and size.get((ctry, c))}
         payload = {"country": ctry, "name": COUNTRY_NAMES.get(ctry, ctry),
                    "snapshotMonth": snapshot_month, "cohorts": rows_out,
                    "sizes": sizes,

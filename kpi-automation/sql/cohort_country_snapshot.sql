@@ -152,6 +152,24 @@ cohort_size AS (
       AND m.FIRST_CREATED_DATE <= CURRENT_DATE()
     GROUP BY m.COHORT_MONTH, m.COUNTRY
 ),
+-- Cohort size per cohort x country for EVERY cohort, not just the 25-month window above.
+--
+-- WHY: the dashboard's Triangle now spans every cohort, because merchants who registered years
+-- ago are the ones adopting Loyverse Payments. Selecting a market left the Size column blank on
+-- most of those rows, since per-country registrations only existed for the recent window — a
+-- table of dashes that reads as broken numbers.
+--
+-- Emitted as a SECOND GRAIN of this query (MONTH_START NULL) rather than as a separate query:
+-- `merchants` is already materialised, so this is one more aggregation over a set already in
+-- memory, and it inherits the same email dedup and bot filter. A separate query using
+-- country_month_registrations would NOT: it disagrees with these figures on 12 of 96 shared
+-- cohorts, so it would put a denominator on screen that contradicts this query's own numerators.
+all_cohort_size AS (
+    SELECT m.COHORT_MONTH, m.COUNTRY, COUNT(*) AS REGISTRATIONS
+    FROM merchants m
+    WHERE m.FIRST_CREATED_DATE <= CURRENT_DATE()
+    GROUP BY m.COHORT_MONTH, m.COUNTRY
+),
 uk_lines AS (
     SELECT
         LOWER(TRIM(c.EMAIL))                                 AS EMAIL_KEY,
@@ -290,4 +308,19 @@ LEFT JOIN paying_per_ccm p
 LEFT JOIN cum_ever_paid cep
        ON cep.COHORT_MONTH = g.COHORT_MONTH
       AND cep.COUNTRY      = g.COUNTRY
-      AND cep.MONTH_START  = g.MONTH_START;
+      AND cep.MONTH_START  = g.MONTH_START
+UNION ALL
+-- The all-cohort size grain. MONTH_START IS NULL marks it; build_cohort_country.py splits on
+-- that and never feeds these rows into the age grid.
+SELECT
+    CURRENT_DATE()                          AS SNAPSHOT_DATE,
+    a.COHORT_MONTH,
+    a.COUNTRY,
+    a.REGISTRATIONS,
+    CAST(NULL AS DATE)                      AS MONTH_START,
+    CAST(NULL AS NUMBER)                    AS MONTH_NUMBER,
+    0                                       AS PAYING_CUSTOMERS,
+    0                                       AS CUM_PAYING_EVER,
+    0                                       AS MRR_USD,
+    CAST(NULL AS NUMBER)                    AS ARPC_USD
+FROM all_cohort_size a;
