@@ -1411,8 +1411,10 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
 //
 // SHAPE. `months` is the month axis; every other month reference is an INDEX into it, so the
 // file stays small as history grows. Per merchant:
+//   o    Loyverse owner id      n  business name      e  email
 //   c    ISO-2 market (CONNECTED_ACCOUNTS.COUNTRY, the same field the payments pages filter on)
 //   h    registration cohort, as an index into `months`
+//   d    registration date, as written — the cohort index only carries the month
 //   k    month index the merchant INITIATED KYC (connected a Stripe account)
 //   f    month index the merchant FINALIZED KYC — see the proxy caveat below
 //   p    months the merchant was PAYING          (sorted indices)
@@ -1458,12 +1460,17 @@ function buildPayCohort(funnel, flags, acctMonths, meta, accountRows) {
   const ix = m => (m && idx[m] !== undefined ? idx[m] : null);
   const ixs = arr => [...new Set((arr || []).map(ix).filter(v => v !== null))].sort((x, y) => x - y);
 
+  // Identity travels with the record so a triangle cell can name the merchants behind its count.
+  // Roughly 50 KB across the file — worth it: without it a cell reading 10 is a number nobody can
+  // check, and checking one was how the off-POS payment case got explained.
   const merchants = rows.map(m => {
     const f = flags[String(m.oid)] || {};
     const t = txnByOwner[String(m.oid)] ? [...txnByOwner[String(m.oid)]] : [];
     return {
+      o: String(m.oid), n: m.name || '', e: m.email || '',
       c: m.cc || CC_UNKNOWN,
       h: ix(mo(m.registered_at)),
+      d: m.registered_at || null,
       k: ix(mo(m.connected_at)),
       f: ix(mo(m.enabled_at)),
       p: ixs(f.pay), a: ixs(f.act), t: ixs(t),
@@ -1497,8 +1504,10 @@ function writePayCohort(pc) {
       whyHere: 'Written into the KPI dashboard folder because the cohort triangle is a different '
              + 'Cloudflare Pages site, and a cross-origin fetch would have to clear Cloudflare Access.',
       fields: {
+        o: 'Loyverse owner id', n: 'business name', e: 'email',
         c: 'market (ISO-2), from CONNECTED_ACCOUNTS.COUNTRY',
         h: 'registration cohort — index into months[]',
+        d: 'registration date as written; h carries only the month',
         k: 'month KYC was INITIATED (account connected) — index into months[]',
         f: 'month KYC was FINALIZED — index into months[]; see caveats.finalizedKyc',
         p: 'months the merchant was PAYING — indices into months[]',

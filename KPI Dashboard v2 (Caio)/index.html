@@ -98,6 +98,30 @@
   table.tri td.sz { text-align:right; color:var(--mid-gray); font-weight:600; background:#F7F9FB; }
   table.tri th.sz { text-align:right; }
   table.tri td.tri-e { background:#FAFBFC; }
+  /* A cell whose merchants can be listed. Only membership cells qualify — the dashboard-wide
+     series are pre-summed totals with no merchant list behind them. */
+  table.tri td.tri-drill { cursor:zoom-in; }
+  table.tri td.tri-drill:hover { outline:2px solid rgba(21,120,196,.85); outline-offset:-2px; }
+  .drill-back { position:fixed; inset:0; background:rgba(16,24,40,.42); z-index:80;
+    display:flex; align-items:center; justify-content:center; padding:24px; }
+  .drill-box { background:#fff; border-radius:12px; box-shadow:0 18px 48px rgba(16,24,40,.28);
+    width:min(920px,100%); max-height:min(80vh,760px); display:flex; flex-direction:column; }
+  .drill-head { padding:16px 20px 12px; border-bottom:1px solid #EEF1F4; }
+  .drill-head h4 { margin:0 0 3px; font-size:15px; color:var(--near-black,#1A1A1A); }
+  .drill-head .sub { font-size:12px; color:var(--mid-gray); }
+  .drill-tools { display:flex; gap:8px; align-items:center; margin-top:10px; }
+  .drill-tools input { flex:1; font-size:12px; padding:6px 9px; border:1px solid var(--border,#D9DEE5); border-radius:6px; }
+  .drill-tools button { font-size:12px; padding:6px 11px; border:1px solid var(--border,#D9DEE5);
+    border-radius:6px; background:#fff; cursor:pointer; }
+  .drill-tools button:hover { border-color:#9AA7B5; }
+  .drill-body { overflow:auto; padding:0 20px 16px; }
+  .drill-body table { border-collapse:collapse; width:100%; font-size:12px; }
+  .drill-body th { text-align:left; font-size:11px; color:var(--mid-gray); font-weight:600;
+    padding:8px 8px 6px; position:sticky; top:0; background:#fff; border-bottom:1px solid #EEF1F4; }
+  .drill-body td { padding:6px 8px; border-bottom:1px solid #F5F7F9; white-space:nowrap; }
+  .drill-body td.nm { white-space:normal; font-weight:600; color:var(--near-black,#1A1A1A); }
+  .drill-x { position:absolute; top:12px; right:16px; border:0; background:none; font-size:20px;
+    line-height:1; color:var(--mid-gray); cursor:pointer; }
   .cohpick { margin:2px 0 10px; }
   .cohpick-lbl { font-size:12px; color:var(--mid-gray); margin-right:8px; }
   .cohchips { display:inline-flex; flex-wrap:wrap; gap:5px; vertical-align:middle; }
@@ -271,6 +295,7 @@
     </div>
     <div id="cohsum-table" style="overflow-x:auto"><table id="t-cohorts"></table></div>
     <div id="cohsum-tri" style="display:none;overflow-x:auto"></div>
+    <div id="cohdrill"></div>
     <div class="note" id="cohsum-note">Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.</div>
   </div>
 
@@ -667,6 +692,10 @@ renderCohTable();
   let byCohort = null;
   // Stamped by the pull; shown in the note so a stale file is visible rather than inferred.
   let PC_STAMP = null;
+  // Identity arrived in the file after the counting did. A dashboard served an older file would
+  // otherwise open a drill-down full of blank rows, which looks like broken data rather than a
+  // pending pull — so cells stay inert until names are actually present.
+  let hasIdentity = false;
   // The first month Loyverse Payments existed at all, taken from the data rather than hardcoded.
   // Before it, a payments question has no answer — see the blanking rule in drawTri.
   let payFrom = null;
@@ -684,6 +713,7 @@ renderCohTable();
       // active in July and went quiet is not active in August. The two KYC steps are different:
       // they are one-way doors and stay crossed, so they keep a single month.
       (out[coh] || (out[coh] = [])).push({
+        o: r.o || '', n: r.n || '', e: r.e || '', reg: r.d || null,
         c: r.c || 'ZZ',
         kyc0: k, kyc1: at(r.f),
         paying: new Set((r.p || []).map(at).filter(Boolean)),
@@ -692,6 +722,7 @@ renderCohTable();
       });
     });
     payFrom = first;
+    hasIdentity = PC.merchants.some(r => r.n || r.e);
     return out;
   }
 
@@ -712,6 +743,20 @@ renderCohTable();
     const list = byCohort && byCohort[coh]; if (!list) return 0;
     const ccs = ccFilter();
     return ccs ? list.filter(r => ccs.indexOf(r.c) >= 0).length : list.length;
+  }
+  // The merchants of this cohort meeting every selected condition in that calendar month.
+  // countAt is this, counted — one predicate, so a cell and its drill-down cannot disagree.
+  function membersAt(coh, cal){
+    const list = byCohort && byCohort[coh]; if (!list) return [];
+    const ccs = ccFilter();
+    return list.filter(r => {
+      if (ccs && ccs.indexOf(r.c) < 0) return false;
+      for (const k of triSel){
+        if (k === 'kyc0' || k === 'kyc1'){ const d = r[k]; if (!d || d > cal) return false; }
+        else if (!r[k].has(cal)) return false;
+      }
+      return true;
+    });
   }
   // How many merchants of this cohort met every selected condition in that calendar month.
   function countAt(coh, cal){
@@ -833,7 +878,14 @@ renderCohTable();
                   + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
         const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
                     + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
-        h += '<td style="' + style + '" title="' + tip + '">' + cell + '</td>';
+        // A cell can be drilled only when its number came from the membership list. The
+        // dashboard-wide series are pre-summed over every merchant, so there is no list behind
+        // them; those cells stay inert rather than opening an empty panel.
+        const drill = membership && hasIdentity && v > 0;
+        h += '<td class="' + (drill ? 'tri-drill' : '') + '"'
+           + (drill ? ' data-coh="' + c + '" data-cal="' + monthAt(c, i) + '"' : '')
+           + ' style="' + style + '" title="' + tip + (drill ? ' — double-click to list them' : '') + '">'
+           + cell + '</td>';
       }
       h += '</tr>';
     });
@@ -848,6 +900,7 @@ renderCohTable();
     }
     triWrap.innerHTML = h + '</tbody></table>' + foot;
     setNote();
+    bindDrill();
   }
 
   // What the numbers mean changes with the selection, so the note under the table is rewritten
@@ -870,7 +923,9 @@ renderCohTable();
           + 'first to carry it for every cohort.';
     }
     if (!useSeries()){
-      s += ' This counts merchants holding a Loyverse Payments account — the only population where '
+      s += (hasIdentity ? ' Double-click any cell to list the merchants it counted. '
+                        : ' Merchant names arrive with the next payments pull, after which any cell can be double-clicked to list them. ')
+         + 'This counts merchants holding a Loyverse Payments account — the only population where '
          + 'a payments condition can be satisfied. It is a '
          + 'small slice of the cohort, so these figures are much smaller than the dashboard-wide '
          + 'Paying and Active views and are not their intersection. '
@@ -902,6 +957,75 @@ renderCohTable();
     }
     noteEl.textContent = s;
   }
+  // ── drill-down ─────────────────────────────────────────────────────────────
+  // Double-click a cell to see the merchants it counted. Double rather than single: the grid runs
+  // to 128 rows by 129 columns and a stray click while scanning should not throw a panel open.
+  const drillHost = document.getElementById('cohdrill');
+  const esc = v => String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const dash = v => (v ? esc(v) : '<span style="color:#C2C8CF">—</span>');
+  function closeDrill(){ if (drillHost) drillHost.innerHTML = ''; }
+  function openDrill(coh, cal){
+    if (!drillHost) return;
+    const rows = membersAt(coh, cal).slice().sort((x, y) =>
+      String(x.n || '').localeCompare(String(y.n || '')));
+    const what = triSel.map(k => LABEL[k]).join(' + ');
+    const age = mAge(coh, cal);
+    // Columns are fixed rather than varying with the selection: the same four dates explain any
+    // combination, and a table whose shape changes is harder to compare between cells.
+    const head = '<tr><th>Merchant</th><th>Email</th><th>Market</th><th>Registered</th>'
+               + '<th>KYC initiated</th><th>KYC finalized</th><th>First transaction</th></tr>';
+    const body = rows.map(r =>
+      '<tr><td class="nm">' + esc(r.n || r.o) + '</td><td>' + esc(r.e) + '</td><td>' + esc(r.c) + '</td>'
+      + '<td>' + dash(r.reg) + '</td><td>' + dash(r.kyc0) + '</td><td>' + dash(r.kyc1) + '</td>'
+      + '<td>' + dash([...r.txn].sort()[0] || '') + '</td></tr>').join('');
+    drillHost.innerHTML =
+      '<div class="drill-back"><div class="drill-box" style="position:relative">'
+      + '<button class="drill-x" title="Close">&times;</button>'
+      + '<div class="drill-head"><h4>' + esc(what) + ' &middot; ' + esc(coh) + ' cohort at M' + age + '</h4>'
+      + '<div class="sub">' + rows.length + ' merchant' + (rows.length === 1 ? '' : 's') + ' in '
+      + esc(cal) + (cal === LATEST_M ? ', a month still in progress' : '')
+      + (ccFilter() ? ' &middot; ' + esc(ccFilter().join(', ')) : '')
+      + '. Dates are each merchant\u2019s own, so they may fall outside this month \u2014 they '
+      + 'explain how the merchant reached this cell.</div>'
+      + '<div class="drill-tools"><input type="search" placeholder="Filter by name or email\u2026">'
+      + '<button data-act="csv">Download (CSV)</button></div></div>'
+      + '<div class="drill-body"><table><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>'
+      + '</div></div>';
+    const box = drillHost.querySelector('.drill-box');
+    const q = drillHost.querySelector('.drill-tools input');
+    q.oninput = () => {
+      const needle = q.value.trim().toLowerCase();
+      drillHost.querySelectorAll('.drill-body tbody tr').forEach((tr, i) => {
+        const r = rows[i];
+        const hit = !needle || ((r.n || '') + ' ' + (r.e || '')).toLowerCase().indexOf(needle) >= 0;
+        tr.style.display = hit ? '' : 'none';
+      });
+    };
+    drillHost.querySelector('[data-act=csv]').onclick = () => {
+      const cell = v => { v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+      const lines = [['Merchant', 'Email', 'Owner ID', 'Market', 'Registered', 'KYC initiated', 'KYC finalized', 'First transaction'].join(',')];
+      rows.forEach(r => lines.push([r.n, r.e, r.o, r.c, r.reg || '', r.kyc0 || '', r.kyc1 || '', [...r.txn].sort()[0] || ''].map(cell).join(',')));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([lines.join('\n')], {type: 'text/csv'}));
+      a.download = 'cohort-' + coh + '-M' + age + '-' + triSel.join('-') + '.csv';
+      a.click();
+    };
+    drillHost.querySelector('.drill-x').onclick = closeDrill;
+    drillHost.querySelector('.drill-back').onclick = e => { if (!box.contains(e.target)) closeDrill(); };
+    q.focus();
+  }
+  function bindDrill(){
+    const tbl = triWrap.querySelector('table.tri');
+    if (!tbl) return;
+    tbl.ondblclick = e => {
+      const td = e.target && e.target.closest ? e.target.closest('td.tri-drill') : null;
+      if (!td) return;
+      openDrill(td.getAttribute('data-coh'), td.getAttribute('data-cal'));
+    };
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrill(); });
+
   window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#cohsum-view button').forEach(x => x.classList.remove('on')); b.classList.add('on');
