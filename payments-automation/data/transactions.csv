@@ -18965,3 +18965,157 @@ ch_3U8fFr9uALOIzRNR0LUbkSlx,2026-08-26 11:44:42,acct_1TMaEu9uALOIzRNR,acct_1SSKs
 ch_3U8fJH9uALOIzRNR1AanxYTy,2026-08-26 11:48:09,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,955,Visa,debit,US,5809,24
 ch_3U8fLs6xrVvfynTx0lWbLAC3,2026-08-26 11:51:15,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3003,Visa,credit,GB,0002,30
 ch_3U8fQQ6xrVvfynTx0cx8MHze,2026-08-26 11:55:39,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,610,Visa,debit,GB,1836,6
+ch_3U8fX66xrVvfynTx0rWdq0SV,2026-08-26 12:02:26,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,600,MasterCard,debit,GB,8356,6
+ch_3U8fXF5XZgMuE7ip14uFu4gW,2026-08-26 12:02:36,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3271,Visa,debit,US,9918,100
+ch_3U8fYw9uALOIzRNR0SOIJAGo,2026-08-26 12:04:20,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,765,Discover,debit,US,3071,19
+ch_3U8fbr5XZgMuE7ip1u4bAZ5y,2026-08-26 12:07:21,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,5803,Visa,debit,US,4096,166
+ch_3U8fjk6xrVvfynTx1g1ZTTI9,2026-08-26 12:15:31,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3066,MasterCard,debit,GB,9859,30
+ch_3U8g2l9uALOIzRNR1LiilVLT,2026-08-26 12:35:14,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,835,Visa,debit,US,8792,21
+ch_3U8g646xrVvfynTx0Aanckd8,2026-08-26 12:39:06,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3690,Visa,debit,GB,3439,37
+ch_3U8g856xrVvfynTx1NYE6Kiz,2026-08-26 12:40:41,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2300,Visa,debit,GB,7545,23
+ch_3U8g8O6xrVvfynTx1cR0np6f,2026-08-26 12:40:58,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1200,MasterCard,debit,GB,3311,12
+ch_3U8g8g6xrVvfynTx120zFEnQ,2026-08-26 12:41:18,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2762,Visa,debit,GB,4946,27
+ch_3U8gB36xrVvfynTx0ZCrdz0E,2026-08-26 12:43:44,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,670,Visa,debit,GB,9157,7
+ch_3U8gF86xrVvfynTx1H0OKz3r,2026-08-26 12:48:01,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,800,Visa,credit,GB,5007,8
+ch_3U8gFx9uALOIzRNR1XrF8YMr,2026-08-26 12:48:49,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,534,Visa,debit,US,7317,13
+ch_3U8gML9uALOIzRNR0BBlEoeZ,2026-08-26 12:55:24,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2040,Visa,debit,US,2638,51
+ch_3U8gVI6xrVvfynTx1bduAt7f,2026-08-26 13:04:37,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,failed,320,MasterCard,credit,GB,7439,
+ch_3U8gVg6xrVvfynTx0rCKKFmb,2026-08-26 13:05:01,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,280,MasterCard,debit,GB,9899,3
+ch_3U8gVs6xrVvfynTx1Hl4K65F,2026-08-26 13:05:15,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,320,Visa,debit,GB,2577,3
+ch_3U8gbD4P02Q3CMCv0SGJypH8,2026-08-26 13:10:46,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,347,MasterCard,debit,US,8890,9
+ch_3U8gbq4P02Q3CMCv0pm2r8XU,2026-08-26 13:11:29,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,694,MasterCard,credit,US,1413,18
+ch_3U8gcq4P02Q3CMCv1pcEU09m,2026-08-26 13:12:27,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1165,Visa,credit,US,1508,31
+ch_3U8ggf6xrVvfynTx0ZUIe618,2026-08-26 13:16:23,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1082,Visa,debit,GB,8732,11
+ch_3U8giD4P02Q3CMCv00uXFK9Q,2026-08-26 13:18:10,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,566,Visa,debit,US,3741,15
+ch_3U8gkC4P02Q3CMCv1HJthPPc,2026-08-26 13:20:09,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,815,Visa,credit,US,2831,22
+ch_3U8gle9uALOIzRNR0qTsrlbo,2026-08-26 13:21:40,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,516,Visa,debit,US,6959,13
+ch_3U8gpp9uALOIzRNR1XgsBdqO,2026-08-26 13:25:51,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,430,Visa,credit,US,3175,11
+ch_3U8gpw4P02Q3CMCv1OzowJkE,2026-08-26 13:26:12,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,765,Visa,debit,US,9484,20
+ch_3U8grV4P02Q3CMCv01VUPPaq,2026-08-26 13:27:39,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,786,Visa,credit,US,9815,21
+ch_3U8gvm4P02Q3CMCv10Z5k9X4,2026-08-26 13:31:59,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,557,MasterCard,credit,US,9523,15
+ch_3U8gxl6xrVvfynTx0HwDFWRl,2026-08-26 13:34:02,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,700,Visa,prepaid,GB,1020,7
+ch_3U8gy16xrVvfynTx1Vu3LhLO,2026-08-26 13:34:19,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1080,MasterCard,prepaid,GB,6617,11
+ch_3U8gyU4P02Q3CMCv0mrJ6UbH,2026-08-26 13:34:59,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,5505,Visa,credit,US,8779,146
+ch_3U8h0e9uALOIzRNR0EyampUc,2026-08-26 13:37:03,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1995,Visa,debit,US,8383,50
+ch_3U8h2j4P02Q3CMCv19M0JZM5,2026-08-26 13:39:20,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1188,Visa,credit,US,5378,31
+ch_3U8h3t4P02Q3CMCv1PNEZuK1,2026-08-26 13:40:26,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,923,Visa,debit,US,1206,24
+ch_3U8h6T4P02Q3CMCv0WV2LkAJ,2026-08-26 13:43:03,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,913,Visa,debit,US,4740,24
+ch_3U8h7m4P02Q3CMCv1gtG6Vq5,2026-08-26 13:44:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,670,MasterCard,debit,US,7404,18
+ch_3U8h8W4P02Q3CMCv0E7AfQOc,2026-08-26 13:45:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,501,American Express,credit,US,0642,13
+ch_3U8hAL4P02Q3CMCv1p3NJZZv,2026-08-26 13:47:03,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,American Express,credit,US,5015,12
+ch_3U8hAc5XZgMuE7ip1pPbF1kY,2026-08-26 13:47:23,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,19265,MasterCard,debit,US,1019,516
+ch_3U8hC54P02Q3CMCv1TihVSSz,2026-08-26 13:48:50,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1330,Visa,credit,US,6492,35
+ch_3U8hDb9uALOIzRNR0iz3eni7,2026-08-26 13:50:25,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1029,Visa,debit,US,7137,26
+ch_3U8hGm4P02Q3CMCv15tbFC7i,2026-08-26 13:53:48,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,594,Visa,debit,US,6509,16
+ch_3U8hH65XZgMuE7ip1EnrkoSK,2026-08-26 13:54:12,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2110,MasterCard,debit,US,3633,70
+ch_3U8hIL6xrVvfynTx1dE8xnVU,2026-08-26 13:55:23,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2200,Visa,credit,GB,2665,22
+ch_3U8hJH4P02Q3CMCv0kH8VCPF,2026-08-26 13:56:16,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1415,Visa,debit,US,2644,37
+ch_3U8hK14P02Q3CMCv1Z7IOggm,2026-08-26 13:57:08,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,868,MasterCard,debit,US,4505,23
+ch_3U8hNf4P02Q3CMCv1CALlM78,2026-08-26 14:01:30,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,3482,Visa,debit,US,6118,92
+ch_3U8hSB9uALOIzRNR1o43LRcT,2026-08-26 14:05:39,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,3138,MasterCard,debit,US,9956,78
+ch_3U8hUC4P02Q3CMCv0tu1bgd1,2026-08-26 14:07:38,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,896,Visa,credit,US,3404,24
+ch_3U8hgX9uALOIzRNR07Bk2sML,2026-08-26 14:20:18,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,625,American Express,credit,US,1201,16
+ch_3U8hn84P02Q3CMCv1bymgR2j,2026-08-26 14:27:12,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,732,Visa,credit,US,1184,19
+ch_3U8hnp4P02Q3CMCv07dWf0yy,2026-08-26 14:28:37,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,555,Visa,prepaid,US,4140,15
+ch_3U8hrk4P02Q3CMCv003yNO5I,2026-08-26 14:32:02,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,804,Visa,credit,US,6492,21
+ch_3U8hxV4P02Q3CMCv09Ws49mo,2026-08-26 14:37:51,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,447,Visa,credit,US,2510,12
+ch_3U8hz24P02Q3CMCv1oGPGb1V,2026-08-26 14:39:27,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,3941,Visa,debit,US,4287,104
+ch_3U8i2Y4P02Q3CMCv09Eac35N,2026-08-26 14:43:11,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,2665,Visa,credit,US,8278,71
+ch_3U8i4a4P02Q3CMCv1pwEw5YK,2026-08-26 14:45:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,638,Visa,credit,US,0957,17
+ch_3U8i6H4P02Q3CMCv0B7HTOWK,2026-08-26 14:47:07,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,869,American Express,credit,US,3250,23
+ch_3U8i8c4P02Q3CMCv0YeQ5Q4E,2026-08-26 14:49:32,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,489,Visa,credit,US,8932,13
+ch_3U8i9U4P02Q3CMCv1sw0M9es,2026-08-26 14:50:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,639,Visa,credit,US,8746,17
+ch_3U8iJz4P02Q3CMCv0JvjKo85,2026-08-26 15:01:06,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,631,MasterCard,debit,US,9203,17
+ch_3U8iMF4P02Q3CMCv0HH2YudP,2026-08-26 15:03:35,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,978,MasterCard,credit,US,2175,26
+ch_3U8iNq4P02Q3CMCv1TgWzD5X,2026-08-26 15:05:15,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,676,Visa,debit,US,5149,18
+ch_3U8iPw9uALOIzRNR1cWcPWV1,2026-08-26 15:07:20,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,420,Visa,debit,US,0783,11
+ch_3U8iSp6xaKj8hHOI1ZmyMKnh,2026-08-26 15:10:15,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1075,Visa,prepaid,US,5398,43
+ch_3U8iW24P02Q3CMCv1yFALUPH,2026-08-26 15:13:32,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,657,Visa,credit,US,1601,17
+ch_3U8iX47C646Nqh7e0DR3uURP,2026-08-26 15:14:38,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5101,MasterCard,credit,US,0733,148
+ch_3U8iXd4P02Q3CMCv1U0Kkke6,2026-08-26 15:15:12,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,769,MasterCard,debit,US,4997,20
+ch_3U8iaX7C646Nqh7e1NCEGDL8,2026-08-26 15:18:39,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5729,Visa,debit,US,1267,164
+ch_3U8iel4P02Q3CMCv1ieD9QzI,2026-08-26 15:22:32,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,849,Visa,debit,US,7367,22
+ch_3U8ies6xaKj8hHOI1jkCp8mg,2026-08-26 15:22:39,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2686,Visa,prepaid,US,7293,85
+ch_3U8ime9uALOIzRNR0TKvI1AZ,2026-08-26 15:30:45,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,743,Visa,debit,US,6502,19
+ch_3U8io16xaKj8hHOI0To9IdIQ,2026-08-26 15:32:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,2866,155
+ch_3U8ipe4P02Q3CMCv1dLf0nbJ,2026-08-26 15:33:56,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1354,Visa,credit,US,4887,36
+ch_3U8ivE9uALOIzRNR1cAVekyR,2026-08-26 15:39:35,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,625,Visa,debit,US,9396,16
+ch_3U8j0J4P02Q3CMCv1n3eQrZo,2026-08-26 15:44:53,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,649,Visa,debit,US,6345,17
+ch_3U8j1H9uALOIzRNR1G9kac2V,2026-08-26 15:45:48,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,745,Visa,credit,US,9989,19
+ch_3U8j286kYqKNQLle1T9KVUMg,2026-08-26 15:46:47,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1657,Visa,debit,US,2966,58
+ch_3U8j2U9uALOIzRNR1fJ2jMmM,2026-08-26 15:47:12,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,874,Visa,credit,US,8121,22
+ch_3U8j2i7C646Nqh7e0R2UDdIp,2026-08-26 15:47:25,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5057,MasterCard,credit,US,9006,146
+ch_3U8j4A9uALOIzRNR1lX3jAVx,2026-08-26 15:49:08,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,990,MasterCard,credit,US,9095,25
+ch_3U8j5h4P02Q3CMCv0MZmimrC,2026-08-26 15:50:29,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1395,MasterCard,credit,US,2321,37
+ch_3U8j6S9uALOIzRNR1oO7zsJG,2026-08-26 15:51:10,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1047,American Express,credit,US,9010,26
+ch_3U8j7F4P02Q3CMCv1b6IGDWJ,2026-08-26 15:52:11,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,2185,12
+ch_3U8jED7C646Nqh7e1hSrGSjb,2026-08-26 15:59:20,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2910,Visa,debit,US,1066,91
+ch_3U8jF44P02Q3CMCv0Udv695c,2026-08-26 16:00:16,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,576,Visa,credit,US,4445,15
+ch_3U8jFV5XZgMuE7ip15eirLLx,2026-08-26 16:00:42,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,8333,MasterCard,credit,US,0331,232
+ch_3U8jFhGG9H7vamtE16tvg7m3,2026-08-26 16:00:44,acct_1U2j3ZGG9H7vamtE,acct_1SSKsA7e4AMQfKY3,Wax On Wax OFF LLC,US,usd,succeeded,3263,American Express,credit,US,6559,75
+ch_3U8jMi6kYqKNQLle0fHw4Mf8,2026-08-26 16:08:05,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,2636,MasterCard,debit,US,7766,84
+ch_3U8jMr4P02Q3CMCv1hDXMWhf,2026-08-26 16:08:07,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,549,Visa,debit,US,1041,15
+ch_3U8jN76kYqKNQLle0a6MX1KT,2026-08-26 16:08:25,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,3034,MasterCard,debit,US,6872,94
+ch_3U8jO76xaKj8hHOI1tDyek3l,2026-08-26 16:09:23,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,645,Visa,debit,US,4355,32
+ch_3U8jQUQJfvlGDJJG0e8jbt8U,2026-08-26 16:11:52,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Discover,credit,US,1613,25
+ch_3U8jUJ4P02Q3CMCv1Gnt7obL,2026-08-26 16:17:15,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,credit,US,0001,12
+ch_3U8jV56kYqKNQLle1aoEFKrd,2026-08-26 16:16:38,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1951,MasterCard,debit,US,0936,66
+ch_3U8jWq4P02Q3CMCv15Izsyr8,2026-08-26 16:18:31,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,797,Visa,debit,US,6612,21
+ch_3U8jaH4P02Q3CMCv07w6pK29,2026-08-26 16:22:00,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,2500,Visa,credit,US,4982,66
+ch_3U8jcT6kYqKNQLle03L8cfAJ,2026-08-26 16:24:14,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,3696,Discover,credit,US,6775,111
+ch_3U8jcd4P02Q3CMCv1PkkISSi,2026-08-26 16:24:45,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,710,Visa,credit,US,8378,19
+ch_3U8jcw6kYqKNQLle0GQpfpHV,2026-08-26 16:24:43,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1713,Visa,debit,US,7249,60
+ch_3U8jdB6kYqKNQLle18RtkG9q,2026-08-26 16:25:02,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1978,MasterCard,credit,US,0152,66
+ch_3U8jdX6kYqKNQLle1vq2ktv5,2026-08-26 16:25:24,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,2504,Visa,debit,US,0068,80
+ch_3U8jde7AFzbzGA0t1BxO4P7s,2026-08-26 16:25:42,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,3186,Visa,prepaid,US,4592,98
+ch_3U8jds6kYqKNQLle1bPCc2I3,2026-08-26 16:25:49,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1998,MasterCard,debit,US,6461,67
+ch_3U8jex7C646Nqh7e0NvpyZsO,2026-08-26 16:26:49,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,3556,Visa,debit,US,7394,107
+ch_3U8jjV7AFzbzGA0t0HKXCpOu,2026-08-26 16:31:39,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1476,Visa,debit,US,7882,53
+ch_3U8jmC6kYqKNQLle1W953p2G,2026-08-26 16:34:23,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1248,Visa,debit,US,9051,47
+ch_3U8juZQJfvlGDJJG0d6uq2Y5,2026-08-26 16:42:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1325,Discover,credit,US,4940,38
+ch_3U8jxK7oXMe4RLzo1NYBIVUp,2026-08-26 16:45:46,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,2495,MasterCard,credit,CA,3772,80
+ch_3U8jxM4P02Q3CMCv09iKEfZ9,2026-08-26 16:45:52,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,715,American Express,credit,US,9879,19
+ch_3U8jz84P02Q3CMCv1Zsgwx1A,2026-08-26 16:47:53,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,815,MasterCard,debit,US,1310,22
+ch_3U8jzk6kYqKNQLle0j3OVCMc,2026-08-26 16:48:17,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1980,Visa,credit,US,0522,66
+ch_3U8k5M7C646Nqh7e1IG37G8Y,2026-08-26 16:54:08,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4865,Visa,credit,US,1587,141
+ch_3U8k5h7AFzbzGA0t1Ug4N0Jz,2026-08-26 16:54:28,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1944,MasterCard,debit,US,6591,66
+ch_3U8k5j4P02Q3CMCv01sstI4E,2026-08-26 16:54:29,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,815,Visa,credit,US,5828,22
+ch_3U8k727AFzbzGA0t0goXR8Qg,2026-08-26 16:55:53,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2700,Visa,prepaid,US,3203,85
+ch_3U8k794P02Q3CMCv0NBhV56D,2026-08-26 16:55:56,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,959,Visa,debit,US,3378,25
+ch_3U8k807AFzbzGA0t0rrCzRKt,2026-08-26 16:56:55,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1296,MasterCard,credit,US,8802,49
+ch_3U8k8GQJfvlGDJJG1tj4LWyk,2026-08-26 16:57:04,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,debit,US,6848,18
+ch_3U8k9SQJfvlGDJJG1kF8PveO,2026-08-26 16:58:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,325,MasterCard,credit,US,2031,13
+ch_3U8k9X6xaKj8hHOI1pGkPLH2,2026-08-26 16:58:24,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,751,MasterCard,debit,US,9362,35
+ch_3U8k9lGG9H7vamtE10rrO1wP,2026-08-26 16:58:36,acct_1U2j3ZGG9H7vamtE,acct_1SSKsA7e4AMQfKY3,Wax On Wax OFF LLC,US,usd,succeeded,4894,American Express,credit,US,6971,113
+ch_3U8kAW4P02Q3CMCv1pXBf8pB,2026-08-26 16:59:29,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1821,Visa,debit,US,1477,48
+ch_3U8kDQ7C646Nqh7e1S66cQIX,2026-08-26 17:02:26,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,842,Visa,debit,US,7605,37
+ch_3U8kDn6xaKj8hHOI0KLolbpI,2026-08-26 17:03:01,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3789,MasterCard,debit,US,2378,114
+ch_3U8kEG4P02Q3CMCv0Y8fBtxQ,2026-08-26 17:03:25,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1300,Visa,credit,US,0069,34
+ch_3U8kIJ7C646Nqh7e1z1K0MRC,2026-08-26 17:07:31,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,8788,MasterCard,debit,US,6068,243
+ch_3U8kPZ7AFzbzGA0t0HOHymgo,2026-08-26 17:15:05,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,failed,1026,Visa,prepaid,US,0750,
+ch_3U8kPr7AFzbzGA0t1ljtzf4I,2026-08-26 17:15:20,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1026,Visa,prepaid,US,0750,42
+ch_3U8kUe7AFzbzGA0t1RsH21sf,2026-08-26 17:20:14,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2337,MasterCard,debit,US,2376,76
+ch_3U8kVW9uALOIzRNR0Tif2S32,2026-08-26 17:21:09,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2272,Visa,debit,US,6135,57
+ch_3U8kWF7oXMe4RLzo11FdGixv,2026-08-26 17:21:51,acct_1TtuoI7oXMe4RLzo,acct_1SSKsA7e4AMQfKY3,Atlantic Vapor Store,US,usd,succeeded,18160,MasterCard,credit,US,6391,487
+ch_3U8kWJ4P02Q3CMCv0cqYuGll,2026-08-26 17:22:12,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,897,Visa,credit,US,7960,24
+ch_3U8kYa7AFzbzGA0t1ETq5tiD,2026-08-26 17:24:28,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,3780,Visa,debit,US,5702,113
+ch_3U8kcmGG9H7vamtE0Y21acW5,2026-08-26 17:28:39,acct_1U2j3ZGG9H7vamtE,acct_1SSKsA7e4AMQfKY3,Wax On Wax OFF LLC,US,usd,succeeded,4894,Visa,credit,US,1987,113
+ch_3U8kdW6xaKj8hHOI1mTCvZxy,2026-08-26 17:29:24,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3149,MasterCard,debit,US,7109,97
+ch_3U8keh6kYqKNQLle1zfHAzjK,2026-08-26 17:30:49,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,4418,Visa,prepaid,US,8239,130
+ch_3U8kfOQJfvlGDJJG1IdQY6iC,2026-08-26 17:31:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,Visa,debit,US,7871,31
+ch_3U8kh94P02Q3CMCv1I5I76lm,2026-08-26 17:33:15,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,3191,MasterCard,credit,US,7739,85
+ch_3U8kh96kYqKNQLle0vJmLKoe,2026-08-26 17:33:15,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1461,MasterCard,credit,US,3688,53
+ch_3U8kiFQJfvlGDJJG0z0ZSHW5,2026-08-26 17:34:15,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,MasterCard,credit,US,7838,16
+ch_3U8kk2GG9H7vamtE1OZ4TY05,2026-08-26 17:36:09,acct_1U2j3ZGG9H7vamtE,acct_1SSKsA7e4AMQfKY3,Wax On Wax OFF LLC,US,usd,succeeded,2719,American Express,credit,US,2003,63
+ch_3U8kkf4P02Q3CMCv0dKpWjyQ,2026-08-26 17:36:50,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,715,Visa,debit,US,3850,19
+ch_3U8kki7C646Nqh7e1Rhc82eU,2026-08-26 17:36:56,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2506,Visa,debit,US,3549,80
+ch_3U8kkn6xaKj8hHOI1AtMFjQy,2026-08-26 17:36:57,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3030,MasterCard,debit,US,4568,94
+ch_3U8klD4P02Q3CMCv1dk7BDCA,2026-08-26 17:37:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,American Express,credit,US,6640,12
+ch_3U8knU6kYqKNQLle17inXKJs,2026-08-26 17:39:44,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,4245,Visa,debit,US,2682,125
+ch_3U8kpr4P02Q3CMCv0YlRw7J8,2026-08-26 17:42:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,797,Visa,debit,US,5532,21
+ch_3U8kwE7AFzbzGA0t1Y4k6ba8,2026-08-26 17:48:44,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1701,MasterCard,debit,US,4238,59
+ch_3U8kwo6kYqKNQLle1TkJA4Gr,2026-08-26 17:49:19,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1903,Visa,debit,US,4163,64
+ch_3U8kwq4P02Q3CMCv0p94O7M4,2026-08-26 17:49:47,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,347,MasterCard,debit,US,8890,9
+ch_3U8kzc6kYqKNQLle1ESbcq2u,2026-08-26 17:53:55,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Addington Enterprise LLC,US,usd,succeeded,1523,Visa,prepaid,US,2378,55
+ch_3U8l43QJfvlGDJJG0C4jEXG1,2026-08-26 17:56:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,Discover,credit,US,3979,28
+ch_3U8l4j6xaKj8hHOI12K83B2s,2026-08-26 17:57:33,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1781,Visa,debit,US,6037,61
