@@ -712,13 +712,22 @@ renderCohTable();
       // transacted in July and stopped is not transacting in August, the same way one that was
       // active in July and went quiet is not active in August. The two KYC steps are different:
       // they are one-way doors and stay crossed, so they keep a single month.
+      const txn = new Set((r.t || []).map(at).filter(Boolean));
+      // ACTIVE = POS receipts OR a card payment through Loyverse Payments that month.
+      //
+      // The file keeps the two sources apart, and this unions them on the way in. A payment taken
+      // on the platform — a payment link or the virtual terminal rather than the till — writes no
+      // POS receipt, so a receipts-only definition of active drops a merchant that plainly was
+      // trading. Transacting is therefore a subset of Active by construction, which is what
+      // anyone reading the two together expects.
+      const active = new Set((r.a || []).map(at).filter(Boolean));
+      txn.forEach(m => active.add(m));
       (out[coh] || (out[coh] = [])).push({
         o: r.o || '', n: r.n || '', e: r.e || '', reg: r.d || null,
         c: r.c || 'ZZ',
         kyc0: k, kyc1: at(r.f),
         paying: new Set((r.p || []).map(at).filter(Boolean)),
-        active: new Set((r.a || []).map(at).filter(Boolean)),
-        txn:    new Set((r.t || []).map(at).filter(Boolean)),
+        active, txn,
       });
     });
     payFrom = first;
@@ -939,10 +948,16 @@ renderCohTable();
          + 'never lost. Paying, Active and Transacting are in-month: a merchant that transacted in '
          + 'July and not in August counts in July only, exactly as one that went quiet on the POS '
          + 'is no longer active. '
-         + 'Transacting can exceed Active + Transacting, which looks impossible but is not: '
-         + 'Active counts POS receipts, and a card payment taken on the platform directly — a '
-         + 'payment link or the virtual terminal rather than the till — is a real transaction that '
-         + 'writes no receipt. On the current data that is 1 merchant-month out of 91. '
+         + 'Paying means Loyverse was PAID for that month — an invoice line whose billing period '
+         + 'covers it. That is stricter than holding a subscription: a merchant in dunning, or one '
+         + 'whose card failed, keeps an active subscription and stops counting as paying. Around '
+         + 'one active subscription in ten is in that position in any given month, so combining a '
+         + 'payments stage with Paying drops merchants that Active would keep. '
+         + 'Active here counts a POS receipt OR a card payment through Loyverse Payments, so a '
+         + 'payment taken on the platform — a payment link or the virtual terminal rather than the '
+         + 'till — still makes the merchant active. Transacting is therefore always a subset of '
+         + 'Active. Note this is wider than the dashboard-wide Active series above, which is '
+         + 'receipts only. '
          + '“Size” is the cohort’s full registrations. The cells count only the subset holding a '
          + 'payments account, so a cell reading 6 means 6 of that subset, not 6 of Size — hover any '
          + 'cell to see both numbers. “% of cohort” divides by Size and answers how far payments has '
