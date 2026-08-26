@@ -673,12 +673,16 @@ renderCohTable();
       const coh = at(r.h); if (!coh) return;
       const k = at(r.k);
       if (k && (!first || k < first)) first = k;
+      // Transacting is stored as the MONTH IT STARTED, like the two KYC steps, not as the set of
+      // months with charges. All three payments stages are one-way doors: a merchant that took a
+      // card payment in July has transacted, whether or not it took another in August. Counting
+      // the months instead dropped 3 of the July cohort's 14 transactors from August's figure.
+      const t = (r.t || []).map(at).filter(Boolean).sort();
       (out[coh] || (out[coh] = [])).push({
         c: r.c || 'ZZ',
-        kyc0: k, kyc1: at(r.f),
+        kyc0: k, kyc1: at(r.f), txn: t.length ? t[0] : null,
         paying: new Set((r.p || []).map(at).filter(Boolean)),
         active: new Set((r.a || []).map(at).filter(Boolean)),
-        txn:    new Set((r.t || []).map(at).filter(Boolean)),
       });
     });
     payFrom = first;
@@ -712,9 +716,11 @@ renderCohTable();
       if (ccs && ccs.indexOf(r.c) < 0) continue;
       let ok = true;
       for (const k of triSel){
-        // KYC steps are one-way doors: reached BY this month, and never un-reached.
-        if (k === 'kyc0' || k === 'kyc1'){ const d = r[k]; if (!d || d > cal){ ok = false; break; } }
-        else if (!r[k].has(cal)){ ok = false; break; }   // in-month states
+        // Payments stages are cumulative: reached BY this month, and never un-reached. Paying and
+        // Active are in-month states — a merchant is not "active in August" because it was
+        // active in July.
+        if (PAY_KEYS.indexOf(k) >= 0){ const d = r[k]; if (!d || d > cal){ ok = false; break; } }
+        else if (!r[k].has(cal)){ ok = false; break; }
       }
       if (ok) n++;
     }
@@ -865,8 +871,11 @@ renderCohTable();
          + (triSel.length > 1 ? 'ALL of those conditions at once' : 'that condition')
          + ', among merchants holding a Loyverse Payments account'
          + (hasPay() ? '' : ' (the only population where these can be intersected)') + '. '
-         + 'Initiated and Finalized KYC are cumulative — reached by that month and never lost. '
-         + 'Paying, Active and Transacting are in-month states. '
+         + 'All three payments stages are cumulative — reached by that month and never lost, so '
+         + 'a merchant that transacted in July still counts in August. Paying and Active are '
+         + 'in-month states, because a merchant is not active in August for having been active in '
+         + 'July; combining one of those with a stage therefore asks "reached this stage, and '
+         + 'still paying or active that month". '
          + '“Size” is the cohort’s full registrations. The cells count only the subset holding a '
          + 'payments account, so a cell reading 6 means 6 of that subset, not 6 of Size — hover any '
          + 'cell to see both numbers. “% of cohort” divides by Size and answers how far payments has '
