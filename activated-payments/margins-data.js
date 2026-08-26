@@ -8,35 +8,35 @@ window.MARGINS = {
     "txns": 18411.0,
     "tpv": 409278.56,
     "avgTicket": 22.2301102601706,
-    "revenue": 11722.61,
-    "takeRate": 0.0286421306798968,
-    "totalFees": 9712.5157,
-    "netMargin": 2010.0943,
-    "netTakeRate": 0.00491131101516776,
-    "pctProfitable": 0.505187116397806,
-    "profitableTxns": 9301.0,
-    "unprofitableTxns": 9110.0,
-    "withActual": 18014.0,
-    "withEstimated": 397.0,
+    "revenue": 11631.68,
+    "takeRate": 0.0284199592570889,
+    "totalFees": 9513.8273,
+    "netMargin": 2117.8527,
+    "netTakeRate": 0.00517459966630062,
+    "pctProfitable": 0.499484004127967,
+    "profitableTxns": 9196.0,
+    "unprofitableTxns": 9215.0,
+    "withActual": 17755.0,
+    "withEstimated": 656.0,
     "failed": 417.0
   },
   "fees": {
-    "total": 9712.5157,
+    "total": 9513.8273,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 8313.4457,
+      "total": 8114.7573,
       "items": [
         {
           "label": "        Interchange",
-          "value": 6830.5666
+          "value": 6694.8391
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 1056.2956
+          "value": 1034.898
         },
         {
           "label": "        Amex Discount",
-          "value": 426.5835
+          "value": 385.0202
         }
       ]
     },
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 11722.61
+        "revenue": 11631.68
       },
       {
         "name": "All 2.5% flat",
@@ -203,26 +203,26 @@ window.MARGINS = {
         "txns": 18154,
         "tpv": 406083.72,
         "avgTicket": 22.368828908229638,
-        "revenue": 11689.34,
-        "takeRate": 0.028785542055219476,
-        "totalFees": 9690.7189,
-        "netMargin": 1998.6211,
-        "netTakeRate": 0.004921697131662139,
-        "pctProfitable": 0.5048474165473174,
-        "profitableTxns": 9165,
-        "unprofitableTxns": 8989,
-        "withActual": 17782,
-        "withEstimated": 372,
+        "revenue": 11598.41,
+        "takeRate": 0.028561622711690996,
+        "totalFees": 9492.0305,
+        "netMargin": 2106.3795,
+        "netTakeRate": 0.005187057190912954,
+        "pctProfitable": 0.4990635672579046,
+        "profitableTxns": 9060,
+        "unprofitableTxns": 9094,
+        "withActual": 17523,
+        "withEstimated": 631,
         "failed": 408
       },
       "fees": {
-        "total": 9690.7189,
+        "total": 9492.0305,
         "network": {
-          "total": 8302.5701,
+          "total": 8103.8817,
           "items": [
-            6823.9435,
-            1052.1781,
-            426.4485
+            6688.216,
+            1030.7805,
+            384.8852
           ]
         },
         "stripe": {
@@ -230,7 +230,7 @@ window.MARGINS = {
         }
       },
       "scenarios": [
-        11689.34,
+        11598.41,
         10152.093,
         11059.793,
         12373.57672,
