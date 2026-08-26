@@ -515,7 +515,8 @@
     <p class="ov-sub" style="margin-top:2px">Every merchant that has <b>passed KYC</b> in the selected bucket &mdash; and of these, who has <b>ordered a terminal</b>, who has <b>received it</b>, and who is already <b>transacting</b>. Buckets are the same mutually exclusive groups as the origin split above.</p>
     <div class="fn-toolbar">
       <div class="ov-range" id="fnDeepPick">
-        <button data-b="new" class="on">New merchants</button>
+        <button data-b="compare" class="on">Compare all</button>
+        <button data-b="new">New merchants</button>
         <button data-b="paying">Paying merchants</button>
         <button data-b="activefree">Non paying</button>
         <button data-b="dormant">Dormant / other</button>
@@ -2128,25 +2129,30 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 
   // ---- ORIGIN SPLIT: mutually exclusive groups over everyone who initiated KYC ----
   var GROUPS=[
-    {k:'New (since '+LAUNCH+')', color:'var(--green)', f:function(r){return r.isNew;}},
+    // The label is a FUNCTION, not a string. GROUPS is built when the script parses, and LAUNCH
+    // is not assigned until loadData() runs, so a baked-in string read "New (since undefined)"
+    // and stayed that way — including after selecting a market with its own launch date.
+    {k:function(){return 'New (since '+LAUNCH+')';}, color:'var(--green)', f:function(r){return r.isNew;}},
     {k:'Existing &mdash; paying', color:'var(--blue-deep)', f:function(r){return !r.isNew&&r.isPaying;}},
     {k:'Existing &mdash; non paying', color:'var(--blue)', f:function(r){return !r.isNew&&!r.isPaying&&r.isActive;}},
     {k:'Existing &mdash; dormant / other', color:'#C2C8CF', tcol:'#3a3a3a', f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
   ];
+  // Every label goes through this, so a plain string and a late-resolved one read the same.
+  function gLabel(g){ return typeof g.k==='function'? g.k() : g.k; }
   function renderOrigin(T){
     var segs=GROUPS.map(function(g){ var rs=book.filter(g.f); return {g:g, rs:rs, a:agg(rs)}; });
     var tot=T.init||1;
     $('fnOriginBar').innerHTML=segs.map(function(s){
       var w=s.a.init/tot*100;
       var lbl=(w>=7)?(num(s.a.init)+' · '+Math.round(w)+'%'):'';
-      return '<div class="seg" style="width:'+w.toFixed(2)+'%;background:'+s.g.color+(s.g.tcol?';color:'+s.g.tcol:'')+'" title="'+esc(s.g.k.replace(/&mdash;/g,'-'))+': '+s.a.init+'">'+lbl+'</div>';
+      return '<div class="seg" style="width:'+w.toFixed(2)+'%;background:'+s.g.color+(s.g.tcol?';color:'+s.g.tcol:'')+'" title="'+esc(gLabel(s.g).replace(/&mdash;/g,'-'))+': '+s.a.init+'">'+lbl+'</div>';
     }).join('');
     $('fnOriginLegend').innerHTML=segs.map(function(s){
-      return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+s.g.k+' &middot; <b>'+num(s.a.init)+'</b></span>';
+      return '<span style="display:inline-flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:3px;background:'+s.g.color+';display:inline-block"></i>'+gLabel(s.g)+' &middot; <b>'+num(s.a.init)+'</b></span>';
     }).join('');
     var thead='<tr><th>Group</th><th style="text-align:right">Initiated KYC</th><th style="text-align:right">Passed KYC</th><th style="text-align:right">Transacting</th><th style="text-align:right">% of initiators</th></tr>';
     var rowsHtml=segs.map(function(s){
-      return '<tr><td>'+s.g.k+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
+      return '<tr><td>'+gLabel(s.g)+'</td><td style="text-align:right">'+num(s.a.init)+'</td><td style="text-align:right">'+num(s.a.passed)+'</td><td style="text-align:right">'+num(s.a.txn)+'</td><td style="text-align:right">'+pctL(s.a.init,T.init)+'</td></tr>';
     }).join('');
     rowsHtml+='<tr style="font-weight:800"><td>Total</td><td style="text-align:right">'+num(T.init)+'</td><td style="text-align:right">'+num(T.passed)+'</td><td style="text-align:right">'+num(T.txn)+'</td><td style="text-align:right">'+(T.init?'100%':'0%')+'</td></tr>';
     $('fnOriginTable').innerHTML=thead+rowsHtml;
@@ -2205,11 +2211,26 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       'dormant':  {name:'Dormant / other',         accent:'#8E99A4',          f:function(r){return !r.isNew&&!r.isPaying&&!r.isActive;}}
     };
     function isDelivered(st){ return String(st||'').toLowerCase()==='delivered'; }
-    function isOrdered(r){ return !!r.m.terminal_at; }
+    // In Monthly mode every column counts events that fall IN the selected month, not status to
+    // date. A tick therefore means "this happened in August", and the four chips are four counts
+    // of the same month rather than one month's count beside three running totals.
+    //
+    // Stripe publishes no delivery timestamp, only a status, so "received in this month" cannot
+    // be dated. It is approximated by the order date: a terminal ordered in the month and now
+    // delivered. Said plainly in the note rather than left for someone to discover.
+    function inM(d){ return !monthly() || ym(d)===MONTH; }
+    function isOrdered(r){ return !!r.m.terminal_at && inM(r.m.terminal_at); }
+    function isReceived(r){ return isDelivered(r.m.terminal_status) && !!r.m.terminal_at && inM(r.m.terminal_at); }
+    function didTxn(r){ return !!r.txn && inM(r.m.first_txn_at); }
+    function didPass(r){ return !!r.passed && inM(r.m.enabled_at); }
+    // The month's population: anyone who reached ANY of these milestones in it. Scoping the list
+    // to that month's KYC-passers alone would hide a merchant who passed in July and first
+    // transacted in August — exactly the merchant an August view should surface.
+    function inMonthRow(r){ return monthly() ? (didPass(r)||isOrdered(r)||isReceived(r)||didTxn(r)) : r.passed; }
     var hasStatus=book.some(function(r){ return r.m.terminal_status!=null; });
-    var cur='new', q='';
+    var cur='compare', q='';
     function rowsFor(b){
-      return book.filter(BUCKETS[b].f).filter(selPassed)
+      return book.filter(BUCKETS[b].f).filter(inMonthRow)
         .sort(function(x,y){
           // transacting first, then received, then ordered, then by enabled date desc
           var kx=(x.txn?4:0)+(isDelivered(x.m.terminal_status)?2:0)+(isOrdered(x)?1:0);
@@ -2226,52 +2247,80 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
                 : '<span style="color:#C2C8CF">&mdash;</span>';
     }
     function fmtStatus(st){ if(!st) return ''; var t=String(st).toLowerCase().replace(/_/g,' '); return t.charAt(0).toUpperCase()+t.slice(1); }
-    function render(){
-      var B=BUCKETS[cur], rs=rowsFor(cur);
-      var ordered=rs.filter(isOrdered);
-      var received=rs.filter(function(r){return isDelivered(r.m.terminal_status);});
-      var txn=rs.filter(function(r){return r.txn;});
+    var ORDER=['new','paying','activefree','dormant'];
+    // One bucket's four chips. Shared by the single view and by Compare all, so the two can
+    // never drift into counting the same thing differently.
+    function chipsFor(b){
+      var B=BUCKETS[b], rs=rowsFor(b);
+      var passed=rs.filter(didPass), ordered=rs.filter(isOrdered),
+          received=rs.filter(isReceived), txn=rs.filter(didTxn);
       var when = monthly()? ' in '+monthShort(MONTH) : '';
-      var toDate = monthly()? ' to date' : '';
-      $('fnDeepKpis').innerHTML=
-        chip('Passed KYC'+when, num(rs.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
-        +chip('Terminal ordered'+toDate, num(ordered.length), '<b>'+pctL(ordered.length,rs.length)+'</b> of those merchants')
-        +chip('Terminal received'+toDate, hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
-        +chip('Transacting'+toDate, num(txn.length), '<b>'+pctL(txn.length,rs.length)+'</b> of those merchants', 'var(--green)');
-      var f=q? rs.filter(function(r){ return (String(r.m.name||'')+' '+String(r.m.email||'')).toLowerCase().indexOf(q)>=0; }) : rs;
-      var thead='<tr><th>Merchant</th><th>Email</th><th>Passed KYC on</th><th>Terminal ordered</th><th>Terminal received</th><th>Transacting since</th></tr>';
-      $('fnDeepTable').innerHTML=thead+f.map(function(r){
-        var m=r.m, st=m.terminal_status;
+      return chip('Passed KYC'+when, num(passed.length), 'in the <b>'+B.name.replace(/—/g,'-')+'</b> bucket', B.accent)
+        +chip('Terminal ordered'+when, num(ordered.length), '<b>'+pctL(ordered.length,passed.length)+'</b> of those merchants')
+        +chip('Terminal received'+when, hasStatus? num(received.length) : '&mdash;', hasStatus? ('<b>'+pctL(received.length,ordered.length)+'</b> of ordered') : 'available after the next data refresh')
+        +chip('Transacting'+when, num(txn.length), '<b>'+pctL(txn.length,passed.length)+'</b> of those merchants', 'var(--green)');
+    }
+    function render(){
+      var all = cur==='compare';
+      var buckets = all? ORDER : [cur];
+      // Compare all shows the four buckets stacked, each headed by its own name, rather than one
+      // undifferentiated row of sixteen chips.
+      $('fnDeepKpis').innerHTML = all
+        ? ORDER.map(function(b){
+            return '<div style="flex:0 0 100%;font-weight:800;font-size:13px;margin:10px 0 -4px;color:'+BUCKETS[b].accent+'">'
+                 + BUCKETS[b].name.replace(/—/g,'-') + '</div>' + chipsFor(b);
+          }).join('')
+        : chipsFor(cur);
+      // The table is every selected bucket's merchants at once, with the bucket named per row so
+      // the list still reconciles against the chips above it.
+      var rs=[];
+      buckets.forEach(function(b){ rowsFor(b).forEach(function(r){ rs.push({r:r, b:b}); }); });
+      if (all) rs.sort(function(x,y){
+        var kx=(didTxn(x.r)?4:0)+(isReceived(x.r)?2:0)+(isOrdered(x.r)?1:0);
+        var ky=(didTxn(y.r)?4:0)+(isReceived(y.r)?2:0)+(isOrdered(y.r)?1:0);
+        if(kx!==ky) return ky-kx;
+        return String(y.r.m.enabled_at||'').localeCompare(String(x.r.m.enabled_at||''));
+      });
+      var f=q? rs.filter(function(x){ return (String(x.r.m.name||'')+' '+String(x.r.m.email||'')).toLowerCase().indexOf(q)>=0; }) : rs;
+      var cols = all? 7 : 6;
+      var thead='<tr><th>Merchant</th><th>Email</th>'+(all?'<th>Bucket</th>':'')
+        +'<th>Passed KYC on</th><th>Terminal ordered</th><th>Terminal received</th><th>Transacting since</th></tr>';
+      $('fnDeepTable').innerHTML=thead+f.map(function(x){
+        var r=x.r, m=r.m, st=m.terminal_status;
         var recCell = !isOrdered(r) ? tick(false)
-          : isDelivered(st) ? tick(true)
+          : isReceived(r) ? tick(true)
           : (hasStatus && st) ? '<span style="color:var(--darkgray)">'+esc(fmtStatus(st))+'</span>'
           : '<span style="color:#C2C8CF">&mdash;</span>';
         return '<tr><td>'+esc(m.name)+'</td><td>'+esc(m.email)+'</td>'
+          +(all? '<td style="color:'+BUCKETS[x.b].accent+';font-weight:700">'+esc(BUCKETS[x.b].name.replace(/—/g,'-'))+'</td>' : '')
           +'<td>'+(m.enabled_at?esc(m.enabled_at):'&mdash;')+'</td>'
           +'<td>'+(isOrdered(r)? tick(true, esc(m.terminal_at)) : tick(false))+'</td>'
           +'<td>'+recCell+'</td>'
-          +'<td>'+(r.txn? tick(true, esc(m.first_txn_at||'')) : tick(false))+'</td></tr>';
-      }).join('') || (thead+'<tr><td colspan="6" style="color:var(--midgray)">No merchants match.</td></tr>');
+          +'<td>'+(didTxn(r)? tick(true, esc(m.first_txn_at||'')) : tick(false))+'</td></tr>';
+      }).join('') || (thead+'<tr><td colspan="'+cols+'" style="color:var(--midgray)">No merchants match.</td></tr>');
       $('fnDeepNote').textContent=(f.length!==rs.length? f.length+' of ':'')+rs.length+' merchant'+(rs.length===1?'':'s')
-        +(monthly()? ' that passed KYC in '+monthLabel(MONTH) : ' that have passed KYC')+' shown. '
+        +(all? ' across all four buckets' : '')
+        +(monthly()? ' that reached a milestone in '+monthLabel(MONTH)+' \u2014 passed KYC, ordered or received a terminal, or first transacted'
+                   : ' that have passed KYC')+' shown. '
         +'Terminal orders are attributed by shipping email; "received" means the Stripe hardware order status is delivered.'
-        +(monthly()? ' Terminal and transacting ticks are status to date, not necessarily reached in '+monthShort(MONTH)+'.' : '')
+        +(monthly()? ' Stripe publishes no delivery date, only a status, so "received in '+monthShort(MONTH)+'" means ordered in '+monthShort(MONTH)+' and delivered since.' : '')
         +(hasStatus?'':' Received status appears after the next scheduled data refresh.');
     }
     $('fnDeepPick').addEventListener('click', function(e){
       var b=e.target.closest?e.target.closest('button'):null; if(!b) return;
       var btns=$('fnDeepPick').querySelectorAll('button');
       for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
-      b.classList.add('on'); cur=b.getAttribute('data-b'); render();
+      b.classList.add('on'); cur=b.getAttribute('data-b'); q=''; if($('fnDeepSearch')) $('fnDeepSearch').value=''; render();
     });
     $('fnDeepSearch').addEventListener('input', function(){ q=this.value.trim().toLowerCase(); render(); });
     $('fnDeepExport').addEventListener('click', function(){
-      var rs=rowsFor(cur);
+      // Exports whatever is on screen — all four buckets under Compare all, one otherwise.
+      var buckets = cur==='compare'? ORDER : [cur];
       var lines=[['Merchant','Email','Owner ID','Bucket','Passed KYC on','Terminal ordered','Terminal status','Terminal received','Transacting since'].join(',')];
-      rs.forEach(function(r){ var m=r.m;
-        lines.push([m.name,m.email,m.oid,BUCKETS[cur].name,m.enabled_at||'',m.terminal_at||'',m.terminal_status||'',isDelivered(m.terminal_status)?'yes':'no',m.first_txn_at||''].map(function(v){
+      buckets.forEach(function(b){ rowsFor(b).forEach(function(r){ var m=r.m;
+        lines.push([m.name,m.email,m.oid,BUCKETS[b].name,m.enabled_at||'',m.terminal_at||'',m.terminal_status||'',isReceived(r)?'yes':'no',m.first_txn_at||''].map(function(v){
           v=String(v==null?'':v); return /[",\n]/.test(v)? '"'+v.replace(/"/g,'""')+'"' : v; }).join(','));
-      });
+      }); });
       var a=document.createElement('a');
       a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));
       a.download='funnel-deep-dive-'+cur+(monthly()? '-'+MONTH : '')+'.csv'; a.click();
