@@ -256,7 +256,7 @@
          to merchants holding an account, and every cell's tooltip names that population.
          The payments group appears only once payments-cohort.json has loaded. -->
     <div class="toggle" id="tri-metric" style="display:none">
-      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button>
+      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="none" class="tri-any" style="display:none" title="No POS condition — count the payments stage on its own, whether or not the merchant was paying or active that month">Any status</button>
     </div>
     <div class="toggle" id="tri-stage" style="display:none;margin-left:8px">
       <button data-metric="kyc0">Initiated KYC</button><button data-metric="kyc1">Finalized KYC</button><button data-metric="txn">Transacting</button>
@@ -647,6 +647,12 @@ renderCohTable();
   const LABEL = { paying:'Paying', active:'Active', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
   const PAY_KEYS = ['kyc0','kyc1','txn'];
   const POS_KEYS = ['paying','active'];
+  // A POS condition is on by default, because Paying alone is what this view has always shown.
+  // That default silently intersected every payments stage a first-time user picked: clicking
+  // Transacting gave "Paying AND transacting", which for the July cohort reads 0 and 1 rather
+  // than 10 and 11. So the first stage pick clears the POS group unless the user has chosen a
+  // POS condition themselves — and "Any status" makes that state visible and reversible.
+  let posTouched = false;
   // Selection is an ordered list; 'paying' alone is the page as it has always been.
   let triSel = ['paying'];
   const hasPay = () => triSel.some(k => PAY_KEYS.indexOf(k) >= 0);
@@ -673,16 +679,16 @@ renderCohTable();
       const coh = at(r.h); if (!coh) return;
       const k = at(r.k);
       if (k && (!first || k < first)) first = k;
-      // Transacting is stored as the MONTH IT STARTED, like the two KYC steps, not as the set of
-      // months with charges. All three payments stages are one-way doors: a merchant that took a
-      // card payment in July has transacted, whether or not it took another in August. Counting
-      // the months instead dropped 3 of the July cohort's 14 transactors from August's figure.
-      const t = (r.t || []).map(at).filter(Boolean).sort();
+      // Transacting is the SET OF MONTHS with charges, not the month it started. A merchant that
+      // transacted in July and stopped is not transacting in August, the same way one that was
+      // active in July and went quiet is not active in August. The two KYC steps are different:
+      // they are one-way doors and stay crossed, so they keep a single month.
       (out[coh] || (out[coh] = [])).push({
         c: r.c || 'ZZ',
-        kyc0: k, kyc1: at(r.f), txn: t.length ? t[0] : null,
+        kyc0: k, kyc1: at(r.f),
         paying: new Set((r.p || []).map(at).filter(Boolean)),
         active: new Set((r.a || []).map(at).filter(Boolean)),
+        txn:    new Set((r.t || []).map(at).filter(Boolean)),
       });
     });
     payFrom = first;
@@ -716,10 +722,9 @@ renderCohTable();
       if (ccs && ccs.indexOf(r.c) < 0) continue;
       let ok = true;
       for (const k of triSel){
-        // Payments stages are cumulative: reached BY this month, and never un-reached. Paying and
-        // Active are in-month states — a merchant is not "active in August" because it was
-        // active in July.
-        if (PAY_KEYS.indexOf(k) >= 0){ const d = r[k]; if (!d || d > cal){ ok = false; break; } }
+        // The two KYC steps are one-way doors: reached BY this month, never un-reached.
+        // Paying, Active and Transacting are in-month states: held in that month or not at all.
+        if (k === 'kyc0' || k === 'kyc1'){ const d = r[k]; if (!d || d > cal){ ok = false; break; } }
         else if (!r[k].has(cal)){ ok = false; break; }
       }
       if (ok) n++;
@@ -849,7 +854,11 @@ renderCohTable();
   // rather than left to describe a view that is no longer on screen.
   const NOTE_TRI = 'Each cell = the cohort’s value at that age (M0 = registration month); “Size” is the '
                  + 'cohort’s total registrations. Toggle “% of cohort” to normalise by size. Colour scales '
-                 + 'with the displayed value.';
+                 + 'with the displayed value. '
+                 + ((D.meta && D.meta.latestMonth)
+                     ? 'The newest cell in every row is ' + D.meta.latestMonth + ', the month still in '
+                       + 'progress — it is marked * and will read low until the month closes. '
+                     : '');
   function setNote(){
     if (triWrap.style.display === 'none') return;
     let s = NOTE_TRI;
@@ -871,11 +880,10 @@ renderCohTable();
          + (triSel.length > 1 ? 'ALL of those conditions at once' : 'that condition')
          + ', among merchants holding a Loyverse Payments account'
          + (hasPay() ? '' : ' (the only population where these can be intersected)') + '. '
-         + 'All three payments stages are cumulative — reached by that month and never lost, so '
-         + 'a merchant that transacted in July still counts in August. Paying and Active are '
-         + 'in-month states, because a merchant is not active in August for having been active in '
-         + 'July; combining one of those with a stage therefore asks "reached this stage, and '
-         + 'still paying or active that month". '
+         + 'Initiated and Finalized KYC are cumulative — one-way doors, reached by that month and '
+         + 'never lost. Paying, Active and Transacting are in-month: a merchant that transacted in '
+         + 'July and not in August counts in July only, exactly as one that went quiet on the POS '
+         + 'is no longer active. '
          + '“Size” is the cohort’s full registrations. The cells count only the subset holding a '
          + 'payments account, so a cell reading 6 means 6 of that subset, not 6 of Size — hover any '
          + 'cell to see both numbers. “% of cohort” divides by Size and answers how far payments has '
@@ -899,6 +907,7 @@ renderCohTable();
     document.getElementById('tri-metric').style.display = tri ? 'inline-block' : 'none';
     // The stage group only exists once the membership file has loaded, so it follows byCohort.
     document.getElementById('tri-stage').style.display = (tri && byCohort) ? 'inline-block' : 'none';
+    document.querySelectorAll('#tri-metric button.tri-any').forEach(b => { b.style.display = (tri && byCohort) ? '' : 'none'; });
     document.getElementById('tri-mode').style.display = tri ? 'inline-block' : 'none';
     noteEl.textContent = tri
       ? NOTE_TRI
@@ -919,6 +928,9 @@ renderCohTable();
   function paintButtons(){
     document.querySelectorAll('#tri-metric button, #tri-stage button').forEach(x =>
       x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
+    // "Any status" is the state of having no POS condition, so it lights up by absence.
+    const anyBtn = document.querySelector('#tri-metric button[data-metric=none]');
+    if (anyBtn) anyBtn.classList.toggle('on', !triSel.some(k => POS_KEYS.indexOf(k) >= 0));
     // triMetric still drives the single-series path and must follow the one selected metric.
     triMetric = useSeries() ? triSel[0] : 'paying';
     // "% of payments base" has no base to divide by in single-series mode, where the cells cover
@@ -932,8 +944,20 @@ renderCohTable();
     }
     drawTri(triMetric, triPct);
   }
-  document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => pickIn(POS_KEYS, b.dataset.metric));
-  document.querySelectorAll('#tri-stage button').forEach(b => b.onclick = () => pickIn(PAY_KEYS, b.dataset.metric));
+  document.querySelectorAll('#tri-metric button').forEach(b => b.onclick = () => {
+    posTouched = true;
+    const k = b.dataset.metric;
+    if (k === 'none'){
+      const rest = triSel.filter(x => POS_KEYS.indexOf(x) < 0);
+      if (!rest.length) return;           // nothing would be left to count
+      triSel = rest; paintButtons(); return;
+    }
+    pickIn(POS_KEYS, k);
+  });
+  document.querySelectorAll('#tri-stage button').forEach(b => b.onclick = () => {
+    if (!posTouched) triSel = triSel.filter(x => POS_KEYS.indexOf(x) < 0);
+    pickIn(PAY_KEYS, b.dataset.metric);
+  });
   // The membership file is fetched, not script-tagged, and with cache:'no-cache' — it is
   // rewritten several times a day and a cached copy renders a stale triangle inside a current
   // page, which is indistinguishable from a bug in the numbers. Until it arrives the section is
@@ -946,6 +970,8 @@ renderCohTable();
       byCohort = idx;
       PC_STAMP = pc.generatedAt || null;
       document.getElementById('tri-stage').style.display = 'inline-block';
+      // "Any status" only means anything once there is a payments stage to show on its own.
+      document.querySelectorAll('#tri-metric button.tri-any').forEach(b => { b.style.display = ''; });
       if (triWrap.style.display !== 'none') drawTri(triMetric, triPct);
     })
     .catch(() => { /* not generated yet — the payments conditions simply are not offered */ });
