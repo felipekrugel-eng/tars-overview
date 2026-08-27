@@ -59,6 +59,7 @@ from collections import Counter, defaultdict
 from datetime import datetime
 
 import openpyxl
+from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import column_index_from_string as cifs
 from openpyxl.utils import get_column_letter as gcl
 
@@ -66,6 +67,7 @@ DETAIL = "Transaction Detail"
 HYPER = "Transaction Hyper Detail"
 DATA_START = 3          # Transaction Detail: banners r1, headers r2, data r3+
 HYPER_START = 2         # Hyper Detail: headers r1, data r2+
+MAXROW = 300_000        # range ceiling, matches the template (never the row count)
 PROTECTED = ("Rate Card", "Merchant Months")
 
 # Transaction Detail raw columns: letter -> header text expected in the template.
@@ -81,6 +83,8 @@ RAW_COLS = {
 
 BRAND = {"Visa": "Visa", "MasterCard": "Mastercard", "American Express": "Amex",
          "Discover": "Discover", "Amex": "Amex"}
+NAVY = "0B2B3C"
+HDR_F = Font(name="Aptos Narrow", size=10, bold=True, color="FFFFFF")
 NETWORK_CATS = ("interchange", "card_scheme", "discount")
 STRIPE_CATS = ("per_auth_fee", "volume_fee")
 
@@ -125,6 +129,10 @@ def load_transactions(path):
                 "last4": r.get("CARD_LAST4") or "",
                 "status": "succeeded",
                 "revenue": money("APPLICATION_FEE_AMOUNT"),
+                # Optional. Present once query1_transactions.sql selects a.COUNTRY;
+                # until then it is absent and we fall back to the template's own
+                # BX values keyed on merchant name (which misses new merchants).
+                "merchant_country": (r.get("MERCHANT_COUNTRY") or "").strip().upper(),
             })
     out.sort(key=lambda x: (x["created"], x["charge_id"]))
     return out
@@ -135,6 +143,7 @@ def load_icplus(path):
     by_cat = defaultdict(lambda: defaultdict(float))
     by_name = defaultdict(lambda: defaultdict(float))
     lines = defaultdict(lambda: defaultdict(lambda: [0, 0.0, Counter()]))
+    cat_of_plan = {}          # plan name -> fee category, for column naming
     with open(path, newline="", encoding="utf-8-sig") as fh:
         for r in csv.DictReader(fh):
             cid = r.get("CHARGE_ID")
@@ -158,7 +167,8 @@ def load_icplus(path):
             agg[0] += 1
             agg[1] += amt
             agg[2][f"{brand(r.get('CARD_BRAND'))} {fund(r.get('CARD_FUNDING'))}"] += 1
-    return by_cat, by_name, lines
+            cat_of_plan.setdefault(plan, cat)
+    return by_cat, by_name, lines, cat_of_plan
 
 
 # --------------------------------------------------------------- cost joining ----
@@ -255,8 +265,9 @@ def build_detail(ws, txns, country):
     unknown = set()
     for i, t in enumerate(txns):
         r = DATA_START + i
-        cty = country.get(t["merchant"].casefold())
-        if cty is None:
+        # Prefer the country the pull gives us; fall back to the name lookup.
+        cty = t.get("merchant_country") or country.get(t["merchant"].casefold())
+        if not cty:
             unknown.add(t["merchant"])
             cty = ""
         vals = {
@@ -274,7 +285,7 @@ def build_detail(ws, txns, country):
     return n, unknown
 
 
-def build_hyper(ws, txns, by_name, country):
+def build_hyper(ws, txns, by_name, country, cat_of_plan):
     hdr = [c.value for c in ws[1]]
     col_of = {}
     for i, h in enumerate(hdr, start=1):
@@ -294,13 +305,15 @@ def build_hyper(ws, txns, by_name, country):
     clear_below(ws, HYPER_START)
 
     unmatched = Counter()
+    added = {}
     for i, t in enumerate(txns):
         r = HYPER_START + i
         net = t["interchange"] + t["card_scheme"] + t["amex_discount"]
         strp = t["per_auth"] + t["volume_fee"]
         base = {
             "Charge ID": t["charge_id"], "Date": t["date"], "Merchant": t["merchant"],
-            "Merchant Country": country.get(t["merchant"].casefold(), ""),
+            "Merchant Country": (t.get("merchant_country")
+                                 or country.get(t["merchant"].casefold(), "")),
             "Transaction Value": t["amount"], "Card Brand": t["brand"],
             "Card Funding": t["funding"], "Card Country": t["card_country"],
             "Fee Data": t["fee_data"], "Revenue (Loyverse)": t["revenue"],
@@ -316,52 +329,108 @@ def build_hyper(ws, txns, by_name, country):
                 ws.cell(r, fixed[h]).value = v
         for plan, amt in by_name.get(t["charge_id"], {}).items():
             c = col_of.get(plan)
-            if c:
-                ws.cell(r, c).value = round(amt, 6)
-            else:
-                unmatched[plan] += 1
-    return unmatched
+            if c is None:
+                # Stripe adds interchange and scheme line items over time - the first
+                # live run met 20 that did not exist in the 25 Aug workbook, and the
+                # previous version DROPPED them. Their cost was still correct in
+                # Transaction Detail (that side aggregates by CATEGORY, not by line
+                # name), but the per-line matrix here under-attributed them with only a
+                # warning. Now the column is created on the spot, so no fee line is
+                # ever lost. Category prefixes match the template's own convention.
+                cat = cat_of_plan.get(plan, "")
+                prefix = ("AX" if cat == "discount" else
+                          "ST" if cat in ("per_auth_fee", "volume_fee") else
+                          "CS" if cat == "card_scheme" else "IC")
+                c = ws.max_column + 1
+                hc = ws.cell(1, c, f"{prefix}: {plan}")
+                hc.font, hc.fill = HDR_F, PatternFill("solid", fgColor=NAVY)
+                hc.alignment = Alignment(wrap_text=True, vertical="bottom")
+                ws.column_dimensions[gcl(c)].width = 18
+                col_of[plan] = c
+                added[plan] = f"{prefix}: {plan}"
+            ws.cell(r, c).value = round(amt, 6)
+    return unmatched, added
 
 
 def build_fee_breakdown(ws, lines, n_estimated):
+    """Rebuild Fee Breakdown, growing the sheet to fit however many fee lines Stripe
+    billed.
+
+    TWO BUGS FIXED HERE, both found on the first live CI run (18,794 charges brought
+    20 fee line items that did not exist in the 25 Aug workbook):
+
+      1. The row budget was the template's own length. The previous version stopped at
+         `ws.max_row - 3` (row 202 of a 205-row sheet) and silently dropped the rest -
+         it reported "200 rows" while truncating the tail of the last category. Exactly
+         the same failure as the hardcoded 16091 ceiling: a fixed size that new data
+         quietly overflows. There is now no cap; the footers move down instead.
+
+      2. The footers were pinned to rows 204/205 and D204 read `=$D$205-$D$203`, where
+         203 meant "the last data row" only on the day it was written. Both footers are
+         now emitted immediately after the data, and every reference is computed from
+         the row they actually land on.
+    """
     LABEL = {"interchange": "Interchange", "card_scheme": "Card Scheme",
              "discount": "Amex Discount", "per_auth_fee": "Stripe Per Auth",
              "volume_fee": "Stripe Volume"}
-    for r in range(5, ws.max_row + 1):
-        for c in range(1, 8):
-            v = ws.cell(r, c).value
-            if not (isinstance(v, str) and v.startswith("=")):
-                ws.cell(r, c).value = None
+    ORDER = ("interchange", "card_scheme", "discount", "per_auth_fee", "volume_fee")
+
+    # Keep a data row's formatting to stamp onto every row we write, since the sheet
+    # now extends past the styled region of the template.
+    proto = [ws.cell(6, c)._style for c in range(1, 8)]
+
+    clear_below(ws, 5)
 
     grand = sum(a[1] for cat in lines.values() for a in cat.values())
     r = 5
-    for cat in ("interchange", "card_scheme", "discount", "per_auth_fee", "volume_fee"):
+    cat_rows = []
+
+    def put(row, values):
+        for c, v in enumerate(values, start=1):
+            cell = ws.cell(row, c, v)
+            cell._style = proto[c - 1]
+
+    for cat in ORDER:
         items = lines.get(cat)
         if not items:
             continue
-        occ = sum(a[0] for a in items.values())
-        tot = sum(a[1] for a in items.values())
-        ws.cell(r, 1).value = LABEL[cat]
-        ws.cell(r, 2).value = f"{LABEL[cat]} — all {len(items)} line items"
-        ws.cell(r, 3).value = occ
-        ws.cell(r, 4).value = round(tot, 6)
-        ws.cell(r, 6).value = round(tot / grand, 6) if grand else None
+        cat_occ = sum(a[0] for a in items.values())
+        cat_tot = sum(a[1] for a in items.values())
+        put(r, [LABEL[cat], f"{LABEL[cat]} — all {len(items)} line items", cat_occ,
+                round(cat_tot, 6), None, round(cat_tot / grand, 6) if grand else None,
+                None])
+        cat_rows.append(r)
         r += 1
         for plan, (occ, tot, cards) in sorted(items.items(), key=lambda kv: -kv[1][1]):
-            if r > ws.max_row - 3:
-                break
-            ws.cell(r, 1).value = LABEL[cat]
-            ws.cell(r, 2).value = plan
-            ws.cell(r, 3).value = occ
-            ws.cell(r, 4).value = round(tot, 6)
-            ws.cell(r, 5).value = round(tot / occ, 6) if occ else None
-            ws.cell(r, 6).value = round(tot / grand, 6) if grand else None
-            ws.cell(r, 7).value = cards.most_common(1)[0][0] if cards else None
+            put(r, [LABEL[cat], plan, occ, round(tot, 6),
+                    round(tot / occ, 6) if occ else None,
+                    round(tot / grand, 6) if grand else None,
+                    cards.most_common(1)[0][0] if cards else None])
             r += 1
-    ws.cell(204, 2).value = (f"Estimated cost — the {n_estimated} charges still settling at "
-                             "extract time (blended rate by card brand and funding, no line "
-                             "items available)")
-    return r - 5
+
+    n_data = r - 5
+
+    # Footers, positioned relative to the data rather than pinned.
+    r += 1
+    actual_row = r
+    put(actual_row, [None, "Actual line items — total of the category rows above", None,
+                     "=" + "+".join(f"$D${x}" for x in cat_rows) if cat_rows else 0,
+                     None, None, None])
+    r += 1
+    est_row = r
+    put(est_row, [None,
+                  f"Estimated cost — the {n_estimated} charges still settling at extract "
+                  "time (blended rate by card brand and funding, no line items available)",
+                  None, None, None, None, None])
+    r += 1
+    total_row = r
+    put(total_row, [None, "TOTAL COST — ties to Transaction Detail column V and to Summary",
+                    None, f"=SUM('{DETAIL}'!$V${DATA_START}:$V${MAXROW})",
+                    None, None, None])
+    # Now that both rows exist, the estimate is total minus what the line items explain.
+    ws.cell(est_row, 4).value = f"=$D${total_row}-$D${actual_row}"
+
+    return n_data, total_row
 
 
 def build_merchant_analysis(ws, txns):
@@ -424,7 +493,7 @@ def main():
     txns = load_transactions(a.tx)
     print(f"  {len(txns):,} succeeded charges")
     print(f"reading {a.ic}")
-    by_cat, by_name, lines = load_icplus(a.ic)
+    by_cat, by_name, lines, cat_of_plan = load_icplus(a.ic)
     n_act, n_est = attach_costs(txns, by_cat)
     print(f"  cost attached: {n_act:,} Actual, {n_est:,} Estimated")
 
@@ -441,16 +510,21 @@ def main():
     print(f"\n  {DETAIL}: {len(txns):,} rows, {n_f:,} formula cells filled")
     if unknown:
         print(f"    WARNING: no country for {len(unknown)} merchant(s): "
-              f"{sorted(unknown)[:5]}")
+              f"{sorted(unknown)[:5]}\n"
+              "      Fix permanently by adding  a.COUNTRY AS merchant_country  to the\n"
+              "      SELECT in payments-automation/queries/query1_transactions.sql.\n"
+              "      CONNECTED_ACCOUNTS.COUNTRY exists - q1_base.sql already filters on it.")
 
-    unmatched = build_hyper(wb[HYPER], txns, by_name, country)
+    unmatched, added = build_hyper(wb[HYPER], txns, by_name, country, cat_of_plan)
     print(f"  {HYPER}: {len(txns):,} rows")
-    if unmatched:
-        print(f"    WARNING: {len(unmatched)} fee line(s) have no column in the template "
-              f"and were dropped: {list(unmatched)[:3]}")
+    if added:
+        print(f"    {len(added)} new fee line(s) appeared in the data and got new "
+              f"columns (nothing dropped):")
+        for k in sorted(added.values()):
+            print(f"       + {k}")
 
-    n_fb = build_fee_breakdown(wb["Fee Breakdown"], lines, n_est)
-    print(f"  Fee Breakdown: {n_fb} rows")
+    n_fb, fb_total = build_fee_breakdown(wb["Fee Breakdown"], lines, n_est)
+    print(f"  Fee Breakdown: {n_fb} fee lines, totals on row {fb_total}")
 
     n_ma = build_merchant_analysis(wb["Merchant Analysis"], txns)
     print(f"  Merchant Analysis: {n_ma} merchants (now formula-driven)")

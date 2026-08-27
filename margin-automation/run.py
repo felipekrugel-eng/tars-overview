@@ -92,9 +92,12 @@ def soffice():
 
 
 def recalc(src):
-    if RECALC_DIR.exists():
-        shutil.rmtree(RECALC_DIR)
-    RECALC_DIR.mkdir(parents=True)
+    # ignore_errors: on CI this directory is always fresh, but on a filesystem that
+    # refuses unlink (some synced/mounted folders) an unguarded rmtree kills an
+    # otherwise good run during CLEANUP. Leftovers are harmless - LibreOffice
+    # overwrites its output - so never fail here.
+    shutil.rmtree(RECALC_DIR, ignore_errors=True)
+    RECALC_DIR.mkdir(parents=True, exist_ok=True)
     sh(soffice(), "--headless", "--norestore", "--convert-to", "xlsx",
        "--outdir", RECALC_DIR, src)
     out = RECALC_DIR / src.name

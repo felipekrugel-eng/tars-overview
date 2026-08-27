@@ -158,9 +158,10 @@ def pull():
 
 
 def recalc(src):
-    if RECALC_DIR.exists():
-        shutil.rmtree(RECALC_DIR)
-    RECALC_DIR.mkdir(parents=True)
+    # ignore_errors: see margin-automation/run.py - an unguarded rmtree kills an
+    # otherwise good run on any filesystem that refuses unlink.
+    shutil.rmtree(RECALC_DIR, ignore_errors=True)
+    RECALC_DIR.mkdir(parents=True, exist_ok=True)
     sh(soffice(), "--headless", "--norestore", "--convert-to", "xlsx",
        "--outdir", RECALC_DIR, src)
     out = RECALC_DIR / src.name
