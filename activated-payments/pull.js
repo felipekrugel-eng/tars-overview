@@ -1462,6 +1462,59 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
   }
   return out;
 }
+// The device model behind each terminal reader, from the Stripe API rather than the data share.
+//
+// WHY THE API AT ALL. The share carries TERMINAL_READER_ID on every card-present charge, but its
+// TERMINAL_READERS view holds exactly ONE row — the platform's own reader. Verified live against
+// INFORMATION_SCHEMA: no other view in the share carries DEVICE_TYPE or SERIAL_NUMBER, and the
+// reader Felipe pointed at appears on 585 charges while being absent from TERMINAL_READERS
+// entirely. Stripe knows the model; the share does not replicate connected accounts' readers.
+// The API does, per connected account, via the Stripe-Account header.
+//
+// Guarded end to end: without STRIPE_API_KEY this returns an empty map, the device dimension is
+// not emitted, and the page falls back to how the card was read. A new page must never be able
+// to break a pull that four other pages depend on.
+async function fetchReaderDevices(acctIds) {
+  const key = process.env.STRIPE_API_KEY;
+  if (!key) { console.log('  (no STRIPE_API_KEY — device models skipped, page falls back to read method)'); return {}; }
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return {};
+  const map = {};
+  let calls = 0, failed = 0;
+  async function one(acct) {
+    let url = 'https://api.stripe.com/v1/terminal/readers?limit=100';
+    for (let page = 0; page < 10 && url; page++) {
+      let res;
+      try {
+        calls++;
+        res = await fetch(url, { headers: { Authorization: 'Bearer ' + key, 'Stripe-Account': acct } });
+      } catch (e) { failed++; return; }
+      if (!res.ok) {
+        // 403/404 on an account that never enabled Terminal is expected, not worth shouting about.
+        if (res.status !== 403 && res.status !== 404) {
+          failed++;
+          if (failed <= 3) console.error(`  reader fetch ${acct}: HTTP ${res.status}`);
+        }
+        return;
+      }
+      const body = await res.json();
+      (body.data || []).forEach(r => {
+        if (r && r.id) map[r.id] = { device: r.device_type || 'unknown', serial: r.serial_number || null };
+      });
+      url = body.has_more && body.data && body.data.length
+        ? 'https://api.stripe.com/v1/terminal/readers?limit=100&starting_after=' + encodeURIComponent(body.data[body.data.length - 1].id)
+        : null;
+    }
+  }
+  // Modest concurrency: short enough not to stretch the pull, well under Stripe's rate limit.
+  const queue = ids.slice();
+  await Promise.all(Array.from({ length: 5 }, async () => {
+    while (queue.length) await one(queue.shift());
+  }));
+  console.log(`✓ terminal readers: ${Object.keys(map).length} readers across ${ids.length} accounts `
+            + `(${calls} API calls, ${failed} failed)`);
+  return map;
+}
 async function fetchProfileAcceptance(conn) {
   const rows = await executeQuery(conn, loadSql('profile_acceptance.sql'));
   const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
@@ -1473,6 +1526,27 @@ async function fetchProfileAcceptance(conn) {
     // AMOUNT_IN_USD is already USD in the minor unit; Stripe's own conversion, not our FX map.
     usd: Math.round((Number(g(r, 'usd_minor')) || 0)) / 100,
   }));
+}
+// Turn the raw reader-id rows into a device dimension and drop the raw ones — a reader id is not
+// something anyone wants to read on a page. Readers the API did not return become
+// 'unknown_reader' rather than disappearing, so the device dimension still sums to exactly the
+// same total as every other dimension, which is the page's one structural guarantee.
+function deviceDimension(mix, readers) {
+  const raw = mix.filter(r => r.d === 'reader_id');
+  const rest = mix.filter(r => r.d !== 'reader_id');
+  if (!raw.length || !Object.keys(readers).length) return rest;
+  const by = {};
+  raw.forEach(r => {
+    const info = readers[r.s];
+    const seg = r.s === 'no_reader' ? 'no_reader' : (info ? info.device : 'unknown_reader');
+    const k = [r.m, r.cc, seg].join('|');
+    by[k] = by[k] || { m: r.m, d: 'device', s: seg, cc: r.cc, n: 0, usd: 0 };
+    by[k].n += r.n; by[k].usd += r.usd;
+  });
+  const rows = Object.keys(by).map(k => by[k]);
+  const matched = raw.filter(r => r.s === 'no_reader' || readers[r.s]).length;
+  console.log(`  device dimension: ${rows.length} rows, ${matched}/${raw.length} reader-months resolved to a model`);
+  return rest.concat(rows);
 }
 function writeProfile(mix, cost, acceptance) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
@@ -1872,12 +1946,17 @@ async function main() {
       // Payment profile. Guarded on its own: three more Snowflake round-trips for a new page
       // must never cost the Report or the cohort file, which are already written by now.
       try {
-        const [mixR, costR, accR] = await Promise.allSettled([
+        const [mixR, costR, accR, rdrR] = await Promise.allSettled([
           fetchProfileMix(conn, prodAccts, countryByAcct),
           fetchProfileCost(conn, prodAccts, countryByAcct),
           fetchProfileAcceptance(conn),
+          // Only accounts that transacted: a reader on any other account cannot appear on a charge.
+          fetchReaderDevices(Object.keys(txnByAcct || {})),
         ]);
-        const mix = mixR.status === 'fulfilled' ? mixR.value : [];
+        let mix = mixR.status === 'fulfilled' ? mixR.value : [];
+        const readers = rdrR.status === 'fulfilled' ? rdrR.value : {};
+        if (rdrR.status !== 'fulfilled') console.error(`✗ terminal readers failed (device split unavailable): ${rdrR.reason && rdrR.reason.message}`);
+        mix = deviceDimension(mix, readers);
         const cost = costR.status === 'fulfilled' ? costR.value : [];
         const acc = accR.status === 'fulfilled' ? accR.value : [];
         if (mixR.status !== 'fulfilled')  console.error(`✗ profile_mix failed: ${mixR.reason && mixR.reason.message}`);

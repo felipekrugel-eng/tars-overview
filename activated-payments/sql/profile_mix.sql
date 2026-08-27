@@ -77,10 +77,17 @@ tall AS (
     UNION ALL
     SELECT MONTH, ACCT, CCY, AMOUNT_MINOR, 'presence',           COALESCE(PM_TYPE, 'unknown')             FROM joined
     UNION ALL
-    -- Reader coverage, so the page can state how much TPV came through a terminal at all, even
-    -- though the model behind that terminal is not exposed.
+    -- Reader coverage, so the page can state how much TPV came through a terminal at all.
     SELECT MONTH, ACCT, CCY, AMOUNT_MINOR, 'reader',
            IFF(READER_ID IS NULL, 'no_reader', 'via_reader')                                        FROM joined
+    UNION ALL
+    -- The reader ID itself. Snowflake cannot turn this into a device model — the share carries
+    -- the id on every charge but replicates only the PLATFORM's reader objects, so the 127
+    -- connected-account readers behind this volume resolve to nothing here. pull.js maps these
+    -- ids to models from the Stripe API and rolls them up into a 'device' dimension; these raw
+    -- rows are the input to that and are not shown on the page.
+    SELECT MONTH, ACCT, CCY, AMOUNT_MINOR, 'reader_id',
+           COALESCE(READER_ID, 'no_reader')                                                         FROM joined
 )
 SELECT
     MONTH,

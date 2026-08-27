@@ -196,6 +196,12 @@
     samsung_pay: 'Samsung Pay', link: 'Link',
     contactless_emv: 'Contactless', contact_emv: 'Chip', magnetic_stripe_track2: 'Magnetic stripe',
     magnetic_stripe_fallback: 'Stripe fallback', not_present: 'Not card present',
+    // Stripe's device_type values. Tap to Phone reports as a mobile reader rather than hardware.
+    stripe_s710: 'Stripe Reader S710', stripe_s700: 'Stripe Reader S700', stripe_m2: 'Stripe Reader M2',
+    bbpos_wisepos_e: 'BBPOS WisePOS E', bbpos_chipper2x: 'BBPOS Chipper 2X',
+    bbpos_wisepad3: 'BBPOS WisePad 3', verifone_P400: 'Verifone P400',
+    mobile_phone_reader: 'Tap to Phone', simulated_wisepos_e: 'Simulated reader',
+    unknown_reader: 'Reader not resolved',
     card_present: 'In person', card: 'Online / keyed',
     via_reader: 'Through a terminal', no_reader: 'No terminal', unknown: 'Unknown'
   };
@@ -258,7 +264,8 @@
     var DIMS = [
       ['brand', 'Card brand', 'Which network the card runs on. Amex and Discover cost materially more to accept than Visa and Mastercard.'],
       ['funding', 'Debit or credit', 'The single biggest lever on cost: debit is regulated in the US and far cheaper than credit.'],
-      ['read_method', 'How the card was read', 'Contactless, chip or stripe. This is NOT the device model — see the note below.'],
+      ['device', 'Which device took the payment', 'M2, S710 or Tap to Phone. Resolved per charge from the terminal reader on it.'],
+      ['read_method', 'How the card was read', 'Contactless, chip or stripe — a property of the tap or dip, not of the device.'],
       ['wallet', 'Wallet', 'Apple Pay, Google Pay and Samsung Pay are contactless taps that carry a device token rather than the card number.'],
       ['card_country', 'Where the card was issued', 'A card issued abroad carries cross-border and currency-conversion fees on top of interchange.'],
       ['presence', 'In person or online', 'Card-present pricing is cheaper and carries less fraud risk than keyed or online.']
@@ -474,17 +481,32 @@
     renderAll();
   }
 
-  // The device caveat goes at the bottom of the mix panel, next to the read-method bar it
-  // qualifies, rather than in a footnote nobody reaches.
-  var warn = document.createElement('div');
-  warn.className = 'warn';
-  warn.innerHTML = '<b>This does not tell you M2 versus S710 versus Tap to Phone.</b> Charges do carry a '
-    + 'terminal reader id, and 127 distinct readers cover 99.9% of volume — but the Stripe data share '
-    + 'exposes only one row in its readers table, belonging to the platform account, so none of those ids '
-    + 'resolve to a device model. &ldquo;How the card was read&rdquo; above is exact and is the closest '
-    + 'available answer. Splitting by device needs Stripe to include connected accounts&rsquo; terminal '
-    + 'readers in the share.';
-  $('mixes').parentNode.appendChild(warn);
+  // The device caveat appears ONLY while the device dimension is genuinely absent. Once the
+  // reader models are being resolved it would be a stale warning about a solved problem, which is
+  // worse than no warning at all.
+  var hasDevice = MIX.some(function (r) { return r.d === 'device'; });
+  var unresolved = MIX.filter(function (r) { return r.d === 'device' && r.s === 'unknown_reader'; })
+    .reduce(function (s, r) { return s + r.usd; }, 0);
+  var deviceTotal = MIX.filter(function (r) { return r.d === 'device'; })
+    .reduce(function (s, r) { return s + r.usd; }, 0);
+  if (!hasDevice) {
+    var warn = document.createElement('div');
+    warn.className = 'warn';
+    warn.innerHTML = '<b>The device split is not showing.</b> Charges carry a terminal reader id, and 127 '
+      + 'distinct readers cover 99.9% of volume, but the Stripe data share replicates only the platform&rsquo;s '
+      + 'own reader objects — so the ids resolve to nothing in the warehouse. Resolving them needs a Stripe '
+      + 'API key with Terminal read access in the pull&rsquo;s secrets; until then, &ldquo;how the card was '
+      + 'read&rdquo; above is the closest exact answer.';
+    $('mixes').parentNode.appendChild(warn);
+  } else if (unresolved > 0.005 * deviceTotal) {
+    var w2 = document.createElement('div');
+    w2.className = 'warn';
+    w2.innerHTML = '<b>' + (100 * unresolved / deviceTotal).toFixed(1) + '% of volume sits on a reader the '
+      + 'API did not return</b> — usually an account that has since disabled Terminal. It is shown as '
+      + '&ldquo;Reader not resolved&rdquo; rather than being dropped, so the device split still sums to the '
+      + 'same total as every other breakdown.';
+    $('mixes').parentNode.appendChild(w2);
+  }
 })();
 </script>
 </body>

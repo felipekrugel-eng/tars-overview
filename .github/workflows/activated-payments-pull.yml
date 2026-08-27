@@ -98,6 +98,12 @@ jobs:
 
       - name: Run payments activation pull
         if: steps.gate.outputs.run == 'yes'
+        env:
+          # Optional. Only used to resolve terminal reader ids to device models (M2 / S710 / Tap
+          # to Phone), which the Stripe data share does not replicate for connected accounts.
+          # Absent, the pull still succeeds and the Payment Profile page falls back to showing how
+          # the card was read. Needs Terminal read access only.
+          STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: node activated-payments/pull.js
 
       - name: Commit & push if the data changed
