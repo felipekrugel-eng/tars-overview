@@ -1475,8 +1475,16 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
 // not emitted, and the page falls back to how the card was read. A new page must never be able
 // to break a pull that four other pages depend on.
 async function fetchReaderDevices(acctIds) {
-  const key = process.env.STRIPE_API_KEY;
+  // Trimmed: a secret pasted with a trailing newline produces a header of "Bearer rk_live_...\n",
+  // which Stripe rejects with a 401 that looks exactly like a wrong key.
+  const key = (process.env.STRIPE_API_KEY || '').trim();
   if (!key) { console.log('  (no STRIPE_API_KEY — device models skipped, page falls back to read method)'); return {}; }
+  // The key's SHAPE, never the key. Enough to tell a live key from a test one, a restricted key
+  // from a secret one, and a truncated paste from a whole one — which is what 401s turn out to be.
+  const shape = key.slice(0, 8) + '… ' + key.length + ' chars';
+  if (!/^(rk|sk)_live_/.test(key)) {
+    console.error(`  ⚠ STRIPE_API_KEY looks like ${shape} — live charges need a key starting rk_live_ or sk_live_`);
+  }
   const ids = sanitizeAccts(acctIds);
   if (!ids.length) return {};
   const map = {};
@@ -1493,7 +1501,15 @@ async function fetchReaderDevices(acctIds) {
         // 403/404 on an account that never enabled Terminal is expected, not worth shouting about.
         if (res.status !== 403 && res.status !== 404) {
           failed++;
-          if (failed <= 3) console.error(`  reader fetch ${acct}: HTTP ${res.status}`);
+          // Stripe's own message says which of the several 401 causes it is — a wrong key, a test
+          // key against live data, an expired key, or one lacking Terminal access. Logging only
+          // the status code sent Felipe back to the dashboard with nothing to act on.
+          let why = '';
+          try {
+            const err = await res.json();
+            why = (err && err.error && (err.error.message || err.error.type)) || '';
+          } catch (e) { /* body was not JSON; the status alone will have to do */ }
+          if (failed <= 2) console.error(`  reader fetch ${acct}: HTTP ${res.status} — ${why || '(no message)'} [key ${shape}]`);
         }
         return;
       }
