@@ -12,6 +12,23 @@ on:
     # (04:00) pulls so the single shared warehouse isn't hit by three jobs at once.
     - cron: "30 */3 * * *"
   workflow_dispatch: {}
+  # RIDE THE ONE TRIGGER THAT ACTUALLY FIRES.
+  #
+  # GitHub drops the `schedule` event in this repo. On 2026-08-27 every scheduled workflow —
+  # this one, ads-pull, payments-pull — stopped for eight hours while manual dispatch kept
+  # working, and the workflow comments record the same thing happening in July and on 08-06.
+  # A cron you cannot rely on is worse than no cron, because it fails silently.
+  #
+  # cusum-pull, by contrast, is dispatched externally every few minutes and never misses. This
+  # hooks onto its completion and uses it as a heartbeat. `workflow_run` needs no PAT and no
+  # machine of Felipe's to be awake — unlike a scheduled task, which stops the moment his
+  # computer sleeps or his usage limit runs out.
+  #
+  # The heartbeat is far faster than this job should run, so the first step below exits unless
+  # the committed data is genuinely stale. Those no-op runs finish in seconds.
+  workflow_run:
+    workflows: ["cusum-pull"]
+    types: [completed]
   push:
     # Auto-run when the dashboard code or pull script changes (e.g. this first commit),
     # so the seed activation-data.js is immediately replaced with a live pull.
@@ -33,22 +50,52 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # the staleness gate reads the data file's commit time
+
+      # Only meaningful for the cusum heartbeat, which fires far more often than this job should
+      # run. Every other trigger — manual, push, or the cron on the days it works — is deliberate
+      # and passes straight through. Staleness is measured from the COMMIT TIME of the generated
+      # data rather than from run history: it is the thing the dashboard actually serves, so a run
+      # that succeeded but committed nothing does not count as fresh.
+      - name: Skip unless the data is stale
+        id: gate
+        run: |
+          MAX_AGE_MIN=170          # just under 3h, so a 3-hourly rhythm is never skipped by drift
+          LAST=$(git log -1 --format=%ct -- activated-payments/funnel-data.js || echo 0)
+          NOW=$(date -u +%s)
+          AGE=$(( (NOW - LAST) / 60 ))
+          echo "data last committed ${AGE} min ago (limit ${MAX_AGE_MIN})"
+          if [ "${{ github.event_name }}" != "workflow_run" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+            echo "triggered by ${{ github.event_name }} — running regardless of age"
+          elif [ "$AGE" -ge "$MAX_AGE_MIN" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            echo "fresh enough — skipping"
+          fi
 
       - name: Set up Node.js
+        if: steps.gate.outputs.run == 'yes'
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install dependencies
+        if: steps.gate.outputs.run == 'yes'
         run: npm install snowflake-sdk
 
       - name: Write Snowflake private key
+        if: steps.gate.outputs.run == 'yes'
         run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
 
       - name: Run payments activation pull
+        if: steps.gate.outputs.run == 'yes'
         run: node activated-payments/pull.js
 
       - name: Commit & push if the data changed
+        if: steps.gate.outputs.run == 'yes'
         run: |
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
