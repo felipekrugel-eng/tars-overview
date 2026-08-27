@@ -1,6 +1,6 @@
 # US MERCHANT BASE — daily server-side rebuild of US_Merchant_Base_FULL.xlsx.
 #
-#   q1_base.sql            -> merchant-base-automation/data/q1_export.csv
+#   q1_base.sql            -> data/q1_export.csv.gz  (committed gzipped, ~9% of plain)
 #   build_full_base.py     -> the 7 generated tabs (streamed, static values)
 #   merchant_base_model.py -> margin model, Margin Assumptions, snapshot tabs,
 #                             and the ACTION merge
@@ -18,11 +18,16 @@
 # Isolated: only writes under merchant-base-automation/, which no other workflow
 # touches.
 #
-# OPEN ITEM (same as payments-pull): role DATA_VIEWER needs SELECT / IMPORTED
-# PRIVILEGES on the Stripe share GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659
-# for the payments columns of q1 to populate. Until that grant lands the pull still
-# succeeds on the LOYVERSE_DATA_LAKE side; the Stripe-derived columns come back empty
-# and run.py falls back to the last good CSV if the row count collapses.
+# SNOWFLAKE ACCESS: settled, no grant needed. DATA_VIEWER reads both LOYVERSE_DATA_LAKE
+# and the Stripe share GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659 - proven by
+# the first live run on 2026-08-27 (pulled 131,778 rows with the payments columns
+# populated: STRIPE_ACCOUNT_ID 757, PAYMENTS_ATTACH_RATE_L30D 4,103).
+#
+# payments-pull.yml still carries an "OPEN ITEM" comment claiming this grant is missing.
+# It is stale - that pipeline has been committing successful Stripe-share pulls since at
+# least 2026-08-11. A stale warning cost real time here; do not trust it, and ideally
+# delete it. If a pull ever DOES fail its sanity gate, run.py falls back to the last
+# good committed export rather than publishing a truncated base.
 name: merchant-base-pull
 
 on:
@@ -94,24 +99,38 @@ jobs:
 
       - name: Commit & push if anything changed
         run: |
+          set -euo pipefail
           git config user.name  "merchant-base-bot"
           git config user.email "merchant-base-bot@users.noreply.github.com"
-          FILES="merchant-base-automation/data/q1_export.csv \
+          FILES="merchant-base-automation/data/q1_export.csv.gz
                  merchant-base-automation/output/US_Merchant_Base_FULL.xlsx"
-          git add $FILES
-          if git diff --cached --quiet; then
-            echo "No change — nothing to commit."
-            exit 0
-          fi
-          # Generated binary + large CSV: unmergeable, so newest generation wins.
-          # reset --soft re-parents our index onto the current remote instead of
-          # attempting a merge that can only ever conflict.
+          # Stash our generated file(s) OUTSIDE the repo before touching git.
+          mkdir -p "$RUNNER_TEMP/keep"
+          for f in $FILES; do cp "$f" "$RUNNER_TEMP/keep/$(basename "$f")"; done
+
           for i in 1 2 3 4 5; do
             git fetch -q origin master || { sleep 5; continue; }
-            git reset -q --soft origin/master
+
+            # reset --HARD, never --soft.
+            #
+            # This used to be `reset --soft`, which moves HEAD but KEEPS THE INDEX -
+            # and the index still reflected the checkout from the start of the job.
+            # If another bot pushed while we were running (~8-20 min), committing that
+            # stale index produced a tree MISSING their file, silently deleting it.
+            # It happened on 2026-08-27: merchant-base-bot's commit at 11:53 wiped the
+            # margin workbook margin-bot had pushed at 11:44. Git even paired them as a
+            # rename, so the diff looked like a size change rather than a deletion.
+            #
+            # --hard makes the working tree AND index exactly origin/master, so
+            # re-adding our own files can only ever ADD or MODIFY our own paths.
+            git reset --hard -q origin/master
+            for f in $FILES; do
+              mkdir -p "$(dirname "$f")"
+              cp "$RUNNER_TEMP/keep/$(basename "$f")" "$f"
+            done
             git add $FILES
             if git diff --cached --quiet; then
-              echo "Remote already has this build — nothing to push."; exit 0
+              echo "No change — nothing to commit."; exit 0
             fi
             git commit -q -m "chore(merchant-base): rebuild $(date -u +%FT%TZ)"
             if git push; then echo "pushed on attempt $i"; exit 0; fi

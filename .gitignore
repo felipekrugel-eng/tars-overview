@@ -6,7 +6,9 @@ _recalc/
 *.pyc
 # behind on purpose so the offending workbook can be opened.
 # Pipeline scratch. run.py removes these on success, but a failed run leaves them
+# The plain export is a working copy; only the .gz is committed.
 # workbook automation scratch
+merchant-base-automation/data/q1_export.csv
 node_modules/
 payments-automation/__pycache__/
 payments-automation/_build.xlsx

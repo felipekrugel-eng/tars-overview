@@ -18,17 +18,24 @@
 # touches, so the rebase-retry push cannot conflict with the CASE, FACADASH,
 # activation, cusum or payments pulls sharing this repo.
 #
-# WHY workflow_run AND NOT A CRON: this job's inputs are produced by payments-pull.
-# Running it on its own schedule would sometimes rebuild from CSVs that payments-pull
-# was midway through replacing, and the two workbooks would disagree about the same
-# week. Chaining on completion means this workbook is never fresher OR staler than
-# the data it claims to describe.
+# CADENCE: once a day, at 05:20 UTC.
+#
+# This originally chained on payments-pull completing, which meant 8 rebuilds a day -
+# and each run commits a 19.3 MB workbook, so ~154 MB/day of git objects that history
+# keeps forever. The workbook is the downloadable ARTEFACT; the dashboard is the live
+# surface. A spreadsheet does not need to be eight versions fresh, so daily buys back
+# ~135 MB/day for no loss of usefulness.
+#
+# 05:20 sits between payments-pull's 3-hourly slots (:45) with ~90 min of clearance on
+# either side, so this never reads CSVs that payments-pull is midway through replacing.
+# That was the original reason for chaining, and it still matters.
+#
+# Use "Run workflow" any time you want it fresher than daily.
 name: margin-pull
 
 on:
-  workflow_run:
-    workflows: ["payments-pull"]
-    types: [completed]
+  schedule:
+    - cron: '20 5 * * *'
   workflow_dispatch: {}
   push:
     branches: [master]
@@ -43,11 +50,6 @@ concurrency:
 
 jobs:
   refresh:
-    # Skip when the upstream pull failed - rebuilding from a half-written CSV is worse
-    # than shipping yesterday's workbook. workflow_dispatch has no upstream conclusion.
-    if: >
-      github.event_name != 'workflow_run' ||
-      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
@@ -55,10 +57,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          # workflow_run checks out the default branch by default, which may predate
-          # the commit that produced the CSVs we are about to read.
-          ref: master
 
       - uses: actions/setup-python@v5
         with:
@@ -104,25 +102,37 @@ jobs:
 
       - name: Commit & push if the workbook changed
         run: |
+          set -euo pipefail
           git config user.name  "margin-bot"
           git config user.email "margin-bot@users.noreply.github.com"
-          TARGET=margin-automation/output/Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx
-          git add "$TARGET"
-          if git diff --cached --quiet; then
-            echo "No change — nothing to commit."
-            exit 0
-          fi
-          # Other pulls advance master while we run. A generated binary workbook is
-          # unmergeable, so `git pull --rebase` fails identically on every attempt.
-          # reset --soft moves HEAD to the current remote while KEEPING our index,
-          # rebuilding the commit on top of origin/master with our content - no
-          # conflict is possible, and newest generation wins by construction.
+          FILES="margin-automation/output/Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx"
+          # Stash our generated file(s) OUTSIDE the repo before touching git.
+          mkdir -p "$RUNNER_TEMP/keep"
+          for f in $FILES; do cp "$f" "$RUNNER_TEMP/keep/$(basename "$f")"; done
+
           for i in 1 2 3 4 5; do
             git fetch -q origin master || { sleep 5; continue; }
-            git reset -q --soft origin/master
-            git add "$TARGET"
+
+            # reset --HARD, never --soft.
+            #
+            # This used to be `reset --soft`, which moves HEAD but KEEPS THE INDEX -
+            # and the index still reflected the checkout from the start of the job.
+            # If another bot pushed while we were running (~8-20 min), committing that
+            # stale index produced a tree MISSING their file, silently deleting it.
+            # It happened on 2026-08-27: merchant-base-bot's commit at 11:53 wiped the
+            # margin workbook margin-bot had pushed at 11:44. Git even paired them as a
+            # rename, so the diff looked like a size change rather than a deletion.
+            #
+            # --hard makes the working tree AND index exactly origin/master, so
+            # re-adding our own files can only ever ADD or MODIFY our own paths.
+            git reset --hard -q origin/master
+            for f in $FILES; do
+              mkdir -p "$(dirname "$f")"
+              cp "$RUNNER_TEMP/keep/$(basename "$f")" "$f"
+            done
+            git add $FILES
             if git diff --cached --quiet; then
-              echo "Remote already has this build — nothing to push."; exit 0
+              echo "No change — nothing to commit."; exit 0
             fi
             git commit -q -m "chore(margin): rebuild $(date -u +%FT%TZ)"
             if git push; then echo "pushed on attempt $i"; exit 0; fi

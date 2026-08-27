@@ -1,20 +1,23 @@
-# Two workbook automations — repo-ready
+# Two workbook automations
 
-Drop these three folders into `felipekrugel-eng/tars-overview` at the repo root and push:
+**Both are LIVE in `felipekrugel-eng/tars-overview` as of 27 Aug 2026.** Numbers below
+are from real CI runs, not local tests.
 
 ```
-margin-automation/          -> Margin vs Competitors, rebuilt every 3 hours
-merchant-base-automation/   -> US Merchant Base, rebuilt daily
+margin-automation/          -> Margin vs Competitors, rebuilt daily 05:20 UTC
+merchant-base-automation/   -> US Merchant Base, rebuilt daily 04:40 UTC
 .github/workflows/          -> margin-pull.yml + merchant-base-pull.yml
 ```
+
+Deploy or update with `bash push_automation.sh --push` from `~/Desktop/Automation`.
 
 Both follow the `payments-pull.yml` pattern already in that repo: pull → rebuild →
 LibreOffice headless recalc → verify → commit the finished `.xlsx`. No computer
 dependency. Each writes only inside its own folder, so the rebase-retry push cannot
 conflict with the CASE, FACADASH, activation, cusum or payments pulls.
 
-**Both were run end to end here and both pass their verify gates.** Numbers below are
-from those runs.
+Both follow the same shape: pull → rebuild → LibreOffice headless recalc → verify →
+commit. No computer dependency.
 
 ---
 
@@ -23,19 +26,24 @@ from those runs.
 | | |
 |---|---|
 | Output | `output/Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx` |
-| Inputs | `payments-automation/data/{transactions,icplus_costs}.csv` — already committed every 3h |
+| Inputs | `payments-automation/data/{transactions,icplus_costs}.csv` — committed every 3h |
 | Snowflake cost | **zero.** Reuses payments-pull's exports |
-| Trigger | `workflow_run` on payments-pull completing |
-| Runtime | ~90s rebuild + ~10s recalc |
+| Trigger | daily 05:20 UTC + `workflow_dispatch` + on code/template change |
+| Runtime | ~2 min |
 
-### Test result
+### Live CI result (27 Aug 2026)
 
 ```
-rows 13,452 · volume $278,989.23 · revenue $7,938.71 (take 2.85%)
-cost $6,951.90 = 2.49% of volume · margin $986.81 (0.35%)
-  interchange 1.79% · card scheme 0.27% · Amex 0.10% · Stripe 0.34%
-formula errors: 0 · Rate Card unchanged · all identities hold
+rows 18,794 · volume $417,522.13 · revenue $11,962.27 (take 2.87%)
+cost $10,022.34 = 2.400% of volume · margin $1,939.93 (0.465%)
+Fee Breakdown: 215 fee lines · 20 new fee columns auto-created
+formula errors: 0 · Rate Card unchanged · all identities hold · VERIFY OK
 ```
+
+The first live run surfaced two defects that local testing had not, both since fixed:
+`Fee Breakdown` capped its rows at the template's own length and silently truncated,
+and `Transaction Hyper Detail` dropped fee line items with no matching column. Stripe
+had added 20 of them since 25 Aug — mostly UK interchange, following the UK launch.
 
 ### The template
 
@@ -71,31 +79,33 @@ any data source.
 | | |
 |---|---|
 | Output | `output/US_Merchant_Base_FULL.xlsx` |
-| Inputs | `queries/q1_base.sql` → `data/q1_export.csv` |
-| Trigger | daily 04:40 UTC |
-| Runtime | ~4 min on a 90k-row fixture |
+| Inputs | `queries/q1_base.sql` → `data/q1_export.csv.gz` |
+| Trigger | daily 04:40 UTC + `workflow_dispatch` + on code change |
+| Runtime | ~20 min |
 
-### Test result
+### Live CI result (27 Aug 2026)
 
 ```
-Full Base 90,757 rows · 65 generated columns + ACTION + 26 model columns
-model formulas 246,288 (only the 10,262 rows with GTV > 0)
-Margin Assumptions: card volume $90.3M/mo · breakeven T1 2.233%
-  revenue at 1.99% $1.80M · at 2.29% $2.07M · at 2.49% $2.25M
-  margin at 1.99% -$219,688 · at 2.29% +$51,335 · at 2.49% +$232,017
-formula errors: 0 · VERIFY OK
+pulled 131,778 rows · 66 generated columns + ACTION + 26 model columns
+model formulas 352,224 (only the rows with GTV > 0)  ·  file 29.9 MB
+ACTION merged onto 8 rows  ·  action_entries=8  ·  sheets=13  ·  VERIFY OK
+snapshots: Prime Base 944 · ACTIVE L12M 1,902 · Transacting 58
+           Paying Total 2,557 · EMAIL BASE 3,806
 ```
 
-Tested against `data/q1_export.FIXTURE_90757rows.csv`, extracted from your Aug 21
-workbook because there is no Snowflake access here (the full 131k extract exhausted
-memory). It is the **dormant tail** of the base, so `Prime Base` and
-`Transacting Merchants` build empty from it — correct for that slice; the rules are
-proven separately below against the real 131k data.
+Against the hand-built file: **3,156,843 formulas → 352,224 (−89%)** and
+**151 MB → 29.9 MB (−80%)**, with identical output.
 
-Two housekeeping notes: delete that fixture once a real pull has run, and
-`merchant-base-automation/output/US_Merchant_Base_FULL.xlsx` is the fixture-built
-workbook — it is there to prove the shape, not as a real deliverable. The first real
-run overwrites it.
+Business numbers from that run, worth knowing:
+
+- **30-day till volume $47,796,564; through Loyverse Payments $245,113.** Attach rate
+  0.51%. **$47.55M/30d still off our rails.**
+- **EMAIL 131,778 (100%) · PHONE 235 (0.18%) · CONTACT_NAME 358 (0.27%).** This inverts
+  the old SQL note ("Email 4% / Phone 1%"): email-led outreach is viable, anything
+  phone-led is dead at 235 numbers.
+- **`KYC rejected, still transacting: 3`**, and 571 merchants with suspect GTV (547
+  "ticket size suggests another currency", 24 "volume too large to trust").
+- 124,517 of 131,778 (94.5%) are dormant; only 4,103 have any 30-day till volume.
 
 ### Pipeline
 
@@ -158,14 +168,14 @@ kept verbatim in `queries/_PREAMBLE.md`.
 
 ---
 
-## Before you push
+## Open items
 
-1. **Get the Snowflake grant.** `DATA_VIEWER` still lacks `IMPORTED PRIVILEGES` on
-   `GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659`, flagged as an OPEN ITEM in
-   `payments-pull.yml`. Until it lands, both pipelines run on schedule but the Stripe
-   layer is as fresh as the last manual export. **This is still the highest-leverage
-   item on the list.**
-2. **Confirm the three best-fit snapshot rules** above.
+1. ~~Get the Snowflake grant.~~ **Not needed.** `DATA_VIEWER` reads both the data lake
+   and the Stripe share — proven by the first live run (131,778 rows with the payments
+   columns populated). The "OPEN ITEM" comment in `payments-pull.yml` is stale and
+   should be deleted; believing it cost real time here.
+2. **Confirm the three best-fit snapshot rules** above. Live counts came out at
+   `ACTIVE L12M` 1,902 · `Transacting` 58 · `Paying Total` 2,557.
 3. **Pick canonical paths.** During this session the workbooks moved from `Desktop/`
    to `Desktop/Spreadsheets/`, and `Desktop/Loyverse/Payments/` still holds an Aug 18
    merchant base on the *old* 48-column schema. Once the pipeline owns the file, point
@@ -173,6 +183,38 @@ kept verbatim in `queries/_PREAMBLE.md`.
 4. **Optional local mirror.** Neither workflow writes to your Desktop. If you want the
    file to land there too, mirror the committed output with a dated `.bak`, matching
    what `payments-call-list-refresh` already does.
+
+## Repo growth — why the cadences look the way they do
+
+Both jobs commit binaries, and git history is permanent. Left unchecked the first
+version of this would have added ~330 MB/day (~10 GB/year) against GitHub's 1 GB
+recommended repo size. Two changes fixed most of it:
+
+| | Before | After |
+|---|---|---|
+| `margin-pull` | 8x/day x 19.3 MB = **154 MB/day** | daily = **19 MB/day** |
+| merchant-base export | 53.2 MB plain CSV/day | gzipped = **~4.9 MB/day** |
+| merchant-base workbook | 29.9 MB/day | unchanged |
+| **total** | **~237 MB/day** | **~54 MB/day** |
+
+`margin-pull` used to chain on `payments-pull` completing, which is 8 runs a day. The
+workbook is the downloadable artefact, not the live surface — the dashboard is that —
+so daily is enough. It now runs at 05:20 UTC, which sits between `payments-pull`'s
+3-hourly slots with ~90 min of clearance, preserving the original reason for chaining:
+never read CSVs that are midway through being replaced. `workflow_dispatch` is still
+there whenever you want it fresher.
+
+The export is committed gzipped (measured at **8.9%** of plain). `build_full_base.py`
+reads plain CSV and is untouched; `run.py` decompresses to a working copy that is
+gitignored. The compression is made **deterministic** — `mtime=0` *and*
+`filename=""` — because both the timestamp and the destination path leak into the gzip
+header otherwise, and either one would make git see a change on every run and
+re-commit ~5 MB daily even when the data is identical. Verified: same input gives
+byte-identical output, changed input gives different output, and the round-trip is
+byte-exact.
+
+Still on the table if the repo gets tight: move the `.xlsx` files to Actions artifacts
+or Releases instead of git, which would take this to near zero.
 
 ## What if someone has the workbook open?
 

@@ -39,7 +39,12 @@ NAME = "US_Merchant_Base_FULL.xlsx"
 SQL_DIR = pathlib.Path(os.environ.get("SQL_DIR", HERE / "queries"))
 DATA_DIR = pathlib.Path(os.environ.get("DATA_DIR", HERE / "data"))
 OUT_DIR = pathlib.Path(os.environ.get("OUT_DIR", HERE / "output"))
-CSV = DATA_DIR / "q1_export.csv"
+# The export is committed GZIPPED. Plain it is ~53 MB and this job commits it every
+# day; git history is forever, so that alone was ~19 GB/year. gzip measures at 9.2% on
+# real data (53.2 MB -> ~4.9 MB). build_full_base.py reads plain CSV and is left
+# untouched, so run.py decompresses to a working copy that is gitignored.
+CSV_GZ = DATA_DIR / "q1_export.csv.gz"      # committed
+CSV = DATA_DIR / "q1_export.csv"            # working copy, NOT committed
 OUT_XLSX = OUT_DIR / NAME
 BUILD = HERE / "_build.xlsx"
 RECALC_DIR = HERE / "_recalc"
@@ -50,6 +55,30 @@ PREV = pathlib.Path(os.environ.get("TEMPLATE_PREV", OUT_XLSX))
 
 MIN_ROWS = int(os.environ.get("MIN_ROWS", 100_000))   # US base ~131k; far below = bad pull
 DATA_SHEET = "Full Base"
+
+
+def gzip_to(src, dst):
+    """Compress src -> dst DETERMINISTICALLY.
+
+    Two things make a .gz differ for identical input, and both would make git see a
+    change on every single run - re-committing ~5 MB daily even when the export is
+    byte-identical, which defeats the reason for compressing at all:
+      * the mtime in the gzip header  -> mtime=0
+      * the original FILENAME in the header. GzipFile(path) embeds it, and passing a
+        fileobj is NOT enough - gzip falls back to fileobj.name, so the destination
+        path leaks into the header anyway. filename="" is what actually suppresses it.
+    Verified: same input now yields byte-identical output.
+    """
+    import gzip
+    with open(src, "rb") as fi, open(dst, "wb") as raw, \
+            gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as fo:
+        shutil.copyfileobj(fi, fo, length=1 << 20)
+
+
+def gunzip_to(src, dst):
+    import gzip
+    with gzip.open(src, "rb") as fi, open(dst, "wb") as fo:
+        shutil.copyfileobj(fi, fo, length=1 << 20)
 
 
 def sh(*cmd, **kw):
@@ -152,6 +181,13 @@ def pull():
             tmp.unlink(missing_ok=True)
             return False
         shutil.move(tmp, CSV)
+        # Compress for the commit. mtime=0 so an unchanged export produces a
+        # byte-identical .gz and git sees no diff - otherwise the gzip header
+        # timestamp would make every run look like a change and defeat the point.
+        gzip_to(CSV, CSV_GZ)
+        print(f"  compressed -> {CSV_GZ.name} "
+              f"({CSV_GZ.stat().st_size / 1e6:.1f} MB, "
+              f"{CSV_GZ.stat().st_size / CSV.stat().st_size:.1%} of plain)")
         return True
     finally:
         conn.close()
@@ -232,8 +268,13 @@ def main():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     print("=== PULL ===", flush=True)
     fresh = pull()
+    if not CSV.exists() and CSV_GZ.exists():
+        # Pull skipped or failed its sanity gate: fall back to the last good committed
+        # export by decompressing it.
+        print(f"  decompressing {CSV_GZ.name} (last good export)")
+        gunzip_to(CSV_GZ, CSV)
     if not CSV.exists():
-        sys.exit(f"no CSV at {CSV} and the pull did not produce one")
+        sys.exit(f"no export at {CSV_GZ} or {CSV}, and the pull did not produce one")
     print(f"  using {CSV} ({CSV.stat().st_size / 1e6:.1f} MB, "
           f"{'fresh' if fresh else 'last good'})")
 
