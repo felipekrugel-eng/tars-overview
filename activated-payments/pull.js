@@ -38,6 +38,7 @@ const FUNNEL_FILE    = path.join(__dirname, 'funnel-data.js');
 const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const REPORT_FILE    = path.join(__dirname, 'report-data.js');
+const PROFILE_FILE   = path.join(__dirname, 'profile-data.js');
 // The cohort triangle lives on the KPI dashboard, which is a SEPARATE Cloudflare Pages site.
 // A cross-origin fetch between the two would have to survive Cloudflare Access, so the payments
 // pull writes the cohort membership straight into the other site's folder instead. Same repo,
@@ -1403,6 +1404,107 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
   });
   return { entered_total: stages.entered, stages, stagesBy, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
+// ── PAYMENT PROFILE: the mix of TPV, what it costs, and what gets declined ───
+// Three queries because they are three populations, and blurring them is the easy mistake:
+// the mix is captured charges, cost is fee rows collapsed to one per charge, acceptance is
+// authorisation ATTEMPTS. Only the first two share a denominator.
+async function fetchProfileMix(conn, acctIds, countryByAcct) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return [];
+  const cba = countryByAcct || {};
+  const rows = await executeQuery(conn, loadSql('profile_mix.sql')
+    .replace('/*ACCOUNT_IDS*/', ids.map(a => `'${a}'`).join(',')));
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const out = [];
+  for (const r of rows || []) {
+    const usd = minorToUsd(g(r, 'amount_minor'), g(r, 'ccy'));
+    if (usd == null) continue;                 // unknown currency — excluded, as everywhere else
+    const acct = g(r, 'acct');
+    out.push({
+      m: g(r, 'month'), d: g(r, 'dim'), s: g(r, 'seg'),
+      cc: acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN,
+      n: Number(g(r, 'txns')) || 0,
+      usd,
+    });
+  }
+  return out;
+}
+async function fetchProfileCost(conn, acctIds, countryByAcct) {
+  const ids = sanitizeAccts(acctIds);
+  if (!ids.length) return [];
+  const cba = countryByAcct || {};
+  const rows = await executeQuery(conn, loadSql('profile_cost.sql')
+    .replace('/*ACCOUNT_IDS*/', ids.map(a => `'${a}'`).join(',')));
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const out = [];
+  for (const r of rows || []) {
+    const ccy = g(r, 'ccy');
+    const usd = minorToUsd(g(r, 'amount_minor'), ccy);
+    if (usd == null) continue;
+    const acct = g(r, 'acct');
+    // Cost is billed in the fee currency, which need not be the charge currency.
+    const cost = minorToUsd(g(r, 'cost_minor'), g(r, 'fee_ccy') || ccy);
+    out.push({
+      m: g(r, 'month'),
+      cc: acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN,
+      brand: g(r, 'brand'), funding: g(r, 'funding'), presence: g(r, 'presence'),
+      n: Number(g(r, 'txns')) || 0,
+      priced: Number(g(r, 'charges_priced')) || 0,
+      usd,
+      pricedUsd: minorToUsd(g(r, 'amount_priced_minor'), ccy) || 0,
+      cost: cost == null ? 0 : cost,
+    });
+  }
+  return out;
+}
+async function fetchProfileAcceptance(conn) {
+  const rows = await executeQuery(conn, loadSql('profile_acceptance.sql'));
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  return (rows || []).map(r => ({
+    m: g(r, 'month'), o: g(r, 'outcome'), r: g(r, 'reason') || '',
+    brand: g(r, 'brand'), funding: g(r, 'funding'), input: g(r, 'input_method'),
+    retry: g(r, 'retry_status'), fin: !!g(r, 'is_final_attempt'),
+    n: Number(g(r, 'attempts')) || 0,
+    // AMOUNT_IN_USD is already USD in the minor unit; Stripe's own conversion, not our FX map.
+    usd: Math.round((Number(g(r, 'usd_minor')) || 0)) / 100,
+  }));
+}
+function writeProfile(mix, cost, acceptance) {
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const tpv = mix.filter(r => r.d === 'brand').reduce((s, r) => s + r.usd, 0);
+  const out =
+`// Loyverse Payments PAYMENT PROFILE — regenerated daily by activated-payments/pull.js.
+//
+// __PROFILE_MIX   share of TPV by segment. One row per {m month, d dimension, s segment,
+//                 cc merchant market, n transactions, usd}. Dimensions: brand, funding, wallet,
+//                 read_method, card_country, presence, reader. Every dimension covers the SAME
+//                 charges, so each one sums to the same total — that is the check to run first
+//                 if a number looks wrong.
+// __PROFILE_COST  cost per segment, from ICPLUS_FEES collapsed to ONE ROW PER CHARGE before
+//                 joining. Without that collapse the charge amount repeats once per fee row and
+//                 inflates the denominator roughly fourfold, which is what a first pass did.
+//                 \`priced\`/\`pricedUsd\` are the charges that actually carry a cost row yet;
+//                 interchange posts on Stripe's schedule, so the newest month is never fully
+//                 priced and bps must be taken over pricedUsd, not usd.
+// __PROFILE_ACCEPT authorisation ATTEMPTS — a different population from the captured charges
+//                 above. Do not divide one by the other and do not add its volume into a TPV
+//                 share; it exists to show what was offered and refused.
+//
+// DEVICE MODEL IS NOT IN THE SHARE. Charges carry TERMINAL_READER_ID and 127 distinct readers
+// cover 99.9% of TPV, but TERMINAL_READERS holds one row — the platform's own — so none of them
+// resolve to a DEVICE_TYPE. M2 vs S710 vs Tap to Phone therefore cannot be split today. The
+// read_method dimension (contactless / chip / swipe) is exact and is what the page shows instead.
+// Generated ${stamp}
+window.__PROFILE_MIX    = ${JSON.stringify(mix)};
+window.__PROFILE_COST   = ${JSON.stringify(cost)};
+window.__PROFILE_ACCEPT = ${JSON.stringify(acceptance)};
+window.__PROFILE_META   = ${JSON.stringify({ generatedAt: stamp, tpv: Math.round(tpv * 100) / 100 })};
+`;
+  fs.writeFileSync(PROFILE_FILE, out);
+  console.log(`✓ profile-data.js: ${mix.length} mix rows, ${cost.length} cost rows, `
+            + `${acceptance.length} acceptance rows — TPV $${Math.round(tpv).toLocaleString()}`);
+}
+
 // ── COHORT MEMBERSHIP FOR THE KPI DASHBOARD TRIANGLE ─────────────────────────
 // The triangle needs to answer questions like "of the July cohort, how many were active AND
 // transacting in month M?". A pre-summed total cannot answer that, so this ships the MEMBERSHIP:
@@ -1761,6 +1863,35 @@ async function main() {
       if (revR.status !== 'fulfilled')  console.error(`✗ app_fees_monthly failed (revenue/take rate blank): ${revR.reason && revR.reason.message}`);
       if (costR2.status !== 'fulfilled') console.error(`✗ icplus_cost_monthly failed (cost/margin blank): ${costR2.reason && costR2.reason.message}`);
       if (Object.keys(cm.unknownCcy || {}).length) console.log(`  charges_monthly: unknown ccy skipped ${JSON.stringify(cm.unknownCcy)}`);
+
+      // Payment profile. Guarded on its own: three more Snowflake round-trips for a new page
+      // must never cost the Report or the cohort file, which are already written by now.
+      try {
+        const [mixR, costR, accR] = await Promise.allSettled([
+          fetchProfileMix(conn, prodAccts, countryByAcct),
+          fetchProfileCost(conn, prodAccts, countryByAcct),
+          fetchProfileAcceptance(conn),
+        ]);
+        const mix = mixR.status === 'fulfilled' ? mixR.value : [];
+        const cost = costR.status === 'fulfilled' ? costR.value : [];
+        const acc = accR.status === 'fulfilled' ? accR.value : [];
+        if (mixR.status !== 'fulfilled')  console.error(`✗ profile_mix failed: ${mixR.reason && mixR.reason.message}`);
+        if (costR.status !== 'fulfilled') console.error(`✗ profile_cost failed (cost per segment blank): ${costR.reason && costR.reason.message}`);
+        if (accR.status !== 'fulfilled')  console.error(`✗ profile_acceptance failed (acceptance blank): ${accR.reason && accR.reason.message}`);
+        if (mix.length) {
+          // Every dimension covers the same charges, so they must agree on the total. A mismatch
+          // means a segment was dropped or double-counted, and the shares on the page would be
+          // wrong in a way nobody would notice — so it is checked here, once, out loud.
+          const byDim = {};
+          mix.forEach(r => { byDim[r.d] = (byDim[r.d] || 0) + r.usd; });
+          const totals = Object.entries(byDim).map(([d, v]) => `${d} $${Math.round(v).toLocaleString()}`);
+          const vals = Object.values(byDim);
+          const spread = Math.max(...vals) - Math.min(...vals);
+          console.log(`  profile dimensions: ${totals.join(' · ')}`);
+          if (spread > 1) console.error(`  ✗ dimensions disagree by $${spread.toFixed(2)} — a segment is being dropped or duplicated`);
+        }
+        writeProfile(mix, cost, acc);
+      } catch (e) { console.error(`✗ profile-data.js not written: ${e.message}`); }
 
       // Cohort membership for the KPI dashboard's triangle. Written from data already in hand,
       // and guarded separately: a failure here must not cost the Report page its monthly series.
