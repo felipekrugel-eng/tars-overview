@@ -37,7 +37,13 @@ on:
       - "activated-payments/**"
 
 concurrency:
-  group: activated-payments-pull
+  # The heartbeat gets its own lane. GitHub keeps at most one PENDING run per group and drops
+  # older ones, so once cusum-pull started chaining into this workflow every few minutes, a
+  # deliberate manual dispatch could be dropped by a heartbeat no-op queued behind it — which is
+  # exactly what happened on 2026-08-27. Separating the lanes means a heartbeat can never cancel
+  # a run someone asked for. Two real pulls still cannot overlap in practice: a dispatch leaves
+  # the data fresh, so the next heartbeat gates itself out.
+  group: activated-payments-pull-${{ github.event_name == 'workflow_run' && 'heartbeat' || 'direct' }}
   cancel-in-progress: false
 
 jobs:
