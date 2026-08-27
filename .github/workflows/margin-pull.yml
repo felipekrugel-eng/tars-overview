@@ -1,0 +1,132 @@
+# MARGIN vs COMPETITORS — server-side rebuild of
+# Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx.
+#
+# Deliberately does NOT pull from Snowflake. payments-pull already exports
+# transactions.csv and icplus_costs.csv every three hours and commits them to
+# payments-automation/data/. This job reads those committed CSVs, so the marginal
+# Snowflake cost of keeping this workbook fresh is zero.
+#
+#   refresh_margin_workbook.py   19 raw columns + Hyper Detail + Fee Breakdown +
+#                                Merchant Analysis, into the template
+#   LibreOffice headless         recalculates so the file opens with live values
+#   verify                       no formula errors · header row matches the template
+#                                cell for cell · Rate Card unaltered · identities
+#                                hold · cost/volume inside 1.5%-4%
+#   commit                       margin-automation/output/*.xlsx
+#
+# Isolated: only writes under margin-automation/output/, which no other workflow
+# touches, so the rebase-retry push cannot conflict with the CASE, FACADASH,
+# activation, cusum or payments pulls sharing this repo.
+#
+# WHY workflow_run AND NOT A CRON: this job's inputs are produced by payments-pull.
+# Running it on its own schedule would sometimes rebuild from CSVs that payments-pull
+# was midway through replacing, and the two workbooks would disagree about the same
+# week. Chaining on completion means this workbook is never fresher OR staler than
+# the data it claims to describe.
+name: margin-pull
+
+on:
+  workflow_run:
+    workflows: ["payments-pull"]
+    types: [completed]
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - 'margin-automation/refresh_margin_workbook.py'
+      - 'margin-automation/run.py'
+      - 'margin-automation/template/**'
+
+concurrency:
+  group: margin-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    # Skip when the upstream pull failed - rebuilding from a half-written CSV is worse
+    # than shipping yesterday's workbook. workflow_dispatch has no upstream conclusion.
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # workflow_run checks out the default branch by default, which may predate
+          # the commit that produced the CSVs we are about to read.
+          ref: master
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install LibreOffice (headless recalc)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-calc
+
+      # The template used XLOOKUP in 321,780 cells; make_margin_template.py converted
+      # every one to INDEX/MATCH precisely so this job does not depend on the runner's
+      # LibreOffice being new enough (XLOOKUP support landed in LO 24.8, and the apt
+      # build on ubuntu-latest has been older than that). This step records the version
+      # so a future regression is diagnosable from the log alone.
+      - name: Record LibreOffice version
+        run: soffice --version || libreoffice --version
+
+      - name: Install Python deps
+        run: pip install -r margin-automation/requirements.txt
+
+      - name: Rebuild -> recalc -> verify -> publish
+        env:
+          TX:       ${{ github.workspace }}/payments-automation/data/transactions.csv
+          IC:       ${{ github.workspace }}/payments-automation/data/icplus_costs.csv
+          TEMPLATE: ${{ github.workspace }}/margin-automation/template/Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx
+          OUT_DIR:  ${{ github.workspace }}/margin-automation/output
+        run: python margin-automation/run.py
+
+      # run.py exits BEFORE publishing if verify fails, so the half-built workbook and
+      # the LibreOffice recalc output both survive. Collect them to open the exact file
+      # the runner produced.
+      - name: Upload build artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: margin-build-debug
+          path: |
+            margin-automation/_build.xlsx
+            margin-automation/_recalc/**
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Commit & push if the workbook changed
+        run: |
+          git config user.name  "margin-bot"
+          git config user.email "margin-bot@users.noreply.github.com"
+          TARGET=margin-automation/output/Loyverse_Payments_Transaction_Margin_vs_Competitors.xlsx
+          git add "$TARGET"
+          if git diff --cached --quiet; then
+            echo "No change — nothing to commit."
+            exit 0
+          fi
+          # Other pulls advance master while we run. A generated binary workbook is
+          # unmergeable, so `git pull --rebase` fails identically on every attempt.
+          # reset --soft moves HEAD to the current remote while KEEPING our index,
+          # rebuilding the commit on top of origin/master with our content - no
+          # conflict is possible, and newest generation wins by construction.
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            git reset -q --soft origin/master
+            git add "$TARGET"
+            if git diff --cached --quiet; then
+              echo "Remote already has this build — nothing to push."; exit 0
+            fi
+            git commit -q -m "chore(margin): rebuild $(date -u +%FT%TZ)"
+            if git push; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1

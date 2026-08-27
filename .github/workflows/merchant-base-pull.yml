@@ -1,0 +1,121 @@
+# US MERCHANT BASE — daily server-side rebuild of US_Merchant_Base_FULL.xlsx.
+#
+#   q1_base.sql            -> merchant-base-automation/data/q1_export.csv
+#   build_full_base.py     -> the 7 generated tabs (streamed, static values)
+#   merchant_base_model.py -> margin model, Margin Assumptions, snapshot tabs,
+#                             and the ACTION merge
+#   LibreOffice headless   -> recalculates so the file opens with live values
+#   verify                 -> row count · required columns · ACTION preserved ·
+#                             no formula errors · junk tab absent
+#   commit                 -> merchant-base-automation/{data,output}/
+#
+# DAILY, NOT HOURLY. q1 runs in minutes but the merchant base does not move fast
+# enough to justify more, and q2 (not run here) hits 8.76bn receipt rows.
+# 04:40 UTC: clear of activated-payments (:30 every 3h), payments-pull (:45 every 3h),
+# CASE (06:00) and FACADASH (04:00), so the single shared warehouse is not hit by
+# several jobs at once.
+#
+# Isolated: only writes under merchant-base-automation/, which no other workflow
+# touches.
+#
+# OPEN ITEM (same as payments-pull): role DATA_VIEWER needs SELECT / IMPORTED
+# PRIVILEGES on the Stripe share GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659
+# for the payments columns of q1 to populate. Until that grant lands the pull still
+# succeeds on the LOYVERSE_DATA_LAKE side; the Stripe-derived columns come back empty
+# and run.py falls back to the last good CSV if the row count collapses.
+name: merchant-base-pull
+
+on:
+  schedule:
+    - cron: '40 4 * * *'
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - 'merchant-base-automation/build_full_base.py'
+      - 'merchant-base-automation/merchant_base_model.py'
+      - 'merchant-base-automation/run.py'
+      - 'merchant-base-automation/queries/**'
+
+concurrency:
+  group: merchant-base-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install LibreOffice (headless recalc)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-calc
+
+      - name: Install Python deps
+        run: pip install -r merchant-base-automation/requirements.txt
+
+      - name: Pull -> build -> model -> recalc -> verify -> publish
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          SQL_DIR:  ${{ github.workspace }}/merchant-base-automation/queries
+          DATA_DIR: ${{ github.workspace }}/merchant-base-automation/data
+          OUT_DIR:  ${{ github.workspace }}/merchant-base-automation/output
+          # The previously published workbook is the ONLY source for the two things
+          # that cannot be regenerated: Margin Assumptions inputs Felipe edited in
+          # Excel, and hand-typed ACTION text.
+          TEMPLATE_PREV: ${{ github.workspace }}/merchant-base-automation/output/US_Merchant_Base_FULL.xlsx
+        run: python merchant-base-automation/run.py
+
+      - name: Upload build artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-base-build-debug
+          path: |
+            merchant-base-automation/_build.xlsx
+            merchant-base-automation/_recalc/**
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Commit & push if anything changed
+        run: |
+          git config user.name  "merchant-base-bot"
+          git config user.email "merchant-base-bot@users.noreply.github.com"
+          FILES="merchant-base-automation/data/q1_export.csv \
+                 merchant-base-automation/output/US_Merchant_Base_FULL.xlsx"
+          git add $FILES
+          if git diff --cached --quiet; then
+            echo "No change — nothing to commit."
+            exit 0
+          fi
+          # Generated binary + large CSV: unmergeable, so newest generation wins.
+          # reset --soft re-parents our index onto the current remote instead of
+          # attempting a merge that can only ever conflict.
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            git reset -q --soft origin/master
+            git add $FILES
+            if git diff --cached --quiet; then
+              echo "Remote already has this build — nothing to push."; exit 0
+            fi
+            git commit -q -m "chore(merchant-base): rebuild $(date -u +%FT%TZ)"
+            if git push; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1

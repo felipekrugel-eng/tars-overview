@@ -1,11 +1,14 @@
-node_modules/
-snowflake_tars_key.p8
 
-payments-automation/_build.xlsx
-payments-automation/_recalc/
-
-payments-automation/_build.xlsx
-payments-automation/_recalc/
-
-payments-automation/__pycache__/
+__pycache__/
+_build.xlsx
+_recalc/
+.~lock.*#
 *.pyc
+# behind on purpose so the offending workbook can be opened.
+# Pipeline scratch. run.py removes these on success, but a failed run leaves them
+# workbook automation scratch
+node_modules/
+payments-automation/__pycache__/
+payments-automation/_build.xlsx
+payments-automation/_recalc/
+snowflake_tars_key.p8
