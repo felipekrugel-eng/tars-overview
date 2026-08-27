@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse Payments — Payment Profile</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="profile-data.js"></script>
+<!-- Country filter, shared verbatim with index.html and report.html. Loaded AFTER the data file
+     because it discovers the live markets from it. -->
+<script src="country-filter.js"></script>
+<style>
+  :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
+    --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
+    --green:#1F9D6B; --red:#D2495B; --amber:#C98A16; --mono:'SFMono-Regular',Menlo,Consolas,monospace; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); }
+  .lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px;}
+  .lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px;}
+  .lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px;}
+  .lvmn .lvmn-brand .lvmn-dot{color:#1D8FE1;}
+  .lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;
+    text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent;}
+  .lvmn a.lvmn-tab:hover{color:#fff;}
+  .lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:#1D8FE1;}
+  .lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block;}
+  .paysub{background:#fff;border-bottom:1px solid #E0E0E0;padding:0 24px;display:flex;gap:4px;align-items:center;}
+  .paysub a{color:#6A6A6A;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;
+    padding:11px 16px;border-bottom:3px solid transparent;text-decoration:none;cursor:pointer;}
+  .paysub a:hover{color:#1A1A1A;}
+  .paysub a.on{color:#1578C4;border-bottom-color:#1D8FE1;}
+  .ccpick{margin-left:auto;display:flex;align-items:center;gap:8px;padding:6px 0;}
+  .ccpick-lbl{color:#8A8A8A;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;}
+  .ccpick-sel{font:12px Arial;color:#1A1A1A;background:#fff;border:1px solid #D8DEE6;border-radius:5px;
+    padding:5px 26px 5px 9px;cursor:pointer;appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5L9 0z' fill='%236A6A6A'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 9px center;background-size:9px 5px;}
+  .ccpick-sel:hover{border-color:#1D8FE1;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:26px 24px 60px; }
+  h1.h1{ font-family:'Arial Black',Arial,sans-serif; font-size:30px; margin:6px 0 2px; }
+  h1.h1 .dot{ color:var(--blue); }
+  .sub{ font-size:13px; color:var(--muted); margin:0 0 18px; max-width:820px; line-height:1.55; }
+  .head{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .range{ display:inline-flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; background:#fff; }
+  .range button{ border:0; background:#fff; color:var(--muted); font:bold 12px Arial; padding:8px 14px; cursor:pointer; }
+  .range button.on{ background:var(--blue); color:#fff; }
+  .mselect{ font:12px Arial; padding:7px 10px; border:1px solid var(--border); border-radius:8px; background:#fff; }
+  .stamp{ margin-left:auto; font-size:11px; color:var(--faint); }
+  .panel{ background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:20px 22px 24px; margin-bottom:18px; box-shadow:0 1px 3px rgba(19,35,58,.04); }
+  .panel h2{ font-size:15px; margin:0 0 3px; }
+  .panel .ph{ font-size:12px; color:var(--muted); margin:0 0 16px; line-height:1.5; }
+  .kpis{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .kpi{ flex:1 1 170px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+  .kpi .k{ font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:bold; }
+  .kpi .v{ font-family:'Arial Black',Arial,sans-serif; font-size:24px; margin:5px 0 2px; }
+  .kpi .s{ font-size:11px; color:var(--muted); }
+  .bar{ display:flex; height:30px; border-radius:7px; overflow:hidden; margin:4px 0 10px; background:#F2F5F9; }
+  .bar .seg{ display:flex; align-items:center; justify-content:center; font:bold 11px Arial; color:#fff;
+    white-space:nowrap; overflow:hidden; }
+  .legend{ display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--ink); margin-bottom:6px; }
+  .legend i{ width:11px; height:11px; border-radius:3px; display:inline-block; margin-right:6px; vertical-align:-1px; }
+  table{ width:100%; border-collapse:collapse; font-size:13px; }
+  th{ text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
+    padding:8px 10px; border-bottom:1px solid var(--border); font-weight:bold; }
+  th:first-child, td:first-child{ text-align:left; }
+  td{ text-align:right; padding:9px 10px; border-bottom:1px solid #F1F4F8; font-variant-numeric:tabular-nums; }
+  tbody tr:hover{ background:#F7FAFD; }
+  td.nm{ font-weight:bold; color:var(--ink); }
+  .note{ font-size:11.5px; color:var(--muted); margin-top:14px; line-height:1.6; }
+  .warn{ font-size:11.5px; color:#8a6100; background:#FFF8E6; border:1px solid #F0DCA8;
+    border-radius:8px; padding:11px 14px; margin-top:14px; line-height:1.6; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:900px){ .grid2{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<nav class="lvmn">
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab" href="https://facadash.pages.dev/daily.html">POS</a>
+  <a class="lvmn-tab on" href="index.html#payments">Payments</a>
+  <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
+</nav>
+<div class="paysub">
+  <a href="index.html#payments">Overview</a>
+  <a href="index.html#margins">Summary of Margins</a>
+  <a href="index.html#pilot">Pilot</a>
+  <a href="index.html#funnel">Funnel</a>
+  <a href="profile.html" class="on">Payment Profile</a>
+  <a href="report.html">Report</a>
+</div>
+
+<div class="wrap">
+  <h1 class="h1">Payment Profile<span class="dot">.</span></h1>
+  <p class="sub" id="intro"></p>
+
+  <div class="head">
+    <div class="range" id="mode">
+      <button data-m="all" class="on">All time</button>
+      <button data-m="month">Monthly</button>
+    </div>
+    <select id="month" class="mselect" style="display:none"></select>
+    <div class="stamp" id="stamp"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="panel">
+    <h2>Where the money runs.</h2>
+    <p class="ph">Share of processed volume by each property of the card and how it was read. Every
+      breakdown below covers the same charges, so each one sums to the same total — if two disagree,
+      something is being dropped or double-counted.</p>
+    <div id="mixes"></div>
+  </div>
+
+  <div class="panel">
+    <h2>What each slice costs.</h2>
+    <p class="ph" id="costHead"></p>
+    <table id="costTable"></table>
+    <div class="note" id="costNote"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Ticket size, and the drag of the fixed fee.</h2>
+    <p class="ph">A per-transaction fixed fee is a bigger share of a small ticket than a large one.
+      At the same fixed fee, a segment with half the average ticket carries twice the drag in basis
+      points — which is why average ticket belongs next to cost rather than in a separate report.</p>
+    <table id="ticketTable"></table>
+    <div class="note" id="ticketNote"></div>
+  </div>
+
+  <div class="panel">
+    <h2>What gets refused.</h2>
+    <p class="ph" id="acceptHead"></p>
+    <div class="kpis" id="acceptKpis"></div>
+    <div class="grid2">
+      <div><table id="declineTable"></table></div>
+      <div><table id="declineBrand"></table></div>
+    </div>
+    <div class="note" id="acceptNote"></div>
+  </div>
+</div>
+
+<script>
+// ===========================================================================
+// PAYMENT PROFILE — what the processed volume is made of, what it costs, and what is refused.
+//
+// THREE POPULATIONS, KEPT APART. The mix and the cost tables both describe CAPTURED CHARGES and
+// share a denominator. Acceptance describes authorisation ATTEMPTS, which is a different and
+// larger population: an attempt can fail and never become a charge, and a charge can follow a
+// retried attempt. They are never divided by one another, and the acceptance panel says so.
+//
+// DEVICE MODEL IS NOT AVAILABLE. Charges carry a terminal reader id — 127 distinct readers across
+// 99.9% of volume — but the share exposes exactly one row in TERMINAL_READERS, belonging to the
+// platform account, so none of those ids resolve to a device type. M2 versus S710 versus Tap to
+// Phone therefore cannot be split today. "How the card was read" is exact and is shown instead;
+// the warning below says which question that does and does not answer.
+// ===========================================================================
+(function () {
+  'use strict';
+  var MIX = window.__PROFILE_MIX || [];
+  var COST = window.__PROFILE_COST || [];
+  var ACC = window.__PROFILE_ACCEPT || [];
+  var META = window.__PROFILE_META || {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  var MODE = 'all', MONTH = null;
+  var MONTHS = (function () {
+    var s = {};
+    MIX.forEach(function (r) { if (r.m) s[r.m] = 1; });
+    return Object.keys(s).sort().reverse();
+  })();
+
+  // ---- formatting ---------------------------------------------------------
+  var fmtUsd = function (v) {
+    if (v == null) return '—';
+    var a = Math.abs(v);
+    if (a >= 1000000) return '$' + (v / 1000000).toFixed(2) + 'M';
+    if (a >= 1000) return '$' + Math.round(v).toLocaleString();
+    return '$' + v.toFixed(2);
+  };
+  var fmtN = function (v) { return (Number(v) || 0).toLocaleString(); };
+  var pct = function (part, whole) { return whole ? (100 * part / whole).toFixed(1) + '%' : '—'; };
+  var bps = function (num, den) { return den ? Math.round(10000 * num / den) + 'bp' : '—'; };
+  var esc = function (v) {
+    return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  };
+  // Segment codes come straight from Stripe; these are the ones worth naming in English.
+  var LABELS = {
+    visa: 'Visa', mastercard: 'Mastercard', amex: 'American Express', discover: 'Discover',
+    debit: 'Debit', credit: 'Credit', prepaid: 'Prepaid',
+    none: 'No wallet (card tapped or dipped)', apple_pay: 'Apple Pay', google_pay: 'Google Pay',
+    samsung_pay: 'Samsung Pay', link: 'Link',
+    contactless_emv: 'Contactless', contact_emv: 'Chip', magnetic_stripe_track2: 'Magnetic stripe',
+    magnetic_stripe_fallback: 'Stripe fallback', not_present: 'Not card present',
+    card_present: 'In person', card: 'Online / keyed',
+    via_reader: 'Through a terminal', no_reader: 'No terminal', unknown: 'Unknown'
+  };
+  var label = function (s) { return LABELS[s] || String(s || '').replace(/_/g, ' '); };
+  var PALETTE = ['#1D8FE1', '#1578C4', '#13233A', '#1F9D6B', '#C98A16', '#7E8A9A', '#B8C4D2', '#D2495B'];
+
+  // ---- filtering ----------------------------------------------------------
+  // Month and country are applied identically to all three datasets, so a filtered page is
+  // internally consistent rather than three views of different slices.
+  function inScope(r) {
+    if (MODE === 'month' && MONTH && r.m !== MONTH) return false;
+    if (window.LVCC && !LVCC.isAll() && r.cc !== undefined && r.cc !== LVCC.cc) return false;
+    return true;
+  }
+  // Acceptance rows carry no merchant country — ANALYTICS_ACCEPTANCE_ITEMIZED does not expose the
+  // connected account. Under a country filter the panel says it is showing all markets rather
+  // than silently presenting global figures as though they were that market's.
+  function accInScope(r) { return !(MODE === 'month' && MONTH && r.m !== MONTH); }
+
+  function mixByDim(dim) {
+    var by = {}, tot = 0, txns = 0;
+    MIX.forEach(function (r) {
+      if (r.d !== dim || !inScope(r)) return;
+      by[r.s] = by[r.s] || { usd: 0, n: 0 };
+      by[r.s].usd += r.usd; by[r.s].n += r.n;
+      tot += r.usd; txns += r.n;
+    });
+    var rows = Object.keys(by).map(function (s) {
+      return { seg: s, usd: by[s].usd, n: by[s].n };
+    }).sort(function (a, b) { return b.usd - a.usd; });
+    return { rows: rows, total: tot, txns: txns };
+  }
+
+  // ---- render -------------------------------------------------------------
+  function renderKpis() {
+    var brand = mixByDim('brand');
+    var c = COST.filter(inScope);
+    var cost = c.reduce(function (s, r) { return s + r.cost; }, 0);
+    var priced = c.reduce(function (s, r) { return s + r.pricedUsd; }, 0);
+    var rev = c.reduce(function (s, r) { return s + (r.rev || 0); }, 0);
+    var billed = c.reduce(function (s, r) { return s + (r.billedUsd || 0); }, 0);
+    var a = ACC.filter(accInScope);
+    var att = a.reduce(function (s, r) { return s + r.n; }, 0);
+    var ok = a.filter(function (r) { return r.o === 'authorized'; }).reduce(function (s, r) { return s + r.n; }, 0);
+    var avg = brand.txns ? brand.total / brand.txns : 0;
+
+    function kpi(k, v, s) {
+      return '<div class="kpi"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + s + '</div></div>';
+    }
+    $('kpis').innerHTML =
+      kpi('Processed volume', fmtUsd(brand.total), fmtN(brand.txns) + ' transactions')
+      + kpi('Average ticket', '$' + avg.toFixed(2), 'across every segment')
+      + kpi('Cost of acceptance', bps(cost, priced), fmtUsd(cost) + ' on ' + fmtUsd(priced) + ' priced')
+      + kpi('Revenue', bps(rev, billed), fmtUsd(rev) + ' of application fees')
+      + kpi('Net margin', bps(rev - cost, Math.min(priced, billed) || priced), fmtUsd(rev - cost) + ' after cost')
+      + kpi('Approved', att ? (100 * ok / att).toFixed(2) + '%' : '—', fmtN(att - ok) + ' refused of ' + fmtN(att));
+  }
+
+  function renderMixes() {
+    var DIMS = [
+      ['brand', 'Card brand', 'Which network the card runs on. Amex and Discover cost materially more to accept than Visa and Mastercard.'],
+      ['funding', 'Debit or credit', 'The single biggest lever on cost: debit is regulated in the US and far cheaper than credit.'],
+      ['read_method', 'How the card was read', 'Contactless, chip or stripe. This is NOT the device model — see the note below.'],
+      ['wallet', 'Wallet', 'Apple Pay, Google Pay and Samsung Pay are contactless taps that carry a device token rather than the card number.'],
+      ['card_country', 'Where the card was issued', 'A card issued abroad carries cross-border and currency-conversion fees on top of interchange.'],
+      ['presence', 'In person or online', 'Card-present pricing is cheaper and carries less fraud risk than keyed or online.']
+    ];
+    var h = '';
+    DIMS.forEach(function (d) {
+      var m = mixByDim(d[0]);
+      if (!m.total) return;
+      h += '<div style="margin-bottom:22px">'
+         + '<div style="font-weight:bold;font-size:13px;margin-bottom:2px">' + esc(d[1]) + '</div>'
+         + '<div style="font-size:11.5px;color:var(--muted);margin-bottom:7px">' + esc(d[2]) + '</div>'
+         + '<div class="bar">';
+      m.rows.forEach(function (r, i) {
+        var w = 100 * r.usd / m.total;
+        h += '<div class="seg" style="width:' + w.toFixed(2) + '%;background:' + PALETTE[i % PALETTE.length] + '"'
+           + ' title="' + esc(label(r.seg)) + ': ' + fmtUsd(r.usd) + ' · ' + fmtN(r.n) + ' txns">'
+           + (w >= 8 ? w.toFixed(1) + '%' : '') + '</div>';
+      });
+      h += '</div><div class="legend">';
+      m.rows.forEach(function (r, i) {
+        h += '<span><i style="background:' + PALETTE[i % PALETTE.length] + '"></i>'
+           + esc(label(r.seg)) + ' &middot; <b>' + pct(r.usd, m.total) + '</b> '
+           + '<span style="color:var(--muted)">' + fmtUsd(r.usd) + ' · avg $'
+           + (r.n ? (r.usd / r.n).toFixed(2) : '0.00') + '</span></span>';
+      });
+      h += '</div></div>';
+    });
+    $('mixes').innerHTML = h;
+  }
+
+  function renderCost() {
+    var by = {};
+    COST.filter(inScope).forEach(function (r) {
+      var k = r.brand + '|' + r.funding;
+      by[k] = by[k] || { brand: r.brand, funding: r.funding, usd: 0, priced: 0, cost: 0, rev: 0, billed: 0, n: 0, np: 0 };
+      var b = by[k];
+      b.usd += r.usd; b.priced += r.pricedUsd; b.cost += r.cost;
+      b.rev += (r.rev || 0); b.billed += (r.billedUsd || 0);
+      b.n += r.n; b.np += r.priced;
+    });
+    var rows = Object.keys(by).map(function (k) { return by[k]; })
+      .sort(function (a, b) { return b.usd - a.usd; });
+    var tot = rows.reduce(function (s, r) { return s + r.usd; }, 0);
+    var totCost = rows.reduce(function (s, r) { return s + r.cost; }, 0);
+    var totPriced = rows.reduce(function (s, r) { return s + r.priced; }, 0);
+    var totRev = rows.reduce(function (s, r) { return s + r.rev; }, 0);
+    var totBilled = rows.reduce(function (s, r) { return s + r.billed; }, 0);
+
+    var h = '<thead><tr><th>Segment</th><th>Share of volume</th><th>Volume</th><th>Avg ticket</th>'
+          + '<th>Cost</th><th>Cost rate</th><th>Revenue</th><th>Take rate</th><th>Net</th></tr></thead><tbody>';
+    rows.forEach(function (r) {
+      h += '<tr><td class="nm">' + esc(label(r.brand)) + ' ' + esc(label(r.funding)).toLowerCase() + '</td>'
+        + '<td>' + pct(r.usd, tot) + '</td>'
+        + '<td>' + fmtUsd(r.usd) + '</td>'
+        + '<td>$' + (r.n ? (r.usd / r.n).toFixed(2) : '0.00') + '</td>'
+        + '<td>' + fmtUsd(r.cost) + '</td>'
+        + '<td><b>' + bps(r.cost, r.priced) + '</b></td>'
+        + '<td>' + fmtUsd(r.rev) + '</td>'
+        + '<td>' + bps(r.rev, r.billed) + '</td>'
+        + '<td style="color:' + ((r.rev - r.cost) >= 0 ? 'var(--green)' : 'var(--red)') + '"><b>'
+        + bps(r.rev - r.cost, r.billed || r.priced) + '</b></td></tr>';
+    });
+    h += '<tr style="font-weight:bold"><td>All segments</td><td>100%</td><td>' + fmtUsd(tot) + '</td><td></td>'
+      + '<td>' + fmtUsd(totCost) + '</td><td>' + bps(totCost, totPriced) + '</td>'
+      + '<td>' + fmtUsd(totRev) + '</td><td>' + bps(totRev, totBilled) + '</td>'
+      + '<td>' + bps(totRev - totCost, totBilled || totPriced) + '</td></tr></tbody>';
+    $('costTable').innerHTML = h;
+
+    $('costHead').textContent = 'Interchange and scheme fees per segment, against the application fees '
+      + 'Loyverse charged on the same charges. Rates are in basis points of the volume each figure covers.';
+
+    // Coverage is stated rather than assumed: interchange and application fees both post on
+    // Stripe's own schedule, so the newest month is never fully priced or fully billed. Taking a
+    // rate over unpriced volume would understate it and read as though the mix had improved.
+    var pricedShare = tot ? 100 * totPriced / tot : 0;
+    var billedShare = tot ? 100 * totBilled / tot : 0;
+    $('costNote').innerHTML = 'Cost rate is taken over the <b>' + pricedShare.toFixed(1)
+      + '%</b> of volume that carries an interchange record, and take rate over the <b>'
+      + billedShare.toFixed(1) + '%</b> that carries an application fee, not over all volume. '
+      + 'Both post on Stripe&rsquo;s schedule, so recent charges are still unpriced; dividing by the '
+      + 'full total would flatter every rate on this table.'
+      + (pricedShare < 90 ? ' <b>Less than 90% is priced right now, so read the rates as provisional.</b>' : '');
+  }
+
+  function renderTicket() {
+    var m = mixByDim('funding');
+    var brand = mixByDim('brand');
+    var avg = brand.txns ? brand.total / brand.txns : 0;
+    // What a fixed per-transaction fee costs in basis points at each segment's average ticket.
+    // 10c is illustrative and labelled as such — the real fixed component varies by agreement,
+    // and inventing a precise one here would be a made-up number on a page about real ones.
+    var FIXED = 0.10;
+    var rows = m.rows.concat(mixByDim('read_method').rows.map(function (r) {
+      return { seg: r.seg, usd: r.usd, n: r.n, group: 'read' };
+    }));
+    var h = '<thead><tr><th>Segment</th><th>Volume</th><th>Transactions</th><th>Average ticket</th>'
+          + '<th>Drag of a 10&cent; fixed fee</th></tr></thead><tbody>';
+    rows.forEach(function (r) {
+      var t = r.n ? r.usd / r.n : 0;
+      h += '<tr><td class="nm">' + esc(label(r.seg)) + '</td>'
+        + '<td>' + fmtUsd(r.usd) + '</td><td>' + fmtN(r.n) + '</td>'
+        + '<td>$' + t.toFixed(2) + '</td>'
+        + '<td><b>' + (t ? Math.round(10000 * FIXED / t) + 'bp' : '—') + '</b></td></tr>';
+    });
+    h += '</tbody>';
+    $('ticketTable').innerHTML = h;
+    $('ticketNote').innerHTML = 'Overall average ticket is <b>$' + avg.toFixed(2) + '</b>. The last column '
+      + 'is illustrative: it shows what a flat 10&cent; per transaction would cost in basis points at each '
+      + 'segment&rsquo;s average ticket, not the fee actually charged. The point is the shape — the smaller '
+      + 'the ticket, the more a fixed fee dominates, regardless of what the fixed fee happens to be.';
+  }
+
+  function renderAccept() {
+    var a = ACC.filter(accInScope);
+    var att = a.reduce(function (s, r) { return s + r.n; }, 0);
+    var ok = a.filter(function (r) { return r.o === 'authorized'; });
+    var bad = a.filter(function (r) { return r.o !== 'authorized'; });
+    var okN = ok.reduce(function (s, r) { return s + r.n; }, 0);
+    var lost = bad.reduce(function (s, r) { return s + r.usd; }, 0);
+    var won = ok.reduce(function (s, r) { return s + r.usd; }, 0);
+
+    function kpi(k, v, s, colour) {
+      return '<div class="kpi"><div class="k">' + k + '</div><div class="v"'
+        + (colour ? ' style="color:' + colour + '"' : '') + '>' + v + '</div><div class="s">' + s + '</div></div>';
+    }
+    $('acceptKpis').innerHTML =
+      kpi('Approval rate', att ? (100 * okN / att).toFixed(2) + '%' : '—', fmtN(att) + ' attempts')
+      + kpi('Refused', fmtN(att - okN), 'authorisation attempts', 'var(--red)')
+      + kpi('Value refused', fmtUsd(lost), 'offered and not taken', 'var(--red)')
+      + kpi('Value approved', fmtUsd(won), 'authorised');
+
+    var byReason = {};
+    bad.forEach(function (r) {
+      var k = r.r || r.o;
+      byReason[k] = byReason[k] || { n: 0, usd: 0 };
+      byReason[k].n += r.n; byReason[k].usd += r.usd;
+    });
+    var rs = Object.keys(byReason).map(function (k) {
+      return { k: k, n: byReason[k].n, usd: byReason[k].usd };
+    }).sort(function (x, y) { return y.usd - x.usd; }).slice(0, 10);
+    var h = '<thead><tr><th>Why it was refused</th><th>Attempts</th><th>Value</th></tr></thead><tbody>';
+    rs.forEach(function (r) {
+      h += '<tr><td class="nm">' + esc(label(r.k)) + '</td><td>' + fmtN(r.n) + '</td><td>' + fmtUsd(r.usd) + '</td></tr>';
+    });
+    h += '</tbody>';
+    $('declineTable').innerHTML = h;
+
+    var byBrand = {};
+    a.forEach(function (r) {
+      byBrand[r.brand] = byBrand[r.brand] || { att: 0, ok: 0 };
+      byBrand[r.brand].att += r.n;
+      if (r.o === 'authorized') byBrand[r.brand].ok += r.n;
+    });
+    var bs = Object.keys(byBrand).map(function (k) {
+      return { k: k, att: byBrand[k].att, ok: byBrand[k].ok };
+    }).sort(function (x, y) { return y.att - x.att; });
+    var h2 = '<thead><tr><th>Approval by brand</th><th>Attempts</th><th>Approved</th></tr></thead><tbody>';
+    bs.forEach(function (r) {
+      h2 += '<tr><td class="nm">' + esc(label(r.k)) + '</td><td>' + fmtN(r.att) + '</td><td><b>'
+        + (r.att ? (100 * r.ok / r.att).toFixed(1) + '%' : '—') + '</b></td></tr>';
+    });
+    h2 += '</tbody>';
+    $('declineBrand').innerHTML = h2;
+
+    $('acceptHead').textContent = 'Authorisation attempts, not captured charges — a different and larger '
+      + 'population than the volume above. An attempt can fail and never become a charge, and a charge '
+      + 'can follow a retried attempt, so these figures must not be divided into the volume figures.';
+
+    var ccNote = (window.LVCC && !LVCC.isAll())
+      ? ' <b>This panel is showing every market:</b> the acceptance data does not carry the merchant&rsquo;s '
+        + 'country, so it cannot be filtered to ' + esc(LVCC.label(LVCC.cc)) + ' the way the panels above are.'
+      : '';
+    $('acceptNote').innerHTML = 'A refusal is not always lost revenue — a card declined once and retried '
+      + 'successfully still took the money. Insufficient funds is the shopper&rsquo;s bank, not something '
+      + 'Loyverse can fix; do-not-honor is usually the issuer&rsquo;s fraud model and can sometimes be '
+      + 'improved.' + ccNote;
+  }
+
+  function renderIntro() {
+    var brand = mixByDim('brand');
+    var period = MODE === 'month' && MONTH ? MONTH : 'all time since launch';
+    $('intro').textContent = 'What Loyverse Payments volume is actually made of — which cards, read '
+      + 'which way, issued where — and what each slice costs to accept. Showing ' + period
+      + (window.LVCC ? LVCC.suffix() : '') + ': ' + fmtUsd(brand.total) + ' across '
+      + fmtN(brand.txns) + ' transactions.';
+    $('stamp').textContent = META.generatedAt ? 'Data as of ' + META.generatedAt : '';
+  }
+
+  function renderAll() {
+    renderIntro(); renderKpis(); renderMixes(); renderCost(); renderTicket(); renderAccept();
+  }
+
+  // ---- controls -----------------------------------------------------------
+  var msel = $('month');
+  msel.innerHTML = MONTHS.map(function (m) { return '<option value="' + m + '">' + m + '</option>'; }).join('');
+  if (MONTHS.length) MONTH = MONTHS[0];
+  msel.value = MONTH || '';
+  msel.addEventListener('change', function () { MONTH = msel.value; renderAll(); });
+  Array.prototype.forEach.call(document.querySelectorAll('#mode button'), function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.forEach.call(document.querySelectorAll('#mode button'), function (x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      MODE = b.getAttribute('data-m');
+      msel.style.display = MODE === 'month' ? '' : 'none';
+      renderAll();
+    });
+  });
+
+  if (window.LVCC) {
+    LVCC.mount(document.querySelector('.paysub'));
+    LVCC.on(function () { renderAll(); });   // fires immediately, so this is the only render path
+  } else {
+    renderAll();
+  }
+
+  // The device caveat goes at the bottom of the mix panel, next to the read-method bar it
+  // qualifies, rather than in a footnote nobody reaches.
+  var warn = document.createElement('div');
+  warn.className = 'warn';
+  warn.innerHTML = '<b>This does not tell you M2 versus S710 versus Tap to Phone.</b> Charges do carry a '
+    + 'terminal reader id, and 127 distinct readers cover 99.9% of volume — but the Stripe data share '
+    + 'exposes only one row in its readers table, belonging to the platform account, so none of those ids '
+    + 'resolve to a device model. &ldquo;How the card was read&rdquo; above is exact and is the closest '
+    + 'available answer. Splitting by device needs Stripe to include connected accounts&rsquo; terminal '
+    + 'readers in the share.';
+  $('mixes').parentNode.appendChild(warn);
+})();
+</script>
+</body>
+</html>

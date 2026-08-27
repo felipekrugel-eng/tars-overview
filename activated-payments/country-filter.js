@@ -69,6 +69,7 @@
     (window.__ACT || []).forEach(function (r) { observe(r.country); });
     (window.__FUNNEL_MERCHANTS || []).forEach(function (r) { observe(r.cc); });
     (window.__PAY_TXN_MERCHANTS || []).forEach(function (r) { observe(r.country); });
+    (window.__PROFILE_MIX || []).forEach(function (r) { observe(r.cc); });
     Object.keys((window.MARGINS && window.MARGINS.byCountry) || {}).forEach(observe);
     Object.keys(window.__FUNNEL_BASES_BY_CC || {}).forEach(observe);
 

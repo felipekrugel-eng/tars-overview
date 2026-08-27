@@ -1450,9 +1450,14 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
       brand: g(r, 'brand'), funding: g(r, 'funding'), presence: g(r, 'presence'),
       n: Number(g(r, 'txns')) || 0,
       priced: Number(g(r, 'charges_priced')) || 0,
+      billed: Number(g(r, 'charges_billed')) || 0,
       usd,
       pricedUsd: minorToUsd(g(r, 'amount_priced_minor'), ccy) || 0,
+      billedUsd: minorToUsd(g(r, 'amount_billed_minor'), ccy) || 0,
       cost: cost == null ? 0 : cost,
+      // Application-fee revenue, netted of refunds — what Loyverse actually charged for this
+      // segment. Together with cost it makes the page about margin rather than only price.
+      rev: (function () { const v = minorToUsd(g(r, 'rev_minor'), g(r, 'rev_ccy') || ccy); return v == null ? 0 : v; })(),
     });
   }
   return out;
