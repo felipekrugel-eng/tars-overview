@@ -18,10 +18,17 @@
 -- than from the payment-method view, so cost and its denominator are described by the same
 -- source and cannot disagree about what a charge was.
 --
--- REVENUE IS HERE TOO, so the page can show margin rather than only cost. Application fees are
--- what Loyverse charges the merchant and they carry CHARGE_ID, so they attribute to a segment
--- exactly as cost does. Refunded fees are netted off — an application fee that was handed back
--- is not revenue. Same fanout discipline: collapsed to one row per charge before joining.
+-- REVENUE IS HERE TOO, so the page can show margin rather than only cost.
+--
+-- NOT from CONNECTED_ACCOUNT_APPLICATION_FEES. That view is EMPTY in this share — a fact
+-- app_fees_by_account.sql already documented, and a first cut of this query used it anyway and
+-- produced $0 of revenue on every row. The authoritative source is the fee-detail lines on the
+-- connected account's balance transactions, TYPE = 'application_fee', which is what the Overview
+-- and Margins pages already read.
+--
+-- Those lines carry no charge id, only BALANCE_TRANSACTION_ID — so the link runs
+-- charge -> its balance transaction -> the application-fee line on it. Same fanout discipline as
+-- the cost side: collapsed to one row per balance transaction before joining.
 
 WITH base AS (
     SELECT
@@ -29,6 +36,7 @@ WITH base AS (
         c.ACCOUNT                                                   AS ACCT,
         TO_VARCHAR(TO_DATE(TRY_TO_TIMESTAMP(TO_VARCHAR(c.CREATED))), 'YYYY-MM') AS MONTH,
         c.AMOUNT                                                    AS AMOUNT_MINOR,
+        c.BALANCE_TRANSACTION_ID                                    AS BTXN_ID,
         UPPER(TRIM(c.CURRENCY))                                     AS CCY
     FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_CHARGES c
     WHERE c.ACCOUNT IN (/*ACCOUNT_IDS*/)
@@ -55,15 +63,16 @@ fee_per_charge AS (
     WHERE f.CHARGE_ID IS NOT NULL
     GROUP BY f.CHARGE_ID
 ),
--- Revenue per charge, netted of refunds, collapsed the same way.
-fee_rev_per_charge AS (
+-- Application-fee revenue per balance transaction, collapsed the same way.
+fee_rev_per_btxn AS (
     SELECT
-        a.CHARGE_ID,
-        SUM(COALESCE(a.AMOUNT, 0) - COALESCE(a.AMOUNT_REFUNDED, 0)) AS REV_MINOR,
-        UPPER(MAX(a.CURRENCY))                                      AS REV_CCY
-    FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_APPLICATION_FEES a
-    WHERE a.CHARGE_ID IS NOT NULL
-    GROUP BY a.CHARGE_ID
+        fd.BALANCE_TRANSACTION_ID   AS BTXN_ID,
+        SUM(fd.AMOUNT)              AS REV_MINOR,
+        UPPER(MAX(fd.CURRENCY))     AS REV_CCY
+    FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_BALANCE_TRANSACTION_FEE_DETAILS fd
+    WHERE LOWER(fd.TYPE) = 'application_fee'
+      AND fd.BALANCE_TRANSACTION_ID IS NOT NULL
+    GROUP BY fd.BALANCE_TRANSACTION_ID
 )
 -- Now the join is one-to-one, so AMOUNT_MINOR is counted once per charge.
 --
@@ -90,11 +99,11 @@ SELECT
     -- Revenue and the charges it covers. Application fees post on their own schedule too, so the
     -- billed subset is reported rather than assumed complete.
     SUM(COALESCE(fr.REV_MINOR, 0))       AS REV_MINOR,
-    COUNT(fr.CHARGE_ID)                  AS CHARGES_BILLED,
-    SUM(IFF(fr.CHARGE_ID IS NULL, 0, b.AMOUNT_MINOR)) AS AMOUNT_BILLED_MINOR,
+    COUNT(fr.BTXN_ID)                    AS CHARGES_BILLED,
+    SUM(IFF(fr.BTXN_ID IS NULL, 0, b.AMOUNT_MINOR)) AS AMOUNT_BILLED_MINOR,
     SUM(COALESCE(fc.FEE_ROWS, 0))        AS FEE_ROWS
 FROM base b
 LEFT JOIN fee_per_charge fc ON fc.CHARGE_ID = b.CHARGE_ID
-LEFT JOIN fee_rev_per_charge fr ON fr.CHARGE_ID = b.CHARGE_ID
+LEFT JOIN fee_rev_per_btxn fr ON fr.BTXN_ID = b.BTXN_ID
 GROUP BY b.MONTH, b.ACCT, b.CCY, 4, 5, 6, 7
 ORDER BY b.MONTH, AMOUNT_MINOR DESC;
