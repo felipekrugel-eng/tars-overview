@@ -50,6 +50,36 @@ GRACE_SQL = "daily_paying_flow_grace_vs_raw.sql"
 # feeds the FACADASH country filter's "Rolling 30 days" views, which degrade gracefully.
 ROLLING_BY_COUNTRY_SQL = "rolling_30d_by_country_49days.sql"
 
+# ---------------------------------------------------------------------------
+# FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
+#
+# What happened: receipts_tpv_daily_asof.sql — the SECOND of the seven queries — hit the
+# 3600s Snowflake statement timeout (57014) on a contended COMPUTE_WH. main() ran every
+# query in one loop and wrote nothing until the loop finished, so that single timeout threw
+# away the cohort pull that had already succeeded and skipped the five cheap ones entirely.
+# daily-history.js got no row for the 28th and the daily registrations graph showed a hole —
+# even though registrations have NOTHING to do with receipts. They just shared a basket.
+#
+# Three changes stop that class of failure:
+#   1. DEGRADABLE — a listed query may fail without taking the run down. The rest still land.
+#   2. Each query's CSVs are written as soon as that query returns, not after all seven.
+#   3. build_kpi_data.py is skipped (not failed) when its receipts input is missing, so
+#      daily-history.js — the file that lost the 28th — refreshes regardless.
+#
+# Keep this set tight: a query belongs here only if the dashboard genuinely degrades
+# gracefully without it (blank series, not wrong numbers).
+DEGRADABLE = {
+    "receipts",  # -> active / receipts lines + kpi-data.js; every consumer handles None
+    "rolling",   # -> reg30d / active30d / payingActive; backfill_daily already guards it
+}
+
+# Per-query statement timeout, seconds. The GitHub job budget is 330 min, so the receipts
+# grid can afford more than the old blanket 3600s — that cap was tight enough that ordinary
+# warehouse contention tripped it, which is exactly what happened on the 28th. Everything
+# else keeps the previous 3600s; none of them has ever come close.
+QUERY_TIMEOUTS  = {"receipts": 7200}
+DEFAULT_TIMEOUT = 3600
+
 def _private_key():
     pem = os.environ["SNOWFLAKE_PRIVATE_KEY"].encode()
     pw  = os.environ.get("SNOWFLAKE_PRIVATE_KEY_PASSPHRASE") or None
@@ -67,10 +97,10 @@ def connect():
         schema=os.environ.get("SNOWFLAKE_SCHEMA", "PUBLIC"),
         client_session_keep_alive=True)
 
-def run_sql(conn, sql_file):
+def run_sql(conn, sql_file, timeout=DEFAULT_TIMEOUT):
     sql = (SQLDIR / sql_file).read_text()
     cur = conn.cursor()
-    cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 3600")
+    cur.execute(f"ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = {int(timeout)}")
     cur.execute(sql)
     df = cur.fetch_pandas_all() if hasattr(cur, "fetch_pandas_all") else \
          pd.DataFrame(cur.fetchall(), columns=[c[0] for c in cur.description])
@@ -85,65 +115,103 @@ def write(path, df):
     path.write_text(df.to_csv(index=False)); print(f"   -> {path.name} ({len(df)} rows)", flush=True)
 
 def main():
-    conn = connect(); dfs = {}
+    conn = connect(); dfs = {}; degraded = []
+
+    # Each query is isolated AND its CSVs are written the moment it returns, so a failure
+    # late in the loop can never discard work that already succeeded (the 28 Aug failure
+    # mode). A DEGRADABLE query that fails is logged and skipped; anything else still
+    # aborts the run, because without it the dashboard would show wrong numbers, not blanks.
+    def pull(key):
+        f = QUERY_FILES[key]
+        print(f"[run] {f}", flush=True)
+        try:
+            dfs[key] = run_sql(conn, f, QUERY_TIMEOUTS.get(key, DEFAULT_TIMEOUT))
+            return True
+        except Exception as e:
+            if key not in DEGRADABLE:
+                raise
+            degraded.append(key)
+            print(f"[run] DEGRADED — {f} failed ({type(e).__name__}: {e}). "
+                  f"Continuing; only the series fed by '{key}' pause this run.", flush=True)
+            return False
+
     try:
-        for key, f in QUERY_FILES.items():
-            print(f"[run] {f}", flush=True); dfs[key] = run_sql(conn, f)
+        # ---- 1. cohort: the daily spine (registrations, paying, MRR, ARPC) ----
+        pull("cohort")
+        write(WORK  / "cohort_grid.csv",             dfs["cohort"])
+        write(DAILY / f"MRR QR_DB 49 Days_{TS}.csv", dfs["cohort"])
+        write(DAILY / f"MRR QR_DB_{TS}.csv",         latest(dfs["cohort"]))
+
+        # ---- 2. paying / country lifetime / registrations by month / bottom-up MRR ----
+        # Cheap queries, and the ones the 28th lost for no reason. They now land before the
+        # heavy receipts grid is even attempted, so a receipts timeout cannot reach them.
+        pull("paying")
+        write(WORK / "paying_country.csv", dfs["paying"])
+        write(DAILY / f"Paying x Country per Month_{TS}.csv",
+              latest(dfs["paying"])[["COUNTRY","CALENDAR_MONTH","ACTIVE_PAYING_CUSTOMERS"]])
+
+        pull("clife")
+        write(WORK / "country_lifetime.csv", dfs["clife"])
+
+        pull("cregm")
+        write(WORK  / "country_reg_month.csv", dfs["cregm"])
+        write(DAILY / f"Registration Month x Country_49 Days_{TS}.csv", dfs["cregm"])
+        write(DAILY / f"Registrations Month x Country_{TS}.csv",
+              latest(dfs["cregm"])[["COUNTRY","CALENDAR_MONTH","REGISTRATIONS"]])
+
+        pull("mrrbu")
+        write(WORK / "mrr_bottomup.csv", dfs["mrrbu"])   # no SNAPSHOT_DATE column; write as-is
+
+        # ---- 3. rolling 30d (DEGRADABLE) ----
+        if pull("rolling"):
+            write(DAILY / f"Rolling 30 Days_{TS}.csv", dfs["rolling"])
+
+        # ---- 4. receipts grid (DEGRADABLE) — the heavy one, deliberately LAST ----
+        # ~26.5M rows, one scan of LOYVERSE_RECEIPTS_UNIQUE fanned across ~70 snapshots.
+        # It is both the slowest query and the only one that has ever timed out, so it runs
+        # after everything else has already been written to disk.
+        if pull("receipts"):
+            write(WORK / "receipts.csv", latest(dfs["receipts"]))   # latest snapshot only — build_kpi_data uses ONLY the latest; writing the full ~26.5M-row grid OOM'd the runner
+            write(DAILY / f"TPV and Receipts DB2_{TS}.csv",
+                  latest(dfs["receipts"])[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]])
     finally:
         conn.close()
 
-    # ---- inputs for build_kpi_data.py (tidy full as-of outputs) ----
-    write(WORK / "cohort_grid.csv",      dfs["cohort"])
-    write(WORK / "receipts.csv",         latest(dfs["receipts"]))   # latest snapshot only — build_kpi_data uses ONLY the latest; writing the full ~26.5M-row grid OOM'd the runner
-    write(WORK / "paying_country.csv",   dfs["paying"])
-    write(WORK / "country_lifetime.csv", dfs["clife"])
-    write(WORK / "country_reg_month.csv",dfs["cregm"])
-    write(WORK / "mrr_bottomup.csv",     dfs["mrrbu"])            # bottom-up MRR (no SNAPSHOT_DATE column; write as-is)
-
-    # ---- inputs for backfill_daily.py (CSV filenames it globs) ----
-    write(DAILY / f"MRR QR_DB 49 Days_{TS}.csv",                 dfs["cohort"])
-    write(DAILY / f"Registration Month x Country_49 Days_{TS}.csv", dfs["cregm"])
-    write(DAILY / f"Rolling 30 Days_{TS}.csv",                   dfs["rolling"])
-    # latest-snapshot "normal daily" files
-    lc = latest(dfs["cohort"]);  write(DAILY / f"MRR QR_DB_{TS}.csv", lc)
-    lp = latest(dfs["paying"])[["COUNTRY","CALENDAR_MONTH","ACTIVE_PAYING_CUSTOMERS"]]
-    write(DAILY / f"Paying x Country per Month_{TS}.csv", lp)
-    lr = latest(dfs["cregm"])[["COUNTRY","CALENDAR_MONTH","REGISTRATIONS"]]
-    write(DAILY / f"Registrations Month x Country_{TS}.csv", lr)
-    lt = latest(dfs["receipts"])
-    write(DAILY / f"TPV and Receipts DB2_{TS}.csv", lt[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]])
     # global daily active/receipts ("49 days 1"): each merchant in one country → current-month sum = global distinct.
     # MEMORY: this used to .copy() 4 cols of the full ~26.5M-row grid AND build two full-length object-string
     # Series (g["S"], g["M"]) while the full grid was still resident — the peak alloc that OOM-killed the runner
     # right here (it surfaces as "The operation was canceled"). Now: no .copy(); compare months as compact
     # int64 PeriodArrays (not GB-sized object strings); slice to current-month rows FIRST, then build DATE.
     # Output is byte-identical.
-    rec = dfs["receipts"]
-    cur = rec.loc[
-        rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
-        == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
-        ["SNAPSHOT_DATE", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
-    ]
-    agg = (cur.assign(DATE=cur["SNAPSHOT_DATE"].astype(str).str[:10])
-              .groupby("DATE")
-              .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
-              .reset_index())
-    agg["GTV"] = 0; agg["AVG_TICKET"] = 0
-    write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
+    # Both blocks below are receipts-derived, so they are skipped when that pull degraded.
+    # backfill_daily.py treats the two files as optional and leaves active/receipts blank.
+    if "receipts" in dfs:
+        rec = dfs["receipts"]
+        cur = rec.loc[
+            rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
+            == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
+            ["SNAPSHOT_DATE", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+        ]
+        agg = (cur.assign(DATE=cur["SNAPSHOT_DATE"].astype(str).str[:10])
+                  .groupby("DATE")
+                  .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+                  .reset_index())
+        agg["GTV"] = 0; agg["AVG_TICKET"] = 0
+        write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
 
-    # ---- by-country daily active/receipts (current-month rows -> DATE x COUNTRY) ----
-    # Same derivation as "49 days 1" above but KEEPS the country dimension so FACADASH can
-    # filter the daily graphs/tiles per country. Output is tiny (~25 countries x ~49 days).
-    recc = rec.loc[
-        rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
-        == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
-        ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
-    ]
-    recc = (recc.assign(DATE=recc["SNAPSHOT_DATE"].astype(str).str[:10])
-                .groupby(["DATE", "COUNTRY"])
-                .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
-                .reset_index())
-    write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS"]])
+        # ---- by-country daily active/receipts (current-month rows -> DATE x COUNTRY) ----
+        # Same derivation as "49 days 1" above but KEEPS the country dimension so FACADASH can
+        # filter the daily graphs/tiles per country. Output is tiny (~25 countries x ~49 days).
+        recc = rec.loc[
+            rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
+            == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
+            ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+        ]
+        recc = (recc.assign(DATE=recc["SNAPSHOT_DATE"].astype(str).str[:10])
+                    .groupby(["DATE", "COUNTRY"])
+                    .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+                    .reset_index())
+        write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS"]])
 
     # ---- by-country daily paying (current-month rows per snapshot -> DATE x COUNTRY) ----
     pay = dfs["paying"]
@@ -162,7 +230,11 @@ def main():
     # subprocesses. They read the CSVs from disk, so keeping the frames resident just doubles RAM
     # alongside the subprocess and OOMs the runner ("lost communication with the server").
     import gc
-    dfs.clear(); del rec, cur, agg, recc, pay, payc; gc.collect()
+    dfs.clear()
+    # Rebind rather than `del`: rec/cur/agg/recc are never bound at all when the receipts
+    # pull degraded, and a NameError here would defeat the whole point of degrading.
+    rec = cur = agg = recc = pay = payc = None
+    gc.collect()
 
     # ---- per-country rolling series (optional, GUARDED) ----
     # Own connection, after the main loop: a failure here — or the ~12 min runtime — must
@@ -181,13 +253,26 @@ def main():
         print(f"[rollingc] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
     # ---- regenerate both data files ----
+    # daily-history.js ALWAYS rebuilds. It carries the registrations / paying / MRR daily
+    # series — the ones the 28 Aug run lost — and backfill_daily.py now treats the
+    # receipts-derived CSVs as optional, blanking active/receipts rather than crashing.
     print("[backfill] daily-history.js", flush=True)
     bf_env = {**os.environ, "DAILY_DIR": str(DAILY), "DAILYHIST_OUT": str(V2 / "daily-history.js")}
     subprocess.run([sys.executable, str(KPIRUN / "backfill_daily.py")], check=True, env=bf_env)
-    print("[build] kpi-data.js", flush=True)
-    env = {**os.environ, "WORK_DIR": str(WORK), "KPIDATA_OUT": str(V2 / "kpi-data.js")}
-    subprocess.run([sys.executable, str(HERE / "build_kpi_data.py")], check=True, env=env)
-    print("[done] daily-history.js + kpi-data.js regenerated", flush=True)
+
+    # kpi-data.js hard-requires receipts.csv (build_kpi_data.py reads it unconditionally, and
+    # the cohort triangle is meaningless without it). If the receipts pull degraded, keep the
+    # previous kpi-data.js — Study & Churn show yesterday's numbers for a day, which is far
+    # better than failing the run and losing today's daily page as well.
+    if (WORK / "receipts.csv").exists():
+        print("[build] kpi-data.js", flush=True)
+        env = {**os.environ, "WORK_DIR": str(WORK), "KPIDATA_OUT": str(V2 / "kpi-data.js")}
+        subprocess.run([sys.executable, str(HERE / "build_kpi_data.py")], check=True, env=env)
+        print("[done] daily-history.js + kpi-data.js regenerated", flush=True)
+    else:
+        print("[build] SKIPPED kpi-data.js — no receipts.csv this run; "
+              "keeping the previously committed file", flush=True)
+        print("[done] daily-history.js regenerated", flush=True)
 
     # ---- paying-base flow charts (flow-data.js + daily-flow.js) ----
     # GUARDED: a failure here (e.g. the heavy grace query spilling/timing out) must NOT
@@ -255,6 +340,11 @@ def main():
     # back to the all-countries data embedded in kpi-data.js and the picker reports no data.
     # Cheaper than its 49-snapshot sibling: a single as-of, and COUNTRY only widens the GROUP BY.
     try:
+        # build_cohort_country.py joins against receipts.csv, so there is nothing to build
+        # when the receipts pull degraded — skip the Snowflake round-trip rather than pay
+        # for a query whose output we would only throw away in the except below.
+        if not (WORK / "receipts.csv").exists():
+            raise RuntimeError("no receipts.csv this run (receipts pull degraded)")
         print("[cohctry] cohort x country snapshot -> cohort_country.csv", flush=True)
         ccconn = connect()
         try:
@@ -277,6 +367,23 @@ def main():
         print("[done] cohort-country/*.json regenerated", flush=True)
     except Exception as e:
         print(f"[cohctry] WARNING — per-country cohort files skipped this run: {e}", flush=True)
+
+    # ---- degradation report ----
+    # Exit 0 so the workflow still COMMITS what did land — a degraded run publishes real,
+    # fresh data for every series that succeeded, and refusing to commit it is precisely
+    # how one timed-out query cost the daily graphs a whole day on 28 Aug. The failure is
+    # surfaced instead through a step output, which a later workflow step turns into a red
+    # run AFTER the commit, so a degraded day is loud without being destructive.
+    if degraded:
+        names = ", ".join(f"{k} ({QUERY_FILES[k]})" for k in degraded)
+        print(f"\n[degraded] This run published without: {names}", flush=True)
+        print("[degraded] Everything else is fresh and committed. Re-dispatch kpi-pull to "
+              "backfill — the as-of snapshot window spans ~70 days, so a later run fills "
+              "the gap retroactively.", flush=True)
+    gh_out = os.environ.get("GITHUB_OUTPUT")
+    if gh_out:
+        with open(gh_out, "a") as fh:
+            fh.write(f"degraded={','.join(degraded)}\n")
 
 
 if __name__ == "__main__":

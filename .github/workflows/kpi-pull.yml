@@ -70,6 +70,7 @@ jobs:
         run: pip install -r kpi-automation/requirements.txt
 
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
+        id: pull
         if: steps.guard.outputs.skip != 'true'
         env:
           # Only the private key is a secret (reused from the CASE pull). The rest are plain config.
@@ -86,8 +87,16 @@ jobs:
           KPIRUN_DIR: ${{ github.workspace }}/kpi_run
         run: python kpi-automation/run.py
 
+      # ALWAYS commit whatever the pull managed to produce. run.py writes each query's CSVs
+      # the moment that query returns and regenerates daily-history.js even when a
+      # DEGRADABLE query fails, so on a partial run there is real, fresh data on disk. On
+      # 28 Aug the step below was skipped because run.py exited non-zero on a timed-out
+      # receipts query, and the day's registrations — already pulled successfully — were
+      # thrown away with it. Committing a partial refresh is strictly better than committing
+      # nothing: the files not regenerated simply keep their previous contents and produce
+      # no diff. `always()` also covers a hard crash midway, for the same reason.
       - name: Commit & push if the data changed
-        if: steps.guard.outputs.skip != 'true'
+        if: always() && steps.guard.outputs.skip != 'true'
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
@@ -124,3 +133,15 @@ jobs:
             done
             echo "push still failing after 5 attempts"; exit 1
           fi
+
+      # Surface a partial run AFTER the data is safely committed. run.py exits 0 when a
+      # DEGRADABLE query fails, so the commit above is never blocked; this step turns that
+      # day red so it does not pass silently and go unnoticed for a week.
+      - name: Fail the run if any query degraded
+        if: always() && steps.guard.outputs.skip != 'true' && steps.pull.outputs.degraded != ''
+        run: |
+          echo "::error::kpi-pull published a PARTIAL refresh — degraded: ${{ steps.pull.outputs.degraded }}"
+          echo "The series fed by those queries kept their previous values; everything else is fresh."
+          echo "Re-dispatch this workflow to backfill: the as-of snapshot window spans ~70 days,"
+          echo "so a later successful run fills the missing days in retroactively."
+          exit 1

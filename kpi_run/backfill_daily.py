@@ -27,15 +27,26 @@ payc_files = {fdate(p): p for p in glob.glob(SRC + "/Paying x Country per Month_
 # "49 days 1" = global daily active/receipts series (skip Jun-18; that day comes from the normal TPV query).
 SKIP_DATE = "2026-06-18"
 mrr49 = sorted(glob.glob(SRC + "/MRR QR_DB 49 Days_*.csv"))[-1]
-g1path = sorted(glob.glob(SRC + "/49 days 1_*.csv"))[-1]
 
-g1 = pd.read_csv(g1path)  # DATE,ACTIVE,RECEIPTS,GTV,AVG_TICKET (GTV/AVG_TICKET deliberately ignored)
+# "49 days 1" is derived from the receipts grid, the one query heavy enough to hit the
+# Snowflake statement timeout on a contended warehouse (it did on 2026-08-28). run.py now
+# treats that pull as DEGRADABLE and simply omits this file when it fails, so DO NOT index
+# an empty glob here — that would turn a missing receipts pull back into a total loss of
+# daily-history.js, which is the exact failure this is meant to prevent. Missing file =>
+# active/receipts stay None for the affected days, which every consumer already handles
+# (see the live-snapshot branch below, where both are None until that day's TPV file lands).
+_g1files = sorted(glob.glob(SRC + "/49 days 1_*.csv"))
 active_by, receipts_by = {}, {}
-for _, gr in g1.iterrows():
-    dd = str(gr["DATE"])[:10]
-    if dd == SKIP_DATE: continue
-    active_by[dd] = int(pd.to_numeric(gr["ACTIVE"], errors="coerce") or 0)
-    receipts_by[dd] = int(pd.to_numeric(gr["RECEIPTS"], errors="coerce") or 0)
+if _g1files:
+    g1 = pd.read_csv(_g1files[-1])  # DATE,ACTIVE,RECEIPTS,GTV,AVG_TICKET (GTV/AVG_TICKET deliberately ignored)
+    for _, gr in g1.iterrows():
+        dd = str(gr["DATE"])[:10]
+        if dd == SKIP_DATE: continue
+        active_by[dd] = int(pd.to_numeric(gr["ACTIVE"], errors="coerce") or 0)
+        receipts_by[dd] = int(pd.to_numeric(gr["RECEIPTS"], errors="coerce") or 0)
+else:
+    print("[backfill] WARNING — no '49 days 1' CSV (receipts pull degraded); "
+          "active/receipts left blank, every other series unaffected", flush=True)
 
 m49 = pd.read_csv(mrr49, usecols=["SNAPSHOT_DATE","COHORT_MONTH","REGISTRATIONS","MONTH_START",
     "PAYING_CUSTOMERS","CUM_PAYING_EVER","MRR_USD"])
@@ -113,7 +124,12 @@ for r in rows:
     r["payingActive"] = v.get("payingActive")
 
 # ---------------- country funnel: current (MTD) + prior month ----------------
-ld = sorted(set(regc_files) & set(payc_files) & set(db2_files))[-1]
+# db2 (TPV and Receipts) is the receipts-derived file and may be absent — see the note above.
+# Anchor the funnel's as-of day on the files that are always produced, and fall back to the
+# three-way intersection only to keep the historical behaviour when db2 IS present.
+_lds = sorted(set(regc_files) & set(payc_files) & set(db2_files)) \
+       or sorted(set(regc_files) & set(payc_files))
+ld = _lds[-1]
 rc = pd.read_csv(regc_files[ld], usecols=["COUNTRY","CALENDAR_MONTH","REGISTRATIONS"])
 rc["M"]=rc["CALENDAR_MONTH"].map(ym); rc["REGISTRATIONS"]=pd.to_numeric(rc["REGISTRATIONS"],errors="coerce").fillna(0)
 CUR = rc["M"].max(); PREV = prev_ym(CUR)
@@ -122,13 +138,20 @@ regC, regP = col_map(rc,"REGISTRATIONS",CUR), col_map(rc,"REGISTRATIONS",PREV)
 pc = pd.read_csv(payc_files[ld], usecols=["COUNTRY","CALENDAR_MONTH","ACTIVE_PAYING_CUSTOMERS"])
 pc["M"]=pc["CALENDAR_MONTH"].map(ym); pc["ACTIVE_PAYING_CUSTOMERS"]=pd.to_numeric(pc["ACTIVE_PAYING_CUSTOMERS"],errors="coerce").fillna(0)
 payC, payP = col_map(pc,"ACTIVE_PAYING_CUSTOMERS",CUR), col_map(pc,"ACTIVE_PAYING_CUSTOMERS",PREV)
-db = pd.read_csv(db2_files[ld], usecols=["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"])
-db["M"]=db["CALENDAR_MONTH"].map(ym)
-for c in ["ACTIVE_MERCHANTS","RECEIPT_COUNT"]: db[c]=pd.to_numeric(db[c],errors="coerce").fillna(0)
-actC=db[db["M"]==CUR].groupby("COUNTRY")["ACTIVE_MERCHANTS"].sum().to_dict()
-actP=db[db["M"]==PREV].groupby("COUNTRY")["ACTIVE_MERCHANTS"].sum().to_dict()
-rcpC=db[db["M"]==CUR].groupby("COUNTRY")["RECEIPT_COUNT"].sum().to_dict()
-rcpP=db[db["M"]==PREV].groupby("COUNTRY")["RECEIPT_COUNT"].sum().to_dict()
+actC, actP, rcpC, rcpP = {}, {}, {}, {}
+if ld in db2_files:
+    db = pd.read_csv(db2_files[ld], usecols=["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"])
+    db["M"]=db["CALENDAR_MONTH"].map(ym)
+    for c in ["ACTIVE_MERCHANTS","RECEIPT_COUNT"]: db[c]=pd.to_numeric(db[c],errors="coerce").fillna(0)
+    actC=db[db["M"]==CUR].groupby("COUNTRY")["ACTIVE_MERCHANTS"].sum().to_dict()
+    actP=db[db["M"]==PREV].groupby("COUNTRY")["ACTIVE_MERCHANTS"].sum().to_dict()
+    rcpC=db[db["M"]==CUR].groupby("COUNTRY")["RECEIPT_COUNT"].sum().to_dict()
+    rcpP=db[db["M"]==PREV].groupby("COUNTRY")["RECEIPT_COUNT"].sum().to_dict()
+else:
+    # Receipts pull degraded: the funnel keeps registrations + paying (its two ranking
+    # columns) and reports zero active/receipts, rather than not being built at all.
+    print("[backfill] WARNING — no TPV/Receipts CSV for " + ld +
+          "; country funnel active/receipts columns are zero this run", flush=True)
 
 # previous-month registrations to the SAME day-of-month (fair momentum vs prior month-to-date, not full month)
 from datetime import date as _date
