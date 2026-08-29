@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-29T10:52:39.440Z",
+  "ranAt": "2026-08-29T11:02:45.879Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -2631,61 +2631,61 @@
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-29 06:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9eaX7oXMe4RLzo0w7wV3Rg",
-        "AMOUNT": 89,
-        "ID": "fee_1U9eab7oXMe4RLzoGcufj5Ql",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-29 06:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9ebc7oXMe4RLzo1IxWUcoL",
-        "AMOUNT": 81,
-        "ID": "fee_1U9ebk7oXMe4RLzo4v4NU1HK",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-29 06:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9edr7oXMe4RLzo0JdOAd4A",
-        "AMOUNT": 251,
-        "ID": "fee_1U9edv7oXMe4RLzoJrWpENvp",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
-        "TYPE": "application_fee"
-      },
-      {
-        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
-        "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-29 06:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9emkG6iUrq4DFX1K60Uslb",
+        "BATCH_TIMESTAMP": "2026-08-29 09:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U9hkV7oXMe4RLzo1EGekYYs",
         "AMOUNT": 93,
-        "ID": "fee_1U9enBG6iUrq4DFXRhUICboA",
+        "ID": "fee_1U9hka7oXMe4RLzoK603oVmx",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TxAQjG6iUrq4DFX",
+        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
         "TYPE": "application_fee"
       },
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-29 06:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9f6C7oXMe4RLzo1nplECI0",
-        "AMOUNT": 89,
-        "ID": "fee_1U9f6N7oXMe4RLzoTKkyEA9D",
+        "BATCH_TIMESTAMP": "2026-08-29 09:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U9hle7oXMe4RLzo1nsbPcsR",
+        "AMOUNT": 44,
+        "ID": "fee_1U9hls7oXMe4RLzoCq3Ve7h3",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-29 09:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U9hoq6xrVvfynTx0xmCwSRC",
+        "AMOUNT": 17,
+        "ID": "fee_1U9hp16xrVvfynTx2e8nFlaH",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "gbp",
+        "ACCOUNT": "acct_1U4NBD6xrVvfynTx",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-29 12:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U9i3q6xrVvfynTx0Wap6Ue7",
+        "AMOUNT": 37,
+        "ID": "fee_1U9i416xrVvfynTxHfDo2EJy",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "gbp",
+        "ACCOUNT": "acct_1U4NBD6xrVvfynTx",
+        "TYPE": "application_fee"
+      },
+      {
+        "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
+        "DESCRIPTION": "Loyverse UK Connect application fee",
+        "BATCH_TIMESTAMP": "2026-08-29 09:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3U4Od66kYqKNQLle03jKvohz",
+        "AMOUNT": 124,
+        "ID": "fee_1U4OdD6kYqKNQLlelGoq3QNT",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "ACCOUNT": "acct_1TuHGJ6kYqKNQLle",
         "TYPE": "application_fee"
       }
     ]
