@@ -98,41 +98,76 @@ jobs:
       - name: Commit & push if the data changed
         if: always() && steps.guard.outputs.skip != 'true'
         run: |
+          set -uo pipefail
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js" "KPI Dashboard v2 (Caio)/pilot-data.js" "KPI Dashboard v2 (Caio)/pilot-status.md" "KPI Dashboard v2 (Caio)/cohort-country"
-          if git diff --cached --quiet; then
-            echo "No data change — nothing to commit."
-          else
-            git commit -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
-            # This job runs ~90 min. The cusum workflow (hourly) and any manual pushes
-            # can advance master while we run, so a bare push fails non-fast-forward
-            # ("! [rejected] ... fetch first"). Rebase our single generated-data commit
-            # onto the latest remote and retry. The files we touch (daily-history.js,
-            # kpi-data.js) are written only by this workflow, so rebasing on top of
-            # other commits (cusum-data.js, sql, etc.) does not conflict.
-            # Generated files: the newest generation simply wins, so re-parent rather than merge.
-            # `git pull --rebase` replays our commit and tries to MERGE our regenerated
-            # daily-history.js with whatever the remote now has. For a large machine-written file
-            # that is unmergeable, and rebase fails with "could not apply ... refresh
-            # daily-history.js" on every attempt — which is how the scheduled run failed every
-            # single day from at least 8 Aug, each time after ~2 hours of completed Snowflake work.
-            # `reset --soft` moves HEAD to the current remote while KEEPING our index, so the
-            # commit is rebuilt on top of origin/master with our content and cannot conflict.
-            for i in 1 2 3 4 5; do
-              git fetch -q origin master || { sleep 5; continue; }
-              git reset -q --soft origin/master
-              git add "KPI Dashboard v2 (Caio)/daily-history.js" "KPI Dashboard v2 (Caio)/kpi-data.js" "KPI Dashboard v2 (Caio)/flow-data.js" "KPI Dashboard v2 (Caio)/daily-flow.js" "KPI Dashboard v2 (Caio)/pilot-data.js" "KPI Dashboard v2 (Caio)/pilot-status.md" "KPI Dashboard v2 (Caio)/cohort-country"
-              if git diff --cached --quiet; then
-                echo "Remote already has this data — nothing to push."; exit 0
-              fi
-              git commit -q -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
-              if git push; then echo "pushed on attempt $i"; exit 0; fi
-              echo "push attempt $i failed (remote moved) — retrying in 5s"
-              sleep 5
+
+          # Every path this job is allowed to write. Nothing outside this list may ever end
+          # up in the commit — see the STALE INDEX note below for why that used to happen.
+          OUT=("KPI Dashboard v2 (Caio)/daily-history.js"
+               "KPI Dashboard v2 (Caio)/kpi-data.js"
+               "KPI Dashboard v2 (Caio)/flow-data.js"
+               "KPI Dashboard v2 (Caio)/daily-flow.js"
+               "KPI Dashboard v2 (Caio)/pilot-data.js"
+               "KPI Dashboard v2 (Caio)/pilot-status.md"
+               "KPI Dashboard v2 (Caio)/cohort-country")
+
+          # ---------------------------------------------------------------------------
+          # THE STALE INDEX BUG (fixed 2026-08-29) — reset --MIXED, never --soft.
+          #
+          # This job runs ~60-90 min. The cusum / payments / ads workflows and any manual
+          # push advance master while it runs, so a bare push fails non-fast-forward, and
+          # `git pull --rebase` cannot merge large machine-written files (that is how the
+          # run failed every day from at least 8 Aug). The previous fix was `reset --soft
+          # origin/master`, which moves HEAD to the new remote while KEEPING the index.
+          #
+          # That is exactly the bug. The index still described the tree from the ORIGINAL
+          # checkout, so committing it wrote back the OLD content of every file that had
+          # changed on master in the meantime — silently REVERTING other jobs' commits.
+          # It stayed invisible for months because the reverted files were other pull
+          # workflows' generated data, which their next run simply regenerated. On 29 Aug
+          # it reverted .github/workflows/kpi-pull.yml and GitHub refused the push
+          # ("refusing to allow a GitHub App to ... update workflow ... without
+          # `workflows` permission") — the first time the bug ever surfaced. The same bug
+          # was found and fixed in margin-pull / merchant-base-pull on 27 Aug (it wiped the
+          # margin workbook); this workflow was simply missed.
+          #
+          # --mixed resets the INDEX to origin/master while leaving the working tree — and
+          # therefore our freshly generated output — untouched. Re-adding only the paths in
+          # OUT then produces a tree that is exactly origin/master plus our own files: it
+          # cannot conflict, and it cannot revert anyone else's work. (payments-pull and
+          # activated-payments-pull already do this; kpi-pull now matches them.)
+          # ---------------------------------------------------------------------------
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            git reset -q --mixed origin/master
+            # Add only paths that exist on disk or are tracked. `git add -A` aborts the
+            # WHOLE add on a single unmatched pathspec, staging nothing — which would then
+            # look like "nothing to push" and silently drop a good refresh.
+            ADD=()
+            for f in "${OUT[@]}"; do
+              if [ -e "$f" ] || git cat-file -e "origin/master:$f" 2>/dev/null; then ADD+=("$f"); fi
             done
-            echo "push still failing after 5 attempts"; exit 1
-          fi
+            if [ ${#ADD[@]} -eq 0 ]; then
+              echo "::error::None of the expected output paths exist — refusing to commit."; exit 1
+            fi
+            git add -A -- "${ADD[@]}"
+            if git diff --cached --quiet; then
+              echo "Remote already has this data — nothing to push."; exit 0
+            fi
+            git commit -q -m "chore(kpi): refresh daily-history.js $(date -u +%FT%TZ)"
+            # Belt and braces: a commit that reaches outside OUT means the guard above
+            # failed. Abort rather than push a revert of someone else's work.
+            if git diff --name-only origin/master HEAD | grep -qv '^KPI Dashboard v2 (Caio)/'; then
+              echo "::error::Commit touches files outside 'KPI Dashboard v2 (Caio)/' — refusing to push."
+              git diff --name-only origin/master HEAD | grep -v '^KPI Dashboard v2 (Caio)/'
+              exit 1
+            fi
+            if git push -q origin master; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1
 
       # Surface a partial run AFTER the data is safely committed. run.py exits 0 when a
       # DEGRADABLE query fails, so the commit above is never blocked; this step turns that
