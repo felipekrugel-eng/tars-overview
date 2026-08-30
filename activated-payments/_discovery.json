@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-08-30T05:55:12.775Z",
+  "ranAt": "2026-08-30T09:15:58.110Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1050,7 +1050,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9456140641
+        "rows": 9457399444
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1671,147 +1671,27 @@
   "samples": {
     "CONNECTED_ACCOUNTS_METADATA": [
       {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "environment",
-        "ACCOUNT_ID": "acct_1U9wxq5XvZjIwfuv",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9wxq5XvZjIwfuv",
-        "VALUE": "prod"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1U9wxq5XvZjIwfuv",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9wxq5XvZjIwfuv",
-        "VALUE": "5158717"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "release",
-        "ACCOUNT_ID": "acct_1U9wxq5XvZjIwfuv",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9wxq5XvZjIwfuv",
-        "VALUE": "2026-08-26"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "environment",
-        "ACCOUNT_ID": "acct_1U9tJ87kFaK6RdK4",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9tJ87kFaK6RdK4",
-        "VALUE": "prod"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1U9tJ87kFaK6RdK4",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9tJ87kFaK6RdK4",
-        "VALUE": "5155462"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "release",
-        "ACCOUNT_ID": "acct_1U9tJ87kFaK6RdK4",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9tJ87kFaK6RdK4",
-        "VALUE": "2026-08-26"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "environment",
-        "ACCOUNT_ID": "acct_1TOKmPQJfvlGDJJG",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TOKmPQJfvlGDJJG",
-        "VALUE": "prod"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1TOKmPQJfvlGDJJG",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TOKmPQJfvlGDJJG",
-        "VALUE": "195247"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "release",
-        "ACCOUNT_ID": "acct_1TOKmPQJfvlGDJJG",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TOKmPQJfvlGDJJG",
-        "VALUE": "2026-04-14"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "environment",
-        "ACCOUNT_ID": "acct_1TtwgqG9cKTLUhQ7",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TtwgqG9cKTLUhQ7",
-        "VALUE": "prod"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1TtwgqG9cKTLUhQ7",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TtwgqG9cKTLUhQ7",
-        "VALUE": "4277102"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "release",
-        "ACCOUNT_ID": "acct_1TtwgqG9cKTLUhQ7",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TtwgqG9cKTLUhQ7",
-        "VALUE": "2026-07-16"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "environment",
-        "ACCOUNT_ID": "acct_1U9yVN8OhNXAjdpo",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9yVN8OhNXAjdpo",
-        "VALUE": "prod"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1U9yVN8OhNXAjdpo",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9yVN8OhNXAjdpo",
-        "VALUE": "5158920"
-      },
-      {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "KEY": "release",
-        "ACCOUNT_ID": "acct_1U9yVN8OhNXAjdpo",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9yVN8OhNXAjdpo",
-        "VALUE": "2026-08-26"
-      },
-      {
         "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
         "KEY": "environment",
-        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
+        "ACCOUNT_ID": "acct_1U9zxDG827M4pjqe",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
+        "ACCOUNT": "acct_1U9zxDG827M4pjqe",
         "VALUE": "prod"
       },
       {
         "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
         "KEY": "owner_id",
-        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
+        "ACCOUNT_ID": "acct_1U9zxDG827M4pjqe",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
-        "VALUE": "5154028"
+        "ACCOUNT": "acct_1U9zxDG827M4pjqe",
+        "VALUE": "5159232"
       },
       {
         "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
         "KEY": "release",
-        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
+        "ACCOUNT_ID": "acct_1U9zxDG827M4pjqe",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
+        "ACCOUNT": "acct_1U9zxDG827M4pjqe",
         "VALUE": "2026-08-26"
       },
       {
@@ -1863,11 +1743,131 @@
         "VALUE": "2026-07-23"
       },
       {
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
         "KEY": "environment",
-        "ACCOUNT_ID": "acct_1TuEuL7itMnCQdbe",
+        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "ACCOUNT": "acct_1TuEuL7itMnCQdbe",
+        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
+        "VALUE": "prod"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "owner_id",
+        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
+        "VALUE": "5154028"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "release",
+        "ACCOUNT_ID": "acct_1U9QN35GOFfLEY9C",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9QN35GOFfLEY9C",
+        "VALUE": "2026-08-26"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "environment",
+        "ACCOUNT_ID": "acct_1U9eQK5bIKcjdqld",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eQK5bIKcjdqld",
+        "VALUE": "prod"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "owner_id",
+        "ACCOUNT_ID": "acct_1U9eQK5bIKcjdqld",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eQK5bIKcjdqld",
+        "VALUE": "5155193"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "release",
+        "ACCOUNT_ID": "acct_1U9eQK5bIKcjdqld",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eQK5bIKcjdqld",
+        "VALUE": "2026-08-26"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "environment",
+        "ACCOUNT_ID": "acct_1U9eo1664hJIqI1G",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eo1664hJIqI1G",
+        "VALUE": "prod"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "owner_id",
+        "ACCOUNT_ID": "acct_1U9eo1664hJIqI1G",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eo1664hJIqI1G",
+        "VALUE": "5144361"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "release",
+        "ACCOUNT_ID": "acct_1U9eo1664hJIqI1G",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9eo1664hJIqI1G",
+        "VALUE": "2026-08-26"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "environment",
+        "ACCOUNT_ID": "acct_1U9gbF9UK51Tp9HB",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9gbF9UK51Tp9HB",
+        "VALUE": "prod"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "owner_id",
+        "ACCOUNT_ID": "acct_1U9gbF9UK51Tp9HB",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9gbF9UK51Tp9HB",
+        "VALUE": "5156414"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "release",
+        "ACCOUNT_ID": "acct_1U9gbF9UK51Tp9HB",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9gbF9UK51Tp9HB",
+        "VALUE": "2026-08-26"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "environment",
+        "ACCOUNT_ID": "acct_1U9iRj4g1VRVAmLr",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9iRj4g1VRVAmLr",
+        "VALUE": "prod"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "owner_id",
+        "ACCOUNT_ID": "acct_1U9iRj4g1VRVAmLr",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9iRj4g1VRVAmLr",
+        "VALUE": "5156671"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "release",
+        "ACCOUNT_ID": "acct_1U9iRj4g1VRVAmLr",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9iRj4g1VRVAmLr",
+        "VALUE": "2026-08-26"
+      },
+      {
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "KEY": "environment",
+        "ACCOUNT_ID": "acct_1U9p3X4dy9unpEJF",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "ACCOUNT": "acct_1U9p3X4dy9unpEJF",
         "VALUE": "prod"
       }
     ],
@@ -2631,61 +2631,61 @@
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9y037HEHpEovei0oWUMk2G",
-        "AMOUNT": 138,
-        "ID": "fee_1U9y0G7HEHpEoveiZMQxdRZG",
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3UA0yC7oXMe4RLzo14ONvFS2",
+        "AMOUNT": 251,
+        "ID": "fee_1UA0yH7oXMe4RLzojS9eau5F",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TLnCc7HEHpEovei",
+        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
         "TYPE": "application_fee"
       },
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9y1u7HEHpEovei0ZFtBQ0p",
-        "AMOUNT": 43,
-        "ID": "fee_1U9y217HEHpEoveiqTIaPbXv",
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3UA19V7oXMe4RLzo000jQND9",
+        "AMOUNT": 97,
+        "ID": "fee_1UA19a7oXMe4RLzo4OEBvSwD",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TLnCc7HEHpEovei",
+        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
         "TYPE": "application_fee"
       },
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9y2s6xaKj8hHOI1GJ6z8IZ",
-        "AMOUNT": 67,
-        "ID": "fee_1U9y306xaKj8hHOItEyDEWI5",
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3UA1MS7oXMe4RLzo1hdR2j9f",
+        "AMOUNT": 172,
+        "ID": "fee_1UA1MW7oXMe4RLzoFgFzLuWL",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TvKXT6xaKj8hHOI",
+        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
         "TYPE": "application_fee"
       },
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9y2u7HEHpEovei1SkTn8LX",
-        "AMOUNT": 102,
-        "ID": "fee_1U9y337HEHpEovei6oAcqIwO",
+        "BATCH_TIMESTAMP": "2026-08-30 06:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3UA1cf7oXMe4RLzo186vsFmH",
+        "AMOUNT": 127,
+        "ID": "fee_1UA1d07oXMe4RLzoWie1ReA0",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TLnCc7HEHpEovei",
+        "ACCOUNT": "acct_1TtuoI7oXMe4RLzo",
         "TYPE": "application_fee"
       },
       {
         "APPLICATION": "ca_UCZitWslFkrRABYqhX0bZLfJ61uJOyj2",
         "DESCRIPTION": "Loyverse UK Connect application fee",
-        "BATCH_TIMESTAMP": "2026-08-30 03:00:00.000",
-        "BALANCE_TRANSACTION_ID": "txn_3U9y477HEHpEovei0ASDUbeB",
-        "AMOUNT": 31,
-        "ID": "fee_1U9y4D7HEHpEoveihlUdgb3A",
+        "BATCH_TIMESTAMP": "2026-04-20 03:00:00.000",
+        "BALANCE_TRANSACTION_ID": "txn_3TLimJ6CHbtYBHTl0NxHjBav",
+        "AMOUNT": 6,
+        "ID": "fee_1TLimt6CHbtYBHTlaYBwUaRu",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "ACCOUNT": "acct_1TLnCc7HEHpEovei",
+        "CURRENCY": "eur",
+        "ACCOUNT": "acct_1TKEC06CHbtYBHTl",
         "TYPE": "application_fee"
       }
     ]
