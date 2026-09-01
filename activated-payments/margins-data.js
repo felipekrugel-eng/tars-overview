@@ -3,22 +3,22 @@
 window.MARGINS = {
   "updated": "2026-09-01",
   "title": "Loyverse Embedded Payments — Full True-Cost & Margin Analysis",
-  "subtitle": "Apr 13–Sep 1, 2026 · 21,260 succeeded transactions · 74 merchants · USD (29 EUR txns at face value)",
+  "subtitle": "Apr 13–Sep 1, 2026 · 21,316 succeeded transactions · 74 merchants · USD (29 EUR txns at face value)",
   "kpis": {
-    "txns": 21260.0,
-    "tpv": 485716.8,
-    "avgTicket": 22.8465098777046,
-    "revenue": 13924.88,
-    "takeRate": 0.0286687221854381,
+    "txns": 21316.0,
+    "tpv": 486438.18,
+    "avgTicket": 22.8203312066054,
+    "revenue": 13941.31,
+    "takeRate": 0.0286599830630071,
     "totalFees": 11327.8354,
-    "netMargin": 2597.0446,
-    "netTakeRate": 0.00534682885170947,
-    "pctProfitable": 0.52728127939793,
-    "profitableTxns": 11210.0,
-    "unprofitableTxns": 10050.0,
+    "netMargin": 2613.4746,
+    "netTakeRate": 0.00537267572212362,
+    "pctProfitable": 0.526975042221805,
+    "profitableTxns": 11233.0,
+    "unprofitableTxns": 10083.0,
     "withActual": 20956.0,
-    "withEstimated": 304.0,
-    "failed": 468.0
+    "withEstimated": 360.0,
+    "failed": 470.0
   },
   "fees": {
     "total": 11327.8354,
@@ -85,27 +85,27 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 13924.88
+        "revenue": 13941.31
       },
       {
         "name": "All 2.5% flat",
-        "revenue": 12142.92
+        "revenue": 12160.9545
       },
       {
         "name": "All 2.5% + 5¢",
-        "revenue": 13205.92
+        "revenue": 13226.7545
       },
       {
         "name": "All 2.6% + 10¢",
-        "revenue": 14754.6368
+        "revenue": 14778.99268
       },
       {
         "name": "All 2.6% + 15¢",
-        "revenue": 15817.6368
+        "revenue": 15844.79268
       },
       {
         "name": "All 2.8% + 15¢",
-        "revenue": 16789.0704
+        "revenue": 16817.66904
       }
     ]
   },
@@ -116,23 +116,23 @@ window.MARGINS = {
   "byCountry": {
     "GB": {
       "kpis": {
-        "txns": 455,
-        "tpv": 6519.27,
-        "avgTicket": 14.328065934065956,
-        "revenue": 66.21,
-        "takeRate": 0.010156045078666768,
-        "totalFees": 45.0943,
-        "netMargin": 21.1157,
-        "netTakeRate": 0.0032389634924270797,
-        "pctProfitable": 0.6747252747252748,
+        "txns": 470,
+        "tpv": 6737.78,
+        "avgTicket": 14.3357021276596,
+        "revenue": 68.61,
+        "takeRate": 0.010182879227282558,
+        "totalFees": 45.8133,
+        "netMargin": 22.7967,
+        "netTakeRate": 0.0033834153364289184,
+        "pctProfitable": 0.6531914893617021,
         "profitableTxns": 307,
-        "unprofitableTxns": 148,
+        "unprofitableTxns": 163,
         "withActual": 445,
-        "withEstimated": 10,
+        "withEstimated": 25,
         "failed": 11
       },
       "fees": {
-        "total": 45.0943,
+        "total": 45.8133,
         "network": {
           "total": 22.6159,
           "items": [
@@ -142,18 +142,18 @@ window.MARGINS = {
           ]
         },
         "stripe": {
-          "total": 22.4784
+          "total": 23.1974
         }
       },
       "scenarios": [
-        66.21,
-        162.98175,
-        185.73175,
-        215.00102,
-        237.75102,
-        250.78956
+        68.61,
+        168.4445,
+        191.9445,
+        222.18228,
+        245.68228,
+        259.15784
       ],
-      "tpvShare": 0.013422,
+      "tpvShare": 0.013851,
       "stripeFeesBasis": "apportioned_by_tpv"
     },
     "NL": {
@@ -163,9 +163,9 @@ window.MARGINS = {
         "avgTicket": 1.2129166666666669,
         "revenue": 1.03,
         "takeRate": 0.03538302988663689,
-        "totalFees": 1.1601,
-        "netMargin": -0.1301,
-        "netTakeRate": -0.004468264806586399,
+        "totalFees": 1.1599,
+        "netMargin": -0.1299,
+        "netTakeRate": -0.004463151482683633,
         "pctProfitable": 0.125,
         "profitableTxns": 3,
         "unprofitableTxns": 21,
@@ -174,7 +174,7 @@ window.MARGINS = {
         "failed": 5
       },
       "fees": {
-        "total": 1.1601,
+        "total": 1.1599,
         "network": {
           "total": 1.0597,
           "items": [
@@ -184,7 +184,7 @@ window.MARGINS = {
           ]
         },
         "stripe": {
-          "total": 0.1004
+          "total": 0.1002
         }
       },
       "scenarios": [
@@ -200,23 +200,23 @@ window.MARGINS = {
     },
     "US": {
       "kpis": {
-        "txns": 20781,
-        "tpv": 479168.42,
-        "avgTicket": 23.058005870747444,
-        "revenue": 13857.64,
-        "takeRate": 0.028920186351178805,
-        "totalFees": 11281.581,
-        "netMargin": 2576.059,
-        "netTakeRate": 0.005376103445342386,
-        "pctProfitable": 0.524517588181512,
-        "profitableTxns": 10900,
-        "unprofitableTxns": 9881,
+        "txns": 20822,
+        "tpv": 479671.29,
+        "avgTicket": 23.036753914129424,
+        "revenue": 13871.67,
+        "takeRate": 0.028919116672586148,
+        "totalFees": 11280.8622,
+        "netMargin": 2590.8078,
+        "netTakeRate": 0.005401215099102964,
+        "pctProfitable": 0.5245893766208818,
+        "profitableTxns": 10923,
+        "unprofitableTxns": 9899,
         "withActual": 20487,
-        "withEstimated": 294,
-        "failed": 452
+        "withEstimated": 335,
+        "failed": 454
       },
       "fees": {
-        "total": 11281.581,
+        "total": 11280.8622,
         "network": {
           "total": 9629.4098,
           "items": [
@@ -226,18 +226,18 @@ window.MARGINS = {
           ]
         },
         "stripe": {
-          "total": 1652.1712
+          "total": 1651.4524
         }
       },
       "scenarios": [
-        13857.64,
-        11979.2105,
-        13018.2605,
-        14536.47892,
-        15575.52892,
-        16533.86576
+        13871.67,
+        11991.78225,
+        13032.88225,
+        14553.65354,
+        15594.75354,
+        16554.09612
       ],
-      "tpvShare": 0.986518,
+      "tpvShare": 0.986089,
       "stripeFeesBasis": "apportioned_by_tpv"
     }
   },
