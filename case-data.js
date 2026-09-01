@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-08-10",
+  "lastUpdated": "2026-09-01",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98454,7 +98454,7 @@ const CASE_DATA = {
     },
     "appStore": {
       "rating": 4.7,
-      "reviewCount": "366",
+      "reviewCount": "369",
       "positive": 87,
       "neutral": 8,
       "negative": 5,
@@ -98582,6 +98582,31 @@ const CASE_DATA = {
   },
   "reviews": {
     "googlePlay": [
+      {
+        "author": "Thant Tun",
+        "country": "MM",
+        "region": "asia",
+        "rating": 5,
+        "date": "Aug 2026",
+        "sentiment": "positive",
+        "themes": [
+          "inventory"
+        ],
+        "text": "Currently, I receive the Low Stock Notification email once a day. It would be very useful if Loyverse could provide an option to receive the notification twice a day. Receiving low-stock notifications twice daily would help us monitor inventory more effectively and restock important items before out of stock. Please consider adding a setting that allows users to choose preferred notification frequency and times."
+      },
+      {
+        "author": "Gareth",
+        "country": "GB",
+        "region": "europe",
+        "rating": 4,
+        "date": "Aug 2026",
+        "sentiment": "neutral",
+        "themes": [
+          "ease-of-use",
+          "free-value"
+        ],
+        "text": "Used this for just over a month, very easy to setup, and full of features. A few limitations and a couple of areas could be improved upon. And not overly keen on the subscription price per month on key features like staff, reporting etc. But overall great epos software."
+      },
       {
         "author": "MarketStallGB",
         "country": "GB",
