@@ -167,6 +167,7 @@
       <span style="color:var(--faint)">&nbsp;· filters the tiles &amp; the 4 graphs below (cusum &amp; league stay global)</span>
     </span>
   </div>
+  <div class="note-warn" id="stale-note" style="display:none"></div>
   <div class="tiles" id="tiles"></div>
 
   <div class="sec">Registrations today &middot; CUSUM</div>
@@ -285,6 +286,92 @@ function recompute(){
   todayStr = _t;
 }
 recompute();
+
+// ===== RECEIPTS FRESHNESS GUARD (added 2026-09-03) =====================================
+// WHY THIS EXISTS. On 2026-09-01 ~21:00 UTC the receipts feed into LOYVERSE_RECEIPTS_UNIQUE
+// stopped: 8-10M receipts/day for 22 straight days, then 2,637 on the 2nd. The dashboard drew
+// that faithfully — a month-to-date line that rose to 172,125 active merchants and then went
+// flat, gaining 5 merchants in a day. A flat line looks like a plateau, not an outage, so it
+// read as a charting bug and cost a morning to trace back to the warehouse.
+//
+// Everything downstream of receipts is affected: active, receipts, gtv, avgTicket, active30d.
+// Registrations / paying / MRR come from other queries and stay trustworthy, so the guard must
+// mark ONLY the receipts-derived fields rather than throwing a banner over the whole page.
+//
+// DETECTION. Month-to-date series are cumulative, so the signal is the DAILY INCREMENT. A day
+// is compared against the median increment of the last 28 complete days — median, not mean, so
+// that the broken days in the window cannot drag the baseline down to meet them.
+//
+// Two thresholds, deliberately: a run of days under 60% of median is "suspect", but the banner
+// only fires if at least one day in that run is under 20%. A quiet weekend dips maybe 15% and
+// must never raise an alarm; a feed that dies drops by 99%. Requiring both a soft run and one
+// hard day catches the partial day at the START of an outage (2026-09-01 came in at 56% of
+// median because the feed died at 21:00) without firing on ordinary softness.
+const STALE = (function(){
+  try{
+    // Complete days only. Today's row is legitimately partial and would always look stale.
+    const rows = GLOBAL_H.filter(r => r.date < todayStr);
+    const incs = [];
+    for (let i = 0; i < rows.length; i++){
+      const r = rows[i], p = rows[i-1];
+      if (r.receipts == null) continue;
+      // Day 1 of a month IS its own increment: the month-to-date total resets on the 1st.
+      const inc = (p && p.month === r.month && p.receipts != null) ? r.receipts - p.receipts
+                : (+r.date.slice(8,10) === 1 ? r.receipts : null);
+      if (inc != null) incs.push({ date: r.date, inc: inc });
+    }
+    if (incs.length < 8) return null;                       // too little history to judge
+    const win = incs.slice(-28).map(x => x.inc).sort((a,b) => a-b);
+    const med = win[Math.floor(win.length/2)];
+    if (!(med > 0)) return null;
+    let i = incs.length - 1, from = null, hard = false, days = 0;
+    while (i >= 0 && incs[i].inc < med * 0.6){
+      from = incs[i].date; days++;
+      if (incs[i].inc < med * 0.2) hard = true;
+      i--;
+    }
+    if (!from || !hard) return null;
+    // A feed rarely dies on a day boundary. The 2026-09-01 outage began at ~21:00 UTC, so that
+    // day landed at 62% of median — a real reading, but an incomplete one, and above the 60%
+    // run threshold so it is NOT part of the frozen run. Reporting it as healthy would be
+    // wrong; folding it into the run on a 2-point margin would be arbitrary. So it gets its
+    // own state: INCOMPLETE (understated but real) as distinct from FROZEN (not a reading).
+    const before = i >= 0 ? incs[i] : null;
+    const partial = (before && before.inc < med * 0.8) ? before : null;
+    return { from: from, partialFrom: partial ? partial.date : null,
+             partialPct: partial ? Math.round(100 * partial.inc / med) : null,
+             chartFrom: partial ? partial.date : from,
+             lastGood: partial ? null : (before ? before.date : null),
+             days: days, median: med, latest: incs[incs.length-1] };
+  } catch(e){ return null; }
+})();
+// The fields that must not be trusted while the receipts feed is broken.
+const STALE_FIELDS = { active:1, receipts:1, active30d:1, gtv:1, avgTicket:1 };
+// Charts grey from the first day that is not fully trustworthy (the incomplete one, if there is
+// one); tiles quote the day the number actually froze. Two different questions, two answers.
+const staleFrom = f => (STALE && STALE_FIELDS[f]) ? STALE.chartFrom : null;
+// Replaces the day-over-day delta on an affected tile. Showing "+5 vs prior day" next to a
+// frozen number is the specific thing that read as real and hid the outage.
+const staleTile = f => !staleFrom(f) ? '' :
+  '<div class="td" style="color:var(--amber)" title="The receipts feed stopped updating on '
+  + STALE.from + '. This figure has not moved since and is not a real reading.">⚠ frozen since '
+  + STALE.from + ' — not a live figure</div>';
+(function(){
+  const el = document.getElementById('stale-note'); if (!el) return;
+  if (!STALE){ el.style.display = 'none'; return; }
+  const pct = Math.round(100 * STALE.latest.inc / STALE.median);
+  el.style.display = 'block';
+  el.innerHTML = '<b>⚠ Receipts data has been frozen since ' + STALE.from + '</b> ('
+    + STALE.days + (STALE.days === 1 ? ' day' : ' days')
+    + '). The last reading added ' + fmtN(STALE.latest.inc) + ' receipts against a 28-day median of '
+    + fmtN(STALE.median) + ' — about ' + pct + '% of normal, so the source feed has stopped rather than slowed.'
+    + (STALE.partialFrom ? ' <b>' + STALE.partialFrom + ' is also incomplete</b> at ' + STALE.partialPct
+        + '% of a normal day, so it is understated rather than wrong — the feed died partway through it.' : '')
+    + ' <b>Active merchants, Receipts and the 30-day rolling actives are affected</b> and are greyed from '
+    + STALE.chartFrom + '. Registrations, Paying merchants, MRR and ARPC come from separate queries and are unaffected.';
+})();
+// ======================================================================================
+
 const CNAMES = D.countryNames || {};
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
@@ -352,10 +439,10 @@ const _regPrevEnd = SEL ? ((D.countryRegistrationsByMonth&&D.countryRegistration
 const _regPrevLbl = MON3[+_regPrevM.slice(5,7)-1]||_regPrevM;
 const tileDefs = cur ? [
   ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=1?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace (MTD \u00F7 '+rrDom+' \u00D7 '+rrDim+' days), vs last month final.">run-rate ~'+fmtN(regRR)+' by month-end'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' '+fmtN(_regPrevEnd)+' ('+(regRR>=_regPrevEnd?'+':'')+Math.round((regRR/_regPrevEnd-1)*100)+'%)'):'')+'</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' ended '+fmtN(_regPrevEnd)):'')+'</div>'), ser('regMTD'), BLUE],
-  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
+  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (staleFrom('active')?staleTile('active'):(sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote))+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
   ['Paying merchants','this month', fmtN(cur.paying), (sameMonth(cur,prev)?deltaTile(cur.paying-prev.paying):newMonthNote)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
   ['MRR', _lcLbl, fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), momTile((_mrrRow && _mrrPrev) ? _mrrRow.mrr - _mrrPrev.mrr : null, v=>fmtM(v)), ser('mrr'), INK],
-  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote), ser('receipts'), BLUE_DEEP],
+  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (staleFrom('receipts')?staleTile('receipts'):(sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote)), ser('receipts'), BLUE_DEEP],
   ['ARPC', _lcLbl, (_mrrRow && _mrrRow.arpc!=null ? '$'+(+_mrrRow.arpc).toFixed(2) : '—'),
     momTile((_mrrRow && _mrrPrev && _mrrRow.arpc!=null && _mrrPrev.arpc!=null) ? _mrrRow.arpc - _mrrPrev.arpc : null, v=>'$'+v.toFixed(2)) + (function(){ const lm=(D.meta||{}).latestMonth; if(!lm || lm===_lcMonth) return ''; const r=_mrrAt(lm); if(!r || r.arpc==null) return ''; return '<div class="td" style="color:var(--muted)" title="Current month so far — partial: MRR accrues through the month, so this reads low until the month completes.">'+_MONX[+lm.slice(5,7)-1]+' '+lm.slice(0,4)+' MTD: $'+(+r.arpc).toFixed(2)+'</div>'; })(), ser('arpc'), BLUE],
 ] : [];
@@ -375,9 +462,15 @@ const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','De
 const mLabel = m => MON[+m.slice(5,7)-1] || m;
 const dayOf = r => +r.date.slice(8,10);
 // months / CURM / PREVM / CUTDAY are (re)computed in recompute() so they follow the selected country
-function fillCmp(id, cur, prv){
+function fillCmp(id, cur, prv, field){
   const e=document.getElementById('mtd-'+id); if(!e) return;
-  if(!cur.length){ e.innerHTML=''; return; }
+  // `cur` arrives already truncated to the last trustworthy day when the feed is stale, so this
+  // month-vs-last-month bullet compares like with like instead of measuring a frozen number
+  // against a complete one — which is what produced the "-31.8%" that looked like a collapse.
+  const sf = (typeof field === 'string') ? staleFrom(field) : null;
+  const sNote = sf ? '<div class="cmpfoot" style="color:#8a6100">⚠ counted to the last complete day before '
+    + sf + ' — the receipts feed has not updated since.</div>' : '';
+  if(!cur.length){ e.innerHTML = sf ? sNote : ''; return; }
   const curDay=cur[cur.length-1].x, curVal=cur[cur.length-1].y;
   const prvAt=prv.filter(p=>p.x<=curDay).sort((a,b)=>a.x-b.x).pop();
   const prvVal=prvAt?prvAt.y:null, mx=Math.max(curVal,prvVal||0)||1;
@@ -387,7 +480,7 @@ function fillCmp(id, cur, prv){
   e.innerHTML=
     '<div class="cmptop"><span class="cmplabel">'+mLabel(CURM)+' to day '+curDay+'</span><span class="cmpval">'+fmtN(curVal)+pill+'</span></div>'+
     '<div class="bullet" title="Bar = this month so far. Tick = '+mLabel(PREVM)+' at the same day."><i class="fill" style="width:'+(curVal/mx*100).toFixed(1)+'%"></i>'+(markerPct==null?'':'<span class="marker" style="left:'+markerPct+'%"></span>')+'</div>'+
-    '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>';
+    '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>'+sNote;
 }
 // The rolling views can leave a ".nodata" note + a hidden canvas in a panel (see
 // rollChart). Any renderer that draws into that panel must clear it first, otherwise
@@ -401,20 +494,34 @@ function clearNoData(id){
 }
 function trend(id,label,field,color){
   clearNoData(id);
-  const cur = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY).map(r=>({x:dayOf(r),y:r[field]}));
+  const curRows = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY);
   const prv = H.filter(r=>r.month===PREVM && r[field]!=null).map(r=>({x:dayOf(r),y:r[field]}));
+  // If the receipts feed is stale, the tail of this series is a frozen number rather than a
+  // reading. Drawn solid it looks like a plateau, so it is split off into an amber dashed
+  // segment. The last GOOD point is repeated at the head of the stale segment purely so the
+  // two lines join up — without it the chart shows a visual gap that reads as missing data.
+  const sf = staleFrom(field);
+  const isStale = r => sf && r.date >= sf;
+  const good = curRows.filter(r=>!isStale(r)).map(r=>({x:dayOf(r),y:r[field]}));
+  const bad  = curRows.filter(isStale).map(r=>({x:dayOf(r),y:r[field]}));
+  const cur  = sf ? good : curRows.map(r=>({x:dayOf(r),y:r[field]}));
+  const badSeg = (sf && bad.length) ? (good.length ? [good[good.length-1]].concat(bad) : bad) : [];
   if(charts[id]) charts[id].destroy();
-  charts[id]=new Chart(document.getElementById(id),{type:'line',
-    data:{datasets:[
+  const sets = [
       {label:mLabel(PREVM)+' (last month)',data:prv,borderColor:'#B8C4D2',backgroundColor:'transparent',fill:false,borderWidth:2,borderDash:[5,4],pointRadius:0,pointHoverRadius:4,tension:.3},
       {label:mLabel(CURM)+' (this month)',data:cur,borderColor:color,backgroundColor:'rgba(29,143,225,.08)',fill:true,borderWidth:2.6,pointRadius:2,pointHoverRadius:5,pointBackgroundColor:color,tension:.3}
-    ]},
+  ];
+  if(badSeg.length) sets.push({label:'stale — feed stopped '+sf,data:badSeg,borderColor:'#C98A16',
+    backgroundColor:'transparent',fill:false,borderWidth:2.2,borderDash:[3,3],pointRadius:2.5,
+    pointStyle:'crossRot',pointBorderWidth:2,pointBackgroundColor:'#C98A16',pointBorderColor:'#C98A16',tension:0});
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+    data:{datasets:sets},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:18,font:{size:10},usePointStyle:false}},
         tooltip:{callbacks:{title:it=>'Day '+it[0].parsed.x,label:it=>it.dataset.label+': '+fmtN(it.parsed.y)}}},
       scales:{x:{type:'linear',min:1,max:31,grid:{display:false},title:{display:true,text:'Day of month',font:{size:10},color:GRAY},ticks:{stepSize:1,autoSkip:false,maxRotation:0,font:{size:9}}},
         y:{grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
-  fillCmp(id,cur,prv);
+  fillCmp(id,cur,prv,field);
 }
 // Registrations: one chart — a bar per day this month (left axis) + two accumulated bars at the right
 // (this month vs last month to the same day) on a separate right axis.
