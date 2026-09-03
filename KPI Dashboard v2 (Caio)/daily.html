@@ -465,8 +465,8 @@ function fillCmp(id, cur, prv, field){
   // month-vs-last-month bullet compares like with like instead of measuring a frozen number
   // against a complete one — which is what produced the "-31.8%" that looked like a collapse.
   const sf = (typeof field === 'string') ? staleFrom(field) : null;
-  const sNote = sf ? '<div class="cmpfoot" style="color:#8a6100">⚠ counted to the last complete day before '
-    + sf + ' — the receipts feed has not updated since.</div>' : '';
+  const sNote = sf ? '<div class="cmpfoot" style="color:#8a6100">⚠ counted to the last settled day before '
+    + sf + ' — later days are still backfilling and would read low.</div>' : '';
   if(!cur.length){ e.innerHTML = sf ? sNote : ''; return; }
   const curDay=cur[cur.length-1].x, curVal=cur[cur.length-1].y;
   const prvAt=prv.filter(p=>p.x<=curDay).sort((a,b)=>a.x-b.x).pop();
