@@ -287,30 +287,33 @@ function recompute(){
 }
 recompute();
 
-// ===== RECEIPTS FRESHNESS GUARD (added 2026-09-03) =====================================
-// WHY THIS EXISTS. On 2026-09-01 ~21:00 UTC the receipts feed into LOYVERSE_RECEIPTS_UNIQUE
-// stopped: 8-10M receipts/day for 22 straight days, then 2,637 on the 2nd. The dashboard drew
-// that faithfully — a month-to-date line that rose to 172,125 active merchants and then went
-// flat, gaining 5 merchants in a day. A flat line looks like a plateau, not an outage, so it
-// read as a charting bug and cost a morning to trace back to the warehouse.
+// ===== RECEIPTS FRESHNESS GUARD (added 2026-09-03, corrected same day) ==================
+// WHAT THIS IS ACTUALLY FOR. On 2026-09-03 the month-to-date active-merchants line sat flat at
+// 172,130, gaining 5 merchants in a day, and read as a dead feed. It is not. LOYVERSE_RECEIPTS_UNIQUE
+// BACKFILLS: a day arrives ~empty, reaches most of its volume two days later, and only settles on
+// the third. Measured across every pull since 2026-08-24:
+//        +1 day ~3k receipts (~0%)   +2 days 5.3-8.3M (63-93%)   +3 days ~99%   +4 days settled
+// So the newest one or two days of this series have ALWAYS been understated. Mid-month nobody
+// notices, because they are a sliver of a large cumulative total — 2026-08-31 was understated by
+// only 4% when first written. At a month boundary the entire month IS those unsettled days, so the
+// same everyday lag renders as a flat line and looks like an outage.
 //
-// Everything downstream of receipts is affected: active, receipts, gtv, avgTicket, active30d.
-// Registrations / paying / MRR come from other queries and stay trustworthy, so the guard must
-// mark ONLY the receipts-derived fields rather than throwing a banner over the whole page.
+// The guard therefore marks data as PROVISIONAL — still loading — not as broken. Calling it an
+// outage sends someone to chase a pipeline that is working.
 //
-// DETECTION. Month-to-date series are cumulative, so the signal is the DAILY INCREMENT. A day
-// is compared against the median increment of the last 28 complete days — median, not mean, so
-// that the broken days in the window cannot drag the baseline down to meet them.
+// DETECTION needs two conditions together, because value alone cannot separate "still loading"
+// from "genuinely quiet". A day is provisional only if it is BOTH inside the fill window (within
+// FILL_DAYS of the newest reading) AND below 85% of the median daily increment of the last 28
+// complete days. Median, not mean, so the unsettled days cannot drag the baseline to meet them.
+// An old day that is merely quiet is left alone; a recent day that is fully loaded is left alone.
 //
-// Two thresholds, deliberately: a run of days under 60% of median is "suspect", but the banner
-// only fires if at least one day in that run is under 20%. A quiet weekend dips maybe 15% and
-// must never raise an alarm; a feed that dies drops by 99%. Requiring both a soft run and one
-// hard day catches the partial day at the START of an outage (2026-09-01 came in at 56% of
-// median because the feed died at 21:00) without firing on ordinary softness.
+// It escalates only when the run is LONGER than the normal fill window, which is the one case
+// that genuinely warrants chasing. Worth watching: two-day completeness has been sliding
+// (92% -> 80% -> 76% -> 66% -> 63% over 2026-08-28..09-01), so the lag is lengthening.
+const FILL_DAYS = 3;                 // observed: a day settles on the third day after it
 const STALE = (function(){
   try{
-    // Complete days only. Today's row is legitimately partial and would always look stale.
-    const rows = GLOBAL_H.filter(r => r.date < todayStr);
+    const rows = GLOBAL_H.filter(r => r.date < todayStr);   // today is legitimately partial
     const incs = [];
     for (let i = 0; i < rows.length; i++){
       const r = rows[i], p = rows[i-1];
@@ -320,55 +323,49 @@ const STALE = (function(){
                 : (+r.date.slice(8,10) === 1 ? r.receipts : null);
       if (inc != null) incs.push({ date: r.date, inc: inc });
     }
-    if (incs.length < 8) return null;                       // too little history to judge
+    if (incs.length < 8) return null;
     const win = incs.slice(-28).map(x => x.inc).sort((a,b) => a-b);
     const med = win[Math.floor(win.length/2)];
     if (!(med > 0)) return null;
-    let i = incs.length - 1, from = null, hard = false, days = 0;
-    while (i >= 0 && incs[i].inc < med * 0.6){
-      from = incs[i].date; days++;
-      if (incs[i].inc < med * 0.2) hard = true;
-      i--;
+    const newest = incs[incs.length-1].date;
+    const ageOf = d => Math.round((Date.parse(newest) - Date.parse(d)) / 86400000);
+    let i = incs.length - 1, from = null, days = 0;
+    while (i >= 0 && incs[i].inc < med * 0.85 && ageOf(incs[i].date) < FILL_DAYS){
+      from = incs[i].date; days++; i--;
     }
-    if (!from || !hard) return null;
-    // A feed rarely dies on a day boundary. The 2026-09-01 outage began at ~21:00 UTC, so that
-    // day landed at 62% of median — a real reading, but an incomplete one, and above the 60%
-    // run threshold so it is NOT part of the frozen run. Reporting it as healthy would be
-    // wrong; folding it into the run on a 2-point margin would be arbitrary. So it gets its
-    // own state: INCOMPLETE (understated but real) as distinct from FROZEN (not a reading).
-    const before = i >= 0 ? incs[i] : null;
-    const partial = (before && before.inc < med * 0.8) ? before : null;
-    return { from: from, partialFrom: partial ? partial.date : null,
-             partialPct: partial ? Math.round(100 * partial.inc / med) : null,
-             chartFrom: partial ? partial.date : from,
-             lastGood: partial ? null : (before ? before.date : null),
-             days: days, median: med, latest: incs[incs.length-1] };
+    if (!from) return null;
+    return { from: from, days: days, median: med, overdue: days > FILL_DAYS,
+             lastGood: i >= 0 ? incs[i].date : null,
+             pct: incs.slice(-days).map(x => ({ date: x.date, pct: Math.round(100*x.inc/med) })) };
   } catch(e){ return null; }
 })();
-// The fields that must not be trusted while the receipts feed is broken.
+// Only receipts-derived fields. Registrations / paying / MRR / ARPC come from other queries and
+// must stay unmarked, or the notice stops meaning anything.
 const STALE_FIELDS = { active:1, receipts:1, active30d:1, gtv:1, avgTicket:1 };
-// Charts grey from the first day that is not fully trustworthy (the incomplete one, if there is
-// one); tiles quote the day the number actually froze. Two different questions, two answers.
-const staleFrom = f => (STALE && STALE_FIELDS[f]) ? STALE.chartFrom : null;
-// Replaces the day-over-day delta on an affected tile. Showing "+5 vs prior day" next to a
-// frozen number is the specific thing that read as real and hid the outage.
+const staleFrom = f => (STALE && STALE_FIELDS[f]) ? STALE.from : null;
 const staleTile = f => !staleFrom(f) ? '' :
-  '<div class="td" style="color:var(--amber)" title="The receipts feed stopped updating on '
-  + STALE.from + '. This figure has not moved since and is not a real reading.">⚠ frozen since '
-  + STALE.from + ' — not a live figure</div>';
+  '<div class="td" style="color:var(--amber)" title="Receipts backfill over about ' + FILL_DAYS
+  + ' days, so the newest days are still loading and read low. This is not a settled figure.">'
+  + '\u26A0 provisional \u2014 still loading since ' + STALE.from + '</div>';
 (function(){
   const el = document.getElementById('stale-note'); if (!el) return;
   if (!STALE){ el.style.display = 'none'; return; }
-  const pct = Math.round(100 * STALE.latest.inc / STALE.median);
+  const detail = STALE.pct.map(x => x.date + ' at ' + x.pct + '%').join(', ');
   el.style.display = 'block';
-  el.innerHTML = '<b>⚠ Receipts data has been frozen since ' + STALE.from + '</b> ('
-    + STALE.days + (STALE.days === 1 ? ' day' : ' days')
-    + '). The last reading added ' + fmtN(STALE.latest.inc) + ' receipts against a 28-day median of '
-    + fmtN(STALE.median) + ' — about ' + pct + '% of normal, so the source feed has stopped rather than slowed.'
-    + (STALE.partialFrom ? ' <b>' + STALE.partialFrom + ' is also incomplete</b> at ' + STALE.partialPct
-        + '% of a normal day, so it is understated rather than wrong — the feed died partway through it.' : '')
-    + ' <b>Active merchants, Receipts and the 30-day rolling actives are affected</b> and are greyed from '
-    + STALE.chartFrom + '. Registrations, Paying merchants, MRR and ARPC come from separate queries and are unaffected.';
+  el.style.background = STALE.overdue ? '#FFF6E5' : '#F2F7FC';
+  el.style.borderLeftColor = STALE.overdue ? 'var(--amber)' : 'var(--blue)';
+  el.style.color = STALE.overdue ? '#7a5a12' : '#345';
+  el.innerHTML = (STALE.overdue
+      ? '<b>\u26A0 Receipts are further behind than usual.</b> '
+      : '<b>\u2139 The newest ' + STALE.days + (STALE.days === 1 ? ' day is' : ' days are')
+        + ' provisional \u2014 receipts are still loading.</b> ')
+    + 'Receipts backfill over about ' + FILL_DAYS + ' days: a day arrives near-empty, reaches most of '
+    + 'its volume on day two and settles on day three. Against a 28-day median of ' + fmtN(STALE.median)
+    + ' receipts/day, the unsettled days stand at ' + detail + '. '
+    + '<b>Active merchants, Receipts and the 30-day rolling actives read low</b> until they fill, and are '
+    + 'greyed from ' + STALE.from + '. Registrations, Paying merchants, MRR and ARPC come from separate '
+    + 'queries and are unaffected. These figures correct themselves on the next pulls \u2014 no action needed'
+    + (STALE.overdue ? ', but this run is longer than the normal fill window and is worth checking.' : '.');
 })();
 // ======================================================================================
 
