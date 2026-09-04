@@ -485,6 +485,45 @@
     });
   }
 
+  /* -------------------------------------------- cross-dashboard availability */
+  // FACACHAT is embedded on two separate pages that each load only half the
+  // data: the POS dashboard (kpi-data.js/daily-history.js/flow-data.js -> K/
+  // DH/DHC/CF/FLOW) and the activated-payments dashboard (activation-data.js
+  // et al -> the __PAY_* globals / PM/PVOL/etc.). Without a stub, asking for
+  // "TPV" on the POS-only page (or POS metrics on the payments-only page)
+  // means the metric is simply absent from the catalog sent to the model —
+  // which can still guess the id anyway, and the engine then fails with a
+  // bare "Unknown metric" error instead of the normal, helpful NOT AVAILABLE
+  // explanation. Registering an explicit unavailable stub for the metrics
+  // people are most likely to ask for on the "wrong" page fixes that: the
+  // model sees it in AVAILABLE METRICS marked NOT AVAILABLE, with a pointer
+  // to the real alternative, and answers with kind=unsupported instead.
+  if (!PM && !PVOL && !METRICS['payments.tpv']) {
+    reg({
+      id: 'payments.tpv', domain: 'payments', unavailable: true,
+      unit: 'usd', basis: 'flow', label: 'Payments TPV (total payment volume)',
+      desc: 'Not available on this dashboard — Loyverse Payments data isn\'t loaded here. ' +
+        'For POS receipt value on this dashboard, use pos.gtv instead. For Loyverse Payments TPV, ask on the payments dashboard.'
+    });
+  }
+  if (!K) {
+    if (!METRICS['pos.gtv']) {
+      reg({
+        id: 'pos.gtv', domain: 'pos', unavailable: true,
+        unit: 'usd', basis: 'flow', label: 'POS GTV / transaction value',
+        desc: 'Not available on this dashboard — POS data isn\'t loaded here. ' +
+          'For Loyverse Payments volume on this dashboard, use payments.tpv instead. For POS GTV, ask on the main KPI dashboard.'
+      });
+    }
+    if (!METRICS['pos.registrations']) {
+      reg({
+        id: 'pos.registrations', domain: 'pos', unavailable: true,
+        unit: 'count', basis: 'flow', label: 'New POS registrations',
+        desc: 'Not available on this dashboard — POS data isn\'t loaded here. Ask on the main KPI dashboard instead.'
+      });
+    }
+  }
+
   /* --------------------------------------------------- dimension inventories */
 
   function dimValues(metricId, dim) {

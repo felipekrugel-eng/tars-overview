@@ -198,6 +198,15 @@ def main():
                   .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"),
                        GTV=("TPV_USD_APPROX", "sum"))
                   .reset_index())
+        # The Snowflake connector returns NUMBER columns as decimal.Decimal, so a groupby
+        # .sum() over them stays object-dtype Decimal (not float64) even though the source
+        # values are plain counts/amounts. Python's Decimal does not support mixed
+        # arithmetic with float (TypeError: unsupported operand type(s) for /: 'float' and
+        # 'decimal.Decimal'), which broke AVG_TICKET below once one side of the divide
+        # picked up Decimal and the other stayed float. Normalize both sides to float here.
+        agg["ACTIVE"] = pd.to_numeric(agg["ACTIVE"], errors="coerce").astype(float)
+        agg["RECEIPTS"] = pd.to_numeric(agg["RECEIPTS"], errors="coerce").astype(float)
+        agg["GTV"] = pd.to_numeric(agg["GTV"], errors="coerce").astype(float)
         # AVG_TICKET is derived here (GTV / RECEIPTS) rather than re-summed from the query's
         # per-row AVG_TICKET_USD, because that column is a per-cohort-row average and summing/
         # averaging it across rows would not equal the true blended ticket size.
@@ -217,6 +226,9 @@ def main():
                     .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"),
                          GTV=("TPV_USD_APPROX", "sum"))
                     .reset_index())
+        # Same Decimal-from-Snowflake normalization as the global "49 days 1" block above.
+        for col in ("ACTIVE", "RECEIPTS", "GTV"):
+            recc[col] = pd.to_numeric(recc[col], errors="coerce").astype(float)
         write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS","GTV"]])
 
     # ---- by-country daily paying (current-month rows per snapshot -> DATE x COUNTRY) ----

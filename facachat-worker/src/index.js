@@ -81,12 +81,37 @@ const QUERY_SPEC_TOOL = {
       compare: { type: 'string', enum: ['prev_period', 'prev_year'], description: 'Omit unless the user explicitly asks to compare against a prior period or the same period last year.' },
       chart: { type: 'string', enum: ['line', 'bar', 'area', 'stacked_bar', 'none'] },
       agg: { type: 'string', enum: ['auto', 'sum', 'avg', 'last', 'min', 'max'], description: 'Only relevant for kind=value.' },
+      project: {
+        type: 'object',
+        description:
+          'Use ONLY for kind=series questions that explicitly ask what a trend implies going forward — ' +
+          '"if this continues", "at this rate", "projected", "forecast", "where will X be in N months". ' +
+          'The engine (never you) computes the projected numbers deterministically from the real historical ' +
+          'series already in range, and renders them as a clearly-labelled dashed continuation. Do not use this ' +
+          'for plain historical questions, and never state a specific projected number yourself — you are only ' +
+          'turning on the projection, not producing its values.',
+        properties: {
+          n: { type: 'number', description: 'How many future periods (same grain as the query) to project, e.g. 12 or 36. Capped at 60.' },
+          method: { type: 'string', enum: ['cagr', 'linear'], description: '"cagr" (default) compounds the historical per-period growth rate forward — best for naturally multiplicative growth. "linear" fits a straight trend line — better when growth looks additive/flattening rather than compounding.' }
+        },
+        required: ['n']
+      },
       ranking: {
         type: 'object',
-        description: 'Required for kind=ranking, e.g. "top 10 countries by registrations".',
+        description: 'Required for kind=ranking, e.g. "top 10 countries by registrations" or "which country grew fastest".',
         properties: {
-          extra: { type: 'string', description: 'One of the catalog\'s extras keys, usually "country_snapshot" or "country_alltime" for country rankings.' },
-          field: { type: 'string', description: 'Field name to rank by, must exist in that extra\'s fields list.' },
+          extra: {
+            type: 'string',
+            description:
+              'One of the catalog\'s extras keys (usually "country_snapshot" or "country_alltime") for a static-field ranking. ' +
+              'OR the special value "metric_growth" to rank countries by how much a time-series metric grew over the query\'s ' +
+              'range — use this whenever the question is about fastest/slowest GROWTH or CHANGE by country (e.g. "which country ' +
+              'grew fastest this quarter", "top 5 countries by TPV growth"), not a snapshot level. When extra="metric_growth", ' +
+              'set ranking.metric instead of ranking.field, and set the top-level "range" to the growth window (e.g. range.last ' +
+              '= {n:3, unit:"month"} for "this quarter"). Set field only for the ordinary extras case.'
+          },
+          metric: { type: 'string', description: 'Required and only used when extra="metric_growth" — a metric id exactly as given in the catalog, ranked by its % change from the start to the end of the range.' },
+          field: { type: 'string', description: 'Field name to rank by for ordinary extras; must exist in that extra\'s fields list. Not used with extra="metric_growth".' },
           n: { type: 'number' },
           direction: { type: 'string', enum: ['asc', 'desc'] }
         }
@@ -161,13 +186,19 @@ function buildSystemPrompt(catalog) {
     'Guidance:',
     '- "growth of X" / "X over time" / "X trend" -> kind=series, chart=line, transform=none (unless the user asks for % growth, then mom_pct or yoy_pct).',
     '- "how many X" / "what is X" for a single figure -> kind=value.',
-    '- "top N countries/merchants by X" -> kind=ranking using the right extra.',
+    '- "top N countries/merchants by X" (a snapshot level, e.g. by current registrations or active merchants) -> kind=ranking using the right extra and field.',
+    '- "which country/market grew fastest/slowest", "top N countries by growth of X", "biggest gainer/decliner in X" -> kind=ranking, ranking.extra="metric_growth", ranking.metric=<the metric id>, and set the top-level range to the growth window the user means (e.g. "this quarter" -> range.last={n:3,unit:"month"}; "this year" -> range.from="YYYY-01"). This is a genuine per-country growth calculation done by the engine, not a snapshot.',
     '- "show me the table of X" / "list X" -> kind=table.',
     '- "last N months/days" -> range.last = {n, unit}. "this year" -> range.from = "YYYY-01".',
-    '- If a metric is marked NOT AVAILABLE, use kind=unsupported and explain why, pointing to the suggested alternative if one is mentioned.',
+    '- Comparing two or more metrics, or the same metric broken out several ways (e.g. "compare GTV growth vs TPV growth", "X in the US vs the UK") -> put multiple entries in the metrics array (up to 6) in ONE kind=series/value call, with the same transform/range applied to all of them, rather than asking a bare single-metric question. Give each a short label if it helps distinguish them on the chart.',
+    '- "if this trend/growth continues", "at this rate", "projected", "forecast", "where will X be in N months/years", "project this forward given the CAGR/growth we are seeing" -> kind=series (never kind=value) with the normal historical metrics/range/transform PLUS project={n, method}. Use method="cagr" by default (compounding growth, e.g. revenue-like metrics), or "linear" if the recent trend looks closer to a flat additive pace than compounding. If the user does not give an explicit horizon (no "36 months", "2 years", etc. — just "project this forward" or "keep this trend going"), do not ask a clarifying question for this alone: default project.n to 12 (same grain as the query, so 12 months for a monthly series, 12 days for a daily one), and say in the title/notes that this is a 12-period default the user can ask you to extend or shorten. This applies to a bare follow-up like "can you project this forward given the CAGR we are seeing?" referring back to a metric just discussed — carry forward that metric/range/transform from history per the conversation-history rule below, and treat the vague horizon the same way. Never answer a forecast question yourself — the projected numbers only exist once the engine computes them from project.',
+    '- If a metric is marked NOT AVAILABLE, use kind=unsupported and explain why, pointing to the suggested alternative if one is mentioned (this is common for "TPV" vs "GTV" — this dashboard only loads one of POS data or Loyverse Payments data, so whichever one is missing is listed as NOT AVAILABLE with a pointer to the metric this dashboard actually has).',
+    '- If the user asks about a metric that does not appear ANYWHERE in the AVAILABLE METRICS list above (available or NOT AVAILABLE), do not guess a plausible-looking id for it — use kind=unsupported and say plainly that this dashboard does not have that metric. A metric id that is not literally in the list, character for character, always fails.',
     '- If the country given doesn\'t clearly map to a code, or the question could mean two different metrics, use kind=clarify with 2-4 short options.',
     '- Prefer grain=month unless the user asks for daily detail or a very short recent window (e.g. "last 14 days").',
-    '- Keep title short and human (e.g. "TPV — last 6 months").'
+    '- Keep title short and human (e.g. "TPV — last 6 months", "TPV — historical + 12-month projection").',
+    '',
+    'Conversation history: you may see earlier turns from this same chat session above the current question (a short summary of what was previously asked and answered, not raw data). Use it only to resolve an otherwise-ambiguous follow-up that clearly refers back to it — e.g. "now break that down by country", "what about last month instead", "and for the UK?", "compare that to TPV" — by carrying forward the metric/range/transform/country the follow-up doesn\'t re-specify. If the new question stands on its own or changes the topic, ignore the history and answer it fresh. Never reuse an old answer\'s numbers; always emit a new, current query spec.'
   ].join('\n');
 }
 
@@ -178,13 +209,21 @@ async function interpret(question, catalog, history, env) {
   }).map(function (h) { return { role: h.role, content: h.content }; });
   messages.push({ role: 'user', content: question });
 
+  const anthropicHeaders = {
+    'Content-Type': 'application/json',
+    'x-api-key': env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  };
+  // Identity-linked API keys (tied to a personal Console login rather than a
+  // fixed workspace) require this header on every request. Standard,
+  // workspace-scoped keys ignore it, so it's safe to always send it if set.
+  if (env.ANTHROPIC_WORKSPACE_ID) {
+    anthropicHeaders['anthropic-workspace-id'] = env.ANTHROPIC_WORKSPACE_ID;
+  }
+
   const resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
-    },
+    headers: anthropicHeaders,
     body: JSON.stringify({
       model: env.ANTHROPIC_MODEL || 'claude-sonnet-5',
       max_tokens: 1024,
