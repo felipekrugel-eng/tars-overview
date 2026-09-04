@@ -387,9 +387,39 @@
     var transform = spec.transform || 'none';
     var out = { grain: grain, series: [], axis: [], range: range };
     var axisSet = {};
+    var partialMonthById = {};
 
     built.forEach(function (s) {
       var pts = clip(s.points, range.from, range.to);
+
+      // Current-month partial-data guard: if the most recent point is the
+      // real, still-in-progress calendar month, its value is just
+      // accumulated-so-far (see mtdToMonthly's "last non-null reading of the
+      // month" logic), not a finished total. Charted or narrated next to
+      // complete historical months, that produces a misleading cliff-drop
+      // and a false "down X%" change. For plain (transform:'none') monthly
+      // flow metrics, exclude it from the "real" points/stats here — but
+      // only when there's other history left to show, so a query
+      // specifically about this one current month (e.g. "registrations this
+      // month so far") is left untouched. A dashed run-rate estimate is
+      // added back as a separate overlay point below.
+      if (transform === 'none' && grain === 'month' && s.basis === 'flow' && pts.length > 1) {
+        var lastP = pts[pts.length - 1];
+        var curMonth = new Date().toISOString().slice(0, 7);
+        if (lastP.t === curMonth && lastP.v !== null) {
+          var dayOfMonth = new Date().getUTCDate();
+          var daysInMonth = +endOfMonth(curMonth).slice(8, 10);
+          if (dayOfMonth < daysInMonth) {
+            partialMonthById[s.id] = {
+              t: lastP.t, actual: lastP.v, dayOfMonth: dayOfMonth, daysInMonth: daysInMonth,
+              runRate: lastP.v * (daysInMonth / dayOfMonth),
+              prevPoint: pts[pts.length - 2] || null
+            };
+            pts = pts.slice(0, pts.length - 1);
+          }
+        }
+      }
+
       // yoy_pct and rolling_avg need lead-in points from before the window.
       if (transform === 'yoy_pct' || transform === 'rolling_avg') {
         var lead = transform === 'yoy_pct' ? (grain === 'month' ? 12 : 365) : (spec.window || 7);
@@ -414,6 +444,100 @@
         stats: summarise(pts, unit, transform === 'none' ? s.basis : 'ratio')
       });
     });
+
+    // Current-month run-rate overlay: add the excluded partial month back as
+    // a single dashed, clearly-labelled estimate (actual-so-far scaled up to
+    // a full month at the same pace) rather than silently dropping it — same
+    // dashed/projected rendering path as the trend-projection and
+    // prev_period/prev_year overlays (buildChart() already renders any
+    // series with dashed:true as a dashed line, no widget changes needed).
+    (function () {
+      var runRateOverlays = [];
+      out.series.slice().forEach(function (s) {
+        var pm = partialMonthById[s.id];
+        if (!pm) return;
+        var pts3 = pm.prevPoint ? [{ t: pm.prevPoint.t, v: pm.prevPoint.v }] : [];
+        pts3.push({ t: pm.t, v: pm.runRate, projected: true });
+        var byT3 = {};
+        pts3.forEach(function (p) { byT3[p.t] = p.v; axisSet[p.t] = 1; });
+        runRateOverlays.push({
+          id: s.id + '|runrate', metric: s.metric, country: s.country,
+          label: s.label + ' (run-rate est.)',
+          fullLabel: s.fullLabel + ' — ' + prettyPeriod(pm.t) + ' run-rate estimate',
+          unit: s.unit, basis: s.basis, domain: s.domain,
+          points: pts3, byT: byT3, dashed: true, projected: true,
+          stats: null, comparisonOf: s.id
+        });
+        warnings.push(prettyPeriod(pm.t) + ' is still in progress (day ' + pm.dayOfMonth + ' of ' + pm.daysInMonth +
+          ') for ' + s.label + ', so its actual-so-far (' + fmt(pm.actual, s.unit) + ') is excluded from the totals/' +
+          'trend/change above to avoid a false drop. The dashed point is a run-rate estimate — actual-so-far scaled ' +
+          'to a full month at the same pace — not a final reported figure.');
+      });
+      if (runRateOverlays.length) out.series = out.series.concat(runRateOverlays);
+    })();
+
+    // Trend projection ("if this continues, what will X be in N months").
+    // Fully deterministic and computed here from the already-clipped/transformed
+    // historical points — the model only ever asks for a projection, it never
+    // supplies or sees the projected numbers themselves. Rendered as a dashed
+    // continuation of each series (same visual mechanism as the prev_period/
+    // prev_year comparison overlay below) and always paired with a warning
+    // that it is a model estimate, not a reported figure.
+    if (spec.project && spec.project.n) {
+      var projN = spec.project.n;
+      var projMethod = spec.project.method === 'linear' ? 'linear' : 'cagr';
+      var forecasts = [];
+      out.series.slice().forEach(function (s) {
+        var nn = s.points.filter(function (p) { return p.v !== null; });
+        if (nn.length < 2) { warnings.push('Not enough history to project ' + s.label + '.'); return; }
+        var last = nn[nn.length - 1];
+        var futureTs = [];
+        var t = last.t;
+        for (var k = 0; k < projN; k++) {
+          t = (grain === 'day') ? addDays(t, 1) : addMonths(t, 1);
+          futureTs.push(t);
+        }
+        var futureVals;
+        if (projMethod === 'linear') {
+          var xs = nn.map(function (_, i) { return i; });
+          var ys = nn.map(function (p) { return p.v; });
+          var nCount = xs.length;
+          var sx = xs.reduce(function (a, b) { return a + b; }, 0);
+          var sy = ys.reduce(function (a, b) { return a + b; }, 0);
+          var sxx = xs.reduce(function (a, x) { return a + x * x; }, 0);
+          var sxy = xs.reduce(function (a, x, i) { return a + x * ys[i]; }, 0);
+          var denom = (nCount * sxx - sx * sx);
+          var slope = denom !== 0 ? (nCount * sxy - sx * sy) / denom : 0;
+          var intercept = (sy - slope * sx) / nCount;
+          var lastIdx = nCount - 1;
+          futureVals = futureTs.map(function (_, k2) { return intercept + slope * (lastIdx + k2 + 1); });
+        } else {
+          var first = nn[0];
+          var periods = nn.length - 1;
+          var rate = (periods > 0 && first.v > 0 && last.v > 0) ? Math.pow(last.v / first.v, 1 / periods) - 1 : 0;
+          futureVals = futureTs.map(function (_, k2) { return last.v * Math.pow(1 + rate, k2 + 1); });
+        }
+        if (s.unit === 'usd' || s.unit === 'count') {
+          futureVals = futureVals.map(function (v) { return Math.max(0, v); });
+        }
+        var fpts = [{ t: last.t, v: last.v }].concat(futureTs.map(function (t2, i2) { return { t: t2, v: futureVals[i2], projected: true }; }));
+        var byT2 = {};
+        fpts.forEach(function (p) { byT2[p.t] = p.v; axisSet[p.t] = 1; });
+        forecasts.push({
+          id: s.id + '|forecast', metric: s.metric, country: s.country,
+          label: s.label + ' (projected)', fullLabel: s.fullLabel + ' — projected (' + projMethod + ')',
+          unit: s.unit, basis: s.basis, domain: s.domain,
+          points: fpts, byT: byT2, dashed: true, projected: true,
+          stats: null, comparisonOf: s.id
+        });
+      });
+      if (forecasts.length) {
+        out.series = out.series.concat(forecasts);
+        warnings.push('Projected values (dashed) extrapolate the recent trend using a ' +
+          (projMethod === 'linear' ? 'linear regression' : 'compound growth rate') +
+          ' fit to the historical data shown. They are a model estimate, not a reported figure, and get less reliable the further out they go.');
+      }
+    }
 
     out.axis = Object.keys(axisSet).sort();
 
@@ -528,6 +652,72 @@
     };
   }
 
+  /* ============================================ run a per-country growth ranking */
+  // Not backed by a static CAT.extras entry — computed on the fly from any
+  // metric's own monthlyByCountry/dailyByCountry series, so it works for
+  // arbitrary metrics and date windows ("which country grew fastest this
+  // quarter") rather than only the fixed current-vs-previous-month snapshot
+  // that country_snapshot provides.
+
+  function runMetricGrowthRanking(spec) {
+    var r = spec.ranking || {};
+    var m = CAT.get(r.metric);
+    if (!m) return { ok: false, error: 'Unknown metric "' + r.metric + '" for a growth ranking.' };
+    var grain = spec.grain === 'day' ? 'day' : 'month';
+    var countries = CAT.dimValues(r.metric, 'country');
+    if (!countries.length) return { ok: false, error: m.label + ' is not broken down by country, so it cannot be ranked by country growth.' };
+
+    var built = [];
+    countries.forEach(function (cc) {
+      var s = seriesFor({ metric: r.metric, country: cc }, grain);
+      if (!s.error && s.points && s.points.length) built.push(s);
+    });
+    if (!built.length) return { ok: false, error: 'No per-country data available for ' + m.label + ' at ' + grain + ' grain.' };
+
+    var range = resolveRange(spec.range, grain, built);
+    var dir = (r.direction === 'asc') ? 1 : -1;
+    var rows = [];
+    built.forEach(function (s) {
+      var pts = clip(s.points, range.from, range.to).filter(function (p) { return p.v !== null; });
+      if (pts.length < 2) return;
+      var first = pts[0], last = pts[pts.length - 1];
+      if (!first.v) return; // zero or null base — % change is undefined
+      var changePct = ((last.v - first.v) / Math.abs(first.v)) * 100;
+      rows.push({
+        c: s.country, name: CAT.countryLabel(s.country) + ' (' + s.country + ')',
+        from: first.v, to: last.v, change: last.v - first.v,
+        changePct: Math.round(changePct * 100) / 100
+      });
+    });
+    if (!rows.length) return { ok: false, error: 'Not enough per-country history for ' + m.label + ' in that window to compute growth.' };
+
+    rows.sort(function (a, b) { return (a.changePct - b.changePct) * dir; });
+    var n = Math.min(Math.max(1, r.n || 10), 250);
+    var top = rows.slice(0, n);
+    var columns = ['#', 'name', 'from', 'to', 'change', 'changePct'];
+    var outRows = top.map(function (x, i) { return { '#': i + 1, name: x.name, from: x.from, to: x.to, change: x.change, changePct: x.changePct }; });
+
+    var chart = {
+      type: 'bar', stacked: false,
+      labels: outRows.map(function (x) { return String(x.name).replace(/\s*\(..\)$/, ''); }),
+      datasets: [{
+        label: 'Growth %', data: top.map(function (x) { return x.changePct; }),
+        backgroundColor: '#1D8FE1', borderColor: '#1D8FE1', borderWidth: 0
+      }],
+      units: ['pct'], indexAxis: 'y'
+    };
+
+    return {
+      ok: true, kind: 'ranking',
+      title: spec.title || ('Top ' + n + ' countries by ' + m.label + ' growth (' + prettyPeriod(range.from) + ' to ' + prettyPeriod(range.to) + ')'),
+      subtitle: m.label + ' % change, ' + prettyPeriod(range.from) + ' to ' + prettyPeriod(range.to),
+      columns: columns, rows: outRows, csv: toCSV(columns, outRows),
+      chart: chart, facts: [],
+      warnings: ['Growth ranking compares the first vs. last available value per country within the window; countries with fewer than two data points in that window are excluded.'],
+      notes: spec.notes || null
+    };
+  }
+
   /* ============================================================ run a table */
 
   function runTable(spec) {
@@ -569,6 +759,15 @@
     if (VALID_TRANSFORMS.indexOf(spec.transform) < 0) spec.transform = 'none';
     if (VALID_CHARTS.indexOf(spec.chart) < 0) spec.chart = (spec.kind === 'value' ? 'line' : 'line');
     if (spec.compare !== 'prev_period' && spec.compare !== 'prev_year') spec.compare = null;
+    if (spec.project && typeof spec.project === 'object') {
+      var pn = Math.round(Number(spec.project.n));
+      if (!pn || pn < 1) spec.project = null;
+      else {
+        spec.project = { n: Math.min(60, Math.max(1, pn)), method: (spec.project.method === 'linear') ? 'linear' : 'cagr' };
+      }
+    } else {
+      spec.project = null;
+    }
     if (spec.metrics && !Array.isArray(spec.metrics)) spec.metrics = [spec.metrics];
     (spec.metrics || []).forEach(function (m) {
       if (m && typeof m.metric === 'string' && !CAT.get(m.metric)) {
@@ -589,7 +788,10 @@
     try {
       if (spec.kind === 'clarify') return { ok: true, kind: 'clarify', question: spec.title || 'Could you narrow that down?', options: spec.options || [], notes: spec.notes || null };
       if (spec.kind === 'unsupported') return { ok: false, kind: 'unsupported', error: spec.notes || spec.title || 'That is not in the dashboard data.' };
-      if (spec.kind === 'ranking') return runRanking(spec);
+      if (spec.kind === 'ranking') {
+        if (spec.ranking && spec.ranking.extra === 'metric_growth') return runMetricGrowthRanking(spec);
+        return runRanking(spec);
+      }
       if (spec.kind === 'table') return runTable(spec);
       return runSeries(spec);
     } catch (e) {
