@@ -21,9 +21,16 @@
    ========================================================================= */
 
 const ALLOWED_ORIGINS = [
+  // Real production dashboards (Netlify — this is what facadash.netlify.app and
+  // activated-payments.netlify.app actually serve; this is the allowlist that matters):
+  'https://facadash.netlify.app',
+  'https://master--facadash.netlify.app',
+  'https://activated-payments.netlify.app',
+  'https://master--activated-payments.netlify.app',
+  // Mirror deploys on Cloudflare Pages (also auto-deployed from the same repo):
   'https://facadash.pages.dev',
   'https://activated-payments.pages.dev'
-  // Add any custom domains you point at these Pages projects, e.g.:
+  // Add any custom domains you point at either of these, e.g.:
   // 'https://dash.loyverse.com',
 ];
 
