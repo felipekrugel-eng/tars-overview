@@ -173,7 +173,8 @@ def main():
         if pull("receipts"):
             write(WORK / "receipts.csv", latest(dfs["receipts"]))   # latest snapshot only — build_kpi_data uses ONLY the latest; writing the full ~26.5M-row grid OOM'd the runner
             write(DAILY / f"TPV and Receipts DB2_{TS}.csv",
-                  latest(dfs["receipts"])[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]])
+                  latest(dfs["receipts"])[["COUNTRY","CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT",
+                                            "TPV_USD_APPROX","AVG_TICKET_USD"]])
     finally:
         conn.close()
 
@@ -190,28 +191,33 @@ def main():
         cur = rec.loc[
             rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
             == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
-            ["SNAPSHOT_DATE", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+            ["SNAPSHOT_DATE", "ACTIVE_MERCHANTS", "RECEIPT_COUNT", "TPV_USD_APPROX"],
         ]
         agg = (cur.assign(DATE=cur["SNAPSHOT_DATE"].astype(str).str[:10])
                   .groupby("DATE")
-                  .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+                  .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"),
+                       GTV=("TPV_USD_APPROX", "sum"))
                   .reset_index())
-        agg["GTV"] = 0; agg["AVG_TICKET"] = 0
+        # AVG_TICKET is derived here (GTV / RECEIPTS) rather than re-summed from the query's
+        # per-row AVG_TICKET_USD, because that column is a per-cohort-row average and summing/
+        # averaging it across rows would not equal the true blended ticket size.
+        agg["AVG_TICKET"] = (agg["GTV"] / agg["RECEIPTS"].replace(0, pd.NA)).fillna(0).round(2)
         write(DAILY / f"49 days 1_{TS}.csv", agg[["DATE","ACTIVE","RECEIPTS","GTV","AVG_TICKET"]])
 
-        # ---- by-country daily active/receipts (current-month rows -> DATE x COUNTRY) ----
+        # ---- by-country daily active/receipts/GTV (current-month rows -> DATE x COUNTRY) ----
         # Same derivation as "49 days 1" above but KEEPS the country dimension so FACADASH can
         # filter the daily graphs/tiles per country. Output is tiny (~25 countries x ~49 days).
         recc = rec.loc[
             rec["SNAPSHOT_DATE"].astype("datetime64[ns]").dt.to_period("M")
             == rec["CALENDAR_MONTH"].astype("datetime64[ns]").dt.to_period("M"),
-            ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"],
+            ["SNAPSHOT_DATE", "COUNTRY", "ACTIVE_MERCHANTS", "RECEIPT_COUNT", "TPV_USD_APPROX"],
         ]
         recc = (recc.assign(DATE=recc["SNAPSHOT_DATE"].astype(str).str[:10])
                     .groupby(["DATE", "COUNTRY"])
-                    .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"))
+                    .agg(ACTIVE=("ACTIVE_MERCHANTS", "sum"), RECEIPTS=("RECEIPT_COUNT", "sum"),
+                         GTV=("TPV_USD_APPROX", "sum"))
                     .reset_index())
-        write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS"]])
+        write(DAILY / f"49 days by country_{TS}.csv", recc[["DATE","COUNTRY","ACTIVE","RECEIPTS","GTV"]])
 
     # ---- by-country daily paying (current-month rows per snapshot -> DATE x COUNTRY) ----
     pay = dfs["paying"]

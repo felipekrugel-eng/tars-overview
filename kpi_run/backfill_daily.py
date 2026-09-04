@@ -36,17 +36,41 @@ mrr49 = sorted(glob.glob(SRC + "/MRR QR_DB 49 Days_*.csv"))[-1]
 # active/receipts stay None for the affected days, which every consumer already handles
 # (see the live-snapshot branch below, where both are None until that day's TPV file lands).
 _g1files = sorted(glob.glob(SRC + "/49 days 1_*.csv"))
-active_by, receipts_by = {}, {}
+active_by, receipts_by, gtv_by, avgticket_by = {}, {}, {}, {}
 if _g1files:
-    g1 = pd.read_csv(_g1files[-1])  # DATE,ACTIVE,RECEIPTS,GTV,AVG_TICKET (GTV/AVG_TICKET deliberately ignored)
+    g1 = pd.read_csv(_g1files[-1])  # DATE,ACTIVE,RECEIPTS,GTV,AVG_TICKET
+    _has_gtv = "GTV" in g1.columns  # backward-compat: older CSVs from before the GTV fix lack these columns
     for _, gr in g1.iterrows():
         dd = str(gr["DATE"])[:10]
         if dd == SKIP_DATE: continue
         active_by[dd] = int(pd.to_numeric(gr["ACTIVE"], errors="coerce") or 0)
         receipts_by[dd] = int(pd.to_numeric(gr["RECEIPTS"], errors="coerce") or 0)
+        if _has_gtv:
+            gtv_by[dd] = round(float(pd.to_numeric(gr["GTV"], errors="coerce") or 0), 2)
+            avgticket_by[dd] = round(float(pd.to_numeric(gr["AVG_TICKET"], errors="coerce") or 0), 2)
 else:
     print("[backfill] WARNING — no '49 days 1' CSV (receipts pull degraded); "
-          "active/receipts left blank, every other series unaffected", flush=True)
+          "active/receipts/gtv left blank, every other series unaffected", flush=True)
+
+def _db2_agg(path, cal_month):
+    """Read a 'TPV and Receipts DB2' CSV and aggregate ACTIVE/RECEIPTS/GTV/AVG_TICKET for one
+    calendar month. Older CSVs (pre-GTV-fix) lack TPV_USD_APPROX/AVG_TICKET_USD; gtv/avg_ticket
+    come back None in that case rather than raising on a missing usecols column."""
+    cols = pd.read_csv(path, nrows=0).columns
+    has_gtv = "TPV_USD_APPROX" in cols
+    base = ["CALENDAR_MONTH", "ACTIVE_MERCHANTS", "RECEIPT_COUNT"]
+    a = pd.read_csv(path, usecols=base + (["TPV_USD_APPROX"] if has_gtv else []))
+    a["CAL"] = a["CALENDAR_MONTH"].map(ym)
+    numcols = ["ACTIVE_MERCHANTS", "RECEIPT_COUNT"] + (["TPV_USD_APPROX"] if has_gtv else [])
+    for c in numcols: a[c] = pd.to_numeric(a[c], errors="coerce").fillna(0)
+    cm = a[a["CAL"] == cal_month]
+    active = int(cm["ACTIVE_MERCHANTS"].sum()); receipts = int(cm["RECEIPT_COUNT"].sum())
+    if has_gtv:
+        gtv = round(float(cm["TPV_USD_APPROX"].sum()), 2)
+        avg_ticket = round(gtv / receipts, 2) if receipts else 0
+    else:
+        gtv = avg_ticket = None
+    return active, receipts, gtv, avg_ticket
 
 m49 = pd.read_csv(mrr49, usecols=["SNAPSHOT_DATE","COHORT_MONTH","REGISTRATIONS","MONTH_START",
     "PAYING_CUSTOMERS","CUM_PAYING_EVER","MRR_USD"])
@@ -65,14 +89,12 @@ for d, df in m49.groupby("d"):
     regMTD = int(reg_by_month.get(cur,0)); newPayersMTD = int(max(0, monthly.loc[cur,"cum"] - monthly.loc[prevc,"cum"]))
     arpc = round(mrr/paying,2) if paying else 0
     if d == SKIP_DATE and d in db2_files:   # Jun-18 active/receipts from the normal query, per instruction
-        a = pd.read_csv(db2_files[d], usecols=["CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"])
-        a["CAL"] = a["CALENDAR_MONTH"].map(ym)
-        for c in ["ACTIVE_MERCHANTS","RECEIPT_COUNT"]: a[c] = pd.to_numeric(a[c],errors="coerce").fillna(0)
-        cm = a[a["CAL"]==cur]; active = int(cm["ACTIVE_MERCHANTS"].sum()); receipts = int(cm["RECEIPT_COUNT"].sum())
+        active, receipts, gtv, avgTicket = _db2_agg(db2_files[d], cur)
     else:
         active = active_by.get(d); receipts = receipts_by.get(d)
+        gtv = gtv_by.get(d); avgTicket = avgticket_by.get(d)
     rows.append({"date":d,"month":cur,"regMTD":regMTD,"paying":paying,"mrr":round(mrr,2),
-                 "newPayersMTD":newPayersMTD,"arpc":arpc,"active":active,"gtv":None,"receipts":receipts,"avgTicket":None})
+                 "newPayersMTD":newPayersMTD,"arpc":arpc,"active":active,"gtv":gtv,"receipts":receipts,"avgTicket":avgTicket})
 
 # extend the 49-day spine with newer LIVE daily snapshots (ongoing days beyond the 49-day pull, e.g. today)
 covered = {r["date"] for r in rows}
@@ -89,13 +111,11 @@ for d in sorted(mrr_files):
     paying=int(mo.loc[cur,"paying"]); mrr=float(mo.loc[cur,"mrr"])
     regMTD=int(rbm.get(cur,0)); newPayersMTD=int(max(0,mo.loc[cur,"cum"]-mo.loc[prevc,"cum"]))
     arpc=round(mrr/paying,2) if paying else 0
-    active=receipts=None
-    if d in db2_files:   # active/receipts only once the TPV query for that day is saved
-        a=pd.read_csv(db2_files[d],usecols=["CALENDAR_MONTH","ACTIVE_MERCHANTS","RECEIPT_COUNT"]); a["CAL"]=a["CALENDAR_MONTH"].map(ym)
-        for c in ["ACTIVE_MERCHANTS","RECEIPT_COUNT"]: a[c]=pd.to_numeric(a[c],errors="coerce").fillna(0)
-        cm=a[a["CAL"]==cur]; active=int(cm["ACTIVE_MERCHANTS"].sum()); receipts=int(cm["RECEIPT_COUNT"].sum())
+    active=receipts=gtv=avgTicket=None
+    if d in db2_files:   # active/receipts/gtv only once the TPV query for that day is saved
+        active, receipts, gtv, avgTicket = _db2_agg(db2_files[d], cur)
     rows.append({"date":d,"month":cur,"regMTD":regMTD,"paying":paying,"mrr":round(mrr,2),
-                 "newPayersMTD":newPayersMTD,"arpc":arpc,"active":active,"gtv":None,"receipts":receipts,"avgTicket":None})
+                 "newPayersMTD":newPayersMTD,"arpc":arpc,"active":active,"gtv":gtv,"receipts":receipts,"avgTicket":avgTicket})
 rows.sort(key=lambda r: r["date"])
 
 for i,r in enumerate(rows):
@@ -183,7 +203,7 @@ country_funnel={"current":CUR,"previous":PREV,"asOf":ld,"rows":cf_rows}
 _bycountry = {}   # code -> { date -> row }
 def _bcrow(code, d):
     return _bycountry.setdefault(code, {}).setdefault(
-        d, {"date": d, "month": d[:7], "regMTD": None, "paying": None, "active": None, "receipts": None})
+        d, {"date": d, "month": d[:7], "regMTD": None, "paying": None, "active": None, "receipts": None, "gtv": None})
 
 _regbc = sorted(glob.glob(SRC + "/Registration Month x Country_49 Days_*.csv"))
 if _regbc:
@@ -198,12 +218,15 @@ if _regbc:
 _arbc = sorted(glob.glob(SRC + "/49 days by country_*.csv"))
 if _arbc:
     _ar = pd.read_csv(_arbc[-1])
+    _ar_has_gtv = "GTV" in _ar.columns   # backward-compat: older CSVs from before the GTV fix lack this column
     for _, x in _ar.iterrows():
         d = str(x["DATE"])[:10]
         if d == SKIP_DATE: continue
         r = _bcrow(str(x["COUNTRY"]), d)
         r["active"]   = int(pd.to_numeric(x["ACTIVE"],   errors="coerce") or 0)
         r["receipts"] = int(pd.to_numeric(x["RECEIPTS"], errors="coerce") or 0)
+        if _ar_has_gtv:
+            r["gtv"] = round(float(pd.to_numeric(x["GTV"], errors="coerce") or 0), 2)
 
 _pybc = sorted(glob.glob(SRC + "/Paying by country 49 Days_*.csv"))
 if _pybc:

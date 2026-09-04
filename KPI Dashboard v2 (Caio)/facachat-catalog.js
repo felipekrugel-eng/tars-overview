@@ -304,16 +304,21 @@
       }
     });
 
-    // POS payment value. The columns exist in the pipeline but are not yet
-    // populated, and pretending otherwise would be the single most damaging
-    // thing FACACHAT could do. Register it so the question gets a straight
-    // "not available yet" instead of a wrong number from a lookalike series.
+    // POS GTV (receipt value), all countries, USD-approximated via the fixed FX table in
+    // receipts_tpv_daily_asof.sql. Same MTD/DAILY_HISTORY plumbing as pos.receipts — see
+    // that metric for the shape. Monthly-by-country is intentionally NOT wired: kpi-data.js
+    // (build_kpi_data.py) does not yet emit a gtvByCountryByMonth series, only the
+    // ~2-month DAILY_HISTORY window below covers it. funnelField is also omitted: the
+    // COUNTRY_FUNNEL rows built by backfill_daily.py have no gtv field.
     reg({
       id: 'pos.gtv', domain: 'pos', label: 'POS GTV / transaction value', short: 'POS GTV',
-      unit: 'usd', basis: 'flow', dims: [], unavailable: true,
-      desc: 'NOT AVAILABLE. The gtv and avgTicket columns in the POS pipeline are still null for every day — receipt VALUE is not yet pulled from Snowflake, only receipt COUNT. For payment volume use payments.tpv (Loyverse Payments TPV).',
-      monthly: function () { return []; },
-      daily: function () { return []; }
+      unit: 'usd', basis: 'flow', dims: ['country'], countryCoverage: 'top25+funnel',
+      desc: 'Total value of receipts rung up on the POS, in USD (non-USD currencies converted with a fixed FX table, not daily live rates). For payment volume through Loyverse Payments specifically, use payments.tpv instead.',
+      monthly: function () { return mtdToMonthly(DH || [], 'gtv'); },
+      daily: function () { return mtdToDaily(DH || [], 'gtv', null); },
+      dailyByCountry: function (cc) { return mtdToDaily((DHC || {})[cc] || [], 'gtv', null); },
+      dailyNote: 'Month-to-date basis: receipt value rung up so far this month, resets each month.',
+      note: 'Monthly totals only cover the DAILY_HISTORY window (~2 months); no longer per-country monthly series yet. USD conversion uses a fixed FX table, so figures are approximate for non-USD countries.'
     });
   }
 
