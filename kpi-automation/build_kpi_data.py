@@ -136,7 +136,13 @@ for m in months:
 
 # ---- receipts/active by cohort x country x month (latest snapshot) ----
 rcpt["COH"] = rcpt["COHORT_MONTH"].map(ym); rcpt["CAL"] = rcpt["CALENDAR_MONTH"].map(ym)
-rcpt = num(rcpt, ["ACTIVE_MERCHANTS","RECEIPT_COUNT","COHORT_COUNTRY_SIZE"])
+# TPV_USD_APPROX (the SQL's country-aware, multi-currency GTV column) is included here so
+# gtv_country_all below can be built the same way as active_country_all/receipts_country_all.
+# It's optional/backward-compatible: older receipts.csv snapshots that predate the GTV wiring
+# in receipts_tpv_daily_asof.sql simply won't have the column, so it's added as 0 rather than
+# via the num() helper (which would KeyError on a missing column).
+if "TPV_USD_APPROX" not in rcpt.columns: rcpt["TPV_USD_APPROX"] = 0
+rcpt = num(rcpt, ["ACTIVE_MERCHANTS","RECEIPT_COUNT","COHORT_COUNTRY_SIZE","TPV_USD_APPROX"])
 rcpt["MN"] = pd.to_numeric(rcpt["MONTH_NUMBER"], errors="coerce").fillna(0).astype(int)
 # global active per month (each merchant in one cohort+country, so summing is a valid distinct total)
 active_by_month = rcpt.groupby("CAL")["ACTIVE_MERCHANTS"].sum()
@@ -166,8 +172,16 @@ def _to_nested(s):
     for (c, m), v in s.items():
         out.setdefault(str(c), {})[m] = int(v)
     return out
+# Same shape as _to_nested but keeps two decimal places instead of truncating to int, since
+# this one carries a USD amount (GTV) rather than a count.
+def _to_nested_usd(s):
+    out = {}
+    for (c, m), v in s.items():
+        out.setdefault(str(c), {})[m] = round(float(v), 2)
+    return out
 active_country_all   = _to_nested(rcpt.groupby(["COUNTRY","CAL"])["ACTIVE_MERCHANTS"].sum())
 receipts_country_all = _to_nested(rcpt.groupby(["COUNTRY","CAL"])["RECEIPT_COUNT"].sum())
+gtv_country_all       = _to_nested_usd(rcpt.groupby(["COUNTRY","CAL"])["TPV_USD_APPROX"].sum())
 
 # ---- aggregate retention curve (avg activation% by age across cohorts) ----
 by_age = {}
@@ -282,6 +296,7 @@ data = {
     "countryRegistrationsByMonth": creg_out,
     "activeByCountryByMonth": {c: active_country_all.get(c, {}) for c in top},
     "receiptsByCountryByMonth": {c: receipts_country_all.get(c, {}) for c in top},
+    "gtvByCountryByMonth": {c: gtv_country_all.get(c, {}) for c in top},
     "payingByCountryByMonth": {c: paying_country_all.get(c, {}) for c in top},
     "mrrByCountryByMonth": {c: mrr_country.get(c, {}) for c in top100},
     "arpcByCountryByMonth": {c: arpc_country.get(c, {}) for c in top100},

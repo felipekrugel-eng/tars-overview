@@ -305,10 +305,12 @@
     });
 
     // POS GTV (receipt value), all countries, USD-approximated via the fixed FX table in
-    // receipts_tpv_daily_asof.sql. Same MTD/DAILY_HISTORY plumbing as pos.receipts — see
-    // that metric for the shape. Monthly-by-country is intentionally NOT wired: kpi-data.js
-    // (build_kpi_data.py) does not yet emit a gtvByCountryByMonth series, only the
-    // ~2-month DAILY_HISTORY window below covers it. funnelField is also omitted: the
+    // receipts_tpv_daily_asof.sql. Same MTD/DAILY_HISTORY plumbing as pos.receipts for the
+    // GLOBAL monthly/daily series (~2-month window) — see that metric for the shape.
+    // monthlyByCountry, unlike global monthly, has full history: receipts_tpv_daily_asof.sql
+    // already computes country x calendar-month TPV_USD_APPROX going back years, and
+    // build_kpi_data.py now surfaces it as gtvByCountryByMonth the same way it already does
+    // for receiptsByCountryByMonth/activeByCountryByMonth. funnelField is still omitted: the
     // COUNTRY_FUNNEL rows built by backfill_daily.py have no gtv field.
     reg({
       id: 'pos.gtv', domain: 'pos', label: 'POS GTV / transaction value', short: 'POS GTV',
@@ -316,9 +318,10 @@
       desc: 'Total value of receipts rung up on the POS, in USD (non-USD currencies converted with a fixed FX table, not daily live rates). For payment volume through Loyverse Payments specifically, use payments.tpv instead.',
       monthly: function () { return mtdToMonthly(DH || [], 'gtv'); },
       daily: function () { return mtdToDaily(DH || [], 'gtv', null); },
+      monthlyByCountry: function (cc) { return fromMonthMap((K.gtvByCountryByMonth || {})[cc], '2016-01'); },
       dailyByCountry: function (cc) { return mtdToDaily((DHC || {})[cc] || [], 'gtv', null); },
       dailyNote: 'Month-to-date basis: receipt value rung up so far this month, resets each month.',
-      note: 'Monthly totals only cover the DAILY_HISTORY window (~2 months); no longer per-country monthly series yet. USD conversion uses a fixed FX table, so figures are approximate for non-USD countries.'
+      note: 'Global monthly/daily totals only cover the DAILY_HISTORY window (~2 months). Per-country monthly history goes back further (see monthlyByCountry). USD conversion uses a fixed FX table, so figures are approximate for non-USD countries.'
     });
   }
 
