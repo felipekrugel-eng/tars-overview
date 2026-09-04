@@ -24,6 +24,15 @@
      ranking:   { extra:'country_snapshot', field:'reg', period:'current',
                   n:10, direction:'desc' }
      table:     { extra:'cohorts', fields:[...], n:20, sortBy:'mrr', direction:'desc' }
+     runRate:   boolean   // ask for the CURRENT, still-in-progress period's
+                          // actual-so-far scaled up to a full period (e.g.
+                          // "September TPV so far, considering the run rate").
+                          // Different from `project`, which extrapolates into
+                          // FUTURE periods that haven't started yet. Forces
+                          // grain='month'. Works even for a single-period
+                          // value question (normally the current partial
+                          // period is only excluded from stats/trend when
+                          // there is other history to fall back on).
      notes:     string
    }
 
@@ -401,12 +410,17 @@
       // flow metrics, exclude it from the "real" points/stats here — but
       // only when there's other history left to show, so a query
       // specifically about this one current month (e.g. "registrations this
-      // month so far") is left untouched. A dashed run-rate estimate is
-      // added back as a separate overlay point below.
-      if (transform === 'none' && grain === 'month' && s.basis === 'flow' && pts.length > 1) {
+      // month so far") is left untouched UNLESS the user explicitly asked
+      // for the run-rate (spec.runRate), in which case a single-point
+      // current-month query is exactly the case this exists to serve — the
+      // "actual" point is still excluded from stats and a run-rate estimate
+      // takes its place below. A dashed run-rate estimate is always added
+      // back as a separate overlay point.
+      if (transform === 'none' && grain === 'month' && s.basis === 'flow' &&
+          (pts.length > 1 || spec.runRate)) {
         var lastP = pts[pts.length - 1];
         var curMonth = new Date().toISOString().slice(0, 7);
-        if (lastP.t === curMonth && lastP.v !== null) {
+        if (lastP && lastP.t === curMonth && lastP.v !== null) {
           var dayOfMonth = new Date().getUTCDate();
           var daysInMonth = +endOfMonth(curMonth).slice(8, 10);
           if (dayOfMonth < daysInMonth) {
@@ -466,12 +480,13 @@
           fullLabel: s.fullLabel + ' — ' + prettyPeriod(pm.t) + ' run-rate estimate',
           unit: s.unit, basis: s.basis, domain: s.domain,
           points: pts3, byT: byT3, dashed: true, projected: true,
-          stats: null, comparisonOf: s.id
+          stats: null, comparisonOf: s.id,
+          runRateMeta: { actual: pm.actual, dayOfMonth: pm.dayOfMonth, daysInMonth: pm.daysInMonth, estimate: pm.runRate }
         });
         warnings.push(prettyPeriod(pm.t) + ' is still in progress (day ' + pm.dayOfMonth + ' of ' + pm.daysInMonth +
           ') for ' + s.label + ', so its actual-so-far (' + fmt(pm.actual, s.unit) + ') is excluded from the totals/' +
-          'trend/change above to avoid a false drop. The dashed point is a run-rate estimate — actual-so-far scaled ' +
-          'to a full month at the same pace — not a final reported figure.');
+          'trend/change above to avoid a false drop. At the current pace that projects to roughly ' +
+          fmt(pm.runRate, s.unit) + ' for the full month (the dashed chart point) — a run-rate estimate, not a final reported figure.');
       });
       if (runRateOverlays.length) out.series = out.series.concat(runRateOverlays);
     })();
@@ -768,6 +783,10 @@
     } else {
       spec.project = null;
     }
+    spec.runRate = !!spec.runRate;
+    // Run-rate math (actual-so-far scaled by day-of-month/days-in-month) only
+    // makes sense against month-grain data, which is where that context lives.
+    if (spec.runRate) spec.grain = 'month';
     if (spec.metrics && !Array.isArray(spec.metrics)) spec.metrics = [spec.metrics];
     (spec.metrics || []).forEach(function (m) {
       if (m && typeof m.metric === 'string' && !CAT.get(m.metric)) {
@@ -811,7 +830,22 @@
     var parts = [];
     result.series.filter(function (s) { return !s.comparisonOf; }).forEach(function (s) {
       var st = s.stats;
-      if (!st) return;
+      if (!st) {
+        // No historical points left to summarise — this happens for a
+        // runRate query about a single current-in-progress period, where the
+        // only point was intentionally excluded from stats (see runSeries).
+        // The answer lives on its run-rate overlay instead; speak from that.
+        var overlay = result.series.filter(function (o) { return o.comparisonOf === s.id && o.runRateMeta; })[0];
+        if (overlay) {
+          var rm = overlay.runRateMeta, ru = overlay.unit;
+          var lastPt = overlay.points[overlay.points.length - 1];
+          parts.push(s.fullLabel + ' — ' + prettyPeriod(lastPt.t) + ' run-rate estimate: ' +
+            fmt(rm.estimate, ru) + ' for the full month, based on ' + fmt(rm.actual, ru) + ' actual so far ' +
+            '(day ' + rm.dayOfMonth + ' of ' + rm.daysInMonth + '). This is a projection at the current pace, ' +
+            'not a final total — the month is still in progress.');
+        }
+        return;
+      }
       var u = s.unit;
       var head = s.fullLabel + ': ';
       if (s.basis === 'flow') {

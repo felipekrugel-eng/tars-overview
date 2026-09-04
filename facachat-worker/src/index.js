@@ -127,6 +127,18 @@ const QUERY_SPEC_TOOL = {
           direction: { type: 'string', enum: ['asc', 'desc'] }
         }
       },
+      runRate: {
+        type: 'boolean',
+        description:
+          'Set true when the user asks for the CURRENT, still-in-progress period\'s value "considering the run ' +
+          'rate", "at the current pace", "annualized/extrapolated for the month", or similar — i.e. they want the ' +
+          'actual-so-far scaled up to what a full period would look like, not the raw partial total and not a ' +
+          'future forecast. Different from `project`: `project` extrapolates into FUTURE periods that have not ' +
+          'started; `runRate` scales the period that is happening right now. Always pairs with grain=month (the ' +
+          'engine forces this) — never grain=day, since the run-rate math needs day-of-month/days-in-month context ' +
+          'that daily data does not carry, and narrating raw day-to-day change over a handful of days is just noise, ' +
+          'not a run rate. Works for kind=value (a single number) or kind=series (charted alongside history).'
+      },
       notes: { type: 'string', description: 'Any caveat worth surfacing to the user, or the unsupported/clarify explanation.' },
       options: { type: 'array', items: { type: 'string' }, description: 'Only used with kind=clarify — 2-4 short options the user can pick from.' }
     },
@@ -192,6 +204,15 @@ function buildSystemPrompt(catalog) {
     '- "last N months/days" -> range.last = {n, unit}. "this year" -> range.from = "YYYY-01".',
     '- Comparing two or more metrics, or the same metric broken out several ways (e.g. "compare GTV growth vs TPV growth", "X in the US vs the UK") -> put multiple entries in the metrics array (up to 6) in ONE kind=series/value call, with the same transform/range applied to all of them, rather than asking a bare single-metric question. Give each a short label if it helps distinguish them on the chart.',
     '- "if this trend/growth continues", "at this rate", "projected", "forecast", "where will X be in N months/years", "project this forward given the CAGR/growth we are seeing" -> kind=series (never kind=value) with the normal historical metrics/range/transform PLUS project={n, method}. Use method="cagr" by default (compounding growth, e.g. revenue-like metrics), or "linear" if the recent trend looks closer to a flat additive pace than compounding. If the user does not give an explicit horizon (no "36 months", "2 years", etc. — just "project this forward" or "keep this trend going"), do not ask a clarifying question for this alone: default project.n to 12 (same grain as the query, so 12 months for a monthly series, 12 days for a daily one), and say in the title/notes that this is a 12-period default the user can ask you to extend or shorten. This applies to a bare follow-up like "can you project this forward given the CAGR we are seeing?" referring back to a metric just discussed — carry forward that metric/range/transform from history per the conversation-history rule below, and treat the vague horizon the same way. Never answer a forecast question yourself — the projected numbers only exist once the engine computes them from project.',
+    '- "considering the run rate", "at the current pace", "current run rate", "annualized/extrapolated for the ' +
+      'month" — about the metric\'s own CURRENT, still-in-progress period (this month, so far) — PLUS runRate=true, ' +
+      'grain=month (never day), range targeting that current month (e.g. range.from=range.to="YYYY-MM" for just ' +
+      'this month, or a "last N months" range if the user also wants recent history for context). This is not the ' +
+      'same as `project`: `project` extrapolates into FUTURE periods that have not started yet; `runRate` scales ' +
+      'the period happening right now (e.g. 4 days of September actuals scaled to what a full 30-day September ' +
+      'would be at the same pace). Do not answer this by picking grain=day and reporting raw day-to-day change — ' +
+      'a few days of daily figures compared to each other is noise, not a run rate, and never actually answers ' +
+      'what the user asked.',
     '- If a metric is marked NOT AVAILABLE, use kind=unsupported and explain why, pointing to the suggested alternative if one is mentioned (this is common for "TPV" vs "GTV" — this dashboard only loads one of POS data or Loyverse Payments data, so whichever one is missing is listed as NOT AVAILABLE with a pointer to the metric this dashboard actually has).',
     '- If the user asks about a metric that does not appear ANYWHERE in the AVAILABLE METRICS list above (available or NOT AVAILABLE), do not guess a plausible-looking id for it — use kind=unsupported and say plainly that this dashboard does not have that metric. A metric id that is not literally in the list, character for character, always fails.',
     '- If the country given doesn\'t clearly map to a code, or the question could mean two different metrics, use kind=clarify with 2-4 short options.',
