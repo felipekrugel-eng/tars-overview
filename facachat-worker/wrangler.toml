@@ -1,0 +1,9 @@
+name = "facachat-worker"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+# ANTHROPIC_API_KEY is set as a secret, not here — see FACACHAT_DEPLOY_GUIDE.md
+# (`wrangler secret put ANTHROPIC_API_KEY`). Never commit the key itself.
+
+[vars]
+ANTHROPIC_MODEL = "claude-sonnet-5"

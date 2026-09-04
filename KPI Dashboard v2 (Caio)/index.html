@@ -12,6 +12,10 @@
 <script src="kpi-data.js"></script>
 <script src="daily-history.js"></script>
 <script src="flow-data.js"></script>
+<!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
+<script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
+<script src="facachat-catalog.js"></script>
+<script src="facachat-engine.js"></script>
 <!-- Loyverse Payments cohort membership is NOT loaded as a script tag. It is refreshed several
      times a day, and a <script src> is served from the browser cache, which showed a triangle
      built from an eleven-minute-old file while the page around it was current. It is fetched
@@ -1395,5 +1399,6 @@ document.getElementById('foot-notes').innerHTML = D.meta.notes.map(n => '&rarr; 
 document.getElementById('foot-source').textContent = D.meta.source;
 document.getElementById('foot-gen').textContent = D.meta.generatedAt;
 </script>
+<script src="facachat-widget.js"></script>
 </body>
 </html>

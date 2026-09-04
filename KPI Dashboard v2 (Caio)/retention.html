@@ -10,6 +10,10 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="kpi-data.js"></script>
+<!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
+<script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
+<script src="facachat-catalog.js"></script>
+<script src="facachat-engine.js"></script>
 <style>
   :root {
     --blue: #1D8FE1; --blue-deep: #1578C4; --near-black: #1A1A1A;
@@ -304,5 +308,6 @@ document.getElementById('foot-gen').textContent = (D.meta && D.meta.generatedAt)
 
 render();
 </script>
+<script src="facachat-widget.js"></script>
 </body>
 </html>

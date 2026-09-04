@@ -12,6 +12,11 @@
 <!-- Country filter, shared verbatim with index.html. Loaded AFTER the data file because it
      discovers the live markets from it. -->
 <script src="country-filter.js"></script>
+<!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
+<script src="facachat-catalog.js"></script>
+<script src="facachat-engine.js"></script>
 <style>
   :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
     --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
@@ -329,5 +334,6 @@ if(window.LVCC){
   redraw();
 }
 </script>
+<script src="facachat-widget.js"></script>
 </body>
 </html>

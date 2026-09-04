@@ -12,6 +12,10 @@
 <script src="kpi-data.js"></script>
 <script src="daily-history.js"></script>
 <script src="daily-flow.js"></script>
+<!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
+<script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
+<script src="facachat-catalog.js"></script>
+<script src="facachat-engine.js"></script>
 <style>
   :root {
     --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
@@ -167,7 +171,6 @@
       <span style="color:var(--faint)">&nbsp;· filters the tiles &amp; the 4 graphs below (cusum &amp; league stay global)</span>
     </span>
   </div>
-  <div class="note-warn" id="stale-note" style="display:none"></div>
   <div class="tiles" id="tiles"></div>
 
   <div class="sec">Registrations today &middot; CUSUM</div>
@@ -286,89 +289,6 @@ function recompute(){
   todayStr = _t;
 }
 recompute();
-
-// ===== RECEIPTS FRESHNESS GUARD (added 2026-09-03, corrected same day) ==================
-// WHAT THIS IS ACTUALLY FOR. On 2026-09-03 the month-to-date active-merchants line sat flat at
-// 172,130, gaining 5 merchants in a day, and read as a dead feed. It is not. LOYVERSE_RECEIPTS_UNIQUE
-// BACKFILLS: a day arrives ~empty, reaches most of its volume two days later, and only settles on
-// the third. Measured across every pull since 2026-08-24:
-//        +1 day ~3k receipts (~0%)   +2 days 5.3-8.3M (63-93%)   +3 days ~99%   +4 days settled
-// So the newest one or two days of this series have ALWAYS been understated. Mid-month nobody
-// notices, because they are a sliver of a large cumulative total — 2026-08-31 was understated by
-// only 4% when first written. At a month boundary the entire month IS those unsettled days, so the
-// same everyday lag renders as a flat line and looks like an outage.
-//
-// The guard therefore marks data as PROVISIONAL — still loading — not as broken. Calling it an
-// outage sends someone to chase a pipeline that is working.
-//
-// DETECTION needs two conditions together, because value alone cannot separate "still loading"
-// from "genuinely quiet". A day is provisional only if it is BOTH inside the fill window (within
-// FILL_DAYS of the newest reading) AND below 85% of the median daily increment of the last 28
-// complete days. Median, not mean, so the unsettled days cannot drag the baseline to meet them.
-// An old day that is merely quiet is left alone; a recent day that is fully loaded is left alone.
-//
-// It escalates only when the run is LONGER than the normal fill window, which is the one case
-// that genuinely warrants chasing. Worth watching: two-day completeness has been sliding
-// (92% -> 80% -> 76% -> 66% -> 63% over 2026-08-28..09-01), so the lag is lengthening.
-const FILL_DAYS = 3;                 // observed: a day settles on the third day after it
-const STALE = (function(){
-  try{
-    const rows = GLOBAL_H.filter(r => r.date < todayStr);   // today is legitimately partial
-    const incs = [];
-    for (let i = 0; i < rows.length; i++){
-      const r = rows[i], p = rows[i-1];
-      if (r.receipts == null) continue;
-      // Day 1 of a month IS its own increment: the month-to-date total resets on the 1st.
-      const inc = (p && p.month === r.month && p.receipts != null) ? r.receipts - p.receipts
-                : (+r.date.slice(8,10) === 1 ? r.receipts : null);
-      if (inc != null) incs.push({ date: r.date, inc: inc });
-    }
-    if (incs.length < 8) return null;
-    const win = incs.slice(-28).map(x => x.inc).sort((a,b) => a-b);
-    const med = win[Math.floor(win.length/2)];
-    if (!(med > 0)) return null;
-    const newest = incs[incs.length-1].date;
-    const ageOf = d => Math.round((Date.parse(newest) - Date.parse(d)) / 86400000);
-    let i = incs.length - 1, from = null, days = 0;
-    while (i >= 0 && incs[i].inc < med * 0.85 && ageOf(incs[i].date) < FILL_DAYS){
-      from = incs[i].date; days++; i--;
-    }
-    if (!from) return null;
-    return { from: from, days: days, median: med, overdue: days > FILL_DAYS,
-             lastGood: i >= 0 ? incs[i].date : null,
-             pct: incs.slice(-days).map(x => ({ date: x.date, pct: Math.round(100*x.inc/med) })) };
-  } catch(e){ return null; }
-})();
-// Only receipts-derived fields. Registrations / paying / MRR / ARPC come from other queries and
-// must stay unmarked, or the notice stops meaning anything.
-const STALE_FIELDS = { active:1, receipts:1, active30d:1, gtv:1, avgTicket:1 };
-const staleFrom = f => (STALE && STALE_FIELDS[f]) ? STALE.from : null;
-const staleTile = f => !staleFrom(f) ? '' :
-  '<div class="td" style="color:var(--amber)" title="Receipts backfill over about ' + FILL_DAYS
-  + ' days, so the newest days are still loading and read low. This is not a settled figure.">'
-  + '\u26A0 provisional \u2014 still loading since ' + STALE.from + '</div>';
-(function(){
-  const el = document.getElementById('stale-note'); if (!el) return;
-  if (!STALE){ el.style.display = 'none'; return; }
-  const detail = STALE.pct.map(x => x.date + ' at ' + x.pct + '%').join(', ');
-  el.style.display = 'block';
-  el.style.background = STALE.overdue ? '#FFF6E5' : '#F2F7FC';
-  el.style.borderLeftColor = STALE.overdue ? 'var(--amber)' : 'var(--blue)';
-  el.style.color = STALE.overdue ? '#7a5a12' : '#345';
-  el.innerHTML = (STALE.overdue
-      ? '<b>\u26A0 Receipts are further behind than usual.</b> '
-      : '<b>\u2139 The newest ' + STALE.days + (STALE.days === 1 ? ' day is' : ' days are')
-        + ' provisional \u2014 receipts are still loading.</b> ')
-    + 'Receipts backfill over about ' + FILL_DAYS + ' days: a day arrives near-empty, reaches most of '
-    + 'its volume on day two and settles on day three. Against a 28-day median of ' + fmtN(STALE.median)
-    + ' receipts/day, the unsettled days stand at ' + detail + '. '
-    + '<b>Active merchants, Receipts and the 30-day rolling actives read low</b> until they fill, and are '
-    + 'greyed from ' + STALE.from + '. Registrations, Paying merchants, MRR and ARPC come from separate '
-    + 'queries and are unaffected. These figures correct themselves on the next pulls \u2014 no action needed'
-    + (STALE.overdue ? ', but this run is longer than the normal fill window and is worth checking.' : '.');
-})();
-// ======================================================================================
-
 const CNAMES = D.countryNames || {};
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 const cflag = c => '<span class="cflag" title="'+(CNAMES[c]||c)+'">'+(isoFlag(c)?isoFlag(c)+' ':'')+c+'</span>';
@@ -436,10 +356,10 @@ const _regPrevEnd = SEL ? ((D.countryRegistrationsByMonth&&D.countryRegistration
 const _regPrevLbl = MON3[+_regPrevM.slice(5,7)-1]||_regPrevM;
 const tileDefs = cur ? [
   ['Registrations','month-to-date', fmtN(regLiveRow.regMTD), (rrDom>=1?'<div class="td" style="color:var(--blue)" title="Projected month-end at the current daily pace (MTD \u00F7 '+rrDom+' \u00D7 '+rrDim+' days), vs last month final.">run-rate ~'+fmtN(regRR)+' by month-end'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' '+fmtN(_regPrevEnd)+' ('+(regRR>=_regPrevEnd?'+':'')+Math.round((regRR/_regPrevEnd-1)*100)+'%)'):'')+'</div>':'<div class="td" style="color:var(--blue)">live \u00B7 updates hourly'+(_regPrevEnd!=null?(' \u00B7 '+_regPrevLbl+' ended '+fmtN(_regPrevEnd)):'')+'</div>'), ser('regMTD'), BLUE],
-  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (staleFrom('active')?staleTile('active'):(sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote))+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
+  ['Active merchants', asOfSub(aN[0]), fmtN(aN[0]?aN[0].active:null), (sameMonth(aN[0],aN[1])?deltaTile(aN[0].active-aN[1].active):newMonthNote)+rollLine(a30[0]?a30[0].active30d:null,'30-day rolling','Distinct merchants active in the trailing 30 days (rolling, no month reset). Toggle the chart below to see the trend.'), ser('active'), BLUE_DEEP],
   ['Paying merchants','this month', fmtN(cur.paying), (sameMonth(cur,prev)?deltaTile(cur.paying-prev.paying):newMonthNote)+rollLine(p30[0]?p30[0].payingActive:null,'Active subscriptions','Merchants with an active paid subscription as of the latest complete day (point-in-time, annual plans counted across their term). Smoother and truer to the paying base than the month-to-date build-up.'), ser('paying'), BLUE],
   ['MRR', _lcLbl, fmtM(_mrrRow ? _mrrRow.mrr : cur.mrr), momTile((_mrrRow && _mrrPrev) ? _mrrRow.mrr - _mrrPrev.mrr : null, v=>fmtM(v)), ser('mrr'), INK],
-  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (staleFrom('receipts')?staleTile('receipts'):(sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote)), ser('receipts'), BLUE_DEEP],
+  ['Receipts', asOfSub(rN[0]), fmtN(rN[0]?rN[0].receipts:null), (sameMonth(rN[0],rN[1])?deltaTile(rN[0].receipts-rN[1].receipts):newMonthNote), ser('receipts'), BLUE_DEEP],
   ['ARPC', _lcLbl, (_mrrRow && _mrrRow.arpc!=null ? '$'+(+_mrrRow.arpc).toFixed(2) : '—'),
     momTile((_mrrRow && _mrrPrev && _mrrRow.arpc!=null && _mrrPrev.arpc!=null) ? _mrrRow.arpc - _mrrPrev.arpc : null, v=>'$'+v.toFixed(2)) + (function(){ const lm=(D.meta||{}).latestMonth; if(!lm || lm===_lcMonth) return ''; const r=_mrrAt(lm); if(!r || r.arpc==null) return ''; return '<div class="td" style="color:var(--muted)" title="Current month so far — partial: MRR accrues through the month, so this reads low until the month completes.">'+_MONX[+lm.slice(5,7)-1]+' '+lm.slice(0,4)+' MTD: $'+(+r.arpc).toFixed(2)+'</div>'; })(), ser('arpc'), BLUE],
 ] : [];
@@ -459,15 +379,9 @@ const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','De
 const mLabel = m => MON[+m.slice(5,7)-1] || m;
 const dayOf = r => +r.date.slice(8,10);
 // months / CURM / PREVM / CUTDAY are (re)computed in recompute() so they follow the selected country
-function fillCmp(id, cur, prv, field){
+function fillCmp(id, cur, prv){
   const e=document.getElementById('mtd-'+id); if(!e) return;
-  // `cur` arrives already truncated to the last trustworthy day when the feed is stale, so this
-  // month-vs-last-month bullet compares like with like instead of measuring a frozen number
-  // against a complete one — which is what produced the "-31.8%" that looked like a collapse.
-  const sf = (typeof field === 'string') ? staleFrom(field) : null;
-  const sNote = sf ? '<div class="cmpfoot" style="color:#8a6100">⚠ counted to the last settled day before '
-    + sf + ' — later days are still backfilling and would read low.</div>' : '';
-  if(!cur.length){ e.innerHTML = sf ? sNote : ''; return; }
+  if(!cur.length){ e.innerHTML=''; return; }
   const curDay=cur[cur.length-1].x, curVal=cur[cur.length-1].y;
   const prvAt=prv.filter(p=>p.x<=curDay).sort((a,b)=>a.x-b.x).pop();
   const prvVal=prvAt?prvAt.y:null, mx=Math.max(curVal,prvVal||0)||1;
@@ -477,7 +391,7 @@ function fillCmp(id, cur, prv, field){
   e.innerHTML=
     '<div class="cmptop"><span class="cmplabel">'+mLabel(CURM)+' to day '+curDay+'</span><span class="cmpval">'+fmtN(curVal)+pill+'</span></div>'+
     '<div class="bullet" title="Bar = this month so far. Tick = '+mLabel(PREVM)+' at the same day."><i class="fill" style="width:'+(curVal/mx*100).toFixed(1)+'%"></i>'+(markerPct==null?'':'<span class="marker" style="left:'+markerPct+'%"></span>')+'</div>'+
-    '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>'+sNote;
+    '<div class="cmpfoot">'+(prvVal==null?'no prior-month data':('<b>\u275a tick</b> = '+mLabel(PREVM)+' to day '+curDay+': '+fmtN(prvVal)))+'</div>';
 }
 // The rolling views can leave a ".nodata" note + a hidden canvas in a panel (see
 // rollChart). Any renderer that draws into that panel must clear it first, otherwise
@@ -491,34 +405,20 @@ function clearNoData(id){
 }
 function trend(id,label,field,color){
   clearNoData(id);
-  const curRows = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY);
+  const cur = H.filter(r=>r.month===CURM && r[field]!=null && dayOf(r)<=CUTDAY).map(r=>({x:dayOf(r),y:r[field]}));
   const prv = H.filter(r=>r.month===PREVM && r[field]!=null).map(r=>({x:dayOf(r),y:r[field]}));
-  // If the receipts feed is stale, the tail of this series is a frozen number rather than a
-  // reading. Drawn solid it looks like a plateau, so it is split off into an amber dashed
-  // segment. The last GOOD point is repeated at the head of the stale segment purely so the
-  // two lines join up — without it the chart shows a visual gap that reads as missing data.
-  const sf = staleFrom(field);
-  const isStale = r => sf && r.date >= sf;
-  const good = curRows.filter(r=>!isStale(r)).map(r=>({x:dayOf(r),y:r[field]}));
-  const bad  = curRows.filter(isStale).map(r=>({x:dayOf(r),y:r[field]}));
-  const cur  = sf ? good : curRows.map(r=>({x:dayOf(r),y:r[field]}));
-  const badSeg = (sf && bad.length) ? (good.length ? [good[good.length-1]].concat(bad) : bad) : [];
   if(charts[id]) charts[id].destroy();
-  const sets = [
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+    data:{datasets:[
       {label:mLabel(PREVM)+' (last month)',data:prv,borderColor:'#B8C4D2',backgroundColor:'transparent',fill:false,borderWidth:2,borderDash:[5,4],pointRadius:0,pointHoverRadius:4,tension:.3},
       {label:mLabel(CURM)+' (this month)',data:cur,borderColor:color,backgroundColor:'rgba(29,143,225,.08)',fill:true,borderWidth:2.6,pointRadius:2,pointHoverRadius:5,pointBackgroundColor:color,tension:.3}
-  ];
-  if(badSeg.length) sets.push({label:'stale — feed stopped '+sf,data:badSeg,borderColor:'#C98A16',
-    backgroundColor:'transparent',fill:false,borderWidth:2.2,borderDash:[3,3],pointRadius:2.5,
-    pointStyle:'crossRot',pointBorderWidth:2,pointBackgroundColor:'#C98A16',pointBorderColor:'#C98A16',tension:0});
-  charts[id]=new Chart(document.getElementById(id),{type:'line',
-    data:{datasets:sets},
+    ]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:true,position:'top',align:'end',labels:{boxWidth:18,font:{size:10},usePointStyle:false}},
         tooltip:{callbacks:{title:it=>'Day '+it[0].parsed.x,label:it=>it.dataset.label+': '+fmtN(it.parsed.y)}}},
       scales:{x:{type:'linear',min:1,max:31,grid:{display:false},title:{display:true,text:'Day of month',font:{size:10},color:GRAY},ticks:{stepSize:1,autoSkip:false,maxRotation:0,font:{size:9}}},
         y:{grid:{color:'#EEF2F6'},ticks:{font:{size:11},callback:v=>fmtN(v)}}}}});
-  fillCmp(id,cur,prv,field);
+  fillCmp(id,cur,prv);
 }
 // Registrations: one chart — a bar per day this month (left axis) + two accumulated bars at the right
 // (this month vs last month to the same day) on a separate right axis.
@@ -892,5 +792,6 @@ _renderCusum();
   document.addEventListener('visibilitychange', function(){ if(!document.hidden) _refreshCusum(); });
 })();
 </script>
+<script src="facachat-widget.js"></script>
 </body>
 </html>
