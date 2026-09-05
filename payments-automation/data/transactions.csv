@@ -24255,75 +24255,106 @@ ch_3UCCWz70hsRCruUB0ykbjxPN,2026-09-05 05:52:57,acct_1TvNtc70hsRCruUB,acct_1SSKs
 ch_3UCCY370hsRCruUB0uIZMZ9L,2026-09-05 05:54:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6300,Visa,credit,US,8892,0
 ch_3UCCZK70hsRCruUB0Q3S5dQt,2026-09-05 05:55:37,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4600,Visa,credit,US,0464,0
 ch_3UCCZP70hsRCruUB0SMYPqvy,2026-09-05 05:55:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,debit,US,6694,0
-ch_3UCCb370hsRCruUB1TAoTU6P,2026-09-05 05:57:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,0759,
+ch_3UCCb370hsRCruUB1TAoTU6P,2026-09-05 05:57:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,0759,0
 ch_3UCCc270hsRCruUB0Loraxfp,2026-09-05 05:58:07,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,failed,5060,Visa,debit,US,6321,
-ch_3UCCen70hsRCruUB0nTlOVpX,2026-09-05 06:01:31,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6900,Visa,debit,US,8309,
-ch_3UCChi70hsRCruUB12mDw8Dn,2026-09-05 06:04:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3910,Visa,debit,US,3606,
-ch_3UCChp70hsRCruUB0YpV9YOn,2026-09-05 06:04:11,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6900,Visa,credit,US,5073,
-ch_3UCCk170hsRCruUB1XRA6g8y,2026-09-05 06:06:21,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,2031,
-ch_3UCCld70hsRCruUB0FI2sZVm,2026-09-05 06:08:02,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,credit,US,4235,
-ch_3UCCnH70hsRCruUB0sDClzFp,2026-09-05 06:09:48,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6200,MasterCard,credit,US,1605,
-ch_3UCCnk70hsRCruUB0Gp3V26p,2026-09-05 06:10:13,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1800,Discover,credit,US,5189,
-ch_3UCCoH70hsRCruUB0P1yDfUz,2026-09-05 06:10:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2880,MasterCard,debit,US,7334,
-ch_3UCCrz70hsRCruUB1o9OnLWL,2026-09-05 06:14:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8800,MasterCard,credit,US,0700,
-ch_3UCCvB70hsRCruUB1wDYbfNG,2026-09-05 06:18:06,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,MasterCard,credit,US,1374,
+ch_3UCCen70hsRCruUB0nTlOVpX,2026-09-05 06:01:31,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6900,Visa,debit,US,8309,0
+ch_3UCChi70hsRCruUB12mDw8Dn,2026-09-05 06:04:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3910,Visa,debit,US,3606,0
+ch_3UCChp70hsRCruUB0YpV9YOn,2026-09-05 06:04:11,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6900,Visa,credit,US,5073,0
+ch_3UCCk170hsRCruUB1XRA6g8y,2026-09-05 06:06:21,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,2031,0
+ch_3UCCld70hsRCruUB0FI2sZVm,2026-09-05 06:08:02,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,credit,US,4235,0
+ch_3UCCnH70hsRCruUB0sDClzFp,2026-09-05 06:09:48,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6200,MasterCard,credit,US,1605,0
+ch_3UCCnk70hsRCruUB0Gp3V26p,2026-09-05 06:10:13,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1800,Discover,credit,US,5189,0
+ch_3UCCoH70hsRCruUB0P1yDfUz,2026-09-05 06:10:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2880,MasterCard,debit,US,7334,0
+ch_3UCCrz70hsRCruUB1o9OnLWL,2026-09-05 06:14:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8800,MasterCard,credit,US,0700,0
+ch_3UCCvB70hsRCruUB1wDYbfNG,2026-09-05 06:18:06,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,MasterCard,credit,US,1374,0
 ch_3UCCvS70hsRCruUB17Rr1N0M,2026-09-05 06:18:12,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,failed,7100,Visa,debit,US,4047,
-ch_3UCCwN70hsRCruUB18xbetwk,2026-09-05 06:19:10,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7100,Visa,debit,US,4047,
-ch_3UCCws70hsRCruUB0BSl2BJl,2026-09-05 06:19:41,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,9012,
-ch_3UCCwx70hsRCruUB1oKG3uo5,2026-09-05 06:19:58,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,9637,
-ch_3UCCxV70hsRCruUB1RAigf3V,2026-09-05 06:20:17,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,credit,US,5177,
-ch_3UCD3z70hsRCruUB0TKqFbrc,2026-09-05 06:27:18,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2600,Visa,debit,US,2101,
-ch_3UCD4D70hsRCruUB0ZRnLGtU,2026-09-05 06:27:17,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6670,Visa,debit,US,1364,
-ch_3UCD5070hsRCruUB0tbQf7PM,2026-09-05 06:28:08,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7788,American Express,credit,US,1008,
-ch_3UCD6g70hsRCruUB0vXxIO8W,2026-09-05 06:29:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,credit,US,6576,
-ch_3UCD8070hsRCruUB0kN1bXAO,2026-09-05 06:31:11,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,1486,
-ch_3UCDA870hsRCruUB06prdYaS,2026-09-05 06:33:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3400,Visa,credit,US,2313,
-ch_3UCDCL70hsRCruUB168p40dk,2026-09-05 06:35:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2478,Visa,debit,US,0564,
-ch_3UCDF370hsRCruUB0kKNfYQW,2026-09-05 06:38:30,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2415,American Express,credit,US,1006,
-ch_3UCDGs70hsRCruUB1VfKlOLa,2026-09-05 06:40:28,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,1347,
-ch_3UCDH070hsRCruUB0XbSGA8p,2026-09-05 06:40:26,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,0294,
-ch_3UCDIe70hsRCruUB0VaRHUsq,2026-09-05 06:42:07,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,6576,
-ch_3UCDQe70hsRCruUB0wSIs95h,2026-09-05 06:50:28,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7788,American Express,credit,US,1008,
-ch_3UCDSG70hsRCruUB0Ks48zN5,2026-09-05 06:52:04,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,debit,US,9538,
-ch_3UCDT070hsRCruUB1vQBnSDu,2026-09-05 06:52:56,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2415,American Express,credit,US,1006,
-ch_3UCDWi70hsRCruUB1DleEnXB,2026-09-05 06:56:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2300,Visa,debit,US,2137,
-ch_3UCDa970hsRCruUB19i6LvIw,2026-09-05 07:00:21,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5520,Visa,debit,US,7836,
-ch_3UCDbI70hsRCruUB1C4rQ5Cd,2026-09-05 07:01:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6960,American Express,credit,US,2788,
-ch_3UCDh570hsRCruUB0AwOAl4q,2026-09-05 07:07:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,5073,
-ch_3UCDiA70hsRCruUB1994JsyE,2026-09-05 07:08:30,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4600,Visa,credit,US,2313,
-ch_3UCDj170hsRCruUB0V2noodk,2026-09-05 07:09:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1180,Discover,credit,US,5189,
-ch_3UCDmT70hsRCruUB0ndyiTId,2026-09-05 07:12:55,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,0294,
-ch_3UCDnj70hsRCruUB13W3snYr,2026-09-05 07:14:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4025,American Express,credit,US,1006,
-ch_3UCDpC70hsRCruUB1eBhBjZJ,2026-09-05 07:15:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,6576,
-ch_3UCDqb70hsRCruUB1QlGEDiV,2026-09-05 07:17:19,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,MasterCard,credit,US,1374,
-ch_3UCDrf70hsRCruUB0MrxcFjP,2026-09-05 07:19:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,10384,American Express,credit,US,1008,
-ch_3UCDuk70hsRCruUB01EVAwEG,2026-09-05 07:21:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6720,Visa,debit,US,5635,
-ch_3UCDwn70hsRCruUB19fL4z57,2026-09-05 07:23:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,5073,
-ch_3UCE1W70hsRCruUB1vnsGc6B,2026-09-05 07:28:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6670,Visa,debit,US,1364,
-ch_3UCE6I70hsRCruUB1GCs8zt5,2026-09-05 07:33:27,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,debit,US,9531,
-ch_3UCE7c70hsRCruUB1HgwI6HC,2026-09-05 07:34:48,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,0759,
-ch_3UCE9270hsRCruUB0VQqRVKo,2026-09-05 07:36:43,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,12400,MasterCard,credit,US,0700,
-ch_3UCEBz70hsRCruUB0UIrRwDl,2026-09-05 07:39:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8165,Visa,debit,US,5538,
-ch_3UCEE970hsRCruUB0S6afWrb,2026-09-05 07:41:35,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1200,Visa,debit,US,0320,
-ch_3UCEET70hsRCruUB0LLsbDKP,2026-09-05 07:42:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,9637,
-ch_3UCEGS70hsRCruUB1oLN2q4w,2026-09-05 07:43:56,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,debit,US,3606,
-ch_3UCEIA70hsRCruUB1Byb9VZp,2026-09-05 07:46:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4900,Visa,credit,US,7449,
+ch_3UCCwN70hsRCruUB18xbetwk,2026-09-05 06:19:10,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7100,Visa,debit,US,4047,0
+ch_3UCCws70hsRCruUB0BSl2BJl,2026-09-05 06:19:41,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,9012,0
+ch_3UCCwx70hsRCruUB1oKG3uo5,2026-09-05 06:19:58,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,9637,0
+ch_3UCCxV70hsRCruUB1RAigf3V,2026-09-05 06:20:17,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,credit,US,5177,0
+ch_3UCD3z70hsRCruUB0TKqFbrc,2026-09-05 06:27:18,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2600,Visa,debit,US,2101,0
+ch_3UCD4D70hsRCruUB0ZRnLGtU,2026-09-05 06:27:17,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6670,Visa,debit,US,1364,0
+ch_3UCD5070hsRCruUB0tbQf7PM,2026-09-05 06:28:08,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7788,American Express,credit,US,1008,0
+ch_3UCD6g70hsRCruUB0vXxIO8W,2026-09-05 06:29:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,credit,US,6576,0
+ch_3UCD8070hsRCruUB0kN1bXAO,2026-09-05 06:31:11,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,debit,US,1486,0
+ch_3UCDA870hsRCruUB06prdYaS,2026-09-05 06:33:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3400,Visa,credit,US,2313,0
+ch_3UCDCL70hsRCruUB168p40dk,2026-09-05 06:35:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2478,Visa,debit,US,0564,0
+ch_3UCDF370hsRCruUB0kKNfYQW,2026-09-05 06:38:30,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2415,American Express,credit,US,1006,0
+ch_3UCDGs70hsRCruUB1VfKlOLa,2026-09-05 06:40:28,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,1347,0
+ch_3UCDH070hsRCruUB0XbSGA8p,2026-09-05 06:40:26,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,0294,0
+ch_3UCDIe70hsRCruUB0VaRHUsq,2026-09-05 06:42:07,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,6576,0
+ch_3UCDQe70hsRCruUB0wSIs95h,2026-09-05 06:50:28,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7788,American Express,credit,US,1008,0
+ch_3UCDSG70hsRCruUB0Ks48zN5,2026-09-05 06:52:04,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,debit,US,9538,0
+ch_3UCDT070hsRCruUB1vQBnSDu,2026-09-05 06:52:56,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2415,American Express,credit,US,1006,0
+ch_3UCDWi70hsRCruUB1DleEnXB,2026-09-05 06:56:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2300,Visa,debit,US,2137,0
+ch_3UCDa970hsRCruUB19i6LvIw,2026-09-05 07:00:21,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5520,Visa,debit,US,7836,0
+ch_3UCDbI70hsRCruUB1C4rQ5Cd,2026-09-05 07:01:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6960,American Express,credit,US,2788,0
+ch_3UCDh570hsRCruUB0AwOAl4q,2026-09-05 07:07:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,5073,0
+ch_3UCDiA70hsRCruUB1994JsyE,2026-09-05 07:08:30,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4600,Visa,credit,US,2313,0
+ch_3UCDj170hsRCruUB0V2noodk,2026-09-05 07:09:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1180,Discover,credit,US,5189,0
+ch_3UCDmT70hsRCruUB0ndyiTId,2026-09-05 07:12:55,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,0294,0
+ch_3UCDnj70hsRCruUB13W3snYr,2026-09-05 07:14:23,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4025,American Express,credit,US,1006,0
+ch_3UCDpC70hsRCruUB1eBhBjZJ,2026-09-05 07:15:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,6576,0
+ch_3UCDqb70hsRCruUB1QlGEDiV,2026-09-05 07:17:19,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,MasterCard,credit,US,1374,0
+ch_3UCDrf70hsRCruUB0MrxcFjP,2026-09-05 07:19:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,10384,American Express,credit,US,1008,0
+ch_3UCDuk70hsRCruUB01EVAwEG,2026-09-05 07:21:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6720,Visa,debit,US,5635,0
+ch_3UCDwn70hsRCruUB19fL4z57,2026-09-05 07:23:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,5073,0
+ch_3UCE1W70hsRCruUB1vnsGc6B,2026-09-05 07:28:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6670,Visa,debit,US,1364,0
+ch_3UCE6I70hsRCruUB1GCs8zt5,2026-09-05 07:33:27,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,debit,US,9531,0
+ch_3UCE7c70hsRCruUB1HgwI6HC,2026-09-05 07:34:48,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,0759,0
+ch_3UCE9270hsRCruUB0VQqRVKo,2026-09-05 07:36:43,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,12400,MasterCard,credit,US,0700,0
+ch_3UCEBz70hsRCruUB0UIrRwDl,2026-09-05 07:39:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8165,Visa,debit,US,5538,0
+ch_3UCEE970hsRCruUB0S6afWrb,2026-09-05 07:41:35,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1200,Visa,debit,US,0320,0
+ch_3UCEET70hsRCruUB0LLsbDKP,2026-09-05 07:42:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,9637,0
+ch_3UCEGS70hsRCruUB1oLN2q4w,2026-09-05 07:43:56,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,debit,US,3606,0
+ch_3UCEIA70hsRCruUB1Byb9VZp,2026-09-05 07:46:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4900,Visa,credit,US,7449,0
 ch_3UCENU70hsRCruUB10rJW8ER,2026-09-05 07:51:18,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,failed,3800,Visa,debit,US,6673,
-ch_3UCEOY70hsRCruUB075mOZT0,2026-09-05 07:52:26,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3700,Visa,debit,US,6673,
-ch_3UCETP70hsRCruUB1JlkpR8W,2026-09-05 07:57:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1700,Visa,credit,US,0420,
-ch_3UCEYC70hsRCruUB1XKhrduo,2026-09-05 08:02:16,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3400,Visa,credit,US,2313,
-ch_3UCEYP70hsRCruUB0V2ZdE4X,2026-09-05 08:02:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3200,Visa,credit,US,0420,
-ch_3UCEZJ70hsRCruUB1gcniFR9,2026-09-05 08:03:27,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4600,Visa,debit,US,1364,
-ch_3UCEZs70hsRCruUB0EADbNWr,2026-09-05 08:04:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5192,American Express,credit,US,1008,
-ch_3UCEh270hsRCruUB0AheNM79,2026-09-05 08:11:49,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1725,Visa,debit,US,5102,
-ch_3UCEko70hsRCruUB0gDYwldo,2026-09-05 08:15:19,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1440,American Express,credit,US,2788,
-ch_3UCEu770hsRCruUB1WdwglZA,2026-09-05 08:24:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,5073,
-ch_3UCEwj70hsRCruUB1BKZNm6K,2026-09-05 08:27:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2880,American Express,credit,US,2788,
-ch_3UCEyk70hsRCruUB0NOu4mSa,2026-09-05 08:29:49,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,0759,
-ch_3UCF0770hsRCruUB0Sb9xf2g,2026-09-05 08:31:06,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,credit,US,4235,
-ch_3UCF4h70hsRCruUB0itlRYab,2026-09-05 08:35:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,debit,US,9637,
-ch_3UCF6370hsRCruUB1eJzlfLX,2026-09-05 08:37:14,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,6694,
-ch_3UCF6c6xrVvfynTx0hzY8cUT,2026-09-05 08:37:51,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,880,Visa,debit,GB,9711,
-ch_3UCF6v70hsRCruUB0P6VQHen,2026-09-05 08:38:09,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3120,American Express,credit,US,2788,
-ch_3UCFIV6xrVvfynTx0xKmnQAX,2026-09-05 08:50:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1130,MasterCard,debit,GB,1166,
-ch_3UCFJF6xrVvfynTx1BLCto2C,2026-09-05 08:50:56,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1130,MasterCard,credit,GB,6727,
+ch_3UCEOY70hsRCruUB075mOZT0,2026-09-05 07:52:26,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3700,Visa,debit,US,6673,0
+ch_3UCETP70hsRCruUB1JlkpR8W,2026-09-05 07:57:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1700,Visa,credit,US,0420,0
+ch_3UCEYC70hsRCruUB1XKhrduo,2026-09-05 08:02:16,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3400,Visa,credit,US,2313,0
+ch_3UCEYP70hsRCruUB0V2ZdE4X,2026-09-05 08:02:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3200,Visa,credit,US,0420,0
+ch_3UCEZJ70hsRCruUB1gcniFR9,2026-09-05 08:03:27,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4600,Visa,debit,US,1364,0
+ch_3UCEZs70hsRCruUB0EADbNWr,2026-09-05 08:04:38,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5192,American Express,credit,US,1008,0
+ch_3UCEh270hsRCruUB0AheNM79,2026-09-05 08:11:49,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1725,Visa,debit,US,5102,0
+ch_3UCEko70hsRCruUB0gDYwldo,2026-09-05 08:15:19,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1440,American Express,credit,US,2788,0
+ch_3UCEu770hsRCruUB1WdwglZA,2026-09-05 08:24:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,credit,US,5073,0
+ch_3UCEwj70hsRCruUB1BKZNm6K,2026-09-05 08:27:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2880,American Express,credit,US,2788,0
+ch_3UCEyk70hsRCruUB0NOu4mSa,2026-09-05 08:29:49,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1380,Visa,credit,US,0759,0
+ch_3UCF0770hsRCruUB0Sb9xf2g,2026-09-05 08:31:06,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2530,Visa,credit,US,4235,0
+ch_3UCF4h70hsRCruUB0itlRYab,2026-09-05 08:35:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2760,Visa,debit,US,9637,0
+ch_3UCF6370hsRCruUB1eJzlfLX,2026-09-05 08:37:14,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,6694,0
+ch_3UCF6c6xrVvfynTx0hzY8cUT,2026-09-05 08:37:51,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,880,Visa,debit,GB,9711,9
+ch_3UCF6v70hsRCruUB0P6VQHen,2026-09-05 08:38:09,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3120,American Express,credit,US,2788,0
+ch_3UCFIV6xrVvfynTx0xKmnQAX,2026-09-05 08:50:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1130,MasterCard,debit,GB,1166,11
+ch_3UCFJF6xrVvfynTx1BLCto2C,2026-09-05 08:50:56,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1130,MasterCard,credit,GB,6727,11
+ch_3UCFo66xrVvfynTx0V2ZTWie,2026-09-05 09:22:53,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2132,Visa,debit,GB,7108,21
+ch_3UCFwV6xrVvfynTx1Vg2ISW3,2026-09-05 09:31:29,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2150,MasterCard,debit,GB,5140,21
+ch_3UCFwt6xrVvfynTx0DvGT1wN,2026-09-05 09:31:55,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2846,MasterCard,debit,GB,8874,28
+ch_3UCFxg6xrVvfynTx1bttJQ7m,2026-09-05 09:32:40,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2450,MasterCard,credit,GB,9487,24
+ch_3UCFye6xrVvfynTx1e0Xsz0B,2026-09-05 09:33:42,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,850,MasterCard,debit,GB,3698,8
+ch_3UCG4j6xrVvfynTx1kVZk2IM,2026-09-05 09:39:59,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,380,MasterCard,debit,GB,0413,4
+ch_3UCG6j6xrVvfynTx1q34JGjf,2026-09-05 09:42:08,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,5923,Visa,debit,GB,5257,59
+ch_3UCGCv6xrVvfynTx0MsaAuzq,2026-09-05 09:48:27,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,930,Visa,debit,GB,5470,9
+ch_3UCGDA6xrVvfynTx1qRWAifH,2026-09-05 09:48:41,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,810,Visa,debit,GB,4171,8
+ch_3UCGDP6xrVvfynTx1spAVnsR,2026-09-05 09:48:56,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,810,MasterCard,debit,GB,1333,8
+ch_3UCGDy6xrVvfynTx15cyAlA9,2026-09-05 09:49:34,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1010,MasterCard,debit,GB,2974,10
+ch_3UCGEF6xrVvfynTx1avlJB7W,2026-09-05 09:49:47,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,810,Visa,debit,GB,2114,8
+ch_3UCGER6xrVvfynTx0y4NAU7U,2026-09-05 09:50:00,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1410,MasterCard,debit,GB,1839,14
+ch_3UCGFF6xrVvfynTx0a5jXsh3,2026-09-05 09:50:54,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,810,MasterCard,debit,GB,0357,8
+ch_3UCGFZ6xrVvfynTx1KJO5J8C,2026-09-05 09:51:09,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1010,Visa,debit,GB,3125,10
+ch_3UCGFn6xrVvfynTx1IPDSvd2,2026-09-05 09:51:23,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1410,MasterCard,debit,GB,3136,14
+ch_3UCGL76xrVvfynTx0Kg8B34V,2026-09-05 09:56:54,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1000,Visa,debit,GB,9088,10
+ch_3UCGSg6xrVvfynTx1DIWZeR0,2026-09-05 10:04:43,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2650,Visa,debit,GB,7253,26
+ch_3UCGh66xrVvfynTx1ekOdkOX,2026-09-05 10:19:38,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3030,MasterCard,debit,GB,6467,30
+ch_3UCHA96xrVvfynTx0krK2knJ,2026-09-05 10:49:44,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1553,Visa,debit,GB,8647,15
+ch_3UCHB96xrVvfynTx0p8hPZzw,2026-09-05 10:50:44,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1260,Visa,debit,GB,9221,12
+ch_3UCHBb6xrVvfynTx0QDy9WtB,2026-09-05 10:51:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1800,Visa,debit,GB,3248,18
+ch_3UCHCs6xrVvfynTx1CVQqRat,2026-09-05 10:52:26,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1620,Visa,credit,GB,0611,16
+ch_3UCHIN6xrVvfynTx1yPwZABF,2026-09-05 10:58:08,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3200,Visa,debit,GB,3300,32
+ch_3UCHNJ6xrVvfynTx1PX4pfU7,2026-09-05 11:03:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,810,MasterCard,debit,GB,6666,8
+ch_3UCHV46xrVvfynTx0dKDBvDa,2026-09-05 11:11:21,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3240,Visa,debit,GB,4665,32
+ch_3UCHii6xrVvfynTx1AILlqGH,2026-09-05 11:25:20,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,350,Visa,debit,GB,3562,3
+ch_3UCHyj6xrVvfynTx0QNQ9BgG,2026-09-05 11:41:56,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1700,MasterCard,debit,GB,1869,17
+ch_3UCHze6xrVvfynTx1lWtr6Uw,2026-09-05 11:42:51,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,587,MasterCard,debit,GB,6250,6
+ch_3UCIDW5XZgMuE7ip1LqRTl9n,2026-09-05 11:57:15,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2260,Visa,debit,US,4262,74
+ch_3UCIDj6xrVvfynTx1yEgIFH0,2026-09-05 11:57:26,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2168,Visa,debit,GB,0549,21
