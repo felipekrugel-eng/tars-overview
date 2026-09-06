@@ -25200,80 +25200,108 @@ ch_3UCTJK6xaKj8hHOI0JkUYeCk,2026-09-05 23:48:02,acct_1TvKXT6xaKj8hHOI,acct_1SSKs
 ch_3UCTLM6xaKj8hHOI1PALjsUI,2026-09-05 23:50:03,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,3002,155
 ch_3UCTMKQJfvlGDJJG1SE8pgBW,2026-09-05 23:51:03,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2075,American Express,credit,US,3382,57
 ch_3UCTPAQJfvlGDJJG1vsAxRAQ,2026-09-05 23:53:56,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,9246,25
-ch_3UCTSw6xaKj8hHOI1eKWJg8X,2026-09-05 23:57:55,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4834,Visa,prepaid,US,3473,
-ch_3UCTSy7itMnCQdbe1Wlmy8eS,2026-09-05 23:57:57,acct_1TuEuL7itMnCQdbe,acct_1SSKsA7e4AMQfKY3,Isan Thai Food Truck,US,usd,succeeded,4043,Visa,debit,US,6978,
-ch_3UCTTC5oE0hif8XD1nBZOOjs,2026-09-05 23:58:07,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,6146,MasterCard,credit,US,5028,
-ch_3UCTUh7itMnCQdbe1Hf5wJrQ,2026-09-05 23:59:57,acct_1TuEuL7itMnCQdbe,acct_1SSKsA7e4AMQfKY3,Isan Thai Food Truck,US,usd,succeeded,3055,Visa,debit,US,6914,
-ch_3UCTUvQJfvlGDJJG1rnPOWEg,2026-09-06 00:00:06,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1625,MasterCard,credit,US,9074,
+ch_3UCTSw6xaKj8hHOI1eKWJg8X,2026-09-05 23:57:55,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4834,Visa,prepaid,US,3473,141
+ch_3UCTSy7itMnCQdbe1Wlmy8eS,2026-09-05 23:57:57,acct_1TuEuL7itMnCQdbe,acct_1SSKsA7e4AMQfKY3,Isan Thai Food Truck,US,usd,succeeded,4043,Visa,debit,US,6978,120
+ch_3UCTTC5oE0hif8XD1nBZOOjs,2026-09-05 23:58:07,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,6146,MasterCard,credit,US,5028,175
+ch_3UCTUh7itMnCQdbe1Hf5wJrQ,2026-09-05 23:59:57,acct_1TuEuL7itMnCQdbe,acct_1SSKsA7e4AMQfKY3,Isan Thai Food Truck,US,usd,succeeded,3055,Visa,debit,US,6914,94
+ch_3UCTUvQJfvlGDJJG1rnPOWEg,2026-09-06 00:00:06,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1625,MasterCard,credit,US,9074,46
 ch_3UCTXS4yu1rGqQyt0TlSleuT,2026-09-06 00:02:30,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,failed,10000,Visa,credit,US,8870,
-ch_3UCTXj4yu1rGqQyt00PQfhRD,2026-09-06 00:02:48,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,10000,Visa,debit,US,0290,
-ch_3UCTZ7QJfvlGDJJG0nmWXo1r,2026-09-06 00:04:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1350,Visa,credit,US,7558,
-ch_3UCTa8G9cKTLUhQ71NU4SAjq,2026-09-06 00:06:32,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,14653,American Express,credit,US,1005,
-ch_3UCTddQJfvlGDJJG1RlZPy8L,2026-09-06 00:08:53,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,Visa,credit,US,5526,
-ch_3UCTgRQJfvlGDJJG1iKstZPA,2026-09-06 00:11:51,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2350,Visa,debit,US,9524,
-ch_3UCTiLQJfvlGDJJG0h69E7Aw,2026-09-06 00:13:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2950,MasterCard,credit,US,1947,
-ch_3UCTkj6xaKj8hHOI1OQPxXr1,2026-09-06 00:16:13,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,968,Visa,credit,US,8720,
-ch_3UCTlgQJfvlGDJJG1O5ynjKi,2026-09-06 00:17:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1100,Visa,debit,US,0737,
-ch_3UCTm6QJfvlGDJJG02KmqkqP,2026-09-06 00:17:37,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,5070,
-ch_3UCToTQJfvlGDJJG0U8Sd6Lx,2026-09-06 00:20:05,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1550,Visa,debit,US,6317,
-ch_3UCTob5oE0hif8XD0gdSKBZT,2026-09-06 00:20:16,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,1756,Visa,debit,US,5598,
-ch_3UCTpP6xaKj8hHOI0c3s2DuH,2026-09-06 00:21:06,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2349,Visa,debit,US,3101,
-ch_3UCTqyQJfvlGDJJG0ZbPZ7br,2026-09-06 00:22:44,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,credit,US,8211,
-ch_3UCTrP5XZgMuE7ip17McG5sV,2026-09-06 00:23:35,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,22869,Visa,credit,US,2736,
-ch_3UCTtpQJfvlGDJJG0WovOIej,2026-09-06 00:25:37,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,MasterCard,debit,US,7310,
-ch_3UCTtuQJfvlGDJJG14N9UZSm,2026-09-06 00:25:43,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2000,Visa,credit,US,6104,
-ch_3UCTvG5XZgMuE7ip0XGlHjwX,2026-09-06 00:27:10,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,475,Visa,credit,US,2736,
-ch_3UCTxnQJfvlGDJJG033PGeLq,2026-09-06 00:29:42,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1375,Visa,credit,US,7439,
-ch_3UCTzwQJfvlGDJJG0rBbjDtN,2026-09-06 00:31:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,Visa,debit,US,4111,
-ch_3UCU1KQJfvlGDJJG1Yi76JFt,2026-09-06 00:33:22,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1175,Visa,credit,US,8312,
-ch_3UCU41G9cKTLUhQ70v5RfB9S,2026-09-06 00:36:25,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,4844,Visa,debit,US,5170,
-ch_3UCU44QJfvlGDJJG0Za8PMCZ,2026-09-06 00:36:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,debit,US,8874,
-ch_3UCU9eQJfvlGDJJG0MpMjrZ8,2026-09-06 00:41:57,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,prepaid,US,2292,
-ch_3UCU9y7HEHpEovei0mlkCjKi,2026-09-06 00:42:21,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,Discover,credit,US,8214,
-ch_3UCUB66xaKj8hHOI02Ya6EnH,2026-09-06 00:43:31,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,Visa,credit,US,8761,
-ch_3UCUBQ6xaKj8hHOI0pgkRYf7,2026-09-06 00:43:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,7049,
-ch_3UCUDe6xaKj8hHOI1Enprmqr,2026-09-06 00:46:07,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6449,Visa,prepaid,US,8607,
-ch_3UCUFi6xaKj8hHOI0q19S6Qf,2026-09-06 00:48:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1395,Visa,debit,US,8801,
-ch_3UCUG0QJfvlGDJJG15t94PGW,2026-09-06 00:48:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,MasterCard,credit,US,8446,
-ch_3UCUGNQJfvlGDJJG00LdOfiT,2026-09-06 00:48:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,8821,
-ch_3UCUJg6xaKj8hHOI1CGC1DqV,2026-09-06 00:52:23,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,Visa,debit,US,1291,
-ch_3UCUKU6xaKj8hHOI0yPZpJ4s,2026-09-06 00:53:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1374,Visa,credit,US,9483,
-ch_3UCUOm7HEHpEovei1hf2Zidq,2026-09-06 00:57:39,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,4050,Visa,debit,US,0133,
-ch_3UCUQw7HEHpEovei1Q6wy9kP,2026-09-06 01:00:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2013,MasterCard,debit,US,7142,
-ch_3UCUSL7HEHpEovei1B6nEZXa,2026-09-06 01:01:20,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2200,Visa,debit,US,8050,
-ch_3UCUWw7HEHpEovei0gTWMJVX,2026-09-06 01:06:52,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1925,Visa,debit,US,8229,
-ch_3UCUbg6xaKj8hHOI0kLB2uue,2026-09-06 01:10:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,859,Visa,prepaid,US,4764,
-ch_3UCUce7HEHpEovei03mkE6j3,2026-09-06 01:11:58,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,5720,Visa,debit,US,6372,
-ch_3UCUdrG9cKTLUhQ71h9OcXod,2026-09-06 01:13:17,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8973,Visa,credit,US,7294,
-ch_3UCUed7HEHpEovei0LQEl2sD,2026-09-06 01:14:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,800,Discover,credit,US,3832,
-ch_3UCUf8QJfvlGDJJG0bAuR5na,2026-09-06 01:14:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1475,Visa,debit,US,5325,
-ch_3UCUgF7HEHpEovei0zeiWUuY,2026-09-06 01:15:46,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3000,MasterCard,credit,US,4540,
-ch_3UCUkkQJfvlGDJJG1xVzZ5mi,2026-09-06 01:20:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1025,Visa,debit,US,3379,
-ch_3UCUt37HEHpEovei099j90Kl,2026-09-06 01:28:54,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1350,Visa,debit,US,8140,
-ch_3UCUvH6xaKj8hHOI1Q3ldVui,2026-09-06 01:31:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1719,MasterCard,debit,US,8022,
-ch_3UCV176xaKj8hHOI1JyS9day,2026-09-06 01:37:18,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2858,MasterCard,debit,US,0098,
-ch_3UCV2jG9cKTLUhQ71Qvj6sea,2026-09-06 01:38:57,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3644,Visa,debit,US,6106,
-ch_3UCV8N7HEHpEovei1B405qrT,2026-09-06 01:44:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1725,Visa,debit,US,6529,
-ch_3UCV956xaKj8hHOI0YuOY2qd,2026-09-06 01:45:30,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5374,Visa,debit,US,4563,
-ch_3UCVD47HEHpEovei1eJhG9bl,2026-09-06 01:50:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2200,Visa,debit,US,9034,
-ch_3UCVFY6xaKj8hHOI12y9NPnS,2026-09-06 01:52:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1796,Visa,prepaid,US,2215,
-ch_3UCVGi7HEHpEovei1W58NjIP,2026-09-06 01:53:30,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1500,Visa,debit,US,3636,
-ch_3UCVIM7HEHpEovei0R6Tgvgu,2026-09-06 01:55:10,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1400,Visa,debit,US,8229,
-ch_3UCVQr7HEHpEovei0dXSqcNl,2026-09-06 02:04:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3853,Visa,credit,US,4584,
-ch_3UCVUt7HEHpEovei0qQb5bUr,2026-09-06 02:08:02,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2128,MasterCard,debit,US,1208,
-ch_3UCVX57HEHpEovei1vCkgsSw,2026-09-06 02:14:51,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,700,Visa,prepaid,US,5571,
-ch_3UCVfL6xaKj8hHOI1doPkXSr,2026-09-06 02:18:49,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2896,Visa,prepaid,US,5975,
-ch_3UCVgf7HEHpEovei0dHHIdrM,2026-09-06 02:20:11,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,400,Visa,debit,US,8140,
-ch_3UCVhP7HEHpEovei02R6cwfJ,2026-09-06 02:21:42,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1550,Visa,debit,US,0000,
-ch_3UCVkP7HEHpEovei162Bypvx,2026-09-06 02:24:06,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,5100,Visa,debit,US,2288,
-ch_3UCVlW7HEHpEovei1kRfgqYO,2026-09-06 02:25:55,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1495,Visa,debit,US,1291,
-ch_3UCVmnG9cKTLUhQ7096rA7mT,2026-09-06 02:26:32,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,17743,Visa,credit,US,6056,
-ch_3UCVuV7HEHpEovei0YM7FhmG,2026-09-06 02:34:29,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3508,Visa,debit,US,3829,
-ch_3UCVx17HEHpEovei1ekal097,2026-09-06 02:37:07,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1208,Visa,debit,US,3147,
-ch_3UCVyK7HEHpEovei1t5Q6PJk,2026-09-06 02:38:26,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1815,MasterCard,credit,US,7258,
-ch_3UCVz76xaKj8hHOI1otrkXWd,2026-09-06 02:39:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,MasterCard,debit,US,9420,
-ch_3UCVzG7HEHpEovei1WECtqyn,2026-09-06 02:39:28,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,550,MasterCard,debit,US,1208,
-ch_3UCW0FG9cKTLUhQ70IkmUI6G,2026-09-06 02:40:26,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,263,Visa,credit,US,6056,
-ch_3UCW0g7HEHpEovei0nJAZbTN,2026-09-06 02:40:52,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,Visa,debit,US,0000,
-ch_3UCW3j7HEHpEovei1gKKFKkg,2026-09-06 02:44:41,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1500,Visa,debit,US,1291,
-ch_3UCW6N7HEHpEovei1jVnmP5l,2026-09-06 02:46:45,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,330,MasterCard,credit,US,8657,
+ch_3UCTXj4yu1rGqQyt00PQfhRD,2026-09-06 00:02:48,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,10000,Visa,debit,US,0290,275
+ch_3UCTZ7QJfvlGDJJG0nmWXo1r,2026-09-06 00:04:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1350,Visa,credit,US,7558,39
+ch_3UCTa8G9cKTLUhQ71NU4SAjq,2026-09-06 00:06:32,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,14653,American Express,credit,US,1005,380
+ch_3UCTddQJfvlGDJJG1RlZPy8L,2026-09-06 00:08:53,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,Visa,credit,US,5526,31
+ch_3UCTgRQJfvlGDJJG1iKstZPA,2026-09-06 00:11:51,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2350,Visa,debit,US,9524,64
+ch_3UCTiLQJfvlGDJJG0h69E7Aw,2026-09-06 00:13:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2950,MasterCard,credit,US,1947,79
+ch_3UCTkj6xaKj8hHOI1OQPxXr1,2026-09-06 00:16:13,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,968,Visa,credit,US,8720,40
+ch_3UCTlgQJfvlGDJJG1O5ynjKi,2026-09-06 00:17:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1100,Visa,debit,US,0737,33
+ch_3UCTm6QJfvlGDJJG02KmqkqP,2026-09-06 00:17:37,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,5070,25
+ch_3UCToTQJfvlGDJJG0U8Sd6Lx,2026-09-06 00:20:05,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1550,Visa,debit,US,6317,44
+ch_3UCTob5oE0hif8XD0gdSKBZT,2026-09-06 00:20:16,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,1756,Visa,debit,US,5598,61
+ch_3UCTpP6xaKj8hHOI0c3s2DuH,2026-09-06 00:21:06,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2349,Visa,debit,US,3101,76
+ch_3UCTqyQJfvlGDJJG0ZbPZ7br,2026-09-06 00:22:44,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,credit,US,8211,30
+ch_3UCTrP5XZgMuE7ip17McG5sV,2026-09-06 00:23:35,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,22869,Visa,credit,US,2736,610
+ch_3UCTtpQJfvlGDJJG0WovOIej,2026-09-06 00:25:37,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,MasterCard,debit,US,7310,29
+ch_3UCTtuQJfvlGDJJG14N9UZSm,2026-09-06 00:25:43,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2000,Visa,credit,US,6104,55
+ch_3UCTvG5XZgMuE7ip0XGlHjwX,2026-09-06 00:27:10,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,475,Visa,credit,US,2736,27
+ch_3UCTxnQJfvlGDJJG033PGeLq,2026-09-06 00:29:42,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1375,Visa,credit,US,7439,39
+ch_3UCTzwQJfvlGDJJG0rBbjDtN,2026-09-06 00:31:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,Visa,debit,US,4111,29
+ch_3UCU1KQJfvlGDJJG1Yi76JFt,2026-09-06 00:33:22,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1175,Visa,credit,US,8312,34
+ch_3UCU41G9cKTLUhQ70v5RfB9S,2026-09-06 00:36:25,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,4844,Visa,debit,US,5170,111
+ch_3UCU44QJfvlGDJJG0Za8PMCZ,2026-09-06 00:36:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,debit,US,8874,18
+ch_3UCU9eQJfvlGDJJG0MpMjrZ8,2026-09-06 00:41:57,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,prepaid,US,2292,16
+ch_3UCU9y7HEHpEovei0mlkCjKi,2026-09-06 00:42:21,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,Discover,credit,US,8214,39
+ch_3UCUB66xaKj8hHOI02Ya6EnH,2026-09-06 00:43:31,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,Visa,credit,US,8761,155
+ch_3UCUBQ6xaKj8hHOI0pgkRYf7,2026-09-06 00:43:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,MasterCard,debit,US,7049,155
+ch_3UCUDe6xaKj8hHOI1Enprmqr,2026-09-06 00:46:07,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6449,Visa,prepaid,US,8607,183
+ch_3UCUFi6xaKj8hHOI0q19S6Qf,2026-09-06 00:48:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1395,Visa,debit,US,8801,51
+ch_3UCUG0QJfvlGDJJG15t94PGW,2026-09-06 00:48:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,MasterCard,credit,US,8446,29
+ch_3UCUGNQJfvlGDJJG00LdOfiT,2026-09-06 00:48:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,8821,19
+ch_3UCUJg6xaKj8hHOI1CGC1DqV,2026-09-06 00:52:23,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5375,Visa,debit,US,1291,155
+ch_3UCUKU6xaKj8hHOI0yPZpJ4s,2026-09-06 00:53:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1374,Visa,credit,US,9483,51
+ch_3UCUOm7HEHpEovei1hf2Zidq,2026-09-06 00:57:39,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,4050,Visa,debit,US,0133,122
+ch_3UCUQw7HEHpEovei1Q6wy9kP,2026-09-06 01:00:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2013,MasterCard,debit,US,7142,60
+ch_3UCUSL7HEHpEovei1B6nEZXa,2026-09-06 01:01:20,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2200,Visa,debit,US,8050,66
+ch_3UCUWw7HEHpEovei0gTWMJVX,2026-09-06 01:06:52,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1925,Visa,debit,US,8229,58
+ch_3UCUbg6xaKj8hHOI0kLB2uue,2026-09-06 01:10:56,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,859,Visa,prepaid,US,4764,37
+ch_3UCUce7HEHpEovei03mkE6j3,2026-09-06 01:11:58,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,5720,Visa,debit,US,6372,172
+ch_3UCUdrG9cKTLUhQ71h9OcXod,2026-09-06 01:13:17,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8973,Visa,credit,US,7294,238
+ch_3UCUed7HEHpEovei0LQEl2sD,2026-09-06 01:14:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,800,Discover,credit,US,3832,24
+ch_3UCUf8QJfvlGDJJG0bAuR5na,2026-09-06 01:14:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1475,Visa,debit,US,5325,42
+ch_3UCUgF7HEHpEovei0zeiWUuY,2026-09-06 01:15:46,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3000,MasterCard,credit,US,4540,90
+ch_3UCUkkQJfvlGDJJG1xVzZ5mi,2026-09-06 01:20:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1025,Visa,debit,US,3379,31
+ch_3UCUt37HEHpEovei099j90Kl,2026-09-06 01:28:54,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1350,Visa,debit,US,8140,41
+ch_3UCUvH6xaKj8hHOI1Q3ldVui,2026-09-06 01:31:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1719,MasterCard,debit,US,8022,60
+ch_3UCV176xaKj8hHOI1JyS9day,2026-09-06 01:37:18,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2858,MasterCard,debit,US,0098,89
+ch_3UCV2jG9cKTLUhQ71Qvj6sea,2026-09-06 01:38:57,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3644,Visa,debit,US,6106,88
+ch_3UCV8N7HEHpEovei1B405qrT,2026-09-06 01:44:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1725,Visa,debit,US,6529,52
+ch_3UCV956xaKj8hHOI0YuOY2qd,2026-09-06 01:45:30,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5374,Visa,debit,US,4563,155
+ch_3UCVD47HEHpEovei1eJhG9bl,2026-09-06 01:50:00,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2200,Visa,debit,US,9034,66
+ch_3UCVFY6xaKj8hHOI12y9NPnS,2026-09-06 01:52:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1796,Visa,prepaid,US,2215,62
+ch_3UCVGi7HEHpEovei1W58NjIP,2026-09-06 01:53:30,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1500,Visa,debit,US,3636,45
+ch_3UCVIM7HEHpEovei0R6Tgvgu,2026-09-06 01:55:10,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1400,Visa,debit,US,8229,42
+ch_3UCVQr7HEHpEovei0dXSqcNl,2026-09-06 02:04:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3853,Visa,credit,US,4584,116
+ch_3UCVUt7HEHpEovei0qQb5bUr,2026-09-06 02:08:02,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2128,MasterCard,debit,US,1208,64
+ch_3UCVX57HEHpEovei1vCkgsSw,2026-09-06 02:14:51,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,700,Visa,prepaid,US,5571,21
+ch_3UCVfL6xaKj8hHOI1doPkXSr,2026-09-06 02:18:49,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2896,Visa,prepaid,US,5975,90
+ch_3UCVgf7HEHpEovei0dHHIdrM,2026-09-06 02:20:11,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,400,Visa,debit,US,8140,12
+ch_3UCVhP7HEHpEovei02R6cwfJ,2026-09-06 02:21:42,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1550,Visa,debit,US,0000,47
+ch_3UCVkP7HEHpEovei162Bypvx,2026-09-06 02:24:06,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,5100,Visa,debit,US,2288,153
+ch_3UCVlW7HEHpEovei1kRfgqYO,2026-09-06 02:25:55,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1495,Visa,debit,US,1291,45
+ch_3UCVmnG9cKTLUhQ7096rA7mT,2026-09-06 02:26:32,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,17743,Visa,credit,US,6056,457
+ch_3UCVuV7HEHpEovei0YM7FhmG,2026-09-06 02:34:29,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,3508,Visa,debit,US,3829,105
+ch_3UCVx17HEHpEovei1ekal097,2026-09-06 02:37:07,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1208,Visa,debit,US,3147,36
+ch_3UCVyK7HEHpEovei1t5Q6PJk,2026-09-06 02:38:26,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1815,MasterCard,credit,US,7258,54
+ch_3UCVz76xaKj8hHOI1otrkXWd,2026-09-06 02:39:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,MasterCard,debit,US,9420,85
+ch_3UCVzG7HEHpEovei1WECtqyn,2026-09-06 02:39:28,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,550,MasterCard,debit,US,1208,17
+ch_3UCW0FG9cKTLUhQ70IkmUI6G,2026-09-06 02:40:26,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,263,Visa,credit,US,6056,22
+ch_3UCW0g7HEHpEovei0nJAZbTN,2026-09-06 02:40:52,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,Visa,debit,US,0000,39
+ch_3UCW3j7HEHpEovei1gKKFKkg,2026-09-06 02:44:41,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1500,Visa,debit,US,1291,45
+ch_3UCW6N7HEHpEovei1jVnmP5l,2026-09-06 02:46:45,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,330,MasterCard,credit,US,8657,10
+ch_3UCWGP7HEHpEovei1sUsZ8uk,2026-09-06 02:57:53,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,990,Visa,debit,US,2166,30
+ch_3UCWJ0G9cKTLUhQ71EIwAQCI,2026-09-06 03:00:31,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2311,American Express,credit,US,1046,73
+ch_3UCWKn7HEHpEovei1ckpxXsn,2026-09-06 03:02:47,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,460,Visa,debit,US,2763,14
+ch_3UCWO97HEHpEovei1q5dIeAX,2026-09-06 03:05:09,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,630,Visa,debit,US,2276,19
+ch_3UCWYj7HEHpEovei1PYLEBoT,2026-09-06 03:16:50,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1400,MasterCard,debit,US,1208,42
+ch_3UCWi47HEHpEovei17mOAygH,2026-09-06 03:25:52,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1800,Visa,debit,US,5203,54
+ch_3UCWiHG6iUrq4DFX0yUTpMEa,2026-09-06 03:26:40,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,3000,Visa,credit,US,8746,90
+ch_3UCWiy7HEHpEovei0iKzkaxb,2026-09-06 03:26:39,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,800,MasterCard,debit,US,1208,24
+ch_3UCX6SG9cKTLUhQ70h2OR3pO,2026-09-06 03:51:20,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,6148,Visa,credit,US,7835,168
+ch_3UCXIY7HEHpEovei0E0CmpwE,2026-09-06 04:03:33,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2255,Visa,debit,US,5250,68
+ch_3UCXKy7HEHpEovei0DaaAYgq,2026-09-06 04:05:56,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1265,Visa,debit,US,0613,38
+ch_3UCXPK4yu1rGqQyt0jnDqF88,2026-09-06 04:10:24,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,10000,MasterCard,credit,US,9576,275
+ch_3UCXhEG9cKTLUhQ71xzgk4Q6,2026-09-06 04:29:03,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,3379,Visa,credit,US,4370,99
+ch_3UCXpO7HEHpEovei1Itrxnxt,2026-09-06 04:37:25,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2750,MasterCard,credit,US,3188,83
+ch_3UCXq07HEHpEovei1q7zCTS1,2026-09-06 04:38:02,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,840,Visa,debit,US,3069,25
+ch_3UCXtd7HEHpEovei0kUvL5z9,2026-09-06 04:41:45,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1150,Visa,credit,US,4584,35
+ch_3UCXtg7HEHpEovei0BgBuL6y,2026-09-06 04:41:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2420,Visa,debit,US,1291,73
+ch_3UCXvI7HEHpEovei1OELrggt,2026-09-06 04:43:24,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,945,Discover,credit,US,8214,28
+ch_3UCXxT7HEHpEovei1tzKHyuv,2026-09-06 04:45:42,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1800,MasterCard,credit,US,3188,54
+ch_3UCY1w7HEHpEovei1gqFykN0,2026-09-06 04:50:20,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,900,Visa,debit,US,8140,27
+ch_3UCbOL6xrVvfynTx0PYaPlrJ,2026-09-06 08:25:39,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1650,Visa,debit,GB,0347,16
+ch_3UCbYV6xrVvfynTx0YtqEBZd,2026-09-06 08:36:08,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,900,Visa,debit,GB,6360,9
+ch_3UCbZo6xrVvfynTx1wA4KS1A,2026-09-06 08:37:29,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1400,Visa,debit,GB,2023,14
+ch_3UCbj56xrVvfynTx1mwDFgu4,2026-09-06 08:47:06,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,700,MasterCard,debit,GB,9067,7
+ch_3UCbjo6xrVvfynTx1GdbrrRw,2026-09-06 08:47:52,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1775,Visa,debit,GB,1918,18
+ch_3UCblB6xrVvfynTx1VVD8PDj,2026-09-06 08:49:20,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2162,MasterCard,prepaid,GB,7408,21
+ch_3UCbnI6xrVvfynTx1ahdWl55,2026-09-06 08:51:30,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,863,Visa,debit,GB,5222,9
+ch_3UCboE65IG2uVdnd16keNQ8c,2026-09-06 08:52:22,acct_1UCagn65IG2uVdnd,acct_1SSKsA7e4AMQfKY3,queen's touch beauty &Haitian foods LLC,US,usd,succeeded,100,Visa,credit,US,9968,0
