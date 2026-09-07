@@ -1,16 +1,28 @@
-
+node_modules/
+snowflake_tars_key.p8
+*.pyc
 __pycache__/
+payments-automation/__pycache__/
+
+# Editor lock files
+.~lock.*#
+
+# Pipeline scratch. run.py removes these on success, but a failed run leaves them
+# behind on purpose so the offending workbook can be opened.
 _build.xlsx
 _recalc/
-.~lock.*#
-*.pyc
-# behind on purpose so the offending workbook can be opened.
-# Pipeline scratch. run.py removes these on success, but a failed run leaves them
-# The plain export is a working copy; only the .gz is committed.
+
 # workbook automation scratch
-merchant-base-automation/data/q1_export.csv
-node_modules/
-payments-automation/__pycache__/
 payments-automation/_build.xlsx
 payments-automation/_recalc/
-snowflake_tars_key.p8
+
+# The plain export is a working copy; only the .gz is committed.
+merchant-base-automation/data/q1_export.csv
+
+# Throwaway probes against Snowflake — not part of any pipeline. Ignoring the
+# directory keeps new one-off scripts out of `git status`; the 14 adhoc files that
+# were already committed stay tracked, since .gitignore does not untrack anything.
+adhoc/
+
+# snowflake-sdk writes this next to whatever script invoked it.
+snowflake.log
