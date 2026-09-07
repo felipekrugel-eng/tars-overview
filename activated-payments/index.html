@@ -590,6 +590,7 @@
             <tr>
               <th class="l" data-k="name">Merchant</th>
               <th data-k="started">Started</th>
+              <th data-k="lastTxn">Last transacted day</th>
               <th data-k="txns">Transactions</th>
               <th data-k="volume">Volume (USD)</th>
               <th data-k="take">Fee applied</th>
@@ -1316,7 +1317,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var RAW_VOL  = window.__PAY_VOL_DAILY || [];     // [{d,usd,cnt,by:{CC:{usd,cnt}}}] volume/day (USD)
   var RAW_ENA  = window.__PAY_ENABLED_DAILY || []; // [{d,n,by:{CC:n}}] enabled/day (backfilled from Terms-accepted)
   var SNAP = window.__PAY_ENABLED_SNAP || [];     // [{d,enabled,total}] legacy forward snapshot (fallback)
-  var RAW_TXN  = window.__PAY_TXN_MERCHANTS || [];// [{acct,name,mid,country,started,txns,volume,captured,take,margin}]
+  var RAW_TXN  = window.__PAY_TXN_MERCHANTS || [];// [{acct,name,mid,country,started,lastTxn,txns,volume,captured,take,margin}]
   var UPD = window.__PAY_OVERVIEW_UPDATED || null;
 
   // What the page actually renders. Reassigned by loadData() whenever the country
@@ -1596,14 +1597,16 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var tot=document.getElementById('ovTxnTot');
     if(!TXN.length){
       tot.textContent='—';
-      document.getElementById('ovTxnBody').innerHTML='<tr><td class="l muted" colspan="7">No merchants have transacted yet — this table fills in as charges appear.</td></tr>';
+      document.getElementById('ovTxnBody').innerHTML='<tr><td class="l muted" colspan="8">No merchants have transacted yet — this table fills in as charges appear.</td></tr>';
       var anyCap0=false; return;
     }
     tot.textContent=fmtInt(TXN.length)+' merchants';
     var rows=TXN.slice().sort(function(a,b){
       var k=txnSort.k, av=a[k], bv=b[k];
       if(k==='name'){ av=String(av||'').toLowerCase(); bv=String(bv||'').toLowerCase(); return av<bv?-txnSort.dir:av>bv?txnSort.dir:0; }
-      if(k==='started'){ av=av||''; bv=bv||''; return (av<bv?-1:av>bv?1:0)*txnSort.dir; }
+      // ISO 'YYYY-MM-DD' sorts correctly as a string; nulls sort to the bottom of the
+      // descending view, which is where a merchant with no recorded date belongs.
+      if(k==='started'||k==='lastTxn'){ av=av||''; bv=bv||''; return (av<bv?-1:av>bv?1:0)*txnSort.dir; }
       av=Number(av)||0; bv=Number(bv)||0; return (av-bv)*txnSort.dir;
     });
     var anyCap=false;
@@ -1615,6 +1618,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       return '<tr>'+
         '<td class="l name" title="'+String(r.name).replace(/"/g,'&quot;')+'">'+String(r.name)+'</td>'+
         '<td>'+fmtDate(r.started)+'</td>'+
+        '<td>'+fmtDate(r.lastTxn)+'</td>'+
         '<td>'+fmtInt(r.txns)+'</td>'+
         '<td>'+fmtUsdFull(r.volume)+'</td>'+
         '<td>'+take+'</td>'+
@@ -1630,6 +1634,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var blended = (hasCap && tVol>0) ? (tCap/tVol*100).toFixed(2)+'%' : '<span class="muted">—</span>';
     document.getElementById('ovTxnFoot').innerHTML='<tr>'+
       '<td class="l">Total ('+TXN.length+')</td>'+
+      '<td></td>'+
       '<td></td>'+
       '<td>'+fmtInt(tTx)+'</td>'+
       '<td>'+fmtUsdFull(tVol)+'</td>'+

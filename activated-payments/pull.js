@@ -319,7 +319,7 @@ async function fetchTxnByAccount(conn, acctIds) {
   const inList = ids.map(a => `'${a}'`).join(',');
   const sql = loadSql('charges_by_account.sql').replace('/*ACCOUNT_IDS*/', inList);
   const rows = await executeQuery(conn, sql);
-  const by = {}; // acct -> { started, cnt, usd, usdKnown }
+  const by = {}; // acct -> { started, lastTxn, cnt, usd, usdKnown }
   for (const r of rows) {
     const acct = r.ACCOUNT != null ? r.ACCOUNT : r.account;
     if (!acct) continue;
@@ -327,11 +327,16 @@ async function fetchTxnByAccount(conn, acctIds) {
     const cnt = Number(r.CNT != null ? r.CNT : r.cnt || 0);
     const amt = r.AMOUNT_MINOR != null ? r.AMOUNT_MINOR : r.amount_minor;
     const usd = minorToUsd(amt, ccy);
-    if (!by[acct]) by[acct] = { started: null, cnt: 0, usd: 0, usdKnown: true };
+    if (!by[acct]) by[acct] = { started: null, lastTxn: null, cnt: 0, usd: 0, usdKnown: true };
     by[acct].cnt += cnt;
     if (usd == null) by[acct].usdKnown = false; else by[acct].usd += usd;
+    // The SQL rows are per (account, currency), so fold across currencies here: earliest
+    // start and latest last-transaction win. A merchant billing in two currencies still
+    // reports one true first day and one true last day.
     const sd = toDate(r.STARTED != null ? r.STARTED : r.started);
     if (sd && (!by[acct].started || sd < by[acct].started)) by[acct].started = sd;
+    const ld = toDate(r.LAST_TXN != null ? r.LAST_TXN : r.last_txn);
+    if (ld && (!by[acct].lastTxn || ld > by[acct].lastTxn)) by[acct].lastTxn = ld;
   }
   return by;
 }
@@ -489,6 +494,7 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, 
       country: cba[acct] || CC_UNKNOWN,   // merchant country (Stripe account), for the page filter
       mid: (meta[acct] && meta[acct].owner_id) || null,
       started: t.started,       // 'YYYY-MM-DD' — first successful charge
+      lastTxn: t.lastTxn,       // 'YYYY-MM-DD' — most recent successful charge
       txns: t.cnt,              // number of successful charges
       volume,                   // gross processed, USD
       captured,                 // application fees, USD ("amount we captured")
@@ -561,7 +567,7 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //                         (fallback CREATED) for currently-Enabled accounts — a true historical curve.
 //   __PAY_VOL_DAILY     : prod terminal volume in USD per day (CONNECTED_ACCOUNT_CHARGES, succeeded/paid/
 //                         captured + fixed FX map), zero-filled calendar, all-time, backfilled.
-//   __PAY_TXN_MERCHANTS : per-merchant transacting table — name, started, txns, volume(USD),
+//   __PAY_TXN_MERCHANTS : per-merchant transacting table — name, started, lastTxn, txns, volume(USD),
 //                         captured(USD, application fees net of refunds), take-rate %,
 //                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).

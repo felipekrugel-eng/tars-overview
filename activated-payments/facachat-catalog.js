@@ -611,7 +611,7 @@
   if (PMERCH) {
     EXTRAS['payments_merchants'] = {
       label: 'Per-merchant payments performance: transactions, volume, revenue captured, take rate, cost, margin',
-      fields: ['name', 'country', 'started', 'txns', 'volume', 'captured', 'take', 'cost', 'margin'],
+      fields: ['name', 'country', 'started', 'lastTxn', 'txns', 'volume', 'captured', 'take', 'cost', 'margin'],
       rows: function () { return PMERCH; }
     };
   }
