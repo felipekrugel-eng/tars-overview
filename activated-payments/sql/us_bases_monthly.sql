@@ -141,6 +141,97 @@ WITH -- ----------------------------------------------------------------
           AND m.LOYVERSE_ID IS NOT NULL
           AND m.CREATED_AT >= '2026-03-01'
     ),
+    -- ----------------------------------------------------------------
+    -- GLOBAL BOT/FAKE-ACCOUNT FILTER (added 2026-09-07)
+    -- The us_bot_accounts block above is hard-scoped to COUNTRY = 'US'. That scope was set
+    -- on the July 2026 finding that the campaign was US-only. It is no longer true: the
+    -- Sep 5-7 2026 Vinted/Mercari wave hit NL/CH/AT/DK/CZ/NO/FI/SE and never touched the US,
+    -- and a re-screen found unfiltered Poshmark clusters in GB (44 on 2026-05-31) and a
+    -- disposable-mail cluster in LT (34 on 2026-03-21) that have been in the published
+    -- numbers all along. These three signatures are country-agnostic.
+    --
+    -- G1 and G2 both require a machine-generated email mailbox as a SECOND factor. Email
+    -- randomness on its own has a ~47% false-positive rate (July 2026 investigation) and
+    -- must never be used alone -- but inside an already-suspicious set it is what separates
+    -- a scripted wave from a real cohort. Two false positives it demonstrably prevents:
+    --   * @loyverse.com accounts that are genuine merchants onboarded by staff, e.g. PH
+    --     'Sabunan Point' (13,850 receipts over 148 days) and PH 'KUAN UA' (7,087 receipts).
+    --   * PH 'EXPO2026', 31 same-name same-day signups on individual human gmail addresses
+    --     minutes apart -- a real event cohort, not a burst.
+    -- Every account these three rules add has ZERO receipts, all-time (verified 2026-09-07).
+    --
+    -- Keep this block IDENTICAL across every file that uses it.
+    -- ----------------------------------------------------------------
+    random_local AS (
+        -- Machine-generated mailbox: 8-12 chars, alphanumeric only, containing BOTH letters
+        -- and digits. Human addresses carry dots, plus-addressing, or are all letters.
+        -- NOTE: Snowflake REGEXP_LIKE is implicitly anchored -- the '.*' wrappers are required.
+        SELECT LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+        WHERE EMAIL IS NOT NULL
+          AND REGEXP_LIKE(SPLIT_PART(LOWER(TRIM(EMAIL)), '@', 1), '^[a-z0-9]{8,12}$')
+          AND REGEXP_LIKE(SPLIT_PART(LOWER(TRIM(EMAIL)), '@', 1), '.*[0-9].*')
+          AND REGEXP_LIKE(SPLIT_PART(LOWER(TRIM(EMAIL)), '@', 1), '.*[a-z].*')
+    ),
+    global_bot_accounts AS (
+        -- G1: signup on Loyverse's OWN email domain with a machine-generated mailbox.
+        -- Verification mail for these goes nowhere real; staff accounts are left alone by
+        -- the random_local test.
+        SELECT m.LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+        WHERE SPLIT_PART(LOWER(TRIM(m.EMAIL)), '@', 2) = 'loyverse.com'
+          AND m.CREATED_AT >= '2026-03-01'
+          AND m.LOYVERSE_ID IN (SELECT LOYVERSE_ID FROM random_local)
+        UNION
+        -- G2: scripted burst -- same normalised business name, same country, same calendar
+        -- day, >= 20 accounts, prior all-time presence of that name in that country under a
+        -- tenth of the burst (the S8 ratio test, generalised off the US), and >= 90% of the
+        -- burst on machine-generated mailboxes.
+        SELECT m.LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+        JOIN (
+            SELECT C, NORM, D
+            FROM (
+                SELECT UPPER(TRIM(COUNTRY)) AS C,
+                       TRANSLATE(LOWER(TRIM(BUSINESS_NAME)), '01345@', 'oieasa') AS NORM,
+                       DATE(CREATED_AT) AS D,
+                       COUNT(*) AS N,
+                       COUNT_IF(LOYVERSE_ID IN (SELECT LOYVERSE_ID FROM random_local)) AS N_RANDOM
+                FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+                WHERE BUSINESS_NAME IS NOT NULL
+                  AND LENGTH(TRIM(BUSINESS_NAME)) >= 4
+                  AND COUNTRY IS NOT NULL
+                GROUP BY 1, 2, 3
+            )
+            QUALIFY N >= 20
+                AND D >= '2026-03-01'
+                AND N_RANDOM >= 0.90 * N
+                AND COALESCE(SUM(N) OVER (PARTITION BY C, NORM ORDER BY D
+                        ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING), 0) < N / 10.0
+        ) b
+          ON UPPER(TRIM(m.COUNTRY)) = b.C
+         AND TRANSLATE(LOWER(TRIM(m.BUSINESS_NAME)), '01345@', 'oieasa') = b.NORM
+         AND DATE(m.CREATED_AT) = b.D
+        UNION
+        -- G3: marketplace-brand impersonation using the brand's OWN email domain. The
+        -- business name is exactly the brand (optionally with a suffix) and the mailbox sits
+        -- on that same brand's domain. No plausible merchant reads this way.
+        SELECT m.LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
+        WHERE m.BUSINESS_NAME IS NOT NULL
+          AND m.CREATED_AT >= '2026-03-01'
+          AND REGEXP_LIKE(TRANSLATE(LOWER(TRIM(m.BUSINESS_NAME)), '01345@', 'oieasa'),
+                  '(vinted|mercari|poshmark|depop|etsy)([[:space:]_#:.-].*)?')
+          AND SPLIT_PART(LOWER(TRIM(m.EMAIL)), '@', 2) IN
+                  ('vinted.com', 'mercari.com', 'poshmark.com', 'depop.com', 'etsy.com')
+    ),
+    bot_accounts AS (
+        -- Single exclusion set consumed by the query below: the US-scoped signatures plus
+        -- the country-agnostic ones. Every reference site uses this, not either half.
+        SELECT LOYVERSE_ID FROM us_bot_accounts
+        UNION
+        SELECT LOYVERSE_ID FROM global_bot_accounts
+    ),
 -- ----------------------------------------------------------------
 params AS (
     SELECT /*LAUNCH*/DATE '2026-07-01' AS LAUNCH,          -- must match us_bases.sql / us_group_tags.sql
@@ -163,14 +254,14 @@ months AS (
 -- is carved from. CREATED_AT is a timestamp, so membership at an as-of DATE is "< the next
 -- day", not "<= the date", or every merchant that registered on the as-of day itself would
 -- be dropped. COUNTRY / LAUNCH / FIRST_MONTH are tokenised (2026-08-17, UK launch) and
--- substituted by pull.js, defaulting to US. The bot CTE stays hard-scoped to US on purpose
--- (see us_bases.sql) — for another market it is inert rather than wrong.
+-- substituted by pull.js, defaulting to US. us_bot_accounts stays hard-scoped to US on
+-- purpose; global_bot_accounts covers every other market (see us_bases.sql).
 us AS (
     SELECT m.LOYVERSE_ID, m.CREATED_AT
       FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS m
      WHERE UPPER(TRIM(m.COUNTRY)) = /*COUNTRY*/'US'
        AND m.LOYVERSE_ID IS NOT NULL
-       AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM us_bot_accounts)   -- [US-bot-filter]
+       AND m.LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM bot_accounts)   -- [bot-filter]
 ),
 -- POS-active in the 30 days ENDING AT EACH AS-OF (daily receipts — the canonical definition).
 -- Semi-joined to `us` so the receipts scan is bounded to the population that can matter; the
@@ -231,6 +322,6 @@ SELECT
     -- reference counts (NOT group bases — see header)
     COUNT_IF(IS_ACTIVE = 1)      AS active_us,
     COUNT_IF(IS_PAYING = 1)      AS paying_us
-FROM tagged   -- [US-bot-filter]
+FROM tagged   -- [bot-filter]
 GROUP BY m_start
 ORDER BY m_start;
