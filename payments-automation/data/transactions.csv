@@ -26872,5 +26872,242 @@ ch_3UDW0CQJfvlGDJJG0U6NH4ne,2026-09-08 20:52:28,acct_1TOKmPQJfvlGDJJG,acct_1SSKs
 ch_3UDW0E6kYqKNQLle19ThlQAp,2026-09-08 20:52:32,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,4021,Visa,debit,US,8703,120
 ch_3UDW1rQJfvlGDJJG1A1g8faW,2026-09-08 20:54:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,750,Visa,debit,US,6988,24
 ch_3UDW2R5XZgMuE7ip0c9YLAL4,2026-09-08 20:54:51,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1266,MasterCard,debit,US,0178,48
-ch_3UDW3z4qfJZZfKex16CbTXCS,2026-09-08 20:56:26,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1058,Visa,prepaid,US,8814,
-ch_3UDW435dFe8AWU100C3DNK8B,2026-09-08 20:56:29,acct_1UBjys5dFe8AWU10,acct_1SSKsA7e4AMQfKY3,Arenas Contracting,US,usd,succeeded,78380,Visa,credit,US,2440,
+ch_3UDW3z4qfJZZfKex16CbTXCS,2026-09-08 20:56:26,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1058,Visa,prepaid,US,8814,0
+ch_3UDW435dFe8AWU100C3DNK8B,2026-09-08 20:56:29,acct_1UBjys5dFe8AWU10,acct_1SSKsA7e4AMQfKY3,Arenas Contracting,US,usd,succeeded,78380,Visa,credit,US,2440,0
+ch_3UDW6D4qfJZZfKex0TfUS0OM,2026-09-08 20:58:52,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1659,Visa,debit,US,4300,0
+ch_3UDW6z4qfJZZfKex1MH1IpN6,2026-09-08 20:59:44,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1800,Visa,debit,US,5167,0
+ch_3UDW7d4qfJZZfKex1cKSxnel,2026-09-08 21:00:08,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1270,Visa,prepaid,US,5915,0
+ch_3UDW9u6xaKj8hHOI0LQkYPGd,2026-09-08 21:02:33,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,933,MasterCard,debit,US,4228,39
+ch_3UDWAQ8lEmH1iqQS0d3ejTxn,2026-09-08 21:03:02,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2639,MasterCard,debit,US,1933,0
+ch_3UDWAnQJfvlGDJJG1iR92xSC,2026-09-08 21:03:26,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1250,MasterCard,debit,US,5188,36
+ch_3UDWBC4qfJZZfKex0XtRQi5Y,2026-09-08 21:04:19,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1166,MasterCard,debit,US,2982,0
+ch_3UDWCC7egDgFG55L1SiURBgm,2026-09-08 21:04:52,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1071,MasterCard,debit,US,3474,0
+ch_3UDWDp6xaKj8hHOI0caiCN05,2026-09-08 21:06:35,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,11286,Visa,debit,US,3097,308
+ch_3UDWF16xaKj8hHOI1PXU6T5S,2026-09-08 21:07:48,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4298,Visa,debit,US,3679,127
+ch_3UDWFR8lEmH1iqQS1mS8xNwk,2026-09-08 21:08:17,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,846,Visa,debit,US,0508,0
+ch_3UDWIU7egDgFG55L0f3rJpJk,2026-09-08 21:11:29,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2195,MasterCard,debit,US,1461,0
+ch_3UDWJT4qfJZZfKex0xFaq6B7,2026-09-08 21:12:24,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,844,MasterCard,debit,US,5280,0
+ch_3UDWKg6xaKj8hHOI0v2IWMDT,2026-09-08 21:13:50,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,9634,Visa,debit,US,5191,265
+ch_3UDWMy6xaKj8hHOI120S1wSM,2026-09-08 21:16:10,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2033,Visa,debit,US,5572,68
+ch_3UDWOW4qfJZZfKex08CIWZs1,2026-09-08 21:18:31,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,952,MasterCard,debit,US,6843,0
+ch_3UDWPj7egDgFG55L1r0rLAok,2026-09-08 21:18:55,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2330,MasterCard,debit,US,0698,0
+ch_3UDWR26xaKj8hHOI1DUZKIoP,2026-09-08 21:20:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2936,MasterCard,prepaid,US,7142,91
+ch_3UDWRLQJfvlGDJJG13CwMHe9,2026-09-08 21:20:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1150,Visa,debit,US,0401,34
+ch_3UDWS28lEmH1iqQS1XZkMUu2,2026-09-08 21:21:14,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1898,Visa,debit,US,4300,0
+ch_3UDWSk7XcmDxB0e11zS2F89x,2026-09-08 21:22:05,acct_1TwW8Z7XcmDxB0e1,acct_1SSKsA7e4AMQfKY3,Friendly Kite School,US,usd,succeeded,600,MasterCard,credit,BR,1887,31
+ch_3UDWSp7egDgFG55L0SxNcGgE,2026-09-08 21:22:04,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1321,MasterCard,debit,US,3349,0
+ch_3UDWYC4qfJZZfKex1ZS2rieG,2026-09-08 21:27:43,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,460,Visa,prepaid,US,4999,0
+ch_3UDWf76xaKj8hHOI0W6NFNw3,2026-09-08 21:34:47,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,Visa,credit,US,1692,71
+ch_3UDWi06xaKj8hHOI006CE5wH,2026-09-08 21:37:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,MasterCard,debit,US,9250,71
+ch_3UDWiW7egDgFG55L1iMVk9WY,2026-09-08 21:38:17,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1098,Visa,debit,US,1780,0
+ch_3UDWkl9IXRsRKinK1KKC8MxW,2026-09-08 21:40:43,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,800,American Express,credit,US,5284,36
+ch_3UDWmy4qfJZZfKex1Vftsj61,2026-09-08 21:42:55,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,75,MasterCard,debit,US,0500,0
+ch_3UDWn67egDgFG55L0ziuARZV,2026-09-08 21:43:07,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,780,Visa,debit,US,0535,0
+ch_3UDWnJ8lEmH1iqQS0zQgJTMj,2026-09-08 21:43:27,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2329,Visa,prepaid,US,1204,0
+ch_3UDWqB9IXRsRKinK1Omz8PKM,2026-09-08 21:46:14,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1500,MasterCard,debit,US,6676,54
+ch_3UDWsn9IXRsRKinK0Dqzh8Rt,2026-09-08 21:48:54,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,Visa,debit,US,1373,25
+ch_3UDWtV9IXRsRKinK04QMoLCV,2026-09-08 21:49:56,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,debit,US,5128,28
+ch_3UDWuo4qfJZZfKex0uO6Dw55,2026-09-08 21:50:58,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,4343,Visa,prepaid,US,7581,0
+ch_3UDWur6xaKj8hHOI0NQ0VFtt,2026-09-08 21:51:03,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2150,Visa,debit,US,5821,71
+ch_3UDWwS4qfJZZfKex0H4oZS4k,2026-09-08 21:52:40,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3175,Visa,prepaid,US,3574,0
+ch_3UDWxB9IXRsRKinK0WGprGW0,2026-09-08 21:55:34,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,credit,US,5420,23
+ch_3UDWzR7egDgFG55L0C1qk6mZ,2026-09-08 21:55:54,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,423,Visa,prepaid,US,9925,0
+ch_3UDWzv7egDgFG55L14txLxQv,2026-09-08 21:56:16,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1059,American Express,credit,US,1007,0
+ch_3UDX048lEmH1iqQS1qZiURLX,2026-09-08 21:56:23,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1425,Visa,prepaid,US,2319,0
+ch_3UDX2Y6xaKj8hHOI169SJ805,2026-09-08 21:59:02,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,debit,US,3599,85
+ch_3UDX3fQJfvlGDJJG0m5tmfr4,2026-09-08 22:00:06,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,prepaid,US,7305,18
+ch_3UDX4KQJfvlGDJJG11O5dV40,2026-09-08 22:00:53,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1850,Visa,debit,US,9774,51
+ch_3UDX4W9IXRsRKinK1yBqSTYg,2026-09-08 22:01:02,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,debit,US,1840,28
+ch_3UDX5A8lEmH1iqQS07ohOe8s,2026-09-08 22:01:46,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,740,Visa,debit,US,7174,0
+ch_3UDX5N7C646Nqh7e0ohgfEej,2026-09-08 22:01:54,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2375,Visa,credit,US,5274,77
+ch_3UDX5RQJfvlGDJJG0P1FO2Ki,2026-09-08 22:01:57,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1425,Visa,debit,US,9293,41
+ch_3UDX77QJfvlGDJJG1U47mquz,2026-09-08 22:03:41,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,600,Visa,credit,US,9801,20
+ch_3UDX7UQJfvlGDJJG037HUoN6,2026-09-08 22:04:04,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,credit,US,4260,16
+ch_3UDX7y9IXRsRKinK1N7irRVS,2026-09-08 22:04:39,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,2400,MasterCard,debit,US,8938,77
+ch_3UDX8uQJfvlGDJJG0n2taWIy,2026-09-08 22:05:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,875,Visa,debit,US,8517,27
+ch_3UDX9cG9cKTLUhQ70YDFl144,2026-09-08 22:06:20,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5506,MasterCard,debit,US,9859,125
+ch_3UDXAD9IXRsRKinK175H0pjb,2026-09-08 22:06:54,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,5073,33
+ch_3UDXBK7C646Nqh7e0GRR3q8L,2026-09-08 22:08:04,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,2852,MasterCard,credit,US,9327,89
+ch_3UDXC29IXRsRKinK109OVmiK,2026-09-08 22:08:46,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,8586,20
+ch_3UDXCU4qfJZZfKex167Hgx7O,2026-09-08 22:09:20,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,6301,Visa,debit,US,3008,0
+ch_3UDXD45oE0hif8XD1vg2H5sN,2026-09-08 22:09:53,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,1018,Visa,debit,US,3347,41
+ch_3UDXDz6xaKj8hHOI10LS2QUH,2026-09-08 22:10:48,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,751,Visa,debit,US,9984,35
+ch_3UDXEfQJfvlGDJJG1EaZxuph,2026-09-08 22:11:28,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,1795,19
+ch_3UDXF55XZgMuE7ip0MQEZVuB,2026-09-08 22:12:00,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,964,Visa,prepaid,US,8366,40
+ch_3UDXFcQJfvlGDJJG0FSMd4Lm,2026-09-08 22:12:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,250,Visa,debit,US,9293,11
+ch_3UDXGM4qfJZZfKex13StgaM5,2026-09-08 22:13:15,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,317,Visa,prepaid,US,2808,0
+ch_3UDXGN6xaKj8hHOI1OuKCykR,2026-09-08 22:13:16,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5479,Visa,debit,US,3454,157
+ch_3UDXGP9IXRsRKinK0GsAINXb,2026-09-08 22:13:18,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,credit,US,0701,33
+ch_3UDXGpG9cKTLUhQ71LePmHo2,2026-09-08 22:13:45,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,877,MasterCard,debit,US,9859,32
+ch_3UDXGz5XZgMuE7ip0uVkZ71E,2026-09-08 22:13:54,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3797,Visa,debit,US,4096,114
+ch_3UDXIE6kYqKNQLle1V4aIE5O,2026-09-08 22:15:12,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,8047,Visa,credit,US,4152,224
+ch_3UDXIZ6xaKj8hHOI1NTpzRBL,2026-09-08 22:15:37,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4406,MasterCard,debit,US,0203,130
+ch_3UDXJa9IXRsRKinK1jJEbSDi,2026-09-08 22:16:36,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,prepaid,US,8902,33
+ch_3UDXKA6xaKj8hHOI0BpPqHau,2026-09-08 22:17:14,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,debit,US,9365,85
+ch_3UDXKO9IXRsRKinK1yDbFXfB,2026-09-08 22:17:25,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,800,Visa,debit,US,8311,36
+ch_3UDXKv9MtEGnBEj30rjIJwjJ,2026-09-08 22:17:59,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3576,Visa,prepaid,US,3689,108
+ch_3UDXMg7C646Nqh7e0M4U9iyl,2026-09-08 22:19:48,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6741,American Express,credit,US,1365,190
+ch_3UDXMt9IXRsRKinK1rQMUE6x,2026-09-08 22:20:16,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1200,Visa,debit,US,2294,46
+ch_3UDXO051aPtqlwev0sDXWDp9,2026-09-08 22:21:09,acct_1U41s951aPtqlwev,acct_1SSKsA7e4AMQfKY3,Mathews Family Farm LLC,US,usd,succeeded,1007,Visa,credit,US,1700,41
+ch_3UDXOI6kYqKNQLle173hQ5m3,2026-09-08 22:21:37,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,1713,Visa,credit,US,0114,60
+ch_3UDXOP9IXRsRKinK1HJF12C4,2026-09-08 22:21:34,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,800,Visa,debit,US,7461,36
+ch_3UDXP09IXRsRKinK1ILKDFMr,2026-09-08 22:22:10,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,600,MasterCard,debit,US,1476,31
+ch_3UDXPzQJfvlGDJJG1m4RlFFE,2026-09-08 22:23:11,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1500,Visa,credit,US,4082,43
+ch_3UDXS56kYqKNQLle0DMFtLGz,2026-09-08 22:25:29,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,6091,Visa,debit,US,9660,173
+ch_3UDXSe9IXRsRKinK0NgT6bnJ,2026-09-08 22:26:06,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,MasterCard,debit,US,5646,20
+ch_3UDXTd9IXRsRKinK1AC9LGM6,2026-09-08 22:26:56,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1400,Visa,debit,US,0238,51
+ch_3UDXUW9IXRsRKinK1yhMpsnG,2026-09-08 22:27:52,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,8109,33
+ch_3UDXV1QJfvlGDJJG0iVLLEei,2026-09-08 22:28:23,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,525,Visa,credit,US,0496,18
+ch_3UDXVg9IXRsRKinK1yRfuDgF,2026-09-08 22:29:03,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,credit,US,0701,23
+ch_3UDXWU9IXRsRKinK02D4rkjf,2026-09-08 22:29:56,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,MasterCard,debit,US,4362,28
+ch_3UDXX5QJfvlGDJJG1UCTfADB,2026-09-08 22:30:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,800,Visa,debit,US,2064,25
+ch_3UDXYb8lEmH1iqQS0sQRqL38,2026-09-08 22:32:04,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1690,Visa,debit,US,2847,0
+ch_3UDXaOQJfvlGDJJG1tQWv94M,2026-09-08 22:33:57,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1775,MasterCard,debit,US,1619,49
+ch_3UDXcw9IXRsRKinK0tQyCg3f,2026-09-08 22:36:38,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,prepaid,US,0378,28
+ch_3UDXeS9IXRsRKinK1k28t590,2026-09-08 22:38:07,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,600,Visa,debit,US,5073,31
+ch_3UDXek6kYqKNQLle15A80fVi,2026-09-08 22:38:38,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,3164,MasterCard,credit,US,8862,97
+ch_3UDXf34qfJZZfKex02M0qfQz,2026-09-08 22:38:46,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3491,Visa,prepaid,US,1139,0
+ch_3UDXf39IXRsRKinK1vppt3uH,2026-09-08 22:38:45,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,MasterCard,debit,US,1616,33
+ch_3UDXfS5XZgMuE7ip1K3aDK2F,2026-09-08 22:39:11,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3205,Visa,debit,US,8088,98
+ch_3UDXhR9IXRsRKinK1nhTSim4,2026-09-08 22:41:13,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,7294,38
+ch_3UDXhy6kYqKNQLle1JWsEQav,2026-09-08 22:41:56,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,3874,MasterCard,credit,US,4766,116
+ch_3UDXiJ9IXRsRKinK1acSThCb,2026-09-08 22:42:06,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,5143,23
+ch_3UDXk44qfJZZfKex18Lf8U7R,2026-09-08 22:44:04,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3498,Visa,credit,US,3495,0
+ch_3UDXkD9IXRsRKinK0UELobL3,2026-09-08 22:44:05,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1500,Visa,debit,US,4647,54
+ch_3UDXlc9IXRsRKinK1ZnceEA5,2026-09-08 22:45:31,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1600,Visa,debit,US,7448,57
+ch_3UDXlv8lEmH1iqQS0zwvF3bs,2026-09-08 22:45:51,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2541,MasterCard,debit,US,7470,0
+ch_3UDXm49IXRsRKinK0dMGP2cn,2026-09-08 22:46:00,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,600,MasterCard,debit,US,8925,31
+ch_3UDXnI6kYqKNQLle0jg2rEPJ,2026-09-08 22:47:23,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,2567,Visa,credit,US,6365,82
+ch_3UDXnJ7sg7EIYCuY1cZ5JFX8,2026-09-08 22:47:20,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,829,Visa,debit,US,4111,37
+ch_3UDXq79IXRsRKinK0Dn5ijH9,2026-09-08 22:50:24,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,5128,38
+ch_3UDXqt9IXRsRKinK18Zm44Rk,2026-09-08 22:51:04,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,failed,1000,Visa,debit,US,5027,
+ch_3UDXrj9IXRsRKinK10zOuzm3,2026-09-08 22:51:55,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1000,Visa,debit,US,5027,41
+ch_3UDXs79IXRsRKinK0lRhxKsh,2026-09-08 22:52:16,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,Discover,credit,US,4977,25
+ch_3UDXsb4qfJZZfKex1fWHCNwR,2026-09-08 22:53:09,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,423,Visa,debit,US,0343,0
+ch_3UDXso9IXRsRKinK1A9eTdey,2026-09-08 22:53:08,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,7805,33
+ch_3UDXsu7egDgFG55L1jqcywa9,2026-09-08 22:53:03,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,634,Visa,debit,US,1211,0
+ch_3UDXtJ9IXRsRKinK1lMzOkTm,2026-09-08 22:53:29,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,MasterCard,debit,US,3401,23
+ch_3UDXtX7sg7EIYCuY0R5dn0vP,2026-09-08 22:53:49,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,3489,Visa,credit,US,1338,106
+ch_3UDXu47C646Nqh7e1BrUkylc,2026-09-08 22:54:19,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5046,Visa,credit,US,1854,146
+ch_3UDXuZ9IXRsRKinK0TebNEJM,2026-09-08 22:54:46,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,7294,38
+ch_3UDXv79IXRsRKinK13YlCwB5,2026-09-08 22:55:27,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,MasterCard,credit,US,8286,28
+ch_3UDXve9IXRsRKinK1g0UQoFc,2026-09-08 22:55:54,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1000,Visa,debit,US,8430,41
+ch_3UDXx68lEmH1iqQS1wsrRF2H,2026-09-08 22:57:24,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,5032,Visa,credit,US,8837,0
+ch_3UDXx99IXRsRKinK0VRohInc,2026-09-08 22:57:28,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1100,Visa,debit,US,1956,44
+ch_3UDXxa6kYqKNQLle0BWS2203,2026-09-08 22:58:00,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,5392,Visa,debit,US,4549,155
+ch_3UDXyf9IXRsRKinK0UeFhtXL,2026-09-08 22:59:00,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,5073,38
+ch_3UDXzE9IXRsRKinK0ecN7XCX,2026-09-08 23:00:08,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,American Express,credit,US,5284,23
+ch_3UDXzh7egDgFG55L0yrkmIVp,2026-09-08 23:00:14,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,390,Visa,debit,US,9690,0
+ch_3UDXziG9cKTLUhQ71Bu4eL1D,2026-09-08 23:00:14,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2179,Visa,debit,US,4763,58
+ch_3UDY0G9IXRsRKinK01pCdJAF,2026-09-08 23:00:54,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1000,Visa,debit,US,7642,41
+ch_3UDY0c8lEmH1iqQS12c6uwpa,2026-09-08 23:01:01,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3495,Visa,debit,US,7939,0
+ch_3UDY0v9IXRsRKinK1HJ836sF,2026-09-08 23:01:28,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,5143,38
+ch_3UDY1O9IXRsRKinK1IxD5cIY,2026-09-08 23:01:55,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,5143,20
+ch_3UDY217sg7EIYCuY06GT9sl9,2026-09-08 23:02:34,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,1144,MasterCard,debit,US,6699,45
+ch_3UDY5D6xaKj8hHOI1bsk4utR,2026-09-08 23:05:57,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1451,Visa,debit,US,7399,53
+ch_3UDY5xQJfvlGDJJG0Hi5lIDc,2026-09-08 23:06:32,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1700,Visa,debit,US,5289,48
+ch_3UDY8B9IXRsRKinK1J2jaHpx,2026-09-08 23:08:52,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,9193,38
+ch_3UDY8K8lEmH1iqQS0wjkTTF9,2026-09-08 23:09:04,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,793,Visa,debit,US,6360,0
+ch_3UDY9z9IXRsRKinK0ftoBXEH,2026-09-08 23:10:47,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,100,MasterCard,credit,US,8286,18
+ch_3UDYAX7sg7EIYCuY1bTZpMP9,2026-09-08 23:11:28,acct_1TtsTo7sg7EIYCuY,acct_1SSKsA7e4AMQfKY3,Sips & Dips LLC,US,usd,succeeded,686,Visa,debit,US,5612,33
+ch_3UDYB4QJfvlGDJJG1kN2BUPQ,2026-09-08 23:11:53,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1875,Visa,debit,US,9198,52
+ch_3UDYC06xaKj8hHOI0nbBGOPu,2026-09-08 23:12:48,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3607,Visa,debit,US,0965,109
+ch_3UDYCJ4qfJZZfKex11ZQ7JOz,2026-09-08 23:13:10,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,741,Visa,prepaid,US,7606,0
+ch_3UDYCn9IXRsRKinK1PoaP7Ry,2026-09-08 23:13:51,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,7642,23
+ch_3UDYCs6kYqKNQLle1bB1OysR,2026-09-08 23:13:48,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,5804,Visa,debit,US,4192,166
+ch_3UDYEt9IXRsRKinK1lx5WmqF,2026-09-08 23:15:47,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,8586,33
+ch_3UDYExQJfvlGDJJG1i9CTyfk,2026-09-08 23:15:50,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1200,Visa,debit,US,3512,35
+ch_3UDYFm9IXRsRKinK0o0CItUf,2026-09-08 23:16:44,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,100,MasterCard,debit,US,1616,18
+ch_3UDYGw4qfJZZfKex0vqtmjbQ,2026-09-08 23:18:06,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3017,Visa,prepaid,US,1856,0
+ch_3UDYHU4qfJZZfKex0mSpTi38,2026-09-08 23:18:26,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1587,Visa,debit,US,0386,0
+ch_3UDYIK9IXRsRKinK0XFb4jiY,2026-09-08 23:19:19,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,credit,US,0701,28
+ch_3UDYJw9IXRsRKinK0rf1tFrD,2026-09-08 23:21:01,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,credit,US,5420,28
+ch_3UDYKH6xaKj8hHOI00AYbpZf,2026-09-08 23:21:25,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1388,Visa,debit,US,8827,51
+ch_3UDYKO4qfJZZfKex0tJwRO4d,2026-09-08 23:21:28,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,423,MasterCard,debit,US,4163,0
+ch_3UDYKe9IXRsRKinK1syOTlBX,2026-09-08 23:21:44,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,7791,33
+ch_3UDYLI9IXRsRKinK1YekhLvs,2026-09-08 23:22:24,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,1341,33
+ch_3UDYN58lEmH1iqQS1Sh2lTQy,2026-09-08 23:24:18,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,317,Visa,credit,US,0078,0
+ch_3UDYQ4QJfvlGDJJG1AFw0lCv,2026-09-08 23:27:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,975,MasterCard,credit,US,6962,29
+ch_3UDYQg9IXRsRKinK0utEAhTi,2026-09-08 23:27:58,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,5502,33
+ch_3UDYRd4qfJZZfKex1xvWvrr2,2026-09-08 23:29:00,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,16127,MasterCard,credit,US,1177,0
+ch_3UDYT78lEmH1iqQS1IJcVQnB,2026-09-08 23:30:28,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1958,Visa,debit,US,2849,0
+ch_3UDYUP9IXRsRKinK12bI2sUN,2026-09-08 23:31:51,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,6697,33
+ch_3UDYXVQJfvlGDJJG0TuoUI1k,2026-09-08 23:35:02,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,Visa,debit,US,5348,32
+ch_3UDYZtQJfvlGDJJG1LLPqZaN,2026-09-08 23:37:30,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1725,Visa,debit,US,5291,48
+ch_3UDYfTQJfvlGDJJG04lAflVA,2026-09-08 23:43:16,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1025,Visa,debit,US,5088,31
+ch_3UDYfh9IXRsRKinK06glapGA,2026-09-08 23:43:29,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,prepaid,US,8902,33
+ch_3UDYhiQJfvlGDJJG0gJsdcCz,2026-09-08 23:47:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2100,MasterCard,debit,US,2365,58
+ch_3UDYkb9IXRsRKinK0mNxyTYt,2026-09-08 23:49:17,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,5143,20
+ch_3UDYkp6xaKj8hHOI1YbWKMB1,2026-09-08 23:48:51,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,MasterCard,debit,US,8990,85
+ch_3UDYll6xaKj8hHOI1yBONgfY,2026-09-08 23:49:50,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1074,Visa,debit,US,4509,43
+ch_3UDYmA9IXRsRKinK0o3LxIUN,2026-09-08 23:50:11,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,MasterCard,debit,US,3401,25
+ch_3UDYmUQJfvlGDJJG0oJsc9qz,2026-09-08 23:50:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,MasterCard,credit,US,1938,30
+ch_3UDYnyQJfvlGDJJG1jVSmp3e,2026-09-08 23:52:01,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2075,Visa,debit,US,9137,57
+ch_3UDYoa6xaKj8hHOI1kp3AV97,2026-09-08 23:52:42,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6448,Visa,debit,US,7570,183
+ch_3UDYqt9IXRsRKinK1ubvM8ys,2026-09-08 23:55:08,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1200,Visa,prepaid,US,4933,46
+ch_3UDYrjQJfvlGDJJG1qxgL29c,2026-09-08 23:55:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,Visa,credit,US,1513,28
+ch_3UDYtD6xaKj8hHOI1TqqMJiT,2026-09-08 23:57:30,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,568,Visa,debit,US,6748,30
+ch_3UDYtKQJfvlGDJJG1HrLFaAR,2026-09-08 23:57:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,900,Visa,debit,US,1249,28
+ch_3UDYvcQJfvlGDJJG1D0llbZA,2026-09-08 23:59:55,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1325,Visa,debit,US,5866,38
+ch_3UDYwP6xaKj8hHOI0CkJ84Ar,2026-09-09 00:00:47,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1718,MasterCard,debit,US,9939,60
+ch_3UDYwl9IXRsRKinK01qzqoib,2026-09-09 00:01:07,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,MasterCard,debit,US,0064,25
+ch_3UDYyG9IXRsRKinK0f5Esa6q,2026-09-09 00:02:46,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,2100,American Express,credit,US,2005,70
+ch_3UDZ1o7C646Nqh7e013jh2uZ,2026-09-09 00:06:24,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,9024,Visa,debit,US,8016,250
+ch_3UDZ1z9IXRsRKinK0uVx7OjQ,2026-09-09 00:06:30,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,prepaid,US,4933,23
+ch_3UDZ2S9IXRsRKinK0CEikCdu,2026-09-09 00:07:25,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,600,Visa,debit,US,8973,31
+ch_3UDZ2mQJfvlGDJJG0y1WEHzB,2026-09-09 00:07:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,debit,US,8749,16
+ch_3UDZ3KQJfvlGDJJG0OV0BzGN,2026-09-09 00:07:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,American Express,credit,US,7059,17
+ch_3UDZ6AQJfvlGDJJG13lJxm8O,2026-09-09 00:10:50,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1375,Visa,credit,US,2829,39
+ch_3UDZ8C9IXRsRKinK0C7P41m6,2026-09-09 00:12:58,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,Visa,debit,US,7294,25
+ch_3UDZ9Y9IXRsRKinK0AGdkRQF,2026-09-09 00:14:19,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,debit,US,7239,28
+ch_3UDZ9s9IXRsRKinK0niiin2l,2026-09-09 00:14:51,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,7642,20
+ch_3UDZAGQJfvlGDJJG1LevBeMv,2026-09-09 00:15:04,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1725,Visa,debit,US,7107,48
+ch_3UDZAr9IXRsRKinK1ZJi2a85,2026-09-09 00:15:39,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,800,Visa,debit,US,4647,36
+ch_3UDZCp9IXRsRKinK1pxtylKh,2026-09-09 00:17:42,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1400,Visa,debit,US,7805,51
+ch_3UDZDM9IXRsRKinK1ndMqwc2,2026-09-09 00:18:17,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,2615,23
+ch_3UDZEL9IXRsRKinK06RxLRud,2026-09-09 00:19:25,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,American Express,credit,US,9371,38
+ch_3UDZGP9IXRsRKinK0Oe3adKs,2026-09-09 00:21:24,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1000,Visa,debit,US,0103,41
+ch_3UDZGw9IXRsRKinK1kUEADqF,2026-09-09 00:21:57,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,0238,33
+ch_3UDZIDG9cKTLUhQ70jG2TmQx,2026-09-09 00:23:20,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5077,Visa,debit,US,7807,116
+ch_3UDZIE9IXRsRKinK1QHuG0ZJ,2026-09-09 00:23:27,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,1478,38
+ch_3UDZKI9IXRsRKinK1QQrDxt4,2026-09-09 00:25:25,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,800,Visa,debit,US,8430,36
+ch_3UDZKW9IXRsRKinK1Bgr4E74,2026-09-09 00:25:39,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,0931,23
+ch_3UDZKu9IXRsRKinK1kcwXg2r,2026-09-09 00:26:04,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,MasterCard,debit,US,6210,33
+ch_3UDZMW9IXRsRKinK0ML0KG34,2026-09-09 00:27:47,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1400,American Express,credit,US,9371,51
+ch_3UDZNC9IXRsRKinK08lLGngf,2026-09-09 00:28:51,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,5027,38
+ch_3UDZOB9IXRsRKinK0u8hK8iy,2026-09-09 00:29:30,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,4647,23
+ch_3UDZOU9IXRsRKinK1SCPgQgP,2026-09-09 00:29:45,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,7327,20
+ch_3UDZOy9IXRsRKinK1GmSaHZy,2026-09-09 00:30:15,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,MasterCard,credit,US,4499,28
+ch_3UDZSW6xaKj8hHOI0LQmq3p8,2026-09-09 00:33:58,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1290,Visa,credit,US,7938,49
+ch_3UDZTV6xaKj8hHOI06FkTA9L,2026-09-09 00:35:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1935,Visa,debit,US,6298,65
+ch_3UDZWV9IXRsRKinK1edoDpRV,2026-09-09 00:38:15,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Discover,debit,US,2830,33
+ch_3UDZX39IXRsRKinK1pBsAVKn,2026-09-09 00:38:36,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,prepaid,US,0390,20
+ch_3UDZYBG9cKTLUhQ70XszirI6,2026-09-09 00:39:53,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1300,Visa,credit,US,3011,47
+ch_3UDZcdG9cKTLUhQ70cbSXis9,2026-09-09 00:44:31,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,9695,Visa,debit,US,6092,208
+ch_3UDZef54wWZX0Iiw1O6Plv41,2026-09-09 00:46:33,acct_1U9BZ854wWZX0Iiw,acct_1SSKsA7e4AMQfKY3,We Fix It Electronics,US,usd,failed,788700,Visa,credit,US,0452,
+ch_3UDZeo9IXRsRKinK0czUOFp3,2026-09-09 00:46:37,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,debit,US,7773,28
+ch_3UDZfd9IXRsRKinK1Tb7OP9l,2026-09-09 00:47:31,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,7965,23
+ch_3UDZfuQJfvlGDJJG0uOcG1TR,2026-09-09 00:47:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,625,Visa,debit,US,3581,21
+ch_3UDZgV9IXRsRKinK0kurIZMM,2026-09-09 00:48:22,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,700,Visa,debit,US,5076,33
+ch_3UDZgg6xaKj8hHOI0352ruK1,2026-09-09 00:48:35,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2150,Visa,credit,US,8109,71
+ch_3UDZhB9IXRsRKinK0AHugS1A,2026-09-09 00:49:06,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,debit,US,5073,28
+ch_3UDZi154wWZX0Iiw1U9cLZKL,2026-09-09 00:50:00,acct_1U9BZ854wWZX0Iiw,acct_1SSKsA7e4AMQfKY3,We Fix It Electronics,US,usd,failed,222,Visa,debit,US,2378,
+ch_3UDZi49IXRsRKinK1BlRDKDe,2026-09-09 00:50:04,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,7642,20
+ch_3UDZjc9IXRsRKinK1Vp4JopC,2026-09-09 00:51:36,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,MasterCard,debit,US,1616,28
+ch_3UDZnQ9IXRsRKinK1mRf6dgS,2026-09-09 00:55:38,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,MasterCard,debit,US,8938,23
+ch_3UDZpR9IXRsRKinK1UPzW090,2026-09-09 00:57:36,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,7294,23
+ch_3UDZrx9IXRsRKinK0OLZ5s2S,2026-09-09 01:00:12,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,900,Visa,debit,US,7773,38
+ch_3UDZv89IXRsRKinK10Q38rVU,2026-09-09 01:03:29,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,600,MasterCard,credit,US,4499,31
+ch_3UDZwu9IXRsRKinK044PoZeK,2026-09-09 01:05:19,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,1200,Visa,debit,US,5882,46
+ch_3UDZxK9IXRsRKinK1vSBxAri,2026-09-09 01:05:45,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,500,Visa,prepaid,US,1829,28
+ch_3UDZy09IXRsRKinK0pU9Td7q,2026-09-09 01:06:28,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,MasterCard,credit,US,4499,23
+ch_3UDa0U9IXRsRKinK1X19tbLU,2026-09-09 01:09:01,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,200,Visa,debit,US,7511,20
+ch_3UDa5A9IXRsRKinK1cAPPNhx,2026-09-09 01:13:51,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,400,Visa,debit,US,5073,25
+ch_3UDa8m9IXRsRKinK0eiMNqHv,2026-09-09 01:17:41,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,0121,23
+ch_3UDa9e9IXRsRKinK0qHOBj1G,2026-09-09 01:18:28,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,prepaid,US,1829,23
+ch_3UDaE39IXRsRKinK16E6oyIe,2026-09-09 01:23:08,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,7642,23
+ch_3UDaGX9IXRsRKinK0LWPbTTe,2026-09-09 01:25:36,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,Visa,debit,US,5128,23
+ch_3UDaHm9IXRsRKinK1aUcVw8w,2026-09-09 01:26:54,acct_1TziUt9IXRsRKinK,acct_1SSKsA7e4AMQfKY3,Pasco High Athletic Booster Club Inc,US,usd,succeeded,300,American Express,credit,US,9371,23
+ch_3UDaMH6xaKj8hHOI0AtpBypk,2026-09-09 01:31:34,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1719,Visa,prepaid,US,5447,60
+ch_3UDacN6xaKj8hHOI0UmZlwVP,2026-09-09 01:48:24,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2229,MasterCard,prepaid,US,9734,73
+ch_3UDb176xaKj8hHOI049oxOOc,2026-09-09 02:13:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,MasterCard,debit,US,9886,71
