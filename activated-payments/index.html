@@ -468,13 +468,15 @@
       <h1 class="ov-h1">Activation Funnel<span class="dot">.</span></h1>
       <div class="ov-updated" id="funnelUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">How each US customer group moves through payments activation: <b>Base</b> &rarr; <b>Initiated KYC</b> (opened a payments account) &rarr; <b>Passed KYC</b> &rarr; <b>Transacting</b>. Groups are mutually exclusive (priority: new &rarr; paying &rarr; non paying &rarr; dormant). Confirmed US bot/fraud registrations are excluded. Refreshes automatically each morning.</p>
+    <p class="ov-sub">How each US customer group moves through payments activation: <b>Base</b> &rarr; <b>Initiated KYC</b> (opened a payments account) &rarr; <b>Passed KYC</b> &rarr; <b>Transacting</b>. Groups are mutually exclusive (priority: new &rarr; paying &rarr; non paying &rarr; dormant). Confirmed US bot/fraud registrations and internal Loyverse test accounts are excluded. Refreshes automatically each morning.</p>
 
-    <!-- Month filter (added 2026-08-05). Drives EVERYTHING below it: the headline KPIs, the
-         group cards, the conversion leaderboard, the origin split and the deep dive. In
-         Monthly mode each stage is counted by ITS OWN date falling inside the selected month
-         (initiated in August / passed in August / first transacted in August), and the
-         denominators come from __FUNNEL_BASES_MONTHLY as of that month. -->
+    <!-- Month filter (added 2026-08-05, changed to a cohort reading 2026-09-09). Drives
+         EVERYTHING below it: the headline KPIs, the group cards, the conversion leaderboard,
+         the origin split and the deep dive. Monthly mode selects the month's COHORT — the
+         merchants that INITIATED KYC in the selected month — and reports how far that same set
+         has progressed since, so every percentage is a real conversion rate. Base denominators
+         come from __FUNNEL_BASES_MONTHLY as of that month. The deep dive at the bottom keeps a
+         milestone-in-the-month reading on purpose; see the comment above it. -->
     <div class="ov-head" style="margin-bottom:16px">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <div class="ov-range" id="fnMode">
@@ -1847,21 +1849,32 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 // MONTH FILTER (added 2026-08-05, requested by Felipe). One control at the top of the page
 // drives every number on it. Two modes:
 //
-//   All time  — unchanged behaviour. A merchant counts at a stage if it has EVER reached it.
-//   Monthly   — FLOW within the selected month. Each stage is counted by its OWN date falling
-//               inside that month: initiated = connected_at in month, passed = enabled_at in
-//               month, transacting = first_txn_at in month. "August" therefore means "what
-//               happened in August", which is what was asked for, and the newest month is
-//               naturally month-to-date.
+//   All time  — a merchant counts at a stage if it has EVER reached it.
+//   Monthly   — a COHORT of the selected month: the merchants that INITIATED KYC in that month,
+//               and how far that same set has progressed since. "September" means "of the
+//               merchants that opened a payments account in September, how many have cleared
+//               KYC and how many are taking payments"; the newest month is month-to-date.
 //
-// TWO CONSEQUENCES OF THE FLOW READING, both surfaced in the UI rather than hidden:
-//   1. The stage-to-stage percentages are RATIOS OF TWO FLOWS, not a cohort conversion. A
-//      merchant that initiated on 30 July and passed on 2 August sits in July's "initiated"
-//      and August's "passed". Monthly captions say "of initiated in <Month>" and the footnote
-//      spells this out. Do NOT relabel them as conversion rates.
-//   2. A stage with no date cannot be attributed to any month. All-time "passed" also accepts
-//      the stage/enabled flag with a null enabled_at; those merchants are counted in All time
-//      and reported as an undated residual in Monthly. Same for transacting.
+// Monthly was a FLOW reading until 2026-09-09 — each stage counted by its own date falling in
+// the month (passed = enabled_at in month, etc). It was replaced because the three stages then
+// counted three different sets of merchants, so no ratio between them was a conversion rate:
+// September showed 18 first transactions against 56 passes, but only 9 of those 18 came from
+// September's own intake, and a thin month could read over 100%. The page had to suppress its
+// percentages in Monthly mode as a result, which is what Felipe asked to fix. Under the cohort
+// reading every percentage is a real conversion rate, bounded by 100% and monotonic down the
+// funnel, and the same caption code serves both modes.
+//
+// TWO CONSEQUENCES OF THE COHORT READING, both stated in the UI rather than hidden:
+//   1. Monthly Passed and Transacting counts are LOWER than the flow reading gave. A merchant
+//      that initiated on 30 July and passed on 2 August belongs to JULY's cohort in both
+//      stages. Stage counts no longer sum across months to the all-time passed/transacting
+//      headline — they sum to the all-time INITIATED headline. The footnote says so.
+//   2. The deep dive at the bottom deliberately keeps the milestone-in-the-month reading, not
+//      the cohort, because "passed in July, first transacted in September" is exactly the
+//      merchant a September operational review needs to see. Its own note says which it is.
+//
+// INTERNAL/QA ACCOUNTS (2026-09-09, same request): accounts opened by Loyverse people to walk
+// the onboarding flow are excluded from every figure on this page. See isInternalTest().
 (function(){
   var $=function(id){return document.getElementById(id);};
   if(!$('fnKpis')) return;
@@ -1875,6 +1888,35 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var MARKETS=window.__FUNNEL_MARKETS||[];            // [{cc,launch}] in launch order
   var ALL_BOTS=window.__FUNNEL_BOTS_EXCLUDED||0;
   var ALL_LAUNCH=window.__FUNNEL_LAUNCH_START||'2026-07-01';
+
+  // ---- Internal / QA accounts ------------------------------------------------
+  // pull.js already drops Stripe accounts whose metadata environment is 'test'. What it cannot
+  // drop is a Loyverse person opening a REAL prod account to walk the onboarding flow — those
+  // are indistinguishable from a merchant on the Stripe side, and there were 27 of them by
+  // Sep 2026 (5 in September alone, which is what made the monthly Initiated tile look busier
+  // than the market really was). Not one has ever passed KYC or taken a payment, so they only
+  // ever inflate the top of the funnel and depress every conversion rate below it.
+  //
+  // Three signals, all applied to the account's own email and business name:
+  //   1. an @loyverse.com / @loyverse.io address (staff, including +tag aliases)
+  //   2. a disposable QA mailbox domain — mailinator and friends, example.com, test.com
+  //   3. a business name that is literally about testing: test / testing / demo / dummy /
+  //      sandbox / prueba as a WHOLE WORD, so "Testa Rossa Cafe" or "Demolition Supply" are
+  //      safe. This is the only signal that can misfire, on a real merchant who typed "Test Co"
+  //      into the name field — accepted deliberately: such an account is not a real activation
+  //      either, and all three of the ones seen so far are stuck at signed_up.
+  // Deliberately NOT here: random-looking local parts (qwer8qaz8air@gmail.com). That is the
+  // registration-fraud pattern us_bases.sql screens for, a different filter with its own
+  // published count; conflating the two would double-report the same exclusion.
+  var TEST_EMAIL_DOMAIN=/@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|yopmail\.[a-z.]+|guerrillamail\.[a-z.]+|sharklasers\.com|10minutemail\.[a-z.]+|tempmail\.[a-z.]+|temp-mail\.[a-z.]+|trashmail\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
+  var TEST_NAME_WORD=/(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
+  function isInternalTest(m){
+    if(!m) return false;
+    return TEST_EMAIL_DOMAIN.test(String(m.email||'')) || TEST_NAME_WORD.test(String(m.name||''));
+  }
+  // How many the filter removed from the book under the current country selection, so the page
+  // can report it the same way it reports the bot exclusion instead of silently shrinking.
+  var TESTS_EXCLUDED=0;
   // What the page renders under the current country selection — all reassigned by loadData().
   var M, BASES, BASES_M, BOTS, LAUNCH;
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1893,7 +1935,13 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // 90-day pos_active flag and disagree with the receipts-30d bases, which is what made the
   // "Non paying" group read 3 against a base of 4,941.
   function buildBook(){
-    return M.filter(function(m){ return m.connected_at; }).map(function(m){
+    // One choke point for the whole page: every KPI, bar, leaderboard, origin split, deep dive
+    // and export reads `book`, so excluding internal/QA accounts here means no view can
+    // disagree with another about who counts as an initiator.
+    var live=M.filter(function(m){ return m.connected_at; });
+    var kept=live.filter(function(m){ return !isInternalTest(m); });
+    TESTS_EXCLUDED=live.length-kept.length;
+    return kept.map(function(m){
       var a=actById[String(m.oid)]||null;
       var isNew=!!(m.registered_at && m.registered_at>=LAUNCH);
       var tag=m.grp||null;
@@ -1943,24 +1991,44 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var MONTHS=[];
   function monthly(){ return MODE==='month' && MONTH; }
 
-  // Stage membership under the current selection. All time = "has ever reached this stage";
-  // Monthly = "reached this stage IN the selected month", which needs the stage's own date.
-  // The monthly test is deliberately "counts as passed today AND its pass date is in the month",
-  // not the date alone: 4 merchants carry an enabled_at but have since dropped out of the passed
-  // set, so date-only monthly buckets would sum to 145 against an all-time headline of 141.
-  // Anchoring on the same r.passed / r.txn membership keeps the months summing to the all-time
-  // number minus the undated residual below, which the footnote reports.
-  function selInit(r){ return monthly()? ym(r.m.connected_at)===MONTH : true; }
-  function selPassed(r){ return r.passed && (monthly()? ym(r.m.enabled_at)===MONTH : true); }
-  function selTxn(r){ return r.txn && (monthly()? ym(r.m.first_txn_at)===MONTH : true); }
+  // Stage membership under the current selection.
+  //
+  //   All time — "has ever reached this stage".
+  //   Monthly  — a COHORT: the merchants that INITIATED in the selected month, and how far that
+  //              same set has progressed since. Selecting September answers "of the merchants
+  //              that opened a payments account in September, how many have cleared KYC and how
+  //              many are taking payments".
+  //
+  // Changed from a flow reading on 2026-09-09 (requested by Felipe, who wanted percentages on
+  // the monthly tiles). The flow reading — initiated in month / passed in month / first
+  // transacted in month — counted three DIFFERENT sets of merchants, so no ratio between them
+  // was a conversion rate; September showed 18 first transactions against 56 passes, but only 9
+  // of those 18 came from September's own intake, and in a thin month the ratio can exceed 100%
+  // (August's paying group read 300% off 3 transacting vs 1 pass). Anchoring all three stages on
+  // one month's initiators makes every percentage a real conversion, bounded by 100% and
+  // monotonically decreasing down the funnel.
+  //
+  // Cost of the change, stated plainly because it will be noticed: the monthly Passed and
+  // Transacting counts are LOWER than they were, since a merchant that initiated in July and
+  // passed in September now belongs to July's cohort, not September's. The stage counts no
+  // longer sum across months to the all-time headline — they sum to the all-time INITIATED
+  // headline, which is the point of a cohort. The deep dive lower down deliberately keeps the
+  // milestone-in-the-month reading and says so, because "passed in July, first transacted in
+  // September" is exactly the merchant a September operational review needs to see.
+  //
+  // Membership still comes from r.passed / r.txn, not from the date alone: 4 merchants carry an
+  // enabled_at but have since dropped out of the passed set, so a date-only test overcounted.
+  // Under the cohort reading the undated residual disappears — a merchant with a null enabled_at
+  // is still attributable to its initiation month — so no residual footnote is needed.
+  function inCohort(r){ return !monthly() || ym(r.m.connected_at)===MONTH; }
+  function selInit(r){ return inCohort(r); }
+  function selPassed(r){ return inCohort(r) && r.passed; }
+  function selTxn(r){ return inCohort(r) && r.txn; }
   function agg(rs){
     return { init:rs.filter(selInit).length,
              passed:rs.filter(selPassed).length,
              txn:rs.filter(selTxn).length };
   }
-  // Undated residual — merchants the all-time view counts as passed/transacting from the
-  // stage flag alone, which no month can claim. Reported in the footnote in Monthly mode.
-  var NO_PASS_DATE=0, NO_TXN_DATE=0;
 
   // ---- Bases ----------------------------------------------------------------
   // Group bases come from sql/us_bases.sql (all time) or sql/us_bases_monthly.sql (a selected
@@ -2025,8 +2093,10 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // ---- Wording that has to change with the mode ------------------------------
   // Kept in one place so a caption can never say "of initiated" while the numbers underneath
   // are a monthly flow.
-  function ofInit(){ return monthly()? 'of initiated in '+monthShort(MONTH) : 'of initiated'; }
-  function ofPassed(){ return monthly()? 'of passed in '+monthShort(MONTH) : 'of passed'; }
+  // Monthly is a cohort, so these read "of the month's initiators" rather than "of initiated in
+  // the month" — the denominator is one fixed set of merchants, not that month's flow.
+  function ofInit(){ return monthly()? 'of '+monthShort(MONTH)+' initiators' : 'of initiated'; }
+  function ofPassed(){ return monthly()? 'of those that passed' : 'of passed'; }
   // The population a base counts. "All countries" still divides by the US base — see the
   // note rendered by renderCcNote() — so it must keep saying US rather than imply otherwise.
   function popLabel(){
@@ -2044,14 +2114,20 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // ---- Headline KPIs ---------------------------------------------------------
   function renderKpis(g){
     var GS=g.GS, T=agg(book);
-    var suffix = monthly()? ' in '+monthShort(MONTH) : '';
+    // Only the FIRST tile carries the month in its label. Under the cohort reading the other two
+    // are not "passed in September", they are "passed, of September's intake" — putting the month
+    // on them would say the opposite of what they now count.
+    var initK = 'Initiated KYC' + (monthly()? ' in '+monthShort(MONTH) : '');
+    // The test-account exclusion is worth naming on the tile it actually moves: these accounts
+    // never progress, so they only ever appeared in Initiated.
+    var testNote = TESTS_EXCLUDED? (' &middot; '+num(TESTS_EXCLUDED)+' internal test account'+(TESTS_EXCLUDED===1?'':'s')+' excluded') : '';
     var bestOverall=GS.filter(function(x){return x.base;}).sort(function(x,y){return y.a.txn/y.base - x.a.txn/x.base;})[0];
     $('fnKpis').innerHTML=[
-      {k:'Initiated KYC'+suffix, v:num(T.init), s: monthly()? (popLabel()+' that opened a payments account in '+monthShort(MONTH)) : (popLabel()+' that opened a payments account')},
-      {k:'Passed KYC'+suffix, v:num(T.passed), s: monthly()? 'cleared KYC in '+monthShort(MONTH)+' &mdash; mostly merchants that initiated earlier' : '<b>'+pctL(T.passed,T.init)+'</b> '+ofInit()},
-      {k:'Transacting'+suffix, v:num(T.txn), s: monthly()? 'took their first payment in '+monthShort(MONTH) : '<b>'+pctL(T.txn,T.passed)+'</b> '+ofPassed()},
+      {k:initK, v:num(T.init), s: (popLabel()+' that opened a payments account'+(monthly()? ' in '+monthShort(MONTH) : '')+testNote)},
+      {k:'Passed KYC', v:num(T.passed), s:'<b>'+pctL(T.passed,T.init)+'</b> '+ofInit()},
+      {k:'Transacting', v:num(T.txn), s:'<b>'+pctL(T.txn,T.passed)+'</b> '+ofPassed()+(monthly()? (' &middot; '+pctL(T.txn,T.init)+' '+ofInit()) : '')},
       {k:'Best converting group', v:bestOverall?bestOverall.name:'&mdash;', accent:bestOverall?bestOverall.accent:null,
-       s:bestOverall?('<b>'+pctL(bestOverall.a.txn,bestOverall.base)+'</b> of its base '+(monthly()? ('transacted in '+monthShort(MONTH)) : 'is already transacting')):''}
+       s:bestOverall?('<b>'+pctL(bestOverall.a.txn,bestOverall.base)+'</b> of its base '+(monthly()? ('initiated in '+monthShort(MONTH)+' and is transacting') : 'is already transacting')):''}
     ].map(function(x){
       return '<div class="fn-kpi"><div class="k">'+x.k+'</div><div class="v"'+(x.accent?' style="color:'+x.accent+'"':'')+'>'+x.v+'</div><div class="s">'+x.s+'</div></div>';
     }).join('');
@@ -2063,15 +2139,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // single view: bars scaled to the group's own initiators; compare view: shared
     // scale across groups so relative volume is visible at a glance
     var a=g.a, mx=(big ? a.init : maxInit)||1;
-    // Monthly: every caption is a share of the month-end base, for the same reason the
-    // leaderboard switches (see renderCards) — within one month the merchants that passed are
-    // not the ones that initiated, so passed/initiated is not a conversion rate and can pass 100%.
-    var st = monthly()
-      ? [
-      {l:'Initiated KYC', n:a.init, c:'var(--blue)', p: g.base!=null ? '<b>'+pctL(a.init,g.base)+'</b> of base' : '&nbsp;'},
-      {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p: g.base!=null ? '<b>'+pctL(a.passed,g.base)+'</b> of base' : '&nbsp;'},
-      {l:'Transacting', n:a.txn, c:'var(--green)', p: g.base!=null ? '<b>'+pctL(a.txn,g.base)+'</b> of base' : '&nbsp;'}
-    ] : [
+    // ONE caption shape for both modes. Under the cohort reading a monthly stage-to-stage
+    // percentage is a genuine conversion rate — the merchants at all three stages are the same
+    // set — so the "% of base only" fallback the flow reading needed is gone. Bars are also
+    // monotonic again (init >= passed >= txn), which they were not before.
+    var st = [
       {l:'Initiated KYC', n:a.init, c:'var(--blue)', p: g.base!=null ? '<b>'+pctL(a.init,g.base)+'</b> of base' : '&nbsp;'},
       {l:'Passed KYC', n:a.passed, c:'var(--blue-deep)', p:'<b>'+pctL(a.passed,a.init)+'</b> '+ofInit()+(big&&g.base!=null?' &middot; '+pctL(a.passed,g.base)+' of base':'')},
       {l:'Transacting', n:a.txn, c:'var(--green)', p:'<b>'+pctL(a.txn,a.passed)+'</b> '+ofPassed()+(big&&g.base!=null?' &middot; '+pctL(a.txn,g.base)+' of base':'')}
@@ -2097,17 +2169,13 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var GS=g.GS;
     var maxInit=Math.max.apply(null, GS.map(function(x){return x.a.init;}))||1;
     $('fnCompare').innerHTML='<div class="fn-cmp">'+GS.map(function(x){return card(x,false,maxInit);}).join('')+'</div>';
-    // All time, a merchant that passed KYC necessarily initiated first, so stage-to-stage ratios
-    // are true conversion rates. Monthly they are NOT: the merchants that passed in August are
-    // mostly the ones that initiated in July, so passed/initiated within one month can exceed
-    // 100% (August's paying group read 300% off 3 transacting vs 1 pass) and would crown a
-    // "best converting group" on a timing artifact. In Monthly mode the leaderboard therefore
-    // ranks each stage against the month-end base instead — three well-defined monthly flows.
-    var METRICS=monthly()? [
-      {k:'Base &rarr; Initiated KYC', f:function(x){return x.base? x.a.init/x.base : null;}, fmt:function(x){return pctL(x.a.init,x.base);}},
-      {k:'Base &rarr; Passed KYC', f:function(x){return x.base? x.a.passed/x.base : null;}, fmt:function(x){return pctL(x.a.passed,x.base);}},
-      {k:'Base &rarr; Transacting', f:function(x){return x.base? x.a.txn/x.base : null;}, fmt:function(x){return pctL(x.a.txn,x.base);}}
-    ] : [
+    // A merchant that passed KYC necessarily initiated first, so under both the all-time and the
+    // cohort reading these are true conversion rates and the leaderboard can rank on them in
+    // either mode. Under the OLD monthly flow reading it could not: the merchants that passed in
+    // August were mostly July's initiators, so passed/initiated within a month could exceed 100%
+    // (August's paying group read 300% off 3 transacting vs 1 pass) and crowned a winner on a
+    // timing artifact — which is why Monthly used to rank against the base instead.
+    var METRICS=[
       {k:'Base &rarr; Initiated KYC', f:function(x){return x.base? x.a.init/x.base : null;}, fmt:function(x){return pctL(x.a.init,x.base);}},
       {k:'Initiated &rarr; Passed KYC', f:function(x){return x.a.init? x.a.passed/x.a.init : null;}, fmt:function(x){return pctL(x.a.passed,x.a.init);}},
       {k:'Passed KYC &rarr; Transacting', f:function(x){return x.a.passed? x.a.txn/x.a.passed : null;}, fmt:function(x){return pctL(x.a.txn,x.a.passed);}}
@@ -2179,14 +2247,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       +'In the origin split, groups are assigned by priority (new > paying > non paying > other), so each merchant is counted once. '
       +(noReg? noReg+' initiator'+(noReg>1?'s':'')+' with no registration date on file are grouped under existing. ':'')
       +(TAGGED&&UNTAGGED_N? UNTAGGED_N+' initiator'+(UNTAGGED_N>1?'s are':' is')+' outside the '+popLabel().replace(/ merchants$/,'')+' population these bases measure (non-'+popLabel().replace(/ merchants$/,'')+' or filtered), so '+(UNTAGGED_N>1?'they are':'it is')+' grouped by the legacy flags. ':'');
+    if(TESTS_EXCLUDED){
+      txt+=TESTS_EXCLUDED+' internal test account'+(TESTS_EXCLUDED===1?' is':'s are')+' excluded from every figure on this page \u2014 Loyverse staff addresses, disposable QA mailboxes, and accounts whose business name is literally test or demo. None has ever passed KYC or taken a payment, so they only inflated the initiated count. This is separate from, and additional to, the registration-fraud filter counted above. ';
+    }
     if(monthly()){
-      txt+='Showing '+monthLabel(MONTH)+' only: each stage is counted by its own date falling in the month, so a merchant that initiated in one month and passed in the next appears in both. Because the merchants at each stage in a single month are not the same people, stage-to-stage conversion rates are not meaningful here and are not shown — every percentage in Monthly view is a share of the group\u2019s base. ';
-      if(NO_PASS_DATE||NO_TXN_DATE){
-        var bits=[];
-        if(NO_PASS_DATE) bits.push(NO_PASS_DATE+' passed KYC');
-        if(NO_TXN_DATE) bits.push(NO_TXN_DATE+' transacting');
-        txt+=bits.join(' and ')+' with no date on file appear under All time but in no single month. ';
-      }
+      txt+='Showing the '+monthLabel(MONTH)+' cohort: the merchants that INITIATED KYC in '+monthLabel(MONTH)+', and how far that same set has progressed since. Every percentage is therefore a real conversion rate for one fixed group of merchants. A merchant that initiated in an earlier month and cleared KYC in '+monthLabel(MONTH)+' belongs to its own initiation cohort, not to this one, so these stage counts are lower than the raw number of things that happened during the month \u2014 for that operational reading, use the deep dive below, which keeps the milestone-in-the-month view. ';
       if(br && br.monthly && br.row){
         txt+='Bases are as of '+(br.row.partial? (br.row.asof||MONTH)+' (month still in progress)' : monthLabel(MONTH)+' month end')+'. ';
       } else {
@@ -2203,15 +2268,20 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var el=$('fnModeNote'); if(!el) return;
     if(!monthly()){ el.textContent='All time \u00b7 every stage a merchant has ever reached'; return; }
     var br=g.src;
-    el.textContent=monthLabel(MONTH)+(br&&br.row&&br.row.partial?' \u00b7 month still in progress':'')
-      +' \u00b7 each stage counted in the month it happened';
+    el.textContent=monthLabel(MONTH)+' cohort'+(br&&br.row&&br.row.partial?' \u00b7 month still in progress':'')
+      +' \u00b7 merchants that initiated KYC in the month, and how far they have got since';
   }
 
   // ---- Deep dive: passed-KYC merchants per bucket ---------------------------
   // Same mutually exclusive bucket assignment as the origin split (priority: new > paying >
-  // non paying > dormant). In Monthly mode the list is the merchants that PASSED KYC in the
-  // selected month; the terminal and transacting columns are their status TO DATE, which the
-  // chips and note say explicitly — a tick there is not a claim that it happened that month.
+  // non paying > dormant).
+  //
+  // DELIBERATELY NOT THE COHORT the KPI tiles above use. In Monthly mode this list is everyone
+  // who reached a MILESTONE in the selected month, whenever they initiated — a merchant that
+  // passed KYC in July and took its first payment in September is exactly what a September
+  // operational review needs to see, and the cohort view above cannot show it. The two readings
+  // will therefore disagree on their counts; that is intended, and both notes say which is
+  // which. Do not "fix" one to match the other.
   var deepRender=function(){};
   (function(){
     if(!$('fnDeepPick')) return;
@@ -2311,7 +2381,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       }).join('') || (thead+'<tr><td colspan="'+cols+'" style="color:var(--midgray)">No merchants match.</td></tr>');
       $('fnDeepNote').textContent=(f.length!==rs.length? f.length+' of ':'')+rs.length+' merchant'+(rs.length===1?'':'s')
         +(all? ' across all four buckets' : '')
-        +(monthly()? ' that reached a milestone in '+monthLabel(MONTH)+' \u2014 passed KYC, ordered or received a terminal, or first transacted'
+        +(monthly()? ' that reached a milestone in '+monthLabel(MONTH)+' \u2014 passed KYC, ordered or received a terminal, or first transacted \u2014 whenever they initiated, so this list is not the '+monthShort(MONTH)+' cohort the tiles above count'
                    : ' that have passed KYC')+' shown. '
         +'Terminal orders are attributed by shipping email; "received" means the Stripe hardware order status is delivered.'
         +(monthly()? ' Stripe publishes no delivery date, only a status, so "received in '+monthShort(MONTH)+'" means ordered in '+monthShort(MONTH)+' and delivered since.' : '')
@@ -2366,8 +2436,10 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var taggedN=book.filter(function(r){ return !!r.tag; }).length;
     TAGGED = book.length>0 && taggedN >= book.length*0.9;
     UNTAGGED_N = book.length - taggedN;
-    NO_PASS_DATE=book.filter(function(r){ return r.passed && !r.m.enabled_at; }).length;
-    NO_TXN_DATE=book.filter(function(r){ return r.txn && !r.m.first_txn_at; }).length;
+    // The undated-stage residual these two lines used to track (merchants counted as passed or
+    // transacting from the stage flag with no date on file) was only needed by the old monthly
+    // flow reading, which had nowhere to put them. The cohort reading attributes every merchant
+    // by its initiation date, which is never null in the book, so there is no residual left.
     basesByMonth={};
     (BASES_M||[]).forEach(function(b){ if(b&&b.month) basesByMonth[b.month]=b; });
     newAll=M.filter(function(m){ return m.registered_at && m.registered_at>=LAUNCH; });
