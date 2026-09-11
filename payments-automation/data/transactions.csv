@@ -28206,48 +28206,65 @@ ch_3UEHn57C646Nqh7e18dNNEy2,2026-09-10 23:54:12,acct_1TtuAL7C646Nqh7e,acct_1SSKs
 ch_3UEHnS7JNOnhaC0p1yLuC7ea,2026-09-10 23:54:45,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,400,Visa,debit,US,1404,0
 ch_3UEHphQJfvlGDJJG1qk6aGIE,2026-09-10 23:56:49,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,750,MasterCard,debit,US,3753,24
 ch_3UEHqJQJfvlGDJJG00UTwyOI,2026-09-10 23:57:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1625,Visa,debit,US,5219,46
-ch_3UEHvE7JNOnhaC0p00RlxaPP,2026-09-11 00:02:36,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,450,Visa,debit,US,6907,
-ch_3UEHvGG9cKTLUhQ71vcoqPtc,2026-09-11 00:02:39,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,7711,Visa,credit,US,6694,
-ch_3UEHvQQJfvlGDJJG0wivOon0,2026-09-11 00:02:43,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1250,Visa,debit,US,3581,
-ch_3UEHxyQJfvlGDJJG02SPO81G,2026-09-11 00:05:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1825,Visa,debit,US,1526,
-ch_3UEHzr6xaKj8hHOI1KeMEfgt,2026-09-11 00:07:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4437,Visa,debit,US,7913,
-ch_3UEI546xaKj8hHOI1Lo26l9m,2026-09-11 00:12:43,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3692,MasterCard,debit,US,8174,
-ch_3UEI6k6xaKj8hHOI1KX6YbWv,2026-09-11 00:14:26,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1718,Visa,credit,US,5780,
-ch_3UEI6tQJfvlGDJJG06jRD67g,2026-09-11 00:14:36,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,MasterCard,debit,US,3451,
-ch_3UEI8XQJfvlGDJJG0pB0grdu,2026-09-11 00:16:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,MasterCard,debit,US,4370,
-ch_3UEIGlQJfvlGDJJG0kyNrqwv,2026-09-11 00:24:46,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,7935,
-ch_3UEIH1QJfvlGDJJG0KuX76em,2026-09-11 00:25:07,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,750,Visa,debit,US,0662,
-ch_3UEIIa7JNOnhaC0p1IfoHHVu,2026-09-11 00:26:39,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,2600,Visa,debit,US,8815,
+ch_3UEHvE7JNOnhaC0p00RlxaPP,2026-09-11 00:02:36,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,450,Visa,debit,US,6907,0
+ch_3UEHvGG9cKTLUhQ71vcoqPtc,2026-09-11 00:02:39,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,7711,Visa,credit,US,6694,207
+ch_3UEHvQQJfvlGDJJG0wivOon0,2026-09-11 00:02:43,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1250,Visa,debit,US,3581,36
+ch_3UEHxyQJfvlGDJJG02SPO81G,2026-09-11 00:05:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1825,Visa,debit,US,1526,51
+ch_3UEHzr6xaKj8hHOI1KeMEfgt,2026-09-11 00:07:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4437,Visa,debit,US,7913,130
+ch_3UEI546xaKj8hHOI1Lo26l9m,2026-09-11 00:12:43,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3692,MasterCard,debit,US,8174,111
+ch_3UEI6k6xaKj8hHOI1KX6YbWv,2026-09-11 00:14:26,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1718,Visa,credit,US,5780,60
+ch_3UEI6tQJfvlGDJJG06jRD67g,2026-09-11 00:14:36,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,MasterCard,debit,US,3451,19
+ch_3UEI8XQJfvlGDJJG0pB0grdu,2026-09-11 00:16:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1075,MasterCard,debit,US,4370,32
+ch_3UEIGlQJfvlGDJJG0kyNrqwv,2026-09-11 00:24:46,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,7935,29
+ch_3UEIH1QJfvlGDJJG0KuX76em,2026-09-11 00:25:07,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,750,Visa,debit,US,0662,24
+ch_3UEIIa7JNOnhaC0p1IfoHHVu,2026-09-11 00:26:39,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,2600,Visa,debit,US,8815,0
 ch_3UEIKOQJfvlGDJJG07yZdCJP,2026-09-11 00:28:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,failed,2100,Visa,debit,US,5059,
 ch_3UEIKcQJfvlGDJJG13nBXQ0i,2026-09-11 00:28:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,failed,2100,Visa,debit,US,4696,
-ch_3UEILAQJfvlGDJJG1XqSYIJ1,2026-09-11 00:29:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2100,Visa,debit,US,4216,
-ch_3UEILt6xaKj8hHOI0eOgkulj,2026-09-11 00:30:06,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,prepaid,US,3280,
-ch_3UEILtG9cKTLUhQ70kuKK8Sw,2026-09-11 00:30:10,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,6793,Visa,debit,US,0239,
-ch_3UEIMaQJfvlGDJJG1ZVxn0b7,2026-09-11 00:30:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1225,Visa,debit,US,4230,
-ch_3UEIXX7JNOnhaC0p0VGDvIpG,2026-09-11 00:42:06,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,Visa,credit,US,3312,
-ch_3UEIcD7JNOnhaC0p1NcporFi,2026-09-11 00:46:56,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,debit,US,1997,
-ch_3UEIcq6xaKj8hHOI1VSqDlHI,2026-09-11 00:47:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,643,Visa,prepaid,US,3197,
-ch_3UEIfC7JNOnhaC0p1H95sSjc,2026-09-11 00:50:09,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,American Express,credit,US,3162,
-ch_3UEIjs6xaKj8hHOI01hTmeBy,2026-09-11 00:54:55,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4298,MasterCard,credit,US,5501,
-ch_3UEInTQJfvlGDJJG1Of7f9Ny,2026-09-11 00:58:34,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1100,Visa,debit,US,0737,
-ch_3UEInq7JNOnhaC0p0mhKGrrV,2026-09-11 00:58:57,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,250,Visa,debit,US,9007,
-ch_3UEIte7JNOnhaC0p0XEPwG4v,2026-09-11 01:05:04,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,debit,US,1404,
-ch_3UEIwL7JNOnhaC0p1osMtj0L,2026-09-11 01:07:44,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,credit,US,3705,
-ch_3UEIxv7JNOnhaC0p0G8AK9Fo,2026-09-11 01:09:34,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,MasterCard,debit,US,3610,
-ch_3UEJ427JNOnhaC0p0BOCYA04,2026-09-11 01:15:52,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,debit,US,6463,
-ch_3UEJ4gG9cKTLUhQ70SQtJq6n,2026-09-11 01:16:37,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1980,Visa,debit,US,6372,
+ch_3UEILAQJfvlGDJJG1XqSYIJ1,2026-09-11 00:29:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2100,Visa,debit,US,4216,58
+ch_3UEILt6xaKj8hHOI0eOgkulj,2026-09-11 00:30:06,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,prepaid,US,3280,85
+ch_3UEILtG9cKTLUhQ70kuKK8Sw,2026-09-11 00:30:10,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,6793,Visa,debit,US,0239,150
+ch_3UEIMaQJfvlGDJJG1ZVxn0b7,2026-09-11 00:30:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1225,Visa,debit,US,4230,36
+ch_3UEIXX7JNOnhaC0p0VGDvIpG,2026-09-11 00:42:06,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,Visa,credit,US,3312,0
+ch_3UEIcD7JNOnhaC0p1NcporFi,2026-09-11 00:46:56,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,debit,US,1997,0
+ch_3UEIcq6xaKj8hHOI1VSqDlHI,2026-09-11 00:47:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,643,Visa,prepaid,US,3197,32
+ch_3UEIfC7JNOnhaC0p1H95sSjc,2026-09-11 00:50:09,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,American Express,credit,US,3162,0
+ch_3UEIjs6xaKj8hHOI01hTmeBy,2026-09-11 00:54:55,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,4298,MasterCard,credit,US,5501,127
+ch_3UEInTQJfvlGDJJG1Of7f9Ny,2026-09-11 00:58:34,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1100,Visa,debit,US,0737,33
+ch_3UEInq7JNOnhaC0p0mhKGrrV,2026-09-11 00:58:57,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,250,Visa,debit,US,9007,0
+ch_3UEIte7JNOnhaC0p0XEPwG4v,2026-09-11 01:05:04,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,debit,US,1404,0
+ch_3UEIwL7JNOnhaC0p1osMtj0L,2026-09-11 01:07:44,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,credit,US,3705,0
+ch_3UEIxv7JNOnhaC0p0G8AK9Fo,2026-09-11 01:09:34,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,MasterCard,debit,US,3610,0
+ch_3UEJ427JNOnhaC0p0BOCYA04,2026-09-11 01:15:52,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,500,Visa,debit,US,6463,0
+ch_3UEJ4gG9cKTLUhQ70SQtJq6n,2026-09-11 01:16:37,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1980,Visa,debit,US,6372,54
 ch_3UEJ6T6xaKj8hHOI1Fc2RX3Q,2026-09-11 01:18:14,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,failed,12899,MasterCard,debit,US,9285,
-ch_3UEJ7w7JNOnhaC0p1pTON2hu,2026-09-11 01:19:45,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,MasterCard,debit,US,3701,
-ch_3UEJ856xaKj8hHOI1XIjeojx,2026-09-11 01:19:54,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,12899,MasterCard,debit,US,9285,
+ch_3UEJ7w7JNOnhaC0p1pTON2hu,2026-09-11 01:19:45,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,MasterCard,debit,US,3701,0
+ch_3UEJ856xaKj8hHOI1XIjeojx,2026-09-11 01:19:54,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,12899,MasterCard,debit,US,9285,350
 ch_3UEJNn6xaKj8hHOI0qAsfwDq,2026-09-11 01:36:21,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,failed,2149,Visa,prepaid,US,9762,
-ch_3UEJOE6xaKj8hHOI0Yv5iQOv,2026-09-11 01:36:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,Visa,prepaid,US,9762,
-ch_3UEJS47JNOnhaC0p1wQtayNF,2026-09-11 01:40:33,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,Visa,debit,US,8155,
-ch_3UEJTP7JNOnhaC0p13jISU6M,2026-09-11 01:41:54,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,Visa,debit,US,8155,
+ch_3UEJOE6xaKj8hHOI0Yv5iQOv,2026-09-11 01:36:36,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,Visa,prepaid,US,9762,71
+ch_3UEJS47JNOnhaC0p1wQtayNF,2026-09-11 01:40:33,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,Visa,debit,US,8155,0
+ch_3UEJTP7JNOnhaC0p13jISU6M,2026-09-11 01:41:54,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,Visa,debit,US,8155,0
 ch_3UEJhr96irvmr6Or1lTbXF2L,2026-09-11 01:56:56,acct_1UDFpO96irvmr6Or,acct_1SSKsA7e4AMQfKY3,Roland beauty saloon,US,usd,failed,15000,MasterCard,credit,US,2281,
-ch_3UEJnx7JNOnhaC0p0fUwdUtX,2026-09-11 02:03:12,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,550,American Express,credit,US,3424,
-ch_3UEK1C7JNOnhaC0p1SK7kTFd,2026-09-11 02:16:50,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,Visa,debit,US,4875,
-ch_3UEK3s7JNOnhaC0p0QghcTYM,2026-09-11 02:19:36,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,debit,US,1997,
-ch_3UEKDn6xaKj8hHOI1HdZbw4L,2026-09-11 02:29:52,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,10748,Visa,debit,US,3936,
-ch_3UEKMh7JNOnhaC0p1VbH2ANb,2026-09-11 02:39:03,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,American Express,credit,US,5743,
-ch_3UEKZx96irvmr6Or0kjiMdbs,2026-09-11 02:52:46,acct_1UDFpO96irvmr6Or,acct_1SSKsA7e4AMQfKY3,Roland beauty saloon,US,usd,succeeded,15000,MasterCard,credit,US,2281,
-ch_3UEKdu7JNOnhaC0p0zln1XnK,2026-09-11 02:56:49,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,credit,US,3312,
+ch_3UEJnx7JNOnhaC0p0fUwdUtX,2026-09-11 02:03:12,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,550,American Express,credit,US,3424,0
+ch_3UEK1C7JNOnhaC0p1SK7kTFd,2026-09-11 02:16:50,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,Visa,debit,US,4875,0
+ch_3UEK3s7JNOnhaC0p0QghcTYM,2026-09-11 02:19:36,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,debit,US,1997,0
+ch_3UEKDn6xaKj8hHOI1HdZbw4L,2026-09-11 02:29:52,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,10748,Visa,debit,US,3936,294
+ch_3UEKMh7JNOnhaC0p1VbH2ANb,2026-09-11 02:39:03,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,American Express,credit,US,5743,0
+ch_3UEKZx96irvmr6Or0kjiMdbs,2026-09-11 02:52:46,acct_1UDFpO96irvmr6Or,acct_1SSKsA7e4AMQfKY3,Roland beauty saloon,US,usd,succeeded,15000,MasterCard,credit,US,2281,0
+ch_3UEKdu7JNOnhaC0p0zln1XnK,2026-09-11 02:56:49,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,100,Visa,credit,US,3312,0
+ch_3UEKf37JNOnhaC0p0ztCw8EA,2026-09-11 02:58:01,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,400,American Express,credit,US,1019,0
+ch_3UEKkN7JNOnhaC0p0pelLFfO,2026-09-11 03:03:31,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,300,MasterCard,credit,US,9692,0
+ch_3UEKmX7JNOnhaC0p1kq1XFHQ,2026-09-11 03:05:44,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,600,Visa,debit,US,6779,0
+ch_3UEKq37JNOnhaC0p1F9eSEE6,2026-09-11 03:09:23,acct_1UAy447JNOnhaC0p,acct_1SSKsA7e4AMQfKY3,El Dorado Aquatics Snack Shack,US,usd,succeeded,200,MasterCard,credit,US,9692,0
+ch_3UEKqpG9cKTLUhQ70oVQL73l,2026-09-11 03:10:16,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2755,Visa,debit,US,4726,70
+ch_3UEOvE6xrVvfynTx0vOOMMb3,2026-09-11 07:31:08,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,350,MasterCard,debit,GB,1396,3
+ch_3UEPB66xrVvfynTx14fDwmIw,2026-09-11 07:47:30,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,280,Visa,debit,GB,1075,3
+ch_3UEPH66xrVvfynTx0vMeZEYV,2026-09-11 07:53:41,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1260,Visa,debit,GB,7452,12
+ch_3UEPK46xrVvfynTx1XZ3mDiR,2026-09-11 07:56:44,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,347,MasterCard,debit,GB,4602,7
+ch_3UEPdO6xrVvfynTx1uFqniZq,2026-09-11 08:16:39,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,680,Visa,debit,GB,2012,7
+ch_3UEPih6xrVvfynTx1gEBQkEE,2026-09-11 08:22:19,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1600,MasterCard,debit,GB,5940,16
+ch_3UEPrC6xrVvfynTx086V0SYM,2026-09-11 08:30:58,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2800,Visa,debit,GB,2716,28
+ch_3UEPsC6xrVvfynTx1tB2uHnl,2026-09-11 08:31:58,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1350,Visa,debit,GB,4131,13
+ch_3UEPtb6xrVvfynTx1zJ3VhNe,2026-09-11 08:33:25,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1660,Visa,debit,GB,5856,16
+ch_3UEQ1r6xrVvfynTx0f4iznZi,2026-09-11 08:41:56,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,294,Visa,debit,GB,3018,3
+ch_3UEQ3c6xrVvfynTx17aQI5Qu,2026-09-11 08:43:47,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3108,MasterCard,debit,GB,9836,31
+ch_3UEQ4y6xrVvfynTx1AQ2zKDw,2026-09-11 08:45:09,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,700,Visa,debit,GB,6346,7
