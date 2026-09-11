@@ -659,11 +659,29 @@ renderCohTable();
   // holding a payments account registered before that window, some as far back as 2017, and they
   // were simply invisible. Registration counts exist for every cohort, so the membership views
   // build their own axis from those instead.
+  //
+  // THE ROW AXIS IS A UNION, and it has to be. D.cohorts is the summary TABLE's source and is
+  // snapshotted at the latest COMPLETE month (meta.snapshotMonth), so a cohort that only began in
+  // the month still in progress has no row there at all. Building the triangle's rows from it
+  // therefore dropped the newest cohort silently — in September 2026 that hid a row carrying
+  // 14,041 active merchants, 99 merchants who had opened a Loyverse Payments account and 97 who
+  // had begun KYC, none of which was visible anywhere on the page.
+  //
+  // monthly and cohortTriangle both carry the in-progress month. monthly is used for the size:
+  // its registrations are identical to cohorts' for all 129 cohorts the two share, so it is the
+  // same figure from the same grid rather than a second definition creeping in. cohortTriangle
+  // keys are unioned in as well, so a cohort that gains a series before it gains a registration
+  // count still gets a row — sizeOf already renders an unknown denominator as "—" and suppresses
+  // the percentage rather than dividing by zero.
   const LATEST_M = (D.meta && D.meta.latestMonth) || null;
   const mAge = (from, to) => (+to.slice(0,4) - +from.slice(0,4)) * 12 + (+to.slice(5,7) - +from.slice(5,7));
-  const ALL_ROWS  = (D.cohorts || []).map(c => c.cohort)
-    .filter(c => LATEST_M && c <= LATEST_M).sort();
-  const ALL_SIZE  = Object.fromEntries((D.cohorts || []).map(c => [c.cohort, +c.registrations || 0]));
+  const ALL_SIZE = {};
+  (D.monthly || []).forEach(m => { if (m && m.month) ALL_SIZE[m.month] = +m.registrations || 0; });
+  (D.cohorts || []).forEach(c => { ALL_SIZE[c.cohort] = +c.registrations || 0; });
+  const ALL_ROWS = Object.keys(ALL_SIZE)
+    .concat(Object.keys(D.cohortTriangle || {}))
+    .filter((c, i, a) => a.indexOf(c) === i && LATEST_M && c <= LATEST_M)
+    .sort();
 
   // The dashboard-wide Paying and Active views were reading cohortCompare, which is trimmed to
   // the last 24 cohorts for the comparison chart above. cohortTriangle holds the SAME numbers —
