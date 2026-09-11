@@ -28299,3 +28299,374 @@ ch_3UESm56xrVvfynTx1l6WtTsv,2026-09-11 11:38:01,acct_1U4NBD6xrVvfynTx,acct_1SSKs
 ch_3UESqy9uALOIzRNR1ht4XKYw,2026-09-11 11:42:57,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,4595,Visa,debit,US,2386,115
 ch_3UESyy6xrVvfynTx1n9lPgMB,2026-09-11 11:51:10,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,250,MasterCard,debit,GB,5504,2
 ch_3UET3v6xrVvfynTx1AtVmwUs,2026-09-11 11:56:30,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2427,MasterCard,debit,GB,2824,24
+ch_3UET9e6xrVvfynTx1A14jtEE,2026-09-11 12:02:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,900,Visa,debit,GB,8029,9
+ch_3UETBl6xrVvfynTx0C5iPJAl,2026-09-11 12:04:34,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,530,MasterCard,debit,GB,1277,5
+ch_3UETCz5XZgMuE7ip0FiOap4S,2026-09-11 12:05:45,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,10021,Visa,debit,US,1169,276
+ch_3UETK99uALOIzRNR0FsIHvOI,2026-09-11 12:13:02,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2208,American Express,credit,US,2009,55
+ch_3UETLC5XZgMuE7ip04OfuqlO,2026-09-11 12:14:09,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,15937,MasterCard,debit,US,5591,429
+ch_3UETXe6xrVvfynTx16TBmfBs,2026-09-11 12:27:13,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1470,MasterCard,debit,GB,5726,15
+ch_3UETeG6xrVvfynTx1wJrCtQq,2026-09-11 12:33:52,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,760,Visa,debit,GB,3439,8
+ch_3UEThs6xrVvfynTx0dUS4Q4L,2026-09-11 12:37:34,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,750,Visa,debit,GB,0605,7
+ch_3UETjE6xrVvfynTx0yULNoam,2026-09-11 12:38:58,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1000,MasterCard,debit,GB,4872,10
+ch_3UEU544qfJZZfKex1ECiy6LG,2026-09-11 13:01:33,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,20776,Visa,credit,US,8350,0
+ch_3UEU5U6xrVvfynTx02HPCuf7,2026-09-11 13:01:58,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,780,Visa,debit,GB,3507,8
+ch_3UEU6B7egDgFG55L08xxch3E,2026-09-11 13:02:41,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,7575,MasterCard,credit,US,1448,0
+ch_3UEU6g4P02Q3CMCv1dNUmfh4,2026-09-11 13:04:18,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,518,Visa,credit,US,7882,14
+ch_3UEU8J6xrVvfynTx0cT7bHNh,2026-09-11 13:04:54,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1920,Visa,debit,GB,5395,19
+ch_3UEU8J7egDgFG55L0qHbMCWI,2026-09-11 13:04:56,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,598,MasterCard,debit,US,4578,0
+ch_3UEU8X4P02Q3CMCv0WKboY3Y,2026-09-11 13:05:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1143,MasterCard,credit,US,4954,30
+ch_3UEUCS4P02Q3CMCv1HYjxl7U,2026-09-11 13:09:11,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,715,Visa,credit,US,0675,19
+ch_3UEUDIGNFnsrSDXh1mlXZi67,2026-09-11 13:10:00,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3200,Visa,credit,US,6008,98
+ch_3UEUDu4P02Q3CMCv0FN23HyW,2026-09-11 13:10:57,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,755,MasterCard,debit,US,6926,20
+ch_3UEUF84P02Q3CMCv1Nmp5Pha,2026-09-11 13:12:03,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1211,Visa,credit,US,5203,32
+ch_3UEUG2GNFnsrSDXh1sZpIo9R,2026-09-11 13:12:51,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,11100,American Express,credit,US,7562,304
+ch_3UEUHJ4P02Q3CMCv0tcrgl9o,2026-09-11 13:14:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1473,Visa,debit,US,6950,39
+ch_3UEUIm4qfJZZfKex0WmyggXn,2026-09-11 13:16:05,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,5069,Visa,prepaid,US,9803,0
+ch_3UEUJ0GNFnsrSDXh1in6dMW3,2026-09-11 13:15:53,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4800,Visa,debit,US,2451,140
+ch_3UEUJC4qfJZZfKex0yIy9tJv,2026-09-11 13:16:06,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,1587,Visa,debit,US,0871,
+ch_3UEUJP4qfJZZfKex0gSvRkdk,2026-09-11 13:16:24,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1587,Visa,debit,US,0871,0
+ch_3UEUJv4P02Q3CMCv0Qko6G7X,2026-09-11 13:16:57,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1317,Visa,credit,US,3409,35
+ch_3UEUKF4qfJZZfKex0dcFkTyo,2026-09-11 13:17:14,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,6198,MasterCard,debit,US,9203,0
+ch_3UEUKp4qfJZZfKex1JY7bYHd,2026-09-11 13:17:46,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2437,Visa,debit,US,1871,0
+ch_3UEUL69uALOIzRNR1d6kN7vh,2026-09-11 13:18:06,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,485,MasterCard,credit,US,0436,12
+ch_3UEUMH4qfJZZfKex01kDVZ3s,2026-09-11 13:19:16,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1534,MasterCard,debit,US,5072,0
+ch_3UEUNA4P02Q3CMCv1GJJuwkQ,2026-09-11 13:20:15,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1165,Visa,debit,US,0914,31
+ch_3UEUPlGNFnsrSDXh0Tx9EMiJ,2026-09-11 13:22:54,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,failed,18600,Visa,credit,US,2591,
+ch_3UEUQY4P02Q3CMCv1w5GzamU,2026-09-11 13:23:52,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,555,Visa,credit,US,3879,15
+ch_3UEUQw9uALOIzRNR1UY1wtvE,2026-09-11 13:25:06,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1305,Visa,debit,US,6711,33
+ch_3UEURD7egDgFG55L1nSz5Snt,2026-09-11 13:24:29,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,794,MasterCard,debit,US,9153,0
+ch_3UEURO4qfJZZfKex1bu2Ed1v,2026-09-11 13:24:33,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1070,Visa,debit,US,8750,0
+ch_3UEUSQ4qfJZZfKex0SLOO2eh,2026-09-11 13:25:37,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1483,Visa,debit,US,8750,0
+ch_3UEUSR5XZgMuE7ip03LAaE2d,2026-09-11 13:25:46,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1579,MasterCard,credit,US,5843,56
+ch_3UEUSV4P02Q3CMCv08SW2you,2026-09-11 13:25:47,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,859,Discover,credit,US,2284,23
+ch_3UEUTb4P02Q3CMCv1rAtR9ES,2026-09-11 13:26:58,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1539,MasterCard,credit,US,0029,41
+ch_3UEUUF5dZ6e5RJIN0JiwpjL5,2026-09-11 13:27:30,acct_1UEUFK5dZ6e5RJIN,acct_1SSKsA7e4AMQfKY3,Nabil Tech,US,usd,succeeded,1500,Visa,debit,US,3206,0
+ch_3UEUW48U0jCSzUQh1dannm2X,2026-09-11 13:29:25,acct_1UDTkX8U0jCSzUQh,acct_1SSKsA7e4AMQfKY3,Central diner llc,US,usd,failed,50000,MasterCard,credit,US,0980,
+ch_3UEUWG7egDgFG55L1Szn1xNh,2026-09-11 13:29:42,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,490,Visa,debit,US,9483,0
+ch_3UEUWQ8U0jCSzUQh0kO1Am4r,2026-09-11 13:29:45,acct_1UDTkX8U0jCSzUQh,acct_1SSKsA7e4AMQfKY3,Central diner llc,US,usd,failed,35000,MasterCard,credit,US,0980,
+ch_3UEUWl8U0jCSzUQh1YMbOp5h,2026-09-11 13:30:20,acct_1UDTkX8U0jCSzUQh,acct_1SSKsA7e4AMQfKY3,Central diner llc,US,usd,failed,9900,Visa,debit,US,9550,
+ch_3UEUY38U0jCSzUQh1qOhNGzC,2026-09-11 13:31:30,acct_1UDTkX8U0jCSzUQh,acct_1SSKsA7e4AMQfKY3,Central diner llc,US,usd,succeeded,3000,Visa,debit,US,3206,0
+ch_3UEUZP9uALOIzRNR1XZsLahh,2026-09-11 13:32:53,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2610,Visa,credit,US,4024,65
+ch_3UEUa19uALOIzRNR0n1DJvhC,2026-09-11 13:33:50,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,477,Visa,debit,US,6711,12
+ch_3UEUaT7egDgFG55L0ekYc2Ns,2026-09-11 13:33:56,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1522,MasterCard,debit,US,8736,0
+ch_3UEUbl4P02Q3CMCv1RbfdboR,2026-09-11 13:35:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1387,Visa,credit,US,9712,37
+ch_3UEUbw8lEmH1iqQS0xT2xnVL,2026-09-11 13:35:32,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,5299,Visa,debit,US,7712,0
+ch_3UEUde8lEmH1iqQS02GuSGqb,2026-09-11 13:37:17,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2381,Visa,debit,US,8379,0
+ch_3UEUeH8lEmH1iqQS12wOUDdD,2026-09-11 13:38:17,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,5936,MasterCard,debit,US,7969,0
+ch_3UEUfFGNFnsrSDXh0m1uJWv9,2026-09-11 13:39:16,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1200,American Express,credit,US,3242,46
+ch_3UEUfb4P02Q3CMCv1sNnZWh6,2026-09-11 13:39:29,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,347,MasterCard,debit,US,8890,9
+ch_3UEUgy9uALOIzRNR0coVMel7,2026-09-11 13:40:43,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,870,Visa,debit,US,5166,22
+ch_3UEUlY8lEmH1iqQS171NxOKG,2026-09-11 13:45:25,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3145,Visa,prepaid,US,2402,0
+ch_3UEUmW9uALOIzRNR1LkGXZvG,2026-09-11 13:46:28,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,799,MasterCard,credit,US,3720,20
+ch_3UEUp24qfJZZfKex1XhbCdd2,2026-09-11 13:48:59,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1587,Visa,debit,US,5366,0
+ch_3UEUpX8lEmH1iqQS1gm4tskB,2026-09-11 13:49:34,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,11558,MasterCard,debit,US,2242,0
+ch_3UEUpu4P02Q3CMCv0pZpPE9T,2026-09-11 13:50:05,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,3184,Visa,credit,US,4934,84
+ch_3UEUqz4P02Q3CMCv0aEXPwW2,2026-09-11 13:51:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1302,American Express,credit,US,7508,35
+ch_3UEUrZGNFnsrSDXh1J8CkkZH,2026-09-11 13:51:36,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1400,Visa,credit,US,8438,51
+ch_3UEUru4qfJZZfKex0v6PVnfE,2026-09-11 13:51:57,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,12613,Visa,debit,US,2660,0
+ch_3UEUsoGNFnsrSDXh0q255yw7,2026-09-11 13:52:53,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4400,Visa,credit,CA,8015,129
+ch_3UEUt64P02Q3CMCv1kx27bSH,2026-09-11 13:53:16,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,638,American Express,credit,US,0642,17
+ch_3UEUtnGNFnsrSDXh1VYU3vbZ,2026-09-11 13:53:54,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,800,Visa,debit,US,1457,36
+ch_3UEUy58lEmH1iqQS0m4qNcSC,2026-09-11 13:58:21,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2065,Visa,debit,US,9822,0
+ch_3UEUyS6xrVvfynTx1OFPqZ3f,2026-09-11 13:58:46,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1470,Visa,debit,GB,1002,15
+ch_3UEV1G4P02Q3CMCv1hVz4qgt,2026-09-11 14:01:43,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1492,Visa,debit,US,4962,40
+ch_3UEV6W4P02Q3CMCv1ybCEwui,2026-09-11 14:07:11,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,credit,US,8957,12
+ch_3UEV7p4P02Q3CMCv1cmCVcyY,2026-09-11 14:08:42,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,1887,12
+ch_3UEV9B8lEmH1iqQS1pI8GZqz,2026-09-11 14:09:49,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2965,Visa,debit,US,2755,0
+ch_3UEVDB9uALOIzRNR1k7pz8AH,2026-09-11 14:14:05,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1478,Visa,credit,US,9040,37
+ch_3UEVE64qfJZZfKex0DfGZ6vL,2026-09-11 14:14:56,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1134,Visa,prepaid,US,3126,0
+ch_3UEVGm4P02Q3CMCv08NZKNRO,2026-09-11 14:17:42,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1563,MasterCard,debit,US,3699,41
+ch_3UEVHKGNFnsrSDXh0XRDbIRI,2026-09-11 14:18:13,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2400,Visa,credit,US,5944,77
+ch_3UEVHr8lEmH1iqQS1a1P2vz1,2026-09-11 14:18:46,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,207,MasterCard,debit,US,2409,0
+ch_3UEVIF9uALOIzRNR08SETpsw,2026-09-11 14:19:13,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1362,Visa,debit,US,8935,34
+ch_3UEVJ19uALOIzRNR0gpIg8iO,2026-09-11 14:20:08,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,495,Visa,debit,US,2772,12
+ch_3UEVJP8lEmH1iqQS1gEiWM6k,2026-09-11 14:20:25,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2669,Visa,debit,US,0429,0
+ch_3UEVJRGNFnsrSDXh1gAMj6af,2026-09-11 14:20:24,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4300,Visa,debit,US,7344,127
+ch_3UEVJs4P02Q3CMCv0cVmTII3,2026-09-11 14:20:53,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,786,Visa,credit,US,5647,21
+ch_3UEVKg4P02Q3CMCv1CUic71n,2026-09-11 14:21:46,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,594,Visa,credit,US,7122,16
+ch_3UEVL14qfJZZfKex1Xa2RhIl,2026-09-11 14:22:03,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,423,Visa,debit,US,2444,0
+ch_3UEVLv4P02Q3CMCv1YDEe2wo,2026-09-11 14:23:02,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,951,MasterCard,debit,US,6489,25
+ch_3UEVMjGNFnsrSDXh0Jn7KdXh,2026-09-11 14:23:56,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1200,Visa,debit,US,2020,46
+ch_3UEVNg6xrVvfynTx1PoqivEI,2026-09-11 14:24:59,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,575,Visa,debit,GB,3849,6
+ch_3UEVNsGNFnsrSDXh1LrGiimC,2026-09-11 14:25:01,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,7200,MasterCard,debit,US,6281,202
+ch_3UEVPMGNFnsrSDXh1ykCl5JC,2026-09-11 14:26:31,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3600,Visa,credit,US,1801,109
+ch_3UEVPq4P02Q3CMCv0xMOz0Ca,2026-09-11 14:27:48,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,731,Visa,debit,US,6509,19
+ch_3UEVR6GNFnsrSDXh15y70juC,2026-09-11 14:28:23,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2300,MasterCard,credit,US,4529,75
+ch_3UEVRb4qfJZZfKex1uk8nu79,2026-09-11 14:28:55,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,687,MasterCard,debit,US,9376,
+ch_3UEVRrGNFnsrSDXh0DmbHQrl,2026-09-11 14:29:11,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4400,American Express,credit,US,2000,129
+ch_3UEVRx4qfJZZfKex03tBIFc7,2026-09-11 14:29:19,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,687,MasterCard,debit,US,9376,
+ch_3UEVSO4qfJZZfKex1T6ibe0k,2026-09-11 14:29:41,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,687,Visa,debit,US,5963,0
+ch_3UEVSV4qfJZZfKex0akXUhgw,2026-09-11 14:30:00,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,370,Visa,prepaid,US,0341,0
+ch_3UEVUVGNFnsrSDXh0jDf3G1V,2026-09-11 14:31:56,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1000,MasterCard,debit,US,6338,41
+ch_3UEVWMGNFnsrSDXh1t1E2yAq,2026-09-11 14:33:46,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2400,Visa,debit,US,0641,77
+ch_3UEVXOGNFnsrSDXh0tVcXQFd,2026-09-11 14:34:51,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2600,MasterCard,debit,US,2453,83
+ch_3UEVYU7egDgFG55L1aTT8NEu,2026-09-11 14:36:04,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,19072,MasterCard,credit,US,9431,0
+ch_3UEVZf4P02Q3CMCv0NwCTu9k,2026-09-11 14:37:17,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,738,Visa,debit,US,0561,20
+ch_3UEVZmGNFnsrSDXh18ljsiU8,2026-09-11 14:37:17,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4000,Visa,credit,US,1560,119
+ch_3UEVaC7egDgFG55L18oRbUsO,2026-09-11 14:37:44,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2652,Visa,debit,US,7316,0
+ch_3UEVaZGNFnsrSDXh1Wc4ExOn,2026-09-11 14:38:15,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1000,Visa,credit,US,2846,41
+ch_3UEVao8lEmH1iqQS0hNDagfl,2026-09-11 14:38:33,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1589,MasterCard,debit,US,2696,0
+ch_3UEVbCGNFnsrSDXh0M7ICsVs,2026-09-11 14:38:46,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1500,MasterCard,credit,US,5912,54
+ch_3UEVbK8lEmH1iqQS1GAM62UX,2026-09-11 14:38:52,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1483,Visa,debit,US,0020,0
+ch_3UEVbf6xrVvfynTx0b2eMFuw,2026-09-11 14:39:31,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1840,MasterCard,debit,GB,3306,18
+ch_3UEVdT5XZgMuE7ip0T8839Vj,2026-09-11 14:41:11,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1794,Visa,debit,US,5697,62
+ch_3UEVeS4P02Q3CMCv1QXNGB37,2026-09-11 14:42:43,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,468,MasterCard,debit,US,6926,12
+ch_3UEVf8GNFnsrSDXh1qyNxBlc,2026-09-11 14:42:52,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1000,Visa,credit,US,9983,41
+ch_3UEVgt5XZgMuE7ip0lxjz8tS,2026-09-11 14:44:40,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,5843,Visa,debit,US,9918,167
+ch_3UEVhj8lEmH1iqQS08y1qFCk,2026-09-11 14:45:35,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1883,MasterCard,debit,US,7922,0
+ch_3UEVho6xrVvfynTx1SInFfUP,2026-09-11 14:45:41,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,819,Visa,debit,GB,3908,8
+ch_3UEVi2GNFnsrSDXh0jSSezKv,2026-09-11 14:45:51,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1000,MasterCard,credit,US,6248,41
+ch_3UEVjXGNFnsrSDXh0IkL60fN,2026-09-11 14:47:23,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1400,Visa,debit,US,4391,51
+ch_3UEVji8lEmH1iqQS0QNW9Ydf,2026-09-11 14:47:32,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,6890,Visa,debit,US,2079,0
+ch_3UEVlVGNFnsrSDXh0SzP2V2k,2026-09-11 14:49:28,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,6600,MasterCard,debit,US,2292,187
+ch_3UEVlW7egDgFG55L0bM1HdDp,2026-09-11 14:49:27,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1058,American Express,credit,US,1005,0
+ch_3UEVlq7egDgFG55L0unFi7Br,2026-09-11 14:49:48,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,13248,MasterCard,debit,US,3697,0
+ch_3UEVnM9uALOIzRNR1nk0wjw4,2026-09-11 14:52:44,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1828,MasterCard,credit,US,9095,46
+ch_3UEVo84P02Q3CMCv1IzqifeZ,2026-09-11 14:52:10,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,570,Visa,credit,US,2510,15
+ch_3UEVqP8lEmH1iqQS0k1LWYLK,2026-09-11 14:54:28,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,370,Visa,debit,US,2229,0
+ch_3UEVqX4P02Q3CMCv0ZQs59EI,2026-09-11 14:54:50,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,786,American Express,credit,US,1009,21
+ch_3UEVspGNFnsrSDXh18xjT4A5,2026-09-11 14:57:00,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,12800,Visa,credit,US,7105,348
+ch_3UEVv19uALOIzRNR1qWB22ss,2026-09-11 14:59:30,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2265,Visa,credit,US,1881,57
+ch_3UEVv44P02Q3CMCv0iolKTi5,2026-09-11 14:59:32,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,759,Visa,credit,US,8295,20
+ch_3UEVxt8lEmH1iqQS1emHzUie,2026-09-11 15:02:12,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3209,MasterCard,debit,US,0503,0
+ch_3UEVyoG6iUrq4DFX0kmww73t,2026-09-11 15:03:09,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1200,Visa,debit,US,2366,39
+ch_3UEVys4qfJZZfKex12QsvmKr,2026-09-11 15:03:13,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,264,Visa,debit,US,5963,0
+ch_3UEVzM8lEmH1iqQS0N4UGQ3I,2026-09-11 15:03:55,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,949,Visa,debit,US,6270,0
+ch_3UEVzk4qfJZZfKex1kvdeRMb,2026-09-11 15:04:08,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2065,Visa,debit,US,3401,0
+ch_3UEVzp4qfJZZfKex1CvSfkV8,2026-09-11 15:04:22,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,10070,Visa,debit,US,8800,0
+ch_3UEW2D4P02Q3CMCv1ZDVmVd2,2026-09-11 15:06:48,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,1475,12
+ch_3UEW3P4P02Q3CMCv0SFXnAgt,2026-09-11 15:07:57,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,621,MasterCard,debit,US,8728,16
+ch_3UEW3i7egDgFG55L0EI9RtJ4,2026-09-11 15:08:20,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2803,Visa,prepaid,US,9457,0
+ch_3UEW597egDgFG55L1r9vkayT,2026-09-11 15:09:44,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2317,Visa,debit,US,0005,0
+ch_3UEW5L4P02Q3CMCv1ylMCZFW,2026-09-11 15:09:56,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,320,MasterCard,debit,US,8890,8
+ch_3UEW5v4qfJZZfKex1Ev9F4Fw,2026-09-11 15:10:33,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2403,Visa,credit,US,3590,0
+ch_3UEW9GGNFnsrSDXh1EB0G18L,2026-09-11 15:13:58,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4900,Visa,credit,US,0679,142
+ch_3UEW9I8lEmH1iqQS0bUKWHrW,2026-09-11 15:13:59,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3813,MasterCard,debit,US,5723,0
+ch_3UEW9r4P02Q3CMCv1RGL1j7y,2026-09-11 15:14:39,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1946,American Express,credit,US,3005,52
+ch_3UEWDZ4P02Q3CMCv1oX8aPWG,2026-09-11 15:18:36,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,713,American Express,credit,MX,5027,19
+ch_3UEWEI9uALOIzRNR0YE8tQsc,2026-09-11 15:19:12,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1095,American Express,credit,US,9010,27
+ch_3UEWEo6xaKj8hHOI1ITEwcq7,2026-09-11 15:19:50,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2364,Visa,debit,US,3879,76
+ch_3UEWG64qfJZZfKex0AHbIuWV,2026-09-11 15:21:07,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,11761,Visa,credit,US,2601,0
+ch_3UEWGL4P02Q3CMCv1mOWGVs5,2026-09-11 15:21:19,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,815,Visa,credit,US,0378,22
+ch_3UEWHh4qfJZZfKex1Ph9h8K4,2026-09-11 15:22:42,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,859,Visa,credit,US,6162,0
+ch_3UEWIq9uALOIzRNR1fJTwUrw,2026-09-11 15:23:54,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1087,Visa,credit,US,3867,27
+ch_3UEWIw4qfJZZfKex1w9MNW5X,2026-09-11 15:24:25,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3869,Visa,debit,US,9809,0
+ch_3UEWJ24qfJZZfKex1slY1yFG,2026-09-11 15:24:04,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2327,MasterCard,debit,US,0720,0
+ch_3UEWJw9uALOIzRNR0ACwcBF1,2026-09-11 15:25:01,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,963,MasterCard,credit,US,3149,24
+ch_3UEWKN9uALOIzRNR0o58ZFDI,2026-09-11 15:25:30,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1128,MasterCard,credit,US,7277,28
+ch_3UEWM3GNFnsrSDXh17Ctu71o,2026-09-11 15:27:11,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3200,Visa,debit,US,3307,98
+ch_3UEWNJ9uALOIzRNR1hOe5QTT,2026-09-11 15:28:30,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,1238,MasterCard,debit,US,0857,31
+ch_3UEWOp4qfJZZfKex0KhfC6jh,2026-09-11 15:30:04,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,583,Visa,prepaid,US,7003,0
+ch_3UEWPH6xaKj8hHOI00OwgBgq,2026-09-11 15:30:35,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5371,Visa,credit,US,8018,155
+ch_3UEWQE8lEmH1iqQS1PRKL6uL,2026-09-11 15:31:29,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,12362,Visa,debit,US,8880,0
+ch_3UEWQh4P02Q3CMCv0d0Goomf,2026-09-11 15:32:04,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,594,Visa,credit,US,4460,16
+ch_3UEWQnGNFnsrSDXh1YGCAY6X,2026-09-11 15:32:04,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,700,Visa,credit,US,9445,33
+ch_3UEWRy8lEmH1iqQS1NzXCMNc,2026-09-11 15:33:23,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1551,MasterCard,debit,US,1433,0
+ch_3UEWSv6xrVvfynTx0Wx16f4R,2026-09-11 15:34:30,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,557,Visa,credit,GB,3087,6
+ch_3UEWTi7egDgFG55L1sKLBmxE,2026-09-11 15:35:05,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2382,MasterCard,debit,US,7721,0
+ch_3UEWU14qfJZZfKex0NA6RZPc,2026-09-11 15:35:23,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,5224,Visa,debit,US,6736,0
+ch_3UEWUFGNFnsrSDXh1l3bVbRc,2026-09-11 15:35:39,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1000,MasterCard,debit,US,6416,41
+ch_3UEWVU7egDgFG55L0hRaVLAQ,2026-09-11 15:36:55,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2381,MasterCard,debit,US,7535,0
+ch_3UEWXs4qfJZZfKex0mxSmX8b,2026-09-11 15:39:23,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3497,Visa,debit,US,0814,0
+ch_3UEWXu7C646Nqh7e1CTd7rGU,2026-09-11 15:39:31,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,5122,Visa,debit,US,9832,148
+ch_3UEWYl4qfJZZfKex0E91UpOX,2026-09-11 15:40:41,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,676,Visa,debit,US,7875,0
+ch_3UEWZSGNFnsrSDXh1rX8JNGP,2026-09-11 15:41:02,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1500,Visa,credit,US,9983,54
+ch_3UEWaO6xaKj8hHOI1eljvwE1,2026-09-11 15:42:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6986,Visa,debit,US,9853,197
+ch_3UEWbD4qfJZZfKex1PwX9J0J,2026-09-11 15:43:16,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1109,Visa,debit,US,8926,0
+ch_3UEWcu7egDgFG55L1cB3FBOU,2026-09-11 15:44:35,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,4864,Visa,credit,US,1648,0
+ch_3UEWdP4qfJZZfKex1ps1LJOq,2026-09-11 15:45:27,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,6040,Visa,debit,US,0790,0
+ch_3UEWdZ6xrVvfynTx0cCUE4VJ,2026-09-11 15:45:24,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,200,Visa,debit,GB,1776,2
+ch_3UEWe24qfJZZfKex1L8403E5,2026-09-11 15:45:45,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,635,Visa,debit,US,6462,0
+ch_3UEWe39MtEGnBEj31kSAWBhw,2026-09-11 15:45:50,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,3576,MasterCard,credit,US,1009,108
+ch_3UEWezGNFnsrSDXh0UImhpMk,2026-09-11 15:46:46,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,7500,MasterCard,debit,US,5055,210
+ch_3UEWf14qfJZZfKex0W5oCjZh,2026-09-11 15:46:49,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,7051,Visa,debit,US,1156,0
+ch_3UEWg18lEmH1iqQS0ocei8BF,2026-09-11 15:47:48,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,876,Visa,prepaid,US,4645,0
+ch_3UEWgcGNFnsrSDXh0o8mrCW9,2026-09-11 15:48:25,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4900,Visa,credit,US,1897,142
+ch_3UEWh74P02Q3CMCv0m2UbhTU,2026-09-11 15:49:20,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,544,Visa,debit,US,2713,14
+ch_3UEWhk7egDgFG55L1nEaa3cv,2026-09-11 15:49:39,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2243,MasterCard,debit,US,4748,0
+ch_3UEWjc4qfJZZfKex0DpAMrTy,2026-09-11 15:51:31,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,282,Visa,debit,US,9195,0
+ch_3UEWjk4P02Q3CMCv0rI9VLQK,2026-09-11 15:51:41,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,715,Visa,debit,US,4234,19
+ch_3UEWkeGNFnsrSDXh1xWp9EeU,2026-09-11 15:52:36,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2700,MasterCard,debit,US,0907,85
+ch_3UEWko9uALOIzRNR0mEWNiXw,2026-09-11 15:52:47,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,627,Visa,debit,US,5023,16
+ch_3UEWlS4P02Q3CMCv085lbWNv,2026-09-11 15:53:35,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1088,Visa,credit,US,2342,29
+ch_3UEWmA6xaKj8hHOI1MsQ0uf3,2026-09-11 15:54:12,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5373,MasterCard,debit,US,9939,155
+ch_3UEWmE4qfJZZfKex016aproa,2026-09-11 15:54:18,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1800,MasterCard,debit,US,6970,0
+ch_3UEWmQ4qfJZZfKex1Tbwh66n,2026-09-11 15:54:32,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,511,Visa,debit,US,9195,0
+ch_3UEWog4P02Q3CMCv1a4SjMHn,2026-09-11 15:56:54,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1635,Visa,credit,US,5488,43
+ch_3UEWomGNFnsrSDXh0bSGkGNj,2026-09-11 15:56:52,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3200,MasterCard,debit,US,4330,98
+ch_3UEWqE8lEmH1iqQS18nug7sl,2026-09-11 15:58:23,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2062,MasterCard,debit,US,9845,0
+ch_3UEWqeGNFnsrSDXh077s08XM,2026-09-11 15:58:49,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2300,Visa,credit,US,3895,75
+ch_3UEWqu9uALOIzRNR1p4eseLm,2026-09-11 15:59:05,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,2170,Visa,credit,US,2375,54
+ch_3UEWrdGNFnsrSDXh1N91wphm,2026-09-11 15:59:58,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2900,MasterCard,credit,US,2767,90
+ch_3UEWrn8lEmH1iqQS1iaqrCr8,2026-09-11 15:59:59,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3018,Discover,debit,US,6756,0
+ch_3UEWsO9uALOIzRNR13Wwq2xm,2026-09-11 16:00:38,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,990,Visa,credit,US,8843,25
+ch_3UEWslGNFnsrSDXh1vZIB5o3,2026-09-11 16:00:59,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3700,MasterCard,debit,US,9518,111
+ch_3UEWtS8lEmH1iqQS0Rghl9Lm,2026-09-11 16:01:42,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2436,MasterCard,debit,US,2836,0
+ch_3UEWuY9uALOIzRNR1MRDRAFa,2026-09-11 16:02:53,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,743,Visa,credit,US,4042,19
+ch_3UEWuZ5XZgMuE7ip0WwOFfDC,2026-09-11 16:02:53,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,9495,Visa,prepaid,US,8116,262
+ch_3UEWukGNFnsrSDXh16fab8dn,2026-09-11 16:03:05,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,800,Visa,debit,US,1868,36
+ch_3UEWvh4qfJZZfKex0BZkAYCw,2026-09-11 16:04:05,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2225,MasterCard,credit,US,5476,0
+ch_3UEWwK7AFzbzGA0t1Qe6URCC,2026-09-11 16:04:52,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2538,Visa,debit,US,3484,81
+ch_3UEWxy7egDgFG55L1st78IWf,2026-09-11 16:06:22,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,2856,Visa,credit,US,0571,0
+ch_3UEWyj9uALOIzRNR0AEbbtyX,2026-09-11 16:07:53,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,745,Visa,debit,US,2594,19
+ch_3UEWzj8lEmH1iqQS0CRgPqKY,2026-09-11 16:08:11,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2167,MasterCard,debit,US,9871,0
+ch_3UEX0A4P02Q3CMCv1dXki9sT,2026-09-11 16:08:44,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,418,MasterCard,credit,US,5329,11
+ch_3UEX0EGNFnsrSDXh0RShAIzE,2026-09-11 16:08:41,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,5500,Visa,credit,US,4092,158
+ch_3UEX0K8lEmH1iqQS1mI3PNQX,2026-09-11 16:08:52,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1483,MasterCard,debit,US,8723,0
+ch_3UEX1IGNFnsrSDXh1Spg6Ecw,2026-09-11 16:09:55,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2700,Visa,credit,US,3788,85
+ch_3UEX1m7egDgFG55L0TgOzLII,2026-09-11 16:10:17,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,720,Visa,debit,US,9566,0
+ch_3UEX2X4P02Q3CMCv01pdqvs5,2026-09-11 16:11:08,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,9571,12
+ch_3UEX2s4qfJZZfKex1qVqR9ij,2026-09-11 16:11:26,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,528,MasterCard,debit,US,6094,0
+ch_3UEX4B4qfJZZfKex18QwSxHU,2026-09-11 16:13:03,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX4Z4qfJZZfKex1a9Dw9yT,2026-09-11 16:13:15,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX4a4P02Q3CMCv1dyXzZnG,2026-09-11 16:13:16,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1105,MasterCard,debit,US,1472,29
+ch_3UEX544qfJZZfKex1ObLhPPR,2026-09-11 16:13:41,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX5E4qfJZZfKex0UkJlB96,2026-09-11 16:14:01,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX5j4qfJZZfKex0SILIjsy,2026-09-11 16:14:22,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX624qfJZZfKex1BStDxa2,2026-09-11 16:14:49,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX6K4P02Q3CMCv0t86i9kr,2026-09-11 16:15:02,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,2744,MasterCard,credit,US,5329,73
+ch_3UEX6M5XZgMuE7ip1ULXI4Sy,2026-09-11 16:15:03,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,5697,MasterCard,debit,US,1966,163
+ch_3UEX6N6kYqKNQLle00vLiuKk,2026-09-11 16:15:07,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,1978,Visa,debit,US,0125,66
+ch_3UEX6d4qfJZZfKex0Bs6w62a,2026-09-11 16:15:18,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX6t4P02Q3CMCv0xicC3Mj,2026-09-11 16:15:56,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,769,Visa,prepaid,US,4511,20
+ch_3UEX704qfJZZfKex0kl0eE44,2026-09-11 16:15:47,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,failed,3180,Visa,debit,US,6736,
+ch_3UEX854P02Q3CMCv1thWrJlu,2026-09-11 16:16:54,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1133,Visa,debit,US,6857,30
+ch_3UEXA37egDgFG55L03UjZwhF,2026-09-11 16:18:50,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1130,MasterCard,credit,US,2249,0
+ch_3UEXAr4P02Q3CMCv0mQ9UesT,2026-09-11 16:19:43,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,632,Visa,credit,US,5269,17
+ch_3UEXCN4P02Q3CMCv0lCvUwAG,2026-09-11 16:21:24,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,676,Visa,debit,US,3774,18
+ch_3UEXCQ7egDgFG55L1eALnoXD,2026-09-11 16:21:35,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1201,Visa,debit,US,2704,0
+ch_3UEXDZ4P02Q3CMCv1jw7yQSA,2026-09-11 16:22:42,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,687,Visa,credit,US,0284,18
+ch_3UEXEQGNFnsrSDXh0Q2VXUEP,2026-09-11 16:23:24,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,6300,Discover,credit,US,4121,179
+ch_3UEXEo6xaKj8hHOI0iDQrp20,2026-09-11 16:23:47,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,9675,Visa,debit,US,0287,267
+ch_3UEXFf8lEmH1iqQS1iWzroDK,2026-09-11 16:24:40,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,741,Visa,debit,US,9739,0
+ch_3UEXFn4P02Q3CMCv1wNUT9s0,2026-09-11 16:24:59,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,807,American Express,credit,US,9541,21
+ch_3UEXGt6xaKj8hHOI0WYDOVS7,2026-09-11 16:25:59,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6664,Visa,debit,US,8488,188
+ch_3UEXHU9MtEGnBEj30Ih1LjUK,2026-09-11 16:26:33,acct_1TWh3c9MtEGnBEj3,acct_1SSKsA7e4AMQfKY3,Anarchy LLC,US,usd,succeeded,2347,Visa,debit,US,6023,76
+ch_3UEXISGNFnsrSDXh0QRlBr0n,2026-09-11 16:27:35,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1200,MasterCard,debit,US,1888,46
+ch_3UEXIV7AFzbzGA0t0X8D0sY4,2026-09-11 16:28:02,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2242,MasterCard,debit,US,2004,73
+ch_3UEXJe4P02Q3CMCv0mVsi4TL,2026-09-11 16:28:52,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,869,MasterCard,debit,US,1446,23
+ch_3UEXK57AFzbzGA0t1PdUemmJ,2026-09-11 16:29:30,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2006,Visa,credit,US,2663,67
+ch_3UEXKI5XZgMuE7ip1rrGMxam,2026-09-11 16:29:28,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,4255,MasterCard,debit,US,4167,126
+ch_3UEXKP8lEmH1iqQS035O6gU7,2026-09-11 16:29:37,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,2278,Visa,prepaid,US,0341,0
+ch_3UEXL98lEmH1iqQS1snQuTBf,2026-09-11 16:30:20,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,476,Visa,debit,US,5634,0
+ch_3UEXLi4P02Q3CMCv1hAOOhU3,2026-09-11 16:31:00,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,American Express,credit,US,2001,12
+ch_3UEXMc5XZgMuE7ip0LAUyQUp,2026-09-11 16:32:03,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,9614,Visa,credit,US,2736,265
+ch_3UEXNr4P02Q3CMCv1PAz4Z7D,2026-09-11 16:33:13,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,715,American Express,credit,US,5015,19
+ch_3UEXO5GNFnsrSDXh08hZCtjQ,2026-09-11 16:33:23,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1600,Visa,credit,US,4687,57
+ch_3UEXOt8lEmH1iqQS02kBrRPe,2026-09-11 16:34:12,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1110,Visa,debit,US,3362,0
+ch_3UEXPm7AFzbzGA0t0rLhYcZb,2026-09-11 16:35:10,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1620,Visa,prepaid,US,1472,57
+ch_3UEXQR4P02Q3CMCv1MrhTHB1,2026-09-11 16:35:54,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,credit,US,7678,12
+ch_3UEXSZ4qfJZZfKex1RtIb53G,2026-09-11 16:37:59,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2418,MasterCard,debit,US,7842,0
+ch_3UEXTe4qfJZZfKex0ez2RtWx,2026-09-11 16:39:27,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,5300,MasterCard,debit,US,0406,0
+ch_3UEXTyGNFnsrSDXh1rPCNpyE,2026-09-11 16:39:38,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,7300,American Express,credit,US,1005,205
+ch_3UEXUG4qfJZZfKex1C713OQc,2026-09-11 16:39:44,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2119,MasterCard,credit,US,6909,0
+ch_3UEXVD8lEmH1iqQS1vu4h0bd,2026-09-11 16:40:44,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3388,Visa,credit,US,8791,0
+ch_3UEXVp5XZgMuE7ip04Q38YjN,2026-09-11 16:41:27,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1159,Visa,debit,US,5978,45
+ch_3UEXWL7AFzbzGA0t0bm9nKTJ,2026-09-11 16:42:00,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2268,Visa,debit,US,4569,74
+ch_3UEXWmQJfvlGDJJG1uxgrBpj,2026-09-11 16:42:21,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,350,Visa,debit,US,6464,14
+ch_3UEXY07AFzbzGA0t1hTpFY8N,2026-09-11 16:43:43,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2360,Visa,debit,US,2781,76
+ch_3UEXYI4P02Q3CMCv1XVpFQBA,2026-09-11 16:44:00,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,557,Visa,credit,US,2290,15
+ch_3UEXYZ8lEmH1iqQS13XA1W7s,2026-09-11 16:44:15,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,211,MasterCard,debit,US,5760,0
+ch_3UEXZMGNFnsrSDXh1PkWqqVV,2026-09-11 16:45:12,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2700,American Express,credit,US,8322,85
+ch_3UEXaS7AFzbzGA0t0z0aoDVl,2026-09-11 16:46:16,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,3450,Visa,debit,US,7016,105
+ch_3UEXbW4P02Q3CMCv1Qt7DdPl,2026-09-11 16:47:45,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1381,Visa,debit,US,5496,37
+ch_3UEXbX4qfJZZfKex0LFCZF10,2026-09-11 16:47:21,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,5330,Visa,prepaid,US,9847,0
+ch_3UEXbw8lEmH1iqQS1kHfnFbt,2026-09-11 16:47:39,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,529,Visa,debit,US,4774,0
+ch_3UEXcWGNFnsrSDXh0k0Fqljm,2026-09-11 16:48:36,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,failed,8700,Visa,credit,CA,1481,
+ch_3UEXd0GNFnsrSDXh1HChxfQQ,2026-09-11 16:48:49,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,8700,Visa,credit,CA,1481,241
+ch_3UEXdT9uALOIzRNR0KvxfRdY,2026-09-11 16:49:18,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,720,American Express,credit,US,1002,18
+ch_3UEXdm4P02Q3CMCv04lwwf44,2026-09-11 16:49:39,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,659,Visa,debit,US,5496,17
+ch_3UEXeL4P02Q3CMCv1m3EclIA,2026-09-11 16:50:17,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,3001,12
+ch_3UEXet6kYqKNQLle1gjcT68D,2026-09-11 16:50:53,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,4460,Visa,credit,US,6114,131
+ch_3UEXfs9uALOIzRNR1mZ65TgQ,2026-09-11 16:51:48,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,567,American Express,credit,US,1002,14
+ch_3UEXhC8lEmH1iqQS1vQaLEsZ,2026-09-11 16:53:05,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,793,Visa,prepaid,US,3333,0
+ch_3UEXhb7egDgFG55L10GlVYDG,2026-09-11 16:53:32,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1482,Visa,debit,US,3751,0
+ch_3UEXjA8lEmH1iqQS1C9E1PDq,2026-09-11 16:55:09,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,failed,792,Visa,debit,US,5854,
+ch_3UEXjM8lEmH1iqQS0VCJ5SBI,2026-09-11 16:55:22,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,792,Visa,debit,US,9229,0
+ch_3UEXkW8lEmH1iqQS1I2vxrtK,2026-09-11 16:56:31,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,581,Visa,debit,US,5700,0
+ch_3UEXkk4P02Q3CMCv14LXbMLK,2026-09-11 16:56:54,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,5028,12
+ch_3UEXl2GNFnsrSDXh0vT5HoEx,2026-09-11 16:57:04,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,7700,Visa,credit,US,6928,215
+ch_3UEXlD8lEmH1iqQS1JK8ZSh5,2026-09-11 16:57:22,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,423,Visa,debit,US,9229,0
+ch_3UEXmN7C646Nqh7e1V3Pcepq,2026-09-11 16:58:29,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,517,Visa,debit,US,4634,28
+ch_3UEXn0GNFnsrSDXh0OHS47zW,2026-09-11 16:59:14,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2600,Visa,debit,US,6563,83
+ch_3UEXnZ4qfJZZfKex1ZmikHgo,2026-09-11 16:59:42,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2382,MasterCard,debit,US,2294,0
+ch_3UEXoJ8lEmH1iqQS0pUEHppM,2026-09-11 17:00:26,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,7419,Visa,debit,US,3845,0
+ch_3UEXoO7egDgFG55L0QdvAiue,2026-09-11 17:00:39,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,14989,MasterCard,debit,US,2929,0
+ch_3UEXqb5XZgMuE7ip1EWMcmpA,2026-09-11 17:02:51,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2487,Visa,debit,US,0976,80
+ch_3UEXrA7C646Nqh7e0tdPhycL,2026-09-11 17:03:37,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,7536,MasterCard,debit,US,7964,211
+ch_3UEXrH4qfJZZfKex0wd0XZoI,2026-09-11 17:03:41,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2120,Visa,debit,US,8584,0
+ch_3UEXs17C646Nqh7e1MnwtIwc,2026-09-11 17:04:21,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,4598,Visa,debit,US,5070,135
+ch_3UEXsL6kYqKNQLle1fDKObSf,2026-09-11 17:04:41,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,856,Visa,debit,US,9788,37
+ch_3UEXuO4qfJZZfKex0V4HHpwo,2026-09-11 17:06:43,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,7841,Visa,debit,US,8700,0
+ch_3UEXuT7AFzbzGA0t0AJ4vpYW,2026-09-11 17:07:07,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1836,MasterCard,debit,US,8057,63
+ch_3UEXv17egDgFG55L020xmed1,2026-09-11 17:07:34,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1850,Visa,debit,US,8559,0
+ch_3UEXvC8lEmH1iqQS1Z7qlRQ4,2026-09-11 17:07:33,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,529,Visa,debit,US,3353,0
+ch_3UEXwF4P02Q3CMCv1sF9PofK,2026-09-11 17:08:48,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,657,American Express,credit,US,1001,17
+ch_3UEXwF4qfJZZfKex0uilTciO,2026-09-11 17:08:45,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,2432,MasterCard,debit,US,7530,0
+ch_3UEXwR7egDgFG55L0c5t4fhg,2026-09-11 17:08:50,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1164,MasterCard,debit,US,0594,0
+ch_3UEXwi6kYqKNQLle0SYn4mBP,2026-09-11 17:09:28,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,1500,Visa,debit,US,1271,54
+ch_3UEXwmGNFnsrSDXh1zH7Rzup,2026-09-11 17:09:12,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,6600,MasterCard,credit,US,0585,187
+ch_3UEXyQ4qfJZZfKex0Fa0GgpW,2026-09-11 17:10:54,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,4876,MasterCard,debit,US,1635,0
+ch_3UEXz4G6iUrq4DFX1h1R6Y2J,2026-09-11 17:11:34,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,failed,1500,Visa,debit,US,2665,
+ch_3UEXzI8lEmH1iqQS0HttFmj4,2026-09-11 17:11:46,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,158,Visa,debit,US,3948,0
+ch_3UEXzKGNFnsrSDXh1KhObfzO,2026-09-11 17:11:51,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4800,Discover,credit,US,0721,140
+ch_3UEY0BG6iUrq4DFX0u7yt11L,2026-09-11 17:12:42,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1500,Visa,debit,US,2665,45
+ch_3UEY0y4P02Q3CMCv0TEgR8iz,2026-09-11 17:13:48,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,1205,Visa,debit,US,9619,32
+ch_3UEY1L4qfJZZfKex1KZSi6qX,2026-09-11 17:13:58,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,422,Visa,debit,US,7932,0
+ch_3UEY2I9uALOIzRNR1vNONN8r,2026-09-11 17:15:10,acct_1TMaEu9uALOIzRNR,acct_1SSKsA7e4AMQfKY3,Richboro Coffeehouse LLC,US,usd,succeeded,836,Visa,credit,US,7616,21
+ch_3UEY2Y8lEmH1iqQS1QJvyjTN,2026-09-11 17:15:10,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,5772,MasterCard,debit,US,7404,0
+ch_3UEY2f6xaKj8hHOI1IwvD0CH,2026-09-11 17:15:27,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,debit,US,9980,85
+ch_3UEY3F8lEmH1iqQS0dbXohrQ,2026-09-11 17:15:57,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1005,MasterCard,debit,US,9598,0
+ch_3UEY3M4qfJZZfKex1qcNurDj,2026-09-11 17:16:00,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,564,Visa,debit,US,7160,0
+ch_3UEY3z7AFzbzGA0t0Huqif2S,2026-09-11 17:16:47,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2337,Visa,debit,US,5016,76
+ch_3UEY4M7dzWyoeYnh0LJd3wx1,2026-09-11 17:17:03,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,1200,Visa,credit,US,6711,46
+ch_3UEY5E8lEmH1iqQS1i9R3XOl,2026-09-11 17:17:55,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,3014,Visa,debit,US,7807,0
+ch_3UEY5z51aPtqlwev10cGjNpp,2026-09-11 17:18:43,acct_1U41s951aPtqlwev,acct_1SSKsA7e4AMQfKY3,Mathews Family Farm LLC,US,usd,succeeded,2062,Visa,credit,US,1528,69
+ch_3UEY6hGNFnsrSDXh1wdPt9CR,2026-09-11 17:19:26,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,3300,Visa,credit,US,4933,101
+ch_3UEY7p4P02Q3CMCv0R7Jv5Sv,2026-09-11 17:20:50,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,557,Visa,debit,US,4670,15
+ch_3UEY854qfJZZfKex0HXlILUI,2026-09-11 17:21:38,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,14309,Visa,credit,US,2774,0
+ch_3UEY8QG6iUrq4DFX0uoHFJ0q,2026-09-11 17:21:14,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,2700,Visa,debit,US,0596,69
+ch_3UEYAH4qfJZZfKex0Qoa1xyy,2026-09-11 17:23:18,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,381,Visa,prepaid,US,1276,0
+ch_3UEYBR4qfJZZfKex1jUo1FUw,2026-09-11 17:24:22,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,6513,Visa,prepaid,US,4060,0
+ch_3UEYCl4P02Q3CMCv0xLYr0fK,2026-09-11 17:25:53,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,457,Visa,debit,US,4863,12
+ch_3UEYCl4qfJZZfKex1xAOJ2MB,2026-09-11 17:25:47,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,677,Visa,debit,US,3706,0
+ch_3UEYDT4qfJZZfKex1snKfYiL,2026-09-11 17:26:26,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,431,Visa,debit,US,1558,0
+ch_3UEYDq7AFzbzGA0t0JHdblkA,2026-09-11 17:27:13,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1836,MasterCard,credit,US,6195,63
+ch_3UEYECQJfvlGDJJG1PGtqQRE,2026-09-11 17:27:12,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1100,Visa,debit,US,8683,33
+ch_3UEYEy7egDgFG55L1vsPsVLC,2026-09-11 17:28:03,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,failed,10368,MasterCard,credit,US,0269,
+ch_3UEYFi6xaKj8hHOI1xdw7Jrb,2026-09-11 17:28:47,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5048,Visa,debit,US,1916,146
+ch_3UEYGK6xaKj8hHOI1NvGQwmf,2026-09-11 17:29:26,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,Visa,debit,US,6956,71
+ch_3UEYGf7egDgFG55L16jipHj2,2026-09-11 17:29:46,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,10473,Visa,debit,US,2420,0
+ch_3UEYHV4P02Q3CMCv1Q5SIBns,2026-09-11 17:30:47,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,694,Visa,debit,US,6406,18
+ch_3UEYJd7egDgFG55L1qyUvWVE,2026-09-11 17:32:58,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,1906,MasterCard,debit,US,2861,0
+ch_3UEYK08lEmH1iqQS1RccqRV2,2026-09-11 17:33:22,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,264,MasterCard,prepaid,US,5766,0
+ch_3UEYMFGNFnsrSDXh0rCYRrsZ,2026-09-11 17:35:32,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2400,Discover,credit,US,6713,77
+ch_3UEYMq6xaKj8hHOI01aqr6Fe,2026-09-11 17:36:11,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,Visa,credit,US,2310,71
+ch_3UEYNEGNFnsrSDXh0k9WLHg9,2026-09-11 17:36:31,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4700,Visa,debit,US,0038,137
+ch_3UEYNF4qfJZZfKex0lG4Lj76,2026-09-11 17:36:32,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,9201,Visa,debit,US,5881,0
+ch_3UEYO24qfJZZfKex0fA61XXQ,2026-09-11 17:37:23,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,1695,Visa,prepaid,US,6627,0
+ch_3UEYOx6xrVvfynTx0XfTwaFp,2026-09-11 17:38:27,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,3833,Visa,debit,GB,2651,38
+ch_3UEYQx6kYqKNQLle005OTFtP,2026-09-11 17:40:27,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,2700,MasterCard,credit,US,5315,85
+ch_3UEYRK4qfJZZfKex12iSQPL9,2026-09-11 17:41:22,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,14573,Visa,debit,US,7003,0
+ch_3UEYSY6kYqKNQLle0O0t1u6u,2026-09-11 17:42:05,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,1651,Discover,credit,US,1924,58
+ch_3UEYSx6kYqKNQLle1oFgEGAc,2026-09-11 17:42:34,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,1561,Visa,debit,US,3958,56
+ch_3UEYTK6kYqKNQLle1GsOMxzp,2026-09-11 17:42:55,acct_1TuHGJ6kYqKNQLle,acct_1SSKsA7e4AMQfKY3,Big Tasty's,US,usd,succeeded,2433,Visa,debit,US,1176,78
+ch_3UEYUX7C646Nqh7e016lZ7HU,2026-09-11 17:44:05,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,949,Visa,debit,US,9285,40
+ch_3UEYVfGNFnsrSDXh1q9zonl5,2026-09-11 17:45:14,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,1200,Visa,credit,US,8608,46
+ch_3UEYWH5dFe8AWU1003L0OPRW,2026-09-11 17:45:57,acct_1UBjys5dFe8AWU10,acct_1SSKsA7e4AMQfKY3,Arenas Contracting,US,usd,succeeded,270000,American Express,credit,US,1006,0
+ch_3UEYWn4P02Q3CMCv1OTA1zSR,2026-09-11 17:46:27,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,418,American Express,credit,US,3019,11
+ch_3UEYY54P02Q3CMCv0adtrl5E,2026-09-11 17:47:56,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,836,Visa,credit,US,2511,22
+ch_3UEYZG4P02Q3CMCv0ycsbm7k,2026-09-11 17:49:07,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,734,Visa,credit,US,7542,19
+ch_3UEYZpGNFnsrSDXh1vvxbf9o,2026-09-11 17:49:34,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,2400,Visa,credit,US,4933,77
+ch_3UEYaV4qfJZZfKex0xFWZhdD,2026-09-11 17:50:30,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,15041,MasterCard,debit,US,8732,0
+ch_3UEYaX4qfJZZfKex1tMm9kjt,2026-09-11 17:50:18,acct_1U9TAR4qfJZZfKex,acct_1SSKsA7e4AMQfKY3,GOLDEN BEAUTY SUPPLY,US,usd,succeeded,3636,Visa,credit,US,2902,0
+ch_3UEYaiG6iUrq4DFX0AkrWVh3,2026-09-11 17:50:28,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1500,Visa,debit,US,5498,45
+ch_3UEYax6xrVvfynTx1MgnLurJ,2026-09-11 17:50:49,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1295,MasterCard,debit,GB,7485,13
+ch_3UEYc8QJfvlGDJJG1VSmryZj,2026-09-11 17:51:57,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2225,MasterCard,credit,US,8984,61
+ch_3UEYch4P02Q3CMCv1FnZjv3S,2026-09-11 17:52:40,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,3300,MasterCard,credit,US,7739,87
+ch_3UEYde4P02Q3CMCv0mKsdiVd,2026-09-11 17:53:37,acct_1TyyLY4P02Q3CMCv,acct_1SSKsA7e4AMQfKY3,Weak Coffee LLC,US,usd,succeeded,687,Visa,credit,US,3124,18
+ch_3UEYeD7C646Nqh7e1wy2Xyjs,2026-09-11 17:54:12,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,1304,Visa,debit,US,3084,49
+ch_3UEYej7egDgFG55L1Fj2dWUx,2026-09-11 17:54:38,acct_1TWOGf7egDgFG55L,acct_1SSKsA7e4AMQfKY3,Fraser Lee Beauty Supply and General Merchandise,US,usd,succeeded,686,MasterCard,debit,US,7118,0
+ch_3UEYgLGNFnsrSDXh1D1aTguR,2026-09-11 17:56:20,acct_1Tqy7pGNFnsrSDXh,acct_1SSKsA7e4AMQfKY3,Auto Value Parts Stores,US,usd,succeeded,4400,Visa,debit,US,3385,129
+ch_3UEYge8lEmH1iqQS06GefK4f,2026-09-11 17:56:35,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1905,Visa,credit,US,9921,
+ch_3UEYhO8lEmH1iqQS1SRFqduY,2026-09-11 17:57:21,acct_1TWOQY8lEmH1iqQS,acct_1SSKsA7e4AMQfKY3,Lee Beauty Southfield Plaza,US,usd,succeeded,1800,Visa,prepaid,US,1469,
