@@ -118,6 +118,13 @@
   .drill-tools button { font-size:12px; padding:6px 11px; border:1px solid var(--border,#D9DEE5);
     border-radius:6px; background:#fff; cursor:pointer; }
   .drill-tools button:hover { border-color:#9AA7B5; }
+  /* Panel-level export. Deliberately not a .toggle button: it performs an action rather than
+     selecting a state, and styling it like its neighbours would invite a click expecting the
+     grid to change. */
+  .csvbtn { font-family:Arial; font-size:12px; padding:6px 12px; border:1px solid var(--border,#D9DEE5);
+    border-radius:6px; background:#fff; color:var(--dark-gray); cursor:pointer; margin-left:12px;
+    margin-bottom:10px; vertical-align:top; }
+  .csvbtn:hover { border-color:#9AA7B5; color:var(--near-black); }
   .drill-body { overflow:auto; padding:0 20px 16px; }
   .drill-body table { border-collapse:collapse; width:100%; font-size:12px; }
   .drill-body th { text-align:left; font-size:11px; color:var(--mid-gray); font-weight:600;
@@ -297,6 +304,10 @@
     <div class="toggle" id="tri-mode" style="display:none;margin-left:8px">
       <button data-pct="0" class="on">Absolute</button><button data-pct="1">% of cohort</button><button data-pct="base" id="tri-pct-base" style="display:none">% of payments base</button>
     </div>
+    <!-- Exports whatever is on screen, Table or Triangle. It sits outside both toggle groups
+         because it belongs to the panel rather than to either view, and a button that did
+         nothing in Table view would read as broken rather than as scoped. -->
+    <button id="cohsum-csv" class="csvbtn" title="Download the view currently on screen as a CSV">Download (CSV)</button>
     <div id="cohsum-table" style="overflow-x:auto"><table id="t-cohorts"></table></div>
     <div id="cohsum-tri" style="display:none;overflow-x:auto"></div>
     <div id="cohdrill"></div>
@@ -671,6 +682,10 @@ renderCohTable();
   // 'base' = share of the cohort's payments merchants. Kept truthy-compatible so every existing
   // `pct ? ... : ...` still means "some percentage" versus "a count".
   let triMetric = 'paying', triPct = false;
+  // The grid drawTri last built, kept so the CSV can be serialised from the same pass that drew
+  // the cells rather than recomputed beside them. Declared here, not next to the export code, so
+  // it is initialised before any draw can reach it.
+  let lastExport = null;
 
   // ── payments membership ────────────────────────────────────────────────────
   const LABEL = { paying:'Paying', active:'Active', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
@@ -862,25 +877,30 @@ renderCohTable();
     // still exists, as the denominator of "% of payments base" and spelled out in every cell's
     // tooltip, where it is attached to the number it actually describes.
     const membership = !series;
+    // Rows accumulated for the CSV as the cells are built, so the file is a transcript of this
+    // draw and not a second opinion about it.
+    const exRows = [];
     let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
     for (let i = 0; i < nAges; i++) h += '<th>M' + i + '</th>';
     h += '</tr></thead><tbody>';
     triCohorts.slice().reverse().forEach(c => {
       const pIdx = ageOfLatest(c);
       const regs = sizeOf(c), base = membership ? baseOf(c) : null;
+      const exCells = [];
       h += '<tr><td class="k">' + c + '</td>'
          + '<td class="sz">' + (regs == null ? '—' : fmtN(regs)) + '</td>';
       for (let i = 0; i < nAges; i++){
         const v = valOf(c, i);
-        if (v == null){ h += '<td class="tri-e"></td>'; continue; }
+        if (v == null){ h += '<td class="tri-e"></td>'; exCells.push(null); continue; }
         const isPartial = (i === pIdx);
         if (isPartial) sawPartial = true;
         // No denominator for this cohort in this market — see sizeOf. The count is exact, the
         // percentage is unknown, and printing 0.0% would claim otherwise.
         const den = pct === 'base' ? base : regs;
-        if (pct && !den){ h += '<td class="tri-e" title="' + c + ' · M' + i + ': ' + fmtN(v)
+        if (pct && !den){ exCells.push(null); h += '<td class="tri-e" title="' + c + ' · M' + i + ': ' + fmtN(v)
               + ' merchants, but there is no denominator for a cohort this old in this market, so the share cannot be computed">—</td>'; continue; }
         const dv = pct ? v/den*100 : v;
+        exCells.push(dv);
         const t = mx ? dv/mx : 0;
         const cell = (pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
         const tip = c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
@@ -900,8 +920,10 @@ renderCohTable();
            + ' style="' + style + '" title="' + tip + (drill ? ' — double-click to list them' : '') + '">'
            + cell + '</td>';
       }
+      exRows.push({ cohort: c, size: regs, base: base, cells: exCells });
       h += '</tr>';
     });
+    lastExport = { pct: pct, sel: triSel.slice(), membership: membership, nAges: nAges, rows: exRows };
     let foot = '';
     if (sawPartial){
       foot = '<div style="font-size:11.5px;color:var(--faint);margin-top:7px">'
@@ -1045,6 +1067,86 @@ renderCohTable();
     };
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrill(); });
+
+  // ── CSV export ─────────────────────────────────────────────────────────────
+  // The triangle's file is serialised from lastExport — the grid drawTri just built — rather than
+  // recomputed from byCohort. Recomputing would mean a second copy of the country filter, the
+  // condition set, the blank-before-payments rule and the two denominators, and a second copy is
+  // a second thing to drift. This way the CSV cannot disagree with the cells by construction.
+  //
+  // Numbers go out at FULL precision. On screen a count of 1,240 reads "1.2k" and a share reads
+  // "3.4%", which is right for scanning a 129-column grid and wrong the moment anyone sums a
+  // column in a spreadsheet.
+  //
+  // Blank stays blank. A cell is empty for three distinct reasons — the cohort has not reached
+  // that age, the month predates Loyverse Payments, or this market has no denominator for a
+  // cohort that old — and none of them is a zero. Writing 0 would turn "no answer" into "none",
+  // which is the one error a CSV makes permanent, because the reader never sees the grid.
+  const csvCell = v => { v = String(v == null ? '' : v);
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+  const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  function saveCsv(name, text){
+    // A BOM, because these open in Excel and the merchant names carry accents.
+    const url = URL.createObjectURL(new Blob(['\ufeff' + text], {type:'text/csv;charset=utf-8'}));
+    const a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  // Carried on every row rather than in a preamble line: a comment header would make the file
+  // stop being a table, and Felipe's copy of it has to survive being pasted next to another.
+  function csvTriangle(){
+    const X = lastExport;
+    if (!X || !X.rows.length) return null;
+    const what = X.sel.map(k => LABEL[k]).join(' + ')
+               + (X.pct === 'base' ? ' (% of payments base)' : X.pct ? ' (% of cohort registrations)' : '');
+    const cc = ccFilter();
+    const head = ['Metric', 'Market', 'Cohort', 'Size'];
+    if (X.membership) head.push('Payments base');
+    for (let i = 0; i < X.nAges; i++) head.push('M' + i + (X.pct ? ' %' : ''));
+    const market = cc ? cc.join(' ') : 'All countries';
+    const lines = [head.map(csvCell).join(',')];
+    X.rows.forEach(r => {
+      const row = [what, market, r.cohort, r.size == null ? '' : r.size];
+      if (X.membership) row.push(r.base == null ? '' : r.base);
+      r.cells.forEach(v => row.push(v == null ? '' : (X.pct ? v.toFixed(4) : v)));
+      lines.push(row.map(csvCell).join(','));
+    });
+    return { name: ['cohort-triangle', slug(X.sel.join('-')),
+                    X.pct === 'base' ? 'pct-of-base' : X.pct ? 'pct-of-cohort' : 'absolute',
+                    cc ? slug(cc.join('-')) : null,
+                    (D.meta && D.meta.latestMonth) || null].filter(Boolean).join('-') + '.csv',
+             text: lines.join('\n') };
+  }
+  // The Table view shares this panel, so the same button exports it. Same rows, same order as on
+  // screen (newest cohort first), without the $ / k / M formatting the cells wear.
+  function csvTable(){
+    if (!cohRows || !cohRows.length) return null;
+    const n = v => (v == null ? 0 : v);
+    const lines = [['Cohort','Registrations','Ever paid','Ever paid %','Paying now','Paying now %',
+                    'Active now','MRR now','ARPC'].join(',')];
+    cohRows.slice().reverse().forEach(c => lines.push([
+      c.cohort, n(c.registrations), n(c.everPaid), n(c.pctEverPaid).toFixed(4),
+      n(c.payingNow), n(c.pctPayingNow).toFixed(4), n(c.active),
+      n(c.mrr).toFixed(2), n(c.arpc).toFixed(2)
+    ].map(csvCell).join(',')));
+    return { name: ['cohort-summary', (D.meta && D.meta.latestMonth) || null]
+                     .filter(Boolean).join('-') + '.csv',
+             text: lines.join('\n') };
+  }
+  const csvBtn = document.getElementById('cohsum-csv');
+  if (csvBtn) csvBtn.onclick = () => {
+    const out = triWrap.style.display === 'none' ? csvTable() : csvTriangle();
+    // Say so on the button rather than staying silent: a download that produces no file is
+    // indistinguishable from a browser that blocked it.
+    if (!out){
+      const was = csvBtn.textContent;
+      csvBtn.textContent = 'Nothing to export yet';
+      setTimeout(() => { csvBtn.textContent = was; }, 1800);
+      return;
+    }
+    saveCsv(out.name, out.text);
+  };
 
   window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
