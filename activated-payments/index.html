@@ -124,6 +124,14 @@
   @media(max-width:900px){.ov-grid{grid-template-columns:1fr;}}
   .ov-card{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:16px 18px 12px;}
   .ov-card.full{grid-column:1/-1;}
+  /* Full-width cards stacked in normal flow have nothing to space them: .ov-grid's
+     gap only applies inside the grid, so two adjacent .full cards sit flush against
+     each other. Match the grid's 18px so the whole column reads on one rhythm.
+     Margins collapse in normal flow, so a card carrying its own larger inline
+     margin-bottom keeps it. Inside a grid the gap already does the work, and margin
+     would stack on top of it -- hence the reset. */
+  .ov-card.full + .ov-card.full{margin-top:18px;}
+  .ov-grid > .ov-card.full + .ov-card.full{margin-top:0;}
   .ov-ctitle{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;}
   .ov-ctitle h2{font-family:"Arial Black",Arial,sans-serif;font-size:16px;color:var(--charcoal);margin:0;}
   .ov-ctitle .tot{font-size:13px;color:var(--midgray);font-weight:bold;}
@@ -577,17 +585,20 @@
         <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly passed / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative passed</span></div>
       </div>
     </div>
+    <!-- Order follows the funnel: KYC initiated -> KYC passed -> transacting -> volume.
+         The two cards above are the first two steps; this is the third, and volume is
+         the outcome, so it reads last. -->
+    <div class="ov-card full">
+      <div class="ov-ctitle"><h2>Merchants transacting per day</h2><span class="tot" id="ovTxnFirstTot">&nbsp;</span></div>
+      <p class="ov-cnote" id="ovTxnFirstNote">Each merchant counts <b>once</b>, on the day of its first successful charge. Bars = merchants transacting for the first time that day; line = cumulative merchants that have ever transacted, ending at the total in the merchant table further down this page. A merchant that transacts every day afterwards still appears in one bar only &mdash; this is the activation curve, not daily activity.</p>
+      <div class="ov-chart" id="ovTxnFirstChart"></div>
+      <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> First-time merchants / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative merchants transacting</span></div>
+    </div>
     <div class="ov-card full">
       <div class="ov-ctitle"><h2>Volume processed on terminals</h2><span class="tot" id="ovVolTot">&nbsp;</span></div>
       <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars = daily; line = cumulative.</p>
       <div class="ov-chart" id="ovVolChart"></div>
       <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
-    </div>
-    <div class="ov-card full">
-      <div class="ov-ctitle"><h2>Merchants transacting per day</h2><span class="tot" id="ovTxnFirstTot">&nbsp;</span></div>
-      <p class="ov-cnote" id="ovTxnFirstNote">Each merchant counts <b>once</b>, on the day of its first successful charge. Bars = merchants transacting for the first time that day; line = cumulative merchants that have ever transacted, ending at the total in the table below. A merchant that transacts every day afterwards still appears in one bar only &mdash; this is the activation curve, not daily activity.</p>
-      <div class="ov-chart" id="ovTxnFirstChart"></div>
-      <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> First-time merchants / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative merchants transacting</span></div>
     </div>
     <div class="ov-tablecard">
       <div class="ov-ctitle"><h2>Merchants transacting through Loyverse Payments</h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
