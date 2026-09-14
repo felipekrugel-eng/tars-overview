@@ -583,6 +583,12 @@
       <div class="ov-chart" id="ovVolChart"></div>
       <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
     </div>
+    <div class="ov-card full">
+      <div class="ov-ctitle"><h2>Merchants transacting per day</h2><span class="tot" id="ovTxnFirstTot">&nbsp;</span></div>
+      <p class="ov-cnote" id="ovTxnFirstNote">Each merchant counts <b>once</b>, on the day of its first successful charge. Bars = merchants transacting for the first time that day; line = cumulative merchants that have ever transacted, ending at the total in the table below. A merchant that transacts every day afterwards still appears in one bar only &mdash; this is the activation curve, not daily activity.</p>
+      <div class="ov-chart" id="ovTxnFirstChart"></div>
+      <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> First-time merchants / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative merchants transacting</span></div>
+    </div>
     <div class="ov-tablecard">
       <div class="ov-ctitle"><h2>Merchants transacting through Loyverse Payments</h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
       <p class="ov-tnote" id="ovTxnNote">Every merchant that has processed at least one successful charge. Volume and captured revenue converted to USD.</p>
@@ -1456,7 +1462,39 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 
   // Pre-densified series; charts just window-slice on range change. Rebuilt by loadData()
   // when the country selection changes, not on every render.
-  var aDense, eDense, vDense;
+  var aDense, eDense, vDense, tDense;
+
+  // First-transaction series, derived from the merchants table rather than pulled.
+  //
+  // Every row of TXN already carries `started` — the day of that merchant's first
+  // successful charge — so counting rows by `started` gives new-merchants-per-day
+  // without a new query, and guarantees the cumulative line ends exactly on the
+  // table's own merchant count. Deriving it from the same array the table renders
+  // is the point: the chart cannot disagree with the total sitting beneath it.
+  //
+  // The spine is padded to match the volume chart's calendar so the two line up
+  // when read together — a bar sitting under a volume spike should be at the same
+  // x position. Padding is with zeros, which is the truth: a day with no first-time
+  // merchant is a real zero, not a gap.
+  function firstTxnSeries(rows, spineFrom, spineTo){
+    var byDay={}, any=false;
+    rows.forEach(function(r){
+      var d=r && r.started ? String(r.started).slice(0,10) : '';
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(d)) return;   // undated merchant: cannot place it
+      byDay[d]=(byDay[d]||0)+1; any=true;
+    });
+    if(!any) return [];
+    var days=Object.keys(byDay).sort();
+    var lo=days[0], hi=days[days.length-1];
+    if(spineFrom && spineFrom<lo) lo=spineFrom;
+    if(spineTo   && spineTo  >hi) hi=spineTo;
+    var out=[];
+    for(var t=new Date(lo+'T00:00:00Z'), e=new Date(hi+'T00:00:00Z'); t<=e; t.setUTCDate(t.getUTCDate()+1)){
+      var d=t.toISOString().slice(0,10);
+      out.push({d:d, v:(byDay[d]||0)});
+    }
+    return out;
+  }
 
   function renderCharts(range){
     // ---- Activations ----
@@ -1478,6 +1516,12 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var v=windowSeries(vDense, range);
     if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
     chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:'',barLabel:'Volume (USD)'});
+    // ---- Merchants transacting (first charge per merchant) ----
+    var t=windowSeries(tDense, range);
+    chart(document.getElementById('ovTxnFirstChart'), t.days, t.bars, t.line,
+      {barClass:'green', lineClass:'',
+       empty:'No merchant has transacted yet in this selection.',
+       barLabel:'First-time merchants'});
     // range note is owned by renderKpis (shows the compared periods too)
   }
 
@@ -1572,18 +1616,28 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   function renderChartTotals(range){
     var P=periods(range), T=allTotals(), haveEna=!!eDense;
     var rn=document.getElementById('ovRangeNote');
+    var tf=document.getElementById('ovTxnFirstTot');
+    // All-time total is TXN.length by definition -- every merchant in the table
+    // had a first charge -- except any whose date is missing, which the chart
+    // cannot place and so must not silently claim to have counted.
+    var txnAll=tDense?tDense.reduce(function(s,r){return s+r.v;},0):0;
+    var undated=TXN.length-txnAll;
     if(!P){
       document.getElementById('ovActTot').textContent=fmtInt(T.act)+' total';
       document.getElementById('ovEnTot').textContent=fmtInt(T.ena)+' enabled';
       document.getElementById('ovVolTot').textContent=fmtUsdFull(T.vol)+' total';
+      if(tf) tf.textContent=fmtInt(txnAll)+' merchants'+(undated>0?' · '+fmtInt(undated)+' undated':'');
       if(rn) rn.textContent='Charts: all time';
     } else {
       var initC=sumRange(ACT,'n',P.curA,P.curB);
       var enC=haveEna?sumRange(ENA,'n',P.curA,P.curB):null;
       var volC=sumRange(VOL,'usd',P.curA,P.curB);
+      var txnC=tDense?tDense.reduce(function(s,r){
+        return s+((r.d>=P.curA && r.d<=P.curB)?r.v:0); },0):0;
       document.getElementById('ovActTot').textContent=fmtInt(initC)+' in period · '+fmtInt(T.act)+' all time';
       document.getElementById('ovEnTot').textContent=haveEna?(fmtInt(enC)+' in period · '+fmtInt(T.ena)+' all time'):'—';
       document.getElementById('ovVolTot').textContent=fmtUsdFull(volC)+' in period';
+      if(tf) tf.textContent=fmtInt(txnC)+' new in period · '+fmtInt(txnAll)+' all time';
       if(rn) rn.textContent='Charts: '+fmtShort(P.curA)+' – '+fmtShort(P.curB);
     }
   }
@@ -1715,6 +1769,9 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // condition: the snapshot has no country breakdown to fall back to.
     eDense=ENA.length ? densify(ENA,'n') : null;
     vDense=densify(VOL,'usd');
+    // Share the volume chart's calendar, so the two full-width charts stacked on
+    // this page have the same x-axis and can be read against each other.
+    tDense=firstTxnSeries(TXN, vDense.length?vDense[0].d:null, maxDay());
     tileMonths=monthsAvailable();
     // Keep the reader's chosen month if this country has it; otherwise show its latest.
     if(!tileMonth || tileMonths.indexOf(tileMonth)<0) tileMonth=tileMonths.length?tileMonths[0]:null;
