@@ -166,6 +166,25 @@
   .ov-range button:hover{color:var(--charcoal);background:var(--offwhite);}
   .ov-range button.on{background:var(--blue);color:#fff;}
 .ov-mselect{border:1px solid var(--silver);border-radius:9px;background:#fff;padding:7px 12px;font-size:12px;font-weight:bold;color:var(--charcoal);font-family:inherit;cursor:pointer;outline:none;}
+  /* Merchant-base filter — a POPULATION control, not a time window, so it is
+     separated from the tile-mode toggle by a rule and carries its own label. */
+  .ov-sep{width:1px;align-self:stretch;min-height:26px;background:var(--silver);margin:0 4px;}
+  .ov-ctllbl{font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px;color:var(--midgray);}
+  .ov-basetag{display:inline-block;font-size:11px;font-weight:bold;letter-spacing:.3px;padding:3px 8px;border-radius:999px;background:var(--offwhite);color:var(--midgray);border:1px solid var(--silver);margin-left:8px;vertical-align:middle;}
+  .ov-basetag.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+  /* Two independent criteria chips with a join between them, so the control reads
+     as the sentence it evaluates: [>$100 processed] and [10+ transactions]. */
+  .ov-chips{display:flex;align-items:center;gap:6px;}
+  .ov-chip{border:1px solid var(--silver);border-radius:999px;background:#fff;padding:6px 12px;font-size:12px;font-weight:bold;color:var(--midgray);font-family:inherit;cursor:pointer;outline:none;white-space:nowrap;transition:background .12s,color .12s,border-color .12s;}
+  .ov-chip:hover{color:var(--charcoal);background:var(--offwhite);}
+  .ov-chip.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .ov-chip.on:hover{background:var(--blue);color:#fff;}
+  .ov-join{display:inline-flex;border:1px solid var(--silver);border-radius:999px;overflow:hidden;background:#fff;}
+  .ov-join button{border:0;background:transparent;padding:6px 9px;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.4px;color:var(--midgray);font-family:inherit;cursor:pointer;outline:none;}
+  .ov-join button.on{background:var(--charcoal);color:#fff;}
+  /* Only one chip on (or none): there is nothing to join, so the control greys out
+     rather than disappearing — the row keeps its width and nothing jumps. */
+  .ov-join.idle{opacity:.35;pointer-events:none;}
   /* transacting-merchants table */
   .ov-tablecard{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:16px 18px 8px;margin-top:18px;}
   .ov-tablewrap{overflow-x:auto;margin-top:8px;}
@@ -558,6 +577,26 @@
           <button data-m="month">Monthly</button>
         </div>
         <select id="ovTileMonth" class="ov-mselect" style="display:none"></select>
+        <!-- Merchant base. "Transacting" counts anyone who ever took a single charge, which
+             includes one-off test taps of a few dollars. The two chips below are the
+             qualifying criteria, INDEPENDENT of each other: money processed and number of
+             charges. Either alone answers a different question — "who has moved real money"
+             vs "who uses it routinely" — and a merchant can clear one without the other
+             (one large invoice; twenty tiny coffees). With both on, the join picks AND,
+             which is the standing activated definition, or OR, which is anyone past either
+             bar. Chip labels and every figure read the two constants in the script, so the
+             thresholds are never written down twice.
+             Both chips off = the unfiltered count, which stays the default reading. -->
+        <span class="ov-sep"></span>
+        <span class="ov-ctllbl">Merchant base</span>
+        <div class="ov-chips" id="ovQualChips" title="Off: every merchant with at least one successful charge, ever. Each chip adds a lifetime criterion. With both on, AND is the activated definition (more than $100 processed AND at least 10 transactions); OR counts merchants past either bar. All figures are lifetime totals, so a merchant that qualifies stays qualified.">
+          <button type="button" class="ov-chip" id="ovQVol" aria-pressed="false">&gt;$100 processed</button>
+          <div class="ov-join idle" id="ovQualJoin">
+            <button type="button" data-j="and" class="on">and</button>
+            <button type="button" data-j="or">or</button>
+          </div>
+          <button type="button" class="ov-chip" id="ovQTxn" aria-pressed="false">10+ transactions</button>
+        </div>
       </div>
       <div class="ov-updated" id="ovTileNote">&nbsp;</div>
     </div>
@@ -601,7 +640,7 @@
       <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
     </div>
     <div class="ov-tablecard">
-      <div class="ov-ctitle"><h2>Merchants transacting through Loyverse Payments</h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
+      <div class="ov-ctitle"><h2 id="ovTxnH2">Merchants transacting through Loyverse Payments<span class="ov-basetag" id="ovTxnBase" style="display:none"></span></h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
       <p class="ov-tnote" id="ovTxnNote">Every merchant that has processed at least one successful charge. Volume and captured revenue converted to USD.</p>
       <div class="ov-tablewrap">
         <table class="ov-table" id="ovTxnTable">
@@ -1344,6 +1383,71 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // page shows exactly the figures it showed before the filter existed.
   var ACT, VOL, ENA, TXN;
 
+  // ---- Activated merchants ------------------------------------------------
+  // "Transacting" is an unqualified count: one successful charge, ever, is enough, so a
+  // merchant who tapped a $1 test card on the day the terminal arrived sits in the same
+  // number as a restaurant running the till through it. ACTIVATED is the qualified read —
+  // a merchant past both thresholds below, which no single test tap can clear.
+  // Both readings are kept and the toggle names which one is on screen; neither is a
+  // correction of the other. All-time figures: the thresholds are lifetime totals, so a
+  // merchant that clears them stays activated even in a month it took nothing.
+  // To change the bar, change these two numbers — every label reads them.
+  var ACT_MIN_USD = 100;   // more than this much processed, all time (USD)
+  var ACT_MIN_TXNS = 10;   // and at least this many successful charges
+  // The two criteria, evaluated separately so either can stand on its own.
+  function passVol(r){ return (Number(r.volume) || 0) > ACT_MIN_USD; }
+  function passTxn(r){ return (Number(r.txns)   || 0) >= ACT_MIN_TXNS; }
+  // ACTIVATED keeps its fixed meaning — both bars cleared — whatever the chips are set
+  // to, because the unfiltered view quotes it as a standing figure.
+  function isActivated(r){ return passVol(r) && passTxn(r); }
+  // Chip state. Both off is the unfiltered population — the default reading of the page.
+  var qVol = false;        // >$ACT_MIN_USD processed, all time
+  var qTxn = false;        // ACT_MIN_TXNS+ successful charges, all time
+  var qJoin = 'and';       // how the two combine when BOTH are on: 'and' | 'or'
+  function qualOn(){ return qVol || qTxn; }
+  function bothOn(){ return qVol && qTxn; }
+  // True only for the AND of both criteria, i.e. the activated definition. Used to decide
+  // whether the page may call the filtered population "activated" rather than "qualifying".
+  function isActMode(){ return bothOn() && qJoin === 'and'; }
+  function qualPred(r){
+    if(bothOn()) return qJoin === 'or' ? (passVol(r) || passTxn(r)) : (passVol(r) && passTxn(r));
+    if(qVol) return passVol(r);
+    if(qTxn) return passTxn(r);
+    return true;
+  }
+  // The merchant population every count on this page is drawn from. Applied AFTER the
+  // country projection, so the two filters compose rather than override each other.
+  function txnRows(){ return qualOn() ? TXN.filter(qualPred) : TXN; }
+  function nActivated(){ return TXN.filter(isActivated).length; }
+
+  // ---- labels ----
+  // Written once, from the constants, so a threshold change cannot leave a stale figure
+  // in a tile or a footnote. critText() is the criteria actually on screen; actQual() is
+  // the fixed activated definition, quoted by the unfiltered view.
+  function volCrit(){ return '&gt;$' + ACT_MIN_USD + ' processed'; }
+  function txnCrit(){ return ACT_MIN_TXNS + '+ transactions'; }
+  // Criteria only. The ", all time" qualifier is appended by the callers that need it,
+  // so the all-time tile does not end up reading "All time · ... , all time".
+  function critText(){
+    if(bothOn()) return volCrit() + (qJoin === 'or' ? ' or ' : ' and ') + txnCrit();
+    if(qVol) return volCrit();
+    if(qTxn) return txnCrit();
+    return '';
+  }
+  function critPlain(){ return critText().replace(/&gt;/g, '>'); }
+  function actQual(){ return volCrit() + ' and ' + txnCrit() + ', all time'; }
+  // Tile heading. Only the AND of both bars earns the word "activated"; one criterion on
+  // its own is a qualifying cut, not activation, and saying otherwise would redefine a
+  // number other decks quote.
+  function qualLabel(){ return isActMode() ? 'Merchants activated' : 'Merchants qualifying'; }
+  // Short form for the badge beside the table heading.
+  function baseTag(){
+    if(isActMode()) return 'Activated only';
+    if(bothOn()) return '>$' + ACT_MIN_USD + ' or ' + ACT_MIN_TXNS + '+ txns';
+    if(qVol) return '>$' + ACT_MIN_USD + ' processed';
+    return ACT_MIN_TXNS + '+ transactions';
+  }
+
   function fmtInt(v){ return (Math.round(v)||0).toLocaleString('en-US'); }
   function fmtUsd(v){
     v=Number(v)||0; var a=Math.abs(v);
@@ -1591,21 +1695,31 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   function renderKpis(){
     var tn=document.getElementById('ovTileNote');
     var haveEna=!!eDense, T=allTotals(), kpis;
+    // The merchant tile is the only one the base filter touches: the KYC and volume
+    // series are daily aggregates with no per-merchant rows to qualify against, so
+    // narrowing them here would be an invention rather than a filter.
+    var TX=txnRows(), nAct=nActivated();
     if(tileMode==='all' || !tileMonth){
       kpis=[
         {num:fmtInt(T.reg), lbl:'Initiated KYC', sub:'All time · merchants connected to Loyverse Payments', cls:'', d:''},
         {num:fmtInt(T.ena), lbl:'Passed KYC', sub:'All time · '+T.rate+'% of initiators are live to transact', cls:'green', d:''},
         {num:fmtUsd(T.vol), lbl:'Volume processed', sub:'All time · successful card charges, USD', cls:'accent', d:''},
-        {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'All time · have processed at least one charge', cls:'', d:''}
+        qualOn()
+          ? {num:fmtInt(TX.length), lbl:qualLabel(), sub:'All time · '+critText()+' · '+fmtInt(TXN.length)+' have transacted at all', cls:'green', d:''}
+          : {num:fmtInt(TXN.length), lbl:'Merchants transacting', sub:'All time · at least one charge · '+fmtInt(nAct)+' of them activated ('+actQual()+')', cls:'', d:''}
       ];
-      if(tn) tn.textContent='Tiles: accumulated · all time';
+      if(tn) tn.textContent='Tiles: accumulated · all time'+(qualOn()?' · '+critPlain():'');
     } else {
       // prior-month sums dropped along with the delta pills — nothing reads them now
       var mb=monthBounds(tileMonth), ml=monthShort(tileMonth);
       var initC=sumRange(ACT,'n',mb.a,mb.b);
       var enC=haveEna?sumRange(ENA,'n',mb.a,mb.b):null;
       var volC=sumRange(VOL,'usd',mb.a,mb.b);
-      var txC=TXN.filter(function(r){return r.started>=mb.a && r.started<=mb.b;}).length;
+      // The month scopes WHEN the merchant first charged; the chip criteria stay all-time.
+      // So with a chip on this reads "first charged in <month> and has since cleared the
+      // bar" — not "qualified during <month>", which the data cannot date.
+      var txC=TX.filter(function(r){return r.started>=mb.a && r.started<=mb.b;}).length;
+      var txCAll=TXN.filter(function(r){return r.started>=mb.a && r.started<=mb.b;}).length;
       // NO month-over-month delta pill here (removed 3 Aug 2026). It compared the selected
       // month against the previous calendar month, so viewing the in-progress month measured a
       // part-month against a full one and always read as a collapse. A like-for-like monthly
@@ -1614,10 +1728,12 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         {num:fmtInt(initC), lbl:'Initiated KYC · '+ml, sub:'New connections in '+ml+' · '+fmtInt(T.reg)+' all time', cls:'', d:''},
         {num:haveEna?fmtInt(enC):'—', lbl:'Passed KYC · '+ml, sub:(haveEna?('Newly live in '+ml+' · '+fmtInt(T.ena)+' all time'):'Populates on the next daily pull'), cls:'green', d:''},
         {num:fmtUsd(volC), lbl:'Volume processed · '+ml, sub:'Card charges in '+ml+', USD · '+fmtUsd(T.vol)+' all time', cls:'accent', d:''},
-        {num:fmtInt(txC), lbl:'Newly transacting · '+ml, sub:'First charge in '+ml+' · '+fmtInt(TXN.length)+' transacting all time', cls:'', d:''}
+        qualOn()
+          ? {num:fmtInt(txC), lbl:(isActMode()?'New, since activated · ':'New, now qualifying · ')+ml, sub:'First charge in '+ml+' and now '+critText()+', all time · '+fmtInt(txCAll)+' first charged in '+ml, cls:'green', d:''}
+          : {num:fmtInt(txC), lbl:'Newly transacting · '+ml, sub:'First charge in '+ml+' · '+fmtInt(TXN.length)+' transacting all time', cls:'', d:''}
       ];
       var _isPartial = (tileMonth === new Date().toISOString().slice(0,7));
-      if(tn) tn.textContent='Tiles: '+monthLabel(tileMonth)+' only'+(_isPartial?' · month still in progress':'');
+      if(tn) tn.textContent='Tiles: '+monthLabel(tileMonth)+' only'+(_isPartial?' · month still in progress':'')+(qualOn()?' · '+critPlain():'');
     }
     document.getElementById('ovKpis').innerHTML = kpis.map(function(k){
       return '<div class="ov-kpi '+k.cls+'"><div class="k-num">'+k.num+(k.d||'')+'</div><div class="k-lbl">'+k.lbl+'</div><div class="k-sub">'+k.sub+'</div></div>';
@@ -1662,13 +1778,27 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var txnSort={k:'volume',dir:-1};
   function renderTable(){
     var tot=document.getElementById('ovTxnTot');
-    if(!TXN.length){
-      tot.textContent='—';
-      document.getElementById('ovTxnBody').innerHTML='<tr><td class="l muted" colspan="8">No merchants have transacted yet — this table fills in as charges appear.</td></tr>';
-      var anyCap0=false; return;
+    var TX=txnRows();
+    // Badge beside the heading, so a screenshot of the table alone still says which
+    // population it lists. Hidden in the unfiltered view — that is the default reading.
+    var bdg=document.getElementById('ovTxnBase');
+    if(bdg){
+      bdg.style.display=qualOn()?'':'none';
+      bdg.className='ov-basetag on';
+      bdg.textContent=qualOn()?baseTag():'';
     }
-    tot.textContent=fmtInt(TXN.length)+' merchants';
-    var rows=TXN.slice().sort(function(a,b){
+    if(!TX.length){
+      tot.textContent='—';
+      document.getElementById('ovTxnBody').innerHTML='<tr><td class="l muted" colspan="8">'
+        +(qualOn()
+          ? 'No merchant matches this filter ('+critPlain()+') — '+fmtInt(TXN.length)+' have taken at least one charge.'
+          : 'No merchants have transacted yet — this table fills in as charges appear.')
+        +'</td></tr>';
+      document.getElementById('ovTxnFoot').innerHTML='';
+      return;
+    }
+    tot.textContent=fmtInt(TX.length)+' merchants'+(qualOn()?' · of '+fmtInt(TXN.length)+' transacting':'');
+    var rows=TX.slice().sort(function(a,b){
       var k=txnSort.k, av=a[k], bv=b[k];
       if(k==='name'){ av=String(av||'').toLowerCase(); bv=String(bv||'').toLowerCase(); return av<bv?-txnSort.dir:av>bv?txnSort.dir:0; }
       // ISO 'YYYY-MM-DD' sorts correctly as a string; nulls sort to the bottom of the
@@ -1695,12 +1825,12 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     document.getElementById('ovTxnBody').innerHTML=body;
     // footer totals
     var tTx=0,tVol=0,tCap=0,tMgn=0,hasCap=false,hasMgn=false;
-    TXN.forEach(function(r){ tTx+=Number(r.txns)||0; tVol+=Number(r.volume)||0;
+    TX.forEach(function(r){ tTx+=Number(r.txns)||0; tVol+=Number(r.volume)||0;
       if(r.captured!=null){hasCap=true;tCap+=Number(r.captured)||0;}
       if(r.margin!=null){hasMgn=true;tMgn+=Number(r.margin)||0;} });
     var blended = (hasCap && tVol>0) ? (tCap/tVol*100).toFixed(2)+'%' : '<span class="muted">—</span>';
     document.getElementById('ovTxnFoot').innerHTML='<tr>'+
-      '<td class="l">Total ('+TXN.length+')</td>'+
+      '<td class="l">Total ('+TX.length+')</td>'+
       '<td></td>'+
       '<td></td>'+
       '<td>'+fmtInt(tTx)+'</td>'+
@@ -1708,9 +1838,22 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       '<td>'+blended+'</td>'+
       '<td>'+(hasCap?fmtUsdFull(tCap):'<span class="muted">—</span>')+'</td>'+
       '<td>'+(hasMgn?fmtUsdFull(tMgn):'<span class="muted">—</span>')+'</td></tr>';
+    // The note states the population first — it is what the reader needs to know before
+    // reading a single row — then the capture caveat if that layer has not landed yet.
+    var note = qualOn()
+      ? '<b>'+(isActMode()?'Activated merchants only':'Filtered')+':</b> '+critText()+', all time. '+fmtInt(TX.length)
+        +' of '+fmtInt(TXN.length)+' transacting merchants match'
+        +(isActMode()?', which filters out one-off test taps and single trial charges. ':'. ')
+        +'The totals row below covers the matching subset, not the full book. '
+        +'Volume and captured revenue converted to USD.'
+      : 'Every merchant that has processed at least one successful charge — an unqualified count, so a single '
+        +'test tap counts the same as a full trading week. '+fmtInt(nActivated())+' of these '+fmtInt(TXN.length)
+        +' are activated ('+actQual()+'); the Merchant base chips above cut on either criterion, or both. '
+        +'Volume and captured revenue converted to USD.';
     if(!anyCap){
-      document.getElementById('ovTxnNote').innerHTML='Every merchant that has processed at least one successful charge. Volume in USD. <b>Fee applied, captured revenue and margin populate on the next daily pull</b> (application-fee layer).';
+      note += ' <b>Fee applied, captured revenue and margin populate on the next daily pull</b> (application-fee layer).';
     }
+    document.getElementById('ovTxnNote').innerHTML=note;
   }
 
   // sortable headers
@@ -1757,6 +1900,33 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       renderKpis();
     });
   })(tmBtns[tb]); }
+
+  // Merchant-base chips. Each toggles its own criterion; the join applies only when both
+  // are on. Redraws the tiles and the table only — the charts are daily aggregates with
+  // no merchant rows to qualify.
+  var chipVol=document.getElementById('ovQVol'),
+      chipTxn=document.getElementById('ovQTxn'),
+      joinWrap=document.getElementById('ovQualJoin'),
+      joinBtns=joinWrap?joinWrap.querySelectorAll('button'):[];
+  // Chip labels come from the constants rather than the markup, so the control can never
+  // advertise a threshold the filter does not apply.
+  if(chipVol) chipVol.innerHTML=volCrit();
+  if(chipTxn) chipTxn.innerHTML=txnCrit();
+  function syncQualUI(){
+    if(chipVol){ chipVol.classList.toggle('on',qVol); chipVol.setAttribute('aria-pressed',qVol?'true':'false'); }
+    if(chipTxn){ chipTxn.classList.toggle('on',qTxn); chipTxn.setAttribute('aria-pressed',qTxn?'true':'false'); }
+    if(joinWrap){
+      joinWrap.classList.toggle('idle',!bothOn());
+      for(var j=0;j<joinBtns.length;j++) joinBtns[j].classList.toggle('on', joinBtns[j].getAttribute('data-j')===qJoin);
+    }
+  }
+  function qualChanged(){ syncQualUI(); renderKpis(); renderTable(); }
+  if(chipVol) chipVol.addEventListener('click',function(){ qVol=!qVol; qualChanged(); });
+  if(chipTxn) chipTxn.addEventListener('click',function(){ qTxn=!qTxn; qualChanged(); });
+  for(var jb=0;jb<joinBtns.length;jb++){ (function(b){
+    b.addEventListener('click',function(){ qJoin=b.getAttribute('data-j'); qualChanged(); });
+  })(joinBtns[jb]); }
+  syncQualUI();
 
   // ---- country projection -------------------------------------------------
   // Rebuild every series the page reads from the raw data for the current selection.
