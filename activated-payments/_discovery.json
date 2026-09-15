@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-15T03:18:57.017Z",
+  "ranAt": "2026-09-15T03:26:13.658Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1909,7 +1909,7 @@
         "TAX": 1605,
         "SHIPPING_ADDRESS_STATE": "VA",
         "SHIPPING_ADDRESS_POSTAL_CODE": "24551",
-        "BATCH_TIMESTAMP": "2026-09-14 21:00:00.000",
+        "BATCH_TIMESTAMP": "2026-09-15 03:00:00.000",
         "SHIPPING_COMPANY": "Loyverse/Bambassadors Mkt",
         "SHIPPING_ADDRESS_LINE1": "1163 Westyn Terrace Loop",
         "AMOUNT": 33181,
@@ -1918,7 +1918,7 @@
         "PO_NUMBER": null,
         "ID": "thor_1UFa9v7e4AMQfKY3tn63qv7J",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-09-14 18:28:01.000",
+        "UPDATED": "2026-09-15 00:16:03.000",
         "SHIPPING_NAME": "Will Scheren",
         "SHIPPING_METHOD_NAME": "standard",
         "STATUS": "shipped",
@@ -1936,7 +1936,7 @@
         "TAX": 443,
         "SHIPPING_ADDRESS_STATE": "FL",
         "SHIPPING_ADDRESS_POSTAL_CODE": "33647",
-        "BATCH_TIMESTAMP": "2026-09-14 18:00:00.000",
+        "BATCH_TIMESTAMP": "2026-09-15 00:00:00.000",
         "SHIPPING_COMPANY": null,
         "SHIPPING_ADDRESS_LINE1": "8704 Cypress Mill Court",
         "AMOUNT": 7643,
@@ -1945,7 +1945,7 @@
         "PO_NUMBER": null,
         "ID": "thor_1UFRw67e4AMQfKY3zjytpWe6",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-09-14 16:26:51.000",
+        "UPDATED": "2026-09-14 22:15:40.000",
         "SHIPPING_NAME": "Trang Tran",
         "SHIPPING_METHOD_NAME": "standard",
         "STATUS": "shipped",
@@ -2125,7 +2125,7 @@
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1UFa9v7e4AMQfKY3tn63qv7J",
-        "BATCH_TIMESTAMP": "2026-09-14 21:00:00.000",
+        "BATCH_TIMESTAMP": "2026-09-15 03:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
         "AMOUNT": 4263,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock",
@@ -2139,7 +2139,7 @@
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1UFa9v7e4AMQfKY3tn63qv7J",
-        "BATCH_TIMESTAMP": "2026-09-14 21:00:00.000",
+        "BATCH_TIMESTAMP": "2026-09-15 03:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
         "AMOUNT": 26013,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
@@ -2153,7 +2153,7 @@
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1UFRw67e4AMQfKY3zjytpWe6",
-        "BATCH_TIMESTAMP": "2026-09-14 18:00:00.000",
+        "BATCH_TIMESTAMP": "2026-09-15 00:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
         "AMOUNT": 5900,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
