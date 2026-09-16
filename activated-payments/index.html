@@ -622,7 +622,22 @@
     </div>
     <div class="ov-kpis" id="ovKpis"></div>
     <div class="ov-card full" style="margin-top:18px">
-      <div class="ov-ctitle"><h2>Activation funnel</h2><span class="tot" id="ovFunnelTot">&nbsp;</span></div>
+      <!-- The join governs the Activated row, and Retained cascades from it. It is a
+           separate control from the Merchant base chips above on purpose: those filter
+           the tiles and the table, while this one only changes how the funnel's last two
+           rungs are defined. Defaults to OR because the two criteria are not symmetric in
+           practice - 22 merchants clear the money bar on big tickets without reaching 10
+           charges, against 1 the other way round, so AND is mostly a filter on ticket size. -->
+      <div class="ov-ctitle"><h2>Activation funnel</h2>
+        <span style="display:flex;align-items:center;gap:8px;margin-left:auto">
+          <span class="ov-ctllbl" id="ovFunnelJoinLbl">Activated</span>
+          <div class="ov-join" id="ovFunnelJoin">
+            <button type="button" data-j="or" class="on">or</button>
+            <button type="button" data-j="and">and</button>
+          </div>
+          <span class="tot" id="ovFunnelTot">&nbsp;</span>
+        </span>
+      </div>
       <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. Setup completion (tap enabled or terminal configured) sits between KYC approval and the first payment but is not visible in Stripe, so that step is not shown.</p>
       <div class="pf-head"><span>Stage</span><span></span><span>Count</span><span>Of previous</span><span>Of interest</span></div>
       <div class="pf-rows" id="ovFunnelRows"></div>
@@ -1824,6 +1839,19 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // through to payments, not the click itself — but it is the earliest thing we can
   // actually see, and half the merchants who reach it never type a character
   // afterwards, so calling it "initiated KYC" overstated what had happened.
+  // How the funnel's Activated row joins the two criteria — and, through it, what
+  // Retained cascades from. Deliberately NOT the merchant-base chips' qJoin: those
+  // filter the tiles and the table, and with both chips off their predicate admits
+  // everyone, which would make Activated equal First payment. This one always applies
+  // both criteria and only chooses how they combine.
+  //
+  // OR by default. The two bars look symmetric but are not: 22 merchants are past $100
+  // without reaching 10 charges (average ticket $414 — invoices, not tills), against a
+  // single merchant the other way round. So AND is in practice a filter on ticket size
+  // rather than on commitment, and it drops a real segment.
+  var fJoin = 'or';
+  function fPass(r){ return fJoin==='or' ? (passVol(r) || passTxn(r)) : (passVol(r) && passTxn(r)); }
+  function fQual(){ return volCrit() + (fJoin==='or' ? ' or ' : ' and ') + txnCrit() + ', all time'; }
   var D30 = 30;
   function daysBetween(a,b){
     if(!a||!b) return null;
@@ -1843,9 +1871,13 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var L=ladderSlice();
     // Outcome stages, from the merchants the page is already showing.
     var asOf=maxDay();
-    var eligible=TXN.filter(function(r){ var d=daysBetween(r.started, asOf); return d!=null && d>=D30; });
+    var activated=TXN.filter(fPass);
+    // Retained cascades from Activated, so the funnel is a true subset chain all the way
+    // down. Its denominator is not the row above, though: a merchant who activated three
+    // days ago has no D30 yet and must not be counted as churned. So the base is the
+    // activated merchants old enough to have been given the chance.
+    var eligible=activated.filter(function(r){ var d=daysBetween(r.started, asOf); return d!=null && d>=D30; });
     var retained=eligible.filter(function(r){ var d=daysBetween(r.started, r.lastTxn); return d!=null && d>=D30; });
-    var activated=TXN.filter(isActivated);
     // Payments interest and KYC approved are taken from the DAILY SERIES, not from the
     // ladder — the same totals the tiles and the chart headers read. Both numbers exist
     // in both places (every account has a CREATED, every approved one an accepted-Terms
@@ -1872,13 +1904,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
        why:'Populates on the next daily pull'},
       {lbl:'KYC approved', sub:'Cleared to transact', n:approved, cls:'green'},
       {lbl:'First payment', sub:'Has processed at least one charge', n:TXN.length, cls:'green'},
-      {lbl:'Activated', sub:actQual(), n:activated.length, cls:'dark'},
-      // Retained is NOT a subset of Activated — a merchant can still be processing at
-      // D30 without ever clearing the activation bar — so measuring it against the
-      // row above would be nonsense. Its denominator is the cohort old enough to have a
-      // D30 at all, which is also why merchants who started less than 30 days ago are
-      // excluded rather than counted as churned.
-      {lbl:'Retained', sub:'Still processing at D30 · of '+fmtInt(eligible.length)+' merchants old enough to count',
+      {lbl:'Activated', sub:fQual(), n:activated.length, cls:'dark'},
+      {lbl:'Retained', sub:'Activated and still processing at D30 · of '+fmtInt(eligible.length)+' activated merchants old enough to count',
        n:retained.length, cls:'dark', denom:eligible.length}
     ];
     // Bars are scaled to the widest MEASURED stage, so an unmeasurable top row does
@@ -2070,6 +2097,18 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     b.addEventListener('click',function(){ qJoin=b.getAttribute('data-j'); qualChanged(); });
   })(joinBtns[jb]); }
   syncQualUI();
+
+  // Funnel join. Redraws the funnel only — the tiles and the table answer to the
+  // merchant-base chips instead, so the two controls never fight over the same figure.
+  var fJoinWrap=document.getElementById('ovFunnelJoin'),
+      fJoinBtns=fJoinWrap?fJoinWrap.querySelectorAll('button'):[];
+  function syncFunnelJoin(){
+    for(var j=0;j<fJoinBtns.length;j++) fJoinBtns[j].classList.toggle('on', fJoinBtns[j].getAttribute('data-j')===fJoin);
+  }
+  for(var fb=0;fb<fJoinBtns.length;fb++){ (function(b){
+    b.addEventListener('click',function(){ fJoin=b.getAttribute('data-j'); syncFunnelJoin(); renderFunnel(); });
+  })(fJoinBtns[fb]); }
+  syncFunnelJoin();
 
   // ---- country projection -------------------------------------------------
   // Rebuild every series the page reads from the raw data for the current selection.
