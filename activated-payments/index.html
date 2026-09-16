@@ -1846,11 +1846,31 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var eligible=TXN.filter(function(r){ var d=daysBetween(r.started, asOf); return d!=null && d>=D30; });
     var retained=eligible.filter(function(r){ var d=daysBetween(r.started, r.lastTxn); return d!=null && d>=D30; });
     var activated=TXN.filter(isActivated);
+    // Payments interest and KYC approved are taken from the DAILY SERIES, not from the
+    // ladder — the same totals the tiles and the chart headers read. Both numbers exist
+    // in both places (every account has a CREATED, every approved one an accepted-Terms
+    // date), so the ladder's copies are redundant, and redundant copies are exactly what
+    // drift apart: on 16 Sep 2026 the two differed by 4 because the ladder had been
+    // regenerated after the morning pull and had picked up accounts that reached the
+    // Stripe share late. Reading the shared number once removes the possibility.
+    //
+    // Only KYC started and submitted are genuinely the ladder's to give. They are then
+    // clamped into [approved, interest] and ordered, so a ladder that lags a pull can
+    // make the middle of the funnel conservative but can never make it non-monotonic —
+    // a funnel that widens as it descends reads as a bug even when the cause is staleness.
+    var T=allTotals();
+    var interest=T.reg, approved=T.ena;
+    var clamp=function(v){ return Math.min(Math.max(v, approved), interest); };
+    var started=L?clamp(L.started):null;
+    var submitted=L?clamp(L.submitted):null;
+    if(started!=null && submitted!=null && submitted>started) started=submitted;
     var rows=[
-      {lbl:'Payments interest', sub:'Opened a payments account', n:L?L.interest:null, cls:''},
-      {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:L?L.started:null, cls:''},
-      {lbl:'KYC submitted', sub:'Sent details in for review', n:L?L.submitted:null, cls:''},
-      {lbl:'KYC approved', sub:'Cleared to transact', n:L?L.approved:null, cls:'green'},
+      {lbl:'Payments interest', sub:'Opened a payments account', n:interest, cls:''},
+      {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:started, cls:'',
+       why:'Populates on the next daily pull'},
+      {lbl:'KYC submitted', sub:'Sent details in for review', n:submitted, cls:'',
+       why:'Populates on the next daily pull'},
+      {lbl:'KYC approved', sub:'Cleared to transact', n:approved, cls:'green'},
       {lbl:'First payment', sub:'Has processed at least one charge', n:TXN.length, cls:'green'},
       {lbl:'Activated', sub:actQual(), n:activated.length, cls:'dark'},
       // Retained is NOT a subset of Activated — a merchant can still be processing at
@@ -1864,7 +1884,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // Bars are scaled to the widest MEASURED stage, so an unmeasurable top row does
     // not silently rescale everything beneath it to a number we do not have.
     var top=0; rows.forEach(function(r){ if(r.n!=null && r.n>top) top=r.n; });
-    var base=(L&&L.interest)||top||1;
+    var base=interest||top||1;
     var prev=null;
     host.innerHTML=rows.map(function(r){
       if(r.n==null){
@@ -1888,9 +1908,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     }).join('');
     var tot=document.getElementById('ovFunnelTot');
     if(tot){
-      tot.textContent = L
-        ? fmtInt(L.interest)+' interested · '+fmtInt(TXN.length)+' transacting'
-        : 'Populates on the next daily pull';
+      tot.textContent = fmtInt(interest)+' interested · '+fmtInt(TXN.length)+' transacting';
     }
   }
 
