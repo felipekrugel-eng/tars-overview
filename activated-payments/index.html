@@ -623,7 +623,7 @@
     <div class="ov-kpis" id="ovKpis"></div>
     <div class="ov-card full" style="margin-top:18px">
       <div class="ov-ctitle"><h2>Activation funnel</h2><span class="tot" id="ovFunnelTot">&nbsp;</span></div>
-      <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. Stages we have no data for are greyed rather than dropped: the gap is the finding.</p>
+      <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. <b>Setup completed</b> is greyed rather than dropped &mdash; tap-to-pay enablement is not visible in Stripe, and that blind spot sits exactly where an approved merchant goes quiet.</p>
       <div class="pf-head"><span>Stage</span><span></span><span>Count</span><span>Of previous</span><span>Of interest</span></div>
       <div class="pf-rows" id="ovFunnelRows"></div>
     </div>
@@ -1808,10 +1808,16 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   //     TXN, the same array the table at the bottom of the page renders, so the
   //     funnel cannot disagree with the table beneath it. Activated reuses the page's
   //     own isActivated() so it cannot drift from the chips or the merchant table.
-  //   · "Payments exposed" and "Setup completed" have NO source at all: the Loyverse
-  //     lake holds Chargebee, receipts, merchants and FX — there is no product-event
-  //     or clickstream table, and tap-to-pay enablement is not visible in Stripe.
-  //     They are drawn greyed and labelled, because an unmeasured stage is a finding.
+  //   · "Setup completed" has NO source at all — tap-to-pay enablement is not visible
+  //     in Stripe — so it is drawn greyed and labelled rather than dropped, because an
+  //     unmeasured stage sitting between KYC approval and the first charge is itself a
+  //     finding: it is where we cannot see why an approved merchant never transacts.
+  //
+  // "Payments exposed" (saw the offer) was dropped at Felipe's request on 16 Sep 2026.
+  // It has no source either — the Loyverse lake holds Chargebee, receipts, merchants and
+  // FX, with no product-event or clickstream table — but unlike Setup completed it sits
+  // ABOVE the funnel's base, so an empty row there told the reader nothing except that
+  // the funnel starts where the data starts, which the base row already says.
   //
   // "Payments interest" is the account-creation moment. That is a proxy for clicking
   // through to payments, not the click itself — but it is the earliest thing we can
@@ -1840,7 +1846,6 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var retained=eligible.filter(function(r){ var d=daysBetween(r.started, r.lastTxn); return d!=null && d>=D30; });
     var activated=TXN.filter(isActivated);
     var rows=[
-      {lbl:'Payments exposed', sub:'Saw the offer', n:null, why:'No product-event data — the merchant app is not instrumented'},
       {lbl:'Payments interest', sub:'Opened a payments account', n:L?L.interest:null, cls:''},
       {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:L?L.started:null, cls:''},
       {lbl:'KYC submitted', sub:'Sent details in for review', n:L?L.submitted:null, cls:''},
