@@ -623,7 +623,7 @@
     <div class="ov-kpis" id="ovKpis"></div>
     <div class="ov-card full" style="margin-top:18px">
       <div class="ov-ctitle"><h2>Activation funnel</h2><span class="tot" id="ovFunnelTot">&nbsp;</span></div>
-      <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. <b>Setup completed</b> is greyed rather than dropped &mdash; tap-to-pay enablement is not visible in Stripe, and that blind spot sits exactly where an approved merchant goes quiet.</p>
+      <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. Setup completion (tap enabled or terminal configured) sits between KYC approval and the first payment but is not visible in Stripe, so that step is not shown.</p>
       <div class="pf-head"><span>Stage</span><span></span><span>Count</span><span>Of previous</span><span>Of interest</span></div>
       <div class="pf-rows" id="ovFunnelRows"></div>
     </div>
@@ -1797,9 +1797,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   }
 
   // ---- Activation funnel strip ---------------------------------------------
-  // The nine stages of the agreed payments funnel, drawn as one ladder. Three
-  // different kinds of source feed it, and the row styling is what keeps them
-  // honest about which is which:
+  // The measurable stages of the agreed payments funnel, drawn as one ladder. Two
+  // kinds of source feed it:
   //   · KYC rows (interest -> started -> submitted -> approved) come from
   //     __PAY_STAGE_LADDER — a CURRENT-STATE snapshot of every Stripe account.
   //     Stripe records no history for "the merchant filled a field", so these can
@@ -1808,16 +1807,18 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   //     TXN, the same array the table at the bottom of the page renders, so the
   //     funnel cannot disagree with the table beneath it. Activated reuses the page's
   //     own isActivated() so it cannot drift from the chips or the merchant table.
-  //   · "Setup completed" has NO source at all — tap-to-pay enablement is not visible
-  //     in Stripe — so it is drawn greyed and labelled rather than dropped, because an
-  //     unmeasured stage sitting between KYC approval and the first charge is itself a
-  //     finding: it is where we cannot see why an approved merchant never transacts.
   //
-  // "Payments exposed" (saw the offer) was dropped at Felipe's request on 16 Sep 2026.
-  // It has no source either — the Loyverse lake holds Chargebee, receipts, merchants and
-  // FX, with no product-event or clickstream table — but unlike Setup completed it sits
-  // ABOVE the funnel's base, so an empty row there told the reader nothing except that
-  // the funnel starts where the data starts, which the base row already says.
+  // Two of the nine agreed stages were dropped at Felipe's request on 16 Sep 2026:
+  // "Payments exposed" (saw the offer) and "Setup completed" (tap enabled or terminal
+  // configured). Neither has a source — the Loyverse lake holds Chargebee, receipts,
+  // merchants and FX with no product-event or clickstream table, and tap-to-pay
+  // enablement is not exposed by Stripe. The `na` row styling below is kept even though
+  // nothing uses it now, so a stage can be reinstated the day it becomes measurable.
+  //
+  // What this costs the reader: the KYC approved -> first payment step now spans a gap.
+  // 332 merchants clear KYC and 96 charge; the missing rung is where that falls apart,
+  // and the funnel no longer says so on its face. Worth remembering when the drop-off
+  // gets attributed to something the data can see.
   //
   // "Payments interest" is the account-creation moment. That is a proxy for clicking
   // through to payments, not the click itself — but it is the earliest thing we can
@@ -1850,7 +1851,6 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:L?L.started:null, cls:''},
       {lbl:'KYC submitted', sub:'Sent details in for review', n:L?L.submitted:null, cls:''},
       {lbl:'KYC approved', sub:'Cleared to transact', n:L?L.approved:null, cls:'green'},
-      {lbl:'Setup completed', sub:'Tap enabled or terminal configured', n:null, why:'Tap-to-pay enablement is not exposed by Stripe'},
       {lbl:'First payment', sub:'Has processed at least one charge', n:TXN.length, cls:'green'},
       {lbl:'Activated', sub:actQual(), n:activated.length, cls:'dark'},
       // Retained is NOT a subset of Activated — a merchant can still be processing at
