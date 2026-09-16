@@ -132,6 +132,26 @@
      would stack on top of it -- hence the reset. */
   .ov-card.full + .ov-card.full{margin-top:18px;}
   .ov-grid > .ov-card.full + .ov-card.full{margin-top:0;}
+  /* Activation funnel strip. Stages the data cannot support are drawn GREYED, not
+     hidden: an unmeasured stage is itself a finding, and dropping it would quietly
+     redraw the funnel as though it began at KYC -- which is exactly the blind spot
+     this strip exists to show. Hatched track = no number available. */
+  .pf-head,.pf-row{display:grid;grid-template-columns:186px 1fr 68px 84px 84px;align-items:center;gap:12px;}
+  .pf-head{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--midgray);padding-bottom:5px;border-bottom:1px solid var(--silver);margin-bottom:8px;}
+  .pf-head span:nth-child(n+3){text-align:right;}
+  .pf-rows{display:flex;flex-direction:column;gap:7px;}
+  .pf-row{font-size:12.5px;}
+  .pf-lbl{font-weight:bold;color:var(--charcoal);line-height:1.2;}
+  .pf-lbl small{display:block;font-weight:normal;color:var(--midgray);font-size:10.5px;line-height:1.3;margin-top:2px;}
+  .pf-track{background:#F1F3F5;border-radius:4px;height:22px;overflow:hidden;}
+  .pf-fill{height:100%;border-radius:4px;background:#1D8FE1;min-width:2px;}
+  .pf-fill.green{background:#1E9E5A;}
+  .pf-fill.dark{background:#1A1A1A;}
+  .pf-n{text-align:right;font-weight:bold;font-variant-numeric:tabular-nums;}
+  .pf-pct{text-align:right;color:var(--midgray);font-size:11.5px;font-variant-numeric:tabular-nums;}
+  .pf-row.na .pf-lbl,.pf-row.na .pf-n,.pf-row.na .pf-pct{color:#A9AFB5;}
+  .pf-row.na .pf-track{background:repeating-linear-gradient(45deg,#F6F7F8,#F6F7F8 5px,#EDEFF1 5px,#EDEFF1 10px);}
+  @media(max-width:760px){.pf-head,.pf-row{grid-template-columns:132px 1fr 60px;}.pf-head span:nth-child(n+4),.pf-row .pf-pct{display:none;}}
   .ov-ctitle{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;}
   .ov-ctitle h2{font-family:"Arial Black",Arial,sans-serif;font-size:16px;color:var(--charcoal);margin:0;}
   .ov-ctitle .tot{font-size:13px;color:var(--midgray);font-weight:bold;}
@@ -601,6 +621,12 @@
       <div class="ov-updated" id="ovTileNote">&nbsp;</div>
     </div>
     <div class="ov-kpis" id="ovKpis"></div>
+    <div class="ov-card full" style="margin-top:18px">
+      <div class="ov-ctitle"><h2>Activation funnel</h2><span class="tot" id="ovFunnelTot">&nbsp;</span></div>
+      <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. Stages we have no data for are greyed rather than dropped: the gap is the finding.</p>
+      <div class="pf-head"><span>Stage</span><span></span><span>Count</span><span>Of previous</span><span>Of interest</span></div>
+      <div class="pf-rows" id="ovFunnelRows"></div>
+    </div>
     <div class="ov-head" style="margin:18px 0 12px">
       <div class="ov-range" id="ovRange">
         <button data-r="month" class="on">Current month</button>
@@ -612,10 +638,10 @@
     </div>
     <div class="ov-grid">
       <div class="ov-card">
-        <div class="ov-ctitle"><h2>Initiated KYC per day</h2><span class="tot" id="ovActTot">&nbsp;</span></div>
-        <p class="ov-cnote">New Stripe connections in the selected window. Bars = daily; line = cumulative.</p>
+        <div class="ov-ctitle"><h2>Payments interest per day</h2><span class="tot" id="ovActTot">&nbsp;</span></div>
+        <p class="ov-cnote">Merchants who opened a payments account in the selected window &mdash; the moment they tapped into the payments flow, before any KYC field is filled. Bars = daily; line = cumulative.</p>
         <div class="ov-chart" id="ovActChart"></div>
-        <div class="ov-legend"><span><i class="pc-bar" style="background:#1D8FE1;opacity:.85"></i> Initiated KYC / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative</span></div>
+        <div class="ov-legend"><span><i class="pc-bar" style="background:#1D8FE1;opacity:.85"></i> Payments interest / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative</span></div>
       </div>
       <div class="ov-card">
         <div class="ov-ctitle"><h2>Passed KYC per day</h2><span class="tot" id="ovEnTot">&nbsp;</span></div>
@@ -624,7 +650,7 @@
         <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly passed / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative passed</span></div>
       </div>
     </div>
-    <!-- Order follows the funnel: KYC initiated -> KYC passed -> transacting -> volume.
+    <!-- Order follows the funnel: payments interest -> KYC passed -> transacting -> volume.
          The two cards above are the first two steps; this is the third, and volume is
          the outcome, so it reads last. -->
     <div class="ov-card full">
@@ -1376,6 +1402,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var RAW_ENA  = window.__PAY_ENABLED_DAILY || []; // [{d,n,by:{CC:n}}] enabled/day (backfilled from Terms-accepted)
   var SNAP = window.__PAY_ENABLED_SNAP || [];     // [{d,enabled,total}] legacy forward snapshot (fallback)
   var RAW_TXN  = window.__PAY_TXN_MERCHANTS || [];// [{acct,name,mid,country,started,lastTxn,txns,volume,captured,take,margin}]
+  var LADDER = window.__PAY_STAGE_LADDER || null;
   var UPD = window.__PAY_OVERVIEW_UPDATED || null;
 
   // What the page actually renders. Reassigned by loadData() whenever the country
@@ -1614,7 +1641,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   function renderCharts(range){
     // ---- Activations ----
     var a=windowSeries(aDense, range);
-    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:'',barLabel:'Initiated KYC'});
+    chart(document.getElementById('ovActChart'), a.days, a.bars, a.line, {barClass:'',lineClass:'',barLabel:'Payments interest'});
     // ---- Enabled (backfilled from Terms-accepted; fallback to legacy snapshot) ----
     if(eDense){
       var e=windowSeries(eDense, range);
@@ -1701,8 +1728,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var TX=txnRows(), nAct=nActivated();
     if(tileMode==='all' || !tileMonth){
       kpis=[
-        {num:fmtInt(T.reg), lbl:'Initiated KYC', sub:'All time · merchants connected to Loyverse Payments', cls:'', d:''},
-        {num:fmtInt(T.ena), lbl:'Passed KYC', sub:'All time · '+T.rate+'% of initiators are live to transact', cls:'green', d:''},
+        {num:fmtInt(T.reg), lbl:'Payments interest', sub:'All time · merchants that opened a payments account', cls:'', d:''},
+        {num:fmtInt(T.ena), lbl:'Passed KYC', sub:'All time · '+T.rate+'% of interested merchants are live to transact', cls:'green', d:''},
         {num:fmtUsd(T.vol), lbl:'Volume processed', sub:'All time · successful card charges, USD', cls:'accent', d:''},
         qualOn()
           ? {num:fmtInt(TX.length), lbl:qualLabel(), sub:'All time · '+critText()+' · '+fmtInt(TXN.length)+' have transacted at all', cls:'green', d:''}
@@ -1725,7 +1752,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       // part-month against a full one and always read as a collapse. A like-for-like monthly
       // comparison belongs on the payments report, not on a tile whose window the reader picks.
       kpis=[
-        {num:fmtInt(initC), lbl:'Initiated KYC · '+ml, sub:'New connections in '+ml+' · '+fmtInt(T.reg)+' all time', cls:'', d:''},
+        {num:fmtInt(initC), lbl:'Payments interest · '+ml, sub:'New payments accounts in '+ml+' · '+fmtInt(T.reg)+' all time', cls:'', d:''},
         {num:haveEna?fmtInt(enC):'—', lbl:'Passed KYC · '+ml, sub:(haveEna?('Newly live in '+ml+' · '+fmtInt(T.ena)+' all time'):'Populates on the next daily pull'), cls:'green', d:''},
         {num:fmtUsd(volC), lbl:'Volume processed · '+ml, sub:'Card charges in '+ml+', USD · '+fmtUsd(T.vol)+' all time', cls:'accent', d:''},
         qualOn()
@@ -1766,6 +1793,99 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       document.getElementById('ovVolTot').textContent=fmtUsdFull(volC)+' in period';
       if(tf) tf.textContent=fmtInt(txnC)+' new in period · '+fmtInt(txnAll)+' all time';
       if(rn) rn.textContent='Charts: '+fmtShort(P.curA)+' – '+fmtShort(P.curB);
+    }
+  }
+
+  // ---- Activation funnel strip ---------------------------------------------
+  // The nine stages of the agreed payments funnel, drawn as one ladder. Three
+  // different kinds of source feed it, and the row styling is what keeps them
+  // honest about which is which:
+  //   · KYC rows (interest -> started -> submitted -> approved) come from
+  //     __PAY_STAGE_LADDER — a CURRENT-STATE snapshot of every Stripe account.
+  //     Stripe records no history for "the merchant filled a field", so these can
+  //     never become a daily curve the way CREATED and TOS_ACCEPTANCE_DATE do.
+  //   · Outcome rows (first payment -> activated -> retained) are computed here from
+  //     TXN, the same array the table at the bottom of the page renders, so the
+  //     funnel cannot disagree with the table beneath it. Activated reuses the page's
+  //     own isActivated() so it cannot drift from the chips or the merchant table.
+  //   · "Payments exposed" and "Setup completed" have NO source at all: the Loyverse
+  //     lake holds Chargebee, receipts, merchants and FX — there is no product-event
+  //     or clickstream table, and tap-to-pay enablement is not visible in Stripe.
+  //     They are drawn greyed and labelled, because an unmeasured stage is a finding.
+  //
+  // "Payments interest" is the account-creation moment. That is a proxy for clicking
+  // through to payments, not the click itself — but it is the earliest thing we can
+  // actually see, and half the merchants who reach it never type a character
+  // afterwards, so calling it "initiated KYC" overstated what had happened.
+  var D30 = 30;
+  function daysBetween(a,b){
+    if(!a||!b) return null;
+    var x=new Date(String(a).slice(0,10)+'T00:00:00Z'), y=new Date(String(b).slice(0,10)+'T00:00:00Z');
+    if(isNaN(x.getTime())||isNaN(y.getTime())) return null;
+    return Math.round((y-x)/86400000);
+  }
+  function ladderSlice(){
+    if(!LADDER) return null;
+    var F=window.LVCC;
+    var row={interest:LADDER.total.interest, started:LADDER.total.started,
+             submitted:LADDER.total.submitted, approved:LADDER.total.approved, by:LADDER.by||{}};
+    return (F && !F.isAll()) ? F.slice(row) : row;
+  }
+  function renderFunnel(){
+    var host=document.getElementById('ovFunnelRows'); if(!host) return;
+    var L=ladderSlice();
+    // Outcome stages, from the merchants the page is already showing.
+    var asOf=maxDay();
+    var eligible=TXN.filter(function(r){ var d=daysBetween(r.started, asOf); return d!=null && d>=D30; });
+    var retained=eligible.filter(function(r){ var d=daysBetween(r.started, r.lastTxn); return d!=null && d>=D30; });
+    var activated=TXN.filter(isActivated);
+    var rows=[
+      {lbl:'Payments exposed', sub:'Saw the offer', n:null, why:'No product-event data — the merchant app is not instrumented'},
+      {lbl:'Payments interest', sub:'Opened a payments account', n:L?L.interest:null, cls:''},
+      {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:L?L.started:null, cls:''},
+      {lbl:'KYC submitted', sub:'Sent details in for review', n:L?L.submitted:null, cls:''},
+      {lbl:'KYC approved', sub:'Cleared to transact', n:L?L.approved:null, cls:'green'},
+      {lbl:'Setup completed', sub:'Tap enabled or terminal configured', n:null, why:'Tap-to-pay enablement is not exposed by Stripe'},
+      {lbl:'First payment', sub:'Has processed at least one charge', n:TXN.length, cls:'green'},
+      {lbl:'Activated', sub:actQual(), n:activated.length, cls:'dark'},
+      // Retained is NOT a subset of Activated — a merchant can still be processing at
+      // D30 without ever clearing the activation bar — so measuring it against the
+      // row above would be nonsense. Its denominator is the cohort old enough to have a
+      // D30 at all, which is also why merchants who started less than 30 days ago are
+      // excluded rather than counted as churned.
+      {lbl:'Retained', sub:'Still processing at D30 · of '+fmtInt(eligible.length)+' merchants old enough to count',
+       n:retained.length, cls:'dark', denom:eligible.length}
+    ];
+    // Bars are scaled to the widest MEASURED stage, so an unmeasurable top row does
+    // not silently rescale everything beneath it to a number we do not have.
+    var top=0; rows.forEach(function(r){ if(r.n!=null && r.n>top) top=r.n; });
+    var base=(L&&L.interest)||top||1;
+    var prev=null;
+    host.innerHTML=rows.map(function(r){
+      if(r.n==null){
+        // `prev` is deliberately NOT cleared: an unmeasured stage should not also destroy
+        // the step conversion of the stage below it. First payment then reads against KYC
+        // approved, which is the ratio anyone actually wants, and skipping the blank row
+        // is honest because a merchant cannot take a payment without completing setup.
+        return '<div class="pf-row na" title="'+r.why+'"><div class="pf-lbl">'+r.lbl+'<small>'+r.sub+'</small></div>'+
+               '<div class="pf-track"></div><div class="pf-n">—</div>'+
+               '<div class="pf-pct">no data</div><div class="pf-pct">—</div></div>';
+      }
+      var w=top?Math.max(0.6,(r.n/top)*100):0;
+      var den = (r.denom!=null) ? r.denom : prev;
+      var ofPrev = (den!=null && den>0) ? Math.round(r.n/den*1000)/10+'%' : '&nbsp;';
+      var ofBase = base>0 ? Math.round(r.n/base*1000)/10+'%' : '&nbsp;';
+      prev=r.n;
+      return '<div class="pf-row"><div class="pf-lbl">'+r.lbl+'<small>'+r.sub+'</small></div>'+
+             '<div class="pf-track"><div class="pf-fill '+(r.cls||'')+'" style="width:'+w.toFixed(1)+'%"></div></div>'+
+             '<div class="pf-n">'+fmtInt(r.n)+'</div>'+
+             '<div class="pf-pct">'+ofPrev+'</div><div class="pf-pct">'+ofBase+'</div></div>';
+    }).join('');
+    var tot=document.getElementById('ovFunnelTot');
+    if(tot){
+      tot.textContent = L
+        ? fmtInt(L.interest)+' interested · '+fmtInt(TXN.length)+' transacting'
+        : 'Populates on the next daily pull';
     }
   }
 
@@ -1963,6 +2083,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     loadData();
     renderStatic();
     renderKpis();
+    renderFunnel();
     renderChartTotals(curRange);
     renderCharts(curRange);
   }

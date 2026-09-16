@@ -465,6 +465,52 @@ function buildEnabledDaily(accountRows, meta) {
   return Object.keys(byDay).sort().map(d => ({ d, n: byDay[d], by: byDayC[d] || {} }));
 }
 
+// ── Field-level KYC stage ladder (the activation funnel's middle) ─────────────
+// CONNECTED_ACCOUNTS is a current-state snapshot: one row per account, no history.
+// So these stages are counts of where the book stands TODAY — they cannot be a daily
+// series the way CREATED and TOS_ACCEPTANCE_DATE can. That limitation is real and the
+// UI says so; it is still the only view we have of what happens INSIDE the KYC form.
+//
+// "Started" is the interesting one. Stripe does not expose a "merchant typed something"
+// flag, but REQUIREMENTS_CURRENTLY_DUE is field-level, not a coarse status: it names the
+// individual fields still outstanding. legal_entity.first_name sits in the baseline
+// due-set of every untouched account and drops out the moment the merchant fills the
+// form's first meaningful field — which is exactly Felipe's definition of KYC started.
+// contact_name (LEGAL_ENTITY_FIRST_NAME || LAST_NAME) is used as a corroborating signal
+// so a merchant who filled a name is counted even if the requirements list lags.
+//
+// Stages are CUMULATIVE (reached at least this far), which is what a funnel means:
+// an approved account has necessarily submitted, and a submitted one has necessarily
+// started. Deriving them by implication rather than by trusting each flag in isolation
+// is what keeps the ladder monotonic — a funnel that can go back up is a bug on screen.
+const KYC_FIRST_FIELD = 'legal_entity.first_name';
+function buildStageLadder(accountRows, meta) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const blank = () => ({ interest: 0, started: 0, submitted: 0, approved: 0 });
+  const tot = blank();
+  const by = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    const env = (meta[acct] && meta[acct].environment) || null;
+    if (env === 'test') continue;               // prod + unknown, matching every other series here
+    const cc = normCountry(get(r, 'country'));
+    if (!by[cc]) by[cc] = blank();
+    const approved = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason')) === 'Enabled';
+    const submitted = approved || truthy(get(r, 'details_submitted'));
+    const due = [...parseReqList(get(r, 'requirements_currently_due')),
+                 ...parseReqList(get(r, 'requirements_past_due'))];
+    const typed = !due.includes(KYC_FIRST_FIELD) || String(get(r, 'contact_name') || '').trim() !== '';
+    const started = submitted || typed;
+    for (const t of [tot, by[cc]]) {
+      t.interest += 1;
+      if (started) t.started += 1;
+      if (submitted) t.submitted += 1;
+      if (approved) t.approved += 1;
+    }
+  }
+  return { total: tot, by };
+}
+
 // Per-merchant "transacting through Loyverse Payments" table rows. Joins the account
 // name/linkage with the charge aggregation (started / txns / volume) and the captured
 // application-fee revenue (captured / effective take-rate). margin (net after Stripe
@@ -553,12 +599,13 @@ function buildEnabledSnapshot(prevSnap, act) {
   return snap;
 }
 
-function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants) {
+function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder) {
   const today = new Date().toISOString().slice(0, 10);
   // Date + hour (UTC) of this pull, e.g. "2026-07-17 13:56 UTC" — shown as the "Updated" stamp.
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   enabledDaily = enabledDaily || [];
   txnMerchants = txnMerchants || [];
+  stageLadder = stageLadder || { total: { interest: 0, started: 0, submitted: 0, approved: 0 }, by: {} };
   const out =
 `// Payments Activation OVERVIEW (first page) — regenerated daily by activated-payments/pull.js.
 // FACADASH-style daily report for Loyverse Payments.
@@ -571,6 +618,11 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //                         captured(USD, application fees net of refunds), take-rate %,
 //                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
+//   __PAY_STAGE_LADDER  : CURRENT-STATE counts for the KYC form itself — {total,by:{CC:…}} with
+//                         cumulative interest ≥ started ≥ submitted ≥ approved. "started" means the
+//                         merchant filled at least one meaningful field, read from the field-level
+//                         REQUIREMENTS_CURRENTLY_DUE list. Snapshot only: CONNECTED_ACCOUNTS keeps
+//                         no history for these, so they are counts today, never a daily curve.
 //
 // COUNTRY SPLIT (added 2026-08-17 for the UK launch): every row above keeps its blended
 // value AND carries a \`by\` map keyed by the merchant's ISO-2 country from Stripe
@@ -585,6 +637,7 @@ window.__PAY_ENABLED_DAILY = ${JSON.stringify(enabledDaily)};
 window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
 window.__PAY_TXN_MERCHANTS = ${JSON.stringify(txnMerchants)};
 window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
+window.__PAY_STAGE_LADDER = ${JSON.stringify(stageLadder)};
 `;
   fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
   console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, enabled days: ${enabledDaily.length}, vol days: ${volDaily.length}, txn merchants: ${txnMerchants.length}, snapshots: ${enabledSnap.length}`);
@@ -1868,7 +1921,8 @@ async function main() {
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
     txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct);
-    writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants);
+    const stageLadder = buildStageLadder(accountRows, meta);
+    writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
   // Funnel (Payments sub-tab) — entry cohort (US-since-launch ∪ pilot) → stage progression.
