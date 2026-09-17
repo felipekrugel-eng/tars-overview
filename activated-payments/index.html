@@ -589,7 +589,7 @@
       <h1 class="ov-h1">Payments Overview<span class="dot">.</span></h1>
       <div class="ov-updated" id="ovUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">A daily report on Loyverse Payments activation &mdash; how many merchants are activating each day, how many pass KYC and go live, and how much real volume is flowing through our terminals. Refreshes automatically every morning from Snowflake. Prod accounts only; volume converted to USD.</p>
+    <p class="ov-sub">A daily report on Loyverse Payments activation &mdash; how many merchants are activating each day, how many pass KYC and go live, and how much real volume is flowing through our terminals. Refreshes automatically every morning from Snowflake. Prod accounts only, with Loyverse&rsquo;s own onboarding walkthroughs excluded on the same rule the Funnel tab uses; volume converted to USD.</p>
     <div class="ov-head" style="margin-bottom:16px">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <div class="ov-range" id="ovTileMode">
@@ -2329,8 +2329,16 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // Deliberately NOT here: random-looking local parts (qwer8qaz8air@gmail.com). That is the
   // registration-fraud pattern us_bases.sql screens for, a different filter with its own
   // published count; conflating the two would double-report the same exclusion.
-  var TEST_EMAIL_DOMAIN=/@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|yopmail\.[a-z.]+|guerrillamail\.[a-z.]+|sharklasers\.com|10minutemail\.[a-z.]+|tempmail\.[a-z.]+|temp-mail\.[a-z.]+|trashmail\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
-  var TEST_NAME_WORD=/(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
+  //
+  // SINGLE SOURCE: pull.js owns this rule and emits it as __PAY_TEST_PATTERNS, because the
+  // Overview series now screens on it too. Until 2026-09-17 only this tab did, which is why
+  // Payments interest read 1,077 on the Overview against 1,045 here. The literals below are
+  // the fallback for a page served before overview-data.js has the key.
+  var _TP=window.__PAY_TEST_PATTERNS||null;
+  var TEST_EMAIL_DOMAIN=_TP&&_TP.email ? new RegExp(_TP.email,'i')
+    : /@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|yopmail\.[a-z.]+|guerrillamail\.[a-z.]+|sharklasers\.com|10minutemail\.[a-z.]+|tempmail\.[a-z.]+|temp-mail\.[a-z.]+|trashmail\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
+  var TEST_NAME_WORD=_TP&&_TP.name ? new RegExp(_TP.name,'i')
+    : /(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
   function isInternalTest(m){
     if(!m) return false;
     return TEST_EMAIL_DOMAIN.test(String(m.email||'')) || TEST_NAME_WORD.test(String(m.name||''));

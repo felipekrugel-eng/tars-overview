@@ -421,16 +421,51 @@ function readExistingSnapshot() {
   return [];
 }
 
+// ── Internal / QA accounts ────────────────────────────────────────────────────
+// The metadata environment flag drops Stripe's own test accounts. What it cannot drop is
+// a Loyverse person opening a REAL prod account to walk the onboarding flow — on Stripe's
+// side that is indistinguishable from a merchant. There were 32 by Sep 2026 and not one
+// has ever passed KYC or taken a payment, so they only ever inflate the top of the funnel
+// and depress every rate below it.
+//
+// The Funnel tab has screened these since 2026-09-09; the Overview series did not, which
+// is why Payments interest read 1,077 here against 1,045 there. These patterns are the
+// SINGLE SOURCE for both: they are emitted into overview-data.js as __PAY_TEST_PATTERNS
+// and the Funnel tab prefers them over its own literals. Two copies of a rule like this
+// is how the two tabs disagreed in the first place.
+//
+// Three signals, applied to the account's own email and business name:
+//   1. an @loyverse.com / @loyverse.io address (staff, including +tag aliases)
+//   2. a disposable QA mailbox domain — mailinator and friends, example.com, test.com
+//   3. a business name that is literally about testing: test / testing / demo / dummy /
+//      sandbox / prueba as a WHOLE WORD, so "Testa Rossa Cafe" and "Demolition Supply"
+//      are safe. The only signal that can misfire, on a real merchant who typed "Test Co"
+//      — accepted deliberately: such an account is not a real activation either.
+// Deliberately NOT here: random-looking local parts. That is the registration-fraud
+// pattern us_bases.sql screens for, with its own published count.
+const TEST_EMAIL_DOMAIN = /@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|yopmail\.[a-z.]+|guerrillamail\.[a-z.]+|sharklasers\.com|10minutemail\.[a-z.]+|tempmail\.[a-z.]+|temp-mail\.[a-z.]+|trashmail\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
+const TEST_NAME_WORD = /(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
+function isInternalTest(email, name) {
+  return TEST_EMAIL_DOMAIN.test(String(email || '')) || TEST_NAME_WORD.test(String(name || ''));
+}
+// One gate for every account-derived series, so a row cannot be counted by one and not
+// another. Returns true when the account should be DROPPED.
+function skipAccount(r, meta, get) {
+  const acct = get(r, 'stripe_account_id');
+  const env = (meta[acct] && meta[acct].environment) || null;
+  if (env === 'test') return true;            // prod + unknown, as every series here has always done
+  return isInternalTest(get(r, 'email'), get(r, 'business_name') || get(r, 'contact_name'));
+}
+
 // Prod-only daily activations from the account population (CONNECTED_ACCOUNTS.CREATED).
-// All accounts are Loyverse-Payments activations; env='prod' excludes test accounts.
+// All accounts are Loyverse-Payments activations; env='prod' excludes test accounts, and
+// skipAccount additionally drops Loyverse's own onboarding walkthroughs.
 function buildActivationsDaily(accountRows, meta) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const byDay = {};
   const byDayC = {};   // d -> { CC: n }  (country split, added for the UK launch)
   for (const r of accountRows) {
-    const acct = get(r, 'stripe_account_id');
-    const env = (meta[acct] && meta[acct].environment) || null;
-    if (env === 'test') continue; // prod + unknown counted as real activations
+    if (skipAccount(r, meta, get)) continue; // prod + unknown, minus Loyverse's own walkthroughs
     const d = toDate(get(r, 'stripe_connected_at'));
     if (!d) continue;
     byDay[d] = (byDay[d] || 0) + 1;
@@ -451,9 +486,7 @@ function buildEnabledDaily(accountRows, meta) {
   const byDay = {};
   const byDayC = {};   // d -> { CC: n }  (country split, added for the UK launch)
   for (const r of accountRows) {
-    const acct = get(r, 'stripe_account_id');
-    const env = (meta[acct] && meta[acct].environment) || null;
-    if (env === 'test') continue;
+    if (skipAccount(r, meta, get)) continue;
     const status = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason'));
     if (status !== 'Enabled') continue;
     const d = toDate(get(r, 'tos_accepted_at')) || toDate(get(r, 'stripe_connected_at'));
@@ -490,9 +523,7 @@ function buildStageLadder(accountRows, meta) {
   const tot = blank();
   const by = {};
   for (const r of accountRows) {
-    const acct = get(r, 'stripe_account_id');
-    const env = (meta[acct] && meta[acct].environment) || null;
-    if (env === 'test') continue;               // prod + unknown, matching every other series here
+    if (skipAccount(r, meta, get)) continue;    // matching every other series here
     const cc = normCountry(get(r, 'country'));
     if (!by[cc]) by[cc] = blank();
     const approved = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason')) === 'Enabled';
@@ -519,14 +550,20 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, 
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const cba = countryByAcct || {};
   const nameByAcct = {};
+  // Same gate as every other account-derived series. No internal account has ever taken a
+  // payment, so today this drops nothing — it is here so that if one ever does, the
+  // merchant table cannot start disagreeing with the funnel above it.
+  const drop = {};
   for (const r of accountRows) {
     const acct = get(r, 'stripe_account_id');
     nameByAcct[acct] = get(r, 'business_name') || get(r, 'contact_name') || get(r, 'email') || acct;
+    if (skipAccount(r, meta, get)) drop[acct] = true;
   }
   const out = [];
   for (const acct of Object.keys(txnByAcct)) {
     const t = txnByAcct[acct];
     if (!t || !t.cnt) continue;
+    if (drop[acct]) continue;
     const f = (feeByAcct && feeByAcct[acct]) || null;
     const c = (costByAcct && costByAcct[acct]) || null;
     const volume = Math.round(t.usd * 100) / 100;
@@ -599,13 +636,17 @@ function buildEnabledSnapshot(prevSnap, act) {
   return snap;
 }
 
-function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder) {
+function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder, testsExcluded) {
   const today = new Date().toISOString().slice(0, 10);
   // Date + hour (UTC) of this pull, e.g. "2026-07-17 13:56 UTC" — shown as the "Updated" stamp.
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   enabledDaily = enabledDaily || [];
   txnMerchants = txnMerchants || [];
   stageLadder = stageLadder || { total: { interest: 0, started: 0, submitted: 0, approved: 0 }, by: {} };
+  // __PAY_TEST_PATTERNS is the single source for the internal/QA rule. The Funnel tab reads
+  // it in preference to its own literals, so the rule cannot be changed here and silently
+  // stay old over there — which is exactly how Payments interest came to read 1,077 on one
+  // tab and 1,045 on the other.
   const out =
 `// Payments Activation OVERVIEW (first page) — regenerated daily by activated-payments/pull.js.
 // FACADASH-style daily report for Loyverse Payments.
@@ -638,6 +679,8 @@ window.__PAY_VOL_DAILY = ${JSON.stringify(volDaily)};
 window.__PAY_TXN_MERCHANTS = ${JSON.stringify(txnMerchants)};
 window.__PAY_ENABLED_SNAP = ${JSON.stringify(enabledSnap)};
 window.__PAY_STAGE_LADDER = ${JSON.stringify(stageLadder)};
+window.__PAY_TEST_EXCLUDED = ${JSON.stringify(testsExcluded || 0)};
+window.__PAY_TEST_PATTERNS = ${JSON.stringify({ email: TEST_EMAIL_DOMAIN.source, name: TEST_NAME_WORD.source })};
 `;
   fs.writeFileSync(OVERVIEW_FILE, out, 'utf8');
   console.log(`✓ Wrote ${OVERVIEW_FILE} (${(out.length / 1024).toFixed(1)} KB) — act days: ${actDaily.length}, enabled days: ${enabledDaily.length}, vol days: ${volDaily.length}, txn merchants: ${txnMerchants.length}, snapshots: ${enabledSnap.length}`);
@@ -1922,7 +1965,12 @@ async function main() {
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
     txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct);
     const stageLadder = buildStageLadder(accountRows, meta);
-    writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder);
+    const getA = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+    const testsExcluded = accountRows.filter(r =>
+      ((meta[getA(r, 'stripe_account_id')] || {}).environment !== 'test') &&
+      isInternalTest(getA(r, 'email'), getA(r, 'business_name') || getA(r, 'contact_name'))).length;
+    console.log(`  internal/QA accounts excluded from the overview series: ${testsExcluded}`);
+    writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder, testsExcluded);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
   // Funnel (Payments sub-tab) — entry cohort (US-since-launch ∪ pilot) → stage progression.
