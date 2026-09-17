@@ -11,8 +11,13 @@
 #   * history accumulates beyond the sheet's own rolling window
 #   * a broken pull is a red run here, not a silently stale page
 #
-# Fully isolated: writes exactly one file. The rebase-retry below handles the
-# case where another pull advances master mid-run.
+# Fully isolated: writes only the two data files under "KPI Dashboard v2 (Caio)".
+# The rebase-retry below handles the case where another pull advances master mid-run.
+#
+# ALSO PULLS MERCHANT ATTRIBUTION (added 2026-09-17). The Google Ads data stops at the
+# click; kpi-automation/pull_attribution.js follows the click through to the Loyverse
+# merchant it became. Same page, same cadence, so the two are never more than one run
+# apart. That step is non-fatal — attribution is additive, and the page renders without it.
 #
 # SOURCE — sheet today, Google Ads API as soon as the developer token lands.
 # Add the five GOOGLE_ADS_* secrets and this job switches to the API on its own;
@@ -54,6 +59,7 @@ on:
     branches: [master]
     paths:
       - 'kpi-automation/build_ads_data.py'
+      - 'kpi-automation/pull_attribution.js'
 
 concurrency:
   group: ads-pull
@@ -62,7 +68,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10          # three small sheet reads; seconds, not minutes
+    # Was 10 when this only read three small sheets. The attribution pull joins against
+    # LOYVERSE_RECEIPTS (~9.6B rows) and takes a couple of minutes, so the job needs more
+    # headroom than its own step timeout or the job would kill the step before the step could.
+    timeout-minutes: 25
     permissions:
       contents: write
     steps:
@@ -102,16 +111,43 @@ jobs:
           V2_DIR: ${{ github.workspace }}/KPI Dashboard v2 (Caio)
         run: python kpi-automation/build_ads_data.py
 
+      # ── Merchant attribution ───────────────────────────────────────────────
+      # Rides this workflow rather than getting its own: it is the same dashboard, the same
+      # cadence, and running the two together means the spend and the merchants on that page
+      # are never more than one run apart. It is a SEPARATE step, and deliberately non-fatal
+      # — Snowflake being slow or the key missing must not cost us the Google Ads refresh,
+      # which is what the page falls back to. marketing.html renders without attribution-data.js.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install the Snowflake driver
+        run: npm install --no-audit --no-fund --silent snowflake-sdk
+
+      - name: Write the Snowflake key
+        run: echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > snowflake_tars_key.p8
+
+      - name: Pull merchant attribution -> attribution-data.js
+        continue-on-error: true
+        # The receipts join prunes ~9.6B rows down to the attributed merchants, which takes
+        # a couple of minutes. Generous but bounded, so a hung query cannot hold the runner.
+        timeout-minutes: 15
+        run: node kpi-automation/pull_attribution.js
+
+      - name: Remove the key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
+
       - name: Commit & push if the data changed
         run: |
           git config user.name  "facadash-bot"
           git config user.email "facadash-bot@users.noreply.github.com"
-          git add "KPI Dashboard v2 (Caio)/ads-data.js"
+          git add "KPI Dashboard v2 (Caio)/ads-data.js" "KPI Dashboard v2 (Caio)/attribution-data.js"
           if git diff --cached --quiet; then
             echo "No ad data change — nothing to commit."
           else
-            git commit -m "chore(ads): refresh ads-data.js $(date -u +%FT%TZ)"
-            # Other pulls can advance master while we run. We only write one file,
+            git commit -m "chore(ads): refresh ads + attribution data $(date -u +%FT%TZ)"
+            # Other pulls can advance master while we run. We only write two files,
             # so rebasing on their commits never conflicts. Retry 5 times.
             for i in 1 2 3 4 5; do
               if git pull --rebase --autostash origin master && git push; then

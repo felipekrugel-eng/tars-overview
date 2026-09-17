@@ -10,6 +10,10 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="ads-data.js"></script>
+<!-- Merchant attribution: which ad click became which Loyverse merchant, and what that
+     merchant went on to do. Separate file, separate pull, and optional — the page renders
+     without it, minus the Acquisition section. -->
+<script src="attribution-data.js"></script>
 <style>
   :root {
     --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
@@ -69,6 +73,11 @@
   .tile .tv { font-size:25px; color:var(--ink); margin-top:6px; font-weight:700; }
   .tile .td { font-size:12px; font-weight:bold; margin-top:4px; }
   .tile .td.up { color:var(--green); } .tile .td.down { color:var(--red); } .tile .td.flat { color:var(--muted); }
+  /* Our own numbers, counted in our database, wear a green edge; Google's keep the blue.
+     The two are not alternative readings of one metric — they count different things — so
+     the strip has to say at a glance which is which. */
+  .tile.ours:before { background:var(--green); }
+  .tile.ours .tl { color:var(--green); }
 
   /* ---- panels & charts ---- */
   .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px; box-shadow:0 1px 2px rgba(20,40,70,.04); display:flex; flex-direction:column; }
@@ -111,6 +120,28 @@
   .stat.other   { color:var(--muted); background:#EEF2F6; }
   .empty { text-align:center; color:var(--muted); font-size:13px; padding:34px 10px; }
 
+  /* ---- acquisition ladder (spend -> merchant -> sold -> payments -> KYC) ----
+     Its own styling rather than .fn-row's, because this ladder is a real funnel: every
+     stage is a subset of the one above it, so the bars are scaled to a shared base and
+     the step percentages mean something. The conversion-event funnel above is ranked by
+     volume with no such guarantee, which is why the two deliberately do not look alike. */
+  .aq-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:16px; }
+  .aq-card { border:1px solid var(--border); border-radius:13px; padding:14px 15px 12px; background:var(--surface-2); }
+  .aq-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:3px; }
+  .aq-name { font-weight:bold; font-size:13px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .aq-spend { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .aq-sub { font-size:10.5px; color:var(--faint); margin-bottom:10px; letter-spacing:.3px; }
+  .aq-step { display:grid; grid-template-columns:96px 1fr 44px 52px; align-items:center; gap:8px; font-size:11.5px; margin-bottom:6px; }
+  .aq-lbl { color:var(--muted); }
+  .aq-track { height:13px; background:#E7ECF2; border-radius:7px; overflow:hidden; }
+  .aq-fill { display:block; height:100%; border-radius:7px; background:linear-gradient(90deg,#1D8FE1,#1578C4); }
+  .aq-fill.green { background:linear-gradient(90deg,#28B27C,#1F9D6B); }
+  .aq-n { text-align:right; font-weight:bold; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .aq-cpa { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; font-size:11px; }
+  .aq-none { color:var(--faint); font-style:italic; }
+  .aq-foot { border-top:1px solid var(--border); margin-top:9px; padding-top:8px; font-size:11px; color:var(--muted); }
+  .aq-foot b { color:var(--ink); }
+
   .foot { background:var(--near-black); color:#AAA; padding:22px 40px; font-size:12px; line-height:1.7; margin-top:24px; }
   .foot .label { color:var(--blue); font-family:'Arial Black',Arial; font-size:12px; margin-bottom:8px; letter-spacing:2px; }
 </style>
@@ -148,7 +179,7 @@
   <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
   <div class="label">Loyverse &middot; Marketing</div>
   <h1>PAID ACQUISITION.</h1>
-  <div class="sub">Google Ads app campaigns &mdash; spend, traffic and conversion events.</div>
+  <div class="sub">Google Ads spend and traffic, followed through to the merchants it actually bought.</div>
   <div class="topbar">
     <span class="badge" id="badge-range">&mdash;</span>
     <span class="badge" id="badge-updated">&mdash;</span>
@@ -200,6 +231,28 @@
 
   <div class="sec">Headline</div>
   <div class="tiles" id="tiles"></div>
+
+  <!-- Everything above this point is Google's view of itself: it stops at the click, and
+       "conversions" is Google's own count of them. Everything below follows the click into
+       our own database and asks what it actually bought. The two disagree, and that gap is
+       the reason this section exists. -->
+  <div class="sec" id="sec-acq">Acquisition &rarr; activation</div>
+  <div class="panel rise" id="p-acq" style="margin-bottom:18px">
+    <h3>What the spend actually bought</h3>
+    <div class="ph">Each campaign followed from spend through to a real Loyverse merchant: signed up, sold something, opened a payments account, passed KYC. Merchants are dated by <b>signup</b>, so a merchant who passed KYC weeks later still counts against the spend that bought them. Costs divide the period&rsquo;s spend by that stage &mdash; what one of those is worth paying for.</div>
+    <div id="acq-cards"></div>
+  </div>
+  <div class="panel rise" id="p-kw" style="margin-bottom:18px">
+    <h3>Keyword economics</h3>
+    <div class="ph">Search keywords only &mdash; App campaigns have none, so this covers roughly 60% of account spend. <b>Cost per merchant</b> is the column to read: clicks and conversions rank keywords quite differently from merchants acquired.</div>
+    <div style="overflow-x:auto"><table class="league" id="t-keywords"></table></div>
+  </div>
+  <div class="panel rise" id="p-chan">
+    <h3>Where merchants actually come from</h3>
+    <div class="ph">Every merchant carrying a referrer, by channel &mdash; not just the paid ones. Paid ads are a small share of signups and a large share of payments merchants, which is the comparison worth having. <b>Play Store default</b> is an untagged Android install and means only that: it is broken out because it swamps everything else. Lifetime, ignoring the date filter.</div>
+    <div style="overflow-x:auto"><table class="league" id="t-channels"></table></div>
+    <div class="aq-foot" id="chan-note"></div>
+  </div>
 
   <div class="sec">Spend &amp; traffic</div>
   <div class="grid2">
@@ -323,8 +376,22 @@
   var campaignName = {};
   campaigns.forEach(function(c){ campaignName[c.campaignId] = c.campaign; });
 
+  // ---------- attribution ----------
+  // Optional. Without it the page is exactly what it was before, minus one section.
+  var A = window.ATTR_DATA || null;
+  var attrName = {};                         // campaignId -> campaign name
+  if (A) (A.campaigns || []).forEach(function(c){ attrName[c.campaignId] = c.campaign; });
+  function attrCampaign(id){ return attrName[id] || null; }
+
   var dateMin = D.dateMin || allDaily[0].date;
   var dateMax = D.dateMax || allDaily[allDaily.length-1].date;
+  // The two feeds are pulled at different times, so their windows differ — today the sheet
+  // export ends a week before Snowflake does. Take the union, or selecting "All" would
+  // silently hide the freshest week of acquisition data behind a bound set by the older feed.
+  if (A) {
+    if (A.dateMin && A.dateMin < dateMin) dateMin = A.dateMin;
+    if (A.dateMax && A.dateMax > dateMax) dateMax = A.dateMax;
+  }
 
   var platformList = [];
   var campaignList = [];
@@ -362,14 +429,44 @@
       return inRange(r.date) && keepCampaign(r.campaign) && S.events.has(r.action);
     });
   }
+  // Attribution rows obey the same date range and campaign chips as everything else, so the
+  // page never shows two populations at once. Campaign identity crosses the two feeds by
+  // NAME, not id: the ads export has no ids, and c2 exists under two ids after being
+  // recreated — both carry the same name, which is the reading anyone wants.
+  function attrRows(key){
+    if (!A || !A[key]) return [];
+    return A[key].filter(function(r){
+      var n = attrCampaign(r.campaignId);
+      return n && inRange(r.d) && keepCampaign(n);
+    });
+  }
+  function attrTotals(){
+    var s = {spend:0, clicks:0, merchants:0, everSold:0, openedPayments:0, passedKyc:0};
+    attrRows('spendDaily').forEach(function(r){ s.spend += r.cost || 0; s.clicks += r.clicks || 0; });
+    attrRows('merchDaily').forEach(function(r){
+      s.merchants += r.merchants || 0; s.everSold += r.everSold || 0;
+      s.openedPayments += r.openedPayments || 0; s.passedKyc += r.passedKyc || 0;
+    });
+    return s;
+  }
+  // Cost per stage. Returns null rather than Infinity when a stage is empty, so the tiles
+  // and tables print an em dash instead of an absurd number: $1,800 of spend that produced
+  // no KYC-passed merchant has no cost per KYC-passed merchant, it has a missing one.
+  function per(spend, n){ return (n > 0 && isFinite(spend)) ? spend / n : null; }
+
   // Previous window of identical length, for the tile deltas.
-  function priorDaily(){
+  // Split out so the attribution tiles can use the identical prior window rather than
+  // computing their own and drifting from it by a day.
+  function priorRange(){
     var from = new Date(S.from + 'T00:00:00Z'), to = new Date(S.to + 'T00:00:00Z');
     var days = Math.round((to - from) / 86400000) + 1;
     var pTo = new Date(from.getTime() - 86400000);
     var pFrom = new Date(pTo.getTime() - (days-1) * 86400000);
-    var a = pFrom.toISOString().slice(0,10), b = pTo.toISOString().slice(0,10);
-    return allDaily.filter(function(r){ return r.date >= a && r.date <= b && keepCampaign(r.campaign); });
+    return {a: pFrom.toISOString().slice(0,10), b: pTo.toISOString().slice(0,10)};
+  }
+  function priorDaily(){
+    var p = priorRange();
+    return allDaily.filter(function(r){ return r.date >= p.a && r.date <= p.b && keepCampaign(r.campaign); });
   }
 
   function totals(rows){
@@ -390,6 +487,19 @@
 
   // ---------- tiles ----------
   // Direction matters per metric: cheaper CPC/CPA is good, more volume is good.
+  //
+  // Ordering is deliberate. The first four tiles are OURS — merchants acquired and what
+  // they cost, counted in our own database. Google's own numbers follow. Before the
+  // attribution join existed the page could only show Google's "cost per conversion", which
+  // is generous: it counts conversion events Google attributes to itself, not merchants we
+  // can find. On the current data Google's cost per conversion and our cost per merchant
+  // are different figures about different things, and the expensive one is the true one.
+  var TILES_ATTR = [
+    {k:'merchants',      label:'Merchants acquired', fmt:fInt.format, good:1,  ours:1},
+    {k:'cpMerchant',     label:'Cost per merchant',  fmt:money,       good:-1, ours:1},
+    {k:'passedKyc',      label:'Passed KYC',         fmt:fInt.format, good:1,  ours:1},
+    {k:'cpKyc',          label:'Cost per KYC',       fmt:money,       good:-1, ours:1}
+  ];
   var TILES = [
     {k:'impressions',    label:'Impressions',       fmt:fInt.format,  good:1},
     {k:'clicks',         label:'Clicks',            fmt:fInt.format,  good:1},
@@ -401,8 +511,40 @@
     {k:'allConversions', label:'All conversions',   fmt:fInt.format,  good:1}
   ];
 
+  // Same shape as totals() so the delta machinery below needs no special case.
+  function attrTileVals(range){
+    var t = range || attrTotals();
+    return {merchants:t.merchants, passedKyc:t.passedKyc,
+            cpMerchant:per(t.spend, t.merchants), cpKyc:per(t.spend, t.passedKyc)};
+  }
+
   function renderTiles(cur, prev){
-    document.getElementById('tiles').innerHTML = TILES.map(function(t){
+    var tiles = TILES.slice(), curx = cur, prevx = prev;
+    if (A) {
+      // Prior-period attribution, on the same window the tile deltas already use, so the
+      // two halves of the tile strip compare like for like.
+      var p = priorRange(), pa = {spend:0, merchants:0, passedKyc:0};
+      (A.spendDaily || []).forEach(function(r){
+        var n = attrCampaign(r.campaignId);
+        if (n && keepCampaign(n) && r.d >= p.a && r.d <= p.b) pa.spend += r.cost || 0;
+      });
+      (A.merchDaily || []).forEach(function(r){
+        var n = attrCampaign(r.campaignId);
+        if (n && keepCampaign(n) && r.d >= p.a && r.d <= p.b) {
+          pa.merchants += r.merchants || 0; pa.passedKyc += r.passedKyc || 0;
+        }
+      });
+      var ca = attrTileVals();
+      curx = {}; prevx = {};
+      Object.keys(cur).forEach(function(k){ curx[k] = cur[k]; });
+      Object.keys(prev).forEach(function(k){ prevx[k] = prev[k]; });
+      Object.keys(ca).forEach(function(k){ curx[k] = ca[k]; });
+      var pav = attrTileVals(pa);
+      Object.keys(pav).forEach(function(k){ prevx[k] = pav[k]; });
+      tiles = TILES_ATTR.concat(TILES);
+    }
+    cur = curx; prev = prevx;
+    document.getElementById('tiles').innerHTML = tiles.map(function(t){
       var v = cur[t.k], p = prev[t.k];
       var val = (v == null || !isFinite(v)) ? '\u2014' : t.fmt(v);
       var delta = '';
@@ -416,7 +558,9 @@
         delta = '<div class="td ' + cls + '">' + (ch >= 0 ? '+' : '') +
                 fPct.format(ch) + '% vs prior period</div>';
       }
-      return '<div class="tile"><div class="tl">' + t.label + '</div>' +
+      return '<div class="tile' + (t.ours ? ' ours' : '') + '" title="' +
+             (t.ours ? 'From our own database, via merchant attribution'
+                     : 'As reported by Google Ads') + '"><div class="tl">' + t.label + '</div>' +
              '<div class="tv font-num">' + val + '</div>' + delta + '</div>';
     }).join('');
   }
@@ -659,6 +803,133 @@
       }).join('') + '</tbody>';
   }
 
+  // ---------- acquisition -> activation ----------
+  // One card per campaign, each a genuine funnel: signed up > sold > opened payments >
+  // passed KYC, every stage a subset of the one above. Bars are scaled to the campaign's
+  // OWN top stage rather than a shared maximum, because the interesting comparison between
+  // campaigns is the shape of the decay, not the absolute size — c4 buys a fifth as many
+  // merchants as c3 and turns more of them into payments merchants, and a shared scale
+  // would flatten c4 into an unreadable sliver and hide exactly that.
+  var AQ_STAGES = [
+    {k:'merchants',      lbl:'Signed up'},
+    {k:'everSold',       lbl:'Sold something'},
+    {k:'openedPayments', lbl:'Opened payments'},
+    {k:'passedKyc',      lbl:'Passed KYC', green:1}
+  ];
+  function renderAcq(){
+    var host = document.getElementById('acq-cards');
+    if (!A) {
+      document.getElementById('sec-acq').style.display = 'none';
+      ['p-acq','p-kw','p-chan'].forEach(function(id){
+        var e = document.getElementById(id); if (e) e.style.display = 'none';
+      });
+      return;
+    }
+    // Spend and merchants are keyed by campaign id, but c2 exists under two ids after being
+    // recreated. Group by NAME so a recreated campaign reads as one campaign, which is what
+    // it is to anyone spending the money.
+    var by = {};
+    var slot = function(n){ return by[n] || (by[n] = {campaign:n, spend:0, clicks:0,
+      merchants:0, everSold:0, openedPayments:0, passedKyc:0}); };
+    attrRows('spendDaily').forEach(function(r){
+      var s = slot(attrCampaign(r.campaignId)); s.spend += r.cost || 0; s.clicks += r.clicks || 0;
+    });
+    attrRows('merchDaily').forEach(function(r){
+      var s = slot(attrCampaign(r.campaignId));
+      AQ_STAGES.forEach(function(st){ s[st.k] += r[st.k] || 0; });
+    });
+    var rows = Object.keys(by).map(function(k){ return by[k]; })
+                     .sort(function(a,b){ return b.spend - a.spend; });
+    if (!rows.length) { host.innerHTML = '<div class="empty">No attributed spend in this period.</div>'; return; }
+
+    host.innerHTML = '<div class="aq-grid">' + rows.map(function(c){
+      var top = c.merchants || 0;
+      var steps = AQ_STAGES.map(function(st){
+        var n = c[st.k] || 0;
+        var w = top > 0 ? Math.max(n > 0 ? 1.5 : 0, (n / top) * 100) : 0;
+        var cp = per(c.spend, n);
+        return '<div class="aq-step"><span class="aq-lbl">' + st.lbl + '</span>' +
+               '<span class="aq-track"><i class="aq-fill' + (st.green ? ' green' : '') +
+               '" style="width:' + w.toFixed(1) + '%"></i></span>' +
+               '<span class="aq-n' + (n ? '' : ' aq-none') + '">' + fInt.format(n) + '</span>' +
+               '<span class="aq-cpa">' + (cp == null ? '—' : money(cp)) + '</span></div>';
+      }).join('');
+      // A campaign that spent money and produced no attributable merchant is worth saying
+      // out loud rather than leaving as four zeroes: on iOS it is a known blind spot, not
+      // a performance result, and the two must not be confused.
+      var foot = c.merchants === 0
+        ? '<div class="aq-foot aq-none">' + money(c.spend) + ' spent, no merchant attributable' +
+          (/ios/i.test(c.campaign) ? ' &mdash; iOS carries no install referrer, so this is a measurement gap, not a result' : '') + '</div>'
+        : '<div class="aq-foot">Cost per merchant <b>' + money(c.spend / c.merchants) + '</b>' +
+          (c.passedKyc ? ' &middot; per KYC <b>' + money(c.spend / c.passedKyc) + '</b>' : '') + '</div>';
+      return '<div class="aq-card"><div class="aq-head"><span class="aq-name">' + esc(c.campaign) +
+             '</span><span class="aq-spend">' + money(c.spend) + '</span></div>' +
+             '<div class="aq-sub">' + fInt.format(c.clicks) + ' clicks</div>' +
+             steps + foot + '</div>';
+    }).join('') + '</div>';
+  }
+
+  function renderKeywordTable(){
+    var el = document.getElementById('t-keywords'); if (!el || !A) return;
+    // Keywords are lifetime, not date-filtered: KEYWORD_VIEW spend is aggregated over all
+    // time and the merchant side carries no click date, so slicing one against the other by
+    // period would divide mismatched windows. The campaign chips still apply.
+    var rows = (A.keywords || []).filter(function(r){
+      var n = attrCampaign(r.campaignId); return n && keepCampaign(n);
+    }).sort(function(a,b){ return b.cost - a.cost; });
+    if (!rows.length) { el.innerHTML = '<tbody><tr><td class="empty">No keyword spend for this selection.</td></tr></tbody>'; return; }
+    var head = '<thead><tr><th>Keyword</th><th>Campaign</th><th>Match</th><th>Clicks</th>' +
+               '<th>Cost</th><th>Merchants</th><th>Sold</th><th>Cost / merchant</th></tr></thead>';
+    el.innerHTML = head + '<tbody>' + rows.map(function(r){
+      var cp = per(r.cost, r.merchants);
+      return '<tr><td class="cc">' + esc(r.keyword) + '</td>' +
+             '<td>' + esc(r.campaign) + '</td>' +
+             '<td>' + esc((r.matchType || '').toLowerCase()) + '</td>' +
+             '<td class="num">' + fInt.format(r.clicks || 0) + '</td>' +
+             '<td class="num">' + money(r.cost || 0) + '</td>' +
+             '<td class="num">' + fInt.format(r.merchants || 0) + '</td>' +
+             '<td class="num">' + fInt.format(r.everSold || 0) + '</td>' +
+             '<td class="num">' + (cp == null ? '—' : '<b>' + money(cp) + '</b>') + '</td></tr>';
+    }).join('') + '</tbody>';
+  }
+
+  function renderChannelTable(){
+    var el = document.getElementById('t-channels'); if (!el || !A) return;
+    var rows = (A.channels || []).slice().sort(function(a,b){ return b.merchants - a.merchants; });
+    if (!rows.length) { el.innerHTML = '<tbody><tr><td class="empty">No channel data.</td></tr></tbody>'; return; }
+    var totM = rows.reduce(function(s,r){ return s + (r.merchants || 0); }, 0);
+    var head = '<thead><tr><th>Channel</th><th>Merchants</th><th>Share</th><th>Sold</th>' +
+               '<th>Opened payments</th><th>Passed KYC</th><th>KYC rate</th></tr></thead>';
+    el.innerHTML = head + '<tbody>' + rows.map(function(r){
+      var share = totM ? (r.merchants / totM) * 100 : 0;
+      var kyc = r.merchants ? (r.passedKyc / r.merchants) * 100 : 0;
+      return '<tr><td class="cc">' + esc(r.channel) + '</td>' +
+             '<td class="num">' + fInt.format(r.merchants || 0) + '</td>' +
+             '<td class="num">' + fPct.format(share) + '%</td>' +
+             '<td class="num">' + fInt.format(r.everSold || 0) + '</td>' +
+             '<td class="num">' + fInt.format(r.openedPayments || 0) + '</td>' +
+             '<td class="num">' + fInt.format(r.passedKyc || 0) + '</td>' +
+             '<td class="num">' + (kyc >= 0.01 ? fPct.format(kyc) + '%' : '—') + '</td></tr>';
+    }).join('') + '</tbody>';
+
+    // The Paid ads row here will not match the campaign cards above, and the gap is not a
+    // bug: this row counts anything that looks paid, while a card needs a click that
+    // resolves to a specific campaign. Google's gclid lookup misses about a quarter of
+    // clicks — App clicks are simply not in CLICK_VIEW — so the remainder is real spend
+    // whose campaign we cannot name. Saying so beats letting someone find two numbers for
+    // "paid merchants" and trust the wrong one.
+    var note = document.getElementById('chan-note'); if (!note) return;
+    var paidCh = rows.filter(function(r){ return r.channel === 'Paid ads'; })[0];
+    var named = (A.merchDaily || []).reduce(function(s, r){ return s + (r.merchants || 0); }, 0);
+    if (paidCh && paidCh.merchants > named) {
+      note.innerHTML = 'Paid ads reads <b>' + fInt.format(paidCh.merchants) + '</b> here against <b>' +
+        fInt.format(named) + '</b> in the campaign cards above. Both are right: this row counts every ' +
+        'merchant that arrived on a paid click, the cards count only those whose click resolves to a ' +
+        'named campaign. The <b>' + fInt.format(paidCh.merchants - named) + '</b> difference is spend we ' +
+        'know worked but cannot yet assign — mostly App clicks, which Google does not report at click level.';
+    } else { note.textContent = ''; }
+  }
+
   // ---------- footer notes ----------
   function renderNotes(rows){
     var notes = [];
@@ -668,6 +939,21 @@
     notes.push('Recent days restate as late conversions land, so the last 2\u20133 days move after the fact.');
     if (D.dateMin && D.dateMax) {
       notes.push('Data held: ' + D.dateMin + ' \u2192 ' + D.dateMax + ' (' + fInt.format(allDaily.length) + ' campaign-days). History accumulates on each pull, so it outlives the export sheet\u2019s own rolling window.');
+    }
+    if (A) {
+      var c = A.coverage || {};
+      // The caveats that change what the numbers MEAN, not just how fresh they are. Anyone
+      // reading a channel share as "this is where our merchants come from" will be wrong by
+      // a wide margin, and it is this note's job to stop them.
+      notes.push('<b>Attribution covers a sample, not the base.</b> ' + fInt.format(c.withReferrer || 0) +
+        ' of ' + fInt.format(c.allMerchants || 0) + ' merchants carry a referrer at all. The attributes were backfilled by replaying Kafka, whose retention is 60 days, so merchants who registered earlier and have not touched their profile since show nothing. <b>A missing referrer means unknown, never organic</b> \u2014 read every share here as a share of the attributed sample.');
+      notes.push('Attribution is <b>first-touch</b>: written once at registration from the Play install referrer or the web signup form, and never updated. A merchant who later arrives via an ad still counts to whatever brought them first.');
+      notes.push('<b>iOS cannot be attributed at all</b> \u2014 there is no iOS equivalent of the Play install referrer, so an iOS campaign showing no merchants is a measurement gap, not a result. Separately, the Play Store link on loyverse.com stamps its own tag instead of forwarding inbound ad parameters, so a search-ad click that ends in an Android install is recorded as own-site traffic. Both understate paid.');
+      notes.push('Acquisition spend is read from the <b>GOOGLE_ADS</b> Snowflake sync; the charts above use the export sheet. The two run about 1.4% apart on the same window because Google restates cost for a few days and the sheet is exported earlier \u2014 same data, different read times.');
+      notes.push('Merchants are dated by <b>signup</b>, with lifetime outcomes: a merchant acquired in August who passed KYC in September counts against August, because that is the spend that bought them. Recent periods therefore improve as their cohorts mature.');
+      if (A.generatedAt) {
+        notes.push('Attribution pull: ' + esc(A.generatedAt) + ' \u00b7 merchant data through ' + esc(c.lastDay || '\u2014') + '.');
+      }
     }
     document.getElementById('foot-notes').innerHTML =
       notes.map(function(n){ return '\u2192 ' + n; }).join('<br>');
@@ -680,6 +966,9 @@
     var cur = totals(rows), prev = totals(priorDaily());
 
     renderTiles(cur, prev);
+    renderAcq();
+    renderKeywordTable();
+    renderChannelTable();
     renderCostChart(rows);
     renderTrafficChart(rows);
 
