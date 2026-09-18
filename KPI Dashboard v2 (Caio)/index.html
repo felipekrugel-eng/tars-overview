@@ -12,6 +12,10 @@
 <script src="kpi-data.js"></script>
 <script src="daily-history.js"></script>
 <script src="flow-data.js"></script>
+<!-- Subscription detail: MRR split by feature, and subscription-level adds/cancellations.
+     Optional — without it the MRR chart stays a single bar and the subscription flow
+     panel hides itself. -->
+<script src="subs-data.js"></script>
 <!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
 <script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
 <script src="facachat-catalog.js"></script>
@@ -88,6 +92,15 @@
   .toggle button { font-family: Arial; font-size: 12px; padding: 6px 14px; border: 1px solid var(--silver);
           background: #fff; color: var(--dark-gray); cursor: pointer; margin-right: -1px; }
   .toggle button.on { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: bold; }
+  /* Feature legend for the stacked MRR chart. Hand-rolled rather than Chart.js's own,
+     because the page disables that legend globally in base() and because clicking these
+     has to survive a chart rebuild — the selection is page state, not chart state. */
+  .featleg { display:flex; flex-wrap:wrap; gap:14px; margin:0 0 10px; font-size:12px; }
+  .featleg button { display:flex; align-items:center; gap:6px; background:none; border:0; padding:2px 0;
+    font-family:Arial; font-size:12px; color:var(--mid-gray); cursor:pointer; }
+  .featleg button i { width:11px; height:11px; border-radius:2px; display:block; }
+  .featleg button.off { opacity:.4; text-decoration:line-through; }
+  .featleg .val { color:var(--dark-gray); font-weight:bold; }
   .pagenav { background: var(--near-black); display: flex; gap: 2px; padding: 0 24px; }
   .pagenav a { color: #BBB; text-decoration: none; font-size: 12px; font-weight: bold; letter-spacing: 1px;
     text-transform: uppercase; padding: 12px 18px; border-bottom: 3px solid transparent; }
@@ -232,8 +245,12 @@
       </div>
       <div class="chart-box"><canvas id="c-pay"></canvas></div>
     </div>
-    <div class="panel"><h3>Total MRR (USD)<span class="info" data-tip="Sum of paid Chargebee invoice line items (plan + add-on), spread evenly across each billing period (annual plans count 1/12 per month). GBP x1.34 and EUR x1.16 to USD. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month.">i</span></h3>
+    <div class="panel"><h3>Total MRR (USD)<span class="info" data-tip="Sum of paid Chargebee invoice line items (plan + add-on), spread evenly across each billing period (annual plans count 1/12 per month). GBP x1.34 and EUR x1.16 to USD. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month. The bars are split by feature: the segments always add up to the same total the chart showed before, because the split comes from the same invoice arithmetic with the plan id kept. Click a feature below to take it out of the stack. Term filters the whole chart to monthly or annual plans; an annual plan still counts 1/12 per month either way, so the filter selects which contracts are counted, not how the revenue is spread.">i</span></h3>
       <div class="toggle viewtoggle" data-key="mrr"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="toggle" id="mrr-term" style="display:none">
+        <button data-term="" class="on">All terms</button><button data-term="monthly">Monthly</button><button data-term="annual">Annual</button>
+      </div>
+      <div class="featleg" id="mrr-legend" style="display:none"></div>
       <div class="chart-box"><canvas id="c-mrr"></canvas></div></div>
     <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date).">i</span></h3>
       <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
@@ -247,7 +264,28 @@
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Churn</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px dashed #185FA5"></span>Net growth of paying base (%)</span>
     </div>
+    <div class="toggle" id="flow-mode" style="display:none">
+      <button data-mode="grace" class="on">30-day non-paying</button><button data-mode="cancel">Cancellations</button>
+    </div>
     <div class="chart-box" style="height:340px"><canvas id="c-flow"></canvas></div>
+  </div>
+
+  <!-- Subscription flow. Sits under the merchant chart on purpose: the two answer the same
+       shape of question at different grains, and the difference between them is the point.
+       16k merchants hold more than one feature, so a merchant who drops one of three is
+       invisible above and visible here. -->
+  <div class="panel" id="p-subflow" style="display:none">
+    <h3>Subscriptions — gross adds vs cancellations<span class="info" data-tip="Counts SUBSCRIPTIONS, not merchants: a merchant who takes three features contributes three. Read against the merchant chart above, which cannot see a merchant dropping one feature of three — the most common way revenue leaks. The dates come from Chargebee's own subscription lifecycle, so a cancellation lands in the month it happened; the merchant chart infers churn from invoice silence with a 30-day grace and is late by construction. The two are not meant to agree. Scheduled cancellations on subscriptions still inside a paid term are excluded — those have not happened yet.">i</span></h3>
+    <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Cancellations</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px dashed #185FA5"></span>Net subscriptions added</span>
+    </div>
+    <div class="toggle" id="subflow-feat"></div>
+    <div class="toggle" id="subflow-term">
+      <button data-term="" class="on">All terms</button><button data-term="monthly">Monthly</button><button data-term="annual">Annual</button>
+    </div>
+    <div class="chart-box" style="height:340px"><canvas id="c-subflow"></canvas></div>
   </div>
 
   <div class="section-label">02</div>
@@ -488,9 +526,86 @@ function drawPaying(mode){ payMode = mode; const ds=[];
     options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:mode==='both',position:'bottom'}},
       scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}}, y:{grid:{color:'#EFEFEF'},beginAtZero:true} } } });
 }
-function drawMrrMonth(){ inst.mrr = new Chart(document.getElementById('c-mrr'), { type:'bar',
-  data:{ labels:labels22, datasets:[{ data:m22.map(m=>m.mrr), backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLACK) }] },
-  options: base({ scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}}, y:{grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) }); }
+// ---- MRR, split by feature ------------------------------------------------------
+// SUBS_DATA is optional. Without it this is the single black bar the chart has always
+// been; with it the same bar is cut into feature segments that add up to exactly the
+// same height, because the split is the same invoice arithmetic with the plan id kept
+// instead of discarded. The build refuses to publish a split that does not reconcile,
+// so the stack can be trusted to equal the total rather than merely resemble it.
+const SUBS = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
+// Distinguishable at 11px and in the order the stack builds, biggest earner at the
+// bottom so the chart reads the way the revenue does.
+const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', SALESHISTORY:'#E8A317',
+                     EMPSTORE:'#7B5EA7', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
+let mrrTerm = '';                     // '' = every term
+const mrrOff = new Set();             // features clicked out of the stack
+function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
+// month -> feature -> USD, for the current term selection. Built once per draw rather
+// than per dataset so the term filter cannot be applied to one feature and not another.
+function mrrByFeature(){
+  const out = {};
+  if (!SUBS) return out;
+  for (const c of SUBS.mrr) {
+    if (mrrTerm && c.t !== mrrTerm) continue;
+    (out[c.m] || (out[c.m] = {}))[c.f] = (out[c.m][c.f] || 0) + c.v;
+  }
+  return out;
+}
+function drawMrrLegend(){
+  const el = document.getElementById('mrr-legend'), tg = document.getElementById('mrr-term');
+  if (!el) return;
+  if (!SUBS || !featList().length) { el.style.display='none'; if(tg) tg.style.display='none'; return; }
+  el.style.display=''; if(tg) tg.style.display='';
+  const by = mrrByFeature(), last = labels22[labels22.length-1], cur = by[last] || {};
+  el.innerHTML = featList().map(f =>
+    '<button data-f="'+f.k+'" class="'+(mrrOff.has(f.k)?'off':'')+'" title="Click to remove from the stack">' +
+    '<i style="background:'+(FEAT_COLOR[f.k]||'#9AA7B4')+'"></i>' + f.l +
+    ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    const k = b.dataset.f;
+    // Clicking the last one still showing brings everything back, so you can never
+    // click your way to an empty chart with no way out.
+    if (mrrOff.has(k)) mrrOff.delete(k);
+    else if (featList().filter(f=>!mrrOff.has(f.k)).length > 1) mrrOff.add(k);
+    else mrrOff.clear();
+    drawMrrMonth(); drawMrrLegend();
+  });
+}
+function drawMrrMonth(){
+  if (inst.mrr) { inst.mrr.destroy(); inst.mrr = null; }
+  const el = document.getElementById('c-mrr');
+  let datasets;
+  if (SUBS && featList().length) {
+    const by = mrrByFeature();
+    datasets = featList().filter(f => !mrrOff.has(f.k)).map(f => ({
+      label: f.l, stack: 'mrr', backgroundColor: FEAT_COLOR[f.k] || '#9AA7B4',
+      data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100)
+    }));
+  } else {
+    datasets = [{ label:'MRR', data:m22.map(m=>m.mrr),
+                  backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLACK) }];
+  }
+  inst.mrr = new Chart(el, { type:'bar', data:{ labels:labels22, datasets },
+    options: base({ interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{
+        label: it => it.dataset.label+': $'+Math.round(it.parsed.y).toLocaleString('en-US'),
+        // Chart.js has no running total across a stack, and the whole promise of this
+        // chart is that the segments add up to the MRR line, so the tooltip says so.
+        footer: its => its.length>1 ? 'Total: $'+Math.round(its.reduce((a,i)=>a+i.parsed.y,0)).toLocaleString('en-US') : ''
+      } } },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{maxTicksLimit:12}},
+               y:{stacked:true,grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) });
+}
+document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#mrr-term button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); mrrTerm = b.dataset.term || '';
+  // Force back to the monthly view: the day view reads DAILY_HISTORY, which has no
+  // feature or term dimension, so a term filter there would silently do nothing.
+  const vt = document.querySelector('.viewtoggle[data-key="mrr"]');
+  if (vt) { vt.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+            const mb = vt.querySelector('[data-view="month"]'); if (mb) mb.classList.add('on'); }
+  drawMrrMonth(); drawMrrLegend();
+});
 function drawActMonth(){ const actLabels = actArr.map(a=>a.month); inst.active = new Chart(document.getElementById('c-active'), { type:'line',
   data:{ labels:actLabels, datasets:[{ data:actArr.map(a=>a.active), borderColor:BLUE_DEEP, backgroundColor:'rgba(21,120,196,0.08)', fill:true,
     pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:BLUE_DEEP, pointBorderWidth:0, borderWidth:2.5, tension:0.35 }] },
@@ -505,33 +620,154 @@ const VIEWCFG = {
 function setView(key, view){
   if (inst[key]) { inst[key].destroy(); inst[key] = null; }
   if (key==='pay') { const pt=document.getElementById('pay-toggle'); if(pt) pt.style.display = (view==='day') ? 'none' : ''; }
+  // The day view reads DAILY_HISTORY, which carries a single MRR scalar with no feature or
+  // term dimension. Leaving the controls visible there would offer filters that do nothing.
+  if (key==='mrr') { const hide = (view==='day') || !SUBS;
+    ['mrr-term','mrr-legend'].forEach(id => { const e=document.getElementById(id); if(e) e.style.display = hide ? 'none' : ''; }); }
   if (view==='day') inst[key] = dayChart('c-'+key, VIEWCFG[key].field, VIEWCFG[key].color, VIEWCFG[key].yf);
   else VIEWCFG[key].build();
 }
-drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawActMonth();
+drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrLegend(); drawActMonth();
 
 // ---- Paying base: gross adds vs churn (monthly, complete months only) ----
 (function(){
   const F = (typeof FLOW_MONTHLY !== 'undefined' ? FLOW_MONTHLY : []);
   const cv = document.getElementById('c-flow'); if(!cv || !F.length) return;
-  const fL = F.map(r=>r.m);
-  new Chart(cv, {
-    data:{ labels:fL, datasets:[
+
+  // Two readings of the same chart, and they are NOT the same number measured twice:
+  //   grace  — the original. Churn inferred from invoice silence, 30 days past period end,
+  //            so renewal lag is not miscounted as churn plus re-add. Late by construction,
+  //            and the newest settled month still drifts upward for weeks.
+  //   cancel — Chargebee's own cancellation events, rolled up from subscriptions to the
+  //            merchants holding them, landing in the month they happened. Earlier and
+  //            sharper, but it counts an intent to leave rather than money stopping.
+  // Keeping both is the point: one says when the merchant decided, the other when we felt it.
+  let flowMode = 'grace', flowChart = null;
+
+  // Merchant-level cancellations, derived from the subscription flow. A merchant appears
+  // once however many features they dropped — otherwise this would not be comparable with
+  // the gross-adds series beside it, which counts merchants. The subscription-level read
+  // is the separate chart below; conflating the two grains in one bar is exactly the
+  // confusion this pair of charts exists to remove.
+  const SUBF = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.flow) ? SUBS_DATA.flow : [];
+  const cancelByMonth = {};
+  for (const c of SUBF) cancelByMonth[c.m] = (cancelByMonth[c.m] || 0) + c.c;
+  const haveCancel = Object.keys(cancelByMonth).length > 0;
+
+  function drawFlow(){
+    if (flowChart) { flowChart.destroy(); flowChart = null; }
+    const isCancel = flowMode === 'cancel' && haveCancel;
+    const lossLabel = isCancel ? 'Cancellations' : 'Churn';
+    const loss = F.map(r => -(isCancel ? (cancelByMonth[r.m] || 0) : r.churn));
+    const datasets = [
       { type:'bar', label:'Gross adds', data:F.map(r=>r.adds), backgroundColor:'#639922', stack:'s', order:3 },
-      { type:'bar', label:'Churn', data:F.map(r=>-r.churn), backgroundColor:'#E24B4A', stack:'s', order:3 },
-      { type:'line', label:'Net growth %', data:F.map(r=>r.g), yAxisID:'y1', borderColor:'#185FA5', borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1 }
-    ]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{display:false},
-        tooltip:{ callbacks:{ label: it => it.dataset.yAxisID==='y1'
-          ? ('Net growth: '+it.parsed.y+'%')
-          : (it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US')) } } },
-      scales:{
-        x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },
-        y:{ stacked:true, grid:{color:'#EFEFEF'}, title:{display:true,text:'Merchants / month'}, ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } },
-        y1:{ position:'right', grid:{display:false}, title:{display:true,text:'Net growth %'}, ticks:{ callback:v=>v+'%' } }
-      } }
+      { type:'bar', label:lossLabel, data:loss, backgroundColor:'#E24B4A', stack:'s', order:3 }
+    ];
+    // The net-growth line belongs to the grace definition — it is the published net growth
+    // of the paying base. Drawing it over a cancellation series would attach a percentage
+    // to bars it was not computed from, so it is dropped in that mode rather than reused.
+    if (!isCancel) datasets.push(
+      { type:'line', label:'Net growth %', data:F.map(r=>r.g), yAxisID:'y1', borderColor:'#185FA5', borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1 });
+    flowChart = new Chart(cv, {
+      data:{ labels:F.map(r=>r.m), datasets },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false},
+          tooltip:{ callbacks:{ label: it => it.dataset.yAxisID==='y1'
+            ? ('Net growth: '+it.parsed.y+'%')
+            : (it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US')) } } },
+        scales:{
+          x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },
+          y:{ stacked:true, grid:{color:'#EFEFEF'}, title:{display:true,text:'Merchants / month'}, ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } },
+          y1:{ display: !isCancel, position:'right', grid:{display:false}, title:{display:true,text:'Net growth %'}, ticks:{ callback:v=>v+'%' } }
+        } }
+    });
+    // The legend is hand-written markup, so relabel it here rather than leaving it saying
+    // "Churn" over cancellation bars. `children`, not querySelectorAll('span') — the latter
+    // also returns the colour swatches nested inside each entry, and writing to one of
+    // those silently does nothing (or, as it did here, throws).
+    const leg = cv.closest('.panel').querySelector('.flowleg');
+    if (leg) {
+      const items = leg.children;
+      if (items[1]) {
+        const txt = [...items[1].childNodes].filter(n => n.nodeType === 3).pop();
+        if (txt) txt.nodeValue = lossLabel;
+      }
+      if (items[2]) items[2].style.display = isCancel ? 'none' : '';
+    }
+  }
+  const fm = document.getElementById('flow-mode');
+  if (fm && haveCancel) {
+    fm.style.display = '';
+    fm.querySelectorAll('button').forEach(b => b.onclick = () => {
+      fm.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); flowMode = b.dataset.mode; drawFlow();
+    });
+  }
+  drawFlow();
+})();
+
+// ---- Subscription gross adds vs cancellations -------------------------------------
+// Subscriptions, not merchants. Hidden entirely when subs-data.js is absent.
+(function(){
+  const S = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
+  const panel = document.getElementById('p-subflow');
+  const cv = document.getElementById('c-subflow');
+  if (!S || !cv || !panel || !S.flow || !S.flow.length) return;
+  panel.style.display = '';
+
+  let sfFeat = '', sfTerm = '', chart = null;
+  // Start where the merchant chart starts rather than in 2018: subscription counts before
+  // then are a handful a month and squeeze five years of readable data into the right edge.
+  const FROM = '2022-01';
+  const months = S.monthsFlow.filter(m => m >= FROM);
+
+  const featBtns = document.getElementById('subflow-feat');
+  if (featBtns) {
+    featBtns.innerHTML = '<button data-f="" class="on">All features</button>' +
+      (S.features||[]).map(f => '<button data-f="'+f.k+'">'+f.l+'</button>').join('');
+    featBtns.querySelectorAll('button').forEach(b => b.onclick = () => {
+      featBtns.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); sfFeat = b.dataset.f || ''; draw();
+    });
+  }
+  const termBtns = document.getElementById('subflow-term');
+  if (termBtns) termBtns.querySelectorAll('button').forEach(b => b.onclick = () => {
+    termBtns.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); sfTerm = b.dataset.term || ''; draw();
   });
+
+  function draw(){
+    if (chart) { chart.destroy(); chart = null; }
+    const adds = {}, cans = {};
+    for (const c of S.flow) {
+      if (c.m < FROM) continue;
+      if (sfFeat && c.f !== sfFeat) continue;
+      if (sfTerm && c.t !== sfTerm) continue;
+      adds[c.m] = (adds[c.m] || 0) + c.a;
+      cans[c.m] = (cans[c.m] || 0) + c.c;
+    }
+    const A = months.map(m => adds[m] || 0), C = months.map(m => cans[m] || 0);
+    chart = new Chart(cv, {
+      data:{ labels:months, datasets:[
+        { type:'bar', label:'Gross adds', data:A, backgroundColor:'#639922', stack:'s', order:3 },
+        { type:'bar', label:'Cancellations', data:C.map(v=>-v), backgroundColor:'#E24B4A', stack:'s', order:3 },
+        // Net in SUBSCRIPTIONS on the same axis as the bars, not a percentage on a second
+        // one: the bars are counts, so the net of them is a count, and putting it on the
+        // same scale lets you read the balance off the chart instead of inferring it.
+        { type:'line', label:'Net', data:months.map((m,i)=>A[i]-C[i]), borderColor:'#185FA5',
+          borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1 }
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false},
+          tooltip:{ callbacks:{ label: it => it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US') } } },
+        scales:{
+          x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },
+          y:{ stacked:true, grid:{color:'#EFEFEF'}, title:{display:true,text:'Subscriptions / month'},
+              ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } }
+        } }
+    });
+  }
+  draw();
 })();
 document.querySelectorAll('#pay-toggle button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#pay-toggle button').forEach(x => x.classList.remove('on'));

@@ -50,6 +50,15 @@ GRACE_SQL = "daily_paying_flow_grace_vs_raw.sql"
 # feeds the FACADASH country filter's "Rolling 30 days" views, which degrade gracefully.
 ROLLING_BY_COUNTRY_SQL = "rolling_30d_by_country_49days.sql"
 
+# Subscription detail for the Study & Trend page: MRR split by feature, and subscription
+# gross adds / cancellations. Both are small and fast (~2s each) but kept OUT of
+# QUERY_FILES and run in their own guarded step, on the same rule as the flow charts:
+# a new query must never be able to break kpi-data.js or daily-history.js. If this step
+# is skipped, subs-data.js simply stays at its last committed value and the page degrades
+# to the single-bar MRR chart it had before.
+MRR_FEATURE_SQL = "mrr_by_feature_monthly.sql"
+SUB_FLOW_SQL    = "subscription_flow_monthly.sql"
+
 # ---------------------------------------------------------------------------
 # FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
 #
@@ -323,6 +332,37 @@ def main():
         print("[done] flow-data.js + daily-flow.js regenerated", flush=True)
     except Exception as e:
         print(f"[flow] WARNING — paying-base flow charts skipped this run: {e}", flush=True)
+
+    # ---- subscription detail (subs-data.js) ----
+    # GUARDED, same rationale as the flow charts. Two cheap queries against the Chargebee
+    # invoice and subscription tables; the build step reconciles the feature split against
+    # mrr_bottomup.csv and refuses to write a file whose parts do not sum to the whole.
+    try:
+        sconn = connect()
+        try:
+            def _run(fname):
+                cur = sconn.cursor()
+                cur.execute((SQLDIR / fname).read_text().rstrip().rstrip(";"))
+                df = cur.fetch_pandas_all() if hasattr(cur, "fetch_pandas_all") else \
+                     pd.DataFrame(cur.fetchall(), columns=[c[0] for c in cur.description])
+                cur.close()
+                return df
+            print("[subs] mrr_by_feature + subscription_flow", flush=True)
+            feat_csv = WORK / "mrr_by_feature.csv"
+            flow_csv = WORK / "subscription_flow.csv"
+            write(feat_csv, _run(MRR_FEATURE_SQL))
+            write(flow_csv, _run(SUB_FLOW_SQL))
+        finally:
+            sconn.close()
+        senv = {**os.environ,
+                "MRR_FEATURE_CSV": str(feat_csv),
+                "SUB_FLOW_CSV": str(flow_csv),
+                "MRR_TOTAL_CSV": str(WORK / "mrr_bottomup.csv"),
+                "SUBS_OUT_DIR": str(V2)}
+        subprocess.run([sys.executable, str(HERE / "build_subs_data.py")], check=True, env=senv)
+        print("[done] subs-data.js regenerated", flush=True)
+    except Exception as e:
+        print(f"[subs] WARNING — subscription detail skipped this run: {e}", flush=True)
 
     # ---- pilot tracker (pilot-data.js + pilot-status.md) ----
     # GUARDED, same rationale as the flow charts above: a new query must never

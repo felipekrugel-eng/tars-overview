@@ -110,6 +110,7 @@ jobs:
                "KPI Dashboard v2 (Caio)/daily-flow.js"
                "KPI Dashboard v2 (Caio)/pilot-data.js"
                "KPI Dashboard v2 (Caio)/pilot-status.md"
+               "KPI Dashboard v2 (Caio)/subs-data.js"
                "KPI Dashboard v2 (Caio)/cohort-country")
 
           # ---------------------------------------------------------------------------
