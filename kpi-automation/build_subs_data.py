@@ -36,6 +36,8 @@ MRR_FEATURE_CSV = Path(os.environ.get("MRR_FEATURE_CSV", HERE / "work" / "mrr_by
 SUB_FLOW_CSV    = Path(os.environ.get("SUB_FLOW_CSV",    HERE / "work" / "subscription_flow.csv"))
 MERCHANT_FLOW_CSV = Path(os.environ.get("MERCHANT_FLOW_CSV", HERE / "work" / "merchant_subscription_flow.csv"))
 MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bottomup.csv"))
+ACTIVE_QUAL_CSV = Path(os.environ.get("ACTIVE_QUAL_CSV", HERE / "work" / "active_qualified.csv"))
+KPI_DATA_JS     = Path(os.environ.get("KPI_DATA_JS",     HERE.parent / "KPI Dashboard v2 (Caio)" / "kpi-data.js"))
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT_FILE        = OUT_DIR / "subs-data.js"
 
@@ -146,6 +148,50 @@ def main() -> None:
         print(f"[subs] WARNING — {MERCHANT_FLOW_CSV} not found; the churn chart keeps its "
               f"30-day reading only and the Cancellations toggle stays hidden", flush=True)
 
+    # ---- qualified active merchants ---------------------------------------------------
+    # 1+ / 5+ / 10+ receipts in the month. The 1+ column is NOT published: it exists only to
+    # be checked against the activeMonthly series the page already draws. Both count the same
+    # thing from the same table with the same filters, so if they disagree one of the two
+    # definitions has moved and the chart would be contradicting itself in public. Publishing
+    # only a5/a10 means the line on screen stays exactly the one the page has always drawn.
+    active_qualified = []
+    if ACTIVE_QUAL_CSV.exists():
+        aq = _load(ACTIVE_QUAL_CSV, "qualified active")
+        aq["M"] = aq["MONTH"].astype(str).str.slice(0, 7)
+        aq = aq[aq["M"] <= cap]
+        published = {}
+        if KPI_DATA_JS.exists():
+            raw = KPI_DATA_JS.read_text(encoding="utf-8")
+            i = raw.find('"activeMonthly"')
+            if i >= 0:
+                arr = json.loads(raw[raw.index("[", i):raw.index("]", i) + 1])
+                published = {r["month"]: r["active"] for r in arr}
+        if published:
+            checked = aq[aq["M"].isin(published)]
+            worst, worst_m = 0.0, None
+            for r in checked.itertuples():
+                base = published[r.M]
+                if not base:
+                    continue
+                pct = abs(int(r.ACTIVE_1) - base) / base * 100
+                if pct > worst:
+                    worst, worst_m = pct, r.M
+            print(f"[subs] active 1+ vs published activeMonthly over {len(checked)} months — worst {worst:.3f}% ({worst_m})")
+            # A quarter of a percent is far beyond the drift you get from receipts landing
+            # between two builds, and far below anything visible on the chart.
+            if worst > 0.25:
+                sys.exit(f"[subs] FAILED — the qualified query's 1+ column is {worst:.2f}% off the "
+                         f"published active series at {worst_m}. They must count the same merchants; "
+                         f"active_qualified_monthly.sql and receipts_tpv_daily_asof.sql have diverged.")
+        else:
+            print("[subs] WARNING — could not read activeMonthly, qualified active unchecked", flush=True)
+        active_qualified = [{"m": r.M, "a5": int(r.ACTIVE_5), "a10": int(r.ACTIVE_10)}
+                            for r in aq.itertuples()]
+        print(f"[subs] qualified active: {len(active_qualified)} months")
+    else:
+        print(f"[subs] WARNING — {ACTIVE_QUAL_CSV} not found; the Qualified toggle stays hidden",
+              flush=True)
+
     # A feature earns a legend entry only if it appears in the window the charts actually
     # draw (the page starts at 2022-01). Without this, OTHER — one unparseable $25 line item
     # from August 2018 — would sit in the legend forever reading "$0K". Its cells stay in
@@ -202,6 +248,7 @@ def main() -> None:
         "mrr": mrr_cells,
         "flow": flow_cells,
         "merchantFlow": merchant_flow,
+        "activeQualified": active_qualified,
     }
 
     banner = (
@@ -225,6 +272,10 @@ def main() -> None:
         "//                merchant's first subscription starts; cancels is the month its last one\n"
         "//                goes, so dropping one feature of three is not a departure. The churn\n"
         "//                chart's Cancellations mode uses this, never a sum over flow[].\n"
+        "//   activeQualified[] : {m, a5, a10} — merchants with 5+ and 10+ receipts that month. The\n"
+        "//                query also returns a 1+ column; it is deliberately NOT published, only\n"
+        "//                reconciled against kpi-data.js activeMonthly, so the line on screen stays\n"
+        "//                the one the page has always drawn.\n"
         "//   summary[]  : {k,l,mrr,chg} for the latest month, chg = % vs the month before.\n"
         "// }\n"
     )

@@ -251,8 +251,13 @@
         <button data-term="" class="on">All terms</button><button data-term="monthly">Monthly</button><button data-term="annual">Annual</button>
       </div>
       <div class="chart-box"><canvas id="c-mrr"></canvas></div></div>
-    <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date).">i</span></h3>
-      <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+    <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date). Qualified adds two higher bars on the same axis: merchants with 5 or more and 10 or more receipts in the month. One receipt is enough to count as active, which is the right top-line number and the wrong one for asking whether a till is in daily use. Same source and same filters as the 1+ line, so the three are directly comparable — the build refuses to publish them if the 1+ column stops matching this one.">i</span></h3>
+      <div class="toggle-row">
+        <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+        <div class="toggle" id="active-qual" style="display:none">
+          <button data-q="1" class="on">Any activity</button><button data-q="all">Qualified</button>
+        </div>
+      </div>
       <div class="chart-box"><canvas id="c-active"></canvas></div></div>
   </div>
 
@@ -620,10 +625,68 @@ document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
   b.classList.add('on'); mrrTerm = b.dataset.term || '';
   drawMrrMonth();
 });
-function drawActMonth(){ const actLabels = actArr.map(a=>a.month); inst.active = new Chart(document.getElementById('c-active'), { type:'line',
-  data:{ labels:actLabels, datasets:[{ data:actArr.map(a=>a.active), borderColor:BLUE_DEEP, backgroundColor:'rgba(21,120,196,0.08)', fill:true,
-    pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:BLUE_DEEP, pointBorderWidth:0, borderWidth:2.5, tension:0.35 }] },
-  options: base({ interaction:{mode:'index',intersect:false} }) }); }
+// ---- Active merchants, with the qualified bars ------------------------------------
+// "Active" counts a merchant with ONE receipt in the month the same as one with four
+// hundred. That is the right top-line number and the wrong one for asking whether a till
+// is in daily use, so Qualified adds 5+ and 10+ receipts on the same axis.
+//
+// ACT_QUAL is optional and its 1+ series must equal the published one. It is drawn from
+// the same table with the same receipt and bot filters (see active_qualified_monthly.sql),
+// and the build fails rather than publishing a file where the two disagree — two different
+// "active" numbers on one chart would discredit both. The chart therefore keeps drawing
+// activeMonthly for the 1+ line and only borrows the higher bars, so the line the page has
+// always published cannot move.
+const AQ = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.activeQualified)
+           ? SUBS_DATA.activeQualified : null;
+let actQual = '1';                    // '1' = the published line alone | 'all' = plus 5+/10+
+const AQ_BY = {};
+if (AQ) for (const r of AQ) AQ_BY[r.m] = r;
+function drawActMonth(){
+  if (inst.active) { inst.active.destroy(); inst.active = null; }
+  const actLabels = actArr.map(a=>a.month);
+  const line = (data, colour, fill, label) => ({
+    label, data, borderColor:colour, backgroundColor:fill ? 'rgba(21,120,196,0.08)' : colour,
+    fill, pointRadius:1.5, pointHoverRadius:5, pointBackgroundColor:colour, pointBorderWidth:0,
+    borderWidth:2.5, tension:0.35 });
+  const ds = [line(actArr.map(a=>a.active), BLUE_DEEP, actQual === '1', 'Any activity')];
+  if (actQual === 'all' && AQ) {
+    // Progressively darker for a stricter bar, and no fill — three filled areas would
+    // occlude each other, and the gap between the lines is the thing worth reading.
+    ds.push(line(actLabels.map(m => (AQ_BY[m] ? AQ_BY[m].a5  : null)), '#1D8FE1', false, '5+ receipts'));
+    ds.push(line(actLabels.map(m => (AQ_BY[m] ? AQ_BY[m].a10 : null)), '#0F4C81', false, '10+ receipts'));
+  }
+  inst.active = new Chart(document.getElementById('c-active'), { type:'line',
+    data:{ labels:actLabels, datasets:ds },
+    options: base({ interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{ display: actQual === 'all',
+                         position:'bottom',
+                         labels:{ boxWidth:10, boxHeight:10, usePointStyle:true, pointStyle:'line', font:{size:11} } },
+        tooltip:{ callbacks:{
+          label: it => it.dataset.label+': '+Math.round(it.parsed.y).toLocaleString('en-US'),
+          // The share is the point of the comparison and nobody should have to divide two
+          // six-figure numbers in their head to get it.
+          footer: its => {
+            if (actQual !== 'all' || its.length < 2) return '';
+            const base = its[0].parsed.y;
+            return base ? its.slice(1).map(i =>
+              i.dataset.label+': '+Math.round(i.parsed.y/base*1000)/10+'% of active').join('\n') : '';
+          } } } },
+    }) });
+}
+document.querySelectorAll('#active-qual button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#active-qual button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); actQual = b.dataset.q || '1';
+  // Back to the monthly view: the day view reads DAILY_HISTORY, which has no receipt-count
+  // dimension, so a qualified bar there would silently do nothing.
+  const vt = document.querySelector('.viewtoggle[data-key="active"]');
+  if (vt) { vt.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+            const mb = vt.querySelector('[data-view="month"]'); if (mb) mb.classList.add('on'); }
+  drawActMonth();
+});
+function syncActControls(){
+  const el = document.getElementById('active-qual');
+  if (el) el.style.display = AQ ? '' : 'none';
+}
 // ---- view toggle wiring ----
 const VIEWCFG = {
   reg:    { build:drawRegMonth,           field:'regMTD', color:BLUE },
@@ -637,6 +700,13 @@ function setView(key, view){
   // The day view reads DAILY_HISTORY, which carries a single MRR scalar with no feature or
   // term dimension, so both controls go away there rather than offering filters that do
   // nothing. Switching to the day view also drops back to Total for the same reason.
+  if (key==='active') {
+    if (view==='day') { actQual = '1';
+      document.querySelectorAll('#active-qual button').forEach(x =>
+        x.classList.toggle('on', x.dataset.q === '1')); }
+    const aq=document.getElementById('active-qual');
+    if (aq) aq.style.display = (view==='day' || !AQ) ? 'none' : '';
+  }
   if (key==='mrr') {
     if (view==='day') { mrrMode = 'total';
       document.querySelectorAll('#mrr-toggle button').forEach(x =>
@@ -648,7 +718,7 @@ function setView(key, view){
   if (view==='day') inst[key] = dayChart('c-'+key, VIEWCFG[key].field, VIEWCFG[key].color, VIEWCFG[key].yf);
   else VIEWCFG[key].build();
 }
-drawRegMonth(); drawPaying('now'); drawMrrMonth(); syncMrrControls(); drawActMonth();
+drawRegMonth(); drawPaying('now'); drawMrrMonth(); syncMrrControls(); drawActMonth(); syncActControls();
 
 // ---- Paying base: gross adds vs churn (monthly, complete months only) ----
 (function(){

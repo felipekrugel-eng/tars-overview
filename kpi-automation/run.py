@@ -59,6 +59,12 @@ ROLLING_BY_COUNTRY_SQL = "rolling_30d_by_country_49days.sql"
 MRR_FEATURE_SQL = "mrr_by_feature_monthly.sql"
 SUB_FLOW_SQL    = "subscription_flow_monthly.sql"
 MERCHANT_FLOW_SQL = "merchant_subscription_flow_monthly.sql"
+# Qualified active merchants (1+/5+/10+ receipts). UNLIKE the two above this is a full scan
+# of LOYVERSE_RECEIPTS_UNIQUE — 9.6B rows, 2.7TB, no clustering key, so nothing prunes and it
+# is measured in tens of minutes. It runs LAST inside the guarded step for that reason: if it
+# is killed by the job budget, subs-data.js still gets its MRR and flow sections and only the
+# Qualified toggle goes missing.
+ACTIVE_QUAL_SQL = "active_qualified_monthly.sql"
 
 # ---------------------------------------------------------------------------
 # FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
@@ -355,12 +361,23 @@ def main():
             write(flow_csv, _run(SUB_FLOW_SQL))
             mflow_csv = WORK / "merchant_subscription_flow.csv"
             write(mflow_csv, _run(MERCHANT_FLOW_SQL))
+            aqual_csv = WORK / "active_qualified.csv"
+            try:
+                cur = sconn.cursor()
+                cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 4200")
+                cur.close()
+                print("[subs] active_qualified (full receipts scan, expect tens of minutes)", flush=True)
+                write(aqual_csv, _run(ACTIVE_QUAL_SQL))
+            except Exception as e:
+                print(f"[subs] WARNING — qualified active skipped: {e}", flush=True)
         finally:
             sconn.close()
         senv = {**os.environ,
                 "MRR_FEATURE_CSV": str(feat_csv),
                 "SUB_FLOW_CSV": str(flow_csv),
                 "MERCHANT_FLOW_CSV": str(mflow_csv),
+                "ACTIVE_QUAL_CSV": str(aqual_csv),
+                "KPI_DATA_JS": str(V2 / "kpi-data.js"),
                 "MRR_TOTAL_CSV": str(WORK / "mrr_bottomup.csv"),
                 "SUBS_OUT_DIR": str(V2)}
         subprocess.run([sys.executable, str(HERE / "build_subs_data.py")], check=True, env=senv)
