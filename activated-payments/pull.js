@@ -517,38 +517,90 @@ function buildEnabledDaily(accountRows, meta) {
 // started. Deriving them by implication rather than by trusting each flag in isolation
 // is what keeps the ladder monotonic — a funnel that can go back up is a bug on screen.
 const KYC_FIRST_FIELD = 'legal_entity.first_name';
-function buildStageLadder(accountRows, meta) {
+// The ladder is emitted as CELLS keyed country x interest-month x merchant group, not as a
+// single total with a country split. That is what lets the page's month picker and the
+// merchant-group chips reach the funnel: any selection is a sum over the matching cells, and
+// because every account lands in exactly one cell, "all" is always the sum of the parts.
+//
+// MONTH MEANS THE MONTH THEY SHOWED INTEREST, and the stage counts are where those accounts
+// stand TODAY. That is a cohort read — "of the merchants who opened a payments account in
+// August, how far have they got" — and it is the only月 reading the data can support, since
+// CONNECTED_ACCOUNTS keeps no history for the KYC fields. It is also the more useful one:
+// it holds a cohort still and lets you watch it mature, rather than mixing arrivals from
+// every month into one bar.
+//
+// APPROVED MEANS EVER APPROVED, not currently enabled. CHARGES_ENABLED is current state, and
+// a merchant can take payments and be restricted afterwards — at which point they fall out of
+// "approved" while staying in "has transacted", and the funnel widens as it descends. Across
+// the whole book that is invisible (339 approved against 98 transacting); in the April 2026
+// cohort it showed as 4 approved against 5 that had charged. Taking a payment is proof of
+// having passed KYC, so transacting accounts count as approved here. Doing it in the DATA
+// rather than clamping per view is what keeps the cells summable: clamp in the page and a
+// month total stops adding up to the all-time one, which is how this was first noticed.
+//
+// Consequence worth knowing: this can read one or two above the "Passed KYC" tile, which is
+// deliberately current-state ("live to transact right now"). The funnel row says so.
+function buildStageLadder(accountRows, meta, groupTags, txnAccts) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const blank = () => ({ interest: 0, started: 0, submitted: 0, approved: 0 });
   const tot = blank();
-  const by = {};
+  const by = {};            // country -> counts. Kept for the pre-cell readers.
+  const cells = {};         // "cc|YYYY-MM|grp" -> counts
+  const tally = {};
   for (const r of accountRows) {
     if (skipAccount(r, meta, get)) continue;    // matching every other series here
     const cc = normCountry(get(r, 'country'));
     if (!by[cc]) by[cc] = blank();
-    const approved = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason')) === 'Enabled';
+    const approved = statusOf(get(r, 'charges_enabled'), get(r, 'disabled_reason')) === 'Enabled'
+                     || !!(txnAccts && txnAccts.has(get(r, 'stripe_account_id')));
     const submitted = approved || truthy(get(r, 'details_submitted'));
     const due = [...parseReqList(get(r, 'requirements_currently_due')),
                  ...parseReqList(get(r, 'requirements_past_due'))];
     const typed = !due.includes(KYC_FIRST_FIELD) || String(get(r, 'contact_name') || '').trim() !== '';
     const started = submitted || typed;
-    for (const t of [tot, by[cc]]) {
+    // Group comes from us_group_tags.sql — the same CASE ladder that sizes the Funnel page's
+    // group bases, so a merchant cannot be "paying" on one tab and something else here.
+    // Accounts the tagger never saw (no owner_id, or a market with no tag query) fall into
+    // 'untagged' rather than being dropped, so the chips can never lose anyone from "all".
+    const owner = (meta[get(r, 'stripe_account_id')] || {}).owner_id;
+    const grp = (owner && groupTags && groupTags[String(owner)] && groupTags[String(owner)].grp) || 'untagged';
+    const d = toDate(get(r, 'stripe_connected_at'));
+    const m = d ? String(d).slice(0, 7) : 'unknown';
+    const key = cc + '|' + m + '|' + grp;
+    if (!cells[key]) cells[key] = blank();
+    tally[grp] = (tally[grp] || 0) + 1;
+    for (const t of [tot, by[cc], cells[key]]) {
       t.interest += 1;
       if (started) t.started += 1;
       if (submitted) t.submitted += 1;
       if (approved) t.approved += 1;
     }
   }
-  return { total: tot, by };
+  console.log(`  stage ladder: ${Object.keys(cells).length} cells (country x month x group), groups ${JSON.stringify(tally)}`);
+  const list = Object.keys(cells).sort().map(k => {
+    const [cc, m, g] = k.split('|');
+    return { cc, m, g, i: cells[k].interest, s: cells[k].started,
+             b: cells[k].submitted, a: cells[k].approved };
+  });
+  return { total: tot, by, cells: list };
 }
 
 // Per-merchant "transacting through Loyverse Payments" table rows. Joins the account
 // name/linkage with the charge aggregation (started / txns / volume) and the captured
 // application-fee revenue (captured / effective take-rate). margin (net after Stripe
 // cost) is left null until the fee-detail columns are confirmed via _discovery.json.
-function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct) {
+function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct, groupTags) {
   const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const cba = countryByAcct || {};
+  // Account-creation date per account, so the funnel's outcome rows can be filtered on the
+  // same interest-month as its KYC rows. `started` on these rows is the first CHARGE, which
+  // is a different date entirely — filtering one funnel on two different clocks would make
+  // the stages stop being subsets of each other.
+  const createdByAcct = {};
+  for (const r of accountRows) {
+    const d = toDate(get(r, 'stripe_connected_at'));
+    if (d) createdByAcct[get(r, 'stripe_account_id')] = String(d).slice(0, 10);
+  }
   const nameByAcct = {};
   // Same gate as every other account-derived series. No internal account has ever taken a
   // payment, so today this drops nothing — it is here so that if one ever does, the
@@ -576,6 +628,11 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, 
       name: String(nameByAcct[acct] || acct),
       country: cba[acct] || CC_UNKNOWN,   // merchant country (Stripe account), for the page filter
       mid: (meta[acct] && meta[acct].owner_id) || null,
+      created: createdByAcct[acct] || null,  // 'YYYY-MM-DD' — payments account opened (interest)
+      grp: (function(){
+        const o = (meta[acct] && meta[acct].owner_id);
+        return (o && groupTags && groupTags[String(o)] && groupTags[String(o)].grp) || 'untagged';
+      })(),
       started: t.started,       // 'YYYY-MM-DD' — first successful charge
       lastTxn: t.lastTxn,       // 'YYYY-MM-DD' — most recent successful charge
       txns: t.cnt,              // number of successful charges
@@ -659,7 +716,17 @@ function writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchan
 //                         captured(USD, application fees net of refunds), take-rate %,
 //                         cost(USD, ICPLUS interchange++ Stripe bills us), margin = captured − cost.
 //   __PAY_ENABLED_SNAP  : legacy forward-only snapshot (kept for continuity; UI prefers __PAY_ENABLED_DAILY).
-//   __PAY_STAGE_LADDER  : CURRENT-STATE counts for the KYC form itself — {total,by:{CC:…}} with
+//   __PAY_STAGE_LADDER  : {total, by:{CC:…}, cells:[{cc,m,g,i,s,b,a}]}. The cells are the grain
+//                         that matters: one row per country x interest-month x merchant group,
+//                         with i/s/b/a = interest/started/submitted/approved. Any page selection
+//                         is a sum over matching cells, and every account sits in exactly one
+//                         cell, so "all" always equals the sum of the parts. m is the month the
+//                         merchant OPENED the account; counts are where that cohort stands today.
+//                         a = EVER approved (currently enabled, or has taken a payment), so the
+//                         ladder cannot widen as it descends. It can therefore read a little
+//                         above the current-state "Passed KYC" tile.
+//                         Legacy total/by kept so an older page still renders.
+//                         CURRENT-STATE counts for the KYC form itself — with
 //                         cumulative interest ≥ started ≥ submitted ≥ approved. "started" means the
 //                         merchant filled at least one meaningful field, read from the field-level
 //                         REQUIREMENTS_CURRENTLY_DUE list. Snapshot only: CONNECTED_ACCOUNTS keeps
@@ -1954,6 +2021,26 @@ async function main() {
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
 
+  // Merchant group tags, hoisted above the overview build (2026-09-18). They used to be
+  // fetched inside the Funnel step, which was fine while only the Funnel page used them.
+  // The Overview funnel now offers the same new / paying / non-paying split, and both must
+  // be drawn with the SAME rule that sizes the Funnel page's group bases — so the fetch
+  // happens once, here, and both consumers read the one result.
+  // Non-fatal by design: an empty map leaves every account 'untagged', which the chips
+  // handle, rather than failing the whole pull over a filter.
+  const connOwners = Object.values(meta).map(x => x.owner_id).filter(Boolean).map(String);
+  let groupTags = {};
+  for (const mkt of MARKETS) {
+    try {
+      const t = await fetchUsGroupTags(conn, connOwners, mkt);
+      Object.assign(groupTags, t);
+      const tally = {};
+      Object.values(t).forEach(function(x){ tally[x.grp] = (tally[x.grp] || 0) + 1; });
+      console.log(`✓ us_group_tags[${mkt.cc}]: ${Object.keys(t).length} owners tagged ${JSON.stringify(tally)}`);
+    } catch (e) { console.error(`✗ us_group_tags[${mkt.cc}] query failed (groups fall back to untagged): ${e.message}`); }
+  }
+  console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged across ${MARKETS.length} markets`);
+
   // Overview (first page) — daily activations, backfilled enabled curve, daily volume, txn table.
   // Hoisted out of the try: the Report step below reuses these three daily series rather than
   // rebuilding them, and must still get them if a later part of the overview write fails.
@@ -1963,13 +2050,28 @@ async function main() {
     enabledDaily = buildEnabledDaily(accountRows, meta);
     const volDaily = denseDailyVolume(vol.byDay);
     const enabledSnap = buildEnabledSnapshot(readExistingSnapshot(), act);
-    txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct);
-    const stageLadder = buildStageLadder(accountRows, meta);
+    txnMerchants = buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, countryByAcct, groupTags);
+    const stageLadder = buildStageLadder(accountRows, meta, groupTags, new Set(Object.keys(txnByAcct || {})));
     const getA = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
     const testsExcluded = accountRows.filter(r =>
       ((meta[getA(r, 'stripe_account_id')] || {}).environment !== 'test') &&
       isInternalTest(getA(r, 'email'), getA(r, 'business_name') || getA(r, 'contact_name'))).length;
     console.log(`  internal/QA accounts excluded from the overview series: ${testsExcluded}`);
+    // Reconciliation, logged every run. Interest MUST equal the activations series exactly —
+    // both come from these same rows through the same gate, so any gap is a bug rather than a
+    // timing artefact. Approved is expected to sit at or above the enabled series, by the
+    // number of merchants who have charged and been restricted since; a NEGATIVE gap would
+    // mean the ever-approved rule had stopped working.
+    const actSum = actDaily.reduce((a, r) => a + (r.n || 0), 0);
+    const enaSum = enabledDaily.reduce((a, r) => a + (r.n || 0), 0);
+    const iGap = stageLadder.total.interest - actSum;
+    const aGap = stageLadder.total.approved - enaSum;
+    console.log(`  ladder reconciliation: interest ${stageLadder.total.interest} vs activations ${actSum} (${iGap === 0 ? 'exact' : 'GAP ' + iGap + ' — INVESTIGATE'})` +
+                `; approved ${stageLadder.total.approved} vs enabled ${enaSum} (+${aGap} ever-approved-but-restricted${aGap < 0 ? ' — NEGATIVE, INVESTIGATE' : ''})`);
+    const cellSum = (stageLadder.cells || []).reduce((a, c) => a + c.i, 0);
+    if (cellSum !== stageLadder.total.interest) {
+      console.error(`✗ ladder cells sum to ${cellSum} but the total says ${stageLadder.total.interest} — the page's month/group filters will not add up`);
+    }
     writeOverview(actDaily, volDaily, enabledSnap, enabledDaily, txnMerchants, stageLadder, testsExcluded);
   } catch (e) { console.error(`✗ overview build failed: ${e.message}`); }
 
@@ -1978,8 +2080,7 @@ async function main() {
     const pilot = readPilot();
     // Registration dates for the pilot AND every connected owner (so pre-launch signups still
     // get a registered_at for the timing clock + date-range slicing), plus all US-since-launch regs.
-    const connOwners = Object.values(meta).map(x => x.owner_id).filter(Boolean).map(String);
-    const regIds = [...pilot.map(p => p.oid), ...connOwners];
+    const regIds = [...pilot.map(p => p.oid), ...connOwners];   // connOwners hoisted above
     const regs = await fetchUsRegistrations(conn, regIds);
     {
       const rt = {}; Object.values(regs).forEach(r => bump(rt, r.cc || CC_UNKNOWN, 1));
@@ -2028,21 +2129,8 @@ async function main() {
     let basesMonthly = basesMonthlyByCc.US || null;
     if (!basesMonthly) { basesMonthly = readExistingBasesMonthly(); if (basesMonthly) { basesMonthlyByCc.US = basesMonthly; console.error('  us_bases_monthly[US]: carrying previously-committed series forward'); } }
 
-    // Group tags for every owner in the book, drawn with the same rule that sizes the bases.
-    // Non-fatal: without them the UI falls back to the legacy pos_active/is_paying split.
-    // Tagged per market and merged — a merchant only ever matches its own market's query,
-    // so the merge cannot produce a conflicting tag for the same owner id.
-    let groupTags = {};
-    for (const mkt of MARKETS) {
-      try {
-        const t = await fetchUsGroupTags(conn, connOwners, mkt);
-        Object.assign(groupTags, t);
-        const tally = {};
-        Object.values(t).forEach(function(x){ tally[x.grp] = (tally[x.grp] || 0) + 1; });
-        console.log(`✓ us_group_tags[${mkt.cc}]: ${Object.keys(t).length} owners tagged ${JSON.stringify(tally)}`);
-      } catch (e) { console.error(`✗ us_group_tags[${mkt.cc}] query failed (that market's funnel groups fall back to pos_active): ${e.message}`); }
-    }
-    console.log(`✓ us_group_tags: ${Object.keys(groupTags).length} of ${connOwners.length} book owners tagged across ${MARKETS.length} markets`);
+    // groupTags is fetched once above, before the overview build, because the Overview
+    // funnel needs the identical split. Same map, same rule, both pages.
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags, countryByAcct);
     writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc);
 

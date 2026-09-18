@@ -639,6 +639,14 @@
         </span>
       </div>
       <p class="ov-cnote" id="ovFunnelNote">Where the payments book stands stage by stage. <b>KYC started</b> means the merchant filled at least one meaningful field of the form, read from Stripe&rsquo;s field-level list of what is still outstanding. The four KYC rows are a <b>current-state snapshot</b> &mdash; Stripe records no history for them, so they are counts as they stand, not a daily curve like the charts below. Setup completion (tap enabled or terminal configured) sits between KYC approval and the first payment but is not visible in Stripe, so that step is not shown.</p>
+      <!-- Merchant group. Same tags that size the Funnel tab's group bases, so the two tabs
+           cannot disagree about who is paying. Untagged is shown rather than hidden so All
+           always equals the sum of the parts. -->
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px">
+        <span class="ov-ctllbl">Merchant group</span>
+        <div class="ov-chips" id="ovFunnelGrp"></div>
+        <span class="ov-updated" id="ovFunnelScope" style="margin-left:auto">&nbsp;</span>
+      </div>
       <div class="pf-head"><span>Stage</span><span></span><span>Count</span><span>Of previous</span><span>Of interest</span></div>
       <div class="pf-rows" id="ovFunnelRows"></div>
     </div>
@@ -1852,61 +1860,103 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var fJoin = 'or';
   function fPass(r){ return fJoin==='or' ? (passVol(r) || passTxn(r)) : (passVol(r) && passTxn(r)); }
   function fQual(){ return volCrit() + (fJoin==='or' ? ' or ' : ' and ') + txnCrit() + ', all time'; }
-  var D30 = 30;
-  function daysBetween(a,b){
-    if(!a||!b) return null;
-    var x=new Date(String(a).slice(0,10)+'T00:00:00Z'), y=new Date(String(b).slice(0,10)+'T00:00:00Z');
-    if(isNaN(x.getTime())||isNaN(y.getTime())) return null;
-    return Math.round((y-x)/86400000);
-  }
+  // Merchant groups, from us_group_tags.sql — the same CASE ladder that sizes the Funnel
+  // tab's group bases, so a merchant cannot be "paying" there and something else here.
+  // 'untagged' is real and kept: accounts with no owner_id, or in a market with no tag
+  // query, land there. Dropping them would make All stop equalling the sum of the parts,
+  // which is the one property a filter like this has to keep.
+  var GROUPS=[{k:'',lbl:'All'},{k:'new',lbl:'New'},{k:'paying',lbl:'Paying'},
+              {k:'nonpaying',lbl:'Non paying'},{k:'dormant',lbl:'Dormant'},{k:'untagged',lbl:'Untagged'}];
+  var fGrp='';                       // '' = all groups
+  function fMonth(){ return (tileMode==='month' && tileMonth) ? tileMonth : null; }
+  function grpOk(g){ return !fGrp || (g||'untagged')===fGrp; }
+
+  // Sum the ladder cells matching the current country, month and group. Cells are one row
+  // per (country x interest-month x group) and every account sits in exactly one, so any
+  // selection is a plain sum and no combination can double-count.
   function ladderSlice(){
     if(!LADDER) return null;
+    var cells=LADDER.cells;
+    if(!cells){
+      // Pre-cell data file: only the unfiltered, all-country read is answerable. Say so by
+      // returning null under a filter rather than quietly showing the total.
+      if(fMonth()||fGrp) return null;
+      var F0=window.LVCC;
+      var row={interest:LADDER.total.interest, started:LADDER.total.started,
+               submitted:LADDER.total.submitted, approved:LADDER.total.approved, by:LADDER.by||{}};
+      return (F0 && !F0.isAll()) ? F0.slice(row) : row;
+    }
     var F=window.LVCC;
-    var row={interest:LADDER.total.interest, started:LADDER.total.started,
-             submitted:LADDER.total.submitted, approved:LADDER.total.approved, by:LADDER.by||{}};
-    return (F && !F.isAll()) ? F.slice(row) : row;
+    var wantCc=(F && !F.isAll()) ? F.cc : null;   // null = every country
+    var m=fMonth();
+    var out={interest:0, started:0, submitted:0, approved:0};
+    for(var i=0;i<cells.length;i++){
+      var c=cells[i];
+      if(wantCc && c.cc!==wantCc) continue;
+      if(m && c.m!==m) continue;
+      if(!grpOk(c.g)) continue;
+      out.interest+=c.i; out.started+=c.s; out.submitted+=c.b; out.approved+=c.a;
+    }
+    return out;
+  }
+  // The TXN rows behind First payment and Activated are filtered on the SAME clock as the
+  // KYC rows above them — the month the merchant opened the account, not the month of their
+  // first charge. Two clocks in one funnel and the stages stop being subsets of each other.
+  function txnScoped(){
+    var m=fMonth();
+    return TXN.filter(function(r){
+      if(!grpOk(r.grp)) return false;
+      if(m && String(r.created||'').slice(0,7)!==m) return false;
+      return true;
+    });
   }
   function renderFunnel(){
     var host=document.getElementById('ovFunnelRows'); if(!host) return;
     var L=ladderSlice();
-    // Outcome stages, from the merchants the page is already showing.
-    var asOf=maxDay();
-    var activated=TXN.filter(fPass);
-    // Retained cascades from Activated, so the funnel is a true subset chain all the way
-    // down. Its denominator is not the row above, though: a merchant who activated three
-    // days ago has no D30 yet and must not be counted as churned. So the base is the
-    // activated merchants old enough to have been given the chance.
-    var eligible=activated.filter(function(r){ var d=daysBetween(r.started, asOf); return d!=null && d>=D30; });
-    var retained=eligible.filter(function(r){ var d=daysBetween(r.started, r.lastTxn); return d!=null && d>=D30; });
-    // Payments interest and KYC approved are taken from the DAILY SERIES, not from the
-    // ladder — the same totals the tiles and the chart headers read. Both numbers exist
-    // in both places (every account has a CREATED, every approved one an accepted-Terms
-    // date), so the ladder's copies are redundant, and redundant copies are exactly what
-    // drift apart: on 16 Sep 2026 the two differed by 4 because the ladder had been
-    // regenerated after the morning pull and had picked up accounts that reached the
-    // Stripe share late. Reading the shared number once removes the possibility.
+    var m=fMonth();
+    var scoped=txnScoped();
+    var activated=scoped.filter(fPass);
+    // With nothing filtered, Payments interest and KYC approved come from the DAILY SERIES —
+    // the same totals the tiles and chart headers read — because both numbers exist in both
+    // places and redundant copies are what drift apart. (On 16 Sep the two differed by 4.)
     //
-    // Only KYC started and submitted are genuinely the ladder's to give. They are then
-    // clamped into [approved, interest] and ordered, so a ladder that lags a pull can
-    // make the middle of the funnel conservative but can never make it non-monotonic —
-    // a funnel that widens as it descends reads as a bug even when the cause is staleness.
+    // Under a month or group filter the daily series cannot answer: it carries no group
+    // split, and its enabled curve is dated by Terms-acceptance rather than by the cohort
+    // the merchant arrived in. So the ladder supplies all four stages, and the anchor
+    // guarantee is replaced by the cells' own arithmetic — every account in exactly one cell.
+    var filtered=!!(m||fGrp);
     var T=allTotals();
-    var interest=T.reg, approved=T.ena;
+    // All four KYC stages come from the ladder, in every view. They used to be anchored to the
+    // daily series when nothing was filtered, to guarantee the funnel agreed with the tiles.
+    // That anchor had to go: it applied in one view and not another, so a month total stopped
+    // adding up to the all-time one the moment the two definitions of "approved" diverged.
+    // One source in every view is the only arrangement where the parts sum to the whole.
+    //
+    // Interest still matches the tile exactly — both count accounts opened, and pull.js builds
+    // them from the same rows in one pass. KYC approved can read a little above the Passed KYC
+    // tile, because the ladder counts merchants who EVER passed and the tile counts those live
+    // right now; the row says so when they differ.
+    var interest = L ? L.interest : T.reg;
+    var approved = L ? L.approved : T.ena;
+    var reApproved = L && T.ena != null && !filtered && approved > T.ena;
+    // Clamped into [approved, interest] and ordered, so a ladder lagging a pull can make the
+    // middle conservative but never non-monotonic — a funnel that widens as it descends
+    // reads as a bug even when the cause is only staleness.
     var clamp=function(v){ return Math.min(Math.max(v, approved), interest); };
     var started=L?clamp(L.started):null;
     var submitted=L?clamp(L.submitted):null;
     if(started!=null && submitted!=null && submitted>started) started=submitted;
+    var noData=filtered&&!L ? 'This data file predates the month and group split — populates on the next daily pull' : 'Populates on the next daily pull';
     var rows=[
-      {lbl:'Payments interest', sub:'Opened a payments account', n:interest, cls:''},
-      {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:started, cls:'',
-       why:'Populates on the next daily pull'},
-      {lbl:'KYC submitted', sub:'Sent details in for review', n:submitted, cls:'',
-       why:'Populates on the next daily pull'},
-      {lbl:'KYC approved', sub:'Cleared to transact', n:approved, cls:'green'},
-      {lbl:'First payment', sub:'Has processed at least one charge', n:TXN.length, cls:'green'},
-      {lbl:'Activated', sub:fQual(), n:activated.length, cls:'dark'},
-      {lbl:'Retained', sub:'Activated and still processing at D30 · of '+fmtInt(eligible.length)+' activated merchants old enough to count',
-       n:retained.length, cls:'dark', denom:eligible.length}
+      {lbl:'Payments interest', sub:'Opened a payments account', n:(filtered&&!L)?null:interest, cls:'', why:noData},
+      {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:started, cls:'', why:noData},
+      {lbl:'KYC submitted', sub:'Sent details in for review', n:submitted, cls:'', why:noData},
+      {lbl:'KYC approved', sub:reApproved
+             ? 'Ever cleared to transact &middot; '+fmtInt(T.ena)+' are live right now, the rest were restricted after they had charged'
+             : 'Cleared to transact',
+       n:(filtered&&!L)?null:approved, cls:'green', why:noData},
+      {lbl:'First payment', sub:'Has processed at least one charge', n:scoped.length, cls:'green'},
+      {lbl:'Activated', sub:fQual(), n:activated.length, cls:'dark'}
     ];
     // Bars are scaled to the widest MEASURED stage, so an unmeasurable top row does
     // not silently rescale everything beneath it to a number we do not have.
@@ -1933,9 +1983,19 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
              '<div class="pf-n">'+fmtInt(r.n)+'</div>'+
              '<div class="pf-pct">'+ofPrev+'</div><div class="pf-pct">'+ofBase+'</div></div>';
     }).join('');
+    // Say plainly what the ladder is currently showing. A funnel whose scope is set by a
+    // control further up the page is the easiest thing in the world to misread.
+    var scope=document.getElementById('ovFunnelScope');
+    if(scope){
+      var gl=GROUPS.filter(function(g){return g.k===fGrp;})[0];
+      scope.innerHTML = (m ? '<b>'+monthLabel(m)+'</b> cohort' : 'All time')
+        + (fGrp ? ' · <b>'+(gl?gl.lbl:fGrp)+'</b> merchants' : '')
+        + (m ? ' · merchants who opened an account that month, where they stand today' : '');
+    }
     var tot=document.getElementById('ovFunnelTot');
     if(tot){
-      tot.textContent = fmtInt(interest)+' interested · '+fmtInt(TXN.length)+' transacting';
+      tot.textContent = ((filtered&&!L) ? '—' : fmtInt(interest)+' interested')
+                        +' · '+fmtInt(scoped.length)+' transacting';
     }
   }
 
@@ -2059,7 +2119,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     tmSel.style.display=(tileMode==='month' && tileMonths.length)?'':'none';
   }
   if(tmSel){
-    tmSel.addEventListener('change',function(){ tileMonth=tmSel.value; renderKpis(); });
+    // The funnel follows this picker too (2026-09-18), so it redraws with the tiles.
+    tmSel.addEventListener('change',function(){ tileMonth=tmSel.value; renderKpis(); renderFunnel(); });
   }
   var tmBtns=document.querySelectorAll('#ovTileMode button');
   for(var tb=0;tb<tmBtns.length;tb++){ (function(btn){
@@ -2067,7 +2128,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       tileMode=btn.getAttribute('data-m');
       for(var q=0;q<tmBtns.length;q++) tmBtns[q].classList.toggle('on', tmBtns[q]===btn);
       if(tmSel) tmSel.style.display=(tileMode==='month' && tileMonths.length)?'':'none';
-      renderKpis();
+      renderKpis(); renderFunnel();
     });
   })(tmBtns[tb]); }
 
@@ -2100,6 +2161,26 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 
   // Funnel join. Redraws the funnel only — the tiles and the table answer to the
   // merchant-base chips instead, so the two controls never fight over the same figure.
+  // Merchant-group chips. Single-select with an explicit All, rather than the multi-select
+  // the Merchant base chips use: those are criteria that compose, these are mutually
+  // exclusive buckets, and a multi-select would invite "new AND paying", which is empty.
+  var grpWrap=document.getElementById('ovFunnelGrp');
+  function syncGrpUI(){
+    if(!grpWrap) return;
+    grpWrap.innerHTML=GROUPS.map(function(g){
+      return '<button type="button" class="ov-chip'+(g.k===fGrp?' on':'')+'" data-g="'+g.k+
+             '" aria-pressed="'+(g.k===fGrp?'true':'false')+'">'+g.lbl+'</button>';
+    }).join('');
+  }
+  if(grpWrap){
+    grpWrap.addEventListener('click',function(e){
+      var b=e.target.closest('.ov-chip'); if(!b) return;
+      fGrp=b.getAttribute('data-g')||'';
+      syncGrpUI(); renderFunnel();
+    });
+    syncGrpUI();
+  }
+
   var fJoinWrap=document.getElementById('ovFunnelJoin'),
       fJoinBtns=fJoinWrap?fJoinWrap.querySelectorAll('button'):[];
   function syncFunnelJoin(){
