@@ -130,6 +130,17 @@ def main() -> None:
     if dropped:
         print(f"[subs] features present only before {WINDOW}, left out of the legend: {', '.join(dropped)}")
 
+    # The subscription base the growth line divides by is DERIVED, not measured: a
+    # subscription is in the base from the month it starts until the month it is cancelled,
+    # so the cumulative net is the base. Logged every run because it is the one number on
+    # that chart nobody can see. On 18 Sep 2026 it accumulated to 82,240 against Chargebee's
+    # own 78,477 active + 2,655 paused + 1,106 non_renewing = 82,238 — a difference of two,
+    # which is the `future` rows. If this ever drifts by more than a handful, the adds or
+    # cancels rule has changed and the growth percentages are wrong.
+    base = int((flow["ADDS"] - flow["CANCELS"]).sum())
+    print(f"[subs] derived subscription base at {cap}: {base:,} "
+          f"(cumulative adds minus cancels; compare against Chargebee active + paused + non_renewing)")
+
     months_mrr = sorted(feat["M"].unique().tolist())
     months_flow = sorted(flow["M"].unique().tolist())
 

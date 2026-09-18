@@ -92,15 +92,14 @@
   .toggle button { font-family: Arial; font-size: 12px; padding: 6px 14px; border: 1px solid var(--silver);
           background: #fff; color: var(--dark-gray); cursor: pointer; margin-right: -1px; }
   .toggle button.on { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: bold; }
-  /* Feature legend for the stacked MRR chart. Hand-rolled rather than Chart.js's own,
-     because the page disables that legend globally in base() and because clicking these
-     has to survive a chart rebuild — the selection is page state, not chart state. */
-  .featleg { display:flex; flex-wrap:wrap; gap:14px; margin:0 0 10px; font-size:12px; }
-  .featleg button { display:flex; align-items:center; gap:6px; background:none; border:0; padding:2px 0;
-    font-family:Arial; font-size:12px; color:var(--mid-gray); cursor:pointer; }
-  .featleg button i { width:11px; height:11px; border-radius:2px; display:block; }
-  .featleg button.off { opacity:.4; text-decoration:line-through; }
-  .featleg .val { color:var(--dark-gray); font-weight:bold; }
+  /* Feature selector for the MRR chart. A normal .toggle row rather than a legend: it is
+     SINGLE-select, because the problem it solves is that Integration at $15K is invisible
+     stacked under Inventory at $250K. Picking one feature rescales the y-axis to it, which
+     a legend that merely hides series cannot do. The colour dot doubles as the key. */
+  .featsel button { display:inline-flex; align-items:center; gap:6px; }
+  .featsel button i { width:9px; height:9px; border-radius:2px; display:block; }
+  .featsel button.on i { background:#fff !important; }
+  .featsel .val { opacity:.75; font-weight:normal; }
   .pagenav { background: var(--near-black); display: flex; gap: 2px; padding: 0 24px; }
   .pagenav a { color: #BBB; text-decoration: none; font-size: 12px; font-weight: bold; letter-spacing: 1px;
     text-transform: uppercase; padding: 12px 18px; border-bottom: 3px solid transparent; }
@@ -250,7 +249,7 @@
       <div class="toggle" id="mrr-term" style="display:none">
         <button data-term="" class="on">All terms</button><button data-term="monthly">Monthly</button><button data-term="annual">Annual</button>
       </div>
-      <div class="featleg" id="mrr-legend" style="display:none"></div>
+      <div class="toggle featsel" id="mrr-feat" style="display:none"></div>
       <div class="chart-box"><canvas id="c-mrr"></canvas></div></div>
     <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date).">i</span></h3>
       <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
@@ -279,7 +278,7 @@
     <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Cancellations</span>
-      <span style="display:flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px dashed #185FA5"></span>Net subscriptions added</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:14px;height:0;border-top:2px dashed #185FA5"></span>Net growth of subscription base (%)</span>
     </div>
     <div class="toggle" id="subflow-feat"></div>
     <div class="toggle" id="subflow-term">
@@ -538,7 +537,7 @@ const SUBS = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
 const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', SALESHISTORY:'#E8A317',
                      EMPSTORE:'#7B5EA7', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
 let mrrTerm = '';                     // '' = every term
-const mrrOff = new Set();             // features clicked out of the stack
+let mrrFeat = '';                     // '' = all features stacked, else one feature alone
 function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
 // month -> feature -> USD, for the current term selection. Built once per draw rather
 // than per dataset so the term filter cannot be applied to one feature and not another.
@@ -551,37 +550,50 @@ function mrrByFeature(){
   }
   return out;
 }
-function drawMrrLegend(){
-  const el = document.getElementById('mrr-legend'), tg = document.getElementById('mrr-term');
+// SINGLE-SELECT, not a hide-this-series legend. Stacked, Integration ($15K) is a sliver
+// against Inventory ($250K) and unreadable; the point of picking one is that the y-axis
+// rescales to it. "All features" returns to the stack, whose height is still exactly the
+// total MRR — so the two modes answer "how is it made up" and "how is this one doing"
+// rather than being two views of the same picture.
+function drawMrrFeatSel(){
+  const el = document.getElementById('mrr-feat'), tg = document.getElementById('mrr-term');
   if (!el) return;
   if (!SUBS || !featList().length) { el.style.display='none'; if(tg) tg.style.display='none'; return; }
   el.style.display=''; if(tg) tg.style.display='';
   const by = mrrByFeature(), last = labels22[labels22.length-1], cur = by[last] || {};
-  el.innerHTML = featList().map(f =>
-    '<button data-f="'+f.k+'" class="'+(mrrOff.has(f.k)?'off':'')+'" title="Click to remove from the stack">' +
-    '<i style="background:'+(FEAT_COLOR[f.k]||'#9AA7B4')+'"></i>' + f.l +
-    ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('');
+  el.innerHTML = '<button data-f="" class="' + (mrrFeat ? '' : 'on') + '">All features</button>' +
+    featList().map(f =>
+      '<button data-f="'+f.k+'" class="'+(mrrFeat===f.k?'on':'')+'">' +
+      '<i style="background:'+(FEAT_COLOR[f.k]||'#9AA7B4')+'"></i>' + f.l +
+      ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('');
   el.querySelectorAll('button').forEach(b => b.onclick = () => {
-    const k = b.dataset.f;
-    // Clicking the last one still showing brings everything back, so you can never
-    // click your way to an empty chart with no way out.
-    if (mrrOff.has(k)) mrrOff.delete(k);
-    else if (featList().filter(f=>!mrrOff.has(f.k)).length > 1) mrrOff.add(k);
-    else mrrOff.clear();
-    drawMrrMonth(); drawMrrLegend();
+    mrrFeat = b.dataset.f || '';
+    drawMrrMonth(); drawMrrFeatSel();
   });
 }
 function drawMrrMonth(){
   if (inst.mrr) { inst.mrr.destroy(); inst.mrr = null; }
   const el = document.getElementById('c-mrr');
-  let datasets;
+  let datasets, stacked = true;
   if (SUBS && featList().length) {
     const by = mrrByFeature();
-    datasets = featList().filter(f => !mrrOff.has(f.k)).map(f => ({
-      label: f.l, stack: 'mrr', backgroundColor: FEAT_COLOR[f.k] || '#9AA7B4',
-      data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100)
-    }));
+    if (mrrFeat) {
+      // One feature, on its own scale. Not stacked — there is nothing to stack — and the
+      // newest month keeps the lighter shade the single-series chart has always used to
+      // mark the month still in progress.
+      const f = featList().find(x => x.k === mrrFeat) || { k: mrrFeat, l: mrrFeat };
+      const col = FEAT_COLOR[f.k] || '#9AA7B4';
+      stacked = false;
+      datasets = [{ label: f.l, data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0)*100)/100),
+                    backgroundColor: labels22.map((l,i)=> i===labels22.length-1 ? '#CCE8FF' : col) }];
+    } else {
+      datasets = featList().map(f => ({
+        label: f.l, stack: 'mrr', backgroundColor: FEAT_COLOR[f.k] || '#9AA7B4',
+        data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100)
+      }));
+    }
   } else {
+    stacked = false;
     datasets = [{ label:'MRR', data:m22.map(m=>m.mrr),
                   backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLACK) }];
   }
@@ -589,12 +601,22 @@ function drawMrrMonth(){
     options: base({ interaction:{mode:'index',intersect:false},
       plugins:{ legend:{display:false}, tooltip:{ callbacks:{
         label: it => it.dataset.label+': $'+Math.round(it.parsed.y).toLocaleString('en-US'),
-        // Chart.js has no running total across a stack, and the whole promise of this
-        // chart is that the segments add up to the MRR line, so the tooltip says so.
-        footer: its => its.length>1 ? 'Total: $'+Math.round(its.reduce((a,i)=>a+i.parsed.y,0)).toLocaleString('en-US') : ''
+        // Chart.js has no running total across a stack, and the whole promise of the
+        // stacked view is that the segments add up to the MRR line, so the tooltip says so.
+        // On a single feature it shows the share of that month's total instead, which is
+        // the number you actually want once the bar is no longer part of a whole.
+        footer: its => {
+          if (!its.length) return '';
+          if (its.length > 1) return 'Total: $'+Math.round(its.reduce((a,i)=>a+i.parsed.y,0)).toLocaleString('en-US');
+          if (!mrrFeat || !SUBS) return '';
+          const m = labels22[its[0].dataIndex], all = mrrByFeature()[m] || {};
+          const tot = Object.keys(all).reduce((a,k)=>a+all[k], 0);
+          return tot ? Math.round(its[0].parsed.y / tot * 1000)/10 + '% of $' +
+                       Math.round(tot).toLocaleString('en-US') + ' that month' : '';
+        }
       } } },
-      scales:{ x:{stacked:true,grid:{display:false},ticks:{maxTicksLimit:12}},
-               y:{stacked:true,grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) });
+      scales:{ x:{stacked,grid:{display:false},ticks:{maxTicksLimit:12}},
+               y:{stacked,grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) });
 }
 document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#mrr-term button').forEach(x => x.classList.remove('on'));
@@ -604,7 +626,7 @@ document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
   const vt = document.querySelector('.viewtoggle[data-key="mrr"]');
   if (vt) { vt.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
             const mb = vt.querySelector('[data-view="month"]'); if (mb) mb.classList.add('on'); }
-  drawMrrMonth(); drawMrrLegend();
+  drawMrrMonth(); drawMrrFeatSel();
 });
 function drawActMonth(){ const actLabels = actArr.map(a=>a.month); inst.active = new Chart(document.getElementById('c-active'), { type:'line',
   data:{ labels:actLabels, datasets:[{ data:actArr.map(a=>a.active), borderColor:BLUE_DEEP, backgroundColor:'rgba(21,120,196,0.08)', fill:true,
@@ -623,11 +645,11 @@ function setView(key, view){
   // The day view reads DAILY_HISTORY, which carries a single MRR scalar with no feature or
   // term dimension. Leaving the controls visible there would offer filters that do nothing.
   if (key==='mrr') { const hide = (view==='day') || !SUBS;
-    ['mrr-term','mrr-legend'].forEach(id => { const e=document.getElementById(id); if(e) e.style.display = hide ? 'none' : ''; }); }
+    ['mrr-term','mrr-feat'].forEach(id => { const e=document.getElementById(id); if(e) e.style.display = hide ? 'none' : ''; }); }
   if (view==='day') inst[key] = dayChart('c-'+key, VIEWCFG[key].field, VIEWCFG[key].color, VIEWCFG[key].yf);
   else VIEWCFG[key].build();
 }
-drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrLegend(); drawActMonth();
+drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMonth();
 
 // ---- Paying base: gross adds vs churn (monthly, complete months only) ----
 (function(){
@@ -736,34 +758,68 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrLegend(); drawActMonth
     b.classList.add('on'); sfTerm = b.dataset.term || ''; draw();
   });
 
+  // Every month in the data, not just the charted ones. The base a growth rate divides by
+  // has to be accumulated from the very first subscription in 2018; starting the running
+  // total at 2022 would divide by a base missing four years of history and print growth
+  // rates several times too large.
+  const allMonths = S.monthsFlow.slice().sort();
+
   function draw(){
     if (chart) { chart.destroy(); chart = null; }
     const adds = {}, cans = {};
     for (const c of S.flow) {
-      if (c.m < FROM) continue;
       if (sfFeat && c.f !== sfFeat) continue;
       if (sfTerm && c.t !== sfTerm) continue;
       adds[c.m] = (adds[c.m] || 0) + c.a;
       cans[c.m] = (cans[c.m] || 0) + c.c;
     }
+    // Running subscription base, under whatever feature/term is selected, so the growth
+    // rate always divides by the base it belongs to. Derived rather than measured: a
+    // subscription is in the base once it has started and until it is cancelled, so the
+    // cumulative net IS the base. It checks out — accumulated to today it lands on 82,240
+    // against Chargebee's own 78,477 active plus 2,655 paused plus 1,106 non-renewing.
+    const startBase = {};
+    let running = 0;
+    for (const m of allMonths) {
+      startBase[m] = running;
+      running += (adds[m] || 0) - (cans[m] || 0);
+    }
     const A = months.map(m => adds[m] || 0), C = months.map(m => cans[m] || 0);
+    const G = months.map((m,i) => {
+      const b = startBase[m];
+      return b > 0 ? Math.round(((A[i] - C[i]) / b) * 1000) / 10 : null;
+    });
     chart = new Chart(cv, {
       data:{ labels:months, datasets:[
         { type:'bar', label:'Gross adds', data:A, backgroundColor:'#639922', stack:'s', order:3 },
         { type:'bar', label:'Cancellations', data:C.map(v=>-v), backgroundColor:'#E24B4A', stack:'s', order:3 },
-        // Net in SUBSCRIPTIONS on the same axis as the bars, not a percentage on a second
-        // one: the bars are counts, so the net of them is a count, and putting it on the
-        // same scale lets you read the balance off the chart instead of inferring it.
-        { type:'line', label:'Net', data:months.map((m,i)=>A[i]-C[i]), borderColor:'#185FA5',
+        // Growth as a PERCENT of the base at the start of the month, on its own right-hand
+        // axis — the same reading as the merchant chart above, so the two can be compared
+        // directly. A count would have grown with the base and said nothing about the rate.
+        { type:'line', label:'Net growth %', data:G, yAxisID:'y1', borderColor:'#185FA5',
           borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1 }
       ]},
       options:{ responsive:true, maintainAspectRatio:false,
         plugins:{ legend:{display:false},
-          tooltip:{ callbacks:{ label: it => it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US') } } },
+          tooltip:{ callbacks:{
+            label: it => it.dataset.yAxisID === 'y1'
+              ? ('Net growth: ' + (it.parsed.y == null ? '\u2014' : it.parsed.y + '%'))
+              : (it.dataset.label + ': ' + Math.abs(it.parsed.y).toLocaleString('en-US')),
+            // The base is the one number the chart divides by and never shows, so the
+            // tooltip states it rather than leaving the percentage unfalsifiable.
+            footer: its => {
+              const m = months[its.length ? its[0].dataIndex : 0];
+              const b = startBase[m], i = months.indexOf(m);
+              if (!b) return '';
+              return 'Net ' + (A[i] - C[i] >= 0 ? '+' : '') + (A[i] - C[i]).toLocaleString('en-US') +
+                     ' on a base of ' + b.toLocaleString('en-US');
+            } } } },
         scales:{
           x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },
           y:{ stacked:true, grid:{color:'#EFEFEF'}, title:{display:true,text:'Subscriptions / month'},
-              ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } }
+              ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } },
+          y1:{ position:'right', grid:{display:false}, title:{display:true,text:'Net growth %'},
+               ticks:{ callback:v=>v+'%' } }
         } }
     });
   }
