@@ -1752,7 +1752,16 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     if(tileMode==='all' || !tileMonth){
       kpis=[
         {num:fmtInt(T.reg), lbl:'Payments interest', sub:'All time · merchants that opened a payments account', cls:'', d:''},
-        {num:fmtInt(T.ena), lbl:'Passed KYC', sub:'All time · '+T.rate+'% of interested merchants are live to transact', cls:'green', d:''},
+        // The tile counts merchants live to transact RIGHT NOW; the funnel below counts
+        // everyone who ever got through KYC. When they differ it is because a merchant was
+        // restricted after being approved, and the tile names that number rather than
+        // leaving two figures on one page with no explanation between them.
+        {num:fmtInt(T.ena), lbl:'Passed KYC', sub:(function(){
+           var ev=everPassed(), base='All time · '+T.rate+'% of interested merchants are live to transact';
+           if(ev==null || ev<=T.ena) return base;
+           var lost=ev-T.ena;
+           return base+'<br><b>('+fmtInt(ev)+' ever passed &mdash; '+fmtInt(lost)+' restricted after approval)</b>';
+         })(), cls:'green', d:''},
         {num:fmtUsd(T.vol), lbl:'Volume processed', sub:'All time · successful card charges, USD', cls:'accent', d:''},
         qualOn()
           ? {num:fmtInt(TX.length), lbl:qualLabel(), sub:'All time · '+critText()+' · '+fmtInt(TXN.length)+' have transacted at all', cls:'green', d:''}
@@ -1874,6 +1883,22 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // Sum the ladder cells matching the current country, month and group. Cells are one row
   // per (country x interest-month x group) and every account sits in exactly one, so any
   // selection is a plain sum and no combination can double-count.
+  // Ever-passed-KYC for the current country, ignoring the funnel's own month and group
+  // chips. The Passed KYC tile uses it to show, and explain, its own difference from the
+  // funnel below. ALL-TIME ONLY on purpose: in month mode the tile counts merchants whose
+  // Terms were accepted that month, while a ladder month is the cohort that OPENED an
+  // account that month. Those are different populations, and putting them side by side
+  // would invent a discrepancy rather than explain one.
+  function everPassed(){
+    if(!LADDER || !LADDER.cells) return null;
+    var F=window.LVCC, wantCc=(F && !F.isAll()) ? F.cc : null, n=0;
+    for(var i=0;i<LADDER.cells.length;i++){
+      var c=LADDER.cells[i];
+      if(wantCc && c.cc!==wantCc) continue;
+      n+=c.a;
+    }
+    return n;
+  }
   function ladderSlice(){
     if(!LADDER) return null;
     var cells=LADDER.cells;
@@ -1952,7 +1977,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       {lbl:'KYC started', sub:'Filled at least one field of the KYC form', n:started, cls:'', why:noData},
       {lbl:'KYC submitted', sub:'Sent details in for review', n:submitted, cls:'', why:noData},
       {lbl:'KYC approved', sub:reApproved
-             ? 'Ever cleared to transact &middot; '+fmtInt(T.ena)+' are live right now, the rest were restricted after they had charged'
+             ? 'Ever cleared to transact &middot; '+fmtInt(T.ena)+' live now, '+fmtInt(approved-T.ena)+' restricted after approval'
              : 'Cleared to transact',
        n:(filtered&&!L)?null:approved, cls:'green', why:noData},
       {lbl:'First payment', sub:'Has processed at least one charge', n:scoped.length, cls:'green'},
