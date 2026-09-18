@@ -274,7 +274,7 @@
        16k merchants hold more than one feature, so a merchant who drops one of three is
        invisible above and visible here. -->
   <div class="panel" id="p-subflow" style="display:none">
-    <h3>Subscriptions — gross adds vs cancellations<span class="info" data-tip="Counts SUBSCRIPTIONS, not merchants: a merchant who takes three features contributes three. Read against the merchant chart above, which cannot see a merchant dropping one feature of three — the most common way revenue leaks. The dates come from Chargebee's own subscription lifecycle, so a cancellation lands in the month it happened; the merchant chart infers churn from invoice silence with a 30-day grace and is late by construction. The two are not meant to agree. Scheduled cancellations on subscriptions still inside a paid term are excluded — those have not happened yet.">i</span></h3>
+    <h3>Subscriptions — gross adds vs cancellations<span class="info" data-tip="Counts SUBSCRIPTIONS, not merchants: a merchant who takes three features contributes three. Read against the merchant chart above, which cannot see a merchant dropping one feature of three — the most common way revenue leaks. The dates come from Chargebee's own subscription lifecycle, so a cancellation lands in the month it happened; the merchant chart infers churn from invoice silence with a 30-day grace and is late by construction. The two are not meant to agree. Scheduled cancellations on subscriptions still inside a paid term are excluded — those have not happened yet. The month in progress is not shown, for the same reason it is not shown above: a part month reads as a collapse, and a growth rate computed from an incomplete numerator is not a rate.">i</span></h3>
     <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Cancellations</span>
@@ -538,6 +538,12 @@ const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', SALESHISTORY:'#E8A
                      EMPSTORE:'#7B5EA7', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
 let mrrTerm = '';                     // '' = every term
 let mrrFeat = '';                     // '' = all features stacked, else one feature alone
+// The month still running. The single-series chart has always marked it with a lighter
+// bar; stacked, every segment carries its feature's own colour and that signal was lost,
+// so the whole bar is drawn translucent instead. From the data's build stamp, not the
+// reader's clock, so a stale file cannot fade a month that has since completed.
+const MRR_PARTIAL = (SUBS && SUBS.generatedAt) ? SUBS.generatedAt.slice(0,7)
+                                              : new Date().toISOString().slice(0,7);
 function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
 // month -> feature -> USD, for the current term selection. Built once per draw rather
 // than per dataset so the term filter cannot be applied to one feature and not another.
@@ -560,12 +566,19 @@ function drawMrrFeatSel(){
   if (!el) return;
   if (!SUBS || !featList().length) { el.style.display='none'; if(tg) tg.style.display='none'; return; }
   el.style.display=''; if(tg) tg.style.display='';
-  const by = mrrByFeature(), last = labels22[labels22.length-1], cur = by[last] || {};
+  // The figure on each button is the last COMPLETE month, not the last bar. The last bar is
+  // the month in progress — Inventory reads $250K there on the 18th against $392K for
+  // August — and a control labelled with a part month invites exactly the wrong comparison.
+  const by = mrrByFeature();
+  const li = labels22.length - 1;
+  const last = labels22[li] === MRR_PARTIAL && li > 0 ? labels22[li-1] : labels22[li];
+  const cur = by[last] || {};
   el.innerHTML = '<button data-f="" class="' + (mrrFeat ? '' : 'on') + '">All features</button>' +
     featList().map(f =>
-      '<button data-f="'+f.k+'" class="'+(mrrFeat===f.k?'on':'')+'">' +
+      '<button data-f="'+f.k+'" class="'+(mrrFeat===f.k?'on':'')+'" title="'+f.l+' in '+last+'">' +
       '<i style="background:'+(FEAT_COLOR[f.k]||'#9AA7B4')+'"></i>' + f.l +
-      ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('');
+      ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('') +
+    '<span style="align-self:center;margin-left:6px;font-size:11px;color:var(--mid-gray)">as of '+last+'</span>';
   el.querySelectorAll('button').forEach(b => b.onclick = () => {
     mrrFeat = b.dataset.f || '';
     drawMrrMonth(); drawMrrFeatSel();
@@ -587,10 +600,12 @@ function drawMrrMonth(){
       datasets = [{ label: f.l, data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0)*100)/100),
                     backgroundColor: labels22.map((l,i)=> i===labels22.length-1 ? '#CCE8FF' : col) }];
     } else {
-      datasets = featList().map(f => ({
-        label: f.l, stack: 'mrr', backgroundColor: FEAT_COLOR[f.k] || '#9AA7B4',
-        data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100)
-      }));
+      datasets = featList().map(f => {
+        const col = FEAT_COLOR[f.k] || '#9AA7B4';
+        return { label: f.l, stack: 'mrr',
+          backgroundColor: labels22.map(m => m === MRR_PARTIAL ? col + '59' : col),
+          data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100) };
+      });
     }
   } else {
     stacked = false;
@@ -741,7 +756,14 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
   // Start where the merchant chart starts rather than in 2018: subscription counts before
   // then are a handful a month and squeeze five years of readable data into the right edge.
   const FROM = '2022-01';
-  const months = S.monthsFlow.filter(m => m >= FROM);
+  // THE IN-PROGRESS MONTH IS DROPPED, as it is on the merchant chart above. A part month
+  // reads as a collapse — September stood at 3,183 adds on the 18th against ~5,700 in a
+  // full month — and it drags the growth line down with it, which is worse, because a rate
+  // computed from two thirds of a month is not a rate. The month comes from the data's own
+  // build stamp rather than the reader's clock, so a stale file cannot silently drop a
+  // month that has since completed.
+  const BUILT = (S.generatedAt || '').slice(0, 7) || new Date().toISOString().slice(0, 7);
+  const months = S.monthsFlow.filter(m => m >= FROM && m < BUILT);
 
   const featBtns = document.getElementById('subflow-feat');
   if (featBtns) {
