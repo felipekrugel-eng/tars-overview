@@ -257,7 +257,7 @@
   </div>
 
   <div class="panel">
-    <h3>Paying base — gross adds vs churn<span class="info" data-tip="Per calendar month, the paying base gains gross adds (green, up) and loses churn (red, down); the net of the two is the visible balance. The dashed line is net growth of the paying base as a percent of the prior month's base (right axis). Churn uses a 30-day grace period (the definition Alex and the team use): a merchant counts as churned only once it is 30 days past period end with no payment, so renewal-timing lag isn't miscounted as churn+re-add. Because of that grace, churn in the most recent month reads low and settles upward over the following weeks. Settled months only: the in-progress month is excluded, and so is the newest complete month, whose churn is still inside the 30-day grace window. Nothing on this chart revises after it is published. This is the smooth monthly read; the daily version is on the FACADASH tab.">i</span></h3>
+    <h3 id="flow-title">Paying base — gross adds vs churn<span class="info" data-tip="Per calendar month, the paying base gains gross adds (green, up) and loses churn (red, down); the net of the two is the visible balance. The dashed line is net growth of the paying base as a percent of the prior month's base (right axis). Churn uses a 30-day grace period (the definition Alex and the team use): a merchant counts as churned only once it is 30 days past period end with no payment, so renewal-timing lag isn't miscounted as churn+re-add. Because of that grace, churn in the most recent month reads low and settles upward over the following weeks. Settled months only: the in-progress month is excluded, and so is the newest complete month, whose churn is still inside the 30-day grace window. Nothing on this chart revises after it is published. This is the smooth monthly read; the daily version is on the FACADASH tab. The Cancellations toggle swaps BOTH series for a different source: Chargebee's own subscription lifecycle at merchant grain, where a merchant arrives when its first subscription starts and leaves when its last one is cancelled. That reading is earlier and sharper &mdash; a dated event rather than an inference from silence &mdash; and it reaches two months further, because there is no grace window to wait out. It is also a different question: it counts the decision to leave, not the money stopping. The two will not agree, and neither is wrong.">i</span></h3>
     <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Churn</span>
@@ -759,6 +759,15 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
     // "Churn" over cancellation bars. `children`, not querySelectorAll('span') — the latter
     // also returns the colour swatches nested inside each entry, and writing to one of
     // those silently does nothing (or, as it did here, throws).
+    // The heading is the last place the word "churn" survived a switch to cancellations.
+    // Churn and cancellation are genuinely different measurements here, so the title names
+    // whichever one is on screen rather than picking a word that is wrong half the time.
+    const ttl = document.getElementById('flow-title');
+    if (ttl) {
+      const t0 = [...ttl.childNodes].filter(n => n.nodeType === 3)[0];
+      if (t0) t0.nodeValue = isCancel ? 'Paying base \u2014 gross adds vs cancellations'
+                                      : 'Paying base \u2014 gross adds vs churn';
+    }
     const leg = cv.closest('.panel').querySelector('.flowleg');
     if (leg) {
       const items = leg.children;
