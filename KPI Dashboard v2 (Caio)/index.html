@@ -534,8 +534,12 @@ function drawPaying(mode){ payMode = mode; const ds=[];
 const SUBS = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
 // Distinguishable at 11px and in the order the stack builds, biggest earner at the
 // bottom so the chart reads the way the revenue does.
-const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', SALESHISTORY:'#E8A317',
-                     EMPSTORE:'#7B5EA7', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
+// The two Employee rows are the same product on different pricing (per employee vs per
+// store), so they take two shades of one green — adjacent in the stack and obviously
+// siblings. Giving them unrelated colours is what let "Employee + Store" read as a
+// separate product for a day.
+const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', EMPSTORE:'#A8CC6B',
+                     SALESHISTORY:'#E8A317', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
 let mrrTerm = '';                     // '' = every term
 let mrrFeat = '';                     // '' = all features stacked, else one feature alone
 // The month still running. The single-series chart has always marked it with a lighter

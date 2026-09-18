@@ -39,14 +39,28 @@ MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bo
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT_FILE        = OUT_DIR / "subs-data.js"
 
-# Order is the order the chart stacks them in, biggest earner at the bottom. Chosen once
-# here so the legend, the stack and any table agree without each deciding for itself.
+# Labels are Chargebee's own line-item descriptions, not a reading of the plan id. That
+# distinction cost us once: EMPSTORE was labelled "Employee + Store" on the assumption that
+# the id named two things, when Chargebee describes it as "Employee management" — the same
+# string as EMPLOYEE. They are ONE FEATURE ON TWO PRICING MODELS:
+#     S_EMPLOYEE_*   $5  per employee, averaging 2.36 employees  -> $11.77 MRR
+#     S_EMPSTORE_*   $25 per store,    averaging 1.40 stores     -> $35.11 MRR
+# Mutually exclusive — no merchant holds both — and both actively sold, ~1,850 new
+# per-employee subscriptions a month against ~67 per-store. Neither is legacy.
+#
+# They are kept SEPARATE rather than merged: the two price the same product so differently
+# that averaging them would hide the more interesting number. The labels and the ordering
+# below put them side by side so nobody reads them as different products, which is the
+# mistake this comment exists to prevent from happening twice.
+#
+# Order is the order the chart stacks them in, biggest earner at the bottom, except that the
+# two Employee rows are held together — grouping a product beats ranking a plan.
 FEATURE_LABEL = [
-    ("INVENTORY",    "Inventory"),
-    ("EMPLOYEE",     "Employee"),
-    ("SALESHISTORY", "Sales history"),
-    ("EMPSTORE",     "Employee + Store"),
-    ("INTEGRATION",  "Integration"),
+    ("INVENTORY",    "Advanced inventory"),
+    ("EMPLOYEE",     "Employee mgmt · per employee"),
+    ("EMPSTORE",     "Employee mgmt · per store"),
+    ("SALESHISTORY", "Unlimited sales history"),
+    ("INTEGRATION",  "Integrations"),
     ("OTHER",        "Other"),
 ]
 TERMS = ["monthly", "annual", "other"]
