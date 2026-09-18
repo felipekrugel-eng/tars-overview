@@ -92,14 +92,6 @@
   .toggle button { font-family: Arial; font-size: 12px; padding: 6px 14px; border: 1px solid var(--silver);
           background: #fff; color: var(--dark-gray); cursor: pointer; margin-right: -1px; }
   .toggle button.on { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: bold; }
-  /* Feature selector for the MRR chart. A normal .toggle row rather than a legend: it is
-     SINGLE-select, because the problem it solves is that Integration at $15K is invisible
-     stacked under Inventory at $250K. Picking one feature rescales the y-axis to it, which
-     a legend that merely hides series cannot do. The colour dot doubles as the key. */
-  .featsel button { display:inline-flex; align-items:center; gap:6px; }
-  .featsel button i { width:9px; height:9px; border-radius:2px; display:block; }
-  .featsel button.on i { background:#fff !important; }
-  .featsel .val { opacity:.75; font-weight:normal; }
   .pagenav { background: var(--near-black); display: flex; gap: 2px; padding: 0 24px; }
   .pagenav a { color: #BBB; text-decoration: none; font-size: 12px; font-weight: bold; letter-spacing: 1px;
     text-transform: uppercase; padding: 12px 18px; border-bottom: 3px solid transparent; }
@@ -244,12 +236,14 @@
       </div>
       <div class="chart-box"><canvas id="c-pay"></canvas></div>
     </div>
-    <div class="panel"><h3>Total MRR (USD)<span class="info" data-tip="Sum of paid Chargebee invoice line items (plan + add-on), spread evenly across each billing period (annual plans count 1/12 per month). GBP x1.34 and EUR x1.16 to USD. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month. The bars are split by feature: the segments always add up to the same total the chart showed before, because the split comes from the same invoice arithmetic with the plan id kept. Click a feature below to take it out of the stack. Term filters the whole chart to monthly or annual plans; an annual plan still counts 1/12 per month either way, so the filter selects which contracts are counted, not how the revenue is spread.">i</span></h3>
+    <div class="panel"><h3>Total MRR (USD)<span class="info" data-tip="Sum of paid Chargebee invoice line items (plan + add-on), spread evenly across each billing period (annual plans count 1/12 per month). GBP x1.34 and EUR x1.16 to USD. Shown from Jan 2022. Day view: this month vs last month, aligned by day of month. Per feature draws the same revenue as one line per product, on settled months only &mdash; they sum to the Total bars exactly, because the split is the same invoice arithmetic with the plan id kept rather than discarded. Click a name in the legend to drop it and let the axis rescale to the rest. Term narrows to monthly or annual contracts; an annual plan still counts 1/12 per month either way, so it selects which contracts are counted, not how the revenue is spread.">i</span></h3>
       <div class="toggle viewtoggle" data-key="mrr"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
+      <div class="toggle" id="mrr-toggle" style="display:none">
+        <button data-mode="total" class="on">Total</button><button data-mode="feature">Per feature</button>
+      </div>
       <div class="toggle" id="mrr-term" style="display:none">
         <button data-term="" class="on">All terms</button><button data-term="monthly">Monthly</button><button data-term="annual">Annual</button>
       </div>
-      <div class="toggle featsel" id="mrr-feat" style="display:none"></div>
       <div class="chart-box"><canvas id="c-mrr"></canvas></div></div>
     <div class="panel"><h3>Active merchants per month<span class="info" data-tip="Merchants that issued at least one receipt in the month (receipts-based). Corrected device-clock-filtered series — full months from Jan 2022 to the latest complete month. The partial current month is not shown. Day view: this month vs last month, aligned by day of month, from the daily snapshots (month-to-date).">i</span></h3>
       <div class="toggle viewtoggle" data-key="active"><button data-view="month" class="on">Monthly</button><button data-view="day">This month vs last</button></div>
@@ -525,32 +519,36 @@ function drawPaying(mode){ payMode = mode; const ds=[];
     options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:mode==='both',position:'bottom'}},
       scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}}, y:{grid:{color:'#EFEFEF'},beginAtZero:true} } } });
 }
-// ---- MRR, split by feature ------------------------------------------------------
-// SUBS_DATA is optional. Without it this is the single black bar the chart has always
-// been; with it the same bar is cut into feature segments that add up to exactly the
-// same height, because the split is the same invoice arithmetic with the plan id kept
-// instead of discarded. The build refuses to publish a split that does not reconcile,
-// so the stack can be trusted to equal the total rather than merely resemble it.
+// ---- MRR ------------------------------------------------------------------------
+// TWO MODES, one toggle, shaped like the Paying customers panel beside it. The first
+// attempt put three control rows and a five-colour stack on a panel that had one row and
+// one colour; it was accurate and it looked nothing like the rest of the page.
+//
+//   Total       the chart exactly as it always was — one bar a month, newest lighter.
+//               Untouched, including its partial current month.
+//   Per feature one LINE per product, settled months only. Lines rather than a stack
+//               because the question is which product is growing, a stack answers which
+//               is biggest and buries anything small; and because five filled areas carry
+//               far more visual weight than five strokes on a page whose other panels are
+//               one or two colours. Chart.js's own legend does the hiding — clicking a
+//               name drops that series and the axis rescales to what is left, which is
+//               the isolation the custom selector was there to provide, for free and in
+//               the styling everyone already recognises.
+//
+// SUBS_DATA is optional. Without it the toggle stays hidden and the panel is Total only.
 const SUBS = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
-// Distinguishable at 11px and in the order the stack builds, biggest earner at the
-// bottom so the chart reads the way the revenue does.
-// The two Employee rows are the same product on different pricing (per employee vs per
-// store), so they take two shades of one green — adjacent in the stack and obviously
-// siblings. Giving them unrelated colours is what let "Employee + Store" read as a
-// separate product for a day.
 const FEAT_COLOR = { INVENTORY:'#1578C4', EMPLOYEE:'#639922', EMPSTORE:'#A8CC6B',
                      SALESHISTORY:'#E8A317', INTEGRATION:'#D2495B', OTHER:'#9AA7B4' };
+let mrrMode = 'total';                // 'total' | 'feature'
 let mrrTerm = '';                     // '' = every term
-let mrrFeat = '';                     // '' = all features stacked, else one feature alone
-// The month still running. The single-series chart has always marked it with a lighter
-// bar; stacked, every segment carries its feature's own colour and that signal was lost,
-// so the whole bar is drawn translucent instead. From the data's build stamp, not the
-// reader's clock, so a stale file cannot fade a month that has since completed.
+function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
+// The month still running. Per-feature mode stops before it: MRR is amortised from
+// invoices paid so far, so September reads $666K against August's $1,024K, and five lines
+// all diving off the right-hand edge is a graph about the calendar rather than the
+// product. Total mode keeps its partial bar — that behaviour predates this and is marked
+// by the lighter shade the chart has always used.
 const MRR_PARTIAL = (SUBS && SUBS.generatedAt) ? SUBS.generatedAt.slice(0,7)
                                               : new Date().toISOString().slice(0,7);
-function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
-// month -> feature -> USD, for the current term selection. Built once per draw rather
-// than per dataset so the term filter cannot be applied to one feature and not another.
 function mrrByFeature(){
   const out = {};
   if (!SUBS) return out;
@@ -560,92 +558,63 @@ function mrrByFeature(){
   }
   return out;
 }
-// SINGLE-SELECT, not a hide-this-series legend. Stacked, Integration ($15K) is a sliver
-// against Inventory ($250K) and unreadable; the point of picking one is that the y-axis
-// rescales to it. "All features" returns to the stack, whose height is still exactly the
-// total MRR — so the two modes answer "how is it made up" and "how is this one doing"
-// rather than being two views of the same picture.
-function drawMrrFeatSel(){
-  const el = document.getElementById('mrr-feat'), tg = document.getElementById('mrr-term');
-  if (!el) return;
-  if (!SUBS || !featList().length) { el.style.display='none'; if(tg) tg.style.display='none'; return; }
-  el.style.display=''; if(tg) tg.style.display='';
-  // The figure on each button is the last COMPLETE month, not the last bar. The last bar is
-  // the month in progress — Inventory reads $250K there on the 18th against $392K for
-  // August — and a control labelled with a part month invites exactly the wrong comparison.
-  const by = mrrByFeature();
-  const li = labels22.length - 1;
-  const last = labels22[li] === MRR_PARTIAL && li > 0 ? labels22[li-1] : labels22[li];
-  const cur = by[last] || {};
-  el.innerHTML = '<button data-f="" class="' + (mrrFeat ? '' : 'on') + '">All features</button>' +
-    featList().map(f =>
-      '<button data-f="'+f.k+'" class="'+(mrrFeat===f.k?'on':'')+'" title="'+f.l+' in '+last+'">' +
-      '<i style="background:'+(FEAT_COLOR[f.k]||'#9AA7B4')+'"></i>' + f.l +
-      ' <span class="val">$'+Math.round((cur[f.k]||0)/1000)+'K</span></button>').join('') +
-    '<span style="align-self:center;margin-left:6px;font-size:11px;color:var(--mid-gray)">as of '+last+'</span>';
-  el.querySelectorAll('button').forEach(b => b.onclick = () => {
-    mrrFeat = b.dataset.f || '';
-    drawMrrMonth(); drawMrrFeatSel();
-  });
-}
 function drawMrrMonth(){
   if (inst.mrr) { inst.mrr.destroy(); inst.mrr = null; }
   const el = document.getElementById('c-mrr');
-  let datasets, stacked = true;
-  if (SUBS && featList().length) {
+  const isFeat = !!(mrrMode === 'feature' && SUBS && featList().length);
+  const lbl = isFeat ? labels22.filter(m => m !== MRR_PARTIAL) : labels22;
+  let datasets;
+  if (isFeat) {
     const by = mrrByFeature();
-    if (mrrFeat) {
-      // One feature, on its own scale. Not stacked — there is nothing to stack — and the
-      // newest month keeps the lighter shade the single-series chart has always used to
-      // mark the month still in progress.
-      const f = featList().find(x => x.k === mrrFeat) || { k: mrrFeat, l: mrrFeat };
-      const col = FEAT_COLOR[f.k] || '#9AA7B4';
-      stacked = false;
-      datasets = [{ label: f.l, data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0)*100)/100),
-                    backgroundColor: labels22.map((l,i)=> i===labels22.length-1 ? '#CCE8FF' : col) }];
-    } else {
-      datasets = featList().map(f => {
-        const col = FEAT_COLOR[f.k] || '#9AA7B4';
-        return { label: f.l, stack: 'mrr',
-          backgroundColor: labels22.map(m => m === MRR_PARTIAL ? col + '59' : col),
-          data: labels22.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100) };
-      });
-    }
+    datasets = featList().map(f => ({
+      type:'line', label:f.l, borderColor:FEAT_COLOR[f.k] || '#9AA7B4',
+      backgroundColor:FEAT_COLOR[f.k] || '#9AA7B4', fill:false,
+      borderWidth:2, pointRadius:0, pointHoverRadius:4, tension:.3,
+      data: lbl.map(m => Math.round(((by[m]||{})[f.k]||0) * 100) / 100)
+    }));
   } else {
-    stacked = false;
-    datasets = [{ label:'MRR', data:m22.map(m=>m.mrr),
+    datasets = [{ type:'bar', label:'MRR', data:m22.map(m=>m.mrr),
                   backgroundColor: labels22.map((l,i)=>i===labels22.length-1?'#CCE8FF':BLACK) }];
   }
-  inst.mrr = new Chart(el, { type:'bar', data:{ labels:labels22, datasets },
+  inst.mrr = new Chart(el, { data:{ labels:lbl, datasets },
     options: base({ interaction:{mode:'index',intersect:false},
-      plugins:{ legend:{display:false}, tooltip:{ callbacks:{
-        label: it => it.dataset.label+': $'+Math.round(it.parsed.y).toLocaleString('en-US'),
-        // Chart.js has no running total across a stack, and the whole promise of the
-        // stacked view is that the segments add up to the MRR line, so the tooltip says so.
-        // On a single feature it shows the share of that month's total instead, which is
-        // the number you actually want once the bar is no longer part of a whole.
-        footer: its => {
-          if (!its.length) return '';
-          if (its.length > 1) return 'Total: $'+Math.round(its.reduce((a,i)=>a+i.parsed.y,0)).toLocaleString('en-US');
-          if (!mrrFeat || !SUBS) return '';
-          const m = labels22[its[0].dataIndex], all = mrrByFeature()[m] || {};
-          const tot = Object.keys(all).reduce((a,k)=>a+all[k], 0);
-          return tot ? Math.round(its[0].parsed.y / tot * 1000)/10 + '% of $' +
-                       Math.round(tot).toLocaleString('en-US') + ' that month' : '';
-        }
-      } } },
-      scales:{ x:{stacked,grid:{display:false},ticks:{maxTicksLimit:12}},
-               y:{stacked,grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) });
+      plugins:{
+        legend:{ display:isFeat, position:'bottom',
+                 labels:{ boxWidth:10, boxHeight:10, usePointStyle:true, pointStyle:'rect', font:{size:11} } },
+        tooltip:{ callbacks:{
+          label: it => it.dataset.label+': $'+Math.round(it.parsed.y).toLocaleString('en-US'),
+          // Chart.js carries no running total across a multi-series tooltip, and the one
+          // promise this mode makes is that the lines add up to the Total bars, so it is
+          // stated rather than left to be taken on trust. Hidden series are excluded, so
+          // the figure always matches what is actually on screen.
+          footer: its => its.length > 1
+            ? 'Total: $'+Math.round(its.reduce((a,i)=>a+i.parsed.y,0)).toLocaleString('en-US')
+            : ''
+        } } },
+      scales:{ x:{grid:{display:false},ticks:{maxTicksLimit:12}},
+               y:{grid:{color:'#EFEFEF'},ticks:{callback:v=>'$'+(v/1000)+'K'},beginAtZero:true} } }) });
 }
-document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
-  document.querySelectorAll('#mrr-term button').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); mrrTerm = b.dataset.term || '';
-  // Force back to the monthly view: the day view reads DAILY_HISTORY, which has no
-  // feature or term dimension, so a term filter there would silently do nothing.
+// Term only means something per feature, so it only appears there — the panel sits at the
+// page's normal one-toggle density until you ask for the detail.
+function syncMrrControls(){
+  const tog = document.getElementById('mrr-toggle'), term = document.getElementById('mrr-term');
+  if (tog)  tog.style.display  = SUBS && featList().length ? '' : 'none';
+  if (term) term.style.display = (SUBS && mrrMode === 'feature') ? '' : 'none';
+}
+document.querySelectorAll('#mrr-toggle button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#mrr-toggle button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); mrrMode = b.dataset.mode || 'total';
+  // Snap back to the monthly view: the day view reads DAILY_HISTORY, a single MRR scalar
+  // with no feature dimension, so per-feature there would silently do nothing.
   const vt = document.querySelector('.viewtoggle[data-key="mrr"]');
   if (vt) { vt.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
             const mb = vt.querySelector('[data-view="month"]'); if (mb) mb.classList.add('on'); }
-  drawMrrMonth(); drawMrrFeatSel();
+  drawMrrMonth(); syncMrrControls();
+});
+document.querySelectorAll('#mrr-term button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#mrr-term button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); mrrTerm = b.dataset.term || '';
+  drawMrrMonth();
 });
 function drawActMonth(){ const actLabels = actArr.map(a=>a.month); inst.active = new Chart(document.getElementById('c-active'), { type:'line',
   data:{ labels:actLabels, datasets:[{ data:actArr.map(a=>a.active), borderColor:BLUE_DEEP, backgroundColor:'rgba(21,120,196,0.08)', fill:true,
@@ -662,13 +631,20 @@ function setView(key, view){
   if (inst[key]) { inst[key].destroy(); inst[key] = null; }
   if (key==='pay') { const pt=document.getElementById('pay-toggle'); if(pt) pt.style.display = (view==='day') ? 'none' : ''; }
   // The day view reads DAILY_HISTORY, which carries a single MRR scalar with no feature or
-  // term dimension. Leaving the controls visible there would offer filters that do nothing.
-  if (key==='mrr') { const hide = (view==='day') || !SUBS;
-    ['mrr-term','mrr-feat'].forEach(id => { const e=document.getElementById(id); if(e) e.style.display = hide ? 'none' : ''; }); }
+  // term dimension, so both controls go away there rather than offering filters that do
+  // nothing. Switching to the day view also drops back to Total for the same reason.
+  if (key==='mrr') {
+    if (view==='day') { mrrMode = 'total';
+      document.querySelectorAll('#mrr-toggle button').forEach(x =>
+        x.classList.toggle('on', x.dataset.mode === 'total')); }
+    const tog=document.getElementById('mrr-toggle'), term=document.getElementById('mrr-term');
+    if (tog)  tog.style.display  = (view==='day' || !SUBS) ? 'none' : '';
+    if (term) term.style.display = (view==='day' || !SUBS || mrrMode!=='feature') ? 'none' : '';
+  }
   if (view==='day') inst[key] = dayChart('c-'+key, VIEWCFG[key].field, VIEWCFG[key].color, VIEWCFG[key].yf);
   else VIEWCFG[key].build();
 }
-drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMonth();
+drawRegMonth(); drawPaying('now'); drawMrrMonth(); syncMrrControls(); drawActMonth();
 
 // ---- Paying base: gross adds vs churn (monthly, complete months only) ----
 (function(){
