@@ -274,7 +274,7 @@
        16k merchants hold more than one feature, so a merchant who drops one of three is
        invisible above and visible here. -->
   <div class="panel" id="p-subflow" style="display:none">
-    <h3>Subscriptions — gross adds vs cancellations<span class="info" data-tip="Counts SUBSCRIPTIONS, not merchants: a merchant who takes three features contributes three. Read against the merchant chart above, which cannot see a merchant dropping one feature of three — the most common way revenue leaks. The dates come from Chargebee's own subscription lifecycle, so a cancellation lands in the month it happened; the merchant chart infers churn from invoice silence with a 30-day grace and is late by construction. The two are not meant to agree. Scheduled cancellations on subscriptions still inside a paid term are excluded — those have not happened yet. The month in progress is not shown, for the same reason it is not shown above: a part month reads as a collapse, and a growth rate computed from an incomplete numerator is not a rate.">i</span></h3>
+    <h3>Subscriptions — gross adds vs cancellations<span class="info" data-tip="Counts SUBSCRIPTIONS, not merchants: a merchant who takes three features contributes three. Read against the merchant chart above, which cannot see a merchant dropping one feature of three — the most common way revenue leaks. The dates come from Chargebee's own subscription lifecycle, so a cancellation lands in the month it happened; the merchant chart infers churn from invoice silence with a 30-day grace and is late by construction. The two are not meant to agree. Scheduled cancellations on subscriptions still inside a paid term are excluded — those have not happened yet. The month in progress IS shown, drawn faded &mdash; these are dated cancellations with no grace period, so the month is partial but the definition is not. Its growth point is withheld all the same, because a rate over part of a month is not a rate.">i</span></h3>
     <div class="flowleg" style="display:flex;flex-wrap:wrap;gap:16px;margin:0 0 10px;font-size:12px;color:var(--mid-gray)">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#639922"></span>Gross adds</span>
       <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E24B4A"></span>Cancellations</span>
@@ -681,41 +681,74 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
   // Keeping both is the point: one says when the merchant decided, the other when we felt it.
   let flowMode = 'grace', flowChart = null;
 
-  // Merchant-level cancellations, derived from the subscription flow. A merchant appears
-  // once however many features they dropped — otherwise this would not be comparable with
-  // the gross-adds series beside it, which counts merchants. The subscription-level read
-  // is the separate chart below; conflating the two grains in one bar is exactly the
-  // confusion this pair of charts exists to remove.
-  const SUBF = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.flow) ? SUBS_DATA.flow : [];
-  const cancelByMonth = {};
-  for (const c of SUBF) cancelByMonth[c.m] = (cancelByMonth[c.m] || 0) + c.c;
-  const haveCancel = Object.keys(cancelByMonth).length > 0;
+  // Cancellation mode is a SELF-CONTAINED reading, both series from Chargebee's own
+  // subscription lifecycle at MERCHANT grain: a merchant arrives when its first
+  // subscription starts and leaves when its last one is cancelled, so dropping one feature
+  // of three is not a departure. Never a sum over the subscription cells — that counts
+  // 4,376 where 2,610 merchants actually left, and would put a subscription count in the
+  // same stacked bar as a merchant count.
+  //
+  // It also reaches TWO MONTHS FURTHER than the grace reading. The grace series withholds
+  // the newest complete month because its churn is still inside the 30-day window and
+  // rising; a dated cancellation has nothing to wait for, so August and September are
+  // available here the moment they happen. That is the point of the toggle, not a side
+  // effect: the cost of the earlier read is that it counts an intent to leave rather than
+  // money stopping.
+  const MF = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.merchantFlow)
+             ? SUBS_DATA.merchantFlow : [];
+  const haveCancel = MF.length > 0;
+  const FROM_M = F.length ? F[0].m : '2022-01';
+  const SBUILT = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.generatedAt)
+                 ? SUBS_DATA.generatedAt.slice(0,7) : new Date().toISOString().slice(0,7);
+  // Running merchant base, for the growth rate, accumulated from the very first month —
+  // starting at 2022 would divide by a base missing four years of history.
+  const mStartBase = {};
+  { let run = 0;
+    for (const r of MF) { mStartBase[r.m] = run; run += r.a - r.c; } }
+  const MFvis = MF.filter(r => r.m >= FROM_M);
 
   function drawFlow(){
     if (flowChart) { flowChart.destroy(); flowChart = null; }
     const isCancel = flowMode === 'cancel' && haveCancel;
     const lossLabel = isCancel ? 'Cancellations' : 'Churn';
-    const loss = F.map(r => -(isCancel ? (cancelByMonth[r.m] || 0) : r.churn));
+    const rows = isCancel ? MFvis : F;
+    const labels = rows.map(r => r.m);
+    const adds = isCancel ? MFvis.map(r => r.a) : F.map(r => r.adds);
+    const loss = isCancel ? MFvis.map(r => -r.c) : F.map(r => -r.churn);
+    // The in-progress month is SHOWN in cancellation mode and marked translucent, because
+    // a dated cancellation is complete as far as it goes — the month is partial, the
+    // definition is not. Its growth point is still withheld: a rate over two thirds of a
+    // month is not a rate, and a dipping line would be read as a trend rather than a
+    // calendar artefact.
+    const partialAt = isCancel ? labels.indexOf(SBUILT) : -1;
+    const shade = (base) => labels.map((m,i) => i === partialAt ? base + '59' : base);
+    const growth = isCancel
+      ? MFvis.map((r,i) => (i === partialAt || !mStartBase[r.m]) ? null
+                          : Math.round(((r.a - r.c) / mStartBase[r.m]) * 1000) / 10)
+      : F.map(r => r.g);
     const datasets = [
-      { type:'bar', label:'Gross adds', data:F.map(r=>r.adds), backgroundColor:'#639922', stack:'s', order:3 },
-      { type:'bar', label:lossLabel, data:loss, backgroundColor:'#E24B4A', stack:'s', order:3 }
+      { type:'bar', label:'Gross adds', data:adds, backgroundColor:shade('#639922'), stack:'s', order:3 },
+      { type:'bar', label:lossLabel, data:loss, backgroundColor:shade('#E24B4A'), stack:'s', order:3 },
+      // In grace mode this is the published net growth of the paying base. In cancellation
+      // mode it is recomputed from THESE bars and their own base — never the grace figure
+      // reused, which would attach a percentage to bars it was not calculated from.
+      { type:'line', label:'Net growth %', data:growth, yAxisID:'y1', borderColor:'#185FA5',
+        borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1, spanGaps:false }
     ];
-    // The net-growth line belongs to the grace definition — it is the published net growth
-    // of the paying base. Drawing it over a cancellation series would attach a percentage
-    // to bars it was not computed from, so it is dropped in that mode rather than reused.
-    if (!isCancel) datasets.push(
-      { type:'line', label:'Net growth %', data:F.map(r=>r.g), yAxisID:'y1', borderColor:'#185FA5', borderDash:[5,4], borderWidth:2, pointRadius:2, tension:.3, order:1 });
     flowChart = new Chart(cv, {
-      data:{ labels:F.map(r=>r.m), datasets },
+      data:{ labels, datasets },
       options:{ responsive:true, maintainAspectRatio:false,
         plugins:{ legend:{display:false},
-          tooltip:{ callbacks:{ label: it => it.dataset.yAxisID==='y1'
-            ? ('Net growth: '+it.parsed.y+'%')
-            : (it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US')) } } },
+          tooltip:{ callbacks:{
+            label: it => it.dataset.yAxisID==='y1'
+              ? ('Net growth: ' + (it.parsed.y == null ? '\u2014 (month still running)' : it.parsed.y + '%'))
+              : (it.dataset.label+': '+Math.abs(it.parsed.y).toLocaleString('en-US')),
+            footer: its => (its.length && its[0].dataIndex === partialAt) ? 'Month still in progress' : ''
+          } } },
         scales:{
           x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },
           y:{ stacked:true, grid:{color:'#EFEFEF'}, title:{display:true,text:'Merchants / month'}, ticks:{ callback:v=>Math.abs(v).toLocaleString('en-US') } },
-          y1:{ display: !isCancel, position:'right', grid:{display:false}, title:{display:true,text:'Net growth %'}, ticks:{ callback:v=>v+'%' } }
+          y1:{ position:'right', grid:{display:false}, title:{display:true,text:'Net growth %'}, ticks:{ callback:v=>v+'%' } }
         } }
     });
     // The legend is hand-written markup, so relabel it here rather than leaving it saying
@@ -729,7 +762,17 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
         const txt = [...items[1].childNodes].filter(n => n.nodeType === 3).pop();
         if (txt) txt.nodeValue = lossLabel;
       }
-      if (items[2]) items[2].style.display = isCancel ? 'none' : '';
+      // The growth line survives the switch now that it is recomputed per mode, so the
+      // legend entry stays put instead of vanishing under the reader — but it must be
+      // relabelled: the base it divides by is the invoice-derived PAYING base in grace
+      // mode and the merchant subscription base in cancellation mode, and those are not
+      // the same population.
+      if (items[2]) {
+        items[2].style.display = '';
+        const t2 = [...items[2].childNodes].filter(n => n.nodeType === 3).pop();
+        if (t2) t2.nodeValue = isCancel ? 'Net growth of merchant base (%)'
+                                        : 'Net growth of paying base (%)';
+      }
     }
   }
   const fm = document.getElementById('flow-mode');
@@ -756,14 +799,16 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
   // Start where the merchant chart starts rather than in 2018: subscription counts before
   // then are a handful a month and squeeze five years of readable data into the right edge.
   const FROM = '2022-01';
-  // THE IN-PROGRESS MONTH IS DROPPED, as it is on the merchant chart above. A part month
-  // reads as a collapse — September stood at 3,183 adds on the 18th against ~5,700 in a
-  // full month — and it drags the growth line down with it, which is worse, because a rate
-  // computed from two thirds of a month is not a rate. The month comes from the data's own
-  // build stamp rather than the reader's clock, so a stale file cannot silently drop a
-  // month that has since completed.
+  // The in-progress month is SHOWN and marked translucent, not dropped. These are dated
+  // cancellation events with no grace period, so the month is partial but the definition is
+  // not — there is nothing to wait for, only days left to run. Its GROWTH POINT is still
+  // withheld: September stood at 3,183 adds on the 18th against ~5,700 in a full month, and
+  // a rate over two thirds of a month is not a rate. A dipping line would be read as a
+  // trend rather than a calendar artefact, which is the one reading worth preventing.
+  // The month comes from the data's build stamp, not the reader's clock, so a stale file
+  // cannot fade a month that has since completed.
   const BUILT = (S.generatedAt || '').slice(0, 7) || new Date().toISOString().slice(0, 7);
-  const months = S.monthsFlow.filter(m => m >= FROM && m < BUILT);
+  const months = S.monthsFlow.filter(m => m >= FROM);
 
   const featBtns = document.getElementById('subflow-feat');
   if (featBtns) {
@@ -807,14 +852,16 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
       running += (adds[m] || 0) - (cans[m] || 0);
     }
     const A = months.map(m => adds[m] || 0), C = months.map(m => cans[m] || 0);
+    const partialAt = months.indexOf(BUILT);
+    const shade = (base) => months.map((m,i) => i === partialAt ? base + '59' : base);
     const G = months.map((m,i) => {
       const b = startBase[m];
-      return b > 0 ? Math.round(((A[i] - C[i]) / b) * 1000) / 10 : null;
+      return (i === partialAt || !(b > 0)) ? null : Math.round(((A[i] - C[i]) / b) * 1000) / 10;
     });
     chart = new Chart(cv, {
       data:{ labels:months, datasets:[
-        { type:'bar', label:'Gross adds', data:A, backgroundColor:'#639922', stack:'s', order:3 },
-        { type:'bar', label:'Cancellations', data:C.map(v=>-v), backgroundColor:'#E24B4A', stack:'s', order:3 },
+        { type:'bar', label:'Gross adds', data:A, backgroundColor:shade('#639922'), stack:'s', order:3 },
+        { type:'bar', label:'Cancellations', data:C.map(v=>-v), backgroundColor:shade('#E24B4A'), stack:'s', order:3 },
         // Growth as a PERCENT of the base at the start of the month, on its own right-hand
         // axis — the same reading as the merchant chart above, so the two can be compared
         // directly. A count would have grown with the base and said nothing about the rate.
@@ -825,16 +872,17 @@ drawRegMonth(); drawPaying('now'); drawMrrMonth(); drawMrrFeatSel(); drawActMont
         plugins:{ legend:{display:false},
           tooltip:{ callbacks:{
             label: it => it.dataset.yAxisID === 'y1'
-              ? ('Net growth: ' + (it.parsed.y == null ? '\u2014' : it.parsed.y + '%'))
+              ? ('Net growth: ' + (it.parsed.y == null ? '\u2014 (month still running)' : it.parsed.y + '%'))
               : (it.dataset.label + ': ' + Math.abs(it.parsed.y).toLocaleString('en-US')),
             // The base is the one number the chart divides by and never shows, so the
             // tooltip states it rather than leaving the percentage unfalsifiable.
             footer: its => {
-              const m = months[its.length ? its[0].dataIndex : 0];
-              const b = startBase[m], i = months.indexOf(m);
+              if (!its.length) return '';
+              const i = its[0].dataIndex, m = months[i], b = startBase[m];
               if (!b) return '';
               return 'Net ' + (A[i] - C[i] >= 0 ? '+' : '') + (A[i] - C[i]).toLocaleString('en-US') +
-                     ' on a base of ' + b.toLocaleString('en-US');
+                     ' on a base of ' + b.toLocaleString('en-US') +
+                     (i === partialAt ? ' \u00b7 month still in progress' : '');
             } } } },
         scales:{
           x:{ stacked:true, grid:{display:false}, ticks:{ maxTicksLimit:14, maxRotation:60, minRotation:60, font:{size:9} } },

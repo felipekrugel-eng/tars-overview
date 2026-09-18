@@ -58,6 +58,7 @@ ROLLING_BY_COUNTRY_SQL = "rolling_30d_by_country_49days.sql"
 # to the single-bar MRR chart it had before.
 MRR_FEATURE_SQL = "mrr_by_feature_monthly.sql"
 SUB_FLOW_SQL    = "subscription_flow_monthly.sql"
+MERCHANT_FLOW_SQL = "merchant_subscription_flow_monthly.sql"
 
 # ---------------------------------------------------------------------------
 # FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
@@ -352,11 +353,14 @@ def main():
             flow_csv = WORK / "subscription_flow.csv"
             write(feat_csv, _run(MRR_FEATURE_SQL))
             write(flow_csv, _run(SUB_FLOW_SQL))
+            mflow_csv = WORK / "merchant_subscription_flow.csv"
+            write(mflow_csv, _run(MERCHANT_FLOW_SQL))
         finally:
             sconn.close()
         senv = {**os.environ,
                 "MRR_FEATURE_CSV": str(feat_csv),
                 "SUB_FLOW_CSV": str(flow_csv),
+                "MERCHANT_FLOW_CSV": str(mflow_csv),
                 "MRR_TOTAL_CSV": str(WORK / "mrr_bottomup.csv"),
                 "SUBS_OUT_DIR": str(V2)}
         subprocess.run([sys.executable, str(HERE / "build_subs_data.py")], check=True, env=senv)

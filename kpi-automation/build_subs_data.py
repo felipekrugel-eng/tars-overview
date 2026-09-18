@@ -34,6 +34,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 MRR_FEATURE_CSV = Path(os.environ.get("MRR_FEATURE_CSV", HERE / "work" / "mrr_by_feature.csv"))
 SUB_FLOW_CSV    = Path(os.environ.get("SUB_FLOW_CSV",    HERE / "work" / "subscription_flow.csv"))
+MERCHANT_FLOW_CSV = Path(os.environ.get("MERCHANT_FLOW_CSV", HERE / "work" / "merchant_subscription_flow.csv"))
 MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bottomup.csv"))
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT_FILE        = OUT_DIR / "subs-data.js"
@@ -114,6 +115,23 @@ def main() -> None:
         for r in flow.itertuples()
     ]
 
+    # ---- merchant-grain twin ----------------------------------------------------------
+    # Separate series, never derived by summing the cells above: a merchant with three
+    # features is three rows there and one here, and the churn chart plots this one against
+    # merchant gross adds. Summing subscriptions into that chart overstated departures by
+    # two thirds (Aug 2026: 4,376 subscriptions against 2,610 merchants).
+    merchant_flow = []
+    if MERCHANT_FLOW_CSV.exists():
+        mf = _load(MERCHANT_FLOW_CSV, "merchant subscription flow")
+        mf["M"] = _month(mf["MONTH"])
+        mf = mf[mf["M"] <= cap]
+        merchant_flow = [{"m": r.M, "a": int(r.ADDS), "c": int(r.CANCELS)} for r in mf.itertuples()]
+        mbase = int((mf["ADDS"] - mf["CANCELS"]).sum())
+        print(f"[subs] merchant-grain flow: {len(merchant_flow)} months, derived merchant base {mbase:,}")
+    else:
+        print(f"[subs] WARNING — {MERCHANT_FLOW_CSV} not found; the churn chart keeps its "
+              f"30-day reading only and the Cancellations toggle stays hidden", flush=True)
+
     # A feature earns a legend entry only if it appears in the window the charts actually
     # draw (the page starts at 2022-01). Without this, OTHER — one unparseable $25 line item
     # from August 2018 — would sit in the legend forever reading "$0K". Its cells stay in
@@ -169,6 +187,7 @@ def main() -> None:
         "summary": summary,
         "mrr": mrr_cells,
         "flow": flow_cells,
+        "merchantFlow": merchant_flow,
     }
 
     banner = (
@@ -188,6 +207,10 @@ def main() -> None:
         "//                dates, so a cancellation lands in the month it happened; the merchant\n"
         "//                churn chart above infers churn from invoice silence with a 30-day grace\n"
         "//                and is late by construction. The two are not meant to agree.\n"
+        "//   merchantFlow[] : {m, a, c} — the SAME events counted per MERCHANT. Adds is the month a\n"
+        "//                merchant's first subscription starts; cancels is the month its last one\n"
+        "//                goes, so dropping one feature of three is not a departure. The churn\n"
+        "//                chart's Cancellations mode uses this, never a sum over flow[].\n"
         "//   summary[]  : {k,l,mrr,chg} for the latest month, chg = % vs the month before.\n"
         "// }\n"
     )
