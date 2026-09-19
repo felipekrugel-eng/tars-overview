@@ -34717,169 +34717,226 @@ ch_3UHBeR4UgNsCfLfV0Jhcb67J,2026-09-18 23:57:12,acct_1U1rct4UgNsCfLfV,acct_1SSKs
 ch_3UHBeS6xaKj8hHOI1XNfmGam,2026-09-18 23:57:13,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2500,Visa,prepaid,US,0130,80
 ch_3UHBeYQJfvlGDJJG0SXwTx2M,2026-09-18 23:57:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1125,MasterCard,credit,US,5633,33
 ch_3UHBeZ4UgNsCfLfV1qiDFYfM,2026-09-18 23:57:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,5990,46
-ch_3UHBfm4UgNsCfLfV09GntAnC,2026-09-18 23:58:38,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,6089,
-ch_3UHBgo4UgNsCfLfV0OMCe4or,2026-09-18 23:59:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2400,Visa,debit,US,9734,
-ch_3UHBh04UgNsCfLfV0CkO9Rxi,2026-09-18 23:59:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,debit,US,3693,
-ch_3UHBiIQJfvlGDJJG1UBgGiuS,2026-09-19 00:01:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1575,MasterCard,debit,US,1854,
-ch_3UHBiRQJfvlGDJJG1MPdEZoT,2026-09-19 00:01:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,7680,
-ch_3UHBiuQJfvlGDJJG1jhbdNha,2026-09-19 00:01:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2400,American Express,credit,US,1002,
-ch_3UHBix4UgNsCfLfV0Og5kjYD,2026-09-19 00:02:20,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1700,MasterCard,prepaid,US,9438,
-ch_3UHBkt4UgNsCfLfV16izogea,2026-09-19 00:03:59,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2300,MasterCard,debit,US,3323,
-ch_3UHBlO6xaKj8hHOI1sH9wfum,2026-09-19 00:04:25,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1384,MasterCard,debit,US,2354,
+ch_3UHBfm4UgNsCfLfV09GntAnC,2026-09-18 23:58:38,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,6089,28
+ch_3UHBgo4UgNsCfLfV0OMCe4or,2026-09-18 23:59:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2400,Visa,debit,US,9734,77
+ch_3UHBh04UgNsCfLfV0CkO9Rxi,2026-09-18 23:59:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,debit,US,3693,51
+ch_3UHBiIQJfvlGDJJG1UBgGiuS,2026-09-19 00:01:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1575,MasterCard,debit,US,1854,44
+ch_3UHBiRQJfvlGDJJG1MPdEZoT,2026-09-19 00:01:18,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,575,Visa,debit,US,7680,19
+ch_3UHBiuQJfvlGDJJG1jhbdNha,2026-09-19 00:01:48,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2400,American Express,credit,US,1002,65
+ch_3UHBix4UgNsCfLfV0Og5kjYD,2026-09-19 00:02:20,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1700,MasterCard,prepaid,US,9438,59
+ch_3UHBkt4UgNsCfLfV16izogea,2026-09-19 00:03:59,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2300,MasterCard,debit,US,3323,75
+ch_3UHBlO6xaKj8hHOI1sH9wfum,2026-09-19 00:04:25,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1384,MasterCard,debit,US,2354,51
 ch_3UHBld4UgNsCfLfV0Vq9iRfA,2026-09-19 00:04:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,failed,1200,Visa,debit,US,3042,
-ch_3UHBmB4UgNsCfLfV0FbkeuXp,2026-09-19 00:05:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,MasterCard,debit,US,9647,
-ch_3UHBn74UgNsCfLfV0w0FavQn,2026-09-19 00:06:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,4234,
-ch_3UHBnT7W6DgNeh5X0G0SS7hm,2026-09-19 00:06:36,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,775,Visa,debit,US,6838,
-ch_3UHBnpQJfvlGDJJG0nhM2bef,2026-09-19 00:06:52,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,debit,US,9173,
-ch_3UHBoA4UgNsCfLfV1i3mXYlV,2026-09-19 00:07:26,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Discover,debit,US,8176,
-ch_3UHBoMQJfvlGDJJG12FCF9Of,2026-09-19 00:07:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,850,Visa,debit,US,7039,
-ch_3UHBof5XZgMuE7ip0VAkwpBT,2026-09-19 00:07:46,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2216,Visa,debit,US,5180,
-ch_3UHBqM4UgNsCfLfV11mZTW0G,2026-09-19 00:09:29,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,3600,MasterCard,credit,US,7901,
-ch_3UHBr64UgNsCfLfV1aOAklfj,2026-09-19 00:10:16,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,1655,
-ch_3UHBrx4UgNsCfLfV0a4DQmIq,2026-09-19 00:11:07,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,credit,US,4954,
-ch_3UHBsO4UgNsCfLfV1DkTqryK,2026-09-19 00:11:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,7674,
-ch_3UHBtOQJfvlGDJJG1x1lmcMX,2026-09-19 00:12:38,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1275,Visa,debit,US,1054,
-ch_3UHBtv6xaKj8hHOI1h1dFQ8g,2026-09-19 00:13:17,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,MasterCard,debit,US,6425,
-ch_3UHBuL4UgNsCfLfV1FRdHlFO,2026-09-19 00:13:38,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1500,Visa,prepaid,US,4555,
-ch_3UHBv34vFfk6H62N0L7pt2cj,2026-09-19 00:14:22,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,206,MasterCard,debit,US,3192,
-ch_3UHBv8QJfvlGDJJG0QXsmtbZ,2026-09-19 00:14:26,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1700,Visa,debit,US,1847,
-ch_3UHBvQ4UgNsCfLfV1GjYhwgU,2026-09-19 00:14:46,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,Visa,debit,US,8957,
-ch_3UHBvy4UgNsCfLfV1ffRF3Og,2026-09-19 00:15:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7986,
-ch_3UHBw24UgNsCfLfV11pg0xLl,2026-09-19 00:15:22,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,6143,
-ch_3UHBx24UgNsCfLfV0Z5UjP23,2026-09-19 00:16:24,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,8337,
-ch_3UHBxX4UgNsCfLfV0JVBuBlA,2026-09-19 00:16:54,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,3985,
-ch_3UHByu4UgNsCfLfV0tz0litC,2026-09-19 00:18:19,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,1230,
-ch_3UHBzJ7W6DgNeh5X1FneHIF5,2026-09-19 00:18:45,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,850,Visa,debit,US,8105,
-ch_3UHBzS4UgNsCfLfV0b6ttH4G,2026-09-19 00:18:55,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,0200,
-ch_3UHC0F6xaKj8hHOI1l3x3YMS,2026-09-19 00:19:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2663,Visa,debit,US,4698,
-ch_3UHC0b4UgNsCfLfV0fWYZIcN,2026-09-19 00:20:05,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1500,Visa,credit,US,0426,
-ch_3UHC1o4UgNsCfLfV0q9NoOE4,2026-09-19 00:21:19,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,8093,
-ch_3UHC3N4UgNsCfLfV0D6WLeOK,2026-09-19 00:22:58,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,4234,
-ch_3UHC3V4UgNsCfLfV0zXioD1v,2026-09-19 00:23:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2000,Visa,debit,US,3159,
-ch_3UHC3z4UgNsCfLfV0oBLl2Jf,2026-09-19 00:23:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7674,
-ch_3UHC594UgNsCfLfV01eroglf,2026-09-19 00:24:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,7484,
-ch_3UHC5gQJfvlGDJJG0TDvPuMU,2026-09-19 00:25:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,American Express,credit,US,3008,
-ch_3UHC6X4UgNsCfLfV1g4T4TVT,2026-09-19 00:26:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,8725,
-ch_3UHC8A4UgNsCfLfV1d534zlB,2026-09-19 00:28:00,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,5910,
-ch_3UHC8h6xaKj8hHOI0y58hUiU,2026-09-19 00:28:29,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,prepaid,US,5100,
-ch_3UHC8y4UgNsCfLfV1WnxMSSv,2026-09-19 00:28:43,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2700,Visa,debit,US,1913,
-ch_3UHC997W6DgNeh5X00GiNVg9,2026-09-19 00:28:57,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1438,MasterCard,credit,US,4829,
-ch_3UHCBF4UgNsCfLfV0eT2pHRj,2026-09-19 00:31:23,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,3535,
-ch_3UHCBJQJfvlGDJJG1mE7ybAw,2026-09-19 00:31:09,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,Visa,debit,US,6241,
-ch_3UHCCSQJfvlGDJJG0BiJ6NWI,2026-09-19 00:32:19,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,7114,
-ch_3UHCEM4UgNsCfLfV19wGA0Tu,2026-09-19 00:34:33,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,2897,
-ch_3UHCEW4UgNsCfLfV0B7QLtCl,2026-09-19 00:34:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,prepaid,US,3627,
-ch_3UHCF3QJfvlGDJJG13f2RlK4,2026-09-19 00:35:00,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1625,Visa,debit,US,4413,
-ch_3UHCG24UgNsCfLfV0ogFktT2,2026-09-19 00:36:01,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,7165,
-ch_3UHCGO6xaKj8hHOI1ELZwPQh,2026-09-19 00:36:40,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2686,MasterCard,debit,US,9203,
-ch_3UHCH1QJfvlGDJJG10urGaIj,2026-09-19 00:37:04,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2250,Visa,debit,US,6547,
-ch_3UHCH94UgNsCfLfV123N9Ye8,2026-09-19 00:37:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,2842,
-ch_3UHCIV5XZgMuE7ip1pVFFcWy,2026-09-19 00:38:42,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2871,Visa,debit,US,4128,
-ch_3UHCIl7dzWyoeYnh1lBp1Xuj,2026-09-19 00:38:55,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,5361,Visa,credit,US,2542,
-ch_3UHCJm4UgNsCfLfV0U2JahtX,2026-09-19 00:39:58,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1100,MasterCard,debit,US,8708,
-ch_3UHCKA4UgNsCfLfV0DTi4MQ1,2026-09-19 00:40:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,5318,
-ch_3UHCKq6xaKj8hHOI1aDECefq,2026-09-19 00:41:03,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2866,MasterCard,debit,US,0809,
-ch_3UHCLR4UgNsCfLfV1D1HDHkj,2026-09-19 00:41:45,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7576,
+ch_3UHBmB4UgNsCfLfV0FbkeuXp,2026-09-19 00:05:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,MasterCard,debit,US,9647,49
+ch_3UHBn74UgNsCfLfV0w0FavQn,2026-09-19 00:06:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,4234,46
+ch_3UHBnT7W6DgNeh5X0G0SS7hm,2026-09-19 00:06:36,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,775,Visa,debit,US,6838,0
+ch_3UHBnpQJfvlGDJJG0nhM2bef,2026-09-19 00:06:52,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,450,Visa,debit,US,9173,16
+ch_3UHBoA4UgNsCfLfV1i3mXYlV,2026-09-19 00:07:26,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Discover,debit,US,8176,20
+ch_3UHBoMQJfvlGDJJG12FCF9Of,2026-09-19 00:07:27,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,850,Visa,debit,US,7039,26
+ch_3UHBof5XZgMuE7ip0VAkwpBT,2026-09-19 00:07:46,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2216,Visa,debit,US,5180,73
+ch_3UHBqM4UgNsCfLfV11mZTW0G,2026-09-19 00:09:29,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,3600,MasterCard,credit,US,7901,109
+ch_3UHBr64UgNsCfLfV1aOAklfj,2026-09-19 00:10:16,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,1655,38
+ch_3UHBrx4UgNsCfLfV0a4DQmIq,2026-09-19 00:11:07,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,credit,US,4954,46
+ch_3UHBsO4UgNsCfLfV1DkTqryK,2026-09-19 00:11:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,7674,38
+ch_3UHBtOQJfvlGDJJG1x1lmcMX,2026-09-19 00:12:38,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1275,Visa,debit,US,1054,37
+ch_3UHBtv6xaKj8hHOI1h1dFQ8g,2026-09-19 00:13:17,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2149,MasterCard,debit,US,6425,71
+ch_3UHBuL4UgNsCfLfV1FRdHlFO,2026-09-19 00:13:38,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1500,Visa,prepaid,US,4555,54
+ch_3UHBv34vFfk6H62N0L7pt2cj,2026-09-19 00:14:22,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,206,MasterCard,debit,US,3192,0
+ch_3UHBv8QJfvlGDJJG0QXsmtbZ,2026-09-19 00:14:26,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1700,Visa,debit,US,1847,48
+ch_3UHBvQ4UgNsCfLfV1GjYhwgU,2026-09-19 00:14:46,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,Visa,debit,US,8957,31
+ch_3UHBvy4UgNsCfLfV1ffRF3Og,2026-09-19 00:15:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7986,20
+ch_3UHBw24UgNsCfLfV11pg0xLl,2026-09-19 00:15:22,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,6143,49
+ch_3UHBx24UgNsCfLfV0Z5UjP23,2026-09-19 00:16:24,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,8337,25
+ch_3UHBxX4UgNsCfLfV0JVBuBlA,2026-09-19 00:16:54,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,3985,41
+ch_3UHByu4UgNsCfLfV0tz0litC,2026-09-19 00:18:19,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,1230,36
+ch_3UHBzJ7W6DgNeh5X1FneHIF5,2026-09-19 00:18:45,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,850,Visa,debit,US,8105,0
+ch_3UHBzS4UgNsCfLfV0b6ttH4G,2026-09-19 00:18:55,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,0200,49
+ch_3UHC0F6xaKj8hHOI1l3x3YMS,2026-09-19 00:19:45,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2663,Visa,debit,US,4698,84
+ch_3UHC0b4UgNsCfLfV0fWYZIcN,2026-09-19 00:20:05,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1500,Visa,credit,US,0426,54
+ch_3UHC1o4UgNsCfLfV0q9NoOE4,2026-09-19 00:21:19,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,8093,64
+ch_3UHC3N4UgNsCfLfV0D6WLeOK,2026-09-19 00:22:58,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,4234,46
+ch_3UHC3V4UgNsCfLfV0zXioD1v,2026-09-19 00:23:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2000,Visa,debit,US,3159,67
+ch_3UHC3z4UgNsCfLfV0oBLl2Jf,2026-09-19 00:23:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7674,20
+ch_3UHC594UgNsCfLfV01eroglf,2026-09-19 00:24:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,7484,57
+ch_3UHC5gQJfvlGDJJG0TDvPuMU,2026-09-19 00:25:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1050,American Express,credit,US,3008,31
+ch_3UHC6X4UgNsCfLfV1g4T4TVT,2026-09-19 00:26:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,8725,46
+ch_3UHC8A4UgNsCfLfV1d534zlB,2026-09-19 00:28:00,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,5910,28
+ch_3UHC8h6xaKj8hHOI0y58hUiU,2026-09-19 00:28:29,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2688,Visa,prepaid,US,5100,85
+ch_3UHC8y4UgNsCfLfV1WnxMSSv,2026-09-19 00:28:43,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2700,Visa,debit,US,1913,85
+ch_3UHC997W6DgNeh5X00GiNVg9,2026-09-19 00:28:57,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1438,MasterCard,credit,US,4829,0
+ch_3UHCBF4UgNsCfLfV0eT2pHRj,2026-09-19 00:31:23,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,3535,36
+ch_3UHCBJQJfvlGDJJG1mE7ybAw,2026-09-19 00:31:09,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,925,Visa,debit,US,6241,28
+ch_3UHCCSQJfvlGDJJG0BiJ6NWI,2026-09-19 00:32:19,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,7114,29
+ch_3UHCEM4UgNsCfLfV19wGA0Tu,2026-09-19 00:34:33,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,2897,57
+ch_3UHCEW4UgNsCfLfV0B7QLtCl,2026-09-19 00:34:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,prepaid,US,3627,49
+ch_3UHCF3QJfvlGDJJG13f2RlK4,2026-09-19 00:35:00,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1625,Visa,debit,US,4413,46
+ch_3UHCG24UgNsCfLfV0ogFktT2,2026-09-19 00:36:01,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,7165,46
+ch_3UHCGO6xaKj8hHOI1ELZwPQh,2026-09-19 00:36:40,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2686,MasterCard,debit,US,9203,85
+ch_3UHCH1QJfvlGDJJG10urGaIj,2026-09-19 00:37:04,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2250,Visa,debit,US,6547,61
+ch_3UHCH94UgNsCfLfV123N9Ye8,2026-09-19 00:37:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,debit,US,2842,46
+ch_3UHCIV5XZgMuE7ip1pVFFcWy,2026-09-19 00:38:42,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,2871,Visa,debit,US,4128,90
+ch_3UHCIl7dzWyoeYnh1lBp1Xuj,2026-09-19 00:38:55,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,5361,Visa,credit,US,2542,154
+ch_3UHCJm4UgNsCfLfV0U2JahtX,2026-09-19 00:39:58,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1100,MasterCard,debit,US,8708,44
+ch_3UHCKA4UgNsCfLfV0DTi4MQ1,2026-09-19 00:40:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,5318,41
+ch_3UHCKq6xaKj8hHOI1aDECefq,2026-09-19 00:41:03,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2866,MasterCard,debit,US,0809,90
+ch_3UHCLR4UgNsCfLfV1D1HDHkj,2026-09-19 00:41:45,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7576,20
 ch_3UHCLR5XZgMuE7ip0RKWrizb,2026-09-19 00:41:43,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,failed,3740,MasterCard,debit,US,1239,
 ch_3UHCLu5XZgMuE7ip1Uq7VwJ2,2026-09-19 00:42:22,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,failed,3740,MasterCard,debit,US,1239,
-ch_3UHCMB4UgNsCfLfV0X78kwUW,2026-09-19 00:42:24,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,0997,
-ch_3UHCMV5XZgMuE7ip0KGHVh03,2026-09-19 00:42:50,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3740,Visa,credit,US,1978,
-ch_3UHCMl5XZgMuE7ip07MLMES2,2026-09-19 00:43:06,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1375,MasterCard,debit,US,1239,
-ch_3UHCN84UgNsCfLfV0dqlSc3h,2026-09-19 00:43:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,2936,
-ch_3UHCNA6xaKj8hHOI0VU8CFsY,2026-09-19 00:45:35,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,645,Visa,prepaid,US,5171,
-ch_3UHCOA4UgNsCfLfV16dDeE8T,2026-09-19 00:44:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,prepaid,US,7067,
-ch_3UHCOA4UgNsCfLfV1UP7Q5vz,2026-09-19 00:44:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,3575,
-ch_3UHCOAG61FLqIJJO1JIAFhts,2026-09-19 00:44:29,acct_1Tu24OG61FLqIJJO,acct_1SSKsA7e4AMQfKY3,The Pavilion Restaurant at Caille Blanc Villa & Hotel,US,usd,succeeded,18767,MasterCard,debit,US,8682,
-ch_3UHCPV4UgNsCfLfV1j9TpgGZ,2026-09-19 00:45:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,7927,
-ch_3UHCPj4UgNsCfLfV0ylGL7xu,2026-09-19 00:46:09,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,prepaid,US,9691,
-ch_3UHCPz4UgNsCfLfV0DcJsCfj,2026-09-19 00:46:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,9788,
-ch_3UHCQK4UgNsCfLfV1EOcRI0k,2026-09-19 00:46:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,9885,
-ch_3UHCQZQJfvlGDJJG0YbU56T3,2026-09-19 00:46:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,credit,US,1271,
-ch_3UHCQu4UgNsCfLfV0YjdYavw,2026-09-19 00:47:16,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,1795,
-ch_3UHCRg4UgNsCfLfV1sqBwPFS,2026-09-19 00:48:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,prepaid,US,0115,
-ch_3UHCRp4UgNsCfLfV0XaUrde6,2026-09-19 00:48:13,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,MasterCard,debit,US,9647,
-ch_3UHCS8QJfvlGDJJG0IJvirqL,2026-09-19 00:48:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,0425,
-ch_3UHCSn4UgNsCfLfV1Oc4fOON,2026-09-19 00:49:12,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,MasterCard,debit,US,9647,
-ch_3UHCTJQJfvlGDJJG1gbITN69,2026-09-19 00:49:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,7919,
-ch_3UHCTh4UgNsCfLfV1pXHrndM,2026-09-19 00:50:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,8572,
-ch_3UHCW64UgNsCfLfV1OZLLXpS,2026-09-19 00:52:41,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,1628,
-ch_3UHCWC4UgNsCfLfV1ftheeYN,2026-09-19 00:52:43,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,2509,
-ch_3UHCWu4vFfk6H62N0KGbhcrm,2026-09-19 00:53:30,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1530,Visa,credit,US,7661,
-ch_3UHCXD4UgNsCfLfV0dmmbkVr,2026-09-19 00:53:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,Visa,prepaid,US,2179,
-ch_3UHCXM4UgNsCfLfV0LF6Cswh,2026-09-19 00:53:57,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,5710,
-ch_3UHCXe7dzWyoeYnh11kKqsZQ,2026-09-19 00:54:15,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,2500,Visa,credit,US,9207,
-ch_3UHCXh4vFfk6H62N1ruOyaux,2026-09-19 00:54:35,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,708,Visa,prepaid,US,3082,
-ch_3UHCXx4UgNsCfLfV1yPKicg0,2026-09-19 00:54:44,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,0522,
-ch_3UHCY74UgNsCfLfV1XcTy4QB,2026-09-19 00:54:42,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,7366,
-ch_3UHCYa4UgNsCfLfV1yRjn83d,2026-09-19 00:55:12,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,9945,
-ch_3UHCYk4UgNsCfLfV0lFqz8Pq,2026-09-19 00:55:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,American Express,credit,US,1022,
-ch_3UHCYk4vFfk6H62N0aVnaopJ,2026-09-19 00:55:25,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,512,American Express,credit,US,1914,
-ch_3UHCZM4UgNsCfLfV1V5LfCcb,2026-09-19 00:56:05,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,0187,
-ch_3UHCZx4UgNsCfLfV1XRtTB0I,2026-09-19 00:56:36,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,5219,
-ch_3UHCbu4UgNsCfLfV0DF74Kcq,2026-09-19 00:58:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1800,Visa,debit,US,5208,
-ch_3UHCc74vFfk6H62N1E9PopM1,2026-09-19 00:59:02,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,206,Visa,credit,US,9220,
-ch_3UHCcEQJfvlGDJJG0XaFqsZR,2026-09-19 00:58:58,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,American Express,credit,US,7617,
-ch_3UHCcfQJfvlGDJJG0Rc6cgBH,2026-09-19 00:59:24,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,Visa,debit,US,7845,
-ch_3UHCd66xaKj8hHOI1zoHaO7j,2026-09-19 01:00:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1543,Visa,credit,US,6287,
-ch_3UHCdM4UgNsCfLfV1kkQbfHo,2026-09-19 01:00:08,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,6924,
-ch_3UHCeXQJfvlGDJJG0DnJwXeB,2026-09-19 01:01:22,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1775,Visa,credit,US,4750,
-ch_3UHCey4vFfk6H62N1IksBCXR,2026-09-19 01:02:01,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1722,MasterCard,credit,US,2080,
-ch_3UHCfL4UgNsCfLfV0IUOfSNo,2026-09-19 01:02:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2400,MasterCard,debit,US,7562,
-ch_3UHCfe4UgNsCfLfV0aVHSkgL,2026-09-19 01:02:31,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,3000,Visa,debit,US,2814,
-ch_3UHCgS4vFfk6H62N0spQUpOg,2026-09-19 01:03:22,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1107,MasterCard,credit,US,8645,
-ch_3UHCgl4UgNsCfLfV1wRDDZTy,2026-09-19 01:03:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,MasterCard,debit,US,8101,
-ch_3UHCh64UgNsCfLfV1IsMzDVA,2026-09-19 01:03:59,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2000,Visa,debit,US,7234,
-ch_3UHCjJ4UgNsCfLfV1j0rPh8K,2026-09-19 01:06:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,2628,
-ch_3UHCjy4UgNsCfLfV0wybtAys,2026-09-19 01:06:57,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,MasterCard,prepaid,US,3402,
-ch_3UHCkLQJfvlGDJJG1z0Fl2DE,2026-09-19 01:07:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1425,Visa,debit,US,9969,
-ch_3UHCkr4UgNsCfLfV0ZQ3tkTJ,2026-09-19 01:07:54,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,3100,
-ch_3UHCmh4UgNsCfLfV00NHtMqw,2026-09-19 01:09:46,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,credit,US,8697,
-ch_3UHCok4UgNsCfLfV1rQGmANb,2026-09-19 01:11:53,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,6726,
-ch_3UHCq54UgNsCfLfV1QV5xU3J,2026-09-19 01:13:15,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,0057,
-ch_3UHCqQ4UgNsCfLfV0SGlGsMy,2026-09-19 01:13:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,2078,
-ch_3UHCsr4UgNsCfLfV1K1HkI9M,2026-09-19 01:16:30,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,4612,
-ch_3UHCuv4UgNsCfLfV1yePqw7H,2026-09-19 01:18:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,3318,
-ch_3UHCvi4UgNsCfLfV1gYpUWLE,2026-09-19 01:19:04,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,9557,
-ch_3UHCww4UgNsCfLfV0VMretF7,2026-09-19 01:20:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,9120,
-ch_3UHCx0QJfvlGDJJG0IxjBZ7G,2026-09-19 01:20:25,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,Visa,credit,US,1964,
-ch_3UHCyC4UgNsCfLfV03JwRj0H,2026-09-19 01:21:42,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,debit,US,7582,
-ch_3UHCyE4UgNsCfLfV0X1hBi7u,2026-09-19 01:21:41,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,4879,
-ch_3UHCyhQJfvlGDJJG0leHRSQ5,2026-09-19 01:22:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,325,Visa,credit,US,5674,
-ch_3UHCzS4UgNsCfLfV1ttpXUtP,2026-09-19 01:23:02,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,MasterCard,credit,US,5645,
-ch_3UHCzd7HEHpEovei0yzQPMfP,2026-09-19 01:23:16,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,4950,Visa,debit,US,8925,
-ch_3UHD0S6xaKj8hHOI19RQCw7c,2026-09-19 01:24:01,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5374,Visa,debit,US,7096,
-ch_3UHD0c7HEHpEovei0LNkzafr,2026-09-19 01:24:11,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,600,Visa,debit,US,8925,
-ch_3UHD2K4UgNsCfLfV1qpFcavW,2026-09-19 01:25:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,9311,
-ch_3UHD3A4UgNsCfLfV1C0Ydnyf,2026-09-19 01:26:47,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,prepaid,US,1427,
-ch_3UHD3V4UgNsCfLfV0BmznYbH,2026-09-19 01:27:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2100,Visa,debit,US,9714,
-ch_3UHD3e7HEHpEovei08YJuS5q,2026-09-19 01:27:22,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2365,Visa,debit,US,8958,
-ch_3UHD4q4UgNsCfLfV0dNK3963,2026-09-19 01:28:32,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,5919,
-ch_3UHD5M4UgNsCfLfV0IXSCOV3,2026-09-19 01:29:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,2907,
-ch_3UHD5d4UgNsCfLfV114cHGbi,2026-09-19 01:29:20,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,5102,
-ch_3UHD634UgNsCfLfV19d6wm10,2026-09-19 01:29:47,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,MasterCard,prepaid,US,1164,
-ch_3UHD654UgNsCfLfV0w7NVyc3,2026-09-19 01:29:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,0187,
-ch_3UHD6j4UgNsCfLfV1IxLYaRz,2026-09-19 01:30:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,5685,
-ch_3UHD8b4UgNsCfLfV0e56axv6,2026-09-19 01:32:30,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,8150,
-ch_3UHD9R6xaKj8hHOI1vDhlKbA,2026-09-19 01:33:17,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1719,Visa,prepaid,US,5534,
-ch_3UHDBH4UgNsCfLfV0NsJd0l3,2026-09-19 01:35:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,7063,
-ch_3UHDBc4UgNsCfLfV1qENP1uh,2026-09-19 01:35:32,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,prepaid,US,1251,
-ch_3UHDCj7HEHpEovei0cXeM5yb,2026-09-19 01:36:45,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1260,Visa,debit,US,9018,
-ch_3UHDDu7HEHpEovei0GYaU2LO,2026-09-19 01:37:56,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1750,Visa,debit,US,3636,
-ch_3UHDE44UgNsCfLfV0VdGm45Q,2026-09-19 01:38:04,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,0196,
-ch_3UHDFs7HEHpEovei0m3lsf0c,2026-09-19 01:39:58,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1250,Visa,debit,US,8958,
-ch_3UHDGw4UgNsCfLfV0fm8F331,2026-09-19 01:41:01,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,9861,
-ch_3UHDHh4UgNsCfLfV1RHWN6cp,2026-09-19 01:41:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7946,
-ch_3UHDMm4UgNsCfLfV0B7zbRKO,2026-09-19 01:47:11,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,9032,
-ch_3UHDTEG6iUrq4DFX1iQ9Kvc2,2026-09-19 01:53:48,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1600,MasterCard,credit,US,1902,
-ch_3UHDUqG9cKTLUhQ71GlCsI1m,2026-09-19 01:55:30,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1651,Visa,debit,US,2810,
-ch_3UHDd77HEHpEovei1KwCDlNX,2026-09-19 02:04:27,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1550,Visa,debit,US,1659,
-ch_3UHDes7HEHpEovei1VfQwMNQ,2026-09-19 02:05:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2035,Visa,debit,US,8958,
-ch_3UHDna6xaKj8hHOI0JdL5gIG,2026-09-19 02:14:48,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6125,Visa,credit,US,4862,
-ch_3UHDsZ6xaKj8hHOI1tepZwud,2026-09-19 02:20:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,7541,MasterCard,debit,US,6383,
-ch_3UHDvV6xaKj8hHOI0DiIdTYu,2026-09-19 02:23:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,737,Visa,debit,US,0488,
-ch_3UHDzR7HEHpEovei0CWBvQJU,2026-09-19 02:27:49,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1200,Visa,debit,US,6573,
-ch_3UHE2GG9cKTLUhQ71528aOfc,2026-09-19 02:30:20,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5400,Discover,debit,US,4198,
-ch_3UHE4H6xaKj8hHOI0wEEt1wN,2026-09-19 02:32:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2873,MasterCard,prepaid,US,2007,
-ch_3UHE4WG6iUrq4DFX0v3YpEb0,2026-09-19 02:32:15,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1400,Visa,debit,US,8231,
-ch_3UHE6W7HEHpEovei1cAzHe8s,2026-09-19 02:35:03,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,MasterCard,credit,US,4834,
-ch_3UHE8NG6iUrq4DFX1zOQL4tP,2026-09-19 02:36:44,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1700,MasterCard,debit,US,3935,
+ch_3UHCMB4UgNsCfLfV0X78kwUW,2026-09-19 00:42:24,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,0997,38
+ch_3UHCMV5XZgMuE7ip0KGHVh03,2026-09-19 00:42:50,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,3740,Visa,credit,US,1978,112
+ch_3UHCMl5XZgMuE7ip07MLMES2,2026-09-19 00:43:06,acct_1Tty3q5XZgMuE7ip,acct_1SSKsA7e4AMQfKY3,In Vino Verde,US,usd,succeeded,1375,MasterCard,debit,US,1239,51
+ch_3UHCN84UgNsCfLfV0dqlSc3h,2026-09-19 00:43:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,2936,36
+ch_3UHCNA6xaKj8hHOI0VU8CFsY,2026-09-19 00:45:35,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,645,Visa,prepaid,US,5171,32
+ch_3UHCOA4UgNsCfLfV16dDeE8T,2026-09-19 00:44:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,prepaid,US,7067,38
+ch_3UHCOA4UgNsCfLfV1UP7Q5vz,2026-09-19 00:44:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,3575,36
+ch_3UHCOAG61FLqIJJO1JIAFhts,2026-09-19 00:44:29,acct_1Tu24OG61FLqIJJO,acct_1SSKsA7e4AMQfKY3,The Pavilion Restaurant at Caille Blanc Villa & Hotel,US,usd,succeeded,18767,MasterCard,debit,US,8682,503
+ch_3UHCPV4UgNsCfLfV1j9TpgGZ,2026-09-19 00:45:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,7927,20
+ch_3UHCPj4UgNsCfLfV0ylGL7xu,2026-09-19 00:46:09,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,prepaid,US,9691,64
+ch_3UHCPz4UgNsCfLfV0DcJsCfj,2026-09-19 00:46:18,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,9788,20
+ch_3UHCQK4UgNsCfLfV1EOcRI0k,2026-09-19 00:46:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,9885,20
+ch_3UHCQZQJfvlGDJJG0YbU56T3,2026-09-19 00:46:54,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,credit,US,1271,30
+ch_3UHCQu4UgNsCfLfV0YjdYavw,2026-09-19 00:47:16,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,1795,25
+ch_3UHCRg4UgNsCfLfV1sqBwPFS,2026-09-19 00:48:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,prepaid,US,0115,25
+ch_3UHCRp4UgNsCfLfV0XaUrde6,2026-09-19 00:48:13,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,MasterCard,debit,US,9647,49
+ch_3UHCS8QJfvlGDJJG0IJvirqL,2026-09-19 00:48:31,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,0425,29
+ch_3UHCSn4UgNsCfLfV1Oc4fOON,2026-09-19 00:49:12,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,MasterCard,debit,US,9647,28
+ch_3UHCTJQJfvlGDJJG1gbITN69,2026-09-19 00:49:45,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,7919,30
+ch_3UHCTh4UgNsCfLfV1pXHrndM,2026-09-19 00:50:14,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,8572,33
+ch_3UHCW64UgNsCfLfV1OZLLXpS,2026-09-19 00:52:41,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,1628,23
+ch_3UHCWC4UgNsCfLfV1ftheeYN,2026-09-19 00:52:43,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,2509,20
+ch_3UHCWu4vFfk6H62N0KGbhcrm,2026-09-19 00:53:30,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1530,Visa,credit,US,7661,0
+ch_3UHCXD4UgNsCfLfV0dmmbkVr,2026-09-19 00:53:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,Visa,prepaid,US,2179,31
+ch_3UHCXM4UgNsCfLfV0LF6Cswh,2026-09-19 00:53:57,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,5710,23
+ch_3UHCXe7dzWyoeYnh11kKqsZQ,2026-09-19 00:54:15,acct_1U5W6I7dzWyoeYnh,acct_1SSKsA7e4AMQfKY3,Shoe Repair,US,usd,succeeded,2500,Visa,credit,US,9207,80
+ch_3UHCXh4vFfk6H62N1ruOyaux,2026-09-19 00:54:35,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,708,Visa,prepaid,US,3082,0
+ch_3UHCXx4UgNsCfLfV1yPKicg0,2026-09-19 00:54:44,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,500,Visa,debit,US,0522,28
+ch_3UHCY74UgNsCfLfV1XcTy4QB,2026-09-19 00:54:42,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,7366,38
+ch_3UHCYa4UgNsCfLfV1yRjn83d,2026-09-19 00:55:12,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,9945,20
+ch_3UHCYk4UgNsCfLfV0lFqz8Pq,2026-09-19 00:55:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,600,American Express,credit,US,1022,31
+ch_3UHCYk4vFfk6H62N0aVnaopJ,2026-09-19 00:55:25,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,512,American Express,credit,US,1914,0
+ch_3UHCZM4UgNsCfLfV1V5LfCcb,2026-09-19 00:56:05,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,900,Visa,debit,US,0187,38
+ch_3UHCZx4UgNsCfLfV1XRtTB0I,2026-09-19 00:56:36,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,800,Visa,debit,US,5219,36
+ch_3UHCbu4UgNsCfLfV0DF74Kcq,2026-09-19 00:58:37,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1800,Visa,debit,US,5208,62
+ch_3UHCc74vFfk6H62N1E9PopM1,2026-09-19 00:59:02,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,206,Visa,credit,US,9220,0
+ch_3UHCcEQJfvlGDJJG0XaFqsZR,2026-09-19 00:58:58,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,American Express,credit,US,7617,17
+ch_3UHCcfQJfvlGDJJG0Rc6cgBH,2026-09-19 00:59:24,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,Visa,debit,US,7845,15
+ch_3UHCd66xaKj8hHOI1zoHaO7j,2026-09-19 01:00:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1543,Visa,credit,US,6287,55
+ch_3UHCdM4UgNsCfLfV1kkQbfHo,2026-09-19 01:00:08,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,6924,46
+ch_3UHCeXQJfvlGDJJG0DnJwXeB,2026-09-19 01:01:22,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1775,Visa,credit,US,4750,49
+ch_3UHCey4vFfk6H62N1IksBCXR,2026-09-19 01:02:01,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1722,MasterCard,credit,US,2080,0
+ch_3UHCfL4UgNsCfLfV0IUOfSNo,2026-09-19 01:02:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2400,MasterCard,debit,US,7562,77
+ch_3UHCfe4UgNsCfLfV0aVHSkgL,2026-09-19 01:02:31,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,3000,Visa,debit,US,2814,93
+ch_3UHCgS4vFfk6H62N0spQUpOg,2026-09-19 01:03:22,acct_1UEvNg4vFfk6H62N,acct_1SSKsA7e4AMQfKY3,American Repertory Theater of Western New York,US,usd,succeeded,1107,MasterCard,credit,US,8645,0
+ch_3UHCgl4UgNsCfLfV1wRDDZTy,2026-09-19 01:03:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,MasterCard,debit,US,8101,33
+ch_3UHCh64UgNsCfLfV1IsMzDVA,2026-09-19 01:03:59,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2000,Visa,debit,US,7234,67
+ch_3UHCjJ4UgNsCfLfV1j0rPh8K,2026-09-19 01:06:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,2628,46
+ch_3UHCjy4UgNsCfLfV0wybtAys,2026-09-19 01:06:57,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,MasterCard,prepaid,US,3402,20
+ch_3UHCkLQJfvlGDJJG1z0Fl2DE,2026-09-19 01:07:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1425,Visa,debit,US,9969,41
+ch_3UHCkr4UgNsCfLfV0ZQ3tkTJ,2026-09-19 01:07:54,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,MasterCard,debit,US,3100,46
+ch_3UHCmh4UgNsCfLfV00NHtMqw,2026-09-19 01:09:46,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,credit,US,8697,51
+ch_3UHCok4UgNsCfLfV1rQGmANb,2026-09-19 01:11:53,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1600,Visa,debit,US,6726,57
+ch_3UHCq54UgNsCfLfV1QV5xU3J,2026-09-19 01:13:15,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,0057,23
+ch_3UHCqQ4UgNsCfLfV0SGlGsMy,2026-09-19 01:13:39,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,2078,23
+ch_3UHCsr4UgNsCfLfV1K1HkI9M,2026-09-19 01:16:30,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,4612,49
+ch_3UHCuv4UgNsCfLfV1yePqw7H,2026-09-19 01:18:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,3318,25
+ch_3UHCvi4UgNsCfLfV1gYpUWLE,2026-09-19 01:19:04,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,9557,23
+ch_3UHCww4UgNsCfLfV0VMretF7,2026-09-19 01:20:21,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,9120,64
+ch_3UHCx0QJfvlGDJJG0IxjBZ7G,2026-09-19 01:20:25,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,400,Visa,credit,US,1964,15
+ch_3UHCyC4UgNsCfLfV03JwRj0H,2026-09-19 01:21:42,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1400,Visa,debit,US,7582,51
+ch_3UHCyE4UgNsCfLfV0X1hBi7u,2026-09-19 01:21:41,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1300,Visa,debit,US,4879,49
+ch_3UHCyhQJfvlGDJJG0leHRSQ5,2026-09-19 01:22:10,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,325,Visa,credit,US,5674,13
+ch_3UHCzS4UgNsCfLfV1ttpXUtP,2026-09-19 01:23:02,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,MasterCard,credit,US,5645,25
+ch_3UHCzd7HEHpEovei0yzQPMfP,2026-09-19 01:23:16,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,4950,Visa,debit,US,8925,149
+ch_3UHD0S6xaKj8hHOI19RQCw7c,2026-09-19 01:24:01,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,5374,Visa,debit,US,7096,155
+ch_3UHD0c7HEHpEovei0LNkzafr,2026-09-19 01:24:11,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,600,Visa,debit,US,8925,18
+ch_3UHD2K4UgNsCfLfV1qpFcavW,2026-09-19 01:25:56,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,9311,33
+ch_3UHD3A4UgNsCfLfV1C0Ydnyf,2026-09-19 01:26:47,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,prepaid,US,1427,25
+ch_3UHD3V4UgNsCfLfV0BmznYbH,2026-09-19 01:27:10,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,2100,Visa,debit,US,9714,70
+ch_3UHD3e7HEHpEovei08YJuS5q,2026-09-19 01:27:22,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2365,Visa,debit,US,8958,71
+ch_3UHD4q4UgNsCfLfV0dNK3963,2026-09-19 01:28:32,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1000,Visa,debit,US,5919,41
+ch_3UHD5M4UgNsCfLfV0IXSCOV3,2026-09-19 01:29:03,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,2907,20
+ch_3UHD5d4UgNsCfLfV114cHGbi,2026-09-19 01:29:20,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,5102,23
+ch_3UHD634UgNsCfLfV19d6wm10,2026-09-19 01:29:47,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,MasterCard,prepaid,US,1164,64
+ch_3UHD654UgNsCfLfV0w7NVyc3,2026-09-19 01:29:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,400,Visa,debit,US,0187,25
+ch_3UHD6j4UgNsCfLfV1IxLYaRz,2026-09-19 01:30:28,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,5685,23
+ch_3UHD8b4UgNsCfLfV0e56axv6,2026-09-19 01:32:30,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1900,Visa,debit,US,8150,64
+ch_3UHD9R6xaKj8hHOI1vDhlKbA,2026-09-19 01:33:17,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,1719,Visa,prepaid,US,5534,60
+ch_3UHDBH4UgNsCfLfV0NsJd0l3,2026-09-19 01:35:25,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,debit,US,7063,23
+ch_3UHDBc4UgNsCfLfV1qENP1uh,2026-09-19 01:35:32,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,1200,Visa,prepaid,US,1251,46
+ch_3UHDCj7HEHpEovei0cXeM5yb,2026-09-19 01:36:45,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1260,Visa,debit,US,9018,38
+ch_3UHDDu7HEHpEovei0GYaU2LO,2026-09-19 01:37:56,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1750,Visa,debit,US,3636,53
+ch_3UHDE44UgNsCfLfV0VdGm45Q,2026-09-19 01:38:04,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,300,Visa,prepaid,US,0196,23
+ch_3UHDFs7HEHpEovei0m3lsf0c,2026-09-19 01:39:58,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1250,Visa,debit,US,8958,38
+ch_3UHDGw4UgNsCfLfV0fm8F331,2026-09-19 01:41:01,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,prepaid,US,9861,20
+ch_3UHDHh4UgNsCfLfV1RHWN6cp,2026-09-19 01:41:48,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,200,Visa,debit,US,7946,20
+ch_3UHDMm4UgNsCfLfV0B7zbRKO,2026-09-19 01:47:11,acct_1U1rct4UgNsCfLfV,acct_1SSKsA7e4AMQfKY3,"R.L. Osborne Band Boosters, Inc",US,usd,succeeded,700,Visa,debit,US,9032,33
+ch_3UHDTEG6iUrq4DFX1iQ9Kvc2,2026-09-19 01:53:48,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1600,MasterCard,credit,US,1902,55
+ch_3UHDUqG9cKTLUhQ71GlCsI1m,2026-09-19 01:55:30,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1651,Visa,debit,US,2810,48
+ch_3UHDd77HEHpEovei1KwCDlNX,2026-09-19 02:04:27,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1550,Visa,debit,US,1659,47
+ch_3UHDes7HEHpEovei1VfQwMNQ,2026-09-19 02:05:48,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,2035,Visa,debit,US,8958,61
+ch_3UHDna6xaKj8hHOI0JdL5gIG,2026-09-19 02:14:48,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,6125,Visa,credit,US,4862,174
+ch_3UHDsZ6xaKj8hHOI1tepZwud,2026-09-19 02:20:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,7541,MasterCard,debit,US,6383,211
+ch_3UHDvV6xaKj8hHOI0DiIdTYu,2026-09-19 02:23:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,737,Visa,debit,US,0488,34
+ch_3UHDzR7HEHpEovei0CWBvQJU,2026-09-19 02:27:49,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1200,Visa,debit,US,6573,36
+ch_3UHE2GG9cKTLUhQ71528aOfc,2026-09-19 02:30:20,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5400,Discover,debit,US,4198,122
+ch_3UHE4H6xaKj8hHOI0wEEt1wN,2026-09-19 02:32:20,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2873,MasterCard,prepaid,US,2007,90
+ch_3UHE4WG6iUrq4DFX0v3YpEb0,2026-09-19 02:32:15,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1400,Visa,debit,US,8231,43
+ch_3UHE6W7HEHpEovei1cAzHe8s,2026-09-19 02:35:03,acct_1TLnCc7HEHpEovei,acct_1SSKsA7e4AMQfKY3,Delta Builders llc,US,usd,succeeded,1300,MasterCard,credit,US,4834,39
+ch_3UHE8NG6iUrq4DFX1zOQL4tP,2026-09-19 02:36:44,acct_1TxAQjG6iUrq4DFX,acct_1SSKsA7e4AMQfKY3,Chilakings,US,usd,succeeded,1700,MasterCard,debit,US,3935,49
+ch_3UHF4sG9cKTLUhQ70lvhfsuS,2026-09-19 03:37:00,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,5252,Visa,credit,US,8608,146
+ch_3UHFLh70hsRCruUB1O2FkZs3,2026-09-19 03:54:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6608,American Express,credit,US,1014,0
+ch_3UHFV470hsRCruUB0CpRecwK,2026-09-19 04:03:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,MasterCard,credit,US,9129,0
+ch_3UHFVm70hsRCruUB1HAHG6Cq,2026-09-19 04:04:40,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,American Express,credit,US,1008,0
+ch_3UHFWi70hsRCruUB0YtyhO5e,2026-09-19 04:05:41,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4900,Visa,credit,US,1602,0
+ch_3UHFfC70hsRCruUB1X5FTJiy,2026-09-19 04:14:39,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6800,Visa,credit,US,9765,0
+ch_3UHFqK70hsRCruUB0xX9vXfm,2026-09-19 04:25:47,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,9440,MasterCard,credit,US,7098,0
+ch_3UHFzw70hsRCruUB1aPnz1di,2026-09-19 04:35:40,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3600,Visa,credit,US,9765,0
+ch_3UHG1770hsRCruUB1jBeENfh,2026-09-19 04:37:01,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6608,Visa,credit,US,9516,0
+ch_3UHGGe70hsRCruUB1UT2G5Nr,2026-09-19 04:53:47,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1200,American Express,credit,US,1008,0
+ch_3UHGOi70hsRCruUB1qiUsNGT,2026-09-19 05:01:25,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3600,Visa,credit,US,7694,0
+ch_3UHGf870hsRCruUB00wQ7Xsv,2026-09-19 05:18:17,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,13688,Visa,credit,US,3804,0
+ch_3UHGrU70hsRCruUB0Cx7tj6G,2026-09-19 05:31:00,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7500,Visa,debit,US,9604,0
+ch_3UHGv770hsRCruUB0F9h8gI9,2026-09-19 05:34:47,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,MasterCard,credit,US,9129,0
+ch_3UHGxK70hsRCruUB0lN3Zg5W,2026-09-19 05:37:08,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5800,Visa,credit,US,7694,0
+ch_3UHH3470hsRCruUB1AMxczU3,2026-09-19 05:43:04,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5428,Visa,debit,US,9895,0
+ch_3UHH7f70hsRCruUB1vahsTnf,2026-09-19 05:47:50,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,6600,Visa,debit,US,7685,0
+ch_3UHH8W70hsRCruUB0Ny23I5J,2026-09-19 05:49:51,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2832,Visa,credit,US,8708,0
+ch_3UHHAA70hsRCruUB02n0UtMo,2026-09-19 05:50:18,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8378,Visa,credit,US,8659,0
+ch_3UHHHI70hsRCruUB15CSdkWK,2026-09-19 05:57:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,16756,MasterCard,credit,US,0973,0
+ch_3UHHNb70hsRCruUB13Vd5FyN,2026-09-19 06:04:11,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1500,Visa,credit,US,7600,0
+ch_3UHHO970hsRCruUB0grn7MHQ,2026-09-19 06:04:48,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3600,Visa,credit,US,9765,0
+ch_3UHHTe70hsRCruUB0tssmqPK,2026-09-19 06:10:52,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7316,Visa,credit,US,9582,0
+ch_3UHHWX5YU7DST2YX0gz7Ya6T,2026-09-19 06:13:33,acct_1U3ffU5YU7DST2YX,acct_1SSKsA7e4AMQfKY3,CJs Deals and Collectibles,US,usd,succeeded,17625,MasterCard,debit,US,9113,473
+ch_3UHHYc70hsRCruUB159OBq6g,2026-09-19 06:15:33,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,failed,4400,Visa,debit,US,8570,
+ch_3UHHYt70hsRCruUB0M3JcN97,2026-09-19 06:15:50,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,MasterCard,credit,US,6014,0
+ch_3UHHkG70hsRCruUB1DfJPgzE,2026-09-19 06:28:05,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3240,Visa,credit,US,5505,0
+ch_3UHHmd70hsRCruUB1wE8V9Xg,2026-09-19 06:30:08,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2640,Visa,credit,US,8305,0
+ch_3UHHr370hsRCruUB1wvwk09P,2026-09-19 06:34:41,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,500,Visa,debit,US,1990,0
+ch_3UHHrR70hsRCruUB1j0cGcMw,2026-09-19 06:35:01,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1400,Visa,debit,US,1990,0
+ch_3UHHuH70hsRCruUB0xPTj9w1,2026-09-19 06:38:04,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4012,Visa,credit,US,3731,0
+ch_3UHHv270hsRCruUB1coW2DwP,2026-09-19 06:38:43,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5760,Visa,credit,US,9582,0
+ch_3UHI1e70hsRCruUB04DmxNRq,2026-09-19 06:45:45,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1200,American Express,credit,US,1008,0
+ch_3UHI1t70hsRCruUB0hzEy7DW,2026-09-19 06:45:55,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5500,Visa,debit,US,8665,0
+ch_3UHI9o70hsRCruUB0snxvS9K,2026-09-19 06:54:01,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8024,American Express,credit,US,9266,0
+ch_3UHIAZ70hsRCruUB0Hl5QH3M,2026-09-19 06:55:13,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4800,Visa,credit,US,7694,0
+ch_3UHICg70hsRCruUB1mE8nDos,2026-09-19 06:57:00,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4400,Visa,credit,PE,8766,0
+ch_3UHIDi70hsRCruUB1uEALq7H,2026-09-19 06:58:06,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,7200,Visa,credit,US,1192,0
+ch_3UHIEx70hsRCruUB1tZ1VG6K,2026-09-19 06:59:20,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,10560,MasterCard,debit,US,2883,0
+ch_3UHIqG70hsRCruUB1eLvGqOZ,2026-09-19 07:37:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5192,American Express,credit,US,1000,0
+ch_3UHIqn6xrVvfynTx1NIyYdMh,2026-09-19 07:38:25,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1400,Visa,debit,GB,9601,14
+ch_3UHIyx70hsRCruUB0KJDTGEd,2026-09-19 07:46:57,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,500,Visa,credit,US,8708,0
+ch_3UHJ2370hsRCruUB12OfZVl7,2026-09-19 07:50:04,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4012,Visa,credit,US,3731,0
+ch_3UHJ3Q70hsRCruUB1KIOBAiO,2026-09-19 07:53:15,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,5280,Visa,credit,US,4857,0
+ch_3UHJ9B70hsRCruUB178kjPck,2026-09-19 07:58:37,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,9400,Visa,credit,US,0149,0
+ch_3UHJIu70hsRCruUB1EcN8I84,2026-09-19 08:07:42,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2900,MasterCard,credit,US,8873,0
+ch_3UHJLN70hsRCruUB0jIXCds0,2026-09-19 08:10:02,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,4500,Visa,debit,US,9604,0
+ch_3UHJMu70hsRCruUB0dNv3rVq,2026-09-19 08:11:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,3400,Visa,debit,US,4368,0
+ch_3UHJUY70hsRCruUB1WMkYCOU,2026-09-19 08:19:36,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,8500,Visa,debit,US,7002,0
+ch_3UHJVg70hsRCruUB10oeBGIM,2026-09-19 08:20:54,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,1200,American Express,credit,US,1008,0
+ch_3UHJWT6xrVvfynTx1xo4EIFD,2026-09-19 08:21:31,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,660,Visa,debit,GB,0196,7
+ch_3UHJWy70hsRCruUB0zNjeVYz,2026-09-19 08:22:00,acct_1TvNtc70hsRCruUB,acct_1SSKsA7e4AMQfKY3,"Galo Entertainment, Inc.",US,usd,succeeded,2400,Visa,debit,US,5379,0
+ch_3UHJm46xrVvfynTx0EgAVppl,2026-09-19 08:37:39,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1140,MasterCard,debit,GB,6942,11
+ch_3UHJmJ6xrVvfynTx0AZx715z,2026-09-19 08:37:54,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,980,MasterCard,debit,GB,0185,10
+ch_3UHJtw6xrVvfynTx1u1l9Qn0,2026-09-19 08:45:45,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,750,Visa,credit,GB,4028,7
+ch_3UHJvx6xrVvfynTx1LB0uQV5,2026-09-19 08:47:53,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2510,MasterCard,debit,GB,5381,25
+ch_3UHJyH6xrVvfynTx0UL98bs7,2026-09-19 08:50:17,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1820,MasterCard,credit,GB,6742,18
