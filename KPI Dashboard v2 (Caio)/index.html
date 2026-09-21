@@ -103,6 +103,12 @@
   .pagenav a.on { color: #fff; border-bottom-color: var(--blue); }
   .cflag { cursor:help; white-space:nowrap; }
   #t-countries td:first-child { white-space:nowrap; }
+  /* Sortable headers. They stay put while the body scrolls, because a 40-row table in a
+     420px box means the header is off-screen exactly when you want to re-sort. */
+  #t-countries th { position:sticky; top:0; background:#fff; z-index:1; }
+  #t-countries th.ct-h { cursor:pointer; user-select:none; }
+  #t-countries th.ct-h:hover { color:var(--blue-deep); }
+  #t-countries th.ct-h.on { color:var(--blue-deep); }
   table.tri { border-collapse:collapse; font-size:11px; }
   table.tri th { font-size:10px; color:var(--mid-gray); font-weight:600; padding:3px 5px; text-align:center; position:sticky; top:0; }
   table.tri td { padding:3px 6px; text-align:center; border:1px solid #F0F2F5; white-space:nowrap; font-variant-numeric:tabular-nums; }
@@ -381,8 +387,8 @@
       <div class="chart-box"><canvas id="c-paying-country"></canvas></div>
     </div>
     <div class="panel">
-      <h3>Top 20 countries — lifetime<span class="info" data-tip="All-time registrations and ever-paid merchants per country, with conversion (ever paid / registrations). Active merchants = merchants in that country issuing at least one receipt in the latest complete month (current activity, not lifetime). Based on Chargebee payment history and the clean receipts series joined to merchant country. The arrow by each country shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining — the angle steepens with the rate.">i</span></h3>
-      <div style="overflow-x:auto; max-height: 360px; overflow-y:auto"><table id="t-countries"></table></div>
+      <h3>Top 40 countries<span class="info" data-tip="Our forty largest markets, ranked by whichever column you click. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV is converted to USD per currency using ISO minor units and a quarterly rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month is converted at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
+      <div style="overflow-x:auto; max-height: 420px; overflow-y:auto"><table id="t-countries"></table></div>
     </div>
   </div>
 
@@ -1933,11 +1939,98 @@ function drawPayingCountry(ctry) { if (payCtrChart) payCtrChart.destroy(); payCt
 ctrSel.onchange = e => { drawCountry(e.target.value); drawActiveCountry(e.target.value); drawReceiptsCountry(e.target.value); drawPayingCountry(e.target.value); };
 drawCountry(ctrKeys[0]); drawActiveCountry(ctrKeys[0]); drawReceiptsCountry(ctrKeys[0]); drawPayingCountry(ctrKeys[0]);
 
-// ---- Country table ----
-document.getElementById('t-countries').innerHTML =
-  '<tr><th>Country</th><th>Registrations</th><th>Active merchants</th><th>Ever paid</th><th>Ever paid %</th></tr>' +
-  D.countries.slice(0, 20).map(c => '<tr><td class="k">' + trendArrow(c.country) + cflag(c.country) + '</td><td>' + fmtN(c.registrations) +
-    '</td><td>' + fmtN(c.active || 0) + '</td><td>' + fmtN(c.everPaid) + '</td><td>' + c.pctEverPaid.toFixed(2) + '%</td></tr>').join('');
+// ---- Country table ----------------------------------------------------------------
+// STRIPE PRODUCT AVAILABILITY, not our launch status. The question this answers is where
+// we COULD put payments, read against where our merchants already are — so a big market
+// with acquiring available and no Loyverse Payments is the interesting row.
+//
+// Reference data, fetched from Stripe's own documentation on 2026-09-21, not inferred:
+//   ACQ  countries whose connected accounts can hold the `card_payments` capability, i.e.
+//        Stripe acquires locally. From /_endpoint/get-requirement-selections-for-platform-country
+//        with platformCountry=US — 48 of the 121 countries Stripe will onboard at all.
+//   CONN the other 73: Stripe can onboard an account but NOT acquire locally (payouts or
+//        recipient-only). Shown as a middle state rather than a bare no, because for a
+//        market-entry question "possible but not local" is a different answer from "no".
+//   ISS  local Issuing, from docs.stripe.com/issuing/global. The page says 22 countries and
+//        lists 23 codes; the list is used as written.
+// Rates of change here are slow (a country or two a year), so this is a dated constant
+// rather than a pull. If it looks stale, re-read those two pages.
+const STRIPE_ACQ = new Set('AE AR AT AU BE BG BR CA CH CY CZ DE DK EE ES FI FR GB GI GR HK HR HU IE IN IT JP LI LT LU LV MT MX MY NL NO NZ PH PL PT RO SE SG SI SK TH US UY'.split(' '));
+const STRIPE_CONN = new Set('AG AL AM AO AZ BA BD BH BJ BN BO BS BT BW CI CL CO CR DO DZ EC EG ET GA GH GM GT GY ID IL IS JM JO KE KH KR KW KZ LA LC LK MA MC MD MG MK MN MO MU MZ NA NE NG OM PA PE PK PY QA RS RW SA SM SN SV TN TR TT TW TZ UZ VN ZA'.split(' '));
+const STRIPE_ISS = new Set('AT BE BG CA CY DE EE ES FI FR GB GR HR IE IT LT LU LV MT NL PT SI SK'.split(' '));
+function stripeCell(cc, set, middle) {
+  if (set.has(cc)) return '<span title="Available" style="color:#1F9D6B;font-weight:bold">\u2713</span>';
+  if (middle && STRIPE_CONN.has(cc)) return '<span title="Stripe can onboard an account here but does not acquire locally" style="color:#E8A317">\u25CB</span>';
+  return '<span title="Not supported" style="color:#C8CDD4">\u2014</span>';
+}
+
+// Country metrics for the latest complete month. MRR and paying come from the Chargebee
+// side, active and GTV from the receipts side; each is read from the series the page
+// already publishes so no figure here is a second opinion on one shown elsewhere.
+const CMET = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.countryMonth)
+             ? SUBS_DATA.countryMonth : null;
+const ctSnap = D.meta.snapshotMonth;
+// Only markets with SOMETHING in the latest complete month. Without this, an ascending
+// sort fills the table with countries whose series stopped years ago — France's MRR ends in
+// Feb 2025, Germany's in May 2021 — and a "top 40" listing dead markets is not a ranking.
+// Nothing real is hidden: a country is kept if it has any MRR, GTV, active or paying.
+const ctRows = D.countries.map(c => {
+  const cc = c.country;
+  const cm = CMET ? (CMET[cc] || null) : null;
+  return {
+    cc,
+    mrr:    Math.round(((D.mrrByCountryByMonth || {})[cc] || {})[ctSnap] || 0),
+    gtv:    cm ? Math.round(cm.gtv || 0) : null,
+    active: cm ? (cm.a1 || 0) : (c.active || 0),
+    paying: ((D.payingByCountryByMonth || {})[cc] || {})[ctSnap] || 0,
+    reg:    c.registrations
+  };
+}).filter(r => r.mrr > 0 || (r.gtv || 0) > 0 || r.active > 0 || r.paying > 0);
+// The 40 shown are the 40 largest on the SORTED column, recomputed on every sort — so
+// "rank by GTV" really means the top 40 by GTV, not the top 40 by something else reordered.
+let ctSort = 'mrr', ctDir = -1;
+const CT_COLS = [
+  {k:'cc',     label:'Country', num:false},
+  {k:'mrr',    label:'MRR',     num:true, fmt:v=>'$'+fmtN(v)},
+  {k:'gtv',    label:'GTV',     num:true, fmt:v=>v==null?'\u2014':'$'+fmtN(v)},
+  {k:'active', label:'Active base', num:true, fmt:fmtN},
+  {k:'paying', label:'Paying base', num:true, fmt:fmtN}
+];
+function renderCountryTable(){
+  const rows = ctRows.slice().sort((a,b) => {
+    if (ctSort === 'cc') return a.cc < b.cc ? -ctDir : (a.cc > b.cc ? ctDir : 0);
+    const av = a[ctSort], bv = b[ctSort];
+    // Nulls last whichever way the sort runs: a country with no GTV is not the smallest,
+    // it is unknown, and parking it at the top of an ascending sort would imply otherwise.
+    if (av == null && bv == null) return 0;
+    if (av == null) return 1;
+    if (bv == null) return -1;
+    return (av - bv) * ctDir;
+  }).slice(0, 40);
+  const head = '<tr>' + CT_COLS.map(c =>
+    '<th class="ct-h' + (ctSort === c.k ? ' on' : '') + '" data-k="' + c.k + '" title="Sort by ' + c.label + '">' +
+    c.label + (ctSort === c.k ? (ctDir < 0 ? ' \u25BE' : ' \u25B4') : '') + '</th>').join('') +
+    '<th title="Stripe acquires card payments locally in this country">Acquiring</th>' +
+    '<th title="Stripe issues cards locally in this country">Issuing</th></tr>';
+  const body = rows.map(r =>
+    '<tr><td class="k">' + trendArrow(r.cc) + cflag(r.cc) + '</td>' +
+    '<td>$' + fmtN(r.mrr) + '</td>' +
+    '<td>' + (r.gtv == null ? '\u2014' : '$' + fmtN(r.gtv)) + '</td>' +
+    '<td>' + fmtN(r.active) + '</td>' +
+    '<td>' + fmtN(r.paying) + '</td>' +
+    '<td style="text-align:center">' + stripeCell(r.cc, STRIPE_ACQ, true) + '</td>' +
+    '<td style="text-align:center">' + stripeCell(r.cc, STRIPE_ISS, false) + '</td></tr>').join('');
+  const el = document.getElementById('t-countries');
+  el.innerHTML = head + body;
+  el.querySelectorAll('.ct-h').forEach(th => th.onclick = () => {
+    const k = th.dataset.k;
+    // Clicking the active column flips direction; a new column starts descending, which
+    // is what anyone wants first from a ranking.
+    if (ctSort === k) ctDir = -ctDir; else { ctSort = k; ctDir = (k === 'cc') ? 1 : -1; }
+    renderCountryTable();
+  });
+}
+renderCountryTable();
 
 // ---- Footer ----
 document.getElementById('foot-notes').innerHTML = D.meta.notes.map(n => '&rarr; ' + n).join('<br>');

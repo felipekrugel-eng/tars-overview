@@ -28,7 +28,12 @@ import pandas as pd
 WORK = pathlib.Path(os.environ.get("WORK_DIR", "."))
 OUT  = pathlib.Path(os.environ.get("KPIDATA_OUT",
         "/sessions/youthful-dazzling-bardeen/mnt/Unit Economics Analysis/KPI Dashboard v2 (Caio)/kpi-data.js"))
-TOPN = 25
+# 60, not 25 (raised 2026-09-21). The country table shows the top 40 on whichever column
+# is sorted, and the trend arrow needs activeByCountryByMonth for every row it draws. At 25
+# the rows below that rank lost their arrow and their paying figure the moment you re-sorted.
+# 60 gives the table headroom on any sort order; the cost is per-country monthly dicts for
+# 35 more countries, which is tens of kilobytes on a 0.95MB file.
+TOPN = 60
 ACTIVE_FROM = "2022-01"
 
 def ym(v):

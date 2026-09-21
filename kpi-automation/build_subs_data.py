@@ -36,7 +36,7 @@ MRR_FEATURE_CSV = Path(os.environ.get("MRR_FEATURE_CSV", HERE / "work" / "mrr_by
 SUB_FLOW_CSV    = Path(os.environ.get("SUB_FLOW_CSV",    HERE / "work" / "subscription_flow.csv"))
 MERCHANT_FLOW_CSV = Path(os.environ.get("MERCHANT_FLOW_CSV", HERE / "work" / "merchant_subscription_flow.csv"))
 MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bottomup.csv"))
-ACTIVE_QUAL_CSV = Path(os.environ.get("ACTIVE_QUAL_CSV", HERE / "work" / "active_qualified.csv"))
+COUNTRY_MONTH_CSV = Path(os.environ.get("COUNTRY_MONTH_CSV", HERE / "work" / "country_month_activity.csv"))
 KPI_DATA_JS     = Path(os.environ.get("KPI_DATA_JS",     HERE.parent / "KPI Dashboard v2 (Caio)" / "kpi-data.js"))
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT_FILE        = OUT_DIR / "subs-data.js"
@@ -148,17 +148,35 @@ def main() -> None:
         print(f"[subs] WARNING — {MERCHANT_FLOW_CSV} not found; the churn chart keeps its "
               f"30-day reading only and the Cancellations toggle stays hidden", flush=True)
 
-    # ---- qualified active merchants ---------------------------------------------------
-    # 1+ / 5+ / 10+ receipts in the month. The 1+ column is NOT published: it exists only to
-    # be checked against the activeMonthly series the page already draws. Both count the same
-    # thing from the same table with the same filters, so if they disagree one of the two
-    # definitions has moved and the chart would be contradicting itself in public. Publishing
-    # only a5/a10 means the line on screen stays exactly the one the page has always drawn.
-    active_qualified = []
-    if ACTIVE_QUAL_CSV.exists():
-        aq = _load(ACTIVE_QUAL_CSV, "qualified active")
-        aq["M"] = aq["MONTH"].astype(str).str.slice(0, 7)
-        aq = aq[aq["M"] <= cap]
+    # ---- country x month activity: qualified active, and GTV ---------------------------
+    # One query feeds two features. The global qualified-active series is the SUM over
+    # countries, which is exact because a merchant has exactly one country — so no merchant
+    # can be double-counted or lost, and it saves a second full scan of a 2.7TB table.
+    #
+    # The 1+ column is NOT published. It exists to be checked against the activeMonthly
+    # series the page already draws: both count the same thing from the same table with the
+    # same filters, so a disagreement means a definition moved and the chart would be
+    # contradicting itself in public. Only 5+/10+ and the per-country figures ship.
+    active_qualified, country_month = [], {}
+    if COUNTRY_MONTH_CSV.exists():
+        cm = _load(COUNTRY_MONTH_CSV, "country x month activity")
+        cm["M"] = cm["MONTH"].astype(str).str.slice(0, 7)
+        cm = cm[cm["M"] <= cap]
+
+        # FX coverage. A currency missing from the rate table contributes no money, and the
+        # query returns how many receipts that affected so the gap is measurable.
+        no_rate = int(cm["RECEIPTS_NO_RATE"].sum())
+        total_r = int(cm["RECEIPTS"].sum())
+        share = (no_rate / total_r * 100) if total_r else 0
+        print(f"[subs] GTV currency coverage: {no_rate:,} of {total_r:,} receipts had no FX rate ({share:.3f}%)")
+        if share > 2:
+            print(f"[subs] WARNING — {share:.2f}% of receipts have no FX rate; GTV understates those "
+                  f"countries. Add the missing currencies to fx_rates in country_month_activity.sql",
+                  flush=True)
+
+        # Global monthly series, summed over countries.
+        g = cm.groupby("M").agg(a1=("ACTIVE_1", "sum"), a5=("ACTIVE_5", "sum"),
+                                a10=("ACTIVE_10", "sum")).reset_index()
         published = {}
         if KPI_DATA_JS.exists():
             raw = KPI_DATA_JS.read_text(encoding="utf-8")
@@ -167,30 +185,58 @@ def main() -> None:
                 arr = json.loads(raw[raw.index("[", i):raw.index("]", i) + 1])
                 published = {r["month"]: r["active"] for r in arr}
         if published:
-            checked = aq[aq["M"].isin(published)]
             worst, worst_m = 0.0, None
-            for r in checked.itertuples():
-                base = published[r.M]
+            checked = 0
+            for r in g.itertuples():
+                base = published.get(r.M)
                 if not base:
                     continue
-                pct = abs(int(r.ACTIVE_1) - base) / base * 100
+                checked += 1
+                pct = abs(int(r.a1) - base) / base * 100
                 if pct > worst:
                     worst, worst_m = pct, r.M
-            print(f"[subs] active 1+ vs published activeMonthly over {len(checked)} months — worst {worst:.3f}% ({worst_m})")
-            # A quarter of a percent is far beyond the drift you get from receipts landing
-            # between two builds, and far below anything visible on the chart.
+            print(f"[subs] active 1+ vs published activeMonthly over {checked} months — worst {worst:.3f}% ({worst_m})")
+            # Far beyond the drift from receipts landing between two builds, far below
+            # anything visible on the chart.
             if worst > 0.25:
-                sys.exit(f"[subs] FAILED — the qualified query's 1+ column is {worst:.2f}% off the "
-                         f"published active series at {worst_m}. They must count the same merchants; "
-                         f"active_qualified_monthly.sql and receipts_tpv_daily_asof.sql have diverged.")
+                sys.exit(f"[subs] FAILED — the 1+ column is {worst:.2f}% off the published active "
+                         f"series at {worst_m}. They must count the same merchants; "
+                         f"country_month_activity.sql and receipts_tpv_daily_asof.sql have diverged.")
         else:
             print("[subs] WARNING — could not read activeMonthly, qualified active unchecked", flush=True)
-        active_qualified = [{"m": r.M, "a5": int(r.ACTIVE_5), "a10": int(r.ACTIVE_10)}
-                            for r in aq.itertuples()]
-        print(f"[subs] qualified active: {len(active_qualified)} months")
+        active_qualified = [{"m": r.M, "a5": int(r.a5), "a10": int(r.a10)} for r in g.itertuples()]
+
+        # Latest complete month per country, for the country table. One month only: the
+        # table shows a ranking, and shipping 70 months x 200 countries to render 40 rows
+        # would be most of a megabyte for nothing.
+        months = sorted(cm["M"].unique().tolist())
+        snap = months[-2] if len(months) > 1 else (months[0] if months else None)
+        if snap:
+            latest = cm[cm["M"] == snap]
+            country_month = {str(r.COUNTRY): {"a1": int(r.ACTIVE_1), "a5": int(r.ACTIVE_5),
+                                              "a10": int(r.ACTIVE_10), "gtv": round(float(r.GTV_USD), 2)}
+                             for r in latest.itertuples()}
+            gtv_total = sum(v["gtv"] for v in country_month.values())
+            act_total = sum(v["a1"] for v in country_month.values())
+            # Capped against uncapped. The $10k per-receipt cap removes ~99.7% of the raw
+            # total — Aug 2026: $4.8bn capped against $1.598 TRILLION uncapped — so the
+            # receipts table carries spectacular junk quite apart from the unit question.
+            # Logged as a ratio: a sudden move in it means the junk pattern changed, and
+            # the capped figure is the only one anyone should rank on.
+            unc = float(latest["GTV_USD_UNCAPPED"].sum())
+            print(f"[subs] GTV capped ${gtv_total:,.0f} vs uncapped ${unc:,.0f} "
+                  f"({(unc/gtv_total if gtv_total else 0):,.0f}x) — the $10k per-receipt cap carries weight")
+            per = gtv_total / act_total if act_total else 0
+            print(f"[subs] country table month {snap}: {len(country_month)} countries, "
+                  f"GTV ${gtv_total:,.0f}, active {act_total:,}, ${per:,.0f} per active merchant")
+            # The old per-country GTV read $188k per active merchant per month. A POS base
+            # averages hundreds, so this is the guard that would have caught it.
+            if per > 20000:
+                sys.exit(f"[subs] FAILED — GTV averages ${per:,.0f} per active merchant, which is not "
+                         f"credible for a POS base. Check minor units and FX in country_month_activity.sql.")
     else:
-        print(f"[subs] WARNING — {ACTIVE_QUAL_CSV} not found; the Qualified toggle stays hidden",
-              flush=True)
+        print(f"[subs] WARNING — {COUNTRY_MONTH_CSV} not found; the Qualified toggle and the "
+              f"country table's GTV column stay hidden", flush=True)
 
     # A feature earns a legend entry only if it appears in the window the charts actually
     # draw (the page starts at 2022-01). Without this, OTHER — one unparseable $25 line item
@@ -249,6 +295,7 @@ def main() -> None:
         "flow": flow_cells,
         "merchantFlow": merchant_flow,
         "activeQualified": active_qualified,
+        "countryMonth": country_month,
     }
 
     banner = (
@@ -272,6 +319,10 @@ def main() -> None:
         "//                merchant's first subscription starts; cancels is the month its last one\n"
         "//                goes, so dropping one feature of three is not a departure. The churn\n"
         "//                chart's Cancellations mode uses this, never a sum over flow[].\n"
+        "//   countryMonth : {CC: {a1,a5,a10,gtv}} for the LATEST COMPLETE month, for the country\n"
+        "//                table. GTV is USD, converted per currency with ISO minor units — the\n"
+        "//                as-of query divides by a per-merchant decimal-places column instead and\n"
+        "//                reads $63m per merchant per month in Korea, so do not cross the two.\n"
         "//   activeQualified[] : {m, a5, a10} — merchants with 5+ and 10+ receipts that month. The\n"
         "//                query also returns a 1+ column; it is deliberately NOT published, only\n"
         "//                reconciled against kpi-data.js activeMonthly, so the line on screen stays\n"
