@@ -62,6 +62,10 @@
   @media (prefers-reduced-motion:reduce){ .panel{animation:none;} }
   .panel h3 { font-family: 'Arial Black', Arial; font-size: 15px; margin-bottom: 12px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  /* A panel that spans the whole grid rather than one column. The country table has seven
+     columns; in a half-width cell it needed a horizontal scrollbar to show what the page
+     had room for anyway. Collapses to full width automatically in the one-column layout. */
+  .grid2 > .panel.wide { grid-column: 1 / -1; }
   @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
   .chart-box { position: relative; height: 280px; }
   select { font-family: Arial; font-size: 13px; padding: 6px 10px; border: 1px solid var(--silver); background: #fff; color: var(--near-black); margin-bottom: 10px; }
@@ -386,9 +390,14 @@
       <h3>Paying customers per month — selected country<span class="info" data-tip="Merchants in the selected country with active paid subscription revenue (MRR over 0) in the month, from paid Chargebee invoice line items. Full months to the latest complete month.">i</span></h3>
       <div class="chart-box"><canvas id="c-paying-country"></canvas></div>
     </div>
-    <div class="panel">
-      <h3>Top 40 countries<span class="info" data-tip="Our forty largest markets, ranked by whichever column you click. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV is converted to USD per currency using ISO minor units and a quarterly rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month is converted at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
+    <div class="panel wide">
+      <h3>Top 40 countries<span class="info" data-tip="Our forty largest markets, ranked by whichever column you click. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV* IS PROVISIONAL AND READS HIGH: against the agreed case-model baseline it comes out about 1.74x, and the overstatement concentrates in high-ticket markets (the US reads 4.6x, on a $232 average ticket against a $7.48 median). The outlier bound is being recalibrated from each currency's own receipt distribution rather than the flat $10k per-receipt cap in use now. Rank on it if you like, but do not quote it. Conversion is per currency to USD on a dated rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month converts at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
       <div style="overflow-x:auto; max-height: 420px; overflow-y:auto"><table id="t-countries"></table></div>
+      <div style="font-size:11px;color:var(--mid-gray);margin-top:8px">
+        <b>*</b> GTV is provisional &mdash; it reconciles about 1.74&times; above the agreed case-model
+        baseline, worst in high-ticket markets. Useful for ranking, not for quoting; the outlier
+        bound is being recalibrated per currency.
+      </div>
     </div>
   </div>
 
@@ -1992,7 +2001,16 @@ let ctSort = 'mrr', ctDir = -1;
 const CT_COLS = [
   {k:'cc',     label:'Country', num:false},
   {k:'mrr',    label:'MRR',     num:true, fmt:v=>'$'+fmtN(v)},
-  {k:'gtv',    label:'GTV',     num:true, fmt:v=>v==null?'\u2014':'$'+fmtN(v)},
+  // PROVISIONAL, and labelled so on the page. Reconciled against the agreed case-model
+  // baseline it reads 1.74x high — $53.8bn trailing twelve months against €26.9bn ($30.9bn)
+  // — and the overstatement is concentrated where tickets are large: the US comes out 4.6x
+  // with a $232 average ticket against a $7.48 median. The cause is the $10k per-receipt
+  // cap, lifted from q1_base.sql where it bounds a US-only USD population; applied to 9.6bn
+  // receipts across 160 currencies it lets a long tail through. A 0.5% sample puts PHP at a
+  // 146 median against a 9,999,998,900 maximum, so the bound wants to come from each
+  // currency's own distribution rather than a round number. Until that lands the column
+  // carries a mark rather than looking settled.
+  {k:'gtv',    label:'GTV*',    num:true, fmt:v=>v==null?'\u2014':'$'+fmtN(v)},
   {k:'active', label:'Active base', num:true, fmt:fmtN},
   {k:'paying', label:'Paying base', num:true, fmt:fmtN}
 ];
