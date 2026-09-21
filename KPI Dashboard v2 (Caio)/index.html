@@ -391,7 +391,7 @@
       <div class="chart-box"><canvas id="c-paying-country"></canvas></div>
     </div>
     <div class="panel wide">
-      <h3>Top 40 countries<span class="info" data-tip="Our forty largest markets, ranked by whichever column you click. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV* IS PROVISIONAL AND READS HIGH: against the agreed case-model baseline it comes out about 1.74x, and the overstatement concentrates in high-ticket markets (the US reads 4.6x, on a $232 average ticket against a $7.48 median). The outlier bound is being recalibrated from each currency's own receipt distribution rather than the flat $10k per-receipt cap in use now. Rank on it if you like, but do not quote it. Conversion is per currency to USD on a dated rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month converts at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
+      <h3>Top 40 countries by MRR<span class="info" data-tip="Our forty largest markets BY MRR. Clicking a column reorders those same forty — the membership is fixed, so nothing appears or disappears under you when you sort. A country large by GTV but outside the top forty by MRR is therefore not listed. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV* IS PROVISIONAL AND READS HIGH: against the agreed case-model baseline it comes out about 1.74x, and the overstatement concentrates in high-ticket markets (the US reads 4.6x, on a $232 average ticket against a $7.48 median). The outlier bound is being recalibrated from each currency's own receipt distribution rather than the flat $10k per-receipt cap in use now. Rank on it if you like, but do not quote it. Conversion is per currency to USD on a dated rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month converts at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
       <div style="overflow-x:auto; max-height: 420px; overflow-y:auto"><table id="t-countries"></table></div>
       <div style="font-size:11px;color:var(--mid-gray);margin-top:8px">
         <b>*</b> GTV is provisional &mdash; it reconciles about 1.74&times; above the agreed case-model
@@ -1995,9 +1995,20 @@ const ctRows = D.countries.map(c => {
     reg:    c.registrations
   };
 }).filter(r => r.mrr > 0 || (r.gtv || 0) > 0 || r.active > 0 || r.paying > 0);
-// The 40 shown are the 40 largest on the SORTED column, recomputed on every sort — so
-// "rank by GTV" really means the top 40 by GTV, not the top 40 by something else reordered.
+// THE 40 ROWS ARE FIXED. Chosen once, by MRR, and sorting only reorders them.
+//
+// The first version recomputed the set on whichever column was sorted, on the reasoning
+// that "rank by GTV" should mean the top 40 by GTV. It reads as a bug: you sort, and
+// instead of your countries reordering, some of them vanish and strangers appear, so the
+// numbers look like they have come loose from the names. A sortable table has one job —
+// reorder the rows in front of you — and surprising the reader about WHICH rows exist is
+// not worth the extra precision at the boundary.
+//
+// What this costs: a country in the top 40 by GTV but outside the top 40 by MRR is not
+// listed. Worth knowing, and cheap to check — sort by GTV ascending and the smallest
+// members of the MRR-selected set are the ones near the cut.
 let ctSort = 'mrr', ctDir = -1;
+const CT_ROWS = ctRows.slice().sort((a, b) => (b.mrr || 0) - (a.mrr || 0)).slice(0, 40);
 const CT_COLS = [
   {k:'cc',     label:'Country', num:false},
   {k:'mrr',    label:'MRR',     num:true, fmt:v=>'$'+fmtN(v)},
@@ -2015,7 +2026,7 @@ const CT_COLS = [
   {k:'paying', label:'Paying base', num:true, fmt:fmtN}
 ];
 function renderCountryTable(){
-  const rows = ctRows.slice().sort((a,b) => {
+  const rows = CT_ROWS.slice().sort((a,b) => {
     if (ctSort === 'cc') return a.cc < b.cc ? -ctDir : (a.cc > b.cc ? ctDir : 0);
     const av = a[ctSort], bv = b[ctSort];
     // Nulls last whichever way the sort runs: a country with no GTV is not the smallest,
@@ -2024,7 +2035,7 @@ function renderCountryTable(){
     if (av == null) return 1;
     if (bv == null) return -1;
     return (av - bv) * ctDir;
-  }).slice(0, 40);
+  });
   const head = '<tr>' + CT_COLS.map(c =>
     '<th class="ct-h' + (ctSort === c.k ? ' on' : '') + '" data-k="' + c.k + '" title="Sort by ' + c.label + '">' +
     c.label + (ctSort === c.k ? (ctDir < 0 ? ' \u25BE' : ' \u25B4') : '') + '</th>').join('') +
@@ -2039,7 +2050,12 @@ function renderCountryTable(){
     '<td style="text-align:center">' + stripeCell(r.cc, STRIPE_ACQ, true) + '</td>' +
     '<td style="text-align:center">' + stripeCell(r.cc, STRIPE_ISS, false) + '</td></tr>').join('');
   const el = document.getElementById('t-countries');
+  // Rebuilding innerHTML sends the scroll box back to the top. Keep the reader where they
+  // were, or a sort performed half-way down forty rows looks like it did nothing.
+  const box = el.parentElement;
+  const keepTop = box ? box.scrollTop : 0;
   el.innerHTML = head + body;
+  if (box) box.scrollTop = keepTop;
   el.querySelectorAll('.ct-h').forEach(th => th.onclick = () => {
     const k = th.dataset.k;
     // Clicking the active column flips direction; a new column starts descending, which
