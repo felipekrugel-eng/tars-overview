@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-09-14",
+  "lastUpdated": "2026-09-21",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98421,7 +98421,7 @@ const CASE_DATA = {
   "appStores": {
     "googlePlay": {
       "rating": 4.6,
-      "reviewCount": "17.8K",
+      "reviewCount": "17.9K",
       "positive": 86,
       "neutral": 9,
       "negative": 5,
@@ -98443,11 +98443,11 @@ const CASE_DATA = {
           "type": "pos"
         },
         {
-          "label": "Android EFTPOS gap",
+          "label": "Open-ticket flow",
           "type": "neg"
         },
         {
-          "label": "Back office slow",
+          "label": "Receipts screen bugs",
           "type": "neg"
         }
       ]
@@ -98488,23 +98488,23 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Mar",
       "Apr",
       "May",
       "Jun",
       "Jul",
-      "Aug"
+      "Aug",
+      "Sep"
     ],
     "googlePlay": [
-      4.7,
       4.68,
       4.72,
       4.75,
       4.7,
+      4.6,
       4.6
     ],
     "appStore": [
-      4.71,
+      4.7,
       4.7,
       4.7,
       4.7,
@@ -98515,43 +98515,43 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 679,
+      "mentions": 686,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 476,
+      "mentions": 481,
       "type": "pos",
       "key": "free-value"
     },
     {
       "name": "Inventory features",
-      "mentions": 372,
+      "mentions": 376,
       "type": "pos",
       "key": "inventory"
     },
     {
       "name": "Reporting",
-      "mentions": 301,
+      "mentions": 304,
       "type": "pos",
       "key": "reporting"
     },
     {
       "name": "Customer support",
-      "mentions": 236,
+      "mentions": 239,
       "type": "neg",
       "key": "customer-support"
     },
     {
       "name": "Payment integration",
-      "mentions": 176,
+      "mentions": 178,
       "type": "neg",
       "key": "payment-integration"
     },
     {
       "name": "Sync / connectivity",
-      "mentions": 131,
+      "mentions": 134,
       "type": "neg",
       "key": "sync"
     }
@@ -98560,28 +98560,52 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "1M+",
       "trend": [
-        985000,
         1000000,
         1017000,
         1034000,
         1071000,
-        1093000
+        1093000,
+        1115000
       ]
     },
     "appStore": {
-      "total": "281K+",
+      "total": "290K+",
       "trend": [
-        232000,
         240000,
         250000,
         259000,
         271000,
-        281000
+        281000,
+        290000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
+      {
+        "author": "Martijn de Klerk",
+        "country": "NL",
+        "region": "europe",
+        "rating": 3,
+        "date": "Sep 2026",
+        "sentiment": "neutral",
+        "themes": [
+          "ease-of-use"
+        ],
+        "text": "You can't save to an existing open ticket (\"All predefined tickets are in use\"). People usually order first and only pick the payment method afterward — then it becomes clear they want to add to an open ticket. The Save button should allow saving new orders to existing open tickets, just like Move ticket does. Also don't see the new feature to group identical items in tickets anywhere, and there's no option for partial payments apart from splitting."
+      },
+      {
+        "author": "Alessandro Buono",
+        "country": "IT",
+        "region": "europe",
+        "rating": 1,
+        "date": "Aug 2026",
+        "sentiment": "negative",
+        "themes": [
+          "sync"
+        ],
+        "text": "Rarely works without issue. Every time I want to see the receipts the screen goes black, and I must reboot the phone and open and close the app many times before the receipts finally show."
+      },
       {
         "author": "Thant Tun",
         "country": "MM",
@@ -98595,7 +98619,7 @@ const CASE_DATA = {
         "text": "Currently, I receive the Low Stock Notification email once a day. It would be very useful if Loyverse could provide an option to receive the notification twice a day. Receiving low-stock notifications twice daily would help us monitor inventory more effectively and restock important items before out of stock. Please consider adding a setting that allows users to choose preferred notification frequency and times."
       },
       {
-        "author": "Gareth",
+        "author": "Gareth Camies",
         "country": "GB",
         "region": "europe",
         "rating": 4,
@@ -98697,18 +98721,6 @@ const CASE_DATA = {
         "text": "Inventory management handles our hardware store well. Low-stock notifications could be smarter — would love automatic reorder points. Best free option available."
       },
       {
-        "author": "WarungID",
-        "country": "ID",
-        "region": "asia",
-        "rating": 3,
-        "date": "Jul 2026",
-        "sentiment": "neutral",
-        "themes": [
-          "sync"
-        ],
-        "text": "Receipts sometimes take a while to load and item photos go missing after edits until the app resyncs. A restart usually fixes it, but it slows the queue during the evening rush."
-      },
-      {
         "author": "CantinaCO",
         "country": "CO",
         "region": "south_america",
@@ -98756,19 +98768,6 @@ const CASE_DATA = {
           "customer-support"
         ],
         "text": "Add-on costs pile up when you need employee management and analytics. Payment processing fees not clear upfront. Waited 8 days for a support reply."
-      },
-      {
-        "author": "NoodleTH",
-        "country": "TH",
-        "region": "asia",
-        "rating": 1,
-        "date": "Jul 2026",
-        "sentiment": "negative",
-        "themes": [
-          "sync",
-          "customer-support"
-        ],
-        "text": "Kitchen display dropped orders mid-service again. Customers left waiting while we scrambled. Bug reported three weeks ago with zero resolution."
       }
     ],
     "appStore": [
