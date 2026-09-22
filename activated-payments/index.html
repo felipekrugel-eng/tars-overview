@@ -655,9 +655,9 @@
         <p class="ov-cnote" id="ovAttachNote"></p>
         <div class="ov-chart" id="ovAttachChart"></div>
         <div class="ov-legend">
-          <span><i class="line" style="background:#1D8FE1"></i> Attachment rate (7-day)</span>
-          <span><i class="line" style="background:#C8CDD4"></i> Single day</span>
-          <span><i class="line" style="background:#1A1A1A"></i> Median merchant</span>
+          <span><i class="line" style="background:#1D8FE1"></i> Median merchant (7-day)</span>
+          <span><i class="line" style="background:#1A1A1A"></i> Blended, weighted by till size</span>
+          <span><i class="line" style="background:#C8CDD4"></i> Single day, blended</span>
         </div>
         <div style="margin-top:18px">
           <div class="ov-ctitle"><h2 style="font-size:14px">Where merchants sit</h2><span class="tot" id="ovAttachSpreadTot">&nbsp;</span></div>
@@ -2379,17 +2379,23 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     wrap.style.display = '';
     var h = ATT.headline || {};
 
-    document.getElementById('ovAttachNum').textContent = (h.blended == null ? '\u2014' : h.blended + '%');
+    // THE MEDIAN MERCHANT IS THE HEADLINE. The blended rate is a VOLUME-WEIGHTED AVERAGE —
+    // total over total weights every merchant by the size of their own till — so it answers
+    // "how much of the money is ours" while looking like a typical merchant. It sits 19
+    // points BELOW the median, because our largest tills attach least. Both are shown, the
+    // median as the number and the blended beneath it, since the gap is itself the finding.
+    document.getElementById('ovAttachNum').textContent = (h.median == null ? '\u2014' : h.median + '%');
     // The change is against the PRIOR 30 days, not month-to-date against a full month —
     // that comparison always reads as a collapse and tells you nothing.
-    var chg = (h.blended != null && h.blendedPrev) ? (h.blended - h.blendedPrev) : null;
+    var chg = (h.median != null && h.medianPrev) ? (h.median - h.medianPrev) : null;
     var chgTxt = chg == null ? ''
       : ' \u00b7 ' + (chg >= 0 ? '+' : '') + (Math.round(chg * 10) / 10) + 'pp vs prior 30 days';
     document.getElementById('ovAttachSub').innerHTML =
-      'Last 30 days \u00b7 ' + fmtUsd(h.lp) + ' of ' + fmtUsd(h.pos) + ' till volume \u00b7 ' +
-      fmtInt(h.merchants) + ' merchants' + chgTxt;
+      'Median merchant, last 30 days' + chgTxt + ' \u00b7 ' +
+      (h.blended == null ? '' : '<b>' + h.blended + '%</b> of all volume, weighted by till size \u00b7 ') +
+      fmtInt(h.merchants) + ' merchants \u00b7 ' + fmtUsd(h.lp) + ' of ' + fmtUsd(h.pos);
     document.getElementById('ovAttachSpark').innerHTML =
-      attachSpark(ATT.daily.slice(-60).map(function(r){ return r.roll; }));
+      attachSpark(ATT.daily.slice(-60).map(function(r){ return r.med; }));
 
     // ---- the expanded card ----
     var days = ATT.daily.map(function(r){ return r.d; });
@@ -2399,7 +2405,10 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         'Of the money crossing these merchants&rsquo; tills, the share taken on Loyverse Payments. ' +
         'Each merchant counts only from their <b>first Loyverse Payments charge onward</b>, so a merchant ' +
         'enters both sides of the ratio on the same day and the rate cannot drift upward merely because ' +
-        'pre-terminal volume ages out. The line is a <b>' + ATT.rollDays + '-day rolling</b> rate computed from ' +
+        'pre-terminal volume ages out. The published rate is the <b>median merchant</b>: blended is a ' +
+        'volume-weighted average, so a few large tills set it while wearing everyone else\u2019s name, ' +
+        'and it runs 19 points lower. Both are drawn and the gap between them is the finding. ' +
+        'The lines are <b>' + ATT.rollDays + '-day rolling</b> rates computed from ' +
         'rolling sums, not an average of daily rates, so a quiet Sunday cannot weigh as much as a busy ' +
         'Saturday. Single days are drawn faintly behind it and are noisy by nature at this merchant count. ' +
         'Same definition as the campaign file&rsquo;s attach rate. USD only.';
@@ -2410,8 +2419,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     var el = document.getElementById('ovAttachChart');
     if (el) pctLines(el, days, [
       { data: ATT.daily.map(function(r){ return r.raw;  }), color: '#C8CDD4', width: 1.2 },
-      { data: ATT.daily.map(function(r){ return r.med;  }), color: '#1A1A1A', width: 1.8, dash: '5,4' },
-      { data: ATT.daily.map(function(r){ return r.roll; }), color: '#1D8FE1', width: 2.6 }
+      { data: ATT.daily.map(function(r){ return r.roll; }), color: '#1A1A1A', width: 1.8, dash: '5,4' },
+      { data: ATT.daily.map(function(r){ return r.med;  }), color: '#1D8FE1', width: 2.6 }
     ]);
 
     // ---- distribution ----

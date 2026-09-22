@@ -7,13 +7,18 @@ merchant-base-automation/queries/q1_base.sql's PAYMENTS_ATTACH_RATE_L30D — the
 campaign already runs on — given a date axis by sql/attach_rate_daily.sql. This script does
 the aggregating and nothing else: one place defines the metric, one place aggregates it.
 
-THREE THINGS IT COMPUTES, because the average hides the thing worth acting on:
+THREE THINGS IT COMPUTES. MEDIAN IS THE HEADLINE:
 
-  BLENDED   total LP volume / total till volume. Dominated by the biggest tills, which is
-            the right read for "how much of the money is ours".
-  MEDIAN    the middle merchant's own rate. The right read for "what does a typical
-            merchant do". These sat 19 points apart when this was built (31.9% against
-            51.4%), and a page showing only one of them would mislead about the other.
+  MEDIAN    the middle merchant's own rate — the published figure. What a typical merchant
+            actually does, which is the thing a team can move.
+  BLENDED   total LP volume / total till volume. This is a VOLUME-WEIGHTED AVERAGE, not a
+            separate measurement: ΣLP/ΣPOS is algebraically Σ(rate_i × pos_i)/Σpos_i, so
+            every merchant is weighted by the size of their own till. That makes it the
+            right read for "how much of the money is ours" and the wrong one for "how are
+            merchants behaving" — a handful of large tills set it while wearing everyone
+            else's name. Kept in the card beside the median, 19 points below it at build
+            time (31.9% against 51.4%), because the gap between the two IS information:
+            it says our biggest merchants attach less than our typical ones.
   SPREAD    how many merchants are effectively all-in against how many barely use it. At
             build time: 16 merchants above 95%, 26 below 25%, out of 90. That bimodality
             is the finding; an average of 32% describes almost nobody.
@@ -151,6 +156,8 @@ def main() -> None:
     prev30 = days[-60:-30]
     wp = df[df["D"].isin(prev30)]
     blended_prev = rate(float(wp["LP_USD"].sum()), float(wp["POS_USD"].sum()))
+    mr_prev = merchant_rates(prev30)
+    median_prev = round(float(mr_prev.median()) * 100, 2) if len(mr_prev) else None
 
     spread = {
         "high": int((mr30 >= HIGH).sum()),
@@ -171,7 +178,7 @@ def main() -> None:
         "lastDay": days[-1] if days else None,
         "headline": {
             "blended": blended30, "median": median30,
-            "blendedPrev": blended_prev,
+            "blendedPrev": blended_prev, "medianPrev": median_prev,
             "lp": round(lp30, 2), "pos": round(pos30, 2),
             "merchants": spread["total"],
             "opportunity": round(max(pos30 - lp30, 0), 2),
@@ -190,9 +197,11 @@ def main() -> None:
         "// campaign runs on — change one and change the other.\n"
         "//\n"
         "// window.__PAY_ATTACH = {\n"
-        "//   headline : {blended, median, blendedPrev, lp, pos, merchants, opportunity} over the last\n"
-        "//              30 complete days. BLENDED is volume-weighted and MEDIAN is the middle\n"
-        "//              merchant; they sat 13 points apart at build time and mean different things.\n"
+        "//   headline : {median, blended, medianPrev, blendedPrev, lp, pos, merchants, opportunity}\n"
+        "//              over the last 30 complete days. MEDIAN is the published figure. BLENDED is a\n"
+        "//              VOLUME-WEIGHTED AVERAGE, not a second measurement — SumLP/SumPOS weights each\n"
+        "//              merchant by their own till — so it answers how much of the money is ours\n"
+        "//              while the median answers how merchants behave. 19 points apart at build time.\n"
         "//              `opportunity` is till volume NOT running through us — the prize.\n"
         "//   spread   : {high, low, total} — merchants at 95%+ and under 25%. The base is bimodal;\n"
         "//              the average describes almost nobody.\n"
@@ -211,7 +220,7 @@ def main() -> None:
     OUT_FILE.write_text(banner + "window.__PAY_ATTACH = " + json.dumps(out, separators=(",", ":")) + ";\n",
                         encoding="utf-8")
     print(f"[attach] wrote {OUT_FILE} — {len(rows)} days, through {out['lastDay']}")
-    print(f"[attach] last 30 days: blended {blended30}%  median {median30}%  "
+    print(f"[attach] last 30 days: MEDIAN {median30}% (headline)  blended {blended30}%  "
           f"({spread['total']} merchants, {spread['high']} at {int(HIGH*100)}%+, {spread['low']} under {int(LOW*100)}%)")
     print(f"[attach] LP ${lp30:,.0f} of ${pos30:,.0f} till volume — ${out['headline']['opportunity']:,.0f} not on us")
 
