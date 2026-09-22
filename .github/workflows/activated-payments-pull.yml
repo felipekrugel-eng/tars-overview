@@ -106,13 +106,45 @@ jobs:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: node activated-payments/pull.js
 
+      # ── Attachment rate ────────────────────────────────────────────────────────
+      # Of the money crossing these merchants' tills, how much comes through Loyverse
+      # Payments. GUARDED and non-fatal, on the same rule as every other addition here: the
+      # payments data above is the critical deliverable and must not be lost to a new query.
+      # Without this step attach-data.js keeps its last committed value and the tile simply
+      # shows yesterday's figure.
+      #
+      # PYTHON IN AN OTHERWISE NODE PIPELINE. The aggregation is pandas because the rolling
+      # windows and per-merchant medians are a dozen lines there and a hundred in hand-rolled
+      # JS. Worth the extra runtime rather than porting it; if this pipeline ever drops
+      # Python, the port is build_attach_data.py and nothing else.
+      - name: Set up Python for the attachment build
+        if: steps.gate.outputs.run == 'yes'
+        continue-on-error: true
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Attachment rate -> attach-data.js
+        if: steps.gate.outputs.run == 'yes'
+        continue-on-error: true
+        # The denominator is a full scan of LOYVERSE_RECEIPTS, which has no clustering key,
+        # so filtering to ~100 merchants costs the same as asking for everyone: ~12 minutes.
+        timeout-minutes: 30
+        run: |
+          pip install --quiet pandas
+          node activated-payments/run_attach.js
+          python3 activated-payments/build_attach_data.py
+        env:
+          ATTACH_CSV: ${{ github.workspace }}/activated-payments/work/attach_rate_daily.csv
+          ATTACH_OUT: ${{ github.workspace }}/activated-payments/attach-data.js
+
       - name: Commit & push if the data changed
         if: steps.gate.outputs.run == 'yes'
         run: |
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
           # Only the generated data + discovery artifact — never the dashboard source.
-          git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
+          git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else
@@ -129,7 +161,7 @@ jobs:
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
               git reset -q --mixed origin/master
-              git add activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
+              git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
               if git diff --cached --quiet; then
                 echo "Remote already has this data — nothing to push."; exit 0
               fi

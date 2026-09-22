@@ -152,6 +152,21 @@
   .pf-row.na .pf-lbl,.pf-row.na .pf-n,.pf-row.na .pf-pct{color:#A9AFB5;}
   .pf-row.na .pf-track{background:repeating-linear-gradient(45deg,#F6F7F8,#F6F7F8 5px,#EDEFF1 5px,#EDEFF1 10px);}
   @media(max-width:760px){.pf-head,.pf-row{grid-template-columns:132px 1fr 60px;}.pf-head span:nth-child(n+4),.pf-row .pf-pct{display:none;}}
+  /* Attachment tile. A button, not a div: it is the control that opens the card, so it
+     should be reachable by keyboard and announce its state without extra wiring. */
+  .at-tile{display:flex;align-items:center;gap:18px;width:100%;text-align:left;cursor:pointer;
+    background:#fff;border:1px solid var(--silver);border-radius:12px;padding:14px 18px;font-family:inherit;}
+  .at-tile:hover{border-color:#C3CBD3;}
+  .at-main{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .at-lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--midgray);font-weight:bold;}
+  .at-num{font-size:26px;font-weight:bold;color:var(--charcoal);line-height:1.1;}
+  .at-sub{font-size:11.5px;color:var(--midgray);}
+  .at-spark{margin-left:auto;}
+  .at-chev{font-size:13px;color:var(--midgray);transition:transform .15s;}
+  .at-tile[aria-expanded="true"] .at-chev{transform:rotate(180deg);}
+  .at-band{display:grid;grid-template-columns:76px 1fr 42px;align-items:center;gap:10px;font-size:11.5px;margin-bottom:5px;}
+  .at-band i{display:block;height:13px;border-radius:3px;background:#1D8FE1;min-width:2px;}
+  .at-band span:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--midgray);}
   .ov-ctitle{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:2px;}
   .ov-ctitle h2{font-family:"Arial Black",Arial,sans-serif;font-size:16px;color:var(--charcoal);margin:0;}
   .ov-ctitle .tot{font-size:13px;color:var(--midgray);font-weight:bold;}
@@ -621,6 +636,36 @@
       <div class="ov-updated" id="ovTileNote">&nbsp;</div>
     </div>
     <div class="ov-kpis" id="ovKpis"></div>
+    <!-- Attachment rate. Sits directly under the tiles as a tile-shaped summary that opens
+         into a full card, because the headline number is genuinely misleading on its own:
+         the base is bimodal and the blended rate describes almost nobody. Collapsed by
+         default so the page reads as it did before for anyone not asking this question. -->
+    <div id="ovAttachWrap" style="display:none;margin-top:14px">
+      <button type="button" id="ovAttachTile" class="at-tile" aria-expanded="false">
+        <span class="at-main">
+          <span class="at-lbl">Loyverse Payments attachment rate</span>
+          <span class="at-num" id="ovAttachNum">&mdash;</span>
+          <span class="at-sub" id="ovAttachSub">&nbsp;</span>
+        </span>
+        <span class="at-spark" id="ovAttachSpark"></span>
+        <span class="at-chev" id="ovAttachChev">&#9662;</span>
+      </button>
+      <div class="ov-card full" id="ovAttachCard" style="display:none;margin-top:12px">
+        <div class="ov-ctitle"><h2>Attachment rate over time</h2><span class="tot" id="ovAttachTot">&nbsp;</span></div>
+        <p class="ov-cnote" id="ovAttachNote"></p>
+        <div class="ov-chart" id="ovAttachChart"></div>
+        <div class="ov-legend">
+          <span><i class="line" style="background:#1D8FE1"></i> Attachment rate (7-day)</span>
+          <span><i class="line" style="background:#C8CDD4"></i> Single day</span>
+          <span><i class="line" style="background:#1A1A1A"></i> Median merchant</span>
+        </div>
+        <div style="margin-top:18px">
+          <div class="ov-ctitle"><h2 style="font-size:14px">Where merchants sit</h2><span class="tot" id="ovAttachSpreadTot">&nbsp;</span></div>
+          <p class="ov-cnote">Each merchant&rsquo;s own rate over the last 30 days. The shape is the point: an average between two clusters describes neither.</p>
+          <div id="ovAttachBands"></div>
+        </div>
+      </div>
+    </div>
     <div class="ov-card full" style="margin-top:18px">
       <!-- The join governs the Activated row, and Retained cascades from it. It is a
            separate control from the Merchant base chips above on purpose: those filter
@@ -1154,6 +1199,8 @@ buildAnchorTable();compute();
 
 <script src="activation-data.js"></script>
 <script src="overview-data.js"></script>
+<!-- Loyverse Payments attachment rate. Optional: without it the tile and its card hide. -->
+<script src="attach-data.js"></script>
 <script src="pilot500-data.js"></script>
 <script src="funnel-data.js"></script>
 <script src="margins-data.js"></script>
@@ -2247,10 +2294,161 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     syncMonthPicker();
   }
 
+  // ---- Loyverse Payments attachment rate -------------------------------------------
+  // Of the money crossing a till, how much comes through us. The tile shows the blended
+  // rate because that is "how much of the money is ours"; the card adds the median because
+  // the base is bimodal and the blended figure describes almost nobody — at build time 18
+  // merchants ran above 95% and 26 below 25%, around a blended 35%.
+  var ATT = window.__PAY_ATTACH || null;
+
+  // A sparkline, not a chart: the tile promises a direction, and the card is one click away
+  // for anyone who wants the axis.
+  function attachSpark(series){
+    var v = series.filter(function(x){ return x != null; });
+    if (v.length < 2) return '';
+    var W = 132, H = 30, lo = Math.min.apply(null, v), hi = Math.max.apply(null, v);
+    var span = (hi - lo) || 1;
+    var pts = series.map(function(x, i){
+      if (x == null) return null;
+      return [(i / (series.length - 1)) * W, H - ((x - lo) / span) * (H - 4) - 2];
+    }).filter(Boolean);
+    var d = pts.map(function(p, i){ return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var last = pts[pts.length - 1];
+    return '<svg width="' + W + '" height="' + H + '" aria-hidden="true">' +
+           '<path d="' + d + '" fill="none" stroke="#1D8FE1" stroke-width="2"/>' +
+           '<circle cx="' + last[0].toFixed(1) + '" cy="' + last[1].toFixed(1) + '" r="2.5" fill="#1D8FE1"/></svg>';
+  }
+
+  // Percentage lines on one axis. Purpose-built rather than an option bolted onto chart():
+  // that helper is bars-plus-one-line in money, four charts depend on its behaviour, and
+  // widening it to carry three percentage series would put those four at risk to save
+  // thirty lines here. Same canvas geometry so the two sit together on the page.
+  //
+  // Gaps are REAL: a null is a day with no till volume, and joining across it would draw a
+  // rate through a day that had none. Each run of consecutive points is its own path.
+  function pctLines(el, days, series){
+    if (!days.length) { el.innerHTML = '<div class="pc-empty">No data yet — populates on the next daily pull.</div>'; return; }
+    var W = 920, H = 300, m = { t: 14, r: 20, b: 34, l: 48 };
+    var iw = W - m.l - m.r, ih = H - m.t - m.b, n = days.length;
+    var all = series.reduce(function(a, s2){ return a.concat(s2.data.filter(function(v){ return v != null; })); }, []);
+    // Always show zero, and give the top a little air, so the eye reads the level rather
+    // than a zoomed slice that makes a two-point move look like a cliff.
+    var hi = Math.max(10, Math.ceil(Math.max.apply(null, all.concat([0])) / 10) * 10 + 5);
+    var X = function(i){ return m.l + (n === 1 ? iw / 2 : (i / (n - 1)) * iw); };
+    var Y = function(v){ return m.t + ih - (v / hi) * ih; };
+    var out = [];
+    for (var g = 0; g <= 4; g++) {
+      var gv = hi * g / 4, gy = Y(gv);
+      out.push('<line x1="' + m.l + '" y1="' + gy.toFixed(1) + '" x2="' + (W - m.r) + '" y2="' + gy.toFixed(1) +
+               '" stroke="#EDEFF1" stroke-width="1"/>');
+      out.push('<text x="' + (m.l - 8) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-size="10" fill="#8A9199">' +
+               Math.round(gv) + '%</text>');
+    }
+    series.forEach(function(s2){
+      var run = [];
+      var flush = function(){
+        if (run.length > 1) {
+          out.push('<path d="' + run.map(function(p, i){ return (i ? 'L' : 'M') + p; }).join(' ') +
+                   '" fill="none" stroke="' + s2.color + '" stroke-width="' + s2.width + '"' +
+                   (s2.dash ? ' stroke-dasharray="' + s2.dash + '"' : '') + ' stroke-linejoin="round"/>');
+        } else if (run.length === 1) {
+          var xy = run[0].split(' ');
+          out.push('<circle cx="' + xy[0] + '" cy="' + xy[1] + '" r="1.6" fill="' + s2.color + '"/>');
+        }
+        run = [];
+      };
+      s2.data.forEach(function(v, i){
+        if (v == null) { flush(); return; }
+        run.push(X(i).toFixed(1) + ' ' + Y(v).toFixed(1));
+      });
+      flush();
+    });
+    // Sparse date labels — one every ~6 weeks keeps them legible at 155 days.
+    var step = Math.max(1, Math.ceil(n / 7));
+    for (var i = 0; i < n; i += step) {
+      out.push('<text x="' + X(i).toFixed(1) + '" y="' + (H - 10) + '" text-anchor="middle" font-size="10" fill="#8A9199">' +
+               days[i].slice(5) + '</text>');
+    }
+    el.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet" role="img">' +
+                   out.join('') + '</svg>';
+  }
+
+  function renderAttach(){
+    var wrap = document.getElementById('ovAttachWrap');
+    if (!wrap || !ATT || !ATT.daily || !ATT.daily.length) return;
+    wrap.style.display = '';
+    var h = ATT.headline || {};
+
+    document.getElementById('ovAttachNum').textContent = (h.blended == null ? '\u2014' : h.blended + '%');
+    // The change is against the PRIOR 30 days, not month-to-date against a full month —
+    // that comparison always reads as a collapse and tells you nothing.
+    var chg = (h.blended != null && h.blendedPrev) ? (h.blended - h.blendedPrev) : null;
+    var chgTxt = chg == null ? ''
+      : ' \u00b7 ' + (chg >= 0 ? '+' : '') + (Math.round(chg * 10) / 10) + 'pp vs prior 30 days';
+    document.getElementById('ovAttachSub').innerHTML =
+      'Last 30 days \u00b7 ' + fmtUsd(h.lp) + ' of ' + fmtUsd(h.pos) + ' till volume \u00b7 ' +
+      fmtInt(h.merchants) + ' merchants' + chgTxt;
+    document.getElementById('ovAttachSpark').innerHTML =
+      attachSpark(ATT.daily.slice(-60).map(function(r){ return r.roll; }));
+
+    // ---- the expanded card ----
+    var days = ATT.daily.map(function(r){ return r.d; });
+    var note = document.getElementById('ovAttachNote');
+    if (note) {
+      note.innerHTML =
+        'Of the money crossing these merchants&rsquo; tills, the share taken on Loyverse Payments. ' +
+        'Each merchant counts only from their <b>first Loyverse Payments charge onward</b>, so a merchant ' +
+        'enters both sides of the ratio on the same day and the rate cannot drift upward merely because ' +
+        'pre-terminal volume ages out. The line is a <b>' + ATT.rollDays + '-day rolling</b> rate computed from ' +
+        'rolling sums, not an average of daily rates, so a quiet Sunday cannot weigh as much as a busy ' +
+        'Saturday. Single days are drawn faintly behind it and are noisy by nature at this merchant count. ' +
+        'Same definition as the campaign file&rsquo;s attach rate. USD only.';
+    }
+    var tot = document.getElementById('ovAttachTot');
+    if (tot) tot.textContent = fmtUsd(h.opportunity) + ' of till volume not on us';
+
+    var el = document.getElementById('ovAttachChart');
+    if (el) pctLines(el, days, [
+      { data: ATT.daily.map(function(r){ return r.raw;  }), color: '#C8CDD4', width: 1.2 },
+      { data: ATT.daily.map(function(r){ return r.med;  }), color: '#1A1A1A', width: 1.8, dash: '5,4' },
+      { data: ATT.daily.map(function(r){ return r.roll; }), color: '#1D8FE1', width: 2.6 }
+    ]);
+
+    // ---- distribution ----
+    var bands = document.getElementById('ovAttachBands');
+    if (bands && ATT.bands) {
+      var top = ATT.bands.reduce(function(a, b){ return Math.max(a, b.n); }, 0) || 1;
+      bands.innerHTML = ATT.bands.map(function(b){
+        return '<div class="at-band"><span>' + b.lo + '\u2013' + b.hi + '%</span>' +
+               '<i style="width:' + (b.n / top * 100).toFixed(1) + '%"></i>' +
+               '<span>' + fmtInt(b.n) + '</span></div>';
+      }).join('');
+      var st = document.getElementById('ovAttachSpreadTot');
+      if (st && ATT.spread) {
+        st.textContent = fmtInt(ATT.spread.high) + ' at 95%+ \u00b7 ' +
+                         fmtInt(ATT.spread.low) + ' under 25% \u00b7 median ' +
+                         (h.median == null ? '\u2014' : h.median + '%');
+      }
+    }
+  }
+  (function(){
+    var btn = document.getElementById('ovAttachTile'), card = document.getElementById('ovAttachCard');
+    if (!btn || !card) return;
+    btn.addEventListener('click', function(){
+      var open = card.style.display === 'none';
+      card.style.display = open ? '' : 'none';
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // Draw on first open rather than on load: the chart is inside a hidden element at
+      // page load, where width measures as zero and the line comes out collapsed.
+      if (open) renderAttach();
+    });
+  })();
+
   function renderAll(){
     loadData();
     renderStatic();
     renderKpis();
+    renderAttach();
     renderFunnel();
     renderChartTotals(curRange);
     renderCharts(curRange);
