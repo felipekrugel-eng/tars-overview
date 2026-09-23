@@ -20,7 +20,7 @@ BRANCH = "master"
 STATE_PATH = "risk-telegram/state.json"
 AAD = b"loyverse-risk-telegram-v1"
 BOT_USERNAME = "lprisk_bot"
-GROUP_TITLE = "Loyverse Payment Risk"
+GROUP_TITLE = "Loyverse Payments Risk"
 
 
 class SafeError(Exception):
