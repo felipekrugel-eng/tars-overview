@@ -37596,53 +37596,64 @@ ch_3UIdTvQJfvlGDJJG0bjaZJFh,2026-09-22 23:52:20,acct_1TOKmPQJfvlGDJJG,acct_1SSKs
 ch_3UIdUI7W6DgNeh5X0H2qukNx,2026-09-22 23:52:44,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1350,MasterCard,debit,US,8194,0
 ch_3UIdX37AFzbzGA0t1iyrlGCE,2026-09-22 23:55:38,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,826,Visa,debit,US,1069,36
 ch_3UIdXq7AFzbzGA0t0teA4LMF,2026-09-22 23:56:35,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,984,Discover,debit,US,5110,41
-ch_3UIdZb7AFzbzGA0t0z5Pj6cg,2026-09-22 23:58:14,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,378,MasterCard,credit,US,7407,
-ch_3UIddG7AFzbzGA0t1eEDdTIe,2026-09-23 00:02:01,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,864,MasterCard,debit,US,8246,
-ch_3UIdeM7W6DgNeh5X005Xpk2Z,2026-09-23 00:03:06,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,604,Visa,credit,US,6787,
-ch_3UIdeN7AFzbzGA0t0U0SniX6,2026-09-23 00:03:10,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2950,Visa,debit,US,7076,
-ch_3UIdf66xaKj8hHOI0IzOtqrG,2026-09-23 00:04:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3000,Visa,prepaid,US,5898,
-ch_3UIdfQ7AFzbzGA0t1J8Omh1D,2026-09-23 00:04:16,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1512,Discover,debit,US,9498,
-ch_3UIdg07W6DgNeh5X1zTVy2ne,2026-09-23 00:04:49,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1325,Visa,debit,US,8057,
-ch_3UIdgFQJfvlGDJJG1CtyNauv,2026-09-23 00:05:08,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,300,Visa,debit,US,4405,
-ch_3UIdiB7AFzbzGA0t1WyVuw05,2026-09-23 00:07:09,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1458,MasterCard,debit,US,5250,
-ch_3UIdiv7W6DgNeh5X0EAVuixQ,2026-09-23 00:07:51,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1375,Visa,debit,US,3750,
-ch_3UIdjv7AFzbzGA0t1Ct94Yun,2026-09-23 00:08:52,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1242,Visa,credit,US,3633,
-ch_3UIdkU7W6DgNeh5X0M1dltCI,2026-09-23 00:09:29,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,900,Visa,credit,US,4574,
-ch_3UIdkYQJfvlGDJJG1lPoPtUV,2026-09-23 00:09:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,MasterCard,credit,US,9259,
-ch_3UIdmX7AFzbzGA0t0YhIyzGQ,2026-09-23 00:11:36,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,810,Visa,prepaid,US,6695,
-ch_3UIdop7AFzbzGA0t0tYiOfCa,2026-09-23 00:14:04,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1134,MasterCard,prepaid,US,4306,
-ch_3UIdos7C646Nqh7e1kiDjaPw,2026-09-23 00:14:02,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6212,Visa,debit,US,7568,
-ch_3UIdpX7AFzbzGA0t0L6Tc0Tt,2026-09-23 00:14:43,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1056,Visa,debit,US,3736,
-ch_3UIdqM7AFzbzGA0t1qvtrP8d,2026-09-23 00:15:33,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1888,American Express,credit,US,2013,
-ch_3UIdtL7AFzbzGA0t1cAgEXxX,2026-09-23 00:18:43,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2706,Discover,credit,US,0043,
-ch_3UIdtN7W6DgNeh5X0qyxxUD0,2026-09-23 00:18:42,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,930,Visa,debit,US,8984,
-ch_3UIdtR8jpGeQspj7046nmFBu,2026-09-23 00:18:42,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,1300,Visa,credit,US,8819,
-ch_3UIdvCQJfvlGDJJG0OtGixci,2026-09-23 00:20:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,0737,
-ch_3UIdwKQJfvlGDJJG0QIw6J7o,2026-09-23 00:21:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2550,MasterCard,debit,US,2733,
-ch_3UIdyA7AFzbzGA0t1cxPQcGu,2026-09-23 00:23:37,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,378,Visa,prepaid,US,0376,
-ch_3UIdz87AFzbzGA0t0jfAVbd6,2026-09-23 00:24:41,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1620,Visa,debit,US,6454,
-ch_3UIe0V8jpGeQspj71s6WMrGS,2026-09-23 00:25:59,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,Visa,debit,US,4218,
-ch_3UIe5DQJfvlGDJJG1yh1qATT,2026-09-23 00:30:52,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,0932,
-ch_3UIe7c7AFzbzGA0t0oPNks9h,2026-09-23 00:33:30,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1944,American Express,credit,US,4359,
-ch_3UIeAEQJfvlGDJJG1Hoa1ezx,2026-09-23 00:36:01,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2675,MasterCard,debit,US,0922,
-ch_3UIeOIQJfvlGDJJG0SKUC5cf,2026-09-23 00:50:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,3550,MasterCard,debit,US,8956,
-ch_3UIeU47W6DgNeh5X033cxtpR,2026-09-23 00:56:33,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1759,Visa,debit,US,8168,
+ch_3UIdZb7AFzbzGA0t0z5Pj6cg,2026-09-22 23:58:14,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,378,MasterCard,credit,US,7407,25
+ch_3UIddG7AFzbzGA0t1eEDdTIe,2026-09-23 00:02:01,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,864,MasterCard,debit,US,8246,37
+ch_3UIdeM7W6DgNeh5X005Xpk2Z,2026-09-23 00:03:06,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,604,Visa,credit,US,6787,0
+ch_3UIdeN7AFzbzGA0t0U0SniX6,2026-09-23 00:03:10,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2950,Visa,debit,US,7076,92
+ch_3UIdf66xaKj8hHOI0IzOtqrG,2026-09-23 00:04:00,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3000,Visa,prepaid,US,5898,93
+ch_3UIdfQ7AFzbzGA0t1J8Omh1D,2026-09-23 00:04:16,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1512,Discover,debit,US,9498,54
+ch_3UIdg07W6DgNeh5X1zTVy2ne,2026-09-23 00:04:49,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1325,Visa,debit,US,8057,0
+ch_3UIdgFQJfvlGDJJG1CtyNauv,2026-09-23 00:05:08,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,300,Visa,debit,US,4405,13
+ch_3UIdiB7AFzbzGA0t1WyVuw05,2026-09-23 00:07:09,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1458,MasterCard,debit,US,5250,53
+ch_3UIdiv7W6DgNeh5X0EAVuixQ,2026-09-23 00:07:51,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1375,Visa,debit,US,3750,0
+ch_3UIdjv7AFzbzGA0t1Ct94Yun,2026-09-23 00:08:52,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1242,Visa,credit,US,3633,47
+ch_3UIdkU7W6DgNeh5X0M1dltCI,2026-09-23 00:09:29,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,900,Visa,credit,US,4574,0
+ch_3UIdkYQJfvlGDJJG1lPoPtUV,2026-09-23 00:09:33,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,475,MasterCard,credit,US,9259,17
+ch_3UIdmX7AFzbzGA0t0YhIyzGQ,2026-09-23 00:11:36,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,810,Visa,prepaid,US,6695,36
+ch_3UIdop7AFzbzGA0t0tYiOfCa,2026-09-23 00:14:04,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1134,MasterCard,prepaid,US,4306,44
+ch_3UIdos7C646Nqh7e1kiDjaPw,2026-09-23 00:14:02,acct_1TtuAL7C646Nqh7e,acct_1SSKsA7e4AMQfKY3,TU CASA RESTAURANT LLC,US,usd,succeeded,6212,Visa,debit,US,7568,177
+ch_3UIdpX7AFzbzGA0t0L6Tc0Tt,2026-09-23 00:14:43,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1056,Visa,debit,US,3736,42
+ch_3UIdqM7AFzbzGA0t1qvtrP8d,2026-09-23 00:15:33,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1888,American Express,credit,US,2013,64
+ch_3UIdtL7AFzbzGA0t1cAgEXxX,2026-09-23 00:18:43,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,2706,Discover,credit,US,0043,85
+ch_3UIdtN7W6DgNeh5X0qyxxUD0,2026-09-23 00:18:42,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,930,Visa,debit,US,8984,0
+ch_3UIdtR8jpGeQspj7046nmFBu,2026-09-23 00:18:42,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,1300,Visa,credit,US,8819,49
+ch_3UIdvCQJfvlGDJJG0OtGixci,2026-09-23 00:20:29,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,950,Visa,debit,US,0737,29
+ch_3UIdwKQJfvlGDJJG0QIw6J7o,2026-09-23 00:21:40,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2550,MasterCard,debit,US,2733,69
+ch_3UIdyA7AFzbzGA0t1cxPQcGu,2026-09-23 00:23:37,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,378,Visa,prepaid,US,0376,25
+ch_3UIdz87AFzbzGA0t0jfAVbd6,2026-09-23 00:24:41,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1620,Visa,debit,US,6454,57
+ch_3UIe0V8jpGeQspj71s6WMrGS,2026-09-23 00:25:59,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,Visa,debit,US,4218,28
+ch_3UIe5DQJfvlGDJJG1yh1qATT,2026-09-23 00:30:52,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,1000,Visa,debit,US,0932,30
+ch_3UIe7c7AFzbzGA0t0oPNks9h,2026-09-23 00:33:30,acct_1Tu2hJ7AFzbzGA0t,acct_1SSKsA7e4AMQfKY3,Easily Edible Cafe and Catering,US,usd,succeeded,1944,American Express,credit,US,4359,66
+ch_3UIeAEQJfvlGDJJG1Hoa1ezx,2026-09-23 00:36:01,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,2675,MasterCard,debit,US,0922,72
+ch_3UIeOIQJfvlGDJJG0SKUC5cf,2026-09-23 00:50:35,acct_1TOKmPQJfvlGDJJG,acct_1SSKsA7e4AMQfKY3,Polar Bear Ice Cream Company,US,usd,succeeded,3550,MasterCard,debit,US,8956,94
+ch_3UIeU47W6DgNeh5X033cxtpR,2026-09-23 00:56:33,acct_1UD2nQ7W6DgNeh5X,acct_1SSKsA7e4AMQfKY3,The Fin,US,usd,succeeded,1759,Visa,debit,US,8168,0
 ch_3UIebL6xaKj8hHOI1D2jGWvV,2026-09-23 01:04:08,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,failed,256,Visa,debit,US,0121,
-ch_3UIebp8jpGeQspj71tE1Vbe1,2026-09-23 01:04:38,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,Visa,debit,US,6593,
-ch_3UIemx6xaKj8hHOI0M3D8wwG,2026-09-23 01:16:05,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2090,Visa,debit,US,1141,
-ch_3UIey4G9cKTLUhQ70FE1oyhF,2026-09-23 01:28:10,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8296,Visa,credit,US,2851,
-ch_3UIeytG9cKTLUhQ703tQIYj7,2026-09-23 01:28:39,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8424,MasterCard,debit,US,8106,
-ch_3UIf0l6xaKj8hHOI0eDjxnJQ,2026-09-23 01:30:27,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,10432,MasterCard,debit,US,0711,
-ch_3UIf3N4yu1rGqQyt0DmFPzuA,2026-09-23 01:33:06,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,5000,Visa,credit,US,1718,
-ch_3UIf3Q8jpGeQspj70xrEsptW,2026-09-23 01:33:04,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,800,Visa,debit,US,9675,
-ch_3UIf9U8jpGeQspj70ot8NkJ6,2026-09-23 01:39:22,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,MasterCard,credit,US,5416,
-ch_3UIfBI8jpGeQspj71wZO75LE,2026-09-23 01:41:12,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,300,Visa,debit,US,9675,
-ch_3UIfGW5oE0hif8XD0NrbV7To,2026-09-23 01:46:37,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,1098,Visa,credit,US,9851,
-ch_3UIfPv8jpGeQspj70f1TvZSz,2026-09-23 01:56:19,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,1300,Visa,prepaid,US,2781,
-ch_3UIfYO6xaKj8hHOI1WOdvWHF,2026-09-23 02:05:05,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2858,Visa,prepaid,US,5975,
-ch_3UIfcp6xaKj8hHOI0kRXGXtH,2026-09-23 02:09:49,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3866,Visa,prepaid,US,1667,
-ch_3UIffDG9cKTLUhQ714KcFaOJ,2026-09-23 02:12:42,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,18089,Visa,debit,US,1550,
-ch_3UIfnJ8jpGeQspj70KJw6M6p,2026-09-23 02:20:38,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,800,Visa,credit,US,7376,
-ch_3UIfzeG9cKTLUhQ70MHjXW4r,2026-09-23 02:33:24,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1280,Visa,debit,US,3518,
-ch_3UIgB0G9cKTLUhQ707vnu8zg,2026-09-23 02:45:02,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2863,Visa,credit,US,6351,
-ch_3UIgLlG9cKTLUhQ71QArVMdG,2026-09-23 02:56:40,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,6166,Visa,debit,US,5173,
+ch_3UIebp8jpGeQspj71tE1Vbe1,2026-09-23 01:04:38,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,Visa,debit,US,6593,28
+ch_3UIemx6xaKj8hHOI0M3D8wwG,2026-09-23 01:16:05,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2090,Visa,debit,US,1141,69
+ch_3UIey4G9cKTLUhQ70FE1oyhF,2026-09-23 01:28:10,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8296,Visa,credit,US,2851,222
+ch_3UIeytG9cKTLUhQ703tQIYj7,2026-09-23 01:28:39,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,8424,MasterCard,debit,US,8106,183
+ch_3UIf0l6xaKj8hHOI0eDjxnJQ,2026-09-23 01:30:27,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,10432,MasterCard,debit,US,0711,286
+ch_3UIf3N4yu1rGqQyt0DmFPzuA,2026-09-23 01:33:06,acct_1Tw2gF4yu1rGqQyt,acct_1SSKsA7e4AMQfKY3,Nasmani Luxury Transportation,US,usd,succeeded,5000,Visa,credit,US,1718,145
+ch_3UIf3Q8jpGeQspj70xrEsptW,2026-09-23 01:33:04,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,800,Visa,debit,US,9675,36
+ch_3UIf9U8jpGeQspj70ot8NkJ6,2026-09-23 01:39:22,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,500,MasterCard,credit,US,5416,28
+ch_3UIfBI8jpGeQspj71wZO75LE,2026-09-23 01:41:12,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,300,Visa,debit,US,9675,23
+ch_3UIfGW5oE0hif8XD0NrbV7To,2026-09-23 01:46:37,acct_1U49B55oE0hif8XD,acct_1SSKsA7e4AMQfKY3,Rainbow,US,usd,succeeded,1098,Visa,credit,US,9851,44
+ch_3UIfPv8jpGeQspj70f1TvZSz,2026-09-23 01:56:19,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,1300,Visa,prepaid,US,2781,49
+ch_3UIfYO6xaKj8hHOI1WOdvWHF,2026-09-23 02:05:05,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,2858,Visa,prepaid,US,5975,89
+ch_3UIfcp6xaKj8hHOI0kRXGXtH,2026-09-23 02:09:49,acct_1TvKXT6xaKj8hHOI,acct_1SSKsA7e4AMQfKY3,Toad Alley LLC,US,usd,succeeded,3866,Visa,prepaid,US,1667,116
+ch_3UIffDG9cKTLUhQ714KcFaOJ,2026-09-23 02:12:42,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,18089,Visa,debit,US,1550,375
+ch_3UIfnJ8jpGeQspj70KJw6M6p,2026-09-23 02:20:38,acct_1Tw1xR8jpGeQspj7,acct_1SSKsA7e4AMQfKY3,Thompson Falls Public School District #2,US,usd,succeeded,800,Visa,credit,US,7376,36
+ch_3UIfzeG9cKTLUhQ70MHjXW4r,2026-09-23 02:33:24,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,1280,Visa,debit,US,3518,40
+ch_3UIgB0G9cKTLUhQ707vnu8zg,2026-09-23 02:45:02,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,2863,Visa,credit,US,6351,86
+ch_3UIgLlG9cKTLUhQ71QArVMdG,2026-09-23 02:56:40,acct_1TtwgqG9cKTLUhQ7,acct_1SSKsA7e4AMQfKY3,Sinbad INC,US,usd,succeeded,6166,Visa,debit,US,5173,138
+ch_3UIkPr6xrVvfynTx0kNxgogg,2026-09-23 07:16:47,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1725,Visa,credit,GB,0005,17
+ch_3UIkyy6xrVvfynTx04bdRoV9,2026-09-23 07:52:55,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,failed,1800,MasterCard,debit,GB,0872,
+ch_3UIkyy6xrVvfynTx06m4dPKO,2026-09-23 07:53:16,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1800,MasterCard,debit,GB,0872,18
+ch_3UIl0O61XfR7SCZd1Z71IPDo,2026-09-23 07:54:27,acct_1TwnVK61XfR7SCZd,acct_1SSKsA7e4AMQfKY3,Resourceful Mindz,US,usd,failed,15500,Visa,prepaid,US,3852,
+ch_3UIl6c61XfR7SCZd1wfWd6Kk,2026-09-23 08:00:46,acct_1TwnVK61XfR7SCZd,acct_1SSKsA7e4AMQfKY3,Resourceful Mindz,US,usd,failed,10000,Visa,prepaid,US,3852,
+ch_3UIlNT6xrVvfynTx0tv9QqMm,2026-09-23 08:18:12,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1150,Visa,debit,GB,2337,11
+ch_3UIlOB6xrVvfynTx1ERpxf1n,2026-09-23 08:18:57,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,588,Visa,debit,GB,2337,6
+ch_3UIlhR6xrVvfynTx1IuVFacR,2026-09-23 08:38:52,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,2016,Visa,debit,GB,3373,20
+ch_3UIlqJ6xrVvfynTx04HzXtAb,2026-09-23 08:48:06,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,900,Visa,debit,GB,1677,9
+ch_3UIlqp6xrVvfynTx0vR3gYed,2026-09-23 08:48:34,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,1890,Visa,debit,GB,4157,19
+ch_3UIlxC6xrVvfynTx0kfoFKt3,2026-09-23 08:55:21,acct_1U4NBD6xrVvfynTx,acct_1SSKsA7e4AMQfKY3,Indigo Venue Limited,GB,gbp,succeeded,250,MasterCard,credit,GB,4542,2
