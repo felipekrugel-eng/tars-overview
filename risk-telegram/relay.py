@@ -102,9 +102,14 @@ def open_state(envelope):
 
 def select_group(updates):
     candidates = {}
+    diagnostics = {"updates": len(updates), "group_messages": 0, "title_matches": 0, "command_matches": 0}
     for update in updates:
         message = update.get("message", {})
         chat = message.get("chat", {})
+        if chat.get("type") in ("group", "supergroup"):
+            diagnostics["group_messages"] += 1
+            diagnostics["title_matches"] += int(chat.get("title") == GROUP_TITLE)
+            diagnostics["command_matches"] += int(message.get("text", "").strip() == "/start@" + BOT_USERNAME)
         if (chat.get("type") in ("group", "supergroup") and not chat.get("username")
                 and chat.get("title") == GROUP_TITLE
                 and message.get("text", "").strip() == "/start@" + BOT_USERNAME
@@ -112,6 +117,7 @@ def select_group(updates):
                 and time.time() - message.get("date", 0) < 86400):
             candidates[chat["id"]] = chat
     if len(candidates) != 1:
+        print("Setup check counts: " + json.dumps(diagnostics, sort_keys=True))
         raise SafeError("one_private_group_start_command_required")
     return next(iter(candidates))
 
