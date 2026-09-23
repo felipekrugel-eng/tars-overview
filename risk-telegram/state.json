@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "bot_username": "lprisk_bot",
-  "status": "configured",
+  "status": "test_confirmed",
   "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAmnNAvPuQwG4ZPn6cfT34\nrz53Y7onTsrIQOyOTzOaT3nJkywH10hvRM0wuqRHbB5zxNjqSY0/vAvAQAtYJKbT\nQBL39iCNlMUmLs+DhdoCxgrxlnTlkTfiGjcgcFn/8IRpOgds6A2tsFHycUFju5gB\n59ACBXomevP5qS1XVZZqOo7QPz55dDLpbkdKGobr5DwMRS/7NRYuuHjXEi8iQv61\nfp9KjiQ3j1PJjKlUEetrX/UPTrgYmSfUIHJ/9Lk+KKlezS1vzCmck7cmN66YJUKV\n2Z0bWuDqYQQ8v+H6LAqrMR5aoORLH2Sti2B9bjwU3piYa9gYE5ZR3Iwk80r+VmED\ncb0XRF8D+A+NN/+XFc7MMFOK4HqDdNF2S0tMqZZ5BU2+IYvxhO5Fmn3yOHlBMFaG\nT0dF66NfmJYAFNgMtp2BGtVSQjhslvQ8NTBAIAATnZg0bBE1s125LW2Z6qbAIdcB\n9oDWMxAOjsHoT4f084U3iZGEglsKrZwaSmVaIk7h21V9AgMBAAE=\n-----END PUBLIC KEY-----\n",
   "private_state": {
     "nonce": "tnGNMeSA88xjVtE5",
@@ -15,5 +15,5 @@
       "sent_epoch": 1790178540
     }
   },
-  "updated_at_utc": "2026-09-23T15:49:00Z"
+  "updated_at_utc": "2026-09-23T15:49:01Z"
 }
