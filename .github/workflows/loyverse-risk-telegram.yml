@@ -1,0 +1,36 @@
+name: Loyverse risk Telegram delivery
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/loyverse-risk-telegram.yml'
+      - 'risk-telegram/relay.py'
+      - 'risk-telegram/outbox/**'
+      - 'risk-telegram/trigger.json'
+permissions:
+  contents: write
+concurrency:
+  group: loyverse-risk-telegram
+  cancel-in-progress: false
+jobs:
+  deliver:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          sparse-checkout: risk-telegram
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install encryption dependency
+        run: pip install 'cryptography==46.0.7'
+      - name: Validate destination and deliver encrypted internal alerts
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python risk-telegram/relay.py
