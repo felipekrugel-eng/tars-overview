@@ -126,7 +126,14 @@ async function main() {
     signD: day(get(r, 'SIGNED_UP_DATE')),
     // POS path
     rcptD: day(get(r, 'FIRST_RECEIPT_DATE')),
+    lastD: day(get(r, 'LAST_RECEIPT_DATE')),
     rcpts: int(get(r, 'RECEIPTS')),
+    r30: int(get(r, 'RECEIPTS_30D')),
+    r7: int(get(r, 'RECEIPTS_7D')),
+    sdays: int(get(r, 'SELLING_DAYS')),
+    a30: int(get(r, 'ACTIVE_30D')),
+    a30_5: int(get(r, 'ACTIVE_30D_5')),
+    a30_10: int(get(r, 'ACTIVE_30D_10')),
     // Payments path — already made monotonic in SQL
     open: int(get(r, 'OPENED_PAYMENTS')),
     kyc1: int(get(r, 'KYC_STARTED')),
@@ -168,6 +175,11 @@ async function main() {
   console.log(`  spend: $${totSpend} total — google $${gSpend}, facebook $${fSpend}`);
   console.log(`  attributed merchants: ${merchants.length}` +
               `  (exact click date on ${merchants.filter(m => m.clickExact).length})`);
+  console.log(`  POS: sold ${merchants.filter(m => m.rcptD).length}` +
+              `  active30 ${merchants.filter(m => m.a30).length}` +
+              `  active30x5 ${merchants.filter(m => m.a30_5).length}` +
+              `  active30x10 ${merchants.filter(m => m.a30_10).length}` +
+              `  lapsed ${merchants.filter(m => m.rcptD && !m.a30).length}`);
   console.log(`  funnel: receipt ${merchants.filter(m => m.rcptD).length}` +
               `  opened ${merchants.filter(m => m.open).length}` +
               `  kyc1 ${merchants.filter(m => m.kyc1).length}` +
@@ -214,7 +226,13 @@ async function main() {
 //                 cannot disagree.
 //                 clickD/signD  the two date bases. clickExact=false means CLICK_DATE was
 //                               unavailable (gad_campaignid path) and signD was substituted.
-//                 rcptD         POS path — first receipt.
+//                 rcptD/lastD   POS path — first and last receipt.
+//                 r30/r7/sdays  receipts in the trailing 30 and 7 days, and distinct days
+//                               sold on. a30/a30_5/a30_10 are the 1+/5+/10+ receipts-in-30d
+//                               activity thresholds, the SAME ones the Study & Trend page
+//                               uses, so "active" means one thing across the dashboard.
+//                               Measured in receipts, not GTV, on purpose: the GTV recipe is
+//                               currently ~1.7x the agreed baseline and under recalibration.
 //                 open..onb     payments path, already forced monotonic in SQL.
 //                 \`open\` is "a Stripe account exists"; \`kyc1\` is "typed the first field".
 //                 chargeD       payments used.

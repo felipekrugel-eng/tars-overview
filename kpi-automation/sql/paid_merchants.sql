@@ -91,10 +91,22 @@ attributed AS (
 --
 -- Cleaning rules are the canonical ones used everywhere else in this repo: no refunds, no
 -- cancellations, no zero-value rows.
+-- The POS side is measured in RECEIPTS AND RECENCY, deliberately not in GTV. Our GTV recipe
+-- is currently running ~1.7x above the agreed business baseline and that recalibration is
+-- open; hanging an activation funnel off a number we know to be wrong would make the funnel
+-- wrong too. Receipt counts need no currency conversion, no per-receipt cap and no
+-- judgement call, so they are the honest way to say how alive a merchant is.
 first_receipt AS (
     SELECT r.MERCHANT_ID,
            MIN(LEFT(r.RECEIPT_DATE, 10))  AS FIRST_RECEIPT_DATE,
-           COUNT(*)                       AS RECEIPTS
+           MAX(LEFT(r.RECEIPT_DATE, 10))  AS LAST_RECEIPT_DATE,
+           COUNT(*)                       AS RECEIPTS,
+           -- Trailing windows, for "is this merchant still alive" rather than "did they ever
+           -- ring once". A merchant who sold twice in August and vanished is a different
+           -- outcome from one selling daily, and a lifetime count cannot tell them apart.
+           COUNT_IF(r.RECEIPT_DATE >= TO_VARCHAR(DATEADD('day', -30, CURRENT_DATE())))  AS RECEIPTS_30D,
+           COUNT_IF(r.RECEIPT_DATE >= TO_VARCHAR(DATEADD('day',  -7, CURRENT_DATE())))  AS RECEIPTS_7D,
+           COUNT(DISTINCT LEFT(r.RECEIPT_DATE, 10))  AS SELLING_DAYS
     FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
     JOIN attributed t ON t.MERCHANT_ID = r.MERCHANT_ID
     WHERE r.RECEIPT_DATE >= '2026-08-01'
@@ -188,8 +200,18 @@ SELECT t.MERCHANT_ID,
 
        -- POS path
        f.FIRST_RECEIPT_DATE,
+       f.LAST_RECEIPT_DATE,
        COALESCE(f.RECEIPTS, 0)                                   AS RECEIPTS,
+       COALESCE(f.RECEIPTS_30D, 0)                               AS RECEIPTS_30D,
+       COALESCE(f.RECEIPTS_7D, 0)                                AS RECEIPTS_7D,
+       COALESCE(f.SELLING_DAYS, 0)                               AS SELLING_DAYS,
        IFF(f.FIRST_RECEIPT_DATE IS NOT NULL, 1, 0)               AS ISSUED_RECEIPT,
+       -- The qualified-activity thresholds the Study & Trend page already uses, so "active"
+       -- means the same thing on both pages. One receipt is a merchant pressing buttons;
+       -- five and ten are a merchant trading.
+       IFF(COALESCE(f.RECEIPTS_30D, 0) >= 1,  1, 0)              AS ACTIVE_30D,
+       IFF(COALESCE(f.RECEIPTS_30D, 0) >= 5,  1, 0)              AS ACTIVE_30D_5,
+       IFF(COALESCE(f.RECEIPTS_30D, 0) >= 10, 1, 0)              AS ACTIVE_30D_10,
 
        -- Payments path. Each stage is forced to imply the ones before it, IN THE DATA rather
        -- than by clamping in the page: a merchant who has taken a charge has necessarily

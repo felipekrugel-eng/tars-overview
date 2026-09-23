@@ -84,32 +84,46 @@
   @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
   @media (prefers-reduced-motion:reduce){ .rise{animation:none;} }
 
-  /* ---- the branching funnel ----
-     Two columns, because the funnel BRANCHES at sign-up: a merchant can ring up a sale, or
-     open Payments, or both, or neither. Rendering these as one descending ladder would
-     invent a conversion rate between "issued a receipt" and "KYC started" that does not
-     exist. The split is the whole point of the layout. */
-  .fork { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px; }
-  @media(max-width:900px){ .fork{grid-template-columns:1fr;} }
-  .path { border:1px solid var(--border); border-radius:14px; padding:15px 16px 12px; background:var(--surface-2); }
-  .path.pos { border-top:3px solid var(--green); }
-  .path.pay { border-top:3px solid var(--blue); }
-  .path h4 { font-size:12.5px; font-family:'Arial Black',Arial; color:var(--ink); }
-  .path .psub { font-size:10.5px; color:var(--muted); margin:3px 0 12px; line-height:1.5; }
-  .top-row { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 17px; display:flex;
-    align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
-  .top-row .trn { font-size:13px; font-weight:bold; color:var(--ink); }
-  .top-row .trv { font-family:var(--mono); font-size:22px; font-weight:700; color:var(--ink); }
-  .top-row .trm { font-size:11.5px; color:var(--muted); }
-  .st { display:grid; grid-template-columns:132px 1fr 46px 62px; align-items:center; gap:9px; font-size:11.5px; margin-bottom:8px; }
-  .st-lbl { color:var(--muted); line-height:1.3; }
-  .st-track { height:14px; background:#E7ECF2; border-radius:7px; overflow:hidden; }
-  .st-fill { display:block; height:100%; border-radius:7px; background:linear-gradient(90deg,#1D8FE1,#1578C4); }
-  .st-fill.green { background:linear-gradient(90deg,#28B27C,#1F9D6B); }
-  .st-n { text-align:right; font-weight:bold; color:var(--ink); font-variant-numeric:tabular-nums; }
-  .st-cpa { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; font-size:11px; }
-  .st-drop { font-size:10.5px; color:var(--red); text-align:right; grid-column:3 / -1; margin:-4px 0 7px; }
-  .beside { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+  /* ---- funnel: the SAME row language as the Payments activation funnel ----
+     Deliberately identical to activated-payments' .pf-* strip — label with a one-line
+     definition under it, a track, the count, % of the step above, % of the base — so that
+     someone who reads one funnel on this dashboard can read the other without relearning
+     the layout. The one addition is a cost column, because this is the only funnel on the
+     dashboard where every stage has a price attached.
+     The POS and Payments paths are a TOGGLE, not two panels side by side: they share a base
+     and a row language, and showing them at once invited exactly the comparison between
+     them that the data does not support. */
+  .pf-head,.pf-row { display:grid; grid-template-columns:200px 1fr 68px 76px 76px 88px; align-items:center; gap:12px; }
+  .pf-head { font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    padding-bottom:5px; border-bottom:1px solid var(--border); margin-bottom:9px; }
+  .pf-head span:nth-child(n+3) { text-align:right; }
+  .pf-rows { display:flex; flex-direction:column; gap:7px; }
+  .pf-row { font-size:12.5px; }
+  .pf-lbl { font-weight:bold; color:var(--ink); line-height:1.2; }
+  .pf-lbl small { display:block; font-weight:normal; color:var(--muted); font-size:10.5px; line-height:1.35; margin-top:2px; }
+  .pf-track { background:#F1F3F5; border-radius:4px; height:22px; overflow:hidden; }
+  .pf-fill { height:100%; border-radius:4px; background:#1D8FE1; min-width:2px; }
+  .pf-fill.green { background:#1E9E5A; }
+  .pf-fill.dark { background:#1A1A1A; }
+  .pf-n { text-align:right; font-weight:bold; font-variant-numeric:tabular-nums; }
+  .pf-pct { text-align:right; color:var(--muted); font-size:11.5px; font-variant-numeric:tabular-nums; }
+  .pf-cost { text-align:right; color:var(--ink); font-size:11.5px; font-variant-numeric:tabular-nums; }
+  /* An unmeasurable stage is drawn GREYED AND HATCHED, never hidden: dropping it would
+     quietly redraw the funnel as though it began one step lower. */
+  .pf-row.na .pf-lbl,.pf-row.na .pf-n,.pf-row.na .pf-pct,.pf-row.na .pf-cost { color:#A9AFB5; }
+  .pf-row.na .pf-track { background:repeating-linear-gradient(45deg,#F6F7F8,#F6F7F8 5px,#EDEFF1 5px,#EDEFF1 10px); }
+  @media(max-width:860px){
+    .pf-head,.pf-row { grid-template-columns:140px 1fr 58px 66px; }
+    .pf-head span:nth-child(n+5),.pf-row .pf-pct:last-of-type,.pf-row .pf-cost { display:none; }
+  }
+  /* The nominal base, stated once above the funnel so every percentage below has a visible
+     denominator instead of an implied one. */
+  .base-bar { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; background:var(--surface-2);
+    border:1px solid var(--border); border-radius:11px; padding:11px 15px; margin-bottom:14px; }
+  .base-bar .bn { font-family:var(--mono); font-size:24px; font-weight:700; color:var(--ink); }
+  .base-bar .bl { font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
+  .base-bar .bx { font-size:11.5px; color:var(--muted); margin-left:auto; text-align:right; line-height:1.5; }
+  .beside { display:flex; gap:12px; flex-wrap:wrap; margin-top:15px; }
   .beside .bi { border:1px dashed var(--border); border-radius:11px; padding:10px 14px; background:var(--surface); min-width:150px; }
   .beside .bl { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:bold; }
   .beside .bv { font-family:var(--mono); font-size:19px; font-weight:700; margin-top:3px; }
@@ -219,37 +233,33 @@
 
   <!-- ============ the funnel ============ -->
   <div class="sec">The funnel
-    <span class="sec-sub">Of the merchants whose click we paid for, how far each one got.</span>
+    <span class="sec-sub">Of the merchants whose click we paid for, how far each one got. The two paths share a base and are toggled, not compared &mdash; a merchant can travel both, one, or neither.</span>
   </div>
   <div class="panel rise">
-    <div class="top-row">
+    <div class="base-bar">
       <div>
-        <div class="trn">Signed up</div>
-        <div class="trm" id="fn-top-note">&mdash;</div>
+        <div class="bl">Nominal base</div>
+        <div class="bn" id="fn-base">&mdash;</div>
       </div>
-      <div style="text-align:right">
-        <div class="trv" id="fn-top-n">&mdash;</div>
-        <div class="trm" id="fn-top-cpa">&mdash;</div>
+      <div style="align-self:center">
+        <div style="font-size:12.5px;font-weight:bold">merchants from campaigns</div>
+        <div style="font-size:11px;color:var(--muted)" id="fn-base-note">&mdash;</div>
       </div>
+      <div class="bx" id="fn-base-cost">&mdash;</div>
     </div>
-    <div class="fork">
-      <div class="path pos">
-        <h4>POS path</h4>
-        <div class="psub">Did the till ever ring. This is activation for the core product and it does not require Payments.</div>
-        <div id="fn-pos"></div>
-      </div>
-      <div class="path pay">
-        <h4>Payments path</h4>
-        <div class="psub">Opening a Stripe account, getting through KYC, and taking a first card payment. Each step is a subset of the one above it.</div>
-        <div id="fn-pay"></div>
-      </div>
+
+    <div class="vtog" id="fn-toggle" style="margin-bottom:12px">
+      <button data-path="pos" class="on">POS path</button>
+      <button data-path="pay">Payments path</button>
     </div>
+    <div class="ph" id="fn-path-note" style="margin:0 0 12px">&mdash;</div>
+
+    <div class="pf-head">
+      <span>Stage</span><span></span><span>Merchants</span><span>Of previous</span><span>Of base</span><span>Cost each</span>
+    </div>
+    <div class="pf-rows" id="fn-rows"></div>
+
     <div class="beside" id="fn-beside"></div>
-    <div class="ph" style="margin:14px 0 0;border-top:1px solid var(--border);padding-top:11px">
-      <b>These two paths are not steps in one ladder.</b> A merchant can ring up a sale, open Payments, do both or do
-      neither &mdash; so there is no conversion rate between them and none is shown. Percentages inside each path are of
-      the step above; percentages beside the bars are of everyone who signed up.
-    </div>
   </div>
 
   <!-- ============ over time ============ -->
@@ -275,6 +285,16 @@
     <div class="ph" style="margin-bottom:10px">Every campaign with spend in the period, including ones no merchant can be traced to.
       A campaign that appears here with no merchants is information, not a gap in the table &mdash; click the header to sort.</div>
     <table class="league" id="tbl-camp"><thead></thead><tbody></tbody></table>
+  </div>
+
+  <!-- ============ where they actually are ============ -->
+  <div class="sec">Where the merchants actually are
+    <span class="sec-sub">Every campaign in the account is named &ldquo;usa&rdquo; and targeted at the US. This is where the
+      merchants we bought turned out to be registered.</span>
+  </div>
+  <div class="panel rise">
+    <div class="ph" id="geo-note" style="margin-bottom:10px">&mdash;</div>
+    <table class="league" id="tbl-geo"><thead></thead><tbody></tbody></table>
   </div>
 
   <!-- ============ Facebook ============ -->
@@ -339,6 +359,7 @@
   const state = {
     from: DMIN, to: DMAX,
     basis: 'click',
+    path: 'pos',
     camps: new Set(ALL_CAMPS.map(c => c.name)),
   };
 
@@ -409,6 +430,15 @@
       btn.classList.add('on'); state.basis = btn.dataset.basis; render();
     };
   });
+  [...$('fn-toggle').children].forEach(btn => {
+    btn.onclick = () => {
+      [...$('fn-toggle').children].forEach(b => b.classList.remove('on'));
+      btn.classList.add('on'); state.path = btn.dataset.path;
+      // Only the funnel changes — re-rendering the charts and tables here would rebuild
+      // three Chart.js canvases to show identical data.
+      renderFunnel(selection());
+    };
+  });
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
@@ -416,6 +446,9 @@
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
     [...$('f-basis').children].forEach(b => b.classList.remove('on'));
     $('f-basis').firstElementChild.classList.add('on');
+    state.path = 'pos';
+    [...$('fn-toggle').children].forEach(b => b.classList.remove('on'));
+    $('fn-toggle').firstElementChild.classList.add('on');
     buildCampChips(); render();
   };
 
@@ -425,6 +458,7 @@
     const aSpend = attributableSpend(sel.spend);
     const nM = ms.length;
     const nSold = ms.filter(m => m.rcptD).length;
+    const nAct5 = ms.filter(m => m.a30_5).length;
     const nKyc = ms.filter(m => m.kyc3).length;
     const tiles = [
       { l: 'Spend', v: money(t.spend), d: `${n0(t.clicks)} clicks · ${n0(t.impr)} impressions` },
@@ -433,6 +467,7 @@
       { l: 'Merchants acquired', v: n0(nM), ours: 1, d: 'Signed up and traced to a paid click' },
       { l: 'Cost per merchant', v: money2(per(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
       { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(per(aSpend, nSold))} each` },
+      { l: 'Active (5+ / 30d)', v: n0(nAct5), ours: 1, d: `${pct(nM ? nAct5 / nM : null)} of merchants · ${money2(per(aSpend, nAct5))} each` },
       { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(per(aSpend, nKyc))} each` },
     ];
     $('tiles').innerHTML = tiles.map(x =>
@@ -441,64 +476,109 @@
   }
 
   // ── the funnel ─────────────────────────────────────────────────────────────
-  function step(label, n, base, prev, spend, green) {
-    const w = base > 0 ? Math.max(n / base * 100, n > 0 ? 1.2 : 0) : 0;
-    const dropTxt = (prev != null && prev > 0 && n < prev)
-      ? `<div class="st-drop">${n0(prev - n)} did not go on (${pct(1 - n / prev)} drop)</div>` : '';
-    return `<div class="st">
-      <div class="st-lbl">${esc(label)}</div>
-      <div class="st-track"><i class="st-fill${green ? ' green' : ''}" style="width:${w.toFixed(1)}%"></i></div>
-      <div class="st-n font-num">${n0(n)}</div>
-      <div class="st-cpa">${money2(per(spend, n))}</div>
-    </div>${dropTxt}`;
-  }
+  // The two ladders. Each row: label, definition, predicate, bar colour.
+  // Every stage is a strict subset of the one above it — enforced in the SQL for the
+  // payments ladder and true by construction for the POS one (10+ receipts implies 5+
+  // implies 1+) — so the "of previous" column is always a real conversion rate.
+  const LADDERS = {
+    pos: {
+      note: 'Did the till ever ring, and is it still ringing. This is activation for the core product and ' +
+            'none of it requires Payments. Activity is measured in <b>receipts, not GTV</b> — our GTV recipe is ' +
+            'currently under recalibration and a funnel built on it would inherit the error.',
+      rows: [
+        { lbl: 'Signed up', sub: 'Registered, traced to a paid click', f: () => true },
+        { lbl: 'Issued a receipt', sub: 'Rang up at least one sale, ever', f: m => m.rcptD, cls: 'green' },
+        { lbl: 'Active', sub: 'At least 1 receipt in the last 30 days', f: m => m.a30, cls: 'green' },
+        { lbl: 'Qualified active · 5+', sub: '5 or more receipts in the last 30 days', f: m => m.a30_5, cls: 'green' },
+        { lbl: 'Qualified active · 10+', sub: '10 or more receipts in the last 30 days', f: m => m.a30_10, cls: 'green' },
+        { lbl: 'Paying', sub: 'Holds an active Chargebee subscription', f: m => m.subD, cls: 'dark' },
+      ],
+    },
+    pay: {
+      note: 'Opening a Stripe account, getting through KYC, and taking a first card payment. ' +
+            '<b>Opened Payments</b> is an account existing at all; <b>KYC started</b> is stricter — the merchant ' +
+            'filled at least one meaningful field. The four KYC rows are a current-state snapshot: Stripe keeps ' +
+            'no history for them.',
+      rows: [
+        { lbl: 'Signed up', sub: 'Registered, traced to a paid click', f: () => true },
+        { lbl: 'Opened Payments', sub: 'A Stripe connected account exists', f: m => m.open },
+        { lbl: 'KYC started', sub: 'Filled at least one field of the KYC form', f: m => m.kyc1 },
+        { lbl: 'KYC submitted', sub: 'Sent details in for review', f: m => m.kyc2 },
+        { lbl: 'KYC approved', sub: 'Cleared to transact', f: m => m.kyc3, cls: 'green' },
+        { lbl: 'Payouts enabled', sub: 'Approved and able to be paid out', f: m => m.onb, cls: 'green' },
+        { lbl: 'Took a payment', sub: 'Has processed at least one charge', f: m => m.chargeD, cls: 'dark' },
+      ],
+    },
+  };
 
   function renderFunnel(sel) {
     const ms = sel.merchants, base = ms.length;
     const aSpend = attributableSpend(sel.spend);
     const c = k => ms.filter(k).length;
 
-    $('fn-top-n').textContent = n0(base);
-    $('fn-top-cpa').textContent = base ? money2(aSpend / base) + ' per merchant' : '—';
+    // ── the nominal base, stated once ────────────────────────────────────────
+    $('fn-base').textContent = n0(base);
     const exact = ms.filter(m => m.clickExact).length;
-    $('fn-top-note').textContent =
-      `merchants traced to a paid click · ${n0(exact)} with an exact click date` +
-      (base > exact ? `, ${n0(base - exact)} dated by sign-up instead` : '');
+    $('fn-base-note').textContent =
+      `${n0(exact)} with an exact click date` +
+      (base > exact ? `, ${n0(base - exact)} dated by sign-up instead` : '') +
+      ` · ${n0(new Set(ms.map(m => m.c)).size)} campaign(s)`;
+    $('fn-base-cost').innerHTML =
+      `<b>${money2(per(aSpend, base))}</b> per merchant<br>` +
+      `from ${money(aSpend)} of traceable spend`;
 
-    const sold = c(m => m.rcptD);
-    $('fn-pos').innerHTML =
-      step('Issued a receipt', sold, base, base, aSpend, true) +
-      `<div class="ph" style="margin:6px 0 0">${base ? pct(sold / base) : '—'} of everyone who signed up.
-       ${n0(c(m => m.rcpts >= 10))} of them have rung up 10 or more.</div>`;
+    const L = LADDERS[state.path];
+    $('fn-path-note').innerHTML = L.note;
 
-    // Each stage is a strict subset of the one above — enforced in SQL, not here, so the
-    // counts stay additive across periods.
-    const rows = [
-      ['Opened Payments', m => m.open],
-      ['KYC started', m => m.kyc1],
-      ['KYC submitted', m => m.kyc2],
-      ['KYC approved', m => m.kyc3],
-      ['Payouts enabled', m => m.onb],
-      ['Took a payment', m => m.chargeD],
-    ];
-    let prev = base, html = '';
-    for (const [label, f] of rows) {
-      const n = c(f);
-      html += step(label, n, base, prev, aSpend, false);
+    // Bars scale to the widest stage, not to the base, so a ladder whose top row is the base
+    // still uses the full width of the track for its largest measured number.
+    const counts = L.rows.map(r => c(r.f));
+    const top = Math.max(...counts, 1);
+
+    let prev = null;
+    $('fn-rows').innerHTML = L.rows.map((r, i) => {
+      const n = counts[i];
+      const w = Math.max(0.6, n / top * 100);
+      const ofPrev = (prev != null && prev > 0) ? pct(n / prev) : '&nbsp;';
+      const ofBase = base > 0 ? pct(n / base) : '&nbsp;';
       prev = n;
-    }
-    $('fn-pay').innerHTML = html;
+      return `<div class="pf-row">
+        <div class="pf-lbl">${esc(r.lbl)}<small>${esc(r.sub)}</small></div>
+        <div class="pf-track"><div class="pf-fill ${r.cls || ''}" style="width:${w.toFixed(1)}%"></div></div>
+        <div class="pf-n">${n0(n)}</div>
+        <div class="pf-pct">${ofPrev}</div>
+        <div class="pf-pct">${ofBase}</div>
+        <div class="pf-cost">${money2(per(aSpend, n))}</div>
+      </div>`;
+    }).join('') +
+    // The two Mixpanel stages, drawn as unmeasurable rows rather than left out. On the POS
+    // path they sit exactly where they belong in the sequence, so their absence is visible
+    // instead of being silently skipped over.
+    (state.path === 'pos' ? ['Opened the app', 'Added a customer'].map(l =>
+      `<div class="pf-row na" title="Mixpanel product event — there is no Mixpanel table in the lake">
+        <div class="pf-lbl">${l}<small>Mixpanel product event &mdash; not in the data lake</small></div>
+        <div class="pf-track"></div><div class="pf-n">&mdash;</div>
+        <div class="pf-pct">no data</div><div class="pf-pct">&mdash;</div><div class="pf-cost">&mdash;</div></div>`).join('') : '');
 
-    const subs = c(m => m.subD);
+    // ── beside the funnel: outcomes that are not steps ───────────────────────
+    const sold = c(m => m.rcptD), lapsed = c(m => m.rcptD && !m.a30);
     $('fn-beside').innerHTML = `
-      <div class="bi"><div class="bl">Subscribed</div><div class="bv">${n0(subs)}</div>
-        <div class="bd">${base ? pct(subs / base) : '—'} · ${money2(per(aSpend, subs))} each</div></div>
-      <div class="bi"><div class="bl">Did neither</div><div class="bv">${n0(c(m => !m.rcptD && !m.open))}</div>
-        <div class="bd">signed up and stopped</div></div>
-      <div class="bi" style="border-style:solid;background:var(--surface-2)">
-        <div class="bl">Not available</div>
-        <div class="bd" style="margin-top:6px;line-height:1.5">Opened the app · Added a customer<br>
-        <span style="color:var(--muted)">Mixpanel events; there is no Mixpanel table in the lake.</span></div></div>`;
+      <div class="bi"><div class="bl">Lapsed</div><div class="bv">${n0(lapsed)}</div>
+        <div class="bd">sold once, nothing in 30 days<br>${sold ? pct(lapsed / sold) : '—'} of everyone who ever sold</div></div>
+      <div class="bi"><div class="bl">Never started</div><div class="bv">${n0(c(m => !m.rcptD && !m.open))}</div>
+        <div class="bd">signed up, never sold, never opened Payments</div></div>
+      <div class="bi"><div class="bl">Receipts rung</div><div class="bv">${n0(ms.reduce((a, m) => a + m.rcpts, 0))}</div>
+        <div class="bd">across the whole base<br>median ${n0(median(ms.filter(m => m.rcptD).map(m => m.rcpts)))} per selling merchant</div></div>
+      <div class="bi"><div class="bl">Did both paths</div><div class="bv">${n0(c(m => m.rcptD && m.open))}</div>
+        <div class="bd">sold on POS <em>and</em> opened Payments</div></div>`;
+  }
+
+  // Median, not mean: receipt counts are heavily skewed — one merchant has rung hundreds
+  // while most have rung a handful — and a mean would describe none of them.
+  function median(a) {
+    if (!a.length) return 0;
+    const s = a.slice().sort((x, y) => x - y), h = Math.floor(s.length / 2);
+    return s.length % 2 ? s[h] : Math.round((s[h - 1] + s[h]) / 2);
   }
 
   // ── charts ─────────────────────────────────────────────────────────────────
@@ -581,7 +661,7 @@
     for (const c of ALL_CAMPS) {
       if (!state.camps.has(c.name)) continue;
       rows.set(c.name, { name: c.name, pf: c.pf, st: c.st, spend: 0, clicks: 0, impr: 0,
-                         merchants: 0, sold: 0, kyc: 0 });
+                         merchants: 0, sold: 0, act: 0, act5: 0, kyc: 0 });
     }
     for (const s of sel.spend) {
       const r = rows.get(s.c); if (!r) continue;
@@ -589,7 +669,7 @@
     }
     for (const m of sel.merchants) {
       const r = rows.get(m.c); if (!r) continue;
-      r.merchants++; if (m.rcptD) r.sold++; if (m.kyc3) r.kyc++;
+      r.merchants++; if (m.rcptD) r.sold++; if (m.a30) r.act++; if (m.a30_5) r.act5++; if (m.kyc3) r.kyc++;
     }
     const list = [...rows.values()];
     for (const r of list) {
@@ -599,12 +679,17 @@
       // rendered as "n/a" with a reason, rather than as an enormous number.
       r.cpm = r.pf === 'google' ? per(r.spend, r.merchants) : null;
       r.cpk = r.pf === 'google' ? per(r.spend, r.kyc) : null;
+      // Cost per ACTIVE merchant is the number that should drive budget: a campaign can buy
+      // cheap signups that never sell, and only this column exposes that.
+      r.cpa5 = r.pf === 'google' ? per(r.spend, r.act5) : null;
     }
     const cols = [
       { k: 'name', t: 'Campaign', s: 1 }, { k: 'pf', t: 'Platform', s: 1 },
       { k: 'spend', t: 'Spend' }, { k: 'clicks', t: 'Clicks' }, { k: 'cpc', t: 'CPC' },
       { k: 'merchants', t: 'Merchants' }, { k: 'cpm', t: 'Cost / merchant' },
-      { k: 'sold', t: 'Issued receipt' }, { k: 'kyc', t: 'Passed KYC' }, { k: 'cpk', t: 'Cost / KYC' },
+      { k: 'sold', t: 'Sold ever' }, { k: 'act', t: 'Active 30d' }, { k: 'act5', t: 'Active 5+' },
+      { k: 'cpa5', t: 'Cost / active 5+' },
+      { k: 'kyc', t: 'Passed KYC' }, { k: 'cpk', t: 'Cost / KYC' },
     ];
     list.sort((a, b) => {
       const x = a[campSort.key], y = b[campSort.key];
@@ -632,9 +717,51 @@
       <td class="num">${r.pf === 'google' ? n0(r.merchants) : '<span style="color:var(--faint)">n/a</span>'}</td>
       <td class="num">${r.pf === 'google' ? money2(r.cpm) : '<span style="color:var(--faint)">no click id</span>'}</td>
       <td class="num">${r.pf === 'google' ? n0(r.sold) : '—'}</td>
+      <td class="num">${r.pf === 'google' ? n0(r.act) : '—'}</td>
+      <td class="num">${r.pf === 'google' ? n0(r.act5) : '—'}</td>
+      <td class="num">${r.pf === 'google' ? money2(r.cpa5) : '—'}</td>
       <td class="num">${r.pf === 'google' ? n0(r.kyc) : '—'}</td>
       <td class="num">${r.pf === 'google' ? money2(r.cpk) : '—'}</td>
-    </tr>`).join('') : '<tr><td colspan="10" class="empty">No campaigns in this period.</td></tr>';
+    </tr>`).join('') : '<tr><td colspan="13" class="empty">No campaigns in this period.</td></tr>';
+  }
+
+  // ── geography ──────────────────────────────────────────────────────────────
+  // Worth its own panel because every campaign here is targeted at the US and a third of
+  // what they bought is not American. Geo leakage is invisible in a cost-per-merchant
+  // average — it only shows up when the base is split by country — and it changes what the
+  // headline number means: a cheap merchant in a market the campaign was not aimed at is
+  // not the same purchase as a US one.
+  function renderGeo(sel) {
+    const by = new Map();
+    for (const m of sel.merchants) {
+      const k = (m.cc || '??').toUpperCase();
+      if (!by.has(k)) by.set(k, { cc: k, n: 0, sold: 0, act: 0, act5: 0, kyc: 0 });
+      const r = by.get(k);
+      r.n++; if (m.rcptD) r.sold++; if (m.a30) r.act++; if (m.a30_5) r.act5++; if (m.kyc3) r.kyc++;
+    }
+    const list = [...by.values()].sort((a, b) => b.n - a.n);
+    const total = sel.merchants.length;
+    const us = by.get('US');
+    const outside = total - (us ? us.n : 0);
+    $('geo-note').innerHTML = total
+      ? `<b>${n0(outside)} of ${n0(total)} merchants (${pct(outside / total)}) are registered outside the US</b>,
+         across ${n0(list.length - (us ? 1 : 0))} other countries. Loyverse Payments is US and UK only, so a merchant
+         outside those markets can activate on POS but can never reach the payments ladder &mdash; which is part of why
+         that funnel narrows as fast as it does.`
+      : 'No merchants in this period.';
+    $('tbl-geo').tHead.innerHTML =
+      '<tr><th>Country</th><th>Merchants</th><th>Share</th><th>Sold ever</th><th>Active 30d</th>' +
+      '<th>Active 5+</th><th>Activation rate</th><th>Passed KYC</th></tr>';
+    $('tbl-geo').tBodies[0].innerHTML = list.length ? list.map(r => `<tr>
+      <td class="cc">${esc(r.cc)}${r.cc === 'US' ? '' : ' <span style="color:var(--faint);font-weight:normal;font-size:10.5px">outside target</span>'}</td>
+      <td class="num">${n0(r.n)}</td>
+      <td class="num">${pct(r.n / total)}</td>
+      <td class="num">${n0(r.sold)}</td>
+      <td class="num">${n0(r.act)}</td>
+      <td class="num">${n0(r.act5)}</td>
+      <td class="num">${pct(r.sold / r.n)}</td>
+      <td class="num">${n0(r.kyc)}</td>
+    </tr>`).join('') : '<tr><td colspan="8" class="empty">No merchants in this period.</td></tr>';
   }
 
   // ── Facebook panel ─────────────────────────────────────────────────────────
@@ -687,21 +814,37 @@
     if (m.rcptD) return ['Issued a receipt', 1];
     return ['Signed up', 0];
   }
+  // POS health as one word. "Lapsed" is the one that matters — a merchant who sold and then
+  // stopped is a different failure from one who never started, and a single "not active"
+  // bucket would hide which of the two we are actually producing.
+  function posStatus(m) {
+    if (m.a30_10) return '<span class="stat enabled">Active 10+</span>';
+    if (m.a30_5)  return '<span class="stat enabled">Active 5+</span>';
+    if (m.a30)    return '<span class="stat enabled">Active</span>';
+    if (m.rcptD)  return '<span class="stat paused">Lapsed</span>';
+    return '<span class="stat other">Never sold</span>';
+  }
   function renderMerchants(sel) {
-    const list = sel.merchants.slice().sort((a, b) => furthest(b)[1] - furthest(a)[1] || b.rcpts - a.rcpts);
+    // Sorted by POS life first, then by how far down the payments ladder they got: the most
+    // valuable merchants on this page are the ones actually trading.
+    const posRank = m => (m.a30_10 ? 4 : m.a30_5 ? 3 : m.a30 ? 2 : m.rcptD ? 1 : 0);
+    const list = sel.merchants.slice().sort((a, b) =>
+      posRank(b) - posRank(a) || b.r30 - a.r30 || furthest(b)[1] - furthest(a)[1] || b.rcpts - a.rcpts);
     $('tbl-merch').tHead.innerHTML =
       '<tr><th>Merchant</th><th>Campaign</th><th>Country</th><th>Click</th><th>Signed up</th>' +
-      '<th>Receipts</th><th>Furthest stage</th><th>Traced by</th></tr>';
+      '<th>Receipts</th><th>Last 30d</th><th>Days sold</th><th>POS status</th><th>Payments stage</th></tr>';
     $('tbl-merch').tBodies[0].innerHTML = list.length ? list.map(m => `<tr>
       <td class="cc">${esc(m.name || '(no name)')}</td>
       <td style="font-size:11.5px;color:var(--muted)">${esc(m.c || '')}</td>
       <td>${esc(m.cc || '—')}</td>
-      <td class="num">${m.clickExact ? esc(m.clickD) : '<span style="color:var(--faint)">' + esc(m.clickD) + '*</span>'}</td>
+      <td class="num">${m.clickExact ? esc(m.clickD) : '<span style="color:var(--faint)" title="no exact click date — dated by sign-up">' + esc(m.clickD) + '*</span>'}</td>
       <td class="num">${esc(m.signD || '—')}</td>
       <td class="num">${n0(m.rcpts)}</td>
+      <td class="num">${n0(m.r30)}</td>
+      <td class="num">${n0(m.sdays)}</td>
+      <td>${posStatus(m)}</td>
       <td style="font-size:11.5px">${esc(furthest(m)[0])}</td>
-      <td style="font-size:11px;color:var(--muted)">${esc(m.via || '')}</td>
-    </tr>`).join('') : '<tr><td colspan="8" class="empty">No merchants in this period.</td></tr>';
+    </tr>`).join('') : '<tr><td colspan="10" class="empty">No merchants in this period.</td></tr>';
   }
 
   // ── render ─────────────────────────────────────────────────────────────────
@@ -714,7 +857,7 @@
       ? 'A merchant lands in the period we paid for their click — the honest basis for cost per merchant.'
       : 'A merchant lands in the period they registered. Spend and merchants can then belong to different weeks.';
     renderTiles(sel); renderFunnel(sel); renderCharts(sel);
-    renderCampaigns(sel); renderFacebook(sel); renderMerchants(sel);
+    renderCampaigns(sel); renderGeo(sel); renderFacebook(sel); renderMerchants(sel);
   }
 
   $('foot-text').innerHTML = `
