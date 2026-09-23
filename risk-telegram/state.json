@@ -9,9 +9,11 @@
   },
   "receipts": {
     "1adf9ec10e2651483af12907bd095c79b6a7f79de6971f0fbcb87803d9314958": {
-      "status": "send_intent",
-      "prepared_epoch": 1790178538
+      "status": "sent",
+      "prepared_epoch": 1790178538,
+      "message_id": 6,
+      "sent_epoch": 1790178540
     }
   },
-  "updated_at_utc": "2026-09-23T15:48:58Z"
+  "updated_at_utc": "2026-09-23T15:49:00Z"
 }
