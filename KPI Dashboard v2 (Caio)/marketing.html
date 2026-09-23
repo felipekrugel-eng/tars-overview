@@ -9,11 +9,11 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="ads-data.js"></script>
-<!-- Merchant attribution: which ad click became which Loyverse merchant, and what that
-     merchant went on to do. Separate file, separate pull, and optional — the page renders
-     without it, minus the Acquisition section. -->
-<script src="attribution-data.js"></script>
+<!-- ONE data file, built by kpi-automation/pull_paid.js. It carries campaign x day spend for
+     both ad platforms AND one row per attributed merchant with every funnel stage on it. The
+     page counts the merchant rows itself rather than reading pre-computed stage totals, which
+     is what stops the tiles and the funnel from ever disagreeing. -->
+<script src="paid-data.js"></script>
 <style>
   :root {
     --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
@@ -37,13 +37,14 @@
   .wrap { max-width:1280px; margin:0 auto; padding:22px 24px 60px; }
   .sec { color:var(--blue-deep); font-family:'Arial Black',Arial; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin:26px 2px 12px; }
   .sec:first-child { margin-top:6px; }
+  .sec .sec-sub { display:block; font-family:Arial; font-weight:normal; font-size:11px; letter-spacing:0; text-transform:none; color:var(--muted); margin-top:4px; }
   .note-warn { background:#FFF6E5; border-left:3px solid var(--amber); border-radius:4px; padding:9px 13px; font-size:11.5px; color:#7a5a12; margin-bottom:14px; line-height:1.6; }
 
   /* ---- filter bar ---- */
   .filters { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px 18px 14px; box-shadow:0 1px 2px rgba(20,40,70,.04); }
   .frow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:11px; }
   .frow:last-child { margin-bottom:0; }
-  .flab { font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:var(--muted); min-width:78px; }
+  .flab { font-size:10.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:var(--muted); min-width:84px; }
   .fdate { font-size:12px; padding:5px 8px; border:1px solid var(--border); border-radius:7px; color:var(--ink); font-family:Arial; background:var(--surface); }
   .chip { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:var(--surface-2);
     border:1px solid var(--border); padding:5px 12px; border-radius:20px; cursor:pointer; transition:all .12s; }
@@ -53,16 +54,7 @@
   .divpill { display:inline-flex; flex-wrap:wrap; background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:3px; }
   .divpill button { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:transparent; border:none; padding:6px 11px; border-radius:6px; cursor:pointer; }
   .divpill button.on { background:var(--blue); color:#fff; }
-  .msel { position:relative; }
-  .msel-btn { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--ink); background:var(--surface-2);
-    border:1px solid var(--border); padding:6px 13px; border-radius:8px; cursor:pointer; }
-  .msel-pop { display:none; position:absolute; z-index:40; top:calc(100% + 5px); left:0; width:430px; max-height:290px; overflow-y:auto;
-    background:var(--surface); border:1px solid var(--border); border-radius:11px; box-shadow:0 8px 26px rgba(20,40,70,.16); padding:9px; }
-  .msel-pop.open { display:block; }
-  .msel-pop label { display:flex; align-items:center; gap:8px; font-size:12px; padding:5px 7px; border-radius:6px; cursor:pointer; }
-  .msel-pop label:hover { background:var(--surface-2); }
-  .msel-acts { display:flex; gap:6px; padding:3px 4px 8px; border-bottom:1px solid var(--border); margin-bottom:5px; }
-  .msel-acts button { font-size:11px; font-weight:bold; color:var(--blue-deep); background:transparent; border:none; cursor:pointer; padding:3px 6px; }
+  .hint { font-size:11px; color:var(--faint); }
 
   /* ---- tiles ---- */
   .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(186px,1fr)); gap:14px; }
@@ -71,20 +63,20 @@
   .tile:before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--blue); }
   .tile .tl { font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-weight:bold; }
   .tile .tv { font-size:25px; color:var(--ink); margin-top:6px; font-weight:700; }
-  .tile .td { font-size:12px; font-weight:bold; margin-top:4px; }
-  .tile .td.up { color:var(--green); } .tile .td.down { color:var(--red); } .tile .td.flat { color:var(--muted); }
-  /* Our own numbers, counted in our database, wear a green edge; Google's keep the blue.
-     The two are not alternative readings of one metric — they count different things — so
-     the strip has to say at a glance which is which. */
+  .tile .td { font-size:11.5px; margin-top:4px; color:var(--muted); }
+  /* Numbers counted in OUR database wear a green edge; the ad platforms' own numbers keep
+     the blue. The two are not alternative readings of one metric — a Google "conversion" and
+     a Loyverse merchant are different objects — so the strip has to say which is which
+     without anyone having to read the label. */
   .tile.ours:before { background:var(--green); }
   .tile.ours .tl { color:var(--green); }
 
   /* ---- panels & charts ---- */
   .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px; box-shadow:0 1px 2px rgba(20,40,70,.04); display:flex; flex-direction:column; }
   .panel h3 { font-size:14px; font-family:'Arial Black',Arial; color:var(--ink); }
-  .panel .ph { font-size:11px; color:var(--muted); margin:2px 0 12px; min-height:30px; line-height:1.5; }
+  .panel .ph { font-size:11px; color:var(--muted); margin:2px 0 12px; line-height:1.55; }
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; } @media(max-width:900px){ .grid2{grid-template-columns:1fr;} }
-  .chart-box { position:relative; height:250px; margin-top:auto; }
+  .chart-box { position:relative; height:260px; margin-top:auto; }
   .vtog { display:inline-flex; gap:2px; margin:0 0 10px; }
   .vtog button { font-family:Arial; font-size:11px; font-weight:bold; color:var(--muted); background:#EEF2F6; border:none; padding:5px 11px; border-radius:6px; cursor:pointer; }
   .vtog button.on { background:var(--blue); color:#fff; }
@@ -92,23 +84,43 @@
   @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
   @media (prefers-reduced-motion:reduce){ .rise{animation:none;} }
 
-  /* ---- funnel ---- */
-  .fn-row { margin:0 0 13px; }
-  .fn-top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:12.5px; margin-bottom:5px; }
-  .fn-name { font-weight:bold; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .fn-name .cat { font-weight:normal; color:var(--faint); font-size:11px; margin-left:7px; letter-spacing:.5px; }
-  .fn-meta { color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
-  .fn-meta b { color:var(--ink); }
-  .fn-bar { height:15px; background:#EEF2F6; border-radius:8px; overflow:hidden; }
-  .fn-bar i { display:block; height:100%; background:linear-gradient(90deg,#1D8FE1,#1578C4); border-radius:8px; }
-  .fn-step { font-size:11px; font-weight:bold; margin-left:9px; }
-  .fn-step.down { color:var(--red); } .fn-step.up { color:var(--green); } .fn-step.flat { color:var(--muted); }
+  /* ---- the branching funnel ----
+     Two columns, because the funnel BRANCHES at sign-up: a merchant can ring up a sale, or
+     open Payments, or both, or neither. Rendering these as one descending ladder would
+     invent a conversion rate between "issued a receipt" and "KYC started" that does not
+     exist. The split is the whole point of the layout. */
+  .fork { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px; }
+  @media(max-width:900px){ .fork{grid-template-columns:1fr;} }
+  .path { border:1px solid var(--border); border-radius:14px; padding:15px 16px 12px; background:var(--surface-2); }
+  .path.pos { border-top:3px solid var(--green); }
+  .path.pay { border-top:3px solid var(--blue); }
+  .path h4 { font-size:12.5px; font-family:'Arial Black',Arial; color:var(--ink); }
+  .path .psub { font-size:10.5px; color:var(--muted); margin:3px 0 12px; line-height:1.5; }
+  .top-row { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 17px; display:flex;
+    align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  .top-row .trn { font-size:13px; font-weight:bold; color:var(--ink); }
+  .top-row .trv { font-family:var(--mono); font-size:22px; font-weight:700; color:var(--ink); }
+  .top-row .trm { font-size:11.5px; color:var(--muted); }
+  .st { display:grid; grid-template-columns:132px 1fr 46px 62px; align-items:center; gap:9px; font-size:11.5px; margin-bottom:8px; }
+  .st-lbl { color:var(--muted); line-height:1.3; }
+  .st-track { height:14px; background:#E7ECF2; border-radius:7px; overflow:hidden; }
+  .st-fill { display:block; height:100%; border-radius:7px; background:linear-gradient(90deg,#1D8FE1,#1578C4); }
+  .st-fill.green { background:linear-gradient(90deg,#28B27C,#1F9D6B); }
+  .st-n { text-align:right; font-weight:bold; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .st-cpa { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; font-size:11px; }
+  .st-drop { font-size:10.5px; color:var(--red); text-align:right; grid-column:3 / -1; margin:-4px 0 7px; }
+  .beside { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+  .beside .bi { border:1px dashed var(--border); border-radius:11px; padding:10px 14px; background:var(--surface); min-width:150px; }
+  .beside .bl { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); font-weight:bold; }
+  .beside .bv { font-family:var(--mono); font-size:19px; font-weight:700; margin-top:3px; }
+  .beside .bd { font-size:10.5px; color:var(--faint); margin-top:2px; }
 
   /* ---- tables ---- */
   table.league { width:100%; border-collapse:collapse; font-size:13px; }
   table.league th { text-align:right; font-size:10px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted);
-    font-weight:bold; padding:9px 10px; border-bottom:2px solid var(--border); }
+    font-weight:bold; padding:9px 10px; border-bottom:2px solid var(--border); cursor:pointer; user-select:none; white-space:nowrap; }
   table.league th:nth-child(-n+2), table.league td:nth-child(-n+2) { text-align:left; }
+  table.league th.sorted { color:var(--blue-deep); }
   table.league td { text-align:right; padding:9px 10px; border-bottom:1px solid var(--surface-2); }
   table.league tbody tr:hover { background:var(--surface-2); }
   table.league .cc { font-weight:bold; color:var(--ink); }
@@ -118,32 +130,15 @@
   .stat.paused  { color:#8a6300; background:#FCF3DC; }
   .stat.removed { color:#B23046; background:#FBE7EB; }
   .stat.other   { color:var(--muted); background:#EEF2F6; }
+  .pf { font-size:9.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:2px 7px; border-radius:9px; }
+  .pf.google { color:#1578C4; background:#E4F1FB; }
+  .pf.facebook { color:#3b5998; background:#E8ECF6; }
   .empty { text-align:center; color:var(--muted); font-size:13px; padding:34px 10px; }
-
-  /* ---- acquisition ladder (spend -> merchant -> sold -> payments -> KYC) ----
-     Its own styling rather than .fn-row's, because this ladder is a real funnel: every
-     stage is a subset of the one above it, so the bars are scaled to a shared base and
-     the step percentages mean something. The conversion-event funnel above is ranked by
-     volume with no such guarantee, which is why the two deliberately do not look alike. */
-  .aq-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:16px; }
-  .aq-card { border:1px solid var(--border); border-radius:13px; padding:14px 15px 12px; background:var(--surface-2); }
-  .aq-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:3px; }
-  .aq-name { font-weight:bold; font-size:13px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .aq-spend { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
-  .aq-sub { font-size:10.5px; color:var(--faint); margin-bottom:10px; letter-spacing:.3px; }
-  .aq-step { display:grid; grid-template-columns:96px 1fr 44px 52px; align-items:center; gap:8px; font-size:11.5px; margin-bottom:6px; }
-  .aq-lbl { color:var(--muted); }
-  .aq-track { height:13px; background:#E7ECF2; border-radius:7px; overflow:hidden; }
-  .aq-fill { display:block; height:100%; border-radius:7px; background:linear-gradient(90deg,#1D8FE1,#1578C4); }
-  .aq-fill.green { background:linear-gradient(90deg,#28B27C,#1F9D6B); }
-  .aq-n { text-align:right; font-weight:bold; color:var(--ink); font-variant-numeric:tabular-nums; }
-  .aq-cpa { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; font-size:11px; }
-  .aq-none { color:var(--faint); font-style:italic; }
-  .aq-foot { border-top:1px solid var(--border); margin-top:9px; padding-top:8px; font-size:11px; color:var(--muted); }
-  .aq-foot b { color:var(--ink); }
+  .scroller { max-height:420px; overflow-y:auto; }
 
   .foot { background:var(--near-black); color:#AAA; padding:22px 40px; font-size:12px; line-height:1.7; margin-top:24px; }
   .foot .label { color:var(--blue); font-family:'Arial Black',Arial; font-size:12px; margin-bottom:8px; letter-spacing:2px; }
+  .foot b { color:#ddd; }
 </style>
 </head>
 <body>
@@ -171,7 +166,7 @@
 </nav>
 
 <div class="pagenav">
-  <a href="marketing.html" class="on">Google Ads</a>
+  <a href="marketing.html" class="on">Paid acquisition</a>
 </div>
 
 <div class="hero">
@@ -179,10 +174,11 @@
   <img class="logo" src="loyverse_icon_white.png" alt="Loyverse">
   <div class="label">Loyverse &middot; Marketing</div>
   <h1>PAID ACQUISITION.</h1>
-  <div class="sub">Google Ads spend and traffic, followed through to the merchants it actually bought.</div>
+  <div class="sub">What we spent, and which merchants it actually bought &mdash; followed from the click through to the first payment.</div>
   <div class="topbar">
     <span class="badge" id="badge-range">&mdash;</span>
     <span class="badge" id="badge-updated">&mdash;</span>
+    <span class="badge" id="badge-basis">&mdash;</span>
   </div>
 </div>
 
@@ -199,932 +195,541 @@
         <button data-days="7">7d</button><button data-days="14">14d</button>
         <button data-days="30">30d</button><button data-days="0" class="on">All</button>
       </span>
-      <button class="chip ghost" id="f-clear" style="margin-left:auto">Clear filters</button>
+      <button class="chip ghost" id="f-clear" style="margin-left:auto">Reset</button>
     </div>
     <div class="frow">
-      <span class="flab">Platform</span>
-      <span id="f-platforms" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+      <span class="flab">Count by</span>
+      <span class="divpill" id="f-basis">
+        <button data-basis="click" class="on">Click date</button>
+        <button data-basis="sign">Sign-up date</button>
+      </span>
+      <span class="hint" id="basis-hint"></span>
     </div>
     <div class="frow">
       <span class="flab">Campaign</span>
       <span id="f-campaigns" style="display:flex;gap:7px;flex-wrap:wrap"></span>
     </div>
-    <div class="frow">
-      <span class="flab">Events</span>
-      <span class="msel">
-        <button class="msel-btn" id="f-events-btn">All conversion events</button>
-        <div class="msel-pop" id="f-events-pop">
-          <div class="msel-acts">
-            <button id="f-events-all">Select all</button>
-            <button id="f-events-none">Clear</button>
-          </div>
-          <div id="f-events-list"></div>
-        </div>
-      </span>
-      <span class="flab" style="margin-left:16px">Metric</span>
-      <span class="divpill" id="f-metric">
-        <button data-metric="conversions" class="on">Conversions</button>
-        <button data-metric="allConversions">All conversions</button>
-      </span>
-    </div>
   </div>
 
-  <div class="sec">Headline</div>
+  <!-- ============ headline ============ -->
+  <div class="sec">The money and what it bought
+    <span class="sec-sub">Blue tiles are the ad platform's own numbers. Green tiles are merchants counted in our database.</span>
+  </div>
   <div class="tiles" id="tiles"></div>
 
-  <!-- Everything above this point is Google's view of itself: it stops at the click, and
-       "conversions" is Google's own count of them. Everything below follows the click into
-       our own database and asks what it actually bought. The two disagree, and that gap is
-       the reason this section exists. -->
-  <div class="sec" id="sec-acq">Acquisition &rarr; activation</div>
-  <div class="panel rise" id="p-acq" style="margin-bottom:18px">
-    <h3>What the spend actually bought</h3>
-    <div class="ph">Each campaign followed from spend through to a real Loyverse merchant: signed up, sold something, opened a payments account, passed KYC. Merchants are dated by <b>signup</b>, so a merchant who passed KYC weeks later still counts against the spend that bought them. Costs divide the period&rsquo;s spend by that stage &mdash; what one of those is worth paying for.</div>
-    <div id="acq-cards"></div>
+  <!-- ============ the funnel ============ -->
+  <div class="sec">The funnel
+    <span class="sec-sub">Of the merchants whose click we paid for, how far each one got.</span>
   </div>
-  <div class="panel rise" id="p-kw" style="margin-bottom:18px">
-    <h3>Keyword economics</h3>
-    <div class="ph">Search keywords only &mdash; App campaigns have none, so this covers roughly 60% of account spend. <b>Cost per merchant</b> is the column to read: clicks and conversions rank keywords quite differently from merchants acquired.</div>
-    <div style="overflow-x:auto"><table class="league" id="t-keywords"></table></div>
-  </div>
-  <div class="panel rise" id="p-chan">
-    <h3>Where merchants actually come from</h3>
-    <div class="ph">Every merchant carrying a referrer, by channel &mdash; not just the paid ones. Paid ads are a small share of signups and a large share of payments merchants, which is the comparison worth having. <b>Play Store default</b> is an untagged Android install and means only that: it is broken out because it swamps everything else. Lifetime, ignoring the date filter.</div>
-    <div style="overflow-x:auto"><table class="league" id="t-channels"></table></div>
-    <div class="aq-foot" id="chan-note"></div>
-  </div>
-
-  <div class="sec">Spend &amp; traffic</div>
-  <div class="grid2">
-    <div class="panel rise">
-      <h3>Cost vs conversions</h3>
-      <div class="ph">Daily spend (bars, left axis) against conversions (line, right axis). Divergence between the two is the story &mdash; flat bars with a falling line means efficiency is decaying.</div>
-      <div class="chart-box"><canvas id="c-cost"></canvas></div>
-    </div>
-    <div class="panel rise">
-      <h3>Clicks vs impressions</h3>
-      <div class="ph">Reach (impressions, right axis) against engagement (clicks, left axis). Impressions climbing while clicks stay flat means the auction is serving weaker inventory.</div>
-      <div class="chart-box"><canvas id="c-traffic"></canvas></div>
-    </div>
-  </div>
-
-  <div class="sec">Conversion events</div>
-  <div class="grid2">
-    <div class="panel rise">
-      <h3>Blended cost per event</h3>
-      <div class="ph">Total spend in the period divided by each event&rsquo;s volume. This is a blended figure, not attributed cost &mdash; Google Ads does not split spend across events, so read it as &ldquo;what each event cost us on average&rdquo;, not as its true marginal cost.</div>
-      <div class="chart-box"><canvas id="c-cpa"></canvas></div>
-    </div>
-    <div class="panel rise">
-      <h3>Event volume trend</h3>
-      <div class="ph">The five highest-volume events over time. Cumulative smooths out daily noise; daily shows the actual shape.</div>
-      <div class="vtog" id="t-trend">
-        <button data-mode="cum" class="on">Cumulative</button>
-        <button data-mode="daily">Daily</button>
+  <div class="panel rise">
+    <div class="top-row">
+      <div>
+        <div class="trn">Signed up</div>
+        <div class="trm" id="fn-top-note">&mdash;</div>
       </div>
-      <div class="chart-box"><canvas id="c-trend"></canvas></div>
+      <div style="text-align:right">
+        <div class="trv" id="fn-top-n">&mdash;</div>
+        <div class="trm" id="fn-top-cpa">&mdash;</div>
+      </div>
+    </div>
+    <div class="fork">
+      <div class="path pos">
+        <h4>POS path</h4>
+        <div class="psub">Did the till ever ring. This is activation for the core product and it does not require Payments.</div>
+        <div id="fn-pos"></div>
+      </div>
+      <div class="path pay">
+        <h4>Payments path</h4>
+        <div class="psub">Opening a Stripe account, getting through KYC, and taking a first card payment. Each step is a subset of the one above it.</div>
+        <div id="fn-pay"></div>
+      </div>
+    </div>
+    <div class="beside" id="fn-beside"></div>
+    <div class="ph" style="margin:14px 0 0;border-top:1px solid var(--border);padding-top:11px">
+      <b>These two paths are not steps in one ladder.</b> A merchant can ring up a sale, open Payments, do both or do
+      neither &mdash; so there is no conversion rate between them and none is shown. Percentages inside each path are of
+      the step above; percentages beside the bars are of everyone who signed up.
     </div>
   </div>
 
-  <div class="sec">Funnel</div>
-  <div class="panel rise">
-    <h3>Where volume falls away</h3>
-    <div class="ph">Every conversion event ranked by volume, with the step-over-step drop to the next one. Ordering is by volume, not by a fixed funnel definition &mdash; events are not guaranteed to be sequential stages.</div>
-    <div id="funnel"></div>
+  <!-- ============ over time ============ -->
+  <div class="sec">Over time</div>
+  <div class="grid2">
+    <div class="panel rise">
+      <h3>Spend and merchants, by day</h3>
+      <div class="ph">Bars are spend on the chosen campaigns. The line counts merchants on the date basis selected above, so
+        a merchant lands on the day we bought their click, not the day they got round to signing up.</div>
+      <div class="chart-box"><canvas id="ch-daily"></canvas></div>
+    </div>
+    <div class="panel rise">
+      <h3>Cost per merchant, rolling 7 days</h3>
+      <div class="ph">Daily cost per merchant is meaningless at this volume &mdash; a day with one signup reads as a triumph
+        or a disaster. This is spend over the window divided by merchants in the window, not an average of daily ratios.</div>
+      <div class="chart-box"><canvas id="ch-cpa"></canvas></div>
+    </div>
   </div>
 
-  <div class="sec">Detail</div>
-  <div class="panel rise" style="margin-bottom:18px">
-    <h3>Event performance</h3>
-    <div class="ph">Volume and blended cost for every conversion event in the filtered period.</div>
-    <div style="overflow-x:auto"><table class="league" id="t-events"></table></div>
-  </div>
+  <!-- ============ campaigns ============ -->
+  <div class="sec">By campaign</div>
   <div class="panel rise">
-    <h3>Campaign settings</h3>
-    <div class="ph">Current state of each campaign as of the last export &mdash; status, bid strategy and daily budget.</div>
-    <div style="overflow-x:auto"><table class="league" id="t-campaigns"></table></div>
+    <div class="ph" style="margin-bottom:10px">Every campaign with spend in the period, including ones no merchant can be traced to.
+      A campaign that appears here with no merchants is information, not a gap in the table &mdash; click the header to sort.</div>
+    <table class="league" id="tbl-camp"><thead></thead><tbody></tbody></table>
+  </div>
+
+  <!-- ============ Facebook ============ -->
+  <div class="sec">Facebook
+    <span class="sec-sub">Separated on purpose. Read the note before comparing it with Google.</span>
+  </div>
+  <div class="panel rise" id="panel-fb"></div>
+
+  <!-- ============ merchants ============ -->
+  <div class="sec">The merchants themselves</div>
+  <div class="panel rise">
+    <div class="ph" style="margin-bottom:10px">Every attributed merchant in the period, furthest stage first. This is the list the
+      funnel above is counting &mdash; if a number looks wrong, it is auditable here.</div>
+    <div class="scroller"><table class="league" id="tbl-merch"><thead></thead><tbody></tbody></table></div>
   </div>
 
 </div>
 
 <div class="foot">
-  <div class="label">NOTES</div>
-  <div id="foot-notes"></div>
-  <div style="margin-top:10px">Source: Google Ads export sheet &rarr; <code>ads-pull</code> GitHub Action &rarr; <code>ads-data.js</code> &middot; Prepared by Felipe Krugel &middot; Internal use only.</div>
+  <div class="label">HOW TO READ THIS</div>
+  <div id="foot-text"></div>
 </div>
 
 <script>
-(function(){
-  "use strict";
+(function () {
+  'use strict';
+  const D = window.PAID_DATA;
+  const $ = id => document.getElementById(id);
 
-  var D = window.ADS_DATA || null;
-  if (!D || !D.daily || !D.daily.length) {
+  if (!D) {
     document.querySelector('.wrap').innerHTML =
-      '<div class="note-warn">No ad data loaded. <b>ads-data.js</b> is missing or empty &mdash; ' +
-      'check the latest <b>ads-pull</b> run in the Actions tab.</div>';
+      '<div class="empty">paid-data.js did not load. Run <code>node kpi-automation/pull_paid.js</code>.</div>';
     return;
   }
 
-  // ---------- formatting ----------
-  var CUR = D.currency || 'USD';
-  var fInt  = new Intl.NumberFormat('en-GB', {maximumFractionDigits:0});
-  // en-US for money: en-GB renders USD as "US$0.53", which reads badly in a
-  // dashboard where every figure is already in one currency.
-  var fCur  = new Intl.NumberFormat('en-US', {style:'currency', currency:CUR, maximumFractionDigits:2});
-  var fCur0 = new Intl.NumberFormat('en-US', {style:'currency', currency:CUR, maximumFractionDigits:0});
-  var fPct  = new Intl.NumberFormat('en-GB', {maximumFractionDigits:2});
-  function money(v){ return (Math.abs(v) >= 1000) ? fCur0.format(v) : fCur.format(v); }
-  function pct(v){ return fPct.format(v) + '%'; }
-  function dash(v){ return (v == null || !isFinite(v)) ? '\u2014' : v; }
-  function esc(s){ return String(s == null ? '' : s)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  // ── formatting ─────────────────────────────────────────────────────────────
+  const money = v => v == null ? '—' : '$' + Math.round(v).toLocaleString('en-US');
+  const money2 = v => v == null ? '—' : '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const n0 = v => v == null ? '—' : Math.round(v).toLocaleString('en-US');
+  const pct = v => v == null ? '—' : (v * 100).toFixed(1) + '%';
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  // ---------- classification ----------
-  // Platform is inferred from the campaign name; the export has no platform column.
-  function platformOf(name){
-    var n = String(name || '').toLowerCase();
-    if (/\bios\b|iphone|ipad|app\s*store/.test(n)) return 'iOS';
-    if (/android|google\s*play/.test(n))           return 'Android';
-    if (/website|web\b|site/.test(n))              return 'Website';
-    return 'Other';
+  // Cost per X is UNDEFINED at zero, not zero and not infinity. A tile that prints "$0" for
+  // a stage nobody reached reads as free acquisition, which is the opposite of the truth.
+  const per = (spend, n) => (n > 0 ? spend / n : null);
+
+  // ── campaigns are grouped by NAME, not id ──────────────────────────────────
+  // Two Google campaign ids share the name "c2-gads-app-ios-usa" (one was rebuilt). Felipe
+  // ticks campaigns by name in the sheet and thinks of them by name, so the page groups by
+  // name and keeps the ids underneath for the merchant join.
+  const campByName = new Map();
+  for (const c of D.campaigns) {
+    if (!campByName.has(c.c)) campByName.set(c.c, { name: c.c, pf: c.pf, ch: c.ch, st: c.st, ids: [] });
+    campByName.get(c.c).ids.push(c.cid);
+    if (c.st === 'ENABLED') campByName.get(c.c).st = 'ENABLED';
   }
-  // Conversion events get the same treatment so the labels stay readable.
-  function eventPlatform(action){
-    var n = String(action || '').toLowerCase();
-    if (/\bios\b|iphone|ipad|app\s*store/.test(n)) return 'iOS';
-    if (/android|google\s*play/.test(n))           return 'Android';
-    if (/website|web\b/.test(n))                   return 'Website';
-    return 'Other';
-  }
-  // The raw action names are long and repeat the bundle id. Trim for display.
-  function shortEvent(action){
-    var s = String(action || '');
-    s = s.replace(/^loyverse-pos-\w+\s*-\s*/i, '')
-         .replace(/\(com\.[\w.]+\)/gi, '')
-         .replace(/com\.loyverse\.\w+/gi, '')
-         .replace(/\s*\(\s*\)\s*/g, ' ')
-         .replace(/\s{2,}/g, ' ')
-         .trim();
-    return s || action;
-  }
+  const ALL_CAMPS = [...campByName.values()];
 
-  // ---------- state ----------
-  var allDaily  = D.daily.slice();
-  var allEvents = (D.events || []).slice();
-  var campaigns = (D.campaigns || []).slice();
-
-  var campaignName = {};
-  campaigns.forEach(function(c){ campaignName[c.campaignId] = c.campaign; });
-
-  // ---------- attribution ----------
-  // Optional. Without it the page is exactly what it was before, minus one section.
-  var A = window.ATTR_DATA || null;
-  var attrName = {};                         // campaignId -> campaign name
-  if (A) (A.campaigns || []).forEach(function(c){ attrName[c.campaignId] = c.campaign; });
-  function attrCampaign(id){ return attrName[id] || null; }
-
-  var dateMin = D.dateMin || allDaily[0].date;
-  var dateMax = D.dateMax || allDaily[allDaily.length-1].date;
-  // The two feeds are pulled at different times, so their windows differ — today the sheet
-  // export ends a week before Snowflake does. Take the union, or selecting "All" would
-  // silently hide the freshest week of acquisition data behind a bound set by the older feed.
-  if (A) {
-    if (A.dateMin && A.dateMin < dateMin) dateMin = A.dateMin;
-    if (A.dateMax && A.dateMax > dateMax) dateMax = A.dateMax;
-  }
-
-  var platformList = [];
-  var campaignList = [];
-  allDaily.forEach(function(r){
-    var p = platformOf(r.campaign);
-    if (platformList.indexOf(p) < 0) platformList.push(p);
-    if (campaignList.indexOf(r.campaign) < 0) campaignList.push(r.campaign);
-  });
-  platformList.sort(); campaignList.sort();
-
-  var eventList = [];
-  allEvents.forEach(function(r){ if (eventList.indexOf(r.action) < 0) eventList.push(r.action); });
-  eventList.sort();
-
-  var S = {
-    from: dateMin,
-    to: dateMax,
-    platforms: new Set(platformList),
-    campaigns: new Set(campaignList),
-    events: new Set(eventList),
-    metric: 'conversions',
-    trend: 'cum'
+  // ── state ──────────────────────────────────────────────────────────────────
+  const days = D.spend.map(s => s.d).filter(Boolean).sort();
+  const DMIN = days[0], DMAX = days[days.length - 1];
+  const state = {
+    from: DMIN, to: DMAX,
+    basis: 'click',
+    camps: new Set(ALL_CAMPS.map(c => c.name)),
   };
 
-  // ---------- filtering ----------
-  function inRange(d){ return d >= S.from && d <= S.to; }
-  function keepCampaign(name){
-    return S.campaigns.has(name) && S.platforms.has(platformOf(name));
-  }
-  function filteredDaily(){
-    return allDaily.filter(function(r){ return inRange(r.date) && keepCampaign(r.campaign); });
-  }
-  function filteredEvents(){
-    return allEvents.filter(function(r){
-      return inRange(r.date) && keepCampaign(r.campaign) && S.events.has(r.action);
-    });
-  }
-  // Attribution rows obey the same date range and campaign chips as everything else, so the
-  // page never shows two populations at once. Campaign identity crosses the two feeds by
-  // NAME, not id: the ads export has no ids, and c2 exists under two ids after being
-  // recreated — both carry the same name, which is the reading anyone wants.
-  function attrRows(key){
-    if (!A || !A[key]) return [];
-    return A[key].filter(function(r){
-      var n = attrCampaign(r.campaignId);
-      return n && inRange(r.d) && keepCampaign(n);
-    });
-  }
-  function attrTotals(){
-    var s = {spend:0, clicks:0, merchants:0, everSold:0, openedPayments:0, passedKyc:0};
-    attrRows('spendDaily').forEach(function(r){ s.spend += r.cost || 0; s.clicks += r.clicks || 0; });
-    attrRows('merchDaily').forEach(function(r){
-      s.merchants += r.merchants || 0; s.everSold += r.everSold || 0;
-      s.openedPayments += r.openedPayments || 0; s.passedKyc += r.passedKyc || 0;
-    });
-    return s;
-  }
-  // Cost per stage. Returns null rather than Infinity when a stage is empty, so the tiles
-  // and tables print an em dash instead of an absurd number: $1,800 of spend that produced
-  // no KYC-passed merchant has no cost per KYC-passed merchant, it has a missing one.
-  function per(spend, n){ return (n > 0 && isFinite(spend)) ? spend / n : null; }
+  // ── selection ──────────────────────────────────────────────────────────────
+  const inPeriod = d => d && d >= state.from && d <= state.to;
+  const mDate = m => state.basis === 'click' ? m.clickD : m.signD;
 
-  // Previous window of identical length, for the tile deltas.
-  // Split out so the attribution tiles can use the identical prior window rather than
-  // computing their own and drifting from it by a day.
-  function priorRange(){
-    var from = new Date(S.from + 'T00:00:00Z'), to = new Date(S.to + 'T00:00:00Z');
-    var days = Math.round((to - from) / 86400000) + 1;
-    var pTo = new Date(from.getTime() - 86400000);
-    var pFrom = new Date(pTo.getTime() - (days-1) * 86400000);
-    return {a: pFrom.toISOString().slice(0,10), b: pTo.toISOString().slice(0,10)};
-  }
-  function priorDaily(){
-    var p = priorRange();
-    return allDaily.filter(function(r){ return r.date >= p.a && r.date <= p.b && keepCampaign(r.campaign); });
+  function selection() {
+    const spend = D.spend.filter(s => state.camps.has(s.c) && inPeriod(s.d));
+    const merchants = D.merchants.filter(m => state.camps.has(m.c) && inPeriod(mDate(m)));
+    const totals = spend.reduce((a, s) => {
+      a.spend += s.s; a.clicks += s.k; a.impr += s.i; a.pconv += s.pc; return a;
+    }, { spend: 0, clicks: 0, impr: 0, pconv: 0 });
+    return { spend, merchants, totals };
   }
 
-  function totals(rows){
-    var t = {impressions:0, clicks:0, cost:0, conversions:0, allConversions:0};
-    rows.forEach(function(r){
-      t.impressions    += r.impressions    || 0;
-      t.clicks         += r.clicks         || 0;
-      t.cost           += r.cost           || 0;
-      t.conversions    += r.conversions    || 0;
-      t.allConversions += r.allConversions || 0;
-    });
-    t.conv = S.metric === 'allConversions' ? t.allConversions : t.conversions;
-    t.ctr  = t.impressions ? (t.clicks / t.impressions) * 100 : null;
-    t.cpc  = t.clicks ? t.cost / t.clicks : null;
-    t.cpa  = t.conv ? t.cost / t.conv : null;
-    return t;
-  }
+  // Merchants are only countable on the Google side. Facebook spend inside the selection
+  // would otherwise be divided by merchants it could not possibly have produced, quietly
+  // inflating every cost-per figure on the page. So the funnel's denominator is
+  // ATTRIBUTABLE spend, and the difference is stated rather than hidden.
+  const attributableSpend = spend => spend.filter(s => s.pf === 'google').reduce((a, s) => a + s.s, 0);
 
-  // ---------- tiles ----------
-  // Direction matters per metric: cheaper CPC/CPA is good, more volume is good.
-  //
-  // Ordering is deliberate. The first four tiles are OURS — merchants acquired and what
-  // they cost, counted in our own database. Google's own numbers follow. Before the
-  // attribution join existed the page could only show Google's "cost per conversion", which
-  // is generous: it counts conversion events Google attributes to itself, not merchants we
-  // can find. On the current data Google's cost per conversion and our cost per merchant
-  // are different figures about different things, and the expensive one is the true one.
-  var TILES_ATTR = [
-    {k:'merchants',      label:'Merchants acquired', fmt:fInt.format, good:1,  ours:1},
-    {k:'cpMerchant',     label:'Cost per merchant',  fmt:money,       good:-1, ours:1},
-    {k:'passedKyc',      label:'Passed KYC',         fmt:fInt.format, good:1,  ours:1},
-    {k:'cpKyc',          label:'Cost per KYC',       fmt:money,       good:-1, ours:1}
-  ];
-  var TILES = [
-    {k:'impressions',    label:'Impressions',       fmt:fInt.format,  good:1},
-    {k:'clicks',         label:'Clicks',            fmt:fInt.format,  good:1},
-    {k:'ctr',            label:'CTR',               fmt:pct,          good:1},
-    {k:'cpc',            label:'Avg. CPC',          fmt:money,        good:-1},
-    {k:'cost',           label:'Total cost',        fmt:money,        good:0},
-    {k:'conv',           label:'Conversions',       fmt:fInt.format,  good:1},
-    {k:'cpa',            label:'Cost per conv.',    fmt:money,        good:-1},
-    {k:'allConversions', label:'All conversions',   fmt:fInt.format,  good:1}
-  ];
-
-  // Same shape as totals() so the delta machinery below needs no special case.
-  function attrTileVals(range){
-    var t = range || attrTotals();
-    return {merchants:t.merchants, passedKyc:t.passedKyc,
-            cpMerchant:per(t.spend, t.merchants), cpKyc:per(t.spend, t.passedKyc)};
-  }
-
-  function renderTiles(cur, prev){
-    var tiles = TILES.slice(), curx = cur, prevx = prev;
-    if (A) {
-      // Prior-period attribution, on the same window the tile deltas already use, so the
-      // two halves of the tile strip compare like for like.
-      var p = priorRange(), pa = {spend:0, merchants:0, passedKyc:0};
-      (A.spendDaily || []).forEach(function(r){
-        var n = attrCampaign(r.campaignId);
-        if (n && keepCampaign(n) && r.d >= p.a && r.d <= p.b) pa.spend += r.cost || 0;
-      });
-      (A.merchDaily || []).forEach(function(r){
-        var n = attrCampaign(r.campaignId);
-        if (n && keepCampaign(n) && r.d >= p.a && r.d <= p.b) {
-          pa.merchants += r.merchants || 0; pa.passedKyc += r.passedKyc || 0;
-        }
-      });
-      var ca = attrTileVals();
-      curx = {}; prevx = {};
-      Object.keys(cur).forEach(function(k){ curx[k] = cur[k]; });
-      Object.keys(prev).forEach(function(k){ prevx[k] = prev[k]; });
-      Object.keys(ca).forEach(function(k){ curx[k] = ca[k]; });
-      var pav = attrTileVals(pa);
-      Object.keys(pav).forEach(function(k){ prevx[k] = pav[k]; });
-      tiles = TILES_ATTR.concat(TILES);
+  // ── filter UI ──────────────────────────────────────────────────────────────
+  function buildCampChips() {
+    const host = $('f-campaigns');
+    host.innerHTML = '';
+    for (const c of ALL_CAMPS.sort((a, b) => a.name.localeCompare(b.name))) {
+      const b = document.createElement('button');
+      b.className = 'chip' + (state.camps.has(c.name) ? ' on' : '');
+      b.textContent = c.name;
+      b.onclick = () => {
+        if (state.camps.has(c.name)) state.camps.delete(c.name); else state.camps.add(c.name);
+        if (!state.camps.size) state.camps.add(c.name);   // never allow an empty page
+        buildCampChips(); render();
+      };
+      host.appendChild(b);
     }
-    cur = curx; prev = prevx;
-    document.getElementById('tiles').innerHTML = tiles.map(function(t){
-      var v = cur[t.k], p = prev[t.k];
-      var val = (v == null || !isFinite(v)) ? '\u2014' : t.fmt(v);
-      var delta = '';
-      if (v != null && p != null && isFinite(v) && isFinite(p) && p !== 0) {
-        var ch = ((v - p) / Math.abs(p)) * 100;
-        var cls = 'flat';
-        if (Math.abs(ch) >= 0.5) {
-          var better = t.good === 0 ? 0 : (ch > 0 ? t.good : -t.good);
-          cls = better > 0 ? 'up' : (better < 0 ? 'down' : 'flat');
-        }
-        delta = '<div class="td ' + cls + '">' + (ch >= 0 ? '+' : '') +
-                fPct.format(ch) + '% vs prior period</div>';
+    const all = document.createElement('button');
+    all.className = 'chip ghost'; all.textContent = 'All';
+    all.onclick = () => { state.camps = new Set(ALL_CAMPS.map(c => c.name)); buildCampChips(); render(); };
+    host.appendChild(all);
+  }
+
+  $('f-from').value = DMIN; $('f-to').value = DMAX;
+  $('f-from').min = DMIN; $('f-from').max = DMAX;
+  $('f-to').min = DMIN; $('f-to').max = DMAX;
+  $('f-from').onchange = e => { state.from = e.target.value || DMIN; clearPreset(); render(); };
+  $('f-to').onchange = e => { state.to = e.target.value || DMAX; clearPreset(); render(); };
+
+  function clearPreset() { [...$('f-preset').children].forEach(b => b.classList.remove('on')); }
+  [...$('f-preset').children].forEach(btn => {
+    btn.onclick = () => {
+      clearPreset(); btn.classList.add('on');
+      const n = +btn.dataset.days;
+      if (!n) { state.from = DMIN; state.to = DMAX; }
+      else {
+        const end = new Date(DMAX + 'T00:00:00Z');
+        const start = new Date(end); start.setUTCDate(start.getUTCDate() - (n - 1));
+        state.from = start.toISOString().slice(0, 10); state.to = DMAX;
       }
-      return '<div class="tile' + (t.ours ? ' ours' : '') + '" title="' +
-             (t.ours ? 'From our own database, via merchant attribution'
-                     : 'As reported by Google Ads') + '"><div class="tl">' + t.label + '</div>' +
-             '<div class="tv font-num">' + val + '</div>' + delta + '</div>';
-    }).join('');
-  }
-
-  // ---------- charts ----------
-  var charts = {};
-  function destroy(id){ if (charts[id]) { charts[id].destroy(); charts[id] = null; } }
-  var GRID = {color:'#EEF2F6'}, TICK = {color:'#7E8A9A', font:{size:10}};
-
-  function baseOpts(extra){
-    var o = {
-      responsive:true, maintainAspectRatio:false,
-      interaction:{mode:'index', intersect:false},
-      plugins:{ legend:{ labels:{ boxWidth:11, boxHeight:11, font:{size:11}, color:'#13233A' } } },
-      scales:{ x:{ grid:{display:false}, ticks:TICK } }
+      $('f-from').value = state.from; $('f-to').value = state.to;
+      render();
     };
-    return Object.assign(o, extra || {});
+  });
+  [...$('f-basis').children].forEach(btn => {
+    btn.onclick = () => {
+      [...$('f-basis').children].forEach(b => b.classList.remove('on'));
+      btn.classList.add('on'); state.basis = btn.dataset.basis; render();
+    };
+  });
+  $('f-clear').onclick = () => {
+    state.from = DMIN; state.to = DMAX; state.basis = 'click';
+    state.camps = new Set(ALL_CAMPS.map(c => c.name));
+    $('f-from').value = DMIN; $('f-to').value = DMAX;
+    clearPreset(); $('f-preset').lastElementChild.classList.add('on');
+    [...$('f-basis').children].forEach(b => b.classList.remove('on'));
+    $('f-basis').firstElementChild.classList.add('on');
+    buildCampChips(); render();
+  };
+
+  // ── tiles ──────────────────────────────────────────────────────────────────
+  function renderTiles(sel) {
+    const t = sel.totals, ms = sel.merchants;
+    const aSpend = attributableSpend(sel.spend);
+    const nM = ms.length;
+    const nSold = ms.filter(m => m.rcptD).length;
+    const nKyc = ms.filter(m => m.kyc3).length;
+    const tiles = [
+      { l: 'Spend', v: money(t.spend), d: `${n0(t.clicks)} clicks · ${n0(t.impr)} impressions` },
+      { l: 'Cost per click', v: t.clicks ? money2(t.spend / t.clicks) : '—', d: 'What Google and Meta charged' },
+      { l: 'Platform conversions', v: n0(t.pconv), d: 'Google’s and Meta’s own count — not merchants' },
+      { l: 'Merchants acquired', v: n0(nM), ours: 1, d: 'Signed up and traced to a paid click' },
+      { l: 'Cost per merchant', v: money2(per(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
+      { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(per(aSpend, nSold))} each` },
+      { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(per(aSpend, nKyc))} each` },
+    ];
+    $('tiles').innerHTML = tiles.map(x =>
+      `<div class="tile${x.ours ? ' ours' : ''} rise"><div class="tl">${esc(x.l)}</div>
+       <div class="tv font-num">${x.v}</div><div class="td">${x.d}</div></div>`).join('');
   }
 
-  function daysBetween(){
-    var out = [], d = new Date(S.from + 'T00:00:00Z'), end = new Date(S.to + 'T00:00:00Z');
-    while (d <= end) { out.push(d.toISOString().slice(0,10)); d = new Date(d.getTime() + 86400000); }
+  // ── the funnel ─────────────────────────────────────────────────────────────
+  function step(label, n, base, prev, spend, green) {
+    const w = base > 0 ? Math.max(n / base * 100, n > 0 ? 1.2 : 0) : 0;
+    const dropTxt = (prev != null && prev > 0 && n < prev)
+      ? `<div class="st-drop">${n0(prev - n)} did not go on (${pct(1 - n / prev)} drop)</div>` : '';
+    return `<div class="st">
+      <div class="st-lbl">${esc(label)}</div>
+      <div class="st-track"><i class="st-fill${green ? ' green' : ''}" style="width:${w.toFixed(1)}%"></i></div>
+      <div class="st-n font-num">${n0(n)}</div>
+      <div class="st-cpa">${money2(per(spend, n))}</div>
+    </div>${dropTxt}`;
+  }
+
+  function renderFunnel(sel) {
+    const ms = sel.merchants, base = ms.length;
+    const aSpend = attributableSpend(sel.spend);
+    const c = k => ms.filter(k).length;
+
+    $('fn-top-n').textContent = n0(base);
+    $('fn-top-cpa').textContent = base ? money2(aSpend / base) + ' per merchant' : '—';
+    const exact = ms.filter(m => m.clickExact).length;
+    $('fn-top-note').textContent =
+      `merchants traced to a paid click · ${n0(exact)} with an exact click date` +
+      (base > exact ? `, ${n0(base - exact)} dated by sign-up instead` : '');
+
+    const sold = c(m => m.rcptD);
+    $('fn-pos').innerHTML =
+      step('Issued a receipt', sold, base, base, aSpend, true) +
+      `<div class="ph" style="margin:6px 0 0">${base ? pct(sold / base) : '—'} of everyone who signed up.
+       ${n0(c(m => m.rcpts >= 10))} of them have rung up 10 or more.</div>`;
+
+    // Each stage is a strict subset of the one above — enforced in SQL, not here, so the
+    // counts stay additive across periods.
+    const rows = [
+      ['Opened Payments', m => m.open],
+      ['KYC started', m => m.kyc1],
+      ['KYC submitted', m => m.kyc2],
+      ['KYC approved', m => m.kyc3],
+      ['Payouts enabled', m => m.onb],
+      ['Took a payment', m => m.chargeD],
+    ];
+    let prev = base, html = '';
+    for (const [label, f] of rows) {
+      const n = c(f);
+      html += step(label, n, base, prev, aSpend, false);
+      prev = n;
+    }
+    $('fn-pay').innerHTML = html;
+
+    const subs = c(m => m.subD);
+    $('fn-beside').innerHTML = `
+      <div class="bi"><div class="bl">Subscribed</div><div class="bv">${n0(subs)}</div>
+        <div class="bd">${base ? pct(subs / base) : '—'} · ${money2(per(aSpend, subs))} each</div></div>
+      <div class="bi"><div class="bl">Did neither</div><div class="bv">${n0(c(m => !m.rcptD && !m.open))}</div>
+        <div class="bd">signed up and stopped</div></div>
+      <div class="bi" style="border-style:solid;background:var(--surface-2)">
+        <div class="bl">Not available</div>
+        <div class="bd" style="margin-top:6px;line-height:1.5">Opened the app · Added a customer<br>
+        <span style="color:var(--muted)">Mixpanel events; there is no Mixpanel table in the lake.</span></div></div>`;
+  }
+
+  // ── charts ─────────────────────────────────────────────────────────────────
+  let chDaily, chCpa;
+  const dayList = () => {
+    const out = [], a = new Date(state.from + 'T00:00:00Z'), b = new Date(state.to + 'T00:00:00Z');
+    for (let d = a; d <= b; d.setUTCDate(d.getUTCDate() + 1)) out.push(d.toISOString().slice(0, 10));
     return out;
-  }
+  };
 
-  function byDay(rows, field){
-    var m = {};
-    rows.forEach(function(r){ m[r.date] = (m[r.date] || 0) + (r[field] || 0); });
-    return m;
-  }
+  function renderCharts(sel) {
+    const ds = dayList();
+    const spendBy = new Map(), merchBy = new Map();
+    for (const s of sel.spend) spendBy.set(s.d, (spendBy.get(s.d) || 0) + s.s);
+    for (const m of sel.merchants) { const d = mDate(m); merchBy.set(d, (merchBy.get(d) || 0) + 1); }
+    const spendSeries = ds.map(d => +(spendBy.get(d) || 0).toFixed(2));
+    const merchSeries = ds.map(d => merchBy.get(d) || 0);
 
-  function renderCostChart(rows){
-    var days = daysBetween();
-    var cost = byDay(rows, 'cost');
-    var conv = byDay(rows, S.metric);
-    destroy('cost');
-    charts.cost = new Chart(document.getElementById('c-cost'), {
-      data:{
-        labels: days,
-        datasets:[
-          {type:'bar',  label:'Cost', data:days.map(function(d){ return +(cost[d]||0).toFixed(2); }),
-           backgroundColor:'rgba(29,143,225,.55)', borderColor:'#1D8FE1', borderWidth:1, yAxisID:'y', order:2},
-          {type:'line', label:'Conversions', data:days.map(function(d){ return conv[d]||0; }),
-           borderColor:'#E8A317', backgroundColor:'#E8A317', borderWidth:2, tension:.3,
-           pointRadius:2, pointHoverRadius:4, yAxisID:'y1', order:1}
-        ]
+    const opts = (leftTitle, rightTitle) => ({
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { labels: { boxWidth: 11, font: { size: 10 } } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkipPadding: 18 } },
+        y: { position: 'left', beginAtZero: true, title: { display: true, text: leftTitle, font: { size: 10 } },
+             grid: { color: '#EEF2F6' }, ticks: { font: { size: 9 } } },
+        y1: { position: 'right', beginAtZero: true, title: { display: true, text: rightTitle, font: { size: 10 } },
+              grid: { display: false }, ticks: { font: { size: 9 }, precision: 0 } },
       },
-      options: baseOpts({
-        scales:{
-          x:{grid:{display:false}, ticks:TICK},
-          y:{position:'left', beginAtZero:true, grid:GRID,
-             ticks:Object.assign({}, TICK, {callback:function(v){ return fCur0.format(v); }})},
-          y1:{position:'right', beginAtZero:true, grid:{display:false}, ticks:TICK}
+    });
+
+    if (chDaily) chDaily.destroy();
+    chDaily = new Chart($('ch-daily'), {
+      data: {
+        labels: ds,
+        datasets: [
+          { type: 'bar', label: 'Spend', data: spendSeries, backgroundColor: '#C4DFF3', yAxisID: 'y', order: 2 },
+          { type: 'line', label: 'Merchants', data: merchSeries, borderColor: '#1F9D6B', backgroundColor: '#1F9D6B',
+            borderWidth: 2, pointRadius: 0, tension: .25, yAxisID: 'y1', order: 1 },
+        ],
+      },
+      options: opts('Spend ($)', 'Merchants'),
+    });
+
+    // Rolling cost per merchant: spend summed over the window ÷ merchants summed over the
+    // window. NOT an average of daily ratios — a day with $200 of spend and no signups has
+    // to be able to drag the number, and a day with $4 and one signup must not rescue it.
+    const W = 7, cpa = [];
+    for (let i = 0; i < ds.length; i++) {
+      const lo = Math.max(0, i - W + 1);
+      let s = 0, m = 0;
+      for (let j = lo; j <= i; j++) { s += spendSeries[j]; m += merchSeries[j]; }
+      cpa.push(m > 0 ? +(s / m).toFixed(2) : null);
+    }
+    if (chCpa) chCpa.destroy();
+    chCpa = new Chart($('ch-cpa'), {
+      data: {
+        labels: ds,
+        datasets: [{ type: 'line', label: 'Cost per merchant (7d)', data: cpa, borderColor: '#1578C4',
+          backgroundColor: 'rgba(29,143,225,.12)', borderWidth: 2, pointRadius: 0, tension: .25, fill: true,
+          spanGaps: false }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { labels: { boxWidth: 11, font: { size: 10 } } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkipPadding: 18 } },
+          y: { beginAtZero: true, grid: { color: '#EEF2F6' },
+               ticks: { font: { size: 9 }, callback: v => '$' + v } },
         },
-        plugins:{ legend:{labels:{boxWidth:11, boxHeight:11, font:{size:11}, color:'#13233A'}},
-          tooltip:{callbacks:{label:function(c){
-            return c.dataset.label + ': ' + (c.dataset.yAxisID === 'y' ? money(c.parsed.y) : fInt.format(c.parsed.y));
-          }}} }
-      })
-    });
-  }
-
-  function renderTrafficChart(rows){
-    var days = daysBetween();
-    var clicks = byDay(rows, 'clicks'), impr = byDay(rows, 'impressions');
-    destroy('traffic');
-    charts.traffic = new Chart(document.getElementById('c-traffic'), {
-      type:'line',
-      data:{
-        labels: days,
-        datasets:[
-          {label:'Clicks', data:days.map(function(d){ return clicks[d]||0; }),
-           borderColor:'#1D8FE1', backgroundColor:'rgba(29,143,225,.12)', borderWidth:2,
-           tension:.3, fill:true, pointRadius:2, pointHoverRadius:4, yAxisID:'y'},
-          {label:'Impressions', data:days.map(function(d){ return impr[d]||0; }),
-           borderColor:'#7E8A9A', backgroundColor:'#7E8A9A', borderWidth:2, borderDash:[5,4],
-           tension:.3, pointRadius:0, pointHoverRadius:4, yAxisID:'y1'}
-        ]
       },
-      options: baseOpts({
-        scales:{
-          x:{grid:{display:false}, ticks:TICK},
-          y:{position:'left', beginAtZero:true, grid:GRID, ticks:TICK},
-          y1:{position:'right', beginAtZero:true, grid:{display:false},
-              ticks:Object.assign({}, TICK, {callback:function(v){ return fInt.format(v); }})}
-        }
-      })
     });
   }
 
-  // Blended: the period's whole cost over each event's volume. Not attributed.
-  function eventAgg(evRows, metric){
-    var m = {};
-    evRows.forEach(function(r){
-      if (!m[r.action]) m[r.action] = {action:r.action, category:r.category || '\u2014', volume:0};
-      m[r.action].volume += r[metric] || 0;
+  // ── campaign table ─────────────────────────────────────────────────────────
+  const campSort = { key: 'spend', dir: -1 };
+  function renderCampaigns(sel) {
+    const rows = new Map();
+    for (const c of ALL_CAMPS) {
+      if (!state.camps.has(c.name)) continue;
+      rows.set(c.name, { name: c.name, pf: c.pf, st: c.st, spend: 0, clicks: 0, impr: 0,
+                         merchants: 0, sold: 0, kyc: 0 });
+    }
+    for (const s of sel.spend) {
+      const r = rows.get(s.c); if (!r) continue;
+      r.spend += s.s; r.clicks += s.k; r.impr += s.i;
+    }
+    for (const m of sel.merchants) {
+      const r = rows.get(m.c); if (!r) continue;
+      r.merchants++; if (m.rcptD) r.sold++; if (m.kyc3) r.kyc++;
+    }
+    const list = [...rows.values()];
+    for (const r of list) {
+      r.cpc = r.clicks ? r.spend / r.clicks : null;
+      // Facebook cannot produce a traceable merchant, so a cost-per-merchant on a Facebook
+      // row would be a division by a number that structurally cannot exist. Left null and
+      // rendered as "n/a" with a reason, rather than as an enormous number.
+      r.cpm = r.pf === 'google' ? per(r.spend, r.merchants) : null;
+      r.cpk = r.pf === 'google' ? per(r.spend, r.kyc) : null;
+    }
+    const cols = [
+      { k: 'name', t: 'Campaign', s: 1 }, { k: 'pf', t: 'Platform', s: 1 },
+      { k: 'spend', t: 'Spend' }, { k: 'clicks', t: 'Clicks' }, { k: 'cpc', t: 'CPC' },
+      { k: 'merchants', t: 'Merchants' }, { k: 'cpm', t: 'Cost / merchant' },
+      { k: 'sold', t: 'Issued receipt' }, { k: 'kyc', t: 'Passed KYC' }, { k: 'cpk', t: 'Cost / KYC' },
+    ];
+    list.sort((a, b) => {
+      const x = a[campSort.key], y = b[campSort.key];
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;            // undefined costs sink, whichever way you sort
+      if (y == null) return -1;
+      return (typeof x === 'string' ? x.localeCompare(y) : x - y) * campSort.dir;
     });
-    return Object.keys(m).map(function(k){ return m[k]; })
-      .filter(function(e){ return e.volume > 0; })
-      .sort(function(a,b){ return b.volume - a.volume; });
-  }
-
-  function renderCpaChart(events, cost){
-    var top = events.slice(0, 10);
-    destroy('cpa');
-    if (!top.length) { return; }
-    var vals = top.map(function(e){ return +(cost / e.volume).toFixed(2); });
-    var max = Math.max.apply(null, vals);
-    charts.cpa = new Chart(document.getElementById('c-cpa'), {
-      type:'bar',
-      data:{
-        labels: top.map(function(e){ return shortEvent(e.action); }),
-        datasets:[{
-          label:'Blended cost per event', data:vals,
-          backgroundColor: vals.map(function(v){
-            // cheapest = brand blue, most expensive = amber; a quick efficiency read
-            var t = max ? v / max : 0;
-            return t < .34 ? 'rgba(31,157,107,.75)' : (t < .67 ? 'rgba(29,143,225,.75)' : 'rgba(232,163,23,.8)');
-          }),
-          borderWidth:0, borderRadius:4
-        }]
-      },
-      options: baseOpts({
-        indexAxis:'y',
-        plugins:{ legend:{display:false},
-          tooltip:{callbacks:{label:function(c){ return money(c.parsed.x); }}} },
-        scales:{
-          x:{beginAtZero:true, grid:GRID, ticks:Object.assign({}, TICK, {callback:function(v){ return fCur0.format(v); }})},
-          y:{grid:{display:false}, ticks:Object.assign({}, TICK, {font:{size:10}, autoSkip:false,
-             callback:function(v){ var s = this.getLabelForValue(v); return s.length > 34 ? s.slice(0,33) + '\u2026' : s; }})}
-        }
-      })
-    });
-  }
-
-  var TREND_COLORS = ['#1D8FE1','#E8A317','#1F9D6B','#D2495B','#7E8A9A'];
-
-  function renderTrendChart(evRows, events){
-    var days = daysBetween();
-    var top = events.slice(0, 5);
-    destroy('trend');
-    if (!top.length) return;
-    var metric = S.metric;
-    var sets = top.map(function(e, i){
-      var m = {};
-      evRows.forEach(function(r){ if (r.action === e.action) m[r.date] = (m[r.date]||0) + (r[metric]||0); });
-      var run = 0;
-      var data = days.map(function(d){
-        var v = m[d] || 0;
-        if (S.trend === 'cum') { run += v; return run; }
-        return v;
-      });
-      return {
-        label: shortEvent(e.action), data: data,
-        borderColor: TREND_COLORS[i], backgroundColor: TREND_COLORS[i],
-        borderWidth:2, tension:.3, pointRadius: S.trend === 'cum' ? 0 : 2, pointHoverRadius:4, fill:false
+    $('tbl-camp').tHead.innerHTML = '<tr>' + cols.map(c =>
+      `<th data-k="${c.k}" class="${campSort.key === c.k ? 'sorted' : ''}">${c.t}${campSort.key === c.k ? (campSort.dir < 0 ? ' ▾' : ' ▴') : ''}</th>`).join('') + '</tr>';
+    [...$('tbl-camp').tHead.querySelectorAll('th')].forEach(th => {
+      th.onclick = () => {
+        const k = th.dataset.k;
+        if (campSort.key === k) campSort.dir *= -1; else { campSort.key = k; campSort.dir = -1; }
+        render();
       };
     });
-    charts.trend = new Chart(document.getElementById('c-trend'), {
-      type:'line',
-      data:{labels:days, datasets:sets},
-      options: baseOpts({
-        plugins:{ legend:{labels:{boxWidth:11, boxHeight:11, font:{size:10}, color:'#13233A'}} },
-        scales:{ x:{grid:{display:false}, ticks:TICK}, y:{beginAtZero:true, grid:GRID, ticks:TICK} }
-      })
-    });
+    const body = $('tbl-camp').tBodies[0];
+    body.innerHTML = list.length ? list.map(r => `<tr>
+      <td class="cc">${esc(r.name)}</td>
+      <td><span class="pf ${r.pf}">${r.pf}</span></td>
+      <td class="num">${money2(r.spend)}</td>
+      <td class="num">${n0(r.clicks)}</td>
+      <td class="num">${money2(r.cpc)}</td>
+      <td class="num">${r.pf === 'google' ? n0(r.merchants) : '<span style="color:var(--faint)">n/a</span>'}</td>
+      <td class="num">${r.pf === 'google' ? money2(r.cpm) : '<span style="color:var(--faint)">no click id</span>'}</td>
+      <td class="num">${r.pf === 'google' ? n0(r.sold) : '—'}</td>
+      <td class="num">${r.pf === 'google' ? n0(r.kyc) : '—'}</td>
+      <td class="num">${r.pf === 'google' ? money2(r.cpk) : '—'}</td>
+    </tr>`).join('') : '<tr><td colspan="10" class="empty">No campaigns in this period.</td></tr>';
   }
 
-  // ---------- funnel ----------
-  function renderFunnel(events, cost){
-    var el = document.getElementById('funnel');
-    if (!events.length) { el.innerHTML = '<div class="empty">No conversion events in this selection.</div>'; return; }
-    var topVol = events[0].volume;
-    el.innerHTML = events.map(function(e, i){
-      var share = topVol ? (e.volume / topVol) * 100 : 0;
-      var step = '';
-      if (i > 0) {
-        var prev = events[i-1].volume;
-        var ch = prev ? ((e.volume - prev) / prev) * 100 : 0;
-        var cls = ch > 0 ? 'up' : (ch < 0 ? 'down' : 'flat');
-        step = '<span class="fn-step ' + cls + '">' + (ch >= 0 ? '+' : '') + fPct.format(ch) + '%</span>';
-      }
-      return '<div class="fn-row">' +
-        '<div class="fn-top">' +
-          '<span class="fn-name">' + esc(shortEvent(e.action)) +
-            '<span class="cat">' + esc(e.category) + ' \u00b7 ' + esc(eventPlatform(e.action)) + '</span></span>' +
-          '<span class="fn-meta"><b>' + fInt.format(e.volume) + '</b> \u00b7 ' + pct(share) + step +
-            ' \u00b7 ' + money(cost / e.volume) + ' ea.</span>' +
-        '</div>' +
-        '<div class="fn-bar"><i style="width:' + Math.max(share, 0.6).toFixed(2) + '%"></i></div>' +
-      '</div>';
-    }).join('');
-  }
-
-  // ---------- tables ----------
-  function renderEventTable(events, cost){
-    var total = events.reduce(function(s, e){ return s + e.volume; }, 0);
-    var t = document.getElementById('t-events');
-    if (!events.length) { t.innerHTML = '<tbody><tr><td class="empty">No events in this selection.</td></tr></tbody>'; return; }
-    t.innerHTML =
-      '<thead><tr><th>Event</th><th>Category</th><th>Platform</th><th>Volume</th><th>% of total</th><th>Blended cost</th></tr></thead><tbody>' +
-      events.map(function(e){
-        return '<tr>' +
-          '<td class="cc" title="' + esc(e.action) + '">' + esc(shortEvent(e.action)) + '</td>' +
-          '<td>' + esc(e.category) + '</td>' +
-          '<td>' + esc(eventPlatform(e.action)) + '</td>' +
-          '<td class="num">' + fInt.format(e.volume) + '</td>' +
-          '<td class="num">' + pct(total ? (e.volume/total)*100 : 0) + '</td>' +
-          '<td class="num">' + money(cost / e.volume) + '</td>' +
-        '</tr>';
-      }).join('') + '</tbody>';
-  }
-
-  function statusClass(s){
-    s = String(s || '').toUpperCase();
-    if (s === 'ENABLED') return 'enabled';
-    if (s === 'PAUSED')  return 'paused';
-    if (s === 'REMOVED') return 'removed';
-    return 'other';
-  }
-
-  function renderCampaignTable(){
-    var t = document.getElementById('t-campaigns');
-    var rows = campaigns.filter(function(c){ return keepCampaign(c.campaign); });
-    if (!rows.length) { t.innerHTML = '<tbody><tr><td class="empty">No campaigns in this selection.</td></tr></tbody>'; return; }
-    t.innerHTML =
-      '<thead><tr><th>Campaign</th><th>Status</th><th>Platform</th><th>Channel</th><th>Subtype</th>' +
-      '<th>Bid strategy</th><th>Daily budget</th><th>Updated</th></tr></thead><tbody>' +
-      rows.map(function(c){
-        return '<tr>' +
-          '<td class="cc">' + esc(c.campaign) + '</td>' +
-          '<td><span class="stat ' + statusClass(c.status) + '">' + esc(c.status || '\u2014') + '</span></td>' +
-          '<td>' + esc(platformOf(c.campaign)) + '</td>' +
-          '<td>' + esc((c.channel || '\u2014').replace(/_/g,' ')) + '</td>' +
-          '<td>' + esc((c.subtype || '\u2014').replace(/_/g,' ')) + '</td>' +
-          '<td>' + esc((c.bidStrategy || '\u2014').replace(/_/g,' ')) + '</td>' +
-          '<td class="num">' + (c.dailyBudget ? money(c.dailyBudget) : '\u2014') + '</td>' +
-          '<td>' + esc(c.updatedAt || '\u2014') + '</td>' +
-        '</tr>';
-      }).join('') + '</tbody>';
-  }
-
-  // ---------- acquisition -> activation ----------
-  // One card per campaign, each a genuine funnel: signed up > sold > opened payments >
-  // passed KYC, every stage a subset of the one above. Bars are scaled to the campaign's
-  // OWN top stage rather than a shared maximum, because the interesting comparison between
-  // campaigns is the shape of the decay, not the absolute size — c4 buys a fifth as many
-  // merchants as c3 and turns more of them into payments merchants, and a shared scale
-  // would flatten c4 into an unreadable sliver and hide exactly that.
-  var AQ_STAGES = [
-    {k:'merchants',      lbl:'Signed up'},
-    {k:'everSold',       lbl:'Sold something'},
-    {k:'openedPayments', lbl:'Opened payments'},
-    {k:'passedKyc',      lbl:'Passed KYC', green:1}
-  ];
-  function renderAcq(){
-    var host = document.getElementById('acq-cards');
-    if (!A) {
-      document.getElementById('sec-acq').style.display = 'none';
-      ['p-acq','p-kw','p-chan'].forEach(function(id){
-        var e = document.getElementById(id); if (e) e.style.display = 'none';
-      });
+  // ── Facebook panel ─────────────────────────────────────────────────────────
+  function renderFacebook(sel) {
+    const fb = sel.spend.filter(s => s.pf === 'facebook');
+    const spend = fb.reduce((a, s) => a + s.s, 0);
+    const clicks = fb.reduce((a, s) => a + s.k, 0);
+    const impr = fb.reduce((a, s) => a + s.i, 0);
+    const regs = fb.reduce((a, s) => a + s.pc, 0);
+    // NOT computed from D.merchants. That array only holds merchants with a RESOLVED campaign,
+    // and no Facebook merchant can ever resolve — so counting it there returns 0 and reads as
+    // "nobody came from Facebook", which is a different and wronger claim than "we cannot tell
+    // who came from Facebook". The real figure is merchants carrying an fbclid at all, measured
+    // against LOYVERSE_MERCHANT_ATTRIBUTION at build time and carried in the caveats.
+    const fbTagged = (D.caveats && D.caveats.facebookTaggedMerchants) != null
+      ? D.caveats.facebookTaggedMerchants : null;
+    if (!fb.length) {
+      $('panel-fb').innerHTML = '<div class="empty">No Facebook spend in this period.</div>';
       return;
     }
-    // Spend and merchants are keyed by campaign id, but c2 exists under two ids after being
-    // recreated. Group by NAME so a recreated campaign reads as one campaign, which is what
-    // it is to anyone spending the money.
-    var by = {};
-    var slot = function(n){ return by[n] || (by[n] = {campaign:n, spend:0, clicks:0,
-      merchants:0, everSold:0, openedPayments:0, passedKyc:0}); };
-    attrRows('spendDaily').forEach(function(r){
-      var s = slot(attrCampaign(r.campaignId)); s.spend += r.cost || 0; s.clicks += r.clicks || 0;
-    });
-    attrRows('merchDaily').forEach(function(r){
-      var s = slot(attrCampaign(r.campaignId));
-      AQ_STAGES.forEach(function(st){ s[st.k] += r[st.k] || 0; });
-    });
-    var rows = Object.keys(by).map(function(k){ return by[k]; })
-                     .sort(function(a,b){ return b.spend - a.spend; });
-    if (!rows.length) { host.innerHTML = '<div class="empty">No attributed spend in this period.</div>'; return; }
-
-    host.innerHTML = '<div class="aq-grid">' + rows.map(function(c){
-      var top = c.merchants || 0;
-      var steps = AQ_STAGES.map(function(st){
-        var n = c[st.k] || 0;
-        var w = top > 0 ? Math.max(n > 0 ? 1.5 : 0, (n / top) * 100) : 0;
-        var cp = per(c.spend, n);
-        return '<div class="aq-step"><span class="aq-lbl">' + st.lbl + '</span>' +
-               '<span class="aq-track"><i class="aq-fill' + (st.green ? ' green' : '') +
-               '" style="width:' + w.toFixed(1) + '%"></i></span>' +
-               '<span class="aq-n' + (n ? '' : ' aq-none') + '">' + fInt.format(n) + '</span>' +
-               '<span class="aq-cpa">' + (cp == null ? '—' : money(cp)) + '</span></div>';
-      }).join('');
-      // A campaign that spent money and produced no attributable merchant is worth saying
-      // out loud rather than leaving as four zeroes: on iOS it is a known blind spot, not
-      // a performance result, and the two must not be confused.
-      var foot = c.merchants === 0
-        ? '<div class="aq-foot aq-none">' + money(c.spend) + ' spent, no merchant attributable' +
-          (/ios/i.test(c.campaign) ? ' &mdash; iOS carries no install referrer, so this is a measurement gap, not a result' : '') + '</div>'
-        : '<div class="aq-foot">Cost per merchant <b>' + money(c.spend / c.merchants) + '</b>' +
-          (c.passedKyc ? ' &middot; per KYC <b>' + money(c.spend / c.passedKyc) + '</b>' : '') + '</div>';
-      return '<div class="aq-card"><div class="aq-head"><span class="aq-name">' + esc(c.campaign) +
-             '</span><span class="aq-spend">' + money(c.spend) + '</span></div>' +
-             '<div class="aq-sub">' + fInt.format(c.clicks) + ' clicks</div>' +
-             steps + foot + '</div>';
-    }).join('') + '</div>';
+    $('panel-fb').innerHTML = `
+      <div class="note-warn"><b>Facebook cannot be followed through to merchants yet, and the funnel above excludes it.</b>
+      Meta does not expose click ids in the Insights API, and our landing page does not capture
+      <code>fbclid</code> the way it captures <code>gclid</code>. ${fbTagged == null ? '' :
+        `Across the whole merchant base only <b>${n0(fbTagged)}</b> merchants carry an <code>fbclid</code> at all, and
+         <b>none</b> of them can be joined to a campaign, ad set or ad. `}Meta claims <b>${n0(regs)}</b> registrations here,
+      on its own attribution window. Those numbers cannot be reconciled from this side: closing the gap is a change to the
+      website's tagging, not to this dashboard.</div>
+      <div class="tiles">
+        <div class="tile"><div class="tl">Facebook spend</div><div class="tv font-num">${money2(spend)}</div>
+          <div class="td">${n0(clicks)} clicks · ${n0(impr)} impressions</div></div>
+        <div class="tile"><div class="tl">Cost per click</div><div class="tv font-num">${clicks ? money2(spend / clicks) : '—'}</div>
+          <div class="td">comparable with Google</div></div>
+        <div class="tile"><div class="tl">Meta-reported registrations</div><div class="tv font-num">${n0(regs)}</div>
+          <div class="td">Meta's count, not ours</div></div>
+        <div class="tile ours" style="--x:0"><div class="tl">Merchants traceable to a campaign</div>
+          <div class="tv font-num">0</div>
+          <div class="td">${fbTagged == null ? 'no click id reaches us' : n0(fbTagged) + ' carry an fbclid, none resolve'}</div></div>
+      </div>`;
   }
 
-  function renderKeywordTable(){
-    var el = document.getElementById('t-keywords'); if (!el || !A) return;
-    // Keywords are lifetime, not date-filtered: KEYWORD_VIEW spend is aggregated over all
-    // time and the merchant side carries no click date, so slicing one against the other by
-    // period would divide mismatched windows. The campaign chips still apply.
-    var rows = (A.keywords || []).filter(function(r){
-      var n = attrCampaign(r.campaignId); return n && keepCampaign(n);
-    }).sort(function(a,b){ return b.cost - a.cost; });
-    if (!rows.length) { el.innerHTML = '<tbody><tr><td class="empty">No keyword spend for this selection.</td></tr></tbody>'; return; }
-    var head = '<thead><tr><th>Keyword</th><th>Campaign</th><th>Match</th><th>Clicks</th>' +
-               '<th>Cost</th><th>Merchants</th><th>Sold</th><th>Cost / merchant</th></tr></thead>';
-    el.innerHTML = head + '<tbody>' + rows.map(function(r){
-      var cp = per(r.cost, r.merchants);
-      return '<tr><td class="cc">' + esc(r.keyword) + '</td>' +
-             '<td>' + esc(r.campaign) + '</td>' +
-             '<td>' + esc((r.matchType || '').toLowerCase()) + '</td>' +
-             '<td class="num">' + fInt.format(r.clicks || 0) + '</td>' +
-             '<td class="num">' + money(r.cost || 0) + '</td>' +
-             '<td class="num">' + fInt.format(r.merchants || 0) + '</td>' +
-             '<td class="num">' + fInt.format(r.everSold || 0) + '</td>' +
-             '<td class="num">' + (cp == null ? '—' : '<b>' + money(cp) + '</b>') + '</td></tr>';
-    }).join('') + '</tbody>';
+  // ── merchant table ─────────────────────────────────────────────────────────
+  function furthest(m) {
+    if (m.chargeD) return ['Took a payment', 7];
+    if (m.onb) return ['Payouts enabled', 6];
+    if (m.kyc3) return ['KYC approved', 5];
+    if (m.kyc2) return ['KYC submitted', 4];
+    if (m.kyc1) return ['KYC started', 3];
+    if (m.open) return ['Opened Payments', 2];
+    if (m.rcptD) return ['Issued a receipt', 1];
+    return ['Signed up', 0];
+  }
+  function renderMerchants(sel) {
+    const list = sel.merchants.slice().sort((a, b) => furthest(b)[1] - furthest(a)[1] || b.rcpts - a.rcpts);
+    $('tbl-merch').tHead.innerHTML =
+      '<tr><th>Merchant</th><th>Campaign</th><th>Country</th><th>Click</th><th>Signed up</th>' +
+      '<th>Receipts</th><th>Furthest stage</th><th>Traced by</th></tr>';
+    $('tbl-merch').tBodies[0].innerHTML = list.length ? list.map(m => `<tr>
+      <td class="cc">${esc(m.name || '(no name)')}</td>
+      <td style="font-size:11.5px;color:var(--muted)">${esc(m.c || '')}</td>
+      <td>${esc(m.cc || '—')}</td>
+      <td class="num">${m.clickExact ? esc(m.clickD) : '<span style="color:var(--faint)">' + esc(m.clickD) + '*</span>'}</td>
+      <td class="num">${esc(m.signD || '—')}</td>
+      <td class="num">${n0(m.rcpts)}</td>
+      <td style="font-size:11.5px">${esc(furthest(m)[0])}</td>
+      <td style="font-size:11px;color:var(--muted)">${esc(m.via || '')}</td>
+    </tr>`).join('') : '<tr><td colspan="8" class="empty">No merchants in this period.</td></tr>';
   }
 
-  function renderChannelTable(){
-    var el = document.getElementById('t-channels'); if (!el || !A) return;
-    var rows = (A.channels || []).slice().sort(function(a,b){ return b.merchants - a.merchants; });
-    if (!rows.length) { el.innerHTML = '<tbody><tr><td class="empty">No channel data.</td></tr></tbody>'; return; }
-    var totM = rows.reduce(function(s,r){ return s + (r.merchants || 0); }, 0);
-    var head = '<thead><tr><th>Channel</th><th>Merchants</th><th>Share</th><th>Sold</th>' +
-               '<th>Opened payments</th><th>Passed KYC</th><th>KYC rate</th></tr></thead>';
-    el.innerHTML = head + '<tbody>' + rows.map(function(r){
-      var share = totM ? (r.merchants / totM) * 100 : 0;
-      var kyc = r.merchants ? (r.passedKyc / r.merchants) * 100 : 0;
-      return '<tr><td class="cc">' + esc(r.channel) + '</td>' +
-             '<td class="num">' + fInt.format(r.merchants || 0) + '</td>' +
-             '<td class="num">' + fPct.format(share) + '%</td>' +
-             '<td class="num">' + fInt.format(r.everSold || 0) + '</td>' +
-             '<td class="num">' + fInt.format(r.openedPayments || 0) + '</td>' +
-             '<td class="num">' + fInt.format(r.passedKyc || 0) + '</td>' +
-             '<td class="num">' + (kyc >= 0.01 ? fPct.format(kyc) + '%' : '—') + '</td></tr>';
-    }).join('') + '</tbody>';
-
-    // The Paid ads row here will not match the campaign cards above, and the gap is not a
-    // bug: this row counts anything that looks paid, while a card needs a click that
-    // resolves to a specific campaign. Google's gclid lookup misses about a quarter of
-    // clicks — App clicks are simply not in CLICK_VIEW — so the remainder is real spend
-    // whose campaign we cannot name. Saying so beats letting someone find two numbers for
-    // "paid merchants" and trust the wrong one.
-    var note = document.getElementById('chan-note'); if (!note) return;
-    var paidCh = rows.filter(function(r){ return r.channel === 'Paid ads'; })[0];
-    var named = (A.merchDaily || []).reduce(function(s, r){ return s + (r.merchants || 0); }, 0);
-    if (paidCh && paidCh.merchants > named) {
-      note.innerHTML = 'Paid ads reads <b>' + fInt.format(paidCh.merchants) + '</b> here against <b>' +
-        fInt.format(named) + '</b> in the campaign cards above. Both are right: this row counts every ' +
-        'merchant that arrived on a paid click, the cards count only those whose click resolves to a ' +
-        'named campaign. The <b>' + fInt.format(paidCh.merchants - named) + '</b> difference is spend we ' +
-        'know worked but cannot yet assign — mostly App clicks, which Google does not report at click level.';
-    } else { note.textContent = ''; }
+  // ── render ─────────────────────────────────────────────────────────────────
+  function render() {
+    const sel = selection();
+    $('badge-range').textContent = state.from + ' → ' + state.to;
+    $('badge-updated').textContent = 'built ' + D.generatedAt;
+    $('badge-basis').textContent = state.basis === 'click' ? 'counted by click date' : 'counted by sign-up date';
+    $('basis-hint').textContent = state.basis === 'click'
+      ? 'A merchant lands in the period we paid for their click — the honest basis for cost per merchant.'
+      : 'A merchant lands in the period they registered. Spend and merchants can then belong to different weeks.';
+    renderTiles(sel); renderFunnel(sel); renderCharts(sel);
+    renderCampaigns(sel); renderFacebook(sel); renderMerchants(sel);
   }
 
-  // ---------- footer notes ----------
-  function renderNotes(rows){
-    var notes = [];
-    notes.push('Platform is inferred from the campaign name \u2014 the export has no platform column.');
-    notes.push('&ldquo;Blended cost&rdquo; is total period spend \u00f7 event volume. Google Ads does not attribute spend to individual conversion events, so it is an average, not a marginal cost.');
-    notes.push('&ldquo;Conversions&rdquo; counts Google&rsquo;s primary conversion actions; &ldquo;All conversions&rdquo; includes secondary ones. The metric toggle drives the tiles, both event charts and the funnel.');
-    notes.push('Recent days restate as late conversions land, so the last 2\u20133 days move after the fact.');
-    if (D.dateMin && D.dateMax) {
-      notes.push('Data held: ' + D.dateMin + ' \u2192 ' + D.dateMax + ' (' + fInt.format(allDaily.length) + ' campaign-days). History accumulates on each pull, so it outlives the export sheet\u2019s own rolling window.');
-    }
-    if (A) {
-      var c = A.coverage || {};
-      // The caveats that change what the numbers MEAN, not just how fresh they are. Anyone
-      // reading a channel share as "this is where our merchants come from" will be wrong by
-      // a wide margin, and it is this note's job to stop them.
-      notes.push('<b>Attribution covers a sample, not the base.</b> ' + fInt.format(c.withReferrer || 0) +
-        ' of ' + fInt.format(c.allMerchants || 0) + ' merchants carry a referrer at all. The attributes were backfilled by replaying Kafka, whose retention is 60 days, so merchants who registered earlier and have not touched their profile since show nothing. <b>A missing referrer means unknown, never organic</b> \u2014 read every share here as a share of the attributed sample.');
-      notes.push('Attribution is <b>first-touch</b>: written once at registration from the Play install referrer or the web signup form, and never updated. A merchant who later arrives via an ad still counts to whatever brought them first.');
-      notes.push('<b>iOS cannot be attributed at all</b> \u2014 there is no iOS equivalent of the Play install referrer, so an iOS campaign showing no merchants is a measurement gap, not a result. Separately, the Play Store link on loyverse.com stamps its own tag instead of forwarding inbound ad parameters, so a search-ad click that ends in an Android install is recorded as own-site traffic. Both understate paid.');
-      notes.push('Acquisition spend is read from the <b>GOOGLE_ADS</b> Snowflake sync; the charts above use the export sheet. The two run about 1.4% apart on the same window because Google restates cost for a few days and the sheet is exported earlier \u2014 same data, different read times.');
-      notes.push('Merchants are dated by <b>signup</b>, with lifetime outcomes: a merchant acquired in August who passed KYC in September counts against August, because that is the spend that bought them. Recent periods therefore improve as their cohorts mature.');
-      if (A.generatedAt) {
-        notes.push('Attribution pull: ' + esc(A.generatedAt) + ' \u00b7 merchant data through ' + esc(c.lastDay || '\u2014') + '.');
-      }
-    }
-    document.getElementById('foot-notes').innerHTML =
-      notes.map(function(n){ return '\u2192 ' + n; }).join('<br>');
-  }
+  $('foot-text').innerHTML = `
+    <b>Attribution is a sample, and a NULL is not an "organic".</b> Attribution is first-touch, written once when a
+    merchant registers and never updated. A merchant with no campaign means we do not know where they came from —
+    not that they arrived unpaid. Nothing here should be published as a share of all Loyverse signups.<br>
+    <b>Two ways to be traced.</b> <code>gclid</code> is the click id itself, joined to Google's click archive: exact, and
+    carries the ad group and keyword. <code>gad_campaignid</code> means only the campaign id survived on the landing URL —
+    right campaign, no click date, so those merchants are dated by sign-up and marked with * in the table.<br>
+    <b>Google restates recent cost</b> for a few days after the fact, so the last two or three days of spend drift upward
+    after first publication.<br>
+    <b>Built from</b> LOYVERSE_MERCHANT_ATTRIBUTION, GOOGLE_ADS and FACEBOOK_MARKETING in Snowflake, plus Stripe for the
+    KYC ladder and Chargebee for subscriptions, by <code>kpi-automation/pull_paid.js</code>.`;
 
-  // ---------- render ----------
-  function render(){
-    var rows = filteredDaily();
-    var evRows = filteredEvents();
-    var cur = totals(rows), prev = totals(priorDaily());
-
-    renderTiles(cur, prev);
-    renderAcq();
-    renderKeywordTable();
-    renderChannelTable();
-    renderCostChart(rows);
-    renderTrafficChart(rows);
-
-    var events = eventAgg(evRows, S.metric);
-    renderCpaChart(events, cur.cost);
-    renderTrendChart(evRows, events);
-    renderFunnel(events, cur.cost);
-    renderEventTable(events, cur.cost);
-    renderCampaignTable();
-
-    document.getElementById('badge-range').textContent = S.from + '  \u2192  ' + S.to;
-    var nSel = S.campaigns.size, nAll = campaignList.length;
-    document.getElementById('f-events-btn').textContent =
-      S.events.size === eventList.length ? 'All conversion events'
-        : S.events.size + ' of ' + eventList.length + ' events';
-    if (nSel !== nAll) {
-      document.getElementById('badge-range').textContent += '  \u00b7  ' + nSel + '/' + nAll + ' campaigns';
-    }
-  }
-
-  // ---------- filter UI ----------
-  function chipHtml(list, sel){
-    return list.map(function(v){
-      return '<button class="chip' + (sel.has(v) ? ' on' : '') + '" data-v="' + esc(v) + '">' + esc(v) + '</button>';
-    }).join('');
-  }
-
-  function wireChips(containerId, list, set){
-    var el = document.getElementById(containerId);
-    el.innerHTML = chipHtml(list, set);
-    el.addEventListener('click', function(e){
-      var b = e.target.closest('.chip'); if (!b) return;
-      var v = b.getAttribute('data-v');
-      // Clicking the only selected chip re-selects everything, so you can never
-      // filter yourself into an empty dashboard with no way back.
-      if (set.has(v)) {
-        if (set.size === 1) { list.forEach(function(x){ set.add(x); }); }
-        else set.delete(v);
-      } else set.add(v);
-      el.innerHTML = chipHtml(list, set);
-      render();
-    });
-  }
-
-  wireChips('f-platforms', platformList, S.platforms);
-  wireChips('f-campaigns', campaignList, S.campaigns);
-
-  // events multiselect
-  var evPop = document.getElementById('f-events-pop');
-  function paintEvents(){
-    document.getElementById('f-events-list').innerHTML = eventList.map(function(a, i){
-      return '<label><input type="checkbox" data-i="' + i + '"' + (S.events.has(a) ? ' checked' : '') + '>' +
-             '<span>' + esc(shortEvent(a)) + '</span></label>';
-    }).join('');
-  }
-  paintEvents();
-  document.getElementById('f-events-btn').addEventListener('click', function(e){
-    e.stopPropagation(); evPop.classList.toggle('open');
-  });
-  evPop.addEventListener('click', function(e){ e.stopPropagation(); });
-  document.addEventListener('click', function(){ evPop.classList.remove('open'); });
-  document.getElementById('f-events-list').addEventListener('change', function(e){
-    var cb = e.target; if (cb.type !== 'checkbox') return;
-    var a = eventList[+cb.getAttribute('data-i')];
-    if (cb.checked) S.events.add(a); else S.events.delete(a);
-    render();
-  });
-  document.getElementById('f-events-all').addEventListener('click', function(){
-    eventList.forEach(function(a){ S.events.add(a); }); paintEvents(); render();
-  });
-  document.getElementById('f-events-none').addEventListener('click', function(){
-    S.events.clear(); paintEvents(); render();
-  });
-
-  // dates + presets
-  var elFrom = document.getElementById('f-from'), elTo = document.getElementById('f-to');
-  elFrom.min = elTo.min = dateMin; elFrom.max = elTo.max = dateMax;
-  function syncDates(){ elFrom.value = S.from; elTo.value = S.to; }
-  syncDates();
-  elFrom.addEventListener('change', function(){
-    S.from = elFrom.value || dateMin;
-    if (S.from > S.to) S.to = S.from;
-    setPreset(null); syncDates(); render();
-  });
-  elTo.addEventListener('change', function(){
-    S.to = elTo.value || dateMax;
-    if (S.to < S.from) S.from = S.to;
-    setPreset(null); syncDates(); render();
-  });
-
-  function setPreset(days){
-    document.querySelectorAll('#f-preset button').forEach(function(b){
-      b.classList.toggle('on', days !== null && +b.getAttribute('data-days') === days);
-    });
-  }
-  document.getElementById('f-preset').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    var days = +b.getAttribute('data-days');
-    if (days === 0) { S.from = dateMin; S.to = dateMax; }
-    else {
-      // Anchor to the latest day we actually hold, not to today — the export
-      // can be a day or two behind and an empty chart looks like a bug.
-      S.to = dateMax;
-      var d = new Date(dateMax + 'T00:00:00Z');
-      d = new Date(d.getTime() - (days-1) * 86400000);
-      var f = d.toISOString().slice(0,10);
-      S.from = f < dateMin ? dateMin : f;
-    }
-    setPreset(days); syncDates(); render();
-  });
-
-  document.getElementById('f-metric').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    S.metric = b.getAttribute('data-metric');
-    document.querySelectorAll('#f-metric button').forEach(function(x){ x.classList.toggle('on', x === b); });
-    render();
-  });
-
-  document.getElementById('t-trend').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (!b) return;
-    S.trend = b.getAttribute('data-mode');
-    document.querySelectorAll('#t-trend button').forEach(function(x){ x.classList.toggle('on', x === b); });
-    render();
-  });
-
-  document.getElementById('f-clear').addEventListener('click', function(){
-    S.from = dateMin; S.to = dateMax;
-    S.platforms = new Set(platformList);
-    S.campaigns = new Set(campaignList);
-    S.events = new Set(eventList);
-    S.metric = 'conversions';
-    document.getElementById('f-platforms').innerHTML = chipHtml(platformList, S.platforms);
-    document.getElementById('f-campaigns').innerHTML = chipHtml(campaignList, S.campaigns);
-    document.querySelectorAll('#f-metric button').forEach(function(x){
-      x.classList.toggle('on', x.getAttribute('data-metric') === 'conversions');
-    });
-    paintEvents(); setPreset(0); syncDates(); render();
-  });
-
-  // ---------- boot ----------
-  var gen = D.generatedAt ? new Date(D.generatedAt) : null;
-  document.getElementById('badge-updated').textContent =
-    gen ? 'Updated ' + gen.toUTCString().replace(' GMT','') + ' UTC' : 'Update time unknown';
-
-  // Stale-data warning: the pull is 3-hourly, so half a day behind means something broke.
-  if (gen && (Date.now() - gen.getTime()) > 12 * 3600 * 1000) {
-    var w = document.createElement('div');
-    w.className = 'note-warn';
-    var hrs = Math.floor((Date.now() - gen.getTime()) / 3600000);
-    w.innerHTML = '<b>Data is ' + hrs + ' hours old.</b> The <b>ads-pull</b> Action runs every 3 hours \u2014 ' +
-                  'check its latest run in the Actions tab, and confirm the export sheet is still being written.';
-    var wrap = document.querySelector('.wrap');
-    wrap.insertBefore(w, wrap.firstChild);
-  }
-
-  renderNotes(allDaily);
+  buildCampChips();
   render();
 })();
 </script>
