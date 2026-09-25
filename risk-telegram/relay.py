@@ -214,7 +214,17 @@ def main():
         if file.stem in state["receipts"]:
             continue
         alert = decrypt_alert(json.loads(file.read_text()), private)
-        digest = validate_alert(alert, file.stem)
+        try:
+            digest = validate_alert(alert, file.stem)
+        except SafeError as error:
+            if str(error) != "invalid_campaign":
+                raise
+            state["receipts"][file.stem] = {
+                "status": "rejected_invalid_campaign",
+                "rejected_epoch": int(time.time()),
+            }
+            sha = save_state(state, sha)
+            continue
         sha = deliver(state, private, sha, digest, alert["text"])
     print("Telegram relay completed; see encrypted state and delivery receipts.")
 
