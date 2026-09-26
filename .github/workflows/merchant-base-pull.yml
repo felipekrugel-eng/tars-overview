@@ -103,6 +103,7 @@ jobs:
           git config user.name  "merchant-base-bot"
           git config user.email "merchant-base-bot@users.noreply.github.com"
           FILES="merchant-base-automation/data/q1_export.csv.gz
+                 merchant-base-automation/data/pull_status.json
                  merchant-base-automation/output/US_Merchant_Base_FULL.xlsx"
           # Stash our generated file(s) OUTSIDE the repo before touching git.
           mkdir -p "$RUNNER_TEMP/keep"
