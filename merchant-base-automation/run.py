@@ -26,6 +26,9 @@ Env:
 """
 
 import os
+import datetime
+import hashlib
+import json
 import pathlib
 import shutil
 import subprocess
@@ -45,6 +48,7 @@ OUT_DIR = pathlib.Path(os.environ.get("OUT_DIR", HERE / "output"))
 # untouched, so run.py decompresses to a working copy that is gitignored.
 CSV_GZ = DATA_DIR / "q1_export.csv.gz"      # committed
 CSV = DATA_DIR / "q1_export.csv"            # working copy, NOT committed
+PULL_STATUS = DATA_DIR / "pull_status.json"   # authoritative freshness evidence
 OUT_XLSX = OUT_DIR / NAME
 BUILD = HERE / "_build.xlsx"
 RECALC_DIR = HERE / "_recalc"
@@ -121,6 +125,39 @@ def soffice():
     sys.exit("no LibreOffice on PATH")
 
 
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def write_pull_status(row_count, source_pulled_at):
+    """Persist proof of a successful Snowflake pull, never of a fallback build."""
+    if source_pulled_at is not None:
+        source_pulled_at = (
+            source_pulled_at.isoformat()
+            if hasattr(source_pulled_at, "isoformat")
+            else str(source_pulled_at)
+        )
+        if not source_pulled_at.endswith(("Z", "+00:00")):
+            source_pulled_at += "Z"
+    status = {
+        "schema_version": 1,
+        "source": "snowflake_merchant_base",
+        "pull_succeeded": True,
+        "completed_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
+        "source_pulled_at_utc": source_pulled_at,
+        "row_count": row_count,
+        "sha256": {CSV_GZ.name: sha256_file(CSV_GZ)},
+    }
+    tmp = PULL_STATUS.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(status, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tmp.replace(PULL_STATUS)
+    print(f"  wrote {PULL_STATUS.name} freshness evidence at {status['completed_at_utc']}")
+
+
 def pull():
     """Run q1_base.sql and write data/q1_export.csv. Keeps the last good CSV on
     failure rather than publishing a truncated base."""
@@ -161,9 +198,13 @@ def pull():
     try:
         cur = conn.cursor()
         cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 3600")
+        cur.execute("ALTER SESSION SET USE_CACHED_RESULT = FALSE")
+        print("  Snowflake result cache disabled for freshness-critical pull")
         cur.execute(sql)
         cols = [d[0] for d in cur.description]
         n = 0
+        pulled_at_i = cols.index("PULLED_AT") if "PULLED_AT" in cols else None
+        source_pulled_at = None
         with open(tmp, "w", newline="", encoding="utf-8") as fh:
             w = _csv.writer(fh)
             w.writerow(cols)
@@ -173,6 +214,10 @@ def pull():
                     break
                 for row in batch:
                     w.writerow(["" if v is None else v for v in row])
+                    if pulled_at_i is not None and row[pulled_at_i] is not None:
+                        value = row[pulled_at_i]
+                        if source_pulled_at is None or value > source_pulled_at:
+                            source_pulled_at = value
                     n += 1
         print(f"  pulled {n:,} rows")
         if n < MIN_ROWS:
@@ -185,6 +230,7 @@ def pull():
         # byte-identical .gz and git sees no diff - otherwise the gzip header
         # timestamp would make every run look like a change and defeat the point.
         gzip_to(CSV, CSV_GZ)
+        write_pull_status(n, source_pulled_at)
         print(f"  compressed -> {CSV_GZ.name} "
               f"({CSV_GZ.stat().st_size / 1e6:.1f} MB, "
               f"{CSV_GZ.stat().st_size / CSV.stat().st_size:.1%} of plain)")
