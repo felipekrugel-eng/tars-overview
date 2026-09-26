@@ -28,11 +28,11 @@ window.MARGINS = {
       "items": [
         {
           "label": "        Interchange",
-          "value": 15651.4774
+          "value": 15651.4773
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 2346.3658
+          "value": 2346.3659
         },
         {
           "label": "        Amex Discount",
@@ -220,8 +220,8 @@ window.MARGINS = {
         "network": {
           "total": 19063.483,
           "items": [
-            15605.0525,
-            2323.2842,
+            15605.0524,
+            2323.2843,
             1135.1463
           ]
         },
