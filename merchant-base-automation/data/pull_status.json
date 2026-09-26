@@ -1,0 +1,11 @@
+{
+  "completed_at_utc": "2026-09-26T21:53:57.795523Z",
+  "pull_succeeded": true,
+  "row_count": 133742,
+  "schema_version": 1,
+  "sha256": {
+    "q1_export.csv.gz": "204e9ec8a4d956cf5682e482f6053b065d626bec23ea1b6dbcc70cc19538302c"
+  },
+  "source": "snowflake_merchant_base",
+  "source_pulled_at_utc": "2026-09-26T14:48:25.515000-07:00Z"
+}
