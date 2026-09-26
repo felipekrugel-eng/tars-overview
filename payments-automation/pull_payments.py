@@ -19,7 +19,7 @@ OPEN ITEM: role DATA_VIEWER must hold SELECT / IMPORTED PRIVILEGES on the Stripe
 GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659. Until that grant lands this pull
 raises on the sanity gate and the workflow leaves the last-good committed CSVs in place.
 """
-import os, csv, sys, pathlib
+import os, csv, sys, pathlib, json, datetime, hashlib
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
 
@@ -80,6 +80,52 @@ def write_csv(path, cols, rows):
     tmp.replace(path)
 
 
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def write_pull_status(cols, rows, transaction_count, icplus_count, platform_fee_count):
+    """Write small authoritative evidence for freshness monitors.
+
+    This file changes after every genuinely successful Snowflake pull. Fallback
+    rebuilds never touch it, so a green workbook build cannot masquerade as a
+    fresh extraction.
+    """
+    latest_created = None
+    if "CREATED_AT" in cols:
+        i = cols.index("CREATED_AT")
+        values = [row[i] for row in rows if row[i] is not None]
+        if values:
+            latest = max(values)
+            latest_created = latest.isoformat() if hasattr(latest, "isoformat") else str(latest)
+            if getattr(latest, "tzinfo", None) is None:
+                latest_created += "Z"
+
+    files = [DATA_DIR / OUT1, DATA_DIR / OUT2, DATA_DIR / OUT3]
+    status = {
+        "schema_version": 1,
+        "source": "snowflake_stripe_share",
+        "pull_succeeded": True,
+        "completed_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
+        "latest_charge_created_at_utc": latest_created,
+        "rows": {
+            "transactions": transaction_count,
+            "icplus_costs": icplus_count,
+            "platform_fees": platform_fee_count,
+        },
+        "sha256": {p.name: sha256_file(p) for p in files},
+    }
+    path = DATA_DIR / "pull_status.json"
+    tmp = path.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(status, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tmp.replace(path)
+    print(f"Wrote {path} freshness evidence at {status['completed_at_utc']}.")
+
+
 def main():
     print(f"SQL_DIR  = {SQL_DIR}")
     print(f"DATA_DIR = {DATA_DIR}")
@@ -87,6 +133,8 @@ def main():
     try:
         cur = conn.cursor()
         try:
+            cur.execute("ALTER SESSION SET USE_CACHED_RESULT = FALSE")
+            print("Snowflake result cache disabled for freshness-critical pull.")
             print(f"Running {Q1} ...")
             c1, r1 = run_query(cur, Q1)
             print(f"  transactions rows = {len(r1):,}  cols = {c1}")
@@ -132,6 +180,7 @@ def main():
     # platform_fees.csv is NOT gated: always (re)written, even when empty, so the header
     # is present and refresh_workbook sees a well-formed file (empty -> all buckets 0).
     write_csv(DATA_DIR / OUT3, c3 or PF_HEADER, r3)
+    write_pull_status(c1, r1, len(r1), len(r2), len(r3))
     print(f"Wrote {DATA_DIR / OUT1} ({len(r1):,} rows), "
           f"{DATA_DIR / OUT2} ({len(r2):,} rows), and "
           f"{DATA_DIR / OUT3} ({len(r3):,} rows).")
