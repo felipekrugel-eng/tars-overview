@@ -136,12 +136,13 @@ def sha256_file(path):
 def write_pull_status(row_count, source_pulled_at):
     """Persist proof of a successful Snowflake pull, never of a fallback build."""
     if source_pulled_at is not None:
+        original = source_pulled_at
         source_pulled_at = (
-            source_pulled_at.isoformat()
-            if hasattr(source_pulled_at, "isoformat")
-            else str(source_pulled_at)
+            original.isoformat()
+            if hasattr(original, "isoformat")
+            else str(original)
         )
-        if not source_pulled_at.endswith(("Z", "+00:00")):
+        if getattr(original, "tzinfo", None) is None:
             source_pulled_at += "Z"
     status = {
         "schema_version": 1,
