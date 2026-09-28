@@ -1,0 +1,116 @@
+# PUERTO RICO MERCHANT BASE — daily server-side rebuild of PR_Merchant_Base_FULL.xlsx.
+#
+# Twin of merchant-base-pull.yml (the US base). Same pipeline, three differences,
+# all documented in merchant-base-automation-pr/README.md:
+#   1. queries/q1_base.sql filters LOYVERSE_MERCHANTS.COUNTRY = 'PR'; Stripe accounts
+#      are read with COUNTRY IN ('US','PR') because Stripe files Puerto Rico under US.
+#   2. Name-only Stripe links require a PR address (first pull matched 8 US accounts).
+#   3. MIN_ROWS is 7,000 (PR base ~8.2k) and the funnel "Expected" column comes from
+#      the pull itself — there is no PR dashboard to reconcile against yet.
+#
+# 05:10 UTC: 30 minutes after merchant-base-pull (04:40) so the two base rebuilds
+# never share the warehouse, and clear of activated-payments (:30 every 3h),
+# payments-pull (:45 every 3h), CASE (06:00) and FACADASH (04:00).
+#
+# Isolated: only writes under merchant-base-automation-pr/, which no other workflow
+# touches. Uses the same SNOWFLAKE_PRIVATE_KEY secret as every other pull.
+name: merchant-base-pr-pull
+
+on:
+  schedule:
+    - cron: '10 5 * * *'
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - 'merchant-base-automation-pr/build_full_base.py'
+      - 'merchant-base-automation-pr/merchant_base_model.py'
+      - 'merchant-base-automation-pr/run.py'
+      - 'merchant-base-automation-pr/queries/**'
+
+concurrency:
+  group: merchant-base-pr-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install LibreOffice (headless recalc)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-calc
+
+      - name: Install Python deps
+        run: pip install -r merchant-base-automation-pr/requirements.txt
+
+      - name: Pull -> build -> model -> recalc -> verify -> publish
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          MIN_ROWS: "7000"
+          SQL_DIR:  ${{ github.workspace }}/merchant-base-automation-pr/queries
+          DATA_DIR: ${{ github.workspace }}/merchant-base-automation-pr/data
+          OUT_DIR:  ${{ github.workspace }}/merchant-base-automation-pr/output
+          # The previously published workbook is the ONLY source for the two things
+          # that cannot be regenerated: Margin Assumptions inputs Felipe edited in
+          # Excel, and hand-typed ACTION text.
+          TEMPLATE_PREV: ${{ github.workspace }}/merchant-base-automation-pr/output/PR_Merchant_Base_FULL.xlsx
+        run: python merchant-base-automation-pr/run.py
+
+      - name: Upload build artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-base-pr-build-debug
+          path: |
+            merchant-base-automation-pr/_build.xlsx
+            merchant-base-automation-pr/_recalc/**
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Commit & push if anything changed
+        run: |
+          set -euo pipefail
+          git config user.name  "merchant-base-pr-bot"
+          git config user.email "merchant-base-pr-bot@users.noreply.github.com"
+          FILES="merchant-base-automation-pr/data/q1_export.csv.gz
+                 merchant-base-automation-pr/output/PR_Merchant_Base_FULL.xlsx"
+          # Stash our generated file(s) OUTSIDE the repo before touching git.
+          mkdir -p "$RUNNER_TEMP/keep"
+          for f in $FILES; do cp "$f" "$RUNNER_TEMP/keep/$(basename "$f")"; done
+
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            # reset --HARD, never --soft: see merchant-base-pull.yml for the
+            # 2026-08-27 incident where a stale index deleted another bot's file.
+            git reset --hard -q origin/master
+            for f in $FILES; do
+              mkdir -p "$(dirname "$f")"
+              cp "$RUNNER_TEMP/keep/$(basename "$f")" "$f"
+            done
+            git add $FILES
+            if git diff --cached --quiet; then
+              echo "No change — nothing to commit."; exit 0
+            fi
+            git commit -q -m "chore(merchant-base-pr): rebuild $(date -u +%FT%TZ)"
+            if git push; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1
