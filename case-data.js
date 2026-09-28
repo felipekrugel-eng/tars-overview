@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-09-21",
+  "lastUpdated": "2026-09-28",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98447,7 +98447,7 @@ const CASE_DATA = {
           "type": "neg"
         },
         {
-          "label": "Receipts screen bugs",
+          "label": "Receipt customisation",
           "type": "neg"
         }
       ]
@@ -98533,7 +98533,7 @@ const CASE_DATA = {
     },
     {
       "name": "Reporting",
-      "mentions": 304,
+      "mentions": 305,
       "type": "pos",
       "key": "reporting"
     },
@@ -98565,7 +98565,7 @@ const CASE_DATA = {
         1034000,
         1071000,
         1093000,
-        1115000
+        1122000
       ]
     },
     "appStore": {
@@ -98576,7 +98576,7 @@ const CASE_DATA = {
         259000,
         271000,
         281000,
-        290000
+        292000
       ]
     }
   },
@@ -98586,13 +98586,25 @@ const CASE_DATA = {
         "author": "Martijn de Klerk",
         "country": "NL",
         "region": "europe",
-        "rating": 3,
+        "rating": 2,
         "date": "Sep 2026",
-        "sentiment": "neutral",
+        "sentiment": "negative",
         "themes": [
           "ease-of-use"
         ],
         "text": "You can't save to an existing open ticket (\"All predefined tickets are in use\"). People usually order first and only pick the payment method afterward — then it becomes clear they want to add to an open ticket. The Save button should allow saving new orders to existing open tickets, just like Move ticket does. Also don't see the new feature to group identical items in tickets anywhere, and there's no option for partial payments apart from splitting."
+      },
+      {
+        "author": "Siyathemba Sakele",
+        "country": "ZA",
+        "region": "africa",
+        "rating": 2,
+        "date": "Sep 2026",
+        "sentiment": "negative",
+        "themes": [
+          "reporting"
+        ],
+        "text": "Nice app, but I would like you to let us overwrite the Tax name on the receipt — e.g. show \"Card bank charges\" on the receipt instead of the tax name."
       },
       {
         "author": "Alessandro Buono",
@@ -98755,19 +98767,6 @@ const CASE_DATA = {
           "payment-integration"
         ],
         "text": "Android still missing EFTPOS integrations that iOS has had for months. Help docs reference old screens. Support replies feel copy-pasted."
-      },
-      {
-        "author": "SandwichUS",
-        "country": "US",
-        "region": "north_america",
-        "rating": 2,
-        "date": "Jul 2026",
-        "sentiment": "negative",
-        "themes": [
-          "payment-integration",
-          "customer-support"
-        ],
-        "text": "Add-on costs pile up when you need employee management and analytics. Payment processing fees not clear upfront. Waited 8 days for a support reply."
       }
     ],
     "appStore": [
