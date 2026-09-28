@@ -13,10 +13,9 @@
 # other workflow touches, so the rebase-retry push never conflicts with the CASE,
 # FACADASH (kpi), activation, or cusum pulls sharing this repo.
 #
-# OPEN ITEM: role DATA_VIEWER needs SELECT / IMPORTED PRIVILEGES on the Stripe share
-# GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659. Until that grant lands the
-# pull fails its <100-row sanity gate and run.py rebuilds from the last-good committed
-# CSVs (so the workbook still refreshes on schedule, just not with same-day data).
+# The risk monitor relies on the verified pull_status.json timestamp, not the
+# workbook's build or commit time. GitHub has missed scheduled triggers in this
+# repository; the cusum-pull completion heartbeat provides a second wake-up.
 name: payments-pull
 
 on:
@@ -34,6 +33,12 @@ on:
     # Note this run commits the full 11.7 MB workbook each time, which is a deliberate choice
     # to keep the downloadable file as fresh as the dashboard.
     - cron: '45 */3 * * *'
+  workflow_run:
+    # cusum-pull is also dispatched externally. It completes about every
+    # 10 minutes even when GitHub's scheduled payment pull is delayed.
+    # The gate below prevents an expensive rebuild on fresh data.
+    workflows: ["cusum-pull"]
+    types: [completed]
   workflow_dispatch: {}          # manual "Run workflow" button + Cowork trigger
   push:
     # First install / whenever the pipeline code changes: rebuild immediately so the
@@ -43,6 +48,7 @@ on:
       - 'payments-automation/pull_payments.py'
       - 'payments-automation/refresh_workbook.py'
       - 'payments-automation/run.py'
+      - 'payments-automation/check_pull_freshness.py'
       - 'payments-automation/queries/**'
 
 concurrency:
@@ -62,15 +68,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Check verified Snowflake pull age
+        id: gate
+        run: |
+          python payments-automation/check_pull_freshness.py \
+            --status payments-automation/data/pull_status.json \
+            --event "${{ github.event_name }}"
+
       - name: Install LibreOffice (headless recalc)
+        if: steps.gate.outputs.run == 'yes'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libreoffice-calc
 
       - name: Install Python deps
+        if: steps.gate.outputs.run == 'yes'
         run: pip install -r payments-automation/requirements.txt
 
       - name: Pull -> rebuild -> recalc -> verify
+        if: steps.gate.outputs.run == 'yes'
         env:
           # Only the private key is a secret (reused from the CASE/kpi pulls). The rest
           # are plain config, identical to kpi-pull.yml.
@@ -93,7 +109,7 @@ jobs:
       # + LibreOffice recalc output survive. Grab them so we can open the exact file the
       # runner produced and see the offending cells (also printed in the run log above).
       - name: Upload build artifacts on failure (for debugging)
-        if: failure()
+        if: failure() && steps.gate.outputs.run == 'yes'
         uses: actions/upload-artifact@v4
         with:
           name: payments-build-debug
@@ -104,6 +120,7 @@ jobs:
           retention-days: 7
 
       - name: Commit & push if the workbook (or CSVs) changed
+        if: steps.gate.outputs.run == 'yes'
         run: |
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
