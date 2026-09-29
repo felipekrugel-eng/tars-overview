@@ -1,5 +1,5 @@
 {
-  "completed_at_utc": "2026-09-29T10:25:39.729757Z",
+  "completed_at_utc": "2026-09-29T10:58:23.958559Z",
   "latest_charge_created_at_utc": "2026-09-29T05:35:45Z",
   "pull_succeeded": true,
   "rows": {
@@ -9,7 +9,7 @@
   },
   "schema_version": 1,
   "sha256": {
-    "icplus_costs.csv": "a82d5d3b7466323a598748e5275f01a0814d9adbf64164d180c96c8024a4bab3",
+    "icplus_costs.csv": "69cbf937b93934f37d36589344bb7a1b94ef1eae75609ab5baae1bc560453f9d",
     "platform_fees.csv": "68c0c752d3a3458e2001848cef58ffea5810619a3488d0e0b28cedf698c935f0",
     "transactions.csv": "caa00c98c138623d53a42ae625cda99768366b7630390d7a682c68e6920e7ba9"
   },
