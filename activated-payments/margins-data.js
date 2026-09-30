@@ -10,33 +10,33 @@ window.MARGINS = {
     "avgTicket": 26.2475636106861,
     "revenue": 23979.01,
     "takeRate": 0.0215033750303799,
-    "totalFees": 24412.9215,
-    "netMargin": -433.911499999998,
-    "netTakeRate": -0.000389113717142395,
-    "pctProfitable": 0.478498293515358,
-    "profitableTxns": 20329.0,
-    "unprofitableTxns": 22156.0,
-    "withActual": 41379.0,
-    "withEstimated": 1106.0,
+    "totalFees": 24583.3323,
+    "netMargin": -604.322300000004,
+    "netTakeRate": -0.000541931007832343,
+    "pctProfitable": 0.478027539131458,
+    "profitableTxns": 20309.0,
+    "unprofitableTxns": 22176.0,
+    "withActual": 41873.0,
+    "withEstimated": 612.0,
     "failed": 1175.0
   },
   "fees": {
-    "total": 24412.9215,
+    "total": 24583.3323,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 20746.5015,
+      "total": 20916.9123,
       "items": [
         {
           "label": "        Interchange",
-          "value": 17002.2506
+          "value": 17096.5826
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 2557.6187
+          "value": 2581.9654
         },
         {
           "label": "        Amex Discount",
-          "value": 1186.6322
+          "value": 1238.3643
         }
       ]
     },
@@ -205,24 +205,24 @@ window.MARGINS = {
         "avgTicket": 26.761195375269377,
         "revenue": 23746.68,
         "takeRate": 0.021736110633103857,
-        "totalFees": 24258.2548,
-        "netMargin": -511.5748,
-        "netTakeRate": -0.0004682610702178388,
-        "pctProfitable": 0.47121791103272587,
-        "profitableTxns": 19237,
-        "unprofitableTxns": 21587,
-        "withActual": 39751,
-        "withEstimated": 1073,
+        "totalFees": 24428.6656,
+        "netMargin": -681.9856,
+        "netTakeRate": -0.0006242436329118902,
+        "pctProfitable": 0.4707280031354105,
+        "profitableTxns": 19217,
+        "unprofitableTxns": 21607,
+        "withActual": 40245,
+        "withEstimated": 579,
         "failed": 1143
       },
       "fees": {
-        "total": 24258.2548,
+        "total": 24428.6656,
         "network": {
-          "total": 20666.2355,
+          "total": 20836.6463,
           "items": [
-            16949.7964,
-            2531.5634,
-            1184.8757
+            17044.1284,
+            2555.9101,
+            1236.6078
           ]
         },
         "stripe": {
