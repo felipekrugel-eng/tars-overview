@@ -10,9 +10,9 @@ window.MARGINS = {
     "avgTicket": 26.2964908703309,
     "revenue": 24374.95,
     "takeRate": 0.0214785397093766,
-    "totalFees": 25037.7737,
-    "netMargin": -662.823699999997,
-    "netTakeRate": -0.000584062127748604,
+    "totalFees": 25037.7739,
+    "netMargin": -662.823899999999,
+    "netTakeRate": -0.00058406230398314,
     "pctProfitable": 0.475716007044212,
     "profitableTxns": 20530.0,
     "unprofitableTxns": 22626.0,
@@ -21,10 +21,10 @@ window.MARGINS = {
     "failed": 1201.0
   },
   "fees": {
-    "total": 25037.7737,
+    "total": 25037.7739,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 21286.7637,
+      "total": 21286.7639,
       "items": [
         {
           "label": "        Interchange",
@@ -32,7 +32,7 @@ window.MARGINS = {
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 2627.4744
+          "value": 2627.4746
         },
         {
           "label": "        Amex Discount",
@@ -205,9 +205,9 @@ window.MARGINS = {
         "avgTicket": 26.822376689189152,
         "revenue": 24135.52,
         "takeRate": 0.021713991126505475,
-        "totalFees": 24879.2688,
-        "netMargin": -743.7488,
-        "netTakeRate": -0.0006691281093104728,
+        "totalFees": 24879.269,
+        "netMargin": -743.749,
+        "netTakeRate": -0.0006691282892443708,
         "pctProfitable": 0.4686534749034749,
         "profitableTxns": 19421,
         "unprofitableTxns": 22019,
@@ -216,12 +216,12 @@ window.MARGINS = {
         "failed": 1167
       },
       "fees": {
-        "total": 24879.2688,
+        "total": 24879.269,
         "network": {
-          "total": 21205.378,
+          "total": 21205.3782,
           "items": [
             17358.1245,
-            2601.0395,
+            2601.0397,
             1246.214
           ]
         },
