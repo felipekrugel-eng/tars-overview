@@ -424,6 +424,7 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
     data["byCountry"] = {}
     data["countrySplitNote"] = None
     data["byMonth"] = None
+    data["freePeriod"] = None
     if tx_path and ic_path:
         try:
             data["byCountry"] = margins_by_country(tx_path, ic_path, _num(C(16)) or 0.0)
@@ -459,6 +460,17 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
                               f"({drift:.4f}%) {flag}", flush=True)
             except Exception as e:
                 print(f"   WARNING — monthly margin series skipped: {e}", flush=True)
+            # The 15 free transacting days. Guarded like the two above — additive, and the
+            # page renders without it.
+            try:
+                from free_period import build as build_free
+                data["freePeriod"] = build_free(tx_path)
+                fp = data["freePeriod"]
+                print(f"   free period: {fp['freeTxns']:,} charges, ${fp['freeVolume']:,.0f} volume, "
+                      f"${fp['forgoneRevenue']:,.2f} forgone at an implied "
+                      f"{fp['impliedTakeRate']*100:.3f}% take rate", flush=True)
+            except Exception as e:
+                print(f"   WARNING — free-period counterfactual skipped: {e}", flush=True)
         except Exception as e:
             print(f"   !! country split skipped (non-fatal): {e}", file=sys.stderr, flush=True)
 

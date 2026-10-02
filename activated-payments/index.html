@@ -784,6 +784,17 @@
       <div class="ov-chips" id="mgMonthChips"></div>
       <span class="mg-fnote" id="mgMonthNote"></span>
     </div>
+    <!-- The 15 free transacting days. A toggle rather than a second table: it is the same
+         economics with one input changed, and showing both at once invites reading the
+         counterfactual as money we hold. -->
+    <div class="mg-filter" id="mgFreeWrap" style="display:none">
+      <span class="mg-flab">Free period</span>
+      <div class="ov-chips" id="mgFreeChips">
+        <button class="ov-chip on" data-free="billed">As billed</button>
+        <button class="ov-chip" data-free="excl">If we had charged</button>
+      </div>
+      <span class="mg-fnote" id="mgFreeNote"></span>
+    </div>
     <div class="ov-kpis" id="mgKpis"></div>
     <div class="ov-card full" style="margin-bottom:26px">
       <div class="ov-ctitle"><h2>Attached economics</h2><span class="tot" id="mgFeeTot">&nbsp;</span></div>
@@ -3307,6 +3318,21 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // month swaps in a slice run.py built from the same records and the same cost model, so
   // the months sum back to the all-months figure to the cent.
   var selMonth = null;
+  // 'billed' = exactly what we invoiced, the published figures. 'excl' = the same book with
+  // the 15 free transacting days priced at what those merchants would otherwise have paid.
+  var freeMode = 'billed';
+  // Forgone revenue for the current month/country selection. Returns 0 when the slice cannot
+  // be answered — the free-period model is merchant-and-month grained but NOT country
+  // grained, so a country selection falls back to "billed" rather than silently applying an
+  // all-countries number to one market.
+  function forgoneFor(){
+    var FP = ALLM && ALLM.freePeriod; if(!FP) return 0;
+    var F = window.LVCC;
+    if(F && !F.isAll()) return 0;                 // not modelled per country
+    if(selMonth) return (FP.byMonth && FP.byMonth[selMonth] ? FP.byMonth[selMonth].forgone : 0) || 0;
+    return FP.forgoneRevenue || 0;
+  }
+  function freeActive(){ return freeMode === 'excl' && forgoneFor() > 0; }
   function monthLabelShort(m){
     var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var pp=String(m).split('-'); return pp.length<2 ? m : mo[(+pp[1])-1]+' '+pp[0].slice(2);
@@ -3359,24 +3385,46 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // page is the workbook's own — exact, and unchanged from before the filter existed.
   // For a single country it swaps in that market's slice, which run.py builds from the SAME
   // records and the same per-charge cost model as the workbook, so the parts add up.
+  // Add back the forgone revenue. ONLY revenue moves: the charges happened either way, so
+  // volume, transaction count and every fee are untouched. That is what makes this a clean
+  // counterfactual rather than a re-forecast.
+  function applyFree(obj){
+    if(!obj || !freeActive()) return obj;
+    var add=forgoneFor(), k=obj.kpis||{}, f=obj.fees||{};
+    var network=Math.abs(num((f.network||{}).total)||0), stripe=Math.abs(num((f.stripe||{}).total)||0);
+    var revenue=(num(k.revenue)||0)+add;
+    var netRevenue=revenue-network, contribution=netRevenue-stripe;
+    var tpv=num(k.tpv)||0;
+    var k2={}; for(var p in k) k2[p]=k[p];
+    k2.revenue=revenue;
+    k2.takeRate= tpv? revenue/tpv : null;
+    k2.netRevenue=netRevenue;
+    k2.netRevenueTakeRate= tpv? netRevenue/tpv : null;
+    k2.netMargin=contribution;
+    k2.netTakeRate= tpv? contribution/tpv : null;
+    k2.contributionMarginPct= netRevenue>0 ? contribution/netRevenue : null;
+    return { updated:obj.updated, subtitle:obj.subtitle, notes:obj.notes,
+             kpis:k2, fees:f, extraFees:obj.extraFees, __free:add };
+  }
+
   function project(){
     var F=window.LVCC;
     // Month first: it is the narrower cut, and a month slice already carries its country.
     if(selMonth){
       var ser=monthSeries();
-      return monthProject(ser ? ser[selMonth] : null);
+      return applyFree(monthProject(ser ? ser[selMonth] : null));
     }
-    if(!F || F.isAll() || !ALLM) return ALLM;
+    if(!F || F.isAll() || !ALLM) return applyFree(ALLM);
     var c=(ALLM.byCountry||{})[F.cc];
     if(!c) return null;
-    return {
+    return applyFree({
       updated: ALLM.updated, subtitle: ALLM.subtitle, notes: ALLM.notes,
       kpis: c.kpis, fees: c.fees,
       // Deliberately empty: the platform fees that extraFees itemises are billed to the
       // Loyverse platform account with no merchant on them, so they cannot be listed per
       // market. They are inside the apportioned Stripe total, and the note says so.
       extraFees: []
-    };
+    });
   }
   function renderCcNote(missing){
     var el=document.getElementById('mgCcNote'); if(!el) return;
@@ -3467,6 +3515,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 
     if(M.notes && M.notes.settlement) setTxt('mgSettleNote', trim(M.notes.settlement));
     renderMonthChips();
+    renderFreeChips();
     renderTrends();
   }
 
@@ -3504,6 +3553,36 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     }
   }
 
+  // ---- free-period chips -----------------------------------------------------
+  function renderFreeChips(){
+    var wrap=document.getElementById('mgFreeWrap'); if(!wrap) return;
+    var FP=ALLM&&ALLM.freePeriod;
+    if(!FP||!FP.freeTxns){ wrap.style.display='none'; return; }
+    wrap.style.display='';
+    var host=document.getElementById('mgFreeChips');
+    Array.prototype.forEach.call(host.querySelectorAll('button'), function(b){
+      b.className='ov-chip'+(freeMode===b.getAttribute('data-free')?' on':'');
+      b.onclick=function(){ freeMode=b.getAttribute('data-free'); render(); };
+    });
+    var F=window.LVCC, perCountry=(F && !F.isAll());
+    var add=forgoneFor(), note=document.getElementById('mgFreeNote');
+    if(!note) return;
+    if(perCountry){
+      note.innerHTML='Not modelled per country \u2014 the free-period prices are per merchant, '
+                   + 'so this view is available for all countries only.';
+    } else if(freeMode==='excl'){
+      note.innerHTML='Adding back <b>'+fmtUsd(add)+'</b> of revenue we chose not to charge'
+                   + (selMonth?(' in '+monthLabelShort(selMonth)):'')
+                   + '. <b>A counterfactual, not money we can collect</b> \u2014 some of this volume '
+                   + 'exists only because it was free.';
+    } else {
+      note.innerHTML='Showing what we actually invoiced. '+fmtInt(FP.freeTxns)+' charges ('
+                   + fmtUsd0(FP.freeVolume)+', '
+                   + (FP.freeVolume && ALLM.kpis.tpv ? (FP.freeVolume/ALLM.kpis.tpv*100).toFixed(1) : '\u2014')
+                   + '% of all volume) earned no fee.';
+    }
+  }
+
   // ---- trend charts ----------------------------------------------------------
   var mgCharts={};
   function destroyCharts(){ Object.keys(mgCharts).forEach(function(k){ try{mgCharts[k].destroy();}catch(e){} }); mgCharts={}; }
@@ -3518,7 +3597,14 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 
     var labels=months.map(monthLabelShort);
     var unsettled=months.filter(function(m){ return ser[m].settled===false; });
-    var val=function(f){ return months.map(function(m){ var v=ser[m][f]; return v==null?null:v; }); };
+    // The charts follow the toggle too. Forgone revenue is per month, so each point is
+    // lifted by its OWN month rather than by a blended figure.
+    var FP=ALLM&&ALLM.freePeriod, lifting=(freeMode==='excl' && FP && (!window.LVCC||window.LVCC.isAll()));
+    var addFor=function(m){ return lifting && FP.byMonth && FP.byMonth[m] ? (FP.byMonth[m].forgone||0) : 0; };
+    var val=function(f){ return months.map(function(m){
+      var v=ser[m][f]; if(v==null) return null;
+      if(f==='netRevenue'||f==='netMargin'||f==='revenue') return +(v+addFor(m)).toFixed(2);
+      return v; }); };
     // Unsettled months are drawn hollow rather than omitted: the VOLUME is real even when the
     // cost has not landed, so hiding the bar would understate the business while showing it
     // solid would overstate the margin.
@@ -3546,7 +3632,9 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         // spanGaps:false on purpose — a month where net revenue was negative has NO defined
         // margin, and joining across it would draw a line through a number that does not exist.
         {type:'line',label:'Contribution margin',
-         data:months.map(function(m){ var v=ser[m].contributionMarginPct; return v==null?null:+(v*100).toFixed(1); }),
+         data:months.map(function(m){
+           var nr=ser[m].netRevenue+addFor(m), c=ser[m].netMargin+addFor(m);
+           return nr>0 ? +(c/nr*100).toFixed(1) : null; }),
          borderColor:'#1E9E5A',backgroundColor:'rgba(30,158,90,0.10)',borderWidth:2,
          pointRadius:3,tension:0.25,fill:true,spanGaps:false}
       ]},options:axis(function(v){ return v+'%'; })});
