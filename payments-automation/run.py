@@ -230,6 +230,142 @@ def margins_by_country(tx_path, ic_path, stripe_fees_total):
     return out
 
 
+
+def margins_by_month(tx_path, ic_path, stripe_fees_total):
+    """Monthly time series of the same KPIs, so the dashboard can filter by month and draw
+    how the economics actually moved.
+
+    SAME RECORDS, SAME COST MODEL as the Summary and as margins_by_country — it imports
+    refresh_workbook.build_data rather than reimplementing anything, so a month slice cannot
+    drift from the total by using a different definition of cost. Summing the months
+    reproduces the all-time figures.
+
+    KEYED BY (month, country) AND ROLLED UP, not two independent splits. The page lets a
+    reader pick a month and a country at the same time; if those were separate aggregations
+    the intersection would be unanswerable and the page would have to silently ignore one of
+    them. Cheap to do properly — this is a few hundred cells.
+
+    THE STRIPE CAVEAT IS THE SAME ONE, AND IT IS WORSE HERE. Stripe's platform fees come from
+    the PLATFORM account's balance transactions and carry no connected-account id, so they
+    cannot be attributed to a merchant, a country OR a month. They are apportioned pro-rata by
+    share of TPV. That makes contribution per month part-actual, part-apportioned: the SHAPE of
+    the series is trustworthy because network fees and revenue are exact per charge, but a
+    single month's contribution is not an actual. Flagged as stripeFeesBasis so the page can
+    say so rather than implying a precision the data has not got.
+    """
+    sys.path.insert(0, str(HERE))
+    from refresh_workbook import build_data
+    D = build_data(tx_path, ic_path)
+
+    tpv_total = sum(r["E"] for r in D["recs"] if r["J"] == "succeeded")
+
+    cells = {}
+    def slot(m, cc):
+        return cells.setdefault((m, cc), dict(
+            txns=0, tpv=0.0, revenue=0.0, interchange=0.0, cardScheme=0.0, amexDiscount=0.0,
+            profitableTxns=0, withActual=0, withEstimated=0, failed=0))
+
+    for r in D["recs"]:
+        month = (r.get("B") or "")[:7]
+        if not month:
+            continue                      # a charge with no date cannot sit on a time axis
+        o = slot(month, r.get("cc") or "ZZ")
+        if r["kind"] == "failed":
+            o["failed"] += 1
+            continue
+        if r["kind"] == "actual":
+            o["withActual"] += 1
+        elif r["kind"] == "est":
+            o["withEstimated"] += 1
+        if r["J"] != "succeeded":
+            continue
+        o["txns"] += 1
+        o["tpv"] += r["E"]
+        o["revenue"] += r["L"] or 0
+        o["interchange"]  += r.get("M") or 0
+        o["cardScheme"]   += r.get("N") or 0
+        o["amexDiscount"] += r.get("O") or 0
+        # Identical profitability test to the country split, rounding to 6dp for the same
+        # float reason documented there.
+        cost = (sum(r.get(k) or 0 for k in ("M", "N", "O", "Q", "R"))
+                if r["kind"] == "actual" else r.get("Tval"))
+        if cost is not None and round((r["L"] or 0) - cost, 6) > 0:
+            o["profitableTxns"] += 1
+
+    def pack(o):
+        network = o["interchange"] + o["cardScheme"] + o["amexDiscount"]
+        share = (o["tpv"] / tpv_total) if tpv_total else 0.0
+        stripe = (stripe_fees_total or 0.0) * share
+        # NET REVENUE — gross less the pass-through only. This is the number the page leads
+        # with now: network fees are collected for the card networks and were never ours, so
+        # gross against total cost makes a healthy book look like it loses money on every
+        # dollar. Contribution is then net revenue less Stripe, which IS our cost.
+        net_revenue = o["revenue"] - network
+        contribution = net_revenue - stripe
+        return {
+            "txns": o["txns"],
+            "tpv": round(o["tpv"], 2),
+            "avgTicket": (o["tpv"] / o["txns"]) if o["txns"] else None,
+            "revenue": round(o["revenue"], 2),
+            "takeRate": (o["revenue"] / o["tpv"]) if o["tpv"] else None,
+            "network": round(network, 4),
+            "interchange": round(o["interchange"], 4),
+            "cardScheme": round(o["cardScheme"], 4),
+            "amexDiscount": round(o["amexDiscount"], 4),
+            "stripe": round(stripe, 4),
+            "netRevenue": round(net_revenue, 4),
+            "netRevenueTakeRate": (net_revenue / o["tpv"]) if o["tpv"] else None,
+            "totalFees": round(network + stripe, 4),
+            "netMargin": round(contribution, 4),
+            "netTakeRate": (contribution / o["tpv"]) if o["tpv"] else None,
+            # UNDEFINED, NOT A BIG NUMBER, when net revenue is zero or negative. September
+            # 2026 has gross 10,479 against network fees of 11,478 — we charged merchants
+            # less than the networks charged us — so net revenue is -999 and contribution
+            # -3,109. Dividing those gives +311%, which would plot as a spectacular month.
+            # A margin on a negative base has no meaning; the honest answer is a gap in the
+            # line and a figure the reader has to look at.
+            "contributionMarginPct": ((contribution / net_revenue)
+                                      if net_revenue and net_revenue > 0 else None),
+            # SETTLEMENT. Network fees come from the IC+ cost feed, which lags the charge by
+            # weeks. A charge still settling carries a blended ESTIMATE that lands in neither
+            # the interchange/scheme/Amex breakdown nor the published fee total — exactly as
+            # the workbook treats it — so a month that is still settling shows too little
+            # cost and too much margin. October 2026 is the extreme case: 844 charges, every
+            # one unsettled, network fees of $0 and an apparent 83.5% contribution margin.
+            # Flagged rather than dropped: the volume is real even when the cost is not yet in.
+            "settledShare": (o["withActual"] / (o["withActual"] + o["withEstimated"]))
+                            if (o["withActual"] + o["withEstimated"]) else None,
+            "settled": bool((o["withActual"] + o["withEstimated"])
+                            and o["withActual"] / (o["withActual"] + o["withEstimated"]) >= 0.95
+                            and network > 0),
+            "pctProfitable": (o["profitableTxns"] / o["txns"]) if o["txns"] else None,
+            "profitableTxns": o["profitableTxns"],
+            "unprofitableTxns": o["txns"] - o["profitableTxns"],
+            "withActual": o["withActual"],
+            "withEstimated": o["withEstimated"],
+            "failed": o["failed"],
+            "stripeFeesBasis": "apportioned_by_tpv",
+        }
+
+    def merge(keys):
+        agg = dict(txns=0, tpv=0.0, revenue=0.0, interchange=0.0, cardScheme=0.0,
+                   amexDiscount=0.0, profitableTxns=0, withActual=0, withEstimated=0, failed=0)
+        for k in keys:
+            for f, v in cells[k].items():
+                agg[f] += v
+        return agg
+
+    months = sorted({m for (m, _) in cells})
+    ccs = sorted({cc for (_, cc) in cells})
+    out = {"months": months, "countries": ccs, "all": {}, "byCountry": {}}
+    for m in months:
+        out["all"][m] = pack(merge([k for k in cells if k[0] == m]))
+    for cc in ccs:
+        out["byCountry"][cc] = {m: pack(merge([(m, cc)]))
+                                for m in months if (m, cc) in cells}
+    return out
+
+
 def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
     """Serialize the workbook's Summary sheet into margins-data.js for the dashboard's
     'Summary of Margins' page. The dashboard mirrors the Summary tab exactly, so we read
@@ -287,6 +423,7 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
     # be able to stop margins-data.js being written, since the page worked without it.
     data["byCountry"] = {}
     data["countrySplitNote"] = None
+    data["byMonth"] = None
     if tx_path and ic_path:
         try:
             data["byCountry"] = margins_by_country(tx_path, ic_path, _num(C(16)) or 0.0)
@@ -298,6 +435,30 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
                 "view is exact.")
             ccs = {cc: v["kpis"]["txns"] for cc, v in data["byCountry"].items()}
             print(f"   country split: {ccs}", flush=True)
+            # Monthly series. Guarded separately from the country split so a failure in one
+            # cannot cost the other — both are additive, and the page renders without either.
+            try:
+                data["byMonth"] = margins_by_month(tx_path, ic_path, _num(C(16)) or 0.0)
+                mm = data["byMonth"]["months"]
+                print(f"   monthly series: {len(mm)} month(s) {mm[0] if mm else '-'}..{mm[-1] if mm else '-'}",
+                      flush=True)
+                # Reconciliation, printed every run: the months must sum back to the Summary
+                # the page has always published. A monthly chart that does not add up to the
+                # headline is worse than no chart.
+                st = data["byMonth"]["all"]
+                tot_txns = sum(v["txns"] for v in st.values())
+                tot_tpv = sum(v["tpv"] for v in st.values())
+                tot_rev = sum(v["revenue"] for v in st.values())
+                for label, got, want in (("txns", tot_txns, _num(C(5))),
+                                         ("tpv", tot_tpv, _num(C(6))),
+                                         ("revenue", tot_rev, _num(C(8)))):
+                    if want:
+                        drift = abs(got - want) / want * 100
+                        flag = "OK" if drift < 0.01 else "DRIFT"
+                        print(f"   month-sum {label}: {got:,.2f} vs Summary {want:,.2f} "
+                              f"({drift:.4f}%) {flag}", flush=True)
+            except Exception as e:
+                print(f"   WARNING — monthly margin series skipped: {e}", flush=True)
         except Exception as e:
             print(f"   !! country split skipped (non-fatal): {e}", file=sys.stderr, flush=True)
 

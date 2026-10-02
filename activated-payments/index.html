@@ -136,6 +136,15 @@
      hidden: an unmeasured stage is itself a finding, and dropping it would quietly
      redraw the funnel as though it began at KYC -- which is exactly the blind spot
      this strip exists to show. Hatched track = no number available. */
+  /* Month filter + trend charts on the margins page. */
+  .mg-filter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;}
+  .mg-flab{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--midgray);font-weight:bold;}
+  .mg-fnote{font-size:11.5px;color:var(--midgray);}
+  .mg-charts{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:860px){.mg-charts{grid-template-columns:1fr;}}
+  .mg-chart{min-width:0;}
+  .mg-chart-h{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--midgray);font-weight:bold;margin-bottom:8px;}
+  .mg-chart canvas{max-height:210px;}
   .pf-head,.pf-row{display:grid;grid-template-columns:186px 1fr 68px 84px 84px;align-items:center;gap:12px;}
   .pf-head{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--midgray);padding-bottom:5px;border-bottom:1px solid var(--silver);margin-bottom:8px;}
   .pf-head span:nth-child(n+3){text-align:right;}
@@ -767,12 +776,32 @@
     <!-- Filled when a single country is selected: Stripe's platform fees carry no merchant
          attribution, so a per-country net margin is an apportionment, not an actual. -->
     <div class="cc-note" id="mgCcNote" style="display:none"></div>
+    <!-- Month filter. Sits beside the country filter in the header, and the two combine:
+         run.py keys the series by (month, country) and rolls up, so picking both is a real
+         intersection rather than one control silently winning. -->
+    <div class="mg-filter" id="mgMonthWrap" style="display:none">
+      <span class="mg-flab">Month</span>
+      <div class="ov-chips" id="mgMonthChips"></div>
+      <span class="mg-fnote" id="mgMonthNote"></span>
+    </div>
     <div class="ov-kpis" id="mgKpis"></div>
     <div class="ov-card full" style="margin-bottom:26px">
-      <div class="ov-ctitle"><h2>Margin P&amp;L</h2><span class="tot" id="mgFeeTot">&nbsp;</span></div>
-      <p class="ov-cnote">Gross revenue less every fee Loyverse pays, over the reporting window. Network fees are pass-through (interchange, scheme, Amex); Stripe fees are Loyverse&rsquo;s platform cost &mdash; per-transaction charges plus payout, tap-to-pay and terminal fees, all in one bucket.</p>
+      <div class="ov-ctitle"><h2>Attached economics</h2><span class="tot" id="mgFeeTot">&nbsp;</span></div>
+      <p class="ov-cnote">What a dollar processed actually earns, over the reporting window. <b>Network fees</b> are pure pass-through &mdash; interchange, scheme and Amex &mdash; money that was never ours, so taking them off gross gives <b>net revenue</b>: the revenue Loyverse genuinely owns. <b>Stripe</b> is then a cost against that revenue, not a pass-through: per-transaction charges plus payout, tap-to-pay and terminal fees. What survives is <b>contribution</b>. Deliberately not called a P&amp;L &mdash; it carries no opex, headcount or overhead, and should not be read as one.</p>
       <div class="ov-tablewrap"><table class="ov-table" id="mgPnlTable"><tbody id="mgPnlBody"></tbody></table></div>
     </div>
+    <div class="ov-card full" id="mgTrendCard" style="margin-bottom:26px;display:none">
+      <div class="ov-ctitle"><h2>How the economics are moving</h2><span class="tot" id="mgTrendTot">&nbsp;</span></div>
+      <p class="ov-cnote" id="mgTrendNote"></p>
+      <div class="mg-charts">
+        <div class="mg-chart"><div class="mg-chart-h">Net revenue and contribution</div><canvas id="mgChRev"></canvas></div>
+        <div class="mg-chart"><div class="mg-chart-h">Contribution margin, % of net revenue</div><canvas id="mgChMargin"></canvas></div>
+        <div class="mg-chart"><div class="mg-chart-h">Volume processed (TPV)</div><canvas id="mgChTpv"></canvas></div>
+        <div class="mg-chart"><div class="mg-chart-h">Transactions</div><canvas id="mgChTxns"></canvas></div>
+      </div>
+      <p class="ov-tnote" id="mgTrendFoot" style="margin-top:12px"></p>
+    </div>
+
     <div class="ov-card full">
       <div class="ov-ctitle"><h2>Profitability of transactions</h2></div>
       <p class="ov-cnote" id="mgProfNote">How many charges cover their true cost, and how much of the cost base is measured vs. estimated.</p>
@@ -3273,6 +3302,44 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 // ===== Summary of Margins page (mirrors the workbook Summary tab) ==========
 (function(){
   var ALLM = window.MARGINS || null;   // blended workbook figures, exactly as before
+  // ---- Month filter ----------------------------------------------------------
+  // null = every month, which is the workbook Summary itself and therefore EXACT. Picking a
+  // month swaps in a slice run.py built from the same records and the same cost model, so
+  // the months sum back to the all-months figure to the cent.
+  var selMonth = null;
+  function monthLabelShort(m){
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var pp=String(m).split('-'); return pp.length<2 ? m : mo[(+pp[1])-1]+' '+pp[0].slice(2);
+  }
+  // The month series for whatever country is selected. Returns null when a country has no
+  // monthly breakdown, so the caller can fall back rather than render an empty axis.
+  function monthSeries(){
+    var B = ALLM && ALLM.byMonth; if(!B) return null;
+    var F = window.LVCC;
+    if(F && !F.isAll()) return (B.byCountry||{})[F.cc] || null;
+    return B.all || null;
+  }
+  // Shape a flat month cell into the {kpis, fees} the table renderer expects. Stripe's items
+  // are NOT itemised here: the platform fees carry no date, so they are apportioned as one
+  // number and splitting them per month would invent a precision that does not exist.
+  function monthProject(cell){
+    if(!cell) return null;
+    return {
+      updated: ALLM.updated, subtitle: ALLM.subtitle, notes: ALLM.notes,
+      kpis: cell,
+      fees: {
+        total: cell.totalFees,
+        network: {label:'Network fees (pass-through)', total: cell.network, items:[
+          {label:'Interchange', value: cell.interchange},
+          {label:'Card Scheme Fees', value: cell.cardScheme},
+          {label:'Amex Discount', value: cell.amexDiscount}
+        ]},
+        stripe: {label:'Stripe fees', total: cell.stripe, items: []}
+      },
+      extraFees: []
+    };
+  }
+
   var M = ALLM;                        // what render() reads — swapped per country selection
   var inited=false;
   function num(v){ return (v==null||v==='')?null:Number(v); }
@@ -3294,6 +3361,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // records and the same per-charge cost model as the workbook, so the parts add up.
   function project(){
     var F=window.LVCC;
+    // Month first: it is the narrower cut, and a month slice already carries its country.
+    if(selMonth){
+      var ser=monthSeries();
+      return monthProject(ser ? ser[selMonth] : null);
+    }
     if(!F || F.isAll() || !ALLM) return ALLM;
     var c=(ALLM.byCountry||{})[F.cc];
     if(!c) return null;
@@ -3332,6 +3404,9 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         // Clear the rest too — leaving the previous country's P&L on screen under a new
         // heading is worse than showing nothing.
         set('mgPnlBody',''); set('mgProfKpis',''); setTxt('mgFeeTot','\u00a0');
+        destroyCharts();
+        var tc=document.getElementById('mgTrendCard'); if(tc) tc.style.display='none';
+        renderMonthChips();
       }
       return;
     }
@@ -3344,7 +3419,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       kpi(fmtUsd0(k.tpv),'Total Volume Processed', fmtInt(k.txns)+' succeeded txns','accent')+
       kpi(fmtUsd0(k.revenue),'Gross Revenue', fmtPct(k.takeRate)+' effective take rate','accent')+
       kpi(fmtUsd0(k.totalFees),'True Cost', 'All network + platform fees')+
-      kpi(fmtUsd0(k.netMargin),'Net Margin', fmtPct(k.netTakeRate,3)+' net take rate', (num(k.netMargin)>=0?'green':''))
+      kpi(fmtUsd0(k.netMargin),'Contribution', fmtPct(k.netTakeRate,3)+' contribution take rate', (num(k.netMargin)>=0?'green':''))
     );
 
     // Margin P&L: gross revenue less network + Stripe fees -> net margin.
@@ -3361,12 +3436,26 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     rows+=grp('Network fees (pass-through)', net.total, net.items);
     // Merge Stripe's per-transaction items with the additional platform fees under Stripe fees.
     var stripeItems=(st.items||[]).concat(M.extraFees||[]);
+    // NET REVENUE — the subtotal the old layout was missing, and the reason it misled.
+    // Network fees are pass-through: that money is collected on behalf of the card networks
+    // and was never Loyverse revenue. Showing gross against total cost implied we earn
+    // $24,781 and spend $25,039, which reads as a business losing money on every dollar.
+    // What is actually true is that we own ~$3,494 of it and Stripe takes slightly more than
+    // that. Same arithmetic, completely different conclusion — hence the subtotal.
+    var netRevenue = (num(k.revenue)!=null && num(net.total)!=null)
+                     ? num(k.revenue) - Math.abs(num(net.total)) : null;
+    rows+='<tr style="border-top:1px solid var(--silver)"><td class="l" style="font-weight:bold">Net revenue</td>'+
+          '<td style="font-weight:bold">'+fmtUsd(netRevenue)+'</td></tr>';
+    // Net revenue take rate, on the same TPV base as the gross take rate above it, so the
+    // two are directly comparable.
+    var tpvBase = (num(k.takeRate) ? num(k.revenue)/num(k.takeRate) : null);
+    rows+='<tr><td class="l muted">Net revenue take rate</td><td class="muted">'+
+          (tpvBase ? fmtPct(netRevenue/tpvBase,3) : '\u2014')+'</td></tr>';
     rows+=grp('Stripe fees', st.total, stripeItems);
-    rows+='<tr style="border-top:1px solid var(--silver)"><td class="l" style="font-weight:bold">Total cost of payments</td><td style="font-weight:bold">'+negUsd(f.total)+'</td></tr>';
-    rows+='<tr style="border-top:2px solid var(--silver)"><td class="l" style="font-weight:bold">Net margin</td><td style="font-weight:bold;color:'+(num(k.netMargin)>=0?'var(--green)':'var(--red)')+'">'+fmtUsd(k.netMargin)+'</td></tr>';
-    rows+='<tr><td class="l muted">Net take rate</td><td class="muted">'+fmtPct(k.netTakeRate,3)+'</td></tr>';
+    rows+='<tr style="border-top:2px solid var(--silver)"><td class="l" style="font-weight:bold">Contribution</td><td style="font-weight:bold;color:'+(num(k.netMargin)>=0?'var(--green)':'var(--red)')+'">'+fmtUsd(k.netMargin)+'</td></tr>';
+    rows+='<tr><td class="l muted">Contribution take rate</td><td class="muted">'+fmtPct(k.netTakeRate,3)+'</td></tr>';
     set('mgPnlBody',rows);
-    setTxt('mgFeeTot', fmtUsd0(k.revenue)+' revenue \u2192 '+fmtUsd0(k.netMargin)+' margin');
+    setTxt('mgFeeTot', fmtUsd0(netRevenue)+' net revenue \u2192 '+fmtUsd0(k.netMargin)+' contribution');
 
     // Profitability KPIs
     set('mgProfKpis',
@@ -3377,6 +3466,113 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     );
 
     if(M.notes && M.notes.settlement) setTxt('mgSettleNote', trim(M.notes.settlement));
+    renderMonthChips();
+    renderTrends();
+  }
+
+  // ---- month chips -----------------------------------------------------------
+  function renderMonthChips(){
+    var wrap=document.getElementById('mgMonthWrap'), host=document.getElementById('mgMonthChips');
+    if(!wrap||!host) return;
+    var B=ALLM&&ALLM.byMonth;
+    if(!B||!B.months||!B.months.length){ wrap.style.display='none'; return; }
+    wrap.style.display='';
+    var ser=monthSeries()||{};
+    var html='<button class="ov-chip'+(selMonth?'':' on')+'" data-m="">All months</button>';
+    B.months.forEach(function(m){
+      // A month with no rows for the selected country is shown DISABLED rather than hidden,
+      // so the axis does not silently change shape when the country filter moves.
+      var has=!!ser[m];
+      html+='<button class="ov-chip'+(selMonth===m?' on':'')+'" data-m="'+m+'"'
+          + (has?'':' disabled style="opacity:.4;cursor:default"')
+          + (has&&ser[m].settled===false?' title="Still settling — cost incomplete"':'')
+          + '>'+monthLabelShort(m)+(has&&ser[m].settled===false?' *':'')+'</button>';
+    });
+    host.innerHTML=html;
+    Array.prototype.forEach.call(host.querySelectorAll('button'), function(b){
+      if(b.disabled) return;
+      b.onclick=function(){ selMonth = b.getAttribute('data-m') || null; render(); };
+    });
+    var note=document.getElementById('mgMonthNote');
+    if(note){
+      var cell=selMonth?(ser[selMonth]||null):null;
+      note.innerHTML = selMonth
+        ? (cell && cell.settled===false
+            ? '<b>'+monthLabelShort(selMonth)+' is still settling</b> — network costs have not all landed, so margin reads high.'
+            : 'Showing '+monthLabelShort(selMonth)+' only.')
+        : 'All months. This is the workbook Summary and is exact.';
+    }
+  }
+
+  // ---- trend charts ----------------------------------------------------------
+  var mgCharts={};
+  function destroyCharts(){ Object.keys(mgCharts).forEach(function(k){ try{mgCharts[k].destroy();}catch(e){} }); mgCharts={}; }
+  function renderTrends(){
+    var card=document.getElementById('mgTrendCard'); if(!card) return;
+    var ser=monthSeries(), B=ALLM&&ALLM.byMonth;
+    if(!ser||!B||typeof Chart==='undefined'){ card.style.display='none'; return; }
+    var months=B.months.filter(function(m){ return !!ser[m]; });
+    if(months.length<2){ card.style.display='none'; return; }   // two points is not a trend
+    card.style.display='';
+    destroyCharts();
+
+    var labels=months.map(monthLabelShort);
+    var unsettled=months.filter(function(m){ return ser[m].settled===false; });
+    var val=function(f){ return months.map(function(m){ var v=ser[m][f]; return v==null?null:v; }); };
+    // Unsettled months are drawn hollow rather than omitted: the VOLUME is real even when the
+    // cost has not landed, so hiding the bar would understate the business while showing it
+    // solid would overstate the margin.
+    var solid=function(colour,hollow){ return months.map(function(m){ return ser[m].settled===false?hollow:colour; }); };
+
+    var axis=function(fmt){ return {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{boxWidth:11,font:{size:10}}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:10}}},
+              y:{beginAtZero:false,grid:{color:'#F1F3F5'},ticks:{font:{size:10},callback:fmt}}}
+    };};
+    var usd=function(v){ return '$'+Number(v).toLocaleString('en-US',{maximumFractionDigits:0}); };
+
+    mgCharts.rev=new Chart(document.getElementById('mgChRev'),{
+      data:{labels:labels,datasets:[
+        {type:'bar',label:'Net revenue',data:val('netRevenue'),
+         backgroundColor:solid('#1D8FE1','rgba(29,143,225,0.35)'),order:2},
+        {type:'line',label:'Contribution',data:val('netMargin'),borderColor:'#1A1A1A',
+         backgroundColor:'#1A1A1A',borderWidth:2,pointRadius:2.5,tension:0.25,order:1}
+      ]},options:axis(usd)});
+
+    mgCharts.margin=new Chart(document.getElementById('mgChMargin'),{
+      data:{labels:labels,datasets:[
+        // spanGaps:false on purpose — a month where net revenue was negative has NO defined
+        // margin, and joining across it would draw a line through a number that does not exist.
+        {type:'line',label:'Contribution margin',
+         data:months.map(function(m){ var v=ser[m].contributionMarginPct; return v==null?null:+(v*100).toFixed(1); }),
+         borderColor:'#1E9E5A',backgroundColor:'rgba(30,158,90,0.10)',borderWidth:2,
+         pointRadius:3,tension:0.25,fill:true,spanGaps:false}
+      ]},options:axis(function(v){ return v+'%'; })});
+
+    mgCharts.tpv=new Chart(document.getElementById('mgChTpv'),{
+      data:{labels:labels,datasets:[
+        {type:'bar',label:'TPV',data:val('tpv'),
+         backgroundColor:solid('#1578C4','rgba(21,120,196,0.35)')}
+      ]},options:axis(usd)});
+
+    mgCharts.txns=new Chart(document.getElementById('mgChTxns'),{
+      data:{labels:labels,datasets:[
+        {type:'bar',label:'Transactions',data:val('txns'),
+         backgroundColor:solid('#8FC5EA','rgba(143,197,234,0.35)')}
+      ]},options:axis(function(v){ return Number(v).toLocaleString('en-US'); })});
+
+    var first=ser[months[0]], last=ser[months[months.length-1]];
+    setTxt('mgTrendTot', monthLabelShort(months[0])+' \u2192 '+monthLabelShort(months[months.length-1])
+           +' \u00b7 '+fmtUsd0(last.tpv)+' processed in the latest month');
+    set('mgTrendNote', esc(trim((ALLM&&ALLM.monthSeriesNote)||'')));
+    setTxt('mgTrendFoot', unsettled.length
+      ? ('Hollow bars ('+unsettled.map(monthLabelShort).join(', ')+') are still settling: the IC+ cost feed '
+         +'lags the charge by weeks, so their network cost is incomplete and their margin reads high. '
+         +'A gap in the margin line is a month where net revenue was negative — a margin on a negative '
+         +'base has no meaning, so none is drawn.')
+      : 'A gap in the margin line is a month where net revenue was negative \u2014 a margin on a negative base has no meaning, so none is drawn.');
   }
 
   window.__MARGINS_INIT=function(){ if(inited) return; inited=true; render(); };
