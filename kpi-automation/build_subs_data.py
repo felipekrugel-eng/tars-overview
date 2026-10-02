@@ -37,6 +37,7 @@ SUB_FLOW_CSV    = Path(os.environ.get("SUB_FLOW_CSV",    HERE / "work" / "subscr
 MERCHANT_FLOW_CSV = Path(os.environ.get("MERCHANT_FLOW_CSV", HERE / "work" / "merchant_subscription_flow.csv"))
 MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bottomup.csv"))
 COUNTRY_MONTH_CSV = Path(os.environ.get("COUNTRY_MONTH_CSV", HERE / "work" / "country_month_activity.csv"))
+FEED_HEALTH_CSV = Path(os.environ.get("FEED_HEALTH_CSV", HERE / "work" / "receipts_feed_health.csv"))
 KPI_DATA_JS     = Path(os.environ.get("KPI_DATA_JS",     HERE.parent / "KPI Dashboard v2 (Caio)" / "kpi-data.js"))
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
 OUT_FILE        = OUT_DIR / "subs-data.js"
@@ -80,6 +81,99 @@ def _load(path: Path, what: str) -> pd.DataFrame:
     return df
 
 
+
+# ── RECEIPTS FEED COMPLETENESS ──────────────────────────────────────────────────────────
+# A build that cannot tell SILENCE from ZERO will eventually publish a catastrophe. On
+# 2026-09-29 the receipts feed stopped mid-afternoon; every build afterwards read the empty
+# days as real and the dashboard showed qualified active merchants going 332,105 -> 76. It
+# stayed wrong for three days because nothing in the pipeline was asked to notice.
+#
+# The cross-check that already existed here could not have caught it. It compares this
+# file's 1+ active column against the activeMonthly series in kpi-data.js — but only for
+# months present in BOTH. October existed only here, so it was skipped exactly because it
+# was new, which is precisely when a month is most likely to be wrong. A guard that only
+# validates what another file already agrees with cannot catch a novel failure.
+#
+# So completeness is decided from the feed's own daily shape instead:
+#   * a day is COMPLETE if it carries at least HEALTHY_FRACTION of the trailing median of
+#     settled days. Proportional, not a fixed floor, so it survives the business growing.
+#   * the trailing median is taken from days that are themselves settled, so an outage
+#     cannot quietly lower the bar it is being judged against.
+#   * a month ships only if its LAST DAY is complete. Month grain alone would not have
+#     caught this: September was 97.8% complete when the feed died — invisible in a monthly
+#     total, still wrong.
+LAG_DAYS = 2            # the feed's own normal settling lag; today is never judged
+HEALTHY_FRACTION = 0.5  # a day under half the trailing median is not a quiet day, it is a gap
+# Beyond this many days with no complete day, the run goes red. Two days is the feed's own
+# normal settling lag, so 2 is "nothing is wrong yet" and anything past it is an incident.
+STALE_ALARM_DAYS = 2
+
+
+def feed_completeness(path: Path):
+    """Return (last_complete_day, health_dict). last_complete_day is None if unknowable."""
+    if not path.exists():
+        print(f"[subs] WARNING — no feed health file at {path}; completeness cannot be "
+              f"checked and months will be published unguarded", flush=True)
+        return None, {"checked": False,
+                      "note": "receipts_feed_health.sql did not run"}
+
+    fh = pd.read_csv(path)
+    fh.columns = [c.upper() for c in fh.columns]
+    fh["D"] = fh["D"].astype(str).str.slice(0, 10)
+    fh = fh[fh["D"] <= pd.Timestamp.utcnow().strftime("%Y-%m-%d")].sort_values("D")
+    if fh.empty:
+        return None, {"checked": False, "note": "feed health query returned no rows"}
+
+    days = fh.set_index("D")["RECEIPTS"].astype(float)
+    # Reference window: settled days only, and the most recent LAG_DAYS dropped outright.
+    settled = days.iloc[:-LAG_DAYS] if len(days) > LAG_DAYS else days
+    if settled.empty:
+        return None, {"checked": False, "note": "not enough settled days"}
+    ref = settled.iloc[-30:-3] if len(settled) > 30 else settled
+    median = float(ref.median()) if len(ref) else 0.0
+    floor = median * HEALTHY_FRACTION
+
+    # Walk back from the newest settled day to the last one that clears the floor.
+    last_complete = None
+    for d, n in settled.iloc[::-1].items():
+        if floor <= 0 or float(n) >= floor:
+            last_complete = d
+            break
+
+    # tz-naive on purpose: every date in this pipeline is a bare calendar day, and
+    # subtracting a tz-aware "now" from a naive date raises.
+    today = pd.Timestamp(pd.Timestamp.utcnow().strftime("%Y-%m-%d"))
+    stale_days = None
+    if last_complete:
+        stale_days = int((today - pd.Timestamp(last_complete)).days)
+
+    health = {
+        "checked": True,
+        "lastCompleteDay": last_complete,
+        "trailingMedianReceipts": int(median),
+        "floor": int(floor),
+        "staleDays": stale_days,
+        "recent": [{"d": d, "receipts": int(n),
+                    "complete": bool(floor <= 0 or float(n) >= floor)}
+                   for d, n in days.iloc[-10:].items()],
+    }
+    return last_complete, health
+
+
+def last_whole_month(last_complete_day: str) -> str:
+    """The newest calendar month the feed covers to its final day."""
+    d = pd.Timestamp(last_complete_day)
+    month_end = d + pd.offsets.MonthEnd(0)
+    if d >= month_end:
+        return d.strftime("%Y-%m")                      # the month closed and we have all of it
+    # Mid-month: the CURRENT month is unfinished, so the newest whole one is the previous.
+    # (Subtracting MonthBegin(1) is the obvious-looking way to write this and is wrong — from
+    # mid-month it lands on the first of the SAME month and would hand back an incomplete
+    # month as though it were whole. That is the exact class of bug this guard exists to stop,
+    # so it is worth the extra line to get right.)
+    return (d.to_period("M") - 1).strftime("%Y-%m")
+
+
 def main() -> None:
     feat = _load(MRR_FEATURE_CSV, "MRR by feature")
     flow = _load(SUB_FLOW_CSV, "subscription flow")
@@ -92,6 +186,34 @@ def main() -> None:
     # happened yet. The total-MRR build caps the same way; not capping here would draw a
     # cliff at the right-hand edge of the chart where the forward months thin out.
     cap = pd.Timestamp.utcnow().strftime("%Y-%m")
+
+    # ---- receipts feed completeness ---------------------------------------------------
+    # Decided before anything is built, because it changes what may be published. MRR and
+    # subscription flow come from Chargebee and are NOT affected by a receipts outage, so
+    # they keep the calendar cap; only the receipts-derived series get the stricter one.
+    last_complete_day, feed_health = feed_completeness(FEED_HEALTH_CSV)
+    receipts_cap = cap
+    feed_stale_fatal = False
+    if last_complete_day:
+        receipts_cap = last_whole_month(last_complete_day)
+        stale = feed_health.get("staleDays")
+        print(f"[subs] receipts feed complete through {last_complete_day} "
+              f"({stale} day(s) ago); receipts-derived months capped at {receipts_cap} "
+              f"(trailing median {feed_health['trailingMedianReceipts']:,}/day)", flush=True)
+        if receipts_cap < cap:
+            print(f"[subs] NOTE — {cap} is NOT fully covered by the feed and will be "
+                  f"withheld rather than drawn as a decline", flush=True)
+        # A feed that has been down for days is an incident, not a quiet patch. Fail the run
+        # so it goes red within hours. The alternative — quietly publishing a series that
+        # just stops — is what let the September outage run for three days.
+        if stale is not None and stale > STALE_ALARM_DAYS:
+            # NOTE THE ORDER: we do NOT bail out here. The file still gets written, with the
+            # incomplete months withheld, so the dashboard shows a series that simply ends
+            # at the last honest month instead of a cliff to near-zero. THEN the run fails,
+            # so somebody is told. Exiting early would leave the previously published —
+            # already broken — file in place, which is the worst of both worlds: wrong on
+            # screen and silent in the logs.
+            feed_stale_fatal = True
     feat = feat[feat["M"] <= cap]
     flow = flow[flow["M"] <= cap]
 
@@ -161,7 +283,14 @@ def main() -> None:
     if COUNTRY_MONTH_CSV.exists():
         cm = _load(COUNTRY_MONTH_CSV, "country x month activity")
         cm["M"] = cm["MONTH"].astype(str).str.slice(0, 7)
-        cm = cm[cm["M"] <= cap]
+        # receipts_cap, NOT cap: this frame is the receipts scan, and a month the feed does
+        # not cover to its final day is incomplete, not small.
+        before = sorted(cm["M"].unique())
+        cm = cm[cm["M"] <= receipts_cap]
+        dropped = [m for m in before if m > receipts_cap]
+        if dropped:
+            print(f"[subs] withheld {len(dropped)} incomplete month(s) from the receipts "
+                  f"series: {', '.join(dropped)}", flush=True)
 
         # FX coverage. A currency missing from the rate table contributes no money, and the
         # query returns how many receipts that affected so the gap is measurable.
@@ -294,6 +423,11 @@ def main() -> None:
         "mrr": mrr_cells,
         "flow": flow_cells,
         "merchantFlow": merchant_flow,
+        # Published so the page can SAY the feed is stale instead of drawing the gap as a
+        # decline. A dashboard that cannot explain its own last data point is how a feed
+        # outage becomes a business panic.
+        "feedHealth": {**feed_health, "stale": feed_stale_fatal},
+        "receiptsThrough": receipts_cap,
         "activeQualified": active_qualified,
         "countryMonth": country_month,
     }
@@ -339,6 +473,21 @@ def main() -> None:
           f"{len(features)} features, {len(months_mrr)} months")
     print(f"[subs] {latest}: ${tot_latest:,.0f} MRR — " +
           ", ".join(f"{s['l']} ${s['mrr']:,.0f}" for s in summary))
+
+    # The file is written and correct; now make the outage impossible to ignore. Everything
+    # above still shipped, so the dashboard is honest either way — this exists purely so the
+    # run goes red and somebody looks, instead of three more days passing.
+    if feed_stale_fatal:
+        print(f"\n[subs] FAILED — RECEIPTS FEED IS DOWN.\n"
+              f"        No complete day since {last_complete_day} "
+              f"({feed_health.get('staleDays')} days ago).\n"
+              f"        Receipts, active merchants, qualified-active and GTV are FROZEN at "
+              f"{receipts_cap}; incomplete months were withheld rather than drawn as a decline.\n"
+              f"        This is an UPSTREAM data-lake problem, not a dashboard one — check the "
+              f"receipts ingestion job.\n"
+              f"        subs-data.js WAS written, so the dashboard is showing the truth; this "
+              f"non-zero exit is the alarm.", file=sys.stderr)
+        sys.exit(3)
 
 
 if __name__ == "__main__":

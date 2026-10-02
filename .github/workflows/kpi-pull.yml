@@ -173,6 +173,21 @@ jobs:
       # Surface a partial run AFTER the data is safely committed. run.py exits 0 when a
       # DEGRADABLE query fails, so the commit above is never blocked; this step turns that
       # day red so it does not pass silently and go unnoticed for a week.
+      # Separate from the degraded check below, and deliberately so: a degraded query means
+      # WE could not read the lake, while this means the LAKE was not fed. The remedies are
+      # different — re-dispatching this workflow fixes the first and does nothing for the
+      # second — so they must not share one error message.
+      - name: Fail the run if the receipts feed is down
+        if: always() && steps.guard.outputs.skip != 'true' && steps.pull.outputs.feed_down == 'true'
+        run: |
+          echo "::error::RECEIPTS FEED IS DOWN — receipts, active merchants and GTV could not be refreshed"
+          echo "The receipts ingestion into LOYVERSE_DATA_LAKE has stopped delivering complete days."
+          echo "subs-data.js WAS committed, with the incomplete months withheld, so the dashboard"
+          echo "shows the series ending at the last complete month rather than collapsing to zero."
+          echo "Re-dispatching this workflow will NOT help: the fix is upstream, in the receipts"
+          echo "ingestion job. Check kpi-automation/sql/receipts_feed_health.sql output in the log."
+          exit 1
+
       - name: Fail the run if any query degraded
         if: always() && steps.guard.outputs.skip != 'true' && steps.pull.outputs.degraded != ''
         run: |

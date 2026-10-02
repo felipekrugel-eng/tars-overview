@@ -66,6 +66,12 @@ MERCHANT_FLOW_SQL = "merchant_subscription_flow_monthly.sql"
 # is killed by the job budget, subs-data.js still gets its MRR and flow sections and only the
 # Qualified toggle goes missing.
 COUNTRY_MONTH_SQL = "country_month_activity.sql"
+# Cheap daily receipts count (sub-second: the date floor prunes micro-partitions). Its only
+# job is to let the build tell a DEAD FEED from a QUIET MONTH — see receipts_feed_health.sql.
+FEED_HEALTH_SQL = "receipts_feed_health.sql"
+# Set when the feed-health guard fires. Collected rather than raised on the spot so the rest
+# of the run still completes and publishes — the alarm is raised at the very end.
+FEED_DOWN: list = []
 
 # ---------------------------------------------------------------------------
 # FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
@@ -362,6 +368,16 @@ def main():
             write(flow_csv, _run(SUB_FLOW_SQL))
             mflow_csv = WORK / "merchant_subscription_flow.csv"
             write(mflow_csv, _run(MERCHANT_FLOW_SQL))
+            # Feed health FIRST, and outside the try that guards the big scan. It costs
+            # nothing and it must be available even when the expensive query fails — those
+            # are exactly the runs where the data is most likely to be wrong.
+            health_csv = WORK / "receipts_feed_health.csv"
+            try:
+                print("[subs] receipts_feed_health (freshness probe)", flush=True)
+                write(health_csv, _run(FEED_HEALTH_SQL))
+            except Exception as e:
+                print(f"[subs] WARNING — feed health probe failed: {e}", flush=True)
+
             cmonth_csv = WORK / "country_month_activity.csv"
             try:
                 cur = sconn.cursor()
@@ -378,11 +394,24 @@ def main():
                 "SUB_FLOW_CSV": str(flow_csv),
                 "MERCHANT_FLOW_CSV": str(mflow_csv),
                 "COUNTRY_MONTH_CSV": str(cmonth_csv),
+                "FEED_HEALTH_CSV": str(health_csv),
                 "KPI_DATA_JS": str(V2 / "kpi-data.js"),
                 "MRR_TOTAL_CSV": str(WORK / "mrr_bottomup.csv"),
                 "SUBS_OUT_DIR": str(V2)}
-        subprocess.run([sys.executable, str(HERE / "build_subs_data.py")], check=True, env=senv)
-        print("[done] subs-data.js regenerated", flush=True)
+        # Exit code 3 is reserved by build_subs_data.py for "the receipts feed is down".
+        # It is NOT a build failure — the file was written correctly — so it must not be
+        # swallowed by the warning below, which exists to stop a new query breaking the
+        # critical deliverables. A dead upstream feed is the one thing here that has to
+        # reach a human, so it is re-raised and fails the run.
+        rc = subprocess.run([sys.executable, str(HERE / "build_subs_data.py")], env=senv).returncode
+        if rc == 3:
+            FEED_DOWN.append(True)
+            print("[subs] subs-data.js regenerated WITH the incomplete months withheld, "
+                  "but THE RECEIPTS FEED IS DOWN", flush=True)
+        elif rc != 0:
+            raise RuntimeError(f"build_subs_data.py exited {rc}")
+        else:
+            print("[done] subs-data.js regenerated", flush=True)
     except Exception as e:
         print(f"[subs] WARNING — subscription detail skipped this run: {e}", flush=True)
 
@@ -460,10 +489,22 @@ def main():
         print("[degraded] Everything else is fresh and committed. Re-dispatch kpi-pull to "
               "backfill — the as-of snapshot window spans ~70 days, so a later run fills "
               "the gap retroactively.", flush=True)
+    # A dead receipts feed is reported the SAME WAY a degraded query is, and for the same
+    # reason: commit first, go red afterwards. Exiting non-zero here would abort before the
+    # commit and leave the OLD, broken subs-data.js live — the exact failure this guard
+    # exists to prevent. The corrected file must ship; the alarm comes after.
+    if FEED_DOWN:
+        print("\n[feed] RECEIPTS FEED IS DOWN — receipts, active merchants, qualified-active "
+              "and GTV were withheld for months the feed does not cover. The dashboard will "
+              "show the series ending at the last complete month instead of falling to zero. "
+              "This is an upstream data-lake problem: check the receipts ingestion job.",
+              flush=True)
+
     gh_out = os.environ.get("GITHUB_OUTPUT")
     if gh_out:
         with open(gh_out, "a") as fh:
             fh.write(f"degraded={','.join(degraded)}\n")
+            fh.write(f"feed_down={'true' if FEED_DOWN else ''}\n")
 
 
 if __name__ == "__main__":

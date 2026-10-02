@@ -224,6 +224,13 @@
   <span class="badge" id="status-badge"></span>
 </div>
 
+<!-- Receipts feed health. Rendered only when the feed is behind — a banner that is always
+     there stops being read. This exists because on 2026-09-29 the feed stopped and the page
+     drew the gap as a collapse from 332,105 qualified active merchants to 76, and kept
+     drawing it for three days. A chart that cannot explain its own last data point turns a
+     pipeline outage into a business panic. -->
+<div id="feed-banner" style="display:none"></div>
+
 <div class="wrap">
 
   <div class="section-label">00</div>
@@ -2072,5 +2079,37 @@ document.getElementById('foot-source').textContent = D.meta.source;
 document.getElementById('foot-gen').textContent = D.meta.generatedAt;
 </script>
 <script src="facachat-widget.js"></script>
+<script>
+(function () {
+  var S = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
+  var h = S && S.feedHealth;
+  if (!h) return;
+  var el = document.getElementById('feed-banner');
+  if (!el) return;
+
+  // Three states, and only two of them say anything. "checked:false" means the probe itself
+  // did not run, which is NOT the same as healthy and must not be silently treated as such.
+  var msg = null, tone = '#E8A317', bg = '#FFF6E5', fg = '#7a5a12';
+  if (h.checked === false) {
+    msg = '<b>Receipts feed health unknown.</b> The freshness probe did not run this build, so '
+        + 'receipts, active merchants and GTV could not be verified as complete. Treat the most '
+        + 'recent months with caution.';
+  } else if (h.stale) {
+    tone = '#D2495B'; bg = '#FBE7EB'; fg = '#8d2435';
+    msg = '<b>The receipts feed is down.</b> No complete day since <b>' + h.lastCompleteDay + '</b>'
+        + (h.staleDays != null ? ' (' + h.staleDays + ' days ago)' : '') + '. '
+        + 'Receipts, active merchants, qualified-active and GTV are shown only through <b>'
+        + (S.receiptsThrough || '—') + '</b> — later months are withheld rather than drawn as a '
+        + 'decline, so the series ending is a GAP, not a fall. Subscriptions, MRR and churn come '
+        + 'from Chargebee and are unaffected. This is an upstream data-lake issue: the receipts '
+        + 'ingestion job needs fixing.';
+  }
+  if (!msg) return;
+  el.style.display = 'block';
+  el.innerHTML = '<div style="max-width:1280px;margin:0 auto;padding:12px 24px">'
+    + '<div style="background:' + bg + ';border-left:4px solid ' + tone + ';border-radius:6px;'
+    + 'padding:11px 15px;font-size:12.5px;line-height:1.6;color:' + fg + '">' + msg + '</div></div>';
+})();
+</script>
 </body>
 </html>
