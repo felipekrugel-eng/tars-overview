@@ -21,8 +21,8 @@
 // __FUNNEL_BASES / __FUNNEL_BASES_MONTHLY still hold the US series unchanged, so anything
 // that read this file before the UK launch reads exactly the same numbers it read then.
 // Bots removed via documented US business-name fraud signatures (Second Brain: US Registration Bot).
-// Do NOT edit by hand; overwritten each morning. Last pull: 2026-10-03 13:08 UTC
-window.__FUNNEL_UPDATED = "2026-10-03 13:08 UTC";
+// Do NOT edit by hand; overwritten each morning. Last pull: 2026-10-03 13:25 UTC
+window.__FUNNEL_UPDATED = "2026-10-03 13:25 UTC";
 window.__FUNNEL_STAGES = {"entered":8250,"signed_up":1287,"enabled":421,"transacting":130};
 window.__FUNNEL_STAGES_BY = {"US":{"entered":6709,"signed_up":1254,"enabled":417,"transacting":128},"GB":{"entered":1540,"signed_up":32,"enabled":3,"transacting":1},"NL":{"entered":1,"signed_up":1,"enabled":1,"transacting":1}};
 window.__FUNNEL_ENTERED_TOTAL = 8250;
