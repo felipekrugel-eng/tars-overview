@@ -11,8 +11,8 @@ window.MARGINS = {
     "revenue": 25804.75,
     "takeRate": 0.0215081863050562,
     "totalFees": 25972.5284,
-    "netMargin": -167.778399999996,
-    "netTakeRate": -0.000139842822936248,
+    "netMargin": -167.778399999999,
+    "netTakeRate": -0.000139842822936251,
     "pctProfitable": 0.480214326496552,
     "profitableTxns": 21868.0,
     "unprofitableTxns": 23670.0,
@@ -28,11 +28,11 @@ window.MARGINS = {
       "items": [
         {
           "label": "        Interchange",
-          "value": 17804.9142
+          "value": 17804.9143
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 2718.0941
+          "value": 2718.094
         },
         {
           "label": "        Amex Discount",
@@ -207,7 +207,7 @@ window.MARGINS = {
         "takeRate": 0.021754682990352586,
         "totalFees": 25798.1055,
         "netMargin": -255.9855,
-        "netTakeRate": -0.00021802747104119997,
+        "netTakeRate": -0.00021802747104119688,
         "pctProfitable": 0.47414247416538735,
         "profitableTxns": 20693,
         "unprofitableTxns": 22950,
@@ -220,8 +220,8 @@ window.MARGINS = {
         "network": {
           "total": 21731.6118,
           "items": [
-            17749.0292,
-            2690.209,
+            17749.0293,
+            2690.2089,
             1292.3736
           ]
         },
@@ -346,8 +346,8 @@ window.MARGINS = {
         "revenue": 2816.76,
         "takeRate": 0.028335587530675558,
         "network": 2241.0084,
-        "interchange": 1867.8959,
-        "cardScheme": 255.6067,
+        "interchange": 1867.896,
+        "cardScheme": 255.6066,
         "amexDiscount": 117.5058,
         "stripe": 344.2972,
         "netRevenue": 575.7516,
@@ -731,8 +731,8 @@ window.MARGINS = {
           "revenue": 2816.38,
           "takeRate": 0.02833384557421359,
           "network": 2240.5566,
-          "interchange": 1867.8959,
-          "cardScheme": 255.1799,
+          "interchange": 1867.896,
+          "cardScheme": 255.1798,
           "amexDiscount": 117.4808,
           "stripe": 344.272,
           "netRevenue": 575.8234,
