@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-03T08:33:23.879Z",
+  "ranAt": "2026-10-03T09:42:39.480Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1071,7 +1071,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9784384024
+        "rows": 9784858188
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -1983,29 +1983,29 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 2031,
-        "SHIPPING_ADDRESS_STATE": "NC",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "28088",
-        "BATCH_TIMESTAMP": "2026-10-03 03:00:00.000",
-        "SHIPPING_COMPANY": "Polished Chaos with Melissa",
-        "SHIPPING_ADDRESS_LINE1": "203 English Oak Lane",
-        "AMOUNT": 31044,
-        "SHIPPING_AMOUNT": 3000,
+        "TAX": 412,
+        "SHIPPING_ADDRESS_STATE": "MO",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "64064",
+        "BATCH_TIMESTAMP": "2026-10-03 06:00:00.000",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_ADDRESS_LINE1": "1624 NE DALTONS RIDGE DR",
+        "AMOUNT": 7612,
+        "SHIPPING_AMOUNT": 1300,
         "SHIPPING_CURRENCY": "usd",
         "PO_NUMBER": null,
-        "ID": "thor_1ULqbj7e4AMQfKY384HCEcHK",
+        "ID": "thor_1UMKcb7e4AMQfKY3OVeKoeGV",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-10-03 02:16:39.000",
-        "SHIPPING_NAME": "Melissa Acla",
-        "SHIPPING_METHOD_NAME": "express",
-        "STATUS": "shipped",
+        "UPDATED": "2026-10-03 05:02:36.000",
+        "SHIPPING_NAME": "Bre Keith",
+        "SHIPPING_METHOD_NAME": "standard",
+        "STATUS": "ready_to_ship",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Landis",
-        "SHIPPING_PHONE": "17047065344",
+        "SHIPPING_ADDRESS_CITY": "Lees Summit",
+        "SHIPPING_PHONE": "18167665327",
         "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "melissaacla@gmail.com",
+        "SHIPPING_EMAIL": "ezekitostaqueria@gmail.com",
         "LIVEMODE": true,
-        "CREATED": "2026-10-01 20:29:35.000",
+        "CREATED": "2026-10-03 04:32:29.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
       },
       {
@@ -2201,16 +2201,16 @@
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1ULqbj7e4AMQfKY384HCEcHK",
-        "BATCH_TIMESTAMP": "2026-10-03 03:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UMKcb7e4AMQfKY3OVeKoeGV",
+        "BATCH_TIMESTAMP": "2026-10-03 06:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
+        "AMOUNT": 5900,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       },
       {
