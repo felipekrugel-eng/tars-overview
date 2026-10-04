@@ -106,6 +106,12 @@ jobs:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: node activated-payments/pull.js
 
+      - name: Verify report registration source
+        if: steps.gate.outputs.run == 'yes'
+        run: |
+          node -e "const f=require('./activated-payments/registration-daily.json'); if(f.schema_version!==1 || f.timezone!=='Europe/London' || !f.generated_at || !f.days || !Object.keys(f.days).length) process.exit(1); for(const d of Object.values(f.days)) if(d.total!==Object.values(d.by_country).reduce((a,b)=>a+b,0)) process.exit(1);"
+          test -s activated-payments/funnel-data.js
+
       # ── Attachment rate ────────────────────────────────────────────────────────
       # Of the money crossing these merchants' tills, how much comes through Loyverse
       # Payments. GUARDED and non-fatal, on the same rule as every other addition here: the
@@ -144,7 +150,7 @@ jobs:
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
           # Only the generated data + discovery artifact — never the dashboard source.
-          git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
+          git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/registration-daily.json activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
           if git diff --cached --quiet; then
             echo "No data change — nothing to commit."
           else
@@ -161,7 +167,7 @@ jobs:
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
               git reset -q --mixed origin/master
-              git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
+              git add activated-payments/attach-data.js activated-payments/activation-data.js activated-payments/overview-data.js activated-payments/funnel-data.js activated-payments/registration-daily.json activated-payments/report-data.js activated-payments/profile-data.js activated-payments/_discovery.json "KPI Dashboard v2 (Caio)/payments-cohort.json"
               if git diff --cached --quiet; then
                 echo "Remote already has this data — nothing to push."; exit 0
               fi
