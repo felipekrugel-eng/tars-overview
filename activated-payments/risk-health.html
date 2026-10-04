@@ -50,7 +50,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 .tablewrap{overflow-x:auto}.merchant-table{width:100%;border-collapse:collapse;font-size:13px}
 .merchant-table th{text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--border)}
 .merchant-table td{padding:11px 10px;border-bottom:1px solid #F1F4F8;vertical-align:middle}
-.merchant-table tr{cursor:pointer}.merchant-table tbody tr:hover{background:#F7FAFD}
+.merchant-table tr{cursor:default}.merchant-table tbody tr{cursor:pointer}.merchant-table tbody tr:hover{background:#F7FAFD}
 .scorepill{display:inline-flex;align-items:center;gap:7px;font-weight:bold}.dot{width:9px;height:9px;border-radius:50%}
 .badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:bold;letter-spacing:.3px}
 .b-low{background:#EAF7F1;color:#177850}.b-moderate{background:#FFF7DE;color:#936400}.b-review{background:#FFF0E3;color:#A84D16}.b-high{background:#FDECEE;color:#A22D3C}.b-very-high{background:#F8E3E6;color:#7C1825}
@@ -129,7 +129,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 
   <div class="panel">
     <h2>Merchant risk queue.</h2>
-    <p class="ph">Click any merchant to open the full weighted score, verified facts, unresolved claims, contradictions and evidence required.</p>
+    <p class="ph">Double-click any merchant to open the full weighted score, graph, verified facts, unresolved claims, contradictions and evidence required.</p>
     <div class="filters">
       <input id="search" placeholder="Search merchant, representative, location, email…">
       <select id="bandFilter"><option value="">All risk bands</option></select>
@@ -139,12 +139,6 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       <thead><tr><th>Merchant</th><th>Trust score</th><th>Risk band</th><th>Location</th><th>Representative</th><th>Recommended action</th></tr></thead>
       <tbody id="tbody"></tbody>
     </table></div>
-  </div>
-
-  <div class="panel">
-    <h2>Recently reviewed.</h2>
-    <p class="ph">Fast visual scan of the most recent merchant legitimacy evaluations.</p>
-    <div class="cardgrid" id="cards"></div>
   </div>
 </div>
 
@@ -159,6 +153,11 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       <div class="panel" style="margin:0 0 18px;padding:18px">
         <h2>Weighted score breakdown.</h2><p class="ph">Hard-to-fake external evidence carries the most weight. Website polish alone carries little weight.</p>
         <div class="scorebars" id="scorebars"></div>
+      </div>
+      <div class="panel" style="margin:0 0 18px;padding:18px">
+        <h2>Fraud health graph.</h2>
+        <p class="ph">Category score as a percentage of the available points in each weighted component.</p>
+        <div id="riskgraph" style="height:220px;display:flex;align-items:flex-end;gap:14px;padding:12px 8px 4px;border-bottom:1px solid #E3E9F0"></div>
       </div>
       <div class="threecols">
         <div class="signalbox"><h3>✓ Verified</h3><ul id="verified"></ul></div>
@@ -222,11 +221,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   function renderTable(){
     var arr=filterMerchants();
     $('tbody').innerHTML=arr.map(function(m){var b=bandFor(m.score);return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>'}).join('');
-    Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.onclick=function(){openMerchant(tr.getAttribute('data-id'))}});
-  }
-  function renderCards(){
-    $('cards').innerHTML=merchants.slice().sort(function(a,b){return (b.reviewedAt||'').localeCompare(a.reviewedAt||'')}).map(function(m){var b=bandFor(m.score);return '<div class="mcard" data-id="'+m.id+'"><div class="name">'+esc(m.name)+'</div><div class="meta">'+esc(m.location||'')+' · '+esc(m.representative||'')+'</div><div class="gauge-wrap">'+gauge(m.score)+'</div><div class="statusline" style="color:'+bandColors[b.level]+'">'+esc(b.label)+'</div></div>'}).join('');
-    Array.prototype.forEach.call(document.querySelectorAll('.mcard'),function(el){el.onclick=function(){openMerchant(el.getAttribute('data-id'))}});
+    Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.ondblclick=function(){openMerchant(tr.getAttribute('data-id'))}});
   }
   function openMerchant(id){
     var m=merchants.find(function(x){return x.id===id});if(!m)return;var b=bandFor(m.score);
@@ -235,6 +230,10 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     $('daction').textContent=m.action||'—';$('dsummary').textContent=m.summary||'';
     $('scorebars').innerHTML=weights.map(function(w){var s=(m.scores||{})[w.key]||0,p=w.max?100*s/w.max:0;return '<div class="scorebarrow"><div>'+esc(w.label)+'</div><div class="track"><div class="fill" style="width:'+p+'%;background:'+bandColors[b.level]+'"></div></div><div style="text-align:right;font-weight:bold">'+s+' / '+w.max+'</div></div>'}).join('');
     $('verified').innerHTML=listHtml(m.verified);$('unverified').innerHTML=listHtml(m.unverified);$('contradictions').innerHTML=listHtml(m.contradictions);$('needed').innerHTML=listHtml(m.evidenceNeeded);
+    $('riskgraph').innerHTML=weights.map(function(w){
+      var s=(m.scores||{})[w.key]||0, p=w.max?Math.round(100*s/w.max):0;
+      return '<div style="flex:1;min-width:46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px"><div style="font-size:10px;font-weight:bold">'+p+'%</div><div style="width:70%;height:'+Math.max(2,p)+'%;background:'+bandColors[b.level]+';border-radius:6px 6px 0 0"></div><div style="font-size:9px;color:var(--muted);text-align:center;line-height:1.15">'+esc(w.label.replace(' & ',' &<br>').replace(' / ',' /<br>'))+'</div></div>';
+    }).join('');
     var fields=[['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Created',m.createdAt],['Reviewed',m.reviewedAt]];
     $('profilegrid').innerHTML=fields.filter(function(x){return x[1]}).map(function(x){return '<div class="pitem"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1])+'</div></div>'}).join('');
     $('modal').classList.add('on');document.body.style.overflow='hidden';
@@ -245,7 +244,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   Array.from(new Set(merchants.map(function(m){return m.action}).filter(Boolean))).sort().forEach(function(a){$('actionFilter').insertAdjacentHTML('beforeend','<option>'+esc(a)+'</option>')});
   $('search').oninput=renderTable;$('bandFilter').onchange=renderTable;$('actionFilter').onchange=renderTable;
   $('stamp').textContent='Last review data: '+(DATA.generatedAt?new Date(DATA.generatedAt).toLocaleString():'—');
-  renderKpis();renderDist();renderPriorities();renderTable();renderCards();
+  renderKpis();renderDist();renderPriorities();renderTable();
 })();
 </script>
 </body>
