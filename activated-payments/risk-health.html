@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Loyverse Payments — Fraud Health</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="risk-health-data.js"></script>
+<style>
+:root{
+  --blue:#1D8FE1;--blue-deep:#1578C4;--ink:#13233A;--near-black:#1A1A1A;--bg:#EEF2F6;
+  --surface:#fff;--border:#E3E9F0;--muted:#7E8A9A;--faint:#B8C4D2;
+  --green:#1F9D6B;--amber:#C98A16;--orange:#E36B2C;--red:#D2495B;--deepred:#9D2435;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+.lvmn{background:#0F0F0F;display:flex;align-items:center;padding:0 24px}
+.lvmn .lvmn-brand{display:flex;align-items:center;margin-right:26px}
+.lvmn .lvmn-brand b{color:#fff;font-size:14px;font-weight:800;letter-spacing:.4px}
+.lvmn .lvmn-brand .lvmn-dot{color:var(--blue)}
+.lvmn a.lvmn-tab{color:#9A9A9A;text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:15px 20px;border-bottom:3px solid transparent}
+.lvmn a.lvmn-tab:hover{color:#fff}.lvmn a.lvmn-tab.on{color:#fff;border-bottom-color:var(--blue)}
+.lvmn .lvmn-logo{height:19px;width:auto;margin-right:9px;display:block}
+.paysub{background:#fff;border-bottom:1px solid #E0E0E0;padding:0 24px;display:flex;gap:4px;align-items:center;overflow-x:auto}
+.paysub a{color:#6A6A6A;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;padding:11px 16px;border-bottom:3px solid transparent;text-decoration:none;white-space:nowrap}
+.paysub a:hover{color:#1A1A1A}.paysub a.on{color:#1578C4;border-bottom-color:var(--blue)}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 24px 64px}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px}
+.hero h1{font-family:'Arial Black',Arial,sans-serif;font-size:32px;line-height:1;margin:0 0 8px}
+.hero h1 .dot{color:var(--blue)}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;max-width:820px}
+.stamp{font-size:11px;color:var(--faint);white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 16px;box-shadow:0 1px 3px rgba(19,35,58,.04)}
+.kpi .k{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:bold}
+.kpi .v{font-family:'Arial Black',Arial,sans-serif;font-size:26px;margin:5px 0 2px}
+.kpi .s{font-size:11px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-bottom:18px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(19,35,58,.04)}
+.panel h2{font-size:15px;margin:0 0 4px}.ph{font-size:12px;color:var(--muted);margin:0 0 16px;line-height:1.5}
+.dist{display:flex;height:28px;border-radius:8px;overflow:hidden;background:#F2F5F9}
+.dist span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:bold;min-width:0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--muted)}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:5px}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.filters input,.filters select{font:12px Arial;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink)}
+.filters input{min-width:260px;flex:1}
+.tablewrap{overflow-x:auto}.merchant-table{width:100%;border-collapse:collapse;font-size:13px}
+.merchant-table th{text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--border)}
+.merchant-table td{padding:11px 10px;border-bottom:1px solid #F1F4F8;vertical-align:middle}
+.merchant-table tr{cursor:pointer}.merchant-table tbody tr:hover{background:#F7FAFD}
+.scorepill{display:inline-flex;align-items:center;gap:7px;font-weight:bold}.dot{width:9px;height:9px;border-radius:50%}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:bold;letter-spacing:.3px}
+.b-low{background:#EAF7F1;color:#177850}.b-moderate{background:#FFF7DE;color:#936400}.b-review{background:#FFF0E3;color:#A84D16}.b-high{background:#FDECEE;color:#A22D3C}.b-very-high{background:#F8E3E6;color:#7C1825}
+.action{font-size:12px;font-weight:bold}.muted{color:var(--muted)}
+.cardgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mcard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:.15s}
+.mcard:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(19,35,58,.08)}
+.mcard .name{font-weight:bold;font-size:13px;margin-bottom:2px}.mcard .meta{font-size:11px;color:var(--muted)}
+.gauge-wrap{display:flex;align-items:center;justify-content:center;margin:10px 0 4px}
+.gauge{width:170px;height:98px;position:relative}
+.gauge svg{width:100%;height:100%}.gauge .score{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-family:'Arial Black',Arial,sans-serif;font-size:27px}
+.gauge .score small{font-family:Arial;font-size:12px;color:var(--muted);font-weight:normal}
+.statusline{text-align:center;font-size:11px;font-weight:bold;margin-top:2px}
+.modal{position:fixed;inset:0;background:rgba(10,20,35,.56);display:none;align-items:flex-start;justify-content:center;padding:28px 16px;z-index:1000;overflow:auto}
+.modal.on{display:flex}.drawer{width:min(1050px,100%);background:#F8FAFC;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+.dhead{background:#fff;padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.dhead h2{margin:0 0 5px;font-size:22px}.close{border:0;background:#F1F4F8;border-radius:8px;width:34px;height:34px;font-size:20px;cursor:pointer}
+.dbody{padding:20px 24px 28px}.detailtop{display:grid;grid-template-columns:250px 1fr;gap:18px;margin-bottom:18px}
+.bigscore{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px}
+.bigscore .gauge{width:210px;height:120px;margin:auto}
+.recommend{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px}
+.recommend .rlabel{font-size:10px;color:var(--muted);font-weight:bold;letter-spacing:1px;text-transform:uppercase}
+.recommend .rvalue{font-size:18px;font-weight:bold;margin:5px 0 8px}.recommend p{font-size:12px;color:var(--muted);line-height:1.55;margin:0}
+.scorebars{display:grid;gap:10px}.scorebarrow{display:grid;grid-template-columns:220px 1fr 52px;align-items:center;gap:10px;font-size:12px}
+.track{height:8px;border-radius:5px;background:#EDF1F5;overflow:hidden}.fill{height:100%;border-radius:5px}
+.threecols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.signalbox{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}.signalbox h3{font-size:13px;margin:0 0 10px}
+.signalbox ul{margin:0;padding-left:18px}.signalbox li{font-size:12px;line-height:1.45;margin:7px 0}
+.profilegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.pitem{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}.pitem .k{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:bold}.pitem .v{font-size:12px;margin-top:4px;word-break:break-word}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.cardgrid{grid-template-columns:repeat(2,1fr)}.grid2,.detailtop{grid-template-columns:1fr}.threecols{grid-template-columns:1fr}.profilegrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.wrap{padding:20px 14px 50px}.lvmn{padding:0 10px}.lvmn a.lvmn-tab{padding:14px 9px;font-size:10px}.lvmn .lvmn-brand{margin-right:8px}.paysub{padding:0 8px}.paysub a{padding:10px 9px;font-size:9px}.hero{align-items:flex-start;flex-direction:column}.kpis,.cardgrid,.profilegrid{grid-template-columns:1fr}.scorebarrow{grid-template-columns:1fr 48px}.scorebarrow .track{grid-column:1/-1}.merchant-table th:nth-child(4),.merchant-table td:nth-child(4),.merchant-table th:nth-child(5),.merchant-table td:nth-child(5){display:none}}
+</style>
+</head>
+<body>
+<nav class="lvmn">
+  <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
+  <a class="lvmn-tab" href="https://facadash.pages.dev/daily.html">POS</a>
+  <a class="lvmn-tab on" href="index.html#payments">Payments</a>
+  <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
+</nav>
+<div class="paysub">
+  <a href="index.html#payments">Overview</a>
+  <a href="index.html#margins">Summary of Margins</a>
+  <a href="index.html#pilot">Pilot</a>
+  <a href="index.html#funnel">Funnel</a>
+  <a href="profile.html">Payment Profile</a>
+  <a href="risk-health.html" class="on">Fraud Health</a>
+  <a href="report.html">Report</a>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Fraud Health<span class="dot">.</span></h1>
+      <p>Merchant-level legitimacy and onboarding-risk review for Loyverse Payments. The Merchant Trust Score measures how strongly the claimed business can be independently corroborated. Higher is better. It is not a mathematical probability of fraud.</p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Portfolio trust distribution.</h2>
+      <p class="ph">Where reviewed merchants sit across the six trust bands.</p>
+      <div class="dist" id="dist"></div>
+      <div class="legend" id="distLegend"></div>
+    </div>
+    <div class="panel">
+      <h2>Review priorities.</h2>
+      <p class="ph">Operational queue based on the latest merchant review.</p>
+      <div id="priorities"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Merchant risk queue.</h2>
+    <p class="ph">Click any merchant to open the full weighted score, verified facts, unresolved claims, contradictions and evidence required.</p>
+    <div class="filters">
+      <input id="search" placeholder="Search merchant, representative, location, email…">
+      <select id="bandFilter"><option value="">All risk bands</option></select>
+      <select id="actionFilter"><option value="">All actions</option></select>
+    </div>
+    <div class="tablewrap"><table class="merchant-table">
+      <thead><tr><th>Merchant</th><th>Trust score</th><th>Risk band</th><th>Location</th><th>Representative</th><th>Recommended action</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div>
+  </div>
+
+  <div class="panel">
+    <h2>Recently reviewed.</h2>
+    <p class="ph">Fast visual scan of the most recent merchant legitimacy evaluations.</p>
+    <div class="cardgrid" id="cards"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="drawer">
+    <div class="dhead"><div><h2 id="dname"></h2><div class="muted" id="dmeta"></div></div><button class="close" id="close">×</button></div>
+    <div class="dbody">
+      <div class="detailtop">
+        <div class="bigscore" id="bigscore"></div>
+        <div class="recommend"><div class="rlabel">Recommended action</div><div class="rvalue" id="daction"></div><p id="dsummary"></p></div>
+      </div>
+      <div class="panel" style="margin:0 0 18px;padding:18px">
+        <h2>Weighted score breakdown.</h2><p class="ph">Hard-to-fake external evidence carries the most weight. Website polish alone carries little weight.</p>
+        <div class="scorebars" id="scorebars"></div>
+      </div>
+      <div class="threecols">
+        <div class="signalbox"><h3>✓ Verified</h3><ul id="verified"></ul></div>
+        <div class="signalbox"><h3>? Unable to verify</h3><ul id="unverified"></ul></div>
+        <div class="signalbox"><h3>! Contradictions / anomalies</h3><ul id="contradictions"></ul></div>
+      </div>
+      <div class="panel" style="margin:18px 0 0;padding:18px">
+        <h2>Evidence required.</h2><p class="ph">The fastest checks to materially raise or lower confidence.</p><ul id="needed" style="margin:0;padding-left:20px"></ul>
+      </div>
+      <div class="profilegrid" id="profilegrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var DATA=window.LV_MERCHANT_TRUST||{merchants:[],methodology:{weights:[],bands:[]}};
+  var merchants=DATA.merchants||[], bands=(DATA.methodology&&DATA.methodology.bands)||[], weights=(DATA.methodology&&DATA.methodology.weights)||[];
+  var bandColors={low:'#1F9D6B',moderate:'#C98A16',review:'#E36B2C',high:'#D2495B','very-high':'#9D2435'};
+  var bandClass={low:'b-low',moderate:'b-moderate',review:'b-review',high:'b-high','very-high':'b-very-high'};
+  var $=function(id){return document.getElementById(id)};
+  function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function bandFor(score){for(var i=0;i<bands.length;i++){if(score>=bands[i].min&&score<=bands[i].max)return bands[i]}return {label:'Unrated',level:'review'}}
+  function gauge(score,large){
+    var b=bandFor(score), color=bandColors[b.level]||'#888', pct=Math.max(0,Math.min(100,score));
+    var len=157.08, dash=(len*pct/100).toFixed(2);
+    return '<div class="gauge"><svg viewBox="0 0 200 115"><path d="M25 95 A75 75 0 0 1 175 95" pathLength="100" fill="none" stroke="#E7EDF3" stroke-width="16" stroke-linecap="round"/><path d="M25 95 A75 75 0 0 1 175 95" pathLength="100" fill="none" stroke="'+color+'" stroke-width="16" stroke-linecap="round" stroke-dasharray="'+pct+' 100"/></svg><div class="score" style="color:'+color+'">'+score+'<small>/100</small></div></div>';
+  }
+  function listHtml(arr){return (arr&&arr.length?arr:['None recorded']).map(function(x){return '<li>'+esc(x)+'</li>'}).join('')}
+  function renderKpis(){
+    var n=merchants.length, avg=n?Math.round(merchants.reduce(function(s,m){return s+m.score},0)/n):0;
+    var hi=merchants.filter(function(m){return m.score<40}).length;
+    var vh=merchants.filter(function(m){return m.score<25}).length;
+    var action=merchants.filter(function(m){return /hold|payout|urgent/i.test(m.action||'')}).length;
+    $('kpis').innerHTML=[
+      ['Reviewed merchants',n,'Current dataset'],
+      ['Average trust score',avg+'/100','Higher = stronger corroboration'],
+      ['Below 40',hi,'High / very high risk'],
+      ['Below 25',vh,'Very high risk'],
+      ['Payout review queue',action,'Explicit payout-review recommendation']
+    ].map(function(x){return '<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>'}).join('');
+  }
+  function renderDist(){
+    var counts={};bands.forEach(function(b){counts[b.label]=0});merchants.forEach(function(m){var b=bandFor(m.score);counts[b.label]=(counts[b.label]||0)+1});
+    var n=Math.max(1,merchants.length);
+    $('dist').innerHTML=bands.map(function(b){var c=counts[b.label]||0;if(!c)return '';return '<span style="width:'+(100*c/n)+'%;background:'+bandColors[b.level]+'" title="'+esc(b.label)+': '+c+'">'+c+'</span>'}).join('');
+    $('distLegend').innerHTML=bands.map(function(b){return '<span><i style="background:'+bandColors[b.level]+'"></i>'+esc(b.label)+' ('+(counts[b.label]||0)+')</span>'}).join('');
+  }
+  function renderPriorities(){
+    var rows=merchants.slice().sort(function(a,b){return a.score-b.score}).slice(0,4);
+    $('priorities').innerHTML=rows.map(function(m,i){var b=bandFor(m.score);return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:'+(i===rows.length-1?'0':'1px solid #F1F4F8')+'"><div style="font-family:Arial Black;font-size:18px;color:'+bandColors[b.level]+'">'+m.score+'</div><div><div style="font-size:12px;font-weight:bold">'+esc(m.name)+'</div><div style="font-size:10px;color:var(--muted)">'+esc(m.action)+'</div></div><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></div>'}).join('');
+  }
+  function filterMerchants(){
+    var q=$('search').value.trim().toLowerCase(), bf=$('bandFilter').value, af=$('actionFilter').value;
+    return merchants.filter(function(m){
+      var hay=[m.name,m.dba,m.representative,m.location,m.email,m.phone,m.website,m.mcc].join(' ').toLowerCase();
+      return (!q||hay.indexOf(q)>=0)&&(!bf||bandFor(m.score).label===bf)&&(!af||m.action===af);
+    }).sort(function(a,b){return a.score-b.score});
+  }
+  function renderTable(){
+    var arr=filterMerchants();
+    $('tbody').innerHTML=arr.map(function(m){var b=bandFor(m.score);return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>'}).join('');
+    Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.onclick=function(){openMerchant(tr.getAttribute('data-id'))}});
+  }
+  function renderCards(){
+    $('cards').innerHTML=merchants.slice().sort(function(a,b){return (b.reviewedAt||'').localeCompare(a.reviewedAt||'')}).map(function(m){var b=bandFor(m.score);return '<div class="mcard" data-id="'+m.id+'"><div class="name">'+esc(m.name)+'</div><div class="meta">'+esc(m.location||'')+' · '+esc(m.representative||'')+'</div><div class="gauge-wrap">'+gauge(m.score)+'</div><div class="statusline" style="color:'+bandColors[b.level]+'">'+esc(b.label)+'</div></div>'}).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('.mcard'),function(el){el.onclick=function(){openMerchant(el.getAttribute('data-id'))}});
+  }
+  function openMerchant(id){
+    var m=merchants.find(function(x){return x.id===id});if(!m)return;var b=bandFor(m.score);
+    $('dname').textContent=m.name;$('dmeta').textContent=[m.location,m.representative,m.mcc].filter(Boolean).join(' · ');
+    $('bigscore').innerHTML=gauge(m.score,true)+'<div class="statusline" style="color:'+bandColors[b.level]+';font-size:13px">'+esc(b.label)+'</div>';
+    $('daction').textContent=m.action||'—';$('dsummary').textContent=m.summary||'';
+    $('scorebars').innerHTML=weights.map(function(w){var s=(m.scores||{})[w.key]||0,p=w.max?100*s/w.max:0;return '<div class="scorebarrow"><div>'+esc(w.label)+'</div><div class="track"><div class="fill" style="width:'+p+'%;background:'+bandColors[b.level]+'"></div></div><div style="text-align:right;font-weight:bold">'+s+' / '+w.max+'</div></div>'}).join('');
+    $('verified').innerHTML=listHtml(m.verified);$('unverified').innerHTML=listHtml(m.unverified);$('contradictions').innerHTML=listHtml(m.contradictions);$('needed').innerHTML=listHtml(m.evidenceNeeded);
+    var fields=[['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Created',m.createdAt],['Reviewed',m.reviewedAt]];
+    $('profilegrid').innerHTML=fields.filter(function(x){return x[1]}).map(function(x){return '<div class="pitem"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1])+'</div></div>'}).join('');
+    $('modal').classList.add('on');document.body.style.overflow='hidden';
+  }
+  function closeModal(){$('modal').classList.remove('on');document.body.style.overflow=''}
+  $('close').onclick=closeModal;$('modal').onclick=function(e){if(e.target===$('modal'))closeModal()};document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+  bands.forEach(function(b){$('bandFilter').insertAdjacentHTML('beforeend','<option>'+esc(b.label)+'</option>')});
+  Array.from(new Set(merchants.map(function(m){return m.action}).filter(Boolean))).sort().forEach(function(a){$('actionFilter').insertAdjacentHTML('beforeend','<option>'+esc(a)+'</option>')});
+  $('search').oninput=renderTable;$('bandFilter').onchange=renderTable;$('actionFilter').onchange=renderTable;
+  $('stamp').textContent='Last review data: '+(DATA.generatedAt?new Date(DATA.generatedAt).toLocaleString():'—');
+  renderKpis();renderDist();renderPriorities();renderTable();renderCards();
+})();
+</script>
+</body>
+</html>
