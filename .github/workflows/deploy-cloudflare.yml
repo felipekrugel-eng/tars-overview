@@ -1,13 +1,9 @@
-# Mirrors every dashboard data refresh to Cloudflare Pages (facadash.pages.dev +
-# activated-payments.pages.dev), which sit behind Cloudflare Access (SSO).
+# Deploys every dashboard data refresh to Cloudflare Pages
+# (facadash.pages.dev + activated-payments.pages.dev), behind Cloudflare Access (SSO).
 #
-# IMPORTANT: this workflow does NOT modify the repo or the Netlify sites in any way.
-# It copies the dashboard folders to a temp dir, rewrites the hardcoded
-# *.netlify.app cross-links to *.pages.dev IN THE COPY ONLY, and uploads that
-# copy to Cloudflare. Netlify keeps deploying the untouched repo content.
-#
-# When the Netlify sites are eventually decommissioned, fix the links in the
-# repo source properly and this rewrite step becomes a no-op.
+# Cloudflare Pages is the production deployment target. The link-rewrite step remains
+# only as a compatibility safeguard for any stale Netlify URLs that may still exist
+# in older source files; new source should use *.pages.dev directly.
 #
 # Added 2026-07-23 (Cowork session, Felipe).
 # 2026-08-12: added pilot-pull to the workflow_run list. pilot-pull commits with the
