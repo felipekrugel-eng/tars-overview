@@ -183,4 +183,25 @@
     norm: norm, suffix: suffix,
     n: n, money: money, pick: pick, slice: slice, keep: keep, fromMap: fromMap
   };
+
+  // Keep the Fraud Health view discoverable from the main Payments dashboard too.
+  // index.html builds its Payments sub-navigation inline, while profile/report are
+  // standalone pages. Injecting here avoids the two navs drifting apart.
+  function ensureFraudHealthNav() {
+    var nav = document.getElementById('paysub') || document.querySelector('.paysub');
+    if (!nav || nav.querySelector('a[href="risk-health.html"]')) return;
+    var a = document.createElement('a');
+    a.href = 'risk-health.html';
+    a.id = 'paysub-risk-health';
+    a.textContent = 'Fraud Health';
+    var report = nav.querySelector('a[href="report.html"]');
+    if (report) nav.insertBefore(a, report);
+    else nav.appendChild(a);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureFraudHealthNav);
+  } else {
+    ensureFraudHealthNav();
+  }
+
 })();
