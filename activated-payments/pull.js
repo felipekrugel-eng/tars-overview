@@ -1904,6 +1904,35 @@ function writePayCohort(pc) {
   console.log(`✓ payments-cohort.json: ${pc.merchants.length} merchants over ${pc.months.length} months `
             + `(${pc.coverage.withMonthlyFlags} with paying/active history, ${pc.coverage.transacting} transacting)`);
 }
+// Compact, PII-free report source. The full funnel file exceeds connector read limits.
+// Count unique non-test owner ids by their registration timestamp in Europe/London.
+function writeDailyRegistrations(funnel) {
+  const stamp = new Date().toISOString();
+  const zone = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit' });
+  const londonDay = d => {
+    const parts = Object.fromEntries(zone.formatToParts(d).map(p => [p.type, p.value]));
+    return parts.year + '-' + parts.month + '-' + parts.day;
+  };
+  const since = Date.now() - 45 * 86400000;
+  const seen = new Set(), days = {};
+  for (const m of funnel.merchants || []) {
+    const oid = String(m.oid || '');
+    const time = Date.parse(m.registered_at);
+    if (!oid || seen.has(oid) || !Number.isFinite(time) || time < since || time >= Date.now()) continue;
+    if (isInternalTest(m.email, m.name)) continue;
+    seen.add(oid);
+    const day = londonDay(new Date(time));
+    const cc = m.cc || CC_UNKNOWN;
+    const row = days[day] || (days[day] = { total: 0, by_country: {} });
+    row.total++;
+    row.by_country[cc] = (row.by_country[cc] || 0) + 1;
+  }
+  const output = { schema_version: 1, source: 'activated-payments/funnel-data.js', generated_at: stamp,
+                   timezone: 'Europe/London', lookback_days: 45, days };
+  fs.writeFileSync(path.join(__dirname, 'registration-daily.json'), JSON.stringify(output) + '\n', 'utf8');
+  console.log('✓ Wrote registration-daily.json — ' + Object.keys(days).length + ' days');
+}
+
 function writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
@@ -2133,6 +2162,7 @@ async function main() {
     // funnel needs the identical split. Same map, same rule, both pages.
     const funnel = buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, groupTags, countryByAcct);
     writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc);
+    writeDailyRegistrations(funnel);
 
     // ---- Report page (monthly series) ----
     // GUARDED: three extra Snowflake round-trips for a page that did not exist before must never
