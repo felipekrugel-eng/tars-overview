@@ -355,7 +355,15 @@
          measure takes over the grid and the status, stage and percentage controls step aside,
          rather than being left on screen meaning nothing. -->
     <div class="toggle" id="tri-money" style="display:none;margin-right:8px">
-      <button data-money="" class="on">Merchants</button><button data-money="mrr">MRR</button><button data-money="paycontrib" id="tri-paycontrib" style="display:none" title="Loyverse Payments contribution, by the month the merchant registered on POS">Payments contribution</button>
+      <button data-money="" class="on">Merchants</button><button data-money="rev">Revenue</button>
+    </div>
+    <!-- ONE revenue view, split by where the money came from. Payments contribution is not a
+         separate triangle: a cohort earns subscription revenue and payments revenue in the
+         same month of life, and showing them as two grids forces the reader to add two
+         pictures together in their head. Total is the default; the other two are the same
+         grid with one component isolated. Appears only once cohort-payments.json has loaded. -->
+    <div class="toggle" id="tri-rev" style="display:none;margin-left:8px">
+      <button data-rev="all" class="on">Total</button><button data-rev="subs">Subscriptions</button><button data-rev="pay" id="tri-rev-pay" title="Loyverse Payments contribution only, by the month the merchant registered on POS">Payments</button>
     </div>
     <div class="toggle" id="tri-metric" style="display:none">
       <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="none" class="tri-any" style="display:none" title="No POS condition — count the payments stage on its own, whether or not the merchant was paying or active that month">Any status</button>
@@ -1159,6 +1167,9 @@ renderCohTable();
   // money instead. Held separately from triMetric so the status selection survives a trip
   // through a money view and comes back intact.
   let triMoney = null;
+  // Which component of revenue the money view shows: 'all' = subscriptions + payments,
+  // 'subs' = MRR alone, 'pay' = payments contribution alone.
+  let moneyPart = 'all';
   // Payments contribution by POS registration cohort, fetched lazily like payments-cohort.json.
   let PAYC = null, PAYC_STAMP = null;
   // The grid drawTri last built, kept so the CSV can be serialised from the same pass that drew
@@ -1184,8 +1195,27 @@ renderCohTable();
   // A money view is always a plain per-cohort series, so it takes the series path whatever
   // the status chips happen to be set to.
   const useSeries = () => !!triMoney || (triSel.length === 1 && (triSel[0] === 'paying' || triSel[0] === 'active'));
-  const moneySrc = () => triMoney === 'paycontrib' ? (PAYC && PAYC.byCohort) : TRI;
-  const moneyKey = () => triMoney === 'paycontrib' ? 'contribution' : 'mrr';
+  // THE TRIANGLE MUST STAY A TRIANGLE. Payments contribution exists only from April 2026, so
+  // its array is short and ragged; subscriptions run from the cohort's first month. Reading
+  // them through one accessor that treats a missing payments cell as ZERO — not as blank —
+  // keeps every row solid from M0 to the cohort's current age. A hole in a cohort grid reads
+  // as broken data, and "no payments revenue that month" is a real zero, not an absence.
+  const payArr = c => (PAYC && PAYC.byCohort && PAYC.byCohort[c] && PAYC.byCohort[c].contribution) || null;
+  // Same accessor, but for a named component — used by the tooltip to break a Total cell
+  // into its two parts without flipping the toggle.
+  const moneyAt2 = (c, i, part) => {
+    const sub = (TRI[c] && TRI[c].mrr && i < TRI[c].mrr.length) ? (TRI[c].mrr[i] || 0) : 0;
+    const pa = payArr(c);
+    const pay = (pa && i < pa.length) ? (pa[i] || 0) : 0;
+    return part === 'subs' ? sub : part === 'pay' ? pay : sub + pay;
+  };
+  const moneyAt = (c, i) => {
+    const sub = (TRI[c] && TRI[c].mrr && i < TRI[c].mrr.length) ? (TRI[c].mrr[i] || 0) : null;
+    if (sub == null) return undefined;                 // beyond this cohort's life: the triangle edge
+    const pa = payArr(c);
+    const pay = (pa && i < pa.length) ? (pa[i] || 0) : 0;
+    return moneyPart === 'subs' ? sub : moneyPart === 'pay' ? pay : sub + pay;
+  };
   // Money is signed — payments contribution is negative for plenty of cohorts — so it cannot
   // use triFmt, which assumes a count. Negatives are shown with a minus and coloured by the
   // caller; zero stays "0" rather than "$0" so an empty cell does not shout.
@@ -1308,15 +1338,12 @@ renderCohTable();
     //     payments era at roughly M111, so a 25-column grid could not have shown it at all.
     // In a money view the metric and the source are decided here, not by the status chips.
     const MONEY = !!triMoney;
-    if (MONEY) { metric = moneyKey(); pct = false; }
+    if (MONEY) { metric = 'mrr'; pct = false; }
     const wide = MONEY ? true : (series ? wideSeries(metric) : true);
-    const MSRC = MONEY ? (moneySrc() || {}) : null;
-    // Payments contribution exists only for cohorts that have processed a charge; MRR exists
-    // for every cohort in the triangle. Rows with no data at all are dropped rather than drawn
-    // as a band of empties, which on 45 of 131 cohorts would bury the signal.
-    const triCohorts = MONEY
-      ? ALL_ROWS.filter(c => { const a = MSRC[c] && MSRC[c][metric]; return a && a.some(v => v); })
-      : (wide ? ALL_ROWS.slice() : triCohortsNow());
+    // EVERY cohort, always. The previous cut dropped rows with no payments revenue, which
+    // punched 86 gaps into a 131-row grid and stopped it being a triangle at all. The span of
+    // a row is the cohort's own life, nothing else.
+    const triCohorts = MONEY ? ALL_ROWS.slice() : (wide ? ALL_ROWS.slice() : triCohortsNow());
     const cohSize = cohSizeNow();
     // Under a country filter the per-country files carry only the last 24 cohorts, so an older
     // cohort has no per-country denominator. Absolute counts are still exact; the percentage is
@@ -1333,9 +1360,10 @@ renderCohTable();
     };
     // Where the numbers come from in series mode: the all-cohort triangle when it has this
     // metric and no country is selected, the trimmed per-country series otherwise.
-    const src = MONEY ? MSRC : (wide ? TRI : CC);
+    const src = wide ? TRI : CC;
     let mx = 0, nAges = 1;
-    if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
+    if (MONEY) triCohorts.forEach(c => { const a = (TRI[c] && TRI[c].mrr) || []; nAges = Math.max(nAges, a.length); });
+    else if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
     else triCohorts.forEach(c => { nAges = Math.max(nAges, (LATEST_M ? mAge(c, LATEST_M) : 0) + 1); });
     // Cells that predate Loyverse Payments are left BLANK, not zero, whenever a payments
     // condition is selected. "How many merchants of the 2024-10 cohort had started KYC in
@@ -1343,7 +1371,9 @@ renderCohTable();
     // the grid buries the months that do have an answer. Paying + Active carries no payments
     // condition, so those cells are real and stay.
     const blankBefore = hasPay() ? payFrom : null;
-    const valOf = series
+    const valOf = MONEY
+      ? (c, i) => moneyAt(c, i)
+      : series
       ? (c, i) => { const a = (src[c] && src[c][metric]) || []; return i < a.length ? a[i] : undefined; }
       : (c, i) => {
           if (!LATEST_M || i > mAge(c, LATEST_M)) return undefined;   // age the cohort has not reached
@@ -1408,13 +1438,15 @@ renderCohTable();
         exCells.push(dv);
         const t = mx ? dv/mx : 0;
         const cell = (MONEY ? moneyFmt(v) : pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
+        const PART = {all:'Revenue', subs:'Subscription MRR', pay:'Payments contribution'}[moneyPart];
+        const usd = x => (x < 0 ? '\u2212$' : '$') + Math.abs(x).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
         const tip = MONEY
-          ? (c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
-             + (triMoney === 'mrr' ? 'MRR' : 'Payments contribution') + ': '
-             + (v < 0 ? '\u2212$' : '$') + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
-             + (triMoney === 'paycontrib'
+          ? (c + ' · M' + i + ' (' + monthAt(c, i) + ') · ' + PART + ': ' + usd(v)
+             + (moneyPart === 'all' && payArr(c)
+                 ? '  —  subscriptions ' + usd(moneyAt2(c, i, 'subs')) + ' + payments ' + usd(moneyAt2(c, i, 'pay'))
+                 : moneyPart === 'pay'
                  ? ' — application fee less network and Stripe fees, for merchants who registered on POS in ' + c
-                 : ' — subscription MRR from the ' + c + ' cohort in that month of life')
+                 : '')
              + (isPartial ? ' — ' + LATEST + ' still in progress' : ''))
           : (c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
              + triSel.map(k => LABEL[k]).join(' + ') + ': '
@@ -1675,6 +1707,7 @@ renderCohTable();
     triWrap.style.display = tri ? '' : 'none';
     document.getElementById('tri-metric').style.display = (tri && !triMoney) ? 'inline-block' : 'none';
     document.getElementById('tri-money').style.display = tri ? 'inline-block' : 'none';
+    document.getElementById('tri-rev').style.display = (tri && triMoney) ? 'inline-block' : 'none';
     // The stage group only exists once the membership file has loaded, so it follows byCohort.
     document.getElementById('tri-stage').style.display = (tri && byCohort) ? 'inline-block' : 'none';
     document.querySelectorAll('#tri-metric button.tri-any').forEach(b => { b.style.display = (tri && byCohort) ? '' : 'none'; });
@@ -1764,12 +1797,20 @@ renderCohTable();
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = moneySaved[id]; });
       moneySaved = null;
     }
+    const rev = document.getElementById('tri-rev');
+    if (rev) rev.style.display = triMoney ? 'inline-block' : 'none';
   }
   document.querySelectorAll('#tri-money button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#tri-money button').forEach(x => x.classList.remove('on'));
     b.classList.add('on');
     triMoney = b.dataset.money || null;
     syncMoneyControls();
+    drawTri(triMetric, triPct);
+  });
+  document.querySelectorAll('#tri-rev button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#tri-rev button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    moneyPart = b.dataset.rev;
     drawTri(triMetric, triPct);
   });
 
@@ -1781,8 +1822,9 @@ renderCohTable();
     .then(pc => {
       if (!pc || !pc.byCohort || !Object.keys(pc.byCohort).length) return;
       PAYC = pc; PAYC_STAMP = pc.generatedAt || null;
-      const btn = document.getElementById('tri-paycontrib');
-      if (btn) btn.style.display = '';
+      // Nothing to reveal — the Payments component is always present; it simply reads zero
+      // everywhere until this file arrives. Redraw so the Total view picks it up.
+      if (triWrap.style.display !== 'none') drawTri(triMetric, triPct);
     })
     .catch(() => { /* not generated yet — the measure is simply not offered */ });
 
