@@ -649,7 +649,7 @@ def external_heartbeat(ok):
         raise SafeError('external_deadman_ping_failed') from None
 
 def workflow_exit_status(state):
-    """Expected, durably saved shadow backfill is a warning, not a job crash.
+    """Known shadow coverage limitations are warnings after durable checkpoint.
 
     Health remains degraded and the external alarm remains down. Unknown errors,
     lost credentials, integrity failures and incomplete active monitoring fail.
@@ -659,9 +659,15 @@ def workflow_exit_status(state):
         return 0
     if state.get('mode') != 'shadow':
         return 2
+    # Missing source IPs cannot be repaired by repeating an otherwise successful
+    # scan. Keep the coverage gap, watchdog and cutover block without presenting
+    # every completed shadow scan as a crashed GitHub job.
+    source_limitations = {'onboarding_ip_coverage_incomplete'}
+    if gaps <= source_limitations:
+        return 0
     full_in_progress = state.get('full', {}).get('status') == 'in_progress'
     global_in_progress = not state.get('global', {}).get('complete', False)
-    allowed = {'run_budget_checkpointed', 'global_sweep_in_progress', 'global_previous_day_incomplete'}
+    allowed = {'run_budget_checkpointed', 'global_sweep_in_progress', 'global_previous_day_incomplete'} | source_limitations
     if full_in_progress:
         allowed |= {'export_charge_cache_incomplete', 'global_fingerprint_coverage_incomplete',
                     'aggregate_refund_comparison_unavailable', 'aggregate_refund_scope_incomparable',
@@ -714,7 +720,7 @@ def main():
         print('Risk checks checkpointed; status '+('degraded' if state['gaps'] else 'healthy')+'.')
         result = workflow_exit_status(state)
         if state['gaps'] and result == 0:
-            print('::warning::Shadow migration scan is still in progress; durable cursors saved. Coverage remains degraded.')
+            print('::warning::Shadow monitoring has incomplete coverage; progress and gap details saved. Coverage remains degraded.')
         return result
     except Exception as exc:
         monitor.gap(str(exc) if isinstance(exc,SafeError) else 'runtime_failure')

@@ -80,6 +80,31 @@ class Failures(unittest.TestCase):
         s=state();s['mode']='shadow';s['full']={'status':'complete'}
         s['global']={'complete':False};s['gaps']=['export_charge_cache_incomplete']
         self.assertEqual(workflow_exit_status(s),2)
+    def test_completed_shadow_scan_with_missing_source_ips_is_degraded_warning(self):
+        from monitor import workflow_exit_status, health
+        s=state();s['mode']='shadow';s['full']={'status':'complete'}
+        s['global']={'complete':True};s['gaps']=['onboarding_ip_coverage_incomplete']
+        self.assertEqual(workflow_exit_status(s),0)
+        report=health(s,100001,completed=True)
+        self.assertEqual(report['status'],'degraded')
+        self.assertEqual(report['gap_codes'],s['gaps'])
+        self.assertIsNone(report['last_completed_at'])
+    def test_missing_source_ips_do_not_hide_operational_errors_or_active_gaps(self):
+        from monitor import workflow_exit_status
+        for mode,error in [('active',None),('shadow','stripe_read_key_missing'),
+                           ('shadow','onboarding_ip_invalid'),('shadow','audit_chain_mismatch'),
+                           ('shadow','processor_data_unknown'),('shadow','runtime_failure')]:
+            with self.subTest(mode=mode,error=error):
+                s=state();s['mode']=mode;s['full']={'status':'complete'}
+                s['global']={'complete':True};s['gaps']=['onboarding_ip_coverage_incomplete']
+                if error:s['gaps'].append(error)
+                self.assertEqual(workflow_exit_status(s),2)
+    def test_partial_shadow_scan_with_missing_source_ips_keeps_progress_warning(self):
+        from monitor import workflow_exit_status
+        s=state();s['mode']='shadow';s['full']={'status':'complete'}
+        s['global']={'complete':False}
+        s['gaps']=['run_budget_checkpointed','global_sweep_in_progress','onboarding_ip_coverage_incomplete']
+        self.assertEqual(workflow_exit_status(s),0)
     def test_durable_state_authenticated_encryption(self):
         with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake-test-key'}):
             s={'sensitive':'not-public'}; e=seal(s)

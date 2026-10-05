@@ -167,6 +167,9 @@ the receipt; do not clear the intent or rerun the side effect.
 
 During shadow migration, safely checkpointed backfill/account scans with only
 known in-progress gap codes finish with a GitHub warning instead of a failed job.
+An otherwise completed shadow scan with missing onboarding source IPs also finishes
+with a warning. Missing IPs stay recorded as a coverage gap and block all-clear and
+production cutover; repeating the scan cannot invent absent source data.
 This avoids repeated GitHub failure emails for expected resumable work. Health
 remains degraded, the independent watchdog continues, and the external alarm
 remains down. Credential, integrity, runtime and unexpected source errors still
