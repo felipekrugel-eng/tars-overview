@@ -106,7 +106,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   <div class="hero">
     <div>
       <h1>Fraud Health<span class="dot">.</span></h1>
-      <p>Merchant-level legitimacy and onboarding-risk review for Loyverse Payments. The Merchant Trust Score measures how strongly the claimed business can be independently corroborated. Higher is better. It is not a mathematical probability of fraud.</p>
+      <p>Merchant-level fraud and business-legitimacy risk for Loyverse Payments. Risk Score runs from 0 (no observable risk) to 100 (extreme risk). Review completeness is tracked separately and does not increase risk by itself.</p>
     </div>
     <div class="stamp" id="stamp"></div>
   </div>
@@ -115,8 +115,8 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 
   <div class="grid2">
     <div class="panel">
-      <h2>Portfolio trust distribution.</h2>
-      <p class="ph">Where reviewed merchants sit across the six trust bands.</p>
+      <h2>Portfolio risk distribution.</h2>
+      <p class="ph">Where reviewed merchants sit across the operational risk bands.</p>
       <div class="dist" id="dist"></div>
       <div class="legend" id="distLegend"></div>
     </div>
@@ -136,7 +136,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       <select id="actionFilter"><option value="">All actions</option></select>
     </div>
     <div class="tablewrap"><table class="merchant-table">
-      <thead><tr><th>Merchant</th><th>Trust score</th><th>Risk band</th><th>Location</th><th>Representative</th><th>Recommended action</th></tr></thead>
+      <thead><tr><th>Merchant</th><th>Risk score</th><th>Risk band</th><th>Location</th><th>Representative</th><th>Recommended action</th></tr></thead>
       <tbody id="tbody"></tbody>
     </table></div>
   </div>
@@ -151,12 +151,12 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
         <div class="recommend"><div class="rlabel">Recommended action</div><div class="rvalue" id="daction"></div><p id="dsummary"></p></div>
       </div>
       <div class="panel" style="margin:0 0 18px;padding:18px">
-        <h2>Weighted score breakdown.</h2><p class="ph">Hard-to-fake external evidence carries the most weight. Website polish alone carries little weight.</p>
+        <h2>Risk breakdown.</h2><p class="ph">Higher category values indicate more risk. Missing review fields are tracked separately as completeness gaps.</p>
         <div class="scorebars" id="scorebars"></div>
       </div>
       <div class="panel" style="margin:0 0 18px;padding:18px">
-        <h2>Fraud health graph.</h2>
-        <p class="ph">Category score as a percentage of the available points in each weighted component.</p>
+        <h2>Risk profile.</h2>
+        <p class="ph">Category risk as a percentage of the maximum available risk in each dimension.</p>
         <div id="riskgraph" style="height:220px;display:flex;align-items:flex-end;gap:14px;padding:12px 8px 4px;border-bottom:1px solid #E3E9F0"></div>
       </div>
       <div class="threecols">
@@ -185,10 +185,10 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     console.error(err);
     document.body.insertAdjacentHTML('afterbegin','<div style="background:#7C1825;color:#fff;padding:10px 16px;font:12px Arial">Fraud Health data could not be loaded.</div>');
   }
-  var merchants=DATA.merchants||[], bands=(DATA.methodology&&DATA.methodology.bands)||[], weights=(DATA.methodology&&DATA.methodology.weights)||[];
+  var merchants=DATA.merchants||[], bands=(DATA.methodology&&DATA.methodology.bands)||[], weights=(DATA.methodology&&DATA.methodology.dimensions)||[];
   var detailCache={};
-  var bandColors={low:'#1F9D6B',moderate:'#C98A16',review:'#E36B2C',high:'#D2495B','very-high':'#9D2435'};
-  var bandClass={low:'b-low',moderate:'b-moderate',review:'b-review',high:'b-high','very-high':'b-very-high'};
+  var bandColors={'very-low':'#1F9D6B',low:'#45A46E',moderate:'#C98A16',elevated:'#E36B2C',high:'#D2495B','very-high':'#9D2435',critical:'#6F0D1B'};
+  var bandClass={'very-low':'b-low',low:'b-low',moderate:'b-moderate',elevated:'b-review',high:'b-high','very-high':'b-very-high',critical:'b-very-high'};
   var $=function(id){return document.getElementById(id)};
   function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
   function bandFor(score){for(var i=0;i<bands.length;i++){if(score>=bands[i].min&&score<=bands[i].max)return bands[i]}return {label:'Unrated',level:'review'}}
@@ -200,8 +200,8 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   function listHtml(arr){return (arr&&arr.length?arr:['None recorded']).map(function(x){return '<li>'+esc(x)+'</li>'}).join('')}
   function renderKpis(){
     var n=merchants.length, avg=n?Math.round(merchants.reduce(function(s,m){return s+m.score},0)/n):0;
-    var hi=merchants.filter(function(m){return m.score<40}).length;
-    var vh=merchants.filter(function(m){return m.score<25}).length;
+    var hi=merchants.filter(function(m){return m.score>=60}).length;
+    var vh=merchants.filter(function(m){return m.score>=90}).length;
     var action=merchants.filter(function(m){return /hold|payout|urgent|manual review/i.test(m.action||'')}).length;
     var coverage=DATA.coverage||{};
     var enabledReviewed=coverage.reviewedEnabled||n;
@@ -209,8 +209,8 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     $('kpis').innerHTML=[
       ['Enabled reviewed',enabledReviewed+'/'+enabledTotal,'Stripe enabled-account population'],
       ['Indexed records',n,'Dashboard records currently stored'],
-      ['Average trust score',avg+'/100','Higher = stronger corroboration'],
-      ['Below 40',hi,'High / very high risk'],
+      ['Average risk score',avg+'/100','Higher = more concerning'],
+      ['60+ risk',merchants.filter(function(m){return m.score>=60}).length,'High / very high / critical'],
       ['Manual review queue',action,'Review / payout attention']
     ].map(function(x){return '<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>'}).join('');
   }
@@ -221,7 +221,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     $('distLegend').innerHTML=bands.map(function(b){return '<span><i style="background:'+bandColors[b.level]+'"></i>'+esc(b.label)+' ('+(counts[b.label]||0)+')</span>'}).join('');
   }
   function renderPriorities(){
-    var rows=merchants.slice().sort(function(a,b){return a.score-b.score}).slice(0,4);
+    var rows=merchants.slice().sort(function(a,b){return b.score-a.score}).slice(0,4);
     $('priorities').innerHTML=rows.map(function(m,i){var b=bandFor(m.score);return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:'+(i===rows.length-1?'0':'1px solid #F1F4F8')+'"><div style="font-family:Arial Black;font-size:18px;color:'+bandColors[b.level]+'">'+m.score+'</div><div><div style="font-size:12px;font-weight:bold">'+esc(m.name)+'</div><div style="font-size:10px;color:var(--muted)">'+esc(m.action)+'</div></div><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></div>'}).join('');
   }
   function filterMerchants(){
@@ -229,7 +229,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     return merchants.filter(function(m){
       var hay=[m.name,m.dba,m.representative,m.location,m.email,m.phone,m.website,m.mcc].join(' ').toLowerCase();
       return (!q||hay.indexOf(q)>=0)&&(!bf||bandFor(m.score).label===bf)&&(!af||m.action===af);
-    }).sort(function(a,b){return a.score-b.score});
+    }).sort(function(a,b){return b.score-a.score});
   }
   function renderTable(){
     var arr=filterMerchants();
@@ -248,20 +248,20 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
         }
         var detailSet=detailCache[indexMerchant.detailFile];
         var detailMerchant=(detailSet.merchants||[]).find(function(x){return (x.accountId||x.id)===id});
-        if(detailMerchant)m=Object.assign({},indexMerchant,detailMerchant);
+        if(detailMerchant)m=Object.assign({},detailMerchant,indexMerchant);
       }catch(err){console.error(err);}
     }
     var b=bandFor(m.score);
     $('dname').textContent=m.name;$('dmeta').textContent=[m.location,m.representative,m.mcc].filter(Boolean).join(' · ');
     $('bigscore').innerHTML=gauge(m.score,true)+'<div class="statusline" style="color:'+bandColors[b.level]+';font-size:13px">'+esc(b.label)+'</div>';
     $('daction').textContent=m.action||'—';$('dsummary').textContent=m.summary||'';
-    $('scorebars').innerHTML=weights.map(function(w){var s=(m.scores||{})[w.key]||0,p=w.max?100*s/w.max:0;return '<div class="scorebarrow"><div>'+esc(w.label)+'</div><div class="track"><div class="fill" style="width:'+p+'%;background:'+bandColors[b.level]+'"></div></div><div style="text-align:right;font-weight:bold">'+s+' / '+w.max+'</div></div>'}).join('');
+    $('scorebars').innerHTML=weights.map(function(w){var s=(m.riskDimensions||{})[w.key]||0,p=w.max?100*s/w.max:0;return '<div class="scorebarrow"><div>'+esc(w.label)+'</div><div class="track"><div class="fill" style="width:'+p+'%;background:'+bandColors[b.level]+'"></div></div><div style="text-align:right;font-weight:bold">'+s+' / '+w.max+'</div></div>'}).join('');
     $('verified').innerHTML=listHtml(m.verified);$('unverified').innerHTML=listHtml(m.unverified);$('contradictions').innerHTML=listHtml(m.contradictions);$('needed').innerHTML=listHtml(m.evidenceNeeded);
     $('riskgraph').innerHTML=weights.map(function(w){
-      var s=(m.scores||{})[w.key]||0, p=w.max?Math.round(100*s/w.max):0;
+      var s=(m.riskDimensions||{})[w.key]||0, p=w.max?Math.round(100*s/w.max):0;
       return '<div style="flex:1;min-width:46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px"><div style="font-size:10px;font-weight:bold">'+p+'%</div><div style="width:70%;height:'+Math.max(2,p)+'%;background:'+bandColors[b.level]+';border-radius:6px 6px 0 0"></div><div style="font-size:9px;color:var(--muted);text-align:center;line-height:1.15">'+esc(w.label.replace(' & ',' &<br>').replace(' / ',' /<br>'))+'</div></div>';
     }).join('');
-    var fields=[['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Created',m.createdAt],['Reviewed',m.reviewedAt]];
+    var fields=[['Risk score',m.score+'/100'],['Review completeness',(m.reviewCompleteness==null?'—':m.reviewCompleteness+'%')],['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Created',m.createdAt],['Reviewed',m.reviewedAt]];
     $('profilegrid').innerHTML=fields.filter(function(x){return x[1]}).map(function(x){return '<div class="pitem"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1])+'</div></div>'}).join('');
     $('modal').classList.add('on');document.body.style.overflow='hidden';
   }
