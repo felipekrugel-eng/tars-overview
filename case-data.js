@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-09-28",
+  "lastUpdated": "2026-10-05",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98488,18 +98488,18 @@ const CASE_DATA = {
   },
   "ratingTrend": {
     "months": [
-      "Apr",
       "May",
       "Jun",
       "Jul",
       "Aug",
-      "Sep"
+      "Sep",
+      "Oct"
     ],
     "googlePlay": [
-      4.68,
       4.72,
       4.75,
       4.7,
+      4.6,
       4.6,
       4.6
     ],
@@ -98560,23 +98560,23 @@ const CASE_DATA = {
     "googlePlay": {
       "total": "1M+",
       "trend": [
-        1000000,
         1017000,
         1034000,
         1071000,
         1093000,
-        1122000
+        1122000,
+        1138000
       ]
     },
     "appStore": {
       "total": "290K+",
       "trend": [
-        240000,
         250000,
         259000,
         271000,
         281000,
-        292000
+        292000,
+        294000
       ]
     }
   },
