@@ -1,10 +1,10 @@
 name: Loyverse risk regression tests
 on:
   pull_request:
-    paths: ['risk-monitor/**', '.github/workflows/loyverse-risk-*.yml']
+    paths: ['risk-telegram/relay.py', 'risk-telegram/tests/**', 'risk-monitor/**', '.github/workflows/loyverse-risk-*.yml']
   push:
     branches: [master]
-    paths: ['risk-monitor/*.py', 'risk-monitor/tests/**', '.github/workflows/loyverse-risk-*.yml']
+    paths: ['risk-telegram/relay.py', 'risk-telegram/tests/**', 'risk-monitor/*.py', 'risk-monitor/tests/**', '.github/workflows/loyverse-risk-*.yml']
 permissions:
   contents: read
 jobs:
@@ -14,9 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: risk-monitor
+          sparse-checkout: |
+            risk-monitor
+            risk-telegram
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r risk-monitor/requirements.txt
       - run: python -m unittest discover -s risk-monitor/tests -v
+      - run: python -m unittest discover -s risk-telegram/tests -v
