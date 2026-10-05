@@ -150,6 +150,9 @@ gap codes mean coverage is still incomplete, even while progress is increasing.
 Historical pages without new findings are checkpointed once a minute and on
 completion. New findings are checkpointed immediately before delivery; the run's
 failure/budget checkpoint retains any remaining cursor progress.
+Unmatched export charges remain an explicit coverage gap. They do not cause an
+already completed, current full fee sweep to restart; interrupted sweeps still
+resume and complete, and the daily sweep schedule remains in force.
 
 Run tests: `python -m unittest discover -s risk-monitor/tests -v`.
 

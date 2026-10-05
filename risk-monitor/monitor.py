@@ -321,7 +321,12 @@ class Monitor:
                 self.gap('watched_fee_pagination_incomplete')
         missing_cache=any(x['status']=='succeeded' and k not in self.s.get('charges',{})
                           for k,x in self.s.get('attempts',{}).items())
-        full_due = missing_cache or not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress'
+        if missing_cache:
+            self.gap('export_charge_cache_incomplete')
+        # Repeating the same completed fee history cannot recover export charges
+        # that have no accessible fee. Keep that gap explicit and investigate it,
+        # while allowing account coverage to finish instead of restarting backfill.
+        full_due = not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress'
         # Give account enumeration its own bounded share of each run. Historical
         # charge backfills must not starve the independent daily account sweep.
         overall_deadline = self.deadline

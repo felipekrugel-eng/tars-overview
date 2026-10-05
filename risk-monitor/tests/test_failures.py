@@ -120,6 +120,18 @@ class Failures(unittest.TestCase):
         fake=object.__new__(Stripe)
         with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass'),patch.object(m,'global_sweep',side_effect=sweep),patch.object(m,'aggregate_refunds'):
             m.live()
+    def test_unmatched_export_charge_does_not_restart_completed_fee_history(self):
+        m=self.monitor();m.c['legacy_last_completed']=1;m.s['full_completed']=m.now
+        m.s['full']={'status':'complete','partitions':[{'complete':True,'checked':100}]}
+        m.s['attempts']={'acct_a|ch_missing':{'status':'succeeded','country':'US'}}
+        m.s['charges']={}
+        fake=object.__new__(Stripe)
+        with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass') as fees,patch.object(m,'global_sweep'),patch.object(m,'aggregate_refunds'):
+            m.live()
+        self.assertEqual(fees.call_count,1)
+        self.assertEqual(m.s['full']['partitions'][0]['checked'],100)
+        self.assertIn('export_charge_cache_incomplete',m.s['gaps'])
+        self.assertIn('fee_linked_export_reconciliation_incomplete',m.s['gaps'])
     def test_historical_pages_batch_checkpoint_and_preserve_final_cursor(self):
         m=self.monitor();stripe=object.__new__(Stripe);m.stripe=stripe
         pages=[{'data':[{'id':'fee_a'}],'has_more':True}, {'data':[{'id':'fee_b'}],'has_more':True}, {'data':[{'id':'fee_c'}],'has_more':False}]
