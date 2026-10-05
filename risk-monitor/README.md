@@ -161,6 +161,13 @@ permissions or delivery. A finished workflow with gap codes is **degraded**, not
 complete monitoring. To resolve uncertain delivery, verify Sent/receipts and record
 the receipt; do not clear the intent or rerun the side effect.
 
+During shadow migration, safely checkpointed backfill/account scans with only
+known in-progress gap codes finish with a GitHub warning instead of a failed job.
+This avoids repeated GitHub failure emails for expected resumable work. Health
+remains degraded, the independent watchdog continues, and the external alarm
+remains down. Credential, integrity, runtime and unexpected source errors still
+fail, as does incomplete active-mode coverage or unmatched exports after backfill.
+
 Rule changes require a regression fixture and a reviewed commit. Changes to schedule,
 mode or recipients are visible in Git history; encrypted checkpoints record run actors.
 The current API adapter has no operation that can disable its own scheduler.

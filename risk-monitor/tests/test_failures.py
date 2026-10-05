@@ -20,6 +20,27 @@ def state():
     return {'run_started':100000,'mode':'active','gaps':[],'events':{},'alerts':{},'seen_attempts':{},'attempts':{}}
 
 class Failures(unittest.TestCase):
+    def test_checkpointed_shadow_backfill_is_warning_with_degraded_health(self):
+        from monitor import workflow_exit_status, health
+        s=state();s['mode']='shadow';s['full']={'status':'in_progress'}
+        s['gaps']=['run_budget_checkpointed','export_charge_cache_incomplete','global_sweep_in_progress']
+        self.assertEqual(workflow_exit_status(s),0)
+        self.assertEqual(health(s,100001,completed=True)['status'],'degraded')
+    def test_shadow_credentials_integrity_and_unexpected_errors_still_fail(self):
+        from monitor import workflow_exit_status
+        for error in ('gmail_oauth_missing','audit_chain_mismatch','runtime_failure','github_git_refs_http_422'):
+            s=state();s['mode']='shadow';s['full']={'status':'in_progress'}
+            s['gaps']=['run_budget_checkpointed',error]
+            self.assertEqual(workflow_exit_status(s),2)
+    def test_active_incomplete_coverage_still_fails(self):
+        from monitor import workflow_exit_status
+        s=state();s['full']={'status':'in_progress'};s['gaps']=['run_budget_checkpointed']
+        self.assertEqual(workflow_exit_status(s),2)
+    def test_completed_backfill_with_unmatched_export_still_fails(self):
+        from monitor import workflow_exit_status
+        s=state();s['mode']='shadow';s['full']={'status':'complete'}
+        s['global']={'complete':False};s['gaps']=['export_charge_cache_incomplete']
+        self.assertEqual(workflow_exit_status(s),2)
     def test_durable_state_authenticated_encryption(self):
         with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake-test-key'}):
             s={'sensitive':'not-public'}; e=seal(s)

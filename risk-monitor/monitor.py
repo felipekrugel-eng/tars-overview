@@ -648,6 +648,28 @@ def external_heartbeat(ok):
     except Exception:
         raise SafeError('external_deadman_ping_failed') from None
 
+def workflow_exit_status(state):
+    """Expected, durably saved shadow backfill is a warning, not a job crash.
+
+    Health remains degraded and the external alarm remains down. Unknown errors,
+    lost credentials, integrity failures and incomplete active monitoring fail.
+    """
+    gaps = set(state.get('gaps', []))
+    if not gaps:
+        return 0
+    if state.get('mode') != 'shadow':
+        return 2
+    full_in_progress = state.get('full', {}).get('status') == 'in_progress'
+    global_in_progress = not state.get('global', {}).get('complete', False)
+    allowed = {'run_budget_checkpointed', 'global_sweep_in_progress', 'global_previous_day_incomplete'}
+    if full_in_progress:
+        allowed |= {'export_charge_cache_incomplete', 'global_fingerprint_coverage_incomplete',
+                    'aggregate_refund_comparison_unavailable', 'aggregate_refund_scope_incomparable',
+                    'fee_linked_export_reconciliation_incomplete'}
+    if (full_in_progress or global_in_progress) and gaps <= allowed:
+        return 0
+    return 2
+
 def main():
     if os.environ.get('GITHUB_REPOSITORY') != 'felipekrugel-eng/tars-overview' or os.environ.get('GITHUB_REF') != 'refs/heads/master':
         raise SafeError('repository_or_branch_mismatch')
@@ -690,8 +712,10 @@ def main():
         if os.environ.get('RISK_HEARTBEAT_URL'):
             external_heartbeat(not state['gaps'] and state['mode']=='active')
         print('Risk checks checkpointed; status '+('degraded' if state['gaps'] else 'healthy')+'.')
-        if state['gaps']: return 2
-        return 0
+        result = workflow_exit_status(state)
+        if state['gaps'] and result == 0:
+            print('::warning::Shadow migration scan is still in progress; durable cursors saved. Coverage remains degraded.')
+        return result
     except Exception as exc:
         monitor.gap(str(exc) if isinstance(exc,SafeError) else 'runtime_failure')
         monitor.group_alerts()
