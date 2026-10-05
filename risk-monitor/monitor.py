@@ -319,10 +319,13 @@ class Monitor:
                 self.fee(fee)
             if page['has_more']:
                 self.gap('watched_fee_pagination_incomplete')
+        missing_cache=any(x['status']=='succeeded' and k not in self.s.get('charges',{})
+                          for k,x in self.s.get('attempts',{}).items())
+        full_due = missing_cache or not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress'
         # Give account enumeration its own bounded share of each run. Historical
         # charge backfills must not starve the independent daily account sweep.
         overall_deadline = self.deadline
-        self.deadline = min(overall_deadline, time.monotonic() + 180)
+        self.deadline = min(overall_deadline, time.monotonic() + 180) if full_due else overall_deadline
         try:
             self.global_sweep()
         except SafeError as exc:
@@ -331,9 +334,7 @@ class Monitor:
             self.gap('global_sweep_in_progress')
         finally:
             self.deadline = overall_deadline
-        missing_cache=any(x['status']=='succeeded' and k not in self.s.get('charges',{})
-                          for k,x in self.s.get('attempts',{}).items())
-        if missing_cache or not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress':
+        if full_due:
             full = self.s.setdefault('full', {'status': 'in_progress', 'started': self.now,
                                               'partitions': [{'from':0,'to':self.now}]})
             if full.get('status') != 'in_progress':
@@ -346,15 +347,15 @@ class Monitor:
                                  'expand[]':['data.charge.refunds','data.charge.dispute']})
             full['status'] = 'complete'
             self.s['full_completed'] = self.now
-        if self.s.get('global', {}).get('complete'):
-            # Refresh fingerprint linkage and coverage after the charge sweep.
-            self.global_sweep()
         self.aggregate_refunds()
         # Fee-linked access must reconcile against all succeeded export keys.
         missing = [k for k,x in self.s.get('attempts', {}).items()
                    if x['status']=='succeeded' and x['country']=='US' and k not in self.s['charges']]
         if missing:
             self.gap('fee_linked_export_reconciliation_incomplete')
+        # Use remaining runtime for the account sweep after backfill finishes,
+        # then refresh its fingerprint linkage against the completed charge set.
+        self.global_sweep()
         self.checkpoint({'type':'live_complete','missing_fee_charge_count':len(missing)})
     def aggregate_refunds(self):
         if not self.s.get('full_completed') or self.now-self.s['full_completed']>86400:

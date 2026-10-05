@@ -108,11 +108,18 @@ class Failures(unittest.TestCase):
         m.s['full']={'status':'in_progress','partitions':[{'from':0,'to':20,'complete':True}]}
         original_deadline=m.deadline
         fake=object.__new__(Stripe)
-        with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass'),patch.object(m,'global_sweep',side_effect=SafeError('run_budget_checkpointed')),patch.object(m,'aggregate_refunds'):
+        with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass'),patch.object(m,'global_sweep',side_effect=[SafeError('run_budget_checkpointed'),None]),patch.object(m,'aggregate_refunds'):
             m.live()
         self.assertEqual(m.s['full']['status'],'complete')
         self.assertEqual(m.deadline,original_deadline)
         self.assertIn('global_sweep_in_progress',m.s['gaps'])
+    def test_current_processor_coverage_leaves_full_budget_for_accounts(self):
+        m=self.monitor();m.c['legacy_last_completed']=1;m.s['full_completed']=m.now
+        original_deadline=m.deadline
+        def sweep():self.assertEqual(m.deadline,original_deadline)
+        fake=object.__new__(Stripe)
+        with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass'),patch.object(m,'global_sweep',side_effect=sweep),patch.object(m,'aggregate_refunds'):
+            m.live()
     def test_historical_pages_batch_checkpoint_and_preserve_final_cursor(self):
         m=self.monitor();stripe=object.__new__(Stripe);m.stripe=stripe
         pages=[{'data':[{'id':'fee_a'}],'has_more':True}, {'data':[{'id':'fee_b'}],'has_more':True}, {'data':[{'id':'fee_c'}],'has_more':False}]

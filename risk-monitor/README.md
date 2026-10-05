@@ -142,7 +142,8 @@ normal replay checks.
 `health.json` reports processor items checked, accounts enumerated, and Gmail's
 completed watermark. Historical backfill cursors survive the run budget. Each run
 gives account enumeration a bounded share before continuing processor backfill,
-and scans Gmail before that backfill. Null completion timestamps and in-progress
+uses remaining runtime for accounts once that backfill finishes, and scans Gmail
+before the backfill. Null completion timestamps and in-progress
 gap codes mean coverage is still incomplete, even while progress is increasing.
 Historical pages without new findings are checkpointed once a minute and on
 completion. New findings are checkpointed immediately before delivery; the run's
