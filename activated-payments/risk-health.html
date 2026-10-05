@@ -202,13 +202,16 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     var n=merchants.length, avg=n?Math.round(merchants.reduce(function(s,m){return s+m.score},0)/n):0;
     var hi=merchants.filter(function(m){return m.score<40}).length;
     var vh=merchants.filter(function(m){return m.score<25}).length;
-    var action=merchants.filter(function(m){return /hold|payout|urgent/i.test(m.action||'')}).length;
+    var action=merchants.filter(function(m){return /hold|payout|urgent|manual review/i.test(m.action||'')}).length;
+    var coverage=DATA.coverage||{};
+    var enabledReviewed=coverage.reviewedEnabled||n;
+    var enabledTotal=coverage.stripeEnabledChargesOrPayouts||enabledReviewed;
     $('kpis').innerHTML=[
-      ['Reviewed merchants',n,'Current dataset'],
+      ['Enabled reviewed',enabledReviewed+'/'+enabledTotal,'Stripe enabled-account population'],
+      ['Indexed records',n,'Dashboard records currently stored'],
       ['Average trust score',avg+'/100','Higher = stronger corroboration'],
       ['Below 40',hi,'High / very high risk'],
-      ['Below 25',vh,'Very high risk'],
-      ['Payout review queue',action,'Explicit payout-review recommendation']
+      ['Manual review queue',action,'Review / payout attention']
     ].map(function(x){return '<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>'}).join('');
   }
   function renderDist(){
