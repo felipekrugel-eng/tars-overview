@@ -99,9 +99,14 @@ class GitStore:
         self.manifest = None
         self.previous = None
     def api(self, path, method='GET', data=None):
-        return http('https://api.github.com/repos/' + REPO + '/' + path, method, data,
-                    {'Authorization': 'Bearer ' + os.environ['GITHUB_TOKEN'],
-                     'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'})
+        try:
+            return http('https://api.github.com/repos/' + REPO + '/' + path, method, data,
+                        {'Authorization': 'Bearer ' + os.environ['GITHUB_TOKEN'],
+                         'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'})
+        except SafeError as exc:
+            if str(exc)=='http_404':raise
+            category='_'.join(path.split('/')[:2]) if path.startswith('git/') else path.split('/')[0]
+            raise SafeError('github_'+category+'_'+str(exc)) from None
     def file(self, path):
         try:
             entry = self.api('contents/' + path + '?ref=master')
@@ -187,6 +192,14 @@ class GitStore:
         files[self.path]=canonical(seal(manifest)).decode()
         if health is not None:
             files['risk-monitor/health.json'] = canonical(health).decode()
+        entries=[]
+        for path,content in files.items():
+            entry={'path':path,'mode':'100644','type':'blob'}
+            if len(content.encode())>500000:
+                blob=self.api('git/blobs','POST',{'content':base64.b64encode(content.encode()).decode(),'encoding':'base64'})
+                entry['sha']=blob['sha']
+            else:entry['content']=content
+            entries.append(entry)
         # Retry only ref conflict from unrelated writers, never delivery. Check the
         # state blob again before rebuilding on a newer parent.
         for conflict in range(3):
@@ -196,14 +209,13 @@ class GitStore:
             _, current_sha = self.file(self.path)
             if current_sha != self.sha:
                 raise SafeError('state_compare_and_swap_conflict')
-            tree = self.api('git/trees', 'POST', {'base_tree': commit['tree']['sha'], 'tree': [
-                {'path': p, 'mode': '100644', 'type': 'blob', 'content': c} for p, c in files.items()]})
+            tree = self.api('git/trees', 'POST', {'base_tree': commit['tree']['sha'], 'tree':entries})
             new = self.api('git/commits', 'POST', {'message': 'chore(risk): durable checkpoint ' + self.run_id,
                                                  'tree': tree['sha'], 'parents': [parent]})
             try:
                 self.api('git/refs/heads/master', 'PATCH', {'sha': new['sha'], 'force': False})
             except SafeError as exc:
-                if str(exc) == 'http_422' and conflict < 2:
+                if str(exc) in ('http_422','github_git_refs_http_422') and conflict < 2:
                     continue
                 raise
             raw = files[self.path].encode()
