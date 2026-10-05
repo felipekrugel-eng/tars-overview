@@ -113,6 +113,25 @@ class Failures(unittest.TestCase):
         self.assertEqual(m.s['full']['status'],'complete')
         self.assertEqual(m.deadline,original_deadline)
         self.assertIn('global_sweep_in_progress',m.s['gaps'])
+    def test_historical_pages_batch_checkpoint_and_preserve_final_cursor(self):
+        m=self.monitor();stripe=object.__new__(Stripe);m.stripe=stripe
+        pages=[{'data':[{'id':'fee_a'}],'has_more':True}, {'data':[{'id':'fee_b'}],'has_more':True}, {'data':[{'id':'fee_c'}],'has_more':False}]
+        progress={}
+        with patch.object(stripe,'page',side_effect=pages) as page,patch.object(m,'fee'),patch.object(m,'deliver'),patch.object(m,'budget'),patch('monitor.time.monotonic',return_value=1):
+            m.fee_pass(progress,{'limit':100})
+        self.assertEqual([call.args[2] for call in page.call_args_list],[None,'fee_a','fee_b'])
+        self.assertEqual(len(m.store.writes),1)
+        self.assertEqual(m.store.writes[0][0].get('alerts'),{})
+        self.assertEqual(progress,{'cursor':'fee_c','checked':3,'complete':True})
+    def test_new_finding_flushes_before_delivery_during_batched_backfill(self):
+        m=self.monitor();stripe=object.__new__(Stripe);m.stripe=stripe
+        pages=[{'data':[{'id':'fee_new'}],'has_more':True}, {'data':[],'has_more':False}]
+        def observe(_):m.add(Finding('acct_a','refund','Elevated',['re_new']))
+        def delivered():self.assertTrue(m.store.writes[-1][0]['alerts'])
+        with patch.object(stripe,'page',side_effect=pages),patch.object(m,'fee',side_effect=observe),patch.object(m,'deliver',side_effect=delivered) as send,patch.object(m,'budget'),patch('monitor.time.monotonic',return_value=1):
+            m.fee_pass({}, {'limit':100})
+        self.assertEqual(send.call_count,2)
+        self.assertEqual(len(m.store.writes),2)
     def test_health_exposes_progress_without_account_or_mailbox_details(self):
         from monitor import health
         s=state();s['full']={'partitions':[{'checked':100},{'checked':50}]}
@@ -123,6 +142,20 @@ class Failures(unittest.TestCase):
         self.assertEqual(h['global_progress_accounts'],1)
         self.assertEqual(h['gmail_completed_at'],123)
         self.assertNotIn('acct_sensitive',str(h))
+    def test_previous_day_global_cursor_finishes_today_without_restart(self):
+        m=self.monitor();m.s['mode']='shadow';m.s['full_completed']=m.now
+        m.s['gaps']=['global_previous_day_incomplete']
+        m.s['global']={'day':'19700101','complete':False,'cursor':'acct_old','records':{'acct_old':{'bucket':'Unknown','checked_at':1}}}
+        stripe=object.__new__(Stripe);m.stripe=stripe
+        verified={'id':'acct_old','bucket':'US','tos_ip':'8.8.8.8','checked_at':m.now}
+        with patch.object(stripe,'page',return_value={'data':[],'has_more':False}) as page,patch.object(m,'account',return_value=verified) as account:
+            m.global_sweep();m.global_sweep()
+        self.assertEqual(page.call_count,1)
+        self.assertEqual(page.call_args.args[2],'acct_old')
+        self.assertEqual(account.call_count,1)
+        self.assertEqual(m.s['global']['day'],'19700102')
+        self.assertEqual(m.s['global']['counts']['US'],1)
+        self.assertNotIn('global_previous_day_incomplete',m.s['gaps'])
     def test_checkpoint_failure_prevents_email_side_effect(self):
         m=self.monitor();m.add(Finding('acct_a','amount','Amount alert',['ch_test']));m.group_alerts()
         gmail=object.__new__(Gmail);m.gmail=gmail

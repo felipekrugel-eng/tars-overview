@@ -274,6 +274,7 @@ class Monitor:
         if finding:
             self.add(finding)
     def fee_pass(self, progress, params):
+        last_checkpoint = time.monotonic()
         while not progress.get('complete'):
             self.budget()
             page = self.stripe.page('application_fees', params, progress.get('cursor'))
@@ -286,9 +287,15 @@ class Monitor:
                 progress['cursor'] = cursor
             progress['complete'] = not page['has_more']
             progress['checked'] = progress.get('checked', 0)+len(page['data'])
+            findings_ready = bool(self.new)
             self.group_alerts()
-            self.checkpoint({'type': 'fee_page', 'checked': len(page['data']), 'complete': progress['complete']})
-            self.deliver()
+            # Old backfill pages do not require one Git commit per 100 fees.
+            # Save at least once per minute, at completion, or before a new alert
+            # can be delivered. Failure/budget handling also saves the cursor.
+            if progress['complete'] or findings_ready or time.monotonic()-last_checkpoint >= 60:
+                self.checkpoint({'type': 'fee_page', 'checked': progress['checked'], 'complete': progress['complete']})
+                self.deliver()
+                last_checkpoint = time.monotonic()
     def live(self):
         self.stripe = Stripe()
         self.stripe.preflight()
@@ -378,6 +385,7 @@ class Monitor:
                               'coverage_asof':self.s['full_completed']}))
             self.s['refund_tiers'][key]={'level':tier,'amount':amount}
     def global_sweep(self):
+        last_checkpoint = time.monotonic()
         day = datetime.fromtimestamp(self.now, ZoneInfo('Europe/London')).strftime('%Y%m%d')
         g = self.s.get('global', {})
         if g.get('day') != day:
@@ -399,9 +407,18 @@ class Monitor:
             if page['data']:
                 g['cursor'] = page['data'][-1]['id']
             g['complete'] = not page['has_more']
-            self.checkpoint({'type':'global_page','total':len(g['records']),'complete':g['complete']})
+            if g['complete'] or time.monotonic()-last_checkpoint >= 60:
+                self.checkpoint({'type':'global_page','total':len(g['records']),'complete':g['complete']})
+                last_checkpoint = time.monotonic()
+        # A resumed prior-day cursor completes today's sweep. Refresh retained
+        # records before publishing completion, without starting enumeration over.
+        g['day'] = day
+        for account_id, record in list(g['records'].items()):
+            if record.get('checked_at') != self.now:
+                self.budget()
+                g['records'][account_id] = self.account(account_id)
         g['completed_at'] = self.now
-        self.s['gaps'] = [code for code in self.s['gaps'] if code != 'global_sweep_in_progress']
+        self.s['gaps'] = [code for code in self.s['gaps'] if code not in ('global_sweep_in_progress','global_previous_day_incomplete')]
         buckets = Counter(a['bucket'] for a in g['records'].values())
         buckets.setdefault('GB',0); buckets.setdefault('PR',0); buckets.setdefault('Unknown',0)
         g['counts'] = dict(sorted(buckets.items()))
