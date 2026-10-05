@@ -471,6 +471,30 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
                       f"{fp['impliedTakeRate']*100:.3f}% take rate", flush=True)
             except Exception as e:
                 print(f"   WARNING — free-period counterfactual skipped: {e}", flush=True)
+            # Payments contribution by POS REGISTRATION cohort, for the KPI dashboard's cohort
+            # triangle. Written as its own small JSON beside payments-cohort.json rather than
+            # folded into margins-data.js: it is consumed by a different page, and the triangle
+            # already fetches that sibling lazily, so this follows a path that works.
+            try:
+                from cohort_payments import build as build_coh
+                import json as _json
+                coh = build_coh(tx_path, ic_path,
+                                str(HERE / "data" / "account_cohort.csv"),
+                                _num(C(16)) or 0.0)
+                dest = HERE.parent / "KPI Dashboard v2 (Caio)" / "cohort-payments.json"
+                coh["generatedAt"] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+                dest.write_text(_json.dumps(coh, separators=(",", ":")), encoding="utf-8")
+                ct = coh["totals"]
+                drift = abs(ct["contribution"] - (_num(C(25)) or 0.0))
+                print(f"   cohort payments: {len(coh['byCohort'])} POS cohorts, "
+                      f"contribution ${ct['contribution']:,.2f} vs Summary "
+                      f"${_num(C(25)) or 0:,.2f} (drift ${drift:,.2f})"
+                      f"{'' if drift < 1 else '  *** DRIFT ***'}", flush=True)
+                if coh["unmapped"]["txns"]:
+                    print(f"   NOTE {coh['unmapped']['txns']} charge(s) could not be tied to a "
+                          f"registration month and are excluded from every cohort", flush=True)
+            except Exception as e:
+                print(f"   WARNING — cohort payments skipped: {e}", flush=True)
         except Exception as e:
             print(f"   !! country split skipped (non-fatal): {e}", file=sys.stderr, flush=True)
 

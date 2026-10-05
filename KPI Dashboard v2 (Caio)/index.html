@@ -201,8 +201,8 @@
 <nav class="lvmn">
   <span class="lvmn-brand"><img class="lvmn-logo" src="loyverse_icon_white.png" alt=""><b>Loyverse<span class="lvmn-dot">.</span></b></span>
   <a class="lvmn-tab on" href="daily.html">POS</a>
-  <a class="lvmn-tab" href="https://activated-payments.pages.dev/#payments">Payments</a>
-  <a class="lvmn-tab" href="https://activated-payments.pages.dev/#map">Merchant Map</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#payments">Payments</a>
+  <a class="lvmn-tab" href="https://activated-payments.netlify.app/#map">Merchant Map</a>
   <a class="lvmn-tab" href="marketing.html">Marketing</a>
 </nav>
 
@@ -349,6 +349,14 @@
          One from each group DOES combine: a payments condition already restricts the population
          to merchants holding an account, and every cell's tooltip names that population.
          The payments group appears only once payments-cohort.json has loaded. -->
+    <!-- MONEY vs MERCHANTS. The triangle has only ever counted merchants; these two count
+         money, and money does not intersect with a status the way Paying and Active do — a
+         cohort's MRR is not "MRR among merchants who were also active". So picking a money
+         measure takes over the grid and the status, stage and percentage controls step aside,
+         rather than being left on screen meaning nothing. -->
+    <div class="toggle" id="tri-money" style="display:none;margin-right:8px">
+      <button data-money="" class="on">Merchants</button><button data-money="mrr">MRR</button><button data-money="paycontrib" id="tri-paycontrib" style="display:none" title="Loyverse Payments contribution, by the month the merchant registered on POS">Payments contribution</button>
+    </div>
     <div class="toggle" id="tri-metric" style="display:none">
       <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="none" class="tri-any" style="display:none" title="No POS condition — count the payments stage on its own, whether or not the merchant was paying or active that month">Any status</button>
     </div>
@@ -1147,6 +1155,12 @@ renderCohTable();
   // 'base' = share of the cohort's payments merchants. Kept truthy-compatible so every existing
   // `pct ? ... : ...` still means "some percentage" versus "a count".
   let triMetric = 'paying', triPct = false;
+  // null = count merchants (everything the triangle did before). 'mrr' or 'paycontrib' = show
+  // money instead. Held separately from triMetric so the status selection survives a trip
+  // through a money view and comes back intact.
+  let triMoney = null;
+  // Payments contribution by POS registration cohort, fetched lazily like payments-cohort.json.
+  let PAYC = null, PAYC_STAMP = null;
   // The grid drawTri last built, kept so the CSV can be serialised from the same pass that drew
   // the cells rather than recomputed beside them. Declared here, not next to the export code, so
   // it is initialised before any draw can reach it.
@@ -1167,7 +1181,22 @@ renderCohTable();
   const hasPay = () => triSel.some(k => PAY_KEYS.indexOf(k) >= 0);
   // One selection, and it is one of the two original metrics -> read the embedded series by
   // reference. Not "equal to" the old behaviour, the SAME data path.
-  const useSeries = () => triSel.length === 1 && (triSel[0] === 'paying' || triSel[0] === 'active');
+  // A money view is always a plain per-cohort series, so it takes the series path whatever
+  // the status chips happen to be set to.
+  const useSeries = () => !!triMoney || (triSel.length === 1 && (triSel[0] === 'paying' || triSel[0] === 'active'));
+  const moneySrc = () => triMoney === 'paycontrib' ? (PAYC && PAYC.byCohort) : TRI;
+  const moneyKey = () => triMoney === 'paycontrib' ? 'contribution' : 'mrr';
+  // Money is signed — payments contribution is negative for plenty of cohorts — so it cannot
+  // use triFmt, which assumes a count. Negatives are shown with a minus and coloured by the
+  // caller; zero stays "0" rather than "$0" so an empty cell does not shout.
+  const moneyFmt = v => {
+    if (v == null) return '';
+    const a = Math.abs(v);
+    const n = a >= 1000 ? '$' + (a/1000).toFixed(1).replace(/\.0$/,'') + 'k'
+            : a >= 1   ? '$' + a.toFixed(0)
+            : a === 0  ? '0' : '$' + a.toFixed(2);
+    return (v < 0 ? '\u2212' : '') + n;
+  };
 
   // Merchants regrouped by registration cohort, month indices resolved to 'YYYY-MM' strings once.
   // Strings rather than indices because the month axis is sparse: a calendar month in which no
@@ -1277,8 +1306,17 @@ renderCohTable();
     //   Anything counted from the membership — EVERY cohort with registrations, and enough age
     //     columns for the oldest of them to reach the current month. A 2017 cohort meets the
     //     payments era at roughly M111, so a 25-column grid could not have shown it at all.
-    const wide = series ? wideSeries(metric) : true;
-    const triCohorts = wide ? ALL_ROWS.slice() : triCohortsNow();
+    // In a money view the metric and the source are decided here, not by the status chips.
+    const MONEY = !!triMoney;
+    if (MONEY) { metric = moneyKey(); pct = false; }
+    const wide = MONEY ? true : (series ? wideSeries(metric) : true);
+    const MSRC = MONEY ? (moneySrc() || {}) : null;
+    // Payments contribution exists only for cohorts that have processed a charge; MRR exists
+    // for every cohort in the triangle. Rows with no data at all are dropped rather than drawn
+    // as a band of empties, which on 45 of 131 cohorts would bury the signal.
+    const triCohorts = MONEY
+      ? ALL_ROWS.filter(c => { const a = MSRC[c] && MSRC[c][metric]; return a && a.some(v => v); })
+      : (wide ? ALL_ROWS.slice() : triCohortsNow());
     const cohSize = cohSizeNow();
     // Under a country filter the per-country files carry only the last 24 cohorts, so an older
     // cohort has no per-country denominator. Absolute counts are still exact; the percentage is
@@ -1295,7 +1333,7 @@ renderCohTable();
     };
     // Where the numbers come from in series mode: the all-cohort triangle when it has this
     // metric and no country is selected, the trimmed per-country series otherwise.
-    const src = wide ? TRI : CC;
+    const src = MONEY ? MSRC : (wide ? TRI : CC);
     let mx = 0, nAges = 1;
     if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
     else triCohorts.forEach(c => { nAges = Math.max(nAges, (LATEST_M ? mAge(c, LATEST_M) : 0) + 1); });
@@ -1320,7 +1358,9 @@ renderCohTable();
     triCohorts.forEach(c => { const s = denomOf(c);
       for (let i = 0; i < nAges; i++){ const v = valOf(c, i);
         if (v == null) continue; const dv = pct ? (s ? v/s*100 : null) : v;
-        if (dv != null && dv > mx) mx = dv; } });
+        // Magnitude, because contribution is signed: scaling a heat ramp on the raw value
+        // would make the worst cohorts the palest.
+        if (dv != null && Math.abs(dv) > mx) mx = Math.abs(dv); } });
     // The newest diagonal is the CURRENT, in-progress month (July cohort's M1 = August-to-date).
     // Each cohort reaches it at a different age, so the partial cell is per-row, not a column.
     //
@@ -1367,19 +1407,33 @@ renderCohTable();
         const dv = pct ? v/den*100 : v;
         exCells.push(dv);
         const t = mx ? dv/mx : 0;
-        const cell = (pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
-        const tip = c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
-                  + triSel.map(k => LABEL[k]).join(' + ') + ': '
-                  + (pct ? dv.toFixed(1) + '% — ' + fmtN(v) + ' of ' + fmtN(den)
-                           + (pct === 'base' ? ' merchants holding a payments account' : ' registrations')
-                     : fmtN(v) + (membership ? ' of the ' + fmtN(base) + ' merchants in this cohort holding a payments account' : ''))
-                  + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : '');
-        const style = 'background:rgba(29,143,225,' + (0.06 + 0.9*t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
+        const cell = (MONEY ? moneyFmt(v) : pct ? dv.toFixed(1) + '%' : triFmt(v)) + (isPartial ? '<span style="opacity:.75">*</span>' : '');
+        const tip = MONEY
+          ? (c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
+             + (triMoney === 'mrr' ? 'MRR' : 'Payments contribution') + ': '
+             + (v < 0 ? '\u2212$' : '$') + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})
+             + (triMoney === 'paycontrib'
+                 ? ' — application fee less network and Stripe fees, for merchants who registered on POS in ' + c
+                 : ' — subscription MRR from the ' + c + ' cohort in that month of life')
+             + (isPartial ? ' — ' + LATEST + ' still in progress' : ''))
+          : (c + ' · M' + i + ' (' + monthAt(c, i) + ') · '
+             + triSel.map(k => LABEL[k]).join(' + ') + ': '
+             + (pct ? dv.toFixed(1) + '% — ' + fmtN(v) + ' of ' + fmtN(den)
+                      + (pct === 'base' ? ' merchants holding a payments account' : ' registrations')
+                : fmtN(v) + (membership ? ' of the ' + fmtN(base) + ' merchants in this cohort holding a payments account' : ''))
+             + (isPartial ? ' — ' + LATEST + ' still in progress; accumulates through the month, so not comparable with completed months' : ''));
+        // Signed money gets a diverging ramp: blue for money earned, red for money lost. A
+        // single-hue ramp would paint a $2,000 loss and a $2,000 gain the same colour, which
+        // on a payments contribution grid is the one distinction that matters.
+        const mag = MONEY ? Math.abs(dv)/ (mx || 1) : t;
+        const style = (MONEY && v < 0
+            ? 'background:rgba(210,73,91,' + (0.06 + 0.9*mag).toFixed(3) + ');color:' + (mag > 0.55 ? '#fff' : '#13233A')
+            : 'background:rgba(29,143,225,' + (0.06 + 0.9*(MONEY?mag:t)).toFixed(3) + ');color:' + ((MONEY?mag:t) > 0.55 ? '#fff' : '#13233A'))
                     + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
         // A cell can be drilled only when its number came from the membership list. The
         // dashboard-wide series are pre-summed over every merchant, so there is no list behind
         // them; those cells stay inert rather than opening an empty panel.
-        const drill = membership && hasIdentity && v > 0;
+        const drill = !MONEY && membership && hasIdentity && v > 0;
         h += '<td class="' + (drill ? 'tri-drill' : '') + '"'
            + (drill ? ' data-coh="' + c + '" data-cal="' + monthAt(c, i) + '"' : '')
            + ' style="' + style + '" title="' + tip + (drill ? ' — double-click to list them' : '') + '">'
@@ -1619,7 +1673,8 @@ renderCohTable();
     const tri = b.dataset.view === 'triangle';
     tblWrap.style.display = tri ? 'none' : '';
     triWrap.style.display = tri ? '' : 'none';
-    document.getElementById('tri-metric').style.display = tri ? 'inline-block' : 'none';
+    document.getElementById('tri-metric').style.display = (tri && !triMoney) ? 'inline-block' : 'none';
+    document.getElementById('tri-money').style.display = tri ? 'inline-block' : 'none';
     // The stage group only exists once the membership file has loaded, so it follows byCohort.
     document.getElementById('tri-stage').style.display = (tri && byCohort) ? 'inline-block' : 'none';
     document.querySelectorAll('#tri-metric button.tri-any').forEach(b => { b.style.display = (tri && byCohort) ? '' : 'none'; });
@@ -1690,6 +1745,47 @@ renderCohTable();
       if (triWrap.style.display !== 'none') drawTri(triMetric, triPct);
     })
     .catch(() => { /* not generated yet — the payments conditions simply are not offered */ });
+  // ── money toggle ──────────────────────────────────────────────────────────
+  // Switching into a money view hides the controls that no longer mean anything rather than
+  // leaving them clickable-but-inert, which reads as a broken page.
+  // Saved ONCE, on the transition into money mode. Saving on every click meant that moving
+  // from MRR to Payments contribution recorded the already-hidden 'none' as the state to
+  // restore, so coming back to Merchants left the controls invisible.
+  let moneySaved = null;
+  function syncMoneyControls(){
+    const ids = ['tri-metric','tri-stage','tri-mode'];
+    if (triMoney) {
+      if (!moneySaved) {
+        moneySaved = {};
+        ids.forEach(id => { const el = document.getElementById(id); if (el) moneySaved[id] = el.style.display; });
+      }
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    } else if (moneySaved) {
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = moneySaved[id]; });
+      moneySaved = null;
+    }
+  }
+  document.querySelectorAll('#tri-money button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#tri-money button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    triMoney = b.dataset.money || null;
+    syncMoneyControls();
+    drawTri(triMetric, triPct);
+  });
+
+  // Payments contribution by POS cohort. Lazy, optional and silent on failure, exactly like
+  // payments-cohort.json: if it never arrives the button simply never appears, and the
+  // triangle is what it always was.
+  fetch('cohort-payments.json', {cache:'no-cache'})
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(pc => {
+      if (!pc || !pc.byCohort || !Object.keys(pc.byCohort).length) return;
+      PAYC = pc; PAYC_STAMP = pc.generatedAt || null;
+      const btn = document.getElementById('tri-paycontrib');
+      if (btn) btn.style.display = '';
+    })
+    .catch(() => { /* not generated yet — the measure is simply not offered */ });
+
   document.querySelectorAll('#tri-mode button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#tri-mode button').forEach(x => x.classList.remove('on')); b.classList.add('on');
     triPct = b.dataset.pct === 'base' ? 'base' : b.dataset.pct === '1';
