@@ -50,6 +50,11 @@ def inspect(path):
                ('seen_attempts', 'attempts', 'charges', 'events', 'alerts', 'refunds', 'disputes')}
     summary['global_accounts'] = len(state.get('global', {}).get('records', {}))
     summary['processor_checked'] = sum(p.get('checked', 0) for p in state.get('full', {}).get('partitions', []))
+    missing = [row for key, row in state.get('attempts', {}).items()
+               if row.get('status') == 'succeeded' and key not in state.get('charges', {})]
+    summary['missing_export_succeeded'] = len(missing)
+    summary['missing_us_export_succeeded'] = sum(row.get('country') == 'US' for row in missing)
+    summary['missing_non_us_export_succeeded'] = sum(row.get('country') != 'US' for row in missing)
     metadata = {'path': path, 'manifest_blob_sha': sha,
                       'journal_count': len(manifest['journals']), 'chain_gaps': gaps,
                       'reconstructed_sha256': hashlib.sha256(canonical(state)).hexdigest(),

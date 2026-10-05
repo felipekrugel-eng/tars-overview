@@ -1,0 +1,38 @@
+name: Loyverse risk external alarm verification
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - risk-monitor/check_alarm.py
+      - .github/workflows/loyverse-risk-alarm-check.yml
+permissions:
+  contents: read
+concurrency:
+  group: loyverse-risk-external-alarm-check
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: risk-monitor
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Verify encrypted monitoring history and remaining coverage
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python risk-monitor/diagnose_state.py
+      - name: Verify failure and recovery notifications
+        env:
+          RISK_HEARTBEAT_URL: ${{ secrets.RISK_HEARTBEAT_URL }}
+          GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
+        run: python risk-monitor/check_alarm.py
