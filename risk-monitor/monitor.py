@@ -83,6 +83,7 @@ class Monitor:
         status = json.loads(Path('payments-automation/data/pull_status.json').read_text())
         fresh = source_health(status, raw, len(rows), self.now, 8*3600)
         self.s['source_asof'] = status['completed_at_utc']
+        self.s['transaction_source_fresh']=fresh
         if not fresh:
             self.gap('transaction_source_stale')
         attempts = []
@@ -202,6 +203,7 @@ class Monitor:
         for x in self.s['charges'].values():
             if x['account'] == account_id:
                 history.append(Attempt(**{k:x[k] for k in row}))
+        if not self.s.get('transaction_source_fresh',False):history=[current]
         status_key = key+'|'+current.status
         if status_key not in self.s['seen_attempts'] or self.s['seen_attempts'][status_key] == self.now:
             for finding in evaluate(current, history, a.get('created'), self.pos_age(account_id, current.created)):
@@ -294,7 +296,9 @@ class Monitor:
                 self.fee(fee)
             if page['has_more']:
                 self.gap('watched_fee_pagination_incomplete')
-        if not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress':
+        missing_cache=any(x['status']=='succeeded' and k not in self.s.get('charges',{})
+                          for k,x in self.s.get('attempts',{}).items())
+        if missing_cache or not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress':
             full = self.s.setdefault('full', {'status': 'in_progress', 'started': self.now,
                                               'partitions': [{'from':0,'to':self.now}]})
             if full.get('status') != 'in_progress':
