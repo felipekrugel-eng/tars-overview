@@ -42,6 +42,9 @@ def health(state, now, completed=False):
             'full_processor_completed_at': state.get('full_completed'),
             'global_sweep_completed_at': state.get('global', {}).get('completed_at'),
             'country_counts': state.get('global', {}).get('counts'),
+            'processor_progress_checked': sum(p.get('checked', 0) for p in state.get('full', {}).get('partitions', [])),
+            'global_progress_accounts': len(state.get('global', {}).get('records', {})),
+            'gmail_completed_at': state.get('gmail_watermark'),
             'run_id': os.environ.get('GITHUB_RUN_ID')}
 
 class Monitor:
@@ -309,6 +312,18 @@ class Monitor:
                 self.fee(fee)
             if page['has_more']:
                 self.gap('watched_fee_pagination_incomplete')
+        # Give account enumeration its own bounded share of each run. Historical
+        # charge backfills must not starve the independent daily account sweep.
+        overall_deadline = self.deadline
+        self.deadline = min(overall_deadline, time.monotonic() + 180)
+        try:
+            self.global_sweep()
+        except SafeError as exc:
+            if str(exc) != 'run_budget_checkpointed':
+                raise
+            self.gap('global_sweep_in_progress')
+        finally:
+            self.deadline = overall_deadline
         missing_cache=any(x['status']=='succeeded' and k not in self.s.get('charges',{})
                           for k,x in self.s.get('attempts',{}).items())
         if missing_cache or not self.s.get('full_completed') or self.now-self.s['full_completed'] >= 86400 or self.s.get('full', {}).get('status') == 'in_progress':
@@ -324,7 +339,9 @@ class Monitor:
                                  'expand[]':['data.charge.refunds','data.charge.dispute']})
             full['status'] = 'complete'
             self.s['full_completed'] = self.now
-        self.global_sweep()
+        if self.s.get('global', {}).get('complete'):
+            # Refresh fingerprint linkage and coverage after the charge sweep.
+            self.global_sweep()
         self.aggregate_refunds()
         # Fee-linked access must reconcile against all succeeded export keys.
         missing = [k for k,x in self.s.get('attempts', {}).items()
@@ -384,6 +401,7 @@ class Monitor:
             g['complete'] = not page['has_more']
             self.checkpoint({'type':'global_page','total':len(g['records']),'complete':g['complete']})
         g['completed_at'] = self.now
+        self.s['gaps'] = [code for code in self.s['gaps'] if code != 'global_sweep_in_progress']
         buckets = Counter(a['bucket'] for a in g['records'].values())
         buckets.setdefault('GB',0); buckets.setdefault('PR',0); buckets.setdefault('Unknown',0)
         g['counts'] = dict(sorted(buckets.items()))
@@ -411,9 +429,12 @@ class Monitor:
                              {'kind':kind,'accounts':sorted(accounts),'lead_only':True}))
         g['clusters_reviewed'] = len(clusters)
         # Complete account enumeration is not complete payment fingerprint coverage.
-        if not self.s.get('full_completed') or self.now-self.s['full_completed']>86400 or any(
-            x['status']=='succeeded' and (k not in self.s.get('charges',{}) or not self.s['charges'][k].get('fingerprint')) for k,x in self.s.get('attempts',{}).items()):
+        fingerprint_incomplete = not self.s.get('full_completed') or self.now-self.s['full_completed']>86400 or any(
+            x['status']=='succeeded' and (k not in self.s.get('charges',{}) or not self.s['charges'][k].get('fingerprint')) for k,x in self.s.get('attempts',{}).items())
+        if fingerprint_incomplete:
             self.gap('global_fingerprint_coverage_incomplete')
+        else:
+            self.s['gaps'] = [code for code in self.s['gaps'] if code != 'global_fingerprint_coverage_incomplete']
         self.checkpoint({'type':'global_complete','counts':g['counts'],'clusters':len(clusters)})
         # Status/recovery transport is enabled only after production cutover.
         if self.s['mode']=='active' and not any(x in self.s['gaps'] for x in ('global_fingerprint_coverage_incomplete','onboarding_ip_coverage_incomplete')):
@@ -633,10 +654,10 @@ def main():
         except Exception: monitor.gap('merchant_source_unverified')
         monitor.export()
         monitor.group_alerts(); monitor.checkpoint({'type':'export_outbox_ready'}); monitor.deliver()
-        try: monitor.live()
-        except (SafeError,ValueError) as exc: monitor.gap(str(exc) if isinstance(exc,SafeError) else 'processor_data_unknown')
         try: monitor.gmail_requests()
         except SafeError as exc: monitor.gap(str(exc))
+        try: monitor.live()
+        except (SafeError,ValueError) as exc: monitor.gap(str(exc) if isinstance(exc,SafeError) else 'processor_data_unknown')
         monitor.group_alerts(); monitor.checkpoint({'type':'outbox_ready'}); monitor.deliver()
         # Never advance the comprehensive completion watermark for incomplete scope.
         if not state['gaps']:

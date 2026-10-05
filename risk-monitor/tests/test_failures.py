@@ -102,6 +102,27 @@ class Failures(unittest.TestCase):
         with patch.object(stripe,'page',return_value={'data':[],'has_more':False}) as page,patch.object(m,'deliver'):
             m.fee_pass(p,{'limit':100});self.assertEqual(page.call_args.args[2],'fee_saved')
         self.assertTrue(p['complete'])
+    def test_partial_global_sweep_budget_does_not_starve_processor_resume(self):
+        m=self.monitor();m.c['legacy_last_completed']=1
+        m.s['incremental']={'from':0,'to':10,'complete':False}
+        m.s['full']={'status':'in_progress','partitions':[{'from':0,'to':20,'complete':True}]}
+        original_deadline=m.deadline
+        fake=object.__new__(Stripe)
+        with patch('monitor.Stripe',return_value=fake),patch.object(fake,'preflight'),patch.object(m,'fee_pass'),patch.object(m,'global_sweep',side_effect=SafeError('run_budget_checkpointed')),patch.object(m,'aggregate_refunds'):
+            m.live()
+        self.assertEqual(m.s['full']['status'],'complete')
+        self.assertEqual(m.deadline,original_deadline)
+        self.assertIn('global_sweep_in_progress',m.s['gaps'])
+    def test_health_exposes_progress_without_account_or_mailbox_details(self):
+        from monitor import health
+        s=state();s['full']={'partitions':[{'checked':100},{'checked':50}]}
+        s['global']={'records':{'acct_sensitive':{}},'complete':False}
+        s['gmail_watermark']=123
+        h=health(s,124)
+        self.assertEqual(h['processor_progress_checked'],150)
+        self.assertEqual(h['global_progress_accounts'],1)
+        self.assertEqual(h['gmail_completed_at'],123)
+        self.assertNotIn('acct_sensitive',str(h))
     def test_checkpoint_failure_prevents_email_side_effect(self):
         m=self.monitor();m.add(Finding('acct_a','amount','Amount alert',['ch_test']));m.group_alerts()
         gmail=object.__new__(Gmail);m.gmail=gmail
