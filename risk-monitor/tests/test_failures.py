@@ -160,6 +160,27 @@ class Failures(unittest.TestCase):
             self.assertEqual(api.call_count,2)
 
 class JournalTests(unittest.TestCase):
+    def relay(self):
+        from adapters import load_module
+        return load_module(str(Path(__file__).resolve().parents[2] / 'risk-telegram/relay.py'), 'relay_checkpoint_tests')
+
+    def test_telegram_receipt_checkpoint_retries_only_unchanged_state(self):
+        relay=self.relay()
+        with patch.object(relay,'github',side_effect=[relay.SafeError('http_409'),{'content':{'sha':'saved'}}]) as write,patch.object(relay,'read_state',return_value=({'receipts':{}},'expected')),patch.object(relay.time,'sleep'),patch.object(relay,'telegram') as send:
+            self.assertEqual(relay.save_state({'receipts':{}},'expected'),'saved')
+            self.assertEqual(write.call_count,2)
+            self.assertTrue(all(call.args[1]['sha']=='expected' for call in write.call_args_list))
+            send.assert_not_called()
+
+    def test_telegram_changed_receipt_state_stops_before_send(self):
+        relay=self.relay()
+        saved={'receipts':{}}
+        with patch.object(relay,'github',side_effect=relay.SafeError('http_409')) as write,patch.object(relay,'read_state',return_value=({'receipts':{'other':{'status':'sent'}}},'newer')),patch.object(relay,'telegram') as send:
+            with self.assertRaisesRegex(relay.SafeError,'telegram_state_compare_and_swap_conflict'):
+                relay.deliver(saved,{'chat_id':'test'},'expected','digest','test')
+            self.assertEqual(write.call_count,1)
+            send.assert_not_called()
+
     def test_failed_checkpoint_does_not_advance_in_memory_audit_head(self):
         store=GitStore(); store.sha='committed'
         store.manifest={'format':'journal-v1','snapshot':{},'journals':[]}

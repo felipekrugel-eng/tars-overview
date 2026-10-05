@@ -124,6 +124,27 @@ samples, cached processor data or a different mailbox/platform.
 
 ## Operations
 
+Checkpoint retries tolerate unrelated branch updates only while the expected
+encrypted state blob is unchanged. An unsuccessful checkpoint leaves the in-memory
+audit head at the last committed record. Telegram receipt writes use the same
+rule: retry a branch conflict only after verifying the delivery state blob has not
+changed, and never retry a Telegram send.
+
+The read-only **Loyverse risk state integrity diagnostic** workflow verifies every
+snapshot/journal checksum and reports chain gaps and aggregate progress counts. It
+does not send alerts or change state. **Loyverse risk verified state recovery** is
+pinned to the diagnosed 5 October 2026 manifest and reconstructed state digest. Its
+authenticated recovery snapshot preserves business state and delivery records;
+subsequent runs verify strict replay without rewriting recovered state. Future
+integrity failures require their own diagnosis, never resetting dedupe or relaxing
+normal replay checks.
+
+`health.json` reports processor items checked, accounts enumerated, and Gmail's
+completed watermark. Historical backfill cursors survive the run budget. Each run
+gives account enumeration a bounded share before continuing processor backfill,
+and scans Gmail before that backfill. Null completion timestamps and in-progress
+gap codes mean coverage is still incomplete, even while progress is increasing.
+
 Run tests: `python -m unittest discover -s risk-monitor/tests -v`.
 
 Green tests prove rule/failure behavior against fixtures; they do not prove live

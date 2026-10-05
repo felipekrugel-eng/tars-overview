@@ -78,8 +78,20 @@ def save_state(state, sha):
             "content": b64(json.dumps(state, indent=2).encode())}
     if sha:
         data["sha"] = sha
-    result = github("contents/" + STATE_PATH, data)
-    return result["content"]["sha"]
+    for conflict in range(8):
+        try:
+            result = github("contents/" + STATE_PATH, data)
+            return result["content"]["sha"]
+        except SafeError as error:
+            if str(error) != "http_409" or conflict == 7:
+                raise
+            # Contents writes can conflict with an unrelated master commit.
+            # Retry only if delivery state itself has not changed. A receipt or
+            # send intent from another writer must never be overwritten.
+            _, current_sha = read_state()
+            if current_sha != sha:
+                raise SafeError("telegram_state_compare_and_swap_conflict") from None
+            time.sleep(min(0.1 * 2**conflict, 1.0))
 
 
 def state_key(token):
