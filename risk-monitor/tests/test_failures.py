@@ -115,6 +115,26 @@ class Failures(unittest.TestCase):
             self.assertEqual(api.call_count,2)
 
 class JournalTests(unittest.TestCase):
+    def test_large_snapshot_uses_blobs_and_one_atomic_ref_update(self):
+        store=GitStore();calls=[]
+        def api(path,method='GET',data=None):
+            calls.append((path,method,data))
+            if path=='git/blobs':return {'sha':'blob'}
+            if path=='git/ref/heads/master':return {'object':{'sha':'head'}}
+            if path=='git/commits/head':return {'tree':{'sha':'base'}}
+            if path=='git/trees':return {'sha':'tree'}
+            if path=='git/commits':return {'sha':'new'}
+            if path=='git/refs/heads/master':return {}
+            raise AssertionError(path)
+        with patch('adapters.seal',return_value={'data':'x'*500001}),patch.object(store,'file',return_value=(None,None)),patch.object(store,'api',side_effect=api):
+            store.checkpoint({'events':{}},{'type':'test'})
+        entries=next(x[2]['tree'] for x in calls if x[0]=='git/trees')
+        self.assertTrue(all('sha' in e and 'content' not in e for e in entries))
+        self.assertEqual(sum(x[0]=='git/refs/heads/master' for x in calls),1)
+        self.assertEqual(store.manifest['journals'],[])
+    def test_missing_evaluation_timestamp_is_alarm_not_watchdog_crash(self):
+        from watchdog import failures
+        self.assertIn('charge_evaluation_overdue',failures({'mode':'active','last_evaluated_at':None,'checkpoint_at':None},100000))
     def replay(self, tamper=False, missing=False):
         import hashlib
         from adapters import canonical, seal
