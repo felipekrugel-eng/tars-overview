@@ -1,0 +1,31 @@
+name: Loyverse risk export source gap inspection
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - risk-monitor/inspect_export_gaps.py
+      - .github/workflows/loyverse-risk-export-gap-check.yml
+permissions:
+  contents: read
+jobs:
+  inspect:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: risk-monitor
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Verify unmatched sample with native connected-account reads
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          STRIPE_RISK_READ_KEY: ${{ secrets.STRIPE_RISK_READ_KEY }}
+        run: python risk-monitor/inspect_export_gaps.py
