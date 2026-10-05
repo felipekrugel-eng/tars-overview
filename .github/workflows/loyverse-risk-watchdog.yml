@@ -1,0 +1,40 @@
+name: Loyverse risk independent watchdog
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_run:
+    workflows: [Loyverse deterministic risk monitor, cusum-pull]
+    types: [completed]
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths: ['risk-monitor/watchdog.py', '.github/workflows/loyverse-risk-watchdog.yml']
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: loyverse-risk-independent-watchdog
+  cancel-in-progress: false
+jobs:
+  watchdog:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: |
+            risk-monitor
+            risk-telegram
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Independently inspect heartbeat and workflow status
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
+        run: python risk-monitor/watchdog.py

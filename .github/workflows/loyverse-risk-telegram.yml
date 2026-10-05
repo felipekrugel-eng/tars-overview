@@ -1,6 +1,9 @@
 name: Loyverse risk Telegram delivery
 on:
   workflow_dispatch: {}
+  workflow_run:
+    workflows: [Loyverse deterministic risk monitor, Loyverse risk independent watchdog]
+    types: [completed]
   push:
     branches: [master]
     paths:
@@ -34,3 +37,4 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
         run: python risk-telegram/relay.py
+

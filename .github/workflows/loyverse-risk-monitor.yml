@@ -1,0 +1,49 @@
+name: Loyverse deterministic risk monitor
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_run:
+    workflows: [payments-pull]
+    types: [completed]
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths: ['risk-monitor/*.py', 'risk-monitor/config.json', 'risk-monitor/bootstrap.enc.json', '.github/workflows/loyverse-risk-monitor.yml']
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: loyverse-deterministic-risk-monitor
+  cancel-in-progress: false
+jobs:
+  monitor:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: |
+            risk-monitor
+            risk-telegram
+            payments-automation/data/transactions.csv
+            payments-automation/data/pull_status.json
+            merchant-base-automation/data/q1_export.csv.gz
+            merchant-base-automation/data/pull_status.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Run regression and failure tests before evaluating charges
+        run: python -m unittest discover -s risk-monitor/tests -v
+      - name: Evaluate and durably checkpoint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          STRIPE_RISK_READ_KEY: ${{ secrets.STRIPE_RISK_READ_KEY }}
+          GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
+          RISK_HEARTBEAT_URL: ${{ secrets.RISK_HEARTBEAT_URL }}
+        run: python risk-monitor/monitor.py

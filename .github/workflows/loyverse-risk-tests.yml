@@ -1,0 +1,22 @@
+name: Loyverse risk regression tests
+on:
+  pull_request:
+    paths: ['risk-monitor/**', '.github/workflows/loyverse-risk-*.yml']
+  push:
+    branches: [master]
+    paths: ['risk-monitor/*.py', 'risk-monitor/tests/**', '.github/workflows/loyverse-risk-*.yml']
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: risk-monitor
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - run: python -m unittest discover -s risk-monitor/tests -v

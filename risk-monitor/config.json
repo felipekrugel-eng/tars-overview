@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "mode": "shadow",
+  "sender": "felipe.krugel@loyverse.com",
+  "recipients": [
+    "felipe.krugel@loyverse.com",
+    "caio.fiuza@loyverse.com",
+    "alex@loyverse.com"
+  ],
+  "telegram_public_key_sha256": "2e7e8b38f1d3a9d03783a068591ea0859fb7de8a4033b7559685421a50bbbe40",
+  "legacy_sha256": "1def6fbe9c63e326aa17620f271f382a6dde828833af8fadfc9db36e566b5445",
+  "legacy_library_file_id": "libfile_520ca120a7888191a212507b99c53fef",
+  "legacy_version": 874,
+  "activation_epoch": 1790174639,
+  "legacy_last_completed": 1791094260,
+  "run_budget_seconds": 1000,
+  "bootstrap_raw_sha256": "34ae1c223406725cce3b3fc59b240e6d4a365eb2dc4a7695d0f1663508c1cb8b"
+}
