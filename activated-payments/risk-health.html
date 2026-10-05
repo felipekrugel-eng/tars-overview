@@ -173,10 +173,20 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 </div>
 
 <script>
-(function(){
+(async function(){
   'use strict';
-  var DATA=window.LV_MERCHANT_TRUST||{merchants:[],methodology:{weights:[],bands:[]}};
+  var CONFIG=window.LV_RISK_CONFIG||{indexUrl:'risk-health/index.json'};
+  var DATA={merchants:[],methodology:{weights:[],bands:[]}};
+  try{
+    var indexResponse=await fetch(CONFIG.indexUrl,{cache:'no-store'});
+    if(!indexResponse.ok) throw new Error('Unable to load Fraud Health index');
+    DATA=await indexResponse.json();
+  }catch(err){
+    console.error(err);
+    document.body.insertAdjacentHTML('afterbegin','<div style="background:#7C1825;color:#fff;padding:10px 16px;font:12px Arial">Fraud Health data could not be loaded.</div>');
+  }
   var merchants=DATA.merchants||[], bands=(DATA.methodology&&DATA.methodology.bands)||[], weights=(DATA.methodology&&DATA.methodology.weights)||[];
+  var detailCache={};
   var bandColors={low:'#1F9D6B',moderate:'#C98A16',review:'#E36B2C',high:'#D2495B','very-high':'#9D2435'};
   var bandClass={low:'b-low',moderate:'b-moderate',review:'b-review',high:'b-high','very-high':'b-very-high'};
   var $=function(id){return document.getElementById(id)};
@@ -223,8 +233,22 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     $('tbody').innerHTML=arr.map(function(m){var b=bandFor(m.score);return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>'}).join('');
     Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.ondblclick=function(){openMerchant(tr.getAttribute('data-id'))}});
   }
-  function openMerchant(id){
-    var m=merchants.find(function(x){return x.id===id});if(!m)return;var b=bandFor(m.score);
+  async function openMerchant(id){
+    var indexMerchant=merchants.find(function(x){return x.id===id});if(!indexMerchant)return;
+    var m=indexMerchant;
+    if(indexMerchant.detailFile){
+      try{
+        if(!detailCache[indexMerchant.detailFile]){
+          var detailResponse=await fetch(indexMerchant.detailFile,{cache:'no-store'});
+          if(!detailResponse.ok) throw new Error('Unable to load merchant detail');
+          detailCache[indexMerchant.detailFile]=await detailResponse.json();
+        }
+        var detailSet=detailCache[indexMerchant.detailFile];
+        var detailMerchant=(detailSet.merchants||[]).find(function(x){return (x.accountId||x.id)===id});
+        if(detailMerchant)m=Object.assign({},indexMerchant,detailMerchant);
+      }catch(err){console.error(err);}
+    }
+    var b=bandFor(m.score);
     $('dname').textContent=m.name;$('dmeta').textContent=[m.location,m.representative,m.mcc].filter(Boolean).join(' · ');
     $('bigscore').innerHTML=gauge(m.score,true)+'<div class="statusline" style="color:'+bandColors[b.level]+';font-size:13px">'+esc(b.label)+'</div>';
     $('daction').textContent=m.action||'—';$('dsummary').textContent=m.summary||'';
