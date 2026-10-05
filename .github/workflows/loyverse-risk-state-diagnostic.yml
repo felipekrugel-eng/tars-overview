@@ -1,0 +1,29 @@
+name: Loyverse risk state integrity diagnostic
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - risk-monitor/diagnose_state.py
+      - .github/workflows/loyverse-risk-state-diagnostic.yml
+permissions:
+  contents: read
+jobs:
+  integrity:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: risk-monitor
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Verify encrypted state without changing it
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python risk-monitor/diagnose_state.py
