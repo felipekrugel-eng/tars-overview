@@ -48,7 +48,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 .filters input,.filters select{font:12px Arial;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink)}
 .filters input{min-width:260px;flex:1}
 .tablewrap{overflow-x:auto}.merchant-table{width:100%;border-collapse:collapse;font-size:13px}
-.merchant-table th{text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--border)}
+.merchant-table th{text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none}.merchant-table th[data-sort]:hover{color:var(--ink);background:#F7FAFD}
 .merchant-table td{padding:11px 10px;border-bottom:1px solid #F1F4F8;vertical-align:middle}
 .merchant-table tr{cursor:default}.merchant-table tbody tr{cursor:pointer}.merchant-table tbody tr:hover{background:#F7FAFD}
 .scorepill{display:inline-flex;align-items:center;gap:7px;font-weight:bold}.dot{width:9px;height:9px;border-radius:50%}
@@ -136,7 +136,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       <select id="actionFilter"><option value="">All actions</option></select>
     </div>
     <div class="tablewrap"><table class="merchant-table">
-      <thead><tr><th>Merchant</th><th>Risk score</th><th>Risk band</th><th>Location</th><th>Representative</th><th>Recommended action</th></tr></thead>
+      <thead><tr><th data-sort="name">Merchant</th><th data-sort="score">Risk score</th><th data-sort="band">Risk band</th><th data-sort="createdAt">Account created</th><th data-sort="hasTransacted">Transacted</th><th data-sort="lastTransactedAt">Last transaction</th><th data-sort="location">Location</th><th data-sort="representative">Representative</th><th data-sort="action">Recommended action</th></tr></thead>
       <tbody id="tbody"></tbody>
     </table></div>
   </div>
@@ -187,6 +187,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   }
   var merchants=DATA.merchants||[], bands=(DATA.methodology&&DATA.methodology.bands)||[], weights=(DATA.methodology&&DATA.methodology.dimensions)||[];
   var detailCache={};
+  var sortKey="score", sortDir="desc";
   var bandColors={'very-low':'#1F9D6B',low:'#45A46E',moderate:'#C98A16',elevated:'#E36B2C',high:'#D2495B','very-high':'#9D2435',critical:'#6F0D1B'};
   var bandClass={'very-low':'b-low',low:'b-low',moderate:'b-moderate',elevated:'b-review',high:'b-high','very-high':'b-very-high',critical:'b-very-high'};
   var $=function(id){return document.getElementById(id)};
@@ -224,17 +225,46 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     var rows=merchants.slice().sort(function(a,b){return b.score-a.score}).slice(0,4);
     $('priorities').innerHTML=rows.map(function(m,i){var b=bandFor(m.score);return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:'+(i===rows.length-1?'0':'1px solid #F1F4F8')+'"><div style="font-family:Arial Black;font-size:18px;color:'+bandColors[b.level]+'">'+m.score+'</div><div><div style="font-size:12px;font-weight:bold">'+esc(m.name)+'</div><div style="font-size:10px;color:var(--muted)">'+esc(m.action)+'</div></div><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></div>'}).join('');
   }
+  function sortValue(m,key){
+    if(key==='band') return bandFor(m.score).min||0;
+    if(key==='createdAt'||key==='lastTransactedAt') return m[key]?new Date(m[key]).getTime():0;
+    if(key==='hasTransacted') return m.hasTransacted?1:0;
+    var v=m[key];
+    if(typeof v==='number') return v;
+    return String(v==null?'':v).toLowerCase();
+  }
   function filterMerchants(){
     var q=$('search').value.trim().toLowerCase(), bf=$('bandFilter').value, af=$('actionFilter').value;
     return merchants.filter(function(m){
       var hay=[m.name,m.dba,m.representative,m.location,m.email,m.phone,m.website,m.mcc].join(' ').toLowerCase();
       return (!q||hay.indexOf(q)>=0)&&(!bf||bandFor(m.score).label===bf)&&(!af||m.action===af);
-    }).sort(function(a,b){return b.score-a.score});
+    }).sort(function(a,b){
+      var av=sortValue(a,sortKey), bv=sortValue(b,sortKey), cmp=0;
+      if(av<bv)cmp=-1; else if(av>bv)cmp=1;
+      return sortDir==='asc'?cmp:-cmp;
+    });
+  }
+  function fmtDate(v,withTime){
+    if(!v)return '—';
+    var d=new Date(v); if(isNaN(d.getTime()))return esc(v);
+    return withTime?d.toLocaleString():d.toLocaleDateString();
   }
   function renderTable(){
     var arr=filterMerchants();
-    $('tbody').innerHTML=arr.map(function(m){var b=bandFor(m.score);return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>'}).join('');
+    $('tbody').innerHTML=arr.map(function(m){
+      var b=bandFor(m.score), tx=m.hasTransacted?'Yes':'No';
+      return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+fmtDate(m.createdAt,true)+'</td><td>'+tx+'</td><td>'+fmtDate(m.lastTransactedAt,false)+'</td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>';
+    }).join('');
     Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.ondblclick=function(){openMerchant(tr.getAttribute('data-id'))}});
+    Array.prototype.forEach.call(document.querySelectorAll('.merchant-table th[data-sort]'),function(th){
+      th.style.cursor='pointer';
+      th.title='Sort by '+th.textContent;
+      th.onclick=function(){
+        var k=th.getAttribute('data-sort');
+        if(sortKey===k)sortDir=sortDir==='asc'?'desc':'asc'; else {sortKey=k;sortDir=(k==='score'||k==='createdAt'||k==='lastTransactedAt')?'desc':'asc';}
+        renderTable();
+      };
+    });
   }
   async function openMerchant(id){
     var indexMerchant=merchants.find(function(x){return x.id===id});if(!indexMerchant)return;
@@ -261,7 +291,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       var s=(m.riskDimensions||{})[w.key]||0, p=w.max?Math.round(100*s/w.max):0;
       return '<div style="flex:1;min-width:46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px"><div style="font-size:10px;font-weight:bold">'+p+'%</div><div style="width:70%;height:'+Math.max(2,p)+'%;background:'+bandColors[b.level]+';border-radius:6px 6px 0 0"></div><div style="font-size:9px;color:var(--muted);text-align:center;line-height:1.15">'+esc(w.label.replace(' & ',' &<br>').replace(' / ',' /<br>'))+'</div></div>';
     }).join('');
-    var fields=[['Risk score',m.score+'/100'],['Review completeness',(m.reviewCompleteness==null?'—':m.reviewCompleteness+'%')],['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Created',m.createdAt],['Reviewed',m.reviewedAt]];
+    var fields=[['Risk score',m.score+'/100'],['Review completeness',(m.reviewCompleteness==null?'—':m.reviewCompleteness+'%')],['Account created',m.createdAt],['Ever transacted',m.hasTransacted?'Yes':'No'],['Successful transactions',m.successfulTransactions],['Last transaction',m.lastTransactedAt],['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Reviewed',m.reviewedAt]];
     $('profilegrid').innerHTML=fields.filter(function(x){return x[1]}).map(function(x){return '<div class="pitem"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1])+'</div></div>'}).join('');
     $('modal').classList.add('on');document.body.style.overflow='hidden';
   }
