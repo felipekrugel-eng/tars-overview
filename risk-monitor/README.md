@@ -74,6 +74,10 @@ state. It checks the monitor workflow's enabled status, heartbeat age, charge
 evaluation age, coverage gaps, shadow mode and pending delivery. It runs on the
 existing externally-woken cusum workflow completion as well as its own cron.
 Failure alerts are deduped by failure/day; recovery requires healthy coverage.
+Shadow migration progress shares one daily notice even when coverage flags change;
+today's existing sent notice is adopted during upgrades. New operational failures
+still alert independently. One recovery notice closes the previous degraded issue
+combinations only after email and Telegram receipts are both confirmed.
 The Telegram relay runs on monitor/watchdog completion, because commits made with
 GitHub's built-in token do not trigger ordinary push workflows.
 

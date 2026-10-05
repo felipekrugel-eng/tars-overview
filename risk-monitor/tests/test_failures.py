@@ -20,6 +20,45 @@ def state():
     return {'run_started':100000,'mode':'active','gaps':[],'events':{},'alerts':{},'seen_attempts':{},'attempts':{}}
 
 class Failures(unittest.TestCase):
+    def test_migration_progress_changes_share_one_daily_notice(self):
+        from watchdog import notice_key
+        s={'notices':{}}
+        first=notice_key(s,['migration_shadow_mode','global_previous_day_incomplete'],'20261005')
+        self.assertEqual(first,notice_key(s,['migration_shadow_mode','export_charge_cache_incomplete','global_sweep_in_progress'],'20261005'))
+        self.assertNotEqual(first,notice_key(s,['migration_shadow_mode'],'20261006'))
+    def test_migration_dedupe_adopts_existing_sent_notice(self):
+        from watchdog import notice_key
+        key='code-monitor:20261005:old-hash'
+        s={'current_failure':key,'notices':{'loyverse_payments_risk_v1:monitoring:'+key:{'email':{'status':'sent'}}}}
+        self.assertEqual(notice_key(s,['migration_shadow_mode','global_sweep_in_progress'],'20261005'),key)
+    def test_new_operational_failure_is_not_suppressed_by_migration_notice(self):
+        from watchdog import notice_key
+        s={'notices':{}}
+        normal=notice_key(s,['migration_shadow_mode'],'20261005')
+        failed=notice_key(s,['migration_shadow_mode','stripe_read_key_missing'],'20261005')
+        self.assertNotEqual(normal,failed)
+        self.assertEqual(failed,notice_key(s,['migration_shadow_mode','stripe_read_key_missing','global_sweep_in_progress'],'20261005'))
+        self.assertNotEqual(failed,notice_key(s,['migration_shadow_mode','gmail_oauth_missing'],'20261005'))
+    def test_migration_upgrade_preserves_uncertain_delivery_id(self):
+        from watchdog import notice_key
+        key='code-monitor:20261005:uncertain'
+        s={'current_failure':key,'notices':{'loyverse_payments_risk_v1:monitoring:'+key:{'email':{'status':'send_intent'}}}}
+        self.assertEqual(notice_key(s,['migration_shadow_mode'],'20261005'),key)
+    def test_active_coverage_errors_do_not_use_migration_dedupe(self):
+        from watchdog import notice_key
+        s={'notices':{}}
+        first=notice_key(s,['global_sweep_in_progress'],'20261005')
+        self.assertNotEqual(first,notice_key(s,['global_sweep_in_progress','onboarding_ip_coverage_incomplete'],'20261005'))
+    def test_one_recovery_closes_all_prior_issue_combinations_after_both_receipts(self):
+        from watchdog import close_recovery
+        s={'open_failures':{'first':{},'second':{}},'current_failure':'second'}
+        notice={'recovers':['first','second'],'email':{'status':'sent'},'telegram':{'status':'enqueued'}}
+        close_recovery(s,notice)
+        self.assertEqual(len(s['open_failures']),2)
+        notice['telegram']['status']='sent'
+        close_recovery(s,notice)
+        self.assertEqual(s['open_failures'],{})
+        self.assertIsNone(s['current_failure'])
     def test_checkpointed_shadow_backfill_is_warning_with_degraded_health(self):
         from monitor import workflow_exit_status, health
         s=state();s['mode']='shadow';s['full']={'status':'in_progress'}

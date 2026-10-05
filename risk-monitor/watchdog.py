@@ -10,6 +10,43 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from adapters import GitStore, Gmail, SafeError, canonical, load_module, verified_transport
 
+MIGRATION_PROGRESS = {
+    'migration_shadow_mode', 'run_budget_checkpointed', 'global_sweep_in_progress',
+    'global_previous_day_incomplete', 'export_charge_cache_incomplete',
+    'global_fingerprint_coverage_incomplete', 'fee_linked_export_reconciliation_incomplete',
+    'aggregate_refund_scope_incomparable', 'aggregate_refund_comparison_unavailable',
+    'onboarding_ip_coverage_incomplete',
+}
+
+def notice_key(state, issues, day):
+    """Deduplicate shadow progress independently of its changing coverage flags."""
+    migration = 'migration_shadow_mode' in issues
+    operational = sorted(set(issues) - MIGRATION_PROGRESS) if migration else sorted(set(issues))
+    prefix = 'code-monitor:' + day + ':'
+    if migration and not operational:
+        keys = state.setdefault('migration_notice_keys', {})
+        if day not in keys:
+            # Adopt today's already-sent legacy notice rather than emailing again
+            # just because the dedupe format changed during this repair.
+            previous = state.get('current_failure') or ''
+            notice = state.get('notices', {}).get('loyverse_payments_risk_v1:monitoring:' + previous, {})
+            has_delivery = (notice.get('email', {}).get('status') in ('sent', 'send_intent', 'uncertain')
+                            or notice.get('telegram', {}).get('status') in ('sent', 'send_intent', 'uncertain', 'enqueued'))
+            keys[day] = previous if previous.startswith(prefix) and has_delivery else prefix + 'migration-progress'
+        return keys[day]
+    return prefix + hashlib.sha256('|'.join(operational).encode()).hexdigest()[:16]
+
+def close_recovery(state, notice):
+    """Close the covered incidents only after both channel receipts are saved."""
+    if notice.get('email', {}).get('status') != 'sent' or notice.get('telegram', {}).get('status') != 'sent':
+        return
+    recovered = notice.get('recovers', [])
+    if isinstance(recovered, str):
+        recovered = [recovered]
+    for key in recovered:
+        state['open_failures'].pop(key, None)
+    state['current_failure'] = next(iter(state['open_failures']), None)
+
 def failures(health, now, workflow_active=True):
     result=[]
     if not workflow_active: result.append('monitor_workflow_disabled')
@@ -33,7 +70,7 @@ def main():
     workflow=store.api('actions/workflows/loyverse-risk-monitor.yml')
     issues=failures(heartbeat,now,workflow.get('state')=='active')
     day=datetime.fromtimestamp(now,ZoneInfo('Europe/London')).strftime('%Y%m%d')
-    key='code-monitor:'+day+':'+hashlib.sha256('|'.join(issues).encode()).hexdigest()[:16]
+    key=notice_key(state,issues,day) if issues else None
     open_failures=state.setdefault('open_failures',{})
     if state.get('current_failure'):open_failures.setdefault(state['current_failure'],{'at':now})
     recovery=not issues and bool(open_failures)
@@ -54,7 +91,11 @@ def main():
         state['current_failure']=key
         open_failures.setdefault(key,{'at':now})
     elif recovery:
-        notice['recovers']=recovery_key
+        # Old issue combinations describe the same ongoing degraded episode.
+        # One confirmed recovery closes them together, preserving their history.
+        existing = notice.get('recovers', [])
+        if isinstance(existing, str): existing = [existing]
+        notice['recovers'] = sorted(set(existing) | set(open_failures))
     coverage=(heartbeat or {}).get('country_counts') or {'GB':'Unknown','PR':'Unknown','Unknown':'Unknown'}
     text=('Sweep: Monitoring '+('degraded' if issues else 'recovered')+
           '\nCoverage: '+json.dumps(coverage,sort_keys=True)+
@@ -85,9 +126,8 @@ def main():
         store.api('contents/'+outbox,'PUT',{'message':'chore(risk): watchdog alarm','branch':'master',
                                            'content':base64.b64encode(canonical(payload)).decode()})
         notice['telegram']={'status':'enqueued','at':now}
-    if recovery and notice.get('telegram',{}).get('status')=='sent':
-        open_failures.pop(recovery_key,None)
-        state['current_failure']=next(iter(open_failures),None)
+    if recovery:
+        close_recovery(state, notice)
     state['checked_at']=now
     store.checkpoint(state,{'type':'watchdog_checked','issues':issues,'alert_id':alert_id})
     print('Watchdog checkpointed '+('failure alarm' if issues else 'recovery')+'.')
