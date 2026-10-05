@@ -173,7 +173,7 @@ class JournalTests(unittest.TestCase):
             if path=='git/commits':return {'sha':'orphan'}
             if path=='git/refs/heads/master':raise SafeError('github_git_refs_http_422')
             raise AssertionError(path)
-        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
+        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch('adapters.time.sleep'),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
             with self.assertRaises(SafeError):store.checkpoint(current,{'type':'failed'})
         self.assertEqual(current['audit_head'],'saved-head')
         self.assertEqual(store.previous['audit_head'],'saved-head')
@@ -196,7 +196,7 @@ class JournalTests(unittest.TestCase):
                 if fail:raise SafeError('github_git_refs_http_422')
                 return {}
             raise AssertionError(path)
-        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
+        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch('adapters.time.sleep'),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
             with self.assertRaises(SafeError):store.checkpoint(current,{'type':'failed'})
             fail=False
             current['events']['new']={'seen':True}
@@ -207,6 +207,25 @@ class JournalTests(unittest.TestCase):
             record=unseal(json.loads(journal['content']))
             self.assertEqual(record['audit']['previous_hash'],'saved-head')
             self.assertEqual(current['audit_head'],record['audit']['hash'])
+
+    def test_unrelated_branch_writers_can_conflict_three_times_then_recover(self):
+        store=GitStore();updates=[]
+        def api(path,method='GET',data=None):
+            if path=='git/ref/heads/master':return {'object':{'sha':'head'}}
+            if path=='git/commits/head':return {'tree':{'sha':'base'}}
+            if path=='git/trees':return {'sha':'tree'}
+            if path=='git/commits':return {'sha':'new'}
+            if path=='git/refs/heads/master':
+                updates.append(data)
+                if len(updates)<=3:raise SafeError('github_git_refs_http_422')
+                return {}
+            raise AssertionError(path)
+        state={'audit_head':'saved'}
+        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch('adapters.time.sleep'),patch.object(store,'file',return_value=(None,None)),patch.object(store,'api',side_effect=api):
+            store.checkpoint(state,{'type':'test'})
+        self.assertEqual(len(updates),4)
+        self.assertTrue(all(update['force'] is False for update in updates))
+        self.assertNotEqual(state['audit_head'],'saved')
 
     def test_large_snapshot_uses_blobs_and_one_atomic_ref_update(self):
         store=GitStore();calls=[]

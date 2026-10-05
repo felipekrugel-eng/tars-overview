@@ -204,7 +204,7 @@ class GitStore:
             entries.append(entry)
         # Retry only ref conflict from unrelated writers, never delivery. Check the
         # state blob again before rebuilding on a newer parent.
-        for conflict in range(3):
+        for conflict in range(8):
             ref = self.api('git/ref/heads/master')
             parent = ref['object']['sha']
             commit = self.api('git/commits/' + parent)
@@ -217,7 +217,8 @@ class GitStore:
             try:
                 self.api('git/refs/heads/master', 'PATCH', {'sha': new['sha'], 'force': False})
             except SafeError as exc:
-                if str(exc) in ('http_422','github_git_refs_http_422') and conflict < 2:
+                if str(exc) in ('http_422','github_git_refs_http_422') and conflict < 7:
+                    time.sleep(min(0.1 * 2**conflict, 1.0))
                     continue
                 raise
             raw = files[self.path].encode()
