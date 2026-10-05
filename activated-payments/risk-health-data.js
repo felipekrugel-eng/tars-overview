@@ -2,7 +2,7 @@
 // Higher score = stronger independent corroboration / lower merchant-legitimacy risk.
 // This is NOT a mathematical probability of fraud.
 window.LV_MERCHANT_TRUST = {
-  "generatedAt": "2026-10-04T19:45:00+01:00",
+  "generatedAt": "2026-10-05T10:36:00+01:00",
   "methodology": {
     "version": "1.0",
     "weights": [
@@ -4519,12 +4519,3457 @@ window.LV_MERCHANT_TRUST = {
         "Transaction documentation only where activity is unusual"
       ],
       "summary": "The underlying company is independently well established. Remaining concerns are mainly website/contact inconsistencies rather than business existence."
+    },
+    {
+      "id": "acct_1UGCEh7xDh13YY6C",
+      "accountId": "acct_1UGCEh7xDh13YY6C",
+      "name": "JAR Locksmith",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UG6jd8E1BPBb8VE",
+      "accountId": "acct_1UG6jd8E1BPBb8VE",
+      "name": "All Things NSFW",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UG4Ke9VIznJHdQO",
+      "accountId": "acct_1UG4Ke9VIznJHdQO",
+      "name": "Headhunter 2.0 Salon",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UG0iv4QLzSWU04O",
+      "accountId": "acct_1UG0iv4QLzSWU04O",
+      "name": "PWA Wholesale LLC",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UG0Mf8JNFuRgdz2",
+      "accountId": "acct_1UG0Mf8JNFuRgdz2",
+      "name": "And That's A Print & Stitch",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFzEX9mOWQS5YXx",
+      "accountId": "acct_1UFzEX9mOWQS5YXx",
+      "name": "Too Much Reality Creations",
+      "score": 65,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring + targeted verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 8,
+        "operating": 13,
+        "history": 10,
+        "identity": 13,
+        "reputation": 5,
+        "website": 8,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFxrP5Ychk62ztO",
+      "accountId": "acct_1UFxrP5Ychk62ztO",
+      "name": "Dijla Cafe",
+      "score": 53,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 8,
+        "operating": 14,
+        "history": 10,
+        "identity": 6,
+        "reputation": 7,
+        "website": 5,
+        "anomalies": 3
+      },
+      "verified": [
+        "Some Stripe onboarding information is internally consistent."
+      ],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "A real Dijla Cafe is independently visible in the Atlanta area, but its public location/contact details do not cleanly match this connected account."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UFii96CWjdb58CF",
+      "accountId": "acct_1UFii96CWjdb58CF",
+      "name": "Smart Ash",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFhdO5ys2OCQLuh",
+      "accountId": "acct_1UFhdO5ys2OCQLuh",
+      "name": "whispering hills inn",
+      "score": 92,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 18,
+        "operating": 20,
+        "history": 15,
+        "identity": 12,
+        "reputation": 10,
+        "website": 10,
+        "anomalies": 7
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UFfdaGE5JWaugWb",
+      "accountId": "acct_1UFfdaGE5JWaugWb",
+      "name": "Ronda's Cleaning Services",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFex197HgisNKBW",
+      "accountId": "acct_1UFex197HgisNKBW",
+      "name": "MISSION RIDGE CONSULTANTS",
+      "score": 92,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 19,
+        "operating": 20,
+        "history": 15,
+        "identity": 13,
+        "reputation": 7,
+        "website": 10,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UFeKD9TFGv0hhSM",
+      "accountId": "acct_1UFeKD9TFGv0hhSM",
+      "name": "Piia Kitchen",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFa6g7TKWtNLuam",
+      "accountId": "acct_1UFa6g7TKWtNLuam",
+      "name": "Carla & Toninha Modas",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFZF97GtorCHtrm",
+      "accountId": "acct_1UFZF97GtorCHtrm",
+      "name": "EVAN COUTURE LLC",
+      "score": 30,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 11,
+        "operating": 2,
+        "history": 1,
+        "identity": 7,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 6
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFRNL4pIhiUQHpe",
+      "accountId": "acct_1UFRNL4pIhiUQHpe",
+      "name": "Man’s Snack Plug",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UFRKZ5Kh0P7Rji6",
+      "accountId": "acct_1UFRKZ5Kh0P7Rji6",
+      "name": "Magic Tea and Coffee",
+      "score": 80,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 16,
+        "operating": 19,
+        "history": 10,
+        "identity": 10,
+        "reputation": 8,
+        "website": 9,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UFFj39RLMRuyKh4",
+      "accountId": "acct_1UFFj39RLMRuyKh4",
+      "name": "Daphne Design",
+      "score": 12,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 4,
+        "operating": 1,
+        "history": 0,
+        "identity": 5,
+        "reputation": 0,
+        "website": 1,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UF2fR4dWlnOznED",
+      "accountId": "acct_1UF2fR4dWlnOznED",
+      "name": "Beenterprises",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEwwm59Esu9Qvrz",
+      "accountId": "acct_1UEwwm59Esu9Qvrz",
+      "name": "Jesus Jimenez",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEwp17hTPFEAi5l",
+      "accountId": "acct_1UEwp17hTPFEAi5l",
+      "name": "home & kitchen corp",
+      "score": 14,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 6,
+        "operating": 1,
+        "history": 0,
+        "identity": 4,
+        "reputation": 0,
+        "website": 2,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UEvNg4vFfk6H62N",
+      "accountId": "acct_1UEvNg4vFfk6H62N",
+      "name": "American Repertory Theater of Western New York",
+      "score": 94,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 20,
+        "operating": 20,
+        "history": 15,
+        "identity": 12,
+        "reputation": 9,
+        "website": 10,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UEs4V4YcAmTRfVs",
+      "accountId": "acct_1UEs4V4YcAmTRfVs",
+      "name": "UnderShadow 1",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEmzO9fKc8XfnKn",
+      "accountId": "acct_1UEmzO9fKc8XfnKn",
+      "name": "Self2023@",
+      "score": 22,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 5,
+        "history": 0,
+        "identity": 10,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 3
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEhOx86rutlnfoW",
+      "accountId": "acct_1UEhOx86rutlnfoW",
+      "name": "Tjay",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEaFM56GgF0tFIA",
+      "accountId": "acct_1UEaFM56GgF0tFIA",
+      "name": "Nior By Nae LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEUFK5dZ6e5RJIN",
+      "accountId": "acct_1UEUFK5dZ6e5RJIN",
+      "name": "Nabil Tech",
+      "score": 11,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 3,
+        "operating": 1,
+        "history": 0,
+        "identity": 5,
+        "reputation": 0,
+        "website": 1,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UEN6q5RYy1gUtlk",
+      "accountId": "acct_1UEN6q5RYy1gUtlk",
+      "name": "T&A Music Company",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEMwp4OSZLsJjsv",
+      "accountId": "acct_1UEMwp4OSZLsJjsv",
+      "name": "Elliot Assets LLC",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEICq6O5Pyu0BaB",
+      "accountId": "acct_1UEICq6O5Pyu0BaB",
+      "name": "jump_zingier3m@icloud.com",
+      "score": 5,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 1,
+        "operating": 1,
+        "history": 0,
+        "identity": 2,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Business name is an email address, the submitted website is Apple, and identity is unverified."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UEEoB7DCJmh71d9",
+      "accountId": "acct_1UEEoB7DCJmh71d9",
+      "name": "Titi Ada's Cottage Pantry",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UEEK89KpwPvOkyl",
+      "accountId": "acct_1UEEK89KpwPvOkyl",
+      "name": "Archen",
+      "score": 19,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 2,
+        "history": 1,
+        "identity": 2,
+        "reputation": 0,
+        "website": 5,
+        "anomalies": 5
+      },
+      "verified": [],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Identity remains unverified and operating evidence is mainly a self-published app/site."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UDgt99XxeB8Ab2e",
+      "accountId": "acct_1UDgt99XxeB8Ab2e",
+      "name": "Ragin Pot",
+      "score": 88,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 17,
+        "operating": 20,
+        "history": 13,
+        "identity": 12,
+        "reputation": 10,
+        "website": 8,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UDdkP5G0gTzee9D",
+      "accountId": "acct_1UDdkP5G0gTzee9D",
+      "name": "Jiller Stickers",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UDX3951IYmx3Xfa",
+      "accountId": "acct_1UDX3951IYmx3Xfa",
+      "name": "Genoa Concession Stnad",
+      "score": 47,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 14,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UDTkX8U0jCSzUQh",
+      "accountId": "acct_1UDTkX8U0jCSzUQh",
+      "name": "Central diner llc",
+      "score": 10,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 5,
+        "operating": 1,
+        "history": 0,
+        "identity": 3,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UDJLd9aCIk2rD3v",
+      "accountId": "acct_1UDJLd9aCIk2rD3v",
+      "name": "Sisters Rustic Charm",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UDFpO96irvmr6Or",
+      "accountId": "acct_1UDFpO96irvmr6Or",
+      "name": "Roland beauty saloon",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UDAvO4hpNEPFPRG",
+      "accountId": "acct_1UDAvO4hpNEPFPRG",
+      "name": "Playin For Keeps",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UDACx9Ri1utbDUy",
+      "accountId": "acct_1UDACx9Ri1utbDUy",
+      "name": "MOONLIT HEARTH BAKERY",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UD2nQ7W6DgNeh5X",
+      "accountId": "acct_1UD2nQ7W6DgNeh5X",
+      "name": "The Fin",
+      "score": 84,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 17,
+        "operating": 19,
+        "history": 12,
+        "identity": 11,
+        "reputation": 8,
+        "website": 9,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UCzIW5OUqZvn5hp",
+      "accountId": "acct_1UCzIW5OUqZvn5hp",
+      "name": "Mercado Jazmín",
+      "score": 27,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 5,
+        "operating": 2,
+        "history": 1,
+        "identity": 12,
+        "reputation": 1,
+        "website": 1,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCsLj5MJyDAdd4b",
+      "accountId": "acct_1UCsLj5MJyDAdd4b",
+      "name": "game exchange",
+      "score": 27,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 6,
+        "history": 1,
+        "identity": 11,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCq9Z81AFCUMwZb",
+      "accountId": "acct_1UCq9Z81AFCUMwZb",
+      "name": "Dusty Rose Clothes LLC",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCpZp7wiLN99Svu",
+      "accountId": "acct_1UCpZp7wiLN99Svu",
+      "name": "Iron Core Strength & Conditioning LLC",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCpGW4WgeXA6hrn",
+      "accountId": "acct_1UCpGW4WgeXA6hrn",
+      "name": "Dwain Titan Taxi",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCliBGLxEE0Mcbv",
+      "accountId": "acct_1UCliBGLxEE0Mcbv",
+      "name": "Mike",
+      "score": 27,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 6,
+        "history": 1,
+        "identity": 11,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCjCO973tfkSJKI",
+      "accountId": "acct_1UCjCO973tfkSJKI",
+      "name": "Smith’s Deli & Mart LLC.",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCjBp5eUS7XLxlX",
+      "accountId": "acct_1UCjBp5eUS7XLxlX",
+      "name": "South County Creations LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCio68rCAFu94mU",
+      "accountId": "acct_1UCio68rCAFu94mU",
+      "name": "Emmy's Fizzpire",
+      "score": 24,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 2,
+        "history": 2,
+        "identity": 4,
+        "reputation": 1,
+        "website": 5,
+        "anomalies": 6
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCagn65IG2uVdnd",
+      "accountId": "acct_1UCagn65IG2uVdnd",
+      "name": "queen's touch beauty &Haitian foods LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCMJN9G5Gh3rxuB",
+      "accountId": "acct_1UCMJN9G5Gh3rxuB",
+      "name": "Cleaning with Care Services and Solutions llc",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCArx9ZnWqour6y",
+      "accountId": "acct_1UCArx9ZnWqour6y",
+      "name": "Diamond Crater Forge LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UCAgp5TR2pVISx6",
+      "accountId": "acct_1UCAgp5TR2pVISx6",
+      "name": "NF Helix",
+      "score": 13,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 7,
+        "operating": 1,
+        "history": 0,
+        "identity": 4,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Legal name, DBA, email theme, MCC and stated business activity do not tell a coherent business story."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UC7U074uN8zlfP5",
+      "accountId": "acct_1UC7U074uN8zlfP5",
+      "name": "Jessi styles",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UC6Pu4gvRvxTRto",
+      "accountId": "acct_1UC6Pu4gvRvxTRto",
+      "name": "Dahlias & Cardz Fashion & Home Group llc",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UC4H57ksU44tsCk",
+      "accountId": "acct_1UC4H57ksU44tsCk",
+      "name": "Taylor APP Dev",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UC49I6N0UTQl06c",
+      "accountId": "acct_1UC49I6N0UTQl06c",
+      "name": "Fortnite tweaks",
+      "score": 28,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 6,
+        "history": 1,
+        "identity": 11,
+        "reputation": 0,
+        "website": 1,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UC3Kg9L7WLQOb2n",
+      "accountId": "acct_1UC3Kg9L7WLQOb2n",
+      "name": "Hendrix’s Llc",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UC2b0G0omqophil",
+      "accountId": "acct_1UC2b0G0omqophil",
+      "name": "Gatormacsotwllc",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBpbJ7xG4I6AdfZ",
+      "accountId": "acct_1UBpbJ7xG4I6AdfZ",
+      "name": "Jacobiq",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBkmE8gaTli7e09",
+      "accountId": "acct_1UBkmE8gaTli7e09",
+      "name": "Mining My Own Business",
+      "score": 18,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 3,
+        "history": 0,
+        "identity": 10,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "The submitted website is Venmo rather than an independent business property, leaving weak account-to-business corroboration."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UBjys5dFe8AWU10",
+      "accountId": "acct_1UBjys5dFe8AWU10",
+      "name": "Arenas Contracting",
+      "score": 11,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 5,
+        "operating": 1,
+        "history": 0,
+        "identity": 4,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UBjvW5oHlXBWXp2",
+      "accountId": "acct_1UBjvW5oHlXBWXp2",
+      "name": "Elevated Dreams LLC",
+      "score": 14,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 6,
+        "operating": 1,
+        "history": 0,
+        "identity": 4,
+        "reputation": 0,
+        "website": 2,
+        "anomalies": 1
+      },
+      "verified": [],
+      "unverified": [
+        "Completed KYC does not resolve the previously identified coordinated-fraud linkage and transaction-pattern concerns."
+      ],
+      "contradictions": [
+        "Prior investigation linked this account/business to the suspected coordinated fraud cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/good-standing evidence.",
+        "Bank-account ownership evidence.",
+        "Historical contracts/invoices predating review.",
+        "Supplier receipts and independently verifiable customer/job addresses.",
+        "Re-review shared IP/device/account links, counterparties and payout destinations."
+      ],
+      "summary": "Known prior fraud-ring evidence outweighs the reassuring effect of completed KYC; urgent manual review remains appropriate."
+    },
+    {
+      "id": "acct_1UBiWv7kKUvlOCf8",
+      "accountId": "acct_1UBiWv7kKUvlOCf8",
+      "name": "Halal Central Diner",
+      "score": 77,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 16,
+        "operating": 20,
+        "history": 13,
+        "identity": 7,
+        "reputation": 9,
+        "website": 9,
+        "anomalies": 3
+      },
+      "verified": [
+        "Some Stripe onboarding information is internally consistent."
+      ],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "The restaurant is strongly corroborated at the submitted address, but that same address is also used by a separate Central Diner connected account in a known-risk cluster."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UBaemQJkK2GSCpz",
+      "accountId": "acct_1UBaemQJkK2GSCpz",
+      "name": "Glenlore Trails",
+      "score": 94,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 20,
+        "operating": 20,
+        "history": 14,
+        "identity": 13,
+        "reputation": 8,
+        "website": 10,
+        "anomalies": 9
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UBSIP6YltI2w0x3",
+      "accountId": "acct_1UBSIP6YltI2w0x3",
+      "name": "Jungle Junkies",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBRvw9JFkO2OqeO",
+      "accountId": "acct_1UBRvw9JFkO2OqeO",
+      "name": "Ooh So Good Desserts",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBQqi7KQ8a5AN9s",
+      "accountId": "acct_1UBQqi7KQ8a5AN9s",
+      "name": "Inteletni LLC",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBNdj9CcGVCSKsJ",
+      "accountId": "acct_1UBNdj9CcGVCSKsJ",
+      "name": "TMH",
+      "score": 34,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 11,
+        "operating": 2,
+        "history": 2,
+        "identity": 7,
+        "reputation": 1,
+        "website": 6,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBIhw8ReD49kGyY",
+      "accountId": "acct_1UBIhw8ReD49kGyY",
+      "name": "Glimmer & Glow llc",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBHxo69d5AVYQ18",
+      "accountId": "acct_1UBHxo69d5AVYQ18",
+      "name": "Upstart Store",
+      "score": 26,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 4,
+        "operating": 4,
+        "history": 1,
+        "identity": 12,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 5
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBHdE5C2aEqUCRg",
+      "accountId": "acct_1UBHdE5C2aEqUCRg",
+      "name": "Little Monster Snow Cones",
+      "score": 42,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 5,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 7,
+        "anomalies": 6
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UBCup7mfyOSMfxk",
+      "accountId": "acct_1UBCup7mfyOSMfxk",
+      "name": "Poppy’s Wildcraft, LLC",
+      "score": 88,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 17,
+        "operating": 19,
+        "history": 15,
+        "identity": 11,
+        "reputation": 8,
+        "website": 10,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UBAFO9pIHxjiB7p",
+      "accountId": "acct_1UBAFO9pIHxjiB7p",
+      "name": "Binkies Little Bits",
+      "score": 30,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 11,
+        "operating": 2,
+        "history": 1,
+        "identity": 7,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 6
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UB19ZGBn27q535l",
+      "accountId": "acct_1UB19ZGBn27q535l",
+      "name": "8Air",
+      "score": 9,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + urgent investigation",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 3,
+        "operating": 1,
+        "history": 0,
+        "identity": 2,
+        "reputation": 0,
+        "website": 0,
+        "anomalies": 3
+      },
+      "verified": [],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Identity is unverified and the submitted business story has little independent operating evidence."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UB0yT807XUMEAXq",
+      "accountId": "acct_1UB0yT807XUMEAXq",
+      "name": "Elite Members Enterprise",
+      "score": 20,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Hold/review payouts + enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 7,
+        "operating": 4,
+        "history": 1,
+        "identity": 5,
+        "reputation": 0,
+        "website": 1,
+        "anomalies": 2
+      },
+      "verified": [
+        "Some Stripe onboarding information is internally consistent."
+      ],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Legal/business naming, generic descriptor and vague sales/services model provide weak independent corroboration."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1UB06F62HWVm57t1",
+      "accountId": "acct_1UB06F62HWVm57t1",
+      "name": "Puntada Caribeña",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAy447JNOnhaC0p",
+      "accountId": "acct_1UAy447JNOnhaC0p",
+      "name": "El Dorado Aquatics Snack Shack",
+      "score": 86,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 19,
+        "operating": 18,
+        "history": 13,
+        "identity": 12,
+        "reputation": 7,
+        "website": 9,
+        "anomalies": 8
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UAvVz4tXeLoMSnp",
+      "accountId": "acct_1UAvVz4tXeLoMSnp",
+      "name": "MAMPOSTEAO CAFE LLC",
+      "score": 83,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 17,
+        "operating": 19,
+        "history": 14,
+        "identity": 10,
+        "reputation": 8,
+        "website": 10,
+        "anomalies": 5
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UAvKF7Boiscs21f",
+      "accountId": "acct_1UAvKF7Boiscs21f",
+      "name": "Second Cup, LLC",
+      "score": 68,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring + targeted verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 20,
+        "operating": 13,
+        "history": 5,
+        "identity": 11,
+        "reputation": 3,
+        "website": 8,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAubK7vWjskiFvF",
+      "accountId": "acct_1UAubK7vWjskiFvF",
+      "name": "Tm legacy",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAtkH96cD1HhFBC",
+      "accountId": "acct_1UAtkH96cD1HhFBC",
+      "name": "Zohra Craft Candle Co.",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAlEN8l3uiGDgWV",
+      "accountId": "acct_1UAlEN8l3uiGDgWV",
+      "name": "TouchedByTory",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAjlc8rwqUnLGjY",
+      "accountId": "acct_1UAjlc8rwqUnLGjY",
+      "name": "FineTunes&Rythem",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAhKzG0zZHDt4dl",
+      "accountId": "acct_1UAhKzG0zZHDt4dl",
+      "name": "Romance by Armani",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAgze6EcbWbvHYH",
+      "accountId": "acct_1UAgze6EcbWbvHYH",
+      "name": "Royal BZNZ",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAgjjG9P9k3Dxp0",
+      "accountId": "acct_1UAgjjG9P9k3Dxp0",
+      "name": "Pia Kitchen",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAeeC7wZFqQjBeS",
+      "accountId": "acct_1UAeeC7wZFqQjBeS",
+      "name": "NEXORIA",
+      "score": 35,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 5,
+        "operating": 2,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 7,
+        "anomalies": 6
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UALtH4ZoKpo8x0M",
+      "accountId": "acct_1UALtH4ZoKpo8x0M",
+      "name": "Lost Woods Plant Nursery",
+      "score": 66,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring + targeted verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 14,
+        "operating": 14,
+        "history": 6,
+        "identity": 11,
+        "reputation": 4,
+        "website": 9,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAF5e5NWLJgp0Y6",
+      "accountId": "acct_1UAF5e5NWLJgp0Y6",
+      "name": "Mossy Wheel Pottery",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1UAD4K4z2hCWeC2s",
+      "accountId": "acct_1UAD4K4z2hCWeC2s",
+      "name": "Redeemer Christian School",
+      "score": 96,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Ordinary monitoring",
+      "reviewType": "automated-first-pass",
+      "confidence": "high",
+      "scores": {
+        "legal": 20,
+        "operating": 20,
+        "history": 15,
+        "identity": 13,
+        "reputation": 9,
+        "website": 10,
+        "anomalies": 9
+      },
+      "verified": [
+        "Strong current independent public corroboration was found for the submitted business identity and operating footprint."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Continue ordinary transaction monitoring; re-verify ownership only if payment behaviour changes materially."
+      ],
+      "summary": "Independent current operating evidence substantially corroborates the submitted business."
+    },
+    {
+      "id": "acct_1UACNf5Xib8XFleT",
+      "accountId": "acct_1UACNf5Xib8XFleT",
+      "name": "Pollo A La Parrilla Y Taqueria",
+      "score": 35,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 7,
+        "reputation": 1,
+        "website": 1,
+        "anomalies": 4
+      },
+      "verified": [
+        "Some Stripe onboarding information is internally consistent."
+      ],
+      "unverified": [
+        "Independent account-to-business linkage remains incomplete."
+      ],
+      "contradictions": [
+        "Restaurant DBA conflicts with the legal/business description referring to both cars and restaurant activity."
+      ],
+      "evidenceNeeded": [
+        "Government registration/DBA record where applicable.",
+        "Bank-account ownership evidence.",
+        "Historical invoices/contracts or supplier receipts.",
+        "Independent customer/job or storefront evidence matching the submitted operator and location."
+      ],
+      "summary": "Material coherence or linkage gaps require targeted verification before relying on KYC status alone."
+    },
+    {
+      "id": "acct_1U9zxDG827M4pjqe",
+      "accountId": "acct_1U9zxDG827M4pjqe",
+      "name": "Weirdoollc",
+      "score": 35,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 5,
+        "operating": 2,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 7,
+        "anomalies": 6
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9zXLG0GIjD5nPj",
+      "accountId": "acct_1U9zXLG0GIjD5nPj",
+      "name": "Eekas cupcakes",
+      "score": 45,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 6,
+        "operating": 8,
+        "history": 3,
+        "identity": 12,
+        "reputation": 2,
+        "website": 6,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9yVN8OhNXAjdpo",
+      "accountId": "acct_1U9yVN8OhNXAjdpo",
+      "name": "Majik Scents",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9t6J4rcGLbRpkZ",
+      "accountId": "acct_1U9t6J4rcGLbRpkZ",
+      "name": "Jims Handyman Service",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9ptO68g4GM022E",
+      "accountId": "acct_1U9ptO68g4GM022E",
+      "name": "premium waffles cone ice cream LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9iRj4g1VRVAmLr",
+      "accountId": "acct_1U9iRj4g1VRVAmLr",
+      "name": "OSANRID TIRE CENTER",
+      "score": 51,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 13,
+        "operating": 9,
+        "history": 4,
+        "identity": 8,
+        "reputation": 2,
+        "website": 7,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9gbF9UK51Tp9HB",
+      "accountId": "acct_1U9gbF9UK51Tp9HB",
+      "name": "The Brew Lab Cafe LLC",
+      "score": 41,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "medium",
+      "scores": {
+        "legal": 12,
+        "operating": 8,
+        "history": 2,
+        "identity": 8,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Onboarding is broadly coherent and the account is operationally plausible."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
+    },
+    {
+      "id": "acct_1U9eQK5bIKcjdqld",
+      "accountId": "acct_1U9eQK5bIKcjdqld",
+      "name": "Z's Catfish",
+      "score": 38,
+      "createdAt": null,
+      "reviewedAt": "2026-10-05",
+      "location": "United States",
+      "action": "Enhanced verification",
+      "reviewType": "automated-first-pass",
+      "confidence": "low",
+      "scores": {
+        "legal": 6,
+        "operating": 7,
+        "history": 2,
+        "identity": 12,
+        "reputation": 1,
+        "website": 2,
+        "anomalies": 8
+      },
+      "verified": [
+        "Core onboarding/identity information is present."
+      ],
+      "unverified": [
+        "Independent public corroboration is limited or was not strong enough in this first-pass review."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Government/state business registration or DBA record where applicable.",
+        "Bank-account ownership linkage.",
+        "Independent licensing/permit evidence where applicable.",
+        "Historical contracts/invoices, supplier receipts, and customer/job addresses predating review."
+      ],
+      "summary": "Automated second-batch first pass: onboarding is plausible, but independent corroboration varies and stronger evidence should drive payout-risk decisions."
     }
   ],
   "batch": {
-    "label": "Latest 100 KYC-completed merchants",
-    "reviewedAt": "2026-10-04",
-    "count": 100,
-    "note": "Automated first-pass scores use connected-account/POS history plus public-web corroboration. Low-confidence cases require deeper verification before payout decisions."
+    "label": "Latest 200 KYC-completed merchants",
+    "reviewedAt": "2026-10-05",
+    "count": 200,
+    "latestBatchCount": 100,
+    "note": "Two sequential 100-account Fraud Health first-pass cohorts. Existing richer manual reviews are preserved; current connected-account data and public corroboration inform automated scores."
   }
 };
