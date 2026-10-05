@@ -12,6 +12,7 @@ from pathlib import Path
 import time
 import uuid
 import copy
+import subprocess
 from concurrent.futures import ThreadPoolExecutor
 import urllib.error
 import urllib.parse
@@ -93,6 +94,18 @@ class GitStore:
     """
     def __init__(self, path='risk-monitor/state.enc.json'):
         self.path = path
+        self.code_sha = os.environ.get('GITHUB_SHA')
+        if os.environ.get('GITHUB_ACTIONS') == 'true':
+            # workflow_run and reruns may check out a newer master than the
+            # triggering event. Audit the code that is actually being executed.
+            try:
+                revision = subprocess.run(['git', 'rev-parse', 'HEAD'], check=True,
+                                          capture_output=True, text=True, timeout=5).stdout.strip()
+            except Exception:
+                raise SafeError('checked_out_revision_unverified') from None
+            if len(revision) != 40 or any(c not in '0123456789abcdef' for c in revision):
+                raise SafeError('checked_out_revision_unverified')
+            self.code_sha = revision
         self.sha = None
         self.run_id = os.environ.get('GITHUB_RUN_ID', str(int(time.time())))+'-'+os.environ.get('GITHUB_RUN_ATTEMPT','1')+'-'+uuid.uuid4().hex[:8]
         self.sequence = 0
@@ -173,7 +186,7 @@ class GitStore:
     def checkpoint(self, state, event, health=None):
         self.sequence += 1
         record = {'run_id': self.run_id, 'sequence': self.sequence, 'at': int(time.time()),
-                  'actor': os.environ.get('GITHUB_ACTOR', 'local'), 'code_sha':os.environ.get('GITHUB_SHA'), 'event': event,
+                  'actor': os.environ.get('GITHUB_ACTOR', 'local'), 'code_sha':self.code_sha, 'event': event,
                   'previous_hash': state.get('audit_head')}
         record['hash'] = hashlib.sha256(canonical(record)).hexdigest()
         # Stage the head until the atomic Git ref update succeeds. A failed write

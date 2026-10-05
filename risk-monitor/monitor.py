@@ -662,7 +662,7 @@ def main():
             raise SafeError('bootstrap_identity_mismatch')
     state.update(run_started=int(time.time()),gaps=[],mode=settings['mode'])
     monitor=Monitor(state,store,settings)
-    monitor.checkpoint({'type':'run_started','code_sha':os.environ.get('GITHUB_SHA'),'mode':settings['mode']})
+    monitor.checkpoint({'type':'run_started','code_sha':store.code_sha,'mode':settings['mode']})
     try:
         if not os.environ.get('RISK_HEARTBEAT_URL'):
             monitor.gap('external_deadman_alarm_not_configured')

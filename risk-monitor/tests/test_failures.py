@@ -200,6 +200,11 @@ class Failures(unittest.TestCase):
             self.assertEqual(api.call_count,2)
 
 class JournalTests(unittest.TestCase):
+    def test_audit_revision_uses_checkout_instead_of_older_trigger(self):
+        from types import SimpleNamespace
+        with patch.dict(os.environ,{'GITHUB_ACTIONS':'true','GITHUB_SHA':'1'*40}),patch('adapters.subprocess.run',return_value=SimpleNamespace(stdout='2'*40+'\n')):
+            self.assertEqual(GitStore().code_sha,'2'*40)
+
     def test_failed_checkpoint_does_not_advance_in_memory_audit_head(self):
         store=GitStore(); store.sha='committed'
         store.manifest={'format':'journal-v1','snapshot':{},'journals':[]}

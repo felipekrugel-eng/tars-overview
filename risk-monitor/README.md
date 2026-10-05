@@ -53,6 +53,8 @@ SHA; concurrent writers cannot overwrite newer state. Unrelated master changes c
 be rebased only while the expected state SHA still matches. Delivery only begins
 after this commit succeeds. Audit records have unique run/attempt identifiers and
 a hash chain, and include actor, code revision and decision/delivery stage.
+Runner audit revisions are taken from the checked-out commit, including when a
+workflow completion or rerun originally referenced an older triggering commit.
 
 The bootstrap verifies every immutable legacy shard's checksum/count/unique keys
 and imports historical success/failure and processed-success dedupe. It preserves
