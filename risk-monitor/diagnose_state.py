@@ -54,6 +54,17 @@ def inspect(path):
                       'journal_count': len(manifest['journals']), 'chain_gaps': gaps,
                       'reconstructed_sha256': hashlib.sha256(canonical(state)).hexdigest(),
                       'counts': summary}
+    deliveries = list(state.get('alerts', {}).values()) + list(state.get('notices', {}).values())
+    status_counts = {}
+    for channel in ('email', 'telegram'):
+        counts = {}
+        for delivery in deliveries:
+            status = delivery.get(channel, {}).get('status', 'missing')
+            if status not in ('sent', 'send_intent', 'uncertain', 'enqueued', 'missing'):
+                status = 'other'
+            counts[status] = counts.get(status, 0) + 1
+        status_counts[channel] = counts
+    metadata['delivery_status_counts'] = status_counts
     print(json.dumps(metadata, sort_keys=True), flush=True)
     return store, state, metadata
 
