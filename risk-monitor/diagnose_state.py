@@ -49,10 +49,12 @@ def inspect(path):
                ('seen_attempts', 'attempts', 'charges', 'events', 'alerts', 'refunds', 'disputes')}
     summary['global_accounts'] = len(state.get('global', {}).get('records', {}))
     summary['processor_checked'] = sum(p.get('checked', 0) for p in state.get('full', {}).get('partitions', []))
-    print(json.dumps({'path': path, 'manifest_blob_sha': sha,
+    metadata = {'path': path, 'manifest_blob_sha': sha,
                       'journal_count': len(manifest['journals']), 'chain_gaps': gaps,
                       'reconstructed_sha256': hashlib.sha256(canonical(state)).hexdigest(),
-                      'counts': summary}, sort_keys=True), flush=True)
+                      'counts': summary}
+    print(json.dumps(metadata, sort_keys=True), flush=True)
+    return store, state, metadata
 
 
 if __name__ == '__main__':

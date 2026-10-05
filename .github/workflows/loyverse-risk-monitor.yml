@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_run:
-    workflows: [payments-pull]
+    workflows: [payments-pull, Loyverse risk verified state recovery]
     types: [completed]
   workflow_dispatch: {}
   push:

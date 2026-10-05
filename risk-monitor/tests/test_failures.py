@@ -115,6 +115,54 @@ class Failures(unittest.TestCase):
             self.assertEqual(api.call_count,2)
 
 class JournalTests(unittest.TestCase):
+    def test_failed_checkpoint_does_not_advance_in_memory_audit_head(self):
+        store=GitStore(); store.sha='committed'
+        store.manifest={'format':'journal-v1','snapshot':{},'journals':[]}
+        store.previous={'audit_head':'saved-head','alerts':{'existing':{'email':{'status':'sent'}}}}
+        import copy
+        current=copy.deepcopy(store.previous)
+        def api(path,method='GET',data=None):
+            if path=='git/ref/heads/master':return {'object':{'sha':'head'}}
+            if path=='git/commits/head':return {'tree':{'sha':'base'}}
+            if path=='git/trees':return {'sha':'tree'}
+            if path=='git/commits':return {'sha':'orphan'}
+            if path=='git/refs/heads/master':raise SafeError('github_git_refs_http_422')
+            raise AssertionError(path)
+        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
+            with self.assertRaises(SafeError):store.checkpoint(current,{'type':'failed'})
+        self.assertEqual(current['audit_head'],'saved-head')
+        self.assertEqual(store.previous['audit_head'],'saved-head')
+        self.assertEqual(store.manifest['journals'],[])
+        self.assertEqual(current['alerts']['existing']['email']['status'],'sent')
+
+    def test_checkpoint_after_failed_write_chains_to_last_committed_head(self):
+        store=GitStore(); store.sha='committed'
+        store.manifest={'format':'journal-v1','snapshot':{},'journals':[]}
+        store.previous={'audit_head':'saved-head','events':{}}
+        current={'audit_head':'saved-head','events':{}}
+        calls=[];fail=True
+        def api(path,method='GET',data=None):
+            calls.append((path,method,data))
+            if path=='git/ref/heads/master':return {'object':{'sha':'head'}}
+            if path=='git/commits/head':return {'tree':{'sha':'base'}}
+            if path=='git/trees':return {'sha':'tree'}
+            if path=='git/commits':return {'sha':'new'}
+            if path=='git/refs/heads/master':
+                if fail:raise SafeError('github_git_refs_http_422')
+                return {}
+            raise AssertionError(path)
+        with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}),patch.object(store,'file',return_value=(b'existing','committed')),patch.object(store,'api',side_effect=api):
+            with self.assertRaises(SafeError):store.checkpoint(current,{'type':'failed'})
+            fail=False
+            current['events']['new']={'seen':True}
+            store.checkpoint(current,{'type':'recovered'})
+            tree=next(data for path,method,data in reversed(calls) if path=='git/trees')
+            import json
+            journal=next(e for e in tree['tree'] if e['path'].startswith('risk-monitor/audit/'))
+            record=unseal(json.loads(journal['content']))
+            self.assertEqual(record['audit']['previous_hash'],'saved-head')
+            self.assertEqual(current['audit_head'],record['audit']['hash'])
+
     def test_large_snapshot_uses_blobs_and_one_atomic_ref_update(self):
         store=GitStore();calls=[]
         def api(path,method='GET',data=None):

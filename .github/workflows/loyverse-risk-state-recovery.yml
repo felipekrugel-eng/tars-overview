@@ -1,0 +1,34 @@
+name: Loyverse risk verified state recovery
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [master]
+    paths:
+      - risk-monitor/recover_state.py
+      - .github/workflows/loyverse-risk-state-recovery.yml
+permissions:
+  contents: write
+concurrency:
+  group: loyverse-deterministic-risk-monitor
+  cancel-in-progress: false
+jobs:
+  recovery:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: risk-monitor
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - run: python -m unittest discover -s risk-monitor/tests
+      - name: Recover only the authenticated diagnosed state
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python risk-monitor/recover_state.py

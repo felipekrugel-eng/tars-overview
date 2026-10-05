@@ -176,17 +176,19 @@ class GitStore:
                   'actor': os.environ.get('GITHUB_ACTOR', 'local'), 'code_sha':os.environ.get('GITHUB_SHA'), 'event': event,
                   'previous_hash': state.get('audit_head')}
         record['hash'] = hashlib.sha256(canonical(record)).hexdigest()
-        state['audit_head'] = record['hash']
+        # Stage the head until the atomic Git ref update succeeds. A failed write
+        # must not make the next checkpoint reference an uncommitted audit entry.
+        staged_state = dict(state, audit_head=record['hash'])
         audit_path=f'risk-monitor/audit/{self.run_id}-{self.sequence:05d}.enc.json'
         files={}
         if self.manifest is None or len(self.manifest['journals'])>=64:
             snapshot=f'risk-monitor/snapshots/{self.run_id}-{self.sequence:05d}.enc.json'
-            files[snapshot]=canonical(seal(state)).decode()
-            manifest={'format':'journal-v1','snapshot':{'path':snapshot,'sha256':hashlib.sha256(canonical(state)).hexdigest()},'journals':[]}
+            files[snapshot]=canonical(seal(staged_state)).decode()
+            manifest={'format':'journal-v1','snapshot':{'path':snapshot,'sha256':hashlib.sha256(canonical(staged_state)).hexdigest()},'journals':[]}
             files[audit_path]=canonical(seal({'audit':record,'snapshot':snapshot})).decode()
         else:
             manifest=copy.deepcopy(self.manifest)
-            journal={'audit':record,'patch':self.diff(self.previous,state)}
+            journal={'audit':record,'patch':self.diff(self.previous,staged_state)}
             files[audit_path]=canonical(seal(journal)).decode()
             manifest['journals'].append({'path':audit_path,'sha256':hashlib.sha256(canonical(journal)).hexdigest()})
         files[self.path]=canonical(seal(manifest)).decode()
@@ -221,6 +223,7 @@ class GitStore:
             raw = files[self.path].encode()
             self.sha = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
             self.manifest=manifest
+            state['audit_head']=record['hash']
             self.previous=copy.deepcopy(state)
             return new['sha']
         raise SafeError('checkpoint_ref_conflict')
