@@ -54,6 +54,7 @@ class Monitor:
         self.gmail = None
         self.stripe = None
         self.new = []
+        self._history_by_account = None
     def checkpoint(self, event, completed=False):
         return self.store.checkpoint(self.s, event, health(self.s, int(time.time()), completed))
     def gap(self, code):
@@ -106,6 +107,7 @@ class Monitor:
         for a in attempts:
             groups[a.account].append(a)
         self.s['attempts'] = {a.key: asdict(a) for a in attempts}
+        self._history_by_account = None
         for a in sorted(attempts, key=lambda x: (x.created, x.id)):
             # Each charge/status is distinct. Failed->succeeded is a new success.
             event_key = a.key+'|'+a.status
@@ -199,18 +201,17 @@ class Monitor:
                'country': a['country'], 'fingerprint': fingerprint}
         self.s.setdefault('charges', {})[key] = row | {'checked_at': self.now}
         current = Attempt(**row)
-        history = [Attempt(**x) for x in self.s.get('attempts', {}).values() if x['account'] == account_id]
-        for x in self.s['charges'].values():
-            if x['account'] == account_id:
-                history.append(Attempt(**{k:x[k] for k in row}))
-        if not self.s.get('transaction_source_fresh',False):history=[current]
+        if self._history_by_account is not None:
+            self._history_by_account.setdefault(account_id, {})[key] = row
         status_key = key+'|'+current.status
         if status_key not in self.s['seen_attempts'] or self.s['seen_attempts'][status_key] == self.now:
+            history = self.history_for(current)
             for finding in evaluate(current, history, a.get('created'), self.pos_age(account_id, current.created)):
                 self.add(finding)
             self.s['seen_attempts'][status_key] = self.now
         elif fingerprint and self.now-current.created <= 86400 and self.s['seen_attempts'].get(status_key)!=1:
             # New authoritative fingerprint can complete a recent pattern.
+            history = self.history_for(current)
             for finding in evaluate(current, history):
                 if finding.kind == 'same-credential':
                     self.add(finding)
@@ -249,6 +250,18 @@ class Monitor:
             if not isinstance(obj, dict) or obj.get('object') != 'dispute' or obj.get('charge') != charge['id']:
                 raise SafeError('dispute_charge_identity_unknown')
             self.observe_object(account_id, obj, 'dispute')
+    def history_for(self, current):
+        if not self.s.get('transaction_source_fresh', False):
+            return [current]
+        if self._history_by_account is None:
+            self._history_by_account = defaultdict(dict)
+            for key, value in self.s.get('attempts', {}).items():
+                self._history_by_account[value['account']][key] = value
+            for key, value in self.s.get('charges', {}).items():
+                self._history_by_account[value['account']][key] = value
+        fields = ('account', 'id', 'created', 'amount', 'currency', 'status', 'country', 'fingerprint')
+        return [Attempt(**{key: value.get(key) for key in fields})
+                for value in self._history_by_account.get(current.account, {}).values()]
     def observe_object(self, account, obj, kind):
         key = account+'|'+obj['id']
         old = self.s.setdefault(kind+'s', {}).get(key)

@@ -7,6 +7,7 @@ from adapters import GitStore, SafeError, canonical, unseal
 def inspect(path):
     store = GitStore(path)
     raw, sha = store.file(path)
+    store.sha = sha
     if not raw:
         raise SafeError('state_missing')
     manifest = unseal(json.loads(raw))

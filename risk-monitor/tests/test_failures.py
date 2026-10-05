@@ -108,6 +108,30 @@ class Failures(unittest.TestCase):
         with patch.object(gmail,'reconcile',return_value=([],[])),patch.object(m.store,'checkpoint',side_effect=SafeError('state_compare_and_swap_conflict')),patch.object(gmail,'send_internal') as send:
             with self.assertRaises(SafeError):m.deliver()
             send.assert_not_called()
+    def test_historical_fee_still_checks_refunds_without_rebuilding_history(self):
+        m=self.monitor();m.c['activation_epoch']=0
+        m.s['seen_attempts']['acct_a|ch_old|succeeded']=1
+        charge={'id':'ch_old','object':'charge','livemode':True,'created':1,
+                'amount':100,'currency':'usd','status':'succeeded',
+                'refunds':{'data':[{'id':'re_new','object':'refund','charge':'ch_old',
+                                  'created':100000,'status':'succeeded','amount':1,'currency':'usd'}],
+                           'has_more':False},'dispute':None}
+        with patch.object(m,'account',return_value={'country':'US'}),patch.object(m,'history_for',side_effect=AssertionError('unneeded history rebuilt')):
+            m.fee({'livemode':True,'account':'acct_a','charge':charge})
+        self.assertEqual(len(m.new),1)
+        self.assertEqual(m.s['refunds']['acct_a|re_new']['amount'],1)
+    def test_history_index_uses_authoritative_charge_and_keeps_prior_failure(self):
+        from engine import Attempt
+        m=self.monitor();m.s['transaction_source_fresh']=True
+        stale={'account':'acct_a','id':'ch_a','created':1,'amount':100,'currency':'usd','status':'succeeded','country':'US','fingerprint':None}
+        failure=dict(stale,id='ch_b',status='failed')
+        live=dict(stale,fingerprint='verified')
+        m.s['attempts']={'acct_a|ch_a':stale,'acct_a|ch_b':failure}
+        m.s['charges']={'acct_a|ch_a':dict(live,checked_at=100000)}
+        result=m.history_for(Attempt(**live))
+        self.assertEqual(len(result),2)
+        self.assertEqual(next(a for a in result if a.id=='ch_a').fingerprint,'verified')
+        self.assertEqual(next(a for a in result if a.id=='ch_b').status,'failed')
     def test_cas_conflict_never_writes_new_commit(self):
         store=GitStore();store.sha='old'
         with patch.object(store,'file',return_value=(b'new','new')),patch.object(store,'api',side_effect=[{'object':{'sha':'head'}},{'tree':{'sha':'tree'}}]) as api,patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake'}):
