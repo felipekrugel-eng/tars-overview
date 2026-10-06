@@ -1,1 +1,922 @@
-{"schemaVersion":2,"batch":{"label":"Daily new-account review — 2026-10-05","reviewedAt":"2026-10-06","count":19},"reviewedAt":"2026-10-06","scoreDirection":"higher_is_riskier","merchants":[{"id":"acct_1UNKEE5Ke92SPPl7","accountId":"acct_1UNKEE5Ke92SPPl7","name":"Tequilas Mexican Grill","score":38,"riskScore":38,"trustScore":62,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; complete standard onboarding before activation.","riskDimensions":{"legal":5,"operating":7,"identity":7,"contact":6,"businessModel":5,"history":8,"behavior":0,"network":0},"verified":["Stripe account was created on 5 Oct 2026 and remains inactive/pre-KYC."],"unverified":["Specific legal entity, operating address, representative identity, restaurant location, permits and independent operating history are not yet established."],"contradictions":[],"evidenceNeeded":["Complete Stripe identity/KYC, provide operating location and restaurant permit/business registration, then match the legal entity and representative to public records."],"summary":"Generic restaurant identity with almost no onboarding evidence yet. No affirmative fraud contradiction was found, so missing data is treated as incomplete review evidence rather than fraud by itself.","reviewCompleteness":55,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T22:19:28Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Incomplete","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNJUm8jgX11uEuc","accountId":"acct_1UNJUm8jgX11uEuc","name":"Cochinero LLC","score":14,"riskScore":14,"trustScore":86,"band":"Very low risk","reviewedAt":"2026-10-06","action":"Normal monitoring.","riskDimensions":{"legal":1,"operating":2,"identity":3,"contact":1,"businessModel":1,"history":6,"behavior":0,"network":0},"verified":["Submitted Phoenix location and business identity match independent operating evidence for Cochinero Estilo Sinaloa.","Stripe onboarding is complete with tax information and payout bank present.","Restaurant/food MCC and public-facing business identity are coherent."],"unverified":["Longer-term processing history is still limited because the Stripe account is new."],"contradictions":[],"evidenceNeeded":[],"summary":"Strong match between Stripe onboarding and an independently corroborated Phoenix restaurant/business footprint.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T21:32:30Z","location":"Phoenix, AZ","representative":null,"email":null,"phone":null,"website":"https://www.instagram.com/cochineroestilosinaloa","mcc":"5499","statementDescriptor":"INSTAGRAM.COM/COCHINER","identityVerification":"KYC complete","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNIvE9UktMnnn0N","accountId":"acct_1UNIvE9UktMnnn0N","name":"LUCKYREILLY, INC.","score":8,"riskScore":8,"trustScore":92,"band":"Very low risk","reviewedAt":"2026-10-06","action":"Normal monitoring.","riskDimensions":{"legal":1,"operating":1,"identity":2,"contact":0,"businessModel":0,"history":1,"behavior":0,"network":3},"verified":["Submitted Spokane Valley location, website and restaurant activity independently match Shamus's Sandwich Shop.","Stripe onboarding is complete with tax information and payout bank present.","The shared Terms-acceptance IP with the Sprague Shamus account is consistent with common operation rather than an unexplained cross-merchant link."],"unverified":[],"contradictions":[],"evidenceNeeded":[],"summary":"Well-established Shamus location with strong independent corroboration and coherent linkage to the related Sprague account.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T20:55:46Z","location":"Spokane Valley, WA","representative":null,"email":null,"phone":null,"website":"https://shamussandwiches.com","mcc":"5812","statementDescriptor":"SHAMUSSANDWICHES.COM","identityVerification":"KYC complete","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNHxL7CUTZyMVHS","accountId":"acct_1UNHxL7CUTZyMVHS","name":"marketing store","score":38,"riskScore":38,"trustScore":62,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; verify the operating site and business model before material exposure.","riskDimensions":{"legal":3,"operating":7,"identity":1,"contact":7,"businessModel":9,"history":10,"behavior":0,"network":1},"verified":["Representative identity is verified in Stripe and the submitted contact fields are internally consistent."],"unverified":["Independent operating history, legal-business footprint and the commercial relationship to the submitted website remain weakly established."],"contradictions":["Generic business name plus a submitted quicksale.my URL does not yet provide a clear US operating-business narrative."],"evidenceNeeded":["Proof of site/domain control, historical customer invoices or supplier receipts, and any applicable local business registration."],"summary":"Identity evidence is stronger than the business evidence. The main risk is lack of an independently corroborated operating footprint and unclear website/business coherence.","reviewCompleteness":85,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T19:53:53Z","location":"Lanett, AL","representative":null,"email":null,"phone":null,"website":"https://quicksale.my/","mcc":"5818","statementDescriptor":"QUICKSALE.MY","identityVerification":"Verified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNHTc76TcfVrGnU","accountId":"acct_1UNHTc76TcfVrGnU","name":"Knights of Columbus Msgr. Gehl Council #7895","score":22,"riskScore":22,"trustScore":78,"band":"Low risk","reviewedAt":"2026-10-06","action":"Complete standard onboarding; ordinary monitoring.","riskDimensions":{"legal":1,"operating":2,"identity":7,"contact":5,"businessModel":5,"history":1,"behavior":0,"network":1},"verified":["Council 7895 / Msgr. Gehl Council is independently corroborated in current Wisconsin Knights of Columbus directories and council publications.","Public material states the council was chartered in 1981 and documents ongoing community/fundraising activity.","Stripe has a tax ID on file for the nonprofit account."],"unverified":["The Stripe representative's authority to open the payments account has not yet been independently confirmed because onboarding remains incomplete."],"contradictions":["The current MCC is not an obvious fit for a fraternal/nonprofit council and should be corrected or explained before activation."],"evidenceNeeded":["Complete Stripe KYC, verify representative authority from the council, confirm payout bank ownership, and correct/confirm MCC."],"summary":"The organization itself is strongly corroborated and long-established. Remaining risk is onboarding/authority completeness rather than business existence.","reviewCompleteness":85,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T19:23:09Z","location":"Hortonville, WI","representative":null,"email":null,"phone":null,"website":"https://www.kofc7895.org","mcc":"5499","statementDescriptor":"KNIGHTS OF COLUMBUS","identityVerification":"Incomplete","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNGRL9g68ZzK0gI","accountId":"acct_1UNGRL9g68ZzK0gI","name":"Turbo Parts Hub LLC","score":48,"riskScore":48,"trustScore":52,"band":"Elevated risk","reviewedAt":"2026-10-06","action":"Enhanced verification.","riskDimensions":{"legal":4,"operating":10,"identity":7,"contact":9,"businessModel":8,"history":10,"behavior":0,"network":0},"verified":["Stripe onboarding is complete with tax information, website, automotive-parts MCC and payout bank present.","Submitted website and merchant naming are internally coherent."],"unverified":["Independent operating history and customer footprint remain thin."],"contradictions":["The submitted Austin address is widely used by registered-agent/virtual-office providers, so it does not by itself establish a physical operating location."],"evidenceNeeded":["Texas entity record, historical supplier invoices/receipts, proof of inventory or fulfilment, customer invoices predating this review, and evidence connecting the business to an operating location."],"summary":"Technically complete onboarding but limited independent operating evidence. The address is not strong proof of a genuine parts operation.","reviewCompleteness":90,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T18:16:45Z","location":"Austin, TX","representative":null,"email":null,"phone":null,"website":"https://turbopartshubllc.com/","mcc":"5533","statementDescriptor":"TURBOPARTSHUBLLC.COM","identityVerification":"KYC complete","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNGNf6kxN5JThjv","accountId":"acct_1UNGNf6kxN5JThjv","name":"GordonResales","score":32,"riskScore":32,"trustScore":68,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely.","riskDimensions":{"legal":5,"operating":7,"identity":1,"contact":3,"businessModel":6,"history":10,"behavior":0,"network":0},"verified":["Individual identity is verified, contact/address fields are internally consistent, and a payout bank is present.","Apparel/resale MCC is plausible for the stated business."],"unverified":["Independent reseller history, customer reputation and operating footprint are limited."],"contradictions":[],"evidenceNeeded":["If volume grows materially, request historical marketplace/storefront evidence, supplier receipts and customer fulfilment records."],"summary":"Strong identity consistency but thin independent evidence of an established resale operation.","reviewCompleteness":90,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T18:12:57Z","location":"Willis, TX","representative":null,"email":null,"phone":null,"website":null,"mcc":"5691","statementDescriptor":null,"identityVerification":"Verified","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNGLF6c5jzuexBk","accountId":"acct_1UNGLF6c5jzuexBk","name":"Tasty Bowls","score":39,"riskScore":39,"trustScore":61,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; complete standard onboarding.","riskDimensions":{"legal":6,"operating":8,"identity":8,"contact":6,"businessModel":5,"history":6,"behavior":0,"network":0},"verified":["Stripe account exists but remains at an early onboarding stage."],"unverified":["Specific business location, representative, legal structure, permits and independent operating history are not yet established."],"contradictions":[],"evidenceNeeded":["Complete KYC, provide operating location and applicable food-service permits, and match the business to independent records."],"summary":"Early-stage onboarding with too little information for strong corroboration, but no affirmative fraud contradiction identified.","reviewCompleteness":55,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T18:10:27Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Incomplete","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNFye8GCyWqr05L","accountId":"acct_1UNFye8GCyWqr05L","name":"Planet Dog","score":52,"riskScore":52,"trustScore":48,"band":"Elevated risk","reviewedAt":"2026-10-06","action":"Enhanced verification before activation.","riskDimensions":{"legal":8,"operating":8,"identity":12,"contact":8,"businessModel":6,"history":8,"behavior":0,"network":2},"verified":["Account is inactive and has not completed identity or business onboarding."],"unverified":["Legal/business identity, representative, address, website, operating history and any connection to similarly named pet-sector businesses."],"contradictions":["The name overlaps existing pet-sector branding, but no evidence currently links this applicant to those businesses."],"evidenceNeeded":["Complete KYC, legal/business registration where applicable, operating address, payout bank ownership and evidence of the actual pet-related operation."],"summary":"Very incomplete onboarding plus an ambiguous brand/name overlap. No conclusion should be drawn from unrelated businesses with similar names.","reviewCompleteness":60,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T17:47:06Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Unverified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNFni79DVNco3m2","accountId":"acct_1UNFni79DVNco3m2","name":"M&M Firearms Training","score":8,"riskScore":8,"trustScore":92,"band":"Very low risk","reviewedAt":"2026-10-06","action":"Normal fraud monitoring; separate regulated-activity compliance applies.","riskDimensions":{"legal":1,"operating":1,"identity":1,"contact":1,"businessModel":1,"history":3,"behavior":0,"network":0},"verified":["Business website and submitted business contact are coherent.","Independent San Diego County material lists the business/representative among approved instructors.","An active California corporation with the same business name predates this Stripe onboarding.","Stripe identity verification is complete and a payout bank is present."],"unverified":[],"contradictions":[],"evidenceNeeded":[],"summary":"Strong independent corroboration of an established training business. Fraud risk is low; regulated-category compliance should be handled separately.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T17:35:48Z","location":"Chula Vista, CA","representative":null,"email":null,"phone":null,"website":"https://mmfirearmstraining.com","mcc":"8299","statementDescriptor":"MMFIREARMSTRAINING.COM","identityVerification":"Verified","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNF0w9IRKwEoowo","accountId":"acct_1UNF0w9IRKwEoowo","name":"SHAMUS'S SANDWICH SHOP, INC.","score":5,"riskScore":5,"trustScore":95,"band":"Very low risk","reviewedAt":"2026-10-06","action":"Normal monitoring.","riskDimensions":{"legal":0,"operating":1,"identity":1,"contact":0,"businessModel":0,"history":0,"behavior":0,"network":3},"verified":["Independent corporate and restaurant records match the 4212 E Sprague Ave Spokane location.","Public history predates the current Stripe onboarding by many years and customer/review evidence is extensive.","Stripe onboarding is complete with tax information and payout bank present.","Shared Terms-acceptance IP with the related Pines location is consistent with common Shamus operation."],"unverified":[],"contradictions":[],"evidenceNeeded":[],"summary":"One of the strongest accounts in the cohort: established operation, coherent corporate/location evidence and expected linkage to another Shamus location.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T16:45:24Z","location":"Spokane, WA","representative":null,"email":null,"phone":null,"website":"https://shamussandwiches.com","mcc":"5812","statementDescriptor":"SHAMUSSANDWICHES.COM","identityVerification":"KYC complete","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UNBnm5XOkPneqm0","accountId":"acct_1UNBnm5XOkPneqm0","name":"Marwan","score":37,"riskScore":37,"trustScore":63,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; complete KYC.","riskDimensions":{"legal":6,"operating":7,"identity":8,"contact":6,"businessModel":4,"history":6,"behavior":0,"network":0},"verified":["Account is currently pre-KYC/inactive."],"unverified":["Business identity, representative, location, industry, website and independent operating history are not yet established."],"contradictions":[],"evidenceNeeded":["Complete Stripe KYC and provide sufficient business information to identify the actual operation before activation."],"summary":"Essentially pre-KYC. There is not enough evidence for independent corroboration, but no affirmative fraud signal yet.","reviewCompleteness":55,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T13:19:36Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Unverified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNBmn4qzj8XloE9","accountId":"acct_1UNBmn4qzj8XloE9","name":"KmKw","score":41,"riskScore":41,"trustScore":59,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; complete KYC.","riskDimensions":{"legal":7,"operating":8,"identity":8,"contact":7,"businessModel":5,"history":6,"behavior":0,"network":0},"verified":["Account is inactive and still at an early onboarding stage."],"unverified":["The ambiguous merchant name cannot yet be tied to a specific operating business, location or representative."],"contradictions":[],"evidenceNeeded":["Complete identity/KYC and provide business name, address, industry, website or product description sufficient for independent verification."],"summary":"Ambiguous pre-KYC account with insufficient business context for independent corroboration.","reviewCompleteness":55,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T13:18:36Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Unverified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UN9hu4MGA4Bs0bg","accountId":"acct_1UN9hu4MGA4Bs0bg","name":"PickleProPainting LLC","score":43,"riskScore":43,"trustScore":57,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; obtain entity/contractor evidence if activity begins.","riskDimensions":{"legal":3,"operating":8,"identity":7,"contact":7,"businessModel":7,"history":9,"behavior":0,"network":2},"verified":["LLC/tax information, Rapid City address and painting-related MCC are internally coherent."],"unverified":["Independent operating history, representative connection and licensing/contractor evidence remain limited."],"contradictions":["The submitted email domain references pickleball rather than painting and is not presently explained by the business footprint."],"evidenceNeeded":["South Dakota entity record, any applicable contractor/licensing evidence, historical painting invoices/contracts and payout bank ownership once supplied."],"summary":"Plausible painting LLC with coherent core onboarding fields but limited independent history and an unexplained contact-domain mismatch.","reviewCompleteness":80,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T11:05:25Z","location":"Rapid City, SD","representative":null,"email":null,"phone":null,"website":null,"mcc":"1740","statementDescriptor":null,"identityVerification":"Incomplete","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UN9GaQCBrpln0bN","accountId":"acct_1UN9GaQCBrpln0bN","name":"Sweet Pea Sourdough","score":27,"riskScore":27,"trustScore":73,"band":"Low risk","reviewedAt":"2026-10-06","action":"Normal monitoring.","riskDimensions":{"legal":4,"operating":5,"identity":1,"contact":2,"businessModel":3,"history":10,"behavior":0,"network":2},"verified":["Stripe individual identity is verified and the submitted domain-based business contact, website, address, food MCC and payout bank are internally coherent.","The business model is plausible for a small/home bakery."],"unverified":["Independent public operating history and customer footprint are limited."],"contradictions":[],"evidenceNeeded":["If processing volume grows materially, confirm any applicable cottage-food/local permits and obtain historical sales/supplier evidence."],"summary":"Coherent small-business onboarding with verified identity. Thin public footprint is plausible for a home/cottage bakery and is not treated as fraud by itself.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-full-review","createdAt":"2026-10-05T10:37:10Z","location":"Fulton, IL","representative":null,"email":null,"phone":null,"website":"https://www.sweetpeasourdough.com","mcc":"5499","statementDescriptor":"SWEETPEASOURDOUGH.COM","identityVerification":"Verified","successfulTransactions":null,"hasTransacted":null,"lastTransactedAt":null},{"id":"acct_1UN6XD6u1J4hHAiP","accountId":"acct_1UN6XD6u1J4hHAiP","name":"Bjks 23-7 Ignited","score":48,"riskScore":48,"trustScore":52,"band":"Elevated risk","reviewedAt":"2026-10-06","action":"Enhanced verification; resolve the platform payout pause before further payout exposure.","riskDimensions":{"legal":5,"operating":9,"identity":1,"contact":5,"businessModel":8,"history":10,"behavior":8,"network":2},"verified":["Stripe individual identity is verified, contact/address fields are internally consistent and a payout bank is present.","The account has successfully transacted."],"unverified":["Independent operating history and business footprint remain limited."],"contradictions":["Payouts are currently platform-paused, which is a material operational risk signal requiring resolution."],"evidenceNeeded":["Establish the reason for the payout pause, verify service activity with historical invoices/contracts or customer evidence, and confirm bank ownership if not already independently validated."],"summary":"The previous 65 score overstated risk from missing public evidence. Identity/bank consistency is strong; the genuine concern is the payout pause plus weak independent operating history.","reviewCompleteness":90,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T07:42:09Z","location":"Powder Springs, GA","representative":null,"email":null,"phone":null,"website":null,"mcc":"7349","statementDescriptor":null,"identityVerification":"Verified","successfulTransactions":1,"hasTransacted":true,"lastTransactedAt":"2026-10-05T08:12:12Z"},{"id":"acct_1UN46892RAx7aOcl","accountId":"acct_1UN46892RAx7aOcl","name":"Faboloso clean binz","score":40,"riskScore":40,"trustScore":60,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely; verify state record and historical service activity.","riskDimensions":{"legal":3,"operating":8,"identity":7,"contact":5,"businessModel":5,"history":10,"behavior":0,"network":2},"verified":["LLC/tax information, Sacramento location, submitted domain and general-services MCC are internally plausible."],"unverified":["Independent operating history and current service footprint remain limited."],"contradictions":[],"evidenceNeeded":["California entity record, historical service invoices/customer addresses, supplier/equipment receipts and payout bank ownership once provided."],"summary":"Plausible service business with coherent onboarding fields but limited independent history.","reviewCompleteness":80,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T05:06:02Z","location":"Sacramento, CA","representative":null,"email":null,"phone":null,"website":"https://fabolosobinz.com","mcc":"7399","statementDescriptor":"FABOLOSOBINZ.COM","identityVerification":"Incomplete","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UN1Jz6hwCWqvoUx","accountId":"acct_1UN1Jz6hwCWqvoUx","name":"Fred Meyer","score":78,"riskScore":78,"trustScore":22,"band":"Very high risk","reviewedAt":"2026-10-06","action":"Do not activate until corporate/business identity and authority are established.","riskDimensions":{"legal":15,"operating":13,"identity":15,"contact":10,"businessModel":10,"history":10,"behavior":0,"network":5},"verified":["The account is inactive and has not completed representative/business KYC."],"unverified":["No evidence currently connects the applicant to the established Fred Meyer retail organization or establishes a distinct legitimate business using the same name."],"contradictions":["The submitted merchant name exactly overlaps a major established retail brand while the account lacks corporate-domain identity, address, representative, website, MCC or authorization evidence."],"evidenceNeeded":["Complete KYC, prove the actual legal/business identity, provide corporate authorization if claiming affiliation with Fred Meyer, or document a distinct legitimate business with registration and bank ownership."],"summary":"Brand/name collision combined with almost no onboarding evidence creates a material impersonation/identity risk. Keep payment capability off until the business identity is resolved.","reviewCompleteness":65,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T02:08:09Z","location":"United States","representative":null,"email":null,"phone":null,"website":null,"mcc":null,"statementDescriptor":null,"identityVerification":"Unverified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UN0Bk9QhE5g5TSo","accountId":"acct_1UN0Bk9QhE5g5TSo","name":"Ride","score":35,"riskScore":35,"trustScore":65,"band":"Moderate risk","reviewedAt":"2026-10-06","action":"Monitor closely.","riskDimensions":{"legal":5,"operating":7,"identity":1,"contact":4,"businessModel":7,"history":10,"behavior":0,"network":1},"verified":["Stripe identity is verified and the submitted location/contact fields are internally consistent.","Transportation MCC is plausible for the stated merchant identity."],"unverified":["Independent operating/licensing footprint and payout bank ownership are not yet established."],"contradictions":[],"evidenceNeeded":["If activation/volume progresses, verify any applicable local transportation/TNC licensing, operating history and payout bank ownership."],"summary":"Identity is established, but the operating transportation business has little independent footprint and onboarding is not complete.","reviewCompleteness":80,"confidence":"medium","reviewType":"daily-full-review","createdAt":"2026-10-05T00:55:34Z","location":"Conway, SC","representative":null,"email":null,"phone":null,"website":null,"mcc":"4121","statementDescriptor":null,"identityVerification":"Verified","successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null}]}
+{
+  "schemaVersion": 2,
+  "batch": {
+    "label": "Daily new-account review — 2026-10-05",
+    "reviewedAt": "2026-10-06",
+    "count": 19
+  },
+  "reviewedAt": "2026-10-06",
+  "scoreDirection": "higher_is_riskier",
+  "merchants": [
+    {
+      "id": "acct_1UNKEE5Ke92SPPl7",
+      "accountId": "acct_1UNKEE5Ke92SPPl7",
+      "name": "Tequilas Mexican Grill",
+      "score": 38,
+      "riskScore": 38,
+      "trustScore": 62,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 5,
+        "operating": 7,
+        "identity": 7,
+        "contact": 6,
+        "businessModel": 5,
+        "history": 8,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Stripe account was created on 5 Oct 2026 and remains inactive/pre-KYC."
+      ],
+      "unverified": [
+        "Specific legal entity, operating address, representative identity, restaurant location, permits and independent operating history are not yet established."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Complete Stripe identity/KYC, provide operating location and restaurant permit/business registration, then match the legal entity and representative to public records."
+      ],
+      "summary": "Generic restaurant identity with almost no onboarding evidence yet. No affirmative fraud contradiction was found, so missing data is treated as incomplete review evidence rather than fraud by itself.",
+      "reviewCompleteness": 55,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T22:19:28Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Incomplete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNJUm8jgX11uEuc",
+      "accountId": "acct_1UNJUm8jgX11uEuc",
+      "name": "Cochinero LLC",
+      "score": 14,
+      "riskScore": 14,
+      "trustScore": 86,
+      "band": "Very low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 1,
+        "operating": 2,
+        "identity": 3,
+        "contact": 1,
+        "businessModel": 1,
+        "history": 6,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Submitted Phoenix location and business identity match independent operating evidence for Cochinero Estilo Sinaloa.",
+        "Stripe onboarding is complete with tax information and payout bank present.",
+        "Restaurant/food MCC and public-facing business identity are coherent."
+      ],
+      "unverified": [
+        "Longer-term processing history is still limited because the Stripe account is new."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Strong match between Stripe onboarding and an independently corroborated Phoenix restaurant/business footprint.",
+      "reviewCompleteness": 95,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T21:32:30Z",
+      "location": "Phoenix, AZ",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://www.instagram.com/cochineroestilosinaloa",
+      "mcc": "5499",
+      "statementDescriptor": "INSTAGRAM.COM/COCHINER",
+      "identityVerification": "KYC complete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNIvE9UktMnnn0N",
+      "accountId": "acct_1UNIvE9UktMnnn0N",
+      "name": "LUCKYREILLY, INC.",
+      "score": 8,
+      "riskScore": 8,
+      "trustScore": 92,
+      "band": "Very low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 1,
+        "operating": 1,
+        "identity": 2,
+        "contact": 0,
+        "businessModel": 0,
+        "history": 1,
+        "behavior": 0,
+        "network": 3
+      },
+      "verified": [
+        "Submitted Spokane Valley location, website and restaurant activity independently match Shamus's Sandwich Shop.",
+        "Stripe onboarding is complete with tax information and payout bank present.",
+        "The shared Terms-acceptance IP with the Sprague Shamus account is consistent with common operation rather than an unexplained cross-merchant link."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Well-established Shamus location with strong independent corroboration and coherent linkage to the related Sprague account.",
+      "reviewCompleteness": 95,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T20:55:46Z",
+      "location": "Spokane Valley, WA",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://shamussandwiches.com",
+      "mcc": "5812",
+      "statementDescriptor": "SHAMUSSANDWICHES.COM",
+      "identityVerification": "KYC complete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNHxL7CUTZyMVHS",
+      "accountId": "acct_1UNHxL7CUTZyMVHS",
+      "name": "marketing store",
+      "score": 38,
+      "riskScore": 38,
+      "trustScore": 62,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 3,
+        "operating": 7,
+        "identity": 1,
+        "contact": 7,
+        "businessModel": 9,
+        "history": 10,
+        "behavior": 0,
+        "network": 1
+      },
+      "verified": [
+        "Representative identity is verified in Stripe and the submitted contact fields are internally consistent."
+      ],
+      "unverified": [
+        "Independent operating history, legal-business footprint and the commercial relationship to the submitted website remain weakly established."
+      ],
+      "contradictions": [
+        "Generic business name plus a submitted quicksale.my URL does not yet provide a clear US operating-business narrative."
+      ],
+      "evidenceNeeded": [
+        "Proof of site/domain control, historical customer invoices or supplier receipts, and any applicable local business registration."
+      ],
+      "summary": "Identity evidence is stronger than the business evidence. The main risk is lack of an independently corroborated operating footprint and unclear website/business coherence.",
+      "reviewCompleteness": 85,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T19:53:53Z",
+      "location": "Lanett, AL",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://quicksale.my/",
+      "mcc": "5818",
+      "statementDescriptor": "QUICKSALE.MY",
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNHTc76TcfVrGnU",
+      "accountId": "acct_1UNHTc76TcfVrGnU",
+      "name": "Knights of Columbus Msgr. Gehl Council #7895",
+      "score": 22,
+      "riskScore": 22,
+      "trustScore": 78,
+      "band": "Low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 1,
+        "operating": 2,
+        "identity": 7,
+        "contact": 5,
+        "businessModel": 5,
+        "history": 1,
+        "behavior": 0,
+        "network": 1
+      },
+      "verified": [
+        "Council 7895 / Msgr. Gehl Council is independently corroborated in current Wisconsin Knights of Columbus directories and council publications.",
+        "Public material states the council was chartered in 1981 and documents ongoing community/fundraising activity.",
+        "Stripe has a tax ID on file for the nonprofit account."
+      ],
+      "unverified": [
+        "The Stripe representative's authority to open the payments account has not yet been independently confirmed because onboarding remains incomplete."
+      ],
+      "contradictions": [
+        "The current MCC is not an obvious fit for a fraternal/nonprofit council and should be corrected or explained before activation."
+      ],
+      "evidenceNeeded": [
+        "Complete Stripe KYC, verify representative authority from the council, confirm payout bank ownership, and correct/confirm MCC."
+      ],
+      "summary": "The organization itself is strongly corroborated and long-established. Remaining risk is onboarding/authority completeness rather than business existence.",
+      "reviewCompleteness": 85,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T19:23:09Z",
+      "location": "Hortonville, WI",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://www.kofc7895.org",
+      "mcc": "5499",
+      "statementDescriptor": "KNIGHTS OF COLUMBUS",
+      "identityVerification": "Incomplete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNGRL9g68ZzK0gI",
+      "accountId": "acct_1UNGRL9g68ZzK0gI",
+      "name": "Turbo Parts Hub LLC",
+      "score": 48,
+      "riskScore": 48,
+      "trustScore": 52,
+      "band": "Elevated risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Enhanced verification",
+      "riskDimensions": {
+        "legal": 4,
+        "operating": 10,
+        "identity": 7,
+        "contact": 9,
+        "businessModel": 8,
+        "history": 10,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Stripe onboarding is complete with tax information, website, automotive-parts MCC and payout bank present.",
+        "Submitted website and merchant naming are internally coherent."
+      ],
+      "unverified": [
+        "Independent operating history and customer footprint remain thin."
+      ],
+      "contradictions": [
+        "The submitted Austin address is widely used by registered-agent/virtual-office providers, so it does not by itself establish a physical operating location."
+      ],
+      "evidenceNeeded": [
+        "Texas entity record, historical supplier invoices/receipts, proof of inventory or fulfilment, customer invoices predating this review, and evidence connecting the business to an operating location."
+      ],
+      "summary": "Technically complete onboarding but limited independent operating evidence. The address is not strong proof of a genuine parts operation.",
+      "reviewCompleteness": 90,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T18:16:45Z",
+      "location": "Austin, TX",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://turbopartshubllc.com/",
+      "mcc": "5533",
+      "statementDescriptor": "TURBOPARTSHUBLLC.COM",
+      "identityVerification": "KYC complete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNGNf6kxN5JThjv",
+      "accountId": "acct_1UNGNf6kxN5JThjv",
+      "name": "GordonResales",
+      "score": 32,
+      "riskScore": 32,
+      "trustScore": 68,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 5,
+        "operating": 7,
+        "identity": 1,
+        "contact": 3,
+        "businessModel": 6,
+        "history": 10,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Individual identity is verified, contact/address fields are internally consistent, and a payout bank is present.",
+        "Apparel/resale MCC is plausible for the stated business."
+      ],
+      "unverified": [
+        "Independent reseller history, customer reputation and operating footprint are limited."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "If volume grows materially, request historical marketplace/storefront evidence, supplier receipts and customer fulfilment records."
+      ],
+      "summary": "Strong identity consistency but thin independent evidence of an established resale operation.",
+      "reviewCompleteness": 90,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T18:12:57Z",
+      "location": "Willis, TX",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": "5691",
+      "statementDescriptor": null,
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNGLF6c5jzuexBk",
+      "accountId": "acct_1UNGLF6c5jzuexBk",
+      "name": "Tasty Bowls",
+      "score": 39,
+      "riskScore": 39,
+      "trustScore": 61,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 6,
+        "operating": 8,
+        "identity": 8,
+        "contact": 6,
+        "businessModel": 5,
+        "history": 6,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Stripe account exists but remains at an early onboarding stage."
+      ],
+      "unverified": [
+        "Specific business location, representative, legal structure, permits and independent operating history are not yet established."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Complete KYC, provide operating location and applicable food-service permits, and match the business to independent records."
+      ],
+      "summary": "Early-stage onboarding with too little information for strong corroboration, but no affirmative fraud contradiction identified.",
+      "reviewCompleteness": 55,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T18:10:27Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Incomplete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNFye8GCyWqr05L",
+      "accountId": "acct_1UNFye8GCyWqr05L",
+      "name": "Planet Dog",
+      "score": 52,
+      "riskScore": 52,
+      "trustScore": 48,
+      "band": "Elevated risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Enhanced verification",
+      "riskDimensions": {
+        "legal": 8,
+        "operating": 8,
+        "identity": 12,
+        "contact": 8,
+        "businessModel": 6,
+        "history": 8,
+        "behavior": 0,
+        "network": 2
+      },
+      "verified": [
+        "Account is inactive and has not completed identity or business onboarding."
+      ],
+      "unverified": [
+        "Legal/business identity, representative, address, website, operating history and any connection to similarly named pet-sector businesses."
+      ],
+      "contradictions": [
+        "The name overlaps existing pet-sector branding, but no evidence currently links this applicant to those businesses."
+      ],
+      "evidenceNeeded": [
+        "Complete KYC, legal/business registration where applicable, operating address, payout bank ownership and evidence of the actual pet-related operation."
+      ],
+      "summary": "Very incomplete onboarding plus an ambiguous brand/name overlap. No conclusion should be drawn from unrelated businesses with similar names.",
+      "reviewCompleteness": 60,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T17:47:06Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Unverified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNFni79DVNco3m2",
+      "accountId": "acct_1UNFni79DVNco3m2",
+      "name": "M&M Firearms Training",
+      "score": 8,
+      "riskScore": 8,
+      "trustScore": 92,
+      "band": "Very low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 1,
+        "operating": 1,
+        "identity": 1,
+        "contact": 1,
+        "businessModel": 1,
+        "history": 3,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Business website and submitted business contact are coherent.",
+        "Independent San Diego County material lists the business/representative among approved instructors.",
+        "An active California corporation with the same business name predates this Stripe onboarding.",
+        "Stripe identity verification is complete and a payout bank is present."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "Strong independent corroboration of an established training business. Fraud risk is low; regulated-category compliance should be handled separately.",
+      "reviewCompleteness": 95,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T17:35:48Z",
+      "location": "Chula Vista, CA",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://mmfirearmstraining.com",
+      "mcc": "8299",
+      "statementDescriptor": "MMFIREARMSTRAINING.COM",
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNF0w9IRKwEoowo",
+      "accountId": "acct_1UNF0w9IRKwEoowo",
+      "name": "SHAMUS'S SANDWICH SHOP, INC.",
+      "score": 5,
+      "riskScore": 5,
+      "trustScore": 95,
+      "band": "Very low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 0,
+        "operating": 1,
+        "identity": 1,
+        "contact": 0,
+        "businessModel": 0,
+        "history": 0,
+        "behavior": 0,
+        "network": 3
+      },
+      "verified": [
+        "Independent corporate and restaurant records match the 4212 E Sprague Ave Spokane location.",
+        "Public history predates the current Stripe onboarding by many years and customer/review evidence is extensive.",
+        "Stripe onboarding is complete with tax information and payout bank present.",
+        "Shared Terms-acceptance IP with the related Pines location is consistent with common Shamus operation."
+      ],
+      "unverified": [],
+      "contradictions": [],
+      "evidenceNeeded": [],
+      "summary": "One of the strongest accounts in the cohort: established operation, coherent corporate/location evidence and expected linkage to another Shamus location.",
+      "reviewCompleteness": 95,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T16:45:24Z",
+      "location": "Spokane, WA",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://shamussandwiches.com",
+      "mcc": "5812",
+      "statementDescriptor": "SHAMUSSANDWICHES.COM",
+      "identityVerification": "KYC complete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNBnm5XOkPneqm0",
+      "accountId": "acct_1UNBnm5XOkPneqm0",
+      "name": "Marwan",
+      "score": 37,
+      "riskScore": 37,
+      "trustScore": 63,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 6,
+        "operating": 7,
+        "identity": 8,
+        "contact": 6,
+        "businessModel": 4,
+        "history": 6,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Account is currently pre-KYC/inactive."
+      ],
+      "unverified": [
+        "Business identity, representative, location, industry, website and independent operating history are not yet established."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Complete Stripe KYC and provide sufficient business information to identify the actual operation before activation."
+      ],
+      "summary": "Essentially pre-KYC. There is not enough evidence for independent corroboration, but no affirmative fraud signal yet.",
+      "reviewCompleteness": 55,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T13:19:36Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Unverified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UNBmn4qzj8XloE9",
+      "accountId": "acct_1UNBmn4qzj8XloE9",
+      "name": "KmKw",
+      "score": 41,
+      "riskScore": 41,
+      "trustScore": 59,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 7,
+        "operating": 8,
+        "identity": 8,
+        "contact": 7,
+        "businessModel": 5,
+        "history": 6,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Account is inactive and still at an early onboarding stage."
+      ],
+      "unverified": [
+        "The ambiguous merchant name cannot yet be tied to a specific operating business, location or representative."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "Complete identity/KYC and provide business name, address, industry, website or product description sufficient for independent verification."
+      ],
+      "summary": "Ambiguous pre-KYC account with insufficient business context for independent corroboration.",
+      "reviewCompleteness": 55,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T13:18:36Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Unverified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN9hu4MGA4Bs0bg",
+      "accountId": "acct_1UN9hu4MGA4Bs0bg",
+      "name": "PickleProPainting LLC",
+      "score": 43,
+      "riskScore": 43,
+      "trustScore": 57,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 3,
+        "operating": 8,
+        "identity": 7,
+        "contact": 7,
+        "businessModel": 7,
+        "history": 9,
+        "behavior": 0,
+        "network": 2
+      },
+      "verified": [
+        "LLC/tax information, Rapid City address and painting-related MCC are internally coherent."
+      ],
+      "unverified": [
+        "Independent operating history, representative connection and licensing/contractor evidence remain limited."
+      ],
+      "contradictions": [
+        "The submitted email domain references pickleball rather than painting and is not presently explained by the business footprint."
+      ],
+      "evidenceNeeded": [
+        "South Dakota entity record, any applicable contractor/licensing evidence, historical painting invoices/contracts and payout bank ownership once supplied."
+      ],
+      "summary": "Plausible painting LLC with coherent core onboarding fields but limited independent history and an unexplained contact-domain mismatch.",
+      "reviewCompleteness": 80,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T11:05:25Z",
+      "location": "Rapid City, SD",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": "1740",
+      "statementDescriptor": null,
+      "identityVerification": "Incomplete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN9GaQCBrpln0bN",
+      "accountId": "acct_1UN9GaQCBrpln0bN",
+      "name": "Sweet Pea Sourdough",
+      "score": 27,
+      "riskScore": 27,
+      "trustScore": 73,
+      "band": "Low risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Normal monitoring",
+      "riskDimensions": {
+        "legal": 4,
+        "operating": 5,
+        "identity": 1,
+        "contact": 2,
+        "businessModel": 3,
+        "history": 10,
+        "behavior": 0,
+        "network": 2
+      },
+      "verified": [
+        "Stripe individual identity is verified and the submitted domain-based business contact, website, address, food MCC and payout bank are internally coherent.",
+        "The business model is plausible for a small/home bakery."
+      ],
+      "unverified": [
+        "Independent public operating history and customer footprint are limited."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "If processing volume grows materially, confirm any applicable cottage-food/local permits and obtain historical sales/supplier evidence."
+      ],
+      "summary": "Coherent small-business onboarding with verified identity. Thin public footprint is plausible for a home/cottage bakery and is not treated as fraud by itself.",
+      "reviewCompleteness": 95,
+      "confidence": "high",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T10:37:10Z",
+      "location": "Fulton, IL",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://www.sweetpeasourdough.com",
+      "mcc": "5499",
+      "statementDescriptor": "SWEETPEASOURDOUGH.COM",
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN6XD6u1J4hHAiP",
+      "accountId": "acct_1UN6XD6u1J4hHAiP",
+      "name": "Bjks 23-7 Ignited",
+      "score": 48,
+      "riskScore": 48,
+      "trustScore": 52,
+      "band": "Elevated risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Enhanced verification",
+      "riskDimensions": {
+        "legal": 5,
+        "operating": 9,
+        "identity": 1,
+        "contact": 5,
+        "businessModel": 8,
+        "history": 10,
+        "behavior": 8,
+        "network": 2
+      },
+      "verified": [
+        "Stripe individual identity is verified, contact/address fields are internally consistent and a payout bank is present.",
+        "The account has successfully transacted."
+      ],
+      "unverified": [
+        "Independent operating history and business footprint remain limited."
+      ],
+      "contradictions": [
+        "Payouts are currently platform-paused, which is a material operational risk signal requiring resolution."
+      ],
+      "evidenceNeeded": [
+        "Establish the reason for the payout pause, verify service activity with historical invoices/contracts or customer evidence, and confirm bank ownership if not already independently validated."
+      ],
+      "summary": "The previous 65 score overstated risk from missing public evidence. Identity/bank consistency is strong; the genuine concern is the payout pause plus weak independent operating history.",
+      "reviewCompleteness": 90,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T07:42:09Z",
+      "location": "Powder Springs, GA",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": "7349",
+      "statementDescriptor": null,
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN46892RAx7aOcl",
+      "accountId": "acct_1UN46892RAx7aOcl",
+      "name": "Faboloso clean binz",
+      "score": 40,
+      "riskScore": 40,
+      "trustScore": 60,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 3,
+        "operating": 8,
+        "identity": 7,
+        "contact": 5,
+        "businessModel": 5,
+        "history": 10,
+        "behavior": 0,
+        "network": 2
+      },
+      "verified": [
+        "LLC/tax information, Sacramento location, submitted domain and general-services MCC are internally plausible."
+      ],
+      "unverified": [
+        "Independent operating history and current service footprint remain limited."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "California entity record, historical service invoices/customer addresses, supplier/equipment receipts and payout bank ownership once provided."
+      ],
+      "summary": "Plausible service business with coherent onboarding fields but limited independent history.",
+      "reviewCompleteness": 80,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T05:06:02Z",
+      "location": "Sacramento, CA",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://fabolosobinz.com",
+      "mcc": "7399",
+      "statementDescriptor": "FABOLOSOBINZ.COM",
+      "identityVerification": "Incomplete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN1Jz6hwCWqvoUx",
+      "accountId": "acct_1UN1Jz6hwCWqvoUx",
+      "name": "Fred Meyer",
+      "score": 78,
+      "riskScore": 78,
+      "trustScore": 22,
+      "band": "Very high risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Hold payouts pending review",
+      "riskDimensions": {
+        "legal": 15,
+        "operating": 13,
+        "identity": 15,
+        "contact": 10,
+        "businessModel": 10,
+        "history": 10,
+        "behavior": 0,
+        "network": 5
+      },
+      "verified": [
+        "The account is inactive and has not completed representative/business KYC."
+      ],
+      "unverified": [
+        "No evidence currently connects the applicant to the established Fred Meyer retail organization or establishes a distinct legitimate business using the same name."
+      ],
+      "contradictions": [
+        "The submitted merchant name exactly overlaps a major established retail brand while the account lacks corporate-domain identity, address, representative, website, MCC or authorization evidence."
+      ],
+      "evidenceNeeded": [
+        "Complete KYC, prove the actual legal/business identity, provide corporate authorization if claiming affiliation with Fred Meyer, or document a distinct legitimate business with registration and bank ownership."
+      ],
+      "summary": "Brand/name collision combined with almost no onboarding evidence creates a material impersonation/identity risk. Keep payment capability off until the business identity is resolved.",
+      "reviewCompleteness": 65,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T02:08:09Z",
+      "location": "United States",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": null,
+      "statementDescriptor": null,
+      "identityVerification": "Unverified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    },
+    {
+      "id": "acct_1UN0Bk9QhE5g5TSo",
+      "accountId": "acct_1UN0Bk9QhE5g5TSo",
+      "name": "Ride",
+      "score": 35,
+      "riskScore": 35,
+      "trustScore": 65,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 5,
+        "operating": 7,
+        "identity": 1,
+        "contact": 4,
+        "businessModel": 7,
+        "history": 10,
+        "behavior": 0,
+        "network": 1
+      },
+      "verified": [
+        "Stripe identity is verified and the submitted location/contact fields are internally consistent.",
+        "Transportation MCC is plausible for the stated merchant identity."
+      ],
+      "unverified": [
+        "Independent operating/licensing footprint and payout bank ownership are not yet established."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "If activation/volume progresses, verify any applicable local transportation/TNC licensing, operating history and payout bank ownership."
+      ],
+      "summary": "Identity is established, but the operating transportation business has little independent footprint and onboarding is not complete.",
+      "reviewCompleteness": 80,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-05T00:55:34Z",
+      "location": "Conway, SC",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "mcc": "4121",
+      "statementDescriptor": null,
+      "identityVerification": "Verified",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    }
+  ]
+}
