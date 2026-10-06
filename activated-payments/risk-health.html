@@ -201,18 +201,14 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   function listHtml(arr){return (arr&&arr.length?arr:['None recorded']).map(function(x){return '<li>'+esc(x)+'</li>'}).join('')}
   function renderKpis(){
     var n=merchants.length, avg=n?Math.round(merchants.reduce(function(s,m){return s+m.score},0)/n):0;
-    var hi=merchants.filter(function(m){return m.score>=60}).length;
-    var vh=merchants.filter(function(m){return m.score>=90}).length;
-    var action=merchants.filter(function(m){return /hold|payout|urgent|manual review/i.test(m.action||'')}).length;
-    var coverage=DATA.coverage||{};
-    var enabledReviewed=coverage.reviewedEnabled||n;
-    var enabledTotal=coverage.stripeEnabledChargesOrPayouts||enabledReviewed;
+    var transacted=merchants.filter(function(m){return m.hasTransacted===true}).length;
+    var action=merchants.filter(function(m){return /hold|payout|urgent|manual review|enhanced verification/i.test(m.action||'')}).length;
     $('kpis').innerHTML=[
-      ['Total reviewed',n,'All Fraud Health merchant records'],
-      ['Enabled reviewed',enabledReviewed+'/'+enabledTotal,'Stripe enabled-account population'],
+      ['Total accounts',n,'Calculated automatically from the live merchant dataset'],
+      ['Ever transacted',transacted,'Accounts with confirmed transaction history'],
       ['Average risk score',avg+'/100','Higher = more concerning'],
       ['60+ risk',merchants.filter(function(m){return m.score>=60}).length,'High / very high / critical'],
-      ['Manual review queue',action,'Review / payout attention']
+      ['Review queue',action,'Accounts requiring additional attention']
     ].map(function(x){return '<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>'}).join('');
   }
   function renderDist(){
