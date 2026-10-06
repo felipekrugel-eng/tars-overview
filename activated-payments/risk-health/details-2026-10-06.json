@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "batch": "2026-10-06 daily enabled reconciliation",
+  "reviewedAt": "2026-10-06",
+  "scoreDirection": "0=no risk, 100=extreme risk",
+  "merchants": [
+    {
+      "id": "acct_1UNPxd5MptZKerfd",
+      "accountId": "acct_1UNPxd5MptZKerfd",
+      "name": "MB GraphicZ Co.",
+      "score": 34,
+      "riskScore": 34,
+      "trustScore": 66,
+      "band": "Moderate risk",
+      "reviewedAt": "2026-10-06",
+      "action": "Monitor closely",
+      "riskDimensions": {
+        "legal": 6,
+        "operating": 8,
+        "identity": 2,
+        "contact": 5,
+        "businessModel": 3,
+        "history": 10,
+        "behavior": 0,
+        "network": 0
+      },
+      "verified": [
+        "Stripe onboarding is complete and the account is fully enabled.",
+        "The submitted Pevely, Missouri business location is internally consistent.",
+        "The submitted Printify storefront is coherent with apparel/merchandise MCC 5691 and the MB GraphicZ business name."
+      ],
+      "unverified": [
+        "Independent legal-registration evidence and a durable operating history for MB GraphicZ Co. were not established in this review.",
+        "The public footprint outside the submitted storefront is limited."
+      ],
+      "contradictions": [],
+      "evidenceNeeded": [
+        "If volume becomes material, corroborate business registration, recent customer/order history, and payout-bank ownership."
+      ],
+      "summary": "KYC is complete and the Printify/apparel business model is internally coherent, but the merchant has a limited independent footprint and little observable operating history. No affirmative fraud contradiction was found.",
+      "reviewCompleteness": 85,
+      "confidence": "medium",
+      "reviewType": "daily-full-review",
+      "createdAt": "2026-10-06T04:26:43Z",
+      "location": "Pevely, MO",
+      "representative": null,
+      "email": null,
+      "phone": null,
+      "website": "https://mb-studio-no-26.printify.me/",
+      "mcc": "5691",
+      "statementDescriptor": "MB-STUDIO-NO-26.PRINTI",
+      "identityVerification": "KYC complete",
+      "successfulTransactions": 0,
+      "hasTransacted": false,
+      "lastTransactedAt": null
+    }
+  ]
+}
