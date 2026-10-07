@@ -1,4 +1,5 @@
 """Alert readability and delivery-volume control."""
+import re
 import sys
 from pathlib import Path
 import unittest
@@ -352,3 +353,70 @@ class WakeCadence(unittest.TestCase):
         self.assertLess(configured, 5400)
         self.assertEqual(failures({'mode': 'active', 'last_evaluated_at': NOW,
                                    'checkpoint_at': NOW}, NOW + configured), [])
+
+
+class RenderedEngineOutput(unittest.TestCase):
+    """Render what the engine actually produces, not a hand-written evidence dict.
+
+    The earlier tests fed `headline()` a dict containing every key it might
+    read, so a rule that never recorded `amount` still rendered cleanly in the
+    test and produced "unknown is 0.0x ..." against live data.
+    """
+
+    def engine_findings(self):
+        from engine import Attempt, evaluate
+        history = [Attempt('acct_a', 'ch_%d' % i, NOW - 10 * 86400 + i, 10000, 'usd',
+                           'succeeded', 'US') for i in range(25)]
+        current = Attempt('acct_a', 'ch_now', NOW, 100000, 'usd', 'succeeded', 'US')
+        findings = evaluate(current, history, account_created=NOW - 5 * 86400,
+                            legitimacy_grade='Unverified')
+        self.assertTrue({'amount', 'ticket-outlier', 'legitimacy-review'}
+                        <= {f.kind for f in findings})
+        return findings
+
+    def test_no_rule_renders_a_missing_value(self):
+        for finding in self.engine_findings():
+            sentence = notify.headline(finding.kind, finding.evidence)
+            with self.subTest(kind=finding.kind):
+                self.assertNotIn('unknown', sentence)
+                # A leading-zero multiple means the amount was missing; "10.0x"
+                # must not trip this.
+                self.assertIsNone(re.search(r'(?<![\d.])0\.0x', sentence))
+                self.assertNotIn('None', sentence)
+                self.assertTrue(sentence.endswith('.'))
+
+    def test_ticket_outlier_states_the_amount_and_a_real_multiple(self):
+        finding = next(f for f in self.engine_findings() if f.kind == 'ticket-outlier')
+        sentence = notify.headline(finding.kind, finding.evidence)
+        self.assertIn('$1,000.00', sentence)
+        self.assertIn('10.0x', sentence)
+
+    def test_legitimacy_review_states_the_amount(self):
+        finding = next(f for f in self.engine_findings() if f.kind == 'legitimacy-review')
+        self.assertIn('$1,000.00', notify.headline(finding.kind, finding.evidence))
+
+    def test_linkage_reports_a_count_not_the_account_ids(self):
+        evidence = {'kind': 'IP', 'accounts': ['acct_1TWOQY8lEmH1iqQS', 'acct_1U9TAR4qfJZZfKex'],
+                    'lead_only': True}
+        sentence = notify.headline('linkage', evidence)
+        self.assertEqual(sentence, 'Shared onboarding IP across 2 accounts.')
+        self.assertNotIn('acct_', sentence)
+        self.assertEqual(notify.headline('linkage', {'kind': 'fingerprint', 'accounts': ['a', 'b', 'c']}),
+                         'Shared card fingerprint across 3 accounts.')
+
+    def test_telegram_text_never_carries_account_ids(self):
+        findings = [{'kind': 'linkage', 'level': 'Elevated',
+                     'evidence': {'kind': 'IP', 'accounts': ['acct_secret1', 'acct_secret2']}}]
+        _, _, text = notify.render_alert({'alert_id': 'm'}, findings,
+                                         {'account': 'cross-account', 'name': 'cross-account',
+                                          'now': NOW})
+        self.assertNotIn('acct_', text)
+
+    def test_every_renderable_kind_degrades_when_evidence_is_empty(self):
+        for kind in ('amount', 'legitimacy-review', 'ticket-outlier', 'high-value-burst',
+                     'day-surge', 'failed-burst', 'sustained-failures', 'same-credential',
+                     'downward-retries', 'refund', 'dispute', 'refund-request', 'linkage'):
+            with self.subTest(kind=kind):
+                sentence = notify.headline(kind, {})
+                self.assertTrue(sentence.endswith('.'))
+                self.assertNotIn('None', sentence)

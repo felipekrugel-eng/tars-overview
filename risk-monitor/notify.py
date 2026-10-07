@@ -80,12 +80,15 @@ def headline(kind, evidence, currency='usd'):
     if kind == 'amount':
         return f"Single payment of {money(e.get('amount'), currency)} (review threshold $750)."
     if kind == 'legitimacy-review':
-        return (f"Merchant is {e.get('payments_age_days', '?')} days old and took "
-                f"{money(e.get('amount'), currency)}. Legitimacy evidence: {e.get('grade', 'Unverified')}.")
+        took = f" and took {money(e['amount'], currency)}" if e.get('amount') is not None else ''
+        return (f"Merchant is {e.get('payments_age_days', '?')} days old{took}. "
+                f"Legitimacy evidence: {e.get('grade', 'Unverified')}.")
     if kind == 'ticket-outlier':
-        return (f"{money(e.get('amount'), currency)} is {ratio(e.get('amount', 0), e.get('median'))} this "
-                f"merchant's median ticket ({money(e.get('median'), currency)} over "
+        tail = (f"this merchant's median ticket ({money(e.get('median'), currency)} over "
                 f"{e.get('sample', '?')} payments in 90 days).")
+        if e.get('amount') is None:
+            return 'A payment far above ' + tail
+        return f"{money(e['amount'], currency)} is {ratio(e['amount'], e.get('median'))} " + tail
     if kind == 'high-value-burst':
         return (f"{money(e.get('total'), currency)} across several payments over $750 "
                 f"within 60 minutes.")
@@ -121,8 +124,13 @@ def headline(kind, evidence, currency='usd'):
         return ('Customer email reads as a refund or chargeback request'
                 + ('.' if verified else ' but could not be matched to one account.'))
     if kind == 'linkage':
-        return (f"Shared onboarding IP or card fingerprint across "
-                f"{e.get('accounts', 'several')} accounts.")
+        # accounts is a list of account ids: the count is the fact, and the ids
+        # do not belong in a message body or a Telegram line.
+        accounts = e.get('accounts')
+        count = len(accounts) if isinstance(accounts, (list, tuple, set)) else accounts
+        label = {'IP': 'onboarding IP', 'fingerprint': 'card fingerprint'}.get(
+            e.get('kind'), 'onboarding IP or card fingerprint')
+        return f"Shared {label} across {count or 'several'} accounts."
     return kind.replace('-', ' ').capitalize() + '.'
 
 
