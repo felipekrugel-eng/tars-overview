@@ -71,13 +71,15 @@ def evaluate(current, history, account_created=None, pos_age_days=None, legitima
             days = (datetime.fromtimestamp(current.created, timezone.utc).date() -
                     datetime.fromtimestamp(account_created, timezone.utc).date()).days
             if 0 <= days < 30 and legitimacy_grade in ('Weak','Unverified','Conflicting'):
-                add('legitimacy-review', 'Elevated', [current], payments_age_days=days,
-                    grade=legitimacy_grade, reason='Public legitimacy review required')
+                add('legitimacy-review', 'Elevated', [current], amount=current.amount,
+                    payments_age_days=days, grade=legitimacy_grade,
+                    reason='Public legitimacy review required')
         prior = [x for x in success if current.created - 90*86400 <= x.created < current.created]
         if current.amount > 75000 and len(prior) >= 20:
             typical = median(x.amount for x in prior)
             if typical > 0 and current.amount >= 3*typical:
-                add('ticket-outlier', 'Elevated', [current], median=typical, sample=len(prior))
+                add('ticket-outlier', 'Elevated', [current], amount=current.amount,
+                    median=typical, sample=len(prior))
         burst = [x for x in success if x.amount > 75000 and x.created >= current.created-3600]
         if len(burst) >= 3 and sum(x.amount for x in burst) >= 250000:
             add('high-value-burst', 'Elevated', burst, total=sum(x.amount for x in burst))
