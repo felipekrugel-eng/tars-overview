@@ -29,7 +29,33 @@ def config():
     value = json.loads(Path('risk-monitor/config.json').read_text())
     if value['recipients'] != RECIPIENTS or value['sender'] != SENDER:
         raise SafeError('fixed_recipient_config_changed')
+    if value.get('mode') == 'active':
+        # Active mode is a cutover, not a flag. The boundary records when the
+        # previous owner stopped alerting, so candidates older than it are not
+        # replayed to recipients who already heard about them.
+        block = value.get('activation') or {}
+        if not isinstance(block.get('boundary_epoch'), int):
+            raise SafeError('activation_boundary_epoch_missing')
+        if not block.get('legacy_alerting_retired'):
+            raise SafeError('legacy_alerting_not_retired')
     return value
+
+
+def releasable(alert, boundary):
+    """Whether a pending alert may be delivered under the activation boundary.
+
+    Returns (ok, reason). A recorded decision always wins; without one, only
+    findings first seen after the boundary deliver, so the shadow backlog
+    cannot be replayed by flipping the mode.
+    """
+    decision = (alert.get('reconciled') or {}).get('decision')
+    if decision == 'baseline':
+        return False, 'baselined'
+    if decision == 'send':
+        return True, 'released'
+    if boundary is None or alert.get('created_at', 0) >= boundary:
+        return True, 'new'
+    return False, 'pre_activation_unreconciled'
 
 def health(state, now, completed=False):
     # Public heartbeat deliberately contains no account, card, merchant or email data.
@@ -38,9 +64,11 @@ def health(state, now, completed=False):
             'last_evaluated_at': state.get('last_evaluated'),
             'status': 'degraded' if state.get('gaps') else 'healthy' if completed else 'running',
             'mode': state['mode'], 'gap_codes': sorted(set(state.get('gaps', []))),
-            'pending_alert_count': sum(x.get('email', {}).get('status') != 'sent' or
-                                      x.get('telegram', {}).get('status') != 'sent'
-                                      for x in state.get('alerts', {}).values()),
+            'pending_alert_count': sum(
+                (x.get('reconciled') or {}).get('decision') != 'baseline'
+                and (x.get('email', {}).get('status') != 'sent'
+                     or x.get('telegram', {}).get('status') != 'sent')
+                for x in state.get('alerts', {}).values()),
             'alerts_held_by_budget': state.get('alerts_held', 0),
             'emails_sent_today': (state.get('send_counters') or {}).get('emails', 0),
             'full_processor_completed_at': state.get('full_completed'),
@@ -594,10 +622,20 @@ class Monitor:
         rules = throttle.policy(self.c)
         budget = throttle.Budget(self.s, self.now, rules)
         throttle.prune_cooldowns(self.s, self.now, rules)
-        immediate, batched = [], []
+        boundary = (self.c.get('activation') or {}).get('boundary_epoch')
+        immediate, batched, blocked = [], [], 0
         for alert in self.pending_alerts():
+            ok, reason = releasable(alert, boundary)
+            if not ok:
+                blocked += reason == 'pre_activation_unreconciled'
+                continue
             (immediate if throttle.route(self.alert_level(alert), rules) == 'immediate'
              else batched).append(alert)
+        if blocked:
+            # Visible and blocking: these need a decision, not a silent drop.
+            self.gap('pre_activation_candidates_unreconciled')
+            print('::warning::%d pre-activation candidate(s) held; run '
+                  'reconcile_candidates.py to decide them.' % blocked)
         # A digest of one merchant is just that merchant's alert: batching it
         # would hide it behind a summary and change its reconciliation marker.
         if len(batched) == 1:

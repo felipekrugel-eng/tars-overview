@@ -37,6 +37,19 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
 - Persistent send intents, Gmail Sent/Drafts reconciliation, encrypted Telegram
   outbox reconciliation and pinned destination checks. Uncertain sends are held.
 
+## Cutover to active mode
+
+`mode: active` is a cutover, not a flag. The monitor refuses to start in active
+mode without a `config.activation` block recording when the previous owner
+stopped alerting, and candidates first seen before that boundary never deliver
+unless they were explicitly released. `cutover_check.py` reports a go/no-go
+against the documented acceptance criteria, and `reconcile_candidates.py` lists
+the accumulated shadow backlog with the evidence that something already covered
+it. Both are read-only by default and run from the **Loyverse risk cutover**
+workflow. See `CUTOVER.md` for the ordered runbook, and
+`CHATGPT_DRAFTS_TASK.md` for the replacement ChatGPT task instructions that
+keep merchant drafts and remove all alerting.
+
 ## Alert volume and readability
 
 Delivery is budgeted and batched, and health issues are tracked as one incident

@@ -224,6 +224,65 @@ class Volume(unittest.TestCase):
         self.assertEqual(recovered, [])
         self.assertEqual(state['pending_recovery'], {})
 
+    def test_activation_boundary_holds_the_shadow_backlog(self):
+        from monitor import releasable
+        boundary = NOW
+        old = {'created_at': NOW - 86400}
+        new = {'created_at': NOW + 60}
+        self.assertEqual(releasable(old, boundary), (False, 'pre_activation_unreconciled'))
+        self.assertEqual(releasable(new, boundary), (True, 'new'))
+        self.assertEqual(releasable(dict(old, reconciled={'decision': 'send'}), boundary),
+                         (True, 'released'))
+        self.assertEqual(releasable(dict(new, reconciled={'decision': 'baseline'}), boundary),
+                         (False, 'baselined'))
+        self.assertEqual(releasable(old, None), (True, 'new'))
+
+    def test_unreconciled_backlog_is_held_and_flagged_not_dropped(self):
+        m = monitor(activation={'boundary_epoch': NOW, 'legacy_alerting_retired': True})
+        m.add(Finding('acct_old', 'amount', 'Urgent', ['ch_old'], {'amount': 900000}))
+        m.group_alerts()
+        for alert in m.s['alerts'].values():
+            alert['created_at'] = NOW - 86400
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'send_internal') as send, patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        send.assert_not_called()
+        self.assertIn('pre_activation_candidates_unreconciled', m.s['gaps'])
+        self.assertTrue(all(a['events'] for a in m.s['alerts'].values()))
+
+    def test_baselined_candidate_never_sends_and_leaves_health_clean(self):
+        from monitor import health
+        m = monitor(activation={'boundary_epoch': NOW, 'legacy_alerting_retired': True})
+        m.add(Finding('acct_old', 'amount', 'Urgent', ['ch_old'], {'amount': 900000}))
+        m.group_alerts()
+        for alert in m.s['alerts'].values():
+            alert['created_at'] = NOW - 86400
+            alert['reconciled'] = {'decision': 'baseline', 'at': NOW, 'by': 'felipe'}
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'send_internal') as send, patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        send.assert_not_called()
+        self.assertNotIn('pre_activation_candidates_unreconciled', m.s['gaps'])
+        self.assertEqual(health(m.s, NOW)['pending_alert_count'], 0)
+
+    def test_active_mode_requires_an_activation_block(self):
+        import json, monitor as monitor_module
+        from adapters import SafeError, RECIPIENTS, SENDER
+        base = {'schema_version': 1, 'sender': SENDER, 'recipients': list(RECIPIENTS)}
+        for broken in ({'mode': 'active'},
+                       {'mode': 'active', 'activation': {'boundary_epoch': NOW}},
+                       {'mode': 'active', 'activation': {'boundary_epoch': NOW,
+                                                         'legacy_alerting_retired': False}}):
+            cfg = dict(base); cfg.update(broken)
+            with patch.object(monitor_module.Path, 'read_text', return_value=json.dumps(cfg)):
+                with self.assertRaises(SafeError):
+                    monitor_module.config()
+        cfg = dict(base); cfg.update({'mode': 'active',
+                                      'activation': {'boundary_epoch': NOW,
+                                                     'legacy_alerting_retired': True}})
+        with patch.object(monitor_module.Path, 'read_text', return_value=json.dumps(cfg)):
+            self.assertEqual(monitor_module.config()['mode'], 'active')
+
     def test_shadow_mode_still_sends_nothing(self):
         m = monitor()
         m.s['mode'] = 'shadow'

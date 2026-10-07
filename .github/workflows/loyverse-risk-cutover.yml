@@ -1,0 +1,90 @@
+name: Loyverse risk cutover
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'readiness = go/no-go; candidates = list the backlog; decide = record decisions'
+        type: choice
+        options: [readiness, candidates, decide]
+        default: readiness
+      decisions:
+        description: 'For decide: space-separated ALERT_ID=baseline|send'
+        type: string
+        default: ''
+      decide_all:
+        description: 'For decide: apply one decision to every undecided candidate'
+        type: choice
+        options: [none, baseline, send]
+        default: none
+      confirm_count:
+        description: 'For decide_all: the exact number of undecided candidates'
+        type: string
+        default: ''
+  push:
+    branches: [master]
+    paths:
+      - 'risk-monitor/cutover_check.py'
+      - 'risk-monitor/reconcile_candidates.py'
+      - '.github/workflows/loyverse-risk-cutover.yml'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: loyverse-deterministic-risk-monitor
+  cancel-in-progress: false
+jobs:
+  cutover:
+    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          persist-credentials: false
+          sparse-checkout: |
+            risk-monitor
+            risk-telegram
+            payments-automation/data/pull_status.json
+            merchant-base-automation/data/pull_status.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r risk-monitor/requirements.txt
+      - name: Run regression tests before reading live state
+        run: python -m unittest discover -s risk-monitor/tests -v
+      - name: Cutover readiness (read-only)
+        if: github.event_name == 'push' || inputs.action == 'readiness'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          STRIPE_RISK_READ_KEY: ${{ secrets.STRIPE_RISK_READ_KEY }}
+          GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
+          RISK_HEARTBEAT_URL: ${{ secrets.RISK_HEARTBEAT_URL }}
+        run: python risk-monitor/cutover_check.py
+      - name: List pending candidates (read-only)
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'candidates'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
+        run: python risk-monitor/reconcile_candidates.py
+      - name: Record candidate decisions
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'decide'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          DECISIONS: ${{ inputs.decisions }}
+          DECIDE_ALL: ${{ inputs.decide_all }}
+          CONFIRM: ${{ inputs.confirm_count }}
+        run: |
+          set -eu
+          if [ "$DECIDE_ALL" != "none" ]; then
+            python risk-monitor/reconcile_candidates.py \
+              --decide-all "$DECIDE_ALL" --confirm "$CONFIRM"
+          else
+            # Unquoted on purpose: each ALERT_ID=decision is a separate argument.
+            # shellcheck disable=SC2086
+            python risk-monitor/reconcile_candidates.py --decide $DECISIONS
+          fi
