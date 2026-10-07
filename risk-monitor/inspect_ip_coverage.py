@@ -22,6 +22,8 @@ import time
 from collections import Counter, defaultdict
 
 from adapters import Stripe, SafeError
+from engine import (ip_evidence, IP_PRESENT, IP_TERMS_WITHOUT_IP,
+                    IP_MISSING_WHILE_LIVE, IP_NOT_ONBOARDED)
 
 # Every Nth listed account is re-read from its authoritative endpoint to prove
 # the list projection carries the same tos_acceptance the monitor would see.
@@ -29,19 +31,13 @@ VERIFY_EVERY = 25
 
 
 def classify(account):
-    """Why this account does or does not expose an onboarding IP."""
-    tos = account.get('tos_acceptance') or {}
+    """Evidence state (shared with the monitor) plus the account's kind."""
     controller = account.get('controller') or {}
     kind = (account.get('type')
             or controller.get('type')
             or ('stripe' if controller.get('is_controller') else None)
             or 'unknown')
-    if tos.get('ip'):
-        return 'present', kind
-    if tos.get('date') or tos.get('service_agreement'):
-        # Terms were accepted, but not through a platform-collected flow.
-        return 'accepted_elsewhere', kind
-    return 'no_tos_record', kind
+    return ip_evidence(account), kind
 
 
 def main(argv=None):
@@ -85,8 +81,9 @@ def main(argv=None):
                     ips[str(parsed)].add(account['id'])
                 else:
                     private += 1
-            elif state == 'no_tos_record' and account.get('charges_enabled'):
-                # Taking payments with no terms record at all is worth a look.
+            elif state == IP_MISSING_WHILE_LIVE:
+                # Taking payments with no terms record at all is the one state
+                # that blocks a gap-free run.
                 unexpected.append({'id': account['id'], 'why': 'charges_enabled_without_tos'})
         if page['data']:
             cursor = page['data'][-1]['id']
@@ -94,14 +91,16 @@ def main(argv=None):
             break
 
     clusters = {ip: sorted(a) for ip, a in ips.items() if len(a) >= 2}
-    covered = states['present']
+    covered = states[IP_PRESENT]
     summary = {
         'accounts_examined': total,
         'coverage_truncated_by_budget': truncated,
         'with_onboarding_ip': covered,
         'coverage_pct': round(100 * covered / total, 1) if total else 0,
-        'accepted_elsewhere_no_platform_ip': states['accepted_elsewhere'],
-        'no_terms_record_at_all': states['no_tos_record'],
+        'terms_accepted_no_platform_ip': states[IP_TERMS_WITHOUT_IP],
+        'live_without_terms_record': states[IP_MISSING_WHILE_LIVE],
+        'never_onboarded': states[IP_NOT_ONBOARDED],
+        'blocks_gap_free_run': states[IP_MISSING_WHILE_LIVE],
         'by_account_kind': {k: dict(v) for k, v in sorted(by_kind.items())},
         'private_or_reserved_ips': private,
         'linkage_clusters_found': len(clusters),
@@ -119,8 +118,11 @@ def main(argv=None):
           % (total, ' (BUDGET TRUNCATED — rerun with a larger --budget-seconds)'
              if truncated else ''))
     print('  with a platform-collected IP   %d (%.1f%%)' % (covered, summary['coverage_pct']))
-    print('  terms accepted, no platform IP %d' % states['accepted_elsewhere'])
-    print('  no terms record at all         %d' % states['no_tos_record'])
+    print('  terms accepted, no platform IP %d  (unobtainable, not a gap)'
+          % states[IP_TERMS_WITHOUT_IP])
+    print('  live with no terms record      %d  (BLOCKS a gap-free run)'
+          % states[IP_MISSING_WHILE_LIVE])
+    print('  never onboarded, not live      %d  (excluded)' % states[IP_NOT_ONBOARDED])
     print('\n  by account kind:')
     for kind, counts in sorted(by_kind.items()):
         print('    %-12s %s' % (kind, ', '.join('%s=%d' % kv for kv in sorted(counts.items()))))
@@ -142,18 +144,17 @@ def main(argv=None):
             print('    …and %d more' % (len(unexpected) - 20))
 
     print('\nWhat this means', flush=True)
-    if states['accepted_elsewhere'] and not unexpected:
+    if states[IP_TERMS_WITHOUT_IP] and not unexpected:
         print('  The missing IPs are structural: those accounts accepted terms through a')
         print('  flow the platform did not collect, so Stripe never exposes an IP for them.')
-        print('  Rescanning cannot fill this in. The coverage contract has to either accept')
-        print('  them as permanently unmeasurable or obtain the evidence from another')
-        print('  verified source.')
+        print('  Rescanning cannot fill this in, and the coverage contract records them as')
+        print('  unobtainable rather than failing the run.')
     elif unexpected:
-        print('  Some accounts lack any terms record while charges are enabled. Resolve')
-        print('  those before deciding the contract — they are not a measurement artefact.')
+        print('  These accounts take payments with no terms record at all. They are the')
+        print('  one state that blocks a gap-free run, and they are a real finding rather')
+        print('  than a measurement artefact. Resolve them at source.')
     else:
-        print('  Every examined account exposes an onboarding IP. If the monitor still')
-        print('  reports the gap, the sweep it is judging is older than this read.')
+        print('  Nothing blocks a gap-free run on onboarding evidence.')
     print('\n  IP evidence feeds only cross-account linkage leads. No payment risk rule')
     print('  depends on it, so a documented partial contract does not weaken amount,')
     print('  burst, failure, refund or dispute detection.')

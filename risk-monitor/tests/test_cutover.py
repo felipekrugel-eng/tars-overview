@@ -126,12 +126,15 @@ class IpCoverage(unittest.TestCase):
         # Terms accepted, but the platform never saw an IP: unobtainable, not missing.
         self.assertEqual(self.mod.classify(
             {'type': 'standard', 'tos_acceptance': {'date': 1700000000}}),
-            ('accepted_elsewhere', 'standard'))
+            ('terms_without_ip', 'standard'))
         self.assertEqual(self.mod.classify(
             {'type': 'standard', 'tos_acceptance': {'service_agreement': 'recipient'}}),
-            ('accepted_elsewhere', 'standard'))
+            ('terms_without_ip', 'standard'))
+        # No terms at all splits on whether the account is actually taking money.
+        self.assertEqual(self.mod.classify({'type': 'express', 'charges_enabled': True}),
+                         ('no_terms_charges_enabled', 'express'))
         self.assertEqual(self.mod.classify({'type': 'express'}),
-                         ('no_tos_record', 'express'))
+                         ('no_terms_not_onboarded', 'express'))
 
     def test_account_kind_falls_back_to_the_controller_shape(self):
         self.assertEqual(self.mod.classify({'controller': {'type': 'application'}})[1],
@@ -160,8 +163,9 @@ class IpCoverage(unittest.TestCase):
         summary = json.loads(shown.call_args[0][0])
         self.assertEqual(summary['accounts_examined'], 5)
         self.assertEqual(summary['with_onboarding_ip'], 3)
-        self.assertEqual(summary['accepted_elsewhere_no_platform_ip'], 1)
-        self.assertEqual(summary['no_terms_record_at_all'], 1)
+        self.assertEqual(summary['terms_accepted_no_platform_ip'], 1)
+        self.assertEqual(summary['live_without_terms_record'], 1)
+        self.assertEqual(summary['blocks_gap_free_run'], 1)
         # A private IP is recorded but never forms a linkage cluster.
         self.assertEqual(summary['private_or_reserved_ips'], 1)
         self.assertEqual(summary['linkage_clusters_found'], 1)

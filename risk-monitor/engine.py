@@ -154,6 +154,38 @@ def object_event(account, obj, old, now, kind, activation):
     event = obj['id'] + ':' + status + ':' + str(due) + ':' + str(threshold)
     return Finding(account, kind, level, [event], record), record
 
+# Onboarding IP evidence states. Stripe exposes tos_acceptance.ip only where
+# the platform collected terms acceptance itself; where Stripe collected them
+# no IP exists for the platform to read, so rescanning cannot produce one.
+# Treating that as a coverage failure made the gap permanent, which is why no
+# run reached a gap-free completion. The states below separate evidence that is
+# genuinely missing from evidence that is structurally unobtainable.
+IP_PRESENT = 'present'
+IP_TERMS_WITHOUT_IP = 'terms_without_ip'
+IP_MISSING_WHILE_LIVE = 'no_terms_charges_enabled'
+IP_NOT_ONBOARDED = 'no_terms_not_onboarded'
+
+# Only this state is a coverage failure: an account taking payments with no
+# record of terms acceptance at all.
+IP_BLOCKING = {IP_MISSING_WHILE_LIVE}
+
+
+def ip_evidence(account):
+    """Classify an authoritative Stripe account's onboarding IP evidence.
+
+    Pure and total: an account shape this does not recognise degrades to the
+    blocking state rather than silently counting as covered.
+    """
+    tos = account.get('tos_acceptance') or {}
+    if tos.get('ip'):
+        return IP_PRESENT
+    if tos.get('date') or tos.get('service_agreement'):
+        return IP_TERMS_WITHOUT_IP
+    if account.get('charges_enabled'):
+        return IP_MISSING_WHILE_LIVE
+    return IP_NOT_ONBOARDED
+
+
 def country_bucket(account):
     country = account.get('country')
     address = (account.get('company') or {}).get('address') or (account.get('individual') or {}).get('address') or {}

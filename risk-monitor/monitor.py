@@ -21,7 +21,8 @@ from zoneinfo import ZoneInfo
 
 from adapters import (GitStore, Gmail, Stripe, SafeError, canonical, load_module, http,
                       verified_transport, SENDER, RECIPIENTS)
-from engine import Attempt, Finding, LEVELS, PREFIX, epoch, evaluate, object_event, source_health, country_bucket
+from engine import (Attempt, Finding, LEVELS, PREFIX, epoch, evaluate, object_event,
+                    source_health, country_bucket, ip_evidence, IP_BLOCKING)
 import notify
 import throttle
 
@@ -74,6 +75,7 @@ def health(state, now, completed=False):
             'full_processor_completed_at': state.get('full_completed'),
             'global_sweep_completed_at': state.get('global', {}).get('completed_at'),
             'country_counts': state.get('global', {}).get('counts'),
+            'ip_evidence_counts': state.get('global', {}).get('ip_evidence'),
             'processor_progress_checked': sum(p.get('checked', 0) for p in state.get('full', {}).get('partitions', [])),
             'global_progress_accounts': len(state.get('global', {}).get('records', {})),
             'gmail_completed_at': state.get('gmail_watermark'),
@@ -214,7 +216,8 @@ class Monitor:
                     'email': a.get('email'), 'charges_enabled': a.get('charges_enabled'),
                     'payouts_enabled': a.get('payouts_enabled'),
                     'disabled_reason': (a.get('requirements') or {}).get('disabled_reason'),
-                    'tos_ip': (a.get('tos_acceptance') or {}).get('ip'), 'checked_at': self.now}
+                    'tos_ip': (a.get('tos_acceptance') or {}).get('ip'),
+                    'ip_evidence': ip_evidence(a), 'checked_at': self.now}
         self.s['accounts'][id] = verified
         return verified
     def fee(self, fee):
@@ -460,7 +463,7 @@ class Monitor:
         buckets = Counter(a['bucket'] for a in g['records'].values())
         buckets.setdefault('GB',0); buckets.setdefault('PR',0); buckets.setdefault('Unknown',0)
         g['counts'] = dict(sorted(buckets.items()))
-        if any(not a.get('tos_ip') for a in g['records'].values()):self.gap('onboarding_ip_coverage_incomplete')
+        g['ip_evidence'] = self.ip_coverage(g['records'])
         ips = defaultdict(set)
         for a in g['records'].values():
             if a.get('tos_ip'):
@@ -492,7 +495,9 @@ class Monitor:
             self.s['gaps'] = [code for code in self.s['gaps'] if code != 'global_fingerprint_coverage_incomplete']
         self.checkpoint({'type':'global_complete','counts':g['counts'],'clusters':len(clusters)})
         # Status/recovery transport is enabled only after production cutover.
-        if self.s['mode']=='active' and not any(x in self.s['gaps'] for x in ('global_fingerprint_coverage_incomplete','onboarding_ip_coverage_incomplete')):
+        if self.s['mode']=='active' and not any(x in self.s['gaps'] for x in (
+                'global_fingerprint_coverage_incomplete','onboarding_terms_evidence_missing',
+                'onboarding_ip_evidence_unclassified')):
             id=PREFIX+'sweep-status:'+g['day']
             if id not in self.s.setdefault('sweep_notices',{}):
                 notice={'alert_id':id}
@@ -501,6 +506,21 @@ class Monitor:
                       '\nResult: '+str(len(clusters))+' IP/fingerprint clusters reviewed; new/material links queued.'+
                       '\nRecommendation: '+('Review new linkage leads.' if clusters else 'Monitoring continues.'))
                 self.enqueue_telegram(notice,text)
+    def ip_coverage(self, records):
+        """Apply the onboarding evidence contract and raise only real gaps.
+
+        Returns the counted split for the public heartbeat. Records written
+        before this contract carry no classification; they self-heal on the
+        next full account refresh, so they degrade the run without being
+        mistaken for either coverage or a genuine gap.
+        """
+        evidence = Counter(a.get('ip_evidence') or 'unclassified' for a in records.values())
+        if evidence['unclassified']:
+            self.gap('onboarding_ip_evidence_unclassified')
+        if any(evidence[state] for state in IP_BLOCKING):
+            self.gap('onboarding_terms_evidence_missing')
+        return dict(sorted(evidence.items()))
+
     def gmail_requests(self):
         if not self.gmail:
             self.gmail = Gmail()
@@ -818,10 +838,10 @@ def workflow_exit_status(state, settings=None):
         return 0
     if state.get('mode') != 'shadow':
         return 2
-    # Missing source IPs cannot be repaired by repeating an otherwise successful
-    # scan. Keep the coverage gap, watchdog and cutover block without presenting
-    # every completed shadow scan as a crashed GitHub job.
-    source_limitations = {'onboarding_ip_coverage_incomplete'}
+    # An unclassified record clears itself on the next full account refresh, so
+    # it must not present a completed shadow scan as a crashed GitHub job.
+    # Genuinely missing terms evidence is not in this set and still fails.
+    source_limitations = {'onboarding_ip_evidence_unclassified'}
     if gaps <= source_limitations:
         return 0
     full_in_progress = state.get('full', {}).get('status') == 'in_progress'

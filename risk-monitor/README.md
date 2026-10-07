@@ -24,7 +24,11 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
   and daily global account cursors are retained across interruptions.
 - Exact public ToS IP and verified fingerprint linkage leads, global country counts,
   separate United Kingdom (`GB`), Puerto Rico (`PR`, excluded from other US) and Unknown.
-  Missing IP evidence and incomplete fingerprints never qualify as all-clear.
+  Incomplete fingerprints never qualify as all-clear. Onboarding IP evidence is
+  classified rather than counted: an IP Stripe never exposes to the platform is
+  recorded as unobtainable, while an account taking payments with no terms
+  record at all remains a blocking gap. `health.json` publishes the split as
+  `ip_evidence_counts`; `inspect_ip_coverage.py` reports it per account kind.
 - Checksummed transaction/merchant extraction evidence. Commit time and latest charge
   time never substitute for extraction success. Stale data remains explicitly degraded.
 - Gmail refund/dispute keyword scan, completed watermark with overlap, MIME original

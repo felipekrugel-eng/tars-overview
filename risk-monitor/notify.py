@@ -298,6 +298,10 @@ HEALTH_PLAIN = {
     'telegram_delivery_unconfirmed': 'A Telegram message has no delivery receipt yet.',
     'email_delivery_uncertain': 'An email send is unconfirmed and needs manual reconciliation.',
     'onboarding_ip_coverage_incomplete': 'Some accounts have no onboarding IP evidence.',
+    'onboarding_terms_evidence_missing': ('Some accounts are taking payments with no record '
+                                          'of terms acceptance.'),
+    'onboarding_ip_evidence_unclassified': ('Some account records predate the onboarding '
+                                            'evidence contract and refresh on the next sweep.'),
     'run_budget_checkpointed': 'The run hit its time budget and checkpointed progress.',
     'global_sweep_in_progress': 'The daily account sweep is still running.',
 }

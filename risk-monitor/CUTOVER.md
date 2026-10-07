@@ -47,13 +47,29 @@ Work the blocking failures until it reports GO. The two expected ones:
 
 - *Gap-free completed run* — the monitor must finish a run with no gap codes.
   Inspect `health.json` after each hourly run; `gap_codes` names what is still
-  incomplete. `onboarding_ip_coverage_incomplete` is the known one, and it is
-  currently unclearable by design: the check is `any(account lacks tos_ip)`
-  across every connected account, so a single account Stripe never gave an IP
-  for blocks completion permanently. Run → `ip-coverage` to measure the split
-  between accounts whose IP is unobtainable and accounts that should have one,
-  then decide the contract deliberately. Do not remove the flag without that
-  measurement.
+  incomplete.
+
+  The old `onboarding_ip_coverage_incomplete` blocker is gone. It fired when
+  **any** account lacked `tos_acceptance.ip`, which Stripe only populates where
+  the platform collected terms acceptance itself — so a single account
+  onboarded through a Stripe-collected flow blocked completion permanently.
+  The contract is now evidence-driven (`engine.ip_evidence`):
+
+  | State | Meaning | Blocks a clean run |
+  | --- | --- | --- |
+  | `present` | platform-collected IP on record | no |
+  | `terms_without_ip` | terms accepted, no IP the platform can read | no — unobtainable |
+  | `no_terms_not_onboarded` | no terms, not taking payments | no — incomplete onboarding |
+  | `no_terms_charges_enabled` | **taking payments with no terms record** | **yes** |
+  | `unclassified` | record predates the contract | warns, self-heals next sweep |
+
+  The split is published in `health.json` as `ip_evidence_counts`, so the
+  contract is auditable without decrypting state. Run → `ip-coverage` to see
+  it per account kind before the next sweep lands.
+
+  If `no_terms_charges_enabled` is non-zero, that is a genuine finding — an
+  account taking money with no record of accepting terms — and it is resolved
+  at source, not by relaxing the contract further.
 - *Shadow candidates reconciled* — step 2.
 
 ## Step 2 — Decide the 15 candidates

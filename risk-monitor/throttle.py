@@ -74,6 +74,7 @@ QUIET = {
     'aggregate_refund_scope_incomparable',
     'aggregate_refund_comparison_unavailable',
     'onboarding_ip_coverage_incomplete',
+    'onboarding_ip_evidence_unclassified',
     'alert_delivery_budget_held',
 }
 
