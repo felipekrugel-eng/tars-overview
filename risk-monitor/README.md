@@ -37,6 +37,21 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
 - Persistent send intents, Gmail Sent/Drafts reconciliation, encrypted Telegram
   outbox reconciliation and pinned destination checks. Uncertain sends are held.
 
+## Alert volume and readability
+
+Delivery is budgeted and batched, and health issues are tracked as one incident
+per code rather than per combination of codes. Urgent findings still interrupt
+immediately and individually; everything else batches into one digest per run
+under per-run and per-day ceilings, with a per-merchant cooldown that an
+escalation always overrides. Held alerts keep their evidence and markers in
+durable state and are delivered by a later run — the throttle never drops a
+finding, and never changes what the rules detect.
+
+Message bodies are prose: amounts in the currency's own units, London
+timestamps, one sentence per finding, and the supporting objects left in
+durable state instead of `json.dumps` blobs. See `NOTIFICATIONS.md` for the
+reasoning, the tier table and every tuning knob.
+
 ## Durable state and audit
 
 `state.enc.json` is an encrypted manifest pointing to an authenticated snapshot

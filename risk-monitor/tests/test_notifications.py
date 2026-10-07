@@ -1,0 +1,238 @@
+"""Alert readability and delivery-volume control."""
+import sys
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import notify
+import throttle
+from adapters import Gmail, canonical
+from engine import Finding
+from monitor import Monitor
+
+NOW = 1791367225
+
+
+class FakeStore:
+    run_id = 'run-test'
+    def __init__(self): self.writes = []
+    def checkpoint(self, state, event, health=None):
+        import json
+        self.writes.append((json.loads(canonical(state)), event))
+    def file(self, path): return None, None
+
+
+def monitor(**settings):
+    state = {'run_started': NOW, 'mode': 'active', 'gaps': [], 'events': {}, 'alerts': {},
+             'seen_attempts': {}, 'attempts': {}}
+    base = {'run_budget_seconds': 1000}
+    base.update(settings)
+    return Monitor(state, FakeStore(), base, now=NOW)
+
+
+class Readability(unittest.TestCase):
+    def test_amounts_render_as_currency_not_minor_units(self):
+        self.assertEqual(notify.money(75001), '$750.01')
+        self.assertEqual(notify.money(2500000), '$25,000.00')
+        self.assertEqual(notify.money(1234, 'eur'), '12.34 EUR')
+        self.assertEqual(notify.money(5000, 'jpy'), '5,000 JPY')
+        self.assertEqual(notify.money(None), 'unknown')
+
+    def test_every_rule_kind_has_a_plain_sentence(self):
+        kinds = ['amount', 'legitimacy-review', 'ticket-outlier', 'high-value-burst',
+                 'day-surge', 'failed-burst', 'sustained-failures', 'same-credential',
+                 'downward-retries', 'refund', 'dispute', 'refund-request', 'linkage']
+        evidence = {'amount': 150000, 'median': 50000, 'sample': 25, 'total': 300000,
+                    'median_day': 100000, 'active_days': 12, 'attempts': 10, 'failures': 6,
+                    'first': 90000, 'final': 20000, 'id': 'dp_1', 'status': 'needs_response',
+                    'payments_age_days': 4, 'grade': 'Weak', 'accounts': 3}
+        for kind in kinds:
+            sentence = notify.headline(kind, evidence)
+            self.assertTrue(sentence.endswith('.'), kind)
+            self.assertNotIn('{', sentence)
+            self.assertNotIn('None', sentence)
+
+    def test_unknown_rule_kind_degrades_instead_of_raising(self):
+        self.assertEqual(notify.headline('brand-new-rule', {}), 'Brand new rule.')
+
+    def test_alert_body_is_prose_and_carries_no_raw_json(self):
+        findings = [{'kind': 'ticket-outlier', 'level': 'Elevated', 'account': 'acct_a',
+                     'ids': ['ch_1'], 'evidence': {'amount': 300000, 'median': 50000, 'sample': 40}}]
+        subject, body, text = notify.render_alert(
+            {'alert_id': 'marker-1'}, findings,
+            {'account': 'acct_a', 'name': 'Acme Coffee', 'now': NOW,
+             'volumes': {'24h': {'count': 3, 'amount': 450000}},
+             'account_age_days': 400, 'live_status': 'active'})
+        self.assertTrue(subject.startswith('[Loyverse Payments] '))
+        self.assertIn('Acme Coffee', subject)
+        for noise in ('{"', '":', 'evidence_details', "'kind'"):
+            self.assertNotIn(noise, body)
+        self.assertIn('$3,000.00', body)
+        self.assertIn('6.0x', body)
+        self.assertIn('WHAT TO DO', body)
+        self.assertIn('marker-1', body)
+
+    def test_telegram_is_short_and_omits_account_identifiers(self):
+        findings = [{'kind': 'amount', 'level': 'Urgent', 'evidence': {'amount': 900000}}]
+        _, _, text = notify.render_alert(
+            {'alert_id': 'marker-2'}, findings,
+            {'account': 'acct_secret', 'name': 'Acme Coffee', 'now': NOW})
+        self.assertLessEqual(len(text), notify.TELEGRAM_LIMIT)
+        self.assertNotIn('acct_secret', text)
+        self.assertIn('$9,000.00', text)
+
+    def test_digest_lists_every_member_marker_for_reconciliation(self):
+        entries = [{'level': 'Elevated', 'name': 'A', 'account': 'acct_a', 'alert_id': 'm-a',
+                    'findings': [{'kind': 'amount', 'evidence': {'amount': 100000}}]},
+                   {'level': 'Amount alert', 'name': 'B', 'account': 'acct_b', 'alert_id': 'm-b',
+                    'findings': [{'kind': 'amount', 'evidence': {'amount': 80000}}]}]
+        subject, body, text = notify.render_digest(entries, {'now': NOW, 'digest_id': 'd-1'})
+        self.assertIn('2 merchants', subject)
+        self.assertIn('m-a', body)
+        self.assertIn('m-b', body)
+        self.assertLess(body.index('Elevated — A'), body.index('Amount alert — B'))
+        self.assertLessEqual(len(text), notify.TELEGRAM_LIMIT)
+
+    def test_health_notice_explains_codes_in_plain_language(self):
+        subject, body, text = notify.render_health(
+            ['gmail_oauth_missing'], [], {'now': NOW, 'alert_id': 'h-1', 'tier': 'critical'})
+        self.assertIn('action needed', subject)
+        self.assertIn('Gmail credentials are missing', body)
+        self.assertNotIn('gmail_oauth_missing.', body.split('h-1')[0].replace(
+            'Gmail credentials are missing or rejected.', ''))
+
+
+class Volume(unittest.TestCase):
+    def deliverable(self, m, accounts, level='Elevated'):
+        for account in accounts:
+            m.add(Finding(account, 'amount', level, ['ch_' + account], {'amount': 100000}))
+        m.group_alerts()
+
+    def test_many_merchants_become_one_digest_email(self):
+        m = monitor()
+        self.deliverable(m, ['acct_a', 'acct_b', 'acct_c', 'acct_d'])
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'msg1', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        self.assertEqual(send.call_count, 1)
+        self.assertIn('Risk digest', send.call_args[0][0])
+        self.assertTrue(all(a['email']['status'] == 'sent' for a in m.s['alerts'].values()))
+
+    def test_urgent_is_sent_immediately_and_separately(self):
+        m = monitor()
+        self.deliverable(m, ['acct_a', 'acct_b'])
+        m.add(Finding('acct_u', 'same-credential', 'Urgent', ['x', 'y', 'z'], {'amount': 500000}))
+        m.group_alerts()
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'm', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        subjects = [call[0][0] for call in send.call_args_list]
+        self.assertEqual(len(subjects), 2)
+        self.assertTrue(any(s.startswith('[Loyverse Payments] Urgent') for s in subjects))
+        self.assertTrue(any('Risk digest' in s for s in subjects))
+
+    def test_single_batched_alert_is_not_hidden_behind_a_digest(self):
+        m = monitor()
+        self.deliverable(m, ['acct_a'])
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'm', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        self.assertNotIn('Risk digest', send.call_args[0][0])
+
+    def test_send_budget_holds_alerts_without_dropping_them(self):
+        m = monitor(notifications={'max_emails_per_run': 1, 'immediate_levels': ['Urgent']})
+        for account in ('acct_a', 'acct_b', 'acct_c'):
+            m.add(Finding(account, 'same-credential', 'Urgent', ['x' + account], {'amount': 100000}))
+        m.group_alerts()
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'm', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        self.assertEqual(send.call_count, 1)
+        self.assertEqual(m.s['alerts_held'], 2)
+        self.assertEqual(m.s['gaps'], [])
+        undelivered = [a for a in m.s['alerts'].values() if a.get('email', {}).get('status') != 'sent']
+        self.assertEqual(len(undelivered), 2)
+        self.assertTrue(all(a['events'] for a in undelivered))
+
+    def test_cooldown_suppresses_a_repeat_but_never_an_escalation(self):
+        rules = throttle.policy({})
+        state = {}
+        throttle.record_delivery(state, 'acct_a', 'Elevated', NOW)
+        self.assertTrue(throttle.cooldown_blocked(state, 'acct_a', 'Elevated', NOW + 60, rules))
+        self.assertFalse(throttle.cooldown_blocked(state, 'acct_a', 'Urgent', NOW + 60, rules))
+        self.assertFalse(throttle.cooldown_blocked(state, 'acct_a', 'Elevated', NOW + 99999, rules))
+
+    def test_daily_budget_survives_across_runs_and_resets_on_a_new_london_day(self):
+        state = {}
+        rules = throttle.policy({'notifications': {'max_emails_per_day': 2}})
+        for _ in range(2):
+            budget = throttle.Budget(state, NOW, rules)
+            self.assertTrue(budget.allows()); budget.spend()
+        self.assertFalse(throttle.Budget(state, NOW, rules).allows())
+        self.assertTrue(throttle.Budget(state, NOW + 2 * 86400, rules).allows())
+
+    def test_digest_respects_the_per_merchant_cooldown(self):
+        m = monitor()
+        self.deliverable(m, ['acct_a', 'acct_b', 'acct_c'])
+        throttle.record_delivery(m.s, 'acct_b', 'Elevated', NOW - 60)
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'm', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        body = send.call_args[0][1]
+        self.assertIn('acct_a', body)
+        self.assertNotIn('acct_b', body)
+        self.assertEqual(m.s['alerts_held'], 1)
+
+    def test_digest_member_count_is_capped_independently_of_email_budget(self):
+        m = monitor(notifications={'max_digest_entries': 2})
+        self.deliverable(m, ['acct_a', 'acct_b', 'acct_c', 'acct_d'])
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'reconcile', return_value=([], [])), \
+             patch.object(gmail, 'send_internal', return_value={'id': 'm', 'labelIds': ['SENT']}) as send, \
+             patch.object(m, 'enqueue_telegram'):
+            m.deliver()
+        self.assertEqual(send.call_count, 1)
+        self.assertIn('2 merchants', send.call_args[0][0])
+        self.assertEqual(m.s['alerts_held'], 2)
+
+    def test_recovery_is_retried_until_both_receipts_confirm(self):
+        rules = throttle.policy({'notifications': {'health_confirm_checks': 1}})
+        state = {'incidents': {'gmail_oauth_missing': {'observations': 2, 'notified_at': 50}}}
+        self.assertEqual(throttle.observe_health(state, [], 100, rules)[1], ['gmail_oauth_missing'])
+        # Nothing confirmed the send, so the next check still owes a recovery.
+        self.assertEqual(throttle.observe_health(state, [], 200, rules)[1], ['gmail_oauth_missing'])
+        from watchdog import close_recovery
+        close_recovery(state, {'email': {'status': 'sent'}, 'telegram': {'status': 'sent'},
+                               'recovers': ['gmail_oauth_missing']})
+        self.assertEqual(throttle.observe_health(state, [], 300, rules)[1], [])
+
+    def test_issue_returning_before_its_recovery_is_delivered_stays_open(self):
+        rules = throttle.policy({'notifications': {'health_confirm_checks': 1}})
+        state = {'incidents': {'transaction_source_stale': {'observations': 2, 'notified_at': 50}}}
+        throttle.observe_health(state, [], 100, rules)
+        candidates, recovered = throttle.observe_health(state, ['transaction_source_stale'], 200, rules)
+        self.assertEqual(recovered, [])
+        self.assertEqual(state['pending_recovery'], {})
+
+    def test_shadow_mode_still_sends_nothing(self):
+        m = monitor()
+        m.s['mode'] = 'shadow'
+        self.deliverable(m, ['acct_a', 'acct_b'])
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch.object(gmail, 'send_internal') as send:
+            m.deliver()
+        send.assert_not_called()
+
+
+if __name__ == '__main__':
+    unittest.main()

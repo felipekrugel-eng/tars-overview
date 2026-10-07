@@ -14,5 +14,19 @@
   "activation_epoch": 1790174639,
   "legacy_last_completed": 1791094260,
   "run_budget_seconds": 1000,
-  "bootstrap_raw_sha256": "34ae1c223406725cce3b3fc59b240e6d4a365eb2dc4a7695d0f1663508c1cb8b"
+  "bootstrap_raw_sha256": "34ae1c223406725cce3b3fc59b240e6d4a365eb2dc4a7695d0f1663508c1cb8b",
+  "notifications": {
+    "immediate_levels": [
+      "Urgent"
+    ],
+    "max_emails_per_run": 4,
+    "max_emails_per_day": 20,
+    "account_cooldown_seconds": 21600,
+    "health_confirm_checks": 2,
+    "health_max_notices_per_day": 4,
+    "health_digest_hour_london": 9,
+    "health_quiet_reminder_days": 7,
+    "warn_only_gap_codes": [],
+    "max_digest_entries": 25
+  }
 }
