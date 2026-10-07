@@ -1,4 +1,11 @@
-"""Separate scheduler and state: detects silent monitor failure, never disables it."""
+"""Separate scheduler and state: detects silent monitor failure, never disables it.
+
+Issues are tracked as one incident per code (risk-monitor/throttle.py). The
+earlier build keyed notices on a hash of the whole issue set, so a set of n
+fluctuating codes could produce up to 2**n notices for a single ongoing
+problem. Confirmation, tiering and a daily cap decide when a tracked issue is
+worth an email; everything observed is recorded either way.
+"""
 import base64
 import hashlib
 import json
@@ -9,43 +16,26 @@ import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from adapters import GitStore, Gmail, SafeError, canonical, load_module, verified_transport
-
-MIGRATION_PROGRESS = {
-    'migration_shadow_mode', 'run_budget_checkpointed', 'global_sweep_in_progress',
-    'global_previous_day_incomplete', 'export_charge_cache_incomplete',
-    'global_fingerprint_coverage_incomplete', 'fee_linked_export_reconciliation_incomplete',
-    'aggregate_refund_scope_incomparable', 'aggregate_refund_comparison_unavailable',
-    'onboarding_ip_coverage_incomplete',
-}
-
-def notice_key(state, issues, day):
-    """Deduplicate shadow progress independently of its changing coverage flags."""
-    migration = 'migration_shadow_mode' in issues
-    operational = sorted(set(issues) - MIGRATION_PROGRESS) if migration else sorted(set(issues))
-    prefix = 'code-monitor:' + day + ':'
-    if migration and not operational:
-        keys = state.setdefault('migration_notice_keys', {})
-        if day not in keys:
-            # Adopt today's already-sent legacy notice rather than emailing again
-            # just because the dedupe format changed during this repair.
-            previous = state.get('current_failure') or ''
-            notice = state.get('notices', {}).get('loyverse_payments_risk_v1:monitoring:' + previous, {})
-            has_delivery = (notice.get('email', {}).get('status') in ('sent', 'send_intent', 'uncertain')
-                            or notice.get('telegram', {}).get('status') in ('sent', 'send_intent', 'uncertain', 'enqueued'))
-            keys[day] = previous if previous.startswith(prefix) and has_delivery else prefix + 'migration-progress'
-        return keys[day]
-    return prefix + hashlib.sha256('|'.join(operational).encode()).hexdigest()[:16]
+import notify
+import throttle
 
 def close_recovery(state, notice):
-    """Close the covered incidents only after both channel receipts are saved."""
+    """Close the covered incidents only after both channel receipts are saved.
+
+    Until both are confirmed the codes stay in `pending_recovery`, so a failed
+    recovery send is retried on the next check instead of being lost.
+    """
     if notice.get('email', {}).get('status') != 'sent' or notice.get('telegram', {}).get('status') != 'sent':
         return
     recovered = notice.get('recovers', [])
     if isinstance(recovered, str):
         recovered = [recovered]
+    pending = state.setdefault('pending_recovery', {})
+    failures_open = state.setdefault('open_failures', {})
     for key in recovered:
-        state['open_failures'].pop(key, None)
-    state['current_failure'] = next(iter(state['open_failures']), None)
+        pending.pop(key, None)
+        failures_open.pop(key, None)
+    state['current_failure'] = next(iter(failures_open), None)
 
 def failures(health, now, workflow_active=True):
     result=[]
@@ -63,45 +53,48 @@ def main():
     if os.environ.get('GITHUB_REPOSITORY')!='felipekrugel-eng/tars-overview' or os.environ.get('GITHUB_REF')!='refs/heads/master':
         raise SafeError('repository_or_branch_mismatch')
     config=json.loads(Path('risk-monitor/config.json').read_text())
+    rules=throttle.policy(config)
     store=GitStore('risk-monitor/watchdog.enc.json')
     state=store.load() or {'schema_version':1,'notices':{},'current_failure':None}
     now=int(time.time())
     raw,_=store.file('risk-monitor/health.json'); heartbeat=json.loads(raw) if raw else None
     workflow=store.api('actions/workflows/loyverse-risk-monitor.yml')
     issues=failures(heartbeat,now,workflow.get('state')=='active')
-    day=datetime.fromtimestamp(now,ZoneInfo('Europe/London')).strftime('%Y%m%d')
-    key=notice_key(state,issues,day) if issues else None
-    open_failures=state.setdefault('open_failures',{})
-    if state.get('current_failure'):open_failures.setdefault(state['current_failure'],{'at':now})
-    recovery=not issues and bool(open_failures)
-    recovery_key=next(iter(open_failures),None)
-    if issues: alert_id='loyverse_payments_risk_v1:monitoring:'+key
-    elif recovery: alert_id='loyverse_payments_risk_v1:monitoring-recovered:'+recovery_key
-    else:
+    throttle.adopt_open_issues(state,issues,now)
+    # One incident per issue code. A changing combination of codes can no longer
+    # invent a new notice for a problem that is already reported.
+    candidates,recovered=throttle.observe_health(state,issues,now,rules)
+    report=throttle.health_due(candidates,state,now,rules)
+    if report and not throttle.health_budget_ok(state,now,rules):
+        report=[]
+        state['health_capped_at']=now
+    if not report and not recovered:
         state['checked_at']=now
-        store.checkpoint(state,{'type':'watchdog_checked','result':'healthy'})
-        print('Watchdog healthy; no alert.'); return 0
+        state['open_issue_codes']=sorted(issues)
+        store.checkpoint(state,{'type':'watchdog_checked','issues':sorted(issues),
+                                'result':'healthy' if not issues else 'tracked'})
+        print('Watchdog checked; %d issue(s) tracked, nothing due to send.'%len(issues))
+        return 0
+    alert_id=('loyverse_payments_risk_v1:monitoring:'+throttle.incident_key(report) if report
+              else 'loyverse_payments_risk_v1:monitoring-recovered:'+throttle.incident_key(recovered,'recovered'))
     relay,transport,private,sha=verified_transport(config)
     digest=hashlib.sha256(alert_id.encode()).hexdigest()
     receipt=transport.get('receipts',{}).get(digest)
     notice=state['notices'].setdefault(alert_id,{})
     if receipt:
         notice['telegram']=receipt
-    if issues:
-        state['current_failure']=key
-        open_failures.setdefault(key,{'at':now})
-    elif recovery:
-        # Old issue combinations describe the same ongoing degraded episode.
-        # One confirmed recovery closes them together, preserving their history.
-        existing = notice.get('recovers', [])
-        if isinstance(existing, str): existing = [existing]
-        notice['recovers'] = sorted(set(existing) | set(open_failures))
-    coverage=(heartbeat or {}).get('country_counts') or {'GB':'Unknown','PR':'Unknown','Unknown':'Unknown'}
-    text=('Sweep: Monitoring '+('degraded' if issues else 'recovered')+
-          '\nCoverage: '+json.dumps(coverage,sort_keys=True)+
-          '; complete processor as-of '+str((heartbeat or {}).get('full_processor_completed_at'))+
-          '\nResult: '+(', '.join(issues) if issues else 'Charge checks and required coverage recovered')+
-          '\nRecommendation: '+('Investigate the monitor; incomplete coverage is not an all-clear.' if issues else 'Monitoring continues.'))[:3500]
+    if recovered:
+        existing=notice.get('recovers',[])
+        if isinstance(existing,str): existing=[existing]
+        notice['recovers']=sorted(set(existing)|set(recovered))
+    groups=throttle.classify(report)
+    coverage=(heartbeat or {}).get('country_counts') or {}
+    subject,body,text=notify.render_health(report,recovered,{
+        'now':now,'alert_id':alert_id,'coverage':coverage,
+        'tier':'critical' if groups['critical'] else 'operational',
+        'action':('Check the monitor workflow run, then the credential and state diagnostics.'
+                  if groups['critical'] else
+                  'Review the monitor health snapshot; no immediate action may be needed.')})
     # Persist each channel's intent independently; Gmail failures do not block Telegram.
     if notice.get('email',{}).get('status')!='sent':
         try:
@@ -110,7 +103,7 @@ def main():
             elif notice.get('email',{}).get('status') not in ('send_intent','uncertain') and not drafts:
                 notice['email']={'status':'send_intent','at':now}
                 store.checkpoint(state,{'type':'watchdog_email_intent','alert_id':alert_id})
-                r=gmail.send_internal('[Loyverse Payments][Elevated] Monitoring '+('degraded' if issues else 'recovered'),text+'\n\n'+alert_id)
+                r=gmail.send_internal(subject,body)
                 if not r.get('id') or 'SENT' not in r.get('labelIds',[]): raise SafeError('watchdog_email_uncertain')
                 notice['email']={'status':'sent','id':r['id'],'at':int(time.time())}
                 store.checkpoint(state,{'type':'watchdog_email_confirmed','alert_id':alert_id})
@@ -126,11 +119,14 @@ def main():
         store.api('contents/'+outbox,'PUT',{'message':'chore(risk): watchdog alarm','branch':'master',
                                            'content':base64.b64encode(canonical(payload)).decode()})
         notice['telegram']={'status':'enqueued','at':now}
-    if recovery:
-        close_recovery(state, notice)
+    if report:
+        throttle.record_health_notice(state,now,report)
+    if recovered:
+        close_recovery(state,notice)
     state['checked_at']=now
-    store.checkpoint(state,{'type':'watchdog_checked','issues':issues,'alert_id':alert_id})
-    print('Watchdog checkpointed '+('failure alarm' if issues else 'recovery')+'.')
+    state['open_issue_codes']=sorted(issues)
+    store.checkpoint(state,{'type':'watchdog_checked','issues':sorted(issues),'alert_id':alert_id})
+    print('Watchdog sent '+('failure alarm' if report else 'recovery')+' for %d code(s).'%len(report or recovered))
     return 0
 
 if __name__=='__main__':

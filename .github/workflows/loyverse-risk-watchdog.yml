@@ -3,12 +3,12 @@ on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_run:
-    workflows: [Loyverse deterministic risk monitor, cusum-pull]
+    workflows: [Loyverse deterministic risk monitor]
     types: [completed]
   workflow_dispatch: {}
   push:
     branches: [master]
-    paths: ['risk-monitor/watchdog.py', '.github/workflows/loyverse-risk-watchdog.yml']
+    paths: ['risk-monitor/watchdog.py', 'risk-monitor/throttle.py', 'risk-monitor/notify.py', '.github/workflows/loyverse-risk-watchdog.yml']
 permissions:
   contents: write
   actions: read

@@ -147,3 +147,71 @@ class Coverage(unittest.TestCase):
         h['mode']='shadow'; self.assertIn('migration_shadow_mode',failures(h,NOW))
 
 if __name__=='__main__': unittest.main()
+
+
+class OnboardingEvidence(unittest.TestCase):
+    """The coverage contract: unobtainable evidence is not a coverage failure."""
+
+    def test_platform_collected_ip_counts_as_covered(self):
+        from engine import ip_evidence
+        self.assertEqual(ip_evidence({'tos_acceptance': {'ip': '1.2.3.4', 'date': 1}}), 'present')
+
+    def test_terms_without_an_ip_are_unobtainable_not_missing(self):
+        from engine import ip_evidence
+        self.assertEqual(ip_evidence({'tos_acceptance': {'date': 1700000000}}), 'terms_without_ip')
+        self.assertEqual(ip_evidence({'tos_acceptance': {'service_agreement': 'full'}}),
+                         'terms_without_ip')
+
+    def test_live_account_without_terms_is_the_only_blocking_state(self):
+        from engine import ip_evidence, IP_BLOCKING
+        self.assertEqual(ip_evidence({'charges_enabled': True}), 'no_terms_charges_enabled')
+        self.assertEqual(ip_evidence({'charges_enabled': False}), 'no_terms_not_onboarded')
+        self.assertEqual(IP_BLOCKING, {'no_terms_charges_enabled'})
+
+    def test_unknown_account_shape_degrades_to_blocking_not_covered(self):
+        from engine import ip_evidence, IP_BLOCKING
+        self.assertIn(ip_evidence({}), IP_BLOCKING | {'no_terms_not_onboarded'})
+        self.assertNotEqual(ip_evidence({}), 'present')
+
+
+class CoverageContract(unittest.TestCase):
+    def monitor(self):
+        import sys
+        from pathlib import Path as _P
+        sys.path.insert(0, str(_P(__file__).resolve().parents[1]))
+        from monitor import Monitor
+        store = type('S', (), {'run_id': 'r', 'checkpoint': lambda *a, **k: None,
+                               'file': lambda self, p: (None, None)})()
+        return Monitor({'gaps': [], 'mode': 'shadow'}, store, {'run_budget_seconds': 1000},
+                       now=NOW)
+
+    def test_unobtainable_evidence_alone_leaves_the_run_clean(self):
+        m = self.monitor()
+        counts = m.ip_coverage({'a': {'ip_evidence': 'present'},
+                                'b': {'ip_evidence': 'terms_without_ip'},
+                                'c': {'ip_evidence': 'no_terms_not_onboarded'}})
+        self.assertEqual(m.s['gaps'], [])
+        self.assertEqual(counts, {'no_terms_not_onboarded': 1, 'present': 1,
+                                  'terms_without_ip': 1})
+
+    def test_one_live_account_without_terms_blocks_the_run(self):
+        m = self.monitor()
+        m.ip_coverage({'a': {'ip_evidence': 'present'},
+                       'b': {'ip_evidence': 'no_terms_charges_enabled'}})
+        self.assertEqual(m.s['gaps'], ['onboarding_terms_evidence_missing'])
+
+    def test_records_predating_the_contract_degrade_without_claiming_coverage(self):
+        m = self.monitor()
+        counts = m.ip_coverage({'a': {'tos_ip': '1.2.3.4'}, 'b': {'ip_evidence': 'present'}})
+        self.assertEqual(m.s['gaps'], ['onboarding_ip_evidence_unclassified'])
+        self.assertEqual(counts['unclassified'], 1)
+
+    def test_account_record_carries_the_classification_for_the_sweep(self):
+        from unittest.mock import patch
+        m = self.monitor()
+        m.stripe = type('S', (), {'get': lambda self, p: {
+            'id': 'acct_x', 'country': 'US', 'charges_enabled': True,
+            'tos_acceptance': {'date': 1700000000}}})()
+        record = m.account('acct_x')
+        self.assertEqual(record['ip_evidence'], 'terms_without_ip')
+        self.assertIsNone(record['tos_ip'])

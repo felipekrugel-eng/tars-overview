@@ -21,13 +21,42 @@ from zoneinfo import ZoneInfo
 
 from adapters import (GitStore, Gmail, Stripe, SafeError, canonical, load_module, http,
                       verified_transport, SENDER, RECIPIENTS)
-from engine import Attempt, Finding, LEVELS, PREFIX, epoch, evaluate, object_event, source_health, country_bucket
+from engine import (Attempt, Finding, LEVELS, PREFIX, epoch, evaluate, object_event,
+                    source_health, country_bucket, ip_evidence, IP_BLOCKING)
+import notify
+import throttle
 
 def config():
     value = json.loads(Path('risk-monitor/config.json').read_text())
     if value['recipients'] != RECIPIENTS or value['sender'] != SENDER:
         raise SafeError('fixed_recipient_config_changed')
+    if value.get('mode') == 'active':
+        # Active mode is a cutover, not a flag. The boundary records when the
+        # previous owner stopped alerting, so candidates older than it are not
+        # replayed to recipients who already heard about them.
+        block = value.get('activation') or {}
+        if not isinstance(block.get('boundary_epoch'), int):
+            raise SafeError('activation_boundary_epoch_missing')
+        if not block.get('legacy_alerting_retired'):
+            raise SafeError('legacy_alerting_not_retired')
     return value
+
+
+def releasable(alert, boundary):
+    """Whether a pending alert may be delivered under the activation boundary.
+
+    Returns (ok, reason). A recorded decision always wins; without one, only
+    findings first seen after the boundary deliver, so the shadow backlog
+    cannot be replayed by flipping the mode.
+    """
+    decision = (alert.get('reconciled') or {}).get('decision')
+    if decision == 'baseline':
+        return False, 'baselined'
+    if decision == 'send':
+        return True, 'released'
+    if boundary is None or alert.get('created_at', 0) >= boundary:
+        return True, 'new'
+    return False, 'pre_activation_unreconciled'
 
 def health(state, now, completed=False):
     # Public heartbeat deliberately contains no account, card, merchant or email data.
@@ -36,12 +65,17 @@ def health(state, now, completed=False):
             'last_evaluated_at': state.get('last_evaluated'),
             'status': 'degraded' if state.get('gaps') else 'healthy' if completed else 'running',
             'mode': state['mode'], 'gap_codes': sorted(set(state.get('gaps', []))),
-            'pending_alert_count': sum(x.get('email', {}).get('status') != 'sent' or
-                                      x.get('telegram', {}).get('status') != 'sent'
-                                      for x in state.get('alerts', {}).values()),
+            'pending_alert_count': sum(
+                (x.get('reconciled') or {}).get('decision') != 'baseline'
+                and (x.get('email', {}).get('status') != 'sent'
+                     or x.get('telegram', {}).get('status') != 'sent')
+                for x in state.get('alerts', {}).values()),
+            'alerts_held_by_budget': state.get('alerts_held', 0),
+            'emails_sent_today': (state.get('send_counters') or {}).get('emails', 0),
             'full_processor_completed_at': state.get('full_completed'),
             'global_sweep_completed_at': state.get('global', {}).get('completed_at'),
             'country_counts': state.get('global', {}).get('counts'),
+            'ip_evidence_counts': state.get('global', {}).get('ip_evidence'),
             'processor_progress_checked': sum(p.get('checked', 0) for p in state.get('full', {}).get('partitions', [])),
             'global_progress_accounts': len(state.get('global', {}).get('records', {})),
             'gmail_completed_at': state.get('gmail_watermark'),
@@ -182,7 +216,8 @@ class Monitor:
                     'email': a.get('email'), 'charges_enabled': a.get('charges_enabled'),
                     'payouts_enabled': a.get('payouts_enabled'),
                     'disabled_reason': (a.get('requirements') or {}).get('disabled_reason'),
-                    'tos_ip': (a.get('tos_acceptance') or {}).get('ip'), 'checked_at': self.now}
+                    'tos_ip': (a.get('tos_acceptance') or {}).get('ip'),
+                    'ip_evidence': ip_evidence(a), 'checked_at': self.now}
         self.s['accounts'][id] = verified
         return verified
     def fee(self, fee):
@@ -428,7 +463,7 @@ class Monitor:
         buckets = Counter(a['bucket'] for a in g['records'].values())
         buckets.setdefault('GB',0); buckets.setdefault('PR',0); buckets.setdefault('Unknown',0)
         g['counts'] = dict(sorted(buckets.items()))
-        if any(not a.get('tos_ip') for a in g['records'].values()):self.gap('onboarding_ip_coverage_incomplete')
+        g['ip_evidence'] = self.ip_coverage(g['records'])
         ips = defaultdict(set)
         for a in g['records'].values():
             if a.get('tos_ip'):
@@ -460,7 +495,9 @@ class Monitor:
             self.s['gaps'] = [code for code in self.s['gaps'] if code != 'global_fingerprint_coverage_incomplete']
         self.checkpoint({'type':'global_complete','counts':g['counts'],'clusters':len(clusters)})
         # Status/recovery transport is enabled only after production cutover.
-        if self.s['mode']=='active' and not any(x in self.s['gaps'] for x in ('global_fingerprint_coverage_incomplete','onboarding_ip_coverage_incomplete')):
+        if self.s['mode']=='active' and not any(x in self.s['gaps'] for x in (
+                'global_fingerprint_coverage_incomplete','onboarding_terms_evidence_missing',
+                'onboarding_ip_evidence_unclassified')):
             id=PREFIX+'sweep-status:'+g['day']
             if id not in self.s.setdefault('sweep_notices',{}):
                 notice={'alert_id':id}
@@ -469,6 +506,21 @@ class Monitor:
                       '\nResult: '+str(len(clusters))+' IP/fingerprint clusters reviewed; new/material links queued.'+
                       '\nRecommendation: '+('Review new linkage leads.' if clusters else 'Monitoring continues.'))
                 self.enqueue_telegram(notice,text)
+    def ip_coverage(self, records):
+        """Apply the onboarding evidence contract and raise only real gaps.
+
+        Returns the counted split for the public heartbeat. Records written
+        before this contract carry no classification; they self-heal on the
+        next full account refresh, so they degrade the run without being
+        mistaken for either coverage or a genuine gap.
+        """
+        evidence = Counter(a.get('ip_evidence') or 'unclassified' for a in records.values())
+        if evidence['unclassified']:
+            self.gap('onboarding_ip_evidence_unclassified')
+        if any(evidence[state] for state in IP_BLOCKING):
+            self.gap('onboarding_terms_evidence_missing')
+        return dict(sorted(evidence.items()))
+
     def gmail_requests(self):
         if not self.gmail:
             self.gmail = Gmail()
@@ -531,72 +583,193 @@ class Monitor:
             for id in ids:
                 self.s['events'][id]['alert_id'] = alert_id
         self.new.clear()
-    def content(self, alert):
-        findings = [self.s['events'][id]['finding'] for id in alert['events']]
-        level = max((x['level'] for x in findings),key=lambda x:LEVELS[x])
-        account = alert['account']; live = self.s.get('accounts',{}).get(account,{})
+    def alert_context(self, account, findings):
+        """Display-only facts for one merchant. Never used for rule decisions."""
+        live = self.s.get('accounts', {}).get(account, {})
         pause = live.get('payouts_enabled') is False and live.get('disabled_reason') == 'platform_paused'
-        recommendation = 'Keep the existing payout pause pending human investigation' if pause else 'Investigate; human action required'
-        name = self.s.get('names',{}).get(account,account)
-        history = [x for x in self.s.get('attempts',{}).values() if x['account']==account]
-        metrics = {}
-        for label, seconds in [('24h',86400),('7d',7*86400),('30d',30*86400),('cumulative',None)]:
-            rows=[x for x in history if x['status']=='succeeded' and (seconds is None or x['created']>=self.now-seconds)]
-            totals=defaultdict(int)
-            for row in rows: totals[row['currency']]+=row['amount']
-            metrics[label]={'counts':len(rows),'minor_units_by_currency':dict(totals)}
-        body=(f'Level: {level}\nRecommendation: {recommendation}\nReason/evidence:\n'+
-              '\n'.join(json.dumps(x,sort_keys=True) for x in findings)+
-              '\nGaps: '+(', '.join(self.s['gaps']) or 'Public legitimacy and document review remain human tasks')+
-              '\nNext steps: Review the evidence and supporting documents. No account action was executed.'+
-              '\nAccount: '+account+'\nLive status / owner linkage: '+json.dumps(live,sort_keys=True)+
-              '\nPayments volumes / counts: '+json.dumps(metrics,sort_keys=True)+
-              '\nPOS profile / exact linkage: '+json.dumps(self.s.get('profiles',{}).get(account,{}),sort_keys=True)+
-              '\nTransaction source as-of: '+str(self.s.get('source_asof'))+
-              '\nHistorical processor coverage as-of: '+str(self.s.get('full_completed'))+
-              '\nMissing fields are unknown. Fingerprints are not unique people or physical cards.'+
-              '\n\n'+alert['alert_id']+'\n'+'\n'.join(alert['events']))
-        # Exclude emails/owner/card attributes from Telegram text.
-        text=(f'Account: {account}\nBehaviour: '+', '.join(x['kind'] for x in findings)+
-              f'. Level {level}. Source as-of {self.s.get("source_asof")}. Delayed evidence where applicable.'+
-              f'\nRecommendation: {recommendation}.')[:3500]
-        return f'[Loyverse Payments][{level}] {name} – investigate',body,text
+        history = self._account_history(account)
+        volumes = {}
+        for label, seconds in (('24h', 86400), ('7d', 7*86400), ('30d', 30*86400)):
+            rows = [x for x in history if x['status'] == 'succeeded' and x['created'] >= self.now-seconds
+                    and (x.get('currency') or 'usd') == 'usd']
+            volumes[label] = {'count': len(rows), 'amount': sum(x['amount'] for x in rows)}
+        created = live.get('created')
+        age = (self.now-created)//86400 if isinstance(created, (int, float)) and created else None
+        status = ('payouts paused by platform' if pause else
+                  'payouts disabled' if live.get('payouts_enabled') is False else
+                  'active' if live.get('payouts_enabled') else None)
+        return {'account': account, 'name': self.s.get('names', {}).get(account, account),
+                'now': self.now, 'volumes': volumes, 'account_age_days': age,
+                'live_status': status, 'gaps': sorted(set(self.s.get('gaps', []))),
+                'source_asof': self.s.get('source_asof'),
+                'recommendation': ('Keep the existing payout pause while this is investigated.'
+                                   if pause else None)}
+
+    def _account_history(self, account):
+        return [x for x in self.s.get('attempts', {}).values() if x['account'] == account]
+
+    def findings_for(self, alert):
+        return [self.s['events'][id]['finding'] for id in alert['events']
+                if id in self.s['events']]
+
+    def alert_level(self, alert):
+        findings = self.findings_for(alert)
+        return max((x['level'] for x in findings), key=lambda x: LEVELS[x]) if findings else 'Elevated'
+
+    def content(self, alert):
+        """Human-readable alert text. Evidence objects stay in durable state."""
+        findings = self.findings_for(alert)
+        account = alert['account']
+        return notify.render_alert(alert, findings, self.alert_context(account, findings))
+
+    def pending_alerts(self):
+        """Alerts with an outstanding channel, oldest first so nothing starves."""
+        return sorted((a for a in self.s['alerts'].values()
+                       if a.get('email', {}).get('status') != 'sent'
+                       or a.get('telegram', {}).get('status') != 'sent'),
+                      key=lambda a: (a.get('created_at', 0), a.get('alert_id', '')))
+
     def deliver(self):
+        """Route pending alerts under a send budget.
+
+        Urgent findings interrupt immediately and individually. Everything else
+        is batched into one digest per run, capped by the configured budget.
+        Nothing is dropped: an alert held by a cooldown or a budget keeps its
+        evidence in durable state and is delivered by a later run.
+        """
         if self.s['mode'] != 'active':
             return
-        for alert in self.s['alerts'].values():
-            self.budget()
-            if alert.get('email',{}).get('status')!='sent' and any(
-                a.get('account')==alert['account'] and a.get('delivered_run_id')==self.store.run_id
-                for a in self.s['alerts'].values() if a is not alert):
+        rules = throttle.policy(self.c)
+        budget = throttle.Budget(self.s, self.now, rules)
+        throttle.prune_cooldowns(self.s, self.now, rules)
+        boundary = (self.c.get('activation') or {}).get('boundary_epoch')
+        immediate, batched, blocked = [], [], 0
+        for alert in self.pending_alerts():
+            ok, reason = releasable(alert, boundary)
+            if not ok:
+                blocked += reason == 'pre_activation_unreconciled'
                 continue
-            subject,body,text = self.content(alert)
-            if self.gmail and alert.get('email',{}).get('status') != 'sent':
-                sent,drafts = self.gmail.reconcile(alert['alert_id'])
-                if sent:
-                    alert['email']={'status':'sent','message_id':sent[0]['id'],'reconciled':True}
-                    self.checkpoint({'type':'email_reconciled','alert_id':alert['alert_id']})
-                elif alert.get('email',{}).get('status') in ('send_intent','uncertain'):
-                    self.gap('email_delivery_uncertain')
-                elif drafts:
-                    self.gap('existing_internal_draft_requires_review')
-                else:
-                    alert['email']={'status':'send_intent','at':self.now}
-                    self.checkpoint({'type':'email_intent','alert_id':alert['alert_id']})
-                    try:
-                        result=self.gmail.send_internal(subject,body)
-                        if not result.get('id') or 'SENT' not in result.get('labelIds',[]):
-                            raise SafeError('email_send_unconfirmed')
-                        alert['email']={'status':'sent','message_id':result['id'],'at':int(time.time())}
-                        alert['delivered_run_id']=self.store.run_id
-                        self.checkpoint({'type':'email_confirmed','alert_id':alert['alert_id']})
-                    except Exception:
-                        # Intent already persisted; never blindly retry.
-                        self.gap('email_delivery_uncertain')
-                        raise SafeError('email_delivery_uncertain') from None
-            if not self.gmail:
-                self.gap('gmail_oauth_missing')
-            self.enqueue_telegram(alert,text)
+            (immediate if throttle.route(self.alert_level(alert), rules) == 'immediate'
+             else batched).append(alert)
+        if blocked:
+            # Visible and blocking: these need a decision, not a silent drop.
+            self.gap('pre_activation_candidates_unreconciled')
+            print('::warning::%d pre-activation candidate(s) held; run '
+                  'reconcile_candidates.py to decide them.' % blocked)
+        # A digest of one merchant is just that merchant's alert: batching it
+        # would hide it behind a summary and change its reconciliation marker.
+        if len(batched) == 1:
+            immediate.append(batched.pop())
+        for alert in immediate:
+            self.deliver_alert(alert, budget, rules)
+        if batched:
+            self.deliver_digest(batched, budget, rules)
+        self.s['alerts_held'] = budget.held
+        if budget.held:
+            print('::notice::%d alert(s) held by the send budget; delivery resumes next run.'
+                  % budget.held)
+
+    def deliver_alert(self, alert, budget, rules):
+        self.budget()
+        level = self.alert_level(alert)
+        unsent = alert.get('email', {}).get('status') != 'sent'
+        if unsent and any(a.get('account') == alert['account']
+                          and a.get('delivered_run_id') == self.store.run_id
+                          for a in self.s['alerts'].values() if a is not alert):
+            return
+        if unsent and throttle.cooldown_blocked(self.s, alert['account'], level, self.now, rules):
+            # Same story, same merchant, same severity, inside the window.
+            budget.hold()
+            return
+        if unsent and not budget.allows():
+            budget.hold()
+            return
+        subject, body, text = self.content(alert)
+        if self.send_email(alert, subject, body, budget):
+            throttle.record_delivery(self.s, alert['account'], level, self.now)
+        self.enqueue_telegram(alert, text)
+
+    def deliver_digest(self, alerts, budget, rules):
+        """One email and one Telegram message covering several merchants."""
+        self.budget()
+        if not budget.allows():
+            for _ in alerts:
+                budget.hold()
+            return
+        entries, members = [], []
+        for alert in alerts:
+            level = self.alert_level(alert)
+            if throttle.cooldown_blocked(self.s, alert['account'], level, self.now, rules):
+                # Already reported at this severity; it returns when it escalates
+                # or when the window expires, with its evidence intact.
+                budget.hold()
+                continue
+            if len(members) >= rules['max_digest_entries']:
+                budget.hold()
+                continue
+            findings = self.findings_for(alert)
+            entries.append({'level': level, 'account': alert['account'],
+                            'alert_id': alert['alert_id'], 'findings': findings,
+                            'name': self.s.get('names', {}).get(alert['account'], alert['account'])})
+            members.append(alert)
+        if not members:
+            return
+        if len(members) == 1:
+            self.deliver_alert(members[0], budget, rules)
+            return
+        digest_id = PREFIX+'digest:'+hashlib.sha256(
+            '|'.join(sorted(a['alert_id'] for a in members)).encode()).hexdigest()[:24]
+        record = self.s.setdefault('digests', {}).setdefault(
+            digest_id, {'alert_id': digest_id, 'members': sorted(a['alert_id'] for a in members),
+                        'created_at': self.now, 'run_id': self.store.run_id})
+        subject, body, text = notify.render_digest(entries, {
+            'now': self.now, 'digest_id': digest_id, 'suppressed': budget.held,
+            'gaps': sorted(set(self.s.get('gaps', [])))})
+        if self.send_email(record, subject, body, budget):
+            for alert in members:
+                alert['email'] = {'status': 'sent', 'via': digest_id,
+                                  'message_id': record['email'].get('message_id')}
+                alert['delivered_run_id'] = self.store.run_id
+                throttle.record_delivery(self.s, alert['account'], self.alert_level(alert), self.now)
+            self.checkpoint({'type': 'digest_delivered', 'alert_id': digest_id,
+                             'merchants': len(members)})
+        self.enqueue_telegram(record, text)
+        for alert in members:
+            alert.setdefault('telegram', record.get('telegram', {}))
+
+    def send_email(self, record, subject, body, budget):
+        """Reconcile, persist intent, send once. Never blindly retries a send."""
+        if not self.gmail:
+            self.gap('gmail_oauth_missing')
+            return False
+        if record.get('email', {}).get('status') == 'sent':
+            return False
+        sent, drafts = self.gmail.reconcile(record['alert_id'])
+        if sent:
+            record['email'] = {'status': 'sent', 'message_id': sent[0]['id'], 'reconciled': True}
+            self.checkpoint({'type': 'email_reconciled', 'alert_id': record['alert_id']})
+            return True
+        if record.get('email', {}).get('status') in ('send_intent', 'uncertain'):
+            self.gap('email_delivery_uncertain')
+            return False
+        if drafts:
+            self.gap('existing_internal_draft_requires_review')
+            return False
+        record['email'] = {'status': 'send_intent', 'at': self.now}
+        self.checkpoint({'type': 'email_intent', 'alert_id': record['alert_id']})
+        try:
+            result = self.gmail.send_internal(subject, body)
+            if not result.get('id') or 'SENT' not in result.get('labelIds', []):
+                raise SafeError('email_send_unconfirmed')
+            record['email'] = {'status': 'sent', 'message_id': result['id'], 'at': int(time.time())}
+            record['delivered_run_id'] = self.store.run_id
+            budget.spend()
+            self.checkpoint({'type': 'email_confirmed', 'alert_id': record['alert_id']})
+            return True
+        except Exception:
+            # Intent already persisted; never blindly retry.
+            self.gap('email_delivery_uncertain')
+            raise SafeError('email_delivery_uncertain') from None
 
     def enqueue_telegram(self, alert, text):
         relay, transport, private, sha = verified_transport(self.c)
@@ -648,7 +821,40 @@ def external_heartbeat(ok):
     except Exception:
         raise SafeError('external_deadman_ping_failed') from None
 
-def workflow_exit_status(state):
+def redundant_wake(state, settings, now):
+    """Whether this wake-up has nothing new to do and should cost nothing.
+
+    The monitor is triggered by payments-pull completing, which the upstream
+    chain fires every few minutes as a missed-schedule backstop rather than
+    because new data landed. Each of those wakes ran a full 12-20 minute pass,
+    so the monitor ran roughly every nine minutes and the watchdog, keyed to
+    monitor completions, ran about every five.
+
+    Skipping is deliberately conservative: any unfinished work, any new
+    extraction, or anything awaiting delivery makes the run proceed. The wake-up
+    chain therefore still protects against a missed schedule.
+    """
+    interval = settings.get('min_run_interval_seconds', 3000)
+    since = now - (state.get('last_run_finished') or 0)
+    if since >= interval or since < 0:
+        return None
+    try:
+        status = json.loads(Path('payments-automation/data/pull_status.json').read_text())
+    except (OSError, ValueError):
+        return None
+    if status.get('completed_at_utc') != state.get('source_asof'):
+        return None
+    if state.get('full', {}).get('status') == 'in_progress':
+        return None
+    if not state.get('global', {}).get('complete'):
+        return None
+    if any(a.get('email', {}).get('status') != 'sent' or a.get('telegram', {}).get('status') != 'sent'
+           for a in state.get('alerts', {}).values()):
+        return None
+    return 'no new extraction since %dm ago; nothing in progress' % (since // 60)
+
+
+def workflow_exit_status(state, settings=None):
     """Known shadow coverage limitations are warnings after durable checkpoint.
 
     Health remains degraded and the external alarm remains down. Unknown errors,
@@ -657,12 +863,18 @@ def workflow_exit_status(state):
     gaps = set(state.get('gaps', []))
     if not gaps:
         return 0
+    # Codes the operator has delegated to the watchdog's channel. Credential,
+    # integrity and unexpected runtime failures can never be delegated away.
+    delegated = set(throttle.policy(settings or {})['warn_only_gap_codes']) - throttle.CRITICAL
+    gaps -= delegated
+    if not gaps:
+        return 0
     if state.get('mode') != 'shadow':
         return 2
-    # Missing source IPs cannot be repaired by repeating an otherwise successful
-    # scan. Keep the coverage gap, watchdog and cutover block without presenting
-    # every completed shadow scan as a crashed GitHub job.
-    source_limitations = {'onboarding_ip_coverage_incomplete'}
+    # An unclassified record clears itself on the next full account refresh, so
+    # it must not present a completed shadow scan as a crashed GitHub job.
+    # Genuinely missing terms evidence is not in this set and still fails.
+    source_limitations = {'onboarding_ip_evidence_unclassified'}
     if gaps <= source_limitations:
         return 0
     full_in_progress = state.get('full', {}).get('status') == 'in_progress'
@@ -693,6 +905,13 @@ def main():
         state=json.loads(raw)
         if state.get('schema_version') != 1 or state.get('legacy_sha256') != settings['legacy_sha256']:
             raise SafeError('bootstrap_identity_mismatch')
+    skip=redundant_wake(state,settings,int(time.time()))
+    if skip:
+        # No checkpoint: a skipped wake must not commit, or it would trigger the
+        # very chain it is avoiding. The hourly schedule refreshes the heartbeat
+        # well inside the watchdog's 90-minute threshold.
+        print('Risk monitor skipped this wake-up: '+skip+'.')
+        return 0
     state.update(run_started=int(time.time()),gaps=[],mode=settings['mode'])
     monitor=Monitor(state,store,settings)
     monitor.checkpoint({'type':'run_started','code_sha':store.code_sha,'mode':settings['mode']})
@@ -718,7 +937,7 @@ def main():
         if os.environ.get('RISK_HEARTBEAT_URL'):
             external_heartbeat(not state['gaps'] and state['mode']=='active')
         print('Risk checks checkpointed; status '+('degraded' if state['gaps'] else 'healthy')+'.')
-        result = workflow_exit_status(state)
+        result = workflow_exit_status(state, settings)
         if state['gaps'] and result == 0:
             print('::warning::Shadow monitoring has incomplete coverage; progress and gap details saved. Coverage remains degraded.')
         return result

@@ -20,35 +20,87 @@ def state():
     return {'run_started':100000,'mode':'active','gaps':[],'events':{},'alerts':{},'seen_attempts':{},'attempts':{}}
 
 class Failures(unittest.TestCase):
-    def test_migration_progress_changes_share_one_daily_notice(self):
-        from watchdog import notice_key
-        s={'notices':{}}
-        first=notice_key(s,['migration_shadow_mode','global_previous_day_incomplete'],'20261005')
-        self.assertEqual(first,notice_key(s,['migration_shadow_mode','export_charge_cache_incomplete','global_sweep_in_progress'],'20261005'))
-        self.assertNotEqual(first,notice_key(s,['migration_shadow_mode'],'20261006'))
-    def test_migration_dedupe_adopts_existing_sent_notice(self):
-        from watchdog import notice_key
-        key='code-monitor:20261005:old-hash'
-        s={'current_failure':key,'notices':{'loyverse_payments_risk_v1:monitoring:'+key:{'email':{'status':'sent'}}}}
-        self.assertEqual(notice_key(s,['migration_shadow_mode','global_sweep_in_progress'],'20261005'),key)
-    def test_new_operational_failure_is_not_suppressed_by_migration_notice(self):
-        from watchdog import notice_key
-        s={'notices':{}}
-        normal=notice_key(s,['migration_shadow_mode'],'20261005')
-        failed=notice_key(s,['migration_shadow_mode','stripe_read_key_missing'],'20261005')
-        self.assertNotEqual(normal,failed)
-        self.assertEqual(failed,notice_key(s,['migration_shadow_mode','stripe_read_key_missing','global_sweep_in_progress'],'20261005'))
-        self.assertNotEqual(failed,notice_key(s,['migration_shadow_mode','gmail_oauth_missing'],'20261005'))
-    def test_migration_upgrade_preserves_uncertain_delivery_id(self):
-        from watchdog import notice_key
-        key='code-monitor:20261005:uncertain'
-        s={'current_failure':key,'notices':{'loyverse_payments_risk_v1:monitoring:'+key:{'email':{'status':'send_intent'}}}}
-        self.assertEqual(notice_key(s,['migration_shadow_mode'],'20261005'),key)
-    def test_active_coverage_errors_do_not_use_migration_dedupe(self):
-        from watchdog import notice_key
-        s={'notices':{}}
-        first=notice_key(s,['global_sweep_in_progress'],'20261005')
-        self.assertNotEqual(first,notice_key(s,['global_sweep_in_progress','onboarding_ip_coverage_incomplete'],'20261005'))
+    def throttle_rules(self, **over):
+        import throttle
+        rules = dict(throttle.DEFAULTS); rules.update(over); return rules
+    def test_changing_issue_combinations_do_not_reopen_a_reported_incident(self):
+        import throttle
+        s={}; rules=self.throttle_rules(health_confirm_checks=1)
+        a,_=throttle.observe_health(s,['stripe_read_key_missing'],100,rules)
+        throttle.record_health_notice(s,100,throttle.health_due(a,s,100,rules))
+        # An unrelated progress code appearing later is not a new incident.
+        b,_=throttle.observe_health(s,['stripe_read_key_missing','global_sweep_in_progress'],200,rules)
+        self.assertNotIn('stripe_read_key_missing',b)
+    def test_transient_issue_is_not_notified_before_confirmation(self):
+        import throttle
+        s={}; rules=self.throttle_rules(health_confirm_checks=2)
+        self.assertEqual(throttle.observe_health(s,['transaction_source_stale'],100,rules)[0],[])
+        self.assertEqual(throttle.observe_health(s,['transaction_source_stale'],200,rules)[0],
+                         ['transaction_source_stale'])
+    def test_issue_clearing_before_confirmation_never_alerts_or_recovers(self):
+        import throttle
+        s={}; rules=self.throttle_rules(health_confirm_checks=2)
+        throttle.observe_health(s,['transaction_source_stale'],100,rules)
+        candidates,recovered=throttle.observe_health(s,[],200,rules)
+        self.assertEqual((candidates,recovered),([],[]))
+    def test_critical_issue_sends_immediately_and_quiet_state_does_not(self):
+        import throttle
+        rules=self.throttle_rules(health_confirm_checks=1,health_digest_hour_london=9)
+        s={}
+        a,_=throttle.observe_health(s,['gmail_oauth_missing'],100,rules)
+        self.assertEqual(throttle.health_due(a,s,100,rules),['gmail_oauth_missing'])
+        s2={}
+        b,_=throttle.observe_health(s2,['migration_shadow_mode'],100,rules)
+        self.assertEqual(throttle.health_due(b,s2,100,rules),[])
+    def test_shadow_progress_reminds_slowly_instead_of_every_check(self):
+        import throttle
+        from datetime import datetime
+        rules=self.throttle_rules(health_confirm_checks=1,health_quiet_reminder_days=7)
+        nine=int(datetime(2026,10,7,10,0,tzinfo=throttle.LONDON).timestamp())
+        s={}
+        a,_=throttle.observe_health(s,['migration_shadow_mode'],nine,rules)
+        due=throttle.health_due(a,s,nine,rules)
+        self.assertEqual(due,['migration_shadow_mode'])
+        throttle.record_health_notice(s,nine,due)
+        s['incidents']['migration_shadow_mode']['notified_at']=None
+        b,_=throttle.observe_health(s,['migration_shadow_mode'],nine+86400,rules)
+        self.assertEqual(throttle.health_due(b,s,nine+86400,rules),[])
+        c,_=throttle.observe_health(s,['migration_shadow_mode'],nine+8*86400,rules)
+        self.assertEqual(throttle.health_due(c,s,nine+8*86400,rules),['migration_shadow_mode'])
+    def test_operational_issue_sends_once_a_day_not_once_a_check(self):
+        import throttle
+        from datetime import datetime
+        rules=self.throttle_rules(health_confirm_checks=1,health_digest_hour_london=9)
+        ten=int(datetime(2026,10,7,10,0,tzinfo=throttle.LONDON).timestamp())
+        s={}
+        a,_=throttle.observe_health(s,['transaction_source_stale'],ten,rules)
+        due=throttle.health_due(a,s,ten,rules)
+        self.assertEqual(due,['transaction_source_stale'])
+        throttle.record_health_notice(s,ten,due)
+        s['incidents']['transaction_source_stale']['notified_at']=None
+        b,_=throttle.observe_health(s,['transaction_source_stale'],ten+3600,rules)
+        self.assertEqual(throttle.health_due(b,s,ten+3600,rules),[])
+    def test_daily_health_notice_cap(self):
+        import throttle
+        rules=self.throttle_rules(health_max_notices_per_day=2)
+        s={}
+        for _ in range(2):
+            self.assertTrue(throttle.health_budget_ok(s,100,rules))
+            throttle.record_health_notice(s,100,['gmail_oauth_missing'])
+        self.assertFalse(throttle.health_budget_ok(s,100,rules))
+    def test_legacy_open_failures_are_adopted_without_re_alerting(self):
+        import throttle
+        s={'open_failures':{'code-monitor:20261005:abc':{'at':1}}}
+        throttle.adopt_open_issues(s,['migration_shadow_mode','transaction_source_stale'],100)
+        rules=self.throttle_rules(health_confirm_checks=1)
+        self.assertEqual(throttle.observe_health(
+            s,['migration_shadow_mode','transaction_source_stale'],200,rules)[0],[])
+    def test_recovery_reported_only_for_issues_that_were_notified(self):
+        import throttle
+        rules=self.throttle_rules(health_confirm_checks=1)
+        s={'incidents':{'gmail_oauth_missing':{'observations':3,'notified_at':50},
+                        'transaction_source_stale':{'observations':1,'notified_at':None}}}
+        self.assertEqual(throttle.observe_health(s,[],100,rules)[1],['gmail_oauth_missing'])
     def test_one_recovery_closes_all_prior_issue_combinations_after_both_receipts(self):
         from watchdog import close_recovery
         s={'open_failures':{'first':{},'second':{}},'current_failure':'second'}
@@ -80,30 +132,38 @@ class Failures(unittest.TestCase):
         s=state();s['mode']='shadow';s['full']={'status':'complete'}
         s['global']={'complete':False};s['gaps']=['export_charge_cache_incomplete']
         self.assertEqual(workflow_exit_status(s),2)
-    def test_completed_shadow_scan_with_missing_source_ips_is_degraded_warning(self):
+    def test_unclassified_onboarding_records_are_a_degraded_warning(self):
         from monitor import workflow_exit_status, health
         s=state();s['mode']='shadow';s['full']={'status':'complete'}
-        s['global']={'complete':True};s['gaps']=['onboarding_ip_coverage_incomplete']
+        s['global']={'complete':True};s['gaps']=['onboarding_ip_evidence_unclassified']
         self.assertEqual(workflow_exit_status(s),0)
         report=health(s,100001,completed=True)
         self.assertEqual(report['status'],'degraded')
         self.assertEqual(report['gap_codes'],s['gaps'])
         self.assertIsNone(report['last_completed_at'])
-    def test_missing_source_ips_do_not_hide_operational_errors_or_active_gaps(self):
+    def test_unclassified_records_do_not_hide_operational_errors_or_active_gaps(self):
         from monitor import workflow_exit_status
         for mode,error in [('active',None),('shadow','stripe_read_key_missing'),
                            ('shadow','onboarding_ip_invalid'),('shadow','audit_chain_mismatch'),
                            ('shadow','processor_data_unknown'),('shadow','runtime_failure')]:
             with self.subTest(mode=mode,error=error):
                 s=state();s['mode']=mode;s['full']={'status':'complete'}
-                s['global']={'complete':True};s['gaps']=['onboarding_ip_coverage_incomplete']
+                s['global']={'complete':True};s['gaps']=['onboarding_ip_evidence_unclassified']
                 if error:s['gaps'].append(error)
                 self.assertEqual(workflow_exit_status(s),2)
-    def test_partial_shadow_scan_with_missing_source_ips_keeps_progress_warning(self):
+    def test_live_accounts_without_terms_evidence_always_fail(self):
+        from monitor import workflow_exit_status
+        for mode in ('shadow','active'):
+            with self.subTest(mode=mode):
+                s=state();s['mode']=mode;s['full']={'status':'complete'}
+                s['global']={'complete':True}
+                s['gaps']=['onboarding_terms_evidence_missing']
+                self.assertEqual(workflow_exit_status(s),2)
+    def test_partial_shadow_scan_with_unclassified_records_keeps_progress_warning(self):
         from monitor import workflow_exit_status
         s=state();s['mode']='shadow';s['full']={'status':'complete'}
         s['global']={'complete':False}
-        s['gaps']=['run_budget_checkpointed','global_sweep_in_progress','onboarding_ip_coverage_incomplete']
+        s['gaps']=['run_budget_checkpointed','global_sweep_in_progress','onboarding_ip_evidence_unclassified']
         self.assertEqual(workflow_exit_status(s),0)
     def test_durable_state_authenticated_encryption(self):
         with patch.dict(os.environ,{'TELEGRAM_BOT_TOKEN':'fake-test-key'}):

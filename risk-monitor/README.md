@@ -24,7 +24,11 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
   and daily global account cursors are retained across interruptions.
 - Exact public ToS IP and verified fingerprint linkage leads, global country counts,
   separate United Kingdom (`GB`), Puerto Rico (`PR`, excluded from other US) and Unknown.
-  Missing IP evidence and incomplete fingerprints never qualify as all-clear.
+  Incomplete fingerprints never qualify as all-clear. Onboarding IP evidence is
+  classified rather than counted: an IP Stripe never exposes to the platform is
+  recorded as unobtainable, while an account taking payments with no terms
+  record at all remains a blocking gap. `health.json` publishes the split as
+  `ip_evidence_counts`; `inspect_ip_coverage.py` reports it per account kind.
 - Checksummed transaction/merchant extraction evidence. Commit time and latest charge
   time never substitute for extraction success. Stale data remains explicitly degraded.
 - Gmail refund/dispute keyword scan, completed watermark with overlap, MIME original
@@ -36,6 +40,34 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
   payout mutation, refund mutation or dispute mutation adapter.
 - Persistent send intents, Gmail Sent/Drafts reconciliation, encrypted Telegram
   outbox reconciliation and pinned destination checks. Uncertain sends are held.
+
+## Cutover to active mode
+
+`mode: active` is a cutover, not a flag. The monitor refuses to start in active
+mode without a `config.activation` block recording when the previous owner
+stopped alerting, and candidates first seen before that boundary never deliver
+unless they were explicitly released. `cutover_check.py` reports a go/no-go
+against the documented acceptance criteria, and `reconcile_candidates.py` lists
+the accumulated shadow backlog with the evidence that something already covered
+it. Both are read-only by default and run from the **Loyverse risk cutover**
+workflow. See `CUTOVER.md` for the ordered runbook, and
+`CHATGPT_DRAFTS_TASK.md` for the replacement ChatGPT task instructions that
+keep merchant drafts and remove all alerting.
+
+## Alert volume and readability
+
+Delivery is budgeted and batched, and health issues are tracked as one incident
+per code rather than per combination of codes. Urgent findings still interrupt
+immediately and individually; everything else batches into one digest per run
+under per-run and per-day ceilings, with a per-merchant cooldown that an
+escalation always overrides. Held alerts keep their evidence and markers in
+durable state and are delivered by a later run — the throttle never drops a
+finding, and never changes what the rules detect.
+
+Message bodies are prose: amounts in the currency's own units, London
+timestamps, one sentence per finding, and the supporting objects left in
+durable state instead of `json.dumps` blobs. See `NOTIFICATIONS.md` for the
+reasoning, the tier table and every tuning knob.
 
 ## Durable state and audit
 
