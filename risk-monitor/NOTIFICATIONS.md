@@ -5,7 +5,20 @@ hundreds of messages, and messages that were hard to read. It describes what
 changed, why, and which knobs to turn. The detection rules are unchanged — the
 monitor still finds exactly what it found before.
 
-## Why the volume was high
+## Measured baseline, 7 October 2026
+
+The state diagnostic on `master` reported the watchdog had sent **11 emails in
+total** (3 notices still undelivered), and the Telegram relay held 10 sent and
+4 enqueued. So this repository's watchdog was never the source of a large
+mailbox volume, and the dominant sender was the ChatGPT scheduled task, which
+alerts per merchant per hour and sends its own monitoring-degraded notices.
+Retiring its alerting (see `CUTOVER.md`) is what reduces that volume.
+
+The changes below still matter: they bound what this monitor can send once it
+becomes the alert owner, and they remove a dedupe design that would have
+scaled badly under active mode.
+
+## Why the volume could grow unbounded
 
 Four independent multipliers, none of which were bounded:
 

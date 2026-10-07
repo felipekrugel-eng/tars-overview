@@ -28,5 +28,6 @@
     "health_quiet_reminder_days": 7,
     "warn_only_gap_codes": [],
     "max_digest_entries": 25
-  }
+  },
+  "min_run_interval_seconds": 3000
 }

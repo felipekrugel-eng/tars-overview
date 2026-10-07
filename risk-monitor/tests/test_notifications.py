@@ -295,3 +295,60 @@ class Volume(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class WakeCadence(unittest.TestCase):
+    """A wake-up with nothing new to do must cost nothing."""
+
+    def setUp(self):
+        import monitor as monitor_module
+        self.mod = monitor_module
+        self.settings = {'min_run_interval_seconds': 3000}
+        self.state = {'last_run_finished': NOW - 600, 'source_asof': '2026-10-07T10:00:00Z',
+                      'full': {'status': 'complete'}, 'global': {'complete': True}, 'alerts': {}}
+        self.status = {'completed_at_utc': '2026-10-07T10:00:00Z'}
+
+    def check(self):
+        import json
+        with patch.object(self.mod.Path, 'read_text', return_value=json.dumps(self.status)):
+            return self.mod.redundant_wake(self.state, self.settings, NOW)
+
+    def test_wake_with_no_new_extraction_is_skipped(self):
+        self.assertIsNotNone(self.check())
+
+    def test_a_new_extraction_always_runs(self):
+        self.status['completed_at_utc'] = '2026-10-07T13:00:00Z'
+        self.assertIsNone(self.check())
+
+    def test_the_scheduled_interval_always_runs(self):
+        self.state['last_run_finished'] = NOW - 4000
+        self.assertIsNone(self.check())
+
+    def test_unfinished_work_always_runs(self):
+        for key, value in (('full', {'status': 'in_progress'}), ('global', {'complete': False})):
+            with self.subTest(key=key):
+                state = dict(self.state); state[key] = value
+                self.state = state
+                self.assertIsNone(self.check())
+
+    def test_undelivered_alerts_always_run(self):
+        self.state['alerts'] = {'a': {'email': {'status': 'sent'}, 'telegram': {}}}
+        self.assertIsNone(self.check())
+
+    def test_unreadable_pull_status_runs_rather_than_skipping(self):
+        with patch.object(self.mod.Path, 'read_text', side_effect=OSError):
+            self.assertIsNone(self.mod.redundant_wake(self.state, self.settings, NOW))
+
+    def test_clock_skew_never_causes_an_indefinite_skip(self):
+        self.state['last_run_finished'] = NOW + 99999
+        self.assertIsNone(self.check())
+
+    def test_skip_interval_stays_under_the_watchdog_heartbeat_threshold(self):
+        import json as _json
+        from watchdog import failures
+        configured = _json.loads(Path('risk-monitor/config.json').read_text())['min_run_interval_seconds']
+        # A skipped wake writes no heartbeat, so the interval must not by itself
+        # age the heartbeat past the watchdog's overdue threshold.
+        self.assertLess(configured, 5400)
+        self.assertEqual(failures({'mode': 'active', 'last_evaluated_at': NOW,
+                                   'checkpoint_at': NOW}, NOW + configured), [])

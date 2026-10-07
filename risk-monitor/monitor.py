@@ -821,6 +821,39 @@ def external_heartbeat(ok):
     except Exception:
         raise SafeError('external_deadman_ping_failed') from None
 
+def redundant_wake(state, settings, now):
+    """Whether this wake-up has nothing new to do and should cost nothing.
+
+    The monitor is triggered by payments-pull completing, which the upstream
+    chain fires every few minutes as a missed-schedule backstop rather than
+    because new data landed. Each of those wakes ran a full 12-20 minute pass,
+    so the monitor ran roughly every nine minutes and the watchdog, keyed to
+    monitor completions, ran about every five.
+
+    Skipping is deliberately conservative: any unfinished work, any new
+    extraction, or anything awaiting delivery makes the run proceed. The wake-up
+    chain therefore still protects against a missed schedule.
+    """
+    interval = settings.get('min_run_interval_seconds', 3000)
+    since = now - (state.get('last_run_finished') or 0)
+    if since >= interval or since < 0:
+        return None
+    try:
+        status = json.loads(Path('payments-automation/data/pull_status.json').read_text())
+    except (OSError, ValueError):
+        return None
+    if status.get('completed_at_utc') != state.get('source_asof'):
+        return None
+    if state.get('full', {}).get('status') == 'in_progress':
+        return None
+    if not state.get('global', {}).get('complete'):
+        return None
+    if any(a.get('email', {}).get('status') != 'sent' or a.get('telegram', {}).get('status') != 'sent'
+           for a in state.get('alerts', {}).values()):
+        return None
+    return 'no new extraction since %dm ago; nothing in progress' % (since // 60)
+
+
 def workflow_exit_status(state, settings=None):
     """Known shadow coverage limitations are warnings after durable checkpoint.
 
@@ -872,6 +905,13 @@ def main():
         state=json.loads(raw)
         if state.get('schema_version') != 1 or state.get('legacy_sha256') != settings['legacy_sha256']:
             raise SafeError('bootstrap_identity_mismatch')
+    skip=redundant_wake(state,settings,int(time.time()))
+    if skip:
+        # No checkpoint: a skipped wake must not commit, or it would trigger the
+        # very chain it is avoiding. The hourly schedule refreshes the heartbeat
+        # well inside the watchdog's 90-minute threshold.
+        print('Risk monitor skipped this wake-up: '+skip+'.')
+        return 0
     state.update(run_started=int(time.time()),gaps=[],mode=settings['mode'])
     monitor=Monitor(state,store,settings)
     monitor.checkpoint({'type':'run_started','code_sha':store.code_sha,'mode':settings['mode']})
