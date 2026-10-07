@@ -1,4 +1,5 @@
 """Cutover tooling: readiness reporting and candidate reconciliation."""
+import json
 import sys
 from pathlib import Path
 import unittest
@@ -109,3 +110,61 @@ class Readiness(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class IpCoverage(unittest.TestCase):
+    def setUp(self):
+        import inspect_ip_coverage
+        self.mod = inspect_ip_coverage
+
+    def test_platform_collected_ip_is_present(self):
+        self.assertEqual(self.mod.classify(
+            {'type': 'custom', 'tos_acceptance': {'ip': '1.2.3.4', 'date': 1}}),
+            ('present', 'custom'))
+
+    def test_stripe_collected_terms_are_distinguished_from_no_terms(self):
+        # Terms accepted, but the platform never saw an IP: unobtainable, not missing.
+        self.assertEqual(self.mod.classify(
+            {'type': 'standard', 'tos_acceptance': {'date': 1700000000}}),
+            ('accepted_elsewhere', 'standard'))
+        self.assertEqual(self.mod.classify(
+            {'type': 'standard', 'tos_acceptance': {'service_agreement': 'recipient'}}),
+            ('accepted_elsewhere', 'standard'))
+        self.assertEqual(self.mod.classify({'type': 'express'}),
+                         ('no_tos_record', 'express'))
+
+    def test_account_kind_falls_back_to_the_controller_shape(self):
+        self.assertEqual(self.mod.classify({'controller': {'type': 'application'}})[1],
+                         'application')
+        self.assertEqual(self.mod.classify({'controller': {'is_controller': True}})[1], 'stripe')
+        self.assertEqual(self.mod.classify({})[1], 'unknown')
+
+    def test_summary_separates_unobtainable_from_genuinely_missing(self):
+        pages = [{'data': [{'id': 'acct_1', 'type': 'custom',
+                            'tos_acceptance': {'ip': '1.2.3.4'}},
+                           {'id': 'acct_2', 'type': 'custom',
+                            'tos_acceptance': {'ip': '1.2.3.4'}},
+                           {'id': 'acct_3', 'type': 'standard',
+                            'tos_acceptance': {'date': 1700000000}},
+                           {'id': 'acct_4', 'type': 'express', 'charges_enabled': True},
+                           {'id': 'acct_5', 'type': 'custom',
+                            'tos_acceptance': {'ip': '10.0.0.1'}}],
+                  'has_more': False}]
+        stripe = object.__new__(self.mod.Stripe)
+        with patch.object(self.mod, 'Stripe', return_value=stripe), \
+             patch.object(stripe, 'preflight'), \
+             patch.object(stripe, 'page', side_effect=pages), \
+             patch.object(stripe, 'get', return_value={}), \
+             patch('builtins.print') as shown:
+            self.assertEqual(self.mod.main(['--json']), 0)
+        summary = json.loads(shown.call_args[0][0])
+        self.assertEqual(summary['accounts_examined'], 5)
+        self.assertEqual(summary['with_onboarding_ip'], 3)
+        self.assertEqual(summary['accepted_elsewhere_no_platform_ip'], 1)
+        self.assertEqual(summary['no_terms_record_at_all'], 1)
+        # A private IP is recorded but never forms a linkage cluster.
+        self.assertEqual(summary['private_or_reserved_ips'], 1)
+        self.assertEqual(summary['linkage_clusters_found'], 1)
+        self.assertEqual(summary['accounts_in_clusters'], 2)
+        self.assertEqual(summary['needs_attention'],
+                         [{'id': 'acct_4', 'why': 'charges_enabled_without_tos'}])

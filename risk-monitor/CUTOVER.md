@@ -47,9 +47,13 @@ Work the blocking failures until it reports GO. The two expected ones:
 
 - *Gap-free completed run* — the monitor must finish a run with no gap codes.
   Inspect `health.json` after each hourly run; `gap_codes` names what is still
-  incomplete. `onboarding_ip_coverage_incomplete` is the known one: either
-  obtain the missing onboarding IP evidence, or make a deliberate, recorded
-  decision to narrow the coverage contract. Do not remove the flag without one.
+  incomplete. `onboarding_ip_coverage_incomplete` is the known one, and it is
+  currently unclearable by design: the check is `any(account lacks tos_ip)`
+  across every connected account, so a single account Stripe never gave an IP
+  for blocks completion permanently. Run → `ip-coverage` to measure the split
+  between accounts whose IP is unobtainable and accounts that should have one,
+  then decide the contract deliberately. Do not remove the flag without that
+  measurement.
 - *Shadow candidates reconciled* — step 2.
 
 ## Step 2 — Decide the 15 candidates

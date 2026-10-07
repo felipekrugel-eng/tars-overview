@@ -5,7 +5,7 @@ on:
       action:
         description: 'readiness = go/no-go; candidates = list the backlog; decide = record decisions'
         type: choice
-        options: [readiness, candidates, decide]
+        options: [readiness, candidates, decide, ip-coverage]
         default: readiness
       decisions:
         description: 'For decide: space-separated ALERT_ID=baseline|send'
@@ -24,6 +24,7 @@ on:
     branches: [master]
     paths:
       - 'risk-monitor/cutover_check.py'
+      - 'risk-monitor/inspect_ip_coverage.py'
       - 'risk-monitor/reconcile_candidates.py'
       - '.github/workflows/loyverse-risk-cutover.yml'
 permissions:
@@ -63,6 +64,12 @@ jobs:
           GMAIL_RISK_OAUTH_JSON: ${{ secrets.GMAIL_RISK_OAUTH_JSON }}
           RISK_HEARTBEAT_URL: ${{ secrets.RISK_HEARTBEAT_URL }}
         run: python risk-monitor/cutover_check.py
+      - name: Onboarding IP coverage (read-only)
+        if: github.event_name == 'workflow_dispatch' && inputs.action == 'ip-coverage'
+        env:
+          STRIPE_RISK_READ_KEY: ${{ secrets.STRIPE_RISK_READ_KEY }}
+        run: python risk-monitor/inspect_ip_coverage.py
+
       - name: List pending candidates (read-only)
         if: github.event_name == 'workflow_dispatch' && inputs.action == 'candidates'
         env:
