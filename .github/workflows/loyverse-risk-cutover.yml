@@ -31,7 +31,13 @@ permissions:
   contents: write
   actions: read
 concurrency:
-  group: loyverse-deterministic-risk-monitor
+  # Only `decide` writes durable state, so only it needs the monitor's lock.
+  # The read-only actions get a per-run group: without this they queued behind
+  # 12-20 minute monitor runs and each new dispatch cancelled the pending one.
+  group: >-
+    ${{ (github.event_name == 'workflow_dispatch' && inputs.action == 'decide')
+        && 'loyverse-deterministic-risk-monitor'
+        || format('loyverse-risk-cutover-{0}', github.run_id) }}
   cancel-in-progress: false
 jobs:
   cutover:
