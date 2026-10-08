@@ -332,9 +332,27 @@ class WakeCadence(unittest.TestCase):
                 self.state = state
                 self.assertIsNone(self.check())
 
-    def test_undelivered_alerts_always_run(self):
-        self.state['alerts'] = {'a': {'email': {'status': 'sent'}, 'telegram': {}}}
+    def test_shadow_mode_pending_alerts_do_not_disable_the_guard(self):
+        # deliver() never runs in shadow mode, so these stay pending forever.
+        self.settings['mode'] = 'shadow'
+        self.state['alerts'] = {'a': {'email': {}, 'telegram': {}, 'created_at': NOW}}
+        self.assertIsNotNone(self.check())
+
+    def test_active_mode_deliverable_alert_always_runs(self):
+        self.settings['mode'] = 'active'
+        self.state['alerts'] = {'a': {'email': {'status': 'sent'}, 'telegram': {},
+                                      'created_at': NOW}}
         self.assertIsNone(self.check())
+
+    def test_active_mode_held_or_baselined_alerts_do_not_force_a_run(self):
+        self.settings['mode'] = 'active'
+        self.settings['activation'] = {'boundary_epoch': NOW}
+        self.state['alerts'] = {
+            'baselined': {'email': {}, 'telegram': {}, 'created_at': NOW + 60,
+                          'reconciled': {'decision': 'baseline'}},
+            'pre_boundary': {'email': {}, 'telegram': {}, 'created_at': NOW - 86400},
+        }
+        self.assertIsNotNone(self.check())
 
     def test_unreadable_pull_status_runs_rather_than_skipping(self):
         with patch.object(self.mod.Path, 'read_text', side_effect=OSError):
