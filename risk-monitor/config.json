@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "mode": "shadow",
+  "mode": "active",
   "sender": "felipe.krugel@loyverse.com",
   "recipients": [
     "felipe.krugel@loyverse.com",
@@ -29,5 +29,9 @@
     "warn_only_gap_codes": [],
     "max_digest_entries": 25
   },
-  "min_run_interval_seconds": 3000
+  "min_run_interval_seconds": 3000,
+  "activation": {
+    "boundary_epoch": 1791397800,
+    "legacy_alerting_retired": true
+  }
 }
