@@ -31,14 +31,18 @@ permissions:
   contents: write
   actions: read
 concurrency:
-  # Only `decide` writes durable state, so only it needs the monitor's lock.
-  # The read-only actions get a per-run group: without this they queued behind
-  # 12-20 minute monitor runs and each new dispatch cancelled the pending one.
-  group: >-
-    ${{ (github.event_name == 'workflow_dispatch' && inputs.action == 'decide')
-        && 'loyverse-deterministic-risk-monitor'
-        || format('loyverse-risk-cutover-{0}', github.run_id) }}
+  # Every action gets its own group. Sharing the monitor's group was meant to
+  # stop `decide` racing a state write, but GitHub keeps only the newest pending
+  # run per group, so with the monitor cycling every few minutes the decide run
+  # was cancelled before it ever started.
+  #
+  # The real protection is in the code: GitStore.checkpoint re-reads the state
+  # blob and raises state_compare_and_swap_conflict if it changed since load, so
+  # a losing writer fails cleanly without a partial write. A cancelled job that
+  # never runs is strictly worse than a clean conflict you can re-run.
+  group: loyverse-risk-cutover-${{ github.run_id }}
   cancel-in-progress: false
+
 jobs:
   cutover:
     if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
