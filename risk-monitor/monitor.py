@@ -649,6 +649,14 @@ class Monitor:
             if not ok:
                 blocked += reason == 'pre_activation_unreconciled'
                 continue
+            # An alert whose email already went still needs its Telegram
+            # receipt read back. That is bookkeeping, not a new send, so it
+            # must not sit behind the budget or the per-merchant cooldown:
+            # once the cooldown opened, nothing would ever reconcile it and
+            # the run stayed degraded with the alert pending forever.
+            if alert.get('email', {}).get('status') == 'sent':
+                self.reconcile_telegram(alert)
+                continue
             (immediate if throttle.route(self.alert_level(alert), rules) == 'immediate'
              else batched).append(alert)
         if blocked:
@@ -771,13 +779,35 @@ class Monitor:
             self.gap('email_delivery_uncertain')
             raise SafeError('email_delivery_uncertain') from None
 
+    def receipt_key(self, alert):
+        """Where this alert's receipt lives: a digest member carries the
+        digest's key, not a hash of its own id."""
+        return ((alert.get('telegram') or {}).get('receipt_key')
+                or hashlib.sha256(alert['alert_id'].encode()).hexdigest())
+
+    def reconcile_telegram(self, alert):
+        """Read back a confirmed receipt. Never sends and never enqueues."""
+        try:
+            relay, transport, private, sha = verified_transport(self.c)
+        except SafeError as exc:
+            self.gap(str(exc))
+            return False
+        receipt = transport.get('receipts', {}).get(self.receipt_key(alert))
+        if not receipt or receipt.get('status') != 'sent':
+            self.gap('telegram_delivery_unconfirmed')
+            return False
+        alert['telegram'] = dict(receipt, receipt_key=self.receipt_key(alert))
+        self.checkpoint({'type': 'telegram_receipt', 'alert_id': alert['alert_id'],
+                         'status': receipt['status']})
+        return True
+
     def enqueue_telegram(self, alert, text):
         relay, transport, private, sha = verified_transport(self.c)
-        digest=hashlib.sha256(alert['alert_id'].encode()).hexdigest()
+        digest=self.receipt_key(alert)
         receipt=transport.get('receipts',{}).get(digest)
         if receipt:
             if receipt.get('status')!='sent':self.gap('telegram_delivery_unconfirmed')
-            alert['telegram']=receipt
+            alert['telegram']=dict(receipt, receipt_key=digest)
             self.checkpoint({'type':'telegram_receipt','alert_id':alert['alert_id'],'status':receipt['status']})
             return
         path='risk-telegram/outbox/'+digest+'.json'
