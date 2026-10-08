@@ -1005,9 +1005,11 @@
       "sent_epoch": 1791451015
     },
     "0eb402e219dbc7e7063dd751b11b4429e7e8862a13a3cde66b2c4cb9711223d0": {
-      "status": "send_intent",
-      "prepared_epoch": 1791451498
+      "status": "sent",
+      "prepared_epoch": 1791451498,
+      "message_id": 172,
+      "sent_epoch": 1791451500
     }
   },
-  "updated_at_utc": "2026-10-08T09:24:58Z"
+  "updated_at_utc": "2026-10-08T09:25:00Z"
 }
