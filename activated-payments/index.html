@@ -461,7 +461,6 @@
 <div class="paysub" id="paysub">
   <a class="on" href="#payments" id="paysub-overview">Overview</a>
   <a href="#margins" id="paysub-margins">Summary of Margins</a>
-  <a href="#pilot" id="paysub-pilot">Pilot</a>
   <a href="#funnel" id="paysub-funnel">Funnel</a>
   <a href="profile.html" id="paysub-profile">Payment Profile</a>
   <a href="report.html" id="paysub-report">Report</a>
@@ -1467,17 +1466,16 @@ window.showPage=function(pg){
   _tg('tab-map','on',pg==='map');
   _tg('tab-merchants','on',pg==='merchants');
   _tg('tab-calc','on',pg==='calc');
-  // Unified master-nav highlight: Merchant Map for the map, Payments for Overview + Pilot.
+  // Unified master-nav highlight: Merchant Map for the map, Payments for everything else.
   _tg('lvmn-map','on',pg==='map');
   _tg('lvmn-payments','on',pg!=='map');
-  // Payments sub-nav (Overview | Pilot | Funnel): visible only within the Payments tab.
-  var ps=document.getElementById('paysub'); if(ps) ps.style.display=(pg==='overview'||pg==='margins'||pg==='pilot'||pg==='funnel')?'flex':'none';
+  // Payments sub-nav (Overview | Margins | Funnel): visible only within the Payments tab.
+  // 'pilot' is deliberately NOT here any more — the subtab was removed.
+  var ps=document.getElementById('paysub'); if(ps) ps.style.display=(pg==='overview'||pg==='margins'||pg==='funnel')?'flex':'none';
   _tg('paysub-overview','on',pg==='overview');
   _tg('paysub-margins','on',pg==='margins');
-  _tg('paysub-pilot','on',pg==='pilot');
   _tg('paysub-funnel','on',pg==='funnel');
   if(pg==='margins' && window.__MARGINS_INIT) window.__MARGINS_INIT();
-  if(pg==='pilot' && window.__PILOT_INIT) window.__PILOT_INIT();
   if(pg==='funnel' && window.__FUNNEL_INIT) window.__FUNNEL_INIT();
   if(pg==='map'){ setTimeout(function(){
       // The map is initialised while #page-map is display:none (Payments is the landing
@@ -1492,7 +1490,9 @@ window.showPage=function(pg){
 // the right view: #map -> Merchant Map, #payments/#overview/none -> Payments Overview.
 function applyMasterHash(){
   var h=(location.hash||'').replace('#','').toLowerCase();
-  showPage(h==='map' ? 'map' : (h==='margins' ? 'margins' : (h==='pilot' ? 'pilot' : (h==='funnel' ? 'funnel' : 'overview'))));
+  // #pilot is no longer a page — the subtab was removed — so an old bookmark falls through
+  // to Overview rather than opening a tab that is not in the nav any more.
+  showPage(h==='map' ? 'map' : (h==='margins' ? 'margins' : (h==='funnel' ? 'funnel' : 'overview')));
 }
 window.addEventListener('hashchange', applyMasterHash);
 applyMasterHash();

@@ -641,7 +641,7 @@ def refresh_text(wb, D, new_last):
     S = wb["Summary"]
     window = fmt_window(D["d0"], D["d1"])
     S["B3"] = (f"{window} \u00b7 {D['n_succ']:,} succeeded transactions \u00b7 "
-               f"{len(D['merchants'])} merchants \u00b7 USD (29 EUR txns at face value)")
+               f"{len(D['merchants'])} merchants \u00b7 USD")
     # scenario profitable counts (rows 40-44, col G)
     sc = D["scen"]
     S.cell(40, 7).value = sc["2.5flat"]
