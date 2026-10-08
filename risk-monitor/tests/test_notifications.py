@@ -438,3 +438,73 @@ class RenderedEngineOutput(unittest.TestCase):
                 sentence = notify.headline(kind, {})
                 self.assertTrue(sentence.endswith('.'))
                 self.assertNotIn('None', sentence)
+
+
+class ReceiptReconciliation(unittest.TestCase):
+    """A confirmed receipt must be read back regardless of cooldown or budget.
+
+    The first digest records a cooldown for every merchant it covered. If
+    reading the receipt back sits behind that cooldown, nothing ever reconciles
+    it: health stays degraded, pending_alert_count never falls, and the wake
+    guard sees permanently deliverable work.
+    """
+
+    def monitor_with_enqueued_digest(self, receipt_status='sent'):
+        m = monitor(activation={'boundary_epoch': NOW - 10, 'legacy_alerting_retired': True})
+        m.add(Finding('acct_a', 'amount', 'Elevated', ['ch_a'], {'amount': 100000}))
+        m.add(Finding('acct_b', 'amount', 'Elevated', ['ch_b'], {'amount': 100000}))
+        m.group_alerts()
+        key = 'digestkey123'
+        for alert in m.s['alerts'].values():
+            alert['created_at'] = NOW
+            alert['email'] = {'status': 'sent', 'message_id': 'm1', 'via': 'digest'}
+            alert['telegram'] = {'status': 'enqueued', 'receipt_key': key}
+            # Both merchants are inside the cooldown the digest recorded.
+            throttle.record_delivery(m.s, alert['account'], 'Elevated', NOW)
+        transport = {'receipts': {key: {'status': receipt_status, 'message_id': 168,
+                                        'sent_epoch': NOW}}}
+        return m, transport
+
+    def test_receipt_is_read_back_despite_the_cooldown(self):
+        from monitor import health
+        m, transport = self.monitor_with_enqueued_digest()
+        with patch('monitor.verified_transport', return_value=(None, transport, None, None)):
+            m.deliver()
+        for alert in m.s['alerts'].values():
+            self.assertEqual(alert['telegram']['status'], 'sent')
+            self.assertEqual(alert['telegram']['message_id'], 168)
+        self.assertNotIn('telegram_delivery_unconfirmed', m.s['gaps'])
+        self.assertEqual(health(m.s, NOW)['pending_alert_count'], 0)
+
+    def test_an_unconfirmed_receipt_stays_a_gap_and_never_resends(self):
+        m, transport = self.monitor_with_enqueued_digest(receipt_status='enqueued')
+        gmail = object.__new__(Gmail); m.gmail = gmail
+        with patch('monitor.verified_transport', return_value=(None, transport, None, None)), \
+             patch.object(gmail, 'send_internal') as send:
+            m.deliver()
+        send.assert_not_called()
+        self.assertIn('telegram_delivery_unconfirmed', m.s['gaps'])
+
+    def test_a_digest_member_resolves_by_the_digest_key_not_its_own_id(self):
+        m, transport = self.monitor_with_enqueued_digest()
+        alert = next(iter(m.s['alerts'].values()))
+        self.assertEqual(m.receipt_key(alert), 'digestkey123')
+        alert['telegram'] = {}
+        import hashlib
+        self.assertEqual(m.receipt_key(alert),
+                         hashlib.sha256(alert['alert_id'].encode()).hexdigest())
+
+    def test_reconciled_alerts_let_the_wake_guard_fire_again(self):
+        from monitor import redundant_wake
+        m, transport = self.monitor_with_enqueued_digest()
+        with patch('monitor.verified_transport', return_value=(None, transport, None, None)):
+            m.deliver()
+        state = dict(m.s, last_run_finished=NOW - 600, source_asof='2026-10-08T09:00:00Z',
+                     full={'status': 'complete'}, global_={'complete': True})
+        state['global'] = {'complete': True}
+        settings = {'mode': 'active', 'min_run_interval_seconds': 3000,
+                    'activation': {'boundary_epoch': NOW - 10}}
+        import json as _json
+        with patch.object(Path, 'read_text',
+                          return_value=_json.dumps({'completed_at_utc': '2026-10-08T09:00:00Z'})):
+            self.assertIsNotNone(redundant_wake(state, settings, NOW))
