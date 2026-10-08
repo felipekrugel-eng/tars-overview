@@ -848,9 +848,18 @@ def redundant_wake(state, settings, now):
         return None
     if not state.get('global', {}).get('complete'):
         return None
-    if any(a.get('email', {}).get('status') != 'sent' or a.get('telegram', {}).get('status') != 'sent'
-           for a in state.get('alerts', {}).values()):
-        return None
+    # A pending alert is a reason to run only if this run would actually deliver
+    # it. In shadow mode deliver() returns early, so every alert stays pending
+    # forever; testing for undelivered alerts there disabled this guard
+    # completely and left the monitor running every few minutes.
+    if settings.get('mode') == 'active':
+        boundary = (settings.get('activation') or {}).get('boundary_epoch')
+        for alert in state.get('alerts', {}).values():
+            if (alert.get('email', {}).get('status') == 'sent'
+                    and alert.get('telegram', {}).get('status') == 'sent'):
+                continue
+            if releasable(alert, boundary)[0]:
+                return None
     return 'no new extraction since %dm ago; nothing in progress' % (since // 60)
 
 
