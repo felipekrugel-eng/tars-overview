@@ -65,8 +65,11 @@ def main():
     # invent a new notice for a problem that is already reported.
     candidates,recovered=throttle.observe_health(state,issues,now,rules)
     report=throttle.health_due(candidates,state,now,rules)
-    if report and not throttle.health_budget_ok(state,now,rules):
+    # A recovery is a notice like any other. It used to bypass the throttle
+    # completely, so closing an issue always sent immediately and uncapped.
+    if (report or recovered) and not throttle.health_budget_ok(state,now,rules):
         report=[]
+        recovered=[]
         state['health_capped_at']=now
     if not report and not recovered:
         state['checked_at']=now
@@ -96,7 +99,7 @@ def main():
                   if groups['critical'] else
                   'Review the monitor health snapshot; no immediate action may be needed.')})
     # Persist each channel's intent independently; Gmail failures do not block Telegram.
-    if notice.get('email',{}).get('status')!='sent':
+    if rules['health_email_enabled'] and notice.get('email',{}).get('status')!='sent':
         try:
             gmail=Gmail(); sent,drafts=gmail.reconcile(alert_id)
             if sent: notice['email']={'status':'sent','id':sent[0]['id']}

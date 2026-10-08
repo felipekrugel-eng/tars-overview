@@ -27,7 +27,8 @@
     "health_digest_hour_london": 9,
     "health_quiet_reminder_days": 7,
     "warn_only_gap_codes": [],
-    "max_digest_entries": 25
+    "max_digest_entries": 25,
+    "health_email_enabled": false
   },
   "min_run_interval_seconds": 3000,
   "activation": {
