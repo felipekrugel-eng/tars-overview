@@ -55,6 +55,25 @@
   .divpill button { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--muted); background:transparent; border:none; padding:6px 11px; border-radius:6px; cursor:pointer; }
   .divpill button.on { background:var(--blue); color:#fff; }
   .hint { font-size:11px; color:var(--faint); }
+  /* Multi-select dropdowns. Chips were fine for four campaigns and stop being fine at
+     thirty-odd countries, which is what the base now spans. */
+  .msel { position:relative; display:inline-block; }
+  .msel-btn { font-family:Arial; font-size:11.5px; font-weight:bold; color:var(--ink); background:var(--surface-2);
+    border:1px solid var(--border); padding:6px 13px; border-radius:8px; cursor:pointer; min-width:150px; text-align:left; }
+  .msel-btn:after { content:" \25BE"; color:var(--muted); }
+  .msel-btn:hover { border-color:var(--faint); }
+  .msel-pop { display:none; position:absolute; z-index:60; top:calc(100% + 5px); left:0; width:300px; max-height:300px;
+    overflow-y:auto; background:var(--surface); border:1px solid var(--border); border-radius:11px;
+    box-shadow:0 8px 26px rgba(20,40,70,.16); padding:9px; }
+  .msel-pop.open { display:block; }
+  .msel-pop label { display:flex; align-items:center; gap:8px; font-size:12px; padding:5px 7px; border-radius:6px; cursor:pointer; }
+  .msel-pop label:hover { background:var(--surface-2); }
+  .msel-pop label .mcount { margin-left:auto; color:var(--muted); font-size:11px; font-variant-numeric:tabular-nums; }
+  .msel-acts { display:flex; gap:6px; padding:3px 4px 8px; border-bottom:1px solid var(--border); margin-bottom:5px; }
+  .msel-acts button { font-size:11px; font-weight:bold; color:var(--blue-deep); background:transparent; border:none; cursor:pointer; padding:3px 6px; }
+  .live { font-size:9.5px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; padding:2px 7px; border-radius:9px; }
+  .live.on { color:#137a4e; background:#E3F4EB; }
+  .live.off { color:#8a6300; background:#FCF3DC; }
 
   /* ---- tiles ---- */
   .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(186px,1fr)); gap:14px; }
@@ -220,8 +239,27 @@
       <span class="hint" id="basis-hint"></span>
     </div>
     <div class="frow">
-      <span class="flab">Campaign</span>
-      <span id="f-campaigns" style="display:flex;gap:7px;flex-wrap:wrap"></span>
+      <span class="flab">Type</span>
+      <span class="divpill" id="f-type">
+        <button data-type="" class="on">All</button><button data-type="web">Web</button><button data-type="ios">iOS</button><button data-type="android">Android</button>
+      </span>
+      <span class="flab" style="margin-left:14px">Platform</span>
+      <span class="divpill" id="f-platform">
+        <button data-pf="" class="on">All</button><button data-pf="google">Google</button><button data-pf="facebook">Facebook</button>
+      </span>
+    </div>
+    <div class="frow">
+      <span class="flab">Countries</span>
+      <span class="msel" id="f-cc-wrap">
+        <button class="msel-btn" id="f-cc-btn">All countries</button>
+        <div class="msel-pop" id="f-cc-pop"></div>
+      </span>
+      <span class="flab" style="margin-left:14px">Campaigns</span>
+      <span class="msel" id="f-camp-wrap">
+        <button class="msel-btn" id="f-camp-btn">All campaigns</button>
+        <div class="msel-pop" id="f-camp-pop"></div>
+      </span>
+      <span class="hint" id="f-camp-live" style="margin-left:6px"></span>
     </div>
   </div>
 
@@ -340,6 +378,10 @@
   // Cost per X is UNDEFINED at zero, not zero and not infinity. A tile that prints "$0" for
   // a stage nobody reached reads as free acquisition, which is the opposite of the truth.
   const per = (spend, n) => (n > 0 ? spend / n : null);
+  // True while the country multi-select narrows the base. Cost-per is then UNDEFINED, not
+  // merely smaller, because the numerator still covers every country the campaign ran in.
+  const ccNarrowed = () => state.ccs.size > 0 && state.ccs.size < ALL_CC.length;
+  const perCC = (spend, n) => (ccNarrowed() ? null : per(spend, n));
 
   // ── campaigns are grouped by NAME, not id ──────────────────────────────────
   // Two Google campaign ids share the name "c2-gads-app-ios-usa" (one was rebuilt). Felipe
@@ -356,20 +398,53 @@
   // ── state ──────────────────────────────────────────────────────────────────
   const days = D.spend.map(s => s.d).filter(Boolean).sort();
   const DMIN = days[0], DMAX = days[days.length - 1];
+  // CAMPAIGN TYPE, read off the name. The account names campaigns deliberately
+  // (c1-gads-app-android-usa, c2-gads-app-ios-usa, c3-gads-search-usa-pos), so the surface a
+  // campaign targets is already in the string. Anything naming neither store is web — the
+  // right default, since a search or social campaign lands on the website and only an
+  // app-install campaign sends people to a store.
+  const typeOf = name => {
+    const n = (name || '').toLowerCase();
+    return n.includes('android') ? 'android' : n.includes('ios') ? 'ios' : 'web';
+  };
+  // LIVE, across two platforms that spell it differently: Google says ENABLED/PAUSED/REMOVED,
+  // Meta says ACTIVE/PAUSED. Only a positively-running status counts, so a value we have
+  // never seen reads as not live rather than silently as live.
+  const isLive = st => ['ENABLED', 'ACTIVE'].includes(String(st || '').toUpperCase());
+
+  for (const c of ALL_CAMPS) { c.type = typeOf(c.name); c.live = isLive(c.st); }
+  const ALL_CC = [...new Set((D.merchants || []).map(m => (m.cc || '??').toUpperCase()))].sort();
+
   const state = {
     from: DMIN, to: DMAX,
     basis: 'click',
     path: 'pos',
+    type: '',        // '' = every type
+    pf: '',          // '' = every platform
+    ccs: new Set(),  // empty = every country
     camps: new Set(ALL_CAMPS.map(c => c.name)),
   };
+
+  // Campaigns the Type and Platform pills allow. The campaign multi-select is INTERSECTED
+  // with this rather than replaced by it, so narrowing Type does not silently re-tick
+  // campaigns the reader had deselected.
+  const campAllowed = c => (!state.type || c.type === state.type) && (!state.pf || c.pf === state.pf);
+  const activeCampNames = () => new Set(ALL_CAMPS.filter(c => campAllowed(c) && state.camps.has(c.name)).map(c => c.name));
 
   // ── selection ──────────────────────────────────────────────────────────────
   const inPeriod = d => d && d >= state.from && d <= state.to;
   const mDate = m => state.basis === 'click' ? m.clickD : m.signD;
 
   function selection() {
-    const spend = D.spend.filter(s => state.camps.has(s.c) && inPeriod(s.d));
-    const merchants = D.merchants.filter(m => state.camps.has(m.c) && inPeriod(mDate(m)));
+    const names = activeCampNames();
+    const spend = D.spend.filter(s => names.has(s.c) && inPeriod(s.d));
+    // COUNTRY NARROWS MERCHANTS ONLY. Spend carries no country — the platforms bill a
+    // campaign, not a market — so a country selection narrows who we counted without
+    // narrowing what we paid. Cost-per figures are therefore suppressed while a country
+    // subset is active (see ccNarrowed): dividing whole-campaign spend by one country's
+    // merchants would state a cost we never incurred.
+    const merchants = D.merchants.filter(m => names.has(m.c) && inPeriod(mDate(m)) &&
+      (!state.ccs.size || state.ccs.has((m.cc || '??').toUpperCase())));
     const totals = spend.reduce((a, s) => {
       a.spend += s.s; a.clicks += s.k; a.impr += s.i; a.pconv += s.pc; return a;
     }, { spend: 0, clicks: 0, impr: 0, pconv: 0 });
@@ -388,25 +463,108 @@
   const attributableSpend = spend => spend.filter(s => ATTRIBUTABLE_PF.has(s.pf)).reduce((a, s) => a + s.s, 0);
 
   // ── filter UI ──────────────────────────────────────────────────────────────
-  function buildCampChips() {
-    const host = $('f-campaigns');
-    host.innerHTML = '';
-    for (const c of ALL_CAMPS.sort((a, b) => a.name.localeCompare(b.name))) {
-      const b = document.createElement('button');
-      b.className = 'chip' + (state.camps.has(c.name) ? ' on' : '');
-      b.textContent = c.name;
-      b.onclick = () => {
-        if (state.camps.has(c.name)) state.camps.delete(c.name); else state.camps.add(c.name);
-        if (!state.camps.size) state.camps.add(c.name);   // never allow an empty page
-        buildCampChips(); render();
-      };
-      host.appendChild(b);
-    }
-    const all = document.createElement('button');
-    all.className = 'chip ghost'; all.textContent = 'All';
-    all.onclick = () => { state.camps = new Set(ALL_CAMPS.map(c => c.name)); buildCampChips(); render(); };
-    host.appendChild(all);
+  // ── multi-selects ───────────────────────────────────────────────────────────
+  // One helper for both dropdowns. Closing on an outside click is wired once, globally,
+  // rather than per-popup, so opening one closes the other without either knowing about it.
+  function wireMsel(btnId, popId, render_) {
+    const btn = $(btnId), pop = $(popId);
+    btn.onclick = e => {
+      e.stopPropagation();
+      const wasOpen = pop.classList.contains('open');
+      document.querySelectorAll('.msel-pop').forEach(x => x.classList.remove('open'));
+      if (!wasOpen) pop.classList.add('open');
+    };
+    pop.onclick = e => e.stopPropagation();
   }
+  document.addEventListener('click', () =>
+    document.querySelectorAll('.msel-pop').forEach(x => x.classList.remove('open')));
+
+  function buildCountryMsel() {
+    const pop = $('f-cc-pop'), btn = $('f-cc-btn');
+    // Counts are of the WHOLE attributed base, not the current period, so the list does not
+    // reshuffle while the reader is reading it.
+    const cnt = {};
+    for (const m of D.merchants) { const k = (m.cc || '??').toUpperCase(); cnt[k] = (cnt[k] || 0) + 1; }
+    const order = ALL_CC.slice().sort((x, y) => (cnt[y] || 0) - (cnt[x] || 0) || x.localeCompare(y));
+    pop.innerHTML =
+      '<div class="msel-acts"><button data-act="all">All</button><button data-act="none">None</button>' +
+      '<button data-act="us">US only</button></div>' +
+      order.map(cc => `<label><input type="checkbox" value="${cc}"${state.ccs.has(cc) ? ' checked' : ''}>` +
+        `<span>${esc(cc)}</span><span class="mcount">${n0(cnt[cc])}</span></label>`).join('');
+    pop.querySelectorAll('input').forEach(i => i.onchange = () => {
+      if (i.checked) state.ccs.add(i.value); else state.ccs.delete(i.value);
+      syncCountryBtn(); render();
+    });
+    pop.querySelectorAll('.msel-acts button').forEach(b => b.onclick = () => {
+      if (b.dataset.act === 'all') state.ccs = new Set();
+      else if (b.dataset.act === 'none') state.ccs = new Set(ALL_CC);
+      else state.ccs = new Set(['US']);
+      buildCountryMsel(); syncCountryBtn(); render();
+    });
+    syncCountryBtn();
+  }
+  function syncCountryBtn() {
+    const btn = $('f-cc-btn'), n = state.ccs.size;
+    btn.textContent = !n ? 'All countries' : n === 1 ? [...state.ccs][0] : n + ' countries';
+  }
+
+  function buildCampMsel() {
+    const pop = $('f-camp-pop');
+    const list = ALL_CAMPS.filter(campAllowed).sort((a, b) => a.name.localeCompare(b.name));
+    pop.innerHTML =
+      '<div class="msel-acts"><button data-act="all">All</button><button data-act="none">None</button>' +
+      '<button data-act="live">Live only</button></div>' +
+      (list.length ? list.map(c =>
+        `<label><input type="checkbox" value="${esc(c.name)}"${state.camps.has(c.name) ? ' checked' : ''}>` +
+        `<span>${esc(c.name)}</span>` +
+        `<span class="live ${c.live ? 'on' : 'off'}" style="margin-left:auto">${c.live ? 'Live' : 'Not live'}</span></label>`
+      ).join('') : '<div style="font-size:12px;color:var(--muted);padding:6px">No campaign matches this type and platform.</div>');
+    pop.querySelectorAll('input').forEach(i => i.onchange = () => {
+      if (i.checked) state.camps.add(i.value); else state.camps.delete(i.value);
+      syncCampBtn(); render();
+    });
+    pop.querySelectorAll('.msel-acts button').forEach(b => b.onclick = () => {
+      const vis = ALL_CAMPS.filter(campAllowed);
+      if (b.dataset.act === 'all') vis.forEach(c => state.camps.add(c.name));
+      else if (b.dataset.act === 'none') vis.forEach(c => state.camps.delete(c.name));
+      else { vis.forEach(c => c.live ? state.camps.add(c.name) : state.camps.delete(c.name)); }
+      buildCampMsel(); syncCampBtn(); render();
+    });
+    syncCampBtn();
+  }
+  // The Live / Not live readout. Shown for the SELECTED campaigns, which is what was asked
+  // for — the badge inside the dropdown says it per campaign, this says it for the view.
+  function syncCampBtn() {
+    const sel = ALL_CAMPS.filter(c => campAllowed(c) && state.camps.has(c.name));
+    const vis = ALL_CAMPS.filter(campAllowed);
+    const btn = $('f-camp-btn');
+    btn.textContent = !sel.length ? 'No campaign'
+      : sel.length === vis.length ? 'All campaigns'
+      : sel.length === 1 ? sel[0].name
+      : sel.length + ' campaigns';
+    const live = sel.filter(c => c.live).length, out = $('f-camp-live');
+    out.innerHTML = !sel.length ? ''
+      : sel.length === 1
+        ? `<span class="live ${sel[0].live ? 'on' : 'off'}">${sel[0].live ? 'Live' : 'Not live'}</span>`
+        : `<span class="live on">${live} live</span>` +
+          (sel.length - live ? ` <span class="live off">${sel.length - live} not live</span>` : '');
+  }
+
+  function buildFilters() { buildCountryMsel(); buildCampMsel(); }
+
+  // Type and Platform pills. Both rebuild the campaign list, because narrowing either
+  // changes which campaigns are even on offer.
+  [['f-type', 'type', 'type'], ['f-platform', 'pf', 'pf']].forEach(([id, key, attr]) => {
+    [...$(id).children].forEach(b => b.onclick = () => {
+      [...$(id).children].forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      state[key] = b.dataset[attr] || '';
+      buildCampMsel(); render();
+    });
+  });
+
+  wireMsel('f-cc-btn', 'f-cc-pop');
+  wireMsel('f-camp-btn', 'f-camp-pop');
 
   $('f-from').value = DMIN; $('f-to').value = DMAX;
   $('f-from').min = DMIN; $('f-from').max = DMAX;
@@ -446,15 +604,20 @@
   });
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
+    state.type = ''; state.pf = ''; state.ccs = new Set();
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
     $('f-from').value = DMIN; $('f-to').value = DMAX;
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
     [...$('f-basis').children].forEach(b => b.classList.remove('on'));
     $('f-basis').firstElementChild.classList.add('on');
+    [...$('f-type').children].forEach(b => b.classList.remove('on'));
+    $('f-type').firstElementChild.classList.add('on');
+    [...$('f-platform').children].forEach(b => b.classList.remove('on'));
+    $('f-platform').firstElementChild.classList.add('on');
     state.path = 'pos';
     [...$('fn-toggle').children].forEach(b => b.classList.remove('on'));
     $('fn-toggle').firstElementChild.classList.add('on');
-    buildCampChips(); render();
+    buildFilters(); render();
   };
 
   // ── tiles ──────────────────────────────────────────────────────────────────
@@ -470,10 +633,10 @@
       { l: 'Cost per click', v: t.clicks ? money2(t.spend / t.clicks) : '—', d: 'What Google and Meta charged' },
       { l: 'Platform conversions', v: n0(t.pconv), d: 'Google’s and Meta’s own count — not merchants' },
       { l: 'Merchants acquired', v: n0(nM), ours: 1, d: 'Signed up and traced to a paid click' },
-      { l: 'Cost per merchant', v: money2(per(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
-      { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(per(aSpend, nSold))} each` },
-      { l: 'Active (5+ / 30d)', v: n0(nAct5), ours: 1, d: `${pct(nM ? nAct5 / nM : null)} of merchants · ${money2(per(aSpend, nAct5))} each` },
-      { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(per(aSpend, nKyc))} each` },
+      { l: 'Cost per merchant', v: money2(perCC(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
+      { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(perCC(aSpend, nSold))} each` },
+      { l: 'Active (5+ / 30d)', v: n0(nAct5), ours: 1, d: `${pct(nM ? nAct5 / nM : null)} of merchants · ${money2(perCC(aSpend, nAct5))} each` },
+      { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(perCC(aSpend, nKyc))} each` },
     ];
     $('tiles').innerHTML = tiles.map(x =>
       `<div class="tile${x.ours ? ' ours' : ''} rise"><div class="tl">${esc(x.l)}</div>
@@ -553,7 +716,7 @@
         <div class="pf-n">${n0(n)}</div>
         <div class="pf-pct">${ofPrev}</div>
         <div class="pf-pct">${ofBase}</div>
-        <div class="pf-cost">${money2(per(aSpend, n))}</div>
+        <div class="pf-cost">${money2(perCC(aSpend, n))}</div>
       </div>`;
     }).join('') +
     // The two Mixpanel stages, drawn as unmeasurable rows rather than left out. On the POS
@@ -878,7 +1041,7 @@
     <b>Built from</b> LOYVERSE_MERCHANT_ATTRIBUTION, GOOGLE_ADS and FACEBOOK_MARKETING in Snowflake, plus Stripe for the
     KYC ladder and Chargebee for subscriptions, by <code>kpi-automation/pull_paid.js</code>.`;
 
-  buildCampChips();
+  buildFilters();
   render();
 })();
 </script>

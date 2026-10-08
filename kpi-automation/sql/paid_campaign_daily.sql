@@ -58,7 +58,9 @@ facebook AS (
     SELECT 'facebook'                                       AS PLATFORM,
            TO_VARCHAR(i.CAMPAIGN_ID)                        AS CAMPAIGN_ID,
            MAX(i.CAMPAIGN_NAME)                             AS CAMPAIGN,
-           NULL                                             AS CAMPAIGN_STATUS,
+           -- Was hard-coded NULL, which left every Facebook campaign showing no status on a
+           -- page that now has a Live / Not live badge. Meta keeps it on the campaign record.
+           MAX(fc.STATUS)                                   AS CAMPAIGN_STATUS,
            'FACEBOOK'                                       AS CHANNEL,
            i.DATE_START                                     AS D,
            SUM(i.SPEND)                                     AS SPEND,
@@ -67,6 +69,8 @@ facebook AS (
            MAX(COALESCE(a.REGISTRATIONS, 0))                AS PLATFORM_CONVERSIONS
     FROM LOYVERSE_DATA_LAKE.FACEBOOK_MARKETING.ADS_INSIGHTS i
     LEFT JOIN fb_actions a ON a.CAMPAIGN_ID = TO_VARCHAR(i.CAMPAIGN_ID) AND a.D = i.DATE_START
+    LEFT JOIN LOYVERSE_DATA_LAKE.FACEBOOK_MARKETING.CAMPAIGNS fc
+           ON TO_VARCHAR(fc.ID) = TO_VARCHAR(i.CAMPAIGN_ID)
     WHERE i.DATE_START IS NOT NULL
     GROUP BY 1, 2, 5, 6
 )
