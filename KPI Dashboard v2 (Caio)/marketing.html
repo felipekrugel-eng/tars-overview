@@ -299,7 +299,7 @@
 
   <!-- ============ Facebook ============ -->
   <div class="sec">Facebook
-    <span class="sec-sub">Separated on purpose. Read the note before comparing it with Google.</span>
+    <span class="sec-sub">Traced through utm_campaign rather than a click id — same merchants, less ad-level detail.</span>
   </div>
   <div class="panel rise" id="panel-fb"></div>
 
@@ -380,7 +380,12 @@
   // would otherwise be divided by merchants it could not possibly have produced, quietly
   // inflating every cost-per figure on the page. So the funnel's denominator is
   // ATTRIBUTABLE spend, and the difference is stated rather than hidden.
-  const attributableSpend = spend => spend.filter(s => s.pf === 'google').reduce((a, s) => a + s.s, 0);
+  // Every platform whose campaigns merchants can be traced to. Was google-only, which was
+  // the same mistake the SQL made: it divided the funnel by Google spend alone while the
+  // funnel counted Google merchants alone, so the arithmetic was self-consistent and the
+  // whole Facebook channel was simply invisible.
+  const ATTRIBUTABLE_PF = new Set((D.merchants || []).map(m => m.pf || 'google'));
+  const attributableSpend = spend => spend.filter(s => ATTRIBUTABLE_PF.has(s.pf)).reduce((a, s) => a + s.s, 0);
 
   // ── filter UI ──────────────────────────────────────────────────────────────
   function buildCampChips() {
@@ -677,11 +682,11 @@
       // Facebook cannot produce a traceable merchant, so a cost-per-merchant on a Facebook
       // row would be a division by a number that structurally cannot exist. Left null and
       // rendered as "n/a" with a reason, rather than as an enormous number.
-      r.cpm = r.pf === 'google' ? per(r.spend, r.merchants) : null;
-      r.cpk = r.pf === 'google' ? per(r.spend, r.kyc) : null;
+      r.cpm = per(r.spend, r.merchants);
+      r.cpk = per(r.spend, r.kyc);
       // Cost per ACTIVE merchant is the number that should drive budget: a campaign can buy
       // cheap signups that never sell, and only this column exposes that.
-      r.cpa5 = r.pf === 'google' ? per(r.spend, r.act5) : null;
+      r.cpa5 = per(r.spend, r.act5);
     }
     const cols = [
       { k: 'name', t: 'Campaign', s: 1 }, { k: 'pf', t: 'Platform', s: 1 },
@@ -714,14 +719,14 @@
       <td class="num">${money2(r.spend)}</td>
       <td class="num">${n0(r.clicks)}</td>
       <td class="num">${money2(r.cpc)}</td>
-      <td class="num">${r.pf === 'google' ? n0(r.merchants) : '<span style="color:var(--faint)">n/a</span>'}</td>
-      <td class="num">${r.pf === 'google' ? money2(r.cpm) : '<span style="color:var(--faint)">no click id</span>'}</td>
-      <td class="num">${r.pf === 'google' ? n0(r.sold) : '—'}</td>
-      <td class="num">${r.pf === 'google' ? n0(r.act) : '—'}</td>
-      <td class="num">${r.pf === 'google' ? n0(r.act5) : '—'}</td>
-      <td class="num">${r.pf === 'google' ? money2(r.cpa5) : '—'}</td>
-      <td class="num">${r.pf === 'google' ? n0(r.kyc) : '—'}</td>
-      <td class="num">${r.pf === 'google' ? money2(r.cpk) : '—'}</td>
+      <td class="num">${n0(r.merchants)}</td>
+      <td class="num">${money2(r.cpm)}</td>
+      <td class="num">${n0(r.sold)}</td>
+      <td class="num">${n0(r.act)}</td>
+      <td class="num">${n0(r.act5)}</td>
+      <td class="num">${money2(r.cpa5)}</td>
+      <td class="num">${n0(r.kyc)}</td>
+      <td class="num">${money2(r.cpk)}</td>
     </tr>`).join('') : '<tr><td colspan="13" class="empty">No campaigns in this period.</td></tr>';
   }
 
@@ -767,39 +772,35 @@
   // ── Facebook panel ─────────────────────────────────────────────────────────
   function renderFacebook(sel) {
     const fb = sel.spend.filter(s => s.pf === 'facebook');
+    const fbM = sel.merchants.filter(m => (m.pf || 'google') === 'facebook');
+    if (!fb.length && !fbM.length) {
+      $('panel-fb').innerHTML = '<div class="empty">No Facebook activity in this period.</div>';
+      return;
+    }
     const spend = fb.reduce((a, s) => a + s.s, 0);
     const clicks = fb.reduce((a, s) => a + s.k, 0);
     const impr = fb.reduce((a, s) => a + s.i, 0);
     const regs = fb.reduce((a, s) => a + s.pc, 0);
-    // NOT computed from D.merchants. That array only holds merchants with a RESOLVED campaign,
-    // and no Facebook merchant can ever resolve — so counting it there returns 0 and reads as
-    // "nobody came from Facebook", which is a different and wronger claim than "we cannot tell
-    // who came from Facebook". The real figure is merchants carrying an fbclid at all, measured
-    // against LOYVERSE_MERCHANT_ATTRIBUTION at build time and carried in the caveats.
-    const fbTagged = (D.caveats && D.caveats.facebookTaggedMerchants) != null
-      ? D.caveats.facebookTaggedMerchants : null;
-    if (!fb.length) {
-      $('panel-fb').innerHTML = '<div class="empty">No Facebook spend in this period.</div>';
-      return;
-    }
+    const sold = fbM.filter(m => m.rcptD).length;
+    const kyc = fbM.filter(m => m.kyc3).length;
     $('panel-fb').innerHTML = `
-      <div class="note-warn"><b>Facebook cannot be followed through to merchants yet, and the funnel above excludes it.</b>
-      Meta does not expose click ids in the Insights API, and our landing page does not capture
-      <code>fbclid</code> the way it captures <code>gclid</code>. ${fbTagged == null ? '' :
-        `Across the whole merchant base only <b>${n0(fbTagged)}</b> merchants carry an <code>fbclid</code> at all, and
-         <b>none</b> of them can be joined to a campaign, ad set or ad. `}Meta claims <b>${n0(regs)}</b> registrations here,
-      on its own attribution window. Those numbers cannot be reconciled from this side: closing the gap is a change to the
-      website's tagging, not to this dashboard.</div>
+      <div class="ph" style="margin-bottom:12px"><b>Facebook merchants are traced through <code>utm_campaign</code>, not a click id.</b>
+      Meta does not expose click ids in the Insights API, but the landing page writes the campaign name into the
+      merchant record, so every merchant below is tied to the campaign that bought them. What is genuinely missing
+      without a click id is the <b>ad, the ad set and the click timestamp</b> — so Facebook merchants carry no ad group
+      or keyword and are dated by sign-up rather than by click. Meta separately claims ${n0(regs)} registrations on its own
+      attribution window, which is not the same count and should not be reconciled against ours.</div>
       <div class="tiles">
         <div class="tile"><div class="tl">Facebook spend</div><div class="tv font-num">${money2(spend)}</div>
           <div class="td">${n0(clicks)} clicks · ${n0(impr)} impressions</div></div>
         <div class="tile"><div class="tl">Cost per click</div><div class="tv font-num">${clicks ? money2(spend / clicks) : '—'}</div>
           <div class="td">comparable with Google</div></div>
-        <div class="tile"><div class="tl">Meta-reported registrations</div><div class="tv font-num">${n0(regs)}</div>
-          <div class="td">Meta's count, not ours</div></div>
-        <div class="tile ours" style="--x:0"><div class="tl">Merchants traceable to a campaign</div>
-          <div class="tv font-num">0</div>
-          <div class="td">${fbTagged == null ? 'no click id reaches us' : n0(fbTagged) + ' carry an fbclid, none resolve'}</div></div>
+        <div class="tile ours"><div class="tl">Merchants acquired</div><div class="tv font-num">${n0(fbM.length)}</div>
+          <div class="td">${money2(per(spend, fbM.length))} each</div></div>
+        <div class="tile ours"><div class="tl">Issued a receipt</div><div class="tv font-num">${n0(sold)}</div>
+          <div class="td">${pct(fbM.length ? sold / fbM.length : null)} of them</div></div>
+        <div class="tile ours"><div class="tl">Passed KYC</div><div class="tv font-num">${n0(kyc)}</div>
+          <div class="td">${money2(per(spend, kyc))} each</div></div>
       </div>`;
   }
 
@@ -864,9 +865,14 @@
     <b>Attribution is a sample, and a NULL is not an "organic".</b> Attribution is first-touch, written once when a
     merchant registers and never updated. A merchant with no campaign means we do not know where they came from —
     not that they arrived unpaid. Nothing here should be published as a share of all Loyverse signups.<br>
-    <b>Two ways to be traced.</b> <code>gclid</code> is the click id itself, joined to Google's click archive: exact, and
-    carries the ad group and keyword. <code>gad_campaignid</code> means only the campaign id survived on the landing URL —
-    right campaign, no click date, so those merchants are dated by sign-up and marked with * in the table.<br>
+    <b>Three ways to be traced, and they are not equal.</b> <code>gclid</code> is Google's click id, joined to its click
+    archive: exact, and carries the ad group and keyword. <code>gad_campaignid</code> means only the campaign id survived
+    on the landing URL — right campaign, no click date. <code>utm_campaign</code> is the campaign name written into the
+    merchant record by the landing page: right campaign, no click id at all, and the only route available on Facebook.
+    Merchants without an exact click date are dated by sign-up and marked with * in the table.<br>
+    <b>Internal and QA accounts are excluded</b>, on the same patterns the Payments funnel uses, so the two pages cannot
+    disagree about the same merchant. This is not cosmetic: five of the six merchants c5-facebook-lead-usa-payments
+    appeared to buy were internal tests.<br>
     <b>Google restates recent cost</b> for a few days after the fact, so the last two or three days of spend drift upward
     after first publication.<br>
     <b>Built from</b> LOYVERSE_MERCHANT_ATTRIBUTION, GOOGLE_ADS and FACEBOOK_MARKETING in Snowflake, plus Stripe for the

@@ -117,6 +117,7 @@ async function main() {
     cc: get(r, 'COUNTRY') || null,
     cid: get(r, 'CAMPAIGN_ID') == null ? null : String(get(r, 'CAMPAIGN_ID')),
     c: get(r, 'CAMPAIGN') || null,
+    pf: get(r, 'PLATFORM') || 'google',
     ag: get(r, 'AD_GROUP_NAME') || null,
     kw: get(r, 'KEYWORD') || null,
     net: get(r, 'AD_NETWORK_TYPE') || null,

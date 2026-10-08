@@ -46,12 +46,15 @@
 --                   no ad group, no keyword, no click date.
 -- The method is carried through to the output so the page can show what it is standing on.
 --
--- FACEBOOK IS ABSENT FROM THIS QUERY ON PURPOSE. Five merchants carry an fbclid, against
--- 195 resolvable through Google, and nothing joins an fbclid to FACEBOOK_MARKETING because
--- Meta does not expose click ids in the Insights API. Facebook is a spend-and-clicks panel
--- until the landing page captures fbclid the way it captures gclid. Putting a 5-merchant
--- Facebook funnel beside a 195-merchant Google one would invite exactly the comparison the
--- data cannot support.
+-- FACEBOOK IS IN, VIA UTM_CAMPAIGN. An earlier version of this file excluded it, on the
+-- reading that Meta exposes no click id so Facebook merchants could not be tied to a
+-- campaign. The first half is true and the conclusion was wrong: the landing page writes
+-- utm_campaign, utm_source and utm_medium into the merchant record, and utm_campaign carries
+-- the exact campaign name. No click id is needed to know which campaign someone came from.
+-- What is genuinely lost without a click id is the ad, the ad set and the click timestamp —
+-- so Facebook rows have no ad group, no keyword and no exact click date, and are dated by
+-- signup instead. That is a real limitation and is flagged per row; it is not a reason to
+-- drop the merchants.
 --
 -- WHAT THE LAKE CANNOT GIVE US. The sheet's "Opened the app" and "Added a customer" are
 -- Mixpanel product events. There is no Mixpanel table in LOYVERSE_DATA_LAKE, so those two
@@ -59,28 +62,83 @@
 -- =================================================================
 
 WITH
+-- ── The paid campaign roster, from both ad platforms ───────────────────────────────
+-- WHY THIS EXISTS, AND WHY ITS ABSENCE WAS A BUG. This query used to select merchants with
+-- `RESOLVED_CAMPAIGN_ID IS NOT NULL`. That column is populated ONLY by Google's click
+-- archive, so it silently defined "paid acquisition" as "whatever Google can resolve" and
+-- excluded every Facebook merchant on the platform — 28 of them by 2026-10-08, the entire
+-- c7-facebook-lead-usa-pos and c5-facebook-lead-usa-payments intake. The dashboard reported
+-- zero Facebook merchants and carried a confident note saying Facebook was unattributable,
+-- which was false: those merchants carry utm_campaign, utm_source=facebook,
+-- utm_medium=paid_social AND an fbclid. The signal was always there; this query was not
+-- looking at it.
+--
+-- The roster is read from the ad platforms themselves rather than hard-coded, so a campaign
+-- launched tomorrow is attributable the moment it spends, with no edit here. Matching on
+-- NAME is safe because the campaigns are deliberately named (c3-gads-..., c7-facebook-...)
+-- and the same string is what the landing page puts in utm_campaign.
+paid_campaigns AS (
+    SELECT NAME, MAX(PLATFORM) AS PLATFORM, MAX(CID) AS CID
+    FROM (
+        SELECT "CAMPAIGN.NAME" AS NAME, 'google' AS PLATFORM, TO_VARCHAR("CAMPAIGN.ID") AS CID
+        FROM LOYVERSE_DATA_LAKE.GOOGLE_ADS.CAMPAIGN
+        WHERE "CAMPAIGN.NAME" IS NOT NULL
+        UNION ALL
+        SELECT NAME, 'facebook', TO_VARCHAR(ID)
+        FROM LOYVERSE_DATA_LAKE.FACEBOOK_MARKETING.CAMPAIGNS
+        WHERE NAME IS NOT NULL
+    )
+    GROUP BY NAME
+),
+
 -- ── Who came from a paid click ──────────────────────────────────────────────────────
 attributed AS (
     SELECT a.LOYVERSE_ID                                  AS MERCHANT_ID,
            a.BUSINESS_NAME,
            a.COUNTRY,
            a.CREATED_AT                                   AS SIGNED_UP_AT,
-           a.RESOLVED_CAMPAIGN_ID                         AS CAMPAIGN_ID,
-           a.RESOLVED_CAMPAIGN_NAME                       AS CAMPAIGN,
+           -- Google's resolved id wins where it exists: it is exact and carries the ad group
+           -- and keyword. The utm_campaign match is the fallback, and it is the ONLY path
+           -- available to Facebook, where Meta exposes no click id in the Insights API.
+           COALESCE(TO_VARCHAR(a.RESOLVED_CAMPAIGN_ID), pc.CID)        AS CAMPAIGN_ID,
+           COALESCE(a.RESOLVED_CAMPAIGN_NAME, a.UTM_CAMPAIGN)          AS CAMPAIGN,
+           COALESCE(pc.PLATFORM, 'google')                             AS PLATFORM,
            a.CAMPAIGN_STATUS,
            a.ADVERTISING_CHANNEL_TYPE,
            a.AD_GROUP_NAME,
            a.KEYWORD,
            a.KEYWORD_MATCH_TYPE,
            a.AD_NETWORK_TYPE,
-           a.ATTRIBUTION_METHOD,
+           -- Three ways in now, and they are not equally good, so the method travels with the
+           -- row: gclid (exact, with ad group and keyword), gad_campaignid (right campaign,
+           -- no click date), utm_campaign (right campaign, no click id at all).
+           COALESCE(a.ATTRIBUTION_METHOD, 'utm_campaign')              AS ATTRIBUTION_METHOD,
            -- CLICK_DATE is only populated on the gclid path. Fall back to the signup date so
            -- a gad_campaignid merchant still lands in a period rather than vanishing from
            -- every date filter — flagged by CLICK_DATE_EXACT so the page can say which.
            COALESCE(TRY_TO_DATE(a.CLICK_DATE), TO_DATE(a.CREATED_AT))  AS CLICK_DATE,
            IFF(TRY_TO_DATE(a.CLICK_DATE) IS NOT NULL, TRUE, FALSE)     AS CLICK_DATE_EXACT
     FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANT_ATTRIBUTION a
-    WHERE a.RESOLVED_CAMPAIGN_ID IS NOT NULL
+    LEFT JOIN paid_campaigns pc ON pc.NAME = a.UTM_CAMPAIGN
+    -- Only for the email, which the attribution table does not carry and the internal-test
+    -- screen below needs.
+    LEFT JOIN LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS lm ON lm.LOYVERSE_ID = a.LOYVERSE_ID
+    -- Either Google resolved the click, OR the merchant's utm_campaign names a campaign that
+    -- actually exists and spends. The second clause is what admits Facebook. It cannot admit
+    -- organic traffic: utm_campaign values like 'homeEN' or 'download-site' are Loyverse's own
+    -- site tagging and match no campaign in either ad account, so they are not in the roster.
+    WHERE (a.RESOLVED_CAMPAIGN_ID IS NOT NULL OR pc.NAME IS NOT NULL)
+      -- INTERNAL AND QA ACCOUNTS ARE EXCLUDED, with the SAME two patterns
+      -- activated-payments/pull.js uses (TEST_EMAIL_DOMAIN and TEST_NAME_WORD). Keeping the
+      -- rule identical matters: a merchant screened out of the payments funnel and counted
+      -- in the marketing funnel would make the two pages disagree about the same person.
+      -- It is not cosmetic here. Of the six merchants c5-facebook-lead-usa-payments appeared
+      -- to buy, FIVE are internal tests — "DBA CTO test", "test", "Demo", "UTM test" — so
+      -- the campaign really bought one merchant, and its cost per merchant was out by 6x.
+      AND NOT REGEXP_LIKE(COALESCE(lm.EMAIL, ''),
+            '.*@(loyverse\\.(com|io)|mailinator\\..*|yopmail\\..*|guerrillamail\\..*|sharklasers\\.com|10minutemail\\..*|tempmail\\..*|temp-mail\\..*|trashmail\\..*|example\\.(com|org|net)|test\\.com)\\s*', 'i')
+      AND NOT REGEXP_LIKE(COALESCE(a.BUSINESS_NAME, ''),
+            '.*(^|[^a-zA-Z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-zA-Z]|$).*', 'i')
 ),
 
 -- ── POS path: did the till ever ring ────────────────────────────────────────────────
@@ -187,6 +245,7 @@ SELECT t.MERCHANT_ID,
        t.COUNTRY,
        t.CAMPAIGN_ID,
        t.CAMPAIGN,
+       t.PLATFORM,
        t.CAMPAIGN_STATUS,
        t.ADVERTISING_CHANNEL_TYPE,
        t.AD_GROUP_NAME,
