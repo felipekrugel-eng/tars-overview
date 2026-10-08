@@ -91,6 +91,9 @@ Then run → `decide` with either:
 `baseline` means never send. `send` releases it to deliver on the first active
 run. Every decision is recorded in the audit chain with your GitHub actor.
 
+If `decide` reports `state_compare_and_swap_conflict`, a monitor run committed
+while it was reading. Nothing was written; dispatch it again.
+
 Changing a recorded decision is refused; that needs a deliberate review, not a
 re-run.
 
