@@ -33,6 +33,10 @@ DEFAULTS = {
     # One transient gap in a single run is not an incident.
     'health_confirm_checks': 2,
     'health_max_notices_per_day': 4,
+    # Whether monitor-health notices may be emailed to the risk recipients at
+    # all. Health is operational, not merchant risk: health.json, the dashboard
+    # and Telegram carry it without filling three inboxes.
+    'health_email_enabled': True,
     # Non-critical health issues are held for one daily summary at this hour.
     'health_digest_hour_london': 9,
     # Deliberate, ongoing states (shadow mode, a backfill in progress) are not

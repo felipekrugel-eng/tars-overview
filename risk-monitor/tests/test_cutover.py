@@ -172,3 +172,29 @@ class IpCoverage(unittest.TestCase):
         self.assertEqual(summary['accounts_in_clusters'], 2)
         self.assertEqual(summary['needs_attention'],
                          [{'id': 'acct_4', 'why': 'charges_enabled_without_tos'}])
+
+
+class HealthNoticeChannels(unittest.TestCase):
+    """Monitor health must not fill the risk recipients' inboxes."""
+
+    def test_health_email_can_be_switched_off_in_config(self):
+        import json as _json
+        from pathlib import Path as _P
+        import throttle
+        live = _json.loads((_P(__file__).resolve().parents[1] / 'config.json').read_text())
+        self.assertFalse(throttle.policy(live)['health_email_enabled'])
+
+    def test_recovery_is_capped_like_any_other_notice(self):
+        import throttle
+        rules = dict(throttle.DEFAULTS); rules['health_max_notices_per_day'] = 1
+        state = {}
+        self.assertTrue(throttle.health_budget_ok(state, 100, rules))
+        throttle.record_health_notice(state, 100, ['gmail_oauth_missing'])
+        # The budget is spent, so a recovery in the same day is held too.
+        self.assertFalse(throttle.health_budget_ok(state, 100, rules))
+
+    def test_watchdog_skips_the_email_block_when_disabled(self):
+        import inspect, watchdog
+        source = inspect.getsource(watchdog.main)
+        self.assertIn("rules['health_email_enabled'] and notice.get('email'", source)
+        self.assertIn('recovered=[]', source)
