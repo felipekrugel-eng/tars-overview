@@ -102,6 +102,13 @@ def headline(kind, evidence, currency='usd'):
     if kind == 'sustained-failures':
         return (f"{e.get('failures', '?')} of {e.get('attempts', '?')} attempts failed over 30 days "
                 f"({_pct(e.get('failures', 0), e.get('attempts', 0))} failure rate).")
+    if kind == 'failures-then-success':
+        count = e.get('failures', '?')
+        window = e.get('window_minutes', 30)
+        if e.get('amount') is None:
+            return f"{count} declined attempts in {window} minutes, then a payment succeeded."
+        return (f"{count} declined attempts in the {window} minutes before a payment of "
+                f"{money(e['amount'], currency)} succeeded.")
     if kind == 'same-credential':
         extra = e.get('preceding_merchant_failures') or 0
         tail = f' Preceded by {extra} failures at this merchant in 7 days.' if extra else ''

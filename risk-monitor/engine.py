@@ -100,6 +100,16 @@ def evaluate(current, history, account_created=None, pos_age_days=None, legitima
     failures = [x for x in window if x.status == 'failed']
     if current.status == 'failed' and len(failures) >= 3 and len(failures)*2 >= len(window):
         add('failed-burst', 'Elevated', failures, attempts=len(window), failures=len(failures))
+    if current.status == 'succeeded':
+        # Card testing: a run of declines at one merchant that ends in a charge
+        # going through. The success is the event worth seeing, not the
+        # declines on their own, which failed-burst already covers.
+        preceding = [x for x in failed if current.created-1800 <= x.created < current.created]
+        if len(preceding) >= 5:
+            big = current.currency == 'usd' and current.amount > 75000
+            add('failures-then-success', 'Urgent' if len(preceding) >= 10 or big else 'Elevated',
+                preceding+[current], failures=len(preceding), window_minutes=30,
+                amount=current.amount)
     window30 = [x for x in same if x.created >= current.created-30*86400
                 and x.status in ('failed', 'succeeded')]
     failures30 = [x for x in window30 if x.status == 'failed']

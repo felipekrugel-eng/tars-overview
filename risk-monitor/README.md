@@ -10,7 +10,9 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
 
 - Exact US/USD `amount > 75000` rule, ticket outlier, high-value burst, active-day
   surge, failed burst, sustained failures, verified same-credential patterns and
-  downward retries. Successful and failed events are distinct; late arrivals and
+  downward retries. `failures-then-success` covers the card-testing shape: five
+  or more declines at one merchant in the 30 minutes before a charge goes
+  through, Urgent at ten or more declines or a successful charge over $750. Successful and failed events are distinct; late arrivals and
   failed-to-succeeded transitions are evaluated. No brand/last4 identity inference.
 - New-account reviews become an Elevated human investigation queue when public
   corroboration is unavailable; there is no invented fraud probability. Independent

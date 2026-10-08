@@ -215,3 +215,56 @@ class CoverageContract(unittest.TestCase):
         record = m.account('acct_x')
         self.assertEqual(record['ip_evidence'], 'terms_without_ip')
         self.assertIsNone(record['tos_ip'])
+
+
+class FailuresThenSuccess(unittest.TestCase):
+    """Declines at one merchant that end in a charge going through."""
+
+    def run_then_success(self, failures, amount=10000, gap=60, status='succeeded'):
+        from engine import Attempt, evaluate
+        history = [Attempt('acct_a', 'f%d' % i, NOW - 1500 + i * gap, 5000, 'usd', 'failed', 'US')
+                   for i in range(failures)]
+        current = Attempt('acct_a', 'ch_ok', NOW, amount, 'usd', status, 'US')
+        return [f for f in evaluate(current, history) if f.kind == 'failures-then-success']
+
+    def test_five_declines_then_a_success_alerts(self):
+        found = self.run_then_success(5)
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0].level, 'Elevated')
+        self.assertEqual(found[0].evidence['failures'], 5)
+
+    def test_four_declines_is_below_the_threshold(self):
+        self.assertEqual(self.run_then_success(4), [])
+
+    def test_declines_with_no_success_do_not_fire_this_rule(self):
+        self.assertEqual(self.run_then_success(8, status='failed'), [])
+
+    def test_ten_declines_or_a_large_success_escalate_to_urgent(self):
+        self.assertEqual(self.run_then_success(10)[0].level, 'Urgent')
+        self.assertEqual(self.run_then_success(5, amount=80000)[0].level, 'Urgent')
+
+    def test_declines_outside_the_window_do_not_count(self):
+        from engine import Attempt, evaluate
+        old = [Attempt('acct_a', 'f%d' % i, NOW - 7200 + i, 5000, 'usd', 'failed', 'US')
+               for i in range(8)]
+        current = Attempt('acct_a', 'ch_ok', NOW, 10000, 'usd', 'succeeded', 'US')
+        self.assertEqual([f for f in evaluate(current, old)
+                          if f.kind == 'failures-then-success'], [])
+
+    def test_the_success_and_every_decline_are_recorded_as_evidence(self):
+        found = self.run_then_success(6)[0]
+        self.assertIn('ch_ok', found.ids)
+        self.assertEqual(len(found.ids), 7)
+
+    def test_it_renders_as_a_plain_sentence(self):
+        import sys
+        from pathlib import Path as _P
+        sys.path.insert(0, str(_P(__file__).resolve().parents[1]))
+        import notify
+        found = self.run_then_success(6, amount=120000)[0]
+        sentence = notify.headline(found.kind, found.evidence)
+        self.assertEqual(sentence,
+                         '6 declined attempts in the 30 minutes before a payment '
+                         'of $1,200.00 succeeded.')
+        self.assertEqual(notify.headline('failures-then-success', {'failures': 6}),
+                         '6 declined attempts in 30 minutes, then a payment succeeded.')
