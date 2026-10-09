@@ -4798,8 +4798,9 @@ window.__ACT=window.__ACT||[];
   // Share transacting within N days among merchants enabled at least N days ago. Each point is
   // its own population, so the curve can dip when older cohorts behaved differently.
   var XS=[]; for(var d=0; d<=90; d+=1) XS.push(d);
+  var MIN_ELIGIBLE=10;   // a point built on fewer merchants than this is noise, not a rate — left blank
   function curve(rows){
-    return XS.map(function(x){ var el=rows.filter(function(r){return r.age!=null&&r.age>=x;}); var hit=el.filter(function(r){return r.lag!=null&&r.lag<=x;}); return {x:x, n:el.length, y:pct(hit.length,el.length)}; });
+    return XS.map(function(x){ var el=rows.filter(function(r){return r.age!=null&&r.age>=x;}); var hit=el.filter(function(r){return r.lag!=null&&r.lag<=x;}); return {x:x, n:el.length, y: el.length>=MIN_ELIGIBLE ? pct(hit.length,el.length) : null}; });
   }
   var BUCKETS=[{l:'Same day',f:function(l){return l<=0;}},{l:'1–7 days',f:function(l){return l>=1&&l<=7;}},{l:'8–14 days',f:function(l){return l>=8&&l<=14;}},{l:'15–28 days',f:function(l){return l>=15&&l<=28;}},{l:'29–56 days',f:function(l){return l>=29&&l<=56;}},{l:'57+ days',f:function(l){return l>=57;}}];
 
@@ -4832,7 +4833,7 @@ window.__ACT=window.__ACT||[];
     h+='<tr><td>Median / p90 (days)</td>'+cols.map(function(s){var l=s.rows.filter(function(r){return r.lag!=null;}).map(function(r){return r.lag;}); return '<td>'+(l.length?quant(l,.5)+' / '+quant(l,.9):'–')+'</td>';}).join('')+'</tr>';
     h+='<tr><td>Still pending (no charge yet)</td>'+cols.map(function(s){return '<td>'+fmtN(s.rows.filter(function(r){return r.lag==null;}).length)+'</td>';}).join('')+'</tr>';
     h+='</tbody>'; $('ttLagTable').innerHTML=h;
-    $('ttNote').textContent='Enabled date = Stripe terms acceptance (the same proxy the funnel uses). Eligible = enabled at least N days before the last pull ('+String(window.__FUNNEL_UPDATED||'').slice(0,10)+'). The oldest cohort dates from the '+(window.__FUNNEL_LAUNCH_START||'2026-07-01')+' launch, so the curve cannot yet show anything beyond ~'+(M.length?Math.max.apply(null,M.map(function(r){return r.age||0;})):0)+' days. Internal/QA accounts excluded.';
+    $('ttNote').textContent='Enabled date = Stripe terms acceptance (the same proxy the funnel uses). Eligible = enabled at least N days before the last pull ('+String(window.__FUNNEL_UPDATED||'').slice(0,10)+'). Points with fewer than '+MIN_ELIGIBLE+' eligible merchants are left blank. The oldest cohort dates from the '+(window.__FUNNEL_LAUNCH_START||'2026-07-01')+' launch, so the curve cannot yet show anything beyond ~'+(M.length?Math.max.apply(null,M.map(function(r){return r.age||0;})):0)+' days. Internal/QA accounts excluded.';
   }
 
   // ── Pending diagnosis ──────────────────────────────────────────────────────
