@@ -43,6 +43,14 @@ concurrency:
   # exactly what happened on 2026-08-27. Separating the lanes means a heartbeat can never cancel
   # a run someone asked for. Two real pulls still cannot overlap in practice: a dispatch leaves
   # the data fresh, so the next heartbeat gates itself out.
+  #
+  # THAT LAST SENTENCE IS CONDITIONAL ON THE PULL SUCCEEDING, and on 2026-10-09 it did not.
+  # A failing pull never commits, so the data never goes fresh, so every heartbeat gates ITSELF
+  # IN — and once the fix landed, four real pulls stacked up at once, all scanning receipts on
+  # the same warehouse. Harmless but wasteful, and worth knowing before trusting the lanes to
+  # keep things apart: they separate heartbeat from deliberate, not pull from pull. Left as is
+  # rather than regrouped, because collapsing the lanes is what caused the 2026-08-27 incident
+  # above; the gate annotations now make a pile-up visible in the run list instead.
   group: activated-payments-pull-${{ github.event_name == 'workflow_run' && 'heartbeat' || 'direct' }}
   cancel-in-progress: false
 
@@ -72,14 +80,29 @@ jobs:
           NOW=$(date -u +%s)
           AGE=$(( (NOW - LAST) / 60 ))
           echo "data last committed ${AGE} min ago (limit ${MAX_AGE_MIN})"
+          # A SKIPPED RUN AND A REAL ONE MUST NOT LOOK THE SAME. Both end green, so the run
+          # list used to show a wall of ticks whether or not a single byte of data moved —
+          # which is how the overview sat at 13:18 for five hours on 2026-10-09 while the
+          # history looked healthy. The notice below becomes an annotation on the run (visible
+          # in the LIST, not just inside the run) and the summary line shows on the run page,
+          # so "green" now says which kind of green it is.
           if [ "${{ github.event_name }}" != "workflow_run" ]; then
             echo "run=yes" >> "$GITHUB_OUTPUT"
             echo "triggered by ${{ github.event_name }} — running regardless of age"
+            echo "::notice title=Pull RUNNING::manual/${{ github.event_name }} trigger — refreshing regardless of age (data ${AGE} min old)"
+            echo "### ✅ Pulling — triggered by \`${{ github.event_name }}\`, data was ${AGE} min old" >> "$GITHUB_STEP_SUMMARY"
           elif [ "$AGE" -ge "$MAX_AGE_MIN" ]; then
             echo "run=yes" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Pull RUNNING::data is ${AGE} min old (limit ${MAX_AGE_MIN}) — refreshing"
+            echo "### ✅ Pulling — data was ${AGE} min old, over the ${MAX_AGE_MIN} min limit" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "fresh enough — skipping"
+            echo "::notice title=SKIPPED — no data refreshed::data is only ${AGE} min old (limit ${MAX_AGE_MIN}); nothing was pulled, written or committed"
+            echo "### ⏭️ Skipped — NO DATA REFRESHED" >> "$GITHUB_STEP_SUMMARY"
+            echo "Data is ${AGE} min old, under the ${MAX_AGE_MIN} min limit. Nothing was pulled, written or committed." >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "A green tick on this run means the gate declined to work, **not** that the dashboard was updated." >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Set up Node.js

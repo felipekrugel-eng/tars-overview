@@ -75,6 +75,23 @@ jobs:
             --status payments-automation/data/pull_status.json \
             --event "${{ github.event_name }}"
 
+      # Same reason as the gate above: a skip ends green and is otherwise indistinguishable
+      # from a refresh. The annotation surfaces in the run LIST, so a run of skips is visible
+      # without opening any of them.
+      - name: Say whether this run refreshed anything
+        if: always()
+        run: |
+          if [ "${{ steps.gate.outputs.run }}" = "yes" ]; then
+            echo "::notice title=Pull RUNNING::the verified Snowflake pull aged out — refreshing"
+            echo "### ✅ Pulling — the verified pull manifest aged out" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::notice title=SKIPPED — no data refreshed::the last verified pull is still fresh; nothing was pulled, rebuilt or committed"
+            echo "### ⏭️ Skipped — NO DATA REFRESHED" >> "$GITHUB_STEP_SUMMARY"
+            echo "The last verified Snowflake pull is still within the freshness window, so nothing was pulled, rebuilt or committed." >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "A green tick on this run means the gate declined to work, **not** that the workbook was updated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Install LibreOffice (headless recalc)
         if: steps.gate.outputs.run == 'yes'
         run: |
