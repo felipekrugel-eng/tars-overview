@@ -37,7 +37,12 @@ SELECT
     a.BUSINESS_PROFILE_MCC                   AS mcc,
     a.BUSINESS_URL                           AS business_url,
     a.PRODUCT_DESCRIPTION                    AS product_description,
-    COALESCE(a.STATEMENT_DESCRIPTOR, a.CALCULATED_STATEMENT_DESCRIPTOR) AS statement_descriptor,
+    -- STATEMENT_DESCRIPTOR only. CALCULATED_STATEMENT_DESCRIPTOR was in the COALESCE here
+    -- and does not exist in the Stripe share — the view carries STATEMENT_DESCRIPTOR and
+    -- PAYOUT_STATEMENT_DESCRIPTOR and nothing else matching. It broke every Daily
+    -- Activation Pull from the moment it was added (9 consecutive failures, 0 successes)
+    -- because connected_accounts is the FIRST query and pull.js exits on its failure.
+    a.STATEMENT_DESCRIPTOR                   AS statement_descriptor,
     -- enablement / transaction readiness
     a.CHARGES_ENABLED                        AS charges_enabled,
     a.PAYOUTS_ENABLED                        AS payouts_enabled,

@@ -2097,6 +2097,39 @@ async function main() {
   const existingByAcct = readExisting();
   console.log(`Existing records to merge: ${Object.keys(existingByAcct).length}`);
 
+  // PRE-FLIGHT: every column connected_accounts.sql names must still exist.
+  //
+  // The Stripe share's schema is not ours and changes without notice, and this query is the
+  // FIRST one the pull runs, so a single dropped column takes the whole pipeline down — which
+  // is exactly what happened on 2026-10-09: a Fraud Health change referenced
+  // CALCULATED_STATEMENT_DESCRIPTOR, which the share does not have, and nine consecutive runs
+  // died with "invalid identifier ... error line 28 at position 37". That message names a line
+  // in the GENERATED sql, not the file, so it points at the wrong row and costs an hour.
+  //
+  // A DESCRIBE is one cheap round trip. It cannot prevent the failure — the column really is
+  // gone — but it turns an opaque parser error into the column name, before any work is done.
+  try {
+    const caCols = await executeQuery(conn,
+      `DESCRIBE VIEW ${STRIPE_SHARE_DB}.${STRIPE_SCHEMA}.CONNECTED_ACCOUNTS`);
+    const have = new Set(caCols.map(c => String(c.name).toUpperCase()));
+    // Strip comments first, or a column named only inside a -- note counts as referenced.
+    const body = loadSql('connected_accounts.sql').replace(/--.*$/gm, '');
+    const referenced = [...new Set([...body.matchAll(/\ba\.([A-Za-z0-9_]+)/g)]
+      .map(m => m[1].toUpperCase()))];
+    const missing = referenced.filter(c => !have.has(c));
+    if (missing.length) {
+      console.error(`✗ connected_accounts.sql references ${missing.length} column(s) that no ` +
+                    `longer exist on the Stripe share: ${missing.join(', ')}`);
+      console.error(`  The share has ${have.size} columns. This is an UPSTREAM schema change — ` +
+                    `drop or replace those references in activated-payments/sql/connected_accounts.sql.`);
+      process.exit(1);
+    }
+    console.log(`✓ pre-flight: all ${referenced.length} referenced columns present on CONNECTED_ACCOUNTS`);
+  } catch (e) {
+    // Never block the pull on the check itself — if DESCRIBE fails, let the real query speak.
+    console.error(`  (pre-flight column check skipped: ${e.message})`);
+  }
+
   let accountRows = [];
   try {
     accountRows = await executeQuery(conn, loadSql('connected_accounts.sql'));
