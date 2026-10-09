@@ -26,6 +26,10 @@ on:
       - payments-pull
       - "PAYMENTS: Daily Activation Pull"
       - "CASE: Daily Snowflake Pull"
+      # 2026-10-09: the Fraud Health daily review commits with the built-in GITHUB_TOKEN
+      # like the pulls above, so without this entry a new merchant review would be
+      # committed to master and never reach the dashboard.
+      - fraud-health-daily
     types: [completed]
   push:
     branches: [master]

@@ -1,0 +1,27 @@
+{
+ "accountId": "acct_1UO7rY7THJ7HMwk2",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "legal",
+   "points": 0,
+   "status": "unverified",
+   "statement": "No exact match for a business trading as 'Killer Chicken' at killer-chicken.com. Checked by web search on 2026-10-09. This environment has no direct web fetch (DNS resolution is unavailable to the agent, confirmed against a control domain), so page-level and registry checks could not be performed — only search-index evidence. City/state were also unavailable: the warehouse pull did not carry LEGAL_ENTITY_ADDRESS_CITY/STATE until the 2026-10-09 change, which takes effect on the next pull. A US LLC is registered at state level, so without a state the registry check cannot be run at all.",
+   "checkedAt": "2026-10-09"
+  },
+  {
+   "dimension": "contact",
+   "points": 0,
+   "status": "unverified",
+   "statement": "The account uses info@killer-chicken.com. Whether that domain resolves, who registered it and when COULD NOT BE DETERMINED: this environment cannot resolve DNS for any host, verified against a control domain, so an earlier apparent 'domain does not exist' result was an artefact of the sandbox and has been discarded. No risk points assigned.",
+   "checkedAt": "2026-10-09"
+  }
+ ],
+ "evidenceNeeded": [
+  "Resolve killer-chicken.com and capture registrar, creation date and registrant — a domain registered days before onboarding would be material.",
+  "Confirm the restaurant exists at a real address with a food licence.",
+  "Review the first transaction (2026-10-09, $0.55) — consistent with a card test."
+ ],
+ "summary": "The only merchant in this cohort using a non-consumer email domain, but the domain could not be checked from this environment and no business of this name was found. The domain check is the single highest-value outstanding item and is explicitly NOT recorded as a finding either way."
+}

@@ -1,0 +1,3417 @@
+{
+ "remediatedAt": "2026-10-09T15:42:34+00:00",
+ "scoreReconciliation": [
+  {
+   "accountId": "acct_1UMvdVQGfFe8jFDj",
+   "name": "¡Wow, que lazo!",
+   "from": 51,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UMvE3G4dl5BO1J5",
+   "name": "Landscaping",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMuEfGAvQ5t1nSQ",
+   "name": "Elite automotive",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMoMD7wpyzNHpuc",
+   "name": "Street Buskerz LLC",
+   "from": 71,
+   "to": 62,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UMo8t5fLc5Qa9M5",
+   "name": "River Rock Coffee Co.",
+   "from": 27,
+   "to": 24,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UMnjz5gwJGtYf7s",
+   "name": "Maci's Maids Services",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMhN19lc3wfTkra",
+   "name": "Riverhold",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMhE78x0RRQtZQM",
+   "name": "'BJK's 23-7 Services",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMgsu5VWjylZHk7",
+   "name": "Martin services",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMdcQ7k2AfD2jbs",
+   "name": "Two Brothers construction",
+   "from": 85,
+   "to": 77,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1UMbrfGHNYcwQJg6",
+   "name": "Brick & Bloom",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMbAm4jUlNkL4aO",
+   "name": "BELART CRAFTING, LLC",
+   "from": 54,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMamG9TluawZ5p9",
+   "name": "Cottontown Curated Co.",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMZMh5YEG5HEfJK",
+   "name": "Jcventures",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UMXDEGEJgmysin3",
+   "name": "Liz's Baked Goods",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UML3E5wM0K7AyZf",
+   "name": "Ha Egg Rolls LLC",
+   "from": 22,
+   "to": 20,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UMKBh55Bqlf495F",
+   "name": "EZEKITOS TAQUERIA Y MAS",
+   "from": 46,
+   "to": 41,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UMJaq4M4li8L7EX",
+   "name": "CH EXPERIENCE LLC",
+   "from": 58,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UMB4O9VgiJZNPpz",
+   "name": "Felas Vegetarian Restaurant",
+   "from": 45,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UM7rG9POTquKgvL",
+   "name": "Mundo LLC",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UM0467BE0FcKMPV",
+   "name": "Jewelry by Jacq",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULulj9cdxEvOCSB",
+   "name": "J&S Construction And Remodeling Limited Liability Company",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULoWw5y6XrUuS6m",
+   "name": "ItsJustBusiness",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULn8T9CREE4Tbwl",
+   "name": "Cuterie Apparels & Accessories",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULlT45NgWFvjg1f",
+   "name": "Madmysha",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULg8b9Ao7XMLd1e",
+   "name": "Advance comprehensive pain care",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULWoo7Fg1q53ZR8",
+   "name": "42-5319802",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1ULVG49rx59g6LKa",
+   "name": "La Macarena LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULV5W5SiRYG2xa5",
+   "name": "creatively Good",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULRuR75LfvlLSCX",
+   "name": "El Dulce Criollo",
+   "from": 46,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1ULORbGCXt7waDeR",
+   "name": "IDOM LLC. / Pool & Beer",
+   "from": 42,
+   "to": 39,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1ULEOe7nOFg84NPi",
+   "name": "Tiny Teez and Thingz",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULDXeQIOCf95OZf",
+   "name": "KJT Joy LLC",
+   "from": 59,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1ULB8X8yPmNmM4yq",
+   "name": "Xoticcustoms",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UL7K2671YGQTYMm",
+   "name": "Wildgoose Beaucerons",
+   "from": 45,
+   "to": 41,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UL4XH7eFAQeomaV",
+   "name": "Ashton Acres, LLC",
+   "from": 54,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UL2tO7TYWTAAtO5",
+   "name": "JCAUTOGLASS",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UL1Ur6vo5bNtQio",
+   "name": "Liquidation Hub",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKtIs5J43YO5m5b",
+   "name": "Jonathan's Exotic Arts",
+   "from": 55,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKpxw7vCUoxRe4P",
+   "name": "Schematics creative llc",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKkpC7Tdf07VgF3",
+   "name": "Darrell E Banks CPA",
+   "from": 54,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UKkGc4ezjooyOlA",
+   "name": "nexus",
+   "from": 74,
+   "to": 68,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UKigzGE0NIGhPlL",
+   "name": "Transportation",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UKX9W8YXF3lxxns",
+   "name": "Tck Innovations llc",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKVgk6u1Cat7J2N",
+   "name": "Pinoy Herbals and Beauty Products",
+   "from": 54,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKTXz4q8TZPuXbg",
+   "name": "Ward's Frenchies 2 Yours LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKRM97J1ivGX2Ez",
+   "name": "tanksleys flooring",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UKQB36Coz9tLuW2",
+   "name": "skip",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UK7v97UYK3kelnL",
+   "name": "98 Pleasant St",
+   "from": 74,
+   "to": 68,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UK7mt8ELwERxbYr",
+   "name": "Elwin R Lamb JR",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UK37A74foUZJDMW",
+   "name": "Locke Point Delivery",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UK0a19bMtMrqh94",
+   "name": "vapegods llc",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJymx6q1mLKFO8Y",
+   "name": "John jones",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UJv5o6KLVxRjwZi",
+   "name": "Cunningham Taylor F.H.s Inc",
+   "from": 63,
+   "to": 48,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJuYy4RPh00blGm",
+   "name": "FaztProdutz",
+   "from": 63,
+   "to": 48,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJqih8GjOqtdxPx",
+   "name": "Ry’s plumbing and drains",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJong6csafsOEGT",
+   "name": "Service provider for you",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UJj6P9HHh6mGSTv",
+   "name": "Méxantojitos “El Benja”",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJVQG763j9WcDoL",
+   "name": "Elliott's Electronics Repair",
+   "from": 52,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJO2V4kIN4yB5Qf",
+   "name": "Unique Finds Market LLC",
+   "from": 55,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJKgF81TBKVjCNh",
+   "name": "Ready Set Home",
+   "from": 57,
+   "to": 48,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJJ9691GE0innMb",
+   "name": "HIGH QUALITY AUTO SOUND PR",
+   "from": 62,
+   "to": 53,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJIPG8TNTb3g8cJ",
+   "name": "Prepaidxchange LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJHyt9ovufv15Ag",
+   "name": "J SPORT BAR",
+   "from": 46,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UJGM34w4tiblfAl",
+   "name": "San Juan Nutrition",
+   "from": 68,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJFG384YnK7U6Lb",
+   "name": "Tavian Moor LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJE8o8m76Cdi9l6",
+   "name": "Interior Glass, Inc.",
+   "from": 43,
+   "to": 38,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UJDhy5ilAZ0xzr2",
+   "name": "IXORA",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJDHDQIvjQTArH0",
+   "name": "Sancocho y mas",
+   "from": 62,
+   "to": 53,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJCc08rHsCMxwtc",
+   "name": "Mangual Distributors",
+   "from": 42,
+   "to": 39,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UJ8zC6i91iB0xKR",
+   "name": "Hair by Z",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJ7PS4yZP4YK3FI",
+   "name": "BarbershopEvo",
+   "from": 55,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJ41d5gOSQQmLAJ",
+   "name": "Puolani Accessories",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UJ3Nu5xrznbuME0",
+   "name": "Drews mobile notary",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UIzp96NM5q5ypEN",
+   "name": "Rosemead Beauty School",
+   "from": 55,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UIy0D7gbI4gLE0j",
+   "name": "AZ DEPARTMENT OF ECONOMY OPPORTUNITIES",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UIvww6kwe44hxTX",
+   "name": "Valcrestus Property Group",
+   "from": 65,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UIvXJ9PkZm6WWvm",
+   "name": "Meris",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UItuF70FqShHvHi",
+   "name": "Ashli’s nails",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UIiZv7o5K88j9dh",
+   "name": "Kilanova Enterprise",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UITtx6D48H6nL7t",
+   "name": "Zeesavoryeats llc",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UISqk683mbsQWYE",
+   "name": "KIM'S INC",
+   "from": 42,
+   "to": 39,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UIHS877ITuKVF2w",
+   "name": "Hook’d on Manis",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UICNZ5hjsENkvb6",
+   "name": "Momentum Wellness Group, Inc",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UI0fV9yJuww7qRI",
+   "name": "Envision Biztech Solutions LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHyYc9V3kJQVs9C",
+   "name": "Nail Junky",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHy7BQFxo15y3TQ",
+   "name": "Think Big Technology",
+   "from": 95,
+   "to": 85,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UHxjV9YKdD77L6o",
+   "name": "Lone Star cleaning",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHtPu4SnyDzLgWU",
+   "name": "M&M ASSOCIATES LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHmrI7nBkUEEgsf",
+   "name": "Angel.com",
+   "from": 78,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UHlVr4qF0yAT5zO",
+   "name": "Bubble and Squeak",
+   "from": 44,
+   "to": 37,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UHl1TG9trOZRH83",
+   "name": "Elysium immersive dining of FTL",
+   "from": 50,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UHZ099ZSnaF1bgm",
+   "name": "ELH RESALE LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHYmPGMNcICYBGq",
+   "name": "Kappa Alpha Tau Inc-Beta Chapter",
+   "from": 46,
+   "to": 41,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UHS8P9GvnhwozsS",
+   "name": "Conexión Latina Express & Grocery",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHRAI4ZqyEi3YB8",
+   "name": "Small Tokens",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHQin79Tya3nQY2",
+   "name": "Deleon Black Construction LLC",
+   "from": 95,
+   "to": 64,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UHQFN7DT06jctNT",
+   "name": "Montalto Future Falls Construction LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UHFoo4h3ijG1S7n",
+   "name": "nourish you",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UH8Wq8DovFa3ZGl",
+   "name": "Tupperlid",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UH5Ym8uMTUAgP93",
+   "name": "HK Consulting",
+   "from": 64,
+   "to": 52,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGvUM9f3yqawg8l",
+   "name": "Ana’stalgia Bakery",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGYP18jgnL3tyab",
+   "name": "STATIC SUPPLY LLC",
+   "from": 69,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGSBw9J8p5qfmGZ",
+   "name": "Handyman Harden",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGR4v8wK7k1UZMa",
+   "name": "LevelUpDetailingIF",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGO0E8bfPYKCwKs",
+   "name": "210 Vendors",
+   "from": 73,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UGCEh7xDh13YY6C",
+   "name": "JAR Locksmith",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UG6jd8E1BPBb8VE",
+   "name": "All Things NSFW",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UG4Ke9VIznJHdQO",
+   "name": "Headhunter 2.0 Salon",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UG0iv4QLzSWU04O",
+   "name": "PWA Wholesale LLC",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UG0Mf8JNFuRgdz2",
+   "name": "And That's A Print & Stitch",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFzEX9mOWQS5YXx",
+   "name": "Too Much Reality Creations",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UFxrP5Ychk62ztO",
+   "name": "Dijla Cafe",
+   "from": 47,
+   "to": 53,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFii96CWjdb58CF",
+   "name": "Smart Ash",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFhdO5ys2OCQLuh",
+   "name": "whispering hills inn",
+   "from": 8,
+   "to": 14,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UFfdaGE5JWaugWb",
+   "name": "Ronda's Cleaning Services",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFex197HgisNKBW",
+   "name": "MISSION RIDGE CONSULTANTS",
+   "from": 8,
+   "to": 10,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UFeKD9TFGv0hhSM",
+   "name": "Piia Kitchen",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFa6g7TKWtNLuam",
+   "name": "Carla & Toninha Modas",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UFZF97GtorCHtrm",
+   "name": "EVAN COUTURE LLC",
+   "from": 70,
+   "to": 60,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UFRNL4pIhiUQHpe",
+   "name": "Man’s Snack Plug",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UFRKZ5Kh0P7Rji6",
+   "name": "Magic Tea and Coffee",
+   "from": 20,
+   "to": 21,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UFFj39RLMRuyKh4",
+   "name": "Daphne Design",
+   "from": 95,
+   "to": 85,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UF2fR4dWlnOznED",
+   "name": "Beenterprises",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UEwwm59Esu9Qvrz",
+   "name": "Jesus Jimenez",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UEwp17hTPFEAi5l",
+   "name": "home & kitchen corp",
+   "from": 95,
+   "to": 84,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UEvNg4vFfk6H62N",
+   "name": "American Repertory Theater of Western New York",
+   "from": 6,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UEs4V4YcAmTRfVs",
+   "name": "UnderShadow 1",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UEmzO9fKc8XfnKn",
+   "name": "Self2023@",
+   "from": 78,
+   "to": 71,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UEhOx86rutlnfoW",
+   "name": "Tjay",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UEaFM56GgF0tFIA",
+   "name": "Nior By Nae LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UEUFK5dZ6e5RJIN",
+   "name": "Nabil Tech",
+   "from": 95,
+   "to": 86,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UEN6q5RYy1gUtlk",
+   "name": "T&A Music Company",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UEMwp4OSZLsJjsv",
+   "name": "Elliot Assets LLC",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UEICq6O5Pyu0BaB",
+   "name": "jump_zingier3m@icloud.com",
+   "from": 95,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UEEoB7DCJmh71d9",
+   "name": "Titi Ada's Cottage Pantry",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UEEK89KpwPvOkyl",
+   "name": "Archen",
+   "from": 81,
+   "to": 74,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UDgt99XxeB8Ab2e",
+   "name": "Ragin Pot",
+   "from": 12,
+   "to": 15,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UDdkP5G0gTzee9D",
+   "name": "Jiller Stickers",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UDX3951IYmx3Xfa",
+   "name": "Genoa Concession Stnad",
+   "from": 53,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UDTkX8U0jCSzUQh",
+   "name": "Central diner llc",
+   "from": 95,
+   "to": 87,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UDJLd9aCIk2rD3v",
+   "name": "Sisters Rustic Charm",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UDFpO96irvmr6Or",
+   "name": "Roland beauty saloon",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UDAvO4hpNEPFPRG",
+   "name": "Playin For Keeps",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UDACx9Ri1utbDUy",
+   "name": "MOONLIT HEARTH BAKERY",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UD2nQ7W6DgNeh5X",
+   "name": "The Fin",
+   "from": 16,
+   "to": 18,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UCzIW5OUqZvn5hp",
+   "name": "Mercado Jazmín",
+   "from": 73,
+   "to": 62,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UCsLj5MJyDAdd4b",
+   "name": "game exchange",
+   "from": 73,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UCq9Z81AFCUMwZb",
+   "name": "Dusty Rose Clothes LLC",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UCpZp7wiLN99Svu",
+   "name": "Iron Core Strength & Conditioning LLC",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UCpGW4WgeXA6hrn",
+   "name": "Dwain Titan Taxi",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UCliBGLxEE0Mcbv",
+   "name": "Mike",
+   "from": 73,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UCjCO973tfkSJKI",
+   "name": "Smith’s Deli & Mart LLC.",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UCjBp5eUS7XLxlX",
+   "name": "South County Creations LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UCio68rCAFu94mU",
+   "name": "Emmy's Fizzpire",
+   "from": 76,
+   "to": 67,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UCagn65IG2uVdnd",
+   "name": "queen's touch beauty &Haitian foods LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UCMJN9G5Gh3rxuB",
+   "name": "Cleaning with Care Services and Solutions llc",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UCArx9ZnWqour6y",
+   "name": "Diamond Crater Forge LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UCAgp5TR2pVISx6",
+   "name": "NF Helix",
+   "from": 87,
+   "to": 84,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1UC7U074uN8zlfP5",
+   "name": "Jessi styles",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UC6Pu4gvRvxTRto",
+   "name": "Dahlias & Cardz Fashion & Home Group llc",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UC4H57ksU44tsCk",
+   "name": "Taylor APP Dev",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UC49I6N0UTQl06c",
+   "name": "Fortnite tweaks",
+   "from": 72,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UC3Kg9L7WLQOb2n",
+   "name": "Hendrix’s Llc",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UC2b0G0omqophil",
+   "name": "Gatormacsotwllc",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UBpbJ7xG4I6AdfZ",
+   "name": "Jacobiq",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UBkmE8gaTli7e09",
+   "name": "Mining My Own Business",
+   "from": 82,
+   "to": 78,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1UBjys5dFe8AWU10",
+   "name": "Arenas Contracting",
+   "from": 95,
+   "to": 86,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UBjvW5oHlXBWXp2",
+   "name": "Elevated Dreams LLC",
+   "from": 95,
+   "to": 84,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1UBiWv7kKUvlOCf8",
+   "name": "Halal Central Diner",
+   "from": 23,
+   "to": 35,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UBaemQJkK2GSCpz",
+   "name": "Glenlore Trails",
+   "from": 6,
+   "to": 7,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UBSIP6YltI2w0x3",
+   "name": "Jungle Junkies",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UBRvw9JFkO2OqeO",
+   "name": "Ooh So Good Desserts",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UBQqi7KQ8a5AN9s",
+   "name": "Inteletni LLC",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UBNdj9CcGVCSKsJ",
+   "name": "TMH",
+   "from": 66,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UBIhw8ReD49kGyY",
+   "name": "Glimmer & Glow llc",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UBHxo69d5AVYQ18",
+   "name": "Upstart Store",
+   "from": 74,
+   "to": 64,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UBHdE5C2aEqUCRg",
+   "name": "Little Monster Snow Cones",
+   "from": 58,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UBCup7mfyOSMfxk",
+   "name": "Poppy’s Wildcraft, LLC",
+   "from": 12,
+   "to": 15,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UBAFO9pIHxjiB7p",
+   "name": "Binkies Little Bits",
+   "from": 70,
+   "to": 60,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1UB19ZGBn27q535l",
+   "name": "8Air",
+   "from": 91,
+   "to": 85,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1UB0yT807XUMEAXq",
+   "name": "Elite Members Enterprise",
+   "from": 80,
+   "to": 77,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1UB06F62HWVm57t1",
+   "name": "Puntada Caribeña",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UAvVz4tXeLoMSnp",
+   "name": "MAMPOSTEAO CAFE LLC",
+   "from": 17,
+   "to": 25,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UAvKF7Boiscs21f",
+   "name": "Second Cup, LLC",
+   "from": 32,
+   "to": 24,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UAubK7vWjskiFvF",
+   "name": "Tm legacy",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UAtkH96cD1HhFBC",
+   "name": "Zohra Craft Candle Co.",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UAlEN8l3uiGDgWV",
+   "name": "TouchedByTory",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UAjlc8rwqUnLGjY",
+   "name": "FineTunes&Rythem",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UAhKzG0zZHDt4dl",
+   "name": "Romance by Armani",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1UAgze6EcbWbvHYH",
+   "name": "Royal BZNZ",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UAgjjG9P9k3Dxp0",
+   "name": "Pia Kitchen",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UAeeC7wZFqQjBeS",
+   "name": "NEXORIA",
+   "from": 65,
+   "to": 54,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UALtH4ZoKpo8x0M",
+   "name": "Lost Woods Plant Nursery",
+   "from": 34,
+   "to": 28,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UAF5e5NWLJgp0Y6",
+   "name": "Mossy Wheel Pottery",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1UAD4K4z2hCWeC2s",
+   "name": "Redeemer Christian School",
+   "from": 4,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1UACNf5Xib8XFleT",
+   "name": "Pollo A La Parrilla Y Taqueria",
+   "from": 65,
+   "to": 60,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U9zxDG827M4pjqe",
+   "name": "Weirdoollc",
+   "from": 65,
+   "to": 54,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9zXLG0GIjD5nPj",
+   "name": "Eekas cupcakes",
+   "from": 55,
+   "to": 44,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U9yVN8OhNXAjdpo",
+   "name": "Majik Scents",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U9t6J4rcGLbRpkZ",
+   "name": "Jims Handyman Service",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9ptO68g4GM022E",
+   "name": "premium waffles cone ice cream LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9iRj4g1VRVAmLr",
+   "name": "OSANRID TIRE CENTER",
+   "from": 49,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U9gbF9UK51Tp9HB",
+   "name": "The Brew Lab Cafe LLC",
+   "from": 59,
+   "to": 47,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9eQK5bIKcjdqld",
+   "name": "Z's Catfish",
+   "from": 62,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9bAK84wKG8giCp",
+   "name": "Storeman.LLC",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U9X205A6bQYBtrF",
+   "name": "Velissé",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U9WUs4oKhHRYb9R",
+   "name": "BTA",
+   "from": 85,
+   "to": 86,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U9Kr98982U6C4kE",
+   "name": "David Voss",
+   "from": 70,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U9Eox4q13a9rSfj",
+   "name": "Alyssa's Liquidation",
+   "from": 25,
+   "to": 26,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U9BZ854wWZX0Iiw",
+   "name": "We Fix It Electronics",
+   "from": 68,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U8teX4z2najFfUB",
+   "name": "Finesse Auto Sales LLC",
+   "from": 48,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U8sauG1xpszgIvt",
+   "name": "Dazzling Delights",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U8VYp5kJHdqPeRT",
+   "name": "Monsters land clearing",
+   "from": 15,
+   "to": 16,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U8JrC5jzMqxJBpe",
+   "name": "Ashland Candle Company",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U85Qm9n0Q2nguMH",
+   "name": "penjamin productions",
+   "from": 82,
+   "to": 83,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U7yRWG7cv0Jdz8D",
+   "name": "Skip the Salon with Krista",
+   "from": 35,
+   "to": 36,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U7nVN8WY4XMmadv",
+   "name": "Jenifer Parsons",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U7ltw6yXqbhf0ty",
+   "name": "MJ",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U7laZ4ZJ5o13WDg",
+   "name": "Kati Solutions, llc",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U7dB48Lf9gMb3sm",
+   "name": "KingTread Transportation",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U7ZHQ9jHgbRRXZt",
+   "name": "Creative Designs",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U7SgXGHrped7Puj",
+   "name": "David Cathey",
+   "from": 24,
+   "to": 25,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U7NJ38ivrGvyP9d",
+   "name": "Salty Surf Club",
+   "from": 68,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U760k79cXxIYVva",
+   "name": "New Planet Solutions LLC",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U72Jd9ciXuma5zr",
+   "name": "FlavorCartel",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U6jjX9mCMh4nlcx",
+   "name": "Doka Pizza",
+   "from": 6,
+   "to": 7,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U6Sar7UdqeMiNfC",
+   "name": "Lola Management",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U63rv74Jx9npPUq",
+   "name": "Sparks flipped",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U62nY5IGDZkHWDP",
+   "name": "Rainier Addis Hookha Loung",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U5tXl8bArA51Ci0",
+   "name": "Reyes perfumes",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U5Nod8qdFtuTHQf",
+   "name": "Roaddogs LLC",
+   "from": 48,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U5LK87gS9FtwPtm",
+   "name": "Curl up N Dye",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U5C2Z6BAZn3VOUt",
+   "name": "Pop...Fizz...Cheers",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U57rQ5qU6KoL7k7",
+   "name": "Lucky Crab",
+   "from": 42,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U4vAl8RYKZL54E1",
+   "name": "RMP Freelance",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U4rB7GI9W0Bcxhb",
+   "name": "RickTech wireless LLC",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U4qei7AbNbznZFY",
+   "name": "So litty llc",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U4oL6QGJSzcChme",
+   "name": "NICK'S SERVICES",
+   "from": 70,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U4XKn6JpCRoR3bx",
+   "name": "theCustomizer Craft Lab LLC",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U4WVA907xXK0HvO",
+   "name": "Joseph barnes jr",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U4RWX5lXEDoOdZr",
+   "name": "Legacy",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U4RCt6YLpJZuaH2",
+   "name": "Dragonship Tattoo Co",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U4P4l86xZMRaC2Z",
+   "name": "VOXBURG",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U4NBD6xrVvfynTx",
+   "name": "Indigo Venue Limited",
+   "from": 8,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U4JcS97lQ6c3Ttw",
+   "name": "Orlando cafe",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U4Gss7KpIJjFGpA",
+   "name": "Yugomax Digital",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U4ET75wWWlqfV3z",
+   "name": "Crowned and Confident by Shelley",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U43wl5hKlq0g8xX",
+   "name": "Designed By Desi",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U42So4lFjROboIJ",
+   "name": "WMI Wholesale",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U41s951aPtqlwev",
+   "name": "Mathews Family Farm LLC",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U3iNY8Rnvd03efN",
+   "name": "Hubruis Comics",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U3gGh7zHLMjvFWz",
+   "name": "Tijwan Designer",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U3ffU5YU7DST2YX",
+   "name": "CJs Deals and Collectibles",
+   "from": 95,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1U3cww6uLDVkuXUr",
+   "name": "Grave Yard Customs llc",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U3PiV5kcgmTk43d",
+   "name": "German consulting",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U359x55Kl2jL8Qa",
+   "name": "moneySalez",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U31um9GDfs9kpnO",
+   "name": "Azul at Greenane Farms",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U2xMtG9OG7rUHlM",
+   "name": "Jolie’s Shop",
+   "from": 68,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U2j3ZGG9H7vamtE",
+   "name": "Wax On Wax OFF LLC",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U2ee38JBbiZ82TP",
+   "name": "Certified Monk’s",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U2YgV6HmOFkpPBM",
+   "name": "Cre, Inc",
+   "from": 70,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U2Cvs9f3d1uJ9sr",
+   "name": "ATC",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U23vs7EAcBAH8Vl",
+   "name": "Peniel Cafe",
+   "from": 35,
+   "to": 36,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1U20HL994R9cJpff",
+   "name": "my own busniess 1 llc",
+   "from": 95,
+   "to": 96,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1U1qRj5yXpHljl6g",
+   "name": "The Crooked Acres",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U1fr25m1ZlBLgpJ",
+   "name": "TEE Channel Casino and Resort",
+   "from": 88,
+   "to": 89,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U1emTQI5YLX7ypQ",
+   "name": "one stop shop",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U1eHu7IFvwOlKU9",
+   "name": "Relaxavis LLC",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U1ZjE8l4boWrOTe",
+   "name": "MEDJAY SMOKE AND VAPE",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U1Ljz8L6JQZME0w",
+   "name": "IAO future prep",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U1InM8qnmS4CBOj",
+   "name": "Mobilz",
+   "from": 82,
+   "to": 83,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U1G5M8xeP7xdCcu",
+   "name": "Artist's Secret Garden Coffee Roasters LLC",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U1FlQG6JZwDAYEL",
+   "name": "Crenshaw Customs",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1U1Amp5T8AHVnUys",
+   "name": "United Pentecostal Church of Palmyra",
+   "from": 4,
+   "to": 5,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U1AVt6hj9YluYcK",
+   "name": "Clean for You",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U16yz8I76WMrLAj",
+   "name": "TaeWannaPlay Fashion Merchandising Productions",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1U15hV9x0c22Iffs",
+   "name": "RY DYL INC LYD LLC",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U12f97Loe0VQiDC",
+   "name": "Tarrytown Merchant",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U0pPU7nttw0Iulp",
+   "name": "Chrixander's",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U0ngs9h04DnbNpo",
+   "name": "Jims Place Furniture LLC",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U0muw7lafJOaDSt",
+   "name": "Wild kutz",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U0DEj7nwbOhG8VV",
+   "name": "Mary Boutique",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U08s16YGKHV19sm",
+   "name": "jaishoez",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1U054E9gbWe8blQS",
+   "name": "BAR FOODS",
+   "from": 82,
+   "to": 83,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1U01MK4gJYQo08a6",
+   "name": "Stratton Electronics LLC",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TzyVs6RidaEcius",
+   "name": "SensorySolutions",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TzlYJ7u54VCD6OZ",
+   "name": "Haywood Music",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TziUt9IXRsRKinK",
+   "name": "Pasco High Athletic Booster Club Inc",
+   "from": 6,
+   "to": 7,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TzhyY4cY4gQrsKv",
+   "name": "THE BROTHERS BLACK HOLDINGS LLC",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TzNOF9JIeDkPEmt",
+   "name": "Golden chick",
+   "from": 95,
+   "to": 96,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1TzCoe8t65WSaBkm",
+   "name": "Afram Health",
+   "from": 93,
+   "to": 94,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1Tz0Yo8NLeGh9v2U",
+   "name": "Badd Habbit",
+   "from": 30,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tyyze55UrYDy3Kg",
+   "name": "JANDPRIMEEEATS",
+   "from": 95,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1TyyMY98r5944q2W",
+   "name": "Ovi’s 5th Ave Inc.",
+   "from": 4,
+   "to": 5,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TyyLY4P02Q3CMCv",
+   "name": "Weak Coffee LLC",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TyuLu7mmET46XC9",
+   "name": "Fat Annie's Coffee Stop",
+   "from": 4,
+   "to": 5,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TycgB4bfb4je3mF",
+   "name": "Freedom Depot LLC",
+   "from": 8,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TycF94xTuzhCteQ",
+   "name": "kurtkurt lawn service",
+   "from": 88,
+   "to": 89,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1Tybpe4U2T5Lpg0B",
+   "name": "JBz Mobile Auto Repair",
+   "from": 35,
+   "to": 36,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TybOU85jKoMHw62",
+   "name": "Accessories2027",
+   "from": 65,
+   "to": 66,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TyRJk4vgXQjNNeL",
+   "name": "Black pearl beauty and haur supply llc",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TyIyL752BS0nqgt",
+   "name": "Air Tennis Co",
+   "from": 95,
+   "to": 89,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1TyAEE7Jnz4DHkuz",
+   "name": "THE FUDGE POT INC",
+   "from": 6,
+   "to": 7,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Ty3Dv9HFhwonJMu",
+   "name": "B & A Flowers",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Ty1n47BxqbHYv0U",
+   "name": "Krafted Memories LLC",
+   "from": 48,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TxmheGGdPH88tBR",
+   "name": "Mitech Solutions",
+   "from": 91,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1Txmhe85O4mEmN6i",
+   "name": "Richard H Greenwood Corporation",
+   "from": 6,
+   "to": 7,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TxYvo9VbQVUlIKr",
+   "name": "Redeeming Tea Co",
+   "from": 42,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TxYA06vp2xBQm7Z",
+   "name": "Pepe Joes Brick Oven Pizzeria",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TxTDZ7Nb4umvEVs",
+   "name": "The Shave Shack LLC",
+   "from": 68,
+   "to": 69,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TxDZH4U03unDtGv",
+   "name": "Sellvia mobile",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1TxAQjG6iUrq4DFX",
+   "name": "Chilakings",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tx6me7pI89fIZqN",
+   "name": "Bravo Detailing",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Twyfq83O5DUZDys",
+   "name": "Cliffs Smokin BBQ",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tww9V8OvcUDepWg",
+   "name": "Zfood",
+   "from": 82,
+   "to": 83,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1Twtrw7RNZ2x2tqz",
+   "name": "Winter’s Devotion",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TwnVK61XfR7SCZd",
+   "name": "Resourceful Mindz",
+   "from": 95,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1Twbg9GGqPiDxZG0",
+   "name": "Somdrero cactus",
+   "from": 88,
+   "to": 89,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1TwW8Z7XcmDxB0e1",
+   "name": "Friendly Kite School",
+   "from": 35,
+   "to": 36,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Tw2gF4yu1rGqQyt",
+   "name": "Nasmani Luxury Transportation",
+   "from": 22,
+   "to": 23,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tw1mQ4fR04h3t5S",
+   "name": "Embers & Ashes",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TvsSMGLIgU4gA5w",
+   "name": "RAD laser engraving and apparel",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TvlMb7umGxRHj7H",
+   "name": "SugahBooks Cafe",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tvhmq5jhvJ6HIFN",
+   "name": "Livingston Hospital",
+   "from": 1,
+   "to": 3,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TvgVy6saaIjhYUI",
+   "name": "strictly needs",
+   "from": 95,
+   "to": 92,
+   "band": "Critical",
+   "action": "Urgent investigation — payouts blocked"
+  },
+  {
+   "accountId": "acct_1TvflK87Zt33mtIt",
+   "name": "Between the covers",
+   "from": 42,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TvYU0GEjMuIzXRw",
+   "name": "Wallflower Bling",
+   "from": 35,
+   "to": 36,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TvY548wCZoEbjHD",
+   "name": "Autoworks",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TvTRbQJcFMN7Q5w",
+   "name": "Jacque Line Shop",
+   "from": 62,
+   "to": 63,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TvNtc70hsRCruUB",
+   "name": "Galo Entertainment, Inc.",
+   "from": 7,
+   "to": 8,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TvLWR60keEz7lj8",
+   "name": "Arctic Circle",
+   "from": 10,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TvKs27RQyylwjul",
+   "name": "US1 TRANSPORTATION SERVICES",
+   "from": 45,
+   "to": 46,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TvK416G6hq2Du7E",
+   "name": "Colorful Creations By Matt",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TvIXX8Zw4bTnrA8",
+   "name": "Curvesbyjess",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tv0lz6YI3Em8Nfx",
+   "name": "Davids millwork",
+   "from": 28,
+   "to": 29,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TusiV5ykrufJkCt",
+   "name": "Everwood Coffee Co™",
+   "from": 85,
+   "to": 86,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1TudszG62KcrI8Vv",
+   "name": "Tied With Charm",
+   "from": 42,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Tud3f8vgzvi6zf7",
+   "name": "Lockhart furniture refinishing",
+   "from": 50,
+   "to": 49,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TubpS5dkAry8TOa",
+   "name": "Epiffany4",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TuZfU8mEkN0Z2qf",
+   "name": "Moshi Labs",
+   "from": 55,
+   "to": 56,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TuIpz7pWAXgiTXW",
+   "name": "Robinson Insurance",
+   "from": 75,
+   "to": 76,
+   "band": "Very high risk",
+   "action": "Hold payouts pending review"
+  },
+  {
+   "accountId": "acct_1TuHGJ6kYqKNQLle",
+   "name": "Big Tasty's",
+   "from": 8,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TuEuL7itMnCQdbe",
+   "name": "Isan Thai Food Truck",
+   "from": 8,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TuEVPGCV7GJ4feE",
+   "name": "Gryphon's Heart LLC",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TuCFY6voXsMUDGG",
+   "name": "Sweet Ice Waterice",
+   "from": 50,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TuBgu5jY1ho048c",
+   "name": "YaadieBodyWorx",
+   "from": 18,
+   "to": 15,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TuBJa9v8AFkcRnO",
+   "name": "Adriana Espinheira",
+   "from": 65,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tu2hJ7AFzbzGA0t",
+   "name": "Easily Edible Cafe and Catering",
+   "from": 22,
+   "to": 20,
+   "band": "Low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tu2e15BuxKqmTzi",
+   "name": "Cool Down Station",
+   "from": 58,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tu24OG61FLqIJJO",
+   "name": "The Pavilion Restaurant at Caille Blanc Villa & Hotel",
+   "from": 10,
+   "to": 14,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tu0c56JDT9EKC5h",
+   "name": "Roodroth Entreprise LLC",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Tty3q5XZgMuE7ip",
+   "name": "In Vino Verde",
+   "from": 75,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1Ttxao7GWD4xNmcf",
+   "name": "Allen Family Gifts",
+   "from": 40,
+   "to": 32,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Ttwml7Uqora9JAi",
+   "name": "KITTO yokatta LLP",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtvXJ6BNUehnzYY",
+   "name": "Fugman Group LLC",
+   "from": 45,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Ttv6H9ChMSf42Ey",
+   "name": "Friends of the Alexandria Zoo",
+   "from": 3,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Ttv1K5Mannx2wup",
+   "name": "Bolsa Food Group LLC",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtuIG9KE9SKFfJE",
+   "name": "Game time vault",
+   "from": 58,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TtuAL7C646Nqh7e",
+   "name": "TU CASA RESTAURANT LLC",
+   "from": 8,
+   "to": 9,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TttgD4bYumanndj",
+   "name": "Rich Walkers LLC",
+   "from": 40,
+   "to": 32,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtsTo7sg7EIYCuY",
+   "name": "Sips & Dips LLC",
+   "from": 45,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtqzU6uCQE8Zczc",
+   "name": "THE CULTURE CAFÉ",
+   "from": 10,
+   "to": 14,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TthlFQIef4mv3J2",
+   "name": "Tasty Jays LLC",
+   "from": 50,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtUxJ5PegT02ycs",
+   "name": "LMD Ice Cream",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TtGdM6YyaltU7SI",
+   "name": "Ariel on Broadway, LLC",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tt2Re4UA6sdHN6h",
+   "name": "Midnight Run",
+   "from": 60,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TstkX5tWgDkBfDc",
+   "name": "ALWsMart",
+   "from": 45,
+   "to": 43,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TshTW8WL2KYZwld",
+   "name": "noodle wagon",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TsX7S4P6Fp7rXpk",
+   "name": "Sweet Mollys LLC",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TsNEw6s1OKt5XDL",
+   "name": "trustandbust",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TsBKM5fEHwyOixc",
+   "name": "Kanon Rush",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TrlHv8TznnkI6g3",
+   "name": "Bossy Girls Co.",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TrkLK8W1Kg639hT",
+   "name": "Kyro’s Lawn Care And Detail",
+   "from": 60,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Trhwr6wCPbGbkI3",
+   "name": "Salviricans LLC",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TrUQrGCFKZFtYnx",
+   "name": "The Deals Depot",
+   "from": 65,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TrP607d9Rj8zgUk",
+   "name": "Global Snack Shack NC LLC",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TrOSZ7xRW9ys2WB",
+   "name": "Dirty cat inc.",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TrNw86sAuyRJTS8",
+   "name": "Zeke's Girls, LLC",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Tr1ZA6GGzxYiJJF",
+   "name": "RWPV",
+   "from": 60,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tqz2w66Uhk3bIY9",
+   "name": "Aleem & Company Corp",
+   "from": 15,
+   "to": 12,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tqy7pGNFnsrSDXh",
+   "name": "Auto Value Parts Stores",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1Tqx0j6KVeviFSZv",
+   "name": "Simply Dimples",
+   "from": 60,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Tqv3L84BAbKYNcp",
+   "name": "Lisa Klene",
+   "from": 80,
+   "to": 64,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1Tqi3v8jynLd53fa",
+   "name": "JENNIFER MARIE GARCIA REMIC co",
+   "from": 80,
+   "to": 64,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1Tqbkx62LiuzGJEh",
+   "name": "Blackdahomeyluxe.llc",
+   "from": 55,
+   "to": 42,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TqKel5B6Ajq2hj4",
+   "name": "ClayClutz",
+   "from": 40,
+   "to": 32,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TqDjv5QsF0Xrbqv",
+   "name": "QuallsTech",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1Tq0p08WVKLTXAtv",
+   "name": "loversity",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TpxjZ9762FzcO1s",
+   "name": "CMAC SERVICES LLC",
+   "from": 50,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TpdDV4m00Ds6Gx3",
+   "name": "Groots Wellness",
+   "from": 70,
+   "to": 59,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TpRfGGDU5VTbxvE",
+   "name": "530.INCORPORATED",
+   "from": 75,
+   "to": 72,
+   "band": "High risk",
+   "action": "Verify before further payout exposure"
+  },
+  {
+   "accountId": "acct_1TpBK68n6hKE542k",
+   "name": "Tae cuts",
+   "from": 60,
+   "to": 55,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1Toqua9Iyn3F9xbN",
+   "name": "busy business",
+   "from": 65,
+   "to": 50,
+   "band": "Elevated risk",
+   "action": "Enhanced verification"
+  },
+  {
+   "accountId": "acct_1TWfXB9YsTPeMVh3",
+   "name": "Wellspring Community Worship Center",
+   "from": 10,
+   "to": 14,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TWOQY8lEmH1iqQS",
+   "name": "Lee Beauty Southfield Plaza",
+   "from": 10,
+   "to": 14,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TWOGf7egDgFG55L",
+   "name": "Fraser Lee Beauty Supply and General Merchandise",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TVeZjG1JfOXkKoN",
+   "name": "R-KEGS INC",
+   "from": 50,
+   "to": 40,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TOKmPQJfvlGDJJG",
+   "name": "Polar Bear Ice Cream Company",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TMaEu9uALOIzRNR",
+   "name": "Richboro Coffeehouse LLC",
+   "from": 5,
+   "to": 6,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  },
+  {
+   "accountId": "acct_1TLnCc7HEHpEovei",
+   "name": "Delta Builders llc",
+   "from": 35,
+   "to": 31,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  },
+  {
+   "accountId": "acct_1TKEC06CHbtYBHTl",
+   "name": "Manami Suzuki",
+   "from": 30,
+   "to": 32,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
+  }
+ ],
+ "overridesPreserved": [
+  {
+   "accountId": "acct_1UHy7BQFxo15y3TQ",
+   "name": "Think Big Technology",
+   "overrideScore": 95,
+   "dimensionSum": 85,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UHQin79Tya3nQY2",
+   "name": "Deleon Black Construction LLC",
+   "overrideScore": 95,
+   "dimensionSum": 64,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UFFj39RLMRuyKh4",
+   "name": "Daphne Design",
+   "overrideScore": 95,
+   "dimensionSum": 85,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UEwp17hTPFEAi5l",
+   "name": "home & kitchen corp",
+   "overrideScore": 95,
+   "dimensionSum": 84,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UEUFK5dZ6e5RJIN",
+   "name": "Nabil Tech",
+   "overrideScore": 95,
+   "dimensionSum": 86,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UDTkX8U0jCSzUQh",
+   "name": "Central diner llc",
+   "overrideScore": 95,
+   "dimensionSum": 87,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UBjys5dFe8AWU10",
+   "name": "Arenas Contracting",
+   "overrideScore": 95,
+   "dimensionSum": 86,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1UBjvW5oHlXBWXp2",
+   "name": "Elevated Dreams LLC",
+   "overrideScore": 95,
+   "dimensionSum": 84,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1U3ffU5YU7DST2YX",
+   "name": "CJs Deals and Collectibles",
+   "overrideScore": 95,
+   "dimensionSum": 92,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1Tyyze55UrYDy3Kg",
+   "name": "JANDPRIMEEEATS",
+   "overrideScore": 95,
+   "dimensionSum": 92,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1TyIyL752BS0nqgt",
+   "name": "Air Tennis Co",
+   "overrideScore": 95,
+   "dimensionSum": 89,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1TwnVK61XfR7SCZd",
+   "name": "Resourceful Mindz",
+   "overrideScore": 95,
+   "dimensionSum": 92,
+   "reason": "known-network-risk"
+  },
+  {
+   "accountId": "acct_1TvgVy6saaIjhYUI",
+   "name": "strictly needs",
+   "overrideScore": 95,
+   "dimensionSum": 92,
+   "reason": "known-network-risk"
+  }
+ ],
+ "duplicatesMerged": [
+  {
+   "slug": "two-brothers",
+   "slugScore": 87,
+   "canonical": "acct_1UMdcQ7k2AfD2jbs",
+   "canonicalScore": 85,
+   "name": "Two Brothers Construction"
+  },
+  {
+   "slug": "valcrestus",
+   "slugScore": 71,
+   "canonical": "acct_1UIvww6kwe44hxTX",
+   "canonicalScore": 65,
+   "name": "Valcrestus Property Group"
+  },
+  {
+   "slug": "deleon-black",
+   "slugScore": 95,
+   "canonical": "acct_1UHQin79Tya3nQY2",
+   "canonicalScore": 95,
+   "name": "DeLeon Black Construction LLC"
+  },
+  {
+   "slug": "interior-glass",
+   "slugScore": 14,
+   "canonical": "acct_1UJE8o8m76Cdi9l6",
+   "canonicalScore": 43,
+   "name": "Interior Glass Inc."
+  }
+ ],
+ "staleEnabledFixed": [
+  {
+   "accountId": "acct_1ULulj9cdxEvOCSB",
+   "name": "J&S Construction And Remodeling Limited Liability Company",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1UHy7BQFxo15y3TQ",
+   "name": "Think Big Technology",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1UFZF97GtorCHtrm",
+   "name": "EVAN COUTURE LLC",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1U9QN35GOFfLEY9C",
+   "name": "Radient Rupture llc",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1U4vAl8RYKZL54E1",
+   "name": "RMP Freelance",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1TzCoe8t65WSaBkm",
+   "name": "Afram Health",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1TycgB4bfb4je3mF",
+   "name": "Freedom Depot LLC",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1TvIXX8Zw4bTnrA8",
+   "name": "Curvesbyjess",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1TstkX5tWgDkBfDc",
+   "name": "ALWsMart",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1TpBK68n6hKE542k",
+   "name": "Tae cuts",
+   "from": true,
+   "to": false,
+   "liveStatus": "Rejected"
+  }
+ ],
+ "unresolved": []
+}

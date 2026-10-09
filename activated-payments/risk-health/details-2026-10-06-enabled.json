@@ -1,1 +1,215 @@
-{"schemaVersion":2,"batch":{"label":"Daily newly-enabled review — 2026-10-06","reviewedAt":"2026-10-07","count":4,"cohortDefinition":"charges_enabled=true with canonical enabled date in 2026-10-06 Europe/London; account creation date ignored"},"reviewedAt":"2026-10-07","scoreDirection":"0=no risk, 100=extreme risk","merchants":[{"id":"acct_1UNPxd5MptZKerfd","accountId":"acct_1UNPxd5MptZKerfd","name":"MB GraphicZ Co.","score":34,"riskScore":34,"trustScore":66,"band":"Moderate risk","reviewedAt":"2026-10-07","action":"Monitor closely","riskDimensions":{"legal":6,"operating":8,"identity":2,"contact":5,"businessModel":3,"history":10,"behavior":0,"network":0},"verified":["Stripe onboarding is complete and the account is enabled.","The submitted Printify storefront is coherent with the apparel/merchandise business model and MCC."],"unverified":["Independent legal-registration evidence and a durable operating history remain limited.","The public footprint outside the submitted storefront is thin."],"contradictions":[],"evidenceNeeded":["If processing volume becomes material, corroborate registration, customer/order history and payout-bank ownership."],"summary":"Complete KYC and coherent storefront/business model, with limited independent operating history. No affirmative fraud contradiction identified.","reviewCompleteness":85,"confidence":"medium","reviewType":"daily-enabled-review","createdAt":"2026-10-06T04:26:42Z","enabledAt":"2026-10-06T04:30:22Z","enabledEvidence":"tos_acceptance_date + charges_enabled=true","location":"Pevely, MO","website":"https://mb-studio-no-26.printify.me/","mcc":"5691","identityVerification":"Verified","enabled":true,"fullyEnabled":true,"detailsSubmitted":true,"successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNYIF9NpejKe1Vc","accountId":"acct_1UNYIF9NpejKe1Vc","name":"Gifts by Jennie Lee","score":19,"riskScore":19,"trustScore":81,"band":"Low risk","reviewedAt":"2026-10-07","action":"Normal monitoring","riskDimensions":{"legal":5,"operating":4,"identity":1,"contact":3,"businessModel":1,"history":5,"behavior":0,"network":0},"verified":["Stripe identity verification is complete and the payout bank is verified.","Independent business listings corroborate Gifts by Jennie Lee as an operating crochet/gift business and match the submitted business phone.","The submitted domain and MCC are coherent with the business."],"unverified":["The submitted residential/contact address differs from the public selling location, plausibly reflecting owner/home versus selling location."],"contradictions":[],"evidenceNeeded":[],"summary":"Strong identity and business-model consistency with independent operating evidence and matching public contact information.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-enabled-review","createdAt":"2026-10-06T13:20:33Z","enabledAt":"2026-10-06T13:31:58Z","enabledEvidence":"tos_acceptance_date + charges_enabled=true","location":"Ridgeland / St Helena, SC","website":"https://giftsbyjennielee.com","mcc":"5399","identityVerification":"Verified","enabled":true,"fullyEnabled":true,"detailsSubmitted":true,"successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1U9ucp9Qvqm2368S","accountId":"acct_1U9ucp9Qvqm2368S","name":"Ideal store and Family","score":32,"riskScore":32,"trustScore":68,"band":"Moderate risk","reviewedAt":"2026-10-07","action":"Monitor closely","riskDimensions":{"legal":8,"operating":7,"identity":1,"contact":5,"businessModel":5,"history":6,"behavior":0,"network":0},"verified":["Stripe identity verification is complete, tax ID is provided, a payout bank is attached and the account is enabled.","A public social account under the representative's name used the exact 'Ideal store and Family' name in 2024, predating the Payments review."],"unverified":["No strong independent corporate/DBA record or established customer-review footprint was found for the exact business identity."],"contradictions":["The submitted address is a residential condominium location rather than an independently verified retail premises.","Public historical content emphasizes family fashion while the current Stripe MCC is grocery stores and the product description spans food, beverages and accessories; this may be a general-store model but remains only partially corroborated."],"evidenceNeeded":["If volume becomes material, verify Florida registration/DBA, source-of-goods/supplier receipts and recent customer/order history."],"summary":"The merchant was created on 29 August but only became enabled on 6 October, which is why it belongs in this cohort. Identity and Stripe onboarding are strong; external business corroboration is limited.","reviewCompleteness":90,"confidence":"medium","reviewType":"daily-enabled-review","createdAt":"2026-08-29T22:21:26Z","enabledAt":"2026-10-06T18:57:32Z","enabledEvidence":"tos_acceptance_date + charges_enabled=true","location":"Pembroke Pines, FL","website":null,"mcc":"5411","identityVerification":"Verified","enabled":true,"fullyEnabled":true,"detailsSubmitted":true,"successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null},{"id":"acct_1UNfVW7p982hKusL","accountId":"acct_1UNfVW7p982hKusL","name":"Fresh Bamboo Kitchen / FRES","score":66,"riskScore":66,"trustScore":34,"band":"High risk","reviewedAt":"2026-10-07","action":"Verify before further payout exposure","riskDimensions":{"legal":14,"operating":15,"identity":2,"contact":10,"businessModel":10,"history":10,"behavior":0,"network":5},"verified":["Stripe onboarding is complete, the account is enabled, tax ID is provided, a company document was supplied and the payout bank is verified.","The submitted food-related MCC is coherent with the Fresh Bamboo Kitchen trading name."],"unverified":["Independent operating history, customer footprint, food-service licensing and a durable restaurant/business presence were not established."],"contradictions":["The submitted Fresh Bamboo Kitchen domain appears to have been newly registered on 1 October 2026, only days before enablement.","The submitted Mesa address is also the principal address of an established active Arizona entity, Relaxcation LLC, managed by the same representative but registered for real-estate/rental activity; the relationship between that entity, FRES and Fresh Bamboo Kitchen is not independently established."],"evidenceNeeded":["Verify Arizona registration/DBA tying FRES to Fresh Bamboo Kitchen, applicable food-service/health permit, payout-bank ownership, supplier receipts and historical customer/order records."],"summary":"Complete Stripe onboarding but materially weak external corroboration, a very new domain and an unresolved legal/entity/address relationship warrant enhanced diligence before additional payout exposure.","reviewCompleteness":95,"confidence":"high","reviewType":"daily-enabled-review","createdAt":"2026-10-06T21:02:45Z","enabledAt":"2026-10-06T21:06:52Z","enabledEvidence":"tos_acceptance_date + charges_enabled=true","location":"Mesa, AZ","website":"https://freshbambookitchen.com","mcc":"5499","identityVerification":"KYC complete","enabled":true,"fullyEnabled":true,"detailsSubmitted":true,"successfulTransactions":0,"hasTransacted":false,"lastTransactedAt":null}]}
+{
+ "schemaVersion": 2,
+ "batch": {
+  "label": "Daily newly-enabled review — 2026-10-06",
+  "reviewedAt": "2026-10-07",
+  "count": 4,
+  "cohortDefinition": "charges_enabled=true with canonical enabled date in 2026-10-06 Europe/London; account creation date ignored"
+ },
+ "reviewedAt": "2026-10-07",
+ "scoreDirection": "0=no risk, 100=extreme risk",
+ "merchants": [
+  {
+   "id": "acct_1UNPxd5MptZKerfd",
+   "accountId": "acct_1UNPxd5MptZKerfd",
+   "name": "MB GraphicZ Co.",
+   "score": 34,
+   "riskScore": 34,
+   "trustScore": 66,
+   "band": "Moderate risk",
+   "reviewedAt": "2026-10-07",
+   "action": "Monitor closely",
+   "riskDimensions": {
+    "legal": 6,
+    "operating": 8,
+    "identity": 2,
+    "contact": 5,
+    "businessModel": 3,
+    "history": 10,
+    "behavior": 0,
+    "network": 0
+   },
+   "verified": [
+    "Stripe onboarding is complete and the account is enabled.",
+    "The submitted Printify storefront is coherent with the apparel/merchandise business model and MCC."
+   ],
+   "unverified": [
+    "Independent legal-registration evidence and a durable operating history remain limited.",
+    "The public footprint outside the submitted storefront is thin."
+   ],
+   "contradictions": [],
+   "evidenceNeeded": [
+    "If processing volume becomes material, corroborate registration, customer/order history and payout-bank ownership."
+   ],
+   "summary": "Complete KYC and coherent storefront/business model, with limited independent operating history. No affirmative fraud contradiction identified.",
+   "reviewCompleteness": 85,
+   "confidence": "medium",
+   "reviewType": "daily-enabled-review",
+   "createdAt": "2026-10-06T04:26:42Z",
+   "enabledAt": "2026-10-06T04:30:22Z",
+   "enabledEvidence": "tos_acceptance_date + charges_enabled=true",
+   "location": "Pevely, MO",
+   "website": "https://mb-studio-no-26.printify.me/",
+   "mcc": "5691",
+   "identityVerification": "Verified",
+   "enabled": true,
+   "fullyEnabled": true,
+   "detailsSubmitted": true,
+   "successfulTransactions": 0,
+   "hasTransacted": false,
+   "lastTransactedAt": null
+  },
+  {
+   "id": "acct_1UNYIF9NpejKe1Vc",
+   "accountId": "acct_1UNYIF9NpejKe1Vc",
+   "name": "Gifts by Jennie Lee",
+   "score": 19,
+   "riskScore": 19,
+   "trustScore": 81,
+   "band": "Low risk",
+   "reviewedAt": "2026-10-07",
+   "action": "Normal monitoring",
+   "riskDimensions": {
+    "legal": 5,
+    "operating": 4,
+    "identity": 1,
+    "contact": 3,
+    "businessModel": 1,
+    "history": 5,
+    "behavior": 0,
+    "network": 0
+   },
+   "verified": [
+    "Stripe identity verification is complete and the payout bank is verified.",
+    "Independent business listings corroborate Gifts by Jennie Lee as an operating crochet/gift business and match the submitted business phone.",
+    "The submitted domain and MCC are coherent with the business."
+   ],
+   "unverified": [
+    "The submitted residential/contact address differs from the public selling location, plausibly reflecting owner/home versus selling location."
+   ],
+   "contradictions": [],
+   "evidenceNeeded": [],
+   "summary": "Strong identity and business-model consistency with independent operating evidence and matching public contact information.",
+   "reviewCompleteness": 95,
+   "confidence": "high",
+   "reviewType": "daily-enabled-review",
+   "createdAt": "2026-10-06T13:20:33Z",
+   "enabledAt": "2026-10-06T13:31:58Z",
+   "enabledEvidence": "tos_acceptance_date + charges_enabled=true",
+   "location": "Ridgeland / St Helena, SC",
+   "website": "https://giftsbyjennielee.com",
+   "mcc": "5399",
+   "identityVerification": "Verified",
+   "enabled": true,
+   "fullyEnabled": true,
+   "detailsSubmitted": true,
+   "successfulTransactions": 0,
+   "hasTransacted": false,
+   "lastTransactedAt": null
+  },
+  {
+   "id": "acct_1U9ucp9Qvqm2368S",
+   "accountId": "acct_1U9ucp9Qvqm2368S",
+   "name": "Ideal store and Family",
+   "score": 32,
+   "riskScore": 32,
+   "trustScore": 68,
+   "band": "Moderate risk",
+   "reviewedAt": "2026-10-07",
+   "action": "Monitor closely",
+   "riskDimensions": {
+    "legal": 8,
+    "operating": 7,
+    "identity": 1,
+    "contact": 5,
+    "businessModel": 5,
+    "history": 6,
+    "behavior": 0,
+    "network": 0
+   },
+   "verified": [
+    "Stripe identity verification is complete, tax ID is provided, a payout bank is attached and the account is enabled.",
+    "A public social account under the representative's name used the exact 'Ideal store and Family' name in 2024, predating the Payments review."
+   ],
+   "unverified": [
+    "No strong independent corporate/DBA record or established customer-review footprint was found for the exact business identity."
+   ],
+   "contradictions": [
+    "The submitted address is a residential condominium location rather than an independently verified retail premises.",
+    "Public historical content emphasizes family fashion while the current Stripe MCC is grocery stores and the product description spans food, beverages and accessories; this may be a general-store model but remains only partially corroborated."
+   ],
+   "evidenceNeeded": [
+    "If volume becomes material, verify Florida registration/DBA, source-of-goods/supplier receipts and recent customer/order history."
+   ],
+   "summary": "The merchant was created on 29 August but only became enabled on 6 October, which is why it belongs in this cohort. Identity and Stripe onboarding are strong; external business corroboration is limited.",
+   "reviewCompleteness": 90,
+   "confidence": "medium",
+   "reviewType": "daily-enabled-review",
+   "createdAt": "2026-08-29T22:21:26Z",
+   "enabledAt": "2026-10-06T18:57:32Z",
+   "enabledEvidence": "tos_acceptance_date + charges_enabled=true",
+   "location": "Pembroke Pines, FL",
+   "website": null,
+   "mcc": "5411",
+   "identityVerification": "Verified",
+   "enabled": true,
+   "fullyEnabled": true,
+   "detailsSubmitted": true,
+   "successfulTransactions": 0,
+   "hasTransacted": false,
+   "lastTransactedAt": null
+  },
+  {
+   "id": "acct_1UNfVW7p982hKusL",
+   "accountId": "acct_1UNfVW7p982hKusL",
+   "name": "Fresh Bamboo Kitchen / FRES",
+   "score": 66,
+   "riskScore": 66,
+   "trustScore": 34,
+   "band": "High risk",
+   "reviewedAt": "2026-10-07",
+   "action": "Verify before further payout exposure",
+   "riskDimensions": {
+    "legal": 14,
+    "operating": 15,
+    "identity": 2,
+    "contact": 10,
+    "businessModel": 10,
+    "history": 10,
+    "behavior": 0,
+    "network": 5
+   },
+   "verified": [
+    "Stripe onboarding is complete, the account is enabled, tax ID is provided, a company document was supplied and the payout bank is verified.",
+    "The submitted food-related MCC is coherent with the Fresh Bamboo Kitchen trading name."
+   ],
+   "unverified": [
+    "Independent operating history, customer footprint, food-service licensing and a durable restaurant/business presence were not established."
+   ],
+   "contradictions": [
+    "The submitted Fresh Bamboo Kitchen domain appears to have been newly registered on 1 October 2026, only days before enablement.",
+    "The submitted Mesa address is also the principal address of an established active Arizona entity, Relaxcation LLC, managed by the same representative but registered for real-estate/rental activity; the relationship between that entity, FRES and Fresh Bamboo Kitchen is not independently established."
+   ],
+   "evidenceNeeded": [
+    "Verify Arizona registration/DBA tying FRES to Fresh Bamboo Kitchen, applicable food-service/health permit, payout-bank ownership, supplier receipts and historical customer/order records."
+   ],
+   "summary": "Complete Stripe onboarding but materially weak external corroboration, a very new domain and an unresolved legal/entity/address relationship warrant enhanced diligence before additional payout exposure.",
+   "reviewCompleteness": 95,
+   "confidence": "high",
+   "reviewType": "daily-enabled-review",
+   "createdAt": "2026-10-06T21:02:45Z",
+   "enabledAt": "2026-10-06T21:06:52Z",
+   "enabledEvidence": "tos_acceptance_date + charges_enabled=true",
+   "location": "Mesa, AZ",
+   "website": "https://freshbambookitchen.com",
+   "mcc": "5499",
+   "identityVerification": "KYC complete",
+   "enabled": true,
+   "fullyEnabled": true,
+   "detailsSubmitted": true,
+   "successfulTransactions": 0,
+   "hasTransacted": false,
+   "lastTransactedAt": null
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+# FRAUD HEALTH — integrity gate.
+#
+# Runs on any change to the pipeline or to the published review data, including a change
+# made by hand. The dataset spent months accumulating defects that nothing checked for;
+# this is what stops that recurring.
+name: fraud-health-tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "fraud-health/**"
+      - "activated-payments/risk-health/**"
+      - "activated-payments/risk-health.html"
+      - "activated-payments/risk-health-data.js"
+      - ".github/workflows/fraud-health-*.yml"
+  pull_request:
+    paths:
+      - "fraud-health/**"
+      - "activated-payments/risk-health/**"
+      - "activated-payments/risk-health.html"
+      - "activated-payments/risk-health-data.js"
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install --quiet pytest
+
+      - name: Unit tests
+        run: python3 -m pytest fraud-health/tests -q
+
+      - name: Dataset integrity
+        run: python3 fraud-health/run.py validate
+
+      - name: Dashboard script parses
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check risk-health.html JavaScript
+        run: |
+          python3 - <<'PY'
+          import re, sys
+          html = open("activated-payments/risk-health.html", encoding="utf-8").read()
+          blocks = re.findall(r"<script>(.*?)</script>", html, re.S)
+          if not blocks:
+              sys.exit("no inline script found in risk-health.html")
+          open("/tmp/risk-health.js", "w", encoding="utf-8").write(blocks[-1])
+          PY
+          node --check /tmp/risk-health.js

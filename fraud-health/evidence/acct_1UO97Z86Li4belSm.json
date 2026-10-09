@@ -1,0 +1,30 @@
+{
+ "accountId": "acct_1UO97Z86Li4belSm",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "history",
+   "points": 0,
+   "status": "unverified",
+   "statement": "A halal grocery trading as 'New Madina Market' is listed at 9200 N Lamar Blvd, Austin TX, with reviews dated 2007-2015 — consistent with a long-established grocer. Same name in the same country and sector is supporting evidence only; it does not establish that this Stripe account belongs to that store.",
+   "checkedAt": "2026-10-09",
+   "url": "https://www.zabihah.com/restaurants/c9e3baed-7767-11ef-95ae-6045bdeb9f57/new-madina-market-austin-tx",
+   "sourceType": "business-directory",
+   "establishes": "that a long-established business of this name and type operates in the US"
+  },
+  {
+   "dimension": "businessModel",
+   "points": 0,
+   "status": "unverified",
+   "statement": "Internal corroboration independent of the web: Loyverse owner id 3026000 is a low, early id with POS receipts recorded to 2026-07 and a last sale of 2024-07-01, so this is an existing POS merchant adding payments, not a new account. Consistent with a grocery business model. Not scored.",
+   "checkedAt": "2026-10-09"
+  }
+ ],
+ "evidenceNeeded": [
+  "Confirm the Stripe account's declared address matches 9200 N Lamar Blvd, Austin TX (available once the address pull lands).",
+  "Texas Secretary of State extract for 'New Madina Market Inc'.",
+  "Confirm the POS receipt history belongs to the same premises."
+ ],
+ "summary": "The best-corroborated merchant in the cohort. A halal grocer trading as 'New Madina Market' is listed in Austin TX, and internal data independently shows a long-standing Loyverse POS merchant (owner id 3026000, receipts back to 2024) rather than a new signup. Same-entity identification is still not proven, so this is corroboration, not verification."
+}
