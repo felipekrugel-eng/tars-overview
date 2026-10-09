@@ -628,15 +628,21 @@
     const nSold = ms.filter(m => m.rcptD).length;
     const nAct5 = ms.filter(m => m.a30_5).length;
     const nKyc = ms.filter(m => m.kyc3).length;
+    // TRANSACTING = has taken at least one card payment through Loyverse Payments. The last
+    // stage of the payments path, and the only one the tile strip was missing: "Issued a
+    // receipt" is the POS equivalent and is already here, so without this the strip stopped
+    // at KYC and never said how many of those merchants actually went on to process.
+    const nTxn = ms.filter(m => m.chargeD).length;
     const tiles = [
       { l: 'Spend', v: money(t.spend), d: `${n0(t.clicks)} clicks · ${n0(t.impr)} impressions` },
       { l: 'Cost per click', v: t.clicks ? money2(t.spend / t.clicks) : '—', d: 'What Google and Meta charged' },
       { l: 'Platform conversions', v: n0(t.pconv), d: 'Google’s and Meta’s own count — not merchants' },
-      { l: 'Merchants acquired', v: n0(nM), ours: 1, d: 'Signed up and traced to a paid click' },
+      { l: 'Merchants registered', v: n0(nM), ours: 1, d: 'Registered and traced to a paid click' },
       { l: 'Cost per merchant', v: money2(perCC(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
       { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(perCC(aSpend, nSold))} each` },
       { l: 'Active (5+ / 30d)', v: n0(nAct5), ours: 1, d: `${pct(nM ? nAct5 / nM : null)} of merchants · ${money2(perCC(aSpend, nAct5))} each` },
       { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(perCC(aSpend, nKyc))} each` },
+      { l: 'Transacting', v: n0(nTxn), ours: 1, d: `${pct(nM ? nTxn / nM : null)} of merchants · ${money2(perCC(aSpend, nTxn))} each` },
     ];
     $('tiles').innerHTML = tiles.map(x =>
       `<div class="tile${x.ours ? ' ours' : ''} rise"><div class="tl">${esc(x.l)}</div>
@@ -946,6 +952,7 @@
     const regs = fb.reduce((a, s) => a + s.pc, 0);
     const sold = fbM.filter(m => m.rcptD).length;
     const kyc = fbM.filter(m => m.kyc3).length;
+    const txn = fbM.filter(m => m.chargeD).length;
     $('panel-fb').innerHTML = `
       <div class="ph" style="margin-bottom:12px"><b>Facebook merchants are traced through <code>utm_campaign</code>, not a click id.</b>
       Meta does not expose click ids in the Insights API, but the landing page writes the campaign name into the
@@ -958,12 +965,14 @@
           <div class="td">${n0(clicks)} clicks · ${n0(impr)} impressions</div></div>
         <div class="tile"><div class="tl">Cost per click</div><div class="tv font-num">${clicks ? money2(spend / clicks) : '—'}</div>
           <div class="td">comparable with Google</div></div>
-        <div class="tile ours"><div class="tl">Merchants acquired</div><div class="tv font-num">${n0(fbM.length)}</div>
+        <div class="tile ours"><div class="tl">Merchants registered</div><div class="tv font-num">${n0(fbM.length)}</div>
           <div class="td">${money2(per(spend, fbM.length))} each</div></div>
         <div class="tile ours"><div class="tl">Issued a receipt</div><div class="tv font-num">${n0(sold)}</div>
           <div class="td">${pct(fbM.length ? sold / fbM.length : null)} of them</div></div>
         <div class="tile ours"><div class="tl">Passed KYC</div><div class="tv font-num">${n0(kyc)}</div>
           <div class="td">${money2(per(spend, kyc))} each</div></div>
+        <div class="tile ours"><div class="tl">Transacting</div><div class="tv font-num">${n0(txn)}</div>
+          <div class="td">taking card payments</div></div>
       </div>`;
   }
 
