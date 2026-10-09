@@ -659,16 +659,19 @@
 .ch-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
 .ch-ctl .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--midgray);font-weight:bold;margin-left:6px;}
 .ch-ctl input[type=number]{width:64px;border:1px solid var(--silver);border-radius:7px;padding:6px 8px;font:12px Arial;color:var(--charcoal);}
-.ch-tri{width:100%;border-collapse:separate;border-spacing:2px;font-size:12px;}
-.ch-tri th{font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--midgray);padding:6px 6px;text-align:center;white-space:nowrap;background:transparent;}
-.ch-tri th:first-child,.ch-tri td:first-child{text-align:left;font-weight:bold;color:var(--charcoal);white-space:nowrap;}
-.ch-tri td{padding:7px 6px;text-align:center;border-radius:5px;white-space:nowrap;min-width:54px;}
-.ch-tri td.c{cursor:pointer;color:var(--charcoal);}
-.ch-tri td.c:hover{outline:2px solid var(--blue);}
-.ch-tri td.c.sel{outline:2px solid var(--charcoal);}
-.ch-tri td.empty{background:transparent;color:var(--silver);}
-.ch-tri td.partial{opacity:.65;}
-.ch-tri td.n{color:var(--darkgray);font-weight:normal;}
+/* Same look as the POS cohort triangle on facadash (table.tri): compact, bordered, newest
+   cohort on top, Size column, heat ramp with white text on dark cells, dashed outline + * on
+   the in-progress month, double-click a cell to list its merchants. */
+.ch-tri{border-collapse:collapse;font-size:11px;}
+.ch-tri th{font-size:10px;color:var(--midgray);font-weight:600;padding:3px 5px;text-align:center;position:sticky;top:0;background:#fff;z-index:1;}
+.ch-tri th.sz{text-align:right;}
+.ch-tri td{padding:3px 6px;text-align:center;border:1px solid #F0F2F5;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.ch-tri td.k{text-align:left;font-weight:600;color:var(--charcoal);background:#fff;position:sticky;left:0;z-index:1;}
+.ch-tri td.sz{text-align:right;color:var(--midgray);font-weight:600;background:#F7F9FB;}
+.ch-tri td.empty{background:#FAFBFC;}
+.ch-tri td.c{cursor:zoom-in;}
+.ch-tri td.c:hover{outline:2px solid rgba(21,120,196,.85);outline-offset:-2px;}
+.ch-tri td.c.sel{outline:2px solid #13233A;outline-offset:-2px;}
 .ch-grid{display:grid;grid-template-columns:1fr;gap:16px;}
 .ch-chart{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:14px 16px;height:320px;position:relative;}
 .ch-chart canvas{position:absolute;left:14px;top:14px;right:16px;bottom:14px;}
@@ -686,14 +689,14 @@
       <h1 class="ov-h1">Payments Cohorts<span class="dot">.</span></h1>
       <div class="ov-updated" id="chUpdated">&nbsp;</div>
     </div>
-    <p class="ov-sub">Loyverse Payments only. A cohort is the month a merchant <b>registered on Loyverse Payments</b> (opened its Stripe connected account). For each cohort: how many are transacting month by month, the volume and <b>net margin</b> they produce (application fees captured minus the interchange-plus cost Stripe bills us &mdash; what Loyverse actually keeps), and the cohort's value over time. Honours the country picker; internal/QA accounts excluded on the same rule as the Funnel.</p>
+    <p class="ov-sub">Loyverse Payments only. The population is every merchant that has <b>passed KYC</b> (enabled to take payments); a cohort is the month they passed it (switch to the month they opened the account, or took the first charge). For each cohort: how many are transacting month by month, the volume and <b>net margin</b> they produce (application fees captured minus the interchange-plus cost Stripe bills us &mdash; what Loyverse actually keeps), and the cohort's value over time. Honours the country picker; internal/QA accounts excluded on the same rule as the Funnel.</p>
     <div class="cc-note" id="chMissing" style="display:none"></div>
 
     <div class="ch-ctl">
       <span class="lbl">Cohort by</span>
       <div class="ov-range" id="chKey">
-        <button data-k="k" class="on">Registered on Payments</button>
-        <button data-k="f">Passed KYC</button>
+        <button data-k="f" class="on">Passed KYC</button>
+        <button data-k="k">Registered on Payments</button>
         <button data-k="t">First charge</button>
       </div>
       <span class="lbl">Axis</span>
@@ -717,18 +720,21 @@
     <p class="lp-note" id="chSumNote" style="margin-top:10px"></p>
 
     <h2 class="lp-h2" style="margin-top:36px">Cohort triangle.</h2>
-    <p class="ov-sub" style="margin-top:2px">Rows are cohorts, columns are months. Pick what each cell shows; click a cell to list the merchants behind it. The current month is shaded lighter because it is still in progress.</p>
+    <p class="ov-sub" style="margin-top:2px">Rows are cohorts (newest on top), columns are months since the cohort month; <b>Size</b> is the number of merchants that passed KYC in that cohort and is the denominator of every percentage. Pick what each cell shows; double-click a cell to list the merchants behind it. The in-progress month is marked <b>*</b>.</p>
     <div class="ch-ctl">
       <span class="lbl">Cell</span>
       <div class="ov-range" id="chMetric">
-        <button data-m="pct_tx" class="on">% transacting</button>
-        <button data-m="n_tx"># transacting</button>
+        <button data-m="n_tx" class="on">Transacting</button>
         <button data-m="tpv">TPV</button>
         <button data-m="fee">Gross fees</button>
         <button data-m="cost">Stripe cost</button>
         <button data-m="margin">Net margin (MRR)</button>
         <button data-m="margin_pm">Net margin / cohort merchant</button>
         <button data-m="cum_pm">Cumulative margin / merchant</button>
+      </div>
+      <div class="ov-range" id="chMode">
+        <button data-p="0">Count</button>
+        <button data-p="1" class="on">% of size</button>
       </div>
     </div>
     <div class="lp-table-scroll" style="max-height:none;overflow:auto;padding:8px"><table id="chTri" class="ch-tri"></table></div>
@@ -4933,13 +4939,15 @@ window.__ACT=window.__ACT||[];
   if(META.seed){ $('chMissing').style.display='block'; $('chMissing').textContent='SEED DATA — synthetic monthly split for layout testing only.'; }
   if(META.charges===false||META.fees===false||META.cost===false){ $('chMissing').style.display='block'; $('chMissing').textContent='One of the monthly Snowflake queries failed on the last pull ('+['charges','fees','cost'].filter(function(k){return META[k]===false;}).join(', ')+'). Figures that depend on it read zero until the next successful pull.'; }
 
-  var key='k', axis='age', metric='pct_tx', cc='';
+  var key='f', axis='age', metric='n_tx', pctMode=true, cc='';
   var disc=10, horizon=12, floor=50;
   var sel=null;   // {c, m}
   var R=[], COH=[], MONTHS=[], LASTFULL=null, PARTIAL=null;
 
   function load(){
-    R=ALL.filter(function(r){ if(cc&&r.c!==cc) return false; if(isTest(r)) return false; return !!mo(r[key]); });
+    // Population = passed KYC (currently enabled, or has taken a charge). An account that only
+    // opened a Stripe account and never cleared KYC cannot transact, so it is not a cohort member.
+    R=ALL.filter(function(r){ if(cc&&r.c!==cc) return false; if(isTest(r)) return false; if(!(r.en||r.t)) return false; return !!mo(r[key]); });
     var cm={}; R.forEach(function(r){ var c=mo(r[key]); (cm[c]||(cm[c]=[])).push(r); });
     var cs=Object.keys(cm).sort();
     var first=cs[0]||PULL_MONTH;
@@ -4993,53 +5001,57 @@ window.__ACT=window.__ACT||[];
   }
 
   // ── Render ────────────────────────────────────────────────────────────────
-  var KEYL={k:'registered on Loyverse Payments',f:'passed KYC',t:'took a first charge'};
+  var KEYL={k:'opened their Loyverse Payments account',f:'passed KYC',t:'took a first charge'};
   function renderKpis(){
     var N=COH.reduce(function(a,c){return a+c.N;},0), ever=COH.reduce(function(a,c){return a+c.ever;},0);
     var margin=COH.reduce(function(a,c){return a+c.val.withPartial.margin;},0), tpv=COH.reduce(function(a,c){return a+c.val.withPartial.tpv;},0);
     var mrr=COH.reduce(function(a,c){return a+c.val.mrr;},0), npv=COH.reduce(function(a,c){return a+c.val.npv;},0);
     var lastCell=null; COH.forEach(function(c){ c.series.forEach(function(s){ if(s.m===LASTFULL){ lastCell=(lastCell||0)+s.n_tx; } }); });
     $('chKpis').innerHTML=[
-      {k:'Cohorts · merchants',v:fmtN(COH.length)+'<span class="u"> · '+fmtN(N)+'</span>',s:'merchants that '+KEYL[key]+(window.LVCC?window.LVCC.suffix():'')},
+      {k:'Cohorts · merchants',v:fmtN(COH.length)+'<span class="u"> · '+fmtN(N)+'</span>',s:'passed KYC · cohorted by the month they '+KEYL[key]+(window.LVCC?window.LVCC.suffix():'')},
       {k:'Ever transacting',v:fmtN(ever)+'<span class="u"> · '+fmtPct(N?100*ever/N:null)+'</span>',s:fmtN(lastCell)+' transacting in '+(LASTFULL?monthLabel(LASTFULL):'–')+' (last complete month)'},
       {k:'Net margin to date',v:fmtMoney(margin)+'<span class="u"> on '+fmtMoney(tpv)+' TPV</span>',s:'fees captured − Stripe IC+ cost · incl. current month'},
       {k:'MRR · portfolio NPV',v:fmtMoney(mrr)+'<span class="u"> · '+fmtMoney(npv)+'</span>',s:'net margin in '+(LASTFULL?monthLabel(LASTFULL):'–')+' · NPV at '+disc+'% with '+horizon+'-month projection'}
     ].map(function(t){return '<div class="fn-kpi"><div class="k">'+t.k+'</div><div class="v">'+t.v+'</div><div class="s">'+t.s+'</div></div>';}).join('');
   }
   function renderSummary(){
-    var h='<thead><tr><th>Cohort</th><th>Merchants</th><th>Passed KYC</th><th>Ever transacting</th><th>Transacting '+(LASTFULL?monthLabel(LASTFULL):'')+'</th><th>Retention / mo</th><th>TPV to date</th><th>Gross fees</th><th>Stripe cost</th><th>Net margin to date</th><th>Margin / merchant</th><th>MRR (net)</th><th>Margin / active</th><th>LTV / merchant</th><th>LTV / transacting</th><th>Cohort NPV</th></tr></thead><tbody>';
+    var h='<thead><tr><th>Cohort</th><th>Merchants (passed KYC)</th><th>Ever transacting</th><th>Transacting '+(LASTFULL?monthLabel(LASTFULL):'')+'</th><th>Retention / mo</th><th>TPV to date</th><th>Gross fees</th><th>Stripe cost</th><th>Net margin to date</th><th>Margin / merchant</th><th>MRR (net)</th><th>Margin / active</th><th>LTV / merchant</th><th>LTV / transacting</th><th>Cohort NPV</th></tr></thead><tbody>';
     var T={N:0,en:0,ev:0,A:0,tpv:0,fee:0,cost:0,m:0,mrr:0,npv:0};
     COH.forEach(function(c){ var v=c.val; T.N+=c.N; T.en+=c.enabled; T.ev+=c.ever; T.A+=v.activeLast; T.tpv+=v.withPartial.tpv; T.fee+=v.fee; T.cost+=v.cost; T.m+=v.withPartial.margin; T.mrr+=v.mrr; T.npv+=v.npv;
-      h+='<tr><td>'+monthLabel(c.c)+'</td><td>'+fmtN(c.N)+'</td><td>'+fmtN(c.enabled)+' <span style="color:var(--midgray)">('+fmtPct(100*c.enabled/c.N,0)+')</span></td><td>'+fmtN(c.ever)+' <span style="color:var(--midgray)">('+fmtPct(100*c.ever/c.N,0)+')</span></td><td>'+fmtN(v.activeLast)+'</td><td title="'+(v.rSrc==='own'?'from this cohort':'borrowed: '+v.rSrc)+'">'+fmtPct(100*v.r,0)+(v.rSrc!=='own'?'<span style="color:var(--midgray)">*</span>':'')+'</td><td>'+fmtMoney(v.withPartial.tpv)+'</td><td>'+fmtMoney(v.fee)+'</td><td>'+fmtMoney(v.cost)+'</td><td style="color:'+(v.withPartial.margin<0?'#CC3333':'inherit')+'">'+fmtMoney(v.withPartial.margin)+'</td><td>'+fmtMoney(c.N?v.withPartial.margin/c.N:null,2)+'</td><td style="color:'+(v.mrr<0?'#CC3333':'inherit')+'">'+fmtMoney(v.mrr)+'</td><td>'+fmtMoney(v.mbar,2)+'</td><td style="color:'+((v.ltv||0)<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.ltv,2)+'</b></td><td>'+fmtMoney(v.ltvTx,2)+'</td><td style="color:'+(v.npv<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.npv)+'</b></td></tr>'; });
-    h+='<tr style="font-weight:bold;background:var(--offwhite)"><td>All cohorts</td><td>'+fmtN(T.N)+'</td><td>'+fmtN(T.en)+' ('+fmtPct(T.N?100*T.en/T.N:null,0)+')</td><td>'+fmtN(T.ev)+' ('+fmtPct(T.N?100*T.ev/T.N:null,0)+')</td><td>'+fmtN(T.A)+'</td><td></td><td>'+fmtMoney(T.tpv)+'</td><td>'+fmtMoney(T.fee)+'</td><td>'+fmtMoney(T.cost)+'</td><td>'+fmtMoney(T.m)+'</td><td>'+fmtMoney(T.N?T.m/T.N:null,2)+'</td><td>'+fmtMoney(T.mrr)+'</td><td></td><td>'+fmtMoney(T.N?T.npv/T.N:null,2)+'</td><td>'+fmtMoney(T.ev?T.npv/T.ev:null,2)+'</td><td>'+fmtMoney(T.npv)+'</td></tr></tbody>';
+      h+='<tr><td>'+c.c+'</td><td>'+fmtN(c.N)+'</td><td>'+fmtN(c.ever)+' <span style="color:var(--midgray)">('+fmtPct(100*c.ever/c.N,0)+')</span></td><td>'+fmtN(v.activeLast)+'</td><td title="'+(v.rSrc==='own'?'from this cohort':'borrowed: '+v.rSrc)+'">'+fmtPct(100*v.r,0)+(v.rSrc!=='own'?'<span style="color:var(--midgray)">*</span>':'')+'</td><td>'+fmtMoney(v.withPartial.tpv)+'</td><td>'+fmtMoney(v.fee)+'</td><td>'+fmtMoney(v.cost)+'</td><td style="color:'+(v.withPartial.margin<0?'#CC3333':'inherit')+'">'+fmtMoney(v.withPartial.margin)+'</td><td>'+fmtMoney(c.N?v.withPartial.margin/c.N:null,2)+'</td><td style="color:'+(v.mrr<0?'#CC3333':'inherit')+'">'+fmtMoney(v.mrr)+'</td><td>'+fmtMoney(v.mbar,2)+'</td><td style="color:'+((v.ltv||0)<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.ltv,2)+'</b></td><td>'+fmtMoney(v.ltvTx,2)+'</td><td style="color:'+(v.npv<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.npv)+'</b></td></tr>'; });
+    h+='<tr style="font-weight:bold;background:var(--offwhite)"><td>All cohorts</td><td>'+fmtN(T.N)+'</td><td>'+fmtN(T.ev)+' ('+fmtPct(T.N?100*T.ev/T.N:null,0)+')</td><td>'+fmtN(T.A)+'</td><td></td><td>'+fmtMoney(T.tpv)+'</td><td>'+fmtMoney(T.fee)+'</td><td>'+fmtMoney(T.cost)+'</td><td>'+fmtMoney(T.m)+'</td><td>'+fmtMoney(T.N?T.m/T.N:null,2)+'</td><td>'+fmtMoney(T.mrr)+'</td><td></td><td>'+fmtMoney(T.N?T.npv/T.N:null,2)+'</td><td>'+fmtMoney(T.ev?T.npv/T.ev:null,2)+'</td><td>'+fmtMoney(T.npv)+'</td></tr></tbody>';
     $('chSummary').innerHTML=h;
     $('chSumNote').textContent='Gross fees, Stripe cost, MRR, retention, LTV and NPV use complete months only (through '+(LASTFULL?monthLabel(LASTFULL):'–')+'); TPV and net margin to date include the current month. LTV / merchant = cohort NPV ÷ cohort size; LTV / transacting = ÷ merchants that ever charged. NPV = Σ observed monthly net margin discounted at '+disc+'%/yr from the cohort month + '+horizon+' projected months of (transacting merchants in the last complete month × retention^j × margin per active merchant, averaged over the last ≤3 months). * retention borrowed from the pooled curve because the cohort has no month-over-month transition yet. No CAC is subtracted.';
   }
-  var METRICS={pct_tx:{l:'% of cohort transacting',f:function(s){return s.pct_tx;},fmt:function(v){return fmtPct(v,0);},neg:false},
-               n_tx:{l:'Merchants transacting',f:function(s){return s.n_tx;},fmt:fmtN,neg:false},
+  var METRICS={n_tx:{l:'Merchants transacting',f:function(s){return pctMode? s.pct_tx : s.n_tx;},fmt:function(v){return pctMode? fmtPct(v,1) : fmtN(v);},neg:false,countable:true},
                tpv:{l:'TPV (USD)',f:function(s){return s.tpv;},fmt:function(v){return fmtMoney(v,0);},neg:false},
                fee:{l:'Gross application fees (USD)',f:function(s){return s.fee;},fmt:function(v){return fmtMoney(v,0);},neg:false},
                cost:{l:'Stripe IC+ cost (USD)',f:function(s){return s.cost;},fmt:function(v){return fmtMoney(v,0);},neg:false},
                margin:{l:'Net margin = fees − cost (USD)',f:function(s){return s.margin;},fmt:function(v){return fmtMoney(v,0);},neg:true},
                margin_pm:{l:'Net margin per cohort merchant (USD)',f:function(s){return s.margin_pm;},fmt:function(v){return fmtMoney(v,2);},neg:true},
                cum_pm:{l:'Cumulative net margin per cohort merchant (USD)',f:function(s){return s.cum_pm;},fmt:function(v){return fmtMoney(v,2);},neg:true}};
-  function shade(v,max,neg){ if(v==null||!isFinite(v)) return 'transparent'; if(!max) return '#F3F7FB'; var t=Math.min(1,Math.abs(v)/max); if(neg&&v<0) return 'rgba(204,51,51,'+(0.12+0.6*t).toFixed(3)+')'; return 'rgba(29,143,225,'+(0.08+0.72*t).toFixed(3)+')'; }
+  // Same ramp as facadash's triangle: blue 0.06→0.96 alpha, white text past 0.55; signed metrics go red below zero.
+  function cellStyle(v,max,neg){ if(v==null||!isFinite(v)) return ''; var t=max?Math.min(1,Math.abs(v)/max):0; var bg=(neg&&v<0)?'rgba(210,73,91,'+(0.06+0.9*t).toFixed(3)+')':'rgba(29,143,225,'+(0.06+0.9*t).toFixed(3)+')'; return 'background:'+bg+';color:'+(t>0.55?'#fff':'#13233A'); }
   function renderTri(){
     var M=METRICS[metric]; var cols= axis==='age'? (function(){var mx=0; COH.forEach(function(c){mx=Math.max(mx,c.series.length);}); var a=[]; for(var i=0;i<mx;i++) a.push(i); return a;})() : MONTHS;
     var max=0; COH.forEach(function(c){ c.series.forEach(function(s){ var v=M.f(s); if(v!=null&&isFinite(v)) max=Math.max(max,Math.abs(v)); }); });
-    var h='<thead><tr><th>Cohort</th><th class="n">Merchants</th>'+cols.map(function(x){return '<th>'+(axis==='age'?'M'+x:monthLabel(x))+'</th>';}).join('')+'</tr></thead><tbody>';
-    COH.forEach(function(c){
-      h+='<tr><td>'+monthLabel(c.c)+'</td><td class="n">'+fmtN(c.N)+'</td>';
-      cols.forEach(function(x){ var s= axis==='age'? c.series[x] : c.series.find(function(q){return q.m===x;}); if(!s){ h+='<td class="empty"></td>'; return; } var v=M.f(s); var isSel=sel&&sel.c===c.c&&sel.m===s.m; h+='<td class="c'+(s.partial?' partial':'')+(isSel?' sel':'')+'" style="background:'+shade(v,max,M.neg)+'" data-c="'+c.c+'" data-m="'+s.m+'" title="'+monthLabel(c.c)+' cohort · '+monthLabel(s.m)+(s.partial?' (in progress)':'')+' · '+esc(M.l)+'">'+M.fmt(v)+'</td>'; });
+    var sawPartial=false;
+    var h='<thead><tr><th>Cohort</th><th class="sz">Size</th>'+cols.map(function(x){return '<th>'+(axis==='age'?'M'+x:monthLabel(x))+'</th>';}).join('')+'</tr></thead><tbody>';
+    COH.slice().reverse().forEach(function(c){
+      h+='<tr><td class="k">'+c.c+'</td><td class="sz">'+fmtN(c.N)+'</td>';
+      cols.forEach(function(x){ var s= axis==='age'? c.series[x] : c.series.find(function(q){return q.m===x;}); if(!s){ h+='<td class="empty"></td>'; return; } var v=M.f(s); if(s.partial) sawPartial=true; var isSel=sel&&sel.c===c.c&&sel.m===s.m;
+        var tip=c.c+' · M'+s.age+' ('+s.m+') · '+M.l+': '+M.fmt(v)+(M.countable&&pctMode?' — '+fmtN(s.n_tx)+' of '+fmtN(c.N)+' merchants that passed KYC':'')+(s.partial?' — '+PULL_MONTH+' still in progress; accumulates through the month, so not comparable with completed months':'')+' — double-click to list the merchants';
+        h+='<td class="c'+(isSel?' sel':'')+'" style="'+cellStyle(v,max,M.neg)+(s.partial?';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px':'')+'" data-c="'+c.c+'" data-m="'+s.m+'" title="'+esc(tip)+'">'+M.fmt(v)+(s.partial?'<span style="opacity:.75">*</span>':'')+'</td>'; });
       h+='</tr>'; });
     h+='</tbody>'; $('chTri').innerHTML=h;
-    $('chLeg').innerHTML='<span>'+esc(M.l)+'</span><span>low <span class="sw'+(M.neg?' neg':'')+'"></span> high'+(M.neg?' (red = negative)':'')+'</span><span>· lighter = current month in progress · click a cell for the merchants</span>';
+    var mode=$('chMode'); if(mode) mode.style.display = M.countable ? '' : 'none';
+    $('chLeg').innerHTML='<span>'+esc(M.l)+(M.countable&&pctMode?' — % of size':'')+'</span><span>low <span class="sw'+(M.neg?' neg':'')+'"></span> high'+(M.neg?' (red = negative)':'')+'</span>'+(sawPartial?'<span><b>*</b> '+PULL_MONTH+' is still in progress (as of '+UPD+'); dashed cells accumulate through the month.</span>':'')+'<span>· double-click a cell for the merchants</span>';
   }
   function renderDrill(){
     if(!sel){ $('chDrill').style.display='none'; return; }
     var c=COH.find(function(x){return x.c===sel.c;}); var s=c&&c.series.find(function(q){return q.m===sel.m;}); if(!s){ $('chDrill').style.display='none'; return; }
     $('chDrill').style.display='block';
-    $('chDrillTitle').innerHTML='<b>'+monthLabel(c.c)+' cohort</b> in <b>'+monthLabel(s.m)+'</b>'+(s.partial?' (in progress)':'')+' — '+fmtN(s.n_tx)+' of '+fmtN(c.N)+' transacting · TPV '+fmtMoney(s.tpv)+' · fees '+fmtMoney(s.fee)+' · cost '+fmtMoney(s.cost)+' · net '+fmtMoney(s.margin);
+    $('chDrillTitle').innerHTML='<b>'+c.c+' cohort</b> · M'+s.age+' (<b>'+s.m+'</b>)'+(s.partial?' (in progress)':'')+' — '+fmtN(s.n_tx)+' of '+fmtN(c.N)+' transacting · TPV '+fmtMoney(s.tpv)+' · fees '+fmtMoney(s.fee)+' · cost '+fmtMoney(s.cost)+' · net '+fmtMoney(s.margin);
     var rows=s.who.slice().sort(function(a,b){return b.v[0]-a.v[0];});
     var h='<thead><tr><th>Merchant</th><th>Email</th><th>Group</th><th>Registered on Payments</th><th>First charge</th><th>Charges</th><th>TPV</th><th>Fees</th><th>Cost</th><th>Net</th></tr></thead><tbody>';
     rows.forEach(function(w){ var r=w.r,v=w.v; h+='<tr><td>'+esc(r.n)+'</td><td style="text-align:left">'+esc(r.e)+'</td><td>'+esc(r.g||'–')+'</td><td>'+esc(r.k)+'</td><td>'+esc(r.t||'–')+'</td><td>'+fmtN(v[1])+'</td><td>'+fmtMoney(v[0])+'</td><td>'+fmtMoney(v[2],2)+'</td><td>'+fmtMoney(v[3],2)+'</td><td style="color:'+((v[2]-v[3])<0?'#CC3333':'inherit')+'">'+fmtMoney(v[2]-v[3],2)+'</td></tr>'; });
@@ -5055,7 +5067,7 @@ window.__ACT=window.__ACT||[];
     }catch(e){ if(window.console) console.error('cohort chart failed',e); }
   }
   function renderFoot(){
-    $('chFoot').textContent='Cohort = month the merchant '+KEYL[key]+'. Transacting in a month = at least one successful, captured charge on the merchant’s connected account that month. TPV, charge counts and application fees are dated by the charge; Stripe’s interchange-plus cost is dated by its balance transaction, which can land a month-boundary charge’s cost in the following month — immaterial at this grain. All amounts USD at fixed FX. Prod accounts only; internal/QA accounts removed on the same rule as the Funnel. Data refreshes every 3 hours from Snowflake; the Stripe share typically lags live by ~6 hours.';
+    $('chFoot').textContent='Population = merchants that passed KYC (currently enabled or have taken a charge). Cohort = month the merchant '+KEYL[key]+'; Size = merchants in the cohort, the denominator of every percentage. Transacting in a month = at least one successful, captured charge on the merchant’s connected account that month. TPV, charge counts and application fees are dated by the charge; Stripe’s interchange-plus cost is dated by its balance transaction, which can land a month-boundary charge’s cost in the following month — immaterial at this grain. All amounts USD at fixed FX. Prod accounts only; internal/QA accounts removed on the same rule as the Funnel. Data refreshes every 3 hours from Snowflake; the Stripe share typically lags live by ~6 hours.';
   }
   function renderAll(){ load(); renderKpis(); renderSummary(); renderTri(); renderDrill(); renderChart(); renderFoot(); }
 
@@ -5064,12 +5076,13 @@ window.__ACT=window.__ACT||[];
   bindRange('chKey','data-k',function(v){ key=v; sel=null; renderAll(); });
   bindRange('chAxis','data-a',function(v){ axis=v; renderTri(); });
   bindRange('chMetric','data-m',function(v){ metric=v; renderTri(); });
+  bindRange('chMode','data-p',function(v){ pctMode=(v==='1'); renderTri(); });
   ['chDisc','chHorizon','chFloor'].forEach(function(id){ $(id).addEventListener('change',function(){ disc=+$('chDisc').value||0; horizon=+$('chHorizon').value||0; floor=+$('chFloor').value||0; computeValue(); renderKpis(); renderSummary(); }); });
-  $('chTri').addEventListener('click',function(e){ var td=e.target.closest('td.c'); if(!td) return; var c=td.getAttribute('data-c'), m=td.getAttribute('data-m'); sel=(sel&&sel.c===c&&sel.m===m)?null:{c:c,m:m}; renderTri(); renderDrill(); if(sel){ try{ $('chDrill').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} } });
+  $('chTri').addEventListener('dblclick',function(e){ var td=e.target.closest('td.c'); if(!td) return; var c=td.getAttribute('data-c'), m=td.getAttribute('data-m'); sel=(sel&&sel.c===c&&sel.m===m)?null:{c:c,m:m}; renderTri(); renderDrill(); if(sel){ try{ $('chDrill').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} } });
   $('chDrillClose').addEventListener('click',function(){ sel=null; renderTri(); renderDrill(); });
   $('chSumExport').addEventListener('click',function(){
-    var head=['cohort','merchants','passed_kyc','ever_transacting','transacting_last_full_month','retention_monthly','retention_source','tpv_to_date','gross_fees_full_months','stripe_cost_full_months','net_margin_to_date','mrr_net_last_full_month','margin_per_active','ltv_per_merchant','ltv_per_transacting','cohort_npv','discount_rate_pct','projection_months'];
-    var csv=[head.join(',')].concat(COH.map(function(c){var v=c.val; return [c.c,c.N,c.enabled,c.ever,v.activeLast,(v.r*100).toFixed(1),v.rSrc,v.withPartial.tpv.toFixed(2),v.fee.toFixed(2),v.cost.toFixed(2),v.withPartial.margin.toFixed(2),v.mrr.toFixed(2),v.mbar.toFixed(2),v.ltv==null?'':v.ltv.toFixed(2),v.ltvTx==null?'':v.ltvTx.toFixed(2),v.npv.toFixed(2),disc,horizon].join(',');})).join('\n');
+    var head=['cohort','merchants_passed_kyc','ever_transacting','transacting_last_full_month','retention_monthly','retention_source','tpv_to_date','gross_fees_full_months','stripe_cost_full_months','net_margin_to_date','mrr_net_last_full_month','margin_per_active','ltv_per_merchant','ltv_per_transacting','cohort_npv','discount_rate_pct','projection_months'];
+    var csv=[head.join(',')].concat(COH.map(function(c){var v=c.val; return [c.c,c.N,c.ever,v.activeLast,(v.r*100).toFixed(1),v.rSrc,v.withPartial.tpv.toFixed(2),v.fee.toFixed(2),v.cost.toFixed(2),v.withPartial.margin.toFixed(2),v.mrr.toFixed(2),v.mbar.toFixed(2),v.ltv==null?'':v.ltv.toFixed(2),v.ltvTx==null?'':v.ltvTx.toFixed(2),v.npv.toFixed(2),disc,horizon].join(',');})).join('\n');
     var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='payments_cohorts_'+UPD.slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
   });
 
