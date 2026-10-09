@@ -462,6 +462,7 @@
   <a class="on" href="#payments" id="paysub-overview">Overview</a>
   <a href="#margins" id="paysub-margins">Summary of Margins</a>
   <a href="#funnel" id="paysub-funnel">Funnel</a>
+  <a href="#cohorts" id="paysub-cohorts">Cohorts</a>
   <a href="profile.html" id="paysub-profile">Payment Profile</a>
   <a href="report.html" id="paysub-report">Report</a>
 </div>
@@ -603,9 +604,147 @@
     <div class="lp-table-scroll"><table id="fnDeepTable" class="lp-table"></table></div>
     <p class="lp-note" id="fnDeepNote" style="margin-top:12px"></p>
 
+    <!-- ── TIME TO FIRST TRANSACTION (added 2026-10-09) ──────────────────────────────────
+         Answers two questions the funnel counts cannot: once a merchant has PASSED KYC, how
+         long until the first charge — and for those who have not charged yet, does the data
+         say "not open yet" or "gone". Everything here is recomputed client-side from
+         __FUNNEL_MERCHANTS (dates, terminal) joined to __ACT (POS activity) by owner id, so it
+         moves with every pull and honours the country picker and the internal/QA exclusion. -->
+    <h2 class="lp-h2" style="margin-top:36px">Time to first transaction.</h2>
+    <p class="ov-sub" style="margin-top:2px">Of the merchants who <b>passed KYC</b>, how quickly do they take their first card payment? The curve reads: among merchants enabled at least <i>N</i> days ago, the share that had transacted within <i>N</i> days. A curve that keeps climbing means merchants need time (e.g. the business has not opened yet); a curve that flattens means those who have not transacted within the first weeks mostly never do.</p>
+    <div class="fn-toolbar">
+      <div class="ov-range" id="ttPick">
+        <button data-g="compare" class="on">Compare all</button>
+        <button data-g="new">New merchants</button>
+        <button data-g="paying">Paying merchants</button>
+        <button data-g="nonpaying">Non paying</button>
+        <button data-g="dormant">Dormant / other</button>
+      </div>
+    </div>
+    <div class="fn-kpis" id="ttKpis"></div>
+    <div class="tt-grid">
+      <div class="tt-chart"><canvas id="ttChart" height="260"></canvas></div>
+      <div class="lp-table-scroll" style="max-height:330px"><table id="ttLagTable" class="lp-table"></table></div>
+    </div>
+    <p class="lp-note" id="ttNote" style="margin-top:10px"></p>
+
+    <h2 class="lp-h2" style="margin-top:36px">Pending merchants: not open yet, or gone?</h2>
+    <p class="ov-sub" style="margin-top:2px">Every merchant that passed KYC but has <b>not transacted</b>, classified by the only signals the data carries: a <b>terminal order</b> (preparing to open), <b>POS sales</b> on Loyverse (open, but paying through someone else), or <b>no POS sales at all</b> &mdash; read against how long ago they were enabled. The data cannot see an opening date; a merchant with no terminal, no POS activity and more than 45 days since KYC is treated as likely lost.</p>
+    <div class="fn-toolbar" style="gap:10px;flex-wrap:wrap">
+      <div class="ov-range" id="ttPendGroup">
+        <button data-g="all" class="on">All groups</button>
+        <button data-g="new">New merchants</button>
+        <button data-g="paying">Paying merchants</button>
+        <button data-g="nonpaying">Non paying</button>
+        <button data-g="dormant">Dormant / other</button>
+      </div>
+    </div>
+    <div class="fn-kpis" id="ttPendKpis"></div>
+    <div class="lp-table-scroll" style="max-height:none;overflow:visible"><table id="ttPendTable" class="lp-table"></table></div>
+    <div class="ov-head" style="margin:16px 0 10px;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <select id="ttPendClass" class="ov-mselect"></select>
+        <input id="ttPendSearch" class="lp-tsearch" placeholder="Filter by name or email...">
+      </div>
+      <button id="ttPendExport" class="lp-export">Download (CSV)</button>
+    </div>
+    <div class="lp-table-scroll"><table id="ttPendList" class="lp-table"></table></div>
+    <p class="lp-note" id="ttPendNote" style="margin-top:10px"></p>
+
     <p class="lp-note" id="fnFootnote" style="margin-top:12px"></p>
   </div>
 </div>
+<style>
+/* ── Cohorts tab (added 2026-10-09) ── */
+.ch-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.ch-ctl .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--midgray);font-weight:bold;margin-left:6px;}
+.ch-ctl input[type=number]{width:64px;border:1px solid var(--silver);border-radius:7px;padding:6px 8px;font:12px Arial;color:var(--charcoal);}
+.ch-tri{width:100%;border-collapse:separate;border-spacing:2px;font-size:12px;}
+.ch-tri th{font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--midgray);padding:6px 6px;text-align:center;white-space:nowrap;background:transparent;}
+.ch-tri th:first-child,.ch-tri td:first-child{text-align:left;font-weight:bold;color:var(--charcoal);white-space:nowrap;}
+.ch-tri td{padding:7px 6px;text-align:center;border-radius:5px;white-space:nowrap;min-width:54px;}
+.ch-tri td.c{cursor:pointer;color:var(--charcoal);}
+.ch-tri td.c:hover{outline:2px solid var(--blue);}
+.ch-tri td.c.sel{outline:2px solid var(--charcoal);}
+.ch-tri td.empty{background:transparent;color:var(--silver);}
+.ch-tri td.partial{opacity:.65;}
+.ch-tri td.n{color:var(--darkgray);font-weight:normal;}
+.ch-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+.ch-chart{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:14px 16px;height:320px;position:relative;}
+.ch-chart canvas{position:absolute;left:14px;top:14px;right:16px;bottom:14px;}
+.ch-leg{display:flex;gap:14px;align-items:center;font-size:11px;color:var(--midgray);margin:6px 0 0;}
+.ch-leg .sw{display:inline-block;width:46px;height:10px;border-radius:3px;background:linear-gradient(90deg,#F3F7FB,#1D8FE1);vertical-align:middle;margin:0 4px;}
+.ch-leg .sw.neg{background:linear-gradient(90deg,#CC3333,#F7E4E4 50%,#1D8FE1);}
+.tt-grid{display:grid;grid-template-columns:3fr 2fr;gap:16px;align-items:start;}
+.tt-chart{background:#fff;border:1px solid var(--silver);border-radius:12px;padding:14px 16px;height:330px;position:relative;}
+.tt-chart canvas{position:absolute;left:14px;top:14px;right:16px;bottom:14px;}
+@media(max-width:1000px){.tt-grid{grid-template-columns:1fr;}}
+</style>
+<div id="page-cohorts" style="display:none">
+  <div class="ov-wrap">
+    <div class="ov-head">
+      <h1 class="ov-h1">Payments Cohorts<span class="dot">.</span></h1>
+      <div class="ov-updated" id="chUpdated">&nbsp;</div>
+    </div>
+    <p class="ov-sub">Loyverse Payments only. A cohort is the month a merchant <b>registered on Loyverse Payments</b> (opened its Stripe connected account). For each cohort: how many are transacting month by month, the volume and <b>net margin</b> they produce (application fees captured minus the interchange-plus cost Stripe bills us &mdash; what Loyverse actually keeps), and the cohort's value over time. Honours the country picker; internal/QA accounts excluded on the same rule as the Funnel.</p>
+    <div class="cc-note" id="chMissing" style="display:none"></div>
+
+    <div class="ch-ctl">
+      <span class="lbl">Cohort by</span>
+      <div class="ov-range" id="chKey">
+        <button data-k="k" class="on">Registered on Payments</button>
+        <button data-k="f">Passed KYC</button>
+        <button data-k="t">First charge</button>
+      </div>
+      <span class="lbl">Axis</span>
+      <div class="ov-range" id="chAxis">
+        <button data-a="age" class="on">Months since cohort</button>
+        <button data-a="cal">Calendar month</button>
+      </div>
+    </div>
+
+    <div class="fn-kpis" id="chKpis"></div>
+
+    <h2 class="lp-h2" style="margin-top:28px">Cohort summary.</h2>
+    <p class="ov-sub" style="margin-top:2px">One row per cohort. <b>MRR</b> is the cohort's net margin in the last complete month. <b>LTV / merchant</b> and <b>NPV</b> are the discounted value of what the cohort has produced so far plus a projection of its current run-rate decaying at the cohort's observed month-to-month retention &mdash; parameters below. No CAC is applied yet.</p>
+    <div class="ch-ctl">
+      <span class="lbl">Discount rate</span><input type="number" id="chDisc" value="10" min="0" max="100" step="1"><span style="font-size:12px;color:var(--midgray)">% / year</span>
+      <span class="lbl">Projection</span><input type="number" id="chHorizon" value="12" min="0" max="60" step="1"><span style="font-size:12px;color:var(--midgray)">months</span>
+      <span class="lbl">Retention floor</span><input type="number" id="chFloor" value="50" min="0" max="100" step="5"><span style="font-size:12px;color:var(--midgray)">%</span>
+      <button id="chSumExport" class="lp-export" style="margin-left:auto">Download (CSV)</button>
+    </div>
+    <div class="lp-table-scroll" style="max-height:none;overflow:auto"><table id="chSummary" class="lp-table"></table></div>
+    <p class="lp-note" id="chSumNote" style="margin-top:10px"></p>
+
+    <h2 class="lp-h2" style="margin-top:36px">Cohort triangle.</h2>
+    <p class="ov-sub" style="margin-top:2px">Rows are cohorts, columns are months. Pick what each cell shows; click a cell to list the merchants behind it. The current month is shaded lighter because it is still in progress.</p>
+    <div class="ch-ctl">
+      <span class="lbl">Cell</span>
+      <div class="ov-range" id="chMetric">
+        <button data-m="pct_tx" class="on">% transacting</button>
+        <button data-m="n_tx"># transacting</button>
+        <button data-m="tpv">TPV</button>
+        <button data-m="fee">Gross fees</button>
+        <button data-m="cost">Stripe cost</button>
+        <button data-m="margin">Net margin (MRR)</button>
+        <button data-m="margin_pm">Net margin / cohort merchant</button>
+        <button data-m="cum_pm">Cumulative margin / merchant</button>
+      </div>
+    </div>
+    <div class="lp-table-scroll" style="max-height:none;overflow:auto;padding:8px"><table id="chTri" class="ch-tri"></table></div>
+    <div class="ch-leg" id="chLeg"></div>
+    <div id="chDrill" style="display:none;margin-top:16px">
+      <div class="ov-head" style="margin-bottom:8px"><div class="ov-sub" id="chDrillTitle" style="margin:0"></div><button id="chDrillClose" class="lp-export">Close</button></div>
+      <div class="lp-table-scroll"><table id="chDrillTable" class="lp-table"></table></div>
+    </div>
+
+    <h2 class="lp-h2" style="margin-top:36px">Net margin by month, stacked by cohort.</h2>
+    <div class="ch-chart"><canvas id="chChart"></canvas></div>
+
+    <p class="lp-note" id="chFoot" style="margin-top:14px"></p>
+  </div>
+</div>
+
 <div id="page-overview" class="on">
   <div class="ov-wrap">
     <div class="ov-head">
@@ -1242,6 +1381,7 @@ buildAnchorTable();compute();
 <script src="attach-data.js"></script>
 <script src="pilot500-data.js"></script>
 <script src="funnel-data.js"></script>
+<script src="cohort-data.js"></script>
 <script src="margins-data.js"></script>
 <!-- Country filter. Loaded AFTER the data files because it discovers the live markets
      from them, and BEFORE the page scripts because they subscribe to it on load. -->
@@ -1459,6 +1599,7 @@ window.showPage=function(pg){
   var pp=document.getElementById('page-pilot'); if(pp) pp.style.display = pg==='pilot'?'block':'none';
   var pf=document.getElementById('page-funnel'); if(pf) pf.style.display = pg==='funnel'?'block':'none';
   var pmar=document.getElementById('page-margins'); if(pmar) pmar.style.display = pg==='margins'?'block':'none';
+  var pco=document.getElementById('page-cohorts'); if(pco) pco.style.display = pg==='cohorts'?'block':'none';
   var pm=document.getElementById('page-map'); if(pm) pm.style.display = pg==='map'?'block':'none';
   var pc=document.getElementById('page-calc'); if(pc) pc.style.display = pg==='calc'?'block':'none';
   _tg('page-merchants','on',pg==='merchants');
@@ -1471,10 +1612,12 @@ window.showPage=function(pg){
   _tg('lvmn-payments','on',pg!=='map');
   // Payments sub-nav (Overview | Margins | Funnel): visible only within the Payments tab.
   // 'pilot' is deliberately NOT here any more — the subtab was removed.
-  var ps=document.getElementById('paysub'); if(ps) ps.style.display=(pg==='overview'||pg==='margins'||pg==='funnel')?'flex':'none';
+  var ps=document.getElementById('paysub'); if(ps) ps.style.display=(pg==='overview'||pg==='margins'||pg==='funnel'||pg==='cohorts')?'flex':'none';
   _tg('paysub-overview','on',pg==='overview');
   _tg('paysub-margins','on',pg==='margins');
   _tg('paysub-funnel','on',pg==='funnel');
+  _tg('paysub-cohorts','on',pg==='cohorts');
+  if(pg==='cohorts' && window.__COHORTS_INIT) window.__COHORTS_INIT();
   if(pg==='margins' && window.__MARGINS_INIT) window.__MARGINS_INIT();
   if(pg==='funnel' && window.__FUNNEL_INIT) window.__FUNNEL_INIT();
   if(pg==='map'){ setTimeout(function(){
@@ -1492,7 +1635,7 @@ function applyMasterHash(){
   var h=(location.hash||'').replace('#','').toLowerCase();
   // #pilot is no longer a page — the subtab was removed — so an old bookmark falls through
   // to Overview rather than opening a tab that is not in the nav any more.
-  showPage(h==='map' ? 'map' : (h==='margins' ? 'margins' : (h==='funnel' ? 'funnel' : 'overview')));
+  showPage(h==='map' ? 'map' : (h==='margins' ? 'margins' : (h==='funnel' ? 'funnel' : (h==='cohorts' ? 'cohorts' : 'overview'))));
 }
 window.addEventListener('hashchange', applyMasterHash);
 applyMasterHash();
@@ -4585,6 +4728,357 @@ window.__ACT=window.__ACT||[];
   });
 })();
 
+</script>
+<script>
+// ── TIME TO FIRST TRANSACTION + PENDING DIAGNOSIS (Funnel page, added 2026-10-09) ────────────
+// Self-contained: reads __FUNNEL_MERCHANTS and __ACT, honours the country picker (LVCC) and the
+// same internal/QA exclusion the funnel uses (__PAY_TEST_PATTERNS). Nothing above on the page
+// depends on this block, and this block depends on nothing above except the shared CSS.
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  if(!$('ttKpis')) return;
+  var ALL_M=window.__FUNNEL_MERCHANTS||[];
+  var ACT=window.__ACT||[];
+  var _TP=window.__PAY_TEST_PATTERNS||null;
+  var TEST_EMAIL=_TP&&_TP.email ? new RegExp(_TP.email,'i') : /@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
+  var TEST_NAME=_TP&&_TP.name ? new RegExp(_TP.name,'i') : /(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
+  function isTest(m){ return TEST_EMAIL.test(String(m.email||''))||TEST_NAME.test(String(m.name||'')); }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  var DAY=864e5;
+  // "Today" is the pull date, not the browser clock: a page opened days after the last pull would
+  // otherwise age every merchant without any new transactions being able to arrive.
+  var ASOF=(function(){ var s=String(window.__FUNNEL_UPDATED||'').slice(0,10); var d=s?new Date(s+'T00:00:00Z'):new Date(); return isNaN(d)?new Date():d; })();
+  function days(a,b){ if(!a||!b) return null; var x=new Date(String(a).slice(0,10)+'T00:00:00Z'), y=(b instanceof Date)?b:new Date(String(b).slice(0,10)+'T00:00:00Z'); if(isNaN(x)||isNaN(y)) return null; return Math.round((y-x)/DAY); }
+  var GROUPS=[{g:'new',l:'New merchants',c:'#1D8FE1'},{g:'paying',l:'Paying merchants',c:'#2E9E5B'},{g:'nonpaying',l:'Non paying',c:'#E39B1C'},{g:'dormant',l:'Dormant / other',c:'#8A8F98'}];
+  var GL={}; GROUPS.forEach(function(x){GL[x.g]=x;});
+  var actByMid={}; ACT.forEach(function(a){ if(a&&a.mid!=null) actByMid[String(a.mid)]=a; });
+  // POS activity. __ACT.pos_active reads the MONTHLY sales table, which lags by months (its last
+  // month was 2026-07 at a 2026-10 pull), so for merchants enabled since the launch it is blind.
+  // cohort-data.js carries each connected merchant's POS-active months from raw receipts
+  // (merchant_month_active_recent.sql), fresh to the pull — preferred whenever present.
+  var COHM={}; (window.__PAY_COHORT_MERCHANTS||[]).forEach(function(r){ if(r&&r.o) COHM[String(r.o)]=r; });
+  var HAVE_FRESH_POS=!!(window.__PAY_COHORT_MERCHANTS&&(window.__PAY_COHORT_META||{}).recentActive!==false);
+  var PULL_MONTH=(function(){ var s=String(window.__FUNNEL_UPDATED||'').slice(0,7); return /^\d{4}-\d{2}$/.test(s)?s:new Date().toISOString().slice(0,7); })();
+  var PREV_MONTH=(function(){ var y=+PULL_MONTH.slice(0,4), m=+PULL_MONTH.slice(5,7); return new Date(Date.UTC(y,m-2,1)).toISOString().slice(0,7); })();
+
+  // Population: passed KYC (has an enabled_at date, or is enabled/transacting), under the current
+  // country, internal/QA accounts removed. enabled_at is TOS acceptance — the same proxy the rest of
+  // the funnel uses — so a merchant enabled weeks after accepting terms reads a slightly longer lag.
+  var M=[];
+  function loadData(cc){
+    M=ALL_M.filter(function(m){
+      if(!m.connected_at) return false;
+      if(cc && m.cc!==cc) return false;
+      if(isTest(m)) return false;
+      if(!m.enabled_at) return false;
+      if(!(m.enabled||m.first_txn_at)) return false;
+      return true;
+    }).map(function(m){
+      var a=actByMid[String(m.oid)]||null, ch=COHM[String(m.oid)]||null;
+      var act=(ch&&ch.act)||[]; var lastAct=act.length?act[act.length-1]:null;
+      var posEver = act.length>0 || !!(a&&(a.pos_receipts||0)>0);
+      var posRecent = HAVE_FRESH_POS ? (act.indexOf(PULL_MONTH)>=0||act.indexOf(PREV_MONTH)>=0) : !!(a&&a.pos_active);
+      var lastSale = lastAct || (a?(a.last_sale||null):null);
+      return {
+        m:m, grp:m.grp||'dormant', name:m.name, email:m.email, oid:m.oid,
+        enabled_at:m.enabled_at, first_txn_at:m.first_txn_at||null,
+        lag: m.first_txn_at? days(m.enabled_at,m.first_txn_at): null,
+        age: days(m.enabled_at,ASOF),
+        term: m.terminal_status||null, term_at:m.terminal_at||null,
+        pos_receipts: posEver?1:0, pos_active:posRecent, pos_months:act.length, last_sale:lastSale,
+        is_paying:!!(a&&a.is_paying), plan:a?(a.plan||null):null
+      };
+    });
+  }
+  function pct(n,d){ return d? (100*n/d):null; }
+  function fmtPct(v){ return v==null?'–':(Math.round(v*10)/10).toFixed(1)+'%'; }
+  function fmtN(v){ return v==null?'–':Number(v).toLocaleString(); }
+  function quant(arr,p){ if(!arr.length) return null; var s=arr.slice().sort(function(a,b){return a-b;}); return s[Math.min(s.length-1,Math.floor(p*s.length))]; }
+
+  // Share transacting within N days among merchants enabled at least N days ago. Each point is
+  // its own population, so the curve can dip when older cohorts behaved differently.
+  var XS=[]; for(var d=0; d<=90; d+=1) XS.push(d);
+  function curve(rows){
+    return XS.map(function(x){ var el=rows.filter(function(r){return r.age!=null&&r.age>=x;}); var hit=el.filter(function(r){return r.lag!=null&&r.lag<=x;}); return {x:x, n:el.length, y:pct(hit.length,el.length)}; });
+  }
+  var BUCKETS=[{l:'Same day',f:function(l){return l<=0;}},{l:'1–7 days',f:function(l){return l>=1&&l<=7;}},{l:'8–14 days',f:function(l){return l>=8&&l<=14;}},{l:'15–28 days',f:function(l){return l>=15&&l<=28;}},{l:'29–56 days',f:function(l){return l>=29&&l<=56;}},{l:'57+ days',f:function(l){return l>=57;}}];
+
+  var chart=null, pick='compare';
+  function renderTT(){
+    var sets = pick==='compare' ? GROUPS.map(function(g){return {k:g.g,l:g.l,c:g.c,rows:M.filter(function(r){return r.grp===g.g;})};}) : [{k:pick,l:GL[pick].l,c:GL[pick].c,rows:M.filter(function(r){return r.grp===pick;})}];
+    var all={k:'all',l:'All merchants',c:'#1B1F24',rows:M};
+    var focus = pick==='compare'? all : sets[0];
+    var tx=focus.rows.filter(function(r){return r.lag!=null;}); var lags=tx.map(function(r){return r.lag;});
+    var c14=curve(focus.rows)[14], c45=curve(focus.rows)[45];
+    var late=tx.filter(function(r){return r.lag>14;}).length;
+    $('ttKpis').innerHTML=[
+      {k:'Passed KYC',v:fmtN(focus.rows.length),s:focus.l+(window.LVCC?window.LVCC.suffix():'')},
+      {k:'Transacting',v:fmtN(tx.length)+'<span class="u"> · '+fmtPct(pct(tx.length,focus.rows.length))+'</span>',s:'ever took a card payment'},
+      {k:'Median time to 1st charge',v:(lags.length?quant(lags,.5):'–')+'<span class="u"> days</span>',s:lags.length?'75% within '+quant(lags,.75)+' d · 90% within '+quant(lags,.9)+' d · max '+quant(lags,1):'no transacting merchants yet'},
+      {k:'Transacted after day 14',v:fmtN(late)+'<span class="u"> of '+fmtN(tx.length)+'</span>',s:'within 14 d: '+fmtPct(c14.y)+' of '+fmtN(c14.n)+' eligible · within 45 d: '+fmtPct(c45.y)+' of '+fmtN(c45.n)}
+    ].map(function(t){return '<div class="fn-kpi"><div class="k">'+t.k+'</div><div class="v">'+t.v+'</div><div class="s">'+t.s+'</div></div>';}).join('');
+
+    // Chart
+    var dsets=(pick==='compare'? sets.concat([all]) : [focus]).map(function(s){ var cv=curve(s.rows); return {label:s.l+' (n='+s.rows.length+')', data:cv.map(function(p){return p.y==null?null:Math.round(p.y*10)/10;}), borderColor:s.c, backgroundColor:s.c, borderWidth: s.k==='all'?3:2, borderDash: s.k==='all'?[6,4]:[], pointRadius:0, tension:.25, spanGaps:true, _n:cv.map(function(p){return p.n;})}; });
+    try{ if(window.Chart){
+      if(chart){ chart.destroy(); chart=null; }
+      chart=new Chart($('ttChart').getContext('2d'),{type:'line',data:{labels:XS,datasets:dsets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{title:function(it){return 'Within '+it[0].label+' days of passing KYC';},label:function(it){var ds=it.dataset; return ds.label.replace(/ \(n=\d+\)$/,'')+': '+(it.raw==null?'–':it.raw+'%')+' of '+ds._n[it.dataIndex]+' eligible';}}}},scales:{x:{title:{display:true,text:'Days since KYC passed',font:{size:11}},ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}},y:{beginAtZero:true,title:{display:true,text:'% transacting within N days',font:{size:11}},ticks:{callback:function(v){return v+'%';},font:{size:10}}}}}});
+    } }catch(e){ if(window.console) console.error('time-to-transaction chart failed',e); }
+    // Lag table
+    var cols=pick==='compare'? sets.concat([all]) : [focus];
+    var h='<thead><tr><th>Time from KYC passed to 1st charge</th>'+cols.map(function(s){return '<th>'+esc(s.l)+'</th>';}).join('')+'</tr></thead><tbody>';
+    BUCKETS.forEach(function(b){ h+='<tr><td>'+b.l+'</td>'+cols.map(function(s){var t=s.rows.filter(function(r){return r.lag!=null;}); var n=t.filter(function(r){return b.f(r.lag);}).length; return '<td>'+fmtN(n)+' <span style="color:var(--midgray)">('+fmtPct(pct(n,t.length))+')</span></td>';}).join('')+'</tr>'; });
+    h+='<tr style="font-weight:bold"><td>Transacting (total)</td>'+cols.map(function(s){return '<td>'+fmtN(s.rows.filter(function(r){return r.lag!=null;}).length)+'</td>';}).join('')+'</tr>';
+    h+='<tr><td>Median / p90 (days)</td>'+cols.map(function(s){var l=s.rows.filter(function(r){return r.lag!=null;}).map(function(r){return r.lag;}); return '<td>'+(l.length?quant(l,.5)+' / '+quant(l,.9):'–')+'</td>';}).join('')+'</tr>';
+    h+='<tr><td>Still pending (no charge yet)</td>'+cols.map(function(s){return '<td>'+fmtN(s.rows.filter(function(r){return r.lag==null;}).length)+'</td>';}).join('')+'</tr>';
+    h+='</tbody>'; $('ttLagTable').innerHTML=h;
+    $('ttNote').textContent='Enabled date = Stripe terms acceptance (the same proxy the funnel uses). Eligible = enabled at least N days before the last pull ('+String(window.__FUNNEL_UPDATED||'').slice(0,10)+'). The oldest cohort dates from the '+(window.__FUNNEL_LAUNCH_START||'2026-07-01')+' launch, so the curve cannot yet show anything beyond ~'+(M.length?Math.max.apply(null,M.map(function(r){return r.age||0;})):0)+' days. Internal/QA accounts excluded.';
+  }
+
+  // ── Pending diagnosis ──────────────────────────────────────────────────────
+  // Order matters: the first matching class wins. A terminal order is the strongest "intends to
+  // open" signal we have, so it is tested first regardless of POS activity.
+  var CLASSES=[
+    {k:'terminal', l:'Terminal ordered or received — preparing to open', hint:'Hardware on the way or delivered; no charge yet.', f:function(r){return !!r.term_at||!!r.term;}},
+    {k:'pos_active', l:'Selling on the POS, not using Loyverse Payments', hint:'POS receipts this month or last — open and trading, card volume going elsewhere (or cash).', f:function(r){return r.pos_active;}},
+    {k:'pos_quiet', l:'POS went quiet', hint:'Had POS receipts before, none this month or last.', f:function(r){return (r.pos_receipts||0)>0 && !r.pos_active;}},
+    {k:'nopos_early', l:'No POS sales yet — enabled ≤14 days ago', hint:'Too early to call: most transacting merchants start within two weeks.', f:function(r){return (r.pos_receipts||0)===0 && r.age!=null && r.age<=14;}},
+    {k:'nopos_mid', l:'No POS sales yet — enabled 15–45 days ago', hint:'Past the typical start window. Not open yet, or lost — the two look identical in the data.', f:function(r){return (r.pos_receipts||0)===0 && r.age!=null && r.age>14 && r.age<=45;}},
+    {k:'nopos_late', l:'No POS sales, no terminal — enabled >45 days ago', hint:'No sign of a business operating on Loyverse. Treated as likely lost.', f:function(r){return (r.pos_receipts||0)===0 && r.age!=null && r.age>45;}},
+    {k:'other', l:'Unclassified', hint:'No POS data available for this account.', f:function(){return true;}}
+  ];
+  function classify(r){ for(var i=0;i<CLASSES.length;i++){ if(CLASSES[i].f(r)) return CLASSES[i].k; } return 'other'; }
+  var pendGroup='all', pendClass='', pendSearch='';
+  var curPend=[];
+  function renderPend(){
+    var pend=M.filter(function(r){return r.lag==null;}); pend.forEach(function(r){ r.cls=classify(r); });
+    var cols=GROUPS.slice();
+    var rows=pend.filter(function(r){return pendGroup==='all'||r.grp===pendGroup;});
+    var byCls={}; rows.forEach(function(r){ byCls[r.cls]=(byCls[r.cls]||0)+1; });
+    var notOpen=(byCls.terminal||0)+(byCls.nopos_early||0)+(byCls.nopos_mid||0);
+    var open=(byCls.pos_active||0);
+    var gone=(byCls.nopos_late||0)+(byCls.pos_quiet||0);
+    $('ttPendKpis').innerHTML=[
+      {k:'Pending (passed KYC, no charge)',v:fmtN(rows.length),s:(pendGroup==='all'?'all groups':GL[pendGroup].l)+(window.LVCC?window.LVCC.suffix():'')},
+      {k:'Preparing / too early',v:fmtN(notOpen)+'<span class="u"> · '+fmtPct(pct(notOpen,rows.length))+'</span>',s:'terminal ordered, or no POS sales and ≤45 days since KYC'},
+      {k:'Open, paying elsewhere',v:fmtN(open)+'<span class="u"> · '+fmtPct(pct(open,rows.length))+'</span>',s:'POS receipts this month or last'},
+      {k:'Likely gone',v:fmtN(gone)+'<span class="u"> · '+fmtPct(pct(gone,rows.length))+'</span>',s:'no POS sales after 45+ days, or POS went quiet'}
+    ].map(function(t){return '<div class="fn-kpi"><div class="k">'+t.k+'</div><div class="v">'+t.v+'</div><div class="s">'+t.s+'</div></div>';}).join('');
+    var h='<thead><tr><th>Why no charge yet</th>'+cols.map(function(g){return '<th>'+esc(g.l)+'</th>';}).join('')+'<th>All</th></tr></thead><tbody>';
+    CLASSES.forEach(function(c){ var tot=pend.filter(function(r){return r.cls===c.k;}).length; if(!tot) return; h+='<tr><td title="'+esc(c.hint)+'">'+esc(c.l)+'<div style="font-size:11px;color:var(--midgray);white-space:normal;max-width:420px">'+esc(c.hint)+'</div></td>'+cols.map(function(g){var p=pend.filter(function(r){return r.grp===g.g;}); var n=p.filter(function(r){return r.cls===c.k;}).length; return '<td>'+fmtN(n)+' <span style="color:var(--midgray)">('+fmtPct(pct(n,p.length))+')</span></td>';}).join('')+'<td><b>'+fmtN(tot)+'</b> <span style="color:var(--midgray)">('+fmtPct(pct(tot,pend.length))+')</span></td></tr>'; });
+    h+='<tr style="font-weight:bold"><td>Pending total</td>'+cols.map(function(g){return '<td>'+fmtN(pend.filter(function(r){return r.grp===g.g;}).length)+'</td>';}).join('')+'<td>'+fmtN(pend.length)+'</td></tr></tbody>';
+    $('ttPendTable').innerHTML=h;
+    // class picker
+    var sel=$('ttPendClass'); var keep=pendClass; sel.innerHTML='<option value="">All classes</option>'+CLASSES.filter(function(c){return rows.some(function(r){return r.cls===c.k;});}).map(function(c){return '<option value="'+c.k+'">'+esc(c.l)+'</option>';}).join(''); sel.value=keep; if(sel.value!==keep){ pendClass=''; }
+    var q=pendSearch.toLowerCase();
+    curPend=rows.filter(function(r){return (!pendClass||r.cls===pendClass)&&(!q||String(r.name||'').toLowerCase().indexOf(q)>=0||String(r.email||'').toLowerCase().indexOf(q)>=0);}).sort(function(a,b){return (b.age||0)-(a.age||0);});
+    var cl={}; CLASSES.forEach(function(c){cl[c.k]=c.l;});
+    var l='<thead><tr><th>Merchant</th><th>Email</th><th>Group</th><th>KYC passed</th><th>Days since</th><th>Terminal</th><th>POS months</th><th>Last POS month</th><th>Class</th></tr></thead><tbody>';
+    curPend.slice(0,400).forEach(function(r){ l+='<tr><td>'+esc(r.name)+'</td><td style="text-align:left">'+esc(r.email)+'</td><td>'+esc(GL[r.grp]?GL[r.grp].l:r.grp)+'</td><td>'+esc(r.enabled_at)+'</td><td>'+fmtN(r.age)+'</td><td>'+esc(r.term||(r.term_at?'ordered':'–'))+'</td><td>'+fmtN(r.pos_receipts)+'</td><td>'+esc(r.last_sale||'–')+'</td><td style="text-align:left;white-space:normal;max-width:260px">'+esc(cl[r.cls]||r.cls)+'</td></tr>'; });
+    l+='</tbody>'; $('ttPendList').innerHTML=l;
+    $('ttPendNote').textContent=curPend.length+' merchant'+(curPend.length===1?'':'s')+(curPend.length>400?' (showing first 400 — download for all)':'')+'. '+(HAVE_FRESH_POS?'POS activity = months with at least one receipt, from raw receipts (fresh to the last pull; month granularity, so "this month or last" is the recency test).':'POS activity is read from the monthly sales table, which lags by several months — treat the POS classes as indicative only until the next pull refreshes cohort-data.js.')+' Terminal = Stripe hardware order matched by email.';
+  }
+  $('ttPendExport').addEventListener('click',function(){
+    var cl={}; CLASSES.forEach(function(c){cl[c.k]=c.l;});
+    var head=['name','email','group','kyc_passed','days_since_kyc','terminal_status','pos_months','last_pos_month','class'];
+    var csv=[head.join(',')].concat(curPend.map(function(r){return [r.name,r.email,r.grp,r.enabled_at,r.age,r.term||(r.term_at?'ordered':''),r.pos_months,r.last_sale||'',cl[r.cls]||r.cls].map(function(v){v=String(v==null?'':v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(',');})).join('\n');
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='pending_merchants_'+String(window.__FUNNEL_UPDATED||'').slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+  });
+  $('ttPendClass').addEventListener('change',function(){ pendClass=this.value; renderPend(); });
+  $('ttPendSearch').addEventListener('input',function(){ pendSearch=this.value; renderPend(); });
+  $('ttPick').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; pick=b.getAttribute('data-g'); $('ttPick').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);}); renderTT(); });
+  $('ttPendGroup').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; pendGroup=b.getAttribute('data-g'); $('ttPendGroup').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);}); renderPend(); });
+
+  function renderAll(cc){ loadData(cc); renderTT(); renderPend(); }
+  // The chart needs a laid-out canvas: render when the Funnel page is actually shown.
+  var rendered=false, lastCc='';
+  function ensure(){ var pf=$('page-funnel'); if(!pf||pf.style.display==='none') return; if(!rendered){ rendered=true; renderAll(lastCc); } }
+  if(window.LVCC){ window.LVCC.on(function(cc){ lastCc=cc||''; if(rendered) renderAll(lastCc); }); }
+  window.addEventListener('hashchange',function(){ setTimeout(ensure,30); });
+  setTimeout(ensure,30);
+  var _show=window.showPage; if(typeof _show==='function'){ window.showPage=function(pg){ _show.apply(this,arguments); if(pg==='funnel') setTimeout(ensure,30); }; }
+})();
+</script>
+<script>
+// ── PAYMENTS COHORTS (Payments tab · Cohorts) — added 2026-10-09 ─────────────────────────────
+// Reads cohort-data.js (window.__PAY_COHORT_MERCHANTS) and does every aggregation in the browser,
+// so cohort key, axis, metric and country can change without another pull. Degrades to a notice if
+// the file has not been generated yet (first deploy after this feature shipped).
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  if(!$('chKpis')) return;
+  var _TP=window.__PAY_TEST_PATTERNS||null;
+  var TEST_EMAIL=_TP&&_TP.email ? new RegExp(_TP.email,'i') : /@(?:loyverse\.(?:com|io)|mailinator\.[a-z.]+|example\.(?:com|org|net)|test\.com)\s*$/i;
+  var TEST_NAME=_TP&&_TP.name ? new RegExp(_TP.name,'i') : /(^|[^a-z])(test|tests|testing|teste|demo|dummy|sandbox|prueba)([^a-z]|$)/i;
+  function isTest(r){ return TEST_EMAIL.test(String(r.e||''))||TEST_NAME.test(String(r.n||'')); }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function mo(d){ return d? String(d).slice(0,7): null; }
+  function addM(m,n){ var y=+m.slice(0,4), mm=+m.slice(5,7); var d=new Date(Date.UTC(y,mm-1+n,1)); return d.toISOString().slice(0,7); }
+  function diffM(a,b){ return (+b.slice(0,4)-+a.slice(0,4))*12 + (+b.slice(5,7)-+a.slice(5,7)); }
+  function fmtMoney(v,dec){ if(v==null) return '–'; var neg=v<0; var a=Math.abs(v); var s=a>=1000? Math.round(a).toLocaleString() : a.toFixed(dec==null?(a<100?2:0):dec); return (neg?'−$':'$')+s; }
+  function fmtPct(v,d){ return v==null?'–':(Math.round(v*Math.pow(10,d==null?1:d))/Math.pow(10,d==null?1:d)).toFixed(d==null?1:d)+'%'; }
+  function fmtN(v){ return v==null?'–':Number(v).toLocaleString(); }
+  function monthLabel(m){ var y=m.slice(0,4), i=+m.slice(5,7)-1; return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]+' '+y.slice(2); }
+
+  var ALL=window.__PAY_COHORT_MERCHANTS||null;
+  var META=window.__PAY_COHORT_META||{};
+  var UPD=String(window.__PAY_COHORT_UPDATED||'');
+  var PULL_MONTH=(function(){ var s=UPD.slice(0,7); return /^\d{4}-\d{2}$/.test(s)? s : new Date().toISOString().slice(0,7); })();
+  $('chUpdated').textContent= ALL? ('Last pull: '+UPD) : '';
+  if(!ALL){
+    $('chMissing').style.display='block';
+    $('chMissing').textContent='The cohort data file has not been generated yet. It is written by the next scheduled activation pull (every 3 hours) — this page fills in automatically after that.';
+    return;
+  }
+  if(META.seed){ $('chMissing').style.display='block'; $('chMissing').textContent='SEED DATA — synthetic monthly split for layout testing only.'; }
+  if(META.charges===false||META.fees===false||META.cost===false){ $('chMissing').style.display='block'; $('chMissing').textContent='One of the monthly Snowflake queries failed on the last pull ('+['charges','fees','cost'].filter(function(k){return META[k]===false;}).join(', ')+'). Figures that depend on it read zero until the next successful pull.'; }
+
+  var key='k', axis='age', metric='pct_tx', cc='';
+  var disc=10, horizon=12, floor=50;
+  var sel=null;   // {c, m}
+  var R=[], COH=[], MONTHS=[], LASTFULL=null, PARTIAL=null;
+
+  function load(){
+    R=ALL.filter(function(r){ if(cc&&r.c!==cc) return false; if(isTest(r)) return false; return !!mo(r[key]); });
+    var cm={}; R.forEach(function(r){ var c=mo(r[key]); (cm[c]||(cm[c]=[])).push(r); });
+    var cs=Object.keys(cm).sort();
+    var first=cs[0]||PULL_MONTH;
+    // Month axis runs to the pull month; the pull month is partial unless the pull was on its last day.
+    MONTHS=[]; for(var m=first; m<=PULL_MONTH; m=addM(m,1)) MONTHS.push(m);
+    PARTIAL=PULL_MONTH; LASTFULL=addM(PULL_MONTH,-1);
+    COH=cs.map(function(c){
+      var rs=cm[c], N=rs.length;
+      var series=MONTHS.filter(function(m){return m>=c;}).map(function(m){
+        var cell={m:m, age:diffM(c,m), n_tx:0, tpv:0, txns:0, fee:0, cost:0, margin:0, who:[]};
+        rs.forEach(function(r){ var v=r.m&&r.m[m]; if(!v) return; var tx=(v[0]>0||v[1]>0); if(tx) cell.n_tx++; cell.tpv+=v[0]; cell.txns+=v[1]; cell.fee+=v[2]; cell.cost+=v[3]; if(tx||v[2]||v[3]) cell.who.push({r:r,v:v}); });
+        cell.margin=cell.fee-cell.cost; cell.pct_tx=N?100*cell.n_tx/N:null; cell.margin_pm=N?cell.margin/N:null; cell.partial=(m===PARTIAL);
+        return cell;
+      });
+      var cum=0; series.forEach(function(s){ cum+=s.margin; s.cum=cum; s.cum_pm=N?cum/N:null; });
+      var en=rs.filter(function(r){return r.en||r.t;}).length, ever=rs.filter(function(r){return !!r.t;}).length;
+      return {c:c, N:N, rows:rs, series:series, enabled:en, ever:ever};
+    });
+    computeValue();
+  }
+
+  // ── Value model ───────────────────────────────────────────────────────────
+  // Observed months only (the partial month is excluded everywhere in this block). Retention is
+  // the geometric mean of month-over-month transacting-merchant ratios over the last ≤3 transitions,
+  // clamped to [floor, 100%]; cohorts too young to have a transition borrow the pooled figure.
+  function retentionOf(series){
+    var full=series.filter(function(s){return !s.partial;}); var ratios=[];
+    for(var i=full.length-1;i>0&&ratios.length<3;i--){ if(full[i-1].n_tx>0) ratios.push(full[i].n_tx/full[i-1].n_tx); }
+    if(!ratios.length) return null; var p=1; ratios.forEach(function(x){p*=x;}); return Math.pow(p,1/ratios.length);
+  }
+  function computeValue(){
+    var d=Math.max(0,disc)/100, H=Math.max(0,Math.round(horizon)), fl=Math.min(1,Math.max(0,floor/100));
+    // pooled retention over all cohorts (sum of n_tx by age index, then same geometric mean)
+    var pooledFull=[]; COH.forEach(function(co){ co.series.forEach(function(s){ if(s.partial) return; var i=s.age; pooledFull[i]=(pooledFull[i]||0)+s.n_tx; }); });
+    var pr=[]; for(var i=pooledFull.length-1;i>0&&pr.length<3;i--){ if(pooledFull[i-1]>0&&pooledFull[i]!=null) pr.push(pooledFull[i]/pooledFull[i-1]); }
+    var pooled=null; if(pr.length){ var p=1; pr.forEach(function(x){p*=x;}); pooled=Math.pow(p,1/pr.length); }
+    COH.forEach(function(co){
+      var full=co.series.filter(function(s){return !s.partial;});
+      var K=full.length-1;
+      var obsNPV=0, obsMargin=0, tpv=0, fee=0, cost=0;
+      full.forEach(function(s,k){ obsNPV+=s.margin/Math.pow(1+d,k/12); obsMargin+=s.margin; tpv+=s.tpv; fee+=s.fee; cost+=s.cost; });
+      var last3=full.slice(Math.max(0,full.length-3)); var sm=0, sn=0; last3.forEach(function(s){sm+=s.margin; sn+=s.n_tx;});
+      var mbar= sn? sm/sn : 0;
+      var rOwn=retentionOf(co.series); var rUsed= rOwn!=null? rOwn : (pooled!=null? pooled : 0.9); var rSrc= rOwn!=null?'own':(pooled!=null?'pooled':'default');
+      rUsed=Math.min(1,Math.max(fl,rUsed));
+      var A=K>=0? full[K].n_tx : 0; var proj=0, projNPV=0;
+      for(var j=1;j<=H;j++){ var v=A*Math.pow(rUsed,j)*mbar; proj+=v; projNPV+=v/Math.pow(1+d,(K+j)/12); }
+      co.val={K:K, obsNPV:obsNPV, obsMargin:obsMargin, tpv:tpv, fee:fee, cost:cost, mrr:K>=0?full[K].margin:0, mrrFee:K>=0?full[K].fee:0, activeLast:A, mbar:mbar, r:rUsed, rSrc:rSrc, proj:proj, projNPV:projNPV, npv:obsNPV+projNPV, ltv:co.N?(obsNPV+projNPV)/co.N:null, ltvTx:co.ever?(obsNPV+projNPV)/co.ever:null,
+               withPartial:{margin:co.series.reduce(function(a,s){return a+s.margin;},0), tpv:co.series.reduce(function(a,s){return a+s.tpv;},0)}};
+    });
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
+  var KEYL={k:'registered on Loyverse Payments',f:'passed KYC',t:'took a first charge'};
+  function renderKpis(){
+    var N=COH.reduce(function(a,c){return a+c.N;},0), ever=COH.reduce(function(a,c){return a+c.ever;},0);
+    var margin=COH.reduce(function(a,c){return a+c.val.withPartial.margin;},0), tpv=COH.reduce(function(a,c){return a+c.val.withPartial.tpv;},0);
+    var mrr=COH.reduce(function(a,c){return a+c.val.mrr;},0), npv=COH.reduce(function(a,c){return a+c.val.npv;},0);
+    var lastCell=null; COH.forEach(function(c){ c.series.forEach(function(s){ if(s.m===LASTFULL){ lastCell=(lastCell||0)+s.n_tx; } }); });
+    $('chKpis').innerHTML=[
+      {k:'Cohorts · merchants',v:fmtN(COH.length)+'<span class="u"> · '+fmtN(N)+'</span>',s:'merchants that '+KEYL[key]+(window.LVCC?window.LVCC.suffix():'')},
+      {k:'Ever transacting',v:fmtN(ever)+'<span class="u"> · '+fmtPct(N?100*ever/N:null)+'</span>',s:fmtN(lastCell)+' transacting in '+(LASTFULL?monthLabel(LASTFULL):'–')+' (last complete month)'},
+      {k:'Net margin to date',v:fmtMoney(margin)+'<span class="u"> on '+fmtMoney(tpv)+' TPV</span>',s:'fees captured − Stripe IC+ cost · incl. current month'},
+      {k:'MRR · portfolio NPV',v:fmtMoney(mrr)+'<span class="u"> · '+fmtMoney(npv)+'</span>',s:'net margin in '+(LASTFULL?monthLabel(LASTFULL):'–')+' · NPV at '+disc+'% with '+horizon+'-month projection'}
+    ].map(function(t){return '<div class="fn-kpi"><div class="k">'+t.k+'</div><div class="v">'+t.v+'</div><div class="s">'+t.s+'</div></div>';}).join('');
+  }
+  function renderSummary(){
+    var h='<thead><tr><th>Cohort</th><th>Merchants</th><th>Passed KYC</th><th>Ever transacting</th><th>Transacting '+(LASTFULL?monthLabel(LASTFULL):'')+'</th><th>Retention / mo</th><th>TPV to date</th><th>Gross fees</th><th>Stripe cost</th><th>Net margin to date</th><th>Margin / merchant</th><th>MRR (net)</th><th>Margin / active</th><th>LTV / merchant</th><th>LTV / transacting</th><th>Cohort NPV</th></tr></thead><tbody>';
+    var T={N:0,en:0,ev:0,A:0,tpv:0,fee:0,cost:0,m:0,mrr:0,npv:0};
+    COH.forEach(function(c){ var v=c.val; T.N+=c.N; T.en+=c.enabled; T.ev+=c.ever; T.A+=v.activeLast; T.tpv+=v.withPartial.tpv; T.fee+=v.fee; T.cost+=v.cost; T.m+=v.withPartial.margin; T.mrr+=v.mrr; T.npv+=v.npv;
+      h+='<tr><td>'+monthLabel(c.c)+'</td><td>'+fmtN(c.N)+'</td><td>'+fmtN(c.enabled)+' <span style="color:var(--midgray)">('+fmtPct(100*c.enabled/c.N,0)+')</span></td><td>'+fmtN(c.ever)+' <span style="color:var(--midgray)">('+fmtPct(100*c.ever/c.N,0)+')</span></td><td>'+fmtN(v.activeLast)+'</td><td title="'+(v.rSrc==='own'?'from this cohort':'borrowed: '+v.rSrc)+'">'+fmtPct(100*v.r,0)+(v.rSrc!=='own'?'<span style="color:var(--midgray)">*</span>':'')+'</td><td>'+fmtMoney(v.withPartial.tpv)+'</td><td>'+fmtMoney(v.fee)+'</td><td>'+fmtMoney(v.cost)+'</td><td style="color:'+(v.withPartial.margin<0?'#CC3333':'inherit')+'">'+fmtMoney(v.withPartial.margin)+'</td><td>'+fmtMoney(c.N?v.withPartial.margin/c.N:null,2)+'</td><td style="color:'+(v.mrr<0?'#CC3333':'inherit')+'">'+fmtMoney(v.mrr)+'</td><td>'+fmtMoney(v.mbar,2)+'</td><td style="color:'+((v.ltv||0)<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.ltv,2)+'</b></td><td>'+fmtMoney(v.ltvTx,2)+'</td><td style="color:'+(v.npv<0?'#CC3333':'inherit')+'"><b>'+fmtMoney(v.npv)+'</b></td></tr>'; });
+    h+='<tr style="font-weight:bold;background:var(--offwhite)"><td>All cohorts</td><td>'+fmtN(T.N)+'</td><td>'+fmtN(T.en)+' ('+fmtPct(T.N?100*T.en/T.N:null,0)+')</td><td>'+fmtN(T.ev)+' ('+fmtPct(T.N?100*T.ev/T.N:null,0)+')</td><td>'+fmtN(T.A)+'</td><td></td><td>'+fmtMoney(T.tpv)+'</td><td>'+fmtMoney(T.fee)+'</td><td>'+fmtMoney(T.cost)+'</td><td>'+fmtMoney(T.m)+'</td><td>'+fmtMoney(T.N?T.m/T.N:null,2)+'</td><td>'+fmtMoney(T.mrr)+'</td><td></td><td>'+fmtMoney(T.N?T.npv/T.N:null,2)+'</td><td>'+fmtMoney(T.ev?T.npv/T.ev:null,2)+'</td><td>'+fmtMoney(T.npv)+'</td></tr></tbody>';
+    $('chSummary').innerHTML=h;
+    $('chSumNote').textContent='Gross fees, Stripe cost, MRR, retention, LTV and NPV use complete months only (through '+(LASTFULL?monthLabel(LASTFULL):'–')+'); TPV and net margin to date include the current month. LTV / merchant = cohort NPV ÷ cohort size; LTV / transacting = ÷ merchants that ever charged. NPV = Σ observed monthly net margin discounted at '+disc+'%/yr from the cohort month + '+horizon+' projected months of (transacting merchants in the last complete month × retention^j × margin per active merchant, averaged over the last ≤3 months). * retention borrowed from the pooled curve because the cohort has no month-over-month transition yet. No CAC is subtracted.';
+  }
+  var METRICS={pct_tx:{l:'% of cohort transacting',f:function(s){return s.pct_tx;},fmt:function(v){return fmtPct(v,0);},neg:false},
+               n_tx:{l:'Merchants transacting',f:function(s){return s.n_tx;},fmt:fmtN,neg:false},
+               tpv:{l:'TPV (USD)',f:function(s){return s.tpv;},fmt:function(v){return fmtMoney(v,0);},neg:false},
+               fee:{l:'Gross application fees (USD)',f:function(s){return s.fee;},fmt:function(v){return fmtMoney(v,0);},neg:false},
+               cost:{l:'Stripe IC+ cost (USD)',f:function(s){return s.cost;},fmt:function(v){return fmtMoney(v,0);},neg:false},
+               margin:{l:'Net margin = fees − cost (USD)',f:function(s){return s.margin;},fmt:function(v){return fmtMoney(v,0);},neg:true},
+               margin_pm:{l:'Net margin per cohort merchant (USD)',f:function(s){return s.margin_pm;},fmt:function(v){return fmtMoney(v,2);},neg:true},
+               cum_pm:{l:'Cumulative net margin per cohort merchant (USD)',f:function(s){return s.cum_pm;},fmt:function(v){return fmtMoney(v,2);},neg:true}};
+  function shade(v,max,neg){ if(v==null||!isFinite(v)) return 'transparent'; if(!max) return '#F3F7FB'; var t=Math.min(1,Math.abs(v)/max); if(neg&&v<0) return 'rgba(204,51,51,'+(0.12+0.6*t).toFixed(3)+')'; return 'rgba(29,143,225,'+(0.08+0.72*t).toFixed(3)+')'; }
+  function renderTri(){
+    var M=METRICS[metric]; var cols= axis==='age'? (function(){var mx=0; COH.forEach(function(c){mx=Math.max(mx,c.series.length);}); var a=[]; for(var i=0;i<mx;i++) a.push(i); return a;})() : MONTHS;
+    var max=0; COH.forEach(function(c){ c.series.forEach(function(s){ var v=M.f(s); if(v!=null&&isFinite(v)) max=Math.max(max,Math.abs(v)); }); });
+    var h='<thead><tr><th>Cohort</th><th class="n">Merchants</th>'+cols.map(function(x){return '<th>'+(axis==='age'?'M'+x:monthLabel(x))+'</th>';}).join('')+'</tr></thead><tbody>';
+    COH.forEach(function(c){
+      h+='<tr><td>'+monthLabel(c.c)+'</td><td class="n">'+fmtN(c.N)+'</td>';
+      cols.forEach(function(x){ var s= axis==='age'? c.series[x] : c.series.find(function(q){return q.m===x;}); if(!s){ h+='<td class="empty"></td>'; return; } var v=M.f(s); var isSel=sel&&sel.c===c.c&&sel.m===s.m; h+='<td class="c'+(s.partial?' partial':'')+(isSel?' sel':'')+'" style="background:'+shade(v,max,M.neg)+'" data-c="'+c.c+'" data-m="'+s.m+'" title="'+monthLabel(c.c)+' cohort · '+monthLabel(s.m)+(s.partial?' (in progress)':'')+' · '+esc(M.l)+'">'+M.fmt(v)+'</td>'; });
+      h+='</tr>'; });
+    h+='</tbody>'; $('chTri').innerHTML=h;
+    $('chLeg').innerHTML='<span>'+esc(M.l)+'</span><span>low <span class="sw'+(M.neg?' neg':'')+'"></span> high'+(M.neg?' (red = negative)':'')+'</span><span>· lighter = current month in progress · click a cell for the merchants</span>';
+  }
+  function renderDrill(){
+    if(!sel){ $('chDrill').style.display='none'; return; }
+    var c=COH.find(function(x){return x.c===sel.c;}); var s=c&&c.series.find(function(q){return q.m===sel.m;}); if(!s){ $('chDrill').style.display='none'; return; }
+    $('chDrill').style.display='block';
+    $('chDrillTitle').innerHTML='<b>'+monthLabel(c.c)+' cohort</b> in <b>'+monthLabel(s.m)+'</b>'+(s.partial?' (in progress)':'')+' — '+fmtN(s.n_tx)+' of '+fmtN(c.N)+' transacting · TPV '+fmtMoney(s.tpv)+' · fees '+fmtMoney(s.fee)+' · cost '+fmtMoney(s.cost)+' · net '+fmtMoney(s.margin);
+    var rows=s.who.slice().sort(function(a,b){return b.v[0]-a.v[0];});
+    var h='<thead><tr><th>Merchant</th><th>Email</th><th>Group</th><th>Registered on Payments</th><th>First charge</th><th>Charges</th><th>TPV</th><th>Fees</th><th>Cost</th><th>Net</th></tr></thead><tbody>';
+    rows.forEach(function(w){ var r=w.r,v=w.v; h+='<tr><td>'+esc(r.n)+'</td><td style="text-align:left">'+esc(r.e)+'</td><td>'+esc(r.g||'–')+'</td><td>'+esc(r.k)+'</td><td>'+esc(r.t||'–')+'</td><td>'+fmtN(v[1])+'</td><td>'+fmtMoney(v[0])+'</td><td>'+fmtMoney(v[2],2)+'</td><td>'+fmtMoney(v[3],2)+'</td><td style="color:'+((v[2]-v[3])<0?'#CC3333':'inherit')+'">'+fmtMoney(v[2]-v[3],2)+'</td></tr>'; });
+    if(!rows.length) h+='<tr><td colspan="10" style="text-align:left;color:var(--midgray)">No merchant from this cohort transacted in this month.</td></tr>';
+    $('chDrillTable').innerHTML=h+'</tbody>';
+  }
+  var chart=null;
+  function palette(i,n){ var hue=(205+ (i*360/Math.max(1,n)))%360; return 'hsl('+hue.toFixed(0)+',62%,'+(48+((i%2)*8))+'%)'; }
+  function renderChart(){
+    if(!window.Chart) return; try{ if(chart){chart.destroy(); chart=null;}
+    var ds=COH.map(function(c,i){ return {label:monthLabel(c.c), backgroundColor:palette(i,COH.length), data:MONTHS.map(function(m){ var s=c.series.find(function(q){return q.m===m;}); return s? Math.round(s.margin*100)/100 : null; }), stack:'m'}; });
+    chart=new Chart($('chChart').getContext('2d'),{type:'bar',data:{labels:MONTHS.map(monthLabel),datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:function(it){return it.dataset.label+' cohort: '+fmtMoney(it.raw,2);},footer:function(items){var t=0; items.forEach(function(i){t+=i.raw||0;}); return 'Total: '+fmtMoney(t,2);}}}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:10}}},y:{stacked:true,ticks:{callback:function(v){return fmtMoney(v,0);},font:{size:10}},title:{display:true,text:'Net margin (USD)',font:{size:11}}}}}});
+    }catch(e){ if(window.console) console.error('cohort chart failed',e); }
+  }
+  function renderFoot(){
+    $('chFoot').textContent='Cohort = month the merchant '+KEYL[key]+'. Transacting in a month = at least one successful, captured charge on the merchant’s connected account that month. TPV, charge counts and application fees are dated by the charge; Stripe’s interchange-plus cost is dated by its balance transaction, which can land a month-boundary charge’s cost in the following month — immaterial at this grain. All amounts USD at fixed FX. Prod accounts only; internal/QA accounts removed on the same rule as the Funnel. Data refreshes every 3 hours from Snowflake; the Stripe share typically lags live by ~6 hours.';
+  }
+  function renderAll(){ load(); renderKpis(); renderSummary(); renderTri(); renderDrill(); renderChart(); renderFoot(); }
+
+  // ── Controls ──────────────────────────────────────────────────────────────
+  function bindRange(id,attr,fn){ $(id).addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; $(id).querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);}); fn(b.getAttribute(attr)); }); }
+  bindRange('chKey','data-k',function(v){ key=v; sel=null; renderAll(); });
+  bindRange('chAxis','data-a',function(v){ axis=v; renderTri(); });
+  bindRange('chMetric','data-m',function(v){ metric=v; renderTri(); });
+  ['chDisc','chHorizon','chFloor'].forEach(function(id){ $(id).addEventListener('change',function(){ disc=+$('chDisc').value||0; horizon=+$('chHorizon').value||0; floor=+$('chFloor').value||0; computeValue(); renderKpis(); renderSummary(); }); });
+  $('chTri').addEventListener('click',function(e){ var td=e.target.closest('td.c'); if(!td) return; var c=td.getAttribute('data-c'), m=td.getAttribute('data-m'); sel=(sel&&sel.c===c&&sel.m===m)?null:{c:c,m:m}; renderTri(); renderDrill(); if(sel){ try{ $('chDrill').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} } });
+  $('chDrillClose').addEventListener('click',function(){ sel=null; renderTri(); renderDrill(); });
+  $('chSumExport').addEventListener('click',function(){
+    var head=['cohort','merchants','passed_kyc','ever_transacting','transacting_last_full_month','retention_monthly','retention_source','tpv_to_date','gross_fees_full_months','stripe_cost_full_months','net_margin_to_date','mrr_net_last_full_month','margin_per_active','ltv_per_merchant','ltv_per_transacting','cohort_npv','discount_rate_pct','projection_months'];
+    var csv=[head.join(',')].concat(COH.map(function(c){var v=c.val; return [c.c,c.N,c.enabled,c.ever,v.activeLast,(v.r*100).toFixed(1),v.rSrc,v.withPartial.tpv.toFixed(2),v.fee.toFixed(2),v.cost.toFixed(2),v.withPartial.margin.toFixed(2),v.mrr.toFixed(2),v.mbar.toFixed(2),v.ltv==null?'':v.ltv.toFixed(2),v.ltvTx==null?'':v.ltvTx.toFixed(2),v.npv.toFixed(2),disc,horizon].join(',');})).join('\n');
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='payments_cohorts_'+UPD.slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+  });
+
+  var rendered=false;
+  function ensure(){ var p=$('page-cohorts'); if(!p||p.style.display==='none') return; if(!rendered){ rendered=true; renderAll(); } }
+  if(window.LVCC){ window.LVCC.on(function(v){ cc=v||''; sel=null; if(rendered) renderAll(); }); }
+  window.__COHORTS_INIT=function(){ setTimeout(ensure,30); };
+  setTimeout(ensure,30);
+})();
 </script>
 <script src="facachat-widget.js"></script>
 </body>

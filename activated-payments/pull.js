@@ -39,6 +39,7 @@ const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const REPORT_FILE    = path.join(__dirname, 'report-data.js');
 const PROFILE_FILE   = path.join(__dirname, 'profile-data.js');
+const COHORT_FILE    = path.join(__dirname, 'cohort-data.js');   // Payments-tab cohort triangle (added 2026-10-09)
 // The cohort triangle lives on the KPI dashboard, which is a SEPARATE Cloudflare Pages site.
 // A cross-origin fetch between the two would have to survive Cloudflare Access, so the payments
 // pull writes the cohort membership straight into the other site's folder instead. Same repo,
@@ -1025,6 +1026,10 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
   // cannot say WHICH merchants transacted, which is exactly what the cohort triangle needs to
   // intersect "transacting" with "active". Same rows, kept rather than discarded.
   const acctMonths = {};
+  // acct -> month -> { tpv, txns } in USD. The cohort triangle on the Payments tab (added
+  // 2026-10-09) needs each merchant's volume BY MONTH, not just which months it transacted in.
+  // Same rows again, kept at one more grain; the blended byMonth totals are untouched.
+  const byAcct = {};
   const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   const slot = (o, cc) => (o.by[cc] || (o.by[cc] = { tpv: 0, txns: 0, accounts: 0 }));
   for (const r of rows || []) {
@@ -1050,6 +1055,11 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
     byMonth[m].txns += cnt;
     const b = slot(byMonth[m], cc);
     b.tpv += usd; b.txns += cnt;
+    if (acct) {
+      const am = byAcct[acct] || (byAcct[acct] = {});
+      const cell = am[m] || (am[m] = { tpv: 0, txns: 0 });
+      cell.tpv += usd; cell.txns += cnt;
+    }
   }
   Object.keys(acctSets).forEach(m => {
     const s = acctSets[m], o = byMonth[m];
@@ -1057,7 +1067,7 @@ async function fetchChargesMonthly(conn, acctIds, countryByAcct) {
     o.accounts = s.all.size;
     Object.keys(s.cc).forEach(cc => { slot(o, cc).accounts = s.cc[cc].size; });
   });
-  return { byMonth, unknownCcy, acctMonths };
+  return { byMonth, unknownCcy, acctMonths, byAcct };
 }
 
 // Per-merchant monthly paying / active membership, for the merchants holding a connected
@@ -1127,12 +1137,18 @@ async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol, country
   const inList = ids.map(a => `'${a}'`).join(',');
   const rows = await executeQuery(conn, loadSql(sqlFile).replace('/*ACCOUNT_IDS*/', inList));
   const byMonth = {};
+  // acct -> month -> usd, for the Payments-tab cohort triangle (2026-10-09). Hung off byMonth as a
+  // NON-ENUMERABLE property so every existing reader that iterates Object.keys(byMonth) as months
+  // sees exactly what it saw before.
+  const byAcct = {};
+  Object.defineProperty(byMonth, '__byAcct', { value: byAcct, enumerable: false });
   const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
   for (const r of rows || []) {
     const m = g(r, 'month'); if (!m) continue;
     const usd = minorToUsd(g(r, amtCol), g(r, 'ccy'));
     if (usd == null) continue;              // unknown currency — excluded, same as the daily layer
     if (!byMonth[m]) byMonth[m] = { usd: 0, cnt: 0, by: {} };
+    { const a0 = g(r, 'acct'); if (a0) { const am = byAcct[a0] || (byAcct[a0] = {}); am[m] = (am[m] || 0) + usd; } }
     const cnt = Number(g(r, cntCol)) || 0;
     byMonth[m].usd += usd;
     byMonth[m].cnt += cnt;
@@ -1533,6 +1549,7 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
     merchants.push({
       grp: (groupTags[String(c.owner)] || {}).grp || null,
       cc,                                   // merchant country — drives the page's country filter
+      acct: c.acct,                         // Stripe account id (added 2026-10-09) — joins the cohort economics
       oid: c.owner || ('acct:' + c.acct),
       name: c.bname || (reg && reg.name) || (p && p.name) || (c.owner || c.acct),
       email: email,
@@ -1933,6 +1950,65 @@ function writeDailyRegistrations(funnel) {
   console.log('✓ Wrote registration-daily.json — ' + Object.keys(days).length + ' days');
 }
 
+// ── PAYMENTS COHORT TRIANGLE (Payments tab · Cohorts) — added 2026-10-09 ─────────────────────
+// One record per PROD connected account, carrying the dates that define a Loyverse Payments
+// cohort (connected = "registered on Loyverse Payments", enabled, first charge) and the
+// merchant's monthly economics: TPV, charge count, application fees captured (gross revenue)
+// and the interchange-plus cost Stripe bills Loyverse. Net margin = fee − cost is what the
+// triangle calls MRR. Everything is USD; months are 'YYYY-MM'. The page does ALL aggregation
+// client-side (cohort = month of connected_at by default), so it can re-slice by country and by
+// metric without another pull. Email and name travel with the record so the page can apply the
+// same internal/QA exclusion the Funnel uses (__PAY_TEST_PATTERNS) and name the merchants in a
+// cell. Fee and cost months come from different timestamps (balance-transaction vs attribution,
+// see the SQL headers), so a month-boundary charge can book its cost one month late — immaterial
+// at cohort grain, and stated on the page.
+function buildCohortEcon(funnel, chargesByAcct, feeByAcct, costByAcct, flags) {
+  const cb = chargesByAcct || {}, fb = feeByAcct || {}, kb = costByAcct || {}, fl = flags || {};
+  const r2 = v => Math.round((Number(v) || 0) * 100) / 100;
+  const out = [];
+  for (const m of (funnel.merchants || [])) {
+    if (!m.acct || !m.connected_at) continue;
+    const months = new Set([...Object.keys(cb[m.acct] || {}), ...Object.keys(fb[m.acct] || {}), ...Object.keys(kb[m.acct] || {})]);
+    const e = {};
+    [...months].sort().forEach(mo => {
+      const c = (cb[m.acct] || {})[mo] || { tpv: 0, txns: 0 };
+      e[mo] = [r2(c.tpv), c.txns || 0, r2((fb[m.acct] || {})[mo] || 0), r2((kb[m.acct] || {})[mo] || 0)];
+    });
+    out.push({
+      a: m.acct, o: String(m.oid), n: m.name || '', e: m.email || '', c: m.cc || CC_UNKNOWN,
+      g: m.grp || null, pilot: m.pilot || 0,
+      r: m.registered_at || null, k: m.connected_at, f: m.enabled_at || null, t: m.first_txn_at || null,
+      en: m.enabled ? 1 : 0, term: m.terminal_status || null,
+      // POS months with at least one receipt (monthly table + raw receipts for the recent window) and
+      // months on a paid Loyverse plan — from merchant_month_flags / merchant_month_active_recent.
+      act: ((fl[String(m.oid)] || {}).act || []).slice().sort(),
+      pay: ((fl[String(m.oid)] || {}).pay || []).slice().sort(),
+      m: e,
+    });
+  }
+  return out;
+}
+function writeCohort(recs, meta) {
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const withEcon = recs.filter(r => Object.keys(r.m).length).length;
+  const out = `// Loyverse Payments COHORTS — regenerated by activated-payments/pull.js. Do NOT edit by hand.
+// One record per PROD Stripe connected account (the payments book), test environment excluded.
+//   a  Stripe account id        o  Loyverse owner id       n/e  business name / email
+//   c  merchant country (ISO-2)  g  funnel group (new/paying/nonpaying/dormant)  pilot  1 if pilot-500
+//   r  Loyverse registration date   k  account CONNECTED (= registered on Loyverse Payments)
+//   f  KYC passed (TOS acceptance)  t  first successful charge   en  currently charges_enabled
+//   term  terminal order status     m  { 'YYYY-MM': [tpv_usd, charges, app_fees_usd, icplus_cost_usd] }
+//   act   months with ≥1 POS receipt (fresh: raw receipts for recent months)   pay  months on a paid plan
+// Cohort = month of k by default; the page can re-key on f or t. Net margin (MRR) = fees − cost.
+// Internal/QA accounts are NOT removed here — the page applies __PAY_TEST_PATTERNS, same as the Funnel.
+// Last pull: ${stamp}
+window.__PAY_COHORT_UPDATED = ${JSON.stringify(stamp)};
+window.__PAY_COHORT_META = ${JSON.stringify(meta || {})};
+window.__PAY_COHORT_MERCHANTS = ${JSON.stringify(recs)};
+`;
+  fs.writeFileSync(COHORT_FILE, out, 'utf8');
+  console.log(`✓ cohort-data.js: ${recs.length} connected accounts (${withEcon} with monthly economics)`);
+}
 function writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
@@ -2246,6 +2322,17 @@ async function main() {
         const salesMerchants = Object.keys(sales).filter(m => (sales[m] || {}).receipts > 0).length;
         console.log(`  active-month coverage (monthly table only): ${flagMerchants} merchants vs ${salesMerchants} in the collapsed sales read`
                   + (salesMerchants && flagMerchants < salesMerchants * 0.95 ? '  ← GAP, investigate' : ''));
+        // Payments-tab cohort triangle (2026-10-09). Built from data already in hand — no extra
+        // Snowflake round-trip — and guarded on its own. Carries the merged paying/active months so
+        // the Funnel's pending diagnosis can read FRESH POS activity (raw receipts) instead of the
+        // lagged monthly sales table that feeds __ACT.pos_active.
+        try {
+          writeCohort(buildCohortEcon(funnel, cm.byAcct || {}, rev.__byAcct || {}, cst.__byAcct || {}, flags), {
+            charges: cmR.status === 'fulfilled', fees: revR.status === 'fulfilled', cost: costR2.status === 'fulfilled',
+            flags: flagsR.status === 'fulfilled', recentActive: recentR.status === 'fulfilled',
+            lastMonthSeen: Object.keys(cm.byMonth || {}).sort().pop() || null,
+          });
+        } catch (e) { console.error(`✗ cohort-data.js not written (Cohorts tab keeps its previous file): ${e.message}`); }
         writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
       } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
 
