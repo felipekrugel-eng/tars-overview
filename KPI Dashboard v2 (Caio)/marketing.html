@@ -310,8 +310,8 @@
       <div class="chart-box"><canvas id="ch-daily"></canvas></div>
     </div>
     <div class="panel rise">
-      <h3>Cost per merchant, rolling 7 days</h3>
-      <div class="ph">Daily cost per merchant is meaningless at this volume &mdash; a day with one signup reads as a triumph
+      <h3>Cost per register, rolling 7 days</h3>
+      <div class="ph">Daily cost per register is meaningless at this volume &mdash; a day with one signup reads as a triumph
         or a disaster. This is spend over the window divided by merchants in the window, not an average of daily ratios.</div>
       <div class="chart-box"><canvas id="ch-cpa"></canvas></div>
     </div>
@@ -638,7 +638,7 @@
       { l: 'Cost per click', v: t.clicks ? money2(t.spend / t.clicks) : '—', d: 'What Google and Meta charged' },
       { l: 'Platform conversions', v: n0(t.pconv), d: 'Google’s and Meta’s own count — not merchants' },
       { l: 'Merchants registered', v: n0(nM), ours: 1, d: 'Registered and traced to a paid click' },
-      { l: 'Cost per merchant', v: money2(perCC(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants' },
+      { l: 'Cost per register', v: money2(perCC(aSpend, nM)), ours: 1, d: 'Traceable spend ÷ merchants registered' },
       { l: 'Issued a receipt', v: n0(nSold), ours: 1, d: `${pct(nM ? nSold / nM : null)} of merchants · ${money2(perCC(aSpend, nSold))} each` },
       { l: 'Active (5+ / 30d)', v: n0(nAct5), ours: 1, d: `${pct(nM ? nAct5 / nM : null)} of merchants · ${money2(perCC(aSpend, nAct5))} each` },
       { l: 'Passed KYC', v: n0(nKyc), ours: 1, d: `${pct(nM ? nKyc / nM : null)} of merchants · ${money2(perCC(aSpend, nKyc))} each` },
@@ -698,7 +698,7 @@
       (base > exact ? `, ${n0(base - exact)} dated by sign-up instead` : '') +
       ` · ${n0(new Set(ms.map(m => m.c)).size)} campaign(s)`;
     $('fn-base-cost').innerHTML =
-      `<b>${money2(per(aSpend, base))}</b> per merchant<br>` +
+      `<b>${money2(per(aSpend, base))}</b> per register<br>` +
       `from ${money(aSpend)} of traceable spend`;
 
     const L = LADDERS[state.path];
@@ -797,7 +797,7 @@
       options: opts('Spend ($)', 'Merchants'),
     });
 
-    // Rolling cost per merchant: spend summed over the window ÷ merchants summed over the
+    // Rolling cost per register: spend summed over the window ÷ merchants summed over the
     // window. NOT an average of daily ratios — a day with $200 of spend and no signups has
     // to be able to drag the number, and a day with $4 and one signup must not rescue it.
     const W = 7, cpa = [];
@@ -811,7 +811,7 @@
     chCpa = new Chart($('ch-cpa'), {
       data: {
         labels: ds,
-        datasets: [{ type: 'line', label: 'Cost per merchant (7d)', data: cpa, borderColor: '#1578C4',
+        datasets: [{ type: 'line', label: 'Cost per register (7d)', data: cpa, borderColor: '#1578C4',
           backgroundColor: 'rgba(29,143,225,.12)', borderWidth: 2, pointRadius: 0, tension: .25, fill: true,
           spanGaps: false }],
       },
@@ -860,7 +860,7 @@
     const cols = [
       { k: 'name', t: 'Campaign', s: 1 }, { k: 'pf', t: 'Platform', s: 1 },
       { k: 'spend', t: 'Spend' }, { k: 'clicks', t: 'Clicks' }, { k: 'cpc', t: 'CPC' },
-      { k: 'merchants', t: 'Merchants' }, { k: 'cpm', t: 'Cost / merchant' },
+      { k: 'merchants', t: 'Merchants' }, { k: 'cpm', t: 'Cost / register' },
       { k: 'sold', t: 'Sold ever' }, { k: 'act', t: 'Active 30d' }, { k: 'act5', t: 'Active 5+' },
       { k: 'cpa5', t: 'Cost / active 5+' },
       { k: 'kyc', t: 'Passed KYC' }, { k: 'cpk', t: 'Cost / KYC' },
@@ -1027,7 +1027,7 @@
     $('badge-updated').textContent = 'built ' + D.generatedAt;
     $('badge-basis').textContent = state.basis === 'click' ? 'counted by click date' : 'counted by sign-up date';
     $('basis-hint').textContent = state.basis === 'click'
-      ? 'A merchant lands in the period we paid for their click — the honest basis for cost per merchant.'
+      ? 'A merchant lands in the period we paid for their click — the honest basis for cost per register.'
       : 'A merchant lands in the period they registered. Spend and merchants can then belong to different weeks.';
     renderTiles(sel); renderFunnel(sel); renderCharts(sel);
     renderCampaigns(sel); renderGeo(sel); renderFacebook(sel); renderMerchants(sel);
