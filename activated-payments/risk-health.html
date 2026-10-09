@@ -83,6 +83,13 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
 .pitem{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}.pitem .k{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:bold}.pitem .v{font-size:12px;margin-top:4px;word-break:break-word}
 @media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.cardgrid{grid-template-columns:repeat(2,1fr)}.grid2,.detailtop{grid-template-columns:1fr}.threecols{grid-template-columns:1fr}.profilegrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.wrap{padding:20px 14px 50px}.lvmn{padding:0 10px}.lvmn a.lvmn-tab{padding:14px 9px;font-size:10px}.lvmn .lvmn-brand{margin-right:8px}.paysub{padding:0 8px}.paysub a{padding:10px 9px;font-size:9px}.hero{align-items:flex-start;flex-direction:column}.kpis,.cardgrid,.profilegrid{grid-template-columns:1fr}.scorebarrow{grid-template-columns:1fr 48px}.scorebarrow .track{grid-column:1/-1}.merchant-table th:nth-child(4),.merchant-table td:nth-child(4),.merchant-table th:nth-child(5),.merchant-table td:nth-child(5){display:none}}
+.ovr{display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;background:#9D2435;color:#fff;font-size:9px;font-weight:bold;letter-spacing:.5px}
+.amb{display:inline-block;margin-left:4px;color:var(--amber);font-weight:bold;cursor:help}
+.rc{display:inline-block;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:bold}
+.rc-low{background:#FDECEE;color:#A22D3C}.rc-mid{background:#FFF7DE;color:#936400}.rc-ok{background:#EAF7F1;color:#177850}.rc-none{background:#F1F4F8;color:#7E8A9A}
+.note{margin-top:10px;padding:8px 10px;border-radius:8px;background:#FFF7DE;color:#6B4A00;font-size:11px;line-height:1.45}
+.revbar{margin:18px 0 0;padding:11px 14px;border-radius:10px;font-size:12px;line-height:1.5}
+.revbar.rc-low{background:#FDECEE;color:#7C1825}.revbar.rc-mid{background:#FFF7DE;color:#6B4A00}.revbar.rc-ok{background:#EAF7F1;color:#13543A}
 </style>
 </head>
 <body>
@@ -136,7 +143,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       <select id="actionFilter"><option value="">All actions</option></select>
     </div>
     <div class="tablewrap"><table class="merchant-table">
-      <thead><tr><th data-sort="name">Merchant</th><th data-sort="score">Risk score</th><th data-sort="band">Risk band</th><th data-sort="createdAt">Account created</th><th data-sort="hasTransacted">Transacted</th><th data-sort="lastTransactedAt">Last transaction</th><th data-sort="location">Location</th><th data-sort="representative">Representative</th><th data-sort="action">Recommended action</th></tr></thead>
+      <thead><tr><th data-sort="name">Merchant</th><th data-sort="score">Risk score</th><th data-sort="band">Risk band</th><th data-sort="reviewCompleteness">Review</th><th data-sort="enabledAt">Enabled</th><th data-sort="createdAt">Account created</th><th data-sort="hasTransacted">Transacted</th><th data-sort="lastTransactedAt">Last transaction</th><th data-sort="location">Location</th><th data-sort="action">Recommended action</th></tr></thead>
       <tbody id="tbody"></tbody>
     </table></div>
   </div>
@@ -159,6 +166,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
         <p class="ph">Category risk as a percentage of the maximum available risk in each dimension.</p>
         <div id="riskgraph" style="height:220px;display:flex;align-items:flex-end;gap:14px;padding:12px 8px 4px;border-bottom:1px solid #E3E9F0"></div>
       </div>
+      <div id="reviewstate"></div>
       <div class="threecols">
         <div class="signalbox"><h3>✓ Verified</h3><ul id="verified"></ul></div>
         <div class="signalbox"><h3>? Unable to verify</h3><ul id="unverified"></ul></div>
@@ -166,6 +174,10 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       </div>
       <div class="panel" style="margin:18px 0 0;padding:18px">
         <h2>Evidence required.</h2><p class="ph">The fastest checks to materially raise or lower confidence.</p><ul id="needed" style="margin:0;padding-left:20px"></ul>
+      </div>
+      <div class="panel" style="margin:18px 0 0;padding:18px">
+        <h2>Sources.</h2><p class="ph">Every independent source cited by this review, with what it actually establishes. A claim with no source here is not verified.</p>
+        <div id="sources"></div>
       </div>
       <div class="profilegrid" id="profilegrid"></div>
     </div>
@@ -192,7 +204,11 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   var bandClass={'very-low':'b-low',low:'b-low',moderate:'b-moderate',elevated:'b-review',high:'b-high','very-high':'b-very-high',critical:'b-very-high'};
   var $=function(id){return document.getElementById(id)};
   function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-  function bandFor(score){for(var i=0;i<bands.length;i++){if(score>=bands[i].min&&score<=bands[i].max)return bands[i]}return {label:'Unrated',level:'review'}}
+  // Operational score. `score` is always the sum of the risk dimensions, so the bars
+  // match the number beside them; a documented human override (riskOverrideScore) can
+  // still raise the band and the recommended action above that sum.
+  function eff(m){var o=m&&m.riskOverrideScore;return (o!=null&&o>m.score)?o:(m?m.score:0)}
+  function bandFor(score){for(var i=0;i<bands.length;i++){if(score>=bands[i].min&&score<=bands[i].max)return bands[i]}return {label:'Unrated',level:'moderate',action:'Review manually',min:0,max:100}}
   function gauge(score,large){
     var b=bandFor(score), color=bandColors[b.level]||'#888', pct=Math.max(0,Math.min(100,score));
     var len=157.08, dash=(len*pct/100).toFixed(2);
@@ -200,35 +216,44 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   }
   function listHtml(arr){return (arr&&arr.length?arr:['None recorded']).map(function(x){return '<li>'+esc(x)+'</li>'}).join('')}
   function renderKpis(){
+    // Every tile is computed from the merchant rows below, never from a stored total.
     var n=merchants.length;
     var enabledReviewed=merchants.filter(function(m){return m.enabled===true}).length;
-    var avg=n?Math.round((merchants.reduce(function(s,m){return s+(Number(m.score)||0)},0)/n)*10)/10:0;
-    var risk60=merchants.filter(function(m){return (Number(m.score)||0)>=60}).length;
-    var manualQueue=merchants.filter(function(m){
-      return /enhanced verification|verify before|hold|urgent|manual review|do not activate|payout pause|payout exposure/i.test(m.action||'');
+    var avg=n?Math.round((merchants.reduce(function(s,m){return s+eff(m)},0)/n)*10)/10:0;
+    var risk60=merchants.filter(function(m){return eff(m)>=60}).length;
+    // Driven by review completeness, not by wording in the action string.
+    var outstanding=merchants.filter(function(m){
+      return m.reviewPriority==='Verification outstanding'||(m.reviewCompleteness!=null&&m.reviewCompleteness<50);
     }).length;
+    var cov=DATA.coverage||{};
+    var covPct=(cov.enabledCoveragePct!=null)?cov.enabledCoveragePct+'%':'—';
+    var covSub=(cov.enabledAccounts!=null)
+      ? cov.reviewedEnabledAccounts+' of '+cov.enabledAccounts+' currently-enabled accounts reviewed'
+      : 'Coverage not recorded in this dataset';
     $('kpis').innerHTML=[
-      ['Total accounts',n,'Calculated from the live merchant dataset'],
-      ['Enabled reviewed',enabledReviewed,'Calculated from each account\'s current enabled status'],
-      ['Average risk score',avg+'/100','Calculated across all reviewed accounts'],
-      ['60+ risk',risk60,'Accounts currently scoring 60 or higher'],
-      ['Manual review queue',manualQueue,'Accounts whose current action requires manual intervention']
+      ['Merchants reviewed',n,'Review records held, not the size of the connected population'],
+      ['Enabled coverage',covPct,covSub],
+      ['Average risk score',avg+'/100','Mean across reviewed merchants, using the operational score'],
+      ['60+ risk',risk60,'Merchants at High risk or above'],
+      ['Verification outstanding',outstanding,'Reviews under 50% complete — low risk here means unchecked, not clean']
     ].map(function(x){return '<div class="kpi"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>'}).join('');
   }
   function renderDist(){
-    var counts={};bands.forEach(function(b){counts[b.label]=0});merchants.forEach(function(m){var b=bandFor(m.score);counts[b.label]=(counts[b.label]||0)+1});
+    var counts={};bands.forEach(function(b){counts[b.label]=0});merchants.forEach(function(m){var b=bandFor(eff(m));counts[b.label]=(counts[b.label]||0)+1});
     var n=Math.max(1,merchants.length);
     $('dist').innerHTML=bands.map(function(b){var c=counts[b.label]||0;if(!c)return '';return '<span style="width:'+(100*c/n)+'%;background:'+bandColors[b.level]+'" title="'+esc(b.label)+': '+c+'">'+c+'</span>'}).join('');
     $('distLegend').innerHTML=bands.map(function(b){return '<span><i style="background:'+bandColors[b.level]+'"></i>'+esc(b.label)+' ('+(counts[b.label]||0)+')</span>'}).join('');
   }
   function renderPriorities(){
-    var rows=merchants.slice().sort(function(a,b){return b.score-a.score}).slice(0,4);
-    $('priorities').innerHTML=rows.map(function(m,i){var b=bandFor(m.score);return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:'+(i===rows.length-1?'0':'1px solid #F1F4F8')+'"><div style="font-family:Arial Black;font-size:18px;color:'+bandColors[b.level]+'">'+m.score+'</div><div><div style="font-size:12px;font-weight:bold">'+esc(m.name)+'</div><div style="font-size:10px;color:var(--muted)">'+esc(m.action)+'</div></div><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></div>'}).join('');
+    var rows=merchants.slice().sort(function(a,b){return eff(b)-eff(a)}).slice(0,4);
+    $('priorities').innerHTML=rows.map(function(m,i){var b=bandFor(eff(m));return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:'+(i===rows.length-1?'0':'1px solid #F1F4F8')+'"><div style="font-family:Arial Black;font-size:18px;color:'+bandColors[b.level]+'">'+eff(m)+'</div><div><div style="font-size:12px;font-weight:bold">'+esc(m.name)+'</div><div style="font-size:10px;color:var(--muted)">'+esc(m.action)+'</div></div><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></div>'}).join('');
   }
   function sortValue(m,key){
-    if(key==='band') return bandFor(m.score).min||0;
-    if(key==='createdAt'||key==='lastTransactedAt') return m[key]?new Date(m[key]).getTime():0;
+    if(key==='score') return eff(m);
+    if(key==='band') return bandFor(eff(m)).min||0;
+    if(key==='createdAt'||key==='lastTransactedAt'||key==='enabledAt') return m[key]?new Date(m[key]).getTime():0;
     if(key==='hasTransacted') return m.hasTransacted?1:0;
+    if(key==='reviewCompleteness') return m.reviewCompleteness==null?-1:m.reviewCompleteness;
     var v=m[key];
     if(typeof v==='number') return v;
     return String(v==null?'':v).toLowerCase();
@@ -237,7 +262,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
     var q=$('search').value.trim().toLowerCase(), bf=$('bandFilter').value, af=$('actionFilter').value;
     return merchants.filter(function(m){
       var hay=[m.name,m.dba,m.representative,m.location,m.email,m.phone,m.website,m.mcc].join(' ').toLowerCase();
-      return (!q||hay.indexOf(q)>=0)&&(!bf||bandFor(m.score).label===bf)&&(!af||m.action===af);
+      return (!q||hay.indexOf(q)>=0)&&(!bf||bandFor(eff(m)).label===bf)&&(!af||m.action===af);
     }).sort(function(a,b){
       var av=sortValue(a,sortKey), bv=sortValue(b,sortKey), cmp=0;
       if(av<bv)cmp=-1; else if(av>bv)cmp=1;
@@ -252,8 +277,21 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   function renderTable(){
     var arr=filterMerchants();
     $('tbody').innerHTML=arr.map(function(m){
-      var b=bandFor(m.score), tx=m.hasTransacted?'Yes':'No';
-      return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td><td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+m.score+'/100</span></td><td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td><td>'+fmtDate(m.createdAt,true)+'</td><td>'+tx+'</td><td>'+fmtDate(m.lastTransactedAt,false)+'</td><td>'+esc(m.location||'—')+'</td><td>'+esc(m.representative||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>';
+      var sc=eff(m), b=bandFor(sc), tx=m.hasTransacted?'Yes':'No';
+      var ovr=(m.riskOverrideScore!=null&&m.riskOverrideScore>m.score)
+        ? '<span class="ovr" title="Score raised by a documented manual override: '+esc(m.riskOverrideReason||'')+'. Dimension total is '+m.score+'.">OVR</span>' : '';
+      var rc=m.reviewCompleteness;
+      var rcCls=(rc==null)?'rc-none':(rc<50?'rc-low':(rc<80?'rc-mid':'rc-ok'));
+      var rcTxt=(rc==null)?'—':rc+'%';
+      var enb=m.enabledAt?fmtDate(m.enabledAt,true):'—';
+      if(m.enabledCertainty==='boundary_ambiguous')
+        enb+='<span class="amb" title="Enablement was observed within a window that crosses midnight, so the date is accurate to within the sampling gap.">±</span>';
+      return '<tr data-id="'+m.id+'"><td><b>'+esc(m.name)+'</b><div class="muted" style="font-size:10px">'+esc(m.email||m.website||'')+'</div></td>'
+        +'<td><span class="scorepill"><i class="dot" style="background:'+bandColors[b.level]+'"></i>'+sc+'/100'+ovr+'</span></td>'
+        +'<td><span class="badge '+bandClass[b.level]+'">'+esc(b.label)+'</span></td>'
+        +'<td><span class="rc '+rcCls+'" title="Review completeness. Low completeness means unchecked, not safe.">'+rcTxt+'</span></td>'
+        +'<td>'+enb+'</td><td>'+fmtDate(m.createdAt,true)+'</td><td>'+tx+'</td><td>'+fmtDate(m.lastTransactedAt,false)+'</td>'
+        +'<td>'+esc(m.location||'—')+'</td><td class="action">'+esc(m.action||'—')+'</td></tr>';
     }).join('');
     Array.prototype.forEach.call($('tbody').querySelectorAll('tr'),function(tr){tr.ondblclick=function(){openMerchant(tr.getAttribute('data-id'))}});
     Array.prototype.forEach.call(document.querySelectorAll('.merchant-table th[data-sort]'),function(th){
@@ -261,7 +299,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
       th.title='Sort by '+th.textContent;
       th.onclick=function(){
         var k=th.getAttribute('data-sort');
-        if(sortKey===k)sortDir=sortDir==='asc'?'desc':'asc'; else {sortKey=k;sortDir=(k==='score'||k==='createdAt'||k==='lastTransactedAt')?'desc':'asc';}
+        if(sortKey===k)sortDir=sortDir==='asc'?'desc':'asc'; else {sortKey=k;sortDir=(k==='score'||k==='createdAt'||k==='enabledAt'||k==='lastTransactedAt')?'desc':'asc';}
         renderTable();
       };
     });
@@ -278,20 +316,49 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
         }
         var detailSet=detailCache[indexMerchant.detailFile];
         var detailMerchant=(detailSet.merchants||[]).find(function(x){return (x.accountId||x.id)===id});
-        if(detailMerchant)m=Object.assign({},detailMerchant,indexMerchant);
+        if(detailMerchant){
+          // Index values win, but only where the index actually HAS a value: a null in
+          // the summary must not erase a good value from the detail record.
+          m=Object.assign({},detailMerchant);
+          Object.keys(indexMerchant).forEach(function(k){
+            if(indexMerchant[k]!==null&&indexMerchant[k]!==undefined)m[k]=indexMerchant[k];
+          });
+        }
       }catch(err){console.error(err);}
     }
-    var b=bandFor(m.score);
+    var sc=eff(m), b=bandFor(sc);
     $('dname').textContent=m.name;$('dmeta').textContent=[m.location,m.representative,m.mcc].filter(Boolean).join(' · ');
-    $('bigscore').innerHTML=gauge(m.score,true)+'<div class="statusline" style="color:'+bandColors[b.level]+';font-size:13px">'+esc(b.label)+'</div>';
+    $('bigscore').innerHTML=gauge(sc,true)+'<div class="statusline" style="color:'+bandColors[b.level]+';font-size:13px">'+esc(b.label)+'</div>'
+      +((m.riskOverrideScore!=null&&m.riskOverrideScore>m.score)
+        ? '<div class="note">Manual override: raised to '+m.riskOverrideScore+' ('+esc(m.riskOverrideReason||'')+'). The dimensions below total '+m.score+'.</div>'
+        : '')
+      +((m.scoreBasis==='legacy-trust-inverted')
+        ? '<div class="note">Legacy review. Scored before the v2 risk model; its dimension values were reconciled on 9 Oct 2026 so the headline matches the breakdown.</div>'
+        : '');
     $('daction').textContent=m.action||'—';$('dsummary').textContent=m.summary||'';
     $('scorebars').innerHTML=weights.map(function(w){var s=(m.riskDimensions||{})[w.key]||0,p=w.max?100*s/w.max:0;return '<div class="scorebarrow"><div>'+esc(w.label)+'</div><div class="track"><div class="fill" style="width:'+p+'%;background:'+bandColors[b.level]+'"></div></div><div style="text-align:right;font-weight:bold">'+s+' / '+w.max+'</div></div>'}).join('');
+    var rc=(m.reviewCompleteness==null?0:m.reviewCompleteness);
+    $('reviewstate').innerHTML='<div class="revbar '+(rc<50?'rc-low':(rc<80?'rc-mid':'rc-ok'))+'">'
+      +'<b>'+esc(m.reviewPriority||(rc<50?'Verification outstanding':'Verification partial'))+'</b> — '
+      +rc+'% of risk dimensions independently checked'
+      +(m.reviewStage?' · '+esc(m.reviewStage):'')
+      +(m.confidence?' · confidence '+esc(m.confidence):'')
+      +'. A low risk score on an incomplete review means nothing alarming has been <i>observed</i>, not that the merchant is verified.</div>';
+    var src=m.sources||[];
+    $('sources').innerHTML=src.length
+      ? '<ol style="margin:0;padding-left:20px">'+src.map(function(x){
+          return '<li style="font-size:12px;line-height:1.5;margin:6px 0"><a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(x.url)+'</a>'
+            +(x.sourceType?' <span class="muted">('+esc(x.sourceType)+')</span>':'')
+            +(x.checkedAt?' <span class="muted">checked '+esc(x.checkedAt)+'</span>':'')
+            +(x.establishes?'<div class="muted">Establishes: '+esc(x.establishes)+'</div>':'')+'</li>';
+        }).join('')+'</ol>'
+      : '<p class="muted" style="font-size:12px;margin:0">No independent source is cited on this review.</p>';
     $('verified').innerHTML=listHtml(m.verified);$('unverified').innerHTML=listHtml(m.unverified);$('contradictions').innerHTML=listHtml(m.contradictions);$('needed').innerHTML=listHtml(m.evidenceNeeded);
     $('riskgraph').innerHTML=weights.map(function(w){
       var s=(m.riskDimensions||{})[w.key]||0, p=w.max?Math.round(100*s/w.max):0;
       return '<div style="flex:1;min-width:46px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px"><div style="font-size:10px;font-weight:bold">'+p+'%</div><div style="width:70%;height:'+Math.max(2,p)+'%;background:'+bandColors[b.level]+';border-radius:6px 6px 0 0"></div><div style="font-size:9px;color:var(--muted);text-align:center;line-height:1.15">'+esc(w.label.replace(' & ',' &<br>').replace(' / ',' /<br>'))+'</div></div>';
     }).join('');
-    var fields=[['Risk score',m.score+'/100'],['Review completeness',(m.reviewCompleteness==null?'—':m.reviewCompleteness+'%')],['Account created',m.createdAt],['Ever transacted',m.hasTransacted?'Yes':'No'],['Successful transactions',m.successfulTransactions],['Last transaction',m.lastTransactedAt],['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Reviewed',m.reviewedAt]];
+    var fields=[['Risk score',sc+'/100'],['Dimension total',m.score+'/100'],['Enabled',m.enabledAt||''],['Enablement evidence',m.enabledEvidenceLevel||''],['Enablement certainty',m.enabledCertainty||''],['Review completeness',(m.reviewCompleteness==null?'—':m.reviewCompleteness+'%')],['Account created',m.createdAt],['Ever transacted',m.hasTransacted?'Yes':'No'],['Successful transactions',m.successfulTransactions],['Last transaction',m.lastTransactedAt],['Representative',m.representative],['Location',m.location],['Phone',m.phone],['Email',m.email],['Website',m.website],['MCC / industry',m.mcc],['Statement descriptor',m.statementDescriptor],['Identity verification',m.identityVerification],['Reviewed',m.reviewedAt]];
     $('profilegrid').innerHTML=fields.filter(function(x){return x[1]}).map(function(x){return '<div class="pitem"><div class="k">'+esc(x[0])+'</div><div class="v">'+esc(x[1])+'</div></div>'}).join('');
     $('modal').classList.add('on');document.body.style.overflow='hidden';
   }

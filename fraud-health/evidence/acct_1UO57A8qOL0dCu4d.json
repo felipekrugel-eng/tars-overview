@@ -1,0 +1,29 @@
+{
+ "accountId": "acct_1UO57A8qOL0dCu4d",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "legal",
+   "points": 0,
+   "status": "unverified",
+   "statement": "No exact match for 'Spotshine cleaners llc'; nearest is 'Spot Shine Genie, LLC', a different entity. State unknown so no registry check was possible. Checked by web search on 2026-10-09. This environment has no direct web fetch (DNS resolution is unavailable to the agent, confirmed against a control domain), so page-level and registry checks could not be performed — only search-index evidence. City/state were also unavailable: the warehouse pull did not carry LEGAL_ENTITY_ADDRESS_CITY/STATE until the 2026-10-09 change, which takes effect on the next pull. A US LLC is registered at state level, so without a state the registry check cannot be run at all.",
+   "checkedAt": "2026-10-09",
+   "url": "https://ie.trustpilot.com/review/spotshinegenie.com",
+   "sourceType": "review-site",
+   "establishes": "that a similarly named cleaning company exists; does NOT identify this merchant"
+  },
+  {
+   "dimension": "identity",
+   "points": 0,
+   "status": "unverified",
+   "statement": "Trading name asserts 'LLC' while the Stripe legal entity type is Individual. Recorded for reconciliation at the next review; not scored, as mismatched self-description at onboarding is common and is not by itself evidence of wrongdoing.",
+   "checkedAt": "2026-10-09"
+  }
+ ],
+ "evidenceNeeded": [
+  "State of registration and an LLC registration extract, or confirmation the business trades as a sole proprietor.",
+  "Service area and any customer/booking footprint."
+ ],
+ "summary": "No entity of this exact name located. Named 'llc' but registered to Stripe as an Individual — worth reconciling, though on its own this is a common onboarding slip rather than an anomaly. Substantially unverified."
+}

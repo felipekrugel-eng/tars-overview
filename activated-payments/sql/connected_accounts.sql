@@ -24,6 +24,20 @@ SELECT
     a.TIMEZONE                               AS timezone,
     -- contact
     COALESCE(a.SUPPORT_PHONE, a.LEGAL_ENTITY_PHONE_NUMBER) AS phone,
+    -- business profile / high-level location.
+    -- Added 2026-10-09 for Fraud Health: verifying a merchant means checking that the
+    -- declared city/state, MCC, website and statement descriptor cohere with a real
+    -- business, and none of that was being pulled — which is why 168 reviewed merchants
+    -- had no location, website or MCC at all. Deliberately NOT selected: street address
+    -- (LEGAL_ENTITY_ADDRESS_LINE1/2), personal addresses, and date of birth. Those are
+    -- identity documents, the dashboard is a static site, and city + state is the
+    -- "high-level location" the review standard actually calls for.
+    a.LEGAL_ENTITY_ADDRESS_CITY              AS city,
+    a.LEGAL_ENTITY_ADDRESS_STATE             AS state,
+    a.BUSINESS_PROFILE_MCC                   AS mcc,
+    a.BUSINESS_URL                           AS business_url,
+    a.PRODUCT_DESCRIPTION                    AS product_description,
+    COALESCE(a.STATEMENT_DESCRIPTOR, a.CALCULATED_STATEMENT_DESCRIPTOR) AS statement_descriptor,
     -- enablement / transaction readiness
     a.CHARGES_ENABLED                        AS charges_enabled,
     a.PAYOUTS_ENABLED                        AS payouts_enabled,

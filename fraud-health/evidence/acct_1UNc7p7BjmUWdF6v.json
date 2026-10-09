@@ -1,0 +1,30 @@
+{
+ "accountId": "acct_1UNc7p7BjmUWdF6v",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "legal",
+   "points": 0,
+   "status": "unverified",
+   "statement": "No exact match for 'Rc Auto Repair & Accessories' in a web search; state of registration unknown, so no Secretary of State check could be run. Checked by web search on 2026-10-09. This environment has no direct web fetch (DNS resolution is unavailable to the agent, confirmed against a control domain), so page-level and registry checks could not be performed — only search-index evidence. City/state were also unavailable: the warehouse pull did not carry LEGAL_ENTITY_ADDRESS_CITY/STATE until the 2026-10-09 change, which takes effect on the next pull. A US LLC is registered at state level, so without a state the registry check cannot be run at all.",
+   "checkedAt": "2026-10-09"
+  },
+  {
+   "dimension": "history",
+   "points": 0,
+   "status": "unverified",
+   "statement": "Nearest name matches are RC Auto and Smog (Vista, CA), RCR Auto Repair & Sales (Tonawanda, NY) and RC Auto Repair Service (Round Rock, TX). None is the same entity on the evidence available — same name is not same entity.",
+   "checkedAt": "2026-10-09",
+   "url": "https://www.aaa.com/autorepair/shop/rcr-auto-repair-sales-110194",
+   "sourceType": "business-directory",
+   "establishes": "that similarly named auto repair businesses exist; does NOT identify this merchant"
+  }
+ ],
+ "evidenceNeeded": [
+  "State of registration, then a Secretary of State entity extract.",
+  "Shop address and a premises/licence check.",
+  "Confirmation that the Loyverse POS receipts (2, last 2026-02-01) originate at that premises."
+ ],
+ "summary": "Searched for the exact trading name; no matching entity found. Three similarly-named auto shops exist in CA, NY and TX, none confirmable as this merchant without a state. No affirmative anomaly observed; the file remains substantially unverified."
+}

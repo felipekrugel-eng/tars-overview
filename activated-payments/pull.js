@@ -114,6 +114,21 @@ function toDate(v) {
   }
   return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
 }
+// Full-precision variant of toDate(). Fraud Health needs the INSTANT an account was
+// created, not just the day: it bounds how early an account could possibly have become
+// charges_enabled, and a date-only bound costs up to 24h of extra uncertainty when
+// dating a daily enablement cohort. See fraud-health/fraud_health/ledger.py.
+function toInstant(v) {
+  if (v == null || v === '') return null;
+  let d;
+  if (v instanceof Date) d = v;
+  else if (typeof v === 'number') d = new Date(v < 1e12 ? v * 1000 : v);
+  else {
+    const n = Number(v);
+    d = (!isNaN(n) && String(v).trim() !== '') ? new Date(n < 1e12 ? n * 1000 : n) : new Date(v);
+  }
+  return isNaN(d.getTime()) ? null : d.toISOString().replace(/\.\d{3}Z$/, 'Z');
+}
 function btypeOf(t) {
   const s = String(t || '').toLowerCase();
   if (s === 'company') return 'Company';
@@ -898,7 +913,19 @@ function buildData(accountRows, existingByAcct, meta, subs, sales) {
       country: String(country),
       status,
       connected: toDate(get(r, 'stripe_connected_at')),
+      // Full-precision creation instant. `connected` stays date-only because every
+      // existing dashboard consumer reads it that way; this is additive and read only
+      // by the Fraud Health enablement ledger.
+      connected_ts: toInstant(get(r, 'stripe_connected_at')),
       btype: btypeOf(get(r, 'legal_entity_type')),
+      // Business profile for Fraud Health coherence checks (city/state only — no street
+      // address, no personal address, no DOB; this file is served to a browser).
+      city: get(r, 'city') || null,
+      state: get(r, 'state') || null,
+      mcc: get(r, 'mcc') || null,
+      url: get(r, 'business_url') || null,
+      descr: get(r, 'product_description') || null,
+      stmt: get(r, 'statement_descriptor') || null,
       mid: midStr,
       match: midStr ? 'stripe-metadata-owner_id' : '',
       env, // 'prod' | 'test' | null  (real-vs-test signal)

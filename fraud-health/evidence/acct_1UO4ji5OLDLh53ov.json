@@ -1,0 +1,30 @@
+{
+ "accountId": "acct_1UO4ji5OLDLh53ov",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "legal",
+   "points": 0,
+   "status": "unverified",
+   "statement": "No exact match for 'Crave Creations' found; registered as an Individual rather than a company, so there may be no registration to find. Checked by web search on 2026-10-09. This environment has no direct web fetch (DNS resolution is unavailable to the agent, confirmed against a control domain), so page-level and registry checks could not be performed — only search-index evidence. City/state were also unavailable: the warehouse pull did not carry LEGAL_ENTITY_ADDRESS_CITY/STATE until the 2026-10-09 change, which takes effect on the next pull. A US LLC is registered at state level, so without a state the registry check cannot be run at all.",
+   "checkedAt": "2026-10-09"
+  },
+  {
+   "dimension": "history",
+   "points": 0,
+   "status": "unverified",
+   "statement": "Nearest match is 'Craved Creations', a bakery in League City, Texas — a different trading name, treated as NOT this merchant.",
+   "checkedAt": "2026-10-09",
+   "url": "https://communityimpact.com/bay-area/dining/where-sweetness-meets-nostalgia-craved-creations-brings-vintage-charm-to-league-city/",
+   "sourceType": "news",
+   "establishes": "that a similarly named bakery exists elsewhere; does NOT identify this merchant"
+  }
+ ],
+ "evidenceNeeded": [
+  "Trading address and state.",
+  "Any storefront, social or marketplace presence confirming the business operates.",
+  "DBA registration if trading under a name other than the individual's."
+ ],
+ "summary": "No entity of this exact name located. The nearest match, 'Craved Creations' in League City TX, is a different name and cannot be assumed to be the same business. No affirmative anomaly observed; substantially unverified."
+}

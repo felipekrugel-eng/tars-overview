@@ -1,0 +1,141 @@
+# FRAUD HEALTH — daily newly-enabled merchant review.
+#
+# Runs after the payments activation pull, because this job's entire input is the data
+# that pull commits: activated-payments/activation-data.js. The enablement ledger folds
+# each new revision in, the cohort for the previous complete Europe/London day is read
+# out of it, and the reviews are published into activated-payments/risk-health/.
+#
+# WHY workflow_run AND NOT A PLAIN CRON. GitHub drops the `schedule` event in this repo —
+# activated-payments-pull.yml records it happening in July, on 08-06 and again for eight
+# hours on 08-27. A cron you cannot rely on is worse than no cron, because it fails
+# silently, and a fraud control that silently stops is the worst version of that. So this
+# hangs off the completion of the pull it depends on, which is itself driven by a
+# heartbeat. The cron below is a belt-and-braces second chance, not the primary trigger.
+#
+# SELF-HEALING. Each run walks the last three complete London days and reviews any day
+# that has no report yet, so a missed run is picked up automatically rather than leaving
+# a permanent hole in coverage.
+name: fraud-health-daily
+
+on:
+  workflow_run:
+    workflows: ["PAYMENTS: Daily Activation Pull"]
+    types: [completed]
+  schedule:
+    # 07:14 UTC. Deliberately not on the hour: most schedules run at :00 and get delayed.
+    - cron: "14 7 * * *"
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "Cohort day to review (YYYY-MM-DD, Europe/London). Blank = catch up."
+        required: false
+      force:
+        description: "Re-review a day that already has a report"
+        type: boolean
+        default: false
+
+concurrency:
+  # Never let two runs write risk-health/ at once.
+  group: fraud-health-daily
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: pip install --quiet pytest
+
+      # The pipeline guards the dataset, so the pipeline's own tests gate the run. A
+      # broken cohort rule must never reach the published dashboard.
+      - name: Unit tests
+        run: python3 -m pytest fraud-health/tests -q
+
+      - name: Validate the dataset as committed
+        run: python3 fraud-health/run.py validate
+
+      - name: Review outstanding cohort days
+        id: review
+        env:
+          INPUT_DAY: ${{ github.event.inputs.day }}
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          set -euo pipefail
+          # The ledger must see this revision of activation-data.js before any cohort is
+          # read out of it, or a merchant enabled since the last run is invisible.
+          python3 fraud-health/run.py ledger
+
+          days=""
+          if [ -n "${INPUT_DAY:-}" ]; then
+            days="$INPUT_DAY"
+          else
+            # Last three COMPLETE London days, oldest first, so a missed run self-heals.
+            days=$(TZ=Europe/London date -d 'today - 3 days' +%F)
+            days="$days $(TZ=Europe/London date -d 'today - 2 days' +%F)"
+            days="$days $(TZ=Europe/London date -d 'yesterday' +%F)"
+          fi
+
+          reviewed=0
+          for day in $days; do
+            if [ -f "fraud-health/reports/daily-$day.json" ] && [ "${FORCE:-false}" != "true" ]; then
+              echo "::notice::$day already reviewed — skipping"
+              continue
+            fi
+            echo "--- reviewing $day ---"
+            python3 fraud-health/run.py daily --day "$day"
+            reviewed=$((reviewed + 1))
+          done
+          echo "reviewed=$reviewed" >> "$GITHUB_OUTPUT"
+
+      # Belt and braces: the dataset is validated again AFTER writing, so a bad review can
+      # never be committed even if it passed record-level validation on the way in.
+      - name: Validate the dataset as written
+        run: python3 fraud-health/run.py validate
+
+      - name: Commit & push if anything changed
+        run: |
+          set -euo pipefail
+          git config user.name  "fraud-health-bot"
+          git config user.email "fraud-health-bot@users.noreply.github.com"
+          git add activated-payments/risk-health \
+                  activated-payments/risk-health-data.js \
+                  fraud-health/enablement-ledger.json \
+                  fraud-health/reports
+          if git diff --cached --quiet; then
+            echo "No change — nothing to commit."
+            exit 0
+          fi
+          # Other pulls advance master while we run. We only touch risk-health/ and
+          # fraud-health/, which no other workflow writes, so re-parenting our commit on
+          # top of theirs can never conflict. Same reset --soft pattern as the payments
+          # pull: generated files are unmergeable, so re-parent rather than merge.
+          for attempt in 1 2 3 4 5; do
+            git commit -q -m "chore(fraud-health): daily enabled-merchant review $(date -u +%FT%TZ)" || true
+            if git push; then
+              echo "pushed on attempt $attempt"; exit 0
+            fi
+            echo "push attempt $attempt failed (remote moved) — retrying"
+            git fetch -q origin master
+            git reset -q --mixed origin/master
+            git add activated-payments/risk-health \
+                    activated-payments/risk-health-data.js \
+                    fraud-health/enablement-ledger.json \
+                    fraud-health/reports
+            if git diff --cached --quiet; then
+              echo "Remote already has this data — nothing to push."; exit 0
+            fi
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1

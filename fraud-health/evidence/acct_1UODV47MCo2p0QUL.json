@@ -1,0 +1,28 @@
+{
+ "accountId": "acct_1UODV47MCo2p0QUL",
+ "reviewedAt": "2026-10-09",
+ "reviewer": "claude-code (independent web research, session 2026-10-09)",
+ "findings": [
+  {
+   "dimension": "legal",
+   "points": 0,
+   "status": "unverified",
+   "statement": "No match for 'Gao Gao Gao Travel LLC' in any register or directory reachable by search. As a US LLC it must be registered in some state, but the state is unknown so the check could not be targeted. Checked by web search on 2026-10-09. This environment has no direct web fetch (DNS resolution is unavailable to the agent, confirmed against a control domain), so page-level and registry checks could not be performed — only search-index evidence. City/state were also unavailable: the warehouse pull did not carry LEGAL_ENTITY_ADDRESS_CITY/STATE until the 2026-10-09 change, which takes effect on the next pull. A US LLC is registered at state level, so without a state the registry check cannot be run at all.",
+   "checkedAt": "2026-10-09"
+  },
+  {
+   "dimension": "businessModel",
+   "points": 0,
+   "status": "unverified",
+   "statement": "Declared as a travel business. Travel is future-delivery: customers pay well before service, so chargeback and failure-to-deliver exposure is structurally higher than for the retail and food merchants in this cohort. Flagged for prioritised review; NOT scored, because sector alone is not an observed anomaly.",
+   "checkedAt": "2026-10-09"
+  }
+ ],
+ "evidenceNeeded": [
+  "State of registration and an LLC extract.",
+  "Whether the state requires seller-of-travel registration, and whether it holds one.",
+  "Any website, booking presence or IATA/ARC/CLIA affiliation.",
+  "Monitor for first transactions: size and timing matter more here than in the rest of the cohort."
+ ],
+ "summary": "No trace of this entity found. Travel is a future-delivery, higher-chargeback sector, and the account uses a consumer mailbox with no web presence located. No affirmative anomaly observed, but this is the cohort member most worth completing a real review on before payout exposure grows."
+}
