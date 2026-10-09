@@ -1381,7 +1381,6 @@ buildAnchorTable();compute();
 <script src="attach-data.js"></script>
 <script src="pilot500-data.js"></script>
 <script src="funnel-data.js"></script>
-<script src="cohort-data.js"></script>
 <script src="margins-data.js"></script>
 <!-- Country filter. Loaded AFTER the data files because it discovers the live markets
      from them, and BEFORE the page scripts because they subscribe to it on load. -->
@@ -4754,7 +4753,7 @@ window.__ACT=window.__ACT||[];
   var actByMid={}; ACT.forEach(function(a){ if(a&&a.mid!=null) actByMid[String(a.mid)]=a; });
   // POS activity. __ACT.pos_active reads the MONTHLY sales table, which lags by months (its last
   // month was 2026-07 at a 2026-10 pull), so for merchants enabled since the launch it is blind.
-  // cohort-data.js carries each connected merchant's POS-active months from raw receipts
+  // The cohort block in funnel-data.js carries each connected merchant's POS-active months from raw receipts
   // (merchant_month_active_recent.sql), fresh to the pull — preferred whenever present.
   var COHM={}; (window.__PAY_COHORT_MERCHANTS||[]).forEach(function(r){ if(r&&r.o) COHM[String(r.o)]=r; });
   var HAVE_FRESH_POS=!!(window.__PAY_COHORT_MERCHANTS&&(window.__PAY_COHORT_META||{}).recentActive!==false);
@@ -4877,7 +4876,7 @@ window.__ACT=window.__ACT||[];
     var l='<thead><tr><th>Merchant</th><th>Email</th><th>Group</th><th>KYC passed</th><th>Days since</th><th>Terminal</th><th>POS months</th><th>Last POS month</th><th>Class</th></tr></thead><tbody>';
     curPend.slice(0,400).forEach(function(r){ l+='<tr><td>'+esc(r.name)+'</td><td style="text-align:left">'+esc(r.email)+'</td><td>'+esc(GL[r.grp]?GL[r.grp].l:r.grp)+'</td><td>'+esc(r.enabled_at)+'</td><td>'+fmtN(r.age)+'</td><td>'+esc(r.term||(r.term_at?'ordered':'–'))+'</td><td>'+fmtN(r.pos_receipts)+'</td><td>'+esc(r.last_sale||'–')+'</td><td style="text-align:left;white-space:normal;max-width:260px">'+esc(cl[r.cls]||r.cls)+'</td></tr>'; });
     l+='</tbody>'; $('ttPendList').innerHTML=l;
-    $('ttPendNote').textContent=curPend.length+' merchant'+(curPend.length===1?'':'s')+(curPend.length>400?' (showing first 400 — download for all)':'')+'. '+(HAVE_FRESH_POS?'POS activity = months with at least one receipt, from raw receipts (fresh to the last pull; month granularity, so "this month or last" is the recency test).':'POS activity is read from the monthly sales table, which lags by several months — treat the POS classes as indicative only until the next pull refreshes cohort-data.js.')+' Terminal = Stripe hardware order matched by email.';
+    $('ttPendNote').textContent=curPend.length+' merchant'+(curPend.length===1?'':'s')+(curPend.length>400?' (showing first 400 — download for all)':'')+'. '+(HAVE_FRESH_POS?'POS activity = months with at least one receipt, from raw receipts (fresh to the last pull; month granularity, so "this month or last" is the recency test).':'POS activity is read from the monthly sales table, which lags by several months — treat the POS classes as indicative only until the next pull refreshes the cohort block.')+' Terminal = Stripe hardware order matched by email.';
   }
   $('ttPendExport').addEventListener('click',function(){
     var cl={}; CLASSES.forEach(function(c){cl[c.k]=c.l;});
@@ -4902,7 +4901,7 @@ window.__ACT=window.__ACT||[];
 </script>
 <script>
 // ── PAYMENTS COHORTS (Payments tab · Cohorts) — added 2026-10-09 ─────────────────────────────
-// Reads cohort-data.js (window.__PAY_COHORT_MERCHANTS) and does every aggregation in the browser,
+// Reads the cohort block pull.js appends to funnel-data.js (window.__PAY_COHORT_MERCHANTS) and does every aggregation in the browser,
 // so cohort key, axis, metric and country can change without another pull. Degrades to a notice if
 // the file has not been generated yet (first deploy after this feature shipped).
 (function(){
@@ -4928,7 +4927,7 @@ window.__ACT=window.__ACT||[];
   $('chUpdated').textContent= ALL? ('Last pull: '+UPD) : '';
   if(!ALL){
     $('chMissing').style.display='block';
-    $('chMissing').textContent='The cohort data file has not been generated yet. It is written by the next scheduled activation pull (every 3 hours) — this page fills in automatically after that.';
+    $('chMissing').textContent='The cohort data has not been generated yet. It is produced by the next activation pull (every 3 hours) — this page fills in automatically after that.';
     return;
   }
   if(META.seed){ $('chMissing').style.display='block'; $('chMissing').textContent='SEED DATA — synthetic monthly split for layout testing only.'; }
