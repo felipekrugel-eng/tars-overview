@@ -8,23 +8,23 @@ window.MARGINS = {
     "txns": 51094.0,
     "tpv": 1355506.15,
     "avgTicket": 26.5296541668298,
-    "revenue": 29015.99,
-    "takeRate": 0.0214060187037883,
-    "totalFees": 28796.3286,
-    "netMargin": 219.661400000005,
-    "netTakeRate": 0.000162051201316943,
-    "pctProfitable": 0.478803773437194,
-    "profitableTxns": 24464.0,
-    "unprofitableTxns": 26630.0,
+    "revenue": 29269.31,
+    "takeRate": 0.0215929009248685,
+    "totalFees": 28796.3288,
+    "netMargin": 472.981200000002,
+    "netTakeRate": 0.000348933274850875,
+    "pctProfitable": 0.485105883273966,
+    "profitableTxns": 24786.0,
+    "unprofitableTxns": 26308.0,
     "withActual": 49005.0,
     "withEstimated": 2089.0,
     "failed": 1431.0
   },
   "fees": {
-    "total": 28796.3286,
+    "total": 28796.3288,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 24231.7086,
+      "total": 24231.7088,
       "items": [
         {
           "label": "        Interchange",
@@ -32,7 +32,7 @@ window.MARGINS = {
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 3049.7302
+          "value": 3049.7304
         },
         {
           "label": "        Amex Discount",
@@ -85,7 +85,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 29015.99
+        "revenue": 29269.31
       },
       {
         "name": "All 2.5% flat",
@@ -203,25 +203,25 @@ window.MARGINS = {
         "txns": 48981,
         "tpv": 1326633.98,
         "avgTicket": 27.084665074212435,
-        "revenue": 28720.98,
-        "takeRate": 0.021649513304340066,
-        "totalFees": 28601.8663,
-        "netMargin": 119.1137,
-        "netTakeRate": 8.978643244730684e-05,
-        "pctProfitable": 0.47161144117106635,
-        "profitableTxns": 23100,
-        "unprofitableTxns": 25881,
+        "revenue": 28974.3,
+        "takeRate": 0.02184046273260664,
+        "totalFees": 28601.8665,
+        "netMargin": 372.4335,
+        "netTakeRate": 0.0002807357099563941,
+        "pctProfitable": 0.4781854188358751,
+        "profitableTxns": 23422,
+        "unprofitableTxns": 25559,
         "withActual": 46990,
         "withEstimated": 1991,
         "failed": 1389
       },
       "fees": {
-        "total": 28601.8663,
+        "total": 28601.8665,
         "network": {
-          "total": 24134.4723,
+          "total": 24134.4725,
           "items": [
             19625.9387,
-            3017.8748,
+            3017.875,
             1490.6588
           ]
         },
@@ -230,7 +230,7 @@ window.MARGINS = {
         }
       },
       "scenarios": [
-        28720.98,
+        28974.3,
         33165.8495,
         35614.8995,
         39390.58348,
@@ -318,17 +318,17 @@ window.MARGINS = {
         "avgTicket": 14.80828338762216,
         "revenue": 1306.8,
         "takeRate": 0.028745246245003738,
-        "network": 1002.5566,
+        "network": 1002.5565,
         "interchange": 834.4005,
-        "cardScheme": 132.2273,
+        "cardScheme": 132.2272,
         "amexDiscount": 35.9288,
         "stripe": 153.0898,
-        "netRevenue": 304.2434,
-        "netRevenueTakeRate": 0.006692341178005139,
-        "totalFees": 1155.6464,
-        "netMargin": 151.1536,
-        "netTakeRate": 0.0033248758219829623,
-        "contributionMarginPct": 0.49681803924019985,
+        "netRevenue": 304.2435,
+        "netRevenueTakeRate": 0.006692343377671977,
+        "totalFees": 1155.6463,
+        "netMargin": 151.1537,
+        "netTakeRate": 0.0033248780216498003,
+        "contributionMarginPct": 0.4968182046281081,
         "settledShare": 1.0,
         "settled": true,
         "pctProfitable": 0.40781758957654723,
@@ -399,16 +399,16 @@ window.MARGINS = {
         "avgTicket": 29.671325906310017,
         "revenue": 10479.01,
         "takeRate": 0.01612499268690186,
-        "network": 11572.9274,
+        "network": 11572.9278,
         "interchange": 9359.0415,
-        "cardScheme": 1419.1615,
+        "cardScheme": 1419.1619,
         "amexDiscount": 794.7244,
         "stripe": 2188.3857,
-        "netRevenue": -1093.9174,
-        "netRevenueTakeRate": -0.001683308831184799,
-        "totalFees": 13761.3131,
-        "netMargin": -3282.3031,
-        "netTakeRate": -0.005050774187206976,
+        "netRevenue": -1093.9178,
+        "netRevenueTakeRate": -0.0016833094467006815,
+        "totalFees": 13761.3135,
+        "netMargin": -3282.3035,
+        "netTakeRate": -0.005050774802722858,
         "contributionMarginPct": null,
         "settledShare": 1.0,
         "settled": true,
@@ -424,24 +424,24 @@ window.MARGINS = {
         "txns": 8007,
         "tpv": 221957.53,
         "avgTicket": 27.720435868614963,
-        "revenue": 4672.6,
-        "takeRate": 0.02105177508508037,
-        "network": 2849.7511,
+        "revenue": 4925.92,
+        "takeRate": 0.022193074503937663,
+        "network": 2849.751,
         "interchange": 2264.3199,
-        "cardScheme": 378.0402,
+        "cardScheme": 378.0401,
         "amexDiscount": 207.391,
         "stripe": 747.4343,
-        "netRevenue": 1822.8489,
-        "netRevenueTakeRate": 0.008212602203673723,
-        "totalFees": 3597.1854,
-        "netMargin": 1075.4146,
-        "netTakeRate": 0.004845136847651545,
-        "contributionMarginPct": 0.5899636592022176,
+        "netRevenue": 2076.169,
+        "netRevenueTakeRate": 0.009353902073067653,
+        "totalFees": 3597.1853,
+        "netMargin": 1328.7347,
+        "netTakeRate": 0.0059864367170454754,
+        "contributionMarginPct": 0.6399935203814036,
         "settledShare": 0.7391032846259523,
         "settled": false,
-        "pctProfitable": 0.509679030848008,
-        "profitableTxns": 4081,
-        "unprofitableTxns": 3926,
+        "pctProfitable": 0.5498938428874734,
+        "profitableTxns": 4403,
+        "unprofitableTxns": 3604,
         "withActual": 5918,
         "withEstimated": 2089,
         "failed": 232,
@@ -703,17 +703,17 @@ window.MARGINS = {
           "avgTicket": 14.838922624877581,
           "revenue": 1306.51,
           "takeRate": 0.02874507003270731,
-          "network": 1002.3019,
+          "network": 1002.3018,
           "interchange": 834.3917,
-          "cardScheme": 132.0414,
+          "cardScheme": 132.0413,
           "amexDiscount": 35.8688,
           "stripe": 153.0568,
-          "netRevenue": 304.2081,
-          "netRevenueTakeRate": 0.0066930089620567575,
-          "totalFees": 1155.3587,
-          "netMargin": 151.1513,
-          "netTakeRate": 0.0033255436060345804,
-          "contributionMarginPct": 0.4968682433995491,
+          "netRevenue": 304.2082,
+          "netRevenueTakeRate": 0.006693011162198358,
+          "totalFees": 1155.3586,
+          "netMargin": 151.1514,
+          "netTakeRate": 0.003325545806176181,
+          "contributionMarginPct": 0.49686840879014554,
           "settledShare": 1.0,
           "settled": true,
           "pctProfitable": 0.40874959190336274,
@@ -784,16 +784,16 @@ window.MARGINS = {
           "avgTicket": 30.62571311118644,
           "revenue": 10308.51,
           "takeRate": 0.016278791431228897,
-          "network": 11513.4231,
+          "network": 11513.4235,
           "interchange": 9319.7142,
-          "cardScheme": 1400.0075,
+          "cardScheme": 1400.0079,
           "amexDiscount": 793.7014,
           "stripe": 2132.4403,
-          "netRevenue": -1204.9131,
-          "netRevenueTakeRate": -0.0019027511296641861,
-          "totalFees": 13645.8634,
-          "netMargin": -3337.3534,
-          "netTakeRate": -0.005270216485686362,
+          "netRevenue": -1204.9135,
+          "netRevenueTakeRate": -0.0019027517613283728,
+          "totalFees": 13645.8638,
+          "netMargin": -3337.3538,
+          "netTakeRate": -0.005270217117350549,
           "contributionMarginPct": null,
           "settledShare": 1.0,
           "settled": true,
@@ -809,24 +809,24 @@ window.MARGINS = {
           "txns": 7588,
           "tpv": 216153.73,
           "avgTicket": 28.486258566157087,
-          "revenue": 4614.41,
-          "takeRate": 0.021347815742064596,
-          "network": 2835.6947,
+          "revenue": 4867.73,
+          "takeRate": 0.02251975943232615,
+          "network": 2835.6946,
           "interchange": 2255.0747,
-          "cardScheme": 373.229,
+          "cardScheme": 373.2289,
           "amexDiscount": 207.391,
           "stripe": 727.8902,
-          "netRevenue": 1778.7153,
-          "netRevenueTakeRate": 0.00822893641483761,
-          "totalFees": 3563.5849,
-          "netMargin": 1050.8251,
-          "netTakeRate": 0.0048614710588154334,
-          "contributionMarginPct": 0.5907775699967381,
+          "netRevenue": 2032.0354,
+          "netRevenueTakeRate": 0.009400880567732865,
+          "totalFees": 3563.5848,
+          "netMargin": 1304.1452,
+          "netTakeRate": 0.0060334152117106875,
+          "contributionMarginPct": 0.6417925606266603,
           "settledShare": 0.7376120189773326,
           "settled": false,
-          "pctProfitable": 0.5081707959936742,
-          "profitableTxns": 3856,
-          "unprofitableTxns": 3732,
+          "pctProfitable": 0.5506062203479177,
+          "profitableTxns": 4178,
+          "unprofitableTxns": 3410,
           "withActual": 5597,
           "withEstimated": 1991,
           "failed": 223,
@@ -836,34 +836,34 @@ window.MARGINS = {
     }
   },
   "freePeriod": {
-    "freeTxns": 8197,
-    "freeVolume": 298098.75,
-    "forgoneRevenue": 6803.11,
-    "impliedTakeRate": 0.022821665639322537,
+    "freeTxns": 7846,
+    "freeVolume": 288832.18,
+    "forgoneRevenue": 6550.38,
+    "impliedTakeRate": 0.02267884416480186,
     "merchants": [
       {
         "name": "GOLDEN BEAUTY SUPPLY",
         "cc": "US",
-        "n": 1537,
-        "vol": 46772.94,
-        "forgone": 1012.24,
+        "n": 1482,
+        "vol": 44539.25,
+        "forgone": 964.82,
         "basis": "derived",
         "pct": 0.020003,
         "fixed": 0.0499,
         "first": "2026-09-01",
-        "last": "2026-10-09"
+        "last": "2026-09-16"
       },
       {
         "name": "The Fin",
         "cc": "US",
-        "n": 2075,
-        "vol": 32951.36,
-        "forgone": 809.17,
+        "n": 2057,
+        "vol": 32677.4,
+        "forgone": 802.36,
         "basis": "negotiated",
         "pct": 0.017,
         "fixed": 0.12,
         "first": "2026-09-13",
-        "last": "2026-10-09"
+        "last": "2026-10-02"
       },
       {
         "name": "Nabil Tech",
@@ -880,14 +880,14 @@ window.MARGINS = {
       {
         "name": "Lee Beauty Southfield Plaza",
         "cc": "US",
-        "n": 1183,
-        "vol": 29898.22,
-        "forgone": 657.23,
+        "n": 1146,
+        "vol": 29085.99,
+        "forgone": 639.15,
         "basis": "derived",
         "pct": 0.020003,
         "fixed": 0.05,
         "first": "2026-09-01",
-        "last": "2026-10-09"
+        "last": "2026-09-16"
       },
       {
         "name": "KIM'S INC",
@@ -904,14 +904,14 @@ window.MARGINS = {
       {
         "name": "Fraser Lee Beauty Supply and General Merchandise",
         "cc": "US",
-        "n": 957,
-        "vol": 26198.77,
-        "forgone": 571.98,
+        "n": 937,
+        "vol": 25763.1,
+        "forgone": 562.26,
         "basis": "derived",
         "pct": 0.020001,
         "fixed": 0.0501,
         "first": "2026-09-04",
-        "last": "2026-10-09"
+        "last": "2026-09-19"
       },
       {
         "name": "home & kitchen corp",
@@ -1024,14 +1024,14 @@ window.MARGINS = {
       {
         "name": "BarbershopEvo",
         "cc": "US",
-        "n": 16,
-        "vol": 1935.0,
-        "forgone": 48.66,
+        "n": 14,
+        "vol": 1894.0,
+        "forgone": 47.55,
         "basis": "standard",
         "pct": null,
         "fixed": null,
         "first": "2026-09-29",
-        "last": "2026-10-09"
+        "last": "2026-10-07"
       },
       {
         "name": "El Dorado Aquatics Snack Shack",
@@ -1046,18 +1046,6 @@ window.MARGINS = {
         "last": "2026-09-15"
       },
       {
-        "name": "Pasco High Athletic Booster Club Inc",
-        "cc": "US",
-        "n": 80,
-        "vol": 773.0,
-        "forgone": 32.1,
-        "basis": "derived",
-        "pct": 0.026003,
-        "fixed": 0.15,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "American Repertory Theater of Western New York",
         "cc": "US",
         "n": 83,
@@ -1068,18 +1056,6 @@ window.MARGINS = {
         "fixed": null,
         "first": "2026-09-13",
         "last": "2026-09-27"
-      },
-      {
-        "name": "Toad Alley LLC",
-        "cc": "US",
-        "n": 28,
-        "vol": 882.91,
-        "forgone": 27.17,
-        "basis": "derived",
-        "pct": 0.026005,
-        "fixed": 0.1504,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
       },
       {
         "name": "Deleon Black Construction LLC",
@@ -1130,30 +1106,6 @@ window.MARGINS = {
         "last": "2026-10-03"
       },
       {
-        "name": "Rainbow",
-        "cc": "US",
-        "n": 6,
-        "vol": 555.81,
-        "forgone": 15.35,
-        "basis": "derived",
-        "pct": 0.026,
-        "fixed": 0.15,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Isan Thai Food Truck",
-        "cc": "US",
-        "n": 14,
-        "vol": 500.17,
-        "forgone": 15.1,
-        "basis": "derived",
-        "pct": 0.026006,
-        "fixed": 0.1498,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "Tupperlid",
         "cc": "US",
         "n": 32,
@@ -1164,18 +1116,6 @@ window.MARGINS = {
         "fixed": null,
         "first": "2026-09-18",
         "last": "2026-09-20"
-      },
-      {
-        "name": "Rosemead Beauty School",
-        "cc": "US",
-        "n": 11,
-        "vol": 499.04,
-        "forgone": 13.37,
-        "basis": "standard",
-        "pct": null,
-        "fixed": null,
-        "first": "2026-09-29",
-        "last": "2026-10-09"
       },
       {
         "name": "Roland beauty saloon",
@@ -1190,28 +1130,16 @@ window.MARGINS = {
         "last": "2026-09-16"
       },
       {
-        "name": "In Vino Verde",
+        "name": "Rosemead Beauty School",
         "cc": "US",
-        "n": 10,
-        "vol": 346.96,
-        "forgone": 10.52,
+        "n": 8,
+        "vol": 411.04,
+        "forgone": 11.45,
         "basis": "derived",
-        "pct": 0.025999,
-        "fixed": 0.1499,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Sinbad INC",
-        "cc": "US",
-        "n": 5,
-        "vol": 361.86,
-        "forgone": 9.68,
-        "basis": "derived",
-        "pct": 0.024838,
-        "fixed": 0.1389,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
+        "pct": 0.024984,
+        "fixed": 0.1471,
+        "first": "2026-09-29",
+        "last": "2026-10-08"
       },
       {
         "name": "Interior Glass, Inc.",
@@ -1226,78 +1154,6 @@ window.MARGINS = {
         "last": "2026-10-07"
       },
       {
-        "name": "The Pavilion Restaurant at Caille Blanc Villa & Hotel",
-        "cc": "US",
-        "n": 1,
-        "vol": 295.52,
-        "forgone": 7.83,
-        "basis": "derived",
-        "pct": 0.026001,
-        "fixed": 0.1493,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Big Tasty's",
-        "cc": "US",
-        "n": 5,
-        "vol": 246.68,
-        "forgone": 7.16,
-        "basis": "derived",
-        "pct": 0.026008,
-        "fixed": 0.1497,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Easily Edible Cafe and Catering",
-        "cc": "US",
-        "n": 8,
-        "vol": 225.53,
-        "forgone": 7.06,
-        "basis": "derived",
-        "pct": 0.025998,
-        "fixed": 0.1502,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Mathews Family Farm LLC",
-        "cc": "US",
-        "n": 7,
-        "vol": 229.0,
-        "forgone": 7.01,
-        "basis": "derived",
-        "pct": 0.025999,
-        "fixed": 0.1503,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Anarchy LLC",
-        "cc": "US",
-        "n": 4,
-        "vol": 227.91,
-        "forgone": 6.53,
-        "basis": "derived",
-        "pct": 0.025993,
-        "fixed": 0.1503,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Polar Bear Ice Cream Company",
-        "cc": "US",
-        "n": 18,
-        "vol": 209.5,
-        "forgone": 6.15,
-        "basis": "derived",
-        "pct": 0.025034,
-        "fixed": 0.0501,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "Majik Scents",
         "cc": "US",
         "n": 7,
@@ -1308,30 +1164,6 @@ window.MARGINS = {
         "fixed": 0.1146,
         "first": "2026-09-12",
         "last": "2026-09-12"
-      },
-      {
-        "name": "Cliffs Smokin BBQ",
-        "cc": "US",
-        "n": 11,
-        "vol": 220.56,
-        "forgone": 5.66,
-        "basis": "derived",
-        "pct": 0.025325,
-        "fixed": 0.0069,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
-        "name": "Shoe Repair",
-        "cc": "US",
-        "n": 4,
-        "vol": 176.75,
-        "forgone": 5.2,
-        "basis": "derived",
-        "pct": 0.026004,
-        "fixed": 0.1499,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
       },
       {
         "name": "Cool Down Station",
@@ -1442,18 +1274,6 @@ window.MARGINS = {
         "last": "2026-09-12"
       },
       {
-        "name": "Killer Chicken",
-        "cc": "US",
-        "n": 3,
-        "vol": 74.19,
-        "forgone": 2.02,
-        "basis": "derived",
-        "pct": 0.021437,
-        "fixed": 0.1435,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "M&M ASSOCIATES LLC",
         "cc": "US",
         "n": 8,
@@ -1478,18 +1298,6 @@ window.MARGINS = {
         "last": "2026-09-05"
       },
       {
-        "name": "Flint Hills Christian School",
-        "cc": "US",
-        "n": 8,
-        "vol": 22.0,
-        "forgone": 1.66,
-        "basis": "derived",
-        "pct": 0.022714,
-        "fixed": 0.1454,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "Creative Designs",
         "cc": "US",
         "n": 4,
@@ -1500,18 +1308,6 @@ window.MARGINS = {
         "fixed": 0.1484,
         "first": "2026-09-09",
         "last": "2026-09-09"
-      },
-      {
-        "name": "Sips & Dips LLC",
-        "cc": "US",
-        "n": 3,
-        "vol": 32.67,
-        "forgone": 1.3,
-        "basis": "derived",
-        "pct": 0.025999,
-        "fixed": 0.1503,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
       },
       {
         "name": "210 Vendors",
@@ -1646,18 +1442,6 @@ window.MARGINS = {
         "last": "2026-09-23"
       },
       {
-        "name": "Rc Auto Repair & Accessories",
-        "cc": "US",
-        "n": 1,
-        "vol": 1.0,
-        "forgone": 0.17,
-        "basis": "standard",
-        "pct": null,
-        "fixed": null,
-        "first": "2026-10-09",
-        "last": "2026-10-09"
-      },
-      {
         "name": "Indigo Venue Limited",
         "cc": "GB",
         "n": 1,
@@ -1674,23 +1458,23 @@ window.MARGINS = {
       "2026-09": {
         "n": 6925,
         "vol": 261603.86,
-        "forgone": 6008.22
+        "forgone": 6008.24
       },
       "2026-10": {
-        "n": 1272,
-        "vol": 36494.89,
-        "forgone": 794.93
+        "n": 921,
+        "vol": 27228.32,
+        "forgone": 542.16
       }
     },
     "basisCounts": {
-      "derived": 4153,
-      "standard": 391,
-      "negotiated": 3653
+      "derived": 3834,
+      "standard": 377,
+      "negotiated": 3635
     },
     "prepaidAssumption": {
-      "n": 1043,
-      "volume": 25981.22,
-      "forgone": 560.72,
+      "n": 1004,
+      "volume": 24766.95,
+      "forgone": 531.32,
       "note": "Prepaid cards were not separately priced and are charged at the debit rate (1.99% + 15c), the usual treatment since prepaid settles at debit interchange. Shown separately because it is an assumption, not an agreed price."
     },
     "pricing": {
