@@ -874,7 +874,7 @@
         <div class="ov-ctitle"><h2>Passed KYC per day</h2><span class="tot" id="ovEnTot">&nbsp;</span></div>
         <p class="ov-cnote">Merchants cleared to transact, dated by when they <b>accepted Terms</b> (the KYC-pass moment). Bars = newly passed / day; line = cumulative passed.</p>
         <div class="ov-chart" id="ovEnChart"></div>
-        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly passed / day</span><span><i class="line" style="background:#CC3333"></i> Cumulative passed</span></div>
+        <div class="ov-legend"><span><i class="pc-bar green" style="background:#1E9E5A;opacity:.85"></i> Newly passed / day</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative passed</span></div>
       </div>
     </div>
     <!-- Order follows the funnel: payments interest -> KYC passed -> transacting -> volume.
@@ -1768,8 +1768,15 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // Slice a densified series to the last `range` days, keeping the TRUE running
   // cumulative (line reflects the real total up to each day, not just the window).
   function windowSeries(dense, range){
-    if(!dense.length) return {days:[],bars:[],line:[]};
+    if(!dense.length) return {days:[],bars:[],line:[],avg:[]};
     var cum=0, lineFull=dense.map(function(r){ cum+=r.v; return cum; });
+    // The rolling average is computed over the WHOLE series and sliced afterwards, exactly as
+    // lineFull is. Computing it on the slice instead — which is what the first version did —
+    // blanks the first six days of every filtered window, so picking 30/60/90 days or "this
+    // month" lost the start of the line even though the days before it are right there in the
+    // data. A trailing average on day 1 of a window is perfectly well defined; it just needs
+    // the week BEFORE the window, which slicing first throws away.
+    var avgFull = rollingMean(dense.map(function(r){ return r.v; }), 7);
     var start;
     if(range==='all'){ start=0; }
     else if(range==='month'){
@@ -1780,7 +1787,8 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     return {
       days: dense.slice(start).map(function(r){return r.d;}),
       bars: dense.slice(start).map(function(r){return r.v;}),
-      line: lineFull.slice(start)
+      line: lineFull.slice(start),
+      avg: avgFull.slice(start)
     };
   }
   // Generic bar + cumulative-line SVG chart. days aligned to bars[] and line[].
@@ -1950,20 +1958,20 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     if(eDense){
       var e=windowSeries(eDense, range);
       chart(document.getElementById('ovEnChart'), e.days, e.bars, e.line,
-        {barClass:'green',lineClass:'red',empty:'No enabled merchants in this window.',barLabel:'Newly enabled'});
+        {barClass:'green',lineClass:'',empty:'No enabled merchants in this window.',barLabel:'Newly enabled'});
     } else {
       var eDays=SNAP.map(function(r){return r.d;});
       var eLine=SNAP.map(function(r){return Number(r.enabled)||0;});
       var eBars=eLine.map(function(v,i){ return i===0?v:Math.max(0,v-eLine[i-1]); });
       chart(document.getElementById('ovEnChart'), eDays, eBars, eLine,
-        {barClass:'green',lineClass:'red',empty:'Passed-KYC curve populates on the next daily pull.',barLabel:'Newly passed'});
+        {barClass:'green',lineClass:'',empty:'Passed-KYC curve populates on the next daily pull.',barLabel:'Newly passed'});
     }
     // ---- Volume ----
     var v=windowSeries(vDense, range);
     if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
     chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line,
       {money:true, barClass:'warn', lineClass:'', barLabel:'Volume (USD)',
-       avg: rollingMean(v.bars, 7), avgLabel:'7-day average', avgColor:'#CC3333'});
+       avg: v.avg, avgLabel:'7-day average', avgColor:'#CC3333'});
     // ---- Merchants transacting (first charge per merchant) ----
     var t=windowSeries(tDense, range);
     chart(document.getElementById('ovTxnFirstChart'), t.days, t.bars, t.line,
