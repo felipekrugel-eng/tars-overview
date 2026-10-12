@@ -3,7 +3,7 @@
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
 // Last pull: 2026-06-22
 const CASE_DATA = {
-  "lastUpdated": "2026-10-05",
+  "lastUpdated": "2026-10-12",
   "period": "Q2 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -98515,13 +98515,13 @@ const CASE_DATA = {
   "reviewThemes": [
     {
       "name": "Ease of use",
-      "mentions": 686,
+      "mentions": 691,
       "type": "pos",
       "key": "ease-of-use"
     },
     {
       "name": "Free / value",
-      "mentions": 481,
+      "mentions": 486,
       "type": "pos",
       "key": "free-value"
     },
@@ -98533,7 +98533,7 @@ const CASE_DATA = {
     },
     {
       "name": "Reporting",
-      "mentions": 305,
+      "mentions": 307,
       "type": "pos",
       "key": "reporting"
     },
@@ -98565,7 +98565,7 @@ const CASE_DATA = {
         1071000,
         1093000,
         1122000,
-        1138000
+        1146000
       ]
     },
     "appStore": {
@@ -98576,12 +98576,38 @@ const CASE_DATA = {
         271000,
         281000,
         292000,
-        294000
+        296000
       ]
     }
   },
   "reviews": {
     "googlePlay": [
+      {
+        "author": "Gina Zamora",
+        "country": "PH",
+        "region": "asia",
+        "rating": 5,
+        "date": "Oct 2026",
+        "sentiment": "positive",
+        "themes": [
+          "free-value",
+          "reporting"
+        ],
+        "text": "Very useful, especially for small business with a simple model and uncomplicated varieties. The free app is already a big help. Tried the free trial of the Sales Report subscription, and it was really valuable."
+      },
+      {
+        "author": "Niño Walter Marimon",
+        "country": "PH",
+        "region": "asia",
+        "rating": 5,
+        "date": "Oct 2026",
+        "sentiment": "positive",
+        "themes": [
+          "free-value",
+          "ease-of-use"
+        ],
+        "text": "I really love this POS for my printing shop. So useful and there are a lot of options. And the best of all is it's free! Thank you Loyverse!"
+      },
       {
         "author": "Martijn de Klerk",
         "country": "NL",
@@ -98721,18 +98747,6 @@ const CASE_DATA = {
         "text": "Absolutely fantastic app, just what I need. But a few modifications: ability to choose your own theme colour, and the save button also at the top would reduce workflow. The ticket flow needs simplifying — after you save there's no need for a second page asking you to confirm again. Also add more quota for favourites and more icons, and let us sort by colour."
       },
       {
-        "author": "FerreteriaMX",
-        "country": "MX",
-        "region": "north_america",
-        "rating": 4,
-        "date": "Jul 2026",
-        "sentiment": "neutral",
-        "themes": [
-          "inventory"
-        ],
-        "text": "Inventory management handles our hardware store well. Low-stock notifications could be smarter — would love automatic reorder points. Best free option available."
-      },
-      {
         "author": "CantinaCO",
         "country": "CO",
         "region": "south_america",
@@ -98755,18 +98769,6 @@ const CASE_DATA = {
           "sync"
         ],
         "text": "Please check your back office website — so slow to respond! The only thing I don't like about the app is the back office website. So slow to respond."
-      },
-      {
-        "author": "TapasBCN",
-        "country": "ES",
-        "region": "europe",
-        "rating": 1,
-        "date": "Jul 2026",
-        "sentiment": "negative",
-        "themes": [
-          "payment-integration"
-        ],
-        "text": "Android still missing EFTPOS integrations that iOS has had for months. Help docs reference old screens. Support replies feel copy-pasted."
       }
     ],
     "appStore": [
