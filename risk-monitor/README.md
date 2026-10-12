@@ -34,9 +34,13 @@ merchant risk alerts. The watchdog does send internal monitoring-failure alerts.
 - Checksummed transaction/merchant extraction evidence. Commit time and latest charge
   time never substitute for extraction success. Stale data remains explicitly degraded.
 - Gmail refund/dispute keyword scan, completed watermark with overlap, MIME original
-  body retrieval and unresolved matching queue. HTML-only/ambiguous bodies require
-  human review and stop the completion watermark. This is deliberately conservative:
-  request intent cannot be exhaustively understood by keyword rules.
+  body retrieval and unresolved matching queue. `text/plain` is preferred; an
+  HTML-only body is converted to text and classified the same way. A message with
+  no readable text at all raises `gmail_original_body_unknown` once, is recorded
+  in `gmail_unreadable` for human review, and is then marked seen so a single
+  unreadable email cannot hold the watermark (and every run) degraded forever.
+  Snippets are never classified. This is deliberately conservative: request intent
+  cannot be exhaustively understood by keyword rules.
 - One internal email per merchant/run where possible; later events are checkpointed
   for the next run. Internal recipients are fixed in code. There is no merchant send,
   payout mutation, refund mutation or dispute mutation adapter.

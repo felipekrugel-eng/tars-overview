@@ -204,6 +204,50 @@ class Failures(unittest.TestCase):
             self.assertEqual(gmail.search('in:sent'),[{'id':'1'},{'id':'2'}])
     def monitor(self):
         st=state(); store=FakeStore(); return Monitor(st,store,{'run_budget_seconds':1000},now=100000)
+    def gmail_scan(self, messages, state_over=None):
+        import base64
+        m=self.monitor(); m.c['activation_epoch']=90000; m.s['accounts']={'acct_a':{}}
+        if state_over: m.s.update(state_over)
+        def part(mime, text):
+            return {'mimeType':mime,'body':{'data':base64.urlsafe_b64encode(text.encode()).decode()}}
+        def payload(msg):
+            if msg.get('parts') is not None:
+                return {'mimeType':'multipart/alternative','parts':[part(k,v) for k,v in msg['parts']]}
+            return {'mimeType':'text/plain','body':{}}
+        full={mid:{'id':mid,'payload':payload(msg)} for mid,msg in messages.items()}
+        gmail=object.__new__(Gmail); m.gmail=gmail
+        with patch.object(gmail,'search',return_value=[{'id':k} for k in messages]), \
+             patch.object(gmail,'api',side_effect=lambda path: full[path.split('/')[1].split('?')[0]]):
+            m.gmail_requests()
+        return m
+    def test_gmail_html_only_body_is_classified_like_plain_text(self):
+        html='<html><body><p>Hi Loyverse Payments team,</p><p>Please <b>refund</b> charge ch_html1 &amp; acct_a.</p><style>p{}</style></body></html>'
+        m=self.gmail_scan({'h1':{'parts':[('text/html',html)]}})
+        self.assertNotIn('gmail_original_body_unknown',m.s['gaps'])
+        self.assertEqual(len(m.new),1)
+        finding=m.s['events'][m.new[0]]['finding']
+        self.assertEqual((finding['account'],finding['kind']),('acct_a','refund-request'))
+        self.assertIn('ch_html1',finding['evidence']['matched_ids'])
+        self.assertIn('h1',m.s['gmail_seen']); self.assertEqual(m.s['gmail_watermark'],100000)
+    def test_gmail_plain_text_preferred_over_html_alternative(self):
+        m=self.gmail_scan({'p1':{'parts':[('text/plain','how do I refund a customer in the app?'),
+                                           ('text/html','<p>Loyverse Payments refund chargeback acct_a</p>')]}})
+        self.assertEqual(m.new,[])
+    def test_gmail_unreadable_message_flags_once_then_clears(self):
+        m=self.gmail_scan({'u1':{}})
+        self.assertIn('gmail_original_body_unknown',m.s['gaps'])
+        self.assertIn('u1',m.s['gmail_seen']); self.assertIn('u1',m.s['gmail_unreadable'])
+        self.assertNotIn('gmail_watermark',m.s)
+        again=self.gmail_scan({'u1':{}},{'gmail_seen':dict(m.s['gmail_seen'])})
+        self.assertNotIn('gmail_original_body_unknown',again.s['gaps'])
+        self.assertEqual(again.s['gmail_watermark'],100000)
+    def test_html_to_text_strips_markup_and_quoted_history(self):
+        from monitor import html_to_text
+        text=html_to_text('<div>Please refund acct_a</div><script>x()</script><div>On Mon, X wrote:</div><blockquote>old refund dp_1</blockquote>')
+        self.assertNotIn('x()',text); self.assertIn('Please refund acct_a',text)
+        import re
+        head=re.split(r'(?m)^On .+wrote:|^>.*|^-{2,}\s*Original Message', text)[0]
+        self.assertNotIn('dp_1',head)
     def test_failure_after_send_intent_never_resends(self):
         m=self.monitor(); m.add(Finding('acct_a','amount','Amount alert',['ch_test'],{'amount':150000})); m.group_alerts()
         gmail=object.__new__(Gmail); m.gmail=gmail

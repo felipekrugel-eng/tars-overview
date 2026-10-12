@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 import csv
 import gzip
 import hashlib
+from html.parser import HTMLParser
+import html as htmllib
 import io
 import json
 import os
@@ -57,6 +59,55 @@ def releasable(alert, boundary):
     if boundary is None or alert.get('created_at', 0) >= boundary:
         return True, 'new'
     return False, 'pre_activation_unreconciled'
+
+class _HtmlText(HTMLParser):
+    """Collect the visible text of an HTML body; scripts and styles are dropped."""
+    def __init__(self):
+        super().__init__(); self.parts = []; self.skip = 0
+    def handle_starttag(self, tag, attrs):
+        if tag in ('script', 'style'):
+            self.skip += 1
+        elif tag in ('br', 'p', 'div', 'tr', 'li', 'blockquote'):
+            self.parts.append('\n')
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style') and self.skip:
+            self.skip -= 1
+        elif tag in ('p', 'div', 'tr', 'li', 'blockquote'):
+            self.parts.append('\n')
+    def handle_data(self, data):
+        if not self.skip:
+            self.parts.append(data)
+
+def html_to_text(markup):
+    parser = _HtmlText(); parser.feed(markup); parser.close()
+    text = htmllib.unescape(''.join(parser.parts))
+    return re.sub(r'\n\s*\n+', '\n', text).strip()
+
+def message_text(payload):
+    """Readable body of a Gmail message payload.
+
+    text/plain parts are preferred. A message with only text/html parts (most
+    automated notifications) is converted to text instead of being treated as
+    unreadable, so one HTML-only email can no longer block the Gmail watermark.
+    Snippets are never used. Returns '' when no readable part exists.
+    """
+    plain, markup = [], []
+    def walk(part):
+        data = part.get('body', {}).get('data')
+        if data:
+            decoded = base64.urlsafe_b64decode(data+'='*(-len(data)%4)).decode('utf-8', 'replace')
+            if part.get('mimeType') == 'text/plain':
+                plain.append(decoded)
+            elif part.get('mimeType') == 'text/html':
+                markup.append(decoded)
+        for child in part.get('parts', []):
+            walk(child)
+    walk(payload)
+    if plain:
+        return '\n'.join(plain)
+    if markup:
+        return html_to_text('\n'.join(markup))
+    return ''
 
 def health(state, now, completed=False):
     # Public heartbeat deliberately contains no account, card, merchant or email data.
@@ -532,17 +583,15 @@ class Monitor:
                 continue
             self.budget()
             m = self.gmail.api('messages/'+item['id']+'?format=full')
-            def text_parts(p):
-                out = []
-                if p.get('mimeType') == 'text/plain' and p.get('body', {}).get('data'):
-                    data = p['body']['data']; out.append(base64.urlsafe_b64decode(data+'='*(-len(data)%4)).decode('utf-8','replace'))
-                for child in p.get('parts',[]):
-                    out.extend(text_parts(child))
-                return out
-            body = '\n'.join(text_parts(m.get('payload',{})))
-            # Do not classify snippets, HTML-only bodies, or quoted history.
+            body = message_text(m.get('payload',{}))
+            # Do not classify snippets or quoted history. A message with no
+            # readable text at all is flagged once and remembered: before this,
+            # the id was never marked seen, so a single unreadable email
+            # re-raised the gap and failed every run until the end of time.
             if not body:
                 self.gap('gmail_original_body_unknown')
+                self.s['gmail_seen'][item['id']] = self.now
+                self.s.setdefault('gmail_unreadable', {})[item['id']] = self.now
                 complete=False
                 continue
             body = re.split(r'(?m)^On .+wrote:|^>.*|^-{2,}\s*Original Message', body)[0]
