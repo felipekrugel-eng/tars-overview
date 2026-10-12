@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
 from fraud_health import cohort as C  # noqa: E402
 from fraud_health import evidence as EV  # noqa: E402
 from fraud_health import publish as P  # noqa: E402
+from fraud_health import review as RV  # noqa: E402
 from fraud_health import signals as SG  # noqa: E402
 from fraud_health.activation import ActivationParseError, parse  # noqa: E402
 from fraud_health.ledger import (  # noqa: E402
@@ -508,3 +509,50 @@ class TestPublish:
         assert coverage["enabledAccounts"] == 2
         assert coverage["reviewedEnabledAccounts"] == 1
         assert coverage["enabledNotYetReviewed"] == ["acct_other"]
+
+
+class TestReviewRecordCarriesBusinessProfile:
+    """review.build must pass the activation pull's business-profile fields through.
+
+    Before 2026-10-12 `website`, `mcc`, `representative` were hard-coded to None and
+    `location` was the bare country, even though activation-data.js carries city, state,
+    MCC, URL, descriptor and entity type. Every newly enabled merchant therefore reached the
+    dashboard as "US" with nothing to target a verification at.
+    """
+
+    def _member(self, acct: str) -> C.CohortMember:
+        return C.CohortMember(
+            accountId=acct, enabledAt="2026-10-11T11:01:52+01:00",
+            enabledWindowStart="2026-10-11T05:23:24+01:00", enabledWindowEnd="2026-10-11T11:01:52+01:00",
+            enabledCertainty="confirmed", enabledEvidenceLevel=EVIDENCE_ARRIVAL,
+            enabledWindowHours=5.64, connected="2026-10-11", currentStatus="Enabled",
+        )
+
+    def test_profile_fields_are_carried_from_the_pull(self):
+        row = {
+            "acct": "acct_p", "name": "Fiorellos Cafe", "email": "x@gmail.com", "country": "US",
+            "status": "Enabled", "city": "West Chester", "state": "PA", "mcc": "5812",
+            "url": "orderfiorello.cafe", "stmt": "ORDERFIORELLO.CAFE", "descr": None, "btype": "Company",
+        }
+        record = RV.build(self._member("acct_p"), SG.Population([row]), None, METHODOLOGY, reviewed_at="2026-10-12T00:00:00+00:00")
+        assert record["location"] == "West Chester, PA, US"
+        assert record["website"] == "orderfiorello.cafe"
+        assert record["mcc"] == "5812"
+        assert record["statementDescriptor"] == "ORDERFIORELLO.CAFE"
+        assert record["entityType"] == "Company"
+        assert record["productDescription"] is None
+        # Personal data stays out of the browser-served shard.
+        assert record["representative"] is None
+        assert validate_record(record, METHODOLOGY) == []
+        # The index summary carries the fields the dashboard lists.
+        summary = P.summarize(record, "details-x.json")
+        assert summary["website"] == "orderfiorello.cafe" and summary["mcc"] == "5812"
+        assert summary["location"] == "West Chester, PA, US"
+
+    def test_missing_profile_falls_back_to_country_and_none(self):
+        row = {"acct": "acct_q", "name": "Bare", "email": "q@gmail.com", "country": "US", "status": "Enabled",
+               "city": "", "mcc": None, "url": "  "}
+        record = RV.build(self._member("acct_q"), SG.Population([row]), None, METHODOLOGY, reviewed_at="2026-10-12T00:00:00+00:00")
+        assert record["location"] == "US"
+        assert record["website"] is None and record["mcc"] is None and record["entityType"] is None
+        assert validate_record(record, METHODOLOGY) == []
