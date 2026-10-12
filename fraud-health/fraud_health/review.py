@@ -139,16 +139,39 @@ def build(
         "createdAt": row.get("connected_ts") or row.get("connected"),
         "enabled": row.get("status") == "Enabled",
         "detailsSubmitted": None,
-        "location": row.get("country"),
+        "location": _location(row),
         "email": row.get("email"),
-        "website": None,
-        "mcc": None,
+        # Carried from the activation pull (CONNECTED_ACCOUNTS business profile). These
+        # were hard-coded to None before 2026-10-12, which threw away exactly the fields a
+        # verifier needs to target a registry, a website or an MCC check.
+        "website": _clean(row.get("url")),
+        "mcc": _clean(row.get("mcc")),
+        "statementDescriptor": _clean(row.get("stmt")),
+        "productDescription": _clean(row.get("descr")),
+        "entityType": _clean(row.get("btype")),
+        # Representative identity is deliberately NOT pulled: the detail shard is served to
+        # a browser and personal data has no place in it.
         "representative": None,
         "successfulTransactions": row.get("pos_receipts"),
         "hasTransacted": bool(row.get("pos_receipts")),
         "lastTransactedAt": row.get("last_sale"),
     }
     return apply_band(record, methodology)
+
+
+def _clean(value: Any) -> str | None:
+    """A trimmed string, or None when the pull had nothing (None, "", whitespace)."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
+def _location(row: dict[str, Any]) -> str | None:
+    """'City, ST, US' from whatever parts the pull carried; falls back to the country."""
+    parts = [_clean(row.get("city")), _clean(row.get("state")), _clean(row.get("country"))]
+    present = [p for p in parts if p]
+    return ", ".join(present) if present else None
 
 
 _DISCLAIMERS = {
