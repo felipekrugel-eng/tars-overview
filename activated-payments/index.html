@@ -882,9 +882,9 @@
     </div>
     <div class="ov-card full">
       <div class="ov-ctitle"><h2>Volume processed on terminals</h2><span class="tot" id="ovVolTot">&nbsp;</span></div>
-      <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars = daily; line = cumulative.</p>
+      <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars are daily; the <b>red line is a trailing 7-day average</b>, on the same scale as the bars — one full week, so the weekday/weekend cycle cancels and what is left is the trend. The black line is cumulative, on the right-hand scale.</p>
       <div class="ov-chart" id="ovVolChart"></div>
-      <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
+      <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#CC3333"></i> 7-day average (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
     </div>
     <div class="ov-tablecard">
       <div class="ov-ctitle"><h2 id="ovTxnH2">Merchants transacting through Loyverse Payments<span class="ov-basetag" id="ovTxnBase" style="display:none"></span></h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
@@ -1778,6 +1778,19 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     };
   }
   // Generic bar + cumulative-line SVG chart. days aligned to bars[] and line[].
+  // Trailing mean over `w` days. Returns null for days that do not yet have a full window,
+  // so the line STARTS on day 7 rather than ramping up from a partial average — a partial
+  // window is a different statistic and drawing it as the same line would invent a trend.
+  function rollingMean(arr, w){
+    var out=[], sum=0;
+    for(var i=0;i<arr.length;i++){
+      sum += Number(arr[i])||0;
+      if(i>=w) sum -= Number(arr[i-w])||0;
+      out.push(i>=w-1 ? sum/w : null);
+    }
+    return out;
+  }
+
   function chart(el, days, bars, line, opt){
     opt=opt||{};
     if(!days.length){ el.innerHTML='<div class="pc-empty">'+(opt.empty||'No data yet — populates on the next daily pull.')+'</div>'; return; }
@@ -1805,6 +1818,26 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       var bv=bars[i]||0; if(bv>0){
         var h=Math.max(0,ih-(yB(bv)-m.t));
         s+='<rect class="pc-bar '+(opt.barClass||'')+'" data-i="'+i+'" x="'+xB(i).toFixed(1)+'" y="'+yB(bv).toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="2"/>';
+      }
+    }
+    // ---- optional rolling-average line, on the LEFT (bar) axis ----------------------
+    // Deliberately the BAR axis, not the cumulative one: a trailing MEAN is in the same unit
+    // as a daily bar, so it overlays them directly and can be read as "what a typical day in
+    // this window looked like". A rolling SUM would be ~7x the bars and would need its own
+    // scale, which is how you end up with two lines that cannot be compared to anything.
+    //
+    // Why 7 and not 30: card volume has a hard weekly cycle — Saturdays are not Tuesdays — so
+    // a 7-day window removes exactly one full cycle and nothing more. It de-seasonalises
+    // without flattening the trend the reader came to see.
+    if(opt.avg && opt.avg.length===n){
+      var ap='', started=false;
+      for(var aj=0; aj<n; aj++){
+        var av=opt.avg[aj];
+        if(av==null) continue;                       // the first days have no full window
+        ap+=(started?' ':'')+xC(aj).toFixed(1)+','+yB(av).toFixed(1); started=true;
+      }
+      if(started){
+        s+='<polyline class="pc-line avg" points="'+ap+'" fill="none" stroke="'+(opt.avgColor||'#1A1A1A')+'" stroke-width="2.25" stroke-linejoin="round" stroke-linecap="round" opacity="0.92"/>';
       }
     }
     // cumulative line
@@ -1842,6 +1875,9 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       var r=el.getBoundingClientRect();
       tip.innerHTML='<div class="pc-tip-d">'+fmtDate(days[i])+'</div>'
         +'<div class="pc-tip-r"><span>'+barLbl+'</span><b>'+fmtB(bars[i]||0)+'</b></div>'
+        +(opt.avg && opt.avg[i]!=null
+            ? '<div class="pc-tip-r"><span>'+(opt.avgLabel||'7-day average')+'</span><b>'+fmtB(opt.avg[i])+'</b></div>'
+            : '')
         +'<div class="pc-tip-r"><span>Cumulative</span><b>'+fmtL(line[i]||0)+'</b></div>';
       tip.style.display='block';
       var x=ev.clientX-r.left, y=ev.clientY-r.top, tw=tip.offsetWidth, th=tip.offsetHeight;
@@ -1915,7 +1951,9 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // ---- Volume ----
     var v=windowSeries(vDense, range);
     if(!VOL.length){ document.getElementById('ovVolNote').innerHTML='Successful, captured card charges on Loyverse Payments per day, converted to USD. <b>Populates on the next daily pull</b> (CONNECTED_ACCOUNT_CHARGES).'; }
-    chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line, {money:true,barClass:'warn',lineClass:'',barLabel:'Volume (USD)'});
+    chart(document.getElementById('ovVolChart'), v.days, v.bars, v.line,
+      {money:true, barClass:'warn', lineClass:'', barLabel:'Volume (USD)',
+       avg: rollingMean(v.bars, 7), avgLabel:'7-day average', avgColor:'#CC3333'});
     // ---- Merchants transacting (first charge per merchant) ----
     var t=windowSeries(tDense, range);
     chart(document.getElementById('ovTxnFirstChart'), t.days, t.bars, t.line,
