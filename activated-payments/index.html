@@ -187,6 +187,12 @@
   .pc-bar.warn{fill:var(--blue-deep);}
   .pc-line{fill:none;stroke:var(--charcoal);stroke-width:2;}
   .pc-line.red{stroke:var(--red);}
+  /* The rolling-average line. It needs its OWN rule because an SVG `stroke` ATTRIBUTE loses
+     to any CSS rule on the element: .pc-line above sets stroke, so stroke="#CC3333" on the
+     polyline was silently ignored and the average drew charcoal, identical to the cumulative
+     line while the legend claimed otherwise. Dashed as well as coloured, so the two lines stay
+     distinguishable in greyscale and for colour-blind readers. */
+  .pc-line.avg{stroke:var(--red);stroke-dasharray:6 4;}
   .pc-grid{stroke:var(--silver);stroke-width:1;}
   .pc-axis{fill:var(--midgray);font:11px Arial;}
   .pc-axis.r{fill:var(--darkgray);}
@@ -884,7 +890,7 @@
       <div class="ov-ctitle"><h2>Volume processed on terminals</h2><span class="tot" id="ovVolTot">&nbsp;</span></div>
       <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars are daily; the <b>red line is a trailing 7-day average</b>, on the same scale as the bars — one full week, so the weekday/weekend cycle cancels and what is left is the trend. The black line is cumulative, on the right-hand scale.</p>
       <div class="ov-chart" id="ovVolChart"></div>
-      <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:#CC3333"></i> 7-day average (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
+      <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:repeating-linear-gradient(90deg,#CC3333 0 6px,transparent 6px 10px)"></i> 7-day average (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
     </div>
     <div class="ov-tablecard">
       <div class="ov-ctitle"><h2 id="ovTxnH2">Merchants transacting through Loyverse Payments<span class="ov-basetag" id="ovTxnBase" style="display:none"></span></h2><span class="tot" id="ovTxnTot">&nbsp;</span></div>
@@ -1837,7 +1843,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         ap+=(started?' ':'')+xC(aj).toFixed(1)+','+yB(av).toFixed(1); started=true;
       }
       if(started){
-        s+='<polyline class="pc-line avg" points="'+ap+'" fill="none" stroke="'+(opt.avgColor||'#1A1A1A')+'" stroke-width="2.25" stroke-linejoin="round" stroke-linecap="round" opacity="0.92"/>';
+        // STYLE, not a stroke attribute: presentation attributes lose to the .pc-line CSS
+        // rule, which is what made this line charcoal instead of red. An inline style wins.
+        s+='<polyline class="pc-line avg" points="'+ap+'" style="fill:none'
+          +(opt.avgColor?';stroke:'+opt.avgColor:'')
+          +';stroke-width:2.25;stroke-linejoin:round;stroke-linecap:round"/>';
       }
     }
     // cumulative line
