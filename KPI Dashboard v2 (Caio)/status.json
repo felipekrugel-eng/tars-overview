@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-13T16:47:31.093152+00:00",
- "worst": "error",
- "digest": "592541da856055fec1e3370c276907753a74be2403bba0d2805ec3b49208aef3",
+ "checked_at": "2026-10-13T16:51:32.514712+00:00",
+ "worst": "warn",
+ "digest": "8602edeefe5fa7e783480719cfa20782d360d96d275d97bccde51a53fa9cece3",
  "pipelines": [
   {
    "name": "CUSUM registrations",
@@ -11,9 +11,10 @@
    "max_age_h": 2,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T16:46:42+00:00",
    "data_at": "2026-10-13T16:46:00+00:00",
-   "age_h": 0.03,
+   "age_h": 0.09,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -25,10 +26,11 @@
     "status = degraded",
     "gap: telegram_delivery_unconfirmed"
    ],
-   "state": "error",
+   "state": "warn",
+   "reason": "source",
    "committed_at": "2026-10-13T16:40:43+00:00",
    "data_at": "2026-10-13T15:32:25+00:00",
-   "age_h": 1.25
+   "age_h": 1.32
   },
   {
    "name": "Payments pull",
@@ -37,9 +39,10 @@
    "max_age_h": 9,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T15:31:09+00:00",
    "data_at": "2026-10-13T14:59:17.283567+00:00",
-   "age_h": 1.8
+   "age_h": 1.87
   },
   {
    "name": "Activated payments",
@@ -48,9 +51,10 @@
    "max_age_h": 9,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T16:37:34+00:00",
    "data_at": "2026-10-13T16:33:06.776000+00:00",
-   "age_h": 0.24,
+   "age_h": 0.31,
    "inputs_changed_at": "2026-10-13T16:22:03+00:00"
   },
   {
@@ -60,9 +64,10 @@
    "max_age_h": 9,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T16:37:34+00:00",
    "data_at": null,
-   "age_h": 0.17
+   "age_h": 0.23
   },
   {
    "name": "Merchant base",
@@ -71,9 +76,10 @@
    "max_age_h": 36,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T12:26:20+00:00",
    "data_at": "2026-10-13T12:17:56.289788+00:00",
-   "age_h": 4.49,
+   "age_h": 4.56,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -83,9 +89,10 @@
    "max_age_h": 36,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 2.39,
+   "age_h": 2.46,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -96,10 +103,11 @@
    "notes": [
     "built before its inputs changed: kpi-automation/build_subs_data.py is 1.0h newer"
    ],
-   "state": "error",
+   "state": "warn",
+   "reason": "rebuild",
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 2.39,
+   "age_h": 2.46,
    "inputs_changed_at": "2026-10-13T15:25:32+00:00"
   },
   {
@@ -109,9 +117,10 @@
    "max_age_h": 36,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-12T23:01:07+00:00",
    "data_at": null,
-   "age_h": 17.77,
+   "age_h": 17.84,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -121,9 +130,10 @@
    "max_age_h": 264,
    "notes": [],
    "state": "ok",
+   "reason": null,
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 31.78,
+   "age_h": 31.85,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -191,7 +201,7 @@
    "2026-10-12": "ok"
   },
   "Risk monitor": {
-   "2026-10-13": "down",
+   "2026-10-13": "warn",
    "2026-08-15": "nodata",
    "2026-08-16": "nodata",
    "2026-08-17": "nodata",
@@ -563,7 +573,7 @@
    "2026-10-12": "ok"
   },
   "KPI subscriptions": {
-   "2026-10-13": "down",
+   "2026-10-13": "warn",
    "2026-08-15": "nodata",
    "2026-08-16": "nodata",
    "2026-08-17": "nodata",

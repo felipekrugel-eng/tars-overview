@@ -59,23 +59,82 @@ def test_ageing_warns_before_it_breaks(one_pipeline, monkeypatch):
 def test_stale_is_an_error(one_pipeline, monkeypatch):
     set_commit(monkeypatch, ago(40))
     r = check.check()[0]
-    assert r["state"] == "error"
+    assert r["state"] == "error" and r["reason"] == "stale"
     assert "stale" in r["notes"][0]
+
+
+def test_stale_beats_a_pending_rebuild(one_pipeline, monkeypatch):
+    """Both true at once: the artefact has stopped AND the code moved. Stopped wins,
+    because that is the one you have to act on."""
+    set_commit(monkeypatch, ago(40))
+    monkeypatch.setattr(check, "newest_input", lambda ref, paths: (ago(1), "src"))
+    r = check.check()[0]
+    assert r["state"] == "error" and r["reason"] == "stale"
+
+
+def test_unreachable_is_never_red(one_pipeline, monkeypatch):
+    """"Could not check" is not "broken". It must never raise an alarm."""
+    def boom(ref, path):
+        raise RuntimeError("network")
+    monkeypatch.setattr(check, "last_commit", boom)
+    r = check.check()[0]
+    assert r["state"] == "unknown"
+    assert r["state"] != "error"
 
 
 def test_missing_artefact_is_an_error(one_pipeline, monkeypatch):
     set_commit(monkeypatch, None)
-    assert check.check()[0]["state"] == "error"
+    r = check.check()[0]
+    assert r["state"] == "error" and r["reason"] == "missing"
+
+
+# ------------------------------------------------------- the rule, stated as one test
+RED_REASONS = {"stale", "missing"}
+
+
+def test_only_a_stale_or_missing_artefact_may_be_red(one_pipeline, monkeypatch):
+    """The contract for this page, pinned.
+
+    Red must mean: the dashboard is serving stale or missing data and someone has to go
+    and fix something. If a future change makes anything else red, this fails.
+    """
+    cases = [
+        ("fresh",             ago(2),   None,      None),
+        ("ageing",            ago(30),  None,      None),
+        ("pending rebuild",   ago(2),   ago(1),    None),
+        ("source warning",    ago(2),   None,      ["status = degraded"]),
+        ("stale",             ago(40),  None,      None),
+    ]
+    for label, commit, src, notes in cases:
+        set_commit(monkeypatch, commit)
+        monkeypatch.setattr(check, "newest_input",
+                            lambda ref, paths, _s=src: (_s, "src") if _s else (None, None))
+        if notes is not None:
+            monkeypatch.setattr(check, "PIPELINES",
+                                [("T", "master", "out.js", 36, "pull_status", ["src"])])
+            monkeypatch.setattr(check, "read_marker",
+                                lambda ref, path, kind, _n=notes: (commit, _n))
+        r = check.check()[0]
+        if r["state"] == "error":
+            assert r["reason"] in RED_REASONS, \
+                f"{label} came out red for reason {r['reason']!r} — red is only for a " \
+                f"dashboard that has actually stopped updating"
 
 
 # ------------------------------------------------- it catches fresh-but-wrong (13 Oct)
-def test_young_artefact_built_before_its_inputs_is_an_error(one_pipeline, monkeypatch):
-    """The 2026-10-13 case: 3.5h old against a 36h limit, and completely wrong."""
+def test_young_artefact_built_before_its_inputs_is_flagged(one_pipeline, monkeypatch):
+    """The 2026-10-13 case: 3.5h old against a 36h limit, and completely wrong.
+
+    Flagged, but AMBER. The pipeline is healthy; the output simply predates a code change
+    and the next scheduled run clears it. Making this red meant that merging a one-line fix
+    painted the page red — which is exactly how everyone learned to ignore red here.
+    """
     set_commit(monkeypatch, ago(3.5))
     monkeypatch.setattr(check, "newest_input",
                         lambda ref, paths: (ago(1.0), "kpi-automation/sql"))
     r = check.check()[0]
-    assert r["state"] == "error", "age alone says OK — this is the check that must fire"
+    assert r["state"] == "warn", "a pending rebuild is not a break"
+    assert r["reason"] == "rebuild"
     assert "built before its inputs changed" in r["notes"][0]
 
 
@@ -86,22 +145,37 @@ def test_inputs_older_than_the_artefact_are_fine(one_pipeline, monkeypatch):
 
 
 # ---------------------------------------------------------------- marker-driven failures
-def test_failed_pull_is_an_error_even_when_recent(monkeypatch):
+def test_failed_pull_with_fresh_data_is_amber_not_red(monkeypatch):
+    """The last pull failed but the published data is still inside its window, so the
+    dashboard is not broken and there is nothing to go and fix yet. If the failures keep
+    up, the age check turns it red on its own — which is the right moment to act."""
     monkeypatch.setattr(check, "PIPELINES",
                         [("P", "master", "pull_status.json", 36, "pull_status", [])])
     set_commit(monkeypatch, ago(1))
     monkeypatch.setattr(check, "read_marker",
                         lambda ref, path, kind: (ago(1), ["pull_succeeded = false"]))
-    assert check.check()[0]["state"] == "error"
+    r = check.check()[0]
+    assert r["state"] == "warn" and r["reason"] == "source"
 
 
-def test_degraded_risk_monitor_is_an_error(monkeypatch):
+def test_failed_pull_that_has_gone_stale_is_red(monkeypatch):
+    monkeypatch.setattr(check, "PIPELINES",
+                        [("P", "master", "pull_status.json", 36, "pull_status", [])])
+    set_commit(monkeypatch, ago(50))
+    monkeypatch.setattr(check, "read_marker",
+                        lambda ref, path, kind: (ago(50), ["pull_succeeded = false"]))
+    r = check.check()[0]
+    assert r["state"] == "error" and r["reason"] == "stale"
+
+
+def test_degraded_risk_monitor_with_fresh_data_is_amber(monkeypatch):
     monkeypatch.setattr(check, "PIPELINES",
                         [("R", "master", "health.json", 4, "risk_health", [])])
     set_commit(monkeypatch, ago(1))
     monkeypatch.setattr(check, "read_marker",
                         lambda ref, path, kind: (ago(1), ["status = degraded"]))
-    assert check.check()[0]["state"] == "error"
+    r = check.check()[0]
+    assert r["state"] == "warn" and r["reason"] == "source"
 
 
 def test_data_timestamp_beats_commit_time(monkeypatch):
