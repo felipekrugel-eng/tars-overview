@@ -4,58 +4,87 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-12 Europe/London",
   "cohortDate": "2026-10-12",
-  "reviewedAt": "2026-10-12T23:01:07+00:00",
+  "reviewedAt": "2026-10-13T17:26:45+00:00",
   "count": 7,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-12T23:01:07+00:00",
+ "reviewedAt": "2026-10-13T17:26:45+00:00",
  "merchants": [
   {
    "id": "acct_1UPPOo8XBqmSsCcs",
    "accountId": "acct_1UPPOo8XBqmSsCcs",
    "merchantId": "5317623",
    "name": "I Care Passaic Pharmacy",
-   "score": 0,
+   "score": 7,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "NJ Division of Revenue Business Name Search lists I CARE PASSAIC PHARMACY CORP (Entity 0450507219, Passaic, incorporated 2020-06-30) and TRU PASSAIC INCORPORATED (Entity 0451403006, Passaic, incorporated 2026-01-21); the free listing does not display active/revoked status. The federal NPI registry shows an active NPI-2 record 1861093395 for I CARE PASSAIC PHARMACY CORP, DBA I Care Passaic Pharmacy, taxonomy Community/Retail Pharmacy, authorized official Mahmoud Medhat Ali (Owner), enumerated 2020-11-02, at 38 Market St, Passaic NJ. [https://npiregistry.cms.hhs.gov/api?number=1861093395&version=2.1]",
+    "Independent listings (Yahoo Local; Birdeye aggregating 27 Google reviews) place I Care Passaic Pharmacy at 38 Market St, Passaic, NJ 07055, phone (973) 396-8918, with posted store hours. [https://local.yahoo.com/info-227322165-i-care-passaic-pharmacy-corp-passaic/]",
+    "http://trupassaicinc.com/ redirects to https://trupassaicinc.com, a dedicated site titled 'I Care Passaic Pharmacy | 38 Market St, Passaic, NJ' showing the same address, phone (973) 396-8918, storefront photos and pharmacy services. The contact email is a Gmail address whose handle mirrors the website domain. [https://trupassaicinc.com]",
+    "The NJ corporation dates to 2020-06-30 and the NPI to 2020-11-02; Birdeye shows 27 Google reviews (3.3 stars) with recent reviews in the last 1-2 months, one noting 'new management'. No scam or fraud reports were found. [https://reviews.birdeye.com/i-care-passaic-pharmacy-176919225474416]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Representative identity and bank-account ownership cannot be verified from public sources. The NPI record names Mahmoud Medhat Ali as owner of the 2020 corporation; the principals of the 2026 Tru Passaic Incorporated were not checked."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The business observably operates as a retail community pharmacy (NPI taxonomy Community/Retail Pharmacy; website sells prescriptions and OTC goods) which would normally be MCC 5912 (Drug Stores and Pharmacies), not the declared MCC 8099 (Medical Services NEC). The website also advertises Western Union/Ria money transfers and money orders on premises, a higher-risk activity not reflected in the MCC. The descriptor 'I CARE PASSAIC PHARMAC' is coherent with the name. [https://trupassaicinc.com]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Confirm the principals of TRU PASSAIC INCORPORATED (2026) against the Stripe representative, since the pharmacy changed hands this year.",
+    "Correct the MCC to 5912 and confirm whether money-transfer/money-order activity is permitted under the platform agreement."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://npiregistry.cms.hhs.gov/api?number=1861093395&version=2.1",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-13",
+     "establishes": "Matching NJ entities exist for both the pharmacy name and the website/email name Tru Passaic Inc; the NPI record confirms a licensed community pharmacy organisation in Passaic.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://local.yahoo.com/info-227322165-i-care-passaic-pharmacy-corp-passaic/",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-13",
+     "establishes": "Physical pharmacy premises with street address and phone in the stated city.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://trupassaicinc.com",
+     "sourceType": "website",
+     "checkedAt": "2026-10-13",
+     "establishes": "The website belongs to this pharmacy and matches the listing address and phone.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://reviews.birdeye.com/i-care-passaic-pharmacy-176919225474416",
+     "sourceType": "review-site",
+     "checkedAt": "2026-10-13",
+     "establishes": "Independent presence well over one year; a recent management/ownership change is indicated, consistent with Tru Passaic Incorporated formed 2026-01-21.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "I Care Passaic Pharmacy is a real, licensed community pharmacy at 38 Market St, Passaic NJ, confirmed by the NPI registry, NJ business registry listings, independent directory listings and a dedicated website matching name, address and phone. The website/email name Tru Passaic Inc corresponds to a NJ entity formed 2026-01-21 and recent reviews mention new management, so the account most likely reflects a recent change of ownership of a pharmacy trading since 2020. The one risk flag is classification: a retail pharmacy coded MCC 8099 that also sells Western Union/Ria money transfers on premises.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T00:45:07+01:00",
    "enabledWindowStart": "2026-10-11T17:14:58+01:00",
    "enabledWindowEnd": "2026-10-12T00:45:07+01:00",
@@ -77,8 +106,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 7,
+   "trustScore": 93,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -108,26 +137,28 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual/sole proprietor, so no corporate registration is expected. A web search against the Puerto Rico Registro de Corporaciones surfaced no matching entity; the official portal was not queried directly.",
+    "No Instagram, Facebook, Google, Yelp or Tripadvisor listing for 'Nelianis Creations' in Guaynabo or elsewhere in Puerto Rico was found; the probable Instagram and Facebook handles returned no content. A home bakery does not require a licensed storefront, so absence of footprint is not treated as a contradiction.",
+    "Representative identity and bank-account ownership cannot be verified from public sources. The statement descriptor 'ALANIS DIAZ ZAYAS' is a personal name consistent with the contact email handle.",
+    "No website provided. The contact email (yahoo.com) is a consumer mailbox consistent with the descriptor name but not independently verifiable.",
+    "MCC 5499 (misc food stores) is coherent on paper with the stated product (cakes, cupcakes, cookies, brownies, loaves) and a sole-proprietor home bakery, but no public page showing actual activity could be loaded to confirm it.",
+    "No dated social posts, reviews, listings or complaint/scam reports mentioning 'Nelianis Creations' were found; the only 'Nelianis' hits were unrelated personal profiles."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Ask the merchant for a social-media page or order photos for the bakery.",
+    "Monitor early ticket sizes and dispute rate for consistency with a home bakery."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Nelianis Creations presents as a brand-new sole-proprietor home bakery in Guaynabo, PR, with no discoverable public footprint: no social page, listing, website or reviews under the business name. Nothing found contradicts the account data; MCC, product description, consumer email and personal-name descriptor are all consistent with a small individual seller, and no adverse reports surfaced. Every dimension remains unverified rather than verified, so legitimacy rests on Stripe's KYC of the individual.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T00:45:07+01:00",
    "enabledWindowStart": "2026-10-11T17:24:08+01:00",
    "enabledWindowEnd": "2026-10-12T00:45:07+01:00",
@@ -172,7 +203,8 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "MCC 5812 (eating places) and descriptor 'L ENCHANTEA' are coherent with a to-go tea/matcha café that also sells packaged tea. The Ma maison tea LLC posting describes in-person café staff preparing and serving tea and specialty beverages and processing POS sales, matching the stated product description. [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
@@ -180,26 +212,42 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Illinois Secretary of State business entity search returned 'Access Denied' to automated requests, so registration of L'enchanTea / Ma Maison Tea LLC could be neither confirmed nor ruled out. A SimplyHired job posting uses the legal-style name 'Ma maison tea LLC' in Batavia, IL, consistent with the contact email mamaisontea@gmail.com, but that is not a registry record. [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]",
+    "No Google/Yelp/Facebook/Instagram listing or local news item for a tea shop named 'L'enchanTea' in downtown Batavia, IL was found; Batavia tea searches return other businesses. The only independent footprint is the SimplyHired posting by Ma maison tea LLC for in-person café staff, with no street address or trade name. [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]",
+    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "No website given on the account. The domain matching the contact email, mamaisontea.com, resolves to a WordPress 'Good Things are Coming' placeholder with no business content; lenchantea.com did not respond. [https://mamaisontea.com]",
+    "No reviews, dated social posts, local news or complaint/scam reports for L'enchanTea or Ma Maison Tea in Batavia were found. All indicators (payments enabled 2026-10-12, recent hiring post, coming-soon website) point to a business that is brand new or not yet open."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual Illinois SOS lookup for 'Ma Maison Tea LLC' (registry blocks automated queries).",
+    "Physical address, lease or local food-service licence for the Batavia premises."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-13",
+     "establishes": "An entity calling itself Ma maison tea LLC is advertising a café job in Batavia; registry status unchecked.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://mamaisontea.com",
+     "sourceType": "website",
+     "checkedAt": "2026-10-13",
+     "establishes": "The brand domain is registered but is only a placeholder, consistent with a very new business.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "L'enchanTea presents as a brand-new to-go tea café in Batavia, IL, and nothing found contradicts that: a third-party job posting shows Ma maison tea LLC (matching the contact email) hiring in-person café staff in Batavia, and mamaisontea.com is a coming-soon placeholder. There is no storefront listing, street address, social page, review or news item under the trade name yet, and the Illinois registry blocked automated lookup, so the LLC's registration status is unconfirmed. MCC 5812 is coherent with the described business.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T06:19:14+01:00",
    "enabledWindowStart": "2026-10-12T06:18:12+01:00",
    "enabledWindowEnd": "2026-10-12T06:19:14+01:00",
@@ -244,34 +292,43 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "Florida Sunbiz lists MAISON JAR LLC (document L26000478555) as an ACTIVE Florida LLC filed 2026-09-14 (effective 2026-09-12), principal/mailing address 528 NW 103rd Terrace, Gainesville FL 32607, registered agent Sabbat, Alexandra at the same address; no FEI/EIN on file, no authorized persons listed, no annual reports yet. The entity is about four weeks old and the address appears residential. [https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?inquiryType=EntityName&searchNameOrder=MAISONJAR&searchTerm=Maison%20Jar]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Web searches for Maison Jar Gainesville / maisonjargnv returned no Google, Yelp, Facebook or Instagram listing in Gainesville; the only 'Maison Jar' results are an unrelated established refillery and grocery in Brooklyn, NY. No independent footprint in Gainesville was found, consistent with an entity registered weeks ago.",
+    "Representative identity and bank-account ownership cannot be verified from public sources. The Florida registry names Alexandra Sabbat as registered agent, consistent with the stated single member, but no authorized persons are listed on the filing.",
+    "maisonjargnv.com resolves in DNS but the site could not be loaded from the review environment (SSL EOF over HTTPS, proxy block over HTTP), so page content and ownership could not be assessed. The descriptor MAISONJARGNV.COM matches the stated domain.",
+    "No product description was supplied and no page showing what the business sells could be loaded; the name mirrors a known refillery/grocery concept, broadly consistent with MCC 5499, but nothing observable confirms what this Gainesville entity sells.",
+    "The LLC was filed 2026-09-14, less than a month before card payments were enabled; no reviews, dated social posts, local news or complaint/scam reports about a Maison Jar in Gainesville were found."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Load maisonjargnv.com from a different network and confirm it belongs to this LLC and shows what is sold.",
+    "Ask the merchant for a product description and a social or storefront link."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?inquiryType=EntityName&searchNameOrder=MAISONJAR&searchTerm=Maison%20Jar",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-13",
+     "establishes": "An active FL LLC matching the account name and state exists, with Alexandra Sabbat named as registered agent.",
+     "dimension": "legal"
+    }
+   ],
+   "summary": "MAISON JAR LLC is a genuine, active Florida LLC registered in Gainesville with Alexandra Sabbat as registered agent, so the legal entity and stated owner are consistent with the account. The company was formed only on 14 Sep 2026 at an apparently residential address, has no EIN on file, and has no discoverable storefront, social page, reviews or listings; the website could not be loaded from the review environment. Rubric score is 0 with no contradictions, but this is a brand-new, thin-file merchant with no observable product yet.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T09:50:10+01:00",
    "enabledWindowStart": "2026-10-12T04:07:21+01:00",
    "enabledWindowEnd": "2026-10-12T09:50:10+01:00",
@@ -303,13 +360,13 @@
    "accountId": "acct_1UPbUQ5C6l92ofNO",
    "merchantId": "5319551",
    "name": "IDD Contracting",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -324,26 +381,44 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Sole proprietor, so no PA entity registration is expected. The PA Attorney General Home Improvement Contractor registry (hicsearch.attorneygeneral.gov) returned 403 to automated queries, so a HIC registration search for 'IDD Contracting' could not be completed; no HIC record surfaced via web search either. [https://hicsearch.attorneygeneral.gov/]",
+    "Web searches for 'IDD Contracting' in Blairsville PA / Indiana County returned no Google, BBB, Yelp, Angi, Facebook or Nextdoor listing; only unrelated similarly named firms (I & D Contracting, Lancaster PA; IDS Contracting, Greensburg PA; Iddings Contracting, Brockport PA) appeared.",
+    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "No dated presence, reviews, complaints or scam reports were found for 'IDD Contracting' in Blairsville PA, for the email handle tls801126, or for 'El MorningStar' as a DC contractor."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared website https://vr8h4h0ao2.c39.airoapp.ai resolves but is an Airo site-builder page titled 'El MorningStar - Contractor & Massage Therapist | Washington DC', canonical elmorningstar.com, with a robots noindex tag and the placeholder phone (202) 555-0100; it never mentions IDD Contracting or Blairsville, PA. The statement descriptor VR8H4H0AO2.C39.AIROAPP is the random site-builder subdomain rather than the business name, so cardholders would not recognise the charge. [https://vr8h4h0ao2.c39.airoapp.ai]",
+    "MCC 1520 (residential general contractor) is plausible for the name, but the only observable content is the declared website, which advertises a different Washington DC business offering drywall, painting, flooring, cleaning, landscaping and deep-tissue massage; no product or service attributable to IDD Contracting in Blairsville is observable. [https://vr8h4h0ao2.c39.airoapp.ai]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Contact the merchant to confirm the business, obtain a PA HIC registration number, and correct the website and statement descriptor before volume is allowed.",
+    "Manual HIC registry lookup (registry blocks automated queries)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://hicsearch.attorneygeneral.gov/",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-13",
+     "establishes": "The correct PA registry exists but could not be queried programmatically.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://vr8h4h0ao2.c39.airoapp.ai",
+     "sourceType": "website",
+     "checkedAt": "2026-10-13",
+     "establishes": "The website belongs to a different business in a different city with fictitious contact details, and the descriptor is a random string.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "IDD Contracting (sole proprietor, Blairsville PA, MCC 1520) has no independent public footprint: no listing, review page, social page or PA HIC registration could be found, though the HIC registry blocked automated queries so that check is inconclusive. The declared website is a site-builder page for an entirely different business (El MorningStar, a Washington DC contractor/massage therapist) with a 555 placeholder phone number, and the statement descriptor is the random airoapp subdomain rather than the merchant name. The mismatch between the account data and what cardholders would see warrants manual outreach before volume is allowed.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T09:50:10+01:00",
    "enabledWindowStart": "2026-10-12T06:09:35+01:00",
    "enabledWindowEnd": "2026-10-12T09:50:10+01:00",
@@ -365,9 +440,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -388,34 +463,43 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "An independent auto-repair directory lists 'Guffey's Mobile Mechanic' at 2557 Sniders Hwy, Walterboro, SC 29488 (Colleton County, which contains Green Pond) with phone (843) 898-6272 and Mon-Sat hours. A Nextdoor business page 'Guffey's Mobile Mechanic - Walterboro, SC' also surfaced in search results but could not be loaded. [https://autorepaircloud.net/dir/shop?shopId=UR113674]",
+    "The loaded listing describes the business as an auto repair operation performing diagnostics, oil changes, general automotive repair, suspension/steering and fleet services, coherent with MCC 7538 (automotive service shops) and the stated mobile-mechanic product description. [https://autorepaircloud.net/dir/shop?shopId=UR113674]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual/sole proprietor, so no South Carolina entity registration is expected for 'Guffey's Mobile Mechanic'. The SC Secretary of State register was not searched.",
+    "Representative identity and bank-account ownership cannot be verified from public sources. The statement descriptor is a personal name (Teresa Fletcher) that differs from the business name 'Guffey's', and no loaded public listing names either a Guffey or a Fletcher as operator; the relationship is unconfirmed but not contradicted.",
+    "No website provided; the only contact is a Gmail address matching the business name. The directory listing shows a phone number but no website, consistent with the account data. [https://autorepaircloud.net/dir/shop?shopId=UR113674]",
+    "No dated, independent review history could be confirmed: the directory page shows two 2013/2014 reviews but they reference a different shop and are evidently template content. No complaints or fraud reports were found. [https://autorepaircloud.net/dir/shop?shopId=UR113674]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Reconcile the descriptor name (Teresa Fletcher) with the KYC representative and the Guffey business name.",
+    "Set the statement descriptor to the business name so cardholders recognise the charge."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-13",
+     "establishes": "A business by this exact name exists in the stated area with a local 843 phone number.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Guffey's Mobile Mechanic has a genuine public footprint in the stated area: an independent repair directory lists it by exact name in Walterboro, Colleton County, SC with a local phone number, and a Nextdoor business page also appears in search. The listed services match MCC 7538 and the product description. The statement descriptor 'TERESA FLETCHER' is a personal name unconnected to 'Guffey' in any public source; not a contradiction, but it should be reconciled against the KYC name on file.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T16:19:21+01:00",
    "enabledWindowStart": "2026-10-12T10:16:06+01:00",
    "enabledWindowEnd": "2026-10-12T16:19:21+01:00",
@@ -447,13 +531,13 @@
    "accountId": "acct_1UPg728iPXA3z7jW",
    "merchantId": "5320411",
    "name": "Pos service",
-   "score": 0,
+   "score": 35,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 15,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 10,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -466,28 +550,30 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Registered as an individual sole proprietor in Michigan, where no state registration is expected for an individual trading under their own name. No assumed-name (DBA) filing for 'Pos service' was found.",
+    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "No scam or complaint reports mentioning 'takeallpayments', 'takeallpayments346', 'Pos service' or the descriptor 'ALEXIS JACKSON' were found, and no dated public presence of any age exists for the business; the account was enabled for card payments on 2026-10-12."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "A seller of 'Digital art' (MCC 5818, digital goods) must have an observable product somewhere, yet searches for 'Pos service' in Commerce Township MI returned only postal-service locations, and searches for an artist 'Alexis Jackson' selling digital art in Michigan (plain, Etsy, Instagram, Behance, DeviantArt, Oakland County / Walled Lake variants) returned no portfolio, shop, listing or social page. There is nothing observable to sell.",
+    "No website is provided. The only contact is a free Gmail address whose handle, 'takeallpayments346', describes the act of collecting payments rather than naming a business, brand or artist; searches for the handle returned nothing associated with any merchant. The business name 'Pos service' likewise names a payment terminal rather than a business.",
+    "The business name describes a payment terminal and the email handle describes payment collection, while the MCC (5818, digital goods) and product description ('Digital art') imply a deliverable that could not be found anywhere online. Searches run: '\"Pos service\" \"Commerce Township\" Michigan'; '\"Alexis Jackson\" digital art Michigan'; '\"Alexis Jackson\" artist etsy OR instagram OR behance OR deviantart \"digital art\"'; '\"ALEXIS JACKSON\" charge on card statement digital art'."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Require proof of product (portfolio, storefront or social page) and identity confirmation before any payout.",
+    "Review the first charges for card-testing patterns (small amounts, many cards, rapid succession)."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "summary": "No public evidence contradicts the suspicious read of this account: the business name ('Pos service') and contact email ('takeallpayments346@gmail.com') both describe the act of taking payments rather than any product, and repeated searches across the general web, Etsy, Instagram, Behance, DeviantArt and Michigan-local variants found no digital-art portfolio, shop, listing or social page for 'Pos service' or an artist named Alexis Jackson. The account is one day old with zero observable footprint and a digital-goods MCC, the classic profile of an account opened to run cards. Treat as a probable card-running account: hold payouts pending proof of product and identity.",
+   "reviewCompleteness": 62,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-12T23:01:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T16:19:21+01:00",
    "enabledWindowStart": "2026-10-12T11:05:44+01:00",
    "enabledWindowEnd": "2026-10-12T16:19:21+01:00",
@@ -509,10 +595,10 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
-   "action": "Normal monitoring"
+   "riskScore": 35,
+   "trustScore": 65,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
   }
  ]
 }
