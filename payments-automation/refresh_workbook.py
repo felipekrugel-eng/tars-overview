@@ -43,8 +43,55 @@ CATS    = NETWORK + STRIPE
 # --- Stripe platform fees, sourced from balance-transaction actuals ----------------
 # Stripe debits the platform balance in GBP; the rest of this model is USD, so we
 # convert the (small) platform-fee actuals to USD to keep the P&L single-currency.
-# Spot GBP/USD on 2026-07-22 = 1.3373 (source: xe.com / Wise). Update if it drifts.
+# Spot GBP/USD on 2026-07-22 = 1.3373 (source: xe.com / Wise). FALLBACK ONLY — the live rate
+# is now derived from Stripe's own FX_RATE in icplus_costs.csv by fx_gbp_usd() below.
 FX_GBP_USD = 1.3373
+
+
+# ── CURRENCY: one rate, Stripe's own, applied everywhere ────────────────────────────────
+# THE BUG THIS EXISTS TO KILL. This model used to sum charge amounts, application fees and
+# IC+ costs at FACE VALUE across currencies — £1 counted as $1 — while converting only the
+# platform-fee CSV. The book is 2,214 GBP charges worth £30,919, so the Summary of Margins
+# published TPV $10,481 BELOW the Payment Profile (which does convert), and the two pages
+# could never reconcile. A single page converting three of its four inputs is worse than one
+# that converts none: the error is invisible instead of obvious.
+#
+# The rate comes from Stripe rather than a constant. Stripe bills the Loyverse platform in GBP
+# and ICPLUS_FEES.FX_RATE is the rate IT used to convert each USD fee into the GBP it charged
+# us. Inverting the volume-weighted average of that gives GBP->USD at the rate we were
+# actually billed, with no constant to maintain and no drift between pipelines.
+def fx_gbp_usd(ic_rows):
+    """GBP->USD from Stripe's own FX_RATE. Falls back to the constant if unavailable."""
+    num = den = 0.0
+    for r in ic_rows:
+        try:
+            rate = float(r.get("FX_RATE") or 0)
+            amt = abs(float(r.get("TOTAL_AMOUNT") or 0))
+        except (TypeError, ValueError):
+            continue
+        # Only USD->GBP conversions tell us the pair; same-currency rows carry no rate.
+        if rate > 0 and (r.get("FEE_CURRENCY") or "").lower() == "usd" and amt:
+            num += rate * amt
+            den += amt
+    if den <= 0 or num <= 0:
+        return FX_GBP_USD, "fallback constant"
+    usd_to_gbp = num / den
+    return (1.0 / usd_to_gbp), f"Stripe FX_RATE ({usd_to_gbp:.5f} USD/GBP)"
+
+
+def to_usd(amount_major, currency, gbp_usd):
+    """Any supported currency -> USD. An unknown currency returns None so it is EXCLUDED and
+    counted, never silently treated as dollars — which is exactly how this went wrong."""
+    c = (currency or "").strip().upper()
+    if c == "USD":
+        return amount_major
+    if c == "GBP":
+        return amount_major * gbp_usd
+    if c == "EUR":
+        # EUR is 24 charges worth EUR29 on this book. Carried at the ECB-ish 1.16 the
+        # activation pipeline already uses, so the two agree; immaterial either way.
+        return amount_major * 1.16
+    return None
 # Which platform_fees.csv buckets feed the Summary "Stripe Fees" section, and where.
 # Everything not listed here (notably the 'other' bucket = terminal hardware purchases
 # and any non-processing charges) is intentionally NEVER read. Categories with no
@@ -86,8 +133,26 @@ def build_data(tx_path, ic_path):
     cat_plan_cnt = defaultdict(lambda: defaultdict(int))
     plan_bf = defaultdict(Counter)                       # (cat,plan) -> Counter((brand,fund))
 
-    for r in csv.DictReader(open(ic_path, encoding="utf-8-sig")):
-        cid = r["CHARGE_ID"]; ft = norm(r["FEE_NAME"]); amt = fnum(r["TOTAL_AMOUNT"])
+    ic_rows = list(csv.DictReader(open(ic_path, encoding="utf-8-sig")))
+    # ONE rate for the whole model, taken from Stripe's own billing, derived before anything
+    # is summed so every figure below is in the same currency.
+    GBP_USD, FX_SRC = fx_gbp_usd(ic_rows)
+    print(f"[fx] GBP->USD {GBP_USD:.5f} from {FX_SRC}", flush=True)
+
+    fx_skipped = defaultdict(float)
+
+    def usd(amount_major, currency):
+        v = to_usd(amount_major, currency, GBP_USD)
+        if v is None:
+            fx_skipped[(currency or "?").upper()] += amount_major
+            return 0.0
+        return v
+
+    for r in ic_rows:
+        cid = r["CHARGE_ID"]; ft = norm(r["FEE_NAME"])
+        # TOTAL_AMOUNT is in the FEE's own currency. Converted here, once, so every consumer
+        # below sees USD cents and cannot reintroduce the mixed-currency sum.
+        amt = usd(fnum(r["TOTAL_AMOUNT"]), r.get("FEE_CURRENCY") or "USD")
         ic_cat[cid][ft] += amt
         if ft in NETWORK:
             pn = (r["PLAN_NAME"] or "").strip() or "(unspecified)"
@@ -122,12 +187,15 @@ def build_data(tx_path, ic_path):
         if not c:
             continue
         key = (brand(t["CARD_BRAND"]), fund(t["CARD_FUNDING"]))
-        bf_cost[key] += sum(c.values()); bf_vol[key] += int(t["AMOUNT"]) / 100
+        bf_cost[key] += sum(c.values()); bf_vol[key] += usd(int(t["AMOUNT"]) / 100, t.get("CURRENCY"))
     blended = {k: (bf_cost[k] / bf_vol[k] if bf_vol[k] else 0) for k in bf_cost}
 
     recs = []
     for t in tx:
-        cid = t["CHARGE_ID"]; st = t["STATUS"]; tv = int(t["AMOUNT"]) / 100
+        cid = t["CHARGE_ID"]; st = t["STATUS"]
+        # TPV in USD. This single line is the $10,481 gap against the Payment Profile: it used
+        # to be int(t["AMOUNT"])/100, which counted £1 as $1 across 2,214 GBP charges.
+        tv = usd(int(t["AMOUNT"]) / 100, t.get("CURRENCY"))
         br = brand(t["CARD_BRAND"]); fn = fund(t["CARD_FUNDING"])
         rec = dict(A=cid, B=t["CREATED_AT"][:10], C=t["MERCHANT_NAME"],
                    D=t["CURRENCY"].upper(), E=tv, F=br, G=fn,
@@ -143,7 +211,8 @@ def build_data(tx_path, ic_path):
             rec.update(K="No fee (failed)", L=0, M=None, N=None, O=None,
                        Q=None, R=None, Tval=None, kind="failed")
         else:
-            rev = int(t["APPLICATION_FEE_AMOUNT"]) / 100 if t["APPLICATION_FEE_AMOUNT"].strip() else 0
+            rev = usd(int(t["APPLICATION_FEE_AMOUNT"]) / 100, t.get("CURRENCY")) \
+                  if t["APPLICATION_FEE_AMOUNT"].strip() else 0
             rec["L"] = round(rev, 4)
             c = comp(cid)
             if c:
@@ -182,7 +251,10 @@ def build_data(tx_path, ic_path):
                    "2.6+10": scen(0.026, 0.10), "2.6+15": scen(0.026, 0.15),
                    "2.8+15": scen(0.028, 0.15)}
 
-    return dict(recs=recs, comp=comp, ic_plan=ic_plan,
+    if fx_skipped:
+        print(f"[fx] WARNING — unconvertible currencies EXCLUDED: "
+              + ", ".join(f"{k} {v:,.2f}" for k, v in sorted(fx_skipped.items())), flush=True)
+    return dict(recs=recs, comp=comp, ic_plan=ic_plan, fx=GBP_USD, fx_src=FX_SRC,
                 cat_tot=cat_tot, cat_cnt=cat_cnt,
                 cat_plan_tot=cat_plan_tot, cat_plan_cnt=cat_plan_cnt, plan_bf=plan_bf,
                 d0=d0, d1=d1, merchants=merchants,
