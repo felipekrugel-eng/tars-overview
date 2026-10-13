@@ -69,6 +69,16 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         run: pip install -r kpi-automation/requirements.txt
 
+      # The completeness gate decides what may be published, and it spent ten days firing
+      # on every morning run while the feed was healthy. Pin its behaviour before trusting
+      # it to judge a pull. Same rationale as fraud-health-daily: the guard's own tests
+      # gate the run.
+      - name: Unit tests (receipts-feed completeness gate)
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          pip install --quiet pytest
+          python3 -m pytest kpi-automation/tests -q
+
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
         id: pull
         if: steps.guard.outputs.skip != 'true'
