@@ -19,7 +19,7 @@ On success the finished workbook is written to output/loyverse_payments_analysis
 which the workflow commits to the repo. That committed file is the source of truth,
 refreshed daily with zero dependence on anyone's computer.
 """
-import os, sys, subprocess, shutil, pathlib, argparse, json, datetime
+import os, sys, subprocess, shutil, pathlib, argparse, json, datetime, csv
 import openpyxl
 
 HERE     = pathlib.Path(__file__).resolve().parent
@@ -366,7 +366,49 @@ def margins_by_month(tx_path, ic_path, stripe_fees_total):
     return out
 
 
-def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
+def _subscriptions(fees_path):
+    """Stripe's FIXED subscriptions, in USD, read straight from platform_fees.csv.
+
+    These are deliberately absent from the workbook Summary: they are not a cost of
+    processing a transaction, so they must not touch contribution, the take rate, or any
+    per-unit figure. But they are Stripe charges on the same account and they are large —
+    Premium Support alone is bigger than this book's whole revenue — so the dashboard shows
+    them BELOW the line. Dropping them entirely is what the old unread 'other' bucket did,
+    and it meant a five-figure cost appeared nowhere at all.
+
+    Guarded: a missing or malformed file returns None and the page simply omits the section,
+    exactly as it did before this existed.
+    """
+    try:
+        sys.path.insert(0, str(HERE))
+        from refresh_workbook import SUBSCRIPTION_CATS, FX_GBP_USD, fnum
+        if not fees_path or not os.path.exists(fees_path):
+            return None
+        minor = {c: 0.0 for c, _ in SUBSCRIPTION_CATS}
+        with open(fees_path, encoding="utf-8-sig") as fh:
+            for r in csv.DictReader(fh):
+                c = (r.get("FEE_CATEGORY") or "").strip()
+                if c in minor:
+                    minor[c] += fnum(r.get("TOTAL_AMOUNT_MINOR"))
+        items = [{"key": c, "label": lbl,
+                  "value": round(-minor[c] / 100.0 * FX_GBP_USD, 2) + 0.0}
+                 for c, lbl in SUBSCRIPTION_CATS]
+        if not any(i["value"] for i in items):
+            return None
+        return {
+            "items": items,
+            "total": round(sum(i["value"] for i in items), 2),
+            "note": "Fixed Stripe subscriptions billed to the platform account. They are "
+                    "NOT a cost of processing a transaction, so they are excluded from "
+                    "contribution and from every per-unit rate on this page. Shown here "
+                    "because they are real cash cost that would otherwise appear nowhere.",
+        }
+    except Exception as e:                     # never let disclosure break the build
+        print(f"  (subscription disclosure skipped: {e})")
+        return None
+
+
+def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None, fees_path=None):
     """Serialize the workbook's Summary sheet into margins-data.js for the dashboard's
     'Summary of Margins' page. The dashboard mirrors the Summary tab exactly, so we read
     label (col B) + value (col C) straight from the deterministic Summary layout."""
@@ -403,10 +445,12 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
             "stripe":  {"label": B(16), "total": _num(C(16)),
                         "items": [pair(17), pair(18)]},
         },
-        # Additional Stripe platform fees from actuals (rows 19-23): Radar, Tap to Pay,
-        # payout, terminal-use, account-volume. Merged under "Stripe fees" in the P&L.
-        # Zero-value buckets render as $0.00 ("0 until it appears"); row 24 is unused.
-        "extraFees": [pair(r) for r in range(19, 24)],
+        # Additional Stripe platform fees from actuals (rows 19-24): Radar, Tap to Pay,
+        # payout, terminal-use, account-volume, card dispute. Merged under "Stripe fees" in
+        # the P&L. Zero-value buckets render as $0.00 ("0 until it appears").
+        # Row 24 (dispute) was previously unused and the range stopped at 23; it now carries
+        # a real bucket, so a range that stopped short would drop it silently.
+        "extraFees": [pair(r) for r in range(19, 25)],
         "scenarios": {
             "headers": {"name": B(38), "revenue": C(38)},
             "rows": [{"name": B(r), "revenue": _num(C(r))} for r in range(39, 45)],
@@ -415,6 +459,8 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None):
             "settlement": " ".join(x for x in (B(34), B(35)) if x),
             "scenario": B(45),
         },
+        # Below the line, never in contribution. See _subscriptions().
+        "subscriptions": _subscriptions(fees_path),
     }
 
     # COUNTRY FILTER (added 2026-08-17, UK launch). Everything above is the workbook Summary
@@ -556,7 +602,7 @@ def main():
 
     # emit the dashboard's "Summary of Margins" data file from the finished workbook.
     # The CSVs go along for the ride so the same records can be split by merchant country.
-    emit_margins(OUT_XLSX, MARGINS_OUT, tx, ic)
+    emit_margins(OUT_XLSX, MARGINS_OUT, tx, ic, fees)
 
     # tidy scratch (leave nothing to accidentally commit)
     for p in (BUILD_XLSX,):

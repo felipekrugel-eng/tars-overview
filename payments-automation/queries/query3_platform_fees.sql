@@ -27,15 +27,54 @@
 -- Window matches query1 ('2026-04-01') so a fresh run picks up all fees through today.
 -- Output is one row per (fee_category, currency): the count and the SUMMED minor-unit
 -- amount (negative). COUNT lets the pull log reconcile against the 40-row probe sample.
+-- WHAT 'other' TURNED OUT TO BE (2026-10-13). This CASE used to end at terminal_use and
+-- sweep everything else into 'other', which the consumer never read. That hid GBP 25,758.70
+-- against GBP 3,663.68 for everything classified — seven times the entire recognised cost.
+-- Enumerated, it was six things, and they split cleanly into two kinds:
+--
+--   PROCESSING COST, wrongly discarded          GBP        was
+--     account_volume  Connect Account Volume     386.99    in 'other' AND the consumer
+--                                                          had a row for it, so the
+--                                                          margins sheet printed a line
+--                                                          called "Account Volume Fee"
+--                                                          that was structurally always 0
+--     dispute         Card Dispute                52.67    in 'other'
+--     terminal cellular connectivity               7.00    in 'other' -> folded into
+--                                                          terminal_use below; it is a
+--                                                          terminal fee and GBP 7 does
+--                                                          not earn its own P&L line
+--
+--   FIXED SUBSCRIPTIONS, correctly outside unit cost
+--     premium_support Stripe Premium Support   24,000.00   6 monthly charges
+--     sigma           Sigma / Data Pipeline     1,312.04   subscription + usage
+--
+-- The subscriptions are NOT per-transaction cost and must not enter contribution, which is a
+-- unit-economics measure — but they are real money, they are larger than this book's entire
+-- revenue, and sweeping them into an unread bucket meant nothing on the dashboard ever said
+-- so. They are emitted under their own categories so the consumer can show them BELOW the
+-- line instead of silently dropping them.
+--
+-- There is no ELSE bucket any more. Every row is named, so a new Stripe fee type cannot
+-- quietly disappear: it fails the consumer's category check and shows up in the pull log.
 SELECT
     CASE
         WHEN DESCRIPTION ILIKE '%per-authorization%'          THEN 'per_auth'
+        -- Before '%volume fee%': "Connect (...): Account Volume Billing" is a different fee
+        -- from "Card payments (...): Stripe volume fees". Verified these are the only two
+        -- description families containing "volume".
+        WHEN DESCRIPTION ILIKE '%account volume%'             THEN 'account_volume'
         WHEN DESCRIPTION ILIKE '%volume fee%'                 THEN 'volume'
         WHEN DESCRIPTION ILIKE '%tap on mobile%'              THEN 'tap_to_pay'
         WHEN DESCRIPTION ILIKE '%radar%'                      THEN 'radar'
         WHEN DESCRIPTION ILIKE '%payout%'                     THEN 'payout'
         WHEN DESCRIPTION ILIKE '%terminal use%'               THEN 'terminal_use'
-        ELSE 'other'
+        WHEN DESCRIPTION ILIKE '%terminal cellular%'          THEN 'terminal_use'
+        WHEN DESCRIPTION ILIKE '%dispute%'                    THEN 'dispute'
+        -- Fixed subscriptions. Reported, never added to unit cost.
+        WHEN DESCRIPTION ILIKE '%premium support%'            THEN 'sub_premium_support'
+        WHEN DESCRIPTION ILIKE '%sigma%'
+          OR DESCRIPTION ILIKE '%data pipeline%'              THEN 'sub_sigma'
+        ELSE 'unclassified'
     END                                             AS fee_category,
     CURRENCY                                        AS currency,
     COUNT(*)                                        AS n,

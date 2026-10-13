@@ -1,0 +1,16 @@
+{
+  "_README": "ONE GBP/USD RATE FOR THE WHOLE PAYMENTS DASHBOARD. Read by payments-automation (Summary of Margins) and activated-payments (Overview, Report, Payment Profile, cohorts). Both pipelines MUST use this file; neither may carry its own rate.",
+
+  "_WHY_PINNED_AND_NOT_DERIVED": "Stripe's own FX_RATE is the truest rate, and the obvious design is to derive it on every run. That design cannot reconcile. The two pipelines are separate jobs that pull at different times, so a derived rate makes them disagree by whatever the rate moved in between, and the disagreement reappears every day with a different value. Worse, it moves the published numbers with no code change: on 2026-10-13 the margins build fell back to 1.3373 because the committed IC extract predated the FX_RATE column, and the next pull would have silently restated the book by about $80. A pinned rate is slightly less accurate and exactly reproducible, which is the right trade for a figure two pages have to agree on.",
+
+  "_HOW_TO_UPDATE": "Change GBP_USD here and nowhere else, note the date and source below, and expect every GBP figure on both pages to restate together - which is the point. The pipelines compare this against Stripe's live FX_RATE on every run and warn when they differ by more than DRIFT_WARN_PCT, so this going stale is visible rather than silent.",
+
+  "GBP_USD": 1.3399,
+  "EUR_USD": 1.16,
+
+  "DRIFT_WARN_PCT": 1.0,
+
+  "pinned_on": "2026-10-13",
+  "source": "Stripe FX_RATE, volume-weighted across USD-denominated IC+ fee rows on the Loyverse platform account (the rate Stripe itself applied when settling). Cross-checked against spot GBP/USD 1.3373 on 2026-07-22 (xe.com), a 0.2% difference.",
+  "note": "GBP matters because Stripe settles the Loyverse platform in sterling while merchant charges are mostly USD: platform fees are billed in GBP and about GBP 31,000 of merchant volume is GBP-denominated. EUR is 24 charges of EUR 29 and is immaterial either way; it is here so neither pipeline has to carry a loose constant."
+}

@@ -22,7 +22,7 @@ Usage:
   python3 refresh_workbook.py --tx transactions.csv --ic icplus_costs.csv \
       --template loyverse_payments_analysis_ful_V2.xlsx --out refreshed.xlsx
 """
-import csv, copy, argparse, re, sys, os
+import csv, copy, argparse, re, sys, os, json
 from datetime import datetime
 from collections import defaultdict, Counter
 import openpyxl
@@ -43,9 +43,28 @@ CATS    = NETWORK + STRIPE
 # --- Stripe platform fees, sourced from balance-transaction actuals ----------------
 # Stripe debits the platform balance in GBP; the rest of this model is USD, so we
 # convert the (small) platform-fee actuals to USD to keep the P&L single-currency.
-# Spot GBP/USD on 2026-07-22 = 1.3373 (source: xe.com / Wise). FALLBACK ONLY — the live rate
-# is now derived from Stripe's own FX_RATE in icplus_costs.csv by fx_gbp_usd() below.
-FX_GBP_USD = 1.3373
+#
+# THE RATE IS PINNED IN shared/fx.json AND READ FROM THERE, by this pipeline and by
+# activated-payments/pull.js alike. Deriving it per run — which this file used to do — is more
+# accurate and cannot reconcile: the two pipelines pull at different times, so each run they
+# disagree by whatever sterling did in between. It also restates published figures with no code
+# change. On 2026-10-13 this very build fell back to 1.3373 because the committed IC extract
+# predated the FX_RATE column, while the Profile was using 1.34 — about $80 apart on the same
+# book, from nothing anyone had edited. fx_gbp_usd() below still derives Stripe's live rate,
+# but only to WARN about drift; the pinned value is what the numbers are built on.
+def _load_fx():
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "shared", "fx.json")
+    try:
+        with open(p, encoding="utf-8") as fh:
+            d = json.load(fh)
+        return float(d["GBP_USD"]), float(d.get("DRIFT_WARN_PCT", 1.0))
+    except Exception as e:
+        # Hard-fail rather than guess: a silent fallback to a different rate is the exact
+        # failure this file is trying to end.
+        raise SystemExit(f"FATAL: cannot read shared/fx.json ({p}): {e}")
+
+
+FX_GBP_USD, FX_DRIFT_WARN_PCT = _load_fx()
 
 
 # ── CURRENCY: one rate, Stripe's own, applied everywhere ────────────────────────────────
@@ -96,6 +115,13 @@ def to_usd(amount_major, currency, gbp_usd):
 # Everything not listed here (notably the 'other' bucket = terminal hardware purchases
 # and any non-processing charges) is intentionally NEVER read. Categories with no
 # actual rows stay at 0 ("0 until it appears"). (fee_category, Summary row, label)
+# Summary rows 17-24, all inside C16's =SUM(C17:C24) subtotal.
+#
+# account_volume (row 23) printed 0.00 on every refresh until 2026-10-13: query3's CASE had
+# no branch producing that category, so the lookup below never matched and the line was
+# structurally incapable of being non-zero. It is GBP 386.99. A row that cannot be right is
+# worse than no row, because it reads as a measured zero — the query and this list are now
+# kept deliberately in step, and unknown_cats below fails loudly if they ever drift again.
 PLATFORM_FEE_ROWS = [
     ("per_auth",       17, "        Per Auth Fee"),
     ("volume",         18, "        Volume Fee"),
@@ -104,6 +130,16 @@ PLATFORM_FEE_ROWS = [
     ("payout",         21, "        Standard Payout Fee"),
     ("terminal_use",   22, "        Terminal Use Fee"),
     ("account_volume", 23, "        Account Volume Fee"),
+    ("dispute",        24, "        Card Dispute Fee"),
+]
+
+# Billed by Stripe to the same platform account, but FIXED SUBSCRIPTIONS rather than a cost
+# of processing a transaction. They are excluded from the subtotal and from contribution on
+# purpose — contribution is per-unit — and reported separately so they are visible rather
+# than discarded. They are not small: Premium Support alone exceeds this book's revenue.
+SUBSCRIPTION_CATS = [
+    ("sub_premium_support", "Stripe Premium Support"),
+    ("sub_sigma",           "Stripe Sigma / Data Pipeline"),
 ]
 
 def fnum(x):
@@ -134,10 +170,17 @@ def build_data(tx_path, ic_path):
     plan_bf = defaultdict(Counter)                       # (cat,plan) -> Counter((brand,fund))
 
     ic_rows = list(csv.DictReader(open(ic_path, encoding="utf-8-sig")))
-    # ONE rate for the whole model, taken from Stripe's own billing, derived before anything
-    # is summed so every figure below is in the same currency.
-    GBP_USD, FX_SRC = fx_gbp_usd(ic_rows)
-    print(f"[fx] GBP->USD {GBP_USD:.5f} from {FX_SRC}", flush=True)
+    # ONE rate for the whole model AND for the Payment Profile: the pinned shared rate, so the
+    # two pages cannot drift apart between pulls. Stripe's live rate is still derived, purely
+    # to check the pin has not gone stale — a warning, never a silent restatement.
+    GBP_USD = FX_GBP_USD
+    live, live_src = fx_gbp_usd(ic_rows)
+    drift = abs(live - GBP_USD) / GBP_USD * 100 if GBP_USD else 0.0
+    print(f"[fx] GBP->USD {GBP_USD:.5f} (pinned, shared/fx.json); "
+          f"Stripe live {live:.5f} from {live_src}; drift {drift:.2f}%", flush=True)
+    if live_src != "fallback constant" and drift > FX_DRIFT_WARN_PCT:
+        print(f"[fx] !! PINNED RATE IS {drift:.2f}% OFF STRIPE'S LIVE RATE — update "
+              f"shared/fx.json (both pages restate together when you do)", flush=True)
 
     fx_skipped = defaultdict(float)
 
@@ -738,33 +781,48 @@ def refresh_text(wb, D, new_last):
 
 # ------------------------------------------------------------------ Stripe platform fees
 def refresh_platform_fees(wb, fees_path):
-    """Source the Summary 'Stripe Fees' section (rows 17-23) from Stripe balance-
+    """Source the Summary 'Stripe Fees' section (rows 17-24) from Stripe balance-
     transaction actuals in platform_fees.csv instead of the old modeled formulas/constants.
     CSV amounts are minor units (pence), NEGATIVE, in GBP; we flip sign, /100, and convert
-    GBP->USD. Missing categories stay 0. The 'other' bucket (terminal hardware etc.) is
-    never read. C16 keeps its =SUM(C17:C24) template formula, so subtotal/total/net-margin
-    all recalc downstream. Returns the per-bucket USD dict for logging."""
+    GBP->USD. C16 keeps its =SUM(C17:C24) template formula, so subtotal/total/net-margin all
+    recalc downstream.
+
+    Returns (usd, subs_usd, unknown): the processing buckets that feed the subtotal, the
+    fixed subscriptions that deliberately do not, and any category the query emitted that
+    this file does not know about."""
     S = wb["Summary"]
     minor = {cat: 0.0 for cat, _, _ in PLATFORM_FEE_ROWS}
+    sub_minor = {cat: 0.0 for cat, _ in SUBSCRIPTION_CATS}
+    unknown = {}
     if fees_path and os.path.exists(fees_path):
         for r in csv.DictReader(open(fees_path, encoding="utf-8-sig")):
             cat = (r.get("FEE_CATEGORY") or "").strip()
+            amt = fnum(r.get("TOTAL_AMOUNT_MINOR"))
             if cat in minor:
-                minor[cat] += fnum(r.get("TOTAL_AMOUNT_MINOR"))
+                minor[cat] += amt
+            elif cat in sub_minor:
+                sub_minor[cat] += amt
+            else:
+                # Nothing is swept away silently any more. An unrecognised category is a
+                # Stripe fee type nobody has decided about yet; it is surfaced in the pull
+                # log so the decision gets made, rather than defaulting to "ignore".
+                unknown[cat] = unknown.get(cat, 0.0) + amt
     usd = {}
     for cat, row, label in PLATFORM_FEE_ROWS:
         v = round(-minor[cat] / 100.0 * FX_GBP_USD, 2) + 0.0   # neg pence GBP -> +USD; kill -0.0
         S.cell(row, 2).value = label
         S.cell(row, 3).value = v
         usd[cat] = v
-    # Row 24 previously held a modeled 'Terminal Smart' constant; no actual bucket -> blank.
-    S.cell(24, 2).value = None
-    S.cell(24, 3).value = None
+    subs_usd = {cat: round(-sub_minor[cat] / 100.0 * FX_GBP_USD, 2) + 0.0
+                for cat, _ in SUBSCRIPTION_CATS}
     # Provenance / FX note (row 36, between the settlement note and the scenario table).
-    S["B36"] = (f"Stripe platform fees (rows 17\u201323) are actuals from Stripe balance "
-                f"transactions, converted GBP\u2192USD at {FX_GBP_USD} (22 Jul 2026). Terminal "
-                f"hardware and other non-processing charges are excluded.")
-    return usd
+    sub_tot = sum(subs_usd.values())
+    S["B36"] = (f"Stripe platform fees (rows 17\u201324) are actuals from Stripe balance "
+                f"transactions, converted GBP\u2192USD at {FX_GBP_USD} (22 Jul 2026). Excludes "
+                f"${sub_tot:,.0f} of fixed Stripe subscriptions (Premium Support, Sigma), "
+                f"which are not a cost of processing a transaction and are reported "
+                f"separately rather than in contribution.")
+    return usd, subs_usd, unknown
 
 # ------------------------------------------------------------------ main
 def main():
@@ -801,9 +859,18 @@ def main():
     print(f"Pricing Model regression precomputed -> n by type {pm}")
     bump_ranges(wb, old_last, new_last)
     print(f"Ranges bumped {old_last} -> {new_last}")
-    pf = refresh_platform_fees(wb, fees_path)
+    pf, subs, unknown_cats = refresh_platform_fees(wb, fees_path)
     src = fees_path if os.path.exists(fees_path) else f"{fees_path} (missing -> all 0)"
     print(f"Stripe platform fees from actuals ({src}) -> USD {pf}")
+    print(f"  excluded fixed subscriptions -> USD {subs} (total ${sum(subs.values()):,.2f})")
+    if unknown_cats:
+        # Loud, but not fatal: the workbook is still correct for everything it does know
+        # about, and failing the whole refresh over an unrecognised fee type would take the
+        # dashboard down for a rounding error. It must not be silent, though - the previous
+        # 'other' bucket was silent and hid GBP 25,758 for months.
+        print("  !! UNRECOGNISED fee categories (NOT in the workbook, decide where they go):")
+        for c, m in sorted(unknown_cats.items(), key=lambda kv: kv[1]):
+            print(f"       {c:<24} GBP {-m/100.0:>12,.2f}")
     refresh_text(wb, D, new_last)
     print("Summary / Read Me text refreshed")
 

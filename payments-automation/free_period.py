@@ -105,6 +105,12 @@ def build(tx_path):
         rows = [r for r in csv.DictReader(fh) if r["STATUS"] == "succeeded"]
 
     def amt(r):
+        # FACE VALUE, NOT CONVERTED — deliberately, and only because it cannot matter here.
+        # The book is 2,214 GBP charges worth GBP 30,919, which is exactly the kind of thing
+        # that produced a $10,481 discrepancy elsewhere in this pipeline; but of the free
+        # charges, ONE is non-USD, for GBP 0.30. Converting would move the answer by about
+        # ten cents on $6,100. Checked rather than assumed, and it needs re-checking if the
+        # free period is ever rerun in a market that is not the US.
         return int(r["AMOUNT"]) / 100
 
     def fee(r):

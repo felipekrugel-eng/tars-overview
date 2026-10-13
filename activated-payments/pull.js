@@ -236,8 +236,25 @@ async function fetchSales(conn, merchantIds) {
 // Stripe AMOUNT is in each currency's minor unit; ZERO_DECIMAL currencies have no
 // minor unit (amount is already whole). Convert minor→major→USD for a single,
 // comparable daily volume number.
+//
+// GBP AND EUR COME FROM shared/fx.json, not from this table. Stripe settles the Loyverse
+// platform in sterling, so GBP is the one rate the Summary of Margins also has to use — and
+// it used to be 1.34 here against 1.3373 there, which is about $80 of permanent, unexplainable
+// disagreement between two pages describing the same book. One file, both pipelines, no drift.
+// The rest of this table is only ever a denominator for small residual currencies.
+const SHARED_FX = (function () {
+  const p = path.join(__dirname, '..', 'shared', 'fx.json');
+  try {
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch (e) {
+    // Hard-fail: quietly falling back to a different rate is the failure this replaced.
+    console.error(`FATAL: cannot read shared/fx.json (${p}): ${e.message}`);
+    process.exit(1);
+  }
+})();
 const USD_RATE = {
-  USD: 1.0, EUR: 1.16, GBP: 1.34, CAD: 0.74, AUD: 0.66, NZD: 0.60, CHF: 1.12,
+  USD: 1.0, EUR: SHARED_FX.EUR_USD, GBP: SHARED_FX.GBP_USD,
+  CAD: 0.74, AUD: 0.66, NZD: 0.60, CHF: 1.12,
   JPY: 0.0066, KRW: 0.00072, CNY: 0.14, HKD: 0.128, SGD: 0.74, INR: 0.012,
   IDR: 0.000063, PHP: 0.018, MYR: 0.21, THB: 0.028, VND: 0.000040, BRL: 0.17,
   MXN: 0.058, ARS: 0.00081, CLP: 0.0010, COP: 0.00023, PEN: 0.27, ZAR: 0.054,
@@ -1669,6 +1686,9 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
     const acct = g(r, 'acct');
     // Cost is billed in the fee currency, which need not be the charge currency.
     const cost = minorToUsd(g(r, 'cost_minor'), g(r, 'fee_ccy') || ccy);
+    // per_auth + volume as the PER-CHARGE feed sees them. Not the page's cost — the platform
+    // balance feed owns that total — but carried so the two can be compared every refresh.
+    const pcp = minorToUsd(g(r, 'per_charge_platform_minor'), g(r, 'fee_ccy') || ccy);
     out.push({
       m: g(r, 'month'),
       cc: acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN,
@@ -1680,6 +1700,7 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
       pricedUsd: minorToUsd(g(r, 'amount_priced_minor'), ccy) || 0,
       billedUsd: minorToUsd(g(r, 'amount_billed_minor'), ccy) || 0,
       cost: cost == null ? 0 : cost,
+      pcPlatform: pcp == null ? 0 : pcp,
       // Application-fee revenue, netted of refunds — what Loyverse actually charged for this
       // segment. Together with cost it makes the page about margin rather than only price.
       rev: (function () { const v = minorToUsd(g(r, 'rev_minor'), g(r, 'rev_ccy') || ccy); return v == null ? 0 : v; })(),
@@ -1687,6 +1708,55 @@ async function fetchProfileCost(conn, acctIds, countryByAcct) {
   }
   return out;
 }
+// ── STRIPE PLATFORM FEES: the cost that carries no merchant id ───────────────
+// These are billed to the Loyverse platform account, not to a connected account, so no join
+// can attribute them to a merchant, a brand or a card type. The page apportions them by share
+// of volume and says so. Without them the Profile understates cost by everything Stripe
+// charges above interchange, which is the gap that made it disagree with the Summary of
+// Margins — the two pages now read the SAME buckets from the SAME feed.
+//
+// Returns { byMonth: {YYYY-MM: usd}, buckets: {...gbp}, subscriptions: {...usd}, total, fx }.
+// Guarded: on any failure the caller gets null and the page falls back to network-only cost,
+// which is what it showed before this existed — degraded, not broken, and visibly flagged.
+async function fetchProfilePlatformFees(conn) {
+  const rows = await executeQuery(conn, loadSql('profile_platform_fees.sql'));
+  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  // Buckets that are a cost of PROCESSING. Must stay identical to PLATFORM_FEE_ROWS in
+  // payments-automation/refresh_workbook.py — that is the whole point of this query.
+  const PROC = ['per_auth', 'volume', 'radar', 'tap_to_pay', 'payout', 'terminal_use',
+                'account_volume', 'dispute'];
+  // Fixed subscriptions. Real money, NOT per-transaction cost: reported, never added in.
+  const SUBS = ['sub_premium_support', 'sub_sigma'];
+  const byMonth = {}, buckets = {}, subs = {};
+  let unclassified = 0;
+  for (const r of rows || []) {
+    const b = String(g(r, 'bucket') || '');
+    const cur = String(g(r, 'cur') || '').toLowerCase();
+    const amt = Number(g(r, 'amount_major')) || 0;
+    const usd = minorToUsd(Math.round(amt * 100), cur);
+    if (usd == null) continue;                  // unknown currency — excluded, as everywhere
+    if (PROC.indexOf(b) >= 0) {
+      byMonth[g(r, 'm')] = (byMonth[g(r, 'm')] || 0) + usd;
+      buckets[b] = Math.round(((buckets[b] || 0) + usd) * 100) / 100;
+    } else if (SUBS.indexOf(b) >= 0) {
+      subs[b] = Math.round(((subs[b] || 0) + usd) * 100) / 100;
+    } else {
+      unclassified += usd;
+    }
+  }
+  if (unclassified) {
+    console.error(`  !! profile platform fees: $${unclassified.toFixed(2)} in UNCLASSIFIED `
+                + `buckets — a new Stripe fee type needs a home in query3 and here`);
+  }
+  for (const k of Object.keys(byMonth)) byMonth[k] = Math.round(byMonth[k] * 100) / 100;
+  const total = Math.round(Object.keys(byMonth).reduce((s, k) => s + byMonth[k], 0) * 100) / 100;
+  const subTotal = Math.round(Object.keys(subs).reduce((s, k) => s + subs[k], 0) * 100) / 100;
+  console.log(`  platform fees: $${total.toLocaleString()} processing across `
+            + `${Object.keys(byMonth).length} months; $${subTotal.toLocaleString()} fixed `
+            + `subscriptions excluded from cost`);
+  return { byMonth, buckets, subscriptions: subs, total, subTotal };
+}
+
 // The device model behind each terminal reader, from the Stripe API rather than the data share.
 //
 // WHY THE API AT ALL. The share carries TERMINAL_READER_ID on every card-present charge, but its
@@ -1789,7 +1859,7 @@ function deviceDimension(mix, readers) {
   console.log(`  device dimension: ${rows.length} rows, ${matched}/${raw.length} reader-months resolved to a model`);
   return rest.concat(rows);
 }
-function writeProfile(mix, cost, acceptance) {
+function writeProfile(mix, cost, acceptance, platform) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const tpv = mix.filter(r => r.d === 'brand').reduce((s, r) => s + r.usd, 0);
   const out =
@@ -1815,9 +1885,16 @@ function writeProfile(mix, cost, acceptance) {
 // resolve to a DEVICE_TYPE. M2 vs S710 vs Tap to Phone therefore cannot be split today. The
 // read_method dimension (contactless / chip / swipe) is exact and is what the page shows instead.
 // Generated ${stamp}
+// __PROFILE_PLATFORM Stripe's platform-level fees — per_auth, volume, Radar, Tap to Pay,
+//                 payout, terminal use, account volume, card dispute. They carry NO connected
+//                 account id, so they cannot be attributed and are apportioned by share of
+//                 volume. \`subscriptions\` (Premium Support, Sigma) are fixed charges, NOT a
+//                 cost of processing: they are shown below the line and never enter cost,
+//                 contribution or any bps figure on the page.
 window.__PROFILE_MIX    = ${JSON.stringify(mix)};
 window.__PROFILE_COST   = ${JSON.stringify(cost)};
 window.__PROFILE_ACCEPT = ${JSON.stringify(acceptance)};
+window.__PROFILE_PLATFORM = ${JSON.stringify(platform || null)};
 window.__PROFILE_META   = ${JSON.stringify({ generatedAt: stamp, tpv: Math.round(tpv * 100) / 100 })};
 `;
   fs.writeFileSync(PROFILE_FILE, out);
@@ -2340,12 +2417,13 @@ async function main() {
       // Payment profile. Guarded on its own: three more Snowflake round-trips for a new page
       // must never cost the Report or the cohort file, which are already written by now.
       try {
-        const [mixR, costR, accR, rdrR] = await Promise.allSettled([
+        const [mixR, costR, accR, rdrR, pfR] = await Promise.allSettled([
           fetchProfileMix(conn, prodAccts, countryByAcct),
           fetchProfileCost(conn, prodAccts, countryByAcct),
           fetchProfileAcceptance(conn),
           // Only accounts that transacted: a reader on any other account cannot appear on a charge.
           fetchReaderDevices(Object.keys(txnByAcct || {})),
+          fetchProfilePlatformFees(conn),
         ]);
         let mix = mixR.status === 'fulfilled' ? mixR.value : [];
         const readers = rdrR.status === 'fulfilled' ? rdrR.value : {};
@@ -2356,6 +2434,22 @@ async function main() {
         if (mixR.status !== 'fulfilled')  console.error(`✗ profile_mix failed: ${mixR.reason && mixR.reason.message}`);
         if (costR.status !== 'fulfilled') console.error(`✗ profile_cost failed (cost per segment blank): ${costR.reason && costR.reason.message}`);
         if (accR.status !== 'fulfilled')  console.error(`✗ profile_acceptance failed (acceptance blank): ${accR.reason && accR.reason.message}`);
+        const platform = pfR.status === 'fulfilled' ? pfR.value : null;
+        if (pfR.status !== 'fulfilled') console.error(`✗ profile_platform_fees failed (page falls back to network-only cost): ${pfR.reason && pfR.reason.message}`);
+        // THE RECONCILIATION CHECK, run on every pull rather than trusted once. The per-charge
+        // feed itemises per_auth and volume; the platform feed bills them in aggregate. They
+        // are two measurements of one thing, so they should be close — and when they drift
+        // apart it means one feed is lagging and the apportioned cost on this page is moving
+        // away from the Summary of Margins. Printed either way, so the number is on the record.
+        if (platform) {
+          const pc = cost.reduce((s, r) => s + (r.pcPlatform || 0), 0);
+          const pl = (platform.buckets.per_auth || 0) + (platform.buckets.volume || 0);
+          const d = pl ? (pc - pl) / pl * 100 : 0;
+          console.log(`  per_auth+volume: per-charge $${pc.toFixed(2)} vs platform `
+                    + `$${pl.toFixed(2)} (${d >= 0 ? '+' : ''}${d.toFixed(1)}%) — platform is `
+                    + `what the page and the margins table both use`);
+          if (Math.abs(d) > 10) console.error(`  ✗ the two fee sources differ by more than 10% — one of them is stale`);
+        }
         if (mix.length) {
           // Every dimension covers the same charges, so they must agree on the total. A mismatch
           // means a segment was dropped or double-counted, and the shares on the page would be
@@ -2368,7 +2462,7 @@ async function main() {
           console.log(`  profile dimensions: ${totals.join(' · ')}`);
           if (spread > 1) console.error(`  ✗ dimensions disagree by $${spread.toFixed(2)} — a segment is being dropped or duplicated`);
         }
-        writeProfile(mix, cost, acc);
+        writeProfile(mix, cost, acc, platform);
       } catch (e) { console.error(`✗ profile-data.js not written: ${e.message}`); }
 
       // Cohort membership for the KPI dashboard's triangle. Written from data already in hand,

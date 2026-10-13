@@ -18,6 +18,25 @@
 -- than from the payment-method view, so cost and its denominator are described by the same
 -- source and cannot disagree about what a charge was.
 --
+-- THE SOURCE COLLISION, AND WHY COST_MINOR IS NOT EVERY FEE ROW (2026-10-13).
+-- Stripe bills per_auth and volume fees TWICE over in this share, in two different places:
+-- itemised per charge here in ICPLUS_FEES, and in aggregate on the platform's balance
+-- transactions, which is where the Summary of Margins reads them. Summing every ICPLUS row
+-- and then adding the platform figure on top would count them twice; summing every ICPLUS
+-- row and NOT adding the platform figure — which is what this query used to do — leaves the
+-- two pages quoting different costs for the same book, with nothing saying why.
+--
+-- Measured, the two sources disagree slightly, and the platform feed is the larger:
+--
+--     per_auth   GBP 2,046.26 per-charge   vs   GBP 2,069.62 platform   (+1.1%)
+--     volume     GBP 1,051.70 per-charge   vs   GBP 1,073.11 platform   (+2.0%)
+--
+-- The platform figure is what Stripe actually took out of the balance, including fees on
+-- charges the per-charge feed has not itemised yet, so it is the truth about how much was
+-- paid; the per-charge feed is the truth about WHO incurred it. So the page takes the TOTAL
+-- from the platform feed and uses the per-charge split only to attribute it. This query
+-- therefore returns network cost in COST_MINOR and keeps the two fees in a separate column.
+--
 -- REVENUE IS HERE TOO, so the page can show margin rather than only cost.
 --
 -- NOT from CONNECTED_ACCOUNT_APPLICATION_FEES. That view is EMPTY in this share — a fact
@@ -52,7 +71,16 @@ WITH base AS (
 fee_per_charge AS (
     SELECT
         f.CHARGE_ID,
-        SUM(f.TOTAL_AMOUNT)                                  AS COST_MINOR,
+        -- NETWORK COST ONLY: interchange, scheme fees, discount. See the SOURCE COLLISION
+        -- note in the header — per_auth_fee and volume_fee are deliberately NOT in this sum.
+        SUM(IFF(LOWER(f.FEE_NAME) IN ('per_auth_fee', 'volume_fee'),
+                0, f.TOTAL_AMOUNT))                          AS COST_MINOR,
+        -- The same two fees, kept separately. Not used as cost by the page — the platform
+        -- balance feed is the authority for their TOTAL — but emitted so the two sources can
+        -- be compared on every refresh instead of being assumed to agree, and so the split
+        -- across segments is available for attribution.
+        SUM(IFF(LOWER(f.FEE_NAME) IN ('per_auth_fee', 'volume_fee'),
+                f.TOTAL_AMOUNT, 0))                          AS PER_CHARGE_PLATFORM_MINOR,
         LOWER(MAX(f.CARD_BRAND))                             AS BRAND,
         LOWER(MAX(f.CARD_FUNDING))                           AS FUNDING,
         MAX(IFF(f.CARD_PRESENT, 'present', 'not_present'))   AS PRESENCE,
@@ -96,6 +124,7 @@ SELECT
     -- TPV of the priced charges only: the correct denominator for cost in bps.
     SUM(IFF(fc.CHARGE_ID IS NULL, 0, b.AMOUNT_MINOR)) AS AMOUNT_PRICED_MINOR,
     SUM(COALESCE(fc.COST_MINOR, 0))      AS COST_MINOR,
+    SUM(COALESCE(fc.PER_CHARGE_PLATFORM_MINOR, 0)) AS PER_CHARGE_PLATFORM_MINOR,
     -- Revenue and the charges it covers. Application fees post on their own schedule too, so the
     -- billed subset is reported rather than assumed complete.
     SUM(COALESCE(fr.REV_MINOR, 0))       AS REV_MINOR,

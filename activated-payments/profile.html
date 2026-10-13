@@ -162,6 +162,41 @@
   'use strict';
   var MIX = window.__PROFILE_MIX || [];
   var COST = window.__PROFILE_COST || [];
+  var PLATFORM = window.__PROFILE_PLATFORM || null;
+
+  // ---- Stripe's platform-level fees ---------------------------------------
+  // per_auth, volume, Radar, Tap to Pay, payout, terminal use, account volume and card
+  // disputes are billed to the Loyverse PLATFORM account. They carry no connected-account
+  // id, so no join can say which merchant, brand or card type caused them — they can only
+  // be apportioned. This page apportions by share of processed volume WITHIN EACH MONTH,
+  // because the fees are billed monthly and a flat whole-period share would push May's fees
+  // onto September's volume.
+  //
+  // Leaving them out is not the neutral choice it looks like. They are the difference
+  // between what interchange costs and what Stripe actually debits, and omitting them is
+  // what made this page disagree with the Summary of Margins. Both pages now read the same
+  // buckets from the same feed, so the two reconcile by construction rather than by luck.
+  //
+  // Fixed subscriptions (Premium Support, Sigma) are deliberately NOT in here. They are not
+  // a cost of processing a transaction and would corrupt every bps figure on the page; they
+  // are disclosed separately below the table.
+  var PLAT_VOL_BY_MONTH = (function () {
+    var t = {};
+    COST.forEach(function (r) { t[r.m] = (t[r.m] || 0) + (r.usd || 0); });
+    return t;
+  })();
+  function platformFor(rows) {
+    if (!PLATFORM || !PLATFORM.byMonth) return 0;
+    var byM = {};
+    rows.forEach(function (r) { byM[r.m] = (byM[r.m] || 0) + (r.usd || 0); });
+    var out = 0;
+    Object.keys(byM).forEach(function (m) {
+      var tot = PLAT_VOL_BY_MONTH[m] || 0;
+      if (!tot) return;
+      out += (PLATFORM.byMonth[m] || 0) * (byM[m] / tot);
+    });
+    return out;
+  }
   var ACC = window.__PROFILE_ACCEPT || [];
   var META = window.__PROFILE_META || {};
   var $ = function (id) { return document.getElementById(id); };
@@ -238,7 +273,11 @@
   function renderKpis() {
     var brand = mixByDim('brand');
     var c = COST.filter(inScope);
-    var cost = c.reduce(function (s, r) { return s + r.cost; }, 0);
+    // network cost (per charge, attributed) + Stripe's platform fees (apportioned). This is
+    // the SAME basis the Summary of Margins uses; see platformFor() above.
+    var network = c.reduce(function (s, r) { return s + r.cost; }, 0);
+    var plat = platformFor(c);
+    var cost = network + plat;
     var priced = c.reduce(function (s, r) { return s + r.pricedUsd; }, 0);
     var rev = c.reduce(function (s, r) { return s + (r.rev || 0); }, 0);
     var billed = c.reduce(function (s, r) { return s + (r.billedUsd || 0); }, 0);
@@ -261,9 +300,10 @@
     $('kpis').innerHTML =
       kpi('Processed volume', fmtUsd(brand.total), fmtN(brand.txns) + ' transactions')
       + kpi('Average ticket', '$' + avg.toFixed(2), 'across every segment')
-      + kpi('Cost of acceptance', bps(cost, volume), fmtUsd(cost) + ' on ' + fmtUsd(volume) + ' processed')
+      + kpi('Cost of acceptance', bps(cost, volume),
+            fmtUsd(network) + ' network + ' + fmtUsd(plat) + ' Stripe platform fees')
       + kpi('Revenue', bps(rev, volume), fmtUsd(rev) + ' of application fees')
-      + kpi('Net margin', bps(rev - cost, volume), fmtUsd(rev - cost) + ' \u2014 revenue less cost')
+      + kpi('Contribution', bps(rev - cost, volume), fmtUsd(rev - cost) + ' \u2014 revenue less all cost')
       + kpi('Approved', att ? (100 * ok / att).toFixed(2) + '%' : '—', fmtN(att - ok) + ' refused of ' + fmtN(att));
   }
 
@@ -304,19 +344,31 @@
   }
 
   function renderCost() {
+    var scoped = COST.filter(inScope);
     var by = {};
-    COST.filter(inScope).forEach(function (r) {
+    scoped.forEach(function (r) {
       var k = r.brand + '|' + r.funding;
-      by[k] = by[k] || { brand: r.brand, funding: r.funding, usd: 0, priced: 0, cost: 0, rev: 0, billed: 0, n: 0, np: 0 };
+      by[k] = by[k] || { brand: r.brand, funding: r.funding, usd: 0, priced: 0, cost: 0,
+                         network: 0, plat: 0, rev: 0, billed: 0, n: 0, np: 0, rows: [] };
       var b = by[k];
-      b.usd += r.usd; b.priced += r.pricedUsd; b.cost += r.cost;
+      b.usd += r.usd; b.priced += r.pricedUsd; b.network += r.cost;
       b.rev += (r.rev || 0); b.billed += (r.billedUsd || 0);
-      b.n += r.n; b.np += r.priced;
+      b.n += r.n; b.np += r.priced; b.rows.push(r);
     });
-    var rows = Object.keys(by).map(function (k) { return by[k]; })
-      .sort(function (a, b) { return b.usd - a.usd; });
+    var rows = Object.keys(by).map(function (k) { return by[k]; });
+    // Stripe's platform fees are apportioned INTO each segment, by the same month-wise volume
+    // share the tiles use, so the table's "All segments" row equals the Cost of acceptance
+    // tile. The alternative — showing network cost per segment and the platform fees only in
+    // a total — is what made the page look internally inconsistent. A segment's cost rate is
+    // therefore part measured, part apportioned, and the caption below says exactly that.
+    rows.forEach(function (b) {
+      b.plat = platformFor(b.rows);
+      b.cost = b.network + b.plat;
+    });
+    rows.sort(function (a, b) { return b.usd - a.usd; });
     var tot = rows.reduce(function (s, r) { return s + r.usd; }, 0);
     var totCost = rows.reduce(function (s, r) { return s + r.cost; }, 0);
+    var totPlat = rows.reduce(function (s, r) { return s + r.plat; }, 0);
     var totPriced = rows.reduce(function (s, r) { return s + r.priced; }, 0);
     var totRev = rows.reduce(function (s, r) { return s + r.rev; }, 0);
     var totBilled = rows.reduce(function (s, r) { return s + r.billed; }, 0);
@@ -341,8 +393,9 @@
       + '<td>' + bps(totRev - totCost, tot) + '</td></tr></tbody>';
     $('costTable').innerHTML = h;
 
-    $('costHead').textContent = 'Interchange and scheme fees per segment, against the application fees '
-      + 'Loyverse charged on the same charges. Rates are in basis points of the volume each figure covers.';
+    $('costHead').textContent = 'The full cost of acceptance per segment — interchange and scheme '
+      + 'fees measured on each charge, plus Stripe’s platform fees apportioned by volume — against '
+      + 'the application fees Loyverse charged. Rates are in basis points of the volume each figure covers.';
 
     // Coverage is stated rather than assumed: interchange and application fees both post on
     // Stripe's own schedule, so the newest month is never fully priced or fully billed. Taking a
@@ -354,7 +407,21 @@
       + billedShare.toFixed(1) + '%</b> that carries an application fee, not over all volume. '
       + 'Both post on Stripe&rsquo;s schedule, so recent charges are still unpriced; dividing by the '
       + 'full total would flatter every rate on this table.'
-      + (pricedShare < 90 ? ' <b>Less than 90% is priced right now, so read the rates as provisional.</b>' : '');
+      + (pricedShare < 90 ? ' <b>Less than 90% is priced right now, so read the rates as provisional.</b>' : '')
+      + (PLATFORM ? ' Cost also includes <b>' + fmtUsd(totPlat) + '</b> of Stripe platform fees '
+          + '(per-authorisation, volume, Radar, Tap to Pay, payout, terminal and dispute fees). '
+          + 'Those are billed to the Loyverse platform account and carry no merchant or card '
+          + 'identifier, so they are apportioned by share of volume within each month rather than '
+          + 'measured per segment — every segment rate here is part measured, part apportioned.'
+        : ' <b>Stripe’s platform fees could not be loaded, so cost below is interchange and '
+          + 'scheme fees only and understates the true cost of acceptance.</b>')
+      + (PLATFORM && PLATFORM.subTotal
+          ? '<br><br><b>Not included above:</b> ' + fmtUsd(PLATFORM.subTotal) + ' of fixed Stripe '
+          + 'subscriptions (Premium Support, Sigma) over the same period. They are not a cost of '
+          + 'processing a transaction, so including them would corrupt every rate on this page — '
+          + 'but they are real cash cost, and larger than this book’s revenue, so they are stated '
+          + 'here rather than left out of the picture entirely.'
+          : '');
   }
 
   function renderTicket() {
