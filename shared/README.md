@@ -75,8 +75,42 @@ These must stay in step, and each file says so at the point it matters:
 - the eight platform-fee buckets — `queries/query3_platform_fees.sql` ↔ `PLATFORM_FEE_ROWS`
   in `refresh_workbook.py` ↔ `PROC`/`SUBS` in `pull.js`
 - the network-cost set (`interchange`, `card_scheme`, `discount`) — `NETWORK` in
-  `refresh_workbook.py` ↔ `NON_NETWORK_FEES` in `pull.js`
+  `refresh_workbook.py` ↔ `NON_NETWORK_FEES` in `pull_payments.py` (the split now happens in the pull, and `pull.js` reads the result)
 - fixed Stripe subscriptions (Premium Support, Sigma) stay **out** of cost on both pages, and
   are disclosed below the line
 
 `reconcile.py` will catch it if they drift, but it tells you *that* something broke, not what.
+
+---
+
+## Repository size
+
+Git keeps every version of every file forever. This pipeline runs ~15× a day, and it used to
+re-commit an 80 MB fee export and a 67 MB workbook on every run — roughly 150 MB of permanent
+history per run, against about 150 MB of actual current data. The repository reached **9.5 GB,
+~98% of it superseded copies nobody has ever opened**, and `Checkout repo` had started taking
+minutes in every workflow that clones it.
+
+What changed:
+
+| | before | after |
+|---|---|---|
+| committed every run | ~150 MB | ~16 MB |
+| `icplus_costs.csv` (80 MB) | every run | once a day |
+| the workbook (67 MB) | every run | once a day |
+| what the Profile reads | the 80 MB raw export | `icplus_by_charge.csv`, 2.8 MB |
+
+`icplus_by_charge.csv` is the raw fee rows collapsed to one row per **(charge, fee currency)**
+— 504,000 rows down to 58,000. The currency grain is not optional: a charge can carry fees in
+more than one currency, and merging them forces a guess at the rate, which is what put the
+Profile $5.69 adrift of margins once already. Verified to reproduce the Profile's figures to
+the cent.
+
+The two large files are still committed daily and still downloadable; they exist for analysis,
+not for the pages. Anything fresher than a day is better pulled straight from Snowflake.
+
+**The 9.5 GB already accumulated is separate.** `.github/workflows/repo-shrink.yml` reclaims
+it, but it rewrites history and force-pushes, so it needs the pipelines paused first and every
+local clone re-cloned after. Read the header of that file before running it. Nothing breaks at
+9.5 GB — it is slow and over GitHub's 5 GB soft limit — so it is a deliberate maintenance job,
+not an emergency.

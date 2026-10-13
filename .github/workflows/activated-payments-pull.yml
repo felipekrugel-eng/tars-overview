@@ -78,7 +78,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0          # the staleness gate reads the data file's commit time
+          # The staleness gate reads funnel-data.js's last commit time, so this needs SOME
+          # history — but not all of it. fetch-depth: 0 clones every version of every file
+          # ever committed, which in this repository is 9.5 GB and had turned checkout into
+          # a multi-minute step on every run. funnel-data.js is rewritten by this very job,
+          # so it is touched far more often than once in 50 commits; and if the gate cannot
+          # find it, it falls back to age 0 and RUNS rather than skipping, which is the safe
+          # direction to fail in.
+          fetch-depth: 50
 
       # Only meaningful for the cusum heartbeat, which fires far more often than this job should
       # run. Every other trigger — manual, push, or the cron on the days it works — is deliberate

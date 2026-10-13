@@ -1,0 +1,151 @@
+# ONE-OFF: reclaim the git history taken by large generated files.
+#
+# WHY. Git keeps every version of every file forever. This repository re-committed an 80 MB
+# fee export and a 67 MB workbook about fifteen times a day, so it grew to 9.5 GB against
+# roughly 150 MB of actual current data — about 98% superseded copies that nobody has ever
+# opened. Every clone pays for all of it, which is why `Checkout repo` had started taking
+# minutes.
+#
+# The CAUSE is already fixed: payments-pull now commits those two files once a day, and the
+# Payment Profile reads a 2.8 MB aggregate instead of the raw export. This workflow deals with
+# the 9.5 GB that has already accumulated. It is NOT urgent — nothing breaks at 9.5 GB, it is
+# just slow and over GitHub's 5 GB soft limit — so run it deliberately, not reflexively.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# READ THIS BEFORE RUNNING IT
+#
+# This REWRITES HISTORY and FORCE-PUSHES. That means:
+#   * every commit gets a new SHA; anyone holding a clone must delete it and re-clone
+#   * open pull requests against master will be broken
+#   * any commit pushed by another job WHILE this runs is lost
+#
+# So: PAUSE THE PIPELINES FIRST. They push ~15x a day, and a push landing mid-rewrite is
+# gone. Disable payments-pull and "PAYMENTS: Daily Activation Pull" in the Actions tab, run
+# this, confirm the dashboard still loads, then re-enable them.
+#
+# WHAT IT KEEPS. The working tree is untouched: the current version of every file, including
+# the big ones, is re-committed as the first commit of the new history. The job FAILS rather
+# than pushes if the resulting tree is not byte-identical to the tree it started from — that
+# check is the whole safety net, and it runs before the force-push.
+#
+# WHAT IT DROPS. Every historical version of the paths listed in PURGE below, and with them
+# the commit history of the repository (replaced by a single seed commit plus whatever came
+# after). If the project's commit history matters to you, say so — there is a slower variant
+# that rewrites in place and keeps the commits, but it needs the full history anyway and is
+# considerably more fragile.
+#
+# RECOVERY. GitHub keeps unreferenced objects for a window after a force-push, so the old
+# history can usually be restored from the SHA printed in the log by contacting support or
+# pushing that SHA back from any machine that still has a full clone. Do not rely on this:
+# the real safety is the tree check above.
+name: "ONE-OFF: shrink repo history"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type SHRINK to confirm you have paused the pipelines'
+        required: true
+        default: ''
+
+concurrency:
+  group: repo-shrink
+  cancel-in-progress: false
+
+jobs:
+  shrink:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - name: Refuse unless explicitly confirmed
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "SHRINK" ]; then
+            echo "::error title=Not confirmed::type SHRINK in the input to run this"
+            exit 1
+          fi
+
+      # The runner's root volume is too small for a 9.5 GB clone plus the rewrite's working
+      # copy. /mnt is the large ephemeral disk and has room.
+      - name: Check there is room
+        run: |
+          df -h / /mnt || true
+          AVAIL=$(df -BG --output=avail /mnt | tail -1 | tr -dc '0-9')
+          echo "/mnt has ${AVAIL}G available"
+          if [ "$AVAIL" -lt 40 ]; then
+            echo "::error title=Not enough disk::need ~40G on /mnt for a 9.5G history rewrite"
+            exit 1
+          fi
+
+      - name: Clone full history
+        run: |
+          sudo mkdir -p /mnt/work && sudo chown "$USER" /mnt/work
+          cd /mnt/work
+          git clone --no-single-branch \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" repo
+          cd repo
+          echo "ORIGINAL_HEAD=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "ORIGINAL_TREE=$(git rev-parse HEAD^{tree})" >> "$GITHUB_ENV"
+          echo "--- size before ---"
+          du -sh .git
+
+      - name: Rebuild history without the large generated files
+        run: |
+          cd /mnt/work/repo
+          # A fresh orphan commit carrying the CURRENT working tree. This is the simple,
+          # verifiable approach: rather than surgically rewriting 2,000 commits, keep exactly
+          # what is checked out now and drop the rest. The tree check below proves nothing
+          # in the working tree changed.
+          git checkout -q --orphan shrunk
+          git add -A
+          {
+            echo "chore: reset history to reclaim space from large generated files"
+            echo
+            echo "The repository had reached 9.5 GB because an 80 MB fee export and a 67 MB"
+            echo "workbook were re-committed ~15x a day, and git keeps every version forever"
+            echo "- about 98% superseded copies against ~150 MB of current data."
+            echo
+            echo "The cause is fixed separately: those two files are now committed once a"
+            echo "day, and the Payment Profile reads a 2.8 MB per-charge aggregate instead"
+            echo "of the raw export, verified to produce identical figures. This commit"
+            echo "reclaims what had already accumulated."
+            echo
+            echo "Every file is byte-identical to the tree this replaces; the workflow"
+            echo "refuses to push if it is not. Previous history ended at $ORIGINAL_HEAD."
+          } > /tmp/shrink_msg.txt
+          git -c user.name="payments-bot" \
+              -c user.email="payments-bot@users.noreply.github.com" \
+              commit -q -F /tmp/shrink_msg.txt
+          echo "NEW_TREE=$(git rev-parse HEAD^{tree})" >> "$GITHUB_ENV"
+
+      # THE SAFETY NET. If the new tree is not identical to the old one, something was
+      # dropped or mangled and this must not be pushed.
+      - name: Verify the working tree is unchanged
+        run: |
+          cd /mnt/work/repo
+          echo "old tree: $ORIGINAL_TREE"
+          echo "new tree: $NEW_TREE"
+          if [ "$ORIGINAL_TREE" != "$NEW_TREE" ]; then
+            echo "::error title=Tree changed::refusing to push — the rewritten tree differs from the original"
+            git diff --stat "$ORIGINAL_TREE" "$NEW_TREE" | tail -40
+            exit 1
+          fi
+          echo "identical — safe to push"
+
+      - name: Force-push the shrunk history
+        run: |
+          cd /mnt/work/repo
+          git push --force origin shrunk:master
+          echo "### Repo history reset" >> "$GITHUB_STEP_SUMMARY"
+          echo "Previous master was \`$ORIGINAL_HEAD\` — recoverable from GitHub for a limited window." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Delete and re-clone any local copy.** Then re-enable \`payments-pull\` and \`PAYMENTS: Daily Activation Pull\`." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Report
+        if: always()
+        run: |
+          cd /mnt/work/repo 2>/dev/null || exit 0
+          echo "--- size after ---"; du -sh .git
+          echo "NOTE: GitHub reclaims the old objects on its own schedule. If the repository"
+          echo "still reports a large size after a day or two, ask GitHub Support to run gc."

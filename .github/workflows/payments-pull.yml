@@ -141,14 +141,45 @@ jobs:
         run: |
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
-          # Only the generated data + finished workbook + dashboard data — never the scripts,
-          # queries, or template.
-          git add payments-automation/data/transactions.csv \
-                  payments-automation/data/icplus_costs.csv \
-                  payments-automation/data/platform_fees.csv \
-                  payments-automation/data/pull_status.json \
-                  payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx \
-                  activated-payments/margins-data.js
+
+          # ── WHAT GETS COMMITTED, AND HOW OFTEN ────────────────────────────────────
+          # Git keeps every version of every file forever. This job runs ~15x a day, and it
+          # used to re-commit an 80 MB fee export and a 67 MB workbook on every single run —
+          # about 150 MB of permanent history per run, against roughly 150 MB of actual
+          # current data. That is most of how this repository reached 9.5 GB, and it is why
+          # `Checkout repo` had started taking minutes in every workflow that clones it.
+          #
+          # EVERY RUN: only what the dashboard needs to stay on one shared snapshot. The
+          # Payment Profile reads the pre-aggregated icplus_by_charge.csv (2.8 MB) instead of
+          # the raw fee export (80 MB) — verified to produce identical figures to the cent.
+          #
+          # ONCE A DAY: the raw fee export and the finished workbook, which exist for
+          # analysis and download rather than for the pages. A day old is fine for that, and
+          # anything fresher can be pulled straight from Snowflake.
+          SMALL="payments-automation/data/transactions.csv
+                 payments-automation/data/icplus_by_charge.csv
+                 payments-automation/data/platform_fees.csv
+                 payments-automation/data/pull_status.json
+                 activated-payments/margins-data.js"
+          BIG="payments-automation/data/icplus_costs.csv
+               payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx
+               payments-automation/data/.last_full_export"
+
+          # The marker is a committed file rather than `git log`, because this job checks out
+          # shallow and a path's last-commit date is not reliably available in that clone.
+          MARKER=payments-automation/data/.last_full_export
+          TODAY=$(date -u +%F)
+          LAST=$(cat "$MARKER" 2>/dev/null || echo "")
+          if [ "$LAST" != "$TODAY" ]; then
+            echo "$TODAY" > "$MARKER"
+            PATHS="$SMALL $BIG"
+            echo "::notice title=Full export committed::daily snapshot of the raw fee export and the workbook"
+          else
+            PATHS="$SMALL"
+            echo "full export already committed today ($LAST) — committing dashboard data only"
+          fi
+
+          git add $PATHS
           if git diff --cached --quiet; then
             echo "No change — nothing to commit."
           else
@@ -161,13 +192,8 @@ jobs:
             # is possible. This job now pushes 8x a day, so that mattered more than it used to.
             for i in 1 2 3 4 5; do
               git fetch -q origin master || { sleep 5; continue; }
-               git reset -q --mixed origin/master
-              git add payments-automation/data/transactions.csv \
-                      payments-automation/data/icplus_costs.csv \
-                      payments-automation/data/platform_fees.csv \
-                      payments-automation/data/pull_status.json \
-                      payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx \
-                      activated-payments/margins-data.js
+              git reset -q --mixed origin/master
+              git add $PATHS
               if git diff --cached --quiet; then
                 echo "Remote already has this data — nothing to push."; exit 0
               fi

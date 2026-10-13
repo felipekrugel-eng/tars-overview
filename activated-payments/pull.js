@@ -1724,7 +1724,13 @@ function loadSnapshot() {
                   + 'shared-vintage change; re-run payments-automation/pull_payments.py');
   }
   const charges = readCsv('transactions.csv');
-  const ic = readCsv('icplus_costs.csv');
+  // The PRE-AGGREGATED IC+ file, one row per (charge, fee currency) — not the raw
+  // fee-grained export, which is 80 MB and committed only once a day. See the note in
+  // pull_payments.py: git keeps every version forever, and rewriting 80 MB fifteen times a
+  // day was most of how this repository reached 9.5 GB against 150 MB of current data.
+  // The aggregate carries everything the Profile needs and is committed every run, so both
+  // dashboard pages stay on one snapshot.
+  const ic = readCsv('icplus_by_charge.csv');
   const pf = readCsv('platform_fees.csv');
   console.log(`  snapshot as of ${asOf} UTC — ${charges.length.toLocaleString()} charges, `
             + `${ic.length.toLocaleString()} IC+ fee rows, ${pf.length} platform-fee rows`);
@@ -1801,7 +1807,10 @@ function profileMixFromSnapshot(charges, countryByAcct) {
 //
 // REVENUE IS THE CHARGE'S APPLICATION FEE, the same column the margins model totals, so the
 // two pages report the same revenue by construction rather than by coincidence.
-const NON_NETWORK_FEES = new Set(['per_auth_fee', 'volume_fee']);
+// The per_auth/volume split now happens in the pull (NON_NETWORK_FEES in pull_payments.py),
+// because that is where the fee-grained rows are. Keep the two definitions in step: this page
+// reads NETWORK_MINOR as cost and ignores PCP_MINOR, so a fee moved between them here moves
+// straight into or out of published contribution.
 
 function profileCostFromSnapshot(charges, icRows, countryByAcct) {
   const cba = countryByAcct || {};
@@ -1813,16 +1822,16 @@ function profileCostFromSnapshot(charges, icRows, countryByAcct) {
     if (!id) continue;
     let o = feeByCharge.get(id);
     if (!o) { o = { network: 0, pcp: 0, rows: 0 }; feeByCharge.set(id, o); }
-    const name = lc(f.FEE_NAME) || '';
-    // CONVERT PER FEE ROW, not per charge. A single charge can carry fee rows in more than
-    // one currency, so summing minor units first and converting the total with whichever
-    // currency happened to come first silently misprices the rest. That is not theoretical:
-    // doing it that way left network cost $5.69 adrift of the margins model, which converts
-    // row by row. Same source, same snapshot, and still a gap — because of this.
-    const usd = minorToUsd(num(f.TOTAL_AMOUNT), f.FEE_CURRENCY);
-    if (usd == null) continue;              // unknown currency — excluded, as everywhere
-    if (NON_NETWORK_FEES.has(name)) o.pcp += usd; else o.network += usd;
-    o.rows++;
+    // CONVERT PER CURRENCY ROW, which is why the aggregate keeps that grain rather than one
+    // row per charge. A single charge can carry fees in more than one currency, and merging
+    // them first forces a guess at which rate to use: doing that left network cost $5.69
+    // adrift of the margins model, which converts row by row. Same data, still a gap.
+    const net = minorToUsd(num(f.NETWORK_MINOR), f.FEE_CURRENCY);
+    const pcp = minorToUsd(num(f.PCP_MINOR), f.FEE_CURRENCY);
+    if (net == null || pcp == null) continue;   // unknown currency — excluded, as everywhere
+    o.network += net;
+    o.pcp += pcp;
+    o.rows += num(f.FEE_ROWS);
   }
 
   const by = new Map();

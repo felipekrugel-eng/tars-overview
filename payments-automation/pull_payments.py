@@ -34,6 +34,62 @@ Q3 = "query3_platform_fees.sql"
 OUT1 = "transactions.csv"
 OUT2 = "icplus_costs.csv"
 OUT3 = "platform_fees.csv"
+OUT4 = "icplus_by_charge.csv"
+
+# ── THE SMALL IC+ FILE, AND WHY IT EXISTS ──────────────────────────────────────────────
+# icplus_costs.csv is FEE-grained: ~504,000 rows and 80 MB, and it is rewritten on every run.
+# Git keeps every version of every file forever, so at ~15 runs a day that one file was the
+# single biggest contributor to a repository that had reached 9.5 GB — against about 150 MB
+# of actual current data. Nobody has ever opened a superseded copy of it.
+#
+# The Payment Profile does not need fee grain. It needs, per charge, the network cost and the
+# per_auth/volume split — which is an aggregate roughly ten times smaller. So the pull emits
+# that aggregate every run (small, committed every time, keeps both dashboard pages on one
+# snapshot) while the full fee-grained export is committed once a day for analysis.
+#
+# ONE ROW PER (CHARGE, FEE CURRENCY), not per charge. A single charge can carry fee rows in
+# more than one currency, and collapsing those into one row forces the consumer to convert the
+# total at whichever rate it guesses. That is not hypothetical: doing exactly that left the
+# Profile's network cost $5.69 adrift of the margins model built from the same data.
+#
+# Computed from rows already in memory — no extra Snowflake query, no extra cost.
+NON_NETWORK_FEES = {"per_auth_fee", "volume_fee"}
+IC_BY_CHARGE_HEADER = ["CHARGE_ID", "FEE_CURRENCY", "NETWORK_MINOR", "PCP_MINOR", "FEE_ROWS"]
+
+
+def aggregate_icplus(cols, rows):
+    """Collapse fee-grained IC+ rows to one row per (charge, fee currency)."""
+    ix = {c.upper(): i for i, c in enumerate(cols)}
+    need = ("CHARGE_ID", "FEE_NAME", "TOTAL_AMOUNT", "FEE_CURRENCY")
+    missing = [c for c in need if c not in ix]
+    if missing:
+        # Refuse rather than emit a silently wrong aggregate: the Profile's whole cost basis
+        # comes from this file, and a missing column would read as zero cost.
+        raise RuntimeError(f"icplus columns missing, cannot aggregate: {missing}; got {cols}")
+    agg = {}
+    for r in rows:
+        cid = r[ix["CHARGE_ID"]]
+        if cid is None:
+            continue
+        ccy = (r[ix["FEE_CURRENCY"]] or "").strip().upper()
+        name = (r[ix["FEE_NAME"]] or "").strip().lower()
+        try:
+            amt = float(r[ix["TOTAL_AMOUNT"]] or 0)
+        except (TypeError, ValueError):
+            continue
+        k = (cid, ccy)
+        o = agg.get(k)
+        if o is None:
+            o = agg[k] = [0.0, 0.0, 0]
+        if name in NON_NETWORK_FEES:
+            o[1] += amt
+        else:
+            o[0] += amt
+        o[2] += 1
+    out = [[cid, ccy, round(net, 6), round(pcp, 6), n]
+           for (cid, ccy), (net, pcp, n) in agg.items()]
+    out.sort(key=lambda x: (str(x[0]), x[1]))
+    return IC_BY_CHARGE_HEADER, out
 
 # Stable header for platform_fees.csv so refresh_workbook can rely on it even when the
 # fee query is skipped/errors (it then just sees zero rows -> every Stripe-fee bucket 0).
@@ -221,6 +277,10 @@ def main():
 
     write_csv(DATA_DIR / OUT1, c1, r1)
     write_csv(DATA_DIR / OUT2, c2, r2)
+    c4, r4 = aggregate_icplus(c2, r2)
+    write_csv(DATA_DIR / OUT4, c4, r4)
+    print(f"  icplus_by_charge: {len(r4):,} rows aggregated from {len(r2):,} fee rows "
+          f"— this is what the Payment Profile reads; the full export is committed daily")
     # platform_fees.csv is NOT gated: always (re)written, even when empty, so the header
     # is present and refresh_workbook sees a well-formed file (empty -> all buckets 0).
     write_csv(DATA_DIR / OUT3, c3 or PF_HEADER, r3)
