@@ -1,0 +1,105 @@
+# PIPELINE HEALTH — the one run that is supposed to mean something.
+#
+# WHY. By 2026-10-13 this repo was doing ~1,700 Actions runs a day and the list had stopped
+# being readable in both directions. About 90% of runs are no-ops that gate themselves out
+# in under a minute, so GREEN stopped meaning "it worked" — `Loyverse risk Telegram delivery`
+# was 100 of its last 100 runs. And `kpi-pull` failed every run that did real work for ten
+# days on an alarm that was wrong, so RED stopped meaning "something broke".
+#
+# That morning the US dashboard served registration numbers that were 95% bot accounts for
+# five hours. Every run was green, the one red run was a false alarm, and nothing in the
+# Actions list said so — because the failure was not a run. It was a published FILE that had
+# stopped matching the code that produces it.
+#
+# So this job asks about artefacts, not runs, and it is RED only when a published artefact
+# has really stopped updating. One entry in the list, one meaning. If you look at one
+# workflow in this repo, look at this one.
+name: pipeline-status
+
+on:
+  # Not a plain cron: GitHub drops the `schedule` event in this repo — activated-payments-pull
+  # records it happening in July, on 08-06 and for eight hours on 08-27. cusum-pull is
+  # dispatched externally every few minutes and does not miss, so it is the heartbeat. The
+  # cron below is a second chance, not the primary trigger.
+  workflow_run:
+    workflows: ["cusum-pull"]
+    types: [completed]
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: pipeline-status
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gate to roughly hourly
+        id: gate
+        run: |
+          set -euo pipefail
+          f="KPI Dashboard v2 (Caio)/status.json"
+          if [ "${{ github.event_name }}" != "workflow_run" ] || [ ! -f "$f" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          last=$(python3 -c "import json,datetime;print(int(datetime.datetime.fromisoformat(json.load(open('$f'))['checked_at']).timestamp()))" 2>/dev/null || echo 0)
+          if [ $(( $(date -u +%s) - last )) -ge 3000 ]; then echo "run=yes" >> "$GITHUB_OUTPUT";
+          else echo "checked recently — skipping"; echo "run=no" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.run == 'yes'
+        with:
+          python-version: "3.12"
+
+      - name: Unit tests
+        if: steps.gate.outputs.run == 'yes'
+        run: |
+          pip install --quiet pytest
+          python3 -m pytest pipeline-status/tests -q
+
+      - name: Check every pipeline
+        id: check
+        if: steps.gate.outputs.run == 'yes'
+        continue-on-error: true          # the page must still publish when something is wrong
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}   # optional; posts only on problems
+        run: python3 pipeline-status/check.py
+
+      - name: Publish the page only when the answer changed
+        if: steps.gate.outputs.run == 'yes'
+        run: |
+          set -uo pipefail
+          f="KPI Dashboard v2 (Caio)/status.json"
+          new=$(python3 -c "import json;print(json.load(open('$f'))['digest'])")
+          old=$(git show "HEAD:$f" 2>/dev/null | python3 -c "import json,sys;print(json.load(sys.stdin).get('digest',''))" 2>/dev/null || echo "")
+          if [ "$new" = "$old" ]; then
+            echo "nothing changed — not committing (avoids 24 commits and 24 deploys a day)"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # master takes several hundred automated commits a day, so a bare push loses the
+          # race. Same re-parent-and-retry pattern as fraud-health-daily.
+          for attempt in 1 2 3 4 5; do
+            git add "KPI Dashboard v2 (Caio)/status.json" "KPI Dashboard v2 (Caio)/status.html"
+            git commit -q -m "chore(status): pipeline health $(date -u +%FT%TZ)" || true
+            if git push; then echo "pushed on attempt $attempt"; exit 0; fi
+            git fetch -q origin master && git reset -q --mixed origin/master
+            sleep 5
+          done
+          echo "::warning::could not publish the status page after 5 attempts"
+
+      - name: Go red only if a pipeline has actually stopped updating
+        if: steps.gate.outputs.run == 'yes' && steps.check.outcome == 'failure'
+        run: |
+          echo "::error::A published artefact has stopped updating — see the Pipeline Health tab"
+          exit 1

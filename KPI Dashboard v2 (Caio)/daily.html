@@ -147,6 +147,7 @@
   <a href="index.html">Study &amp; Trend</a>
   <a href="retention.html">Churn</a>
   <a href="report.html">Report</a>
+  <a href="status.html">Pipeline Health</a>
 </div>
 
 <div class="hero">
@@ -158,6 +159,7 @@
   <div class="topbar">
     <span class="badge" id="badge"></span>
     <span class="badge" id="updated"></span>
+    <a class="badge" id="health" href="status.html" style="text-decoration:none"></a>
     <span class="pill" id="pill" style="display:none"><button data-win="7">7d</button><button data-win="30" class="on">30d</button><button data-win="90">90d</button></span>
   </div>
 </div>
@@ -792,5 +794,52 @@ _renderCusum();
 })();
 </script>
 <script src="facachat-widget.js"></script>
+
+<script>
+/* Pipeline health badge.
+   The Actions list stopped being readable at ~1,700 runs a day, and on 2026-10-13 this
+   dashboard served the US bot wave for five hours with every run green. This badge reads
+   status.json — "is every published artefact fresher than its own measured cadence, and
+   was it built after the code that generates it last changed" — so the answer is on the
+   page you already look at, rather than a tab you have to remember to open.
+   Deliberately defensive: a monitoring widget must never be able to break the dashboard. */
+(function () {
+  var el = document.getElementById('health');
+  if (!el) return;
+  function paint(bg, text, title) {
+    el.textContent = text;
+    el.style.background = bg;
+    el.style.color = '#fff';
+    el.title = title || '';
+  }
+  paint('rgba(255,255,255,.18)', 'Pipeline health \u00b7 checking\u2026');
+  fetch('status.json?t=' + Date.now()).then(function (r) {
+    if (!r.ok) throw new Error('http ' + r.status);
+    return r.json();
+  }).then(function (d) {
+    var bad = (d.pipelines || []).filter(function (p) {
+      return p.state === 'error' || p.state === 'unknown';
+    });
+    var warn = (d.pipelines || []).filter(function (p) { return p.state === 'warn'; });
+    /* If the checker itself stopped running, say so rather than showing a stale green. */
+    var ageH = (Date.now() - new Date(d.checked_at).getTime()) / 3600000;
+    if (ageH > 6) {
+      paint('#9a6700', 'Pipeline health \u00b7 check is ' + ageH.toFixed(0) + 'h old',
+            'The status check has not run recently.');
+    } else if (bad.length) {
+      paint('#cf222e', bad.length + ' pipeline' + (bad.length > 1 ? 's' : '') + ' not updating',
+            bad.map(function (p) { return p.name + ': ' + (p.notes || []).join('; '); }).join('\n'));
+    } else if (warn.length) {
+      paint('#9a6700', warn.length + ' pipeline' + (warn.length > 1 ? 's' : '') + ' ageing',
+            warn.map(function (p) { return p.name + ': ' + (p.notes || []).join('; '); }).join('\n'));
+    } else {
+      paint('rgba(44,160,70,.92)', 'All pipelines operational',
+            'Every published artefact is fresher than its measured cadence.');
+    }
+  }).catch(function (e) {
+    paint('rgba(255,255,255,.18)', 'Pipeline health \u00b7 unavailable', String(e));
+  });
+})();
+</script>
 </body>
 </html>

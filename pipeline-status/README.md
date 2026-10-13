@@ -1,0 +1,103 @@
+# pipeline-status
+
+One answer to **"is anything actually wrong?"**, on the dashboard you already look at.
+
+## Why this exists
+
+By 13 October 2026 this repo was doing roughly **1,700 Actions runs a day**, and the run
+list had stopped being a signal in both directions at once:
+
+- **Green stopped meaning "it worked."** About 90% of runs are no-ops that gate themselves
+  out in under a minute. `Loyverse risk Telegram delivery` was 100 of its last 100 runs.
+  `pages build` 93%. `fraud-health-daily` 91%.
+- **Red stopped meaning "something broke."** `kpi-pull` failed every single run that did
+  real work for ten days — 12 out of 12 — on a false alarm. A permanent red that meant
+  nothing, sitting beside the reds that would have.
+
+That morning the US dashboard served registration figures that were 95% bot accounts for
+about five hours. Every run was green, the one red run was the false alarm, and nothing in
+the Actions list said otherwise. **The failure was not a run.** It was a published file
+that no longer matched the code that produces it.
+
+So this checks artefacts, not runs.
+
+## What it checks
+
+For each published artefact, two questions:
+
+1. **Age** — is it newer than its *own measured* cadence? Catches a job that stopped,
+   whatever colour its last run was.
+2. **Inputs** — was it generated *after* the code that generates it last changed? Catches
+   an artefact that is perfectly fresh and completely wrong. On 13 Oct the bot filter
+   merged at 09:34 and `daily-history.js` had last been written at 06:04 — 3.5h old against
+   a 36h limit, so age alone says OK. Comparing it to `kpi-automation/sql/` says REBUILD at
+   the moment of the merge.
+
+Where an artefact publishes its own data timestamp — `pull_status.json`, the CUSUM `asOf`,
+`risk-monitor/health.json` — that is preferred over the commit time, because a job can
+commit at 06:04 data that was pulled at 04:06, and the second number is the one that
+matters.
+
+## The rule that keeps it trustworthy
+
+**Every threshold sits above the artefact's own measured p90 gap.** Not above how often
+someone thinks it ought to run.
+
+The first draft of this file gave the CASE dashboard a 120h limit when its measured p90 gap
+is 168.69h, and promptly scored it **43% "uptime"** across sixty days of entirely normal
+behaviour. That is the exact failure this page exists to replace, caught by the page itself
+before it shipped. There is a test asserting the rule, so the next person cannot tighten a
+threshold on a hunch:
+
+```
+test_every_threshold_sits_above_its_measured_p90
+```
+
+If a pipeline ought to run more often than it does, fix its schedule. Do not tighten the
+number here.
+
+## Where it shows up
+
+- **A badge in the FACADASH header**, beside `DATA THROUGH` and `KPIS UPDATED`. Green when
+  everything is fresh, amber when something is ageing, red when something has stopped. This
+  is the point: a tab only helps if you remember to open it.
+- **The Pipeline Health tab**, with one bar per day over the last 60 days per pipeline, so
+  "is it normally like that?" is answerable at a glance.
+- **One workflow in the Actions list** that is red *only* when a published artefact has
+  really stopped updating.
+- **Slack**, if `SLACK_WEBHOOK_URL` is ever set. Optional; nothing depends on it.
+
+## Design notes
+
+- **Read-only.** It writes nothing but its own page. It cannot break a pipeline.
+- **Uses the GitHub API, not a checkout** — deliberately. This repo is 9.3 GB and growing
+  about 578 MB a week; cloning it inside a monitoring job would be absurd.
+- **Commits only when the answer changes.** `status.json` carries a `digest` of everything
+  except the clock. Publishing hourly would add 24 commits and 24 Cloudflare deploys a day
+  to a repo already taking 8,096 commits a week. A commit here means something changed.
+- **Runs off the `cusum-pull` heartbeat**, not a plain cron, because GitHub drops the
+  `schedule` event in this repo — recorded in July, on 08-06, and for eight hours on 08-27.
+- **History accumulates forward**, like `cusum-state.json`. Days before an artefact existed
+  show grey, honestly, rather than being guessed at.
+
+## Running it by hand
+
+```
+GITHUB_TOKEN=... STATUS_OUT=/tmp/st STATUS_SOFT=1 python3 pipeline-status/check.py
+python3 -m pytest pipeline-status/tests -q
+```
+
+`STATUS_SOFT=1` stops it exiting non-zero, which is what you want locally.
+
+## Adding a pipeline
+
+Add a row to `PIPELINES` in `check.py` with the artefact path, then **measure** its cadence
+before choosing a threshold:
+
+```
+GET /repos/{repo}/commits?path={artefact}&per_page=40
+```
+
+Take the p90 gap between consecutive commits and set the threshold above it. Record the
+measurement in `MEASURED_P90_H` in the tests, or `test_config_and_measurements_have_not_drifted_apart`
+will fail — on purpose.
