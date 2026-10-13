@@ -556,3 +556,30 @@ class TestReviewRecordCarriesBusinessProfile:
         assert record["location"] == "US"
         assert record["website"] is None and record["mcc"] is None and record["entityType"] is None
         assert validate_record(record, METHODOLOGY) == []
+
+
+class TestEvidenceBasedSummaryValidates:
+    """An evidence-based record must survive the round trip into the index.
+
+    The index summary is validated with the same stage/sources invariant as the detail
+    shard. Until 2026-10-13 `sources` was not a summary field, so the first evidence file
+    to reach a daily run failed `run.py validate` after writing and nothing was committed.
+    """
+
+    def test_summary_of_evidence_based_record_passes_validation(self):
+        record = {
+            "id": "acct_ev", "accountId": "acct_ev", "name": "Evidenced", "score": 7,
+            "riskDimensions": {k: 0 for k in METHODOLOGY.keys}, "verified": [], "unverified": [],
+            "contradictions": ["MCC mismatch [https://example.test/site]"], "evidenceNeeded": [],
+            "sources": [{"url": "https://example.test/site", "sourceType": "website", "checkedAt": "2026-10-13", "establishes": "x", "dimension": "businessModel"}],
+            "summary": "s", "reviewCompleteness": 88, "confidence": "high", "reviewStage": "evidence-based",
+            "reviewPriority": "Verification complete", "reviewType": "daily-enabled-review", "reviewedAt": "2026-10-13T00:00:00+00:00",
+            "reviewer": "r", "enabled": True,
+        }
+        record["riskDimensions"]["businessModel"] = 7
+        apply_band(record, METHODOLOGY)
+        assert validate_record(record, METHODOLOGY) == []
+        summary = P.summarize(record, "details-x.json")
+        assert summary["reviewStage"] == "evidence-based"
+        assert summary["sources"] and summary["sources"][0]["url"] == "https://example.test/site"
+        assert validate_record(summary, METHODOLOGY, require_dimensions=False) == []
