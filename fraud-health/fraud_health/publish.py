@@ -35,6 +35,11 @@ SUMMARY_FIELDS = (
     "successfulTransactions", "lastTransactedAt", "location", "website", "mcc",
     "identityVerification", "representative", "email", "phone", "statementDescriptor",
     "scoreBasis", "riskOverride", "riskOverrideReason",
+    # Citations travel with the summary: the index is validated with the same
+    # "evidence-based => sources" invariant as the shard, and without this field no
+    # evidence-based review could ever pass the post-write validation (found 2026-10-13,
+    # when the first reviewer-authored evidence files reached the daily run).
+    "sources",
 )
 
 
