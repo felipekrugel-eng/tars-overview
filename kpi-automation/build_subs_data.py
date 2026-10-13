@@ -137,11 +137,26 @@ def feed_completeness(path: Path):
     #      it, the window slid back one, `last_complete` landed on D-3 instead of D-2, and
     #      stale_days read 3 against STALE_ALARM_DAYS = 2.
     #
-    # (2) made kpi-pull fail EVERY morning run while every afternoon run passed: 12 failures
-    # from 12 runs started before 12:00 UTC, 14 passes from 14 started after, over the ten
-    # days to 2026-10-13. The receipts feed was healthy throughout — every day 94-117% of
-    # the trailing median. A data-integrity gate that cries wolf daily is one people learn
-    # to ignore, which would have cost us the next real outage.
+    # (2) made kpi-pull fail EVERY run that actually pulled. Over the ten days to
+    # 2026-10-13 the job ran a real pull 12 times and failed this gate 12 times. The other
+    # 14 runs look green only because the guard step skipped them in ~0.5 min once the day's
+    # data was already published — they never reached the gate at all. So the gate did not
+    # pass once in the whole window; it was simply not evaluated on the runs that looked
+    # healthy. (Worth remembering when reading this workflow's history: a green kpi-pull run
+    # usually means NOTHING WAS PULLED.)
+    #
+    # From the 2026-10-13 04:06 log, with the feed perfectly healthy:
+    #     receipts feed complete through 2026-10-10 (3 day(s) ago)
+    # 10 Oct is D-3. With a row for the current day it would have been 11 Oct, D-2, and
+    # stale_days would have read 2 — under the alarm. The only difference was the missing
+    # row.
+    #
+    # And the cost was not just a red tick. Every one of those runs also withheld the
+    # current month from the receipts-derived series:
+    #     withheld 1 incomplete month(s) from the receipts series: 2026-10
+    # so receipts, active merchants, qualified-active and GTV sat FROZEN AT 2026-09 on the
+    # dashboard for the whole of October while the feed was delivering 94-117% of its
+    # trailing median every single day.
     #
     # Reindexing onto a dense date range fixes both: a missing day is now an explicit 0 and
     # fails the floor, and the settle window is chosen by CALENDAR DATE so it no longer
