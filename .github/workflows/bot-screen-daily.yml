@@ -92,9 +92,23 @@ jobs:
         if: steps.gate.outputs.run == 'yes'
         run: |
           set -euo pipefail
-          date -u +%s > bot-filter/.last-screen
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add bot-filter/.last-screen
-          git diff --cached --quiet || git commit -m "chore(bot-screen): daily all-country screen $(date -u +%FT%TZ)"
-          git push
+          # master takes several hundred automated commits a day, so a bare push loses the
+          # race almost every time. Same re-parent-and-retry pattern as fraud-health-daily:
+          # nothing else writes bot-filter/.last-screen, so re-parenting can never conflict.
+          for attempt in 1 2 3 4 5; do
+            date -u +%s > bot-filter/.last-screen
+            git add bot-filter/.last-screen
+            git commit -q -m "chore(bot-screen): daily all-country screen $(date -u +%FT%TZ)" || true
+            if git push; then
+              echo "pushed on attempt $attempt"; exit 0
+            fi
+            echo "push attempt $attempt failed (remote moved) - retrying"
+            git fetch -q origin master
+            git reset -q --mixed origin/master
+            sleep 5
+          done
+          # The stamp is only a throttle. Losing it means at worst one extra screen run,
+          # so a persistent push failure must not fail the job and mask a real alert.
+          echo "::warning::could not record the run stamp after 5 attempts"
