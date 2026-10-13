@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-13T15:49:13.478523+00:00",
+ "checked_at": "2026-10-13T16:47:31.093152+00:00",
  "worst": "error",
- "digest": "4f7ffa17abb4bff44b69ba272302f39f437e03d9ce0eb97ce57a22462a9e71be",
+ "digest": "592541da856055fec1e3370c276907753a74be2403bba0d2805ec3b49208aef3",
  "pipelines": [
   {
    "name": "CUSUM registrations",
@@ -11,9 +11,9 @@
    "max_age_h": 2,
    "notes": [],
    "state": "ok",
-   "committed_at": "2026-10-13T15:47:41+00:00",
-   "data_at": "2026-10-13T15:47:00+00:00",
-   "age_h": 0.04,
+   "committed_at": "2026-10-13T16:46:42+00:00",
+   "data_at": "2026-10-13T16:46:00+00:00",
+   "age_h": 0.03,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -21,11 +21,14 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [],
-   "state": "ok",
-   "committed_at": "2026-10-13T15:46:03+00:00",
+   "notes": [
+    "status = degraded",
+    "gap: telegram_delivery_unconfirmed"
+   ],
+   "state": "error",
+   "committed_at": "2026-10-13T16:40:43+00:00",
    "data_at": "2026-10-13T15:32:25+00:00",
-   "age_h": 0.28
+   "age_h": 1.25
   },
   {
    "name": "Payments pull",
@@ -36,7 +39,7 @@
    "state": "ok",
    "committed_at": "2026-10-13T15:31:09+00:00",
    "data_at": "2026-10-13T14:59:17.283567+00:00",
-   "age_h": 0.83
+   "age_h": 1.8
   },
   {
    "name": "Activated payments",
@@ -45,10 +48,10 @@
    "max_age_h": 9,
    "notes": [],
    "state": "ok",
-   "committed_at": "2026-10-13T15:36:44+00:00",
-   "data_at": "2026-10-13T15:32:11.278000+00:00",
-   "age_h": 0.28,
-   "inputs_changed_at": "2026-10-13T14:57:11+00:00"
+   "committed_at": "2026-10-13T16:37:34+00:00",
+   "data_at": "2026-10-13T16:33:06.776000+00:00",
+   "age_h": 0.24,
+   "inputs_changed_at": "2026-10-13T16:22:03+00:00"
   },
   {
    "name": "Ads + attribution",
@@ -57,9 +60,9 @@
    "max_age_h": 9,
    "notes": [],
    "state": "ok",
-   "committed_at": "2026-10-13T15:36:44+00:00",
+   "committed_at": "2026-10-13T16:37:34+00:00",
    "data_at": null,
-   "age_h": 0.21
+   "age_h": 0.17
   },
   {
    "name": "Merchant base",
@@ -70,7 +73,7 @@
    "state": "ok",
    "committed_at": "2026-10-13T12:26:20+00:00",
    "data_at": "2026-10-13T12:17:56.289788+00:00",
-   "age_h": 3.52,
+   "age_h": 4.49,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -82,7 +85,7 @@
    "state": "ok",
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 1.42,
+   "age_h": 2.39,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -96,7 +99,7 @@
    "state": "error",
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 1.42,
+   "age_h": 2.39,
    "inputs_changed_at": "2026-10-13T15:25:32+00:00"
   },
   {
@@ -108,7 +111,7 @@
    "state": "ok",
    "committed_at": "2026-10-12T23:01:07+00:00",
    "data_at": null,
-   "age_h": 16.8,
+   "age_h": 17.77,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -120,7 +123,7 @@
    "state": "ok",
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 30.81,
+   "age_h": 31.78,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -188,7 +191,7 @@
    "2026-10-12": "ok"
   },
   "Risk monitor": {
-   "2026-10-13": "ok",
+   "2026-10-13": "down",
    "2026-08-15": "nodata",
    "2026-08-16": "nodata",
    "2026-08-17": "nodata",
