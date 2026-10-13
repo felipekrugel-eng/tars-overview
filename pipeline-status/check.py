@@ -226,14 +226,17 @@ def check():
     def one(entry):
         name, ref, path, max_age, kind, inputs = entry
         row = {"name": name, "path": path, "ref": ref, "max_age_h": max_age,
-               "notes": [], "state": "ok"}
+               "notes": [], "state": "ok", "reason": None}
         try:
             commit_at = last_commit(ref, path)
         except Exception as e:
-            row.update(state="unknown", notes=["could not reach GitHub: %s" % e])
+            # Could not check is not the same as broken: amber, never red. If the checker
+            # itself has stopped, the badge says so from status.json's own age.
+            row.update(state="unknown", reason="unreachable",
+                       notes=["could not reach GitHub: %s" % e])
             return row
         if commit_at is None:
-            row.update(state="error", notes=["artefact does not exist"])
+            row.update(state="error", reason="missing", notes=["artefact does not exist"])
             return row
         data_at, notes = (None, [])
         if kind:
@@ -244,26 +247,52 @@ def check():
         row["data_at"] = data_at.isoformat() if data_at else None
         age = (NOW - effective).total_seconds() / 3600.0
         row["age_h"] = round(age, 2)
-        if age > max_age:
-            row["state"] = "error"
-            row["notes"].insert(0, "stale: %.1fh old, limit %dh" % (age, max_age))
-        elif age > max_age * 0.75:
-            row["state"] = "warn"
-            row["notes"].insert(0, "ageing: %.1fh old, limit %dh" % (age, max_age))
-        # Young, but built before the code that generates it last changed.
+
+        # ---- severity -----------------------------------------------------------------
+        # RED MEANS ONE THING: the dashboard is serving stale or missing data and someone
+        # has to go and fix something. Nothing else is allowed to be red.
+        #
+        # This is not fussiness. The first version made "built before its inputs changed"
+        # red, so the very first thing the page ever reported was a red tick caused by
+        # merging a one-line fix — a pipeline that was running perfectly and simply had not
+        # been rebuilt yet. Every code merge would have painted the page red until the next
+        # pull. That is precisely how this repo taught everyone to ignore red in the first
+        # place, and it would have undone the whole point of the page within a week.
+        #
+        # So: stale or missing -> error. Everything else is amber and informational.
+        stale = age > max_age
+
+        # Built before the code that generates it last changed. Real, worth showing, and
+        # NOT a break: the pipeline is healthy, the output just predates a code change and
+        # the next scheduled run clears it by itself.
+        rebuild = False
         if inputs:
             src_at, src_path = newest_input("master", inputs)
             if src_at:
                 row["inputs_changed_at"] = src_at.isoformat()
                 if src_at > commit_at:
+                    rebuild = True
                     behind = (src_at - commit_at).total_seconds() / 3600.0
-                    row["state"] = "error"
-                    row["notes"].insert(0, "built before its inputs changed: %s is %.1fh newer"
+                    row["notes"].append("built before its inputs changed: %s is %.1fh newer"
                                         % (src_path, behind))
-        if any(n.startswith(("pull_succeeded", "status = degraded")) for n in row["notes"]):
-            row["state"] = "error"
-        elif any(n.startswith("gap:") for n in row["notes"]) and row["state"] == "ok":
-            row["state"] = "warn"
+
+        source_warning = any(n.startswith(("pull_succeeded", "status = degraded", "gap:"))
+                             for n in row["notes"])
+
+        if stale:
+            row["state"], row["reason"] = "error", "stale"
+            row["notes"].insert(0, "stale: %.1fh old, limit %dh" % (age, max_age))
+        elif rebuild:
+            # Deliberately ranked above `ageing`: "rebuild me" is the more useful sentence.
+            row["state"], row["reason"] = "warn", "rebuild"
+        elif age > max_age * 0.75:
+            row["state"], row["reason"] = "warn", "ageing"
+            row["notes"].insert(0, "ageing: %.1fh old, limit %dh" % (age, max_age))
+        elif source_warning:
+            # The last pull reported a problem but the published data is still inside its
+            # window, so the dashboard is not broken. If the failures continue the age check
+            # turns this red on its own, which is the right moment to act.
+            row["state"], row["reason"] = "warn", "source"
         return row
 
     with ThreadPoolExecutor(max_workers=10) as pool:
@@ -272,12 +301,17 @@ def check():
 
 def render_html(rows, worst, hist, window):
     BAR = {"ok": "#3bab43", "warn": "#e0a33e", "down": "#d64b3e", "nodata": "#e3e6ea"}
-    LABEL = {"ok": ("Operational", "#1a7f37"), "warn": ("Degraded", "#9a6700"),
-             "error": ("Not updating", "#cf222e"), "unknown": ("Unknown", "#6e7781")}
-    HEAD = {"ok": ("All pipelines operational", "#3bab43"),
-            "warn": ("Some pipelines degraded", "#e0a33e"),
-            "error": ("A pipeline has stopped updating", "#d64b3e"),
-            "unknown": ("Status could not be determined", "#6e7781")}
+    # Red is reserved for "the dashboard is serving stale or missing data, go fix it".
+    LABEL = {("error", "stale"):     ("Not updating",   "#cf222e"),
+             ("error", "missing"):   ("Missing",        "#cf222e"),
+             ("warn",  "rebuild"):   ("Needs rebuild",  "#9a6700"),
+             ("warn",  "ageing"):    ("Ageing",         "#9a6700"),
+             ("warn",  "source"):    ("Source warning", "#9a6700"),
+             ("unknown", "unreachable"): ("Not checked", "#6e7781")}
+    HEAD = {"ok":    ("All pipelines operational", "#3bab43"),
+            "warn":  ("Everything is publishing \u2014 see the notes below", "#e0a33e"),
+            "error": ("A pipeline has stopped updating \u2014 the dashboard is stale", "#d64b3e"),
+            "unknown": ("Some pipelines could not be checked", "#6e7781")}
 
     cards = []
     for r in rows:
@@ -292,7 +326,8 @@ def render_html(rows, worst, hist, window):
                                    "down": "not updating", "nodata": "no data"}[st])
             bars.append('<i style="background:%s" title="%s"></i>' % (BAR[st], tip))
         uptime = ("%.2f %% uptime" % (100.0 * good / known)) if known else "no history yet"
-        text, colour = LABEL[r["state"]]
+        text, colour = LABEL.get((r["state"], r.get("reason")),
+                                 ("Operational", "#1a7f37"))
         notes = ('<div class=n>%s</div>' % "<br>".join(r["notes"])) if r["notes"] else ""
         age = ("%.1fh old" % r["age_h"]) if "age_h" in r else ""
         cards.append(
@@ -358,7 +393,8 @@ thresholds measured from each artefact's own commit history</p>
 
 def main():
     rows = check()
-    order = {"error": 3, "unknown": 2, "warn": 1, "ok": 0}
+    # unknown ranks BELOW warn: "could not check" is not a breakage.
+    order = {"error": 3, "warn": 2, "unknown": 1, "ok": 0}
     worst = max(rows, key=lambda r: order[r["state"]])["state"] if rows else "unknown"
 
     outdir = os.environ.get("STATUS_OUT", "KPI Dashboard v2 (Caio)")
@@ -392,7 +428,10 @@ def main():
         print("%-22s %-7s %8s  %s" % (r["name"], r["state"].upper(),
                                       ("%.1fh" % r["age_h"]) if "age_h" in r else "-",
                                       "; ".join(r["notes"])))
-    bad = [r for r in rows if r["state"] in ("error", "unknown")]
+    # Only genuine breaks. A pending rebuild, an ageing artefact or a check we could not
+    # run are all amber: visible on the page, but they never raise an alarm, because an
+    # alarm you cannot act on is how the Actions list became unreadable.
+    bad = [r for r in rows if r["state"] == "error"]
     print("\nworst: %s" % worst.upper())
 
     hook = os.environ.get("SLACK_WEBHOOK_URL")
@@ -408,7 +447,8 @@ def main():
             print("Slack post failed: %s" % e)
 
     # The whole point: this workflow is red ONLY when a published artefact has actually
-    # stopped updating. One run, one meaning.
+    # stopped updating, i.e. the dashboard is serving stale or missing data and someone has
+    # to act. One run, one meaning. Pending rebuilds and ageing artefacts stay amber.
     if bad and os.environ.get("STATUS_SOFT") != "1":
         sys.exit(1)
 

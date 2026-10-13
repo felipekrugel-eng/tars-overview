@@ -817,10 +817,14 @@ _renderCusum();
     if (!r.ok) throw new Error('http ' + r.status);
     return r.json();
   }).then(function (d) {
-    var bad = (d.pipelines || []).filter(function (p) {
-      return p.state === 'error' || p.state === 'unknown';
+    /* Red is reserved for "the dashboard is serving stale or missing data, go fix it".
+       A pending rebuild, an ageing artefact or a check that could not run are amber:
+       visible, but never an alarm. An alarm you cannot act on is how the Actions list
+       became unreadable in the first place. */
+    var bad = (d.pipelines || []).filter(function (p) { return p.state === 'error'; });
+    var warn = (d.pipelines || []).filter(function (p) {
+      return p.state === 'warn' || p.state === 'unknown';
     });
-    var warn = (d.pipelines || []).filter(function (p) { return p.state === 'warn'; });
     /* If the checker itself stopped running, say so rather than showing a stale green. */
     var ageH = (Date.now() - new Date(d.checked_at).getTime()) / 3600000;
     if (ageH > 6) {
@@ -830,7 +834,11 @@ _renderCusum();
       paint('#cf222e', bad.length + ' pipeline' + (bad.length > 1 ? 's' : '') + ' not updating',
             bad.map(function (p) { return p.name + ': ' + (p.notes || []).join('; '); }).join('\n'));
     } else if (warn.length) {
-      paint('#9a6700', warn.length + ' pipeline' + (warn.length > 1 ? 's' : '') + ' ageing',
+      var rebuild = warn.filter(function (p) { return p.reason === 'rebuild'; }).length;
+      paint('#9a6700',
+            rebuild === warn.length
+              ? warn.length + ' pipeline' + (warn.length > 1 ? 's' : '') + ' need rebuilding'
+              : warn.length + ' pipeline' + (warn.length > 1 ? 's' : '') + ' to look at',
             warn.map(function (p) { return p.name + ': ' + (p.notes || []).join('; '); }).join('\n'));
     } else {
       paint('rgba(44,160,70,.92)', 'All pipelines operational',

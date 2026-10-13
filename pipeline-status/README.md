@@ -38,6 +38,29 @@ Where an artefact publishes its own data timestamp — `pull_status.json`, the C
 commit at 06:04 data that was pulled at 04:06, and the second number is the one that
 matters.
 
+## What red means
+
+**Red means exactly one thing: the dashboard is serving stale or missing data and someone
+has to go and fix something.** Nothing else is allowed to be red.
+
+| state | shown as | meaning | do you act? |
+|---|---|---|---|
+| `error` / `stale` | **Not updating** | the artefact has stopped refreshing | **yes** — find out why the job stopped |
+| `error` / `missing` | **Missing** | the artefact is not there | **yes** |
+| `warn` / `rebuild` | Needs rebuild | code changed; the output predates it | no — the next run clears it |
+| `warn` / `ageing` | Ageing | past 75% of its limit, not over | no — watch it |
+| `warn` / `source` | Source warning | last pull reported a problem, data still fresh | no — it goes red by itself if it persists |
+| `unknown` | Not checked | the check could not run | no |
+
+This distinction is the whole reason the page is worth having. The first version made
+"built before its inputs changed" **red**, so the very first thing it ever reported was a
+red tick caused by merging a one-line fix — a pipeline that was running perfectly and had
+simply not been rebuilt yet. Every code merge would have painted the page red until the
+next pull, and within a week red would have meant nothing again. That is precisely how the
+Actions list got into the state this page was built to escape.
+
+`test_only_a_stale_or_missing_artefact_may_be_red` pins the contract.
+
 ## The rule that keeps it trustworthy
 
 **Every threshold sits above the artefact's own measured p90 gap.** Not above how often
