@@ -151,12 +151,17 @@ def feed_completeness(path: Path):
     # stale_days would have read 2 — under the alarm. The only difference was the missing
     # row.
     #
-    # And the cost was not just a red tick. Every one of those runs also withheld the
-    # current month from the receipts-derived series:
+    # What the bug does NOT cause, despite the alarming log line: those runs also printed
     #     withheld 1 incomplete month(s) from the receipts series: 2026-10
-    # so receipts, active merchants, qualified-active and GTV sat FROZEN AT 2026-09 on the
-    # dashboard for the whole of October while the feed was delivering 94-117% of its
-    # trailing median every single day.
+    # That one is CORRECT and unrelated. last_whole_month() ships a month only once its
+    # final day is complete, so on any mid-October day the monthly receipts series caps at
+    # 2026-09 whatever this gate decides. October ships when October ends. Do not "fix" it.
+    #
+    # The damage here is narrower and entirely about trust: a run that goes red every time
+    # it does real work, reporting staleDays=3 when the truth is 2, under an error that
+    # says RECEIPTS FEED IS DOWN and sends the reader upstream to an ingestion job that is
+    # working perfectly. The next genuine outage arrives into a team that has learned this
+    # gate is noise.
     #
     # Reindexing onto a dense date range fixes both: a missing day is now an explicit 0 and
     # fails the floor, and the settle window is chosen by CALENDAR DATE so it no longer
