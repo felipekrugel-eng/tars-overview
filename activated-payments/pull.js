@@ -1646,117 +1646,277 @@ function buildFunnel(accountRows, meta, txnByAcct, regs, pilot, termByEmail, gro
   });
   return { entered_total: stages.entered, stages, stagesBy, merchants, botsExcluded, launch_start: LAUNCH_START };
 }
+// ════════════════════════════════════════════════════════════════════════════
+// THE SHARED SNAPSHOT
+// ════════════════════════════════════════════════════════════════════════════
+// Felipe, 2026-10-13: "I asked for the numbers to have one source and one time of pull so
+// that they match instead of showing different numbers and creating confusion."
+//
+// They did not. The Summary of Margins and the Payment Profile were built by two separate
+// jobs on two separate crons, each making its own trip to Snowflake. Fifteen minutes apart on
+// a good day, and each could skip a cycle independently, so the two pages described the same
+// book at two different moments. On the day this was written they were 18 charges apart from
+// timing alone. Aligning the DEFINITIONS - which is what the previous commit did - cannot fix
+// a difference of vintage, and claiming it had was wrong.
+//
+// So the charge-level facts are now pulled ONCE, by payments-automation/pull_payments.py, cut
+// at a single timestamp, and written to payments-automation/data/. This file reads that
+// snapshot instead of re-querying. Every money figure on both pages - TPV, transactions,
+// revenue, network cost, platform fees - now comes from the same rows of the same pull, so
+// the two CANNOT disagree. Not "should not": cannot.
+//
+// WHAT IS STILL PULLED LIVE HERE, and why that is all right: accounts, subscriptions,
+// registrations, KYC, terminal orders and authorisation ATTEMPTS. None of those appear on the
+// margins page, so there is no second number for them to contradict. Acceptance in particular
+// is a different population (attempts, not captured charges) and is deliberately not in the
+// snapshot - see the note on fetchProfileAcceptance.
+const SNAP_DIR = path.join(__dirname, '..', 'payments-automation', 'data');
+
+// A REAL CSV parser, character by character over the whole file.
+//
+// The obvious implementation — split on newlines, then split each line on commas — is wrong
+// twice over, and both ways bite here. Merchant names contain commas, which corrupts every
+// column after the name; and merchant names contain NEWLINES, which splits one charge into
+// two bogus rows. The first draft of this function split on lines and read 55,459 rows out of
+// a 55,439-row file, losing 10 succeeded charges in the process: silent, plausible-looking
+// corruption of exactly the figures this whole change exists to make trustworthy. Quoted
+// fields are only safe if the parser never treats the file as lines at all.
+function readCsv(file) {
+  const text = fs.readFileSync(path.join(SNAP_DIR, file), 'utf8');
+  const rows = [];
+  let row = [], cur = '', q = false, started = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) {
+      if (ch === '"') {
+        if (text[i + 1] === '"') { cur += '"'; i++; }   // escaped quote
+        else q = false;
+      } else cur += ch;
+      continue;
+    }
+    if (ch === '"') { q = true; started = true; continue; }
+    if (ch === ',') { row.push(cur); cur = ''; started = true; continue; }
+    if (ch === '\r') continue;
+    if (ch === '\n') {
+      if (started || cur.length || row.length) { row.push(cur); rows.push(row); }
+      row = []; cur = ''; started = false;
+      continue;
+    }
+    cur += ch; started = true;
+  }
+  if (started || cur.length || row.length) { row.push(cur); rows.push(row); }
+  if (!rows.length) return [];
+  const head = rows[0].map(h => h.trim().replace(/^﻿/, ''));
+  return rows.slice(1).map(cells => {
+    const o = {};
+    head.forEach((h, i) => { o[h] = cells[i] === undefined ? '' : cells[i]; });
+    return o;
+  });
+}
+
+function loadSnapshot() {
+  const status = JSON.parse(fs.readFileSync(path.join(SNAP_DIR, 'pull_status.json'), 'utf8'));
+  const asOf = status.snapshot_as_of_utc || null;
+  if (!asOf) {
+    // A snapshot with no stated instant is exactly the situation this replaced: data of
+    // unknown vintage that looks authoritative. Refuse it rather than publish it.
+    throw new Error('pull_status.json has no snapshot_as_of_utc — the snapshot predates the '
+                  + 'shared-vintage change; re-run payments-automation/pull_payments.py');
+  }
+  const charges = readCsv('transactions.csv');
+  const ic = readCsv('icplus_costs.csv');
+  const pf = readCsv('platform_fees.csv');
+  console.log(`  snapshot as of ${asOf} UTC — ${charges.length.toLocaleString()} charges, `
+            + `${ic.length.toLocaleString()} IC+ fee rows, ${pf.length} platform-fee rows`);
+  return { asOf, charges, ic, pf, status };
+}
+
+// Succeeded, paid, captured — the same population the margins model counts. Verified against
+// Snowflake: on this book the PAID/CAPTURED conditions exclude nothing beyond 'succeeded',
+// so the two pages are not merely consistent by convention but by measurement.
+const succeeded = (r) => String(r.STATUS || '').toLowerCase() === 'succeeded'
+  && String(r.PAID || '').toUpperCase() !== 'FALSE'
+  && String(r.CAPTURED || '').toUpperCase() !== 'FALSE';
+
+const lc = (v) => { const s = String(v == null ? '' : v).trim().toLowerCase(); return s || null; };
+const uc = (v) => { const s = String(v == null ? '' : v).trim().toUpperCase(); return s || null; };
+const num = (v) => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
+
 // ── PAYMENT PROFILE: the mix of TPV, what it costs, and what gets declined ───
 // Three queries because they are three populations, and blurring them is the easy mistake:
 // the mix is captured charges, cost is fee rows collapsed to one per charge, acceptance is
 // authorisation ATTEMPTS. Only the first two share a denominator.
-async function fetchProfileMix(conn, acctIds, countryByAcct) {
-  const ids = sanitizeAccts(acctIds);
-  if (!ids.length) return [];
+// All three of these used to be Snowflake queries issued from this file. They are now pure
+// functions over the shared snapshot: same shape out, no second trip to the warehouse, and
+// therefore no second moment in time. The SQL they replace (sql/profile_mix.sql,
+// sql/profile_cost.sql) is kept in the repo as the reference definition of the aggregation,
+// but is no longer executed by the pipeline.
+
+// Share of TPV by segment, one row per {month, dimension, segment, market}.
+// Every dimension covers the SAME charges, so each sums to the same total — the check that
+// runs after this is the first thing to look at if a share looks wrong.
+function profileMixFromSnapshot(charges, countryByAcct) {
   const cba = countryByAcct || {};
-  const rows = await executeQuery(conn, loadSql('profile_mix.sql')
-    .replace('/*ACCOUNT_IDS*/', ids.map(a => `'${a}'`).join(',')));
-  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
-  const out = [];
-  for (const r of rows || []) {
-    const usd = minorToUsd(g(r, 'amount_minor'), g(r, 'ccy'));
-    if (usd == null) continue;                 // unknown currency — excluded, as everywhere else
-    const acct = g(r, 'acct');
-    out.push({
-      m: g(r, 'month'), d: g(r, 'dim'), s: g(r, 'seg'),
-      cc: acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN,
-      n: Number(g(r, 'txns')) || 0,
-      usd,
-    });
+  const by = new Map();
+  const add = (m, d, s, cc, n, usd) => {
+    const k = m + '|' + d + '|' + s + '|' + cc;
+    let o = by.get(k);
+    if (!o) { o = { m, d, s, cc, n: 0, usd: 0 }; by.set(k, o); }
+    o.n += n; o.usd += usd;
+  };
+  let skipped = 0;
+  for (const r of charges) {
+    if (!succeeded(r)) continue;
+    const usd = minorToUsd(num(r.AMOUNT), r.CURRENCY);
+    if (usd == null) { skipped++; continue; }   // unknown currency — excluded, as everywhere
+    const m = String(r.CREATED_AT || '').slice(0, 7);
+    const cc = r.CHARGE_ACCOUNT_ID ? (cba[r.CHARGE_ACCOUNT_ID] || CC_UNKNOWN) : CC_UNKNOWN;
+    const reader = r.TERMINAL_READER_ID ? String(r.TERMINAL_READER_ID).trim() : '';
+    // A NULL attribute becomes an explicit bucket rather than vanishing: a share that
+    // silently drops its unknowns adds up to 100% of the wrong thing.
+    add(m, 'brand',        lc(r.CARD_BRAND)       || 'unknown',     cc, 1, usd);
+    add(m, 'funding',      lc(r.CARD_FUNDING)     || 'unknown',     cc, 1, usd);
+    add(m, 'wallet',       lc(r.CARD_WALLET_TYPE) || 'none',        cc, 1, usd);
+    add(m, 'read_method',  lc(r.CARD_READ_METHOD) || 'not_present', cc, 1, usd);
+    add(m, 'card_country', uc(r.CARD_COUNTRY)     || 'unknown',     cc, 1, usd);
+    add(m, 'presence',     lc(r.PM_TYPE)          || 'unknown',     cc, 1, usd);
+    add(m, 'reader',       reader || 'no_reader',                   cc, 1, usd);
   }
-  return out;
+  if (skipped) console.log(`  profile mix: ${skipped} charges in unsupported currencies excluded`);
+  return [...by.values()];
 }
-async function fetchProfileCost(conn, acctIds, countryByAcct) {
-  const ids = sanitizeAccts(acctIds);
-  if (!ids.length) return [];
-  const cba = countryByAcct || {};
-  const rows = await executeQuery(conn, loadSql('profile_cost.sql')
-    .replace('/*ACCOUNT_IDS*/', ids.map(a => `'${a}'`).join(',')));
-  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
-  const out = [];
-  for (const r of rows || []) {
-    const ccy = g(r, 'ccy');
-    const usd = minorToUsd(g(r, 'amount_minor'), ccy);
-    if (usd == null) continue;
-    const acct = g(r, 'acct');
-    // Cost is billed in the fee currency, which need not be the charge currency.
-    const cost = minorToUsd(g(r, 'cost_minor'), g(r, 'fee_ccy') || ccy);
-    // per_auth + volume as the PER-CHARGE feed sees them. Not the page's cost — the platform
-    // balance feed owns that total — but carried so the two can be compared every refresh.
-    const pcp = minorToUsd(g(r, 'per_charge_platform_minor'), g(r, 'fee_ccy') || ccy);
-    out.push({
-      m: g(r, 'month'),
-      cc: acct ? (cba[acct] || CC_UNKNOWN) : CC_UNKNOWN,
-      brand: g(r, 'brand'), funding: g(r, 'funding'), presence: g(r, 'presence'),
-      n: Number(g(r, 'txns')) || 0,
-      priced: Number(g(r, 'charges_priced')) || 0,
-      billed: Number(g(r, 'charges_billed')) || 0,
-      usd,
-      pricedUsd: minorToUsd(g(r, 'amount_priced_minor'), ccy) || 0,
-      billedUsd: minorToUsd(g(r, 'amount_billed_minor'), ccy) || 0,
-      cost: cost == null ? 0 : cost,
-      pcPlatform: pcp == null ? 0 : pcp,
-      // Application-fee revenue, netted of refunds — what Loyverse actually charged for this
-      // segment. Together with cost it makes the page about margin rather than only price.
-      rev: (function () { const v = minorToUsd(g(r, 'rev_minor'), g(r, 'rev_ccy') || ccy); return v == null ? 0 : v; })(),
-    });
-  }
-  return out;
-}
-// ── STRIPE PLATFORM FEES: the cost that carries no merchant id ───────────────
-// These are billed to the Loyverse platform account, not to a connected account, so no join
-// can attribute them to a merchant, a brand or a card type. The page apportions them by share
-// of volume and says so. Without them the Profile understates cost by everything Stripe
-// charges above interchange, which is the gap that made it disagree with the Summary of
-// Margins — the two pages now read the SAME buckets from the SAME feed.
+
+// Cost and revenue per segment.
 //
-// Returns { byMonth: {YYYY-MM: usd}, buckets: {...gbp}, subscriptions: {...usd}, total, fx }.
-// Guarded: on any failure the caller gets null and the page falls back to network-only cost,
-// which is what it showed before this existed — degraded, not broken, and visibly flagged.
-async function fetchProfilePlatformFees(conn) {
-  const rows = await executeQuery(conn, loadSql('profile_platform_fees.sql'));
-  const g = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
-  // Buckets that are a cost of PROCESSING. Must stay identical to PLATFORM_FEE_ROWS in
-  // payments-automation/refresh_workbook.py — that is the whole point of this query.
+// THE FANOUT THIS GUARDS AGAINST. The IC+ feed is FEE-grained, not charge-grained: one charge
+// carries several fee rows. Joining it straight to the charge amount repeats that amount once
+// per fee row — a scouting query once reported $1,569,139 of Visa-debit TPV against a real
+// $169,359, and its cost rates came out near 20bp instead of 190bp. So fees are collapsed to
+// one row per charge FIRST, below, and only then attached.
+//
+// COST IS NETWORK ONLY — interchange, scheme, discount. per_auth_fee and volume_fee are
+// itemised here AND billed in aggregate on the platform balance feed; the platform feed owns
+// their total (it is what Stripe actually debited) and this split is kept only to attribute.
+// Adding both would double count. See sql/profile_cost.sql for the full account.
+//
+// REVENUE IS THE CHARGE'S APPLICATION FEE, the same column the margins model totals, so the
+// two pages report the same revenue by construction rather than by coincidence.
+const NON_NETWORK_FEES = new Set(['per_auth_fee', 'volume_fee']);
+
+function profileCostFromSnapshot(charges, icRows, countryByAcct) {
+  const cba = countryByAcct || {};
+
+  // Collapse IC+ to one row per charge before anything is joined.
+  const feeByCharge = new Map();
+  for (const f of icRows) {
+    const id = f.CHARGE_ID;
+    if (!id) continue;
+    let o = feeByCharge.get(id);
+    if (!o) { o = { network: 0, pcp: 0, rows: 0 }; feeByCharge.set(id, o); }
+    const name = lc(f.FEE_NAME) || '';
+    // CONVERT PER FEE ROW, not per charge. A single charge can carry fee rows in more than
+    // one currency, so summing minor units first and converting the total with whichever
+    // currency happened to come first silently misprices the rest. That is not theoretical:
+    // doing it that way left network cost $5.69 adrift of the margins model, which converts
+    // row by row. Same source, same snapshot, and still a gap — because of this.
+    const usd = minorToUsd(num(f.TOTAL_AMOUNT), f.FEE_CURRENCY);
+    if (usd == null) continue;              // unknown currency — excluded, as everywhere
+    if (NON_NETWORK_FEES.has(name)) o.pcp += usd; else o.network += usd;
+    o.rows++;
+  }
+
+  const by = new Map();
+  for (const r of charges) {
+    if (!succeeded(r)) continue;
+    const usd = minorToUsd(num(r.AMOUNT), r.CURRENCY);
+    if (usd == null) continue;
+    const m = String(r.CREATED_AT || '').slice(0, 7);
+    const cc = r.CHARGE_ACCOUNT_ID ? (cba[r.CHARGE_ACCOUNT_ID] || CC_UNKNOWN) : CC_UNKNOWN;
+    const brand = lc(r.CARD_BRAND) || 'unknown';
+    const funding = lc(r.CARD_FUNDING) || 'unknown';
+    const presence = lc(r.PM_TYPE) || 'unknown';
+    const k = [m, cc, brand, funding, presence].join('|');
+    let o = by.get(k);
+    if (!o) {
+      o = { m, cc, brand, funding, presence, n: 0, priced: 0, billed: 0,
+            usd: 0, pricedUsd: 0, billedUsd: 0, cost: 0, pcPlatform: 0, rev: 0 };
+      by.set(k, o);
+    }
+    o.n++; o.usd += usd;
+
+    const f = feeByCharge.get(r.CHARGE_ID);
+    if (f) {
+      // Interchange posts on Stripe's own schedule, so the newest charges carry no cost row
+      // yet. `priced`/`pricedUsd` record how much of the volume is actually costed, and the
+      // page takes its rates over that rather than over all volume — dividing a partial cost
+      // by a full month's TPV understates bps and reads as though the mix had improved.
+      o.priced++;
+      o.pricedUsd += usd;
+      o.cost += f.network;          // already USD, converted per fee row above
+      o.pcPlatform += f.pcp;
+    }
+
+    const feeMinor = String(r.APPLICATION_FEE_AMOUNT || '').trim();
+    if (feeMinor !== '') {
+      const rev = minorToUsd(num(feeMinor), r.CURRENCY);
+      if (rev != null && rev !== 0) { o.rev += rev; o.billed++; o.billedUsd += usd; }
+    }
+  }
+  return [...by.values()];
+}
+
+// Stripe's platform-level fees — per_auth, volume, Radar, Tap to Pay, payout, terminal use,
+// account volume and card disputes. Billed to the Loyverse PLATFORM account, so they carry no
+// connected-account id and no join can attribute them to a merchant, brand or card type; the
+// page apportions them by share of volume and says so.
+//
+// Read from the same snapshot file the margins workbook reads, so both pages cost the book
+// with the identical eight buckets at the identical FX rate.
+function platformFeesFromSnapshot(pfRows, charges) {
+  // Must stay identical to PLATFORM_FEE_ROWS in payments-automation/refresh_workbook.py.
   const PROC = ['per_auth', 'volume', 'radar', 'tap_to_pay', 'payout', 'terminal_use',
                 'account_volume', 'dispute'];
   // Fixed subscriptions. Real money, NOT per-transaction cost: reported, never added in.
   const SUBS = ['sub_premium_support', 'sub_sigma'];
-  const byMonth = {}, buckets = {}, subs = {};
-  let unclassified = 0;
-  for (const r of rows || []) {
-    const b = String(g(r, 'bucket') || '');
-    const cur = String(g(r, 'cur') || '').toLowerCase();
-    const amt = Number(g(r, 'amount_major')) || 0;
-    const usd = minorToUsd(Math.round(amt * 100), cur);
-    if (usd == null) continue;                  // unknown currency — excluded, as everywhere
-    if (PROC.indexOf(b) >= 0) {
-      byMonth[g(r, 'm')] = (byMonth[g(r, 'm')] || 0) + usd;
-      buckets[b] = Math.round(((buckets[b] || 0) + usd) * 100) / 100;
-    } else if (SUBS.indexOf(b) >= 0) {
-      subs[b] = Math.round(((subs[b] || 0) + usd) * 100) / 100;
-    } else {
-      unclassified += usd;
-    }
+  const buckets = {}, subs = {};
+  let unclassified = 0, total = 0, subTotal = 0;
+  for (const r of pfRows) {
+    const b = String(r.FEE_CATEGORY || '').trim();
+    const cur = String(r.CURRENCY || '').trim();
+    // Minor units, NEGATIVE (a fee leaves the balance). Sign flipped here.
+    const usd = minorToUsd(-num(r.TOTAL_AMOUNT_MINOR), cur);
+    if (usd == null) continue;
+    if (PROC.indexOf(b) >= 0) { buckets[b] = Math.round(((buckets[b] || 0) + usd) * 100) / 100; total += usd; }
+    else if (SUBS.indexOf(b) >= 0) { subs[b] = Math.round(((subs[b] || 0) + usd) * 100) / 100; subTotal += usd; }
+    else unclassified += usd;
   }
   if (unclassified) {
-    console.error(`  !! profile platform fees: $${unclassified.toFixed(2)} in UNCLASSIFIED `
-                + `buckets — a new Stripe fee type needs a home in query3 and here`);
+    console.error(`  !! platform fees: $${unclassified.toFixed(2)} UNCLASSIFIED — a new Stripe `
+                + `fee type needs a home in query3_platform_fees.sql and in PROC/SUBS here`);
   }
-  for (const k of Object.keys(byMonth)) byMonth[k] = Math.round(byMonth[k] * 100) / 100;
-  const total = Math.round(Object.keys(byMonth).reduce((s, k) => s + byMonth[k], 0) * 100) / 100;
-  const subTotal = Math.round(Object.keys(subs).reduce((s, k) => s + subs[k], 0) * 100) / 100;
-  console.log(`  platform fees: $${total.toLocaleString()} processing across `
-            + `${Object.keys(byMonth).length} months; $${subTotal.toLocaleString()} fixed `
-            + `subscriptions excluded from cost`);
+  // The snapshot bills platform fees as a period total with no month grain, so they are
+  // spread across months by share of volume — the same apportionment the page applies across
+  // segments, and for the same reason: these fees genuinely cannot be attributed.
+  const volByMonth = {};
+  let volTotal = 0;
+  for (const r of charges) {
+    if (!succeeded(r)) continue;
+    const usd = minorToUsd(num(r.AMOUNT), r.CURRENCY);
+    if (usd == null) continue;
+    const m = String(r.CREATED_AT || '').slice(0, 7);
+    volByMonth[m] = (volByMonth[m] || 0) + usd;
+    volTotal += usd;
+  }
+  const byMonth = {};
+  Object.keys(volByMonth).forEach(m => {
+    byMonth[m] = Math.round(total * (volByMonth[m] / (volTotal || 1)) * 100) / 100;
+  });
+  total = Math.round(total * 100) / 100;
+  subTotal = Math.round(subTotal * 100) / 100;
+  console.log(`  platform fees: $${total.toLocaleString()} processing; `
+            + `$${subTotal.toLocaleString()} fixed subscriptions excluded from cost`);
   return { byMonth, buckets, subscriptions: subs, total, subTotal };
 }
-
 // The device model behind each terminal reader, from the Stripe API rather than the data share.
 //
 // WHY THE API AT ALL. The share carries TERMINAL_READER_ID on every card-present charge, but its
@@ -1859,7 +2019,7 @@ function deviceDimension(mix, readers) {
   console.log(`  device dimension: ${rows.length} rows, ${matched}/${raw.length} reader-months resolved to a model`);
   return rest.concat(rows);
 }
-function writeProfile(mix, cost, acceptance, platform) {
+function writeProfile(mix, cost, acceptance, platform, snapshotAsOf) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const tpv = mix.filter(r => r.d === 'brand').reduce((s, r) => s + r.usd, 0);
   const out =
@@ -1895,7 +2055,7 @@ window.__PROFILE_MIX    = ${JSON.stringify(mix)};
 window.__PROFILE_COST   = ${JSON.stringify(cost)};
 window.__PROFILE_ACCEPT = ${JSON.stringify(acceptance)};
 window.__PROFILE_PLATFORM = ${JSON.stringify(platform || null)};
-window.__PROFILE_META   = ${JSON.stringify({ generatedAt: stamp, tpv: Math.round(tpv * 100) / 100 })};
+window.__PROFILE_META   = ${JSON.stringify({ generatedAt: stamp, tpv: Math.round(tpv * 100) / 100, snapshotAsOf: snapshotAsOf || null })};
 `;
   fs.writeFileSync(PROFILE_FILE, out);
   console.log(`✓ profile-data.js: ${mix.length} mix rows, ${cost.length} cost rows, `
@@ -2414,28 +2574,28 @@ async function main() {
       if (costR2.status !== 'fulfilled') console.error(`✗ icplus_cost_monthly failed (cost/margin blank): ${costR2.reason && costR2.reason.message}`);
       if (Object.keys(cm.unknownCcy || {}).length) console.log(`  charges_monthly: unknown ccy skipped ${JSON.stringify(cm.unknownCcy)}`);
 
-      // Payment profile. Guarded on its own: three more Snowflake round-trips for a new page
-      // must never cost the Report or the cohort file, which are already written by now.
+      // Payment profile, built from the SHARED SNAPSHOT rather than from its own queries, so
+      // every money figure on it comes from the same pull — and therefore the same instant —
+      // as the Summary of Margins. Guarded on its own: a failure here must never cost the
+      // Report or the cohort file, which are already written by now.
       try {
-        const [mixR, costR, accR, rdrR, pfR] = await Promise.allSettled([
-          fetchProfileMix(conn, prodAccts, countryByAcct),
-          fetchProfileCost(conn, prodAccts, countryByAcct),
+        const snap = loadSnapshot();
+        const [accR, rdrR] = await Promise.allSettled([
+          // Still live, and legitimately so: acceptance is authorisation ATTEMPTS, a different
+          // population from captured charges, and it appears on no other page, so there is no
+          // second number for it to contradict.
           fetchProfileAcceptance(conn),
           // Only accounts that transacted: a reader on any other account cannot appear on a charge.
           fetchReaderDevices(Object.keys(txnByAcct || {})),
-          fetchProfilePlatformFees(conn),
         ]);
-        let mix = mixR.status === 'fulfilled' ? mixR.value : [];
+        let mix = profileMixFromSnapshot(snap.charges, countryByAcct);
+        const cost = profileCostFromSnapshot(snap.charges, snap.ic, countryByAcct);
+        const platform = platformFeesFromSnapshot(snap.pf, snap.charges);
         const readers = rdrR.status === 'fulfilled' ? rdrR.value : {};
         if (rdrR.status !== 'fulfilled') console.error(`✗ terminal readers failed (device split unavailable): ${rdrR.reason && rdrR.reason.message}`);
         mix = deviceDimension(mix, readers);
-        const cost = costR.status === 'fulfilled' ? costR.value : [];
         const acc = accR.status === 'fulfilled' ? accR.value : [];
-        if (mixR.status !== 'fulfilled')  console.error(`✗ profile_mix failed: ${mixR.reason && mixR.reason.message}`);
-        if (costR.status !== 'fulfilled') console.error(`✗ profile_cost failed (cost per segment blank): ${costR.reason && costR.reason.message}`);
         if (accR.status !== 'fulfilled')  console.error(`✗ profile_acceptance failed (acceptance blank): ${accR.reason && accR.reason.message}`);
-        const platform = pfR.status === 'fulfilled' ? pfR.value : null;
-        if (pfR.status !== 'fulfilled') console.error(`✗ profile_platform_fees failed (page falls back to network-only cost): ${pfR.reason && pfR.reason.message}`);
         // THE RECONCILIATION CHECK, run on every pull rather than trusted once. The per-charge
         // feed itemises per_auth and volume; the platform feed bills them in aggregate. They
         // are two measurements of one thing, so they should be close — and when they drift
@@ -2462,7 +2622,7 @@ async function main() {
           console.log(`  profile dimensions: ${totals.join(' · ')}`);
           if (spread > 1) console.error(`  ✗ dimensions disagree by $${spread.toFixed(2)} — a segment is being dropped or duplicated`);
         }
-        writeProfile(mix, cost, acc, platform);
+        writeProfile(mix, cost, acc, platform, snap.asOf);
       } catch (e) { console.error(`✗ profile-data.js not written: ${e.message}`); }
 
       // Cohort membership for the KPI dashboard's triangle. Written from data already in hand,

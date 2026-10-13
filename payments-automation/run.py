@@ -408,6 +408,16 @@ def _subscriptions(fees_path):
         return None
 
 
+def _snapshot_as_of(fees_path):
+    """The instant the shared snapshot describes, read from the pull's own manifest."""
+    try:
+        p = os.path.join(os.path.dirname(os.path.abspath(fees_path or "")), "pull_status.json")
+        with open(p, encoding="utf-8") as fh:
+            return json.load(fh).get("snapshot_as_of_utc")
+    except Exception:
+        return None
+
+
 def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None, fees_path=None):
     """Serialize the workbook's Summary sheet into margins-data.js for the dashboard's
     'Summary of Margins' page. The dashboard mirrors the Summary tab exactly, so we read
@@ -461,6 +471,10 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None, fees_path=None
         },
         # Below the line, never in contribution. See _subscriptions().
         "subscriptions": _subscriptions(fees_path),
+        # THE SHARED VINTAGE. The same instant the Payment Profile stamps, because both pages
+        # are built from the same snapshot. Printed on both so "are these two numbers from the
+        # same moment?" is answered by looking, not by trusting.
+        "snapshotAsOf": _snapshot_as_of(fees_path),
     }
 
     # COUNTRY FILTER (added 2026-08-17, UK launch). Everything above is the workbook Summary

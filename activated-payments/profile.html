@@ -525,7 +525,14 @@
       + 'which way, issued where — and what each slice costs to accept. Showing ' + period
       + (window.LVCC ? LVCC.suffix() : '') + ': ' + fmtUsd(brand.total) + ' across '
       + fmtN(brand.txns) + ' transactions.';
-    $('stamp').textContent = META.generatedAt ? 'Data as of ' + META.generatedAt : '';
+    // THE SHARED VINTAGE, shown rather than assumed. The Summary of Margins prints the same
+    // line from the same snapshot manifest, so two pages that disagree can be told apart at a
+    // glance: same stamp means a real difference to chase, different stamps mean one of them
+    // simply has not rebuilt yet. Falls back to the build time if a page is ever served from
+    // a pre-snapshot data file.
+    $('stamp').textContent = META.snapshotAsOf
+      ? 'Snapshot ' + META.snapshotAsOf + ' UTC — same data as the Summary of Margins'
+      : (META.generatedAt ? 'Data as of ' + META.generatedAt : '');
   }
 
   function renderAll() {

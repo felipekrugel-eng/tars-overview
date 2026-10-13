@@ -23,4 +23,8 @@ SELECT
     fee_currency, fx_rate, billing_currency, billing_amount
 FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.ICPLUS_FEES
 WHERE incurred_at >= '2026-04-01'
+  -- Same snapshot cut-off as query1 and query3; see the note there. Fees are cut on
+  -- INCURRED_AT, the same clock the charges are cut on, so a fee cannot appear in the
+  -- snapshot for a charge the snapshot does not contain.
+  AND incurred_at < '/*AS_OF*/'
 ORDER BY charge_id;

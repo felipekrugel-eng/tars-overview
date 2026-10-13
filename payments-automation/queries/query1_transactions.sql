@@ -37,11 +37,34 @@ SELECT
     c.CARD_FUNDING                                          AS card_funding,
     c.CARD_COUNTRY                                          AS card_country,
     c.CARD_LAST4                                            AS card_last4,
-    af.AMOUNT                                               AS application_fee_amount
+    af.AMOUNT                                               AS application_fee_amount,
+    -- ── Columns below exist so the PAYMENT PROFILE can be built from this same snapshot
+    -- rather than from its own separate Snowflake pull. That was the whole discrepancy:
+    -- two pages, two pulls, two different moments, numbers that could never match. One
+    -- row per charge, read by both. See shared/README.md.
+    c.BALANCE_TRANSACTION_ID                                AS balance_transaction_id,
+    c.PAID                                                  AS paid,
+    c.CAPTURED                                              AS captured,
+    pm.CARD_WALLET_TYPE                                     AS card_wallet_type,
+    pm.CARD_READ_METHOD                                     AS card_read_method,
+    pm.TYPE                                                 AS pm_type,
+    pm.TERMINAL_READER_ID                                   AS terminal_reader_id
 FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_CHARGES c
 LEFT JOIN GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNTS a
     ON a.ID = c.ACCOUNT
 LEFT JOIN GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.APPLICATION_FEES af
     ON af.CHARGE_ID = c.ID
+-- Payment-method attributes (wallet, how the card was read, terminal reader). The view is
+-- charge-grained already, but QUALIFY guards the arithmetic: a duplicate row here would
+-- double-count a charge's money in every share on the Profile page.
+LEFT JOIN (
+    SELECT d.CHARGE_ID, d.CARD_WALLET_TYPE, d.CARD_READ_METHOD, d.TYPE, d.TERMINAL_READER_ID
+    FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.CONNECTED_ACCOUNT_PAYMENT_METHOD_DETAILS d
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY d.CHARGE_ID ORDER BY d.BATCH_TIMESTAMP DESC NULLS LAST) = 1
+) pm ON pm.CHARGE_ID = c.ID
 WHERE c.CREATED >= '2026-04-01'
+  -- THE SNAPSHOT CUT-OFF. Substituted by pull_payments.py with ONE timestamp shared by all
+  -- three queries in the pull. Without it the queries run seconds apart and each sees a
+  -- slightly different book, so even a single pull is not a single instant.
+  AND c.CREATED < '/*AS_OF*/'
 ORDER BY c.ID;

@@ -60,8 +60,44 @@ def connect():
         client_session_keep_alive=True)
 
 
-def run_query(cur, sql_file):
+# ── THE SNAPSHOT INSTANT ──────────────────────────────────────────────────────────────
+# ONE timestamp, chosen once, substituted into every query in this pull.
+#
+# WHY THIS EXISTS. The Summary of Margins and the Payment Profile used to be built from two
+# separate Snowflake pulls on two separate crons. They ran fifteen minutes apart and each
+# could skip a cycle on its own, so the two pages described the same book at two different
+# moments and their numbers simply never matched - 18 charges apart on the day this was
+# written, and unboundedly more after a skipped run. No alignment of definitions can fix a
+# difference of vintage.
+#
+# A single pull is not automatically a single instant either: three queries issued seconds
+# apart each see whatever had landed by the time it ran. So the cut-off is fixed BEFORE the
+# first query and every query is cut on it. Everything downstream - the workbook, the
+# margins page, the profile page - is then a view of one well-defined moment.
+#
+# The cut-off is deliberately in the PAST (SNAPSHOT_LAG_MINUTES). Stripe's feeds land with a
+# short delay, so cutting at "now" means slicing through a partially-arrived minute: the
+# charges are there but their fee rows are not yet, which reads as free volume and understates
+# cost. Lagging the cut-off trades a few minutes of freshness for a complete picture.
+SNAPSHOT_LAG_MINUTES = int(os.environ.get("SNAPSHOT_LAG_MINUTES", "15"))
+
+
+def snapshot_as_of():
+    """The one instant this pull describes, as a Snowflake-comparable UTC string."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    cut = now - datetime.timedelta(minutes=SNAPSHOT_LAG_MINUTES)
+    return cut.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def run_query(cur, sql_file, as_of):
     sql = (SQL_DIR / sql_file).read_text()
+    if "/*AS_OF*/" not in sql:
+        # Refuse rather than silently pull an uncut query: a query without the cut-off
+        # returns a different instant from its siblings, which is the exact bug this
+        # whole mechanism exists to prevent.
+        raise RuntimeError(f"{sql_file} has no /*AS_OF*/ placeholder — it would not be "
+                           f"cut to the snapshot instant and must not run in this pull")
+    sql = sql.replace("/*AS_OF*/", as_of)
     # SQL files may contain a trailing semicolon / comments — execute as a single statement.
     cur.execute(sql)
     cols = [c[0] for c in cur.description]
@@ -88,7 +124,8 @@ def sha256_file(path):
     return h.hexdigest()
 
 
-def write_pull_status(cols, rows, transaction_count, icplus_count, platform_fee_count):
+def write_pull_status(cols, rows, transaction_count, icplus_count, platform_fee_count,
+                      as_of=None):
     """Write small authoritative evidence for freshness monitors.
 
     This file changes after every genuinely successful Snowflake pull. Fallback
@@ -107,9 +144,13 @@ def write_pull_status(cols, rows, transaction_count, icplus_count, platform_fee_
 
     files = [DATA_DIR / OUT1, DATA_DIR / OUT2, DATA_DIR / OUT3]
     status = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source": "snowflake_stripe_share",
         "pull_succeeded": True,
+        # THE SHARED VINTAGE. Every page built from this snapshot shows this timestamp, so
+        # "do these two numbers come from the same moment?" is answerable by looking rather
+        # than by trusting. activated-payments/pull.js reads it from here too.
+        "snapshot_as_of_utc": as_of,
         "completed_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
         "latest_charge_created_at_utc": latest_created,
         "rows": {
@@ -129,6 +170,9 @@ def write_pull_status(cols, rows, transaction_count, icplus_count, platform_fee_
 def main():
     print(f"SQL_DIR  = {SQL_DIR}")
     print(f"DATA_DIR = {DATA_DIR}")
+    as_of = snapshot_as_of()
+    print(f"SNAPSHOT AS OF = {as_of} UTC (lag {SNAPSHOT_LAG_MINUTES} min) — every query in "
+          f"this pull is cut at this one instant, and both dashboard pages are built from it.")
     conn = connect()
     try:
         cur = conn.cursor()
@@ -136,10 +180,10 @@ def main():
             cur.execute("ALTER SESSION SET USE_CACHED_RESULT = FALSE")
             print("Snowflake result cache disabled for freshness-critical pull.")
             print(f"Running {Q1} ...")
-            c1, r1 = run_query(cur, Q1)
+            c1, r1 = run_query(cur, Q1, as_of)
             print(f"  transactions rows = {len(r1):,}  cols = {c1}")
             print(f"Running {Q2} ...")
-            c2, r2 = run_query(cur, Q2)
+            c2, r2 = run_query(cur, Q2, as_of)
             print(f"  icplus rows       = {len(r2):,}  cols = {c2}")
 
             # Query 3 — Stripe platform fees from balance-transaction actuals.
@@ -148,7 +192,7 @@ def main():
             # succeeds and refresh falls back to zero for every Stripe-fee bucket.
             print(f"Running {Q3} ...")
             try:
-                c3, r3 = run_query(cur, Q3)
+                c3, r3 = run_query(cur, Q3, as_of)
                 print(f"  platform-fee rows = {len(r3):,}  cols = {c3}")
                 print("  --- Stripe platform-fee buckets (minor units, negative = cost) ---")
                 for row in r3:
@@ -180,7 +224,7 @@ def main():
     # platform_fees.csv is NOT gated: always (re)written, even when empty, so the header
     # is present and refresh_workbook sees a well-formed file (empty -> all buckets 0).
     write_csv(DATA_DIR / OUT3, c3 or PF_HEADER, r3)
-    write_pull_status(c1, r1, len(r1), len(r2), len(r3))
+    write_pull_status(c1, r1, len(r1), len(r2), len(r3), as_of=as_of)
     print(f"Wrote {DATA_DIR / OUT1} ({len(r1):,} rows), "
           f"{DATA_DIR / OUT2} ({len(r2):,} rows), and "
           f"{DATA_DIR / OUT3} ({len(r3):,} rows).")

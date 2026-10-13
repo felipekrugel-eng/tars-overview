@@ -176,6 +176,9 @@ def build_data(tx_path, ic_path):
     GBP_USD = FX_GBP_USD
     live, live_src = fx_gbp_usd(ic_rows)
     drift = abs(live - GBP_USD) / GBP_USD * 100 if GBP_USD else 0.0
+    # Reported on the workbook and the page, so a reader can see which rate produced the
+    # figures and that it is pinned rather than whatever today's pull happened to derive.
+    FX_SRC = f"pinned shared/fx.json (Stripe live {live:.5f}, drift {drift:.2f}%)"
     print(f"[fx] GBP->USD {GBP_USD:.5f} (pinned, shared/fx.json); "
           f"Stripe live {live:.5f} from {live_src}; drift {drift:.2f}%", flush=True)
     if live_src != "fallback constant" and drift > FX_DRIFT_WARN_PCT:

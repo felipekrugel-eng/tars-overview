@@ -83,5 +83,7 @@ FROM GSWUDFY_STRIPE_AWS_EU_CENTRAL_1_SHARE_ORXEAZX_TC97659.STRIPE.BALANCE_TRANSA
 WHERE TYPE = 'stripe_fee'
   AND REPORTING_CATEGORY = 'fee'
   AND CREATED >= '2026-04-01'
+  -- Same snapshot cut-off as query1 and query2; see the note in query1.
+  AND CREATED < '/*AS_OF*/'
 GROUP BY 1, 2
 ORDER BY 1, 2;

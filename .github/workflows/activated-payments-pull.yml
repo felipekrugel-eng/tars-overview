@@ -26,8 +26,21 @@ on:
   #
   # The heartbeat is far faster than this job should run, so the first step below exits unless
   # the committed data is genuinely stale. Those no-op runs finish in seconds.
+  # ALSO CHAINED TO payments-pull, and that one is not a heartbeat — it is an ORDERING
+  # CONSTRAINT, and the reason the two payments pages can now be trusted against each other.
+  #
+  # payments-pull takes the single Snowflake snapshot of the charge-level facts and commits it
+  # together with the margins page built from it. This job builds the Payment Profile from that
+  # same committed snapshot. So the moment a new snapshot lands, the profile must be rebuilt on
+  # it — otherwise margins is showing vintage N while the profile is still showing N-1, which
+  # is precisely the "different numbers on two pages" this whole design removes. Chaining here
+  # closes that window to one job length instead of up to three hours.
+  #
+  # The cusum heartbeat stays for everything in this job that is NOT from the snapshot —
+  # accounts, registrations, KYC, subscriptions, acceptance — which has its own cadence and no
+  # counterpart on the margins page to disagree with.
   workflow_run:
-    workflows: ["cusum-pull"]
+    workflows: ["cusum-pull", "payments-pull"]
     types: [completed]
   push:
     # Auto-run when the dashboard code or pull script changes (e.g. this first commit),
@@ -86,7 +99,16 @@ jobs:
           # history looked healthy. The notice below becomes an annotation on the run (visible
           # in the LIST, not just inside the run) and the summary line shows on the run page,
           # so "green" now says which kind of green it is.
-          if [ "${{ github.event_name }}" != "workflow_run" ]; then
+          # A NEW SNAPSHOT ALWAYS WINS OVER THE FRESHNESS GATE. When payments-pull has just
+          # committed one, the profile MUST be rebuilt on it however recently this job ran —
+          # skipping would leave the two pages on different vintages, which is the failure the
+          # shared snapshot exists to prevent. Only the cusum heartbeat is allowed to gate out.
+          if [ "${{ github.event.workflow_run.name }}" = "payments-pull" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+            echo "payments-pull just published a new snapshot — rebuilding the profile on it"
+            echo "::notice title=Pull RUNNING::new shared snapshot from payments-pull — rebuilding so both payments pages stay on one vintage"
+            echo "### ✅ Pulling — payments-pull published a new shared snapshot" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "${{ github.event_name }}" != "workflow_run" ]; then
             echo "run=yes" >> "$GITHUB_OUTPUT"
             echo "triggered by ${{ github.event_name }} — running regardless of age"
             echo "::notice title=Pull RUNNING::manual/${{ github.event_name }} trigger — refreshing regardless of age (data ${AGE} min old)"
@@ -128,6 +150,19 @@ jobs:
           # the card was read. Needs Terminal read access only.
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: node activated-payments/pull.js
+
+      # ── DO THE TWO PAYMENTS PAGES AGREE? ──────────────────────────────────────
+      # Both are now built from one snapshot taken at one instant, so they should agree to
+      # rounding. This asserts it on every run rather than trusting it, because every previous
+      # cause of disagreement — face-value FX, two rates for one currency, a discarded fee
+      # bucket, two separate pulls — was invisible until somebody put the pages side by side.
+      #
+      # Runs BEFORE the commit, so a build that would publish contradictory numbers fails
+      # instead of shipping them. It does not block the rest of the data: if margins-data.js is
+      # absent the check skips, and it only ever compares what both pages actually state.
+      - name: Reconcile Margins against Payment Profile
+        if: steps.gate.outputs.run == 'yes'
+        run: python3 shared/reconcile.py
 
       - name: Verify report registration source
         if: steps.gate.outputs.run == 'yes'

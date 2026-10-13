@@ -3663,7 +3663,14 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       return;
     }
     var k=M.kpis||{};
-    setTxt('mgUpdated','Updated '+fmtDate(M.updated));
+    // THE SHARED VINTAGE. The Payment Profile prints the same instant from the same snapshot
+    // manifest, so the two pages can be told apart at a glance: same stamp means any gap is a
+    // real difference worth chasing, different stamps mean one simply has not rebuilt yet.
+    // Until this change the two were built by separate pulls minutes-to-hours apart and there
+    // was no way to tell those two cases apart at all.
+    setTxt('mgUpdated', ALLM && ALLM.snapshotAsOf
+      ? 'Snapshot ' + ALLM.snapshotAsOf + ' UTC — same data as the Payment Profile'
+      : 'Updated ' + fmtDate(M.updated));
     if(M.subtitle) setTxt('mgSub', M.subtitle);
 
     // Headline KPIs
