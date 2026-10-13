@@ -242,6 +242,14 @@
     var priced = c.reduce(function (s, r) { return s + r.pricedUsd; }, 0);
     var rev = c.reduce(function (s, r) { return s + (r.rev || 0); }, 0);
     var billed = c.reduce(function (s, r) { return s + (r.billedUsd || 0); }, 0);
+    // ONE DENOMINATOR for every basis-point figure on this strip: the processed volume of the
+    // SAME filtered rows. It used to be three different ones — cost over `priced`, revenue
+    // over `billed`, margin over min(priced, billed) — so the tiles read 212bp, 271bp and 8bp
+    // and 271 - 212 was 59, not 8. Three true numbers that cannot be subtracted from each
+    // other are worse than one approximate number, because the reader has no way to know.
+    // On a common base they reconcile exactly: 216 - 209 = 6bp.
+    // `priced` and `billed` are still shown underneath, as the context they always were.
+    var volume = c.reduce(function (s, r) { return s + (r.usd || 0); }, 0);
     var a = ACC.filter(accInScope);
     var att = a.reduce(function (s, r) { return s + r.n; }, 0);
     var ok = a.filter(function (r) { return r.o === 'authorized'; }).reduce(function (s, r) { return s + r.n; }, 0);
@@ -253,9 +261,9 @@
     $('kpis').innerHTML =
       kpi('Processed volume', fmtUsd(brand.total), fmtN(brand.txns) + ' transactions')
       + kpi('Average ticket', '$' + avg.toFixed(2), 'across every segment')
-      + kpi('Cost of acceptance', bps(cost, priced), fmtUsd(cost) + ' on ' + fmtUsd(priced) + ' priced')
-      + kpi('Revenue', bps(rev, billed), fmtUsd(rev) + ' of application fees')
-      + kpi('Net margin', bps(rev - cost, Math.min(priced, billed) || priced), fmtUsd(rev - cost) + ' after cost')
+      + kpi('Cost of acceptance', bps(cost, volume), fmtUsd(cost) + ' on ' + fmtUsd(volume) + ' processed')
+      + kpi('Revenue', bps(rev, volume), fmtUsd(rev) + ' of application fees')
+      + kpi('Net margin', bps(rev - cost, volume), fmtUsd(rev - cost) + ' \u2014 revenue less cost')
       + kpi('Approved', att ? (100 * ok / att).toFixed(2) + '%' : '—', fmtN(att - ok) + ' refused of ' + fmtN(att));
   }
 
@@ -321,16 +329,16 @@
         + '<td>' + fmtUsd(r.usd) + '</td>'
         + '<td>$' + (r.n ? (r.usd / r.n).toFixed(2) : '0.00') + '</td>'
         + '<td>' + fmtUsd(r.cost) + '</td>'
-        + '<td><b>' + bps(r.cost, r.priced) + '</b></td>'
+        + '<td><b>' + bps(r.cost, r.usd) + '</b></td>'
         + '<td>' + fmtUsd(r.rev) + '</td>'
-        + '<td>' + bps(r.rev, r.billed) + '</td>'
+        + '<td>' + bps(r.rev, r.usd) + '</td>'
         + '<td style="color:' + ((r.rev - r.cost) >= 0 ? 'var(--green)' : 'var(--red)') + '"><b>'
-        + bps(r.rev - r.cost, r.billed || r.priced) + '</b></td></tr>';
+        + bps(r.rev - r.cost, r.usd) + '</b></td></tr>';
     });
     h += '<tr style="font-weight:bold"><td>All segments</td><td>100%</td><td>' + fmtUsd(tot) + '</td><td></td>'
-      + '<td>' + fmtUsd(totCost) + '</td><td>' + bps(totCost, totPriced) + '</td>'
-      + '<td>' + fmtUsd(totRev) + '</td><td>' + bps(totRev, totBilled) + '</td>'
-      + '<td>' + bps(totRev - totCost, totBilled || totPriced) + '</td></tr></tbody>';
+      + '<td>' + fmtUsd(totCost) + '</td><td>' + bps(totCost, tot) + '</td>'
+      + '<td>' + fmtUsd(totRev) + '</td><td>' + bps(totRev, tot) + '</td>'
+      + '<td>' + bps(totRev - totCost, tot) + '</td></tr></tbody>';
     $('costTable').innerHTML = h;
 
     $('costHead').textContent = 'Interchange and scheme fees per segment, against the application fees '

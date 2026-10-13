@@ -634,8 +634,21 @@ function buildTxnMerchants(accountRows, meta, txnByAcct, feeByAcct, costByAcct, 
     const f = (feeByAcct && feeByAcct[acct]) || null;
     const c = (costByAcct && costByAcct[acct]) || null;
     const volume = Math.round(t.usd * 100) / 100;
-    const captured = (f && f.usdKnown) ? Math.round(f.capturedUsd * 100) / 100 : null;
-    const cost = (c && c.usdKnown) ? Math.round(c.costUsd * 100) / 100 : null;
+    // ZERO AND UNKNOWN ARE DIFFERENT, and conflating them hid the single most important fact
+    // this table has to show. A merchant with successful charges but NO application-fee rows
+    // has not got missing data — we charged them nothing, which is a real $0. Emitting null
+    // instead blanked their take rate AND dropped them from the margin column while their
+    // cost stayed in it, so the table did not tie to itself: Sum(margin) read $2,488.44 against
+    // Sum(captured) - Sum(cost) of $491.85, overstating margin by $1,996.59.
+    //
+    // Those 29 merchants are the 15 free transacting days — Nabil Tech, home & kitchen corp,
+    // Arenas Contracting and the rest — $94,293 of volume that cost $1,996.59 and earned
+    // nothing. That is exactly what the table exists to show, and it was showing a blank.
+    //
+    // A missing entry means no fees were charged (0). usdKnown === false means rows exist but
+    // a currency could not be converted, which IS unknown and stays null.
+    const captured = !f ? 0 : (f.usdKnown ? Math.round(f.capturedUsd * 100) / 100 : null);
+    const cost = !c ? 0 : (c.usdKnown ? Math.round(c.costUsd * 100) / 100 : null);
     const take = (captured != null && volume > 0) ? Math.round((captured / volume) * 10000) / 100 : null;
     const margin = (captured != null && cost != null) ? Math.round((captured - cost) * 100) / 100 : null;
     out.push({
