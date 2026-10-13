@@ -1,0 +1,100 @@
+# BOT SCREEN — all-country daily registration anomaly alert.
+#
+# Three registration-bot waves reached production before anyone noticed, and all three were
+# caught by a human looking at a chart: 30-31 Jul 2026 (8,001 accounts), 10-16 Sep 2026
+# (1,834, ~32 hours), 8-12 Oct 2026 (819, ~3.5 days). This job removes the dependency on
+# someone having the CUSUM graph open.
+#
+# WHY workflow_run AND NOT A PLAIN CRON. GitHub drops the `schedule` event in this repo --
+# activated-payments-pull.yml records it happening in July, on 08-06 and for eight hours on
+# 08-27. A detection control that silently stops is worse than none, so this hangs off
+# cusum-pull, which is dispatched externally every few minutes and does not miss. The cron
+# below is a second chance, not the primary trigger.
+#
+# The heartbeat fires far more often than this should run, so the gate step exits unless the
+# last screen is more than 20 hours old. Gated runs finish in seconds.
+name: bot-screen-daily
+
+on:
+  workflow_run:
+    workflows: ["cusum-pull"]
+    types: [completed]
+  schedule:
+    - cron: "41 8 * * *"        # off the hour, to dodge GitHub's cron congestion
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "How many complete days back to screen"
+        required: false
+        default: "3"
+      force:
+        description: "Run even if the last screen was recent"
+        type: boolean
+        default: false
+
+concurrency:
+  group: bot-screen-daily
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Gate on staleness
+        id: gate
+        env:
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          set -euo pipefail
+          stamp=bot-filter/.last-screen
+          if [ "${FORCE:-false}" = "true" ] || [ ! -f "$stamp" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          last=$(cat "$stamp"); now=$(date -u +%s)
+          age=$(( (now - last) / 3600 ))
+          if [ "$age" -ge 20 ]; then echo "run=yes" >> "$GITHUB_OUTPUT";
+          else echo "last screen ${age}h ago - skipping"; echo "run=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Set up Node
+        if: steps.gate.outputs.run == 'yes'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install snowflake-sdk
+        if: steps.gate.outputs.run == 'yes'
+        run: npm install --no-audit --no-fund
+
+      - name: Screen all countries
+        if: steps.gate.outputs.run == 'yes'
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          # Until this secret exists the job still runs and still fails loudly on a real
+          # problem via the step log; it just cannot post. See bot-filter/README.md.
+          SLACK_WEBHOOK_URL:   ${{ secrets.SLACK_WEBHOOK_URL }}
+          LOOKBACK_DAYS:       ${{ github.event.inputs.lookback_days || '3' }}
+        run: node bot-filter/daily_bot_screen.js
+
+      - name: Record the run
+        if: steps.gate.outputs.run == 'yes'
+        run: |
+          set -euo pipefail
+          date -u +%s > bot-filter/.last-screen
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add bot-filter/.last-screen
+          git diff --cached --quiet || git commit -m "chore(bot-screen): daily all-country screen $(date -u +%FT%TZ)"
+          git push
