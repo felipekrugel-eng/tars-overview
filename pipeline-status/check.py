@@ -53,7 +53,11 @@ HISTORY_DAYS = int(os.environ.get("STATUS_HISTORY_DAYS", "60"))
 HISTORY_METHOD = 2
 # Cap API calls per run so the first run does not make 600 of them; the chart fills in
 # over the following few runs and is complete within a day.
-BACKFILL_BUDGET = int(os.environ.get("STATUS_BACKFILL_BUDGET", "60"))
+BACKFILL_BUDGET = int(os.environ.get("STATUS_BACKFILL_BUDGET", "200"))
+# Below this many known days an uptime percentage is noise, not information: one bad day
+# out of one reads "0.0% uptime", which is alarming and means nothing. Say how much history
+# exists instead, and start quoting a figure once there is enough to carry meaning.
+MIN_DAYS_FOR_UPTIME = 7
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 NOW = dt.datetime.now(dt.timezone.utc)
 
@@ -412,7 +416,12 @@ def render_html(rows, worst, hist, window):
             tip = "%s — %s" % (d, {"ok": "operational", "warn": "degraded",
                                    "down": "not updating", "nodata": "no data"}[st])
             bars.append('<i style="background:%s" title="%s"></i>' % (BAR[st], tip))
-        uptime = ("%.2f %% uptime" % (100.0 * good / known)) if known else "no history yet"
+        if known >= MIN_DAYS_FOR_UPTIME:
+            uptime = "%.2f %% uptime" % (100.0 * good / known)
+        elif known:
+            uptime = "%d day%s recorded" % (known, "" if known == 1 else "s")
+        else:
+            uptime = "no history yet"
         text, colour = LABEL.get((r["state"], r.get("reason")),
                                  ("Operational", "#1a7f37"))
         notes = ('<div class=n>%s</div>' % "<br>".join(r["notes"])) if r["notes"] else ""
