@@ -292,3 +292,26 @@ def test_an_uncoverable_quiet_day_is_not_guessed(monkeypatch):
     monkeypatch.setattr(check, "commits_between", lambda ref, p, s, e: ([check.NOW] * 3, False))
     day = check.NOW.date() - dt.timedelta(days=1)
     assert check.day_state("master", "x.json", 36, day) == "nodata"
+
+
+def test_uptime_is_not_quoted_until_it_means_something():
+    """One bad day out of one known day reads '0.00 % uptime', which is alarming and
+    carries no information. The backfill takes a few runs to populate, so the chart must
+    not libel a pipeline in the meantime."""
+    rows = [{"name": "P", "path": "p", "ref": "master", "max_age_h": 9,
+             "state": "error", "reason": "stale", "notes": [], "age_h": 12.0}]
+    window = [(check.NOW.date() - dt.timedelta(days=i)).isoformat() for i in range(2, -1, -1)]
+    hist = {"P": {window[-1]: "down"}}
+    html = check.render_html(rows, "error", hist, window)
+    assert "0.00 % uptime" not in html
+    assert "1 day recorded" in html
+
+
+def test_uptime_appears_once_there_is_enough_history():
+    rows = [{"name": "P", "path": "p", "ref": "master", "max_age_h": 9,
+             "state": "ok", "reason": None, "notes": [], "age_h": 1.0}]
+    days = check.MIN_DAYS_FOR_UPTIME + 1
+    window = [(check.NOW.date() - dt.timedelta(days=i)).isoformat() for i in range(days - 1, -1, -1)]
+    hist = {"P": {d: "ok" for d in window}}
+    html = check.render_html(rows, "ok", hist, window)
+    assert "100.00 % uptime" in html
