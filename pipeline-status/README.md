@@ -38,6 +38,52 @@ Where an artefact publishes its own data timestamp — `pull_status.json`, the C
 commit at 06:04 data that was pulled at 04:06, and the second number is the one that
 matters.
 
+## Automated diagnosis, not automated repair
+
+When a pipeline is flagged, `diagnose.py` does the lookup a person would do:
+
+```
+artefact -> owning workflow -> recent runs -> which step failed -> log tail ->
+error signature -> did it publish anything?
+```
+
+On 2026-10-14 that produced, with no human involved:
+
+> **payments-pull.yml** · running but not publishing — 28 run(s) since the artefact was last
+> written, none succeeded · failing step: Pull -> rebuild -> recalc -> verify · OOM-killed on
+> the runner (exit 137) · its publish step was SKIPPED, so the work was discarded · 28
+> consecutive non-success runs
+> *The runner ran out of memory. Needs a lower-memory build, a larger runner, or less data.*
+
+That is the whole of a twenty-minute manual investigation, on the card.
+
+**Why it diagnoses and does not repair.** The obvious next step after a status page is to
+make it fix things. This repo already shows why that is wrong. That same morning the
+payments pull retried itself every ten minutes for nine hours. Every attempt pulled 56,077
+transactions correctly, was OOM-killed during the workbook rebuild, and threw the good data
+away — twenty times, eight hours of runner time, no progress and no alert. **The automation
+was not the cure, it was the failure mode.** Retrying harder makes a broken thing fail
+faster and more quietly.
+
+So this dispatches nothing and retries nothing. It only means the next person starts where
+the last investigation finished.
+
+**The check that matters most is `verdict`**, which separates three cases that look
+identical from the artefact alone and need opposite responses:
+
+| verdict | meaning |
+|---|---|
+| has not run since the artefact was last written | the workflow is not firing — check its trigger |
+| running but not publishing | it runs and fails, or runs and discards its work |
+| ran and succeeded, artefact did not move | it is writing nothing, or writing somewhere else |
+
+Unrecognised failures say nothing rather than guess. `test_unknown_errors_do_not_guess`
+pins that: a monitor that invents causes is worse than one that admits ignorance.
+
+Known signatures live in `SIGNATURES` in `diagnose.py` — exit 137 (OOM), exit 143
+(terminated), Snowflake statement timeouts, job timeouts, auth failures, rate limiting,
+push races, and unhandled exceptions. Add to that list as new failure shapes appear.
+
 ## What red means
 
 **Red means exactly one thing: the dashboard is serving stale or missing data and someone

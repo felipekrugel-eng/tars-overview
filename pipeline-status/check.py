@@ -40,6 +40,11 @@ DESIGN NOTES
 import datetime as dt, hashlib, json, os, re, sys, urllib.parse, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 
+try:
+    import diagnose as _diagnose           # same directory, read-only, optional
+except Exception:                          # never let diagnosis break the status page
+    _diagnose = None
+
 REPO = os.environ.get("STATUS_REPO", "felipekrugel-eng/tars-overview")
 HISTORY_DAYS = int(os.environ.get("STATUS_HISTORY_DAYS", "60"))
 # Cap API calls per run so the first run does not make 600 of them; the chart fills in
@@ -329,15 +334,22 @@ def render_html(rows, worst, hist, window):
         text, colour = LABEL.get((r["state"], r.get("reason")),
                                  ("Operational", "#1a7f37"))
         notes = ('<div class=n>%s</div>' % "<br>".join(r["notes"])) if r["notes"] else ""
+        dx = ""
+        if r.get("diagnosis_line"):
+            d = r.get("diagnosis") or {}
+            link = (' <a href="%s">see the run</a>' % d["failing_run"]) if d.get("failing_run") else ""
+            hint = ('<div class=hint>%s</div>' % d["meaning"]) if d.get("meaning") else ""
+            dx = ('<div class=dx><b>%s</b> &middot; %s%s%s</div>'
+                  % (d.get("workflow", "?"), r["diagnosis_line"], link, hint))
         age = ("%.1fh old" % r["age_h"]) if "age_h" in r else ""
         cards.append(
             '<section class=c>'
             '<div class=t><div><h2>%s</h2><div class=p>%s · %s · limit %dh</div></div>'
             '<div class=s style="color:%s">%s</div></div>'
-            '%s<div class=bars>%s</div>'
+            '%s%s<div class=bars>%s</div>'
             '<div class=f><span>%d days ago</span><span class=u>%s</span><span>Today</span></div>'
             '</section>'
-            % (r["name"], r["path"], age, r["max_age_h"], colour, text, notes,
+            % (r["name"], r["path"], age, r["max_age_h"], colour, text, notes, dx,
                "".join(bars), len(window), uptime))
 
     htxt, hcol = HEAD[worst]
@@ -367,6 +379,11 @@ def render_html(rows, worst, hist, window):
  .s{font-size:13px;font-weight:580;white-space:nowrap}
  .p{color:#8b949e;font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:3px}
  .n{color:#cf222e;font-size:12.5px;margin-top:9px;line-height:1.45}
+ .dx{margin-top:9px;padding:9px 11px;background:#f6f8fa;border-left:3px solid #afb8c1;
+     border-radius:0 5px 5px 0;font-size:12.5px;color:#424a53;line-height:1.5}
+ .dx b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:#1f2328}
+ .dx a{color:#0969da}
+ .hint{margin-top:5px;color:#656d76;font-style:italic}
  .bars{display:flex;gap:2px;margin:13px 0 7px;height:34px}
  .bars i{flex:1 1 0;border-radius:1.5px;min-width:2px}
  .f{display:flex;justify-content:space-between;color:#8b949e;font-size:11.5px}
@@ -393,6 +410,35 @@ thresholds measured from each artefact's own commit history</p>
 
 def main():
     rows = check()
+
+    # ---- diagnosis -------------------------------------------------------------------
+    # Only for pipelines that are flagged, so a healthy run costs nothing extra. Strictly
+    # read-only: this dispatches nothing and retries nothing. Automating the REPAIR is what
+    # produced the 2026-10-14 mess, where the payments pull retried itself twenty times in
+    # nine hours, succeeded at the pull every time, and threw the data away every time.
+    # Automating the DIAGNOSIS is the part that was actually slow, and entirely mechanical.
+    if _diagnose is not None:
+        flagged = [r for r in rows if r["state"] != "ok"]
+        if flagged:
+            def _dx(r):
+                at = None
+                if r.get("committed_at"):
+                    at = dt.datetime.fromisoformat(r["committed_at"])
+                try:
+                    d = _diagnose.diagnose(r, at)
+                    return r["name"], d, _diagnose.summarise(d)
+                except Exception as e:
+                    return r["name"], {"note": "diagnosis failed: %s" % e}, ""
+            with ThreadPoolExecutor(max_workers=4) as pool:
+                results = list(pool.map(_dx, flagged))
+            by = {n: (d, line) for n, d, line in results}
+            for r in rows:
+                if r["name"] in by:
+                    d, line = by[r["name"]]
+                    r["diagnosis"] = d
+                    if line:
+                        r["diagnosis_line"] = line
+
     # unknown ranks BELOW warn: "could not check" is not a breakage.
     order = {"error": 3, "warn": 2, "unknown": 1, "ok": 0}
     worst = max(rows, key=lambda r: order[r["state"]])["state"] if rows else "unknown"
