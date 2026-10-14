@@ -108,7 +108,7 @@ def _ts(s):
 def _failed_step_and_log(run_id):
     """Which step failed, and the signature in its log."""
     out = {"step": None, "signature": None, "meaning": None, "detail": None,
-           "skipped_publish": None}
+           "skipped_publish": None, "runner_lost": None}
     try:
         jobs = api("actions/runs/%d/jobs" % run_id).get("jobs", [])
     except Exception:
@@ -125,6 +125,16 @@ def _failed_step_and_log(run_id):
         if re.search(r"commit|push|publish", s.get("name", ""), re.I):
             out["skipped_publish"] = (s.get("conclusion") == "skipped")
             break
+
+    # DID THE RUNNER ITSELF DIE? GitHub's own post-job steps ("Post Run actions/checkout")
+    # run unconditionally — unless there is no runner left to run them. If those are
+    # skipped, the VM went away rather than the code failing, and NO conditional can help:
+    # `if: always()` has nothing to execute on. This is worth naming because it is easy to
+    # get wrong by hand — on 2026-10-14 the first attempted fix was exactly an `always()`
+    # that could never have fired.
+    posts = [s for s in job.get("steps", []) if s.get("name", "").startswith("Post ")]
+    if posts:
+        out["runner_lost"] = all(s.get("conclusion") == "skipped" for s in posts)
     try:
         blob = api("actions/runs/%d/logs" % run_id, binary=True)
         zf = zipfile.ZipFile(io.BytesIO(blob))
@@ -209,7 +219,11 @@ def summarise(d):
         bits.append("failing step: %s" % d["step"])
     if d.get("signature"):
         bits.append(d["signature"])
-    if d.get("skipped_publish"):
+    if d.get("runner_lost"):
+        bits.append("THE RUNNER ITSELF WAS LOST (post-job steps skipped) — no `if: always()` "
+                    "can rescue work from this; the data has to be committed before the "
+                    "step that kills it")
+    elif d.get("skipped_publish"):
         bits.append("its publish step was SKIPPED, so the work was discarded")
     if d.get("consecutive_non_success"):
         bits.append("%d consecutive non-success runs" % d["consecutive_non_success"])
