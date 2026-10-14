@@ -144,3 +144,35 @@ def test_diagnosis_never_raises_on_a_broken_api(monkeypatch):
     monkeypatch.setattr(diagnose, "_runs", boom)
     d = diagnose.diagnose({"name": "Payments pull"}, NOW)
     assert "could not read workflow runs" in d["note"]
+
+
+# ------------------------------------------------------- the lesson from 2026-10-14
+def test_runner_loss_is_distinguished_from_a_step_failure(monkeypatch):
+    """GitHub's own post-job steps run unconditionally unless the runner is gone.
+
+    Getting this wrong cost a wasted fix: `if: always()` was added to the commit step and
+    could never have fired, because there was no runner left to run it. The summary has to
+    say so, loudly, or the next person tries the same thing.
+    """
+    monkeypatch.setattr(diagnose, "api", lambda *a, **k: {"jobs": [{"steps": [
+        {"name": "Pull -> rebuild", "conclusion": "cancelled"},
+        {"name": "Commit & push if the workbook changed", "conclusion": "skipped"},
+        {"name": "Post Run actions/setup-python@v5", "conclusion": "skipped"},
+        {"name": "Post Run actions/checkout@v4", "conclusion": "skipped"},
+    ]}]})
+    out = diagnose._failed_step_and_log(1)
+    assert out["runner_lost"] is True
+    line = diagnose.summarise({"runner_lost": True, "skipped_publish": True})
+    assert "RUNNER ITSELF WAS LOST" in line
+    assert "always()" in line
+
+
+def test_a_normal_step_failure_is_not_called_runner_loss(monkeypatch):
+    monkeypatch.setattr(diagnose, "api", lambda *a, **k: {"jobs": [{"steps": [
+        {"name": "Pull -> rebuild", "conclusion": "failure"},
+        {"name": "Commit & push", "conclusion": "skipped"},
+        {"name": "Post Run actions/checkout@v4", "conclusion": "success"},
+    ]}]})
+    out = diagnose._failed_step_and_log(1)
+    assert out["runner_lost"] is False
+    assert "discarded" in diagnose.summarise({"skipped_publish": True})

@@ -102,7 +102,29 @@ jobs:
         if: steps.gate.outputs.run == 'yes'
         run: pip install -r payments-automation/requirements.txt
 
-      - name: Pull -> rebuild -> recalc -> verify
+      # ──────────────────────────────────────────────────────────────────────────────
+      # WHY THIS IS TWO STEPS AND NOT ONE
+      #
+      # run.py pulls from Snowflake and then rebuilds a ~56,000 row x 348 column workbook
+      # through openpyxl and a headless LibreOffice recalc. On 2026-10-14 the rebuild began
+      # exhausting the runner's memory: 28 consecutive runs pulled the data perfectly and
+      # then died, and payments-automation/data went 12 hours stale. The risk monitor, which
+      # reads transactions.csv, raised transaction_source_stale and went degraded with it.
+      #
+      # The first attempt at a fix put `if: always()` on the commit step. It did not work,
+      # and the run log says exactly why: steps 19 and 20 — GitHub's OWN post-job cleanup —
+      # were skipped too. Those run unconditionally unless the runner itself is gone. This
+      # is not a process failing, it is the VM dying, and `always()` has nothing left to run
+      # on. No conditional can rescue data from a runner that no longer exists.
+      #
+      # So the data is committed BEFORE the step that can kill the runner ever starts.
+      # pull_payments.py writes the CSVs and pull_status.json (with a sha256 per file) and
+      # is cheap; the workbook build is what is dangerous. Splitting them means the CSVs,
+      # and everything downstream of them, survive a workbook failure by construction
+      # rather than by hoping a condition fires.
+      # ──────────────────────────────────────────────────────────────────────────────
+      - name: Pull from Snowflake
+        id: pull
         if: steps.gate.outputs.run == 'yes'
         env:
           # Only the private key is a secret (reused from the CASE/kpi pulls). The rest
@@ -120,7 +142,67 @@ jobs:
           OUT_DIR:   ${{ github.workspace }}/payments-automation/output
           # Dashboard "Summary of Margins" page reads this; committed below so Netlify redeploys.
           MARGINS_OUT: ${{ github.workspace }}/activated-payments/margins-data.js
-        run: python payments-automation/run.py
+        run: python payments-automation/pull_payments.py
+
+      - name: Commit the data before the workbook build can take the runner down
+        if: steps.pull.outcome == 'success'
+        run: |
+          set -uo pipefail
+          git config user.name  "payments-bot"
+          git config user.email "payments-bot@users.noreply.github.com"
+
+          # Refuse to publish a half-written pull. pull_payments.py records a sha256 for
+          # each CSV it wrote, so we can prove the files match rather than trusting that a
+          # process which may have been killed left them whole.
+          python3 - <<'PY' || { echo "::warning::pull output failed its own checksums — not committing"; exit 0; }
+          import hashlib, json, pathlib, sys
+          d = pathlib.Path("payments-automation/data")
+          st = json.loads((d / "pull_status.json").read_text())
+          bad = []
+          for name, want in (st.get("sha256") or {}).items():
+              f = d / name
+              if not f.exists():
+                  bad.append(name + ": missing"); continue
+              if hashlib.sha256(f.read_bytes()).hexdigest() != want:
+                  bad.append(name + ": sha mismatch")
+          if bad:
+              print("INTEGRITY FAIL: " + "; ".join(bad)); sys.exit(1)
+          print("integrity OK: " + ", ".join(sorted(st.get("sha256") or {})))
+          PY
+
+          # Only what the pull itself produced. margins-data.js and the workbook come from
+          # the rebuild below and are committed by the later step if it survives.
+          DATA="payments-automation/data/transactions.csv
+                payments-automation/data/icplus_by_charge.csv
+                payments-automation/data/platform_fees.csv
+                payments-automation/data/pull_status.json"
+
+          git add $DATA
+          if git diff --cached --quiet; then
+            echo "No data change — nothing to commit."
+            exit 0
+          fi
+          for i in 1 2 3 4 5; do
+            git commit -q -m "chore(payments): data pull $(date -u +%FT%TZ)" || true
+            if git push; then echo "data published on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (master moved) — re-parenting"
+            git fetch -q origin master
+            git reset -q --mixed origin/master
+            git add $DATA
+            if git diff --cached --quiet; then echo "remote already has it"; exit 0; fi
+            sleep 5
+          done
+          echo "::warning::could not publish the pulled data after 5 attempts"
+
+      - name: Rebuild -> recalc -> verify the workbook
+        if: steps.pull.outcome == 'success'
+        env:
+          DATA_DIR:  ${{ github.workspace }}/payments-automation/data
+          TEMPLATE:  ${{ github.workspace }}/payments-automation/template/loyverse_payments_analysis_ful_V2.xlsx
+          OUT_DIR:   ${{ github.workspace }}/payments-automation/output
+          # Dashboard "Summary of Margins" page reads this; committed below so Netlify redeploys.
+          MARGINS_OUT: ${{ github.workspace }}/activated-payments/margins-data.js
+        run: python payments-automation/run.py --no-pull
 
       # If VERIFY fails, run.py exits BEFORE tidying scratch, so the half-built workbook
       # + LibreOffice recalc output survive. Grab them so we can open the exact file the
