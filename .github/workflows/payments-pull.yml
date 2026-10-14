@@ -137,7 +137,22 @@ jobs:
           retention-days: 7
 
       - name: Commit & push if the workbook (or CSVs) changed
-        if: steps.gate.outputs.run == 'yes'
+        # ALWAYS commit whatever the pull managed to produce — the same lesson kpi-pull
+        # learned on 2026-08-28, which this workflow never got.
+        #
+        # run.py pulls the CSVs first and rebuilds the workbook second. When the workbook
+        # step dies the CSVs on disk are already complete and correct, but this step used to
+        # be skipped with the job, so a perfectly good data pull was thrown away. On
+        # 2026-10-14 that happened 20 times in nine hours: every run pulled 56,077
+        # transactions successfully, got OOM-killed (exit 137) during the LibreOffice
+        # recalc, and discarded the lot. payments-automation/data went 12 hours stale, which
+        # also starved the risk monitor — it raised `transaction_source_stale` and went
+        # degraded, because its transaction source IS this pull.
+        #
+        # The integrity check below is what makes this safe: pull_status.json carries a
+        # sha256 for every CSV it wrote, so we can prove the files match the status before
+        # committing, rather than trusting that a killed process left them whole.
+        if: always() && steps.gate.outputs.run == 'yes'
         run: |
           git config user.name  "payments-bot"
           git config user.email "payments-bot@users.noreply.github.com"
@@ -178,6 +193,26 @@ jobs:
             PATHS="$SMALL"
             echo "full export already committed today ($LAST) — committing dashboard data only"
           fi
+
+          # Refuse to commit a half-written pull. run.py records a sha256 per CSV in
+          # pull_status.json; if the process was killed mid-write those will not match, and
+          # committing would publish a torn file that looks fresh.
+          python3 - <<'PY' || { echo "::warning::pull output failed its own checksums — not committing data"; exit 0; }
+          import hashlib, json, pathlib, sys
+          d = pathlib.Path("payments-automation/data")
+          st = json.loads((d / "pull_status.json").read_text())
+          bad = []
+          for name, want in (st.get("sha256") or {}).items():
+              f = d / name
+              if not f.exists():
+                  bad.append(name + ": missing"); continue
+              got = hashlib.sha256(f.read_bytes()).hexdigest()
+              if got != want:
+                  bad.append(name + ": sha mismatch")
+          if bad:
+              print("INTEGRITY FAIL: " + "; ".join(bad)); sys.exit(1)
+          print("integrity OK: " + ", ".join(sorted((st.get("sha256") or {}))))
+          PY
 
           git add $PATHS
           if git diff --cached --quiet; then
