@@ -58,6 +58,8 @@ BACKFILL_BUDGET = int(os.environ.get("STATUS_BACKFILL_BUDGET", "200"))
 # out of one reads "0.0% uptime", which is alarming and means nothing. Say how much history
 # exists instead, and start quoting a figure once there is enough to carry meaning.
 MIN_DAYS_FOR_UPTIME = 7
+# Where the Pipeline Health tab is served. Only used to link from the Slack message.
+STATUS_PAGE_URL = os.environ.get("STATUS_PAGE_URL", "https://facadash.pages.dev/status.html")
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 NOW = dt.datetime.now(dt.timezone.utc)
 
@@ -579,8 +581,26 @@ def main():
 
     hook = os.environ.get("SLACK_WEBHOOK_URL")
     if hook and bad:
-        text = "*Pipeline status: %s*\n" % worst.upper() + "\n".join(
-            "• *%s* — %s" % (r["name"], "; ".join(r["notes"]) or r["state"]) for r in bad)
+        # The Slack message carries the DIAGNOSIS, not just the symptom. This is what gets
+        # read on a phone, away from the dashboard, so "payments pull is stale" is far less
+        # use than "it is running fine and discarding its own output, here is the run".
+        # (#26 added the diagnosis to the page; the matching change here never landed, so
+        # the most useful sentence only reached the place you were already looking.)
+        #
+        # The prefix matters too: this channel also carries the registration bot screen, and
+        # a fraud alert and an ops alert must be distinguishable at a glance, or the channel
+        # becomes the Actions tab all over again.
+        lines = []
+        for r in bad:
+            lines.append("• *%s* — %s" % (r["name"], "; ".join(r["notes"]) or r["state"]))
+            if r.get("diagnosis_line"):
+                lines.append("    _%s_" % r["diagnosis_line"])
+            d = r.get("diagnosis") or {}
+            if d.get("failing_run"):
+                lines.append("    <%s|see the failing run>" % d["failing_run"])
+        text = (":triangular_flag_on_post: *Pipeline health — %s*\n" % worst.upper()
+                + "\n".join(lines)
+                + "\n\n<%s|Open the Pipeline Health tab>" % STATUS_PAGE_URL)
         try:
             req = urllib.request.Request(hook, data=json.dumps({"text": text}).encode(),
                                          headers={"Content-Type": "application/json"})
