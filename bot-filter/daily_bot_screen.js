@@ -137,15 +137,23 @@ async function main() {
         COUNT_IF(LOYVERSE_ID IN (SELECT LOYVERSE_ID FROM bot_accounts))      AS ALREADY_FILTERED,
         (SELECT COUNT(DISTINCT r.MERCHANT_ID) FROM ${CFG.database}.${CFG.schema}.LOYVERSE_RECEIPTS r
           WHERE r.MERCHANT_ID IN (SELECT LOYVERSE_ID FROM coh))              AS WITH_RECEIPTS,
-        (SELECT ROUND(COALESCE(SUM(r.TOTAL_MONEY),0),2) FROM ${CFG.database}.${CFG.schema}.LOYVERSE_RECEIPTS r
-          WHERE r.MERCHANT_ID IN (SELECT LOYVERSE_ID FROM coh))              AS RECEIPT_MONEY
+        -- Receipt totals are reported PER CURRENCY, never summed across them. The first
+        -- live run of this screen reported SN as "$3,920,791" when the figure was XOF -
+        -- about $6,500. A number that wrong on a fraud alert is how people learn to
+        -- distrust the alert, so the currency travels with the number or the number does
+        -- not get shown.
+        (SELECT LISTAGG(x, ' + ') WITHIN GROUP (ORDER BY x) FROM (
+            SELECT TO_VARCHAR(ROUND(SUM(r.TOTAL_MONEY), 0), '999,999,999,999') || ' ' || r.CURRENCY AS x
+            FROM ${CFG.database}.${CFG.schema}.LOYVERSE_RECEIPTS r
+            WHERE r.MERCHANT_ID IN (SELECT LOYVERSE_ID FROM coh)
+            GROUP BY r.CURRENCY ORDER BY SUM(r.TOTAL_MONEY) DESC LIMIT 3))   AS RECEIPT_MONEY
       FROM (SELECT c.*, COUNT(*) OVER (PARTITION BY SHAPE) / COUNT(*) OVER () AS SHARE FROM coh c)`);
     Object.assign(f, {
       distinctNames: Number(row.DISTINCT_NAMES),
       topShapeShare: Math.round(100 * Number(row.TOP_SHAPE_SHARE)),
       pctDotless: Number(row.PCT_DOTLESS), pctGmail: Number(row.PCT_GMAIL),
       alreadyFiltered: Number(row.ALREADY_FILTERED),
-      withReceipts: Number(row.WITH_RECEIPTS), receiptMoney: Number(row.RECEIPT_MONEY),
+      withReceipts: Number(row.WITH_RECEIPTS), receiptMoney: row.RECEIPT_MONEY || "none",
     });
   }
   conn.destroy(() => {});
@@ -166,7 +174,7 @@ function render(flagged) {
     return [
       `*${f.country} ${f.day}* — ${f.n} registrations vs median ${f.median} (${f.z} MAD)  ${verdict}`,
       `    ${f.alreadyFiltered}/${f.n} already excluded · ${f.distinctNames} distinct names · top name-shape ${f.topShapeShare}%`,
-      `    mailbox: ${f.pctDotless}% dotless, ${f.pctGmail}% gmail · receipts: ${f.withReceipts} merchants, $${f.receiptMoney.toLocaleString('en-US')}`,
+      `    mailbox: ${f.pctDotless}% dotless, ${f.pctGmail}% gmail · receipts: ${f.withReceipts} merchants, ${String(f.receiptMoney).trim()}`,
     ].join('\n');
   });
   const urgent = flagged.some(f => f.alreadyFiltered < 0.9 * Math.max(f.n - f.median, 1));
