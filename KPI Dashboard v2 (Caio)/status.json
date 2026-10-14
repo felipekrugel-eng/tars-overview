@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-14T05:09:43.849294+00:00",
+ "checked_at": "2026-10-14T06:07:50.005969+00:00",
  "worst": "warn",
- "digest": "7b5d366ee6459dc7a3b2e3d1275c4f0e61175ca7bb5fe0604aadc53455cfb6c7",
+ "digest": "2568f40ac24d132207c38179d57aadacaa5553cdff700a4ed87ef591b2d253a9",
  "pipelines": [
   {
    "name": "CUSUM registrations",
@@ -12,9 +12,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-14T04:56:51+00:00",
-   "data_at": "2026-10-14T04:56:00+00:00",
-   "age_h": 0.23,
+   "committed_at": "2026-10-14T06:07:08+00:00",
+   "data_at": "2026-10-14T06:07:00+00:00",
+   "age_h": 0.01,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -22,12 +22,15 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
-   "committed_at": "2026-10-14T05:07:55+00:00",
+   "notes": [
+    "status = degraded",
+    "gap: transaction_source_stale"
+   ],
+   "state": "warn",
+   "reason": "source",
+   "committed_at": "2026-10-14T05:59:19+00:00",
    "data_at": "2026-10-14T04:56:43+00:00",
-   "age_h": 0.22
+   "age_h": 1.19
   },
   {
    "name": "Payments pull",
@@ -35,13 +38,13 @@
    "ref": "master",
    "max_age_h": 9,
    "notes": [
-    "ageing: 7.9h old, limit 9h"
+    "ageing: 8.9h old, limit 9h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-10-13T21:37:29+00:00",
    "data_at": "2026-10-13T21:15:02.553001+00:00",
-   "age_h": 7.91
+   "age_h": 8.88
   },
   {
    "name": "Activated payments",
@@ -51,9 +54,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-14T04:59:11+00:00",
-   "data_at": "2026-10-14T04:51:48.374000+00:00",
-   "age_h": 0.3,
+   "committed_at": "2026-10-14T05:56:43+00:00",
+   "data_at": "2026-10-14T05:51:29.502000+00:00",
+   "age_h": 0.27,
    "inputs_changed_at": "2026-10-13T16:22:03+00:00"
   },
   {
@@ -64,9 +67,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-14T04:59:11+00:00",
+   "committed_at": "2026-10-14T05:56:43+00:00",
    "data_at": null,
-   "age_h": 0.18
+   "age_h": 0.19
   },
   {
    "name": "Merchant base",
@@ -78,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-10-13T12:26:20+00:00",
    "data_at": "2026-10-13T12:17:56.289788+00:00",
-   "age_h": 16.86,
+   "age_h": 17.83,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -91,7 +94,7 @@
    "reason": null,
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 14.76,
+   "age_h": 15.73,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -106,7 +109,7 @@
    "reason": "rebuild",
    "committed_at": "2026-10-13T14:24:05+00:00",
    "data_at": null,
-   "age_h": 14.76,
+   "age_h": 15.73,
    "inputs_changed_at": "2026-10-13T15:25:32+00:00"
   },
   {
@@ -119,7 +122,7 @@
    "reason": null,
    "committed_at": "2026-10-13T23:06:41+00:00",
    "data_at": null,
-   "age_h": 6.05,
+   "age_h": 7.02,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -132,7 +135,7 @@
    "reason": null,
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 44.15,
+   "age_h": 45.12,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -259,7 +262,7 @@
    "2026-10-10": "ok",
    "2026-10-11": "ok",
    "2026-10-12": "ok",
-   "2026-10-14": "ok"
+   "2026-10-14": "warn"
   },
   "Payments pull": {
    "2026-10-13": "ok",
