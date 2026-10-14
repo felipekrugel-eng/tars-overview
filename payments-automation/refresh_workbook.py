@@ -489,8 +489,12 @@ def refresh_hyper_detail(wb, D, last):
                     v = rec["Q"]
                 elif key == "R":
                     v = rec["R"]
-            cell = HD.cell(r, col, v)
-            cell.font = base_font; cell.number_format = FMT2
+            # Do not materialise empty cells. openpyxl allocates a full Cell object for a
+            # None just as it does for a value (~237 bytes measured), and this matrix is
+            # ~97% empty — see the note on put_plan_details below.
+            if v is not None:
+                cell = HD.cell(r, col, v)
+                cell.font = base_font; cell.number_format = FMT2
         HD.column_dimensions[gcl(col)].width = 13
         plan_layout.append((col, level, False, collapsed)); col += 1
 
@@ -502,8 +506,36 @@ def refresh_hyper_detail(wb, D, last):
                 r = 2 + i
                 cents = ic_plan.get(rec["A"], {}).get((cat, pn))
                 v = round(cents / 100.0, 4) if cents else None
-                cell = HD.cell(r, col, v)
-                cell.font = det_font; cell.number_format = FMT4
+                # ── WHY THIS `if` IS THE WHOLE FIX ────────────────────────────────────
+                # This sheet is 56,077 rows x ~348 columns = ~19.5 MILLION positions, and
+                # openpyxl allocates a full Cell object for a None exactly as it does for a
+                # value — measured at ~237 bytes each. But the fee matrix is a sparse join:
+                # ~503,765 individual fee rows spread across those 19.5M positions, so
+                # about 97% of it is empty.
+                #
+                # Writing the empties cost roughly 4.6 GB of Cell objects holding nothing,
+                # which is what began taking the runner down on 2026-10-14 — not failing the
+                # step, taking the whole VM with it, so that 28 consecutive runs pulled the
+                # data correctly and could not commit it.
+                #
+                # Measured at full production size (56,077 x 348, 2.6% filled):
+                #     writing every cell  ~19.5M cells   ~4.6 GB
+                #     skipping the Nones   1.88M cells    614 MB
+                #
+                # The header on row 1 is still written for every column, so the column
+                # survives, keeps its width and keeps its grouping. The number format only
+                # ever mattered where there was a number.
+                #
+                # NOTE FOR THE NEXT PERSON: the obvious suspect here is the copy.copy() of
+                # font/fill/alignment/border per cell elsewhere in this file. It is NOT the
+                # problem — openpyxl de-duplicates styles into a shared table on assignment,
+                # so the copy is discarded immediately. Measured: identical peak RSS with
+                # and without it. It wastes CPU, not memory. Do not "fix" that expecting
+                # this to improve.
+                # ──────────────────────────────────────────────────────────────────────
+                if v is not None:
+                    cell = HD.cell(r, col, v)
+                    cell.font = det_font; cell.number_format = FMT4
             HD.column_dimensions[gcl(col)].width = 12
             plan_layout.append((col, 2, True, False)); col += 1
 
