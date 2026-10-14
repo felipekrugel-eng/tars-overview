@@ -203,6 +203,8 @@ def test_history_records_today_and_prunes_the_window(monkeypatch):
 
 
 def test_backfill_budget_is_respected(monkeypatch):
+    """The budget caps BACKFILL of past days. Today is always evaluated — it is one call
+    per pipeline and it is the day anyone actually cares about."""
     calls = []
     monkeypatch.setattr(check, "day_state",
                         lambda ref, p, m, d: calls.append(d) or "ok")
@@ -210,8 +212,11 @@ def test_backfill_budget_is_respected(monkeypatch):
              "state": "ok", "notes": []},
             {"name": "B", "ref": "master", "path": "b", "max_age_h": 36,
              "state": "ok", "notes": []}]
+    today = check.NOW.date()
     check.build_history(rows, {}, days=30, budget=7)
-    assert len(calls) == 7, "a first run must not fire hundreds of API calls"
+    past = [d for d in calls if d != today]
+    assert len(past) <= 7, "a first run must not fire hundreds of API calls"
+    assert calls.count(today) == len(rows), "today must be evaluated for every pipeline"
 
 
 # ---------------------------------------------------------------- the anti-false-alarm rule
@@ -237,3 +242,53 @@ def test_every_threshold_sits_above_its_measured_p90():
 def test_config_and_measurements_have_not_drifted_apart():
     assert {p[0] for p in check.PIPELINES} == set(MEASURED_P90_H), \
         "a pipeline was added or renamed without recording its measured cadence"
+
+
+# ---------------------------------------------------------- the record must not heal
+def test_a_days_bar_never_recovers_its_colour(monkeypatch):
+    """A day that went down stays down, even once the pipeline is fixed.
+
+    The payments pull was down for fourteen hours on 2026-10-14, was fixed, and the bar
+    went green as though nothing had happened — because today's cell was overwritten with
+    the live state on every check. A chart that forgets outages is worse than no chart.
+    """
+    rows = [{"name": "P", "ref": "master", "path": "p.json", "max_age_h": 9,
+             "state": "error", "notes": []}]
+    monkeypatch.setattr(check, "day_state", lambda *a: "ok")
+    today = check.NOW.date().isoformat()
+
+    hist, _ = check.build_history(rows, {}, days=3, budget=5)
+    assert hist["P"][today] == "down", "an outage must be recorded when it happens"
+
+    rows[0]["state"] = "ok"                       # recovered
+    hist, _ = check.build_history(rows, hist, days=3, budget=5)
+    assert hist["P"][today] == "down", "recovery must NOT erase the outage"
+
+
+def test_severity_only_ratchets_upward(monkeypatch):
+    rows = [{"name": "P", "ref": "master", "path": "p.json", "max_age_h": 9,
+             "state": "warn", "notes": []}]
+    monkeypatch.setattr(check, "day_state", lambda *a: "ok")
+    today = check.NOW.date().isoformat()
+    hist, _ = check.build_history(rows, {}, days=3, budget=5)
+    assert hist["P"][today] == "warn"
+    rows[0]["state"] = "error"                    # got worse
+    hist, _ = check.build_history(rows, hist, days=3, budget=5)
+    assert hist["P"][today] == "down", "a worse state must still be recorded"
+
+
+def test_a_very_busy_day_is_not_reported_as_an_outage(monkeypatch):
+    """cusum commits ~144 times a day. Reading only the first page of 100 invents a gap
+    where the older commits were, which is how it first came out at 1.7% uptime."""
+    monkeypatch.setattr(check, "last_commit_before", lambda ref, p, when: None)
+    monkeypatch.setattr(check, "commits_between",
+                        lambda ref, p, s, e: ([check.NOW] * 300, False))   # cap hit
+    day = check.NOW.date() - dt.timedelta(days=1)
+    assert check.day_state("gh-pages", "docs/cusum-data.js", 2, day) == "ok"
+
+
+def test_an_uncoverable_quiet_day_is_not_guessed(monkeypatch):
+    monkeypatch.setattr(check, "last_commit_before", lambda ref, p, when: None)
+    monkeypatch.setattr(check, "commits_between", lambda ref, p, s, e: ([check.NOW] * 3, False))
+    day = check.NOW.date() - dt.timedelta(days=1)
+    assert check.day_state("master", "x.json", 36, day) == "nodata"

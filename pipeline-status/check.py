@@ -47,6 +47,10 @@ except Exception:                          # never let diagnosis break the statu
 
 REPO = os.environ.get("STATUS_REPO", "felipekrugel-eng/tars-overview")
 HISTORY_DAYS = int(os.environ.get("STATUS_HISTORY_DAYS", "60"))
+# Bump when the MEANING of a history cell changes, so the stored bars are rebuilt rather
+# than left as a mix of two definitions. 2 = worst state seen during the day (was: state
+# at the end of the day, which silently erased any outage that had been fixed by midnight).
+HISTORY_METHOD = 2
 # Cap API calls per run so the first run does not make 600 of them; the chart fills in
 # over the following few runs and is complete within a day.
 BACKFILL_BUDGET = int(os.environ.get("STATUS_BACKFILL_BUDGET", "60"))
@@ -172,19 +176,72 @@ def last_commit_before(ref, path, when):
     return dt.datetime.fromisoformat(cs[0]["commit"]["committer"]["date"].replace("Z", "+00:00"))
 
 
+# Some artefacts update every few minutes (cusum commits ~144 times a day), so a single
+# page of 100 does not cover a day. Missing the older half of a busy day invents a huge
+# gap and reports a perfectly healthy pipeline as down — which is exactly what the first
+# version of this did: cusum came out at 1.7% uptime.
+COMMIT_PAGES_MAX = 6          # 600 commits/day is far above anything here
+
+
+def commits_between(ref, path, start, end):
+    """Every commit touching `path` inside the window, oldest first.
+
+    Returns (commits, complete). `complete` is False when the page cap was hit before the
+    window was covered, so the caller can decline to judge rather than guess.
+    """
+    out, complete = [], False
+    for page in range(1, COMMIT_PAGES_MAX + 1):
+        q = ("commits?sha=" + urllib.parse.quote(ref) + "&path=" + urllib.parse.quote(path)
+             + "&since=" + start.strftime("%Y-%m-%dT%H:%M:%SZ")
+             + "&until=" + end.strftime("%Y-%m-%dT%H:%M:%SZ")
+             + "&per_page=100&page=%d" % page)
+        batch = api(q)
+        out.extend(dt.datetime.fromisoformat(c["commit"]["committer"]["date"].replace("Z", "+00:00"))
+                   for c in batch)
+        if len(batch) < 100:          # ran out of commits: the window is fully covered
+            complete = True
+            break
+    return sorted(out), complete
+
+
 def day_state(ref, path, max_age, day):
-    """Was the artefact fresh at the END of that day? Grey if it did not exist yet."""
-    end = dt.datetime.combine(day, dt.time(23, 59, 59), dt.timezone.utc)
-    if end > NOW:
-        end = NOW
+    """The WORST state the artefact was in at any point that day.
+
+    This used to ask only "was it fresh at the END of the day", which quietly erased
+    incidents: the payments pull was stale for fourteen hours on 2026-10-14, was fixed at
+    10:50, and the bar read green because the single instant it sampled happened to be
+    after the recovery. A chart that forgets outages is worse than no chart, because it
+    looks authoritative while hiding exactly what you built it to see.
+
+    The age at any instant is `now - last update before now`, so the age peaks immediately
+    BEFORE each update, and again at the end of the window. Checking those points gives the
+    true worst age for the day without walking the clock.
+    """
+    start = dt.datetime.combine(day, dt.time.min, tzinfo=dt.timezone.utc)
+    end = min(dt.datetime.combine(day, dt.time(23, 59, 59), tzinfo=dt.timezone.utc), NOW)
+    if end <= start:
+        return "nodata"
     try:
-        c = last_commit_before(ref, path, end)
+        prior = last_commit_before(ref, path, start)
+        during, complete = commits_between(ref, path, start, end)
     except Exception:
         return "nodata"
-    if c is None:
-        return "nodata"
-    age = (end - c).total_seconds() / 3600.0
-    return "down" if age > max_age else "warn" if age > max_age * 0.75 else "ok"
+    if prior is None and not during:
+        return "nodata"                      # the artefact did not exist yet
+    if not complete:
+        # Too many updates that day to enumerate. An artefact committing >600 times in a
+        # day is self-evidently not stale, but say "unknown" rather than assert health.
+        return "ok" if len(during) > 24 else "nodata"
+
+    worst, cursor = 0.0, prior
+    for c in during:                         # age just before each update
+        if cursor is not None:
+            worst = max(worst, (c - cursor).total_seconds() / 3600.0)
+        cursor = c
+    if cursor is not None:                   # age at the end of the window
+        worst = max(worst, (end - cursor).total_seconds() / 3600.0)
+
+    return "down" if worst > max_age else "warn" if worst > max_age * 0.75 else "ok"
 
 
 def build_history(rows, previous, days=HISTORY_DAYS, budget=BACKFILL_BUDGET):
@@ -201,13 +258,35 @@ def build_history(rows, previous, days=HISTORY_DAYS, budget=BACKFILL_BUDGET):
     hist = {name: dict(h) for name, h in (previous or {}).items()}
     live = {"ok": "ok", "warn": "warn", "error": "down", "unknown": "nodata"}
 
+    # A DAY NEVER RECOVERS ITS COLOUR.
+    #
+    # Today's cell used to be overwritten with the live state on every check, so the moment
+    # a pipeline came back the outage vanished from the chart. On 2026-10-14 the payments
+    # pull was down for fourteen hours, was fixed, and the bar went green as though nothing
+    # had happened — which makes the history worse than useless, because it looks
+    # authoritative while quietly hiding every crash.
+    #
+    # An uptime chart records the WORST state seen in a day. A day that went down stays
+    # down, a day that wobbled stays amber, and the uptime percentage underneath means
+    # something. The live state is on the card above; the bars are the record.
+    severity = {"nodata": 0, "ok": 1, "warn": 2, "down": 3}
+
+    today_key = today.isoformat()
     todo = []
     for r in rows:
         h = hist.setdefault(r["name"], {})
         for d in window:
             key = d.isoformat()
             if d == today:
-                h[key] = live[r["state"]]
+                # Today is the worse of: what we can see RIGHT NOW, and what actually
+                # happened earlier today. The live state alone is not enough — a pipeline
+                # that was down for fourteen hours and got fixed at 10:50 reads "ok" now,
+                # and on a freshly rebuilt file there is no earlier cell to ratchet against.
+                todo.append((r, d, key))
+                seen = h.get(key)
+                now_state = live[r["state"]]
+                if seen is None or severity[now_state] > severity[seen]:
+                    h[key] = now_state
             elif key not in h and len(todo) < budget:
                 todo.append((r, d, key))
 
@@ -217,7 +296,10 @@ def build_history(rows, previous, days=HISTORY_DAYS, budget=BACKFILL_BUDGET):
             return r["name"], key, day_state(r["ref"], r["path"], r["max_age_h"], d)
         with ThreadPoolExecutor(max_workers=12) as pool:
             for name, key, state in pool.map(one, todo):
-                hist[name][key] = state
+                seen = hist[name].get(key)
+                # Never let a later look downgrade a day that already went bad.
+                if seen is None or severity[state] > severity[seen]:
+                    hist[name][key] = state
 
     first = window[0].isoformat()
     for name in list(hist):
@@ -448,7 +530,12 @@ def main():
     prev = {}
     try:
         with open(os.path.join(outdir, "status.json")) as fh:
-            prev = (json.load(fh) or {}).get("history", {})
+            stored = json.load(fh) or {}
+        if stored.get("history_method") == HISTORY_METHOD:
+            prev = stored.get("history", {})
+        else:
+            print("history method changed (%r -> %d) — rebuilding the bars"
+                  % (stored.get("history_method"), HISTORY_METHOD))
     except Exception:
         pass
     hist, window = build_history(rows, prev)
@@ -464,7 +551,8 @@ def main():
     digest = hashlib.sha256(json.dumps(meaningful, sort_keys=True).encode()).hexdigest()
 
     out = {"schema_version": 2, "checked_at": NOW.isoformat(), "worst": worst,
-           "digest": digest, "pipelines": rows, "history": hist}
+           "digest": digest, "history_method": HISTORY_METHOD,
+           "pipelines": rows, "history": hist}
     with open(os.path.join(outdir, "status.json"), "w") as fh:
         json.dump(out, fh, indent=1)
     with open(os.path.join(outdir, "status.html"), "w") as fh:
