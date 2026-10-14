@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-14T20:52:49.529Z",
+  "ranAt": "2026-10-14T21:15:44.082Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1143,7 +1143,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9892484339
+        "rows": 9892681412
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2054,33 +2054,6 @@
     ],
     "TERMINAL_HARDWARE_ORDERS": [
       {
-        "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 1717,
-        "SHIPPING_ADDRESS_STATE": "AZ",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "85546",
-        "BATCH_TIMESTAMP": "2026-10-14 15:00:00.000",
-        "SHIPPING_COMPANY": null,
-        "SHIPPING_ADDRESS_LINE1": "1580 N Plateau Ave",
-        "AMOUNT": 30730,
-        "SHIPPING_AMOUNT": 3000,
-        "SHIPPING_CURRENCY": "usd",
-        "PO_NUMBER": null,
-        "ID": "thor_1UQSvO7e4AMQfKY32YMhtpWm",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-10-14 14:43:04.000",
-        "SHIPPING_NAME": "Casey Jack",
-        "SHIPPING_METHOD_NAME": "express",
-        "STATUS": "ready_to_ship",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Safford",
-        "SHIPPING_PHONE": "14804425550",
-        "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "info@killer-chicken.com",
-        "LIVEMODE": true,
-        "CREATED": "2026-10-14 14:12:58.000",
-        "SHIPPING_ADDRESS_COUNTRY": "US"
-      },
-      {
         "SHIPPING_ADDRESS_LINE2": "",
         "TAX": 7014,
         "SHIPPING_ADDRESS_STATE": null,
@@ -2267,6 +2240,33 @@
         "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
         "LIVEMODE": true,
         "CREATED": "2026-05-18 15:22:42.000",
+        "SHIPPING_ADDRESS_COUNTRY": "US"
+      },
+      {
+        "SHIPPING_ADDRESS_LINE2": null,
+        "TAX": 1921,
+        "SHIPPING_ADDRESS_STATE": "PA",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
+        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
+        "SHIPPING_COMPANY": "Polarbear icecream",
+        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
+        "AMOUNT": 33934,
+        "SHIPPING_AMOUNT": 6000,
+        "SHIPPING_CURRENCY": "usd",
+        "PO_NUMBER": null,
+        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "UPDATED": "2026-09-09 12:16:17.000",
+        "SHIPPING_NAME": "Sean hunter",
+        "SHIPPING_METHOD_NAME": "priority",
+        "STATUS": "delivered",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "SHIPPING_ADDRESS_CITY": "Matamoras",
+        "SHIPPING_PHONE": "18458498613",
+        "CURRENCY": "usd",
+        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
+        "LIVEMODE": true,
+        "CREATED": "2026-06-16 13:28:54.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
       }
     ],
