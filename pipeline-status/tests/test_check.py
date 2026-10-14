@@ -14,6 +14,7 @@ Two things are being pinned here, and the second matters as much as the first:
      threshold sits above its artefact's own measured p90.
 """
 import datetime as dt
+import json
 import importlib.util
 import pathlib
 import sys
@@ -315,3 +316,35 @@ def test_uptime_appears_once_there_is_enough_history():
     hist = {"P": {d: "ok" for d in window}}
     html = check.render_html(rows, "ok", hist, window)
     assert "100.00 % uptime" in html
+
+
+def test_slack_message_carries_the_diagnosis(monkeypatch, capsys):
+    """Slack is what gets read away from the dashboard, so it must carry the diagnosis —
+    "payments pull is stale" is far less use than "it is running and discarding its output".
+    #26 added this to the page and the matching change here never landed."""
+    posted = {}
+    class _R:
+        def read(self): return b""
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+    def fake_open(req, timeout=0):
+        posted["body"] = json.loads(req.data.decode())
+        return _R()
+    monkeypatch.setattr(check.urllib.request, "urlopen", fake_open)
+    monkeypatch.setenv("SLACK_WEBHOOK_URL", "https://hooks.slack.com/services/x")
+    monkeypatch.setenv("STATUS_SOFT", "1")
+    monkeypatch.setattr(check, "check", lambda: [
+        {"name": "Payments pull", "path": "p", "ref": "master", "max_age_h": 9,
+         "state": "error", "reason": "stale", "age_h": 12.0, "notes": ["stale: 12.0h old"],
+         "diagnosis_line": "running but not publishing — its publish step was SKIPPED",
+         "diagnosis": {"failing_run": "https://github.com/x/y/actions/runs/1"}}])
+    # main() re-runs the diagnosis, which would overwrite the fixture with a live lookup.
+    monkeypatch.setattr(check, "_diagnose", None)
+    monkeypatch.setattr(check, "build_history", lambda rows, prev, **k: ({}, []))
+    monkeypatch.setattr(check, "render_html", lambda *a: "<html></html>")
+    monkeypatch.setenv("STATUS_OUT", "/tmp/_slacktest")
+    check.main()
+    text = posted["body"]["text"]
+    assert "Pipeline health" in text, "must be distinguishable from the bot screen"
+    assert "publish step was SKIPPED" in text, "the diagnosis must reach Slack"
+    assert "see the failing run" in text
