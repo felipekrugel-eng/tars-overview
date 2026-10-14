@@ -956,7 +956,7 @@
       <p class="ov-cnote" id="mgTrendNote"></p>
       <div class="mg-charts">
         <div class="mg-chart"><div class="mg-chart-h">Net revenue and contribution</div><canvas id="mgChRev"></canvas></div>
-        <div class="mg-chart"><div class="mg-chart-h">Contribution margin, % of net revenue</div><canvas id="mgChMargin"></canvas></div>
+        <div class="mg-chart"><div class="mg-chart-h">Contribution per dollar processed (bps of TPV)</div><canvas id="mgChMargin"></canvas></div>
         <div class="mg-chart"><div class="mg-chart-h">Volume processed (TPV)</div><canvas id="mgChTpv"></canvas></div>
         <div class="mg-chart"><div class="mg-chart-h">Transactions</div><canvas id="mgChTxns"></canvas></div>
       </div>
@@ -3838,17 +3838,45 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
          backgroundColor:'#1A1A1A',borderWidth:2,pointRadius:2.5,tension:0.25,order:1}
       ]},options:axis(usd)});
 
+    // CONTRIBUTION PER DOLLAR PROCESSED, not contribution as a share of net revenue.
+    //
+    // This chart used to plot contribution / net revenue. That denominator goes to zero and
+    // then negative exactly when the month is most worth looking at, so the metric was
+    // undefined precisely where it mattered — and the chart drew a GAP. In September 2026,
+    // the largest month on the book ($649,861 of volume, 21,902 charges), 40% of volume ran
+    // free, the take rate fell from 2.91% to 1.61%, network fees overtook gross revenue and
+    // net revenue went to -$1,094. The chart's response was to show nothing at all, leaving
+    // October stranded as a dot with no line, and April's -83% — a percentage of NINE
+    // DOLLARS of net revenue — stretching the axis from -120% to 80% so the months that
+    // actually matter were squeezed into the top fifth.
+    //
+    // Volume is the right denominator: it is never zero, never negative, comparable across
+    // months, and basis points of TPV is how a payments book is actually read. Every month
+    // now has a value, September included, and September is the whole point — a visible
+    // -51bp trough instead of a blank.
+    var bpsOf=function(m){
+      var t=ser[m].tpv; if(!t) return null;             // no volume, genuinely nothing to show
+      return +((ser[m].netMargin+addFor(m))/t*10000).toFixed(1);
+    };
     mgCharts.margin=new Chart(document.getElementById('mgChMargin'),{
       data:{labels:labels,datasets:[
-        // spanGaps:false on purpose — a month where net revenue was negative has NO defined
-        // margin, and joining across it would draw a line through a number that does not exist.
-        {type:'line',label:'Contribution margin',
-         data:months.map(function(m){
-           var nr=ser[m].netRevenue+addFor(m), c=ser[m].netMargin+addFor(m);
-           return nr>0 ? +(c/nr*100).toFixed(1) : null; }),
+        {type:'line',label:'Contribution per $ processed',
+         data:months.map(bpsOf),
          borderColor:'#1E9E5A',backgroundColor:'rgba(30,158,90,0.10)',borderWidth:2,
-         pointRadius:3,tension:0.25,fill:true,spanGaps:false}
-      ]},options:axis(function(v){ return v+'%'; })});
+         // A month still settling is hollow here for the same reason its bar is hollow in the
+         // other charts: its cost is incomplete, so its contribution reads high.
+         pointRadius:4,
+         pointBackgroundColor:months.map(function(m){ return ser[m].settled===false?'#FFFFFF':'#1E9E5A'; }),
+         pointBorderColor:'#1E9E5A',pointBorderWidth:2,
+         tension:0.25,fill:true,spanGaps:false}
+      ]},options:(function(){
+        var o=axis(function(v){ return v+'bp'; });
+        // Zero matters on this chart in a way it does not on the others — it is the line
+        // between making and losing money on every dollar processed — so it is drawn darker
+        // than the other gridlines rather than left to look like one of them.
+        o.scales.y.grid={color:function(c){ return c.tick&&c.tick.value===0?'#9AA0A6':'#F1F3F5'; }};
+        return o;
+      })()});
 
     mgCharts.tpv=new Chart(document.getElementById('mgChTpv'),{
       data:{labels:labels,datasets:[
@@ -3866,12 +3894,22 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     setTxt('mgTrendTot', monthLabelShort(months[0])+' \u2192 '+monthLabelShort(months[months.length-1])
            +' \u00b7 '+fmtUsd0(last.tpv)+' processed in the latest month');
     set('mgTrendNote', esc(trim((ALLM&&ALLM.monthSeriesNote)||'')));
-    setTxt('mgTrendFoot', unsettled.length
-      ? ('Hollow bars ('+unsettled.map(monthLabelShort).join(', ')+') are still settling: the IC+ cost feed '
-         +'lags the charge by weeks, so their network cost is incomplete and their margin reads high. '
-         +'A gap in the margin line is a month where net revenue was negative — a margin on a negative '
-         +'base has no meaning, so none is drawn.')
-      : 'A gap in the margin line is a month where net revenue was negative \u2014 a margin on a negative base has no meaning, so none is drawn.');
+    // Call out any month that processed volume at a LOSS. On the old chart these were exactly
+    // the months that vanished into a gap; they are the ones most worth naming.
+    var negative=months.filter(function(m){ return (ser[m].netMargin+addFor(m))<0; });
+    setTxt('mgTrendFoot',
+      (negative.length
+        ? ('Contribution was NEGATIVE in '+negative.map(monthLabelShort).join(', ')
+           +' \u2014 every dollar processed cost more than it earned. ')
+        : '')
+      + (unsettled.length
+        ? ('Hollow markers and bars ('+unsettled.map(monthLabelShort).join(', ')+') are still '
+           +'settling: the IC+ cost feed lags the charge by weeks, so their network cost is '
+           +'incomplete and their contribution reads high. ')
+        : '')
+      + 'Contribution is shown per dollar processed, in basis points of volume, rather than as a '
+      + 'share of net revenue \u2014 net revenue can be zero or negative, and a percentage of it is '
+      + 'undefined exactly when the month matters most.');
   }
 
   window.__MARGINS_INIT=function(){ if(inited) return; inited=true; render(); };
