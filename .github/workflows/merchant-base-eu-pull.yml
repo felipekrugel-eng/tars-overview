@@ -1,0 +1,131 @@
+# EU MERCHANT BASES — daily server-side rebuild of <CC>_Merchant_Base_FULL.xlsx for
+# Spain, Switzerland, Belgium and the Netherlands.
+#
+# Twin of merchant-base-pull.yml (US) and merchant-base-pr-pull.yml (PR): same pipeline,
+# ONE folder (merchant-base-automation-eu/), one workbook per market, selected by the
+# COUNTRY env. Market list, currency and sanity gate live in countries.py; the query is
+# rendered from queries/q1_base.sql.tmpl each run. FX = latest daily rate in the lake's
+# CURRENCY_RATES table. Details in merchant-base-automation-eu/README.md.
+#
+# Markets run SEQUENTIALLY (max-parallel: 1) so four pulls never share the warehouse, and
+# the job starts 05:40 UTC: after merchant-base-pull (04:40) and merchant-base-pr-pull
+# (05:10), clear of activated-payments (:30 every 3h), payments-pull (:45 every 3h),
+# CASE (06:00) and FACADASH (04:00). ES is the big one (~100k rows, ~10 min); the other
+# three are 15-20k rows each.
+#
+# Download URLs (always the latest build on master):
+#   https://github.com/felipekrugel-eng/tars-overview/raw/master/merchant-base-automation-eu/output/ES_Merchant_Base_FULL.xlsx
+#   https://github.com/felipekrugel-eng/tars-overview/raw/master/merchant-base-automation-eu/output/CH_Merchant_Base_FULL.xlsx
+#   https://github.com/felipekrugel-eng/tars-overview/raw/master/merchant-base-automation-eu/output/BE_Merchant_Base_FULL.xlsx
+#   https://github.com/felipekrugel-eng/tars-overview/raw/master/merchant-base-automation-eu/output/NL_Merchant_Base_FULL.xlsx
+name: merchant-base-eu-pull
+
+on:
+  schedule:
+    - cron: '40 5 * * *'
+  workflow_dispatch:
+    inputs:
+      country:
+        description: "Market to rebuild (ES, CH, BE, NL) or ALL"
+        default: "ALL"
+        required: false
+  push:
+    branches: [master]
+    paths:
+      - 'merchant-base-automation-eu/build_full_base.py'
+      - 'merchant-base-automation-eu/merchant_base_model.py'
+      - 'merchant-base-automation-eu/run.py'
+      - 'merchant-base-automation-eu/countries.py'
+      - 'merchant-base-automation-eu/queries/q1_base.sql.tmpl'
+
+concurrency:
+  group: merchant-base-eu-pull
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    # workflow_dispatch with a single market: the other three matrix legs are skipped here.
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.country == 'ALL' || github.event.inputs.country == matrix.country }}
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        country: [ES, CH, BE, NL]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install LibreOffice (headless recalc)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-calc
+
+      - name: Install Python deps
+        run: pip install -r merchant-base-automation-eu/requirements.txt
+
+      - name: Pull -> build -> model -> recalc -> verify -> publish (${{ matrix.country }})
+        env:
+          COUNTRY: ${{ matrix.country }}
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
+          SNOWFLAKE_USER:      "TARS_SERVICE_USER"
+          SNOWFLAKE_WAREHOUSE: "COMPUTE_WH"
+          SNOWFLAKE_ROLE:      "DATA_VIEWER"
+          SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
+          SNOWFLAKE_SCHEMA:    "PUBLIC"
+          SQL_DIR:  ${{ github.workspace }}/merchant-base-automation-eu/queries
+          DATA_DIR: ${{ github.workspace }}/merchant-base-automation-eu/data/${{ matrix.country }}
+          OUT_DIR:  ${{ github.workspace }}/merchant-base-automation-eu/output
+          # The previously published workbook is the ONLY source for the two things that
+          # cannot be regenerated: Margin Assumptions inputs edited in Excel, and ACTION text.
+          TEMPLATE_PREV: ${{ github.workspace }}/merchant-base-automation-eu/output/${{ matrix.country }}_Merchant_Base_FULL.xlsx
+        run: python merchant-base-automation-eu/run.py
+
+      - name: Upload build artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-base-eu-${{ matrix.country }}-build-debug
+          path: |
+            merchant-base-automation-eu/_build_${{ matrix.country }}.xlsx
+            merchant-base-automation-eu/_recalc_${{ matrix.country }}/**
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Commit & push if anything changed
+        run: |
+          set -euo pipefail
+          CC="${{ matrix.country }}"
+          git config user.name  "merchant-base-eu-bot"
+          git config user.email "merchant-base-eu-bot@users.noreply.github.com"
+          FILES="merchant-base-automation-eu/data/$CC/q1_export.csv.gz
+                 merchant-base-automation-eu/output/${CC}_Merchant_Base_FULL.xlsx
+                 merchant-base-automation-eu/queries/q1_base_$CC.sql"
+          # Stash our generated files OUTSIDE the repo before touching git.
+          mkdir -p "$RUNNER_TEMP/keep"
+          for f in $FILES; do mkdir -p "$RUNNER_TEMP/keep/$(dirname "$f")"; cp "$f" "$RUNNER_TEMP/keep/$f"; done
+
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            # reset --HARD, never --soft: see merchant-base-pull.yml for the 2026-08-27
+            # incident where a stale index deleted another bot's file.
+            git reset --hard -q origin/master
+            for f in $FILES; do mkdir -p "$(dirname "$f")"; cp "$RUNNER_TEMP/keep/$f" "$f"; done
+            git add $FILES
+            if git diff --cached --quiet; then
+              echo "No change — nothing to commit."; exit 0
+            fi
+            git commit -q -m "chore(merchant-base-eu): rebuild $CC $(date -u +%FT%TZ)"
+            if git push; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "push still failing after 5 attempts"; exit 1

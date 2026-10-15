@@ -26,3 +26,8 @@ adhoc/
 
 # snowflake-sdk writes this next to whatever script invoked it.
 snowflake.log
+
+# merchant-base-automation-eu scratch (one build/recalc per market)
+merchant-base-automation-eu/_build_*.xlsx
+merchant-base-automation-eu/_recalc_*/
+merchant-base-automation-eu/data/*/q1_export.csv
