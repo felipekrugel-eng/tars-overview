@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-15T10:33:16.098Z",
+  "ranAt": "2026-10-15T11:00:05.677Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1095,23 +1095,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 140721
+        "rows": 140802
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59874
+        "rows": 59876
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1128085
+        "rows": 1128735
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 102861
+        "rows": 102883
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1800674
+        "rows": 1801797
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
@@ -1143,7 +1143,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9897393654
+        "rows": 9897871304
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
