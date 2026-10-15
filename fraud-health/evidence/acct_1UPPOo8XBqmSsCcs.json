@@ -1,5 +1,78 @@
 {
   "accountId": "acct_1UPPOo8XBqmSsCcs",
+  "reviewedAt": "2026-10-15",
+  "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "NJ Division of Revenue Business Name Search lists I CARE PASSAIC PHARMACY CORP (Entity 0450507219, Passaic, incorporated 2020-06-30) and TRU PASSAIC INCORPORATED (Entity 0451403006, Passaic, incorporated 2026-01-21); the free listing does not display active/revoked status. The federal NPI registry shows an active NPI-2 record 1861093395 for I CARE PASSAIC PHARMACY CORP, DBA I Care Passaic Pharmacy, taxonomy Community/Retail Pharmacy, authorized official Mahmoud Medhat Ali (Owner), enumerated 2020-11-02, at 38 Market St, Passaic NJ.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-13",
+      "establishes": "Matching NJ entities exist for both the pharmacy name and the website/email name Tru Passaic Inc; the NPI record confirms a licensed community pharmacy organisation in Passaic.",
+      "url": "https://npiregistry.cms.hhs.gov/api?number=1861093395&version=2.1"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent listings (Yahoo Local; Birdeye aggregating 27 Google reviews) place I Care Passaic Pharmacy at 38 Market St, Passaic, NJ 07055, phone (973) 396-8918, with posted store hours.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "Physical pharmacy premises with street address and phone in the stated city.",
+      "url": "https://local.yahoo.com/info-227322165-i-care-passaic-pharmacy-corp-passaic/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative does not appear as a pharmacist or authorized official on the NPI registry (no individual with that surname is enumerated as a pharmacist in NJ or in Passaic), is not named on the business website, and does not appear as an owner replying to reviews on the Birdeye aggregator. The NJ Business Name Search free tier carries no officer data, so whether the representative is an officer of TRU PASSAIC INCORPORATED (formed 2026-01-21) remains open. Nothing loaded contradicts the link; the pharmacy NPI still lists the 2020 owner as authorized official, consistent with the 2026 change of ownership. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-15",
+      "establishes": "No public source yet names the representative as officer or owner of the 2026 entity; no contradiction found.",
+      "url": "https://npiregistry.cms.hhs.gov/api/?version=2.1&last_name=Bajwa&state=NJ"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "http://trupassaicinc.com/ redirects to https://trupassaicinc.com, a dedicated site titled 'I Care Passaic Pharmacy | 38 Market St, Passaic, NJ' showing the same address, phone (973) 396-8918, storefront photos and pharmacy services. The contact email is a Gmail address whose handle mirrors the website domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "The website belongs to this pharmacy and matches the listing address and phone.",
+      "url": "https://trupassaicinc.com"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "The business observably operates as a retail community pharmacy (NPI taxonomy Community/Retail Pharmacy; website sells prescriptions and OTC goods) which would normally be MCC 5912 (Drug Stores and Pharmacies), not the declared MCC 8099 (Medical Services NEC). The website also advertises Western Union/Ria money transfers and money orders on premises, a higher-risk activity not reflected in the MCC. The descriptor 'I CARE PASSAIC PHARMAC' is coherent with the name.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "MCC is mismatched with a retail pharmacy, and the merchant offers money-transfer services not captured by the declared category.",
+      "url": "https://trupassaicinc.com"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "The NJ corporation dates to 2020-06-30 and the NPI to 2020-11-02; Birdeye shows 27 Google reviews (3.3 stars) with recent reviews in the last 1-2 months, one noting 'new management'. No scam or fraud reports were found.",
+      "sourceType": "review-site",
+      "checkedAt": "2026-10-13",
+      "establishes": "Independent presence well over one year; a recent management/ownership change is indicated, consistent with Tru Passaic Incorporated formed 2026-01-21.",
+      "url": "https://reviews.birdeye.com/i-care-passaic-pharmacy-176919225474416"
+    }
+  ],
+  "evidenceNeeded": [
+    "Confirm the officer of TRU PASSAIC INCORPORATED against the representative (NJ Business Records Service status report, paid) — the pharmacy changed hands in 2026.",
+    "Confirm the principals of TRU PASSAIC INCORPORATED (2026) against the Stripe representative, since the pharmacy changed hands this year.",
+    "Correct the MCC to 5912 and confirm whether money-transfer/money-order activity is permitted under the platform agreement."
+  ],
+  "summary": "I Care Passaic Pharmacy is a real, licensed community pharmacy at 38 Market St, Passaic NJ, confirmed by the NPI registry, NJ business registry listings, independent directory listings and a dedicated website matching name, address and phone. The website/email name Tru Passaic Inc corresponds to a NJ entity formed 2026-01-21 and recent reviews mention new management, so the account most likely reflects a recent change of ownership of a pharmacy trading since 2020. The one risk flag is classification: a retail pharmacy coded MCC 8099 that also sells Western Union/Ria money transfers on premises."
+}
+{
+  "accountId": "acct_1UPPOo8XBqmSsCcs",
   "reviewedAt": "2026-10-13",
   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
   "findings": [
