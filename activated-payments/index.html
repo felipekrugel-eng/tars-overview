@@ -888,7 +888,7 @@
     </div>
     <div class="ov-card full">
       <div class="ov-ctitle"><h2>Volume processed on terminals</h2><span class="tot" id="ovVolTot">&nbsp;</span></div>
-      <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars are daily; the <b>red line is a trailing 7-day average</b>, on the same scale as the bars — one full week, so the weekday/weekend cycle cancels and what is left is the trend. The black line is cumulative, on the right-hand scale.</p>
+      <p class="ov-cnote" id="ovVolNote">Successful, captured card charges on Loyverse Payments per day, converted to USD. Bars are daily; the <b>red line is a trailing 7-day average</b>, on the same scale as the bars — one full week, so the weekday/weekend cycle cancels and what is left is the trend. The black line is cumulative, on the right-hand scale. <b>Complete days only</b> &mdash; the pull runs during the day, so its final day is a part-day and is excluded rather than drawn as a collapse that drags the average down with it.</p>
       <div class="ov-chart" id="ovVolChart"></div>
       <div class="ov-legend"><span><i class="pc-bar warn" style="background:#1578C4;opacity:.85"></i> Volume / day (USD)</span><span><i class="line" style="background:repeating-linear-gradient(90deg,#CC3333 0 6px,transparent 6px 10px)"></i> 7-day average (USD)</span><span><i class="line" style="background:#1A1A1A"></i> Cumulative (USD)</span></div>
     </div>
@@ -1661,11 +1661,33 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
 (function(){
   // Raw series as banked by pull.js. Each daily row carries its blended field(s) plus a
   // `by` object keyed by merchant country; __PAY_TXN_MERCHANTS carries a scalar `country`.
-  var RAW_ACT  = window.__PAY_ACT_DAILY || [];     // [{d,n,by:{CC:n}}] prod activations/day
-  var RAW_VOL  = window.__PAY_VOL_DAILY || [];     // [{d,usd,cnt,by:{CC:{usd,cnt}}}] volume/day (USD)
-  var RAW_ENA  = window.__PAY_ENABLED_DAILY || []; // [{d,n,by:{CC:n}}] enabled/day (backfilled from Terms-accepted)
-  var SNAP = window.__PAY_ENABLED_SNAP || [];     // [{d,enabled,total}] legacy forward snapshot (fallback)
-  var RAW_TXN  = window.__PAY_TXN_MERCHANTS || [];// [{acct,name,mid,country,started,lastTxn,txns,volume,captured,take,margin}]
+  // ── COMPLETE DAYS ONLY ──────────────────────────────────────────────────────
+  // The pull runs through the day, so its last day is always a PART of a day — whatever had
+  // landed by the time it ran. Drawn as a bar it looks like a collapse (on 2026-10-13 the
+  // final bar was $1,227 against a $18,673 day before it, because the pull was at 14:43), and
+  // it drags the 7-day average down with it, which is worse: the bar is at least visibly a
+  // stub, while the average just bends and looks like a real trend.
+  //
+  // So every daily series here stops at the last day the data actually covers end to end.
+  //
+  // The cut-off comes from the DATA's own timestamp, not the browser's clock. A reader in
+  // Auckland and a reader in Los Angeles disagree about what "today" is by a full day, and
+  // the series is in UTC; using the viewer's clock would show them different charts from the
+  // same file. __PAY_OVERVIEW_UPDATED is when the pull ran, so its date is the partial day.
+  var DATA_DAY = String(window.__PAY_OVERVIEW_UPDATED || '').slice(0, 10);
+  function completeOnly(rows, key){
+    if (!DATA_DAY || !rows || !rows.length) return rows || [];
+    var k = key || 'd';
+    return rows.filter(function (r) { return String(r[k] || '').slice(0, 10) < DATA_DAY; });
+  }
+  var RAW_ACT  = completeOnly(window.__PAY_ACT_DAILY || []);     // [{d,n,by:{CC:n}}] prod activations/day
+  var RAW_VOL  = completeOnly(window.__PAY_VOL_DAILY || []);     // [{d,usd,cnt,by:{CC:{usd,cnt}}}] volume/day (USD)
+  var RAW_ENA  = completeOnly(window.__PAY_ENABLED_DAILY || []); // [{d,n,by:{CC:n}}] enabled/day (backfilled from Terms-accepted)
+  var SNAP = completeOnly(window.__PAY_ENABLED_SNAP || []);      // [{d,enabled,total}] legacy forward snapshot (fallback)
+  // Keyed on `started` (first charge), which is what firstTxnSeries buckets by — and it only
+  // ever EXTENDS its spine, never truncates, so a merchant whose first charge is today would
+  // put the partial day back on the x-axis however the other series are cut.
+  var RAW_TXN  = completeOnly(window.__PAY_TXN_MERCHANTS || [], 'started');// [{acct,name,mid,country,started,lastTxn,txns,volume,captured,take,margin}]
   var LADDER = window.__PAY_STAGE_LADDER || null;
   var UPD = window.__PAY_OVERVIEW_UPDATED || null;
 
