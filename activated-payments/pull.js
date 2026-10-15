@@ -39,6 +39,10 @@ const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const REPORT_FILE    = path.join(__dirname, 'report-data.js');
 const PROFILE_FILE   = path.join(__dirname, 'profile-data.js');
+// Private feed for the Fraud Health verification agent (2026-10-15): representative name
+// and Stripe's own KYC outcome. Lives outside activated-payments/ so the Cloudflare deploy
+// never serves it. See writeRepresentatives().
+const REPRESENTATIVES_FILE = path.join(__dirname, '..', 'fraud-health', 'private', 'representatives.json');
 // The cohort triangle lives on the KPI dashboard, which is a SEPARATE Cloudflare Pages site.
 // A cross-origin fetch between the two would have to survive Cloudflare Access, so the payments
 // pull writes the cohort membership straight into the other site's folder instead. Same repo,
@@ -1030,6 +1034,41 @@ window.__ACT_KYC = ${JSON.stringify(kyc)};
 `;
   fs.writeFileSync(OUTPUT_FILE, out, 'utf8');
   console.log(`✓ Wrote ${OUTPUT_FILE} (${(out.length / 1024).toFixed(1)} KB)`);
+}
+
+// ── Representative feed for the Fraud Health verifier (2026-10-15) ─────────────
+// The verification agent checks whether the PERSON on the Stripe account is consistently
+// the person behind the business across public sources (state filing officer/registered
+// agent, licence holder, the owner on the business's own channels). That needs the
+// representative's name, which is deliberately NOT in activation-data.js because that
+// file is served to a browser. So it goes to fraud-health/private/, which the Cloudflare
+// deploy never copies (it stages only activated-payments/ and the KPI dashboard).
+// Name and Stripe's KYC outcome only — no phone, no date of birth, no address, no
+// document data. Those never leave Stripe.
+function writeRepresentatives(accountRows) {
+  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
+  const accounts = {};
+  for (const r of accountRows) {
+    const acct = get(r, 'stripe_account_id');
+    const name = String(get(r, 'contact_name') || '').trim();
+    if (!acct || !name) continue;
+    accounts[acct] = {
+      name,
+      legal_entity_type: get(r, 'legal_entity_type') || null,
+      legal_entity_verification_status: get(r, 'legal_entity_verification_status') || null,
+      payouts_enabled: get(r, 'payouts_enabled') === true,
+    };
+  }
+  const out = {
+    schema_version: 1,
+    generated_at: new Date().toISOString(),
+    note: 'Representative name + Stripe KYC outcome per connected account, for the fraud-health ' +
+          'verification agent. Private: never deployed, never written into dashboard data.',
+    accounts,
+  };
+  fs.mkdirSync(path.dirname(REPRESENTATIVES_FILE), { recursive: true });
+  fs.writeFileSync(REPRESENTATIVES_FILE, JSON.stringify(out, null, 1) + '\n', 'utf8');
+  console.log(`✓ Wrote ${REPRESENTATIVES_FILE} (${Object.keys(accounts).length} representatives)`);
 }
 
 // ── Funnel: entry cohort (US-since-launch + pilot 500) → stage progression ──────
@@ -2447,6 +2486,8 @@ async function main() {
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
+  // Non-fatal: the verifier can run on the previous feed if this write fails.
+  try { writeRepresentatives(accountRows); } catch (e) { console.error(`✗ representatives feed not written: ${e.message}`); }
 
   // Merchant group tags, hoisted above the overview build (2026-09-18). They used to be
   // fetched inside the Funnel step, which was fine while only the Funnel page used them.
