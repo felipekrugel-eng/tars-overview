@@ -1,5 +1,77 @@
 {
   "accountId": "acct_1UPfKz9pd3Hgu2lm",
+  "reviewedAt": "2026-10-15",
+  "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Individual/sole proprietor, so no South Carolina entity registration is expected for 'Guffey's Mobile Mechanic'. The SC Secretary of State register was not searched.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-13",
+      "establishes": "No registration expected; nothing checked or contradicted."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent auto-repair directory lists 'Guffey's Mobile Mechanic' at 2557 Sniders Hwy, Walterboro, SC 29488 (Colleton County, which contains Green Pond) with phone (843) 898-6272 and Mon-Sat hours. A Nextdoor business page 'Guffey's Mobile Mechanic - Walterboro, SC' also surfaced in search results but could not be loaded.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "A business by this exact name exists in the stated area with a local 843 phone number.",
+      "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative (who is also the statement descriptor) is not named as owner or contact on any loaded listing: the directory page shows only the business name, Walterboro address, phone, hours and services; the Nextdoor page returned no readable content; no Facebook page, review reply or SC DBA filing names the representative or any individual named Guffey. No source links or contradicts the representative's connection to the 'Guffey's' trade name. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-15",
+      "establishes": "Business exists as listed but names no person; the descriptor/trade-name gap is unresolved either way.",
+      "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website provided; the only contact is a Gmail address matching the business name. The directory listing shows a phone number but no website, consistent with the account data.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "No website to verify; public listing confirms a phone contact only.",
+      "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The loaded listing describes the business as an auto repair operation performing diagnostics, oil changes, general automotive repair, suspension/steering and fleet services, coherent with MCC 7538 (automotive service shops) and the stated mobile-mechanic product description.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "Observable service offering matches the MCC and product description.",
+      "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated, independent review history could be confirmed: the directory page shows two 2013/2014 reviews but they reference a different shop and are evidently template content. No complaints or fraud reports were found.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "No reliable evidence of operating tenure; no negative reports.",
+      "url": "https://autorepaircloud.net/dir/shop?shopId=UR113674"
+    }
+  ],
+  "evidenceNeeded": [
+    "Search snippets indicate a Yelp listing with a 1-star review alleging the business took payment and became unreachable; the page could not be loaded — check Yelp manually and ask the merchant for a DBA or document tying the representative to the Guffey's trade name; set the descriptor to the business name.",
+    "Reconcile the descriptor name (Teresa Fletcher) with the KYC representative and the Guffey business name.",
+    "Set the statement descriptor to the business name so cardholders recognise the charge."
+  ],
+  "summary": "Guffey's Mobile Mechanic has a genuine public footprint in the stated area: an independent repair directory lists it by exact name in Walterboro, Colleton County, SC with a local phone number, and a Nextdoor business page also appears in search. The listed services match MCC 7538 and the product description. The statement descriptor 'TERESA FLETCHER' is a personal name unconnected to 'Guffey' in any public source; not a contradiction, but it should be reconciled against the KYC name on file."
+}
+{
+  "accountId": "acct_1UPfKz9pd3Hgu2lm",
   "reviewedAt": "2026-10-13",
   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
   "findings": [
