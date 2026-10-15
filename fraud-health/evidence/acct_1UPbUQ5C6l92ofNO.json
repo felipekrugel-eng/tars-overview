@@ -1,5 +1,76 @@
 {
   "accountId": "acct_1UPbUQ5C6l92ofNO",
+  "reviewedAt": "2026-10-15",
+  "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Sole proprietor, so no PA entity registration is expected. The PA Attorney General Home Improvement Contractor registry (hicsearch.attorneygeneral.gov) returned 403 to automated queries, so a HIC registration search for 'IDD Contracting' could not be completed; no HIC record surfaced via web search either.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-13",
+      "establishes": "The correct PA registry exists but could not be queried programmatically.",
+      "url": "https://hicsearch.attorneygeneral.gov/"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Web searches for 'IDD Contracting' in Blairsville PA / Indiana County returned no Google, BBB, Yelp, Angi, Facebook or Nextdoor listing; only unrelated similarly named firms (I & D Contracting, Lancaster PA; IDS Contracting, Greensburg PA; Iddings Contracting, Brockport PA) appeared.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "No independent footprint placing IDD Contracting in Blairsville; absence is not proof of non-existence for a service business."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No listing, social page, PA HIC registration, fictitious-name filing, news item or complaint report connects the representative to IDD Contracting; the PA HIC registry returned no data to automated queries. A separate, long-established general contractor sharing the representative's surname operates in Blairsville PA (BBB file since 2007, no complaints shown, a different named owner); it is not shown to be linked to the representative or to IDD Contracting, though a family business the representative is trading from under his own initials is plausible. Nothing found contradicts the stated role. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-15",
+      "establishes": "Same-surname local contractor exists; no public link to or contradiction of the representative.",
+      "url": "https://www.bbb.org/us/pa/blairsville/profile/general-contractor/dunmire-contracting-0141-18005239"
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The declared website https://vr8h4h0ao2.c39.airoapp.ai resolves but is an Airo site-builder page titled 'El MorningStar - Contractor & Massage Therapist | Washington DC', canonical elmorningstar.com, with a robots noindex tag and the placeholder phone (202) 555-0100; it never mentions IDD Contracting or Blairsville, PA. The statement descriptor VR8H4H0AO2.C39.AIROAPP is the random site-builder subdomain rather than the business name, so cardholders would not recognise the charge.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "The website belongs to a different business in a different city with fictitious contact details, and the descriptor is a random string.",
+      "url": "https://vr8h4h0ao2.c39.airoapp.ai"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 1520 (residential general contractor) is plausible for the name, but the only observable content is the declared website, which advertises a different Washington DC business offering drywall, painting, flooring, cleaning, landscaping and deep-tissue massage; no product or service attributable to IDD Contracting in Blairsville is observable.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "What the account would show customers (site and descriptor) does not match the stated merchant, location or a coherent MCC 1520 business.",
+      "url": "https://vr8h4h0ao2.c39.airoapp.ai"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated presence, reviews, complaints or scam reports were found for 'IDD Contracting' in Blairsville PA, for the email handle tls801126, or for 'El MorningStar' as a DC contractor.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "No observable history either way."
+    }
+  ],
+  "evidenceNeeded": [
+    "Ask the merchant whether IDD Contracting is connected to the established Blairsville contractor of the same surname, and for a PA HIC registration number.",
+    "Contact the merchant to confirm the business, obtain a PA HIC registration number, and correct the website and statement descriptor before volume is allowed.",
+    "Manual HIC registry lookup (registry blocks automated queries)."
+  ],
+  "summary": "IDD Contracting (sole proprietor, Blairsville PA, MCC 1520) has no independent public footprint: no listing, review page, social page or PA HIC registration could be found, though the HIC registry blocked automated queries so that check is inconclusive. The declared website is a site-builder page for an entirely different business (El MorningStar, a Washington DC contractor/massage therapist) with a 555 placeholder phone number, and the statement descriptor is the random airoapp subdomain rather than the merchant name. The mismatch between the account data and what cardholders would see warrants manual outreach before volume is allowed."
+}
+{
+  "accountId": "acct_1UPbUQ5C6l92ofNO",
   "reviewedAt": "2026-10-13",
   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
   "findings": [
