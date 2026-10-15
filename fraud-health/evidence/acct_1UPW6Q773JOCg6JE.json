@@ -1,5 +1,77 @@
 {
   "accountId": "acct_1UPW6Q773JOCg6JE",
+  "reviewedAt": "2026-10-15",
+  "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Illinois Secretary of State business entity search returned 'Access Denied' to automated requests, so registration of L'enchanTea / Ma Maison Tea LLC could be neither confirmed nor ruled out. A SimplyHired job posting uses the legal-style name 'Ma maison tea LLC' in Batavia, IL, consistent with the contact email mamaisontea@gmail.com, but that is not a registry record.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "An entity calling itself Ma maison tea LLC is advertising a café job in Batavia; registry status unchecked.",
+      "url": "https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No Google/Yelp/Facebook/Instagram listing or local news item for a tea shop named 'L'enchanTea' in downtown Batavia, IL was found; Batavia tea searches return other businesses. The only independent footprint is the SimplyHired posting by Ma maison tea LLC for in-person café staff, with no street address or trade name.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "A café operation tied to the Ma Maison Tea name is hiring in Batavia; no storefront listing under L'enchanTea located.",
+      "url": "https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative's name was not found in connection with Ma Maison Tea LLC or L'enchanTea in any loaded source: the job posting names only the employer, and the Illinois SOS search, OpenCorporates and Bizapedia returned empty or blocked content, so no officer, member or registered agent could be read. No scam or complaint reports or links to another business were found. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-15",
+      "establishes": "Filing officers unreadable from this environment; no contradiction found.",
+      "url": "https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website given on the account. The domain matching the contact email, mamaisontea.com, resolves to a WordPress 'Good Things are Coming' placeholder with no business content; lenchantea.com did not respond.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "The brand domain is registered but is only a placeholder, consistent with a very new business.",
+      "url": "https://mamaisontea.com"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5812 (eating places) and descriptor 'L ENCHANTEA' are coherent with a to-go tea/matcha café that also sells packaged tea. The Ma maison tea LLC posting describes in-person café staff preparing and serving tea and specialty beverages and processing POS sales, matching the stated product description.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-13",
+      "establishes": "The business observably operates or is staffing a beverage café, consistent with MCC 5812.",
+      "url": "https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No reviews, dated social posts, local news or complaint/scam reports for L'enchanTea or Ma Maison Tea in Batavia were found. All indicators (payments enabled 2026-10-12, recent hiring post, coming-soon website) point to a business that is brand new or not yet open.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "No presence of one year or more; no adverse reports."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual Illinois SOS lookup of Ma Maison Tea LLC: confirm the manager/registered agent is the representative.",
+    "Manual Illinois SOS lookup for 'Ma Maison Tea LLC' (registry blocks automated queries).",
+    "Physical address, lease or local food-service licence for the Batavia premises."
+  ],
+  "summary": "L'enchanTea presents as a brand-new to-go tea café in Batavia, IL, and nothing found contradicts that: a third-party job posting shows Ma maison tea LLC (matching the contact email) hiring in-person café staff in Batavia, and mamaisontea.com is a coming-soon placeholder. There is no storefront listing, street address, social page, review or news item under the trade name yet, and the Illinois registry blocked automated lookup, so the LLC's registration status is unconfirmed. MCC 5812 is coherent with the described business."
+}
+{
+  "accountId": "acct_1UPW6Q773JOCg6JE",
   "reviewedAt": "2026-10-13",
   "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
   "findings": [
