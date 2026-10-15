@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-12 Europe/London",
   "cohortDate": "2026-10-12",
-  "reviewedAt": "2026-10-13T17:26:45+00:00",
+  "reviewedAt": "2026-10-15T13:40:30+00:00",
   "count": 7,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-13T17:26:45+00:00",
+ "reviewedAt": "2026-10-15T13:40:30+00:00",
  "merchants": [
   {
    "id": "acct_1UPPOo8XBqmSsCcs",
@@ -38,12 +38,13 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Representative identity and bank-account ownership cannot be verified from public sources. The NPI record names Mahmoud Medhat Ali as owner of the 2020 corporation; the principals of the 2026 Tru Passaic Incorporated were not checked."
+    "The representative does not appear as a pharmacist or authorized official on the NPI registry (no individual with that surname is enumerated as a pharmacist in NJ or in Passaic), is not named on the business website, and does not appear as an owner replying to reviews on the Birdeye aggregator. The NJ Business Name Search free tier carries no officer data, so whether the representative is an officer of TRU PASSAIC INCORPORATED (formed 2026-01-21) remains open. Nothing loaded contradicts the link; the pharmacy NPI still lists the 2020 owner as authorized official, consistent with the 2026 change of ownership. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://npiregistry.cms.hhs.gov/api/?version=2.1&last_name=Bajwa&state=NJ]"
    ],
    "contradictions": [
     "The business observably operates as a retail community pharmacy (NPI taxonomy Community/Retail Pharmacy; website sells prescriptions and OTC goods) which would normally be MCC 5912 (Drug Stores and Pharmacies), not the declared MCC 8099 (Medical Services NEC). The website also advertises Western Union/Ria money transfers and money orders on premises, a higher-risk activity not reflected in the MCC. The descriptor 'I CARE PASSAIC PHARMAC' is coherent with the name. [https://trupassaicinc.com]"
    ],
    "evidenceNeeded": [
+    "Confirm the officer of TRU PASSAIC INCORPORATED against the representative (NJ Business Records Service status report, paid) — the pharmacy changed hands in 2026.",
     "Confirm the principals of TRU PASSAIC INCORPORATED (2026) against the Stripe representative, since the pharmacy changed hands this year.",
     "Correct the MCC to 5912 and confirm whether money-transfer/money-order activity is permitted under the platform agreement."
    ],
@@ -61,6 +62,13 @@
      "checkedAt": "2026-10-13",
      "establishes": "Physical pharmacy premises with street address and phone in the stated city.",
      "dimension": "operating"
+    },
+    {
+     "url": "https://npiregistry.cms.hhs.gov/api/?version=2.1&last_name=Bajwa&state=NJ",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-15",
+     "establishes": "No public source yet names the representative as officer or owner of the 2026 entity; no contradiction found.",
+     "dimension": "identity"
     },
     {
      "url": "https://trupassaicinc.com",
@@ -83,7 +91,7 @@
    "reviewStage": "evidence-based",
    "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T00:45:07+01:00",
    "enabledWindowStart": "2026-10-11T17:14:58+01:00",
@@ -140,7 +148,7 @@
     "Independent operating history and reputation have not been researched.",
     "Individual/sole proprietor, so no corporate registration is expected. A web search against the Puerto Rico Registro de Corporaciones surfaced no matching entity; the official portal was not queried directly.",
     "No Instagram, Facebook, Google, Yelp or Tripadvisor listing for 'Nelianis Creations' in Guaynabo or elsewhere in Puerto Rico was found; the probable Instagram and Facebook handles returned no content. A home bakery does not require a licensed storefront, so absence of footprint is not treated as a contradiction.",
-    "Representative identity and bank-account ownership cannot be verified from public sources. The statement descriptor 'ALANIS DIAZ ZAYAS' is a personal name consistent with the contact email handle.",
+    "The representative matches the statement descriptor, but no Instagram, Facebook, TikTok, listing, market-vendor or news page connecting the representative to Nelianis Creations was found, and no page for the business at all. No scam or complaint reports tie the representative or the business name to any business. Identity documents and bank ownership are verified only by Stripe (status: verified).",
     "No website provided. The contact email (yahoo.com) is a consumer mailbox consistent with the descriptor name but not independently verifiable.",
     "MCC 5499 (misc food stores) is coherent on paper with the stated product (cakes, cupcakes, cookies, brownies, loaves) and a sole-proprietor home bakery, but no public page showing actual activity could be loaded to confirm it.",
     "No dated social posts, reviews, listings or complaint/scam reports mentioning 'Nelianis Creations' were found; the only 'Nelianis' hits were unrelated personal profiles."
@@ -157,7 +165,7 @@
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T00:45:07+01:00",
    "enabledWindowStart": "2026-10-11T17:24:08+01:00",
@@ -215,12 +223,13 @@
     "Independent operating history and reputation have not been researched.",
     "The Illinois Secretary of State business entity search returned 'Access Denied' to automated requests, so registration of L'enchanTea / Ma Maison Tea LLC could be neither confirmed nor ruled out. A SimplyHired job posting uses the legal-style name 'Ma maison tea LLC' in Batavia, IL, consistent with the contact email mamaisontea@gmail.com, but that is not a registry record. [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]",
     "No Google/Yelp/Facebook/Instagram listing or local news item for a tea shop named 'L'enchanTea' in downtown Batavia, IL was found; Batavia tea searches return other businesses. The only independent footprint is the SimplyHired posting by Ma maison tea LLC for in-person café staff, with no street address or trade name. [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]",
-    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "The representative's name was not found in connection with Ma Maison Tea LLC or L'enchanTea in any loaded source: the job posting names only the employer, and the Illinois SOS search, OpenCorporates and Bizapedia returned empty or blocked content, so no officer, member or registered agent could be read. No scam or complaint reports or links to another business were found. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://www.simplyhired.com/job/J0aO13hG0BYkUvTQSaePEFPNAGuEH9yWpta9IknbFzzg2G-ez3Hq3Q]",
     "No website given on the account. The domain matching the contact email, mamaisontea.com, resolves to a WordPress 'Good Things are Coming' placeholder with no business content; lenchantea.com did not respond. [https://mamaisontea.com]",
     "No reviews, dated social posts, local news or complaint/scam reports for L'enchanTea or Ma Maison Tea in Batavia were found. All indicators (payments enabled 2026-10-12, recent hiring post, coming-soon website) point to a business that is brand new or not yet open."
    ],
    "contradictions": [],
    "evidenceNeeded": [
+    "Manual Illinois SOS lookup of Ma Maison Tea LLC: confirm the manager/registered agent is the representative.",
     "Manual Illinois SOS lookup for 'Ma Maison Tea LLC' (registry blocks automated queries).",
     "Physical address, lease or local food-service licence for the Batavia premises."
    ],
@@ -246,7 +255,7 @@
    "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T06:19:14+01:00",
    "enabledWindowStart": "2026-10-12T06:18:12+01:00",
@@ -293,16 +302,15 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Company.",
-    "Florida Sunbiz lists MAISON JAR LLC (document L26000478555) as an ACTIVE Florida LLC filed 2026-09-14 (effective 2026-09-12), principal/mailing address 528 NW 103rd Terrace, Gainesville FL 32607, registered agent Sabbat, Alexandra at the same address; no FEI/EIN on file, no authorized persons listed, no annual reports yet. The entity is about four weeks old and the address appears residential. [https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?inquiryType=EntityName&searchNameOrder=MAISONJAR&searchTerm=Maison%20Jar]"
+    "Florida Sunbiz lists MAISON JAR LLC (document L26000478555) as an ACTIVE Florida LLC filed 2026-09-14 (effective 2026-09-12), principal/mailing address 528 NW 103rd Terrace, Gainesville FL 32607, registered agent Sabbat, Alexandra at the same address; no FEI/EIN on file, no authorized persons listed, no annual reports yet. The entity is about four weeks old and the address appears residential. [https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?inquiryType=EntityName&searchNameOrder=MAISONJAR&searchTerm=Maison%20Jar]",
+    "The representative matches the registered agent named on the Florida Sunbiz filing for MAISON JAR LLC (document L26000478555, ACTIVE, filed 2026-09-14); the filing lists no other authorized persons or managers and no annual reports yet. Identity documents and bank ownership are verified by Stripe (status: verified). [https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=MAISONJAR%20L260004785550&aggregateId=flal-l26000478555-4ea0fae4-be33-4d45-acdc-0b6ab8ea443a]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
     "Independent operating history and reputation have not been researched.",
     "Web searches for Maison Jar Gainesville / maisonjargnv returned no Google, Yelp, Facebook or Instagram listing in Gainesville; the only 'Maison Jar' results are an unrelated established refillery and grocery in Brooklyn, NY. No independent footprint in Gainesville was found, consistent with an entity registered weeks ago.",
-    "Representative identity and bank-account ownership cannot be verified from public sources. The Florida registry names Alexandra Sabbat as registered agent, consistent with the stated single member, but no authorized persons are listed on the filing.",
     "maisonjargnv.com resolves in DNS but the site could not be loaded from the review environment (SSL EOF over HTTPS, proxy block over HTTP), so page content and ownership could not be assessed. The descriptor MAISONJARGNV.COM matches the stated domain.",
     "No product description was supplied and no page showing what the business sells could be loaded; the name mirrors a known refillery/grocery concept, broadly consistent with MCC 5499, but nothing observable confirms what this Gainesville entity sells.",
     "The LLC was filed 2026-09-14, less than a month before card payments were enabled; no reviews, dated social posts, local news or complaint/scam reports about a Maison Jar in Gainesville were found."
@@ -319,15 +327,22 @@
      "checkedAt": "2026-10-13",
      "establishes": "An active FL LLC matching the account name and state exists, with Alexandra Sabbat named as registered agent.",
      "dimension": "legal"
+    },
+    {
+     "url": "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=MAISONJAR%20L260004785550&aggregateId=flal-l26000478555-4ea0fae4-be33-4d45-acdc-0b6ab8ea443a",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-15",
+     "establishes": "The person on the Stripe account is the registered agent of the Florida LLC that owns the business.",
+     "dimension": "identity"
     }
    ],
    "summary": "MAISON JAR LLC is a genuine, active Florida LLC registered in Gainesville with Alexandra Sabbat as registered agent, so the legal entity and stated owner are consistent with the account. The company was formed only on 14 Sep 2026 at an apparently residential address, has no EIN on file, and has no discoverable storefront, social page, reviews or listings; the website could not be loaded from the review environment. Rubric score is 0 with no contradictions, but this is a brand-new, thin-file merchant with no observable product yet.",
-   "reviewCompleteness": 38,
-   "confidence": "low",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
    "reviewStage": "evidence-based",
-   "reviewPriority": "Verification outstanding",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T09:50:10+01:00",
    "enabledWindowStart": "2026-10-12T04:07:21+01:00",
@@ -384,7 +399,7 @@
     "Independent operating history and reputation have not been researched.",
     "Sole proprietor, so no PA entity registration is expected. The PA Attorney General Home Improvement Contractor registry (hicsearch.attorneygeneral.gov) returned 403 to automated queries, so a HIC registration search for 'IDD Contracting' could not be completed; no HIC record surfaced via web search either. [https://hicsearch.attorneygeneral.gov/]",
     "Web searches for 'IDD Contracting' in Blairsville PA / Indiana County returned no Google, BBB, Yelp, Angi, Facebook or Nextdoor listing; only unrelated similarly named firms (I & D Contracting, Lancaster PA; IDS Contracting, Greensburg PA; Iddings Contracting, Brockport PA) appeared.",
-    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "No listing, social page, PA HIC registration, fictitious-name filing, news item or complaint report connects the representative to IDD Contracting; the PA HIC registry returned no data to automated queries. A separate, long-established general contractor sharing the representative's surname operates in Blairsville PA (BBB file since 2007, no complaints shown, a different named owner); it is not shown to be linked to the representative or to IDD Contracting, though a family business the representative is trading from under his own initials is plausible. Nothing found contradicts the stated role. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://www.bbb.org/us/pa/blairsville/profile/general-contractor/dunmire-contracting-0141-18005239]",
     "No dated presence, reviews, complaints or scam reports were found for 'IDD Contracting' in Blairsville PA, for the email handle tls801126, or for 'El MorningStar' as a DC contractor."
    ],
    "contradictions": [
@@ -392,6 +407,7 @@
     "MCC 1520 (residential general contractor) is plausible for the name, but the only observable content is the declared website, which advertises a different Washington DC business offering drywall, painting, flooring, cleaning, landscaping and deep-tissue massage; no product or service attributable to IDD Contracting in Blairsville is observable. [https://vr8h4h0ao2.c39.airoapp.ai]"
    ],
    "evidenceNeeded": [
+    "Ask the merchant whether IDD Contracting is connected to the established Blairsville contractor of the same surname, and for a PA HIC registration number.",
     "Contact the merchant to confirm the business, obtain a PA HIC registration number, and correct the website and statement descriptor before volume is allowed.",
     "Manual HIC registry lookup (registry blocks automated queries)."
    ],
@@ -402,6 +418,13 @@
      "checkedAt": "2026-10-13",
      "establishes": "The correct PA registry exists but could not be queried programmatically.",
      "dimension": "legal"
+    },
+    {
+     "url": "https://www.bbb.org/us/pa/blairsville/profile/general-contractor/dunmire-contracting-0141-18005239",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-15",
+     "establishes": "Same-surname local contractor exists; no public link to or contradiction of the representative.",
+     "dimension": "identity"
     },
     {
      "url": "https://vr8h4h0ao2.c39.airoapp.ai",
@@ -417,7 +440,7 @@
    "reviewStage": "evidence-based",
    "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T09:50:10+01:00",
    "enabledWindowStart": "2026-10-12T06:09:35+01:00",
@@ -474,12 +497,13 @@
     "Representative identity and bank-account ownership have not been independently confirmed.",
     "Independent operating history and reputation have not been researched.",
     "Individual/sole proprietor, so no South Carolina entity registration is expected for 'Guffey's Mobile Mechanic'. The SC Secretary of State register was not searched.",
-    "Representative identity and bank-account ownership cannot be verified from public sources. The statement descriptor is a personal name (Teresa Fletcher) that differs from the business name 'Guffey's', and no loaded public listing names either a Guffey or a Fletcher as operator; the relationship is unconfirmed but not contradicted.",
+    "The representative (who is also the statement descriptor) is not named as owner or contact on any loaded listing: the directory page shows only the business name, Walterboro address, phone, hours and services; the Nextdoor page returned no readable content; no Facebook page, review reply or SC DBA filing names the representative or any individual named Guffey. No source links or contradicts the representative's connection to the 'Guffey's' trade name. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://autorepaircloud.net/dir/shop?shopId=UR113674]",
     "No website provided; the only contact is a Gmail address matching the business name. The directory listing shows a phone number but no website, consistent with the account data. [https://autorepaircloud.net/dir/shop?shopId=UR113674]",
     "No dated, independent review history could be confirmed: the directory page shows two 2013/2014 reviews but they reference a different shop and are evidently template content. No complaints or fraud reports were found. [https://autorepaircloud.net/dir/shop?shopId=UR113674]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
+    "Search snippets indicate a Yelp listing with a 1-star review alleging the business took payment and became unreachable; the page could not be loaded — check Yelp manually and ask the merchant for a DBA or document tying the representative to the Guffey's trade name; set the descriptor to the business name.",
     "Reconcile the descriptor name (Teresa Fletcher) with the KYC representative and the Guffey business name.",
     "Set the statement descriptor to the business name so cardholders recognise the charge."
    ],
@@ -498,7 +522,7 @@
    "reviewStage": "evidence-based",
    "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T16:19:21+01:00",
    "enabledWindowStart": "2026-10-12T10:16:06+01:00",
@@ -553,7 +577,7 @@
     "Representative identity and bank-account ownership have not been independently confirmed.",
     "Independent operating history and reputation have not been researched.",
     "Registered as an individual sole proprietor in Michigan, where no state registration is expected for an individual trading under their own name. No assumed-name (DBA) filing for 'Pos service' was found.",
-    "Representative identity and bank-account ownership cannot be verified from public sources.",
+    "The representative (who is also the statement descriptor) could not be linked to any observable business: searches combining the representative's name with digital art, Michigan localities and marketplace/portfolio platforms (Etsy, Redbubble, Society6, Gumroad, Behance, ArtStation, Instagram) returned no shop, portfolio or art account attributable to the representative; the one candidate Etsy shop lists only a first name with no surname or Michigan reference. The name and the email handle returned no scam, complaint, chargeback or card-testing reports and no other merchant accounts. Identity documents and bank ownership are verified only by Stripe (status: verified).",
     "No scam or complaint reports mentioning 'takeallpayments', 'takeallpayments346', 'Pos service' or the descriptor 'ALEXIS JACKSON' were found, and no dated public presence of any age exists for the business; the account was enabled for card payments on 2026-10-12."
    ],
    "contradictions": [
@@ -572,7 +596,7 @@
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-13T17:26:45+00:00",
+   "reviewedAt": "2026-10-15T13:40:30+00:00",
    "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
    "enabledAt": "2026-10-12T16:19:21+01:00",
    "enabledWindowStart": "2026-10-12T11:05:44+01:00",
