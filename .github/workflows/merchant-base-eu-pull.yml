@@ -48,8 +48,6 @@ jobs:
     timeout-minutes: 90
     permissions:
       contents: write
-    # workflow_dispatch with a single market: the other three matrix legs are skipped here.
-    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.country == 'ALL' || github.event.inputs.country == matrix.country }}
     strategy:
       max-parallel: 1
       fail-fast: false
@@ -57,21 +55,37 @@ jobs:
         country: [ES, CH, BE, NL]
 
     steps:
+      # workflow_dispatch with a single market: the other three matrix legs do nothing.
+      # (the matrix context is not available in a job-level `if`, hence a step gate)
+      - name: Gate
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ] || [ "${{ github.event.inputs.country }}" = "ALL" ] || [ "${{ github.event.inputs.country }}" = "${{ matrix.country }}" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "skipping ${{ matrix.country }}"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
 
       - uses: actions/setup-python@v5
+        if: steps.gate.outputs.run == 'true'
         with:
           python-version: '3.12'
 
       - name: Install LibreOffice (headless recalc)
+        if: steps.gate.outputs.run == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libreoffice-calc
 
       - name: Install Python deps
+        if: steps.gate.outputs.run == 'true'
         run: pip install -r merchant-base-automation-eu/requirements.txt
 
       - name: Pull -> build -> model -> recalc -> verify -> publish (${{ matrix.country }})
+        if: steps.gate.outputs.run == 'true'
         env:
           COUNTRY: ${{ matrix.country }}
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
@@ -101,6 +115,7 @@ jobs:
           retention-days: 7
 
       - name: Commit & push if anything changed
+        if: steps.gate.outputs.run == 'true'
         run: |
           set -euo pipefail
           CC="${{ matrix.country }}"
