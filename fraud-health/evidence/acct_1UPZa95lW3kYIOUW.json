@@ -1,0 +1,68 @@
+{
+  "accountId": "acct_1UPZa95lW3kYIOUW",
+  "reviewedAt": "2026-10-15",
+  "reviewer": "cowork-verification-agent (claude) — dry run reviewed by Felipe",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "Florida Sunbiz lists MAISON JAR LLC (document L26000478555) as an ACTIVE Florida LLC filed 2026-09-14 (effective 2026-09-12), principal/mailing address 528 NW 103rd Terrace, Gainesville FL 32607, registered agent Sabbat, Alexandra at the same address; no FEI/EIN on file, no authorized persons listed, no annual reports yet. The entity is about four weeks old and the address appears residential.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-13",
+      "establishes": "An active FL LLC matching the account name and state exists, with Alexandra Sabbat named as registered agent.",
+      "url": "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResults?inquiryType=EntityName&searchNameOrder=MAISONJAR&searchTerm=Maison%20Jar"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Web searches for Maison Jar Gainesville / maisonjargnv returned no Google, Yelp, Facebook or Instagram listing in Gainesville; the only 'Maison Jar' results are an unrelated established refillery and grocery in Brooklyn, NY. No independent footprint in Gainesville was found, consistent with an entity registered weeks ago.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "No independent presence in the stated city; name collides with an existing Brooklyn brand."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative matches the registered agent named on the Florida Sunbiz filing for MAISON JAR LLC (document L26000478555, ACTIVE, filed 2026-09-14); the filing lists no other authorized persons or managers and no annual reports yet. Identity documents and bank ownership are verified by Stripe (status: verified).",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-15",
+      "establishes": "The person on the Stripe account is the registered agent of the Florida LLC that owns the business.",
+      "url": "https://search.sunbiz.org/Inquiry/CorporationSearch/SearchResultDetail?inquirytype=EntityName&directionType=Initial&searchNameOrder=MAISONJAR%20L260004785550&aggregateId=flal-l26000478555-4ea0fae4-be33-4d45-acdc-0b6ab8ea443a"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "maisonjargnv.com resolves in DNS but the site could not be loaded from the review environment (SSL EOF over HTTPS, proxy block over HTTP), so page content and ownership could not be assessed. The descriptor MAISONJARGNV.COM matches the stated domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-13",
+      "establishes": "Domain exists; whether it hosts a live site for this business is undetermined."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No product description was supplied and no page showing what the business sells could be loaded; the name mirrors a known refillery/grocery concept, broadly consistent with MCC 5499, but nothing observable confirms what this Gainesville entity sells.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "MCC coherence cannot be confirmed or refuted."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The LLC was filed 2026-09-14, less than a month before card payments were enabled; no reviews, dated social posts, local news or complaint/scam reports about a Maison Jar in Gainesville were found.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-13",
+      "establishes": "Essentially no public history; no adverse reports."
+    }
+  ],
+  "evidenceNeeded": [
+    "Load maisonjargnv.com from a different network and confirm it belongs to this LLC and shows what is sold.",
+    "Ask the merchant for a product description and a social or storefront link."
+  ],
+  "summary": "MAISON JAR LLC is a genuine, active Florida LLC registered in Gainesville with Alexandra Sabbat as registered agent, so the legal entity and stated owner are consistent with the account. The company was formed only on 14 Sep 2026 at an apparently residential address, has no EIN on file, and has no discoverable storefront, social page, reviews or listings; the website could not be loaded from the review environment. Rubric score is 0 with no contradictions, but this is a brand-new, thin-file merchant with no observable product yet."
+}
