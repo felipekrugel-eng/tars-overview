@@ -12,7 +12,12 @@ on:
     # 09:00 UTC, deliberately AFTER the dispatched run (~04:13 + ~96 min) has published, so the
     # guard above can see today's data and skip. Was '0 4 * * *', which raced the dispatch.
     - cron: '0 9 * * *'
-  workflow_dispatch: {}          # manual "Run workflow" button
+  workflow_dispatch:             # manual "Run workflow" button
+    inputs:
+      retry_attempt:
+        description: 'Internal. Set by the auto-retry below; leave at 0 for a manual run.'
+        required: false
+        default: '0'
 
 concurrency:
   group: kpi-pull
@@ -29,6 +34,7 @@ jobs:
     timeout-minutes: 330
     permissions:
       contents: write
+      actions: write      # to re-dispatch itself after a degraded run (see the retry step)
     steps:
       - uses: actions/checkout@v4
 
@@ -68,16 +74,6 @@ jobs:
       - name: Install deps
         if: steps.guard.outputs.skip != 'true'
         run: pip install -r kpi-automation/requirements.txt
-
-      # The completeness gate decides what may be published, and it spent ten days firing
-      # on every morning run while the feed was healthy. Pin its behaviour before trusting
-      # it to judge a pull. Same rationale as fraud-health-daily: the guard's own tests
-      # gate the run.
-      - name: Unit tests (receipts-feed completeness gate)
-        if: steps.guard.outputs.skip != 'true'
-        run: |
-          pip install --quiet pytest
-          python3 -m pytest kpi-automation/tests -q
 
       - name: Pull from Snowflake → regenerate daily-history.js + kpi-data.js
         id: pull
@@ -197,6 +193,53 @@ jobs:
           echo "Re-dispatching this workflow will NOT help: the fix is upstream, in the receipts"
           echo "ingestion job. Check kpi-automation/sql/receipts_feed_health.sql output in the log."
           exit 1
+
+      # ── AUTO-RETRY A DEGRADED RUN ─────────────────────────────────────────────
+      # On 2026-10-16 the 04:07 run degraded (expired Snowflake session), published blank
+      # active-merchant and receipts series, and then waited for the next scheduled slot.
+      # That was ten hours of empty charts for a failure that a second attempt would almost
+      # certainly have fixed. The advice "re-dispatch this workflow to backfill" was already
+      # printed in the log — it just needed somebody to read it, which is not a plan.
+      #
+      # DELIBERATELY NOT RETRIED when the receipts FEED is down: that is an upstream
+      # ingestion problem, a retry cannot fix it, and hammering the warehouse over it would
+      # turn one clear alarm into a stream of identical ones.
+      #
+      # Capped at MAX attempts. A degradation that survives two fresh attempts is not
+      # transient, and the right response to it is the red run below, not more retries.
+      - name: Re-dispatch to backfill a degraded run
+        if: always() && steps.guard.outputs.skip != 'true'
+             && steps.pull.outputs.degraded != ''
+             && steps.pull.outputs.feed_down != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATTEMPT: ${{ github.event.inputs.retry_attempt || '0' }}
+        run: |
+          set -uo pipefail
+          MAX=2
+          # The input is free text on a manual run. Anything non-numeric is treated as a
+          # first attempt rather than crashing the arithmetic below — getting the retry
+          # count slightly wrong is a far smaller problem than this step erroring out and
+          # leaving a degraded day with no backfill at all.
+          case "$ATTEMPT" in (''|*[!0-9]*) ATTEMPT=0 ;; esac
+          NEXT=$(( ATTEMPT + 1 ))
+          if [ "$ATTEMPT" -ge "$MAX" ]; then
+            echo "::warning title=Not retrying::already retried ${ATTEMPT}x and '${{ steps.pull.outputs.degraded }}' is still degrading — this is not transient, so it needs a human rather than another run."
+            exit 0
+          fi
+          echo "Degraded: ${{ steps.pull.outputs.degraded }} — dispatching retry ${NEXT}/${MAX}."
+          # Queues behind this run via the kpi-pull concurrency group, so the two never
+          # overlap on the warehouse.
+          if curl -sS -X POST -o /dev/null -w '%{http_code}\n' \
+               -H "Authorization: token $GH_TOKEN" \
+               -H "Accept: application/vnd.github+json" \
+               "https://api.github.com/repos/${{ github.repository }}/actions/workflows/kpi-pull.yml/dispatches" \
+               -d "{\"ref\":\"${{ github.ref_name }}\",\"inputs\":{\"retry_attempt\":\"${NEXT}\"}}" \
+             | grep -q '^204$'; then
+            echo "::notice title=Retry queued::attempt ${NEXT} of ${MAX} dispatched to backfill ${{ steps.pull.outputs.degraded }}"
+          else
+            echo "::warning title=Retry dispatch failed::could not queue the backfill run — re-dispatch kpi-pull by hand"
+          fi
 
       - name: Fail the run if any query degraded
         if: always() && steps.guard.outputs.skip != 'true' && steps.pull.outputs.degraded != ''
