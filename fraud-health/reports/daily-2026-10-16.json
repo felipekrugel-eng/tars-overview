@@ -1,0 +1,175 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-16",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-16T00:00:00+01:00",
+  "windowEnd": "2026-10-17T00:00:00+01:00",
+  "count": 7,
+  "confirmed": 7,
+  "boundaryAmbiguous": 0,
+  "members": [
+   {
+    "accountId": "acct_1UQyr08gjilQUUMD",
+    "enabledAt": "2026-10-16T06:40:16+01:00",
+    "enabledWindowStart": "2026-10-16T01:18:35+01:00",
+    "enabledWindowEnd": "2026-10-16T06:40:16+01:00",
+    "enabledWindowHours": 5.36,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UQztt58dPTKQ7yV",
+    "enabledAt": "2026-10-16T06:40:16+01:00",
+    "enabledWindowStart": "2026-10-16T02:25:38+01:00",
+    "enabledWindowEnd": "2026-10-16T06:40:16+01:00",
+    "enabledWindowHours": 4.24,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UR2XV8uIqwO1DTq",
+    "enabledAt": "2026-10-16T09:49:04+01:00",
+    "enabledWindowStart": "2026-10-16T05:14:42+01:00",
+    "enabledWindowEnd": "2026-10-16T09:49:04+01:00",
+    "enabledWindowHours": 4.57,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UR2na6fmms9Ii5n",
+    "enabledAt": "2026-10-16T09:49:04+01:00",
+    "enabledWindowStart": "2026-10-16T05:31:19+01:00",
+    "enabledWindowEnd": "2026-10-16T09:49:04+01:00",
+    "enabledWindowHours": 4.3,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UR31B6LalLH4TcX",
+    "enabledAt": "2026-10-16T09:49:04+01:00",
+    "enabledWindowStart": "2026-10-16T05:45:21+01:00",
+    "enabledWindowEnd": "2026-10-16T09:49:04+01:00",
+    "enabledWindowHours": 4.06,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UR4WI5rr6vZe3BJ",
+    "enabledAt": "2026-10-16T12:06:36+01:00",
+    "enabledWindowStart": "2026-10-16T07:21:35+01:00",
+    "enabledWindowEnd": "2026-10-16T12:06:36+01:00",
+    "enabledWindowHours": 4.75,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UREpF8sk0PtDu4z",
+    "enabledAt": "2026-10-16T21:28:27+01:00",
+    "enabledWindowStart": "2026-10-16T18:21:49+01:00",
+    "enabledWindowEnd": "2026-10-16T21:28:27+01:00",
+    "enabledWindowHours": 3.11,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 471,
+   "never_observed_enabled": 966
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1UQyr08gjilQUUMD",
+   "acct_1UQztt58dPTKQ7yV",
+   "acct_1UR2XV8uIqwO1DTq",
+   "acct_1UR2na6fmms9Ii5n",
+   "acct_1UR31B6LalLH4TcX",
+   "acct_1UR4WI5rr6vZe3BJ",
+   "acct_1UREpF8sk0PtDu4z"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [
+  {
+   "accountId": "acct_1Twbg9GGqPiDxZG0",
+   "name": "Somdrero cactus",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1U2Cvs9f3d1uJ9sr",
+   "name": "ATC",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1UItuF70FqShHvHi",
+   "name": "Ashli’s nails",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  },
+  {
+   "accountId": "acct_1UBiWv7kKUvlOCf8",
+   "name": "Halal Central Diner",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  }
+ ],
+ "coverage": {
+  "computedAt": "2026-10-16T23:01:06+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1492,
+  "enabledAccounts": 487,
+  "reviewedAccounts": 528,
+  "reviewedEnabledAccounts": 483,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.2,
+  "ledgerAccounts": 1493,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
