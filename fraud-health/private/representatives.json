@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-16T22:40:53.375Z",
+ "generated_at": "2026-10-16T23:01:15.931Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URHqy8ETjwhvHPH": {
+   "name": "Thabani Worthington",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "unverified",
+   "payouts_enabled": false
+  },
   "acct_1UREpF8sk0PtDu4z": {
    "name": "Rachael Hester",
    "legal_entity_type": "company",
