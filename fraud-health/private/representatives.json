@@ -1,8 +1,26 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-16T08:10:05.392Z",
+ "generated_at": "2026-10-16T08:31:02.421Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UR31B6LalLH4TcX": {
+   "name": "Nancy Smith",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UR2na6fmms9Ii5n": {
+   "name": "Courtnei Washington",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UR2XV8uIqwO1DTq": {
+   "name": "Dakota Smith",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UQztt58dPTKQ7yV": {
    "name": "Janessa Havinga",
    "legal_entity_type": "company",
@@ -3631,7 +3649,7 @@
    "name": "Alejandro Montealegre",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
+   "payouts_enabled": false
   },
   "acct_1TwWYh7JGiSHuCjf": {
    "name": "Giovanni Torres",
