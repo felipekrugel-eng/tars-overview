@@ -1,0 +1,6 @@
+# Investigation state, alerts, reports, and anything a reviewer pulled from
+# Gmail. None of it belongs in the repository.
+private/
+fixtures/documents/
+__pycache__/
+*.pyc
