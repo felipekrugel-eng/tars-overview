@@ -1,11 +1,11 @@
 {
-  "completed_at_utc": "2026-10-15T09:34:06.100682Z",
+  "completed_at_utc": "2026-10-16T09:21:00.354954Z",
   "pull_succeeded": true,
-  "row_count": 135016,
+  "row_count": 135082,
   "schema_version": 1,
   "sha256": {
-    "q1_export.csv.gz": "be27f118666bdb8630630a32dbffaef95b94cc03e958ffdbdad7f886440cfb25"
+    "q1_export.csv.gz": "64bc7cded01030e3072951963e0bff52e6e5ae71bc37f23f5bc032a3006ecc9c"
   },
   "source": "snowflake_merchant_base",
-  "source_pulled_at_utc": "2026-10-15T02:22:06.181000-07:00"
+  "source_pulled_at_utc": "2026-10-16T02:15:45.063000-07:00"
 }
