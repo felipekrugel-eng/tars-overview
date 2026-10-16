@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-16T19:34:12.768Z",
+ "generated_at": "2026-10-16T20:01:17.086Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UREpF8sk0PtDu4z": {
+   "name": "Rachael Hester",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UR4WI5rr6vZe3BJ": {
    "name": "Omar Elsayed",
    "legal_entity_type": "non_profit",
