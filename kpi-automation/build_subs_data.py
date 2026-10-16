@@ -125,66 +125,11 @@ def feed_completeness(path: Path):
         return None, {"checked": False, "note": "feed health query returned no rows"}
 
     days = fh.set_index("D")["RECEIPTS"].astype(float)
-
-    # ---- dense calendar (fixed 2026-10-13) ------------------------------------------
-    # A day with no receipts at all produces NO ROW from the GROUP BY, not a zero row.
-    # Two consequences, and the old code had both backwards:
-    #
-    #   1. A genuine gap used to VANISH instead of failing the floor — the exact
-    #      silence-vs-zero confusion this check was written to prevent.
-    #   2. `settled` dropped the last LAG_DAYS *rows*, not the last LAG_DAYS *days*. Early
-    #      in the UTC day the current day has not started ingesting, so there is no row for
-    #      it, the window slid back one, `last_complete` landed on D-3 instead of D-2, and
-    #      stale_days read 3 against STALE_ALARM_DAYS = 2.
-    #
-    # (2) made kpi-pull fail EVERY run that actually pulled. Over the ten days to
-    # 2026-10-13 the job ran a real pull 12 times and failed this gate 12 times. The other
-    # 14 runs look green only because the guard step skipped them in ~0.5 min once the day's
-    # data was already published — they never reached the gate at all. So the gate did not
-    # pass once in the whole window; it was simply not evaluated on the runs that looked
-    # healthy. (Worth remembering when reading this workflow's history: a green kpi-pull run
-    # usually means NOTHING WAS PULLED.)
-    #
-    # From the 2026-10-13 04:06 log, with the feed perfectly healthy:
-    #     receipts feed complete through 2026-10-10 (3 day(s) ago)
-    # 10 Oct is D-3. With a row for the current day it would have been 11 Oct, D-2, and
-    # stale_days would have read 2 — under the alarm. The only difference was the missing
-    # row.
-    #
-    # What the bug does NOT cause, despite the alarming log line: those runs also printed
-    #     withheld 1 incomplete month(s) from the receipts series: 2026-10
-    # That one is CORRECT and unrelated. last_whole_month() ships a month only once its
-    # final day is complete, so on any mid-October day the monthly receipts series caps at
-    # 2026-09 whatever this gate decides. October ships when October ends. Do not "fix" it.
-    #
-    # The damage here is narrower and entirely about trust: a run that goes red every time
-    # it does real work, reporting staleDays=3 when the truth is 2, under an error that
-    # says RECEIPTS FEED IS DOWN and sends the reader upstream to an ingestion job that is
-    # working perfectly. The next genuine outage arrives into a team that has learned this
-    # gate is noise.
-    #
-    # Reindexing onto a dense date range fixes both: a missing day is now an explicit 0 and
-    # fails the floor, and the settle window is chosen by CALENDAR DATE so it no longer
-    # depends on what time of day the job happens to run.
-    today_str = pd.Timestamp.utcnow().strftime("%Y-%m-%d")
-    today_ts = pd.Timestamp(today_str)
-    dense_idx = pd.date_range(pd.Timestamp(days.index.min()), today_ts,
-                              freq="D").strftime("%Y-%m-%d")
-    days = days.reindex(dense_idx, fill_value=0.0)
-
-    # Judge only days that have had LAG_DAYS whole days to settle. Date-based, so the
-    # in-progress day is excluded because of WHAT IT IS, not because of where it sits.
-    cutoff = (today_ts - pd.Timedelta(days=LAG_DAYS)).strftime("%Y-%m-%d")
-    settled = days[days.index <= cutoff]
+    # Reference window: settled days only, and the most recent LAG_DAYS dropped outright.
+    settled = days.iloc[:-LAG_DAYS] if len(days) > LAG_DAYS else days
     if settled.empty:
         return None, {"checked": False, "note": "not enough settled days"}
-
-    # The bar is taken from days that actually carried traffic. Including the zeros we just
-    # materialised would let a long outage quietly lower the threshold it is judged against
-    # — the property the header promises, which the sparse version got for free and the
-    # dense one has to ask for.
-    ref_src = settled[settled > 0]
-    ref = ref_src.iloc[-30:-3] if len(ref_src) > 30 else ref_src
+    ref = settled.iloc[-30:-3] if len(settled) > 30 else settled
     median = float(ref.median()) if len(ref) else 0.0
     floor = median * HEALTHY_FRACTION
 
@@ -482,6 +427,14 @@ def main() -> None:
         # decline. A dashboard that cannot explain its own last data point is how a feed
         # outage becomes a business panic.
         "feedHealth": {**feed_health, "stale": feed_stale_fatal},
+        # QUERIES THAT DID NOT LAND THIS BUILD, so the page can distinguish "this series is
+        # empty because nothing happened" from "this series is empty because we failed to
+        # fetch it". feedHealth answers a DIFFERENT question — is the upstream lake feed
+        # alive — and on 2026-10-16 it answered yes, correctly, while active merchants and
+        # receipts sat blank because our own pull had died of an expired session. Two
+        # different failures, two different signals; conflating them is what let a broken
+        # dashboard look fine.
+        "degraded": [q for q in os.environ.get("DEGRADED_QUERIES", "").split(",") if q],
         "receiptsThrough": receipts_cap,
         "activeQualified": active_qualified,
         "countryMonth": country_month,

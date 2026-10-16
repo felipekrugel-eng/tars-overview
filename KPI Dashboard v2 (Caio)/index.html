@@ -212,7 +212,6 @@
   <a href="index.html" class="on">Study &amp; Trend</a>
   <a href="retention.html">Churn</a>
   <a href="report.html">Report</a>
-  <a href="status.html">Pipeline Health</a>
 </div>
 
 <div class="hero">
@@ -2221,9 +2220,37 @@ document.getElementById('foot-gen').textContent = D.meta.generatedAt;
 (function () {
   var S = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA) ? SUBS_DATA : null;
   var h = S && S.feedHealth;
-  if (!h) return;
   var el = document.getElementById('feed-banner');
-  if (!el) return;
+  if (!el || !S) return;
+
+  // ── THIS BUILD FAILED TO FETCH SOMETHING ──────────────────────────────────
+  // Checked FIRST and separately from feed health, because they are different failures and
+  // on 2026-10-16 the difference mattered: the receipts pull died of an expired Snowflake
+  // session, active merchants and receipts went blank, and this banner said nothing at all
+  // — correctly, by its own logic, because the upstream feed was perfectly healthy. The
+  // dashboard looked normal and merely had no data in it. Felipe found it before we did.
+  //
+  // feedHealth answers "is the lake still being fed?". This answers "did we manage to read
+  // it?". A blank chart needs the second question answered too.
+  var deg = (S.degraded || []);
+  if (deg.length) {
+    var LABELS = {receipts:'active merchants, receipts and GTV',
+                  rolling:'30-day rolling registrations and active merchants'};
+    var what = deg.map(function(q){ return LABELS[q] || q; }).join('; ');
+    el.style.display = 'block';
+    el.innerHTML = '<div style="max-width:1280px;margin:0 auto;padding:12px 24px">'
+      + '<div style="background:#FBE7EB;border-left:4px solid #D2495B;border-radius:6px;'
+      + 'padding:11px 15px;font-size:12.5px;line-height:1.6;color:#8d2435">'
+      + '<b>This build could not fetch part of the data.</b> Missing: <b>' + what + '</b>. '
+      + 'Those charts are BLANK because the query did not complete, not because the numbers '
+      + 'are zero. Everything else on this page refreshed normally and is current. The next '
+      + 'successful run backfills the gap — the snapshot window spans about 70 days, so '
+      + 'nothing is lost permanently.'
+      + '</div></div>';
+    return;   // the more specific failure wins; no need to also speculate about the feed
+  }
+
+  if (!h) return;
 
   // Three states, and only two of them say anything. "checked:false" means the probe itself
   // did not run, which is NOT the same as healthy and must not be silently treated as such.

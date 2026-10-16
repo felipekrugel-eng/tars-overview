@@ -120,6 +120,34 @@ def connect():
         schema=os.environ.get("SNOWFLAKE_SCHEMA", "PUBLIC"),
         client_session_keep_alive=True)
 
+# ---------------------------------------------------------------------------
+# SESSION EXPIRY IS NOT A DATA FAILURE (added 2026-10-16 after the 16 Oct outage)
+#
+# What happened: receipts_tpv_daily_asof.sql died with
+#     390112 (08001): Session expired - reauthentication required
+# and, being DEGRADABLE, took active merchants, receipts and GTV off the dashboard for the
+# day. Nothing was wrong with the data or the query. The run had simply been connected long
+# enough that Snowflake's master token expired underneath it.
+#
+# client_session_keep_alive=True does NOT prevent this. The heartbeat keeps the session from
+# going idle; it does not extend the master token, which has a hard lifetime (4h by default).
+# This pull holds ONE connection across all seven queries and the receipts grid alone is
+# allowed 7200s, so a slow warehouse day can put the total past that ceiling — and then the
+# next query to run is the one that dies, whichever it happens to be.
+#
+# DEGRADING WAS THE WRONG RESPONSE. Degrading exists for a query that genuinely cannot
+# complete; an expired token means the connection is stale, not that the data is unavailable.
+# The right answer is to throw the connection away and reconnect, which costs about a second.
+# Only if the query fails again on a FRESH session is it a real failure worth degrading.
+SESSION_DEAD = ("390112", "08001", "session expired", "session is expired",
+                "authentication token has expired", "session no longer exists")
+
+
+def _is_session_dead(exc):
+    s = f"{getattr(exc, 'errno', '')} {getattr(exc, 'sqlstate', '')} {exc}".lower()
+    return any(m in s for m in SESSION_DEAD)
+
+
 def run_sql(conn, sql_file, timeout=DEFAULT_TIMEOUT):
     sql = (SQLDIR / sql_file).read_text()
     cur = conn.cursor()
@@ -130,6 +158,43 @@ def run_sql(conn, sql_file, timeout=DEFAULT_TIMEOUT):
     cur.close()
     return df
 
+
+class Session:
+    """One Snowflake connection that replaces itself when the token expires.
+
+    Deliberately not a retry-everything wrapper. A statement timeout, a permissions error or
+    a bad query must still fail on the first attempt and be handled by the degrade logic —
+    retrying those just burns warehouse time to reach the same answer. Only a dead SESSION is
+    retried, and only once, because the second attempt starts from a brand-new token: if it
+    fails again the problem is real.
+    """
+
+    def __init__(self):
+        self.conn = connect()
+
+    def run(self, sql_file, timeout=DEFAULT_TIMEOUT):
+        try:
+            return run_sql(self.conn, sql_file, timeout)
+        except Exception as e:
+            if not _is_session_dead(e):
+                raise
+            print(f"[session] token expired during {sql_file} ({type(e).__name__}: {e}). "
+                  f"Reconnecting and retrying once — this is a stale connection, not a data "
+                  f"problem, and degrading the series over it would blank the dashboard for "
+                  f"no reason.", flush=True)
+            try:
+                self.conn.close()
+            except Exception:
+                pass
+            self.conn = connect()
+            return run_sql(self.conn, sql_file, timeout)
+
+    def close(self):
+        try:
+            self.conn.close()
+        except Exception:
+            pass
+
 def latest(df):
     s = df["SNAPSHOT_DATE"].astype(str).str[:10]
     return df[s == s.max()].copy()
@@ -138,7 +203,7 @@ def write(path, df):
     path.write_text(df.to_csv(index=False)); print(f"   -> {path.name} ({len(df)} rows)", flush=True)
 
 def main():
-    conn = connect(); dfs = {}; degraded = []
+    conn = Session(); dfs = {}; degraded = []
 
     # Each query is isolated AND its CSVs are written the moment it returns, so a failure
     # late in the loop can never discard work that already succeeded (the 28 Aug failure
@@ -148,7 +213,7 @@ def main():
         f = QUERY_FILES[key]
         print(f"[run] {f}", flush=True)
         try:
-            dfs[key] = run_sql(conn, f, QUERY_TIMEOUTS.get(key, DEFAULT_TIMEOUT))
+            dfs[key] = conn.run(f, QUERY_TIMEOUTS.get(key, DEFAULT_TIMEOUT))
             return True
         except Exception as e:
             if key not in DEGRADABLE:
@@ -395,6 +460,14 @@ def main():
                 "MERCHANT_FLOW_CSV": str(mflow_csv),
                 "COUNTRY_MONTH_CSV": str(cmonth_csv),
                 "FEED_HEALTH_CSV": str(health_csv),
+                # WHICH QUERIES DID NOT LAND THIS BUILD. Until 2026-10-16 this only reached
+                # GITHUB_OUTPUT, which turns the Actions run red and tells nobody else. On
+                # 16 Oct the receipts pull died of an expired session, active merchants and
+                # receipts went blank on the dashboard, the feed-health banner stayed silent
+                # because the LAKE was perfectly healthy, and the first anyone knew was
+                # Felipe noticing empty charts. A blank series has to say why it is blank,
+                # on the page, not in a log nobody reads.
+                "DEGRADED_QUERIES": ",".join(degraded),
                 "KPI_DATA_JS": str(V2 / "kpi-data.js"),
                 "MRR_TOTAL_CSV": str(WORK / "mrr_bottomup.csv"),
                 "SUBS_OUT_DIR": str(V2)}
