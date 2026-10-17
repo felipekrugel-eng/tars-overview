@@ -1,0 +1,81 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-17",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-17T00:00:00+01:00",
+  "windowEnd": "2026-10-18T00:00:00+01:00",
+  "count": 2,
+  "confirmed": 1,
+  "boundaryAmbiguous": 1,
+  "members": [
+   {
+    "accountId": "acct_1URJ5p8Tfjjm3yvr",
+    "enabledAt": "2026-10-17T05:05:59+01:00",
+    "enabledWindowStart": "2026-10-16T22:55:13+01:00",
+    "enabledWindowEnd": "2026-10-17T05:05:59+01:00",
+    "enabledWindowHours": 6.18,
+    "enabledCertainty": "boundary_ambiguous",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-16",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1URb5Z9UCcDu25HT",
+    "enabledAt": "2026-10-17T21:11:43+01:00",
+    "enabledWindowStart": "2026-10-17T18:08:10+01:00",
+    "enabledWindowEnd": "2026-10-17T21:11:43+01:00",
+    "enabledWindowHours": 3.06,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-17",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 478,
+   "never_observed_enabled": 973
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1URJ5p8Tfjjm3yvr",
+   "acct_1URb5Z9UCcDu25HT"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-10-17T23:00:57+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1501,
+  "enabledAccounts": 489,
+  "reviewedAccounts": 530,
+  "reviewedEnabledAccounts": 485,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.2,
+  "ledgerAccounts": 1502,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
