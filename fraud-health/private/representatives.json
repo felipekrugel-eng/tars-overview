@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-17T00:34:40.973Z",
+ "generated_at": "2026-10-17T03:29:40.473Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URJ5p8Tfjjm3yvr": {
+   "name": "Eliezer Colon",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1URHqy8ETjwhvHPH": {
    "name": "Thabani Worthington",
    "legal_entity_type": "individual",
