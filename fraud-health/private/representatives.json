@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-17T19:29:38.349Z",
+ "generated_at": "2026-10-17T19:48:28.105Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URb5Z9UCcDu25HT": {
+   "name": "Edwin De La Cruz Romero",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1URNQU9ZxT3kDn1q": {
    "name": "Richard Fischer",
    "legal_entity_type": "individual",
