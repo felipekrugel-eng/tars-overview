@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-17T00:33:39.163990+00:00",
+ "checked_at": "2026-10-17T00:36:34.850521+00:00",
  "worst": "warn",
- "digest": "ab2f703a910ae6a57b8a05008aaf9fd0011d8a4c51996507551d8c85ce2791a7",
+ "digest": "f014a9de36b81c5cdc644adad7edaba697d864a5a10f7dc1152b313d96a595f7",
  "history_method": 2,
  "pipelines": [
   {
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-10-17T00:32:41+00:00",
    "data_at": "2026-10-17T00:32:00+00:00",
-   "age_h": 0.03,
+   "age_h": 0.08,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -31,12 +31,16 @@
    "reason": "source",
    "committed_at": "2026-10-17T00:11:49+00:00",
    "data_at": "2026-10-16T22:15:39+00:00",
-   "age_h": 2.3,
+   "age_h": 2.35,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-10-16T23:18:47Z",
-    "consecutive_non_success": 2,
+    "last_success": "2026-10-17T00:33:39Z",
+    "consecutive_non_success": 0,
     "recent": [
+     {
+      "at": "2026-10-17T00:33:39Z",
+      "outcome": "success"
+     },
      {
       "at": "2026-10-16T23:56:01Z",
       "outcome": "failure"
@@ -56,20 +60,16 @@
      {
       "at": "2026-10-16T22:58:24Z",
       "outcome": "success"
-     },
-     {
-      "at": "2026-10-16T22:48:19Z",
-      "outcome": "success"
      }
     ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
+    "runs_since_artefact": 1,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/38983958205",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Evaluate and durably checkpoint \u00b7 2 consecutive non-success runs \u00b7 last success 2026-10-16 23:18"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Evaluate and durably checkpoint \u00b7 last success 2026-10-17 00:33"
   },
   {
    "name": "Payments pull",
@@ -81,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-10-16T21:59:36+00:00",
    "data_at": "2026-10-16T21:59:29.425876+00:00",
-   "age_h": 2.57
+   "age_h": 2.62
   },
   {
    "name": "Activated payments",
@@ -93,7 +93,7 @@
    "reason": null,
    "committed_at": "2026-10-17T00:08:41+00:00",
    "data_at": "2026-10-17T00:04:16.250000+00:00",
-   "age_h": 0.49,
+   "age_h": 0.54,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -106,7 +106,7 @@
    "reason": null,
    "committed_at": "2026-10-17T00:08:41+00:00",
    "data_at": null,
-   "age_h": 0.42
+   "age_h": 0.46
   },
   {
    "name": "Merchant base",
@@ -118,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-10-16T09:27:57+00:00",
    "data_at": "2026-10-16T09:21:00.354954+00:00",
-   "age_h": 15.21,
+   "age_h": 15.26,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -131,7 +131,7 @@
    "reason": null,
    "committed_at": "2026-10-16T20:18:48+00:00",
    "data_at": null,
-   "age_h": 4.25,
+   "age_h": 4.3,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -144,7 +144,7 @@
    "reason": null,
    "committed_at": "2026-10-16T20:18:48+00:00",
    "data_at": null,
-   "age_h": 4.25,
+   "age_h": 4.3,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -157,7 +157,7 @@
    "reason": null,
    "committed_at": "2026-10-16T23:01:07+00:00",
    "data_at": null,
-   "age_h": 1.54,
+   "age_h": 1.59,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -170,7 +170,7 @@
    "reason": null,
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 111.55,
+   "age_h": 111.6,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
