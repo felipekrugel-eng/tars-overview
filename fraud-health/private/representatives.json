@@ -1,13 +1,25 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-17T22:22:49.058Z",
+ "generated_at": "2026-10-17T22:45:40.361Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URby38Uvbjy1cO6": {
+   "name": "Avery Nichols",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1URb5Z9UCcDu25HT": {
    "name": "Edwin De La Cruz Romero",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
+  },
+  "acct_1URWYg99DqUkON1i": {
+   "name": "Brittney Thompson",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
   },
   "acct_1URNQU9ZxT3kDn1q": {
    "name": "Richard Fischer",
