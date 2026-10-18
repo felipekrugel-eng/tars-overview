@@ -1,8 +1,20 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-18T07:46:58.167Z",
+ "generated_at": "2026-10-18T08:17:30.101Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URl477RqLveHETp": {
+   "name": "MARIA POSADA",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1URkCh5ebl7T3FbV": {
+   "name": "Rocio Cruz",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "unverified",
+   "payouts_enabled": false
+  },
   "acct_1URfc68z07g4fYM2": {
    "name": "Duala Cornwell",
    "legal_entity_type": "individual",
