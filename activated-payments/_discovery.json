@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-18T15:11:30.308Z",
+  "ranAt": "2026-10-18T15:22:46.081Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1135,7 +1135,7 @@
       },
       {
         "name": "CURRENCY_RATES",
-        "rows": 296934
+        "rows": 297106
       },
       {
         "name": "HISTORICAL_RATES",
