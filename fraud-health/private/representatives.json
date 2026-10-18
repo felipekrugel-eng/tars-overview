@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-18T13:54:57.564Z",
+ "generated_at": "2026-10-18T14:14:34.675Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1URl477RqLveHETp": {
@@ -2191,7 +2191,7 @@
    "name": "Feryixsso Finlay",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
+   "payouts_enabled": false
   },
   "acct_1UAhKzG0zZHDt4dl": {
    "name": "Briana Dixon",
