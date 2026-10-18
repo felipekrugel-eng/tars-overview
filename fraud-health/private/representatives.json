@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-18T01:46:40.606Z",
+ "generated_at": "2026-10-18T02:10:50.659Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URfc68z07g4fYM2": {
+   "name": "Duala Cornwell",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1URby38Uvbjy1cO6": {
    "name": "Avery Nichols",
    "legal_entity_type": "individual",
@@ -25,7 +31,7 @@
    "name": "Richard Fischer",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": false
+   "payouts_enabled": true
   },
   "acct_1URJ5p8Tfjjm3yvr": {
    "name": "Eliezer Colon",
