@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-18T16:47:17.701Z",
+ "generated_at": "2026-10-18T16:58:15.671Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1URso265ZmWhTPpv": {
+   "name": "marouane sohofi",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "unverified",
+   "payouts_enabled": false
+  },
   "acct_1URl477RqLveHETp": {
    "name": "MARIA POSADA",
    "legal_entity_type": "company",
