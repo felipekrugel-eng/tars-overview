@@ -40,10 +40,19 @@ on:
 
 concurrency:
   group: deploy-cloudflare
-  cancel-in-progress: false
+  # 2026-10-19: was false, which let superseded deploys run to completion and
+  # then cancelled them at the END - 178 wasted runs a day. A deploy already
+  # overtaken by a newer one has nothing left to publish, so drop it at once.
+  # Safe precisely because every deploy publishes the whole site, not a delta.
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    # Every trigger above except push/workflow_dispatch is a data pull finishing.
+    # A pull that failed or was cancelled published nothing, so deploying behind
+    # it just rebuilds the last good site and burns a runner. Until 2026-10-19
+    # nothing here looked at the parent's outcome.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
