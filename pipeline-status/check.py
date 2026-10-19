@@ -406,6 +406,23 @@ def render_html(rows, worst, hist, window):
             "error": ("A pipeline has stopped updating \u2014 the dashboard is stale", "#d64b3e"),
             "unknown": ("Some pipelines could not be checked", "#6e7781")}
 
+    # The card above shows the state RIGHT NOW. The bars record the WORST state
+    # each day reached. Those answer different questions, and when they disagree
+    # the page looked like it was contradicting itself: "All pipelines
+    # operational" sitting above a yellow bar, with nothing saying why.
+    #
+    # So today's bar carries both. The fill is the live state and a stripe along
+    # the top is the worst moment earlier today, which reads as "fine now, but it
+    # wobbled at 06:00" — the true sentence, and the one that was missing.
+    #
+    # The stored history is NOT changed by this: build_history still ratchets a
+    # day to its worst state and a day that went down still stays down. This is
+    # presentation only, so the uptime figure underneath still means what it said.
+    LIVE = {"ok": "ok", "warn": "warn", "error": "down", "unknown": "nodata"}
+    WORD = {"ok": "operational", "warn": "degraded",
+            "down": "not updating", "nodata": "no data"}
+    today = window[-1] if window else None
+
     cards = []
     for r in rows:
         h = hist.get(r["name"], {})
@@ -415,9 +432,17 @@ def render_html(rows, worst, hist, window):
             if st != "nodata":
                 known += 1
                 good += (st == "ok")
-            tip = "%s — %s" % (d, {"ok": "operational", "warn": "degraded",
-                                   "down": "not updating", "nodata": "no data"}[st])
-            bars.append('<i style="background:%s" title="%s"></i>' % (BAR[st], tip))
+            if d == today:
+                now_st = LIVE[r["state"]]
+                tip = "today — %s now" % WORD[now_st]
+                style = "background:%s" % BAR[now_st]
+                if st != "nodata" and st != now_st:
+                    tip += ", %s earlier today" % WORD[st]
+                    style += ";box-shadow:inset 0 5px 0 0 %s" % BAR[st]
+                bars.append('<i style="%s" title="%s"></i>' % (style, tip))
+                continue
+            bars.append('<i style="background:%s" title="%s — %s"></i>'
+                        % (BAR[st], d, WORD[st]))
         if known >= MIN_DAYS_FOR_UPTIME:
             uptime = "%.2f %% uptime" % (100.0 * good / known)
         elif known:
@@ -440,7 +465,7 @@ def render_html(rows, worst, hist, window):
             '<div class=t><div><h2>%s</h2><div class=p>%s · %s · limit %dh</div></div>'
             '<div class=s style="color:%s">%s</div></div>'
             '%s%s<div class=bars>%s</div>'
-            '<div class=f><span>%d days ago</span><span class=u>%s</span><span>Today</span></div>'
+            '<div class=f><span>%d days ago</span><span class=u>%s</span><span>Today (live)</span></div>'
             '</section>'
             % (r["name"], r["path"], age, r["max_age_h"], colour, text, notes, dx,
                "".join(bars), len(window), uptime))
@@ -496,7 +521,7 @@ def render_html(rows, worst, hist, window):
 built after the code that generates it last changed? Independent of how many Actions ran.</p>
 <div class=hd style="background:%s">%s</div>
 %s
-<p class=lede style="margin-top:18px">Checked %s UTC · one bar per day, newest on the right ·
+<p class=lede style="margin-top:18px">Checked %s UTC · one bar per day, newest on the right, showing the worst state that day · today's bar is the live state, with any earlier dip as a stripe ·
 thresholds measured from each artefact's own commit history</p>
 </div>""" % (hcol, htxt, "".join(cards), NOW.strftime("%Y-%m-%d %H:%M"))
 
