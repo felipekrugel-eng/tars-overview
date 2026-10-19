@@ -38,6 +38,10 @@ concurrency:
 
 jobs:
   screen:
+    # cusum-pull failing or being cancelled means no new registrations landed,
+    # so there is nothing to screen. The staleness gate below would catch this
+    # a step later, but only after paying for a runner and a checkout.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
