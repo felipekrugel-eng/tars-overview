@@ -13,7 +13,7 @@
   "legacy_version": 874,
   "activation_epoch": 1790174639,
   "legacy_last_completed": 1791094260,
-  "run_budget_seconds": 1000,
+  "run_budget_seconds": 1200,
   "bootstrap_raw_sha256": "34ae1c223406725cce3b3fc59b240e6d4a365eb2dc4a7695d0f1663508c1cb8b",
   "notifications": {
     "immediate_levels": [
@@ -26,7 +26,19 @@
     "health_max_notices_per_day": 4,
     "health_digest_hour_london": 9,
     "health_quiet_reminder_days": 7,
-    "warn_only_gap_codes": [],
+    "warn_only_gap_codes": [
+      "run_budget_checkpointed",
+      "alert_delivery_budget_held",
+      "global_sweep_in_progress",
+      "global_previous_day_incomplete",
+      "export_charge_cache_incomplete",
+      "global_fingerprint_coverage_incomplete",
+      "fee_linked_export_reconciliation_incomplete",
+      "aggregate_refund_scope_incomparable",
+      "aggregate_refund_comparison_unavailable",
+      "onboarding_ip_coverage_incomplete",
+      "onboarding_ip_evidence_unclassified"
+    ],
     "max_digest_entries": 25,
     "health_email_enabled": false
   },
