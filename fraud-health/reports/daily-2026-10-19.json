@@ -1,0 +1,120 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-19",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-19T00:00:00+01:00",
+  "windowEnd": "2026-10-20T00:00:00+01:00",
+  "count": 5,
+  "confirmed": 5,
+  "boundaryAmbiguous": 0,
+  "members": [
+   {
+    "accountId": "acct_1URkCh5ebl7T3FbV",
+    "enabledAt": "2026-10-19T06:56:25+01:00",
+    "enabledWindowStart": "2026-10-19T06:47:25+01:00",
+    "enabledWindowEnd": "2026-10-19T06:56:25+01:00",
+    "enabledWindowHours": 0.15,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-18",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USCxA4muEDtl63J",
+    "enabledAt": "2026-10-19T15:02:58+01:00",
+    "enabledWindowStart": "2026-10-19T10:34:01+01:00",
+    "enabledWindowEnd": "2026-10-19T15:02:58+01:00",
+    "enabledWindowHours": 4.48,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USGyt7eukyTQOUz",
+    "enabledAt": "2026-10-19T20:47:16+01:00",
+    "enabledWindowStart": "2026-10-19T20:24:53+01:00",
+    "enabledWindowEnd": "2026-10-19T20:47:16+01:00",
+    "enabledWindowHours": 0.37,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USHVY5knLs8VT7C",
+    "enabledAt": "2026-10-19T20:13:11+01:00",
+    "enabledWindowStart": "2026-10-19T15:25:49+01:00",
+    "enabledWindowEnd": "2026-10-19T20:13:11+01:00",
+    "enabledWindowHours": 4.79,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USIjO7Zv5Sqwrhy",
+    "enabledAt": "2026-10-19T20:47:16+01:00",
+    "enabledWindowStart": "2026-10-19T16:44:11+01:00",
+    "enabledWindowEnd": "2026-10-19T20:47:16+01:00",
+    "enabledWindowHours": 4.05,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-19",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 484,
+   "never_observed_enabled": 986
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1URkCh5ebl7T3FbV",
+   "acct_1USCxA4muEDtl63J",
+   "acct_1USGyt7eukyTQOUz",
+   "acct_1USHVY5knLs8VT7C",
+   "acct_1USIjO7Zv5Sqwrhy"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-10-19T23:04:03+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1523,
+  "enabledAccounts": 497,
+  "reviewedAccounts": 539,
+  "reviewedEnabledAccounts": 493,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.2,
+  "ledgerAccounts": 1524,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
