@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-19T17:05:07.418Z",
+ "generated_at": "2026-10-19T17:29:07.084Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1USHVY5knLs8VT7C": {
+   "name": "Monica Rodriguez",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1USCxA4muEDtl63J": {
    "name": "Joshua Gillette",
    "legal_entity_type": "individual",
