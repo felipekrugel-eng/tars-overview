@@ -51,6 +51,12 @@ HISTORY_DAYS = int(os.environ.get("STATUS_HISTORY_DAYS", "60"))
 # than left as a mix of two definitions. 2 = worst state seen during the day (was: state
 # at the end of the day, which silently erased any outage that had been fixed by midnight).
 HISTORY_METHOD = 2
+# Bump when the PAGE changes shape rather than the data. The digest below
+# deliberately excludes the clock so an unchanged answer does not commit 24
+# times a day - but that also excluded the renderer, so a template change sat
+# unpublished until some pipeline's state happened to move. The live-state bar
+# shipped on 2026-10-19 and would have waited hours for exactly that reason.
+RENDER_VERSION = 1
 # Cap API calls per run so the first run does not make 600 of them; the chart fills in
 # over the following few runs and is complete within a day.
 BACKFILL_BUDGET = int(os.environ.get("STATUS_BACKFILL_BUDGET", "200"))
@@ -580,7 +586,7 @@ def main():
     # answer actually changed. Committing every hour would add 24 commits and 24 Cloudflare
     # deploys a day to a repo already taking 8,096 commits a week — the exact problem this
     # page exists to help with. A commit here therefore means something really changed.
-    meaningful = {"worst": worst, "history": hist,
+    meaningful = {"worst": worst, "history": hist, "render": RENDER_VERSION,
                   "pipelines": [{k: v for k, v in r.items()
                                  if k not in ("age_h", "committed_at", "data_at",
                                               "inputs_changed_at")} for r in rows]}
