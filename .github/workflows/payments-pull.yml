@@ -57,6 +57,10 @@ concurrency:
 
 jobs:
   refresh:
+    # cusum-pull failing or being cancelled means no fresh upstream data, so
+    # there is nothing for this pull to chase. Guarded 2026-10-19; the cron,
+    # push and manual paths are deliberately left alone.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
