@@ -17,7 +17,15 @@ concurrency:
   cancel-in-progress: false
 jobs:
   monitor:
-    if: github.repository == 'felipekrugel-eng/tars-overview' && github.ref == 'refs/heads/master'
+    # The repo/ref guard stops forks and branches running this. The third clause,
+    # added 2026-10-19, stops a payments-pull that failed or was cancelled from
+    # waking the monitor: no new charge data landed, and the hourly cron covers
+    # the gap anyway. Cron, push and dispatch runs are unaffected.
+    if: >-
+      github.repository == 'felipekrugel-eng/tars-overview'
+      && github.ref == 'refs/heads/master'
+      && (github.event_name != 'workflow_run'
+          || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
