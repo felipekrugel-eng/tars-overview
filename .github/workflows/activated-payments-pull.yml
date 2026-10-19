@@ -40,7 +40,10 @@ on:
   # accounts, registrations, KYC, subscriptions, acceptance — which has its own cadence and no
   # counterpart on the margins page to disagree with.
   workflow_run:
-    workflows: ["cusum-pull", "payments-pull"]
+    workflows: ["payments-pull"]   # 2026-10-19: was ["cusum-pull", "payments-pull"].
+    # payments-pull is itself triggered by cusum-pull, so listening to both fired
+    # this job twice per heartbeat and the second one was almost always cancelled:
+    # 86 cancellations against 31 successes, the worst ratio in the repo.
     types: [completed]
   push:
     # Auto-run when the dashboard code or pull script changes (e.g. this first commit),
@@ -69,6 +72,10 @@ concurrency:
 
 jobs:
   pull-and-deploy:
+    # A parent pull that failed or was cancelled has produced no new data, so
+    # there is nothing for this job to pick up. Guarded 2026-10-19; push, cron
+    # and manual dispatch are deliberately unaffected.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
