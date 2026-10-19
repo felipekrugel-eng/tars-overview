@@ -710,9 +710,29 @@
         <button data-a="age" class="on">Months since cohort</button>
         <button data-a="cal">Calendar month</button>
       </div>
+      <!-- POS relationship filter (added 2026-10-19). Narrows the whole tab — KPIs, summary,
+           triangle, drill-down, chart — to one group. The groups are the Funnel tab's four, read
+           from the `g` tag pull.js already writes on every cohort record, so no pipeline change
+           was needed. "Who is in each cohort" below always shows the FULL split regardless of
+           what is selected here, which is the point: the filter answers "how did the new-to-POS
+           merchants perform", the split answers "how many of them were there". -->
+      <span class="lbl">POS relationship</span>
+      <div class="ov-range" id="chGrp">
+        <button data-g="" class="on">All</button>
+        <button data-g="new">New to POS</button>
+        <button data-g="paying">Paying</button>
+        <button data-g="nonpaying">Non paying</button>
+        <button data-g="dormant">Dormant</button>
+        <button data-g="_none" id="chGrpNone" style="display:none">Untagged</button>
+      </div>
     </div>
 
     <div class="fn-kpis" id="chKpis"></div>
+
+    <h2 class="lp-h2" style="margin-top:28px">Who is in each cohort.</h2>
+    <p class="ov-sub" style="margin-top:2px">Of the merchants that entered each cohort, how many came from each POS group &mdash; <b>new to POS</b> (registered on Loyverse on or after the market's payments launch), <b>paying</b>, <b>non paying</b> (free plan, POS sale in the last 30 days) and <b>dormant</b>. Always the full cohort, whatever the POS relationship filter above is set to.</p>
+    <div class="lp-table-scroll"><table id="chSplit" class="lp-table"></table></div>
+    <p class="lp-note" id="chSplitNote" style="margin-top:10px"></p>
 
     <h2 class="lp-h2" style="margin-top:28px">Cohort summary.</h2>
     <p class="ov-sub" style="margin-top:2px">One row per cohort. <b>MRR</b> is the cohort's net margin in the last complete month. <b>LTV / merchant</b> and <b>NPV</b> are the discounted value of what the cohort has produced so far plus a projection of its current run-rate decaying at the cohort's observed month-to-month retention &mdash; parameters below. No CAC is applied yet.</p>
@@ -5072,13 +5092,41 @@ window.__ACT=window.__ACT||[];
 
   var key='f', axis='age', metric='n_tx', pctMode=true, cc='';
   var disc=10, horizon=12, floor=50;
+  var grp='';     // '' = all; otherwise one of GRPS below
   var sel=null;   // {c, m}
-  var R=[], COH=[], MONTHS=[], LASTFULL=null, PARTIAL=null;
+  var R=[], COH=[], MONTHS=[], LASTFULL=null, PARTIAL=null, SPLIT={}, UNTAGGED=0;
+
+  // The four Funnel groups, plus an explicit bucket for records the tag layer could not reach.
+  // us_group_tags.sql is US-only and non-bot, so non-US and filtered merchants carry g:null.
+  // Giving them a visible bucket is what makes the split reconcile to the cohort size; folding
+  // them into "dormant" or dropping them would make the rows quietly fail to add up.
+  var GRPS=[{g:'new',l:'New to POS',c:'var(--green)'},{g:'paying',l:'Paying',c:'var(--blue-deep)'},
+            {g:'nonpaying',l:'Non paying',c:'var(--blue)'},{g:'dormant',l:'Dormant',c:'#8E99A4'},
+            {g:'_none',l:'Untagged',c:'#C2C8CF'}];
+  var GRPL={}; GRPS.forEach(function(x){ GRPL[x.g]=x.l; });
+  // Group AS OF THE LAST PULL, not as of the cohort month. `new` never drifts (registration date
+  // is fixed), but paying/non paying/dormant do — a merchant free in July and paying now reads
+  // "paying" in July's cohort. Said out loud in the note under the split table. act[]/pay[] carry
+  // the monthly history if an as-of-month reading is ever wanted.
+  function gOf(r){ var g=r&&r.g; return (g==='new'||g==='paying'||g==='nonpaying'||g==='dormant')? g : '_none'; }
 
   function load(){
     // Population = passed KYC (currently enabled, or has taken a charge). An account that only
     // opened a Stripe account and never cleared KYC cannot transact, so it is not a cohort member.
-    R=ALL.filter(function(r){ if(cc&&r.c!==cc) return false; if(isTest(r)) return false; if(!(r.en||r.t)) return false; return !!mo(r[key]); });
+    var inPop=function(r){ if(cc&&r.c!==cc) return false; if(isTest(r)) return false; if(!(r.en||r.t)) return false; return !!mo(r[key]); };
+    // RALL is the population BEFORE the group filter. The split is computed from it so that
+    // selecting a group narrows the performance figures without collapsing the composition
+    // table to a single 100% column.
+    var RALL=ALL.filter(inPop);
+    SPLIT={}; UNTAGGED=0;
+    RALL.forEach(function(r){
+      var c=mo(r[key]), s=SPLIT[c];
+      if(!s){ s=SPLIT[c]={total:0}; GRPS.forEach(function(x){ s[x.g]=0; }); }
+      var g=gOf(r); s[g]++; s.total++; if(g==='_none') UNTAGGED++;
+    });
+    var noneBtn=$('chGrpNone');
+    if(noneBtn) noneBtn.style.display = UNTAGGED? '' : 'none';
+    R = grp? RALL.filter(function(r){ return gOf(r)===grp; }) : RALL;
     var cm={}; R.forEach(function(r){ var c=mo(r[key]); (cm[c]||(cm[c]=[])).push(r); });
     var cs=Object.keys(cm).sort();
     var first=cs[0]||PULL_MONTH;
@@ -5139,11 +5187,41 @@ window.__ACT=window.__ACT||[];
     var mrr=COH.reduce(function(a,c){return a+c.val.mrr;},0), npv=COH.reduce(function(a,c){return a+c.val.npv;},0);
     var lastCell=null; COH.forEach(function(c){ c.series.forEach(function(s){ if(s.m===LASTFULL){ lastCell=(lastCell||0)+s.n_tx; } }); });
     $('chKpis').innerHTML=[
-      {k:'Cohorts · merchants',v:fmtN(COH.length)+'<span class="u"> · '+fmtN(N)+'</span>',s:'passed KYC · cohorted by the month they '+KEYL[key]+(window.LVCC?window.LVCC.suffix():'')},
+      {k:'Cohorts · merchants',v:fmtN(COH.length)+'<span class="u"> · '+fmtN(N)+'</span>',s:'passed KYC · cohorted by the month they '+KEYL[key]+(grp? ' · '+GRPL[grp]+' only':'')+(window.LVCC?window.LVCC.suffix():'')},
       {k:'Ever transacting',v:fmtN(ever)+'<span class="u"> · '+fmtPct(N?100*ever/N:null)+'</span>',s:fmtN(lastCell)+' transacting in '+(LASTFULL?monthLabel(LASTFULL):'–')+' (last complete month)'},
       {k:'Net margin to date',v:fmtMoney(margin)+'<span class="u"> on '+fmtMoney(tpv)+' TPV</span>',s:'fees captured − Stripe IC+ cost · incl. current month'},
       {k:'MRR · portfolio NPV',v:fmtMoney(mrr)+'<span class="u"> · '+fmtMoney(npv)+'</span>',s:'net margin in '+(LASTFULL?monthLabel(LASTFULL):'–')+' · NPV at '+disc+'% with '+horizon+'-month projection'}
     ].map(function(t){return '<div class="fn-kpi"><div class="k">'+t.k+'</div><div class="v">'+t.v+'</div><div class="s">'+t.s+'</div></div>';}).join('');
+  }
+  // ── Who is in each cohort ─────────────────────────────────────────────────
+  // Driven by SPLIT (pre-group-filter), so the rows are the same whichever chip is active and a
+  // cohort with nobody in the selected group still appears here rather than vanishing.
+  function renderSplit(){
+    var cs=Object.keys(SPLIT).sort(function(a,b){ return a<b?1:-1; });   // newest first, like the triangle
+    var cols=GRPS.filter(function(x){ return x.g!=='_none' || UNTAGGED; });
+    var h='<thead><tr><th>Cohort</th><th>Merchants</th>'
+      +cols.map(function(x){ return '<th style="text-align:right">'+x.l+'</th>'; }).join('')
+      +'</tr></thead><tbody>';
+    var T={total:0}; cols.forEach(function(x){ T[x.g]=0; });
+    cs.forEach(function(c){
+      var s=SPLIT[c]; T.total+=s.total;
+      h+='<tr><td>'+monthLabel(c)+'</td><td><b>'+fmtN(s.total)+'</b></td>'
+        +cols.map(function(x){
+            T[x.g]+=s[x.g];
+            return '<td style="text-align:right">'+(s[x.g]
+              ? fmtN(s[x.g])+' <span style="color:var(--midgray)">('+fmtPct(100*s[x.g]/s.total,0)+')</span>'
+              : '<span style="color:#C2C8CF">&ndash;</span>')+'</td>';
+          }).join('')
+        +'</tr>';
+    });
+    h+='<tr style="font-weight:bold;background:var(--offwhite)"><td>All cohorts</td><td>'+fmtN(T.total)+'</td>'
+      +cols.map(function(x){ return '<td style="text-align:right">'+fmtN(T[x.g])+' ('+fmtPct(T.total?100*T[x.g]/T.total:null,0)+')</td>'; }).join('')
+      +'</tr></tbody>';
+    $('chSplit').innerHTML=h;
+    $('chSplitNote').textContent='Groups are mutually exclusive and sum to the cohort size. "New to POS" means the merchant registered on Loyverse on or after its market’s payments launch date; the other three are pre-launch merchants, split by whether they hold a paid subscription and whether they rang a POS sale in the trailing 30 days. '
+      +'These are the same four groups the Funnel tab uses, read as of the last pull — NOT as of the cohort month. "New to POS" cannot drift, because a registration date is fixed; paying, non paying and dormant can, so a merchant on a free plan when it enabled payments in July and paying today is counted here as paying. '
+      +(UNTAGGED? ('Untagged = '+fmtN(UNTAGGED)+' merchant'+(UNTAGGED===1?'':'s')+' outside the group-tag layer, which covers US non-bot merchants only. ') : '')
+      +'This table always shows the whole cohort; the POS relationship filter above changes every other figure on the page, not this one.';
   }
   function renderSummary(){
     var h='<thead><tr><th>Cohort</th><th>Merchants (passed KYC)</th><th>Ever transacting</th><th>Transacting '+(LASTFULL?monthLabel(LASTFULL):'')+'</th><th>Retention / mo</th><th>TPV to date</th><th>Gross fees</th><th>Stripe cost</th><th>Net margin to date</th><th>Margin / merchant</th><th>MRR (net)</th><th>Margin / active</th><th>LTV / merchant</th><th>LTV / transacting</th><th>Cohort NPV</th></tr></thead><tbody>';
@@ -5198,23 +5276,29 @@ window.__ACT=window.__ACT||[];
     }catch(e){ if(window.console) console.error('cohort chart failed',e); }
   }
   function renderFoot(){
-    $('chFoot').textContent='Population = merchants that passed KYC (currently enabled or have taken a charge). Cohort = month the merchant '+KEYL[key]+'; Size = merchants in the cohort, the denominator of every percentage. Transacting in a month = at least one successful, captured charge on the merchant’s connected account that month. TPV, charge counts and application fees are dated by the charge; Stripe’s interchange-plus cost is dated by its balance transaction, which can land a month-boundary charge’s cost in the following month — immaterial at this grain. All amounts USD at fixed FX. Prod accounts only; internal/QA accounts removed on the same rule as the Funnel. Data refreshes every 3 hours from Snowflake; the Stripe share typically lags live by ~6 hours.';
+    $('chFoot').textContent=(grp? ('Filtered to '+GRPL[grp]+' merchants only — every figure on this page except "Who is in each cohort" counts just that group, including each cohort’s Size and therefore every percentage derived from it. ') : '')
+      +'Population = merchants that passed KYC (currently enabled or have taken a charge). Cohort = month the merchant '+KEYL[key]+'; Size = merchants in the cohort, the denominator of every percentage. Transacting in a month = at least one successful, captured charge on the merchant’s connected account that month. TPV, charge counts and application fees are dated by the charge; Stripe’s interchange-plus cost is dated by its balance transaction, which can land a month-boundary charge’s cost in the following month — immaterial at this grain. All amounts USD at fixed FX. Prod accounts only; internal/QA accounts removed on the same rule as the Funnel. Data refreshes every 3 hours from Snowflake; the Stripe share typically lags live by ~6 hours.';
   }
-  function renderAll(){ load(); renderKpis(); renderSummary(); renderTri(); renderDrill(); renderChart(); renderFoot(); }
+  function renderAll(){ load(); renderKpis(); renderSplit(); renderSummary(); renderTri(); renderDrill(); renderChart(); renderFoot(); }
 
   // ── Controls ──────────────────────────────────────────────────────────────
   function bindRange(id,attr,fn){ $(id).addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; $(id).querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);}); fn(b.getAttribute(attr)); }); }
   bindRange('chKey','data-k',function(v){ key=v; sel=null; renderAll(); });
   bindRange('chAxis','data-a',function(v){ axis=v; renderTri(); });
+  // Group change re-runs load(), because the population itself changes — not just the rendering.
+  bindRange('chGrp','data-g',function(v){ grp=v||''; sel=null; renderAll(); });
   bindRange('chMetric','data-m',function(v){ metric=v; renderTri(); });
   bindRange('chMode','data-p',function(v){ pctMode=(v==='1'); renderTri(); });
   ['chDisc','chHorizon','chFloor'].forEach(function(id){ $(id).addEventListener('change',function(){ disc=+$('chDisc').value||0; horizon=+$('chHorizon').value||0; floor=+$('chFloor').value||0; computeValue(); renderKpis(); renderSummary(); }); });
   $('chTri').addEventListener('dblclick',function(e){ var td=e.target.closest('td.c'); if(!td) return; var c=td.getAttribute('data-c'), m=td.getAttribute('data-m'); sel=(sel&&sel.c===c&&sel.m===m)?null:{c:c,m:m}; renderTri(); renderDrill(); if(sel){ try{ $('chDrill').scrollIntoView({behavior:'smooth',block:'nearest'}); }catch(e){} } });
   $('chDrillClose').addEventListener('click',function(){ sel=null; renderTri(); renderDrill(); });
   $('chSumExport').addEventListener('click',function(){
-    var head=['cohort','merchants_passed_kyc','ever_transacting','transacting_last_full_month','retention_monthly','retention_source','tpv_to_date','gross_fees_full_months','stripe_cost_full_months','net_margin_to_date','mrr_net_last_full_month','margin_per_active','ltv_per_merchant','ltv_per_transacting','cohort_npv','discount_rate_pct','projection_months'];
-    var csv=[head.join(',')].concat(COH.map(function(c){var v=c.val; return [c.c,c.N,c.ever,v.activeLast,(v.r*100).toFixed(1),v.rSrc,v.withPartial.tpv.toFixed(2),v.fee.toFixed(2),v.cost.toFixed(2),v.withPartial.margin.toFixed(2),v.mrr.toFixed(2),v.mbar.toFixed(2),v.ltv==null?'':v.ltv.toFixed(2),v.ltvTx==null?'':v.ltvTx.toFixed(2),v.npv.toFixed(2),disc,horizon].join(',');})).join('\n');
-    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='payments_cohorts_'+UPD.slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+    // The split columns describe the WHOLE cohort (they come from SPLIT), while the performance
+    // columns describe whatever group is selected. pos_group_filter records which, so a
+    // downloaded file can never be mistaken for the unfiltered one.
+    var head=['cohort','pos_group_filter','merchants_passed_kyc','ever_transacting','transacting_last_full_month','retention_monthly','retention_source','tpv_to_date','gross_fees_full_months','stripe_cost_full_months','net_margin_to_date','mrr_net_last_full_month','margin_per_active','ltv_per_merchant','ltv_per_transacting','cohort_npv','discount_rate_pct','projection_months','cohort_total_all_groups','cohort_new_to_pos','cohort_paying','cohort_nonpaying','cohort_dormant','cohort_untagged'];
+    var csv=[head.join(',')].concat(COH.map(function(c){var v=c.val, s=SPLIT[c.c]||{}; return [c.c,(grp||'all'),c.N,c.ever,v.activeLast,(v.r*100).toFixed(1),v.rSrc,v.withPartial.tpv.toFixed(2),v.fee.toFixed(2),v.cost.toFixed(2),v.withPartial.margin.toFixed(2),v.mrr.toFixed(2),v.mbar.toFixed(2),v.ltv==null?'':v.ltv.toFixed(2),v.ltvTx==null?'':v.ltvTx.toFixed(2),v.npv.toFixed(2),disc,horizon,s.total||0,s['new']||0,s.paying||0,s.nonpaying||0,s.dormant||0,s._none||0].join(',');})).join('\n');
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='payments_cohorts_'+(grp||'all')+'_'+UPD.slice(0,10)+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
   });
 
   var rendered=false;
