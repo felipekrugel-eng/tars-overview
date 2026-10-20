@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-20T21:20:41.620112+00:00",
+ "checked_at": "2026-10-20T22:19:41.825902+00:00",
  "worst": "warn",
- "digest": "bb3b100006735e9668016b496fb71411245c447f572d40ffece7a8acb5576238",
+ "digest": "4956228a6ab2b5abc3488b13c6cb94890a7745d3713cee202e2a134a23f6633b",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-20T21:19:23+00:00",
-   "data_at": "2026-10-20T21:18:00+00:00",
-   "age_h": 0.04,
+   "committed_at": "2026-10-20T22:18:26+00:00",
+   "data_at": "2026-10-20T22:18:00+00:00",
+   "age_h": 0.03,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -23,12 +23,53 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
-   "committed_at": "2026-10-20T20:47:04+00:00",
+   "notes": [
+    "status = degraded",
+    "gap: telegram_delivery_unconfirmed"
+   ],
+   "state": "warn",
+   "reason": "source",
+   "committed_at": "2026-10-20T21:59:07+00:00",
    "data_at": "2026-10-20T20:35:13+00:00",
-   "age_h": 0.76
+   "age_h": 1.74,
+   "diagnosis": {
+    "workflow": "loyverse-risk-monitor.yml",
+    "last_success": "2026-10-20T22:08:13Z",
+    "consecutive_non_success": 0,
+    "recent": [
+     {
+      "at": "2026-10-20T22:08:13Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-20T21:59:14Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-20T21:54:07Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-20T21:50:04Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-10-20T21:44:22Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-10-20T21:36:55Z",
+      "outcome": "skipped"
+     }
+    ],
+    "runs_since_artefact": 2,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/39502781090",
+    "step": "Evaluate and durably checkpoint",
+    "detail": "Process completed with exit code 2.",
+    "runner_lost": false
+   },
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Evaluate and durably checkpoint \u00b7 last success 2026-10-20 22:08"
   },
   {
    "name": "Payments pull",
@@ -40,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-10-20T20:16:08+00:00",
    "data_at": "2026-10-20T20:16:07.652182+00:00",
-   "age_h": 1.08
+   "age_h": 2.06
   },
   {
    "name": "Activated payments",
@@ -50,9 +91,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-20T21:07:57+00:00",
-   "data_at": "2026-10-20T21:03:31.885000+00:00",
-   "age_h": 0.29,
+   "committed_at": "2026-10-20T22:06:13+00:00",
+   "data_at": "2026-10-20T21:59:58.966000+00:00",
+   "age_h": 0.33,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -63,9 +104,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-20T21:07:57+00:00",
+   "committed_at": "2026-10-20T22:06:13+00:00",
    "data_at": null,
-   "age_h": 0.21
+   "age_h": 0.22
   },
   {
    "name": "Merchant base",
@@ -77,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-10-20T09:49:38+00:00",
    "data_at": "2026-10-20T09:41:42.171751+00:00",
-   "age_h": 11.65,
+   "age_h": 12.63,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -90,7 +131,7 @@
    "reason": null,
    "committed_at": "2026-10-20T08:37:48+00:00",
    "data_at": null,
-   "age_h": 12.71,
+   "age_h": 13.7,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -103,7 +144,7 @@
    "reason": null,
    "committed_at": "2026-10-20T08:37:48+00:00",
    "data_at": null,
-   "age_h": 12.71,
+   "age_h": 13.7,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -116,7 +157,7 @@
    "reason": null,
    "committed_at": "2026-10-19T23:04:16+00:00",
    "data_at": null,
-   "age_h": 22.27,
+   "age_h": 23.26,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -125,13 +166,13 @@
    "ref": "master",
    "max_age_h": 264,
    "notes": [
-    "ageing: 204.3h old, limit 264h"
+    "ageing: 205.3h old, limit 264h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 204.33,
+   "age_h": 205.32,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00",
    "diagnosis": {
     "workflow": "snowflake-pull.yml",
