@@ -1,0 +1,115 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-20",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-20T00:00:00+01:00",
+  "windowEnd": "2026-10-21T00:00:00+01:00",
+  "count": 4,
+  "confirmed": 3,
+  "boundaryAmbiguous": 1,
+  "members": [
+   {
+    "accountId": "acct_1TzR1d5IJfM6EIfy",
+    "enabledAt": "2026-10-20T13:43:56+01:00",
+    "enabledWindowStart": "2026-10-20T00:04:03+01:00",
+    "enabledWindowEnd": "2026-10-20T13:43:56+01:00",
+    "enabledWindowHours": 13.66,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-08-01",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USPJYG1sdqYIiIz",
+    "enabledAt": "2026-10-20T13:43:56+01:00",
+    "enabledWindowStart": "2026-10-19T23:45:57+01:00",
+    "enabledWindowEnd": "2026-10-20T13:43:56+01:00",
+    "enabledWindowHours": 13.97,
+    "enabledCertainty": "boundary_ambiguous",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USdxxQJ6ec0RsW5",
+    "enabledAt": "2026-10-20T20:05:12+01:00",
+    "enabledWindowStart": "2026-10-20T15:24:38+01:00",
+    "enabledWindowEnd": "2026-10-20T20:05:12+01:00",
+    "enabledWindowHours": 4.68,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-20",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1USfyc4yopaGzKuF",
+    "enabledAt": "2026-10-20T21:21:07+01:00",
+    "enabledWindowStart": "2026-10-20T17:33:27+01:00",
+    "enabledWindowEnd": "2026-10-20T21:21:07+01:00",
+    "enabledWindowHours": 3.79,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-20",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 489,
+   "never_observed_enabled": 990
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1TzR1d5IJfM6EIfy",
+   "acct_1USPJYG1sdqYIiIz",
+   "acct_1USdxxQJ6ec0RsW5",
+   "acct_1USfyc4yopaGzKuF"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [
+  {
+   "accountId": "acct_1UHQFN7DT06jctNT",
+   "name": "Montalto Future Falls Construction LLC",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  }
+ ],
+ "coverage": {
+  "computedAt": "2026-10-20T23:05:02+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1531,
+  "enabledAccounts": 500,
+  "reviewedAccounts": 543,
+  "reviewedEnabledAccounts": 496,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.2,
+  "ledgerAccounts": 1532,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
