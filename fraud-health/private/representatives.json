@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-20T16:47:14.060Z",
+ "generated_at": "2026-10-20T17:00:15.682Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1USdxxQJ6ec0RsW5": {
+   "name": "Katrina Atherley",
+   "legal_entity_type": "non_profit",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1USPJYG1sdqYIiIz": {
    "name": "Rahim Burrell",
    "legal_entity_type": "individual",
