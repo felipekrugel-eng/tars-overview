@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-19T23:34:15.537613+00:00",
+ "checked_at": "2026-10-20T00:28:20.419693+00:00",
  "worst": "warn",
- "digest": "4180ebe08fa5f9c226200bfab269a638b7da92655859561d6b4f414dcc3beb7b",
+ "digest": "240a4eae945e8536dc611c18633503ee564af5075dbe9c5300be87f209aca4c1",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-19T23:33:14+00:00",
-   "data_at": "2026-10-19T23:33:00+00:00",
+   "committed_at": "2026-10-20T00:27:18+00:00",
+   "data_at": "2026-10-20T00:27:00+00:00",
    "age_h": 0.02,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
@@ -29,43 +29,47 @@
    ],
    "state": "warn",
    "reason": "source",
-   "committed_at": "2026-10-19T23:32:37+00:00",
+   "committed_at": "2026-10-20T00:04:48+00:00",
    "data_at": "2026-10-19T22:51:04+00:00",
-   "age_h": 0.72,
+   "age_h": 1.62,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-10-19T22:58:32Z",
+    "last_success": "2026-10-20T00:21:02Z",
     "consecutive_non_success": 0,
     "recent": [
      {
-      "at": "2026-10-19T22:58:32Z",
+      "at": "2026-10-20T00:21:02Z",
       "outcome": "success"
      },
      {
-      "at": "2026-10-19T22:50:03Z",
+      "at": "2026-10-20T00:17:46Z",
       "outcome": "success"
      },
      {
-      "at": "2026-10-19T22:38:15Z",
+      "at": "2026-10-20T00:07:39Z",
       "outcome": "success"
      },
      {
-      "at": "2026-10-19T22:28:26Z",
+      "at": "2026-10-20T00:01:41Z",
       "outcome": "success"
      },
      {
-      "at": "2026-10-19T22:17:26Z",
-      "outcome": "success"
+      "at": "2026-10-19T23:51:01Z",
+      "outcome": "failure"
      },
      {
-      "at": "2026-10-19T22:11:30Z",
-      "outcome": "success"
+      "at": "2026-10-19T23:45:09Z",
+      "outcome": "cancelled"
      }
     ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing"
+    "runs_since_artefact": 3,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/39344088966",
+    "step": "Evaluate and durably checkpoint",
+    "detail": "Process completed with exit code 2.",
+    "runner_lost": false
    },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 last success 2026-10-19 22:58"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Evaluate and durably checkpoint \u00b7 last success 2026-10-20 00:21"
   },
   {
    "name": "Payments pull",
@@ -77,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-10-19T23:09:04+00:00",
    "data_at": "2026-10-19T23:09:02.672879+00:00",
-   "age_h": 0.42
+   "age_h": 1.32
   },
   {
    "name": "Activated payments",
@@ -87,9 +91,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-19T23:27:11+00:00",
-   "data_at": "2026-10-19T23:21:28.205000+00:00",
-   "age_h": 0.21,
+   "committed_at": "2026-10-20T00:17:03+00:00",
+   "data_at": "2026-10-20T00:11:16.891000+00:00",
+   "age_h": 0.28,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -100,9 +104,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-19T23:27:11+00:00",
+   "committed_at": "2026-10-20T00:17:03+00:00",
    "data_at": null,
-   "age_h": 0.12
+   "age_h": 0.19
   },
   {
    "name": "Merchant base",
@@ -114,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-10-19T10:27:27+00:00",
    "data_at": "2026-10-19T10:20:46.590409+00:00",
-   "age_h": 13.22,
+   "age_h": 14.13,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -127,7 +131,7 @@
    "reason": null,
    "committed_at": "2026-10-19T07:47:42+00:00",
    "data_at": null,
-   "age_h": 15.78,
+   "age_h": 16.68,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -140,7 +144,7 @@
    "reason": null,
    "committed_at": "2026-10-19T07:47:42+00:00",
    "data_at": null,
-   "age_h": 15.78,
+   "age_h": 16.68,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -153,7 +157,7 @@
    "reason": null,
    "committed_at": "2026-10-19T23:04:16+00:00",
    "data_at": null,
-   "age_h": 0.5,
+   "age_h": 1.4,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -166,14 +170,13 @@
    "reason": null,
    "committed_at": "2026-10-12T09:00:43+00:00",
    "data_at": null,
-   "age_h": 182.56,
+   "age_h": 183.46,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
  "history": {
   "CUSUM registrations": {
    "2026-10-14": "ok",
-   "2026-08-21": "ok",
    "2026-08-22": "ok",
    "2026-08-23": "ok",
    "2026-08-24": "ok",
@@ -231,11 +234,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "down",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "Risk monitor": {
    "2026-10-14": "warn",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -293,11 +296,11 @@
    "2026-10-16": "down",
    "2026-10-17": "down",
    "2026-10-18": "warn",
-   "2026-10-19": "warn"
+   "2026-10-19": "warn",
+   "2026-10-20": "warn"
   },
   "Payments pull": {
    "2026-10-14": "down",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -355,11 +358,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "Activated payments": {
    "2026-10-14": "ok",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -417,11 +420,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "Ads + attribution": {
    "2026-10-14": "ok",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -479,11 +482,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "Merchant base": {
    "2026-10-14": "ok",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -541,11 +544,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "KPI daily history": {
    "2026-10-14": "ok",
-   "2026-08-21": "ok",
    "2026-08-22": "ok",
    "2026-08-23": "ok",
    "2026-08-24": "ok",
@@ -603,11 +606,11 @@
    "2026-10-16": "warn",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "KPI subscriptions": {
    "2026-10-14": "ok",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -665,11 +668,11 @@
    "2026-10-16": "warn",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "Fraud health": {
    "2026-10-14": "ok",
-   "2026-08-21": "nodata",
    "2026-08-22": "nodata",
    "2026-08-23": "nodata",
    "2026-08-24": "nodata",
@@ -727,11 +730,11 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   },
   "CASE dashboard": {
    "2026-10-14": "ok",
-   "2026-08-21": "down",
    "2026-08-22": "down",
    "2026-08-23": "down",
    "2026-08-24": "down",
@@ -789,7 +792,8 @@
    "2026-10-16": "ok",
    "2026-10-17": "ok",
    "2026-10-18": "ok",
-   "2026-10-19": "ok"
+   "2026-10-19": "ok",
+   "2026-10-20": "ok"
   }
  }
 }
