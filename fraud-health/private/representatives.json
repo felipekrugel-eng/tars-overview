@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-20T19:29:14.514Z",
+ "generated_at": "2026-10-20T19:53:41.782Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1USfyc4yopaGzKuF": {
+   "name": "Brent Lyons",
+   "legal_entity_type": "non_profit",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1USdxxQJ6ec0RsW5": {
    "name": "Katrina Atherley",
    "legal_entity_type": "non_profit",
