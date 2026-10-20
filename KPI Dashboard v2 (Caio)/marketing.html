@@ -346,7 +346,15 @@
   <div class="panel rise">
     <div class="ph" style="margin-bottom:10px">Every attributed merchant in the period, furthest stage first. This is the list the
       funnel above is counting &mdash; if a number looks wrong, it is auditable here.</div>
+    <!-- Payments-stage filter (added 2026-10-20). Deliberately scoped to THIS TABLE ONLY: it does
+         not touch selection(), so the tiles, funnel, charts, campaign and geo tables above keep
+         counting every merchant in the period. Filtering them too would make the funnel agree
+         with itself trivially and stop being an audit of the list. Multi-select, because the
+         stages are a ladder: picking one answers "who is stuck here", picking the top few
+         answers "who got at least this far". -->
+    <div class="frow" id="merch-filter" style="margin-bottom:10px"></div>
     <div class="scroller"><table class="league" id="tbl-merch"><thead></thead><tbody></tbody></table></div>
+    <div class="ph" id="merch-note" style="margin-top:9px"></div>
   </div>
 
 </div>
@@ -423,6 +431,9 @@
     pf: '',          // '' = every platform
     ccs: new Set(),  // empty = every country
     camps: new Set(ALL_CAMPS.map(c => c.name)),
+    // Payments-stage ranks kept for the merchant table only. Empty = no filter. Not consumed by
+    // selection(), on purpose — see the comment above #merch-filter.
+    stages: new Set(),
   };
 
   // Campaigns the Type and Platform pills allow. The campaign multi-select is INTERSECTED
@@ -602,9 +613,24 @@
       renderFunnel(selection());
     };
   });
+  // Delegated, because the stage pills are rebuilt on every draw of the merchant table — binding
+  // the buttons themselves would need re-binding each time. Only the table is redrawn: nothing
+  // above it reads state.stages.
+  $('merch-filter').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-stage]');
+    if (!btn) return;
+    const v = btn.dataset.stage;
+    if (v === '') {
+      state.stages.clear();
+    } else {
+      const r = +v;
+      if (state.stages.has(r)) state.stages.delete(r); else state.stages.add(r);
+    }
+    renderMerchants(selection());
+  });
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
-    state.type = ''; state.pf = ''; state.ccs = new Set();
+    state.type = ''; state.pf = ''; state.ccs = new Set(); state.stages.clear();
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
     $('f-from').value = DMIN; $('f-to').value = DMAX;
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
@@ -997,12 +1023,36 @@
     if (m.rcptD)  return '<span class="stat paused">Lapsed</span>';
     return '<span class="stat other">Never sold</span>';
   }
+  // The payments ladder, furthest first — the same eight rungs furthest() assigns, kept in one
+  // place so the filter can never drift from the column it filters. Keyed on the RANK, not the
+  // label, so rewording a stage cannot silently empty a selection.
+  const STAGES = [
+    { r: 7, l: 'Took a payment' }, { r: 6, l: 'Payouts enabled' },
+    { r: 5, l: 'KYC approved' },   { r: 4, l: 'KYC submitted' },
+    { r: 3, l: 'KYC started' },    { r: 2, l: 'Opened Payments' },
+    { r: 1, l: 'Issued a receipt' }, { r: 0, l: 'Signed up' },
+  ];
   function renderMerchants(sel) {
     // Sorted by POS life first, then by how far down the payments ladder they got: the most
     // valuable merchants on this page are the ones actually trading.
     const posRank = m => (m.a30_10 ? 4 : m.a30_5 ? 3 : m.a30 ? 2 : m.rcptD ? 1 : 0);
-    const list = sel.merchants.slice().sort((a, b) =>
+    const all = sel.merchants.slice().sort((a, b) =>
       posRank(b) - posRank(a) || b.r30 - a.r30 || furthest(b)[1] - furthest(a)[1] || b.rcpts - a.rcpts);
+
+    // Counts come from `all` — the period's merchants before the stage filter — so the numbers on
+    // the buttons stay put as you toggle, instead of every unselected stage reading zero.
+    const counts = {};
+    all.forEach(m => { const r = furthest(m)[1]; counts[r] = (counts[r] || 0) + 1; });
+    const none = state.stages.size === 0;   // empty set = no filter = everything
+    $('merch-filter').innerHTML =
+      '<span class="flab">Payments stage</span>' +
+      '<span class="divpill" id="f-stage">' +
+      '<button data-stage="" class="' + (none ? 'on' : '') + '">All <span style="opacity:.6">' + n0(all.length) + '</span></button>' +
+      STAGES.map(s => '<button data-stage="' + s.r + '"' + (state.stages.has(s.r) ? ' class="on"' : '') + '>' +
+        esc(s.l) + ' <span style="opacity:.6">' + n0(counts[s.r] || 0) + '</span></button>').join('') +
+      '</span>';
+
+    const list = none ? all : all.filter(m => state.stages.has(furthest(m)[1]));
     $('tbl-merch').tHead.innerHTML =
       '<tr><th>Merchant</th><th>Campaign</th><th>Country</th><th>Click</th><th>Signed up</th>' +
       '<th>Receipts</th><th>Last 30d</th><th>Days sold</th><th>POS status</th><th>Payments stage</th></tr>';
@@ -1017,7 +1067,16 @@
       <td class="num">${n0(m.sdays)}</td>
       <td>${posStatus(m)}</td>
       <td style="font-size:11.5px">${esc(furthest(m)[0])}</td>
-    </tr>`).join('') : '<tr><td colspan="10" class="empty">No merchants in this period.</td></tr>';
+    </tr>`).join('') : '<tr><td colspan="10" class="empty">' +
+      (none ? 'No merchants in this period.' : 'No merchants at the selected stage' + (state.stages.size > 1 ? 's' : '') + ' in this period.') +
+      '</td></tr>';
+    // Says out loud that the list no longer matches the funnel above it. Without this, a filtered
+    // screenshot of this table reads as the full attributed population.
+    $('merch-note').innerHTML = none
+      ? ''
+      : 'Showing <b>' + n0(list.length) + '</b> of ' + n0(all.length) + ' attributed merchants — ' +
+        STAGES.filter(s => state.stages.has(s.r)).map(s => esc(s.l)).join(', ') +
+        '. The tiles, funnel and tables above are unaffected and still count all ' + n0(all.length) + '.';
   }
 
   // ── render ─────────────────────────────────────────────────────────────────
