@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-21T10:44:25.894Z",
+  "ranAt": "2026-10-21T11:13:45.317Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1095,23 +1095,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 141077
+        "rows": 141142
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59898
+        "rows": 59901
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1132245
+        "rows": 1132895
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 102992
+        "rows": 103025
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1807360
+        "rows": 1808412
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
@@ -1143,7 +1143,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9953782661
+        "rows": 9954235340
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2058,7 +2058,7 @@
         "TAX": 753,
         "SHIPPING_ADDRESS_STATE": "CA",
         "SHIPPING_ADDRESS_POSTAL_CODE": "90201",
-        "BATCH_TIMESTAMP": "2026-10-21 06:00:00.000",
+        "BATCH_TIMESTAMP": "2026-10-21 09:00:00.000",
         "SHIPPING_COMPANY": null,
         "SHIPPING_ADDRESS_LINE1": "7627 Emil Ave",
         "AMOUNT": 7953,
@@ -2067,10 +2067,10 @@
         "PO_NUMBER": null,
         "ID": "thor_1USs5x7e4AMQfKY3U5cMjbSH",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-10-21 05:29:49.000",
+        "UPDATED": "2026-10-21 05:59:52.000",
         "SHIPPING_NAME": "Thinh Ho",
         "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "pending",
+        "STATUS": "ready_to_ship",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "SHIPPING_ADDRESS_CITY": "Bell Gardens",
         "SHIPPING_PHONE": "16262839994",
@@ -2274,7 +2274,7 @@
       {
         "QUANTITY": 1,
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1USs5x7e4AMQfKY3U5cMjbSH",
-        "BATCH_TIMESTAMP": "2026-10-21 06:00:00.000",
+        "BATCH_TIMESTAMP": "2026-10-21 09:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
         "AMOUNT": 5900,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
