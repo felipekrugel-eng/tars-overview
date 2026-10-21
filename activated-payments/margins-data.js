@@ -8,23 +8,23 @@ window.MARGINS = {
     "txns": 62134.0,
     "tpv": 1673438.679518,
     "avgTicket": 26.9327369800431,
-    "revenue": 36612.691,
-    "takeRate": 0.0218787168290777,
-    "totalFees": 35984.8261,
-    "netMargin": 627.864900000001,
-    "netTakeRate": 0.00037519444702978,
-    "pctProfitable": 0.487124601667364,
-    "profitableTxns": 30267.0,
-    "unprofitableTxns": 31867.0,
+    "revenue": 36657.391,
+    "takeRate": 0.021905428294844,
+    "totalFees": 35984.826,
+    "netMargin": 672.565000000002,
+    "netTakeRate": 0.000401905972553306,
+    "pctProfitable": 0.487929314063154,
+    "profitableTxns": 30317.0,
+    "unprofitableTxns": 31817.0,
     "withActual": 60969.0,
     "withEstimated": 1165.0,
     "failed": 1800.0
   },
   "fees": {
-    "total": 35984.8261,
+    "total": 35984.826,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 29775.1061,
+      "total": 29775.106,
       "items": [
         {
           "label": "        Interchange",
@@ -32,7 +32,7 @@ window.MARGINS = {
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 3850.6866
+          "value": 3850.6865
         },
         {
           "label": "        Amex Discount",
@@ -89,7 +89,7 @@ window.MARGINS = {
     "rows": [
       {
         "name": "Current mix",
-        "revenue": 36612.691
+        "revenue": 36657.391
       },
       {
         "name": "All 2.5% flat",
@@ -133,7 +133,7 @@ window.MARGINS = {
     "total": 33915.6,
     "note": "Fixed Stripe subscriptions billed to the platform account. They are NOT a cost of processing a transaction, so they are excluded from contribution and from every per-unit rate on this page. Shown here because they are real cash cost that would otherwise appear nowhere."
   },
-  "snapshotAsOf": "2026-10-21 04:50:09",
+  "snapshotAsOf": "2026-10-21 07:43:38",
   "byCountry": {
     "GB": {
       "kpis": {
@@ -224,25 +224,25 @@ window.MARGINS = {
         "txns": 59570,
         "tpv": 1626282.21,
         "avgTicket": 27.30035605170433,
-        "revenue": 36131.39,
-        "takeRate": 0.022217171028390506,
-        "totalFees": 35649.5429,
-        "netMargin": 481.8471,
-        "netTakeRate": 0.00029628749265684534,
-        "pctProfitable": 0.478865200604331,
-        "profitableTxns": 28526,
-        "unprofitableTxns": 31044,
+        "revenue": 36176.09,
+        "takeRate": 0.022244657032802997,
+        "totalFees": 35649.5428,
+        "netMargin": 526.5472,
+        "netTakeRate": 0.00032377355855927914,
+        "pctProfitable": 0.47970454926976663,
+        "profitableTxns": 28576,
+        "unprofitableTxns": 30994,
         "withActual": 58431,
         "withEstimated": 1139,
         "failed": 1746
       },
       "fees": {
-        "total": 35649.5429,
+        "total": 35649.5428,
         "network": {
-          "total": 29614.809,
+          "total": 29614.8089,
           "items": [
             23915.1902,
-            3803.0422,
+            3803.0421,
             1896.5766
           ]
         },
@@ -251,7 +251,7 @@ window.MARGINS = {
         }
       },
       "scenarios": [
-        36131.39,
+        36176.09,
         40657.05525,
         43635.55525,
         48240.33746,
@@ -339,17 +339,17 @@ window.MARGINS = {
         "avgTicket": 14.808794657980467,
         "revenue": 1306.85,
         "takeRate": 0.028745274431914082,
-        "network": 1002.5972,
+        "network": 1002.5971,
         "interchange": 834.4019,
-        "cardScheme": 132.2569,
+        "cardScheme": 132.2568,
         "amexDiscount": 35.9384,
         "stripe": 168.702,
-        "netRevenue": 304.2492,
-        "netRevenueTakeRate": 0.006692237702678948,
-        "totalFees": 1171.2992,
-        "netMargin": 135.5472,
-        "netTakeRate": 0.0029814832687079444,
-        "contributionMarginPct": 0.4455136534547236,
+        "netRevenue": 304.2493,
+        "netRevenueTakeRate": 0.006692239902269843,
+        "totalFees": 1171.2991,
+        "netMargin": 135.5473,
+        "netTakeRate": 0.0029814854682988392,
+        "contributionMarginPct": 0.44551383570209324,
         "settledShare": 1.0,
         "settled": true,
         "pctProfitable": 0.40781758957654723,
@@ -445,24 +445,24 @@ window.MARGINS = {
         "txns": 19047,
         "tpv": 532054.36,
         "avgTicket": 27.93376161306221,
-        "revenue": 12188.97,
-        "takeRate": 0.02290925603646259,
+        "revenue": 12233.67,
+        "takeRate": 0.02299327000867164,
         "network": 8591.6353,
         "interchange": 6802.7979,
         "cardScheme": 1173.6279,
         "amexDiscount": 615.2095,
         "stripe": 1974.3231,
-        "netRevenue": 3597.3342,
-        "netRevenueTakeRate": 0.0067612155594060684,
+        "netRevenue": 3642.0342,
+        "netRevenueTakeRate": 0.0068452295316151195,
         "totalFees": 10565.9584,
-        "netMargin": 1623.0111,
-        "netTakeRate": 0.003050461125435065,
-        "contributionMarginPct": 0.4511705178799283,
+        "netMargin": 1667.7111,
+        "netTakeRate": 0.0031344750976441157,
+        "contributionMarginPct": 0.4579065001644353,
         "settledShare": 0.938835512154145,
         "settled": false,
-        "pctProfitable": 0.5177718275843964,
-        "profitableTxns": 9862,
-        "unprofitableTxns": 9185,
+        "pctProfitable": 0.5203969128996693,
+        "profitableTxns": 9912,
+        "unprofitableTxns": 9135,
         "withActual": 17882,
         "withEstimated": 1165,
         "failed": 601,
@@ -724,17 +724,17 @@ window.MARGINS = {
           "avgTicket": 14.838922624877581,
           "revenue": 1306.51,
           "takeRate": 0.02874507003270731,
-          "network": 1002.3019,
+          "network": 1002.3018,
           "interchange": 834.3917,
-          "cardScheme": 132.0414,
+          "cardScheme": 132.0413,
           "amexDiscount": 35.8688,
           "stripe": 168.6598,
-          "netRevenue": 304.2081,
-          "netRevenueTakeRate": 0.0066930089620567575,
-          "totalFees": 1170.9617,
-          "netMargin": 135.5483,
-          "netTakeRate": 0.002982254528085753,
-          "contributionMarginPct": 0.4455775489010115,
+          "netRevenue": 304.2082,
+          "netRevenueTakeRate": 0.006693011162198358,
+          "totalFees": 1170.9616,
+          "netMargin": 135.5484,
+          "netTakeRate": 0.0029822567282273534,
+          "contributionMarginPct": 0.4455777311519998,
           "settledShare": 1.0,
           "settled": true,
           "pctProfitable": 0.40874959190336274,
@@ -830,24 +830,24 @@ window.MARGINS = {
           "txns": 18177,
           "tpv": 515801.96,
           "avgTicket": 28.37662760631545,
-          "revenue": 12024.82,
-          "takeRate": 0.02331286216903903,
+          "revenue": 12069.52,
+          "takeRate": 0.023399523336437474,
           "network": 8538.795,
           "interchange": 6767.24,
           "cardScheme": 1158.2462,
           "amexDiscount": 613.3088,
           "stripe": 1914.0144,
-          "netRevenue": 3486.025,
-          "netRevenueTakeRate": 0.00675845628814627,
+          "netRevenue": 3530.725,
+          "netRevenueTakeRate": 0.0068451174555447135,
           "totalFees": 10452.8094,
-          "netMargin": 1572.0106,
-          "netTakeRate": 0.003047701854175267,
-          "contributionMarginPct": 0.4509464475668303,
+          "netMargin": 1616.7106,
+          "netTakeRate": 0.0031343630215737092,
+          "contributionMarginPct": 0.45789762439135334,
           "settledShare": 0.9373383946745888,
           "settled": false,
-          "pctProfitable": 0.5106453210100677,
-          "profitableTxns": 9282,
-          "unprofitableTxns": 8895,
+          "pctProfitable": 0.5133960499532376,
+          "profitableTxns": 9332,
+          "unprofitableTxns": 8845,
           "withActual": 17038,
           "withEstimated": 1139,
           "failed": 580,
@@ -857,10 +857,10 @@ window.MARGINS = {
     }
   },
   "freePeriod": {
-    "freeTxns": 8065,
-    "freeVolume": 295466.24,
-    "forgoneRevenue": 6677.28,
-    "impliedTakeRate": 0.022599130107047085,
+    "freeTxns": 8014,
+    "freeVolume": 293779.39,
+    "forgoneRevenue": 6630.67,
+    "impliedTakeRate": 0.02257023544095452,
     "merchants": [
       {
         "name": "GOLDEN BEAUTY SUPPLY",
@@ -877,14 +877,14 @@ window.MARGINS = {
       {
         "name": "The Fin",
         "cc": "US",
-        "n": 2062,
-        "vol": 32737.44,
-        "forgone": 803.98,
+        "n": 2057,
+        "vol": 32677.4,
+        "forgone": 802.36,
         "basis": "negotiated",
         "pct": 0.017,
         "fixed": 0.12,
         "first": "2026-09-13",
-        "last": "2026-10-21"
+        "last": "2026-10-02"
       },
       {
         "name": "KIM'S INC",
@@ -1057,14 +1057,14 @@ window.MARGINS = {
       {
         "name": "El Dorado Aquatics Snack Shack",
         "cc": "US",
-        "n": 149,
-        "vol": 712.0,
-        "forgone": 37.56,
+        "n": 141,
+        "vol": 680.0,
+        "forgone": 35.64,
         "basis": "derived",
-        "pct": 0.021209,
-        "fixed": 0.1507,
+        "pct": 0.02088,
+        "fixed": 0.1521,
         "first": "2026-09-04",
-        "last": "2026-10-21"
+        "last": "2026-09-15"
       },
       {
         "name": "American Repertory Theater of Western New York",
@@ -1127,18 +1127,6 @@ window.MARGINS = {
         "last": "2026-09-13"
       },
       {
-        "name": "KJT Joy LLC",
-        "cc": "US",
-        "n": 11,
-        "vol": 537.32,
-        "forgone": 13.85,
-        "basis": "derived",
-        "pct": 0.022378,
-        "fixed": 0.1659,
-        "first": "2026-10-21",
-        "last": "2026-10-21"
-      },
-      {
         "name": "Tupperlid",
         "cc": "US",
         "n": 32,
@@ -1163,18 +1151,6 @@ window.MARGINS = {
         "last": "2026-09-16"
       },
       {
-        "name": "Killer Chicken",
-        "cc": "US",
-        "n": 11,
-        "vol": 429.47,
-        "forgone": 10.93,
-        "basis": "derived",
-        "pct": 0.021991,
-        "fixed": 0.1346,
-        "first": "2026-10-20",
-        "last": "2026-10-21"
-      },
-      {
         "name": "Rosemead Beauty School",
         "cc": "US",
         "n": 8,
@@ -1197,30 +1173,6 @@ window.MARGINS = {
         "fixed": null,
         "first": "2026-09-30",
         "last": "2026-10-07"
-      },
-      {
-        "name": "Toad Alley LLC",
-        "cc": "US",
-        "n": 5,
-        "vol": 278.07,
-        "forgone": 7.98,
-        "basis": "derived",
-        "pct": 0.026004,
-        "fixed": 0.1504,
-        "first": "2026-10-21",
-        "last": "2026-10-21"
-      },
-      {
-        "name": "Sinbad INC",
-        "cc": "US",
-        "n": 4,
-        "vol": 278.63,
-        "forgone": 7.4,
-        "basis": "derived",
-        "pct": 0.024541,
-        "fixed": 0.1408,
-        "first": "2026-10-21",
-        "last": "2026-10-21"
       },
       {
         "name": "Majik Scents",
@@ -1345,14 +1297,14 @@ window.MARGINS = {
       {
         "name": "M&M ASSOCIATES LLC",
         "cc": "US",
-        "n": 9,
-        "vol": 32.13,
-        "forgone": 2.15,
+        "n": 8,
+        "vol": 28.18,
+        "forgone": 1.9,
         "basis": "standard",
         "pct": null,
         "fixed": null,
         "first": "2026-09-24",
-        "last": "2026-10-21"
+        "last": "2026-09-26"
       },
       {
         "name": "A2Z Events",
@@ -1365,18 +1317,6 @@ window.MARGINS = {
         "fixed": null,
         "first": "2026-09-04",
         "last": "2026-09-05"
-      },
-      {
-        "name": "Thompson Falls Public School District #2",
-        "cc": "US",
-        "n": 5,
-        "vol": 31.0,
-        "forgone": 1.56,
-        "basis": "derived",
-        "pct": 0.025997,
-        "fixed": 0.1508,
-        "first": "2026-10-20",
-        "last": "2026-10-21"
       },
       {
         "name": "Creative Designs",
@@ -1413,18 +1353,6 @@ window.MARGINS = {
         "fixed": null,
         "first": "2026-09-24",
         "last": "2026-09-24"
-      },
-      {
-        "name": "Rainbow",
-        "cc": "US",
-        "n": 1,
-        "vol": 36.37,
-        "forgone": 1.1,
-        "basis": "derived",
-        "pct": 0.026,
-        "fixed": 0.1502,
-        "first": "2026-10-21",
-        "last": "2026-10-21"
       },
       {
         "name": "Ry’s plumbing and drains",
@@ -1551,23 +1479,23 @@ window.MARGINS = {
       "2026-09": {
         "n": 6925,
         "vol": 261603.86,
-        "forgone": 6005.22
+        "forgone": 6005.19
       },
       "2026-10": {
-        "n": 1140,
-        "vol": 33862.38,
-        "forgone": 672.08
+        "n": 1089,
+        "vol": 32175.53,
+        "forgone": 625.51
       }
     },
     "basisCounts": {
-      "derived": 3977,
-      "standard": 284,
-      "negotiated": 3804
+      "derived": 3932,
+      "standard": 283,
+      "negotiated": 3799
     },
     "prepaidAssumption": {
-      "n": 1040,
-      "volume": 25748.59,
-      "forgone": 550.37,
+      "n": 1039,
+      "volume": 25628.24,
+      "forgone": 547.09,
       "note": "Prepaid cards were not separately priced and are charged at the debit rate (1.99% + 15c), the usual treatment since prepaid settles at debit interchange. Shown separately because it is an assumption, not an agreed price."
     },
     "pricing": {
