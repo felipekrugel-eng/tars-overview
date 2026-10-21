@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-21T13:46:30.304Z",
+ "generated_at": "2026-10-21T13:58:32.667Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1USx6t5TQR9BjRhG": {
+   "name": "Christopher Calhoun",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1USvEz6m3Hjht9ju": {
    "name": "Michael Holton",
    "legal_entity_type": "company",
