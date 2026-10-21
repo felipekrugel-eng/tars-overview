@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-21T20:06:38.039Z",
+  "ranAt": "2026-10-21T20:51:35.560Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1143,7 +1143,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 9957517950
+        "rows": 9957709380
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2055,29 +2055,29 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "SHIPPING_ADDRESS_LINE2": null,
-        "TAX": 504,
-        "SHIPPING_ADDRESS_STATE": "MS",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "38756",
-        "BATCH_TIMESTAMP": "2026-10-21 15:00:00.000",
+        "TAX": 325,
+        "SHIPPING_ADDRESS_STATE": "ME",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "04671",
+        "BATCH_TIMESTAMP": "2026-10-21 18:00:00.000",
         "SHIPPING_COMPANY": null,
-        "SHIPPING_ADDRESS_LINE1": "320 Sycamore St",
-        "AMOUNT": 7704,
+        "SHIPPING_ADDRESS_LINE1": "536 Brewer Rd",
+        "AMOUNT": 7525,
         "SHIPPING_AMOUNT": 1300,
         "SHIPPING_CURRENCY": "usd",
         "PO_NUMBER": null,
-        "ID": "thor_1UT09U7e4AMQfKY3BPQiBVbZ",
+        "ID": "thor_1USgcP7e4AMQfKY3UJ2KQtqX",
         "PAYMENT_TYPE": "monthly_invoice",
-        "UPDATED": "2026-10-21 14:36:08.000",
-        "SHIPPING_NAME": "Rachael Hester",
+        "UPDATED": "2026-10-21 16:24:07.000",
+        "SHIPPING_NAME": "Brent Lyons",
         "SHIPPING_METHOD_NAME": "standard",
-        "STATUS": "ready_to_ship",
+        "STATUS": "shipped",
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "SHIPPING_ADDRESS_CITY": "Leland",
-        "SHIPPING_PHONE": "16628220113",
+        "SHIPPING_ADDRESS_CITY": "Robbinston",
+        "SHIPPING_PHONE": "12072146297",
         "CURRENCY": "usd",
-        "SHIPPING_EMAIL": "thedeltabarllc@gmail.com",
+        "SHIPPING_EMAIL": "Stcroixbowling@gmail.com",
         "LIVEMODE": true,
-        "CREATED": "2026-10-21 14:06:00.000",
+        "CREATED": "2026-10-20 17:14:33.000",
         "SHIPPING_ADDRESS_COUNTRY": "US"
       },
       {
@@ -2273,22 +2273,8 @@
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UT09U7e4AMQfKY3BPQiBVbZ",
-        "BATCH_TIMESTAMP": "2026-10-21 15:00:00.000",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
-        "AMOUNT": 5900,
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
-      },
-      {
-        "QUANTITY": 1,
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1USs5x7e4AMQfKY3U5cMjbSH",
-        "BATCH_TIMESTAMP": "2026-10-21 09:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1USgcP7e4AMQfKY3UJ2KQtqX",
+        "BATCH_TIMESTAMP": "2026-10-21 18:00:00.000",
         "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
         "AMOUNT": 5900,
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2",
@@ -2381,6 +2367,20 @@
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "CURRENCY": "usd",
         "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
+      },
+      {
+        "QUANTITY": 1,
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
+        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 3393,
+        "AMOUNT": 3393,
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_hub",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6ClPRnoqxoTO",
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_OabKxOTb82dOHG",
         "TERMINAL_HARDWARE_SKU_CURRENCY": "usd"
       }
     ],

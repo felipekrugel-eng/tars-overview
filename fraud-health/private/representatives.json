@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-21T19:49:36.872Z",
+ "generated_at": "2026-10-21T20:25:49.696Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1USx6t5TQR9BjRhG": {
@@ -19,7 +19,7 @@
    "name": "Quicksall Josh",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": false
+   "payouts_enabled": true
   },
   "acct_1USfyc4yopaGzKuF": {
    "name": "Brent Lyons",
