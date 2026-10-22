@@ -55,15 +55,33 @@ jobs:
             echo "Dispatched run — always proceeds."
             exit 0
           fi
-          LAST=$(grep -o '"generatedAt":"[0-9-]\{10\}' "KPI Dashboard v2 (Caio)/kpi-data.js" \
-                 | head -1 | grep -o '[0-9-]\{10\}' || true)
+          # Was: skip when kpi-data.js carries today's generatedAt. That read ONE
+          # artefact as a proxy for "the refresh happened", and a PARTIAL run breaks
+          # the proxy. On 2026-10-21 the 04:07 dispatch was killed by the 330m timeout
+          # AFTER the cohort query had regenerated kpi-data.js but BEFORE the
+          # subscriptions query finished. generatedAt therefore said 10-21, this
+          # fail-safe skipped, and subs-data.js sat untouched for 49h against a 36h
+          # limit — the dashboard's 'KPI subscriptions / Not updating' alarm.
+          #
+          # So ask about the artefact that actually goes stale, not about a sibling
+          # that a half-finished run has already touched. Written by the same commit
+          # as daily-history.js, so one question covers both.
+          #
+          # Fails OPEN: if GitHub cannot be asked, run. A needless refresh costs one
+          # run; a skipped one costs a day of stale charts.
           TODAY=$(date -u +%F)
-          if [ "$LAST" = "$TODAY" ]; then
+          WROTE=$(curl -sfS -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/repos/${{ github.repository }}/commits?path=KPI%20Dashboard%20v2%20%28Caio%29/subs-data.js&sha=master&since=${TODAY}T00:00:00Z&per_page=1" \
+            | python3 -c "import json,sys;print(len(json.load(sys.stdin)))") || WROTE=""
+          if [ -z "$WROTE" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Could not ask GitHub when subs-data.js was last written — proceeding."
+          elif [ "$WROTE" -gt 0 ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "kpi-data.js already generated today ($LAST) — cron fail-safe not needed, exiting."
+            echo "subs-data.js already refreshed today — cron fail-safe not needed, exiting."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
-            echo "No refresh yet today (last generated $LAST) — cron fail-safe proceeding."
+            echo "subs-data.js not written today — cron fail-safe proceeding."
           fi
 
       - uses: actions/setup-python@v5
