@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-22T22:39:35.174Z",
+ "generated_at": "2026-10-22T23:03:01.749Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTR4C9r4n3kXgvW": {
+   "name": "Frank Saif",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UTONw5NNkwXVkmH": {
    "name": "Feryixsso Finlay",
    "legal_entity_type": "company",
