@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-22T19:55:57.684Z",
+ "generated_at": "2026-10-22T20:21:13.191Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTONw5NNkwXVkmH": {
+   "name": "Feryixsso Finlay",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
   "acct_1UTKN77k64k0WRUo": {
    "name": "Lizbeth Arroyo",
    "legal_entity_type": "company",
