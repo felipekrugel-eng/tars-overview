@@ -1,6 +1,6 @@
 FEE_CATEGORY,CURRENCY,N,TOTAL_AMOUNT_MINOR
 account_volume,gbp,8,-38699
-dispute,gbp,7,-7525
+dispute,gbp,8,-9018
 payout,gbp,8,-3964
 per_auth,gbp,190,-241817
 radar,gbp,4,-20
