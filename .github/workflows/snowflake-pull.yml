@@ -5,6 +5,10 @@ on:
     - cron: "0 6 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: snowflake-pull
+  cancel-in-progress: false
+
 jobs:
   pull-and-deploy:
     runs-on: ubuntu-latest
@@ -43,11 +47,59 @@ jobs:
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git config user.name "CASE Bot"
+          set -uo pipefail
+          git config user.name  "CASE Bot"
           git config user.email "case-bot@loyverse.com"
-          git add case-data.js
-          git commit -m "CASE: daily Snowflake pull $(date +%Y-%m-%d)"
-          git push origin master
+
+          # -------------------------------------------------------------------------
+          # WHY THIS IS NOT A BARE `git push`.
+          #
+          # This workflow was disabled on 2026-06-23 after a single failure, and the
+          # failing step was this one — the Snowflake pull itself had succeeded. master
+          # takes several hundred automated commits a day, so by the time the pull
+          # finishes the branch has moved and a bare push is rejected non-fast-forward.
+          #
+          # kpi-pull, margin-pull and merchant-base-pull all hit the same wall and were
+          # fixed in late August with the pattern below. This file had already been
+          # switched off by then, so it never received the fix. Same bug, same remedy.
+          #
+          # reset --MIXED, never --soft: --soft keeps the index from the ORIGINAL
+          # checkout, so committing it writes back the OLD content of every file that
+          # changed on master meanwhile, silently reverting other jobs. --mixed resets
+          # the index to origin/master and leaves our freshly written case-data.js in
+          # the working tree, so the commit is exactly origin/master plus that one file.
+          # -------------------------------------------------------------------------
+          for i in 1 2 3 4 5; do
+            git fetch -q origin master || { sleep 5; continue; }
+            git reset -q --mixed origin/master
+            git add -- case-data.js
+            if git diff --cached --quiet; then
+              echo "Remote already has this data — nothing to push."; exit 0
+            fi
+            git commit -q -m "CASE: daily Snowflake pull $(date -u +%F)"
+            # Nothing but case-data.js may ever reach the commit. The Snowflake private
+            # key is written into the working tree by an earlier step and must never be
+            # pushed, whatever a future edit to the add line does.
+            if git diff --name-only origin/master HEAD | grep -qv '^case-data\.js
+
+      - name: Clean up key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
+; then
+              echo "::error::Commit touches files other than case-data.js — refusing to push."
+              git diff --name-only origin/master HEAD | grep -v '^case-data\.js
+
+      - name: Clean up key
+        if: always()
+        run: rm -f snowflake_tars_key.p8
+
+              exit 1
+            fi
+            if git push -q origin master; then echo "pushed on attempt $i"; exit 0; fi
+            echo "push attempt $i failed (remote moved) — retrying in 5s"
+            sleep 5
+          done
+          echo "::error::push still failing after 5 attempts"; exit 1
 
       - name: Clean up key
         if: always()
