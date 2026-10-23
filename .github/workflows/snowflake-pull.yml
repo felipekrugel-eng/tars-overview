@@ -80,19 +80,9 @@ jobs:
             # Nothing but case-data.js may ever reach the commit. The Snowflake private
             # key is written into the working tree by an earlier step and must never be
             # pushed, whatever a future edit to the add line does.
-            if git diff --name-only origin/master HEAD | grep -qv '^case-data\.js
-
-      - name: Clean up key
-        if: always()
-        run: rm -f snowflake_tars_key.p8
-; then
+            if git diff --name-only origin/master HEAD | grep -qv '^case-data\.js$'; then
               echo "::error::Commit touches files other than case-data.js — refusing to push."
-              git diff --name-only origin/master HEAD | grep -v '^case-data\.js
-
-      - name: Clean up key
-        if: always()
-        run: rm -f snowflake_tars_key.p8
-
+              git diff --name-only origin/master HEAD | grep -v '^case-data\.js$'
               exit 1
             fi
             if git push -q origin master; then echo "pushed on attempt $i"; exit 0; fi
