@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-23T22:40:20.707Z",
+ "generated_at": "2026-10-23T23:04:00.015Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTp6i8xhRdNyuKS": {
+   "name": "Heaven Bryant",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UTj5f8m6m0Dzh2j": {
    "name": "Terrell Lofton",
    "legal_entity_type": "company",
