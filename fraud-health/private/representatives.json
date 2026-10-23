@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-23T14:01:04.863Z",
+ "generated_at": "2026-10-23T14:29:16.620Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTfYd6fIstd6X6s": {
+   "name": "Jeewanjot Singh",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UTVn19G2w9oC9Gn": {
    "name": "Alexis Jeffries",
    "legal_entity_type": "individual",
