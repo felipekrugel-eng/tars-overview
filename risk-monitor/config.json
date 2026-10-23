@@ -44,7 +44,7 @@
   },
   "min_run_interval_seconds": 3000,
   "activation": {
-    "boundary_epoch": 1791397800,
+    "boundary_epoch": 0,
     "legacy_alerting_retired": true
   }
 }
