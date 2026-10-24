@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-24T05:58:37.187507+00:00",
+ "checked_at": "2026-10-24T06:01:05.264954+00:00",
  "worst": "warn",
- "digest": "889dae22a1be6e2666eef8f48986dfbea291030c1af1409b4fdfb2c3ae65c211",
+ "digest": "6a3810f8d7872ad4f7c3492d9f0940390033efa8a2a7219a2190dcc0f6682a15",
  "history_method": 2,
  "pipelines": [
   {
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-10-24T05:57:37+00:00",
    "data_at": "2026-10-24T05:57:00+00:00",
-   "age_h": 0.03,
+   "age_h": 0.07,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -31,12 +31,16 @@
    "reason": "source",
    "committed_at": "2026-10-24T05:10:06+00:00",
    "data_at": "2026-10-24T03:51:03+00:00",
-   "age_h": 2.13,
+   "age_h": 2.17,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-10-24T05:55:18Z",
+    "last_success": "2026-10-24T05:58:37Z",
     "consecutive_non_success": 0,
     "recent": [
+     {
+      "at": "2026-10-24T05:58:37Z",
+      "outcome": "success"
+     },
      {
       "at": "2026-10-24T05:55:18Z",
       "outcome": "success"
@@ -56,20 +60,16 @@
      {
       "at": "2026-10-24T05:18:21Z",
       "outcome": "success"
-     },
-     {
-      "at": "2026-10-24T05:07:03Z",
-      "outcome": "success"
      }
     ],
-    "runs_since_artefact": 5,
+    "runs_since_artefact": 6,
     "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/40064121312",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Evaluate and durably checkpoint \u00b7 last success 2026-10-24 05:55"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Evaluate and durably checkpoint \u00b7 last success 2026-10-24 05:58"
   },
   {
    "name": "Payments pull",
@@ -81,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-10-24T03:34:13+00:00",
    "data_at": "2026-10-24T03:34:11.576337+00:00",
-   "age_h": 2.41
+   "age_h": 2.45
   },
   {
    "name": "Activated payments",
@@ -93,7 +93,7 @@
    "reason": null,
    "committed_at": "2026-10-24T05:33:41+00:00",
    "data_at": "2026-10-24T05:26:58.270000+00:00",
-   "age_h": 0.53,
+   "age_h": 0.57,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -106,7 +106,7 @@
    "reason": null,
    "committed_at": "2026-10-24T05:33:41+00:00",
    "data_at": null,
-   "age_h": 0.42
+   "age_h": 0.46
   },
   {
    "name": "Merchant base",
@@ -118,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-10-23T09:47:13+00:00",
    "data_at": "2026-10-23T09:39:41.284941+00:00",
-   "age_h": 20.32,
+   "age_h": 20.36,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -131,7 +131,7 @@
    "reason": null,
    "committed_at": "2026-10-23T17:33:29+00:00",
    "data_at": null,
-   "age_h": 12.42,
+   "age_h": 12.46,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -144,7 +144,7 @@
    "reason": null,
    "committed_at": "2026-10-23T17:33:29+00:00",
    "data_at": null,
-   "age_h": 12.42,
+   "age_h": 12.46,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -157,7 +157,7 @@
    "reason": null,
    "committed_at": "2026-10-23T23:02:43+00:00",
    "data_at": null,
-   "age_h": 6.93,
+   "age_h": 6.97,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -170,7 +170,7 @@
    "reason": null,
    "committed_at": "2026-10-23T13:58:41+00:00",
    "data_at": null,
-   "age_h": 16.0,
+   "age_h": 16.04,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
