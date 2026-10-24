@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-24T02:52:15.146Z",
+ "generated_at": "2026-10-24T03:16:44.554Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UTqPr7qOJ46qd4b": {
