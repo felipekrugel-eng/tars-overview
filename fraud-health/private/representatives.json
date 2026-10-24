@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-24T01:52:19.982Z",
+ "generated_at": "2026-10-24T02:04:59.567Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTqPr7qOJ46qd4b": {
+   "name": "Francisco Mendez",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UTp6i8xhRdNyuKS": {
    "name": "Heaven Bryant",
    "legal_entity_type": "individual",
