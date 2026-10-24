@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-24T11:22:46.987Z",
+ "generated_at": "2026-10-24T11:36:51.823Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UTy4E6rjHSwXeQv": {
+   "name": "Kishan Patel",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UTxVP6EXKM02Jm4": {
    "name": "Anthony Smith",
    "legal_entity_type": "non_profit",
