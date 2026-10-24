@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-24T19:34:31.406Z",
+ "generated_at": "2026-10-24T19:46:08.617Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UU96G8h27Izfy5P": {
+   "name": "Christopher Haygood",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UU4lO7rskFBVLMK": {
    "name": "Sandy Sullivan",
    "legal_entity_type": "individual",
