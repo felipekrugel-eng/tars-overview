@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-25T10:18:22.873Z",
+ "generated_at": "2026-10-25T10:55:03.755Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UULpf7oMmz4cXIQ": {
+   "name": "Zita Grunder",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UU96G8h27Izfy5P": {
    "name": "Christopher Haygood",
    "legal_entity_type": "individual",
