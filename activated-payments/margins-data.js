@@ -10,9 +10,9 @@ window.MARGINS = {
     "avgTicket": 26.9120123642227,
     "revenue": 39982.4828,
     "takeRate": 0.0220773651943939,
-    "totalFees": 38798.7278,
-    "netMargin": 1183.755,
-    "netTakeRate": 0.000653641034910661,
+    "totalFees": 38798.7276,
+    "netMargin": 1183.75519999999,
+    "netTakeRate": 0.000653641145345847,
     "pctProfitable": 0.488780574791215,
     "profitableTxns": 32892.0,
     "unprofitableTxns": 34402.0,
@@ -21,10 +21,10 @@ window.MARGINS = {
     "failed": 1936.0
   },
   "fees": {
-    "total": 38798.7278,
+    "total": 38798.7276,
     "network": {
       "label": "    Network Fees (pass-through)",
-      "total": 32091.7378,
+      "total": 32091.7376,
       "items": [
         {
           "label": "        Interchange",
@@ -32,7 +32,7 @@ window.MARGINS = {
         },
         {
           "label": "        Card Scheme Fees",
-          "value": 4180.0419
+          "value": 4180.0417
         },
         {
           "label": "        Amex Discount",
@@ -133,7 +133,7 @@ window.MARGINS = {
     "total": 33915.6,
     "note": "Fixed Stripe subscriptions billed to the platform account. They are NOT a cost of processing a transaction, so they are excluded from contribution and from every per-unit rate on this page. Shown here because they are real cash cost that would otherwise appear nowhere."
   },
-  "snapshotAsOf": "2026-10-26 12:23:56",
+  "snapshotAsOf": "2026-10-26 15:15:29",
   "byCountry": {
     "GB": {
       "kpis": {
@@ -226,9 +226,9 @@ window.MARGINS = {
         "avgTicket": 27.274192667949126,
         "revenue": 39449.15,
         "takeRate": 0.022430232570303996,
-        "totalFees": 38429.6144,
-        "netMargin": 1019.5356,
-        "netTakeRate": 0.000579693637978515,
+        "totalFees": 38429.6142,
+        "netMargin": 1019.5358,
+        "netTakeRate": 0.0005796937516957029,
         "pctProfitable": 0.4805998387196824,
         "profitableTxns": 30991,
         "unprofitableTxns": 33493,
@@ -237,12 +237,12 @@ window.MARGINS = {
         "failed": 1878
       },
       "fees": {
-        "total": 38429.6144,
+        "total": 38429.6142,
         "network": {
-          "total": 31916.1954,
+          "total": 31916.1952,
           "items": [
             25788.8598,
-            4128.2269,
+            4128.2267,
             1999.1087
           ]
         },
@@ -447,17 +447,17 @@ window.MARGINS = {
         "avgTicket": 27.662768536538927,
         "revenue": 15558.76,
         "takeRate": 0.02323477145215946,
-        "network": 11007.4669,
+        "network": 11007.4667,
         "interchange": 8785.7975,
-        "cardScheme": 1502.9832,
+        "cardScheme": 1502.983,
         "amexDiscount": 718.6862,
         "stripe": 2479.9433,
-        "netRevenue": 4551.2944,
-        "netRevenueTakeRate": 0.00679670335937968,
-        "totalFees": 13487.4102,
-        "netMargin": 2071.3511,
-        "netTakeRate": 0.0030932648229127055,
-        "contributionMarginPct": 0.45511252431576193,
+        "netRevenue": 4551.2946,
+        "netRevenueTakeRate": 0.006796703658050905,
+        "totalFees": 13487.41,
+        "netMargin": 2071.3513,
+        "netTakeRate": 0.003093265121583931,
+        "contributionMarginPct": 0.45511254826004705,
         "settledShare": 0.9622836369645144,
         "settled": true,
         "pctProfitable": 0.5158425248894948,
@@ -832,17 +832,17 @@ window.MARGINS = {
           "avgTicket": 28.07452210818058,
           "revenue": 15342.58,
           "takeRate": 0.023667003929034095,
-          "network": 10939.3813,
+          "network": 10939.3811,
           "interchange": 8740.1095,
-          "cardScheme": 1483.4309,
+          "cardScheme": 1483.4307,
           "amexDiscount": 715.8409,
           "stripe": 2400.8236,
-          "netRevenue": 4403.1987,
-          "netRevenueTakeRate": 0.00679224230430744,
-          "totalFees": 13340.2049,
-          "netMargin": 2002.3751,
-          "netTakeRate": 0.0030888037678404655,
-          "contributionMarginPct": 0.45475464941550114,
+          "netRevenue": 4403.1989,
+          "netRevenueTakeRate": 0.006792242612821442,
+          "totalFees": 13340.2047,
+          "netMargin": 2002.3753,
+          "netTakeRate": 0.003088804076354467,
+          "contributionMarginPct": 0.45475467418137516,
           "settledShare": 0.9626261313931835,
           "settled": true,
           "pctProfitable": 0.5087263435970725,
