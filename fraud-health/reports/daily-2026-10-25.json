@@ -1,0 +1,76 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-25",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-25T00:00:00+01:00",
+  "windowEnd": "2026-10-26T00:00:00+00:00",
+  "count": 1,
+  "confirmed": 1,
+  "boundaryAmbiguous": 0,
+  "members": [
+   {
+    "accountId": "acct_1UULpf7oMmz4cXIQ",
+    "enabledAt": "2026-10-25T12:35:02+00:00",
+    "enabledWindowStart": "2026-10-25T07:27:08+00:00",
+    "enabledWindowEnd": "2026-10-25T12:35:02+00:00",
+    "enabledWindowHours": 5.13,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-25",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 514,
+   "never_observed_enabled": 1030
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1UULpf7oMmz4cXIQ"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [
+  {
+   "accountId": "acct_1USPJYG1sdqYIiIz",
+   "name": "Tradex alliance",
+   "from": "True",
+   "to": "False",
+   "liveStatus": "Rejected"
+  }
+ ],
+ "coverage": {
+  "computedAt": "2026-10-26T00:09:47+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1593,
+  "enabledAccounts": 521,
+  "reviewedAccounts": 565,
+  "reviewedEnabledAccounts": 517,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.2,
+  "ledgerAccounts": 1594,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}

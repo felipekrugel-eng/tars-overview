@@ -1,0 +1,87 @@
+{
+ "schemaVersion": 2,
+ "scoreDirection": "higher_is_riskier",
+ "batch": {
+  "label": "Daily newly-enabled review — 2026-10-25 Europe/London",
+  "cohortDate": "2026-10-25",
+  "reviewedAt": "2026-10-26T00:09:47+00:00",
+  "count": 1,
+  "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
+ },
+ "reviewedAt": "2026-10-26T00:09:47+00:00",
+ "merchants": [
+  {
+   "id": "acct_1UULpf7oMmz4cXIQ",
+   "accountId": "acct_1UULpf7oMmz4cXIQ",
+   "merchantId": "5361011",
+   "name": "zitaschen.ch",
+   "score": 0,
+   "riskDimensions": {
+    "legal": 0,
+    "operating": 0,
+    "identity": 0,
+    "contact": 0,
+    "businessModel": 0,
+    "history": 0,
+    "behavior": 0,
+    "network": 0
+   },
+   "verified": [
+    "Account email uses a business domain (zitaschen.ch).",
+    "Stripe reports charges_enabled = true for this account (warehouse share).",
+    "Stripe legal entity type is recorded as Individual."
+   ],
+   "unverified": [
+    "Ownership and age of zitaschen.ch have not been checked against a registrar.",
+    "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
+    "Legal registration and company standing have not been checked against a government register.",
+    "Operating premises, licensing and permits have not been verified.",
+    "Representative identity and bank-account ownership have not been independently confirmed.",
+    "Independent operating history and reputation have not been researched."
+   ],
+   "contradictions": [],
+   "evidenceNeeded": [
+    "Government or state business-registration extract for the exact legal entity.",
+    "Evidence of a real operating location: licence, permit or premises confirmation.",
+    "Representative identity and payout bank-account ownership linkage.",
+    "Independent operating history: reviews, listings, supplier or customer evidence.",
+    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
+    "Confirmation that phone, website and email resolve to the same business."
+   ],
+   "sources": [],
+   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "reviewCompleteness": 25,
+   "confidence": "low",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "reviewType": "daily-enabled-review",
+   "reviewedAt": "2026-10-26T00:09:47+00:00",
+   "reviewer": "fraud-health-pipeline",
+   "enabledAt": "2026-10-25T12:35:02+00:00",
+   "enabledWindowStart": "2026-10-25T07:27:08+00:00",
+   "enabledWindowEnd": "2026-10-25T12:35:02+00:00",
+   "enabledWindowHours": 5.13,
+   "enabledCertainty": "confirmed",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+   "createdAt": "2026-10-25T07:27:08Z",
+   "enabled": true,
+   "detailsSubmitted": null,
+   "location": "Niederwil, CH",
+   "email": "zita@zitaschen.ch",
+   "website": "www.zitaschen.ch",
+   "mcc": "5691",
+   "statementDescriptor": "ZITASCHEN.CH",
+   "productDescription": null,
+   "entityType": "Individual",
+   "representative": null,
+   "successfulTransactions": null,
+   "hasTransacted": false,
+   "lastTransactedAt": null,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring"
+  }
+ ]
+}
