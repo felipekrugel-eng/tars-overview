@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-26T17:11:20.812Z",
+ "generated_at": "2026-10-26T17:39:52.087Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UUnuA8hP9onlrs2": {
+   "name": "Luis Blanco Lopez",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
   "acct_1UUi765Ia7X4n9wd": {
    "name": "SHANTE Watson",
    "legal_entity_type": "non_profit",
