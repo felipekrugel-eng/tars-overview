@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-26T19:54:42.996Z",
+ "generated_at": "2026-10-26T20:16:21.239Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UUsR7GHImdFq9Sk": {
+   "name": "Jared Diaz",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
   "acct_1UUnuA8hP9onlrs2": {
    "name": "Luis Blanco Lopez",
    "legal_entity_type": "company",
@@ -38,6 +44,12 @@
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
+  },
+  "acct_1UUBj46DsleJx5S0": {
+   "name": "Ana Martinez",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "unverified",
+   "payouts_enabled": false
   },
   "acct_1UU96G8h27Izfy5P": {
    "name": "Christopher Haygood",
