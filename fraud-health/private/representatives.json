@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-27T07:44:39.486Z",
+ "generated_at": "2026-10-27T08:07:54.588Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UV23D6raSAz5QJM": {
+   "name": "Shane Scoffield",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UV0Fz8DNWe3iweJ": {
    "name": "Lisa Clemons",
    "legal_entity_type": "individual",
