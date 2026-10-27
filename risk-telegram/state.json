@@ -1693,7 +1693,11 @@
       "prepared_epoch": 1793105220,
       "message_id": 286,
       "sent_epoch": 1793105222
+    },
+    "faabe352d216db131c3bb41aaafa1ebb7db9d8aa5b006b47a7f4379a8c115c6d": {
+      "status": "send_intent",
+      "prepared_epoch": 1793115948
     }
   },
-  "updated_at_utc": "2026-10-27T15:45:46Z"
+  "updated_at_utc": "2026-10-27T15:45:48Z"
 }
