@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-27T14:09:04.541Z",
+ "generated_at": "2026-10-27T14:20:52.328Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UV23D6raSAz5QJM": {
@@ -60,8 +60,8 @@
   "acct_1UUBj46DsleJx5S0": {
    "name": "Ana Martinez",
    "legal_entity_type": "individual",
-   "legal_entity_verification_status": "unverified",
-   "payouts_enabled": false
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
   },
   "acct_1UU96G8h27Izfy5P": {
    "name": "Christopher Haygood",
