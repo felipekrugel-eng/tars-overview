@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-27T04:42:17.888Z",
+ "generated_at": "2026-10-27T04:58:12.566Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UV0Fz8DNWe3iweJ": {
+   "name": "Lisa Clemons",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UUsR7GHImdFq9Sk": {
    "name": "Jared Diaz",
    "legal_entity_type": "company",
@@ -1303,7 +1309,7 @@
    "name": "Daniel Fisher",
    "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
+   "payouts_enabled": false
   },
   "acct_1UK7mt8ELwERxbYr": {
    "name": "Elwin Lamb Jr",
