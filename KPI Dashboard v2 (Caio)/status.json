@@ -1,6 +1,6 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-27T17:03:41.110183+00:00",
+ "checked_at": "2026-10-27T17:05:25.730908+00:00",
  "worst": "error",
  "digest": "2bed2b9f3cd99794da221f3f182ef47c75b3477284a1b800a271a4adf8c5a030",
  "history_method": 2,
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-10-27T16:47:42+00:00",
    "data_at": "2026-10-27T16:47:00+00:00",
-   "age_h": 0.28,
+   "age_h": 0.31,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -32,7 +32,7 @@
    "reason": "stale",
    "committed_at": "2026-10-27T16:59:58+00:00",
    "data_at": "2026-10-26T23:05:17+00:00",
-   "age_h": 17.97,
+   "age_h": 18.0,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": null,
@@ -82,7 +82,7 @@
    "reason": null,
    "committed_at": "2026-10-27T15:32:32+00:00",
    "data_at": "2026-10-27T15:32:16.734090+00:00",
-   "age_h": 1.52
+   "age_h": 1.55
   },
   {
    "name": "Activated payments",
@@ -94,7 +94,7 @@
    "reason": null,
    "committed_at": "2026-10-27T16:27:07+00:00",
    "data_at": "2026-10-27T16:14:33.265000+00:00",
-   "age_h": 0.82,
+   "age_h": 0.85,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -107,7 +107,7 @@
    "reason": null,
    "committed_at": "2026-10-27T16:27:07+00:00",
    "data_at": null,
-   "age_h": 0.61
+   "age_h": 0.64
   },
   {
    "name": "Merchant base",
@@ -119,7 +119,7 @@
    "reason": null,
    "committed_at": "2026-10-27T10:12:42+00:00",
    "data_at": "2026-10-27T10:05:12.614145+00:00",
-   "age_h": 6.97,
+   "age_h": 7.0,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -132,7 +132,7 @@
    "reason": null,
    "committed_at": "2026-10-27T07:46:40+00:00",
    "data_at": null,
-   "age_h": 9.28,
+   "age_h": 9.31,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -145,7 +145,7 @@
    "reason": null,
    "committed_at": "2026-10-27T07:46:40+00:00",
    "data_at": null,
-   "age_h": 9.28,
+   "age_h": 9.31,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -158,7 +158,7 @@
    "reason": null,
    "committed_at": "2026-10-27T00:03:08+00:00",
    "data_at": null,
-   "age_h": 17.01,
+   "age_h": 17.04,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -171,7 +171,7 @@
    "reason": null,
    "committed_at": "2026-10-27T13:43:55+00:00",
    "data_at": null,
-   "age_h": 3.33,
+   "age_h": 3.36,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
