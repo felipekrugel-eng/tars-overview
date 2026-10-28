@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-28T15:15:00.672Z",
+ "generated_at": "2026-10-28T17:41:15.569Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UVXQz6p5mkICTOT": {
+   "name": "Zachary Brown",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UVPFF8aA4pVI76f": {
    "name": "Mary Jane Asprec",
    "legal_entity_type": "company",
@@ -2309,6 +2315,12 @@
   },
   "acct_1UBpbJ7xG4I6AdfZ": {
    "name": "Jacob Ingle",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UBn0H5jwblXdhq6": {
+   "name": "Ryan Wolfe",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
