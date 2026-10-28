@@ -1,8 +1,32 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-28T05:15:37.033Z",
+ "generated_at": "2026-10-28T05:48:12.507Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UVMkD4tD53fx3mB": {
+   "name": "Junior Santos",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UVMfI505E3k7pgp": {
+   "name": "Lisa Glish",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UVLnT5p9kmRZKfQ": {
+   "name": "Nayem Ahmed",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UVLiz8rKlooX4xz": {
+   "name": "Mark Endly",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UVJvn82259fMR1w": {
    "name": "Andrew Gau",
    "legal_entity_type": "individual",
