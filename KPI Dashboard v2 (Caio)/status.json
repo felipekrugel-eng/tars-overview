@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-28T19:45:14.744352+00:00",
+ "checked_at": "2026-10-28T19:47:31.510778+00:00",
  "worst": "error",
- "digest": "baa2d0c491672b137d48a935bc0f7f21c5547dc65ca2dabf5d9f5680c468c375",
+ "digest": "8f4374c67d18bb9b8c26bbb91819bb8cda7bf1c28a5510d03715f3ffb8a93040",
  "history_method": 2,
  "pipelines": [
   {
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-10-28T19:44:22+00:00",
    "data_at": "2026-10-28T19:44:00+00:00",
-   "age_h": 0.02,
+   "age_h": 0.06,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -31,14 +31,18 @@
    ],
    "state": "error",
    "reason": "stale",
-   "committed_at": "2026-10-28T19:32:27+00:00",
+   "committed_at": "2026-10-28T19:47:28+00:00",
    "data_at": "2026-10-26T23:05:17+00:00",
-   "age_h": 44.67,
+   "age_h": 44.7,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": null,
     "consecutive_non_success": 28,
     "recent": [
+     {
+      "at": "2026-10-28T19:43:44Z",
+      "outcome": "cancelled"
+     },
      {
       "at": "2026-10-28T19:33:19Z",
       "outcome": "cancelled"
@@ -58,20 +62,16 @@
      {
       "at": "2026-10-28T18:36:13Z",
       "outcome": "skipped"
-     },
-     {
-      "at": "2026-10-28T18:35:03Z",
-      "outcome": "skipped"
      }
     ],
-    "runs_since_artefact": 1,
-    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded",
+    "runs_since_artefact": 0,
+    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/40750272816",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 28 consecutive non-success runs"
+   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Evaluate and durably checkpoint \u00b7 28 consecutive non-success runs"
   },
   {
    "name": "Payments pull",
@@ -83,7 +83,7 @@
    "reason": null,
    "committed_at": "2026-10-28T17:16:26+00:00",
    "data_at": "2026-10-28T17:16:25.118819+00:00",
-   "age_h": 2.48
+   "age_h": 2.52
   },
   {
    "name": "Activated payments",
@@ -95,7 +95,7 @@
    "reason": null,
    "committed_at": "2026-10-28T19:39:45+00:00",
    "data_at": "2026-10-28T19:27:50.936000+00:00",
-   "age_h": 0.29,
+   "age_h": 0.33,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -108,7 +108,7 @@
    "reason": null,
    "committed_at": "2026-10-28T19:39:45+00:00",
    "data_at": null,
-   "age_h": 0.09
+   "age_h": 0.13
   },
   {
    "name": "Merchant base",
@@ -120,7 +120,7 @@
    "reason": null,
    "committed_at": "2026-10-28T10:58:03+00:00",
    "data_at": "2026-10-28T10:52:21.924712+00:00",
-   "age_h": 8.88,
+   "age_h": 8.92,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -133,7 +133,7 @@
    "reason": null,
    "committed_at": "2026-10-28T07:41:34+00:00",
    "data_at": null,
-   "age_h": 12.06,
+   "age_h": 12.1,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -146,7 +146,7 @@
    "reason": null,
    "committed_at": "2026-10-28T07:41:34+00:00",
    "data_at": null,
-   "age_h": 12.06,
+   "age_h": 12.1,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -159,7 +159,7 @@
    "reason": null,
    "committed_at": "2026-10-28T00:16:22+00:00",
    "data_at": null,
-   "age_h": 19.48,
+   "age_h": 19.52,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -172,7 +172,7 @@
    "reason": null,
    "committed_at": "2026-10-28T14:16:15+00:00",
    "data_at": null,
-   "age_h": 5.48,
+   "age_h": 5.52,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
