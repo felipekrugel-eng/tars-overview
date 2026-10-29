@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-29T23:01:26.474Z",
+ "generated_at": "2026-10-29T23:33:57.939Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UVxCB4uxDNwhkh9": {
@@ -13,7 +13,7 @@
    "name": "Christina van Helvoort",
    "legal_entity_type": "non_profit",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": false
+   "payouts_enabled": true
   },
   "acct_1UVviT86CcvShTNh": {
    "name": "Brady Buettner",
