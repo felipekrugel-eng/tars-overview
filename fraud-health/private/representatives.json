@@ -1,8 +1,26 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-29T20:11:49.171Z",
+ "generated_at": "2026-10-29T20:47:16.176Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UVxCB4uxDNwhkh9": {
+   "name": "Mehmet Kalkan",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UVxBL51LxcI96Mk": {
+   "name": "Christina van Helvoort",
+   "legal_entity_type": "non_profit",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UVviT86CcvShTNh": {
+   "name": "Brady Buettner",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UVuob7p5v4eiVl9": {
    "name": "Abd el moutalib Aid",
    "legal_entity_type": "individual",
@@ -1303,7 +1321,7 @@
    "name": "Darvy Contreras",
    "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
+   "payouts_enabled": false
   },
   "acct_1UL1zk5Wls9mpM7v": {
    "name": "Valerie Chiriboga",
@@ -3945,15 +3963,15 @@
    "legal_entity_verification_status": "unverified",
    "payouts_enabled": false
   },
-  "acct_1TxmheGGdPH88tBR": {
-   "name": "Marcum Eddie Shane",
-   "legal_entity_type": "individual",
-   "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
-  },
   "acct_1Txmhe85O4mEmN6i": {
    "name": "Richard Greenwood",
    "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1TxmheGGdPH88tBR": {
+   "name": "Marcum Eddie Shane",
+   "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
   },
