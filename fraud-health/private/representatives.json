@@ -1,8 +1,14 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-29T10:48:47.806Z",
+ "generated_at": "2026-10-29T11:21:33.519Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UVn7d8Fmdezj6oL": {
+   "name": "Josie Cannon",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UVi6Z4abGVAnPPv": {
    "name": "Bea Puncochar",
    "legal_entity_type": "non_profit",
@@ -187,7 +193,7 @@
    "name": "Terrell Lofton",
    "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": false
+   "payouts_enabled": true
   },
   "acct_1UTfYd6fIstd6X6s": {
    "name": "Jeewanjot Singh",
