@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-29T02:52:41.375Z",
+  "ranAt": "2026-10-29T03:12:50.109Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -904,6 +904,9 @@
         "name": "PROMOTION_CODES"
       },
       {
+        "name": "PROMOTION_CODE_METADATA"
+      },
+      {
         "name": "PURCHASE_DETAILS_RECEIPTS"
       },
       {
@@ -1146,7 +1149,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10024790202
+        "rows": 10025102633
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2061,30 +2064,57 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-28 21:00:00.000",
-        "ID": "thor_1URFeM7e4AMQfKY3TCAUoFfb",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
+        "ID": "thor_1URmX77e4AMQfKY3cTA6d47q",
         "LIVEMODE": true,
-        "CREATED": "2026-10-16 18:14:38.000",
-        "UPDATED": "2026-10-28 19:14:03.000",
-        "AMOUNT": 7650,
+        "CREATED": "2026-10-18 05:21:21.000",
+        "UPDATED": "2026-10-28 23:15:44.000",
+        "AMOUNT": 7613,
         "CURRENCY": "usd",
         "PAYMENT_TYPE": "monthly_invoice",
         "STATUS": "delivered",
         "PO_NUMBER": null,
-        "TAX": 450,
+        "TAX": 413,
         "SHIPPING_AMOUNT": 1300,
         "SHIPPING_CURRENCY": "usd",
         "SHIPPING_COMPANY": null,
-        "SHIPPING_EMAIL": "flourishlaya@gmail.com",
-        "SHIPPING_NAME": "NINA MAGPILI",
-        "SHIPPING_PHONE": "17573255827",
-        "SHIPPING_ADDRESS_LINE1": "16813 Black Kettle Dr",
+        "SHIPPING_EMAIL": "cocobylulu305@gmail.com",
+        "SHIPPING_NAME": "MARIA POSADA",
+        "SHIPPING_PHONE": "17868678155",
+        "SHIPPING_ADDRESS_LINE1": "3080 NW 28th St",
         "SHIPPING_ADDRESS_LINE2": null,
-        "SHIPPING_ADDRESS_CITY": "Leander",
-        "SHIPPING_ADDRESS_STATE": "TX",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "78641",
+        "SHIPPING_ADDRESS_CITY": "MIAMI",
+        "SHIPPING_ADDRESS_STATE": "FL",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "33142",
         "SHIPPING_ADDRESS_COUNTRY": "US",
         "SHIPPING_METHOD_NAME": "standard"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
+        "ID": "thor_1UVWxB7e4AMQfKY3GkjcGW1O",
+        "LIVEMODE": true,
+        "CREATED": "2026-10-28 13:31:46.000",
+        "UPDATED": "2026-10-28 23:13:54.000",
+        "AMOUNT": 31042,
+        "CURRENCY": "usd",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "STATUS": "shipped",
+        "PO_NUMBER": null,
+        "TAX": 2029,
+        "SHIPPING_AMOUNT": 3000,
+        "SHIPPING_CURRENCY": "usd",
+        "SHIPPING_COMPANY": null,
+        "SHIPPING_EMAIL": "ca.infinite.prosperity@gmail.com",
+        "SHIPPING_NAME": "Giovanni Carmiol",
+        "SHIPPING_PHONE": "16028009038",
+        "SHIPPING_ADDRESS_LINE1": "4463 E Grand Canyon Dr",
+        "SHIPPING_ADDRESS_LINE2": null,
+        "SHIPPING_ADDRESS_CITY": "Chandler",
+        "SHIPPING_ADDRESS_STATE": "AZ",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "85249",
+        "SHIPPING_ADDRESS_COUNTRY": "US",
+        "SHIPPING_METHOD_NAME": "express"
       },
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
@@ -2247,40 +2277,13 @@
         "SHIPPING_ADDRESS_POSTAL_CODE": "07643",
         "SHIPPING_ADDRESS_COUNTRY": "US",
         "SHIPPING_METHOD_NAME": "standard"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
-        "ID": "thor_1TYT0A7e4AMQfKY3zZkhxobL",
-        "LIVEMODE": true,
-        "CREATED": "2026-05-18 15:22:42.000",
-        "UPDATED": "2026-09-09 12:16:10.000",
-        "AMOUNT": 18842,
-        "CURRENCY": "usd",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "STATUS": "delivered",
-        "PO_NUMBER": null,
-        "TAX": 1042,
-        "SHIPPING_AMOUNT": 2200,
-        "SHIPPING_CURRENCY": "usd",
-        "SHIPPING_COMPANY": "Delta Builders llc",
-        "SHIPPING_EMAIL": "felipe.krugel@loyverse.com",
-        "SHIPPING_NAME": "Charles Mason",
-        "SHIPPING_PHONE": "19705100014",
-        "SHIPPING_ADDRESS_LINE1": "318 Main Street",
-        "SHIPPING_ADDRESS_LINE2": "Delta, CO 81416",
-        "SHIPPING_ADDRESS_CITY": "Delta",
-        "SHIPPING_ADDRESS_STATE": "CO",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "81416",
-        "SHIPPING_ADDRESS_COUNTRY": "US",
-        "SHIPPING_METHOD_NAME": "standard"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-28 21:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1URFeM7e4AMQfKY3TCAUoFfb",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1URmX77e4AMQfKY3cTA6d47q",
         "QUANTITY": 1,
         "AMOUNT": 5900,
         "CURRENCY": "usd",
@@ -2293,7 +2296,7 @@
       },
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-28 18:00:00.000",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1UVWxB7e4AMQfKY3GkjcGW1O",
         "QUANTITY": 1,
         "AMOUNT": 26013,
@@ -2307,8 +2310,22 @@
       },
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-28 18:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UUD6c7e4AMQfKY3d07O8XTr",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UU5A77e4AMQfKY3X1g8KNgA",
+        "QUANTITY": 1,
+        "AMOUNT": 5900,
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-10-29 00:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UUcBi7e4AMQfKY31xZspM5r",
         "QUANTITY": 1,
         "AMOUNT": 5900,
         "CURRENCY": "usd",
@@ -2374,20 +2391,6 @@
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
         "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6ClPRnoqxoTO",
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_hub"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
-        "QUANTITY": 2,
-        "AMOUNT": 52026,
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_METADATA": [],
