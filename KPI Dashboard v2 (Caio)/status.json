@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-10-28T23:40:11.062301+00:00",
+ "checked_at": "2026-10-29T00:39:09.617121+00:00",
  "worst": "error",
- "digest": "70dc21e82545cc35c9ccee2f8d6a20a618ce7bb4482855ec85b5ede36cf361a6",
+ "digest": "8761aea3281a5f48b6f9ee4a66f9af904ffe70c2b909d644eb20dc390dc0f8a2",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-28T23:38:49+00:00",
-   "data_at": "2026-10-28T23:38:00+00:00",
+   "committed_at": "2026-10-29T00:37:53+00:00",
+   "data_at": "2026-10-29T00:37:00+00:00",
    "age_h": 0.04,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
@@ -24,54 +24,54 @@
    "ref": "master",
    "max_age_h": 4,
    "notes": [
-    "stale: 48.6h old, limit 4h",
+    "stale: 49.6h old, limit 4h",
     "status = degraded",
     "gap: email_delivery_uncertain",
     "gap: telegram_delivery_unconfirmed"
    ],
    "state": "error",
    "reason": "stale",
-   "committed_at": "2026-10-28T23:28:31+00:00",
+   "committed_at": "2026-10-29T00:36:39+00:00",
    "data_at": "2026-10-26T23:05:17+00:00",
-   "age_h": 48.58,
+   "age_h": 49.56,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": null,
-    "consecutive_non_success": 28,
+    "consecutive_non_success": 29,
     "recent": [
+     {
+      "at": "2026-10-29T00:20:46Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-10-29T00:08:49Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-10-29T00:04:39Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-10-28T23:51:23Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-10-28T23:40:08Z",
+      "outcome": "failure"
+     },
      {
       "at": "2026-10-28T23:29:44Z",
       "outcome": "cancelled"
-     },
-     {
-      "at": "2026-10-28T23:27:01Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-10-28T23:18:46Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-10-28T23:10:08Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-10-28T22:44:50Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-10-28T22:40:43Z",
-      "outcome": "failure"
      }
     ],
-    "runs_since_artefact": 1,
-    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/40782299843",
+    "runs_since_artefact": 0,
+    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/40792112988",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 28 consecutive non-success runs"
+   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Evaluate and durably checkpoint \u00b7 29 consecutive non-success runs"
   },
   {
    "name": "Payments pull",
@@ -83,7 +83,7 @@
    "reason": null,
    "committed_at": "2026-10-28T23:02:59+00:00",
    "data_at": "2026-10-28T23:02:50.759157+00:00",
-   "age_h": 0.62
+   "age_h": 1.61
   },
   {
    "name": "Activated payments",
@@ -93,9 +93,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-28T23:37:34+00:00",
-   "data_at": "2026-10-28T23:33:13.445000+00:00",
-   "age_h": 0.12,
+   "committed_at": "2026-10-29T00:25:57+00:00",
+   "data_at": "2026-10-29T00:21:29.690000+00:00",
+   "age_h": 0.29,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
@@ -106,9 +106,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-28T23:37:34+00:00",
+   "committed_at": "2026-10-29T00:25:57+00:00",
    "data_at": null,
-   "age_h": 0.04
+   "age_h": 0.22
   },
   {
    "name": "Merchant base",
@@ -120,7 +120,7 @@
    "reason": null,
    "committed_at": "2026-10-28T10:58:03+00:00",
    "data_at": "2026-10-28T10:52:21.924712+00:00",
-   "age_h": 12.8,
+   "age_h": 13.78,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -133,7 +133,7 @@
    "reason": null,
    "committed_at": "2026-10-28T07:41:34+00:00",
    "data_at": null,
-   "age_h": 15.98,
+   "age_h": 16.96,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -146,7 +146,7 @@
    "reason": null,
    "committed_at": "2026-10-28T07:41:34+00:00",
    "data_at": null,
-   "age_h": 15.98,
+   "age_h": 16.96,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -157,9 +157,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-10-28T00:16:22+00:00",
+   "committed_at": "2026-10-29T00:27:49+00:00",
    "data_at": null,
-   "age_h": 23.4,
+   "age_h": 0.19,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -172,14 +172,13 @@
    "reason": null,
    "committed_at": "2026-10-28T14:16:15+00:00",
    "data_at": null,
-   "age_h": 9.4,
+   "age_h": 10.38,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
  "history": {
   "CUSUM registrations": {
    "2026-10-14": "ok",
-   "2026-08-30": "ok",
    "2026-08-31": "ok",
    "2026-09-01": "ok",
    "2026-09-02": "ok",
@@ -237,11 +236,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "warn"
+   "2026-10-28": "warn",
+   "2026-10-29": "ok"
   },
   "Risk monitor": {
    "2026-10-14": "warn",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -299,11 +298,11 @@
    "2026-10-25": "warn",
    "2026-10-26": "warn",
    "2026-10-27": "down",
-   "2026-10-28": "down"
+   "2026-10-28": "down",
+   "2026-10-29": "down"
   },
   "Payments pull": {
    "2026-10-14": "down",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -361,11 +360,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "Activated payments": {
    "2026-10-14": "ok",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -423,11 +422,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "Ads + attribution": {
    "2026-10-14": "ok",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -485,11 +484,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "Merchant base": {
    "2026-10-14": "ok",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -547,11 +546,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "KPI daily history": {
    "2026-10-14": "ok",
-   "2026-08-30": "ok",
    "2026-08-31": "ok",
    "2026-09-01": "ok",
    "2026-09-02": "ok",
@@ -609,11 +608,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "KPI subscriptions": {
    "2026-10-14": "ok",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -671,11 +670,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "Fraud health": {
    "2026-10-14": "ok",
-   "2026-08-30": "nodata",
    "2026-08-31": "nodata",
    "2026-09-01": "nodata",
    "2026-09-02": "nodata",
@@ -733,11 +732,11 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   },
   "CASE dashboard": {
    "2026-10-14": "ok",
-   "2026-08-30": "down",
    "2026-08-31": "down",
    "2026-09-01": "down",
    "2026-09-02": "ok",
@@ -795,7 +794,8 @@
    "2026-10-25": "ok",
    "2026-10-26": "ok",
    "2026-10-27": "ok",
-   "2026-10-28": "ok"
+   "2026-10-28": "ok",
+   "2026-10-29": "ok"
   }
  }
 }
