@@ -2,7 +2,7 @@
 
 STATE: NO_EFFECT
 PRICE_STATE: PRICE_APPLIED
-GENERATED: 2026-10-29 11:30 UTC
+GENERATED: 2026-10-29 19:18 UTC
 LAST_DATA_DATE: 2026-10-28
 SIGNAL_DAYS: 91
 SIGNAL_DAYS_NEEDED: 7
@@ -18,9 +18,9 @@ PRICE_OBSERVED_BASELINE: $5.17 (modal $5.00, 659 adopters)
 PRICE_OBSERVED_SIGNAL: $6.30 (modal $5.00, 315 adopters)
 PRICE_CHANGE_DETECTED: True
 PRICE_FINDING: moved: $5.17 -> $6.30 (+22%)
-INTENDED_TIER: S_SALESHISTORY_1_USD_V002
-INTENDED_TIER_SUBS_GLOBAL: 163
-INTENDED_TIER_PILOT_SUBS_SINCE_LAUNCH: 0
+INTENDED_TIER: not found / catalogue not queried
+INTENDED_TIER_SUBS_GLOBAL: null
+INTENDED_TIER_PILOT_SUBS_SINCE_LAUNCH: null
 
 ## New payers (the primary metric)
 BASELINE_PILOT_PER_DAY: 3.622
@@ -43,7 +43,7 @@ NOTE: with the price flat, this moves on volume and monthly/annual mix, not pric
 
 ## Upsells (needs a full billing month — 28 signal days)
 SIGNAL_PILOT_PER_DAY: 1.066
-DID: 1.016
+DID: 1.015
 READABLE: True
 
 ## Reading this
