@@ -1,0 +1,73 @@
+{
+  "accountId": "acct_1UVxBL51LxcI96Mk",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Belgian Crossroads Bank for Enterprises public search (kbopub.economie.fgov.be) and the Belgisch Staatsblad search (ejustice.just.fgov.be) could not be loaded by this tooling, so no authoritative registry check was completed and no enterprise number was established for The Ducs and Duchess VZW. Searches across registry-mirror sources returned no VZW matching the exact name in Assenede, but because the official registry itself was not reachable this is recorded as unverified rather than as a contradiction.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "Legal registration and enterprise number of the VZW remain unconfirmed; the KBO/Staatsblad check must be redone manually."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent page that was actually loaded places the organisation in Assenede: the club's own website describes a Belgian motorcycle club but names no municipality, and a Belgian motorcycle-club directory page returned an empty body when fetched, so its listing could not be confirmed from the page content. A motorcycle association is a service organisation that does not require licensed premises, so the absence of a confirmed footprint is scored as unverified.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared municipality of Assenede is not yet corroborated by any independently loaded source."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name does not appear anywhere on the club's own website, which publishes no board or committee page naming officers, and registry-mirror and news searches returned no association of that name with this club or with any other business, complaint or fraud report. No people-search or data-broker sources were used and no personal data was recorded. Nothing contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public director or officer record either supports or contradicts the declared representative.",
+      "url": "https://theducsandduchess.be/index.php/over-the-ducs-and-duchess/"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared website loads and clearly belongs to this organisation: it is a Dutch-language WordPress site titled 'The Ducs and Duchess' with navigation for the club, rides and events, membership and a members' area, and a footer reading '2026 The Ducs and Duchess VZW - Ride Together - Enjoy Forever' alongside the contact address info@theducsandduchess.be, which matches the email on the account. The statement descriptor matches the domain and the legal name, and the site is real content rather than a parked or builder placeholder.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Website, email handle and statement descriptor all belong to the declared organisation.",
+      "url": "https://theducsandduchess.be/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 8641 (civic, social and fraternal associations) is coherent with what the organisation observably does: its own About page states that The Ducs and Duchess VZW is a Belgian motorcycle club for riders who value scenic routes, camaraderie and responsible riding, that the VZW organises group rides, meet-ups and other activities, and that new members can join at their own pace. This matches the declared income from membership fees and sales of drinks, prepackaged snacks and club merchandise during activities, and the descriptor is the club's own name and domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "MCC, descriptor and declared product description are consistent with the club's published activity.",
+      "url": "https://theducsandduchess.be/index.php/over-the-ducs-and-duchess/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of one year or more could be established: no dated third-party listing, news item or register entry for the club was loaded, and the only dated evidence is the club's own site, whose image uploads sit under September and October 2026 paths and whose footer reads 2026, indicating a site created roughly one to two months before this check. No scam, complaint or fraud reports referencing the club or its representative were found.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Operating history is short and uncorroborated, with no adverse reports found.",
+      "url": "https://theducsandduchess.be/"
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual KBO/BCE lookup at kbopub.economie.fgov.be by exact name 'The Ducs and Duchess' and by the enterprise number the merchant supplies, confirming active status, VZW legal form and a registered seat in Assenede.",
+    "The VZW's founding deed as published in the Belgisch Staatsblad, to confirm the enterprise number, the registered seat and the appointment of the declared representative as a bestuurder (name and role only).",
+    "Merchant-supplied enterprise number (ondernemingsnummer) and a copy of the VZW statutes.",
+    "An independent footprint placing the club in Assenede: its Facebook or Instagram page, or a confirmable entry in a motorcycle-club directory, with dated posts.",
+    "Confirmation of how drinks, snacks and merchandise are sold (club events only versus a public bar or clubhouse), since on-premises alcohol sales in Flanders may require a municipal permit."
+  ],
+  "summary": "The declared website is genuine and unambiguously belongs to The Ducs and Duchess VZW, a Dutch-language Belgian motorcycle club, and its content is fully coherent with MCC 8641 and the declared revenue model, with the descriptor and email both matching the domain. The principal gap is legal: the KBO and Staatsblad registries could not be reached from this environment, so the VZW's existence, enterprise number and Assenede seat are unconfirmed, and mirror-source searches surfaced no same-named association. The representative is not named on any public channel and is not linked to any adverse report, so identity rests solely on Stripe's verification. The site appears to be only one to two months old with no independent dated footprint, consistent with a newly founded association but leaving no corroborating history; no risk points are assigned, and the file should be held for a manual KBO/Staatsblad confirmation and the enterprise number before clearing."
+}
