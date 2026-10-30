@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-29 Europe/London",
   "cohortDate": "2026-10-29",
-  "reviewedAt": "2026-10-30T00:13:07+00:00",
+  "reviewedAt": "2026-10-30T09:38:16+00:00",
   "count": 8,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-30T00:13:07+00:00",
+ "reviewedAt": "2026-10-30T09:38:16+00:00",
  "merchants": [
   {
    "id": "acct_1UVi6Z4abGVAnPPv",
@@ -28,34 +28,58 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Non-profit."
+    "Stripe legal entity type is recorded as Non-profit.",
+    "Independent local news coverage from WSMV (NBC Nashville) describes 'the Nashville nonprofit Neighbors 4 Native Plants' holding its fall pollinator-kit sale and quotes a co-founder; the Wild Ones Middle Tennessee chapter separately hosted the organisation's founders as speakers and states they are based in East Nashville. Two independent sources place the organisation in Nashville, TN as stated. [https://www.wsmv.com/2024/09/13/nashville-non-profit-hold-native-plant-sale/]",
+    "The representative is publicly named as a co-founder of this organisation: a February 2025 article hosted by Pollinator Partnership is bylined as by the co-founder of Neighbors for Native Plants under the surname on the account, WSMV quotes the same surname as co-founder of Neighbors 4 Native Plants, and the Wild Ones Middle Tennessee chapter page names the same person as a founder. The declared first name appears to be a short form of the published given name; that spelling variance is unresolved and is listed in evidenceNeeded. No conflicting business, other city or state, or complaint/fraud report was found for this name. No people-search or data-broker sources were used. [https://pollinator.org/pollinator.org/assets/globals/Neighbors-for-Native-Plants-February-2025.pdf]",
+    "MCC 5261 (nurseries, lawn and garden supply) is coherent with observed activity: the organisation researches region-appropriate species and assembles and sells native plant pollinator kits to households, having moved roughly 13,500 plants into the Nashville area by end of 2024, with twice-yearly seasonal sales reported by WSMV. The statement descriptor matches the organisation name and describes the trade rather than payment collection. [https://pollinator.org/pollinator.org/assets/globals/Neighbors-for-Native-Plants-February-2025.pdf]",
+    "Independent dated presence spans well over a year: WSMV covered an East Nashville native plant sale in August 2023 and a further nonprofit plant sale in September 2024; the Wild Ones Middle Tennessee chapter published a February 2024 meeting listing featuring the founders; and Pollinator Partnership published a February 2025 piece on the organisation. No scam, complaint or fraud reports were found under either name variant. [https://middletennessee.wildones.org/2024/02/02/neighbors-for-native-plants/]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "The Tennessee Secretary of State business entity search (TNBEAR) could not be loaded by the available tooling - the registry is an interactive form-based application and no entity record page was retrievable, so blocked automation. No official state filing for 'Neighbors for Native Plants' / 'Neighbors 4 Native Plants' was confirmed either way, and the IRS Tax Exempt Organization Search is likewise a JavaScript application that could not be loaded. Nonprofit registration and 501(c)(3) status remain unconfirmed against any primary registry.",
+    "The declared website www.neighbors4nativeplants.org could not be loaded - the fetch was refused and a site-restricted search returned no indexed pages from that domain - so the site's content, ownership and contact details could not be inspected. The organisation's own February 2025 account confirms it created a website, and local news directs buyers to a third-party ticketing/sales page, but that page returned no content either. The statement descriptor is a faithful rendering of the trading name, and the email handle matches the trade rather than payment collection."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Tennessee Secretary of State entity record (control number, charter date, status, registered agent) for 'Neighbors for Native Plants' or 'Neighbors 4 Native Plants' - manual TNBEAR lookup required, automation blocked.",
+    "IRS Tax Exempt Organization Search confirmation of 501(c)(3) determination and EIN.",
+    "Tennessee charitable solicitation registration (Division of Charitable Solicitations) if the entity solicits donations.",
+    "A loadable copy of www.neighbors4nativeplants.org showing organisation name, Nashville contact details and the plant-kit offering.",
+    "Reconciliation of the declared representative first name against the publicly documented given name on the organisation's own published article (ID document or board/officer listing)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.wsmv.com/2024/09/13/nashville-non-profit-hold-native-plant-sale/",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "Organisation observably operates in the stated city (Nashville, TN).",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://pollinator.org/pollinator.org/assets/globals/Neighbors-for-Native-Plants-February-2025.pdf",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "Representative matches a publicly named co-founder/officer of this organisation in Nashville.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://middletennessee.wildones.org/2024/02/02/neighbors-for-native-plants/",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "Continuous independent public footprint from 2023 through 2025, no adverse reports.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Neighbors for Native Plants is a genuine, well-documented Nashville grassroots nonprofit that assembles and sells native plant pollinator kits, with independent coverage from WSMV (2023 and 2024), the Wild Ones Middle Tennessee chapter (2024) and Pollinator Partnership (2025) placing it in East Nashville and confirming a real, observable product. MCC 5261 and the statement descriptor are fully coherent with that activity, and the declared representative matches a publicly named co-founder in both the organisation's own published account and local news, with no adverse reports found. Two gaps remain and are tooling gaps rather than red flags: the Tennessee Secretary of State entity search and the IRS Tax Exempt Organization Search could not be loaded, so the Non-profit entity type and any 501(c)(3) status are unconfirmed against a primary registry, and the declared website would not load. Total risk 0; recommend a manual TNBEAR and IRS TEOS lookup plus a browser check of the declared domain before clearing, but nothing observed contradicts the merchant's declarations.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T20:43:34+00:00",
    "enabledWindowStart": "2026-10-29T14:18:19+00:00",
    "enabledWindowEnd": "2026-10-29T20:43:34+00:00",
@@ -87,10 +111,10 @@
    "accountId": "acct_1UVn7d8Fmdezj6oL",
    "merchantId": "5380175",
    "name": "Petersburg Pie Company",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -106,28 +130,49 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Alaska requires a state business licence even for sole proprietors. The Division of Corporations, Business and Professional Licensing business-licence search page loaded with an empty body (JavaScript-only form, no server-rendered results), so the registry effectively blocks automation and no licence record for 'Petersburg Pie Company' could be retrieved or ruled out. A site-restricted search across commerce.alaska.gov returned only generic licensing-policy pages. Stripe classifies the account as Individual, so no corporate entity filing is expected; the open item is the business licence itself, which remains unchecked rather than absent. [https://www.commerce.alaska.gov/cbp/businesslicense/search/License]",
+    "The representative name could not be located on any Alaska business-licence record (the state licence search would not load for automation), on any licence listing, on business-owned channels (no website, social page or review profile for this business was found), or in Petersburg local news. Nothing contradicts the declared representative either - no competing sole owner, no other business in another state, and no scam or complaint report ties this name to anything. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "The declared website petersburgpieco.com could not be loaded in this environment and a direct search on the exact domain string returned zero pages referencing it, which is consistent with a site that is unindexed, very new, or not publicly reachable. Whether it resolves, is parked, or belongs to this business is therefore unconfirmed and is not scored. The statement descriptor matches the declared business name rather than a random string or an unrelated party, so no contradiction is recorded.",
+    "The trading name, MCC 5814 (fast food restaurants) and the statement descriptor are internally coherent - a pie shop in Petersburg, AK is a plausible fast-food merchant, and nothing in the name or descriptor describes payment collection or digital goods. However, no page anywhere shows a menu, product, price list, ordering flow or any other observable output of this business, and the product description field on the account is blank, so coherence could not be confirmed against real activity. Recorded as unverified rather than a contradiction because no evidence conflicts with the declared model.",
+    "No dated independent presence of any length was found: no reviews, no directory listing with a creation date, no local news coverage, no chamber-of-commerce entry and no retrievable state filing. Equally, no scam, complaint, chargeback or fraud report was found against the business name or the declared representative."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MCC 5814 implies a food-service operation on licensed physical premises, but the business has no independent footprint in Petersburg, AK (population roughly 3,000) at all. A published Petersburg restaurant directory lists the town's eating places - Coastal Cold Storage, Helse Restaurant, Inga's Galley, Papa Bear's Pizza and The Salty Pantry - and Petersburg Pie Company is not among them. Repeated searches against general web, local news, travel listings, Yelp, Facebook and Instagram returned no listing, no address, no hours and no photographs of a premises anywhere. [https://cdn.fodors.com/world/north-america/usa/alaska/juneau-the-inside-passage-and-southeast-alaska/places/petersburg/restaurants]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Alaska business licence number and a screenshot or PDF of the licence record showing business name, owner name, city and Active status (manual lookup required; the search blocks automation).",
+    "Alaska DEC Food Safety and Sanitation retail food establishment permit number for the Petersburg premises, plus the most recent inspection record.",
+    "A working, publicly reachable petersburgpieco.com showing business name, Petersburg AK address, menu and contact details - or an explanation of why the declared domain does not resolve.",
+    "Physical premises evidence: street address in Petersburg AK, photographs of the storefront or kitchen, and a lease or occupancy document.",
+    "Any independent third-party listing (Google Business Profile, Facebook page, Yelp, Petersburg Chamber of Commerce) that places the business in Petersburg and carries dated activity.",
+    "Confirmation of the sales channel: if this is an online or shipped-pie operation rather than a storefront, the correct MCC and evidence of fulfilment capability."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.commerce.alaska.gov/cbp/businesslicense/search/License",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "Whether an active Alaska business licence exists in this business name, and who is named as owner, is unresolved because the registry blocks automation.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://cdn.fodors.com/world/north-america/usa/alaska/juneau-the-inside-passage-and-southeast-alaska/places/petersburg/restaurants",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "No independent third party places this food business at a physical address in the stated city.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Petersburg Pie Company presents as a fast-food merchant (MCC 5814) in a town of roughly 3,000 people, yet it has no discoverable public footprint of any kind: it is absent from a published Petersburg restaurant directory and from every listing, social, review and local-news search attempted, and the declared domain petersburgpieco.com is unindexed and could not be loaded. The single material risk flag is operating (10 points) - a business type that cannot legally trade without licensed physical premises, with zero independent evidence that those premises exist. Legal, contact, identity, business model and history are all unverified at 0 rather than clean: the Alaska business-licence search is JavaScript-only and returned an empty body to automation, so the one check that would settle both the licence and the owner's name could not be completed. Recommend a documentation request before volume is enabled - Alaska business licence, DEC food establishment permit, premises address with photographs, and a reachable website - since the current profile is equally consistent with a brand-new pre-launch bakery and with a merchant that has no underlying operation.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T14:18:19+00:00",
    "enabledWindowStart": "2026-10-29T06:47:38+00:00",
    "enabledWindowEnd": "2026-10-29T14:18:19+00:00",
@@ -141,7 +186,7 @@
    "location": "Petersburg, AK, US",
    "email": "Petersburgpieco@gmail.com",
    "website": "petersburgpieco.com",
-   "mcc": "5499",
+   "mcc": "5814",
    "statementDescriptor": "PETERSBURGPIECO.COM",
    "productDescription": null,
    "entityType": "Individual",
@@ -149,8 +194,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -174,33 +219,63 @@
     "Account email uses a business domain (speer-braui.ch).",
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Non-profit.",
-    "Loyverse POS activity is present: 1134 receipt(s), last sale 2026-02-01."
+    "Loyverse POS activity is present: 1134 receipt(s), last sale 2026-02-01.",
+    "The Swiss commercial register (Zefix data) shows an ACTIVE association (Verein) named 'Speer-Braui', UID CHE-493.081.761, registered at Braendliguet 27, 8722 Kaltbrunn, canton St. Gallen, with the purpose of promoting the variety of beer and spirits in Kaltbrunn and the region; the name, legal form (Verein / non-profit) and place match the Stripe profile exactly, and the same UID is published in the merchant's own Impressum. No dissolution or strike-off is shown. Separately, the federal alcohol authority (BAZG) licence for spirits production could not be checked: a concession is required above 200 litres of pure alcohol per year but there is no public register of concession holders, so licence status is unknown and not scored; the merchant's own 'Ueber uns' page states distilling is carried out by an external distillery. [https://onlineinfo.ch/firma/speer-braui---che-493-081-761/pdf]",
+    "Independent sources place the business physically in Kaltbrunn (SG). The regional newspaper Suedostschweiz (16 November 2023) reports on whisky casks maturing in the Grynau fortress and names the Speer-Braui in Kaltbrunn and the two people responsible for the spirit, with roughly 500 litres in storage and a silver award from the Swiss Spirit Revue. The commercial register gives the registered address Braendliguet 27, 8722 Kaltbrunn, and the merchant's own site gives a public shop (Braui-Laden) at Dorfstrasse 11, Kaltbrunn, with dated opening days and event appearances. [https://www.suedostschweiz.ch/schweiz-und-welt/experiment-whiskylagerung-in-einer-festung-ihr-whisky-reift-an-der-grynau-im-militaerbunker-104698]",
+    "The representative is listed in the commercial register entry for Speer-Braui (CHE-493.081.761) as president of the board with sole signature authority, alongside a vice-president. The same two names appear as the authorised representatives in the merchant's own Impressum and on its 'Ueber uns' page, and in the 2023 Suedostschweiz article as the people behind the Speer-Braui whisky. The representative therefore matches a named officer in the register, on the organisation's own channels and in independent local news. No home address, date of birth or other personal data was collected, and no people-search or data-broker sources were used. [https://onlineinfo.ch/firma/speer-braui---che-493-081-761/pdf]",
+    "The declared URL www.speer-braui.ch loads and is a genuine, actively maintained site for this business: a WooCommerce site titled 'Speer-Braui', tagline 'Brauerei - Whisky- und Rhum-Produktion', with product sections for Bier, Whisky and Rhum, a Festservice (keg and tap-system rental), and a blog with posts dated to 24 October 2026. The Impressum states the contact address Braendliguet 27, 8722 Kaltbrunn (identical to the registered address), the e-mail info@speer-braui.ch (identical to the Stripe account e-mail), the two representatives, and commercial register number CHE-493.081.761. The statement descriptor is the business name and its own domain. [https://www.speer-braui.ch/impressum/]",
+    "The declared product description matches what the business observably does. The 'Ueber uns' page states Speer-Braui is a brewery and whisky/rum producer in Kaltbrunn run by the two named officers; it brews its own beer, prepares and ferments the wash for its single malt and its rum, has distillation performed by an external distillery, and handles cask selection, maturation and bottling itself. Revenue channels are observable: an on-site shop at Dorfstrasse 11 Kaltbrunn with published opening days, an online store, gift sets, and a beer/tap-system Festservice for local events. MCC 5499 (miscellaneous food stores) is an acceptable but imprecise fit for an alcoholic-beverage producer with a retail outlet; MCC 5921 (package stores - beer, wine, liquor) would describe the activity more exactly. [https://www.speer-braui.ch/ueber-uns/]",
+    "Independent and dated presence well beyond one year, with no complaint, scam or fraud reports found. The association was founded at the end of 2020 per its own chronicle (the whisky project started in 2015 with the first bottling in 2018, and the Kaltbrunn premises at Dorfstrasse 11 were taken over in 2021), it is entered in the Swiss commercial register under CHE-493.081.761, and the Suedostschweiz regional newspaper covered it by name on 16 November 2023 in connection with the Grynau fortress cask-maturation project, including a silver award from the Swiss Spirit Revue. The website carries dated content spanning 2021 through October 2026. [https://www.suedostschweiz.ch/schweiz-und-welt/experiment-whiskylagerung-in-einer-festung-ihr-whisky-reift-an-der-grynau-im-militaerbunker-104698]"
    ],
    "unverified": [
-    "Ownership and age of speer-braui.ch have not been checked against a registrar.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Ownership and age of speer-braui.ch have not been checked against a registrar."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Confirmation from BAZG (Alkohol / Spirituosensteuer) of which party holds the distilling concession for the Speer whisky and rum production, or written confirmation from the merchant naming the external contract distillery and its concession number.",
+    "Evidence that spirits duty (Spirituosensteuer) is declared and settled for the bottlings sold under the merchant's own label.",
+    "Confirmation of the merchant's age-verification process for the online store and any mail-order shipping, and whether shipping is domestic (CH) only.",
+    "Consider reassigning MCC from 5499 to 5921 (package stores - beer, wine, liquor) to match the actual activity.",
+    "Confirmation that the Verein's revenue stays within thresholds consistent with its non-profit status, and the expected annual processing volume, given commercial beer, whisky and rum sales plus a Festservice."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://onlineinfo.ch/firma/speer-braui---che-493-081-761/pdf",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "An active, correctly named and correctly located Swiss legal entity exists for this merchant; spirits-production licensing could not be verified from any public source.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://www.suedostschweiz.ch/schweiz-und-welt/experiment-whiskylagerung-in-einer-festung-ihr-whisky-reift-an-der-grynau-im-militaerbunker-104698",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "A real, independently reported physical operation in the stated town, with a named retail premises and public events.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.speer-braui.ch/impressum/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "The declared website, e-mail domain, registered address, UID and statement descriptor all belong to the same verified entity.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://www.speer-braui.ch/ueber-uns/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "Stated product, MCC and descriptor are coherent with an observable, physically grounded beverage production and retail operation; only MCC precision is worth noting.",
+     "dimension": "businessModel"
+    }
+   ],
+   "summary": "Speer-Braui is a verified, low-risk merchant with no contradictions on any dimension. The Swiss commercial register shows an active Verein 'Speer-Braui' (CHE-493.081.761) at Braendliguet 27, 8722 Kaltbrunn SG, with the declared representative as board president holding sole signature authority, matching the Stripe name, place, entity type and representative; the declared website resolves, is actively maintained, and its Impressum reproduces the identical UID, address and account e-mail, while regional press from 2023 independently places the operation and both named officers in Kaltbrunn. The business model is coherent and physically grounded: own brewing plus cask maturation and bottling of whisky and rum, sold through a shop at Dorfstrasse 11, an online store and a local keg/tap-rental service, giving roughly six years of documented trading history with no complaint or fraud reports. The only open items are regulatory: BAZG publishes no searchable register of spirits concession holders, so the licence chain could not be verified, and MCC 5499 should arguably be 5921 for an alcoholic-beverage seller.",
+   "reviewCompleteness": 100,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T20:43:34+00:00",
    "enabledWindowStart": "2026-10-29T13:07:26+00:00",
    "enabledWindowEnd": "2026-10-29T20:43:34+00:00",
@@ -246,33 +321,64 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Company.",
-    "Loyverse POS activity is present: 1169 receipt(s), last sale 2026-02-01."
+    "Loyverse POS activity is present: 1169 receipt(s), last sale 2026-02-01.",
+    "Independent listings place both halves of the declared trading name at one physical address in the stated city: a MapQuest listing (Yelp/Infogroup/Foursquare data) shows 'Salon Kendall' at 320 Longmire Rd, Conroe, TX 77304 with 46 Yelp reviews and staffed Monday-Saturday opening hours, and lists 'Cha Cha's' at the same address under 'Also at this address'. WeddingWire independently lists Salon Kendall at 320 Longmire Road, Conroe, TX 77304. This is a real, staffed physical salon-plus-boutique footprint in Conroe, TX. [https://phoenix.aws.mapquest.com/us/texas/salon-kendall-305829679]",
+    "The business's own profile text on the Salon Kendall listing names the owner by the representative's first name and surname, stating she has 25 years of experience, opened her first salon in 1992, expanded to Salon Kendall in 1998, and that the Conroe location is her fourth salon and the third in partnership with her husband. That matches the Stripe representative as owner of this specific business, with a single-letter surname spelling difference between the account and the listing that should be reconciled against the identity document. The earlier salons referenced are described as this same owner's prior locations, not an unrelated business, and no scam, complaint or fraud report was found against the name. No people-search or data-broker source was used and no personal data was recorded. [https://phoenix.aws.mapquest.com/us/texas/salon-kendall-305829679]",
+    "The declared domain is tied to this business by two independent listing records that were loaded: the MapQuest record for Salon Kendall at 320 Longmire Rd, Conroe TX carries the website link https://www.salonkendall.com/, and the MapQuest record for Cha Cha's at the same address carries a link to a contact page on the same domain. The statement descriptor is the business's own domain rather than a random string, and the business phone number is consistent across MapQuest, Fresha and WeddingWire. Caveat: the declared page www.salonkendall.com/store could not itself be fetched from this environment, so the live content and checkout of the /store path were not inspected. [https://phoenix.aws.mapquest.com/us/texas/cha-chas-305829678]",
+    "MCC 5999 (miscellaneous and specialty retail) is coherent with what the business observably does. The Cha Cha's listing is reviewed as a retail apparel and accessories boutique - described by reviewers as a store for seasonal fashions, reasonably priced, with jewellery - operating inside the same premises as Salon Kendall, which supplies hair services. A salon with a co-located clothing and jewellery boutique selling retail goods under 5999 is plausible, and the descriptor matches the trading name. Nothing in the name or description describes payment collection itself. [https://phoenix.aws.mapquest.com/us/texas/cha-chas-305829678]",
+    "Independent dated presence far exceeds one year. WeddingWire carries a dated customer review from 07/10/2018 for Salon Kendall at 320 Longmire Road, Conroe TX, and MapQuest-syndicated Yelp reviews for Salon Kendall are dated from nine years ago through two years ago, while Cha Cha's Yelp reviews are dated 12 to 15 years ago. The owner profile states Salon Kendall was established in 1998. No scam or fraud reports were found; the only negative material is ordinary service-quality customer reviews. [https://www.weddingwire.com/biz/salon-kendall-conroe/34192f8bfaddd2a4.html]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (sbcglobal.net), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "The Texas Comptroller taxable-entity search and the TDLR public licence search are interactive query forms that could not be retrieved by automation from this environment, so neither the state registration record nor the cosmetology/beauty-salon establishment licence could be confirmed directly - blocked automation. A third-party NAICS business directory that did load lists 'SALON KENDALL LP', a Texas Limited Liability Partnership at 320 Longmire Rd, Conroe, TX 77304, NAICS 812990, which is consistent with the declared Company entity type and TX location but is not a state register and is not scored as a registry match. [https://naicslist.com/company-profile/salon-kendall-lp-conroe-tx-77304]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Texas Comptroller taxable entity / Texas SOS record for 'Salon Kendall LP' (or the exact filed legal name) confirming active status, taxpayer number and registered agent - the search form blocked automation and must be run manually.",
+    "TDLR Beauty Salon establishment licence number for 320 Longmire Rd, Conroe TX 77304, with current status and expiry - the TDLR public licence search blocked automation.",
+    "Confirmation of the representative surname spelling: the Stripe account and the business's published owner profile differ by one letter.",
+    "Live capture of www.salonkendall.com/store showing the e-commerce catalogue and checkout, since MCC 5999 and the descriptor point to online retail that was not directly inspected.",
+    "Confirmation that the Stripe entity type 'Company' matches the registered form (the directory indicates a Limited Liability Partnership) and that bank account ownership matches that filed entity."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://naicslist.com/company-profile/salon-kendall-lp-conroe-tx-77304",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "A Texas limited liability partnership trading as Salon Kendall exists at the Conroe address per a business directory, but neither state registration status nor the required TDLR salon licence could be confirmed because both registries blocked automated search.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://phoenix.aws.mapquest.com/us/texas/salon-kendall-305829679",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "The merchant operates an observable physical premises in Conroe, Texas, matching the declared city and state, with the salon and the boutique co-located.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://phoenix.aws.mapquest.com/us/texas/cha-chas-305829678",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "The declared website domain and the statement descriptor both belong to this merchant per independent listings; the live /store page remains uninspected.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://www.weddingwire.com/biz/salon-kendall-conroe/34192f8bfaddd2a4.html",
+     "sourceType": "review-site",
+     "checkedAt": "2026-10-30",
+     "establishes": "Continuous independent public presence for well over a decade with no fraud or scam reporting.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Salon Kendall / Cha Cha's Boutique is a long-established, physically present salon-and-boutique at 320 Longmire Rd, Conroe, TX 77304, corroborated by MapQuest/Yelp and WeddingWire listings with dated reviews going back 12 to 15 years and an owner profile stating the salon was founded in 1998. The declared domain salonkendall.com is linked from both the salon and the boutique listings and matches the statement descriptor, and the boutique's reviews describe apparel and jewellery retail, coherent with MCC 5999. The representative is named as owner on the business's own published profile, though the surname is spelled one letter differently there, which should be reconciled against the ID document. Total risk 0: the only open items are registry confirmations - the Texas Comptroller taxable entity search and the TDLR salon licence search both block automation and must be run manually before the file is closed.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T20:43:34+00:00",
    "enabledWindowStart": "2026-10-29T14:10:02+00:00",
    "enabledWindowEnd": "2026-10-29T20:43:34+00:00",
@@ -325,26 +431,32 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor) in Kentucky, where no state entity registration is expected for a sole proprietorship, so no registration gap is implied. Repeated web searches against the Kentucky Secretary of State FastTrack database surfaced no 'Infinite Pages' entity, only unrelated companies; the KY SOS name-search form itself could not be loaded by the fetch tool, so no registry page content was actually retrieved and no registry statement can be evidenced.",
+    "Six independent search passes (bookstore directories, Danville KY local news and business-licence roundups, the Danville-Boyle County Chamber directory, Yelp/TripAdvisor/Instagram, Facebook) returned zero listings, reviews, articles or social pages for a business called 'Infinite Pages' in Danville, Kentucky; the only Danville KY bookshop found was unrelated. The declared Facebook page could not be opened (Facebook share links are routinely blocked to automation), so the merchant's only declared channel remains unexamined and no page content was loaded that would support a contradiction.",
+    "The representative name was not found on any Kentucky Secretary of State filing, licence record, local news item, business listing or complaint report reachable by search; no people-search or data-broker source was used and no personal data was collected. Nothing contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "There is no conventional website; the declared URL is a Facebook share permalink which could not be loaded, so it cannot be confirmed to belong to this business, to be parked, or to belong to someone else. The email handle matches the trade name and does not describe payment collection, and the statement descriptor matches the business name exactly rather than being a random string or an unrelated personal name.",
+    "MCC 5399 (miscellaneous general merchandise) and the descriptor are not internally incoherent for a books or paper-goods seller, and the name does not describe payment collection, but no product, price list, catalogue or storefront was observable anywhere and no product description was supplied on the account, so coherence could not be confirmed against anything the business observably does.",
+    "No dated independent presence of any age was found: no reviews, no directory listings, no Danville business-licence entry in local news roundups, no chamber membership and no state filing. Equally, no scam, complaint or fraud report naming the business or the representative was found."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A loadable link to the business's Facebook page (public page URL, not a share permalink) or a screenshot of it, showing page name, city, creation date and posted products.",
+    "Danville, KY occupational/business licence certificate or the City of Danville Finance Department licence record naming the business and the representative.",
+    "Kentucky Secretary of State or Boyle County assumed-name filing, if one exists, or written confirmation the merchant trades as an unregistered sole proprietor.",
+    "A product catalogue, price list or sample invoices showing what is actually sold, to confirm MCC 5399 is appropriate.",
+    "Evidence of trading history: dated customer reviews, prior processing statements, or supplier invoices covering at least 12 months.",
+    "Confirmation of the physical trading location (storefront, market stall or online-only) with photos or a lease."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Infinite Pages has no discoverable public footprint whatsoever: six independent search passes across bookstore directories, Danville KY local news and business-licence roundups, the Danville-Boyle County Chamber, review platforms and social media found nothing under this name in Danville, Kentucky, and the Kentucky SOS surfaced no matching entity. The only declared channel is a Facebook share permalink that could not be opened, so the merchant's sole shopfront remains completely unexamined. Because no page content was successfully loaded in this pass, every dimension is scored unverified at 0 risk points under the evidence rules - the 0 reflects absence of loadable evidence, not a clean result, and should not be read as a pass. Identity and bank ownership rest entirely on Stripe's own checks; recommend a manual review that opens the Facebook link in a browser and requests the licence, product and trading-history evidence listed above before raising limits.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T20:43:34+00:00",
    "enabledWindowStart": "2026-10-29T14:14:30+00:00",
    "enabledWindowEnd": "2026-10-29T20:43:34+00:00",
@@ -376,13 +488,13 @@
    "accountId": "acct_1UVviT86CcvShTNh",
    "merchantId": "2375304",
    "name": "Brady pos",
-   "score": 0,
+   "score": 27,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -395,28 +507,49 @@
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no Montana Secretary of State entity registration is expected. The MT SOS portal at biz.sosmt.gov could not be loaded by this agent, so the state register was not searched - treat as blocked automation. On licensing, RiverStone Health's Yellowstone County mobile-food page (loaded) confirms a mobile food unit in Laurel / Yellowstone County must hold an annual DPHHS/RiverStone retail food licence issued after plan review and a pre-opening inspection; however RiverStone publishes no searchable public register of current licence holders, only a list of unlicensed operators, so the presence or absence of a licence for this merchant could not be confirmed either way. The merchant does not appear on RiverStone's May 2026 unlicensed-and-uninspected list, which is weak negative evidence only. [https://riverstonehealth.org/inspections-permits/mobile-food/]",
+    "The representative name could not be found on any state filing, licence record, business-owned channel, review reply, local news item or complaint report; targeted searches returned nothing about this person, and no people-search or data-broker sources were used. The statement descriptor is the representative's own name and matches the Stripe representative exactly, so the mismatched-personal-descriptor trigger does not fire. No adverse or conflicting association with another business, city or state was found. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No dated independent presence of any age was found - no reviews, directory listings, social pages, news mentions or filings for the business name or the representative in Laurel, MT - so trading history of one year or more could not be established. Equally, no scam, fraud, chargeback or complaint reports were found, and the merchant does not appear on RiverStone Health's May 2026 list of unlicensed and uninspected Yellowstone County food operations. [https://riverstonehealth.org/wp-content/uploads/Unlicensed-and-Uninspected_May_2026.pdf]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "A food service operation requires licensed physical premises or a licensed mobile unit, yet searches of food-truck directories, Laurel/Billings local news, delivery platforms and Facebook/Google listing queries for the business name, the representative and chicken-tender/fries vendors in Laurel, MT returned no listing, page, menu or photo placing this business in Laurel. The only Laurel-area mobile food operations surfaced were unrelated. No independent footprint of any kind was found, so no page can be cited as positive proof.",
+    "No website was declared and none was found. The registered business name is 'Brady pos', where 'pos' is the point-of-sale tool rather than a trade: the name tells a customer nothing about chicken tenders, fries or burgers and reads as the representative's first name plus the POS application. Mitigating: the product description names a clear food trade, the MCC is a food code, and the descriptor is the representative's real name, so the benign explanation (the account was named after the till) is plausible. Aggravating: with no website, no trade name and no independent footprint anywhere, the only public-facing identifier this merchant presents describes payment acceptance rather than anything it sells, so the trigger fires. The risk is opacity and unverifiability rather than evidence of a payment-aggregation scheme.",
+    "The stated model (chicken tenders, fries, an occasional burger - prepared hot food, i.e. a food truck or concession stand) is internally plausible but cannot be corroborated by any observable product, menu, listing or photo, and it sits incoherently with the declared setup: MCC 5499 (miscellaneous food stores, i.e. retail grocery and specialty food) is the wrong code for prepared food service, which belongs in 5812 (eating places), and the business name describes a POS system rather than the food trade it claims. Nothing contradicts the food description itself; the incoherence is MCC-to-activity plus a name that does not match the declared trade."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Copy of the current Montana DPHHS / RiverStone Health retail food establishment or mobile food unit licence in the representative's name, with licence number and 2026 validity dates.",
+    "Photo of the food truck, trailer or concession stand showing signage and the trading name actually used with customers, plus its usual pitch location or event schedule in Laurel / Yellowstone County.",
+    "A link to any customer-facing channel (Facebook page, Google Business Profile, Instagram, online menu) for the operation.",
+    "Confirmation of the intended trading name - whether 'Brady pos' is merely the Loyverse POS store label - and what name appears on the unit and on customer receipts.",
+    "MCC reassignment review: 5812 (eating places) rather than 5499 if the merchant sells prepared hot food.",
+    "Manual check of the Montana SOS register at biz.sosmt.gov for any assumed-business-name filing, since automated access was unavailable."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://riverstonehealth.org/inspections-permits/mobile-food/",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "Individual/sole-proprietor status means no entity filing is expected; the required county/state food establishment licence could not be checked because MT SOS was unreachable and no public licensed-holder register exists.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://riverstonehealth.org/wp-content/uploads/Unlicensed-and-Uninspected_May_2026.pdf",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "No trading history either way: no dated footprint and no adverse reports.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Brady pos is a US sole proprietor in Laurel, MT claiming a small prepared-food operation (chicken tenders, fries, occasional burgers), with Stripe identity verification passed and a statement descriptor that correctly matches the representative's own name - so there is no identity or descriptor mismatch and nothing adverse about the representative was found. The core problem is total unverifiability: after searches of food-truck directories, Laurel/Billings local news, delivery platforms, social and county health sources, there is no listing, menu, photo, review or licence record placing any food vendor run by this person in Laurel, and the Montana SOS portal could not be loaded. Compounding this, the only public identifier the merchant offers names the point-of-sale tool rather than a trade, there is no website, and MCC 5499 is the wrong code for prepared food service. Total 27 risk points, driven entirely by absence of an operating footprint and an opaque non-trade business name rather than by positive evidence of wrongdoing; a licence copy plus a photo of the unit and its trading name would clear most of it.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T21:05:56+00:00",
    "enabledWindowStart": "2026-10-29T15:58:13+00:00",
    "enabledWindowEnd": "2026-10-29T21:05:56+00:00",
@@ -438,9 +571,9 @@
    "successfulTransactions": 60,
    "hasTransacted": true,
    "lastTransactedAt": "2025-11-01",
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 27,
+   "trustScore": 73,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -462,7 +595,9 @@
    "verified": [
     "Account email uses a business domain (theducsandduchess.be).",
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Non-profit."
+    "Stripe legal entity type is recorded as Non-profit.",
+    "The declared website loads and clearly belongs to this organisation: it is a Dutch-language WordPress site titled 'The Ducs and Duchess' with navigation for the club, rides and events, membership and a members' area, and a footer reading '2026 The Ducs and Duchess VZW - Ride Together - Enjoy Forever' alongside the contact address info@theducsandduchess.be, which matches the email on the account. The statement descriptor matches the domain and the legal name, and the site is real content rather than a parked or builder placeholder. [https://theducsandduchess.be/]",
+    "MCC 8641 (civic, social and fraternal associations) is coherent with what the organisation observably does: its own About page states that The Ducs and Duchess VZW is a Belgian motorcycle club for riders who value scenic routes, camaraderie and responsible riding, that the VZW organises group rides, meet-ups and other activities, and that new members can join at their own pace. This matches the declared income from membership fees and sales of drinks, prepackaged snacks and club merchandise during activities, and the descriptor is the club's own name and domain. [https://theducsandduchess.be/index.php/over-the-ducs-and-duchess/]"
    ],
    "unverified": [
     "Ownership and age of theducsandduchess.be have not been checked against a registrar.",
@@ -470,26 +605,44 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Belgian Crossroads Bank for Enterprises public search (kbopub.economie.fgov.be) and the Belgisch Staatsblad search (ejustice.just.fgov.be) could not be loaded by this tooling, so no authoritative registry check was completed and no enterprise number was established for The Ducs and Duchess VZW. Searches across registry-mirror sources returned no VZW matching the exact name in Assenede, but because the official registry itself was not reachable this is recorded as unverified rather than as a contradiction.",
+    "No independent page that was actually loaded places the organisation in Assenede: the club's own website describes a Belgian motorcycle club but names no municipality, and a Belgian motorcycle-club directory page returned an empty body when fetched, so its listing could not be confirmed from the page content. A motorcycle association is a service organisation that does not require licensed premises, so the absence of a confirmed footprint is scored as unverified.",
+    "The representative name does not appear anywhere on the club's own website, which publishes no board or committee page naming officers, and registry-mirror and news searches returned no association of that name with this club or with any other business, complaint or fraud report. No people-search or data-broker sources were used and no personal data was recorded. Nothing contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://theducsandduchess.be/index.php/over-the-ducs-and-duchess/]",
+    "No independent presence of one year or more could be established: no dated third-party listing, news item or register entry for the club was loaded, and the only dated evidence is the club's own site, whose image uploads sit under September and October 2026 paths and whose footer reads 2026, indicating a site created roughly one to two months before this check. No scam, complaint or fraud reports referencing the club or its representative were found. [https://theducsandduchess.be/]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual KBO/BCE lookup at kbopub.economie.fgov.be by exact name 'The Ducs and Duchess' and by the enterprise number the merchant supplies, confirming active status, VZW legal form and a registered seat in Assenede.",
+    "The VZW's founding deed as published in the Belgisch Staatsblad, to confirm the enterprise number, the registered seat and the appointment of the declared representative as a bestuurder (name and role only).",
+    "Merchant-supplied enterprise number (ondernemingsnummer) and a copy of the VZW statutes.",
+    "An independent footprint placing the club in Assenede: its Facebook or Instagram page, or a confirmable entry in a motorcycle-club directory, with dated posts.",
+    "Confirmation of how drinks, snacks and merchandise are sold (club events only versus a public bar or clubhouse), since on-premises alcohol sales in Flanders may require a municipal permit."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://theducsandduchess.be/index.php/over-the-ducs-and-duchess/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "No public director or officer record either supports or contradicts the declared representative.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://theducsandduchess.be/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "Website, email handle and statement descriptor all belong to the declared organisation.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "The declared website is genuine and unambiguously belongs to The Ducs and Duchess VZW, a Dutch-language Belgian motorcycle club, and its content is fully coherent with MCC 8641 and the declared revenue model, with the descriptor and email both matching the domain. The principal gap is legal: the KBO and Staatsblad registries could not be reached from this environment, so the VZW's existence, enterprise number and Assenede seat are unconfirmed, and mirror-source searches surfaced no same-named association. The representative is not named on any public channel and is not linked to any adverse report, so identity rests solely on Stripe's verification. The site appears to be only one to two months old with no independent dated footprint, consistent with a newly founded association but leaving no corroborating history; no risk points are assigned, and the file should be held for a manual KBO/Staatsblad confirmation and the enterprise number before clearing.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T23:56:38+00:00",
    "enabledWindowStart": "2026-10-29T23:33:53+00:00",
    "enabledWindowEnd": "2026-10-29T23:56:38+00:00",
@@ -521,10 +674,10 @@
    "accountId": "acct_1UVxCB4uxDNwhkh9",
    "merchantId": "5381875",
    "name": "FRIED",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -540,28 +693,49 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe records the entity as an Individual (Swiss Einzelfirma), which is only required to enter the commercial register above CHF 100,000 annual turnover, so absence of a registration is not itself a contradiction. The Zefix commercial register could not be queried directly from this environment (both the search page and its REST endpoint were blocked), and web searches for 'FRIED' or the representative's surname as a Kloten/Zurich sole proprietorship returned no matching entry. The cantonal food-establishment notification register (Lebensmittelkontrolle Kanton Zuerich) is not publicly searchable and could not be checked, so licence status is unknown.",
+    "The representative name could not be located in any public source: not in a commercial-register entry, not on any business Impressum or about page (the declared site could not be loaded), not as a licence holder, and not in owner replies on review sites. A targeted search for the name together with Kloten/Zurich restaurant ownership returned no match; the Kloten restaurants that did appear name other operators. No scam, complaint or fraud report tied to this name was found, and no conflicting business attribution was found. The statement descriptor contains the representative's surname, which is consistent with the declared representative rather than conflicting, though no loaded page corroborates the link. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "The declared website foodbykalkan.ch could not be loaded in this environment, and multiple web searches for the domain and the brand returned no page from that domain and no indexed content for it. The site's existence, ownership and content are therefore unconfirmed - it is not established as parked, placeholder or belonging to another business, so no points are scored. The contact email is a free-mail address whose handle combines the trade name with the German word for till or cash register, which is a point-of-sale term rather than a payment-collection description, and is not by itself contradictory.",
+    "MCC 5499 (miscellaneous food stores), the trade name FRIED and the descriptor are internally consistent with a small food outlet or food brand, and nothing observed describes payment collection itself or a digital-goods model with no product. However, no page could be loaded that shows what the business actually sells - the declared website was unreachable and no menu, product list or listing for FRIED in Kloten was found on local.ch, Just Eat or any other directory - so coherence between the MCC and real activity cannot be confirmed. Separately, the descriptor does not contain the trading name FRIED, so a cardholder who bought at a shop branded FRIED would not recognise the statement line without prior knowledge of the website, raising dispute and friendly-fraud exposure.",
+    "No independent trace of the business over time was found: no dated reviews, no directory listing with a history, no commercial-register entry, no social posts and no local news coverage mentioning FRIED or Food by Kalkan in Kloten. The local.ch take-away listing for Kloten and the Just Eat Kloten Turkish page both show established competitors with dated reviews but contain no entry for this merchant. Equally, no scam, complaint or fraud reports were found against the name or the representative. [https://www.just-eat.ch/en/takeaway/kloten/turkish]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MCC 5499 with a descriptor pointing at a food business implies licensed physical food premises in Kloten, but no independent footprint for 'FRIED' or 'Food by Kalkan' exists there. The local.ch directory page for take-away businesses in Kloten (29 results, covering restaurants, Imbiss, bakeries and delivery outlets at 8302 Kloten) lists no business under either name, and the Just Eat Switzerland page for Turkish takeaway in Kloten likewise lists no such outlet. Repeated searches against Google/local listings, Eat.ch, Just Eat, Smood, TripAdvisor and local news produced zero mentions of a Kloten food business under either name. [https://www.local.ch/de/q/kloten/take-away]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A live, loadable copy of foodbykalkan.ch (screenshot or PDF) showing the trading name FRIED, the Kloten street address, the menu or product range, and an Impressum naming the representative.",
+    "Cantonal food-establishment notification or inspection confirmation from Lebensmittelkontrolle Kanton Zuerich for the Kloten premises.",
+    "Zefix or cantonal commercial-register extract, or a signed declaration that turnover is below CHF 100,000 and registration is not required.",
+    "Proof of premises in Kloten: lease or rental agreement, utility bill, or exterior and interior photos showing FRIED signage at the stated address.",
+    "Explanation and supporting evidence for why the statement descriptor is FOODBYKALKAN.CH while the trading name is FRIED, plus confirmation of what cardholders see at the point of sale.",
+    "Any independent customer-facing channel (Google Business Profile, Instagram, Facebook, Eat.ch, Smood or Just Eat listing) tied to the Kloten location."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.local.ch/de/q/kloten/take-away",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "A food business requiring physical premises has no observable presence in the town it declares.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.just-eat.ch/en/takeaway/kloten/turkish",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "Neither tenure nor adverse history can be established; the business has no datable public record.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "FRIED declares a Kloten, Switzerland food business under MCC 5499 with the descriptor FOODBYKALKAN.CH, but no independent evidence of its existence could be found. The local.ch take-away directory for Kloten (29 entries) and the Just Eat Kloten Turkish listing contain no business under either name, and no Google, review-site, social or news mention surfaced across six searches, which for a food business requiring licensed physical premises scores as a 10-point operating contradiction. The declared website foodbykalkan.ch could not be loaded and is absent from search indexes, and the Zefix commercial register and the Zurich cantonal food-establishment register were likewise not reachable, so legal standing, contact validity, representative identity and trading history are all genuinely unverified rather than cleared. Total risk 10: the merchant is not disproven, but the file rests entirely on Stripe's own identity verification, and the mismatch between the trading name FRIED and the descriptor adds recognisability risk; the website, premises evidence and food-licence confirmation should be obtained before the account is treated as low risk.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-30T00:13:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:38:16+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-29T21:05:56+00:00",
    "enabledWindowStart": "2026-10-29T17:32:59+00:00",
    "enabledWindowEnd": "2026-10-29T21:05:56+00:00",
@@ -583,8 +757,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   }
