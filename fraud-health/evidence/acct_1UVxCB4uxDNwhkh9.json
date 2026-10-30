@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVxCB4uxDNwhkh9",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe records the entity as an Individual (Swiss Einzelfirma), which is only required to enter the commercial register above CHF 100,000 annual turnover, so absence of a registration is not itself a contradiction. The Zefix commercial register could not be queried directly from this environment (both the search page and its REST endpoint were blocked), and web searches for 'FRIED' or the representative's surname as a Kloten/Zurich sole proprietorship returned no matching entry. The cantonal food-establishment notification register (Lebensmittelkontrolle Kanton Zuerich) is not publicly searchable and could not be checked, so licence status is unknown.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No commercial-register or food-licence confirmation could be obtained; registry access was blocked, so this is neither a confirmation nor a contradiction."
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "MCC 5499 with a descriptor pointing at a food business implies licensed physical food premises in Kloten, but no independent footprint for 'FRIED' or 'Food by Kalkan' exists there. The local.ch directory page for take-away businesses in Kloten (29 results, covering restaurants, Imbiss, bakeries and delivery outlets at 8302 Kloten) lists no business under either name, and the Just Eat Switzerland page for Turkish takeaway in Kloten likewise lists no such outlet. Repeated searches against Google/local listings, Eat.ch, Just Eat, Smood, TripAdvisor and local news produced zero mentions of a Kloten food business under either name.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "A food business requiring physical premises has no observable presence in the town it declares.",
+      "url": "https://www.local.ch/de/q/kloten/take-away"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name could not be located in any public source: not in a commercial-register entry, not on any business Impressum or about page (the declared site could not be loaded), not as a licence holder, and not in owner replies on review sites. A targeted search for the name together with Kloten/Zurich restaurant ownership returned no match; the Kloten restaurants that did appear name other operators. No scam, complaint or fraud report tied to this name was found, and no conflicting business attribution was found. The statement descriptor contains the representative's surname, which is consistent with the declared representative rather than conflicting, though no loaded page corroborates the link. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public corroboration of the representative's link to the business, and no adverse identity signal either."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared website foodbykalkan.ch could not be loaded in this environment, and multiple web searches for the domain and the brand returned no page from that domain and no indexed content for it. The site's existence, ownership and content are therefore unconfirmed - it is not established as parked, placeholder or belonging to another business, so no points are scored. The contact email is a free-mail address whose handle combines the trade name with the German word for till or cash register, which is a point-of-sale term rather than a payment-collection description, and is not by itself contradictory.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared website could not be loaded or located in any index, so the contact channel remains unconfirmed."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5499 (miscellaneous food stores), the trade name FRIED and the descriptor are internally consistent with a small food outlet or food brand, and nothing observed describes payment collection itself or a digital-goods model with no product. However, no page could be loaded that shows what the business actually sells - the declared website was unreachable and no menu, product list or listing for FRIED in Kloten was found on local.ch, Just Eat or any other directory - so coherence between the MCC and real activity cannot be confirmed. Separately, the descriptor does not contain the trading name FRIED, so a cardholder who bought at a shop branded FRIED would not recognise the statement line without prior knowledge of the website, raising dispute and friendly-fraud exposure.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared MCC and descriptor are not incoherent on their face, but no observable product exists to confirm them, and the descriptor does not match the trading name."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent trace of the business over time was found: no dated reviews, no directory listing with a history, no commercial-register entry, no social posts and no local news coverage mentioning FRIED or Food by Kalkan in Kloten. The local.ch take-away listing for Kloten and the Just Eat Kloten Turkish page both show established competitors with dated reviews but contain no entry for this merchant. Equally, no scam, complaint or fraud reports were found against the name or the representative.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "Neither tenure nor adverse history can be established; the business has no datable public record.",
+      "url": "https://www.just-eat.ch/en/takeaway/kloten/turkish"
+    }
+  ],
+  "evidenceNeeded": [
+    "A live, loadable copy of foodbykalkan.ch (screenshot or PDF) showing the trading name FRIED, the Kloten street address, the menu or product range, and an Impressum naming the representative.",
+    "Cantonal food-establishment notification or inspection confirmation from Lebensmittelkontrolle Kanton Zuerich for the Kloten premises.",
+    "Zefix or cantonal commercial-register extract, or a signed declaration that turnover is below CHF 100,000 and registration is not required.",
+    "Proof of premises in Kloten: lease or rental agreement, utility bill, or exterior and interior photos showing FRIED signage at the stated address.",
+    "Explanation and supporting evidence for why the statement descriptor is FOODBYKALKAN.CH while the trading name is FRIED, plus confirmation of what cardholders see at the point of sale.",
+    "Any independent customer-facing channel (Google Business Profile, Instagram, Facebook, Eat.ch, Smood or Just Eat listing) tied to the Kloten location."
+  ],
+  "summary": "FRIED declares a Kloten, Switzerland food business under MCC 5499 with the descriptor FOODBYKALKAN.CH, but no independent evidence of its existence could be found. The local.ch take-away directory for Kloten (29 entries) and the Just Eat Kloten Turkish listing contain no business under either name, and no Google, review-site, social or news mention surfaced across six searches, which for a food business requiring licensed physical premises scores as a 10-point operating contradiction. The declared website foodbykalkan.ch could not be loaded and is absent from search indexes, and the Zefix commercial register and the Zurich cantonal food-establishment register were likewise not reachable, so legal standing, contact validity, representative identity and trading history are all genuinely unverified rather than cleared. Total risk 10: the merchant is not disproven, but the file rests entirely on Stripe's own identity verification, and the mismatch between the trading name FRIED and the descriptor adds recognisability risk; the website, premises evidence and food-licence confirmation should be obtained before the account is treated as low risk."
+}
