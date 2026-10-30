@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UUBj46DsleJx5S0",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor) operating a food truck, so no company registration is expected. The Connecticut Secretary of the State online business search at service.ct.gov refused the automated request before returning any page content, so no CT entity or trade-name record could be retrieved; a web search for a Connecticut entity or trade name \"El Callejon\" in Norwalk returned no matching registration.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered entity is expected for an individual sole proprietor; the CT registry itself could not be queried, so the absence of a filing is not evidence either way."
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "A food truck in Connecticut requires a local health-department mobile/itinerant food vendor permit and would normally appear in at least one directory. The FoodTrucksIn directory for Norwalk, CT lists fourteen trucks and none is El Callejon; searches of other food-truck directories, Connecticut food-truck guides, review sites and Norwalk permit material also produced no listing, review, event appearance or permit record for an El Callejon food truck anywhere in Connecticut.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent evidence places an El Callejon food truck in Norwalk, CT, or anywhere in Connecticut.",
+      "url": "https://www.foodtrucksin.com/city/norwalk_ct"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The statement descriptor is a personal name that matches the representative on the Stripe account, so no descriptor/representative mismatch arises. No public source naming the representative in connection with this business was found, because the business has no traceable public presence, and nothing contradicting the representative was found. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "The representative could not be independently corroborated or contradicted by any public KYB source."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found. The contact email handle describes a food-truck trade consistent with the stated business rather than payment collection, and the statement descriptor is a personal name rather than a random string.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No website exists to verify, but the email handle and descriptor are not themselves red flags."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5814 (fast food restaurants), the product description \"I sell Dominican street food\" and a food-truck operating model are internally coherent and describe a real trade rather than payment collection, but no public page showing this business’s menu, products or operations was found, so the model could not be confirmed against observable evidence.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared MCC and description are coherent on their face but unsupported by any observable product or sales channel."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, directory listings, event appearances, news coverage or filings of any age were found for an El Callejon food truck in Norwalk, CT. No scam, complaint or fraud reports were found about the business or its representative either.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No operating history can be established, and no adverse history was found."
+    }
+  ],
+  "evidenceNeeded": [
+    "City of Norwalk / Norwalk Health Department itinerant or mobile food vendor permit showing the business name and permit holder",
+    "Photographs of the food truck showing \"El Callejon\" branding, plus vehicle registration or a commissary agreement",
+    "A link to the business’s own public channel (Facebook/Instagram page, Google Business Profile or Yelp listing) showing the truck operating in Norwalk, CT",
+    "Connecticut trade-name (DBA) certificate filed with the Norwalk Town Clerk, or confirmation that the merchant trades under her own name only",
+    "Manual re-check of the CT Secretary of the State business search at service.ct.gov for \"El Callejon\", since automated access was refused"
+  ],
+  "summary": "El Callejon presents as a one-person Dominican street-food truck in Norwalk, CT, with a statement descriptor matching the account representative and an MCC coherent with the declared trade. The material gap is that the business has no independent public footprint at all: it is absent from the FoodTrucksIn Norwalk directory and every other food-truck directory, review site, local news source and mobile-vendor permit listing searched, and it has no website or social page. Because a Connecticut mobile food vendor needs a local health permit and normally leaves some trace, that total absence is scored as an operating contradiction (10 points); all other dimensions are unverified at 0 and no adverse reports exist. Two checks need manual completion: the CT Secretary of the State business search (automated access refused) and a direct enquiry to the Norwalk Health Department for a current itinerant/mobile food vendor permit in this name."
+}
