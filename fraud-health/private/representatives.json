@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-30T07:07:40.967Z",
+ "generated_at": "2026-10-30T07:39:22.808Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UW4pO9tl93nU890": {
@@ -3995,6 +3995,12 @@
   },
   "acct_1TxlrQ8YMzgujAbT": {
    "name": "Ali Abdulkarim",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1TxfDm5q3btV2CH8": {
+   "name": "Roger Aleman",
    "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
