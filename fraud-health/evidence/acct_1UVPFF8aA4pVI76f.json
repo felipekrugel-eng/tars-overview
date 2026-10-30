@@ -1,0 +1,71 @@
+{
+  "accountId": "acct_1UVPFF8aA4pVI76f",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Arizona Corporation Commission entity-search form rendered, but the search itself could not be executed - submitting a parameterised query was refused, so no result set for 'High Income Positive Return Investment LLC' was returned. Treat this as blocked automation, not as a negative result. Open web searches for the exact entity name in Arizona returned no ACC filing, SEC filing or business listing, but absence from a search index is not proof of non-registration. No Arizona entity number, status, formation date or statutory agent has been confirmed, so the declared Company/LLC entity type remains unconfirmed.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "ACC entity search form reachable but query submission blocked; no Arizona registration confirmed or disproved for the declared LLC name.",
+      "url": "https://ecorptestonline.azcc.gov/EntitySearch/Index"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent footprint placing a jewellery business in Chandler, AZ was found. Searches for the declared domain, for a domain-restricted index of it, and for the brand together with jewellery terms all returned zero pages belonging to this merchant; results were entirely unrelated third-party retailers. No Google Business listing, marketplace storefront, review page or social account for the merchant was found. However, www.pixiufei.com itself could not be loaded, so the absence of a product catalogue is not confirmed by direct inspection and is not scored as a contradiction.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Zero discoverable commercial footprint for a declared Chandler AZ jewellery merchant, unconfirmed by direct page load."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name was not found in any permitted KYB source: no Arizona Corporation Commission filing naming her as member, manager or statutory agent (the ACC query could not be executed), no licence record, no business-owned channel, no review replies, no local news and no scam or complaint report. Nothing found contradicts the declared representative; the name is simply absent from the public record. No people-search or data-broker sources were used and no home address, phone, age or date of birth was sought or recorded. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Representative name has no public tie to this business or any other, and no adverse record; identity rests solely on Stripe's verification."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared website www.pixiufei.com could not be loaded in this run, which is a tooling block rather than a finding about the site, so it is not scored. What is observable is that a domain-restricted search returned no indexed pages at all and a general search for the domain returned nothing belonging to it, which is unusual for a trading retail website but is not evidence of parking. The statement descriptor matches the declared domain rather than the registered legal name, and the contact email is a free Gmail handle whose wording relates to prosperity and investment rather than to a jewellery trade.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared website unloadable in this run and wholly unindexed; descriptor matches domain not legal name; free-mail contact with investment-themed handle."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "The merchant profile is internally incoherent, established from the account data itself rather than from any web page (no URL is cited for that reason): the registered legal name 'High Income Positive Return Investment LLC' and the contact email handle both describe investment returns and financial yield, while the declared MCC is 5944 (jewelry stores, watches, clocks and silverware), a physical-goods retail category. The product description field is empty and no product, catalogue, price list or inventory was observable anywhere, so nothing resolves the conflict in favour of the jewellery classification. An investment-themed name on a retail jewellery MCC is a recognised pattern for miscoded processing, and jewellery is itself a high-risk category for value transfer.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Legal name and email describe investment returns while MCC 5944 declares jewellery retail, with no observable product to reconcile them."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of any age was found for the business or the representative: no dated reviews, no directory listings, no confirmed state filings and no news. Equally, no scam, fraud or complaint report naming the entity, the domain or the representative was found. A search for Chandler, AZ investment-fraud matters returned only unrelated cases involving different named individuals, which are not recorded against this merchant.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No operating history of any length, and no adverse media or complaint record attributable to this merchant."
+    }
+  ],
+  "evidenceNeeded": [
+    "Re-run the Arizona Corporation Commission entity search manually for the exact name 'High Income Positive Return Investment LLC' and by principal name; capture entity ID, status, formation date, statutory agent and members.",
+    "Manually load www.pixiufei.com and screenshot it: confirm whether it is a live jewellery storefront with a working cart and real SKUs, a parked domain, or a placeholder. Capture WHOIS creation date and hosting.",
+    "Ask the merchant for a written product description, photographs of inventory, and supplier invoices for the jewellery being sold.",
+    "Obtain an explanation of the mismatch between a legal name describing investment returns and MCC 5944, and confirmation that the business is not soliciting investment or offering returns to the public.",
+    "Obtain a business-domain email address, a Chandler AZ business premises address, and the Maricopa County / Chandler transaction privilege tax licence for retail sales.",
+    "Check Arizona Corporation Commission Securities Division enforcement and SEC Form D for the entity name and the representative before approving."
+  ],
+  "summary": "This account could not be positively verified on any dimension and carries a material unresolved coherence problem: the registered name 'High Income Positive Return Investment LLC' and the investment-themed email handle describe financial returns, while the declared MCC is 5944 jewellery retail with an empty product description and no observable product, catalogue or storefront anywhere. Two checks were blocked rather than negative and must not be read as clean: the Arizona Corporation Commission entity-search form loaded but the query could not be submitted, and the declared site www.pixiufei.com could not be loaded at all - though it returns zero indexed pages, which is atypical for a trading retail domain. The representative appears nowhere in permitted KYB sources, so identity rests entirely on Stripe's own verification. Recommend manual review rather than auto-approval: a human ACC lookup, direct inspection of the website, and a documented explanation of the investment-name versus jewellery-MCC mismatch. The low numeric score reflects blocked evidence, not a low-risk merchant."
+}
