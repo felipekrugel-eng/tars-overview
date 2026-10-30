@@ -1,0 +1,73 @@
+{
+  "accountId": "acct_1UVXQz6p5mkICTOT",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no Colorado registered-entity filing is expected; a web search for a 'My Anointing' Colorado Secretary of State filing or trade name returned no matching record, and the coloradosos.gov entity-search form could not be queried directly from this tooling, so no registration status could be confirmed either way. No licence is required for online apparel sales.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered entity is expected or found for this sole proprietor; the registry was not directly queried."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The business is an online-only apparel seller and its own storefront shows real, observable product (custom snapbacks, baseball caps, tees, coasters, a 'Design Your Hat' customiser and a limited-edition collection), so the no-observable-product test does not fire; however no independent listing, social page, marketplace profile or directory entry places 'My Anointing' in Fountain, CO, so the stated location is unconfirmed.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Real product catalogue exists online, but no independent footprint corroborates the Fountain, CO location.",
+      "url": "https://www.myanointing.org/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name does not appear anywhere findable in a KYB-scope search: not on a Colorado SOS filing, not on the business's reachable public pages (the About Us and Contact subpages could not be loaded by this tooling), not in local news, and not in any complaint or scam report. The statement descriptor is the business domain, not a differing personal name, so nothing contradicts the declared representative. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public confirmation or contradiction of the declared representative."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared URL resolves (http://myanointing.org/ redirects to https://www.myanointing.org/) and is a built, working storefront clearly belonging to this merchant: headline 'WEAR YOUR ANOINTING - FAITH. PURPOSE. ORIGINALITY', navigation for New / Snapbacks / Baseball Caps / Design Your Hat / Accessories / Coasters / About Us / Contact, a Shop Now flow and a footer reading 2026 My Anointing. It is a live site-builder store, not a parked or placeholder page. The site-builder subdomain handle matches the account email handle, and the statement descriptor is the business's own domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared website, email handle and statement descriptor all belong to the same business.",
+      "url": "https://www.myanointing.org/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5691 (men's and women's clothing stores) is coherent with what the site observably sells: faith-themed wearable apparel - custom snapbacks and baseball caps, tees, sweatshirts and hoodies, plus minor accessories such as coasters. The descriptor matches the brand a cardholder would recognise. The .org domain and religious brand name could read as a ministry or donation collector, but the site is a straightforward retail shop with priced goods and a checkout flow, not solicitation.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Apparel retail activity is consistent with MCC 5691 and with the statement descriptor.",
+      "url": "https://www.myanointing.org/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of any age was found: no dated reviews, no business listings, no social profiles, no state filings, and no complaint, scam or fraud reports about the business, the domain or the representative. The site itself carries a 2026 copyright and a hero image asset named for October 2026, and the page is served with meta-robots noindex, all consistent with a storefront built roughly a month ago rather than a one-year-plus operating history - but nothing independent confirms a start date.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No verifiable operating history of one year or more, and no adverse reports."
+    }
+  ],
+  "evidenceNeeded": [
+    "Colorado Secretary of State trade-name or entity record for 'My Anointing', or confirmation the merchant trades as a sole proprietor under the representative's own name.",
+    "The About Us and Contact pages of myanointing.org, which did not load here - owner name, business contact details and stated Fountain, CO location.",
+    "Proof the storefront can actually transact: a completed test order, order-confirmation emails, or a fulfilment/print-on-demand supplier agreement.",
+    "Evidence of trading history and volume consistent with projected processing: prior processor statements, supplier invoices, or first-sale records.",
+    "Any social or marketplace channel operated by the business, to corroborate location and start date.",
+    "Documentation linking the representative to the brand (business bank account in the trade name, domain or site-builder account ownership, or an owner byline on the site)."
+  ],
+  "summary": "My Anointing is a genuine, if very new, direct-to-consumer apparel storefront: myanointing.org resolves to a live shop selling faith-themed custom snapbacks, caps, tees and small accessories, so MCC 5691 and the descriptor are coherent and the declared URL, email handle and descriptor all tie to the same brand. No risk points were scored on any dimension: nothing contradicts the profile, there are no scam or complaint reports, and as a Stripe-declared Individual no entity registration is expected. The weakness is thinness rather than conflict - zero independent footprint (no listings, social accounts, reviews or filings), no public trace of the representative, and site artefacts dated October 2026 suggesting the shop is roughly a month old. Treat as unseasoned new-merchant risk: monitor early volume, chargebacks and fulfilment, and request the About/Contact details plus evidence the store can fulfil orders before raising limits."
+}
