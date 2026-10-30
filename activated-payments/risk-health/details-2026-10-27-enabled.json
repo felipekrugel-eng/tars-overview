@@ -4,21 +4,21 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-27 Europe/London",
   "cohortDate": "2026-10-27",
-  "reviewedAt": "2026-10-28T00:16:16+00:00",
+  "reviewedAt": "2026-10-30T09:59:19+00:00",
   "count": 5,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-28T00:16:16+00:00",
+ "reviewedAt": "2026-10-30T09:59:19+00:00",
  "merchants": [
   {
    "id": "acct_1UUBj46DsleJx5S0",
    "accountId": "acct_1UUBj46DsleJx5S0",
    "merchantId": "5365129",
    "name": "El Callejon",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -34,28 +34,41 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor) operating a food truck, so no company registration is expected. The Connecticut Secretary of the State online business search at service.ct.gov refused the automated request before returning any page content, so no CT entity or trade-name record could be retrieved; a web search for a Connecticut entity or trade name \"El Callejon\" in Norwalk returned no matching registration.",
+    "The statement descriptor is a personal name that matches the representative on the Stripe account, so no descriptor/representative mismatch arises. No public source naming the representative in connection with this business was found, because the business has no traceable public presence, and nothing contradicting the representative was found. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website was declared and none was found. The contact email handle describes a food-truck trade consistent with the stated business rather than payment collection, and the statement descriptor is a personal name rather than a random string.",
+    "MCC 5814 (fast food restaurants), the product description \"I sell Dominican street food\" and a food-truck operating model are internally coherent and describe a real trade rather than payment collection, but no public page showing this business’s menu, products or operations was found, so the model could not be confirmed against observable evidence.",
+    "No dated reviews, directory listings, event appearances, news coverage or filings of any age were found for an El Callejon food truck in Norwalk, CT. No scam, complaint or fraud reports were found about the business or its representative either."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "A food truck in Connecticut requires a local health-department mobile/itinerant food vendor permit and would normally appear in at least one directory. The FoodTrucksIn directory for Norwalk, CT lists fourteen trucks and none is El Callejon; searches of other food-truck directories, Connecticut food-truck guides, review sites and Norwalk permit material also produced no listing, review, event appearance or permit record for an El Callejon food truck anywhere in Connecticut. [https://www.foodtrucksin.com/city/norwalk_ct]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "City of Norwalk / Norwalk Health Department itinerant or mobile food vendor permit showing the business name and permit holder",
+    "Photographs of the food truck showing \"El Callejon\" branding, plus vehicle registration or a commissary agreement",
+    "A link to the business’s own public channel (Facebook/Instagram page, Google Business Profile or Yelp listing) showing the truck operating in Norwalk, CT",
+    "Connecticut trade-name (DBA) certificate filed with the Norwalk Town Clerk, or confirmation that the merchant trades under her own name only",
+    "Manual re-check of the CT Secretary of the State business search at service.ct.gov for \"El Callejon\", since automated access was refused"
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.foodtrucksin.com/city/norwalk_ct",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "No independent evidence places an El Callejon food truck in Norwalk, CT, or anywhere in Connecticut.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "El Callejon presents as a one-person Dominican street-food truck in Norwalk, CT, with a statement descriptor matching the account representative and an MCC coherent with the declared trade. The material gap is that the business has no independent public footprint at all: it is absent from the FoodTrucksIn Norwalk directory and every other food-truck directory, review site, local news source and mobile-vendor permit listing searched, and it has no website or social page. Because a Connecticut mobile food vendor needs a local health permit and normally leaves some trace, that total absence is scored as an operating contradiction (10 points); all other dimensions are unverified at 0 and no adverse reports exist. Two checks need manual completion: the CT Secretary of the State business search (automated access refused) and a direct enquiry to the Norwalk Health Department for a current itinerant/mobile food vendor permit in this name.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-28T00:16:16+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:59:19+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-27T20:28:07+00:00",
    "enabledWindowStart": "2026-10-27T13:12:55+00:00",
    "enabledWindowEnd": "2026-10-27T20:28:07+00:00",
@@ -69,7 +82,7 @@
    "location": "Norwalk, CT, US",
    "email": "elcallejonfoodtruck25@gmail.com",
    "website": null,
-   "mcc": "5499",
+   "mcc": "5814",
    "statementDescriptor": "ANA MARTINEZ",
    "productDescription": "I sell Dominican street food",
    "entityType": "Individual",
@@ -77,8 +90,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -102,33 +115,64 @@
     "Account email uses a business domain (nesttothreads.com).",
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Individual.",
-    "Loyverse POS activity is present: 260 receipt(s), last sale 2026-02-01."
+    "Loyverse POS activity is present: 260 receipt(s), last sale 2026-02-01.",
+    "Independent directory listings with third-party storefront photos and posted Wed–Sat opening hours place both brands at one physical retail address, 3033 Coon Rapids Blvd, Coon Rapids, MN 55433. The declared city is Blaine, MN, an adjacent Anoka County suburb roughly five miles away, so the premises is in the stated metro but not the stated city. [https://www.mapquest.com/us/minnesota/nest-to-threads-boutique-marketplace-516546629]",
+    "The representative’s first name matches one of the two owner-operators named on the declared website’s own about page for The Refab Sisters Upcycling Studio. The page gives no surname, so the match is on first name only; nothing found contradicts the representative’s connection to the business. People-search and data-broker sites were not used. [https://www.refabsisters.com/about-us/]",
+    "The declared website refabsisters.com resolves and belongs to this operator. The name/domain mismatch resolves as two brands of one operator at one premises: the MapQuest listing for The Refab Sisters Upcycling Studio (3033 Coon Rapids Blvd Ste G) links refabsisters.com and shows \"Also at this address: Nest to Threads Boutique Marketplace\", whose own listing links nesttothreads.com at the same street address. The descriptor therefore matches a genuine sister brand rather than a different business, but it does not match the account name or email domain, so cardholders paying \"Nest to Threads\" will see an unrelated-looking descriptor. Note also that nesttothreads.com currently serves a WordPress \"under construction\" page and refabsisters.com retains unedited theme filler. [https://www.mapquest.com/us/minnesota/the-refab-sisters-upcycling-studio-660663581]",
+    "MCC 5712 (furniture, home furnishings) is coherent with what both brands observably sell: the Refab Sisters listing and website describe transforming vintage and antique furniture into custom upcycled pieces, and the Nest to Threads listing describes a co-retail marketplace of handcrafted goods including textiles, candles, ceramics and home decor, with product photos. A card-present POS history of 260 receipts fits a staffed retail shop. [https://www.mapquest.com/us/minnesota/nest-to-threads-boutique-marketplace-516546629]",
+    "Independent presence exceeds one year: a dated Macaroni KID Coon Rapids article of 20 December 2024 describes Nest to Threads Boutique Marketplace as an operating co-retail marketplace at 3033 Coon Rapids Blvd with space for 26 local vendors; directory listings with third-party customer photos corroborate. No scam, fraud or complaint reports about either brand or the representative were found. [https://coonrapids.macaronikid.com/articles/6761046ad662bb45d42acbb8/win-gift-cards-to-nest-to-threads-boutique-marketplace-and-cotton-patch]"
    ],
    "unverified": [
     "Ownership and age of nesttothreads.com have not been checked against a registrar.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Entity type is Individual (sole proprietor), where no corporate registration is expected in Minnesota. The MN Secretary of State business search at mblsportal.sos.state.mn.us could not be loaded by the available tooling, so no state filing was retrieved, and a web search surfaced no MN entity or assumed-name record for \"Nest to Threads\"."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A surname-level link between the representative and the business (MN certificate of assumed name for \"Nest to Threads\" or \"The Refab Sisters\", or a signed owner attestation) — the about page gives first names only",
+    "A loaded MN Secretary of State record for \"Nest to Threads\" and \"The Refab Sisters\"; the registry could not be reached by automation and should be checked manually, including whether the account should be a company rather than an Individual",
+    "Explanation of why the declared address city is Blaine, MN while every independent listing places the premises in Coon Rapids, MN",
+    "Confirmation that the shop is still trading: last POS sale was 271 days ago, the Loyverse subscription is cancelled, and nesttothreads.com is serving an \"under construction\" page",
+    "A declared product description, and confirmation that the statement descriptor is what \"Nest to Threads\" cardholders will recognise, or a descriptor change"
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.mapquest.com/us/minnesota/nest-to-threads-boutique-marketplace-516546629",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "A real, independently listed physical retail premises exists in Anoka County, MN, though in Coon Rapids rather than the declared Blaine.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.refabsisters.com/about-us/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "The representative matches an owner-operator named on the business’s own about page, on a first-name basis; no contradicting link to another business or to complaint reports was found.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://www.mapquest.com/us/minnesota/the-refab-sisters-upcycling-studio-660663581",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "The declared site is genuine and belongs to the same operator and premises as the account name; the descriptor is a real sister brand but is mismatched to the trading name for cardholder recognition.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://coonrapids.macaronikid.com/articles/6761046ad662bb45d42acbb8/win-gift-cards-to-nest-to-threads-boutique-marketplace-and-cotton-patch",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "At least ~22 months of documented independent trading presence with no adverse reports.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "The name/domain/descriptor mismatch resolves benignly: \"Nest to Threads Boutique Marketplace\" and \"The Refab Sisters Upcycling Studio\" (the declared site and descriptor) are two brands of one operator trading from the same premises at 3033 Coon Rapids Blvd, Coon Rapids, MN, with each MapQuest listing explicitly cross-referencing the other as also at that address. The Refab Sisters about page names the operators by first name, matching the representative, and MCC 5712 is coherent with an upcycled-furniture and home-goods shop supported by 260 card-present POS receipts; independent presence is documented back to at least December 2024 with no adverse reports. Total risk score is 0, but two non-scoring issues should be worked before payouts: the declared city is Blaine while every independent source places the shop in Coon Rapids, and the account looks dormant — no POS sale in 271 days, subscription cancelled, and the nesttothreads.com site now a placeholder. Identity rests on a first-name match plus Stripe’s own verification, so a surname-level link and a trading-status confirmation are the two pieces worth collecting.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-28T00:16:16+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:59:19+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-27T13:12:55+00:00",
    "enabledWindowStart": "2026-10-27T02:36:59+00:00",
    "enabledWindowEnd": "2026-10-27T13:12:55+00:00",
@@ -181,26 +225,39 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), so no state entity registration is expected in Utah. Utah has no Secretary of State; the Division of Corporations Business Entity Search at secure.utah.gov/bes/ loaded only as an empty JavaScript shell with no server-rendered results, so no name or principal lookup could be completed by automation. [https://secure.utah.gov/bes/]",
+    "Home organizing and holiday decorating is a service business that does not require licensed physical premises. Searches across web, Thumbtack, HomeAdvisor, Angi, Care.com, BBB organizing-services directories and Box Elder County listings returned no listing, social page or directory entry for \"Clean and Collected\" in Brigham City or anywhere in Utah; the only near-name matches were unrelated firms.",
+    "The representative was not found on any state filing, licence record, business channel, review reply or news item; the Utah Business Entity Search and Registered Principal Search could not be queried by automation. The account email handle is consistent with the representative and the statement descriptor is the business name rather than a different personal name, so nothing contradicts the declared identity. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website is declared and none was found. The business name and the email handle describe a cleaning/organizing trade, not payment collection, so the no-website contradiction rule does not apply. The \"HHM\" token in the statement descriptor could not be mapped to any franchise, brand or Brigham City business and remains unexplained, but the descriptor is not a random string since it carries the business name in full.",
+    "MCC 7299 (other personal services) is a coherent classification for a declared home-organizing and Christmas-decor service, and the descriptor carries the business name, but no public source was found showing what this business actually does, so coherence could not be confirmed against observed activity. Only 2 POS receipts historically, last sale 2026-01-01 — consistent with seasonal work but too thin to corroborate.",
+    "No dated reviews, directory listings, social posts, filings or news establishing any public presence for \"Clean and Collected\" were found, so no trading history of any length could be evidenced. Searches for scam, fraud or consumer-complaint reports naming the business or its representative returned nothing."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A manual browser query of the Utah Business Entity Search (secure.utah.gov/bes/) and Registered Principal Search (secure.utah.gov/rps/) for \"Clean and Collected\" and for the representative; both are JavaScript-only and cannot be queried by automation",
+    "A Brigham City business licence check to confirm a licensed sole proprietor at the stated address",
+    "An explanation from the merchant of the \"HHM\" element in the statement descriptor; it maps to no franchise, brand or Brigham City business found in search",
+    "Any customer-facing channel (Instagram/Facebook business page, Google Business Profile, Thumbtack or Nextdoor profile, or a price list) showing the organizing and Christmas-decor services and naming the owner",
+    "Two or three sample paid invoices or customer receipts tied to the historical POS sales, to confirm the stated service is what is actually charged for"
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "sources": [
+    {
+     "url": "https://secure.utah.gov/bes/",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "No registered entity is expected for a sole proprietor; the Utah registry could not be queried programmatically, so the absence of a filing is not evidence either way.",
+     "dimension": "legal"
+    }
+   ],
+   "summary": "Clean and Collected is a declared sole-proprietor home-organizing and Christmas-decor service in Brigham City, UT, with no discoverable public footprint at all across roughly a dozen searches: no website, no social or directory listing, no reviews, no BBB or Thumbtack/HomeAdvisor/Angi entry, no local news mention. Under the rubric this scores 0 on every dimension — a service business is not expected to have licensed premises, a sole proprietor is not expected to hold a state registration, and the Utah registry is a JavaScript-only tool whose silence proves nothing. Nothing contradicts the merchant either: the email handle matches the representative, the descriptor carries the real business name, the MCC fits the declared trade, and no scam or complaint record was found. The residual concerns are thinness rather than conflict — zero independent corroboration, only 2 lifetime POS receipts with the last on 2026-01-01, and the unexplained \"HHM\" suffix in the descriptor.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-28T00:16:16+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:59:19+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-27T13:12:55+00:00",
    "enabledWindowStart": "2026-10-27T04:31:55+00:00",
    "enabledWindowEnd": "2026-10-27T13:12:55+00:00",
@@ -245,34 +302,66 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "Independent music press places the operator in Illinois and the business has an observable product: Digital Music News (November 2022) profiles Saucemankeys as a producer born in Kankakee, IL outside Chicago, and the live site serves a catalogue of 12+ named instrumentals with tagged preview MP3s plus a 708 area-code business phone consistent with the south Chicago suburbs. Richton Park at city level was not independently confirmed. [https://www.digitalmusicnews.com/2022/11/01/saucemankeys-producer/]",
+    "saucemankeys.com resolves (HTTP 200, Netlify-hosted) and is a fully built \"SAUCEMANKEYS | Official Beat Store\" site, not a parked page or builder placeholder. Its contact section lists a business email matching the account email exactly, and the statement descriptor is the site’s own domain. [https://saucemankeys.com/]",
+    "MCC 5815 (digital goods: books, movies, music) is coherent with the observable business: the site sells licences to original instrumentals at a stated $100 non-exclusive lease and $1,500 exclusive price, serving 15-second tagged previews only, and the machine-readable catalogue at /beats.json lists the individual beats and their preview files. The site states checkout is not yet live (\"PayPal setup pending\"), so the sales channel is built but not yet transacting. [https://saucemankeys.com/beats.json]",
+    "The Saucemankeys brand has independent third-party coverage going back more than three years: Notion Magazine published a review of the self-titled EP on 25 January 2023, and Digital Music News profiled the producer on 1 November 2022 referencing releases from \"The Art of Trap 101\" in 2020 onward. No scam, fraud or complaint reports were found for the brand, the account name or the city. [https://notion.online/listen-to-saucemankeys-by-saucemankeys/]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Entity type is Individual (sole proprietor), so no company registration is expected. The Illinois Secretary of State business register is known to block automated access and was therefore not queried, so no assumed-name (DBA) filing for \"Saucemankeys\" or \"Malaya33\" could be checked.",
+    "The representative does not appear on the merchant’s own site (which carries no personal byline), in the Saucemankeys artist coverage in Digital Music News or Notion Magazine, or in any licence or filing reachable without the blocked Illinois registry. Nothing found contradicts the representative, and no adverse or complaint reporting was located. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://saucemankeys.com/]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Explanation of the account name \"Malaya33\", which matches nothing on the website, the brand or any public source — confirm whether it is a stage/label name or a data-entry artefact",
+    "A direct link between the representative and the Saucemankeys brand independent of Stripe’s internal check — e.g. the artist’s own BeatStars/Bandcamp/DSP profile, distributor or PRO (ASCAP/BMI) writer credits, or an Illinois assumed-name certificate",
+    "Confirmation of the Richton Park, IL address at city level; current evidence only places the operator in the Chicago area / Kankakee, IL",
+    "Expected volumes and ticket sizes: the storefront prices beats at $100 and $1,500 and still says checkout is not configured, so immediate high-volume processing would be inconsistent with the observable channel",
+    "A fulfilment and refund policy for the digital licences — the site states licence agreements are not finalised and automatic download delivery is not enabled, which is chargeback exposure for a card-not-present digital-goods seller"
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.digitalmusicnews.com/2022/11/01/saucemankeys-producer/",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "This is a digital-goods seller with a real, loadable product catalogue and an Illinois/Chicago-area footprint.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://saucemankeys.com/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "No public source links or contradicts the representative as the person behind the Saucemankeys brand.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://saucemankeys.com/beats.json",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "The merchant observably sells digital music licences, matching the declared MCC and descriptor.",
+     "dimension": "businessModel"
+    },
+    {
+     "url": "https://notion.online/listen-to-saucemankeys-by-saucemankeys/",
+     "sourceType": "news",
+     "checkedAt": "2026-10-30",
+     "establishes": "Independent presence well over one year with no adverse reporting.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Malaya33 is the Stripe account name for a real, observable digital-music business: saucemankeys.com loads as a fully built official beat store with a 12-plus track catalogue of tagged preview instrumentals, published lease ($100) and exclusive ($1,500) pricing, and a contact block whose business email matches the account email exactly and whose descriptor is the site’s own domain. The Saucemankeys brand is independently documented by Digital Music News (November 2022) and Notion Magazine (January 2023) as an Illinois producer from Kankakee outside Chicago with releases since 2020, so MCC 5815 and the descriptor are coherent and the history test is satisfied with no adverse reporting. Risk score is 0: entity type is Individual so no registration is expected, and the Illinois SOS register blocks automation and was not queried. Two residual items for the file rather than scored risk: the account name \"Malaya33\" matches nothing public and should be explained, and the storefront’s own copy says checkout is still pending with licence terms and automatic delivery not finalised — so a sudden high volume or high average ticket would be out of step with the channel observable today.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-28T00:16:16+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:59:19+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-27T23:25:25+00:00",
    "enabledWindowStart": "2026-10-27T19:59:42+00:00",
    "enabledWindowEnd": "2026-10-27T23:25:25+00:00",
@@ -325,26 +414,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type on the Stripe account is Individual (sole proprietor) trading under the style \"ltm unlimited\", for which Missouri requires no Secretary of State entity registration. An attempt to query the Missouri SOS business entity search at bsd.sos.mo.gov returned HTTP 403 behind a Cloudflare interstitial, so the registry blocked automation and could not be checked; web searches for \"LTM Unlimited\" Missouri returned no matching registered entity.",
+    "No independent listing, social page, Google/Maps entry, antique mall vendor roster, flea market or craft/antique show exhibitor list places \"ltm unlimited\" in St. Joseph, MO. Searches covering St. Joseph antique malls and vendor events surfaced only unrelated venues. As a mobile/pop-up antiques trader with no fixed premises, an absent footprint is expected and carries no risk points under the rubric.",
+    "The representative was not found on any state filing, licence record, business-owned channel, review reply or local news item connected to this business; searches tying the name to St. Joseph, MO antiques/flea-market vending and to scam or complaint reports returned nothing. The statement descriptor is the trading name, not a personal name, so no descriptor/representative mismatch arises. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website is declared and none could be found for \"ltm unlimited\" in St. Joseph, MO. The email handle is a generic personal Gmail handle carrying no trade signal, but it does not describe payment collection, and the statement descriptor matches the declared business name rather than being a random string, so no contradiction applies.",
+    "MCC 5399 (miscellaneous general merchandise) is a coherent fit for the stated activity, \"mobile pop up merchant of antiques and odd products\", and the descriptor matches the business name; the goods are physical, not digital, so the digital-goods rule does not apply. No product, inventory, listing or sales channel could be observed anywhere, so coherence is assessed from the declared description alone.",
+    "No dated independent presence was found: no reviews, directory listings, event vendor records, state filings or news mentions referencing \"ltm unlimited\" at any date, so trading history of one year or more could not be established. Equally, no scam, complaint, chargeback or fraud reports about the business or its representative were found."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Photographs of the pop-up stall or booth in operation with \"LTM Unlimited\" signage, plus the name and address of the most recent market, antique mall or event attended",
+    "A Missouri retail sales tax licence issued to the sole proprietor, or an antique mall / market vendor agreement naming the business",
+    "Any social or marketplace channel used to sell (Facebook page or Marketplace profile, Etsy/eBay store) showing the representative as owner or admin and carrying dated listings",
+    "Two or three recent dated sales records or event receipts evidencing trading activity and typical ticket size, to confirm MCC 5399 and expected processing volume",
+    "A manual re-run of the Missouri SOS business entity search (bsd.sos.mo.gov returned HTTP 403 to automation) for any fictitious-name registration under \"LTM Unlimited\""
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "ltm unlimited has no discoverable public footprint of any kind: no website, no social or marketplace page, no Google or directory listing, no antique mall or event vendor record in or around St. Joseph, MO, and no mention of the representative in connection with the business. The Missouri Secretary of State registry blocked automated querying (HTTP 403 behind Cloudflare), so no state-filing check could be completed, but as a declared Individual sole proprietor no entity registration is expected. Nothing contradicts the merchant’s own account either: the MCC, descriptor and product description are mutually coherent, the business model (mobile/pop-up antiques trading) is one where an absent online footprint is normal rather than suspicious, and no scam, complaint or adverse-media reports were found. Net risk score is 0 across all six dimensions; this is a low-information rather than high-risk file, and the open question is operational substantiation — proof of actual trading — rather than any identified red flag.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-28T00:16:16+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:59:19+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-27T23:25:25+00:00",
    "enabledWindowStart": "2026-10-27T20:40:50+00:00",
    "enabledWindowEnd": "2026-10-27T23:25:25+00:00",
