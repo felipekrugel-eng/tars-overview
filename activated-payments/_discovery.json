@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-30T15:35:01.801Z",
+  "ranAt": "2026-10-30T16:02:58.507Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1141,7 +1141,7 @@
       },
       {
         "name": "CURRENCY_RATES",
-        "rows": 298998
+        "rows": 299170
       },
       {
         "name": "HISTORICAL_RATES",
@@ -1149,7 +1149,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10040201174
+        "rows": 10040565332
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
