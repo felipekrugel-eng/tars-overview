@@ -1,0 +1,75 @@
+{
+  "accountId": "acct_1UVt3B9EbGUmHhVU",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Swiss commercial register (Zefix data) shows an ACTIVE association (Verein) named 'Speer-Braui', UID CHE-493.081.761, registered at Braendliguet 27, 8722 Kaltbrunn, canton St. Gallen, with the purpose of promoting the variety of beer and spirits in Kaltbrunn and the region; the name, legal form (Verein / non-profit) and place match the Stripe profile exactly, and the same UID is published in the merchant's own Impressum. No dissolution or strike-off is shown. Separately, the federal alcohol authority (BAZG) licence for spirits production could not be checked: a concession is required above 200 litres of pure alcohol per year but there is no public register of concession holders, so licence status is unknown and not scored; the merchant's own 'Ueber uns' page states distilling is carried out by an external distillery.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "An active, correctly named and correctly located Swiss legal entity exists for this merchant; spirits-production licensing could not be verified from any public source.",
+      "url": "https://onlineinfo.ch/firma/speer-braui---che-493-081-761/pdf"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent sources place the business physically in Kaltbrunn (SG). The regional newspaper Suedostschweiz (16 November 2023) reports on whisky casks maturing in the Grynau fortress and names the Speer-Braui in Kaltbrunn and the two people responsible for the spirit, with roughly 500 litres in storage and a silver award from the Swiss Spirit Revue. The commercial register gives the registered address Braendliguet 27, 8722 Kaltbrunn, and the merchant's own site gives a public shop (Braui-Laden) at Dorfstrasse 11, Kaltbrunn, with dated opening days and event appearances.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "A real, independently reported physical operation in the stated town, with a named retail premises and public events.",
+      "url": "https://www.suedostschweiz.ch/schweiz-und-welt/experiment-whiskylagerung-in-einer-festung-ihr-whisky-reift-an-der-grynau-im-militaerbunker-104698"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative is listed in the commercial register entry for Speer-Braui (CHE-493.081.761) as president of the board with sole signature authority, alongside a vice-president. The same two names appear as the authorised representatives in the merchant's own Impressum and on its 'Ueber uns' page, and in the 2023 Suedostschweiz article as the people behind the Speer-Braui whisky. The representative therefore matches a named officer in the register, on the organisation's own channels and in independent local news. No home address, date of birth or other personal data was collected, and no people-search or data-broker sources were used.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared representative is a registered, signature-authorised officer of the registered entity and is publicly associated with it.",
+      "url": "https://onlineinfo.ch/firma/speer-braui---che-493-081-761/pdf"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared URL www.speer-braui.ch loads and is a genuine, actively maintained site for this business: a WooCommerce site titled 'Speer-Braui', tagline 'Brauerei - Whisky- und Rhum-Produktion', with product sections for Bier, Whisky and Rhum, a Festservice (keg and tap-system rental), and a blog with posts dated to 24 October 2026. The Impressum states the contact address Braendliguet 27, 8722 Kaltbrunn (identical to the registered address), the e-mail info@speer-braui.ch (identical to the Stripe account e-mail), the two representatives, and commercial register number CHE-493.081.761. The statement descriptor is the business name and its own domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared website, e-mail domain, registered address, UID and statement descriptor all belong to the same verified entity.",
+      "url": "https://www.speer-braui.ch/impressum/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared product description matches what the business observably does. The 'Ueber uns' page states Speer-Braui is a brewery and whisky/rum producer in Kaltbrunn run by the two named officers; it brews its own beer, prepares and ferments the wash for its single malt and its rum, has distillation performed by an external distillery, and handles cask selection, maturation and bottling itself. Revenue channels are observable: an on-site shop at Dorfstrasse 11 Kaltbrunn with published opening days, an online store, gift sets, and a beer/tap-system Festservice for local events. MCC 5499 (miscellaneous food stores) is an acceptable but imprecise fit for an alcoholic-beverage producer with a retail outlet; MCC 5921 (package stores - beer, wine, liquor) would describe the activity more exactly.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Stated product, MCC and descriptor are coherent with an observable, physically grounded beverage production and retail operation; only MCC precision is worth noting.",
+      "url": "https://www.speer-braui.ch/ueber-uns/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent and dated presence well beyond one year, with no complaint, scam or fraud reports found. The association was founded at the end of 2020 per its own chronicle (the whisky project started in 2015 with the first bottling in 2018, and the Kaltbrunn premises at Dorfstrasse 11 were taken over in 2021), it is entered in the Swiss commercial register under CHE-493.081.761, and the Suedostschweiz regional newspaper covered it by name on 16 November 2023 in connection with the Grynau fortress cask-maturation project, including a silver award from the Swiss Spirit Revue. The website carries dated content spanning 2021 through October 2026.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "A continuous, independently documented trading history of roughly six years with a clean public record.",
+      "url": "https://www.suedostschweiz.ch/schweiz-und-welt/experiment-whiskylagerung-in-einer-festung-ihr-whisky-reift-an-der-grynau-im-militaerbunker-104698"
+    }
+  ],
+  "evidenceNeeded": [
+    "Confirmation from BAZG (Alkohol / Spirituosensteuer) of which party holds the distilling concession for the Speer whisky and rum production, or written confirmation from the merchant naming the external contract distillery and its concession number.",
+    "Evidence that spirits duty (Spirituosensteuer) is declared and settled for the bottlings sold under the merchant's own label.",
+    "Confirmation of the merchant's age-verification process for the online store and any mail-order shipping, and whether shipping is domestic (CH) only.",
+    "Consider reassigning MCC from 5499 to 5921 (package stores - beer, wine, liquor) to match the actual activity.",
+    "Confirmation that the Verein's revenue stays within thresholds consistent with its non-profit status, and the expected annual processing volume, given commercial beer, whisky and rum sales plus a Festservice."
+  ],
+  "summary": "Speer-Braui is a verified, low-risk merchant with no contradictions on any dimension. The Swiss commercial register shows an active Verein 'Speer-Braui' (CHE-493.081.761) at Braendliguet 27, 8722 Kaltbrunn SG, with the declared representative as board president holding sole signature authority, matching the Stripe name, place, entity type and representative; the declared website resolves, is actively maintained, and its Impressum reproduces the identical UID, address and account e-mail, while regional press from 2023 independently places the operation and both named officers in Kaltbrunn. The business model is coherent and physically grounded: own brewing plus cask maturation and bottling of whisky and rum, sold through a shop at Dorfstrasse 11, an online store and a local keg/tap-rental service, giving roughly six years of documented trading history with no complaint or fraud reports. The only open items are regulatory: BAZG publishes no searchable register of spirits concession holders, so the licence chain could not be verified, and MCC 5499 should arguably be 5921 for an alcoholic-beverage seller."
+}
