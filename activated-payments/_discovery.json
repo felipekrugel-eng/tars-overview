@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-30T02:18:16.727Z",
+  "ranAt": "2026-10-30T02:38:28.448Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -2283,8 +2283,22 @@
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-29 21:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UPZ8w7e4AMQfKY39QcBISMM",
+        "BATCH_TIMESTAMP": "2026-10-30 00:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1USQla7e4AMQfKY3pUQE5OPV",
+        "QUANTITY": 1,
+        "AMOUNT": 5900,
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-10-30 00:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1USQla7e4AMQfKY3pUQE5OPV",
         "QUANTITY": 1,
         "AMOUNT": 26013,
         "CURRENCY": "usd",
@@ -2294,34 +2308,6 @@
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
         "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-29 21:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1USQ8N7e4AMQfKY3xwMBbTSc",
-        "QUANTITY": 1,
-        "AMOUNT": 5900,
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-10-29 18:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UVwd67e4AMQfKY3miGGlA5q",
-        "QUANTITY": 1,
-        "AMOUNT": 5900,
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_JokaJ6KpLMlDID",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 5900,
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_MJfoN6Xy5Qu46F",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_m2"
       },
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
@@ -2392,6 +2378,20 @@
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
         "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNyD7e4AMQfKY34sC7lZ3z",
+        "QUANTITY": 1,
+        "AMOUNT": 4263,
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_OOBOv6kyg2QwyB",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 4263,
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6CPcP2UVJHmg",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_dock"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_METADATA": [],
