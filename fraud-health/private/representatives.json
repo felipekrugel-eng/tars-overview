@@ -1,8 +1,20 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-30T01:50:28.959Z",
+ "generated_at": "2026-10-30T02:02:21.881Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UW3hx7np7DQ3oqi": {
+   "name": "paul raschke",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UW0Vs875fdmoZRt": {
+   "name": "Keith Taylor",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UVxCB4uxDNwhkh9": {
    "name": "Mehmet Kalkan",
    "legal_entity_type": "individual",
@@ -3963,15 +3975,15 @@
    "legal_entity_verification_status": "unverified",
    "payouts_enabled": false
   },
-  "acct_1Txmhe85O4mEmN6i": {
-   "name": "Richard Greenwood",
-   "legal_entity_type": "company",
-   "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
-  },
   "acct_1TxmheGGdPH88tBR": {
    "name": "Marcum Eddie Shane",
    "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1Txmhe85O4mEmN6i": {
+   "name": "Richard Greenwood",
+   "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
    "payouts_enabled": true
   },
