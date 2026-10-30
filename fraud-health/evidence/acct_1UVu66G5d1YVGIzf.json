@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UVu66G5d1YVGIzf",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor) in Kentucky, where no state entity registration is expected for a sole proprietorship, so no registration gap is implied. Repeated web searches against the Kentucky Secretary of State FastTrack database surfaced no 'Infinite Pages' entity, only unrelated companies; the KY SOS name-search form itself could not be loaded by the fetch tool, so no registry page content was actually retrieved and no registry statement can be evidenced.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No state registration is expected for an Individual; no KY SOS record was surfaced and the registry search page could not be loaded."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Six independent search passes (bookstore directories, Danville KY local news and business-licence roundups, the Danville-Boyle County Chamber directory, Yelp/TripAdvisor/Instagram, Facebook) returned zero listings, reviews, articles or social pages for a business called 'Infinite Pages' in Danville, Kentucky; the only Danville KY bookshop found was unrelated. The declared Facebook page could not be opened (Facebook share links are routinely blocked to automation), so the merchant's only declared channel remains unexamined and no page content was loaded that would support a contradiction.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent footprint for 'Infinite Pages' in Danville, KY was found, and the sole declared channel could not be loaded."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name was not found on any Kentucky Secretary of State filing, licence record, local news item, business listing or complaint report reachable by search; no people-search or data-broker source was used and no personal data was collected. Nothing contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Representative name has no public KYB-scope footprint; nothing contradicts it."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "There is no conventional website; the declared URL is a Facebook share permalink which could not be loaded, so it cannot be confirmed to belong to this business, to be parked, or to belong to someone else. The email handle matches the trade name and does not describe payment collection, and the statement descriptor matches the business name exactly rather than being a random string or an unrelated personal name.",
+      "sourceType": "social",
+      "checkedAt": "2026-10-30",
+      "establishes": "No loadable website or social page; descriptor and email are name-consistent, so no contact contradiction is evidenced."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5399 (miscellaneous general merchandise) and the descriptor are not internally incoherent for a books or paper-goods seller, and the name does not describe payment collection, but no product, price list, catalogue or storefront was observable anywhere and no product description was supplied on the account, so coherence could not be confirmed against anything the business observably does.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable product or trading activity exists to test MCC/descriptor coherence against."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any age was found: no reviews, no directory listings, no Danville business-licence entry in local news roundups, no chamber membership and no state filing. Equally, no scam, complaint or fraud report naming the business or the representative was found.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history of one year or more can be evidenced, and no adverse reports exist."
+    }
+  ],
+  "evidenceNeeded": [
+    "A loadable link to the business's Facebook page (public page URL, not a share permalink) or a screenshot of it, showing page name, city, creation date and posted products.",
+    "Danville, KY occupational/business licence certificate or the City of Danville Finance Department licence record naming the business and the representative.",
+    "Kentucky Secretary of State or Boyle County assumed-name filing, if one exists, or written confirmation the merchant trades as an unregistered sole proprietor.",
+    "A product catalogue, price list or sample invoices showing what is actually sold, to confirm MCC 5399 is appropriate.",
+    "Evidence of trading history: dated customer reviews, prior processing statements, or supplier invoices covering at least 12 months.",
+    "Confirmation of the physical trading location (storefront, market stall or online-only) with photos or a lease."
+  ],
+  "summary": "Infinite Pages has no discoverable public footprint whatsoever: six independent search passes across bookstore directories, Danville KY local news and business-licence roundups, the Danville-Boyle County Chamber, review platforms and social media found nothing under this name in Danville, Kentucky, and the Kentucky SOS surfaced no matching entity. The only declared channel is a Facebook share permalink that could not be opened, so the merchant's sole shopfront remains completely unexamined. Because no page content was successfully loaded in this pass, every dimension is scored unverified at 0 risk points under the evidence rules - the 0 reflects absence of loadable evidence, not a clean result, and should not be read as a pass. Identity and bank ownership rest entirely on Stripe's own checks; recommend a manual review that opens the Facebook link in a browser and requests the licence, product and trading-history evidence listed above before raising limits."
+}
