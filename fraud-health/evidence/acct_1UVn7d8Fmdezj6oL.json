@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVn7d8Fmdezj6oL",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Alaska requires a state business licence even for sole proprietors. The Division of Corporations, Business and Professional Licensing business-licence search page loaded with an empty body (JavaScript-only form, no server-rendered results), so the registry effectively blocks automation and no licence record for 'Petersburg Pie Company' could be retrieved or ruled out. A site-restricted search across commerce.alaska.gov returned only generic licensing-policy pages. Stripe classifies the account as Individual, so no corporate entity filing is expected; the open item is the business licence itself, which remains unchecked rather than absent.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "Whether an active Alaska business licence exists in this business name, and who is named as owner, is unresolved because the registry blocks automation.",
+      "url": "https://www.commerce.alaska.gov/cbp/businesslicense/search/License"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "MCC 5814 implies a food-service operation on licensed physical premises, but the business has no independent footprint in Petersburg, AK (population roughly 3,000) at all. A published Petersburg restaurant directory lists the town's eating places - Coastal Cold Storage, Helse Restaurant, Inga's Galley, Papa Bear's Pizza and The Salty Pantry - and Petersburg Pie Company is not among them. Repeated searches against general web, local news, travel listings, Yelp, Facebook and Instagram returned no listing, no address, no hours and no photographs of a premises anywhere.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent third party places this food business at a physical address in the stated city.",
+      "url": "https://cdn.fodors.com/world/north-america/usa/alaska/juneau-the-inside-passage-and-southeast-alaska/places/petersburg/restaurants"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name could not be located on any Alaska business-licence record (the state licence search would not load for automation), on any licence listing, on business-owned channels (no website, social page or review profile for this business was found), or in Petersburg local news. Nothing contradicts the declared representative either - no competing sole owner, no other business in another state, and no scam or complaint report ties this name to anything. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Whether the declared representative is publicly linked to this business as owner or licence holder could not be established either way."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared website petersburgpieco.com could not be loaded in this environment and a direct search on the exact domain string returned zero pages referencing it, which is consistent with a site that is unindexed, very new, or not publicly reachable. Whether it resolves, is parked, or belongs to this business is therefore unconfirmed and is not scored. The statement descriptor matches the declared business name rather than a random string or an unrelated party, so no contradiction is recorded.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Whether the declared website resolves and demonstrably belongs to this merchant is unconfirmed."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The trading name, MCC 5814 (fast food restaurants) and the statement descriptor are internally coherent - a pie shop in Petersburg, AK is a plausible fast-food merchant, and nothing in the name or descriptor describes payment collection or digital goods. However, no page anywhere shows a menu, product, price list, ordering flow or any other observable output of this business, and the product description field on the account is blank, so coherence could not be confirmed against real activity. Recorded as unverified rather than a contradiction because no evidence conflicts with the declared model.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable product against which to test the declared MCC and descriptor."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any length was found: no reviews, no directory listing with a creation date, no local news coverage, no chamber-of-commerce entry and no retrievable state filing. Equally, no scam, complaint, chargeback or fraud report was found against the business name or the declared representative.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Neither an observable track record of at least one year nor any adverse reports could be established."
+    }
+  ],
+  "evidenceNeeded": [
+    "Alaska business licence number and a screenshot or PDF of the licence record showing business name, owner name, city and Active status (manual lookup required; the search blocks automation).",
+    "Alaska DEC Food Safety and Sanitation retail food establishment permit number for the Petersburg premises, plus the most recent inspection record.",
+    "A working, publicly reachable petersburgpieco.com showing business name, Petersburg AK address, menu and contact details - or an explanation of why the declared domain does not resolve.",
+    "Physical premises evidence: street address in Petersburg AK, photographs of the storefront or kitchen, and a lease or occupancy document.",
+    "Any independent third-party listing (Google Business Profile, Facebook page, Yelp, Petersburg Chamber of Commerce) that places the business in Petersburg and carries dated activity.",
+    "Confirmation of the sales channel: if this is an online or shipped-pie operation rather than a storefront, the correct MCC and evidence of fulfilment capability."
+  ],
+  "summary": "Petersburg Pie Company presents as a fast-food merchant (MCC 5814) in a town of roughly 3,000 people, yet it has no discoverable public footprint of any kind: it is absent from a published Petersburg restaurant directory and from every listing, social, review and local-news search attempted, and the declared domain petersburgpieco.com is unindexed and could not be loaded. The single material risk flag is operating (10 points) - a business type that cannot legally trade without licensed physical premises, with zero independent evidence that those premises exist. Legal, contact, identity, business model and history are all unverified at 0 rather than clean: the Alaska business-licence search is JavaScript-only and returned an empty body to automation, so the one check that would settle both the licence and the owner's name could not be completed. Recommend a documentation request before volume is enabled - Alaska business licence, DEC food establishment permit, premises address with photographs, and a reachable website - since the current profile is equally consistent with a brand-new pre-launch bakery and with a merchant that has no underlying operation."
+}
