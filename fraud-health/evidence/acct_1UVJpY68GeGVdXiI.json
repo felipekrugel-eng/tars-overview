@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UVJpY68GeGVdXiI",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no Rhode Island state entity registration is expected and none is required for this trade; the Rhode Island Secretary of State corporate search blocked automation (the ASPX form could not be loaded), so no registry record was checked either way.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registration is expected for an individual/sole proprietor; the RI registry was not reachable, so this is unverified rather than a contradiction."
+    },
+    {
+      "dimension": "operating",
+      "points": 15,
+      "status": "contradiction",
+      "statement": "Targeted searches for the business name, the email handle, the representative and the trade (custom/indie wrestling figures, New England, Rhode Island, Etsy, eBay, Instagram, Facebook, TikTok, YouTube) returned no shop, no product listing, no portfolio and no social page for this business anywhere. This is an online physical-goods seller with no observable product or sales channel on any platform, and nothing places a merchandise seller of this name in N Scituate, RI or elsewhere.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "A goods seller with no observable product or sales channel on any platform; no independent evidence that the business operates at all."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name does not appear on any business channel, listing, licence record, local news item or complaint report found in searching, and nothing publicly ties that name to a different business, city or state; the statement descriptor is the business name rather than a personal name, so there is no descriptor mismatch. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public source either confirms or contradicts the representative's link to the business."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No URL was declared and no website for this business could be found; the email handle matches the business name and describes a trade (wrestling figures), not payment collection, and the statement descriptor matches the business name rather than being a random string.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Absence of a website with no aggravating signal in the email handle or descriptor."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5399 (miscellaneous general merchandise) and the descriptor are facially consistent with the declared trade of manufacturing and selling wrestling toys and merchandise, and nothing in the name or description describes payment collection; however no page showing what the business actually does could be found, so coherence could not be confirmed against any observable activity.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared MCC and descriptor are internally plausible for a physical-goods seller, but unconfirmed against real-world activity."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, listings, filings, news items or social posts of any age were found for the business or for the representative in connection with it, and no scam, complaint or fraud reports about the business or the owner were found either.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history can be established, and equally no adverse history exists in public sources."
+    }
+  ],
+  "evidenceNeeded": [
+    "A live sales channel for the goods: Etsy/eBay/Shopify storefront URL, Instagram or Facebook business page, or a product catalogue with dated listings.",
+    "Proof that the representative owns Big Fight Figures: an about page, owner bio, or owner reply on a business channel naming them.",
+    "Rhode Island sole-proprietor / fictitious business name filing for N Scituate, RI, or a municipal vendor or sales-tax permit from the RI Division of Taxation.",
+    "Processing-history evidence: order confirmations, invoices or shipping records for recent sales, plus expected monthly volume and average ticket.",
+    "Written likeness/IP licence or consent from the independent wrestlers whose likenesses the merchant says are used on the products - an unlicensed-IP exposure the KYB dimensions do not score."
+  ],
+  "summary": "Big Fight Figures has no discoverable public footprint at all: searches across web, marketplaces (Etsy, eBay), social (Instagram, Facebook, TikTok, YouTube) and local Rhode Island sources found no website, no storefront, no product listing, no social page and no mention of the business or its representative. That is the single material risk: a consumer physical-goods seller with no sales channel anywhere scores operating 15, since there is nothing to show the business exists outside the Stripe application. Nothing contradicts the merchant either - the entity is an Individual so no RI registration is expected (the RI SOS search blocked automation), the descriptor matches the business name, the email handle matches the trade, and no scam or complaint reports were found. Recommend holding payouts pending a live sales channel plus proof of ownership, and separately flagging the declared use of independent wrestlers' likenesses."
+}
