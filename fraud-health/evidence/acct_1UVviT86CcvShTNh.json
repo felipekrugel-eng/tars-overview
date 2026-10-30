@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVviT86CcvShTNh",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no Montana Secretary of State entity registration is expected. The MT SOS portal at biz.sosmt.gov could not be loaded by this agent, so the state register was not searched - treat as blocked automation. On licensing, RiverStone Health's Yellowstone County mobile-food page (loaded) confirms a mobile food unit in Laurel / Yellowstone County must hold an annual DPHHS/RiverStone retail food licence issued after plan review and a pre-opening inspection; however RiverStone publishes no searchable public register of current licence holders, only a list of unlicensed operators, so the presence or absence of a licence for this merchant could not be confirmed either way. The merchant does not appear on RiverStone's May 2026 unlicensed-and-uninspected list, which is weak negative evidence only.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "Individual/sole-proprietor status means no entity filing is expected; the required county/state food establishment licence could not be checked because MT SOS was unreachable and no public licensed-holder register exists.",
+      "url": "https://riverstonehealth.org/inspections-permits/mobile-food/"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "A food service operation requires licensed physical premises or a licensed mobile unit, yet searches of food-truck directories, Laurel/Billings local news, delivery platforms and Facebook/Google listing queries for the business name, the representative and chicken-tender/fries vendors in Laurel, MT returned no listing, page, menu or photo placing this business in Laurel. The only Laurel-area mobile food operations surfaced were unrelated. No independent footprint of any kind was found, so no page can be cited as positive proof.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Zero independent corroboration that a food vendor operated by this representative exists in Laurel, MT."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name could not be found on any state filing, licence record, business-owned channel, review reply, local news item or complaint report; targeted searches returned nothing about this person, and no people-search or data-broker sources were used. The statement descriptor is the representative's own name and matches the Stripe representative exactly, so the mismatched-personal-descriptor trigger does not fire. No adverse or conflicting association with another business, city or state was found. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public source ties the representative's name to any business; the descriptor is consistent with the representative, and nothing adverse was found."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "No website was declared and none was found. The registered business name is 'Brady pos', where 'pos' is the point-of-sale tool rather than a trade: the name tells a customer nothing about chicken tenders, fries or burgers and reads as the representative's first name plus the POS application. Mitigating: the product description names a clear food trade, the MCC is a food code, and the descriptor is the representative's real name, so the benign explanation (the account was named after the till) is plausible. Aggravating: with no website, no trade name and no independent footprint anywhere, the only public-facing identifier this merchant presents describes payment acceptance rather than anything it sells, so the trigger fires. The risk is opacity and unverifiability rather than evidence of a payment-aggregation scheme.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No reachable web or contact presence; the only business identifier names the POS system rather than the trade."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "The stated model (chicken tenders, fries, an occasional burger - prepared hot food, i.e. a food truck or concession stand) is internally plausible but cannot be corroborated by any observable product, menu, listing or photo, and it sits incoherently with the declared setup: MCC 5499 (miscellaneous food stores, i.e. retail grocery and specialty food) is the wrong code for prepared food service, which belongs in 5812 (eating places), and the business name describes a POS system rather than the food trade it claims. Nothing contradicts the food description itself; the incoherence is MCC-to-activity plus a name that does not match the declared trade.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "MCC 5499 is a poor fit for a prepared-food vendor and the declared activity is uncorroborated by any observable product."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any age was found - no reviews, directory listings, social pages, news mentions or filings for the business name or the representative in Laurel, MT - so trading history of one year or more could not be established. Equally, no scam, fraud, chargeback or complaint reports were found, and the merchant does not appear on RiverStone Health's May 2026 list of unlicensed and uninspected Yellowstone County food operations.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history either way: no dated footprint and no adverse reports.",
+      "url": "https://riverstonehealth.org/wp-content/uploads/Unlicensed-and-Uninspected_May_2026.pdf"
+    }
+  ],
+  "evidenceNeeded": [
+    "Copy of the current Montana DPHHS / RiverStone Health retail food establishment or mobile food unit licence in the representative's name, with licence number and 2026 validity dates.",
+    "Photo of the food truck, trailer or concession stand showing signage and the trading name actually used with customers, plus its usual pitch location or event schedule in Laurel / Yellowstone County.",
+    "A link to any customer-facing channel (Facebook page, Google Business Profile, Instagram, online menu) for the operation.",
+    "Confirmation of the intended trading name - whether 'Brady pos' is merely the Loyverse POS store label - and what name appears on the unit and on customer receipts.",
+    "MCC reassignment review: 5812 (eating places) rather than 5499 if the merchant sells prepared hot food.",
+    "Manual check of the Montana SOS register at biz.sosmt.gov for any assumed-business-name filing, since automated access was unavailable."
+  ],
+  "summary": "Brady pos is a US sole proprietor in Laurel, MT claiming a small prepared-food operation (chicken tenders, fries, occasional burgers), with Stripe identity verification passed and a statement descriptor that correctly matches the representative's own name - so there is no identity or descriptor mismatch and nothing adverse about the representative was found. The core problem is total unverifiability: after searches of food-truck directories, Laurel/Billings local news, delivery platforms, social and county health sources, there is no listing, menu, photo, review or licence record placing any food vendor run by this person in Laurel, and the Montana SOS portal could not be loaded. Compounding this, the only public identifier the merchant offers names the point-of-sale tool rather than a trade, there is no website, and MCC 5499 is the wrong code for prepared food service. Total 27 risk points, driven entirely by absence of an operating footprint and an opaque non-trade business name rather than by positive evidence of wrongdoing; a licence copy plus a photo of the unit and its trading name would clear most of it."
+}
