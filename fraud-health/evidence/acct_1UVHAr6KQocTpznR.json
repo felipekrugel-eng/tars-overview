@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UVHAr6KQocTpznR",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type on the Stripe account is Individual (sole proprietor) trading under the style \"ltm unlimited\", for which Missouri requires no Secretary of State entity registration. An attempt to query the Missouri SOS business entity search at bsd.sos.mo.gov returned HTTP 403 behind a Cloudflare interstitial, so the registry blocked automation and could not be checked; web searches for \"LTM Unlimited\" Missouri returned no matching registered entity.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No entity registration is expected for a Missouri sole proprietor; the state registry was unreachable, so the absence of a filing is neither confirmed nor contradicted."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, social page, Google/Maps entry, antique mall vendor roster, flea market or craft/antique show exhibitor list places \"ltm unlimited\" in St. Joseph, MO. Searches covering St. Joseph antique malls and vendor events surfaced only unrelated venues. As a mobile/pop-up antiques trader with no fixed premises, an absent footprint is expected and carries no risk points under the rubric.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable operating footprint in the stated city; not scored, because mobile/pop-up traders are not expected to have one."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative was not found on any state filing, licence record, business-owned channel, review reply or local news item connected to this business; searches tying the name to St. Joseph, MO antiques/flea-market vending and to scam or complaint reports returned nothing. The statement descriptor is the trading name, not a personal name, so no descriptor/representative mismatch arises. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public source links the representative to the business, and nothing contradicts the declared representative either."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none could be found for \"ltm unlimited\" in St. Joseph, MO. The email handle is a generic personal Gmail handle carrying no trade signal, but it does not describe payment collection, and the statement descriptor matches the declared business name rather than being a random string, so no contradiction applies.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No contactable web presence exists, but nothing about the contact details is misleading or payment-collection oriented."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5399 (miscellaneous general merchandise) is a coherent fit for the stated activity, \"mobile pop up merchant of antiques and odd products\", and the descriptor matches the business name; the goods are physical, not digital, so the digital-goods rule does not apply. No product, inventory, listing or sales channel could be observed anywhere, so coherence is assessed from the declared description alone.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared MCC, descriptor and product description are internally coherent, but no independent evidence of the actual product offering exists."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence was found: no reviews, directory listings, event vendor records, state filings or news mentions referencing \"ltm unlimited\" at any date, so trading history of one year or more could not be established. Equally, no scam, complaint, chargeback or fraud reports about the business or its representative were found.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No verifiable trading history and no adverse history; the business is invisible to public sources in either direction."
+    }
+  ],
+  "evidenceNeeded": [
+    "Photographs of the pop-up stall or booth in operation with \"LTM Unlimited\" signage, plus the name and address of the most recent market, antique mall or event attended",
+    "A Missouri retail sales tax licence issued to the sole proprietor, or an antique mall / market vendor agreement naming the business",
+    "Any social or marketplace channel used to sell (Facebook page or Marketplace profile, Etsy/eBay store) showing the representative as owner or admin and carrying dated listings",
+    "Two or three recent dated sales records or event receipts evidencing trading activity and typical ticket size, to confirm MCC 5399 and expected processing volume",
+    "A manual re-run of the Missouri SOS business entity search (bsd.sos.mo.gov returned HTTP 403 to automation) for any fictitious-name registration under \"LTM Unlimited\""
+  ],
+  "summary": "ltm unlimited has no discoverable public footprint of any kind: no website, no social or marketplace page, no Google or directory listing, no antique mall or event vendor record in or around St. Joseph, MO, and no mention of the representative in connection with the business. The Missouri Secretary of State registry blocked automated querying (HTTP 403 behind Cloudflare), so no state-filing check could be completed, but as a declared Individual sole proprietor no entity registration is expected. Nothing contradicts the merchant’s own account either: the MCC, descriptor and product description are mutually coherent, the business model (mobile/pop-up antiques trading) is one where an absent online footprint is normal rather than suspicious, and no scam, complaint or adverse-media reports were found. Net risk score is 0 across all six dimensions; this is a low-information rather than high-risk file, and the open question is operational substantiation — proof of actual trading — rather than any identified red flag."
+}
