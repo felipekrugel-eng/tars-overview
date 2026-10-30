@@ -2,10 +2,10 @@ FEE_CATEGORY,CURRENCY,N,TOTAL_AMOUNT_MINOR
 account_volume,gbp,8,-38699
 dispute,gbp,10,-10517
 payout,gbp,8,-3964
-per_auth,gbp,197,-266470
+per_auth,gbp,198,-270308
 radar,gbp,4,-20
 sub_premium_support,gbp,6,-2400000
 sub_sigma,gbp,9,-131204
 tap_to_pay,gbp,119,-22124
 terminal_use,gbp,7,-34508
-volume,gbp,381,-138267
+volume,gbp,383,-139993
