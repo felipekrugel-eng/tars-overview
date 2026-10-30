@@ -1,8 +1,26 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-30T10:22:42.903Z",
+ "generated_at": "2026-10-30T10:41:25.071Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UWBh56ugqY7knnI": {
+   "name": "marco ruberto",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UW9qfG2Ssc95GBj": {
+   "name": "jabreel slater",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UW9dT9Uqyjawhh9": {
+   "name": "John Sterling",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
   "acct_1UW4pO9tl93nU890": {
    "name": "Larry Coleman",
    "legal_entity_type": "individual",
