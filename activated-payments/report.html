@@ -157,12 +157,29 @@ const fmtC = n => (n==null) ? '&mdash;' : '$' + (+n).toFixed(2);
 const fmtP = n => (n==null) ? '&mdash;' : (+n).toFixed(2) + '%';
 
 // Change cell. higherIsBetter=false flips the colour (used for cost, where up is bad).
+//
+// DIVIDE BY |prev|, NOT prev. (cur/prev - 1) silently inverts whenever the BASE is negative,
+// which on this page is exactly the months worth looking at. Net margin went from -$2,960 to
+// +$2,688 — a swing into profit — and the old formula reported it as -190.8% in red. The
+// magnitude was right; only the sign was wrong, because dividing by a negative flips the
+// direction of the ratio. With |prev| the sign of p always matches the sign of (cur - prev),
+// so "improved" and "green" cannot come apart again:
+//
+//     -2960 -> +2688   (-2960+2688)/|-2960|  = +190.8%   improvement, green
+//     -2960 -> -1000   losing less            =  +66.2%   improvement, green
+//     -1000 -> -2000   losing more            = -100.0%   worse, red
+//      +100 ->   -50   fell into loss         = -150.0%   worse, red
 function pctCell(cur, prev, higherIsBetter){
   if(cur==null || prev==null || prev===0) return '<td class="chg flat">&mdash;</td>';
-  const p=(cur/prev-1)*100;
+  const p=(cur-prev)/Math.abs(prev)*100;
   const good = (higherIsBetter===false) ? (p<0) : (p>0);
   const cls = Math.abs(p)<0.05 ? 'flat' : (good ? 'up' : 'down');
-  return '<td class="chg '+cls+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</td>';
+  // A percentage off a negative base is easy to misread on its own, so the cell says what it
+  // is measured against when that happens. Positive bases get no tooltip — nothing to explain.
+  const tip = prev<0 ? ' title="Measured against last period&rsquo;s loss of '
+                     + Math.abs(prev).toLocaleString('en-US',{maximumFractionDigits:2})
+                     + '. A move from a negative base to a higher number is an improvement."' : '';
+  return '<td class="chg '+cls+'"'+tip+'>'+(p>=0?'+':'')+p.toFixed(1)+'%</td>';
 }
 
 // Cumulative column: flows sum, point-in-time takes the last value, ratios are recomputed from

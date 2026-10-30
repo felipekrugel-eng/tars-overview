@@ -444,7 +444,10 @@ const fmtN = n => n.toLocaleString('en-US');
   const MO = Object.keys(D.monthly).filter(k=>/^\d+$/.test(k)).map(n=>D.monthly[n]);
   const AM = D.activeMonthly || [];
   const el = id => document.getElementById(id);
-  const pct = (a,b) => b ? (a/b-1)*100 : 0;
+  // |b|, not b: (a/b - 1) inverts when the base is negative, turning a recovery into a red
+  // fall. Same formula that mis-reported net margin on the payments report; for a positive
+  // base — which is all of these, today — it is identical.
+  const pct = (a,b) => b ? (a-b)/Math.abs(b)*100 : 0;
   const setDelta = (id,v,suffix) => { const e=el(id); if(!e) return; const up=v>=0; e.className='delta '+(up?'up':'down'); e.textContent=(up?'\u25B2 ':'\u25BC ')+(v>=0?'+':'')+v.toFixed(1)+'%'+(suffix||''); };
   const muted = (id,txt) => { const e=el(id); if(!e) return; e.className='delta'; e.innerHTML='<span style="color:var(--mid-gray)">'+txt+'</span>'; };
   function spark(id, vals, color){

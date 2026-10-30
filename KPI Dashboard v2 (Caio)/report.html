@@ -133,9 +133,13 @@ const fmtP = n => (n==null) ? '—' : (+n).toFixed(1) + '%';
 const prevMonth = m => { let y=+m.slice(0,4), mo=+m.slice(5,7)-1; if(mo<1){mo=12;y--;} return y+'-'+String(mo).padStart(2,'0'); };
 const isoFlag = c => (c && /^[A-Za-z]{2}$/.test(c)) ? c.toUpperCase().replace(/./g, ch=>String.fromCodePoint(127397+ch.charCodeAt(0))) : '';
 
+// DIVIDE BY |prev|, NOT prev. (cur/prev - 1) inverts whenever the base is negative, so a
+// recovery out of a negative month is coloured red as though it were a collapse. Latent here
+// — these series are almost always positive — but it is the same formula that mis-reported
+// net margin on the payments report, and for a positive base |prev| changes nothing at all.
 function pctCell(cur, prev){
   if(cur==null || prev==null || prev===0) return '<td class="chg flat">—</td>';
-  const p=(cur/prev-1)*100, cls=p>0.05?'up':(p<-0.05?'down':'flat'), s=p>=0?'+':'';
+  const p=(cur-prev)/Math.abs(prev)*100, cls=p>0.05?'up':(p<-0.05?'down':'flat'), s=p>=0?'+':'';
   return '<td class="chg '+cls+'">'+s+p.toFixed(1)+'%</td>';
 }
 
