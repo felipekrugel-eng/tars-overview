@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UVJvn82259fMR1w",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no Arizona Corporation Commission registration is expected; web searches for an 'Ag Mobile' or 'AG Mobile LLC' Arizona entity returned no matching filing, and the ACC eCorp entity-search tool itself could not be loaded from this environment, so no registry record was read.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered Arizona entity is required or evidenced for this sole-proprietor merchant; the state register itself was not readable."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, map profile, chamber entry or social page places an 'Ag Mobile' mobile-mechanic business in Wickenburg, AZ; searches surfaced only templated lead-generation mobile-mechanic pages and unrelated local shops. A mobile mechanic does not require licensed physical premises, so absence of a footprint is treated as unverified rather than contradictory.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Zero independent evidence that the business operates in the stated city, though the business type does not require premises."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name does not appear on any Arizona state filing, licence record, business channel, review reply or news item found in searching; nothing publicly ties the name to a different business or to complaint or fraud reports either. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public corroboration of the representative's link to the business, and no contradicting public record."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared site www.agmobile.com could not be loaded from this environment, so its content was not inspected, and a domain-restricted search returned no indexed pages. Separately, 'AgMobile' is an established national brand for an agricultural commodity-markets app published by Barchart.com, Inc. (App Store listing loaded, live since 2014), so the declared domain may belong to an unrelated company rather than an Arizona mobile mechanic. This must be confirmed by actually loading the site before any contradiction is scored, so no points are assigned.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared website was unreachable here and the 'AgMobile' name is strongly associated with an unrelated national agriculture app brand; ownership of the domain is unresolved.",
+      "url": "https://apps.apple.com/us/app/agmobile/id886743681"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Nothing observable online shows what this merchant actually sells: no website content, listing, price page or service description was found, so MCC 7538 (automotive service shops) and the descriptor can be neither confirmed nor shown incoherent. The descriptor does match the declared business name and does not describe payment collection.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable products or services against which to test MCC and descriptor coherence."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of at least one year was found for an 'Ag Mobile' business in Wickenburg, AZ - no dated reviews, directory listings or filings - and equally no scam, complaint or fraud reports about the business or the representative.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history and no adverse history located."
+    }
+  ],
+  "evidenceNeeded": [
+    "Direct load of www.agmobile.com plus WHOIS registrant data, to establish whether the domain serves this Arizona mobile-mechanic business or the unrelated AgMobile agriculture app.",
+    "Arizona Corporation Commission eCorp or county trade-name (DBA) record for 'Ag Mobile' naming the representative.",
+    "Google Business Profile, Facebook page or Yelp listing for the business showing a Wickenburg service area and dated reviews.",
+    "Arizona transaction privilege tax (TPT) licence or Wickenburg business licence in the business name.",
+    "Proof of trading: recent invoices, service-vehicle photos or a customer-facing booking page tied to the merchant's domain."
+  ],
+  "summary": "Ag Mobile presents as an Arizona sole-proprietor mobile mechanic, but the file is almost entirely unverified: no independent listing, social page, review, filing or licence record places an 'Ag Mobile' business in Wickenburg, AZ, and the representative's name appears nowhere publicly. No contradictions were provable, so risk points total 0, but that reflects absence of evidence rather than clean verification. The main open flag is the declared URL www.agmobile.com, which could not be loaded here while 'AgMobile' is a long-established brand of Barchart.com, Inc. for an agricultural commodity-markets app - a likely domain mismatch that would move contact to a 10-point contradiction if confirmed. Recommend manual retrieval of the website and WHOIS plus an Arizona DBA/TPT check before enabling payments; the statement descriptor points cardholders at a domain the merchant may not control."
+}
