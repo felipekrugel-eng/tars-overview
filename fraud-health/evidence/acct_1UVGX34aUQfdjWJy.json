@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UVGX34aUQfdjWJy",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), so no company registration is expected. The Illinois Secretary of State business register is known to block automated access and was therefore not queried, so no assumed-name (DBA) filing for \"Saucemankeys\" or \"Malaya33\" could be checked.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registration requirement applies to a sole proprietor and the Illinois registry could not be searched by automation."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent music press places the operator in Illinois and the business has an observable product: Digital Music News (November 2022) profiles Saucemankeys as a producer born in Kankakee, IL outside Chicago, and the live site serves a catalogue of 12+ named instrumentals with tagged preview MP3s plus a 708 area-code business phone consistent with the south Chicago suburbs. Richton Park at city level was not independently confirmed.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "This is a digital-goods seller with a real, loadable product catalogue and an Illinois/Chicago-area footprint.",
+      "url": "https://www.digitalmusicnews.com/2022/11/01/saucemankeys-producer/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative does not appear on the merchant’s own site (which carries no personal byline), in the Saucemankeys artist coverage in Digital Music News or Notion Magazine, or in any licence or filing reachable without the blocked Illinois registry. Nothing found contradicts the representative, and no adverse or complaint reporting was located. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public source links or contradicts the representative as the person behind the Saucemankeys brand.",
+      "url": "https://saucemankeys.com/"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "saucemankeys.com resolves (HTTP 200, Netlify-hosted) and is a fully built \"SAUCEMANKEYS | Official Beat Store\" site, not a parked page or builder placeholder. Its contact section lists a business email matching the account email exactly, and the statement descriptor is the site’s own domain.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The website, account email and statement descriptor all belong to the same brand.",
+      "url": "https://saucemankeys.com/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5815 (digital goods: books, movies, music) is coherent with the observable business: the site sells licences to original instrumentals at a stated $100 non-exclusive lease and $1,500 exclusive price, serving 15-second tagged previews only, and the machine-readable catalogue at /beats.json lists the individual beats and their preview files. The site states checkout is not yet live (\"PayPal setup pending\"), so the sales channel is built but not yet transacting.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The merchant observably sells digital music licences, matching the declared MCC and descriptor.",
+      "url": "https://saucemankeys.com/beats.json"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Saucemankeys brand has independent third-party coverage going back more than three years: Notion Magazine published a review of the self-titled EP on 25 January 2023, and Digital Music News profiled the producer on 1 November 2022 referencing releases from \"The Art of Trap 101\" in 2020 onward. No scam, fraud or complaint reports were found for the brand, the account name or the city.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "Independent presence well over one year with no adverse reporting.",
+      "url": "https://notion.online/listen-to-saucemankeys-by-saucemankeys/"
+    }
+  ],
+  "evidenceNeeded": [
+    "Explanation of the account name \"Malaya33\", which matches nothing on the website, the brand or any public source — confirm whether it is a stage/label name or a data-entry artefact",
+    "A direct link between the representative and the Saucemankeys brand independent of Stripe’s internal check — e.g. the artist’s own BeatStars/Bandcamp/DSP profile, distributor or PRO (ASCAP/BMI) writer credits, or an Illinois assumed-name certificate",
+    "Confirmation of the Richton Park, IL address at city level; current evidence only places the operator in the Chicago area / Kankakee, IL",
+    "Expected volumes and ticket sizes: the storefront prices beats at $100 and $1,500 and still says checkout is not configured, so immediate high-volume processing would be inconsistent with the observable channel",
+    "A fulfilment and refund policy for the digital licences — the site states licence agreements are not finalised and automatic download delivery is not enabled, which is chargeback exposure for a card-not-present digital-goods seller"
+  ],
+  "summary": "Malaya33 is the Stripe account name for a real, observable digital-music business: saucemankeys.com loads as a fully built official beat store with a 12-plus track catalogue of tagged preview instrumentals, published lease ($100) and exclusive ($1,500) pricing, and a contact block whose business email matches the account email exactly and whose descriptor is the site’s own domain. The Saucemankeys brand is independently documented by Digital Music News (November 2022) and Notion Magazine (January 2023) as an Illinois producer from Kankakee outside Chicago with releases since 2020, so MCC 5815 and the descriptor are coherent and the history test is satisfied with no adverse reporting. Risk score is 0: entity type is Individual so no registration is expected, and the Illinois SOS register blocks automation and was not queried. Two residual items for the file rather than scored risk: the account name \"Malaya33\" matches nothing public and should be explained, and the storefront’s own copy says checkout is still pending with licence terms and automatic delivery not finalised — so a sudden high volume or high average ticket would be out of step with the channel observable today."
+}
