@@ -1,0 +1,73 @@
+{
+  "accountId": "acct_1UVcc75kfvmID7dX",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Texas Department of Agriculture requires every location selling or growing nursery products to hold a Nursery/Floral Certificate of Registration. TDA's official Nursery Floral licensee extract contains two current records with legal name and facility name 'MELTING POT PLANTS': certificate 0961719, county Houston, Nursery Floral Class M, expiring 2027-04-30; and certificate 1011543, county Waller, Nursery Floral Class 2 (permanent location that grows, 10 acres or less), expiring 2027-10-31. Both are unexpired. The Stripe entity type is Individual, so no Texas SOS corporate filing is expected; the required trade licence for this activity exists and is active.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "The required Texas nursery/floral trade licence exists under the exact business name and is currently active, in two classes; no corporate registration is expected for a sole proprietor.",
+      "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent government record places the business physically in the Houston metropolitan area. The TDA licensee extract lists 'MELTING POT PLANTS' with a Class 2 permanent licensed premises in Waller county and a Class M temporary-market registration recorded under Houston. Cypress, TX is an unincorporated Houston-metro community straddling the Harris/Waller county line, so the licensed premises is consistent with the declared city. TDA Class 2 is defined as a permanent location that sells and grows nursery stock, corroborating real physical premises rather than a paper-only entity. No consumer-facing footprint was found in four web searches, consistent with the merchant's statement that the retail store is still being opened.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "A state licence register independently places a permanent, growing nursery premises for this exact business name in the Houston/Waller area adjacent to the declared city.",
+      "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Stripe representative name matches the authorized official on the licence: in the TDA Nursery Floral licensee extract, both 'MELTING POT PLANTS' records (certificates 0961719 and 1011543) carry the representative as the named attention/responsible party, tying the declared representative to the licensed business on a state register. No people-search or data-broker sources were used, and no home address, date of birth, age, relatives or personal phone number was looked up or recorded. No scam, fraud or complaint reports naming the business or the representative were found.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "The representative is the named authorized official on both state nursery licences held under the exact business name.",
+      "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found: searches for the business name combined with Cypress/Houston Texas, with plant nursery terms, and with Facebook/Instagram/Etsy returned no page belonging to this merchant. The email handle matches the registered business name exactly and describes a trade (selling plants), not payment collection. The statement descriptor is the business name as filed with TDA, not a personal name or a random string.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No web contact surface exists yet, but the email handle and statement descriptor both match the state-registered trade name."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared activity is coherent with what the state licence shows the business actually does. TDA gives MELTING POT PLANTS a Class 2 registration - a permanent location that sells, leases or distributes and also grows nursery products on 10 acres or less - plus a Class M registration for selling nursery products at temporary markets such as plant or flower shows. That matches the product description of selling plants of all varieties and opening a plant retail store, and the descriptor is the trade name. MCC 0780 (landscaping and horticultural services) is defensible because the merchant grows nursery stock, but for a bricks-and-mortar plant and pottery retail store MCC 5261 is the better fit and reclassification is recommended; this is coding hygiene, not an incoherence.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "The merchant's licensed activity matches its declared product description and descriptor; MCC 0780 is horticulturally coherent but MCC 5261 is more accurate for the retail store.",
+      "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of one year or more could be established, and no adverse history was found. Searches for the business name with 'scam', 'complaint', 'review' and 'now open' returned nothing referring to this merchant, and no BBB, Trustpilot, news or review-site record exists. The only dated artefacts are the two TDA certificate expiry dates, which are forward-looking annual renewal dates and do not prove how long the business has traded. Consistent with a genuinely new or newly expanding business.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history of one year or more could be evidenced, and no scam, fraud or complaint reports exist."
+    }
+  ],
+  "evidenceNeeded": [
+    "Street address of the Cypress, TX retail premises, plus the lease or a utility bill, to reconcile the declared city against the TDA county fields (Waller for the Class 2 permanent location, Houston for the Class M registration).",
+    "Copies of TDA Nursery/Floral certificates 0961719 and 1011543 showing registered location addresses and original issue dates, to establish how long the business has been trading.",
+    "Confirmation of the expected mix between permanent retail store sales and temporary market/event sales, since the Class M registration implies event-based selling with different chargeback characteristics.",
+    "A website, Google Business Profile or social page once the retail store opens, to give an independent consumer-facing footprint.",
+    "Merchant confirmation on reclassifying the MCC from 0780 to 5261 if the primary channel is in-store retail of plants and pottery."
+  ],
+  "summary": "Melting Pot Plants verifies cleanly against the register that matters for this trade: the Texas Department of Agriculture's current Nursery/Floral licensee extract lists the exact business name twice, with an active Class 2 permanent growing location in Waller County and an active Class M temporary-market registration, both naming the Stripe representative as the authorized official. That single source carries legal, operating and identity at zero risk, and it is the right source because a Texas sole proprietor has no SOS corporate filing to find. The absence of any website, social page or review footprint would normally concern a retail shop, but it is consistent with the merchant's own statement that the store is still being opened, and is outweighed by an active state licence under the exact name; no scam, fraud or complaint reports exist. Total risk 0; the only follow-ups are operational - confirming the Cypress street address against the Waller/Houston county fields and reclassifying the MCC from 0780 to 5261."
+}
