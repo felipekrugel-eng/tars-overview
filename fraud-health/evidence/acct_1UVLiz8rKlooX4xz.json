@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVLiz8rKlooX4xz",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), for which no Ohio Secretary of State entity registration is expected, and targeted searches returned no Ohio entity named 'M & D Roadside'. PUCO confirms private towing is PUCO-regulated and Ohio intrastate for-hire tow operators need a Certificate of Public Convenience and Necessity, but PUCO's 'Search Motor Carrier Intrastate Authority' tool is an interactive OHID portal application that blocks automation, so no tow or roadside registration for this merchant could be confirmed or excluded.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registration is expected for a sole proprietor and nothing adverse was found; PUCO tow-registration status remains unresolved because the registry blocks automation.",
+      "url": "https://puco.ohio.gov/transportation/towing"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent third-party roadside provider directory (Curbside SOS) carries a listing for 'M & D Roadside' located in Akron, OH, with a stated service area along Interstates 76 and 77 and State Routes 8, 18 and 261, published hours, and a declared fleet of 2 service vehicles and 2 operators, placing the business in the stated city.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "Independent evidence that a roadside-assistance operation under this exact name is active in Akron, Ohio.",
+      "url": "https://curbsidesos.com/company/m-d-roadside"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches for the representative name in connection with Akron, Ohio and with the business returned nothing: no state filing, no licence record, no owner attribution on the Curbside SOS listing (which names no principal), no business-owned website, social page or review replies, no local news and no complaint or scam report. Nothing contradicts the declared representative either - no other named owner or member appears anywhere for this business. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "The representative could not be publicly linked to the business, and equally no conflicting principal was found."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found: the only public presence is a third-party aggregator listing with no company URL. The statement descriptor matches the trading name exactly rather than being a random string or an unrelated name, and the email handle describes a trade (towing) rather than payment collection, so no contact contradiction applies.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent contact channel exists to verify, but nothing about the descriptor or email is misleading or payment-collection-oriented."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 4789 (transportation services, not elsewhere classified) and the descriptor are coherent with what the business observably does: the Curbside SOS listing shows it performing lockouts, flat-tire changes, jump-starts and battery service on Akron-area roads at a published per-mile rate. One divergence worth noting rather than scoring: the listing states the provider handles most roadside issues except gas, tow and recovery services, whereas the Stripe product description says 'Towing and Roadside Assistance' - roadside assistance without towing still sits within MCC 4789.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The MCC, descriptor and observed service offering are consistent; the towing element of the declared description is not independently evidenced.",
+      "url": "https://curbsidesos.com/company/m-d-roadside"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence was found: the Curbside SOS listing carries no first-seen or review dates, and no Google, Yelp, Facebook or BBB profile, no BBB complaint record and no scam, fraud or ripoff report for 'M & D Roadside' surfaced in searches. Nothing negative was found, but trading history of at least one year could not be evidenced.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Neither longevity nor adverse history could be established from public sources."
+    }
+  ],
+  "evidenceNeeded": [
+    "PUCO intrastate motor carrier / towing authority: query the 'Search Motor Carrier Intrastate Authority' tool manually (OHID portal blocks automation) or contact PUCO Motor Carrier Registration for a CPCN record under 'M & D Roadside'.",
+    "Reconcile the declared product description 'Towing and Roadside Assistance' with the Curbside SOS listing that explicitly excludes tow and recovery - ask whether tow trucks are operated, since towing triggers the PUCO registration requirement.",
+    "Ask the merchant for a business website or Google Business Profile, plus proof of commercial auto / roadside liability insurance.",
+    "Ask for an Ohio vendor's licence or Summit County sole-proprietor registration, and documentation linking the representative to 'M & D Roadside' (for example an insurance certificate naming them as owner).",
+    "Confirm first date of trading and obtain customer-facing evidence of operating history (invoices, platform dispatch records)."
+  ],
+  "summary": "M & D Roadside scores 0 risk points across all six dimensions: nothing adverse was found and the business has a genuine, independently verifiable footprint. An independent roadside-provider directory places a two-vehicle, two-operator 'M & D Roadside' in Akron, Ohio performing lockout, tire, jump-start and battery work, which is coherent with MCC 4789 and the exact-match statement descriptor. The open items are gaps rather than contradictions: the representative could not be tied to the business through any public channel (identity rests on Stripe's verified status), there is no website or dated review history, and PUCO's tow-authority registry blocks automation so towing licensure could not be checked. Note also that the declared product description mentions towing while the public listing says tow and recovery are not offered - worth clarifying, since towing is what would trigger the PUCO registration requirement."
+}
