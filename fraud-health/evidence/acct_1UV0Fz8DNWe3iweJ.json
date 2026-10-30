@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UV0Fz8DNWe3iweJ",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), where no corporate registration is expected in Minnesota. The MN Secretary of State business search at mblsportal.sos.state.mn.us could not be loaded by the available tooling, so no state filing was retrieved, and a web search surfaced no MN entity or assumed-name record for \"Nest to Threads\".",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered entity was confirmed or ruled out; none is required for a sole proprietor, and the MN registry could not be loaded."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent directory listings with third-party storefront photos and posted Wed–Sat opening hours place both brands at one physical retail address, 3033 Coon Rapids Blvd, Coon Rapids, MN 55433. The declared city is Blaine, MN, an adjacent Anoka County suburb roughly five miles away, so the premises is in the stated metro but not the stated city.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "A real, independently listed physical retail premises exists in Anoka County, MN, though in Coon Rapids rather than the declared Blaine.",
+      "url": "https://www.mapquest.com/us/minnesota/nest-to-threads-boutique-marketplace-516546629"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative’s first name matches one of the two owner-operators named on the declared website’s own about page for The Refab Sisters Upcycling Studio. The page gives no surname, so the match is on first name only; nothing found contradicts the representative’s connection to the business. People-search and data-broker sites were not used.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The representative matches an owner-operator named on the business’s own about page, on a first-name basis; no contradicting link to another business or to complaint reports was found.",
+      "url": "https://www.refabsisters.com/about-us/"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared website refabsisters.com resolves and belongs to this operator. The name/domain mismatch resolves as two brands of one operator at one premises: the MapQuest listing for The Refab Sisters Upcycling Studio (3033 Coon Rapids Blvd Ste G) links refabsisters.com and shows \"Also at this address: Nest to Threads Boutique Marketplace\", whose own listing links nesttothreads.com at the same street address. The descriptor therefore matches a genuine sister brand rather than a different business, but it does not match the account name or email domain, so cardholders paying \"Nest to Threads\" will see an unrelated-looking descriptor. Note also that nesttothreads.com currently serves a WordPress \"under construction\" page and refabsisters.com retains unedited theme filler.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared site is genuine and belongs to the same operator and premises as the account name; the descriptor is a real sister brand but is mismatched to the trading name for cardholder recognition.",
+      "url": "https://www.mapquest.com/us/minnesota/the-refab-sisters-upcycling-studio-660663581"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5712 (furniture, home furnishings) is coherent with what both brands observably sell: the Refab Sisters listing and website describe transforming vintage and antique furniture into custom upcycled pieces, and the Nest to Threads listing describes a co-retail marketplace of handcrafted goods including textiles, candles, ceramics and home decor, with product photos. A card-present POS history of 260 receipts fits a staffed retail shop.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared MCC and the card-present POS pattern match an observable furniture and home-goods retail operation.",
+      "url": "https://www.mapquest.com/us/minnesota/nest-to-threads-boutique-marketplace-516546629"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent presence exceeds one year: a dated Macaroni KID Coon Rapids article of 20 December 2024 describes Nest to Threads Boutique Marketplace as an operating co-retail marketplace at 3033 Coon Rapids Blvd with space for 26 local vendors; directory listings with third-party customer photos corroborate. No scam, fraud or complaint reports about either brand or the representative were found.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "At least ~22 months of documented independent trading presence with no adverse reports.",
+      "url": "https://coonrapids.macaronikid.com/articles/6761046ad662bb45d42acbb8/win-gift-cards-to-nest-to-threads-boutique-marketplace-and-cotton-patch"
+    }
+  ],
+  "evidenceNeeded": [
+    "A surname-level link between the representative and the business (MN certificate of assumed name for \"Nest to Threads\" or \"The Refab Sisters\", or a signed owner attestation) — the about page gives first names only",
+    "A loaded MN Secretary of State record for \"Nest to Threads\" and \"The Refab Sisters\"; the registry could not be reached by automation and should be checked manually, including whether the account should be a company rather than an Individual",
+    "Explanation of why the declared address city is Blaine, MN while every independent listing places the premises in Coon Rapids, MN",
+    "Confirmation that the shop is still trading: last POS sale was 271 days ago, the Loyverse subscription is cancelled, and nesttothreads.com is serving an \"under construction\" page",
+    "A declared product description, and confirmation that the statement descriptor is what \"Nest to Threads\" cardholders will recognise, or a descriptor change"
+  ],
+  "summary": "The name/domain/descriptor mismatch resolves benignly: \"Nest to Threads Boutique Marketplace\" and \"The Refab Sisters Upcycling Studio\" (the declared site and descriptor) are two brands of one operator trading from the same premises at 3033 Coon Rapids Blvd, Coon Rapids, MN, with each MapQuest listing explicitly cross-referencing the other as also at that address. The Refab Sisters about page names the operators by first name, matching the representative, and MCC 5712 is coherent with an upcycled-furniture and home-goods shop supported by 260 card-present POS receipts; independent presence is documented back to at least December 2024 with no adverse reports. Total risk score is 0, but two non-scoring issues should be worked before payouts: the declared city is Blaine while every independent source places the shop in Coon Rapids, and the account looks dormant — no POS sale in 271 days, subscription cancelled, and the nesttothreads.com site now a placeholder. Identity rests on a first-name match plus Stripe’s own verification, so a surname-level link and a trading-status confirmation are the two pieces worth collecting."
+}
