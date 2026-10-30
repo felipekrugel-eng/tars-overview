@@ -1,0 +1,73 @@
+{
+  "accountId": "acct_1UVi6Z4abGVAnPPv",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Tennessee Secretary of State business entity search (TNBEAR) could not be loaded by the available tooling - the registry is an interactive form-based application and no entity record page was retrievable, so blocked automation. No official state filing for 'Neighbors for Native Plants' / 'Neighbors 4 Native Plants' was confirmed either way, and the IRS Tax Exempt Organization Search is likewise a JavaScript application that could not be loaded. Nonprofit registration and 501(c)(3) status remain unconfirmed against any primary registry.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "Registration status unknown; registry not reachable via automation, so no risk points assigned."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent local news coverage from WSMV (NBC Nashville) describes 'the Nashville nonprofit Neighbors 4 Native Plants' holding its fall pollinator-kit sale and quotes a co-founder; the Wild Ones Middle Tennessee chapter separately hosted the organisation's founders as speakers and states they are based in East Nashville. Two independent sources place the organisation in Nashville, TN as stated.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "Organisation observably operates in the stated city (Nashville, TN).",
+      "url": "https://www.wsmv.com/2024/09/13/nashville-non-profit-hold-native-plant-sale/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative is publicly named as a co-founder of this organisation: a February 2025 article hosted by Pollinator Partnership is bylined as by the co-founder of Neighbors for Native Plants under the surname on the account, WSMV quotes the same surname as co-founder of Neighbors 4 Native Plants, and the Wild Ones Middle Tennessee chapter page names the same person as a founder. The declared first name appears to be a short form of the published given name; that spelling variance is unresolved and is listed in evidenceNeeded. No conflicting business, other city or state, or complaint/fraud report was found for this name. No people-search or data-broker sources were used.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "Representative matches a publicly named co-founder/officer of this organisation in Nashville.",
+      "url": "https://pollinator.org/pollinator.org/assets/globals/Neighbors-for-Native-Plants-February-2025.pdf"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared website www.neighbors4nativeplants.org could not be loaded - the fetch was refused and a site-restricted search returned no indexed pages from that domain - so the site's content, ownership and contact details could not be inspected. The organisation's own February 2025 account confirms it created a website, and local news directs buyers to a third-party ticketing/sales page, but that page returned no content either. The statement descriptor is a faithful rendering of the trading name, and the email handle matches the trade rather than payment collection.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-30",
+      "establishes": "Declared website could not be loaded; descriptor and email handle are coherent with the organisation name."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5261 (nurseries, lawn and garden supply) is coherent with observed activity: the organisation researches region-appropriate species and assembles and sells native plant pollinator kits to households, having moved roughly 13,500 plants into the Nashville area by end of 2024, with twice-yearly seasonal sales reported by WSMV. The statement descriptor matches the organisation name and describes the trade rather than payment collection.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "MCC and descriptor are coherent with the organisation's observable product (native plant kits sold to consumers).",
+      "url": "https://pollinator.org/pollinator.org/assets/globals/Neighbors-for-Native-Plants-February-2025.pdf"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent dated presence spans well over a year: WSMV covered an East Nashville native plant sale in August 2023 and a further nonprofit plant sale in September 2024; the Wild Ones Middle Tennessee chapter published a February 2024 meeting listing featuring the founders; and Pollinator Partnership published a February 2025 piece on the organisation. No scam, complaint or fraud reports were found under either name variant.",
+      "sourceType": "news",
+      "checkedAt": "2026-10-30",
+      "establishes": "Continuous independent public footprint from 2023 through 2025, no adverse reports.",
+      "url": "https://middletennessee.wildones.org/2024/02/02/neighbors-for-native-plants/"
+    }
+  ],
+  "evidenceNeeded": [
+    "Tennessee Secretary of State entity record (control number, charter date, status, registered agent) for 'Neighbors for Native Plants' or 'Neighbors 4 Native Plants' - manual TNBEAR lookup required, automation blocked.",
+    "IRS Tax Exempt Organization Search confirmation of 501(c)(3) determination and EIN.",
+    "Tennessee charitable solicitation registration (Division of Charitable Solicitations) if the entity solicits donations.",
+    "A loadable copy of www.neighbors4nativeplants.org showing organisation name, Nashville contact details and the plant-kit offering.",
+    "Reconciliation of the declared representative first name against the publicly documented given name on the organisation's own published article (ID document or board/officer listing)."
+  ],
+  "summary": "Neighbors for Native Plants is a genuine, well-documented Nashville grassroots nonprofit that assembles and sells native plant pollinator kits, with independent coverage from WSMV (2023 and 2024), the Wild Ones Middle Tennessee chapter (2024) and Pollinator Partnership (2025) placing it in East Nashville and confirming a real, observable product. MCC 5261 and the statement descriptor are fully coherent with that activity, and the declared representative matches a publicly named co-founder in both the organisation's own published account and local news, with no adverse reports found. Two gaps remain and are tooling gaps rather than red flags: the Tennessee Secretary of State entity search and the IRS Tax Exempt Organization Search could not be loaded, so the Non-profit entity type and any 501(c)(3) status are unconfirmed against a primary registry, and the declared website would not load. Total risk 0; recommend a manual TNBEAR and IRS TEOS lookup plus a browser check of the declared domain before clearing, but nothing observed contradicts the merchant's declarations."
+}
