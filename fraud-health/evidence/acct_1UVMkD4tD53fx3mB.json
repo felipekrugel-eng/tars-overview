@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVMkD4tD53fx3mB",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no North Carolina corporate registration is expected. The NC Secretary of State business registration search was loaded and its own notice states the online search tools are for interactive real-time use and that automated or scripted searches are not permitted, so the name, officer and assumed-name indexes could not be queried programmatically; no entity named 'Equipment Tech' in NC was confirmed or excluded.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registration is required for an individual; the NC registry blocks automated search, so legal standing is neither confirmed nor contradicted.",
+      "url": "https://www.sosnc.gov/online_services/search"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "MCC 5533 (automotive parts and accessories store) is a trade normally run from physical premises, but no independent footprint places 'Equipment Tech' in Raleigh NC. A directory of Auto Parts & Supplies businesses in Raleigh NC (68 listed businesses) contains no entry for this merchant, and five targeted web searches (business name plus Raleigh/NC, Yelp/BBB, Facebook, the Instagram handle, the email domain) returned no Google Business, Yelp, BBB, Facebook or directory listing for it. The declared Instagram profile could not be loaded (Instagram blocks automated fetching), so any Raleigh location shown on it is unconfirmed.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "A physical-premises retail trade with zero independent evidence of operating in the stated city.",
+      "url": "https://reviews.birdeye.com/d/auto-parts-supplies/raleigh-nc"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name was not found on any NC Secretary of State filing (the registry is interactive-only and blocks automation), on any licence record, on any business-owned channel, or in local news; a name-plus-Raleigh business search returned only unrelated individuals with no link to this merchant. No scam, complaint or fraud report naming this business or this representative was found, so nothing contradicts the declared identity. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Representative name has no public tie to this business either way; reliance rests on Stripe's own verification."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No working website was confirmed. The declared 'website' is a social profile (an Instagram handle) which could not be fetched - Instagram blocks automated fetching - and a site-restricted search and a handle search both returned zero results for it. The email domain equipmenttech.net could not be loaded and a verbatim web search for it returned no page, index entry or mention anywhere, so it is unconfirmed whether it resolves or belongs to this business. The statement descriptor reproduces the declared social URL rather than the business name, which is weak but is not a fictitious or random-string descriptor.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Neither declared contact channel could be loaded or corroborated; contact details remain unproven rather than disproven."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "There is no product description on file and no observable product, price list, inventory, storefront or service page anywhere public, so MCC 5533 (automotive parts and accessories) could be neither confirmed nor contradicted. The business name and the Instagram handle suffix '_power' hint at power or outdoor equipment rather than automotive parts retail, which would be an MCC mismatch, but no loaded source shows what the merchant actually sells, so no contradiction is scored.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Nothing observable to test MCC/descriptor coherence against; possible equipment-versus-auto-parts MCC drift is unresolved."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any age was found: no reviews, no directory listing, no registry filing, no news mention and no archived web presence for the business name in Raleigh NC, for equipmenttech.net or for the declared Instagram handle. Equally, no scam, complaint or fraud report about the business or the representative was found.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No evidence of trading for one year or more, and no adverse history either."
+    }
+  ],
+  "evidenceNeeded": [
+    "Screenshot or export of the declared Instagram profile showing business name, Raleigh NC location, contact details and dated post history (automated fetching is blocked; collect manually or ask the merchant).",
+    "Proof that equipmenttech.net resolves and belongs to this business: live screenshot of the homepage plus domain registration/creation date.",
+    "Merchant-supplied product description and photos of actual inventory or storefront, to confirm whether the trade is automotive parts (MCC 5533) or power/outdoor equipment (possible reclassification).",
+    "NC Secretary of State Assumed Name certificate for 'Equipment Tech' filed in Wake County, or confirmation the sole proprietor trades under the representative's own name.",
+    "Business address in Raleigh plus a utility bill, lease or signage photo, and a business phone listing, to establish physical premises.",
+    "Correction of the statement descriptor, which should carry the business name rather than an Instagram URL, to reduce chargeback risk."
+  ],
+  "summary": "Equipment Tech has effectively no verifiable public footprint. The declared 'website' is an Instagram handle that could not be loaded and does not surface in any search, while the email domain equipmenttech.net returned no search presence at all, so neither declared channel corroborates the business. For an MCC 5533 auto-parts trade in Raleigh NC, the complete absence from the Raleigh auto parts directory and from Google/Yelp/BBB/Facebook results is the main risk signal, scored as a 10-point operating contradiction. Nothing adverse was found - no scam or complaint reports, no conflicting business tie for the representative - and as a sole proprietor no state registration is expected, with the NC registry blocking automated search in any case. Recommend holding for merchant-supplied evidence: live Instagram/website proof, product and premises evidence, and a descriptor change to the business name."
+}
