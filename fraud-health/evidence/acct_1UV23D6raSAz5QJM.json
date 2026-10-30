@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UV23D6raSAz5QJM",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), so no state entity registration is expected in Utah. Utah has no Secretary of State; the Division of Corporations Business Entity Search at secure.utah.gov/bes/ loaded only as an empty JavaScript shell with no server-rendered results, so no name or principal lookup could be completed by automation.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered entity is expected for a sole proprietor; the Utah registry could not be queried programmatically, so the absence of a filing is not evidence either way.",
+      "url": "https://secure.utah.gov/bes/"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Home organizing and holiday decorating is a service business that does not require licensed physical premises. Searches across web, Thumbtack, HomeAdvisor, Angi, Care.com, BBB organizing-services directories and Box Elder County listings returned no listing, social page or directory entry for \"Clean and Collected\" in Brigham City or anywhere in Utah; the only near-name matches were unrelated firms.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent listing places the business in Brigham City, UT; as a service business this carries no risk points under the rubric."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative was not found on any state filing, licence record, business channel, review reply or news item; the Utah Business Entity Search and Registered Principal Search could not be queried by automation. The account email handle is consistent with the representative and the statement descriptor is the business name rather than a different personal name, so nothing contradicts the declared identity. People-search and data-broker sites were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public source links the representative to the business, and no public source contradicts the link either."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found. The business name and the email handle describe a cleaning/organizing trade, not payment collection, so the no-website contradiction rule does not apply. The \"HHM\" token in the statement descriptor could not be mapped to any franchise, brand or Brigham City business and remains unexplained, but the descriptor is not a random string since it carries the business name in full.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No website exists to verify; the descriptor carries the business name, and the unexplained \"HHM\" suffix is an open question rather than a contradiction."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 7299 (other personal services) is a coherent classification for a declared home-organizing and Christmas-decor service, and the descriptor carries the business name, but no public source was found showing what this business actually does, so coherence could not be confirmed against observed activity. Only 2 POS receipts historically, last sale 2026-01-01 — consistent with seasonal work but too thin to corroborate.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "MCC and descriptor are internally plausible for the declared trade, but no observable evidence of the business model exists to verify or contradict it."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, directory listings, social posts, filings or news establishing any public presence for \"Clean and Collected\" were found, so no trading history of any length could be evidenced. Searches for scam, fraud or consumer-complaint reports naming the business or its representative returned nothing.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent presence of any age was found, and no adverse or complaint record exists against the business or its owner."
+    }
+  ],
+  "evidenceNeeded": [
+    "A manual browser query of the Utah Business Entity Search (secure.utah.gov/bes/) and Registered Principal Search (secure.utah.gov/rps/) for \"Clean and Collected\" and for the representative; both are JavaScript-only and cannot be queried by automation",
+    "A Brigham City business licence check to confirm a licensed sole proprietor at the stated address",
+    "An explanation from the merchant of the \"HHM\" element in the statement descriptor; it maps to no franchise, brand or Brigham City business found in search",
+    "Any customer-facing channel (Instagram/Facebook business page, Google Business Profile, Thumbtack or Nextdoor profile, or a price list) showing the organizing and Christmas-decor services and naming the owner",
+    "Two or three sample paid invoices or customer receipts tied to the historical POS sales, to confirm the stated service is what is actually charged for"
+  ],
+  "summary": "Clean and Collected is a declared sole-proprietor home-organizing and Christmas-decor service in Brigham City, UT, with no discoverable public footprint at all across roughly a dozen searches: no website, no social or directory listing, no reviews, no BBB or Thumbtack/HomeAdvisor/Angi entry, no local news mention. Under the rubric this scores 0 on every dimension — a service business is not expected to have licensed premises, a sole proprietor is not expected to hold a state registration, and the Utah registry is a JavaScript-only tool whose silence proves nothing. Nothing contradicts the merchant either: the email handle matches the representative, the descriptor carries the real business name, the MCC fits the declared trade, and no scam or complaint record was found. The residual concerns are thinness rather than conflict — zero independent corroboration, only 2 lifetime POS receipts with the last on 2026-01-01, and the unexplained \"HHM\" suffix in the descriptor."
+}
