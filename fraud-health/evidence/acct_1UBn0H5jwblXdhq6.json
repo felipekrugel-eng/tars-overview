@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UBn0H5jwblXdhq6",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Stripe entity type is Individual (sole proprietor), so no corporate registration is expected. The California Secretary of State bizfile business search blocked automation (POST/JS-only endpoint, not retrievable), and no California entity or fictitious-business-name record for 'Dolphin Bay Yacht Club' was surfaced by open-web search. A San Diego County food-facility permit, which a restaurant and market would require, was also not found, but the county database at sdfoodinfo.org could not be loaded, so this is recorded as unverified rather than a contradiction.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "No registered-entity or licence record could be confirmed or excluded; sole-proprietor status means no registration is expected."
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The merchant is declared as a restaurant and market, a business type that needs licensed physical premises, yet it has no independent footprint in San Diego at all: three separate name searches returned no Yelp, Google, Facebook, OpenTable, marina-directory or news listing for 'Dolphin Bay Yacht Club' anywhere in California, and the Port of San Diego's own waterfront dining directory (loaded) lists Bali Hai, The Fish Market/Top of the Market, Humphrey's, Island Prime/C Level, Tom Ham's Lighthouse and Galley at the Marina, with no Dolphin Bay Yacht Club among San Diego Bay dining or club venues.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable physical premises or independent listing places this restaurant/market in San Diego.",
+      "url": "https://www.portofsandiego.org/stories/plan-your-visit/dining-experiences-waterfront-views"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No public source links the representative to Dolphin Bay Yacht Club in San Diego: the name appears on no California filing, licence record, business channel, review reply or news item. The statement descriptor is the representative's own name, so the descriptor-mismatch trigger does not fire. A boat-charter business in Sayulita, Mexico whose brand echoes the account email handle names only a first name on its public listing, which is too weak to establish a tie to a different business and has not been scored; it is recorded in evidenceNeeded as a manual follow-up. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public corroboration or contradiction of the representative's link to the declared business."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found. The email handle and the business name do not describe payment collection, and the statement descriptor is a personal name rather than a random string, so no contact contradiction is established; there is simply no verifiable web contact point for this merchant.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No website or verifiable contact channel exists for the declared business."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5812 (eating places) and the description 'Restaurant and market. Charged at point of sale' are internally plausible, but no page anywhere shows a menu, premises, product or any other observable output of this business, so coherence between the declared MCC and real activity could not be tested. Recorded as unverified rather than a contradiction because nothing loaded conflicts with the declared model.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable activity against which to test MCC and descriptor coherence."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any kind was found for Dolphin Bay Yacht Club - no reviews, listings, filings, news or complaint/scam reports under that name, in San Diego or elsewhere - so neither an established trading history nor adverse history can be established.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No trading history, and no adverse reports, can be confirmed for the business."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual search of California Secretary of State bizfile (bizfileonline.sos.ca.gov) and the San Diego County Recorder fictitious business name index for 'Dolphin Bay Yacht Club'.",
+    "Manual lookup in San Diego County DEH food facility records (sdfoodinfo.org) and City of San Diego business tax certificate records - a restaurant and market cannot legally operate without a health permit and business tax certificate.",
+    "Request from the merchant: trading address, photos of the premises and POS terminal, a current health permit and business tax certificate, and supplier or lease documentation.",
+    "Manual follow-up on the account email handle, which matches the brand of a boat-charter operator in Sayulita, Mexico whose public listing names only a first name; confirm whether the representative is that operator and, if so, why a charter business is onboarding as a San Diego restaurant under MCC 5812.",
+    "Check Stripe-side signals: IP/device geolocation versus the declared San Diego address, and whether settlement activity looks card-present as claimed."
+  ],
+  "summary": "Dolphin Bay Yacht Club has no verifiable existence as a San Diego restaurant and market: three name searches and the Port of San Diego's own waterfront dining directory return nothing, and no registry, licence, listing, review or news record places the business in California. That missing operating footprint is the single scored contradiction (10 points); legal, identity, contact, business model and history are all unverified at 0 rather than clean, because the California registry and the county food-permit database both blocked automation. Stripe reports legal_entity_verification_status 'verified', so identity documents and bank ownership have been checked by Stripe, but that speaks only to the individual, not to the existence of the declared restaurant. A separate manual lead is noted: the account email handle matches the brand of a boat-charter business in Sayulita, Mexico - a different trade in another country - which should be reconciled before card-present processing is enabled."
+}
