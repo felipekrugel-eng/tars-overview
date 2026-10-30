@@ -1,0 +1,75 @@
+{
+  "accountId": "acct_1UVu1l6V5wsssdWu",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Texas Comptroller taxable-entity search and the TDLR public licence search are interactive query forms that could not be retrieved by automation from this environment, so neither the state registration record nor the cosmetology/beauty-salon establishment licence could be confirmed directly - blocked automation. A third-party NAICS business directory that did load lists 'SALON KENDALL LP', a Texas Limited Liability Partnership at 320 Longmire Rd, Conroe, TX 77304, NAICS 812990, which is consistent with the declared Company entity type and TX location but is not a state register and is not scored as a registry match.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "A Texas limited liability partnership trading as Salon Kendall exists at the Conroe address per a business directory, but neither state registration status nor the required TDLR salon licence could be confirmed because both registries blocked automated search.",
+      "url": "https://naicslist.com/company-profile/salon-kendall-lp-conroe-tx-77304"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent listings place both halves of the declared trading name at one physical address in the stated city: a MapQuest listing (Yelp/Infogroup/Foursquare data) shows 'Salon Kendall' at 320 Longmire Rd, Conroe, TX 77304 with 46 Yelp reviews and staffed Monday-Saturday opening hours, and lists 'Cha Cha's' at the same address under 'Also at this address'. WeddingWire independently lists Salon Kendall at 320 Longmire Road, Conroe, TX 77304. This is a real, staffed physical salon-plus-boutique footprint in Conroe, TX.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The merchant operates an observable physical premises in Conroe, Texas, matching the declared city and state, with the salon and the boutique co-located.",
+      "url": "https://phoenix.aws.mapquest.com/us/texas/salon-kendall-305829679"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The business's own profile text on the Salon Kendall listing names the owner by the representative's first name and surname, stating she has 25 years of experience, opened her first salon in 1992, expanded to Salon Kendall in 1998, and that the Conroe location is her fourth salon and the third in partnership with her husband. That matches the Stripe representative as owner of this specific business, with a single-letter surname spelling difference between the account and the listing that should be reconciled against the identity document. The earlier salons referenced are described as this same owner's prior locations, not an unrelated business, and no scam, complaint or fraud report was found against the name. No people-search or data-broker source was used and no personal data was recorded.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The representative appears as the named owner on the business's own published profile, subject to confirming the surname spelling.",
+      "url": "https://phoenix.aws.mapquest.com/us/texas/salon-kendall-305829679"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared domain is tied to this business by two independent listing records that were loaded: the MapQuest record for Salon Kendall at 320 Longmire Rd, Conroe TX carries the website link https://www.salonkendall.com/, and the MapQuest record for Cha Cha's at the same address carries a link to a contact page on the same domain. The statement descriptor is the business's own domain rather than a random string, and the business phone number is consistent across MapQuest, Fresha and WeddingWire. Caveat: the declared page www.salonkendall.com/store could not itself be fetched from this environment, so the live content and checkout of the /store path were not inspected.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared website domain and the statement descriptor both belong to this merchant per independent listings; the live /store page remains uninspected.",
+      "url": "https://phoenix.aws.mapquest.com/us/texas/cha-chas-305829678"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5999 (miscellaneous and specialty retail) is coherent with what the business observably does. The Cha Cha's listing is reviewed as a retail apparel and accessories boutique - described by reviewers as a store for seasonal fashions, reasonably priced, with jewellery - operating inside the same premises as Salon Kendall, which supplies hair services. A salon with a co-located clothing and jewellery boutique selling retail goods under 5999 is plausible, and the descriptor matches the trading name. Nothing in the name or description describes payment collection itself.",
+      "sourceType": "review-site",
+      "checkedAt": "2026-10-30",
+      "establishes": "Observable retail activity (apparel, jewellery, accessories) at the boutique supports the declared MCC 5999 and the statement descriptor.",
+      "url": "https://phoenix.aws.mapquest.com/us/texas/cha-chas-305829678"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent dated presence far exceeds one year. WeddingWire carries a dated customer review from 07/10/2018 for Salon Kendall at 320 Longmire Road, Conroe TX, and MapQuest-syndicated Yelp reviews for Salon Kendall are dated from nine years ago through two years ago, while Cha Cha's Yelp reviews are dated 12 to 15 years ago. The owner profile states Salon Kendall was established in 1998. No scam or fraud reports were found; the only negative material is ordinary service-quality customer reviews.",
+      "sourceType": "review-site",
+      "checkedAt": "2026-10-30",
+      "establishes": "Continuous independent public presence for well over a decade with no fraud or scam reporting.",
+      "url": "https://www.weddingwire.com/biz/salon-kendall-conroe/34192f8bfaddd2a4.html"
+    }
+  ],
+  "evidenceNeeded": [
+    "Texas Comptroller taxable entity / Texas SOS record for 'Salon Kendall LP' (or the exact filed legal name) confirming active status, taxpayer number and registered agent - the search form blocked automation and must be run manually.",
+    "TDLR Beauty Salon establishment licence number for 320 Longmire Rd, Conroe TX 77304, with current status and expiry - the TDLR public licence search blocked automation.",
+    "Confirmation of the representative surname spelling: the Stripe account and the business's published owner profile differ by one letter.",
+    "Live capture of www.salonkendall.com/store showing the e-commerce catalogue and checkout, since MCC 5999 and the descriptor point to online retail that was not directly inspected.",
+    "Confirmation that the Stripe entity type 'Company' matches the registered form (the directory indicates a Limited Liability Partnership) and that bank account ownership matches that filed entity."
+  ],
+  "summary": "Salon Kendall / Cha Cha's Boutique is a long-established, physically present salon-and-boutique at 320 Longmire Rd, Conroe, TX 77304, corroborated by MapQuest/Yelp and WeddingWire listings with dated reviews going back 12 to 15 years and an owner profile stating the salon was founded in 1998. The declared domain salonkendall.com is linked from both the salon and the boutique listings and matches the statement descriptor, and the boutique's reviews describe apparel and jewellery retail, coherent with MCC 5999. The representative is named as owner on the business's own published profile, though the surname is spelled one letter differently there, which should be reconciled against the ID document. Total risk 0: the only open items are registry confirmations - the Texas Comptroller taxable entity search and the TDLR salon licence search both block automation and must be run manually before the file is closed."
+}
