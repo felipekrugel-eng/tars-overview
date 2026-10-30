@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UVLnT5p9kmRZKfQ",
+  "reviewedAt": "2026-10-30",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "A Michigan LARA / Corporations Division entity lookup could not be completed: LARA retired the old COFS Business Entity Search in June 2025 and the replacement MiBusiness Registry Portal search could not be loaded by this tooling - blocked automation - so no registration status for 'Grand Detroit transportation LLC' was confirmed either way. An open-web name search for the exact entity in Michigan returned no matching LLC (only unrelated carriers), and no City of Detroit or Michigan taxi/limousine licence record was found under this name.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-30",
+      "establishes": "Legal existence and good standing of the LLC are unconfirmed; the state registry itself was unreachable, so absence of registration is not established."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, map entry, social page, directory record or review profile places 'Grand Detroit transportation LLC' in Sterling Heights, MI or anywhere in Metro Detroit; searches of local taxi/limo directories for Sterling Heights surfaced only unrelated operators. A taxi/limousine operator does not require licensed public premises, so no footprint is treated as unverified rather than contradictory.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No independent evidence of an operating presence under the declared trading name in the declared city."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative name was not found on any state filing, licence record, business website, owner review reply, local news item or complaint report connected to this business or to any Metro Detroit transportation company; no people-search or data-broker sources were used and no personal data was collected. Nothing found contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "No public confirmation or contradiction of the representative's link to the business."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The declared URL and statement descriptor (checkerdetroit.com / CHECKERDETROIT.COM) belong to a different, long-established operator: Checker Transportation (Checker Cab Detroit), 6420 East Lafayette, Detroit MI, trading in Detroit since 1921, whose official website is listed as https://www.checkerdetroit.com/ with booking, driver-recruitment and fleet pages on that domain. Nothing ties checkerdetroit.com to 'Grand Detroit transportation LLC' of Sterling Heights, so cardholders would see a third party's brand on their statements.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "The declared website and statement descriptor belong to a different business than the applicant.",
+      "url": "https://visitdetroit.com/directory/checker-transportation/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 4121 (taxicabs and limousines) is coherent with the declared domain's line of business, but the only observable taxi operation behind checkerdetroit.com is Checker Transportation of Detroit, not the applicant; there is no observable product, fleet, booking channel or service offering attributable to 'Grand Detroit transportation LLC', and no product description was supplied. The model as declared therefore rests entirely on another company's visible operation.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-30",
+      "establishes": "No observable trading activity of the applicant itself; the MCC/descriptor coherence derives from a third party's business.",
+      "url": "https://visitdetroit.com/directory/checker-transportation/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence (reviews, listings, filings, news) was found for 'Grand Detroit transportation LLC' at any age; equally, no scam, fraud or complaint reports were found about the business or the named representative. The one-year-plus history evidence found online relates to Checker Transportation of Detroit, a different operator.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-30",
+      "establishes": "Trading history of the applicant is unestablished; no adverse reports found."
+    }
+  ],
+  "evidenceNeeded": [
+    "Michigan LARA / MiBusiness Registry Portal entity record for 'Grand Detroit transportation LLC' showing status, formation date, registered office and member/manager or resident agent (manual lookup required - the portal blocked automation).",
+    "Signed written authorisation from Checker Transportation / Checker Cab Detroit permitting use of checkerdetroit.com and the CHECKERDETROIT.COM descriptor, or a corrected descriptor and a website owned by the applicant.",
+    "City of Detroit and/or Michigan vehicle-for-hire or limousine carrier authority in the LLC's name, with licence number and expiry.",
+    "Proof the representative is a member or manager of the LLC (filed Articles of Organization or annual statement).",
+    "Evidence of actual operations: vehicle registrations, driver roster, booking channel, insurance certificate, or three months of prior processing statements in the LLC's name.",
+    "Business bank account statement showing the account name matches the registered LLC."
+  ],
+  "summary": "Grand Detroit transportation LLC (Sterling Heights, MI; MCC 4121) has essentially no verifiable public footprint of its own: no state registry record could be retrieved because LARA's MiBusiness Registry Portal replaced COFS in June 2025 and blocked automated access, and open-web searching found no matching Michigan LLC, no licence, no listing, no reviews and no trace of the representative. The material red flag is the declared URL and statement descriptor: checkerdetroit.com is the official website of Checker Transportation (Checker Cab Detroit), an unrelated operator trading in Detroit since 1921, so the applicant is presenting a third party's brand to cardholders - a classic setup for descriptor-mismatch disputes or brand misuse. Total risk 17, driven by the contact dimension; legal, identity, operating and history are unresolved rather than clean, so true risk may be higher. Recommend holding payouts pending a manual LARA lookup, a licence check, and written proof of the right to use the Checker Detroit domain and descriptor."
+}
