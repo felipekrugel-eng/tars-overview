@@ -4,21 +4,21 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-28 Europe/London",
   "cohortDate": "2026-10-28",
-  "reviewedAt": "2026-10-29T00:27:42+00:00",
+  "reviewedAt": "2026-10-30T09:36:49+00:00",
   "count": 9,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-29T00:27:42+00:00",
+ "reviewedAt": "2026-10-30T09:36:49+00:00",
  "merchants": [
   {
    "id": "acct_1UBn0H5jwblXdhq6",
    "accountId": "acct_1UBn0H5jwblXdhq6",
    "merchantId": "3939524",
    "name": "Dolphin Bay Yacht Club",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -34,28 +34,41 @@
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no corporate registration is expected. The California Secretary of State bizfile business search blocked automation (POST/JS-only endpoint, not retrievable), and no California entity or fictitious-business-name record for 'Dolphin Bay Yacht Club' was surfaced by open-web search. A San Diego County food-facility permit, which a restaurant and market would require, was also not found, but the county database at sdfoodinfo.org could not be loaded, so this is recorded as unverified rather than a contradiction.",
+    "No public source links the representative to Dolphin Bay Yacht Club in San Diego: the name appears on no California filing, licence record, business channel, review reply or news item. The statement descriptor is the representative's own name, so the descriptor-mismatch trigger does not fire. A boat-charter business in Sayulita, Mexico whose brand echoes the account email handle names only a first name on its public listing, which is too weak to establish a tie to a different business and has not been scored; it is recorded in evidenceNeeded as a manual follow-up. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website was declared and none was found. The email handle and the business name do not describe payment collection, and the statement descriptor is a personal name rather than a random string, so no contact contradiction is established; there is simply no verifiable web contact point for this merchant.",
+    "MCC 5812 (eating places) and the description 'Restaurant and market. Charged at point of sale' are internally plausible, but no page anywhere shows a menu, premises, product or any other observable output of this business, so coherence between the declared MCC and real activity could not be tested. Recorded as unverified rather than a contradiction because nothing loaded conflicts with the declared model.",
+    "No dated independent presence of any kind was found for Dolphin Bay Yacht Club - no reviews, listings, filings, news or complaint/scam reports under that name, in San Diego or elsewhere - so neither an established trading history nor adverse history can be established."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The merchant is declared as a restaurant and market, a business type that needs licensed physical premises, yet it has no independent footprint in San Diego at all: three separate name searches returned no Yelp, Google, Facebook, OpenTable, marina-directory or news listing for 'Dolphin Bay Yacht Club' anywhere in California, and the Port of San Diego's own waterfront dining directory (loaded) lists Bali Hai, The Fish Market/Top of the Market, Humphrey's, Island Prime/C Level, Tom Ham's Lighthouse and Galley at the Marina, with no Dolphin Bay Yacht Club among San Diego Bay dining or club venues. [https://www.portofsandiego.org/stories/plan-your-visit/dining-experiences-waterfront-views]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual search of California Secretary of State bizfile (bizfileonline.sos.ca.gov) and the San Diego County Recorder fictitious business name index for 'Dolphin Bay Yacht Club'.",
+    "Manual lookup in San Diego County DEH food facility records (sdfoodinfo.org) and City of San Diego business tax certificate records - a restaurant and market cannot legally operate without a health permit and business tax certificate.",
+    "Request from the merchant: trading address, photos of the premises and POS terminal, a current health permit and business tax certificate, and supplier or lease documentation.",
+    "Manual follow-up on the account email handle, which matches the brand of a boat-charter operator in Sayulita, Mexico whose public listing names only a first name; confirm whether the representative is that operator and, if so, why a charter business is onboarding as a San Diego restaurant under MCC 5812.",
+    "Check Stripe-side signals: IP/device geolocation versus the declared San Diego address, and whether settlement activity looks card-present as claimed."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.portofsandiego.org/stories/plan-your-visit/dining-experiences-waterfront-views",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "No observable physical premises or independent listing places this restaurant/market in San Diego.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Dolphin Bay Yacht Club has no verifiable existence as a San Diego restaurant and market: three name searches and the Port of San Diego's own waterfront dining directory return nothing, and no registry, licence, listing, review or news record places the business in California. That missing operating footprint is the single scored contradiction (10 points); legal, identity, contact, business model and history are all unverified at 0 rather than clean, because the California registry and the county food-permit database both blocked automation. Stripe reports legal_entity_verification_status 'verified', so identity documents and bank ownership have been checked by Stripe, but that speaks only to the individual, not to the existence of the declared restaurant. A separate manual lead is noted: the account email handle matches the brand of a boat-charter business in Sayulita, Mexico - a different trade in another country - which should be reconciled before card-present processing is enabled.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T20:18:56+00:00",
    "enabledWindowStart": "2026-10-28T14:00:59+00:00",
    "enabledWindowEnd": "2026-10-28T20:18:56+00:00",
@@ -77,8 +90,8 @@
    "successfulTransactions": 3,
    "hasTransacted": true,
    "lastTransactedAt": "2025-09-01",
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -87,10 +100,10 @@
    "accountId": "acct_1UVJpY68GeGVdXiI",
    "merchantId": "5375379",
    "name": "Big Fight Figures",
-   "score": 0,
+   "score": 15,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 15,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -106,28 +119,33 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no Rhode Island state entity registration is expected and none is required for this trade; the Rhode Island Secretary of State corporate search blocked automation (the ASPX form could not be loaded), so no registry record was checked either way.",
+    "The representative name does not appear on any business channel, listing, licence record, local news item or complaint report found in searching, and nothing publicly ties that name to a different business, city or state; the statement descriptor is the business name rather than a personal name, so there is no descriptor mismatch. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No URL was declared and no website for this business could be found; the email handle matches the business name and describes a trade (wrestling figures), not payment collection, and the statement descriptor matches the business name rather than being a random string.",
+    "MCC 5399 (miscellaneous general merchandise) and the descriptor are facially consistent with the declared trade of manufacturing and selling wrestling toys and merchandise, and nothing in the name or description describes payment collection; however no page showing what the business actually does could be found, so coherence could not be confirmed against any observable activity.",
+    "No dated reviews, listings, filings, news items or social posts of any age were found for the business or for the representative in connection with it, and no scam, complaint or fraud reports about the business or the owner were found either."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "Targeted searches for the business name, the email handle, the representative and the trade (custom/indie wrestling figures, New England, Rhode Island, Etsy, eBay, Instagram, Facebook, TikTok, YouTube) returned no shop, no product listing, no portfolio and no social page for this business anywhere. This is an online physical-goods seller with no observable product or sales channel on any platform, and nothing places a merchandise seller of this name in N Scituate, RI or elsewhere."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A live sales channel for the goods: Etsy/eBay/Shopify storefront URL, Instagram or Facebook business page, or a product catalogue with dated listings.",
+    "Proof that the representative owns Big Fight Figures: an about page, owner bio, or owner reply on a business channel naming them.",
+    "Rhode Island sole-proprietor / fictitious business name filing for N Scituate, RI, or a municipal vendor or sales-tax permit from the RI Division of Taxation.",
+    "Processing-history evidence: order confirmations, invoices or shipping records for recent sales, plus expected monthly volume and average ticket.",
+    "Written likeness/IP licence or consent from the independent wrestlers whose likenesses the merchant says are used on the products - an unlicensed-IP exposure the KYB dimensions do not score."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "summary": "Big Fight Figures has no discoverable public footprint at all: searches across web, marketplaces (Etsy, eBay), social (Instagram, Facebook, TikTok, YouTube) and local Rhode Island sources found no website, no storefront, no product listing, no social page and no mention of the business or its representative. That is the single material risk: a consumer physical-goods seller with no sales channel anywhere scores operating 15, since there is nothing to show the business exists outside the Stripe application. Nothing contradicts the merchant either - the entity is an Individual so no RI registration is expected (the RI SOS search blocked automation), the descriptor matches the business name, the email handle matches the trade, and no scam or complaint reports were found. Recommend holding payouts pending a live sales channel plus proof of ownership, and separately flagging the declared use of independent wrestlers' likenesses.",
+   "reviewCompleteness": 38,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-27T23:31:01+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -149,9 +167,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 15,
+   "trustScore": 85,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -180,26 +198,39 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no Arizona Corporation Commission registration is expected; web searches for an 'Ag Mobile' or 'AG Mobile LLC' Arizona entity returned no matching filing, and the ACC eCorp entity-search tool itself could not be loaded from this environment, so no registry record was read.",
+    "No independent listing, map profile, chamber entry or social page places an 'Ag Mobile' mobile-mechanic business in Wickenburg, AZ; searches surfaced only templated lead-generation mobile-mechanic pages and unrelated local shops. A mobile mechanic does not require licensed physical premises, so absence of a footprint is treated as unverified rather than contradictory.",
+    "The representative name does not appear on any Arizona state filing, licence record, business channel, review reply or news item found in searching; nothing publicly ties the name to a different business or to complaint or fraud reports either. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "The declared site www.agmobile.com could not be loaded from this environment, so its content was not inspected, and a domain-restricted search returned no indexed pages. Separately, 'AgMobile' is an established national brand for an agricultural commodity-markets app published by Barchart.com, Inc. (App Store listing loaded, live since 2014), so the declared domain may belong to an unrelated company rather than an Arizona mobile mechanic. This must be confirmed by actually loading the site before any contradiction is scored, so no points are assigned. [https://apps.apple.com/us/app/agmobile/id886743681]",
+    "Nothing observable online shows what this merchant actually sells: no website content, listing, price page or service description was found, so MCC 7538 (automotive service shops) and the descriptor can be neither confirmed nor shown incoherent. The descriptor does match the declared business name and does not describe payment collection.",
+    "No dated independent presence of at least one year was found for an 'Ag Mobile' business in Wickenburg, AZ - no dated reviews, directory listings or filings - and equally no scam, complaint or fraud reports about the business or the representative."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Direct load of www.agmobile.com plus WHOIS registrant data, to establish whether the domain serves this Arizona mobile-mechanic business or the unrelated AgMobile agriculture app.",
+    "Arizona Corporation Commission eCorp or county trade-name (DBA) record for 'Ag Mobile' naming the representative.",
+    "Google Business Profile, Facebook page or Yelp listing for the business showing a Wickenburg service area and dated reviews.",
+    "Arizona transaction privilege tax (TPT) licence or Wickenburg business licence in the business name.",
+    "Proof of trading: recent invoices, service-vehicle photos or a customer-facing booking page tied to the merchant's domain."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "sources": [
+    {
+     "url": "https://apps.apple.com/us/app/agmobile/id886743681",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "Declared website was unreachable here and the 'AgMobile' name is strongly associated with an unrelated national agriculture app brand; ownership of the domain is unresolved.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Ag Mobile presents as an Arizona sole-proprietor mobile mechanic, but the file is almost entirely unverified: no independent listing, social page, review, filing or licence record places an 'Ag Mobile' business in Wickenburg, AZ, and the representative's name appears nowhere publicly. No contradictions were provable, so risk points total 0, but that reflects absence of evidence rather than clean verification. The main open flag is the declared URL www.agmobile.com, which could not be loaded here while 'AgMobile' is a long-established brand of Barchart.com, Inc. for an agricultural commodity-markets app - a likely domain mismatch that would move contact to a 10-point contradiction if confirmed. Recommend manual retrieval of the website and WHOIS plus an Arizona DBA/TPT check before enabling payments; the statement descriptor points cardholders at a domain the merchant may not control.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-27T23:37:28+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -244,34 +275,53 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "An independent third-party roadside provider directory (Curbside SOS) carries a listing for 'M & D Roadside' located in Akron, OH, with a stated service area along Interstates 76 and 77 and State Routes 8, 18 and 261, published hours, and a declared fleet of 2 service vehicles and 2 operators, placing the business in the stated city. [https://curbsidesos.com/company/m-d-roadside]",
+    "MCC 4789 (transportation services, not elsewhere classified) and the descriptor are coherent with what the business observably does: the Curbside SOS listing shows it performing lockouts, flat-tire changes, jump-starts and battery service on Akron-area roads at a published per-mile rate. One divergence worth noting rather than scoring: the listing states the provider handles most roadside issues except gas, tow and recovery services, whereas the Stripe product description says 'Towing and Roadside Assistance' - roadside assistance without towing still sits within MCC 4789. [https://curbsidesos.com/company/m-d-roadside]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), for which no Ohio Secretary of State entity registration is expected, and targeted searches returned no Ohio entity named 'M & D Roadside'. PUCO confirms private towing is PUCO-regulated and Ohio intrastate for-hire tow operators need a Certificate of Public Convenience and Necessity, but PUCO's 'Search Motor Carrier Intrastate Authority' tool is an interactive OHID portal application that blocks automation, so no tow or roadside registration for this merchant could be confirmed or excluded. [https://puco.ohio.gov/transportation/towing]",
+    "Searches for the representative name in connection with Akron, Ohio and with the business returned nothing: no state filing, no licence record, no owner attribution on the Curbside SOS listing (which names no principal), no business-owned website, social page or review replies, no local news and no complaint or scam report. Nothing contradicts the declared representative either - no other named owner or member appears anywhere for this business. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website was declared and none was found: the only public presence is a third-party aggregator listing with no company URL. The statement descriptor matches the trading name exactly rather than being a random string or an unrelated name, and the email handle describes a trade (towing) rather than payment collection, so no contact contradiction applies.",
+    "No dated independent presence was found: the Curbside SOS listing carries no first-seen or review dates, and no Google, Yelp, Facebook or BBB profile, no BBB complaint record and no scam, fraud or ripoff report for 'M & D Roadside' surfaced in searches. Nothing negative was found, but trading history of at least one year could not be evidenced."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "PUCO intrastate motor carrier / towing authority: query the 'Search Motor Carrier Intrastate Authority' tool manually (OHID portal blocks automation) or contact PUCO Motor Carrier Registration for a CPCN record under 'M & D Roadside'.",
+    "Reconcile the declared product description 'Towing and Roadside Assistance' with the Curbside SOS listing that explicitly excludes tow and recovery - ask whether tow trucks are operated, since towing triggers the PUCO registration requirement.",
+    "Ask the merchant for a business website or Google Business Profile, plus proof of commercial auto / roadside liability insurance.",
+    "Ask for an Ohio vendor's licence or Summit County sole-proprietor registration, and documentation linking the representative to 'M & D Roadside' (for example an insurance certificate naming them as owner).",
+    "Confirm first date of trading and obtain customer-facing evidence of operating history (invoices, platform dispatch records)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://puco.ohio.gov/transportation/towing",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "No registration is expected for a sole proprietor and nothing adverse was found; PUCO tow-registration status remains unresolved because the registry blocks automation.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://curbsidesos.com/company/m-d-roadside",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "Independent evidence that a roadside-assistance operation under this exact name is active in Akron, Ohio.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "M & D Roadside scores 0 risk points across all six dimensions: nothing adverse was found and the business has a genuine, independently verifiable footprint. An independent roadside-provider directory places a two-vehicle, two-operator 'M & D Roadside' in Akron, Ohio performing lockout, tire, jump-start and battery work, which is coherent with MCC 4789 and the exact-match statement descriptor. The open items are gaps rather than contradictions: the representative could not be tied to the business through any public channel (identity rests on Stripe's verified status), there is no website or dated review history, and PUCO's tow-authority registry blocks automation so towing licensure could not be checked. Note also that the declared product description mentions towing while the public listing says tow and recovery are not offered - worth clarifying, since towing is what would trigger the PUCO registration requirement.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-28T01:32:22+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -303,13 +353,13 @@
    "accountId": "acct_1UVLnT5p9kmRZKfQ",
    "merchantId": "4219205",
    "name": "Grand Detroit transportation LLC",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -324,26 +374,41 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "A Michigan LARA / Corporations Division entity lookup could not be completed: LARA retired the old COFS Business Entity Search in June 2025 and the replacement MiBusiness Registry Portal search could not be loaded by this tooling - blocked automation - so no registration status for 'Grand Detroit transportation LLC' was confirmed either way. An open-web name search for the exact entity in Michigan returned no matching LLC (only unrelated carriers), and no City of Detroit or Michigan taxi/limousine licence record was found under this name.",
+    "No independent listing, map entry, social page, directory record or review profile places 'Grand Detroit transportation LLC' in Sterling Heights, MI or anywhere in Metro Detroit; searches of local taxi/limo directories for Sterling Heights surfaced only unrelated operators. A taxi/limousine operator does not require licensed public premises, so no footprint is treated as unverified rather than contradictory.",
+    "The representative name was not found on any state filing, licence record, business website, owner review reply, local news item or complaint report connected to this business or to any Metro Detroit transportation company; no people-search or data-broker sources were used and no personal data was collected. Nothing found contradicts the declared representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No dated independent presence (reviews, listings, filings, news) was found for 'Grand Detroit transportation LLC' at any age; equally, no scam, fraud or complaint reports were found about the business or the named representative. The one-year-plus history evidence found online relates to Checker Transportation of Detroit, a different operator."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared URL and statement descriptor (checkerdetroit.com / CHECKERDETROIT.COM) belong to a different, long-established operator: Checker Transportation (Checker Cab Detroit), 6420 East Lafayette, Detroit MI, trading in Detroit since 1921, whose official website is listed as https://www.checkerdetroit.com/ with booking, driver-recruitment and fleet pages on that domain. Nothing ties checkerdetroit.com to 'Grand Detroit transportation LLC' of Sterling Heights, so cardholders would see a third party's brand on their statements. [https://visitdetroit.com/directory/checker-transportation/]",
+    "MCC 4121 (taxicabs and limousines) is coherent with the declared domain's line of business, but the only observable taxi operation behind checkerdetroit.com is Checker Transportation of Detroit, not the applicant; there is no observable product, fleet, booking channel or service offering attributable to 'Grand Detroit transportation LLC', and no product description was supplied. The model as declared therefore rests entirely on another company's visible operation. [https://visitdetroit.com/directory/checker-transportation/]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Michigan LARA / MiBusiness Registry Portal entity record for 'Grand Detroit transportation LLC' showing status, formation date, registered office and member/manager or resident agent (manual lookup required - the portal blocked automation).",
+    "Signed written authorisation from Checker Transportation / Checker Cab Detroit permitting use of checkerdetroit.com and the CHECKERDETROIT.COM descriptor, or a corrected descriptor and a website owned by the applicant.",
+    "City of Detroit and/or Michigan vehicle-for-hire or limousine carrier authority in the LLC's name, with licence number and expiry.",
+    "Proof the representative is a member or manager of the LLC (filed Articles of Organization or annual statement).",
+    "Evidence of actual operations: vehicle registrations, driver roster, booking channel, insurance certificate, or three months of prior processing statements in the LLC's name.",
+    "Business bank account statement showing the account name matches the registered LLC."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://visitdetroit.com/directory/checker-transportation/",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "The declared website and statement descriptor belong to a different business than the applicant.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Grand Detroit transportation LLC (Sterling Heights, MI; MCC 4121) has essentially no verifiable public footprint of its own: no state registry record could be retrieved because LARA's MiBusiness Registry Portal replaced COFS in June 2025 and blocked automated access, and open-web searching found no matching Michigan LLC, no licence, no listing, no reviews and no trace of the representative. The material red flag is the declared URL and statement descriptor: checkerdetroit.com is the official website of Checker Transportation (Checker Cab Detroit), an unrelated operator trading in Detroit since 1921, so the applicant is presenting a third party's brand to cardholders - a classic setup for descriptor-mismatch disputes or brand misuse. Total risk 17, driven by the contact dimension; legal, identity, operating and history are unresolved rather than clean, so true risk may be higher. Recommend holding payouts pending a manual LARA lookup, a licence check, and written proof of the right to use the Checker Detroit domain and descriptor.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-28T01:36:59+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -365,9 +430,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -375,10 +440,10 @@
    "accountId": "acct_1UVMkD4tD53fx3mB",
    "merchantId": "5376019",
    "name": "Equipment Tech",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -395,28 +460,49 @@
     "Ownership and age of equipmenttech.net have not been checked against a registrar.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no North Carolina corporate registration is expected. The NC Secretary of State business registration search was loaded and its own notice states the online search tools are for interactive real-time use and that automated or scripted searches are not permitted, so the name, officer and assumed-name indexes could not be queried programmatically; no entity named 'Equipment Tech' in NC was confirmed or excluded. [https://www.sosnc.gov/online_services/search]",
+    "The representative name was not found on any NC Secretary of State filing (the registry is interactive-only and blocks automation), on any licence record, on any business-owned channel, or in local news; a name-plus-Raleigh business search returned only unrelated individuals with no link to this merchant. No scam, complaint or fraud report naming this business or this representative was found, so nothing contradicts the declared identity. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No working website was confirmed. The declared 'website' is a social profile (an Instagram handle) which could not be fetched - Instagram blocks automated fetching - and a site-restricted search and a handle search both returned zero results for it. The email domain equipmenttech.net could not be loaded and a verbatim web search for it returned no page, index entry or mention anywhere, so it is unconfirmed whether it resolves or belongs to this business. The statement descriptor reproduces the declared social URL rather than the business name, which is weak but is not a fictitious or random-string descriptor.",
+    "There is no product description on file and no observable product, price list, inventory, storefront or service page anywhere public, so MCC 5533 (automotive parts and accessories) could be neither confirmed nor contradicted. The business name and the Instagram handle suffix '_power' hint at power or outdoor equipment rather than automotive parts retail, which would be an MCC mismatch, but no loaded source shows what the merchant actually sells, so no contradiction is scored.",
+    "No dated independent presence of any age was found: no reviews, no directory listing, no registry filing, no news mention and no archived web presence for the business name in Raleigh NC, for equipmenttech.net or for the declared Instagram handle. Equally, no scam, complaint or fraud report about the business or the representative was found."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MCC 5533 (automotive parts and accessories store) is a trade normally run from physical premises, but no independent footprint places 'Equipment Tech' in Raleigh NC. A directory of Auto Parts & Supplies businesses in Raleigh NC (68 listed businesses) contains no entry for this merchant, and five targeted web searches (business name plus Raleigh/NC, Yelp/BBB, Facebook, the Instagram handle, the email domain) returned no Google Business, Yelp, BBB, Facebook or directory listing for it. The declared Instagram profile could not be loaded (Instagram blocks automated fetching), so any Raleigh location shown on it is unconfirmed. [https://reviews.birdeye.com/d/auto-parts-supplies/raleigh-nc]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Screenshot or export of the declared Instagram profile showing business name, Raleigh NC location, contact details and dated post history (automated fetching is blocked; collect manually or ask the merchant).",
+    "Proof that equipmenttech.net resolves and belongs to this business: live screenshot of the homepage plus domain registration/creation date.",
+    "Merchant-supplied product description and photos of actual inventory or storefront, to confirm whether the trade is automotive parts (MCC 5533) or power/outdoor equipment (possible reclassification).",
+    "NC Secretary of State Assumed Name certificate for 'Equipment Tech' filed in Wake County, or confirmation the sole proprietor trades under the representative's own name.",
+    "Business address in Raleigh plus a utility bill, lease or signage photo, and a business phone listing, to establish physical premises.",
+    "Correction of the statement descriptor, which should carry the business name rather than an Instagram URL, to reduce chargeback risk."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.sosnc.gov/online_services/search",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "No registration is required for an individual; the NC registry blocks automated search, so legal standing is neither confirmed nor contradicted.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://reviews.birdeye.com/d/auto-parts-supplies/raleigh-nc",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-30",
+     "establishes": "A physical-premises retail trade with zero independent evidence of operating in the stated city.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Equipment Tech has effectively no verifiable public footprint. The declared 'website' is an Instagram handle that could not be loaded and does not surface in any search, while the email domain equipmenttech.net returned no search presence at all, so neither declared channel corroborates the business. For an MCC 5533 auto-parts trade in Raleigh NC, the complete absence from the Raleigh auto parts directory and from Google/Yelp/BBB/Facebook results is the main risk signal, scored as a 10-point operating contradiction. Nothing adverse was found - no scam or complaint reports, no conflicting business tie for the representative - and as a sole proprietor no state registration is expected, with the NC registry blocking automated search in any case. Recommend holding for merchant-supplied evidence: live Instagram/website proof, product and premises evidence, and a descriptor change to the business name.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-28T02:37:42+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -438,8 +524,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -448,13 +534,13 @@
    "accountId": "acct_1UVPFF8aA4pVI76f",
    "merchantId": "5376435",
    "name": "High Income Positive Return Investment LLC",
-   "score": 0,
+   "score": 7,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -469,26 +555,41 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Arizona Corporation Commission entity-search form rendered, but the search itself could not be executed - submitting a parameterised query was refused, so no result set for 'High Income Positive Return Investment LLC' was returned. Treat this as blocked automation, not as a negative result. Open web searches for the exact entity name in Arizona returned no ACC filing, SEC filing or business listing, but absence from a search index is not proof of non-registration. No Arizona entity number, status, formation date or statutory agent has been confirmed, so the declared Company/LLC entity type remains unconfirmed. [https://ecorptestonline.azcc.gov/EntitySearch/Index]",
+    "No independent footprint placing a jewellery business in Chandler, AZ was found. Searches for the declared domain, for a domain-restricted index of it, and for the brand together with jewellery terms all returned zero pages belonging to this merchant; results were entirely unrelated third-party retailers. No Google Business listing, marketplace storefront, review page or social account for the merchant was found. However, www.pixiufei.com itself could not be loaded, so the absence of a product catalogue is not confirmed by direct inspection and is not scored as a contradiction.",
+    "The representative name was not found in any permitted KYB source: no Arizona Corporation Commission filing naming her as member, manager or statutory agent (the ACC query could not be executed), no licence record, no business-owned channel, no review replies, no local news and no scam or complaint report. Nothing found contradicts the declared representative; the name is simply absent from the public record. No people-search or data-broker sources were used and no home address, phone, age or date of birth was sought or recorded. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "The declared website www.pixiufei.com could not be loaded in this run, which is a tooling block rather than a finding about the site, so it is not scored. What is observable is that a domain-restricted search returned no indexed pages at all and a general search for the domain returned nothing belonging to it, which is unusual for a trading retail website but is not evidence of parking. The statement descriptor matches the declared domain rather than the registered legal name, and the contact email is a free Gmail handle whose wording relates to prosperity and investment rather than to a jewellery trade.",
+    "No independent presence of any age was found for the business or the representative: no dated reviews, no directory listings, no confirmed state filings and no news. Equally, no scam, fraud or complaint report naming the entity, the domain or the representative was found. A search for Chandler, AZ investment-fraud matters returned only unrelated cases involving different named individuals, which are not recorded against this merchant."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The merchant profile is internally incoherent, established from the account data itself rather than from any web page (no URL is cited for that reason): the registered legal name 'High Income Positive Return Investment LLC' and the contact email handle both describe investment returns and financial yield, while the declared MCC is 5944 (jewelry stores, watches, clocks and silverware), a physical-goods retail category. The product description field is empty and no product, catalogue, price list or inventory was observable anywhere, so nothing resolves the conflict in favour of the jewellery classification. An investment-themed name on a retail jewellery MCC is a recognised pattern for miscoded processing, and jewellery is itself a high-risk category for value transfer."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Re-run the Arizona Corporation Commission entity search manually for the exact name 'High Income Positive Return Investment LLC' and by principal name; capture entity ID, status, formation date, statutory agent and members.",
+    "Manually load www.pixiufei.com and screenshot it: confirm whether it is a live jewellery storefront with a working cart and real SKUs, a parked domain, or a placeholder. Capture WHOIS creation date and hosting.",
+    "Ask the merchant for a written product description, photographs of inventory, and supplier invoices for the jewellery being sold.",
+    "Obtain an explanation of the mismatch between a legal name describing investment returns and MCC 5944, and confirmation that the business is not soliciting investment or offering returns to the public.",
+    "Obtain a business-domain email address, a Chandler AZ business premises address, and the Maricopa County / Chandler transaction privilege tax licence for retail sales.",
+    "Check Arizona Corporation Commission Securities Division enforcement and SEC Form D for the entity name and the representative before approving."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://ecorptestonline.azcc.gov/EntitySearch/Index",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "ACC entity search form reachable but query submission blocked; no Arizona registration confirmed or disproved for the declared LLC name.",
+     "dimension": "legal"
+    }
+   ],
+   "summary": "This account could not be positively verified on any dimension and carries a material unresolved coherence problem: the registered name 'High Income Positive Return Investment LLC' and the investment-themed email handle describe financial returns, while the declared MCC is 5944 jewellery retail with an empty product description and no observable product, catalogue or storefront anywhere. Two checks were blocked rather than negative and must not be read as clean: the Arizona Corporation Commission entity-search form loaded but the query could not be submitted, and the declared site www.pixiufei.com could not be loaded at all - though it returns zero indexed pages, which is atypical for a trading retail domain. The representative appears nowhere in permitted KYB sources, so identity rests entirely on Stripe's own verification. Recommend manual review rather than auto-approval: a human ACC lookup, direct inspection of the website, and a documented explanation of the investment-name versus jewellery-MCC mismatch. The low numeric score reflects blocked evidence, not a low-risk merchant.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T14:00:59+00:00",
    "enabledWindowStart": "2026-10-28T05:17:54+00:00",
    "enabledWindowEnd": "2026-10-28T14:00:59+00:00",
@@ -502,7 +603,7 @@
    "location": "Chandler, AZ, US",
    "email": "ca.infinite.prosperity@gmail.com",
    "website": "www.pixiufei.com",
-   "mcc": "5691",
+   "mcc": "5944",
    "statementDescriptor": "PIXIUFEI.COM",
    "productDescription": null,
    "entityType": "Company",
@@ -510,8 +611,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 7,
+   "trustScore": 93,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -533,7 +634,9 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "The declared URL resolves (http://myanointing.org/ redirects to https://www.myanointing.org/) and is a built, working storefront clearly belonging to this merchant: headline 'WEAR YOUR ANOINTING - FAITH. PURPOSE. ORIGINALITY', navigation for New / Snapbacks / Baseball Caps / Design Your Hat / Accessories / Coasters / About Us / Contact, a Shop Now flow and a footer reading 2026 My Anointing. It is a live site-builder store, not a parked or placeholder page. The site-builder subdomain handle matches the account email handle, and the statement descriptor is the business's own domain. [https://www.myanointing.org/]",
+    "MCC 5691 (men's and women's clothing stores) is coherent with what the site observably sells: faith-themed wearable apparel - custom snapbacks and baseball caps, tees, sweatshirts and hoodies, plus minor accessories such as coasters. The descriptor matches the brand a cardholder would recognise. The .org domain and religious brand name could read as a ministry or donation collector, but the site is a straightforward retail shop with priced goods and a checkout flow, not solicitation. [https://www.myanointing.org/]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
@@ -541,26 +644,38 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Stripe entity type is Individual (sole proprietor), so no Colorado registered-entity filing is expected; a web search for a 'My Anointing' Colorado Secretary of State filing or trade name returned no matching record, and the coloradosos.gov entity-search form could not be queried directly from this tooling, so no registration status could be confirmed either way. No licence is required for online apparel sales.",
+    "The business is an online-only apparel seller and its own storefront shows real, observable product (custom snapbacks, baseball caps, tees, coasters, a 'Design Your Hat' customiser and a limited-edition collection), so the no-observable-product test does not fire; however no independent listing, social page, marketplace profile or directory entry places 'My Anointing' in Fountain, CO, so the stated location is unconfirmed. [https://www.myanointing.org/]",
+    "The representative name does not appear anywhere findable in a KYB-scope search: not on a Colorado SOS filing, not on the business's reachable public pages (the About Us and Contact subpages could not be loaded by this tooling), not in local news, and not in any complaint or scam report. The statement descriptor is the business domain, not a differing personal name, so nothing contradicts the declared representative. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No independent presence of any age was found: no dated reviews, no business listings, no social profiles, no state filings, and no complaint, scam or fraud reports about the business, the domain or the representative. The site itself carries a 2026 copyright and a hero image asset named for October 2026, and the page is served with meta-robots noindex, all consistent with a storefront built roughly a month ago rather than a one-year-plus operating history - but nothing independent confirms a start date."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Colorado Secretary of State trade-name or entity record for 'My Anointing', or confirmation the merchant trades as a sole proprietor under the representative's own name.",
+    "The About Us and Contact pages of myanointing.org, which did not load here - owner name, business contact details and stated Fountain, CO location.",
+    "Proof the storefront can actually transact: a completed test order, order-confirmation emails, or a fulfilment/print-on-demand supplier agreement.",
+    "Evidence of trading history and volume consistent with projected processing: prior processor statements, supplier invoices, or first-sale records.",
+    "Any social or marketplace channel operated by the business, to corroborate location and start date.",
+    "Documentation linking the representative to the brand (business bank account in the trade name, domain or site-builder account ownership, or an owner byline on the site)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.myanointing.org/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-30",
+     "establishes": "Real product catalogue exists online, but no independent footprint corroborates the Fountain, CO location.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "My Anointing is a genuine, if very new, direct-to-consumer apparel storefront: myanointing.org resolves to a live shop selling faith-themed custom snapbacks, caps, tees and small accessories, so MCC 5691 and the descriptor are coherent and the declared URL, email handle and descriptor all tie to the same brand. No risk points were scored on any dimension: nothing contradicts the profile, there are no scam or complaint reports, and as a Stripe-declared Individual no entity registration is expected. The weakness is thinness rather than conflict - zero independent footprint (no listings, social accounts, reviews or filings), no public trace of the representative, and site artefacts dated October 2026 suggesting the shop is roughly a month old. Treat as unseasoned new-merchant risk: monitor early volume, chargebacks and fulfilment, and request the About/Contact details plus evidence the store can fulfil orders before raising limits.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T20:18:56+00:00",
    "enabledWindowStart": "2026-10-28T14:02:33+00:00",
    "enabledWindowEnd": "2026-10-28T20:18:56+00:00",
@@ -605,34 +720,51 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "The Texas Department of Agriculture requires every location selling or growing nursery products to hold a Nursery/Floral Certificate of Registration. TDA's official Nursery Floral licensee extract contains two current records with legal name and facility name 'MELTING POT PLANTS': certificate 0961719, county Houston, Nursery Floral Class M, expiring 2027-04-30; and certificate 1011543, county Waller, Nursery Floral Class 2 (permanent location that grows, 10 acres or less), expiring 2027-10-31. Both are unexpired. The Stripe entity type is Individual, so no Texas SOS corporate filing is expected; the required trade licence for this activity exists and is active. [https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications]",
+    "An independent government record places the business physically in the Houston metropolitan area. The TDA licensee extract lists 'MELTING POT PLANTS' with a Class 2 permanent licensed premises in Waller county and a Class M temporary-market registration recorded under Houston. Cypress, TX is an unincorporated Houston-metro community straddling the Harris/Waller county line, so the licensed premises is consistent with the declared city. TDA Class 2 is defined as a permanent location that sells and grows nursery stock, corroborating real physical premises rather than a paper-only entity. No consumer-facing footprint was found in four web searches, consistent with the merchant's statement that the retail store is still being opened. [https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications]",
+    "The Stripe representative name matches the authorized official on the licence: in the TDA Nursery Floral licensee extract, both 'MELTING POT PLANTS' records (certificates 0961719 and 1011543) carry the representative as the named attention/responsible party, tying the declared representative to the licensed business on a state register. No people-search or data-broker sources were used, and no home address, date of birth, age, relatives or personal phone number was looked up or recorded. No scam, fraud or complaint reports naming the business or the representative were found. [https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications]",
+    "The declared activity is coherent with what the state licence shows the business actually does. TDA gives MELTING POT PLANTS a Class 2 registration - a permanent location that sells, leases or distributes and also grows nursery products on 10 acres or less - plus a Class M registration for selling nursery products at temporary markets such as plant or flower shows. That matches the product description of selling plants of all varieties and opening a plant retail store, and the descriptor is the trade name. MCC 0780 (landscaping and horticultural services) is defensible because the merchant grows nursery stock, but for a bricks-and-mortar plant and pottery retail store MCC 5261 is the better fit and reclassification is recommended; this is coding hygiene, not an incoherence. [https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "No website was declared and none was found: searches for the business name combined with Cypress/Houston Texas, with plant nursery terms, and with Facebook/Instagram/Etsy returned no page belonging to this merchant. The email handle matches the registered business name exactly and describes a trade (selling plants), not payment collection. The statement descriptor is the business name as filed with TDA, not a personal name or a random string.",
+    "No dated independent presence of one year or more could be established, and no adverse history was found. Searches for the business name with 'scam', 'complaint', 'review' and 'now open' returned nothing referring to this merchant, and no BBB, Trustpilot, news or review-site record exists. The only dated artefacts are the two TDA certificate expiry dates, which are forward-looking annual renewal dates and do not prove how long the business has traded. Consistent with a genuinely new or newly expanding business."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Street address of the Cypress, TX retail premises, plus the lease or a utility bill, to reconcile the declared city against the TDA county fields (Waller for the Class 2 permanent location, Houston for the Class M registration).",
+    "Copies of TDA Nursery/Floral certificates 0961719 and 1011543 showing registered location addresses and original issue dates, to establish how long the business has been trading.",
+    "Confirmation of the expected mix between permanent retail store sales and temporary market/event sales, since the Class M registration implies event-based selling with different chargeback characteristics.",
+    "A website, Google Business Profile or social page once the retail store opens, to give an independent consumer-facing footprint.",
+    "Merchant confirmation on reclassifying the MCC from 0780 to 5261 if the primary channel is in-store retail of plants and pottery."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral-Reports-Publications",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "The required Texas nursery/floral trade licence exists under the exact business name and is currently active, in two classes; no corporate registration is expected for a sole proprietor.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://texasagriculture.gov/Regulatory-Programs/Plant-Quality/Nursery-Floral/Nursery-Floral",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-30",
+     "establishes": "The merchant's licensed activity matches its declared product description and descriptor; MCC 0780 is horticulturally coherent but MCC 5261 is more accurate for the retail store.",
+     "dimension": "businessModel"
+    }
+   ],
+   "summary": "Melting Pot Plants verifies cleanly against the register that matters for this trade: the Texas Department of Agriculture's current Nursery/Floral licensee extract lists the exact business name twice, with an active Class 2 permanent growing location in Waller County and an active Class M temporary-market registration, both naming the Stripe representative as the authorized official. That single source carries legal, operating and identity at zero risk, and it is the right source because a Texas sole proprietor has no SOS corporate filing to find. The absence of any website, social page or review footprint would normally concern a retail shop, but it is consistent with the merchant's own statement that the store is still being opened, and is outweighed by an active state licence under the exact name; no scam, fraud or complaint reports exist. Total risk 0; the only follow-ups are operational - confirming the Cypress street address against the Waller/Houston county fields and reclassifying the MCC from 0780 to 5261.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-29T00:27:42+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-30T09:36:49+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-28T23:06:17+00:00",
    "enabledWindowStart": "2026-10-28T19:34:24+00:00",
    "enabledWindowEnd": "2026-10-28T23:06:17+00:00",
