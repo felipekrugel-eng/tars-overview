@@ -1,0 +1,76 @@
+{
+  "accountId": "acct_1UUsR7GHImdFq9Sk",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 8,
+      "status": "contradiction",
+      "statement": "MINY NIGHTS LLC is a real registered entity: the NY Department of State corporations dataset returns DOS ID 8054239, MINY NIGHTS LLC, domestic limited liability company, Oneida County (the county containing Utica), initial DOS filing date 2026-10-23, registered agent ZenBusiness Inc., 41 State Street Suite 112, Albany NY 12207 - so name, entity type and state all match the account, though the filing is only 8 days old and predates the Stripe connection (2026-10-26) by 3 days. The required alcohol licence is absent: the NY State Liquor Authority Current Active Licenses dataset and the Current Pending Licenses dataset return no record for MINY NIGHTS, for any licensee or DBA containing 'MURAL', or for any premises on Cottage Place in Utica, while the same active dataset holds 181 licences for the city of Utica, confirming coverage. The declared event advertises a cash bar serving cocktails, beer and wine on 2026-10-31.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "The LLC is genuinely registered in the correct state and county but was formed days before onboarding, and no liquor licence or pending application exists for the alcohol service the business openly advertises.",
+      "url": "https://data.ny.gov/resource/n9v6-gdp6.json?dos_id=8054239"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The only evidence placing this business in Utica is the merchant's own Ticket Tailor page, which gives the venue as 'The Mural Institute of New York, 600 Cottage Pl., Utica NY 13502' in the 'Utica Arts District'. No independent footprint exists: searches for 'Mural Institute of New York', 'MINY Nights' and '600 Cottage Place' Utica returned no listing, social page, venue directory, arts-council entry or local news item for this organisation, returning instead the unrelated Munson-Williams-Proctor Arts Institute and Oneida Square Arts District. Instagram served a login wall rather than profile metadata. This is a business type requiring licensed physical premises (a 21+ venue with a bar and live music running to 2:00 AM) with no observable independent presence at the stated address.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "A venue-based alcohol-serving operation has zero third-party corroboration of existing at the address it sells admission to, leaving the merchant's own sales page as the sole evidence of the venue.",
+      "url": "https://www.tickettailor.com/events/muralinstituteofnewyork/2478292"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative could not be confirmed or contradicted through permitted KYB sources. The NY DOS record for the LLC names no member, manager or officer (New York LLC filings do not disclose members) and lists only a commercial registered-agent service, so the filing neither names the representative nor names any other person as sole member. No NYSLA active or pending licence exists for this business, so there is no licence holder to compare against. The business's own ticketing pages carry no named organiser, officer or staff and no review replies exist because no review or listing presence was found. A search of the representative's name in connection with this business or Utica event programming returned only unrelated coverage involving a same-named person tied to a different organisation, which is a name match rather than a link to this merchant and is not treated as evidence. Separately, the account name field itself names a different individual as member (MBR) than the Stripe representative - a mismatch internal to the account record rather than a registry contradiction. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No permitted public source ties the representative to this entity in any role, and the account record itself names a different person as member, so the representative-to-entity link rests entirely on Stripe's own verification.",
+      "url": "https://data.ny.gov/resource/n9v6-gdp6.json?dos_id=8054239"
+    },
+    {
+      "dimension": "contact",
+      "points": 6,
+      "status": "contradiction",
+      "statement": "The declared URL resolves (HTTP 200) and plainly belongs to this merchant: the Ticket Tailor organiser 'Mural Institute of New York' lists a single event, 'MINY NIGHTS | Halloween Party', Sat 31 Oct 2026, 7:00 PM-2:00 AM, at 600 Cottage Pl., Utica NY 13502, matching the account name and city. The statement descriptor is the weakness: 'TICKETTAILOR.COM' is a third-party ticketing platform's domain, not a random string, but it names neither the merchant, the brand the customer bought under, nor the event, and the same descriptor would appear for any unrelated Ticket Tailor seller, so it does not identify this merchant to a cardholder. Scored at the lower end of the two contradiction rules because the website itself is genuine and correctly attributed, with the risk confined to descriptor non-recognition; this is aggravated by a single-date, advance-sale-only, no-door-sales event model, which concentrates dispute exposure.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The web presence is authentic and matches the merchant, but the descriptor is unrecognisable to cardholders and creates elevated non-recognition chargeback risk on a one-night advance-ticket event.",
+      "url": "https://www.tickettailor.com/events/muralinstituteofnewyork/2478292"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 5812 (Eating Places, Restaurants) does not match what the merchant observably sells. The event page shows the card-funded product is admission only: '$25 tickets, RSVP early for a discount, advance tickets only, no sales at the door, 21+'. Food and drink are explicitly not sold by this merchant through this channel: the bar is described as a 'Cash Bar: Cocktails, Beer, Wine + NA Options' and hot food is sold separately onsite by a named third-party vendor. The product description supplied to Stripe is consistent with a ticketed event producer, not a restaurant. An admission-ticket MCC such as 7922 or 7929 would be coherent; 5812 is not, and it understates the deferred-delivery and event-cancellation risk that ticketing carries.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The merchant is a ticketed-event producer miscoded as a restaurant, which misprices deferred-delivery risk and is inconsistent with its own page showing alcohol and food sold by cash and by a separate vendor.",
+      "url": "https://www.tickettailor.com/events/muralinstituteofnewyork/2478292"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent history of any length was found, and no adverse history either. The only dated artefacts are the NY DOS filing of 2026-10-23 and a single ticketed event dated 2026-10-31 - the day of this check - on a Ticket Tailor organiser page that lists no past events. No dated reviews, business listings, directory entries, news coverage or prior event records exist for 'MINY NIGHTS' or 'Mural Institute of New York'. Searches for scam, complaint, refund or fraud reports against either name returned nothing, so there is no negative history to report; the entity is simply 8 days old with no observable track record.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "The business has no trading history at all rather than a bad one: every verifiable datapoint is 8 days old or less, so prior-performance risk cannot be assessed.",
+      "url": "https://www.tickettailor.com/events/muralinstituteofnewyork"
+    }
+  ],
+  "evidenceNeeded": [
+    "Obtain the LLC's Articles of Organization and operating agreement to establish who the members are, and reconcile the member named in the account name field against the Stripe representative - the account record names two different individuals and NY DOS does not disclose members.",
+    "Require a current NYSLA on-premises licence or a temporary beer/wine/liquor permit covering 600 Cottage Place, Utica NY 13502 for 2026-10-31, or written confirmation that a separately licensed caterer holds the permit and that no alcohol revenue flows through this account.",
+    "Confirm the merchant's legal right to occupy 600 Cottage Place (lease, venue hire agreement or certificate of occupancy) and whether it is a licensed assembly venue - no independent source places any organisation at that address.",
+    "Reclassify the MCC from 5812 to an admission/ticketing code and change the statement descriptor from TICKETTAILOR.COM to one naming MINY NIGHTS or the Mural Institute of New York; Ticket Tailor descriptors are seller-configurable.",
+    "Apply deferred-delivery controls appropriate to a first-time single-event ticket seller: a payout reserve or delay until after the event date, a volume cap sized to the venue's lawful capacity, and monitoring for refund and chargeback spikes in the 10 days after 2026-10-31.",
+    "Ask the merchant for its public channels and for prior event history under any predecessor name, then re-check - Instagram served a login wall and could not be read in this pass."
+  ],
+  "summary": "MINY NIGHTS LLC is genuinely registered in New York (DOS ID 8054239, Oneida County) and its declared Ticket Tailor page is authentic and matches the account's name, city and product description, so this is not an obvious fabrication. The risk is concentrated newness plus missing controls: the LLC was formed 2026-10-23, three days before the Stripe connection, the organisation has no independent footprint anywhere despite running a licensed-premises-style 21+ event with a bar, and no NYSLA active or pending liquor licence exists for the business, the name or the Cottage Place premises even though the same dataset holds 181 Utica licences. Coding and presentation are both wrong for the actual activity: MCC 5812 is applied to what the page shows is pure advance admission sales with a cash bar and a separate third-party food vendor, and the descriptor TICKETTAILOR.COM identifies the platform rather than the merchant, a combination that maximises non-recognition chargeback risk on a single-night, advance-only event. The representative could not be tied to the entity through any permitted KYB source and the account name field names a different individual as member, so ownership rests solely on Stripe's verification and should be documented before payouts are released."
+}
