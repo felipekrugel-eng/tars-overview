@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UUaD06quEC1gEap",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 8,
+      "status": "contradiction",
+      "statement": "Entity type is Individual, so no NY corporate registration is expected and its absence is not held against the merchant; however a NY retail candy/grocery shop needs a NYS Dept of Agriculture & Markets retail food store licence and typically a NYC DCWP licence, and a direct query of the NYS retail food store register returned no 'JK CANDY' anywhere in the state (only an unrelated JK & SONS CORPORATION in the Bronx), while the NYC DCWP legally-operating-businesses dataset returned no JK CANDY citywide and no Bronx match. The NY DOS public inquiry API returned a server error and could not be used.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No applicable NY food-retail or NYC consumer-affairs licence exists under the merchant name after a real search of both registers.",
+      "url": "https://data.ny.gov/resource/9a8c-vfzj.json"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "A candy/general-merchandise shop requires licensed physical premises, but repeated searches found no Google, Yelp, Facebook, Instagram, Nextdoor or BBB listing, no address and no phone placing 'JK Candy' in the Bronx or anywhere in New York; the only Bronx candy businesses returned were unrelated (Chocolate Place, Morris Candy Shop, Zig & Zag Candy, 181st Candy & Deli).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent footprint of any kind places this business at a Bronx location.",
+      "url": "https://opengovny.com/food-store/708709"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative's name was not found as officer, member, manager or registered agent on any state filing, not as a licence holder in the NYS retail food store or NYC DCWP registers, and not on any business-owned channel or review reply, because no such filing, licence or channel for JK Candy exists to check; nothing publicly contradicts the representative either, and the statement descriptor JKCANDY.COM is a domain rather than a personal name so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No public source either confirms or contradicts the representative's link to this business."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "jkcandy.com resolves (HTTP 200) but serves a Chinese-language gaming/gambling SEO page, with no reference to a Bronx candy business; the domain's current registration dates only from 2026-09-01 on Gname nameservers, roughly seven weeks before the 2026-10-25 Stripe connection, and the archived 2025-01-29 capture shows the domain previously hosted a Polish-language sweet shop with prices in zloty, while the 2024-03-24 capture was an unmodified WordPress sample page. The statement descriptor JKCANDY.COM therefore points cardholders at a site belonging to someone other than this merchant.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The website in the statement descriptor does not belong to this business and currently hosts unrelated foreign gambling content.",
+      "url": "https://jkcandy.com"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 5399 would be unremarkable for a bodega-style candy and general-merchandise shop, but no product, menu, catalogue, storefront photo or listing for JK Candy could be observed anywhere, and the only asset carrying the trading name - the jkcandy.com domain used as the statement descriptor - shows Chinese gambling/game content rather than merchandise; the historical content on that domain was a Polish-zloty sweets e-shop, incompatible with a US Bronx retailer. The MCC and descriptor are therefore not supported by anything observable.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "Nothing observable corroborates that this merchant sells general merchandise or candy under this name and descriptor.",
+      "url": "https://jkcandy.com"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, business listings, licence filings, news items, BBB profile or scam/complaint reports were found for JK Candy of the Bronx or for the representative, so independent presence of one year or more could not be established; the archived jkcandy.com history from 2024-2025 belongs to a Polish-language sweet shop and cannot be attributed to this merchant, and the 3,812 lifetime POS receipts are Loyverse-internal rather than independent evidence. No adverse reports were found either.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent dated evidence of trading history, and no negative reports.",
+      "url": "http://web.archive.org/cdx/search/cdx?url=jkcandy.com&output=json&limit=20&collapse=timestamp:6"
+    }
+  ],
+  "evidenceNeeded": [
+    "Manually run the NY Department of State entity search at apps.dos.ny.gov/publicInquiry for 'JK CANDY' and for any assumed-name/DBA filing - the public API returned a server error during automated checks.",
+    "Ask the merchant for the physical Bronx store address, the NYS Certificate of Authority (sales tax) number and the NYS Dept of Agriculture & Markets retail food store licence number, then confirm the licence holder name matches the Stripe representative.",
+    "Ask the merchant to explain jkcandy.com: why the statement descriptor points to a domain registered 2026-09-01 that serves Chinese-language gambling content, and whether they control the domain at all; require a corrected descriptor before releasing payouts if they do not.",
+    "Pull the Loyverse POS account detail: store address on the POS profile, device/IP geography, item catalogue and average ticket, and reconcile against the claimed Bronx candy shop; explain the eight-month gap between the last POS sale (2026-03-01) and the Stripe connection (2026-10-25).",
+    "Request photographic evidence of the storefront and a utility bill or lease in the business name at the Bronx address."
+  ],
+  "summary": "JK Candy presents as a Bronx candy/general-merchandise retailer with a real Loyverse POS history (3,812 receipts), but it has no verifiable external existence: no NYS retail food store licence, no NYC DCWP licence, and no Google, Yelp, Facebook, Instagram or BBB listing placing it in the Bronx or anywhere in New York. The most serious issue is the statement descriptor: jkcandy.com was re-registered on 2026-09-01, weeks before the 2026-10-25 Stripe connection, and currently serves a Chinese-language gambling page, while its archived 2025 content was a Polish-zloty sweet shop, so the domain demonstrably belongs to someone other than this US merchant. Stripe has verified the individual's identity documents and bank ownership and nothing adverse was found about the representative, so the risk reads as an unverifiable business with a descriptor pointing cardholders at unrelated foreign content rather than identity fraud on its face. Recommend holding payouts pending the licence number, physical address evidence and a corrected descriptor."
+}
