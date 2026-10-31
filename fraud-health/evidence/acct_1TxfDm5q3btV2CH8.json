@@ -1,0 +1,75 @@
+{
+  "accountId": "acct_1TxfDm5q3btV2CH8",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "The PA Department of State business entity search (file.dos.pa.gov) blocked automated access (HTTP 403), so the state corporate register could not be checked and was not retried. The City of Philadelphia L&I business licence register does carry a matching entity: 'Fruty Ice Cream Two Brother Inc', legal entity type 'Company', 2139 S 8th St, Philadelphia PA 19148, holding an Active 'Food Preparing and Serving' licence no. 1011923 issued 2026-07-03 and expiring 2027-07-02, together with Commercial Activity Licence no. 0998289. Both licences required for a Philadelphia water-ice/ice-cream vendor are present and current; only the state-level incorporation record is outstanding.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "A licensed, currently active Philadelphia food business registered as a Company under a name matching the merchant and its statement descriptor, with the required city food and commercial activity licences.",
+      "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clegalname%2Clegalentitytype%2Caddress%2Czip%2Clicensenum%2Clicensetype%2Clicensestatus%2Cinitialissuedate%2Cexpirationdate%2Ccal_number%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent government record places the business at fixed commercial premises in the stated city: the Philadelphia L&I licence register lists 'Fruty Ice Cream Two Brother Inc' at 2139 S 8th St, Philadelphia PA 19148-3134 (South Philadelphia) with an Active food-preparing-and-serving licence, i.e. a licensed physical location rather than a mobile or event-only vendor permit. No Google, Yelp, Facebook, Instagram or BBB listing was found in several searches, which is consistent with a shop that opened in mid-2026 but leaves the consumer-facing footprint unconfirmed.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "A licensed physical trading address in Philadelphia PA matching the declared country, state and city, though no independent consumer listing was located.",
+      "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Caddress%2Clicensetype%2Clicensestatus%2Cinitialissuedate%20FROM%20business_licenses%20WHERE%20address%3D%272139%20S%208TH%20ST%27"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative matches the recorded owner contact on the City of Philadelphia L&I food-establishment licence record for 'Fruty Ice Cream Two Brother Inc' (licence 1011923), where the owner contact is recorded under the same name in Philadelphia PA. The statement descriptor 'FRUTY ICE CREAM' is a trade name, not a personal name, and matches the licensed business name, so no descriptor/person mismatch arises. No people-search or data-broker sources were used and no personal identifiers beyond the name on the licence record were examined or recorded.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "The Stripe representative is the publicly recorded owner contact on the city licence for the business, linking the account's control person to the licensed entity.",
+      "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensenum%2Cownercontact1name%2Cownercontact1city%2Cownercontact1state%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found; searches for the business name and the descriptor returned no site, no parked domain and no site-builder placeholder, so there is nothing to validate or contradict. The statement descriptor 'FRUTY ICE CREAM' coheres closely with the licensed trade name 'Fruty Ice Cream Two Brother Inc' and with the merchant-declared name 'Two Brothers Fruit and Ice cream' - the spelling 'Fruty' appears in the city licence record itself, so it is the business's own spelling, not a random string. The email is a personal free-mail handle that describes a person, not payment collection; typical for a small owner-operated shop but not independently verifiable.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No web presence exists to verify or contradict; descriptor and business name are consistent with each other and with the city licence record."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5499 (Misc Food Stores - Convenience Stores and Specialty Markets) is coherent with the observable activity. The Philadelphia licence register shows the entity trading as 'Fruty Ice Cream Two Brother Inc' from a fixed address under a 'Food Preparing and Serving' licence, matching the declared products 'water ice, ice cream, Fruit' and the descriptor. A water-ice/ice-cream/fruit counter sits on the boundary between 5499 and 5812/5814; given the city licence is for food preparing and serving, 5814 would arguably be the tighter fit, but 5499 is a commonly accepted and non-deceptive classification for a frozen-dessert and fruit retailer and conceals no higher-risk activity.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "The declared MCC, product description and statement descriptor all describe the same real, licensed frozen-dessert and fruit retail operation; the MCC choice is defensible with a minor 5499-vs-5814 note.",
+      "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensetype%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The only dated independent evidence is the city food licence, first issued 2026-07-03, and the Commercial Activity Licence attached to it - roughly four months of recorded independent presence, short of the one-year threshold, and consistent with a genuinely new seasonal shop that opened just before the Stripe account was created on 2026-07-27. No dated reviews, directory listings, news coverage, complaints or scam/fraud reports were found for the business name, the trade name or the owner in any search; nothing negative surfaced, but nothing corroborates longevity either.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "Independent presence is confirmed only from July 2026 (under one year); no adverse history, complaints or scam reports were found.",
+      "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Cinitialissuedate%2Cexpirationdate%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27"
+    }
+  ],
+  "evidenceNeeded": [
+    "Manually run the PA Department of State business entity search at file.dos.pa.gov for 'Fruty Ice Cream Two Brother Inc' and 'Two Brothers Fruit and Ice Cream' - the registry returned HTTP 403 to automation, so state incorporation, status and officer/agent details are unconfirmed.",
+    "Confirm the Philadelphia Department of Public Health food inspection history for 2139 S 8th St, Philadelphia PA 19148 to corroborate that the premises is actually trading.",
+    "Check Google Maps / Street View and Yelp for a storefront at that address under the Fruty Ice Cream name; absence of any consumer listing four months after licensing is worth a quick visual confirmation.",
+    "Confirm with the merchant whether the business is year-round or seasonal, since a water-ice shop licensed in July may go dormant over winter - relevant to expected volume patterns and to any sudden off-season processing.",
+    "Review whether MCC 5499 or 5814 better matches actual ticket sizes and card-present mix once processing data accumulates.",
+    "Verify that the Stripe payout bank account is held in the name of the licensed entity rather than a personal account, given the free-mail personal contact address."
+  ],
+  "summary": "This merchant verifies cleanly against primary government records. The City of Philadelphia L&I licence register lists 'Fruty Ice Cream Two Brother Inc' at 2139 S 8th St, Philadelphia PA 19148 with an Active Food Preparing and Serving licence (no. 1011923, issued 2026-07-03, valid to 2027-07-02), a Commercial Activity Licence (0998289), legal entity type 'Company', and an owner contact matching the Stripe representative - so legal, operating, identity and businessModel all check out, and the descriptor 'FRUTY ICE CREAM' is the business's own licensed trade name rather than an unexplained string. The two open items are benign rather than adverse: the PA Department of State registry blocked automated access (HTTP 403), leaving state incorporation unconfirmed, and the business has only about four months of independent recorded presence, consistent with a new seasonal South Philadelphia water-ice shop licensed three weeks before the Stripe account was opened. No website, social page or consumer listing exists, and no complaints, scam reports or adverse media were found. Total risk 0; recommend normal new-merchant monitoring with a manual PA DOS check, noting a seasonal business may show a winter lull."
+}
