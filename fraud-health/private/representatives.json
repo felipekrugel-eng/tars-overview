@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated_at": "2026-10-31T04:35:54.404Z",
+ "generated_at": "2026-10-31T05:15:55.969Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UWPN76nVuEFsT7W": {
@@ -55,7 +55,7 @@
    "name": "John Sterling",
    "legal_entity_type": "company",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": false
+   "payouts_enabled": true
   },
   "acct_1UW4pO9tl93nU890": {
    "name": "Larry Coleman",
