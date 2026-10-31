@@ -1,0 +1,76 @@
+{
+  "accountId": "acct_1UWBh56ugqY7knnI",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "Swiss commercial register (Ticino, via the Moneyhouse mirror of the FOSC/SHAB publication) shows 'Tech Industry Sagl', CHE-424.355.542, register no. CH-501.4.031.291-1, Societa a garanzia limitata, registered seat Corso San Gottardo 54a, 6830 Chiasso TI, capital CHF 20'000, status 'attiva' (active), first entered 24.09.2026 and published in FOSC 260929/2026 on 29.09.2026 as a new incorporation; the UID matches the one printed in the website footer. Zefix REST returned HTTP 401 and onlineinfo.ch returned HTTP 403 (Cloudflare), so the Moneyhouse FOSC mirror was used; the entity is active and not in liquidation, but it is only about five weeks old.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "The Sagl exists, is active in the Swiss commercial register, and its registered name, UID and Chiasso address match the merchant profile and the website.",
+      "url": "https://www.moneyhouse.ch/it/company/tech-industry-sagl-10116339101"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "The company's registered seat in the commercial register (Corso San Gottardo 54a, 6830 Chiasso) matches the shop address published on www.cityphonechiasso.ch, and the shop's published phone number appears in the independent search.ch/local.ch directory as the mobile line of the CityPhone24 retail business in Ticino, confirming a real Ticino phone-retail operation behind the brand. Caveat: no directory, map or review listing yet exists for the Chiasso branch itself - a local.ch query for 'cityphone chiasso' returned only three unrelated businesses - which is consistent with a shop opened weeks ago but means the Chiasso premises are not independently attested; Moneyhouse also notes three other entities registered at the same address.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-31",
+      "establishes": "A real Ticino phone/electronics retail operation is tied to the merchant's published phone number and the registered Chiasso address, though the Chiasso storefront itself has no independent listing yet.",
+      "url": "https://tel.search.ch/bellinzona/viale-giuseppe-motta-2/cityphone24"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative matches the 'socio e gerente, con firma individuale' (member and managing officer with sole signature) of Tech Industry Sagl on the Ticino commercial register entry published in the FOSC and mirrored on Moneyhouse; a second person is recorded as co-member. The statement descriptor is the website domain, not a personal name, so no descriptor/person mismatch arises. No scam, complaint or fraud report naming the representative or the business was found.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "The Stripe representative is the registered managing officer and signatory of the legal entity, consistent with control of the account.",
+      "url": "https://www.moneyhouse.ch/it/company/tech-industry-sagl-10116339101"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "www.cityphonechiasso.ch resolves (HTTP 200, real Next.js storefront) and is unambiguously this business: title 'Cityphone 2.0 - Tecnologia, riparazioni e usato a Chiasso', schema.org ElectronicsStore with legalName 'Tech Industry Sagl', address Corso San Gottardo 54A, 6830 Chiasso, and a footer reading '2026 Tech Industry Sagl - CHE-424.355.542' - the same UID and address as the commercial register. The descriptor CITYPHONECHIASSO.CH is the site's own domain and trading name, so it will be recognisable on cardholder statements. The site's contact email is a generic free-mail address matching the legal name rather than a domain mailbox, and the profile email differs from it - low significance for a small Swiss retailer, not a contradiction.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The website is live, is operated by the registered Sagl, and the statement descriptor coheres with the trading name customers will recognise.",
+      "url": "https://www.cityphonechiasso.ch/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 5734 (Computer Software Stores) does not describe what the business observably sells. The website offers new, used and refurbished smartphones, computers/Mac, tablets and accessories, professional repairs (screen, battery) for phones, PCs and tablets, and trade-in valuations, with free shipping across Switzerland and Europe priced in CHF; its own structured data classifies it as 'ElectronicsStore', and the registered corporate purpose covers development, production, sale, installation, maintenance and repair of electronic and electrotechnical equipment, systems, components and software. No software retailing is observable anywhere on the site. The appropriate codes are 5732 (Electronics Stores) and/or 7622 (Electronics Repair). This is a miscoding within the same consumer-electronics family rather than a disguise for a restricted vertical, but it should be corrected; note also that the shop ships cross-border in Europe, so a material share of volume will be card-not-present rather than in-store.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The assigned MCC misdescribes the merchant's actual product mix (device retail and repair, not software), with cross-border e-commerce exposure not implied by the current coding.",
+      "url": "https://www.cityphonechiasso.ch/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of one year or more could be established for this merchant. Tech Industry Sagl was first entered in the commercial register on 24.09.2026 (FOSC publication 29.09.2026), roughly five weeks before the Stripe connection on 2026-10-30; the storefront brands itself 'Cityphone 2.0' and the website carries a 2026 copyright. local.ch returned no listing or review for a Cityphone in Chiasso, and the related CityPhone24 directory entries in Bellinzona and Lugano carry no customer feedback. No scam, complaint or fraud report about the business, the brand or the representative was found, so nothing negative is on record - there is simply no dated independent track record for the Chiasso operation.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-31",
+      "establishes": "The merchant is a newly incorporated entity with no verifiable operating history of its own, and equally no adverse reports.",
+      "url": "https://www.local.ch/it/q/chiasso/cityphone"
+    }
+  ],
+  "evidenceNeeded": [
+    "Obtain the official Zefix / Ticino register extract (or a certified FOSC extract) for CHE-424.355.542 to confirm current status, signatories and quota holders first-hand, since Zefix blocked automated access and the data used came from the Moneyhouse FOSC mirror.",
+    "Reclassify the account from MCC 5734 to 5732 (Electronics Stores) or 7622 (Electronics Repair), and capture a written product description, since none was supplied.",
+    "Confirm the relationship between Tech Industry Sagl / 'Cityphone 2.0' Chiasso and the existing CityPhone24 shops in Lugano and Bellinzona, whose directory entry carries the same phone number - same group, franchise, or merely a reused number?",
+    "Verify physical occupancy of Corso San Gottardo 54a, 6830 Chiasso (lease or utility bill, shop photo/signage): three other entities are registered at the same address and no directory, map or review listing exists for the Chiasso branch.",
+    "Given free shipping across Europe, quantify the expected split between in-store card-present and cross-border e-commerce volume, and review refurbished/used-device and trade-in warranty and returns terms for chargeback exposure.",
+    "Confirm the business email and bank account are controlled by the Sagl rather than a personal free-mail account, and reconcile the two email addresses on file."
+  ],
+  "summary": "The legal entity checks out: Tech Industry Sagl, CHE-424.355.542, is active in the Ticino commercial register at Corso San Gottardo 54a, 6830 Chiasso, with the Stripe representative recorded as socio e gerente with sole signature, and the website footer publishes the same UID and address - so the legal-name versus trading-name gap ('Cityphone 2.0' / cityphonechiasso.ch) is properly corroborated. The website is a genuine, fully built storefront for a phone and computer shop with repairs and trade-ins, the descriptor matches the trading domain, and the brand's phone number also appears in the independent Swiss directory under CityPhone24 in Ticino. The main substantive issue is MCC 5734 (Computer Software Stores), which does not match an electronics retail and repair business - 5732 or 7622 is correct - and the business also ships across Europe, implying more card-not-present volume than the coding suggests. Residual risk is newness, not legitimacy: the company was incorporated on 24.09.2026, roughly five weeks before onboarding, with no reviews, no Chiasso directory listing, three other entities registered at the same address, and no adverse reports found anywhere."
+}
