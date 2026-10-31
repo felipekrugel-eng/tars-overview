@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UUnuA8hP9onlrs2",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Puerto Rico Departamento de Estado Registro de Corporaciones could not be searched programmatically: prcorpfiling.f1hst.com redirects to rcp.estado.pr.gov, which serves a JavaScript-only single-page portal with no reachable search endpoint (API probes returned Azure 404s), so the registry blocked automation and no conclusion can be drawn about whether Bradjay LLC is registered or active. Web searches against PR registry aggregators returned no matching entity, but that is not a substitute for a real registry search. The PR Departamento de Salud food permit and the Sabana Grande municipal patente required for catering were likewise not searchable through any reachable public index.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "Legal existence and good standing of the registered entity, and the catering permits it would need, are unconfirmed because the official PR registry is not machine-accessible.",
+      "url": "https://rcp.estado.pr.gov/en"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "No independent footprint of any kind places Bradjay LLC in Sabana Grande, Puerto Rico. Searches for the business name combined with Sabana Grande, with Puerto Rico catering, and with Facebook/Instagram returned zero results referencing the business; no Google Business listing, social page, directory entry, address or phone number was found. Catering is a food-handling trade requiring permitted physical premises in Puerto Rico, and no such premises or operating presence is observable anywhere. Established by exhaustive search; no page could be loaded that evidences the absence.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "A business claiming catering operations from a specific Puerto Rico municipality has no verifiable physical or online presence there."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative's name was not found on any permitted KYB source: the PR corporate registry filing could not be retrieved, no licence record was reachable, the business has no website, social page, review profile or owner replies to inspect, and no local news or complaint report mentions the business. Nothing contradicts the representative either - no link to a different business, city or adverse report surfaced. The statement descriptor is BRADJAY LLC, the business name rather than a personal name, so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No public source either confirms or contradicts the representative's role in this business."
+    },
+    {
+      "dimension": "contact",
+      "points": 6,
+      "status": "contradiction",
+      "statement": "bradjaypr.com, the domain of the declared support email, resolves to Squarespace but does not serve a business website: requests redirect to https://www.bradjaypr.com/ and return HTTP 404 with the Squarespace system page titled 'Squarespace - Website Expired' and the text 'This account has expired.' The domain's MX record points to Google mail, so the mailbox is likely live, and the statement descriptor BRADJAY LLC matches the legal name, but the only declared web asset is an expired site-builder placeholder with no content identifying this business.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The merchant's only web presence is an expired Squarespace account, so nothing on the web confirms the contact details belong to an operating business.",
+      "url": "https://www.bradjaypr.com/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 7399 (Business Services, Not Elsewhere Classified) is a catch-all that does not describe the activities declared. The product description spans three unrelated trades - catering, logistics services and online product sales - which map to distinct MCCs (caterers 5811, freight/logistics 4214, online retail 5999); routing all three through 7399 obscures the food-service and card-not-present retail risk. No page anywhere shows a menu, a catering offer, a logistics service or a product catalogue, so there is no observable activity against which the MCC or descriptor can be reconciled.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "The declared MCC does not match the declared trades, and none of the three declared trades is observable in public sources."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated evidence of independent presence was found: no reviews on Google, Trustpilot, WeddingWire or any catering directory, no business listings, no news coverage and no filings mention Bradjay LLC. Equally, no scam report, BBB Scam Tracker entry, fraud allegation or complaint about the business or its owner was found. The only dated signal is the expired Squarespace account on the email domain, which indicates a lapsed subscription but carries no verifiable start date.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "There is no evidence of operating history of any length, and no adverse history either."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual search of the PR Departamento de Estado Registro de Corporaciones at rcp.estado.pr.gov in a real browser for 'Bradjay' and variants, to confirm registration number, status, incorporation date, resident agent and the members/managers named on the filing, and whether the representative appears there.",
+    "If registered, pull the Puerto Rico Departamento de Salud food-handling permit and the Sabana Grande municipal patente for the catering activity, plus any PR transport authority if freight logistics is genuinely performed.",
+    "Ask the merchant for a working website or online store, a sample catering menu with pricing, and at least two recent customer invoices or event contracts; bradjaypr.com currently serves an expired Squarespace placeholder.",
+    "Obtain the business's physical operating address and confirm a permitted commercial kitchen exists there.",
+    "Require the merchant to restate the business model: decide which of catering, logistics or online retail is dominant and re-assign the MCC accordingly (5811, 4214 or 5999 rather than 7399), and set limits and a reserve appropriate to card-not-present deposits for future-dated events.",
+    "Confirm with Stripe which documents supported legal_entity_verification_status = verified, and whether the bank account owner name matches the registered entity."
+  ],
+  "summary": "Bradjay LLC (Sabana Grande, PR) has essentially no verifiable public existence: the PR corporate registry is JavaScript-only and blocked automated search, so registration could not be confirmed either way, and no listing, social page, review, directory entry or news item places the business in Sabana Grande or anywhere else. Its only declared web asset, the email domain bradjaypr.com, resolves to an expired Squarespace account returning HTTP 404, though the domain's Google mail records suggest the mailbox is live. The declared activity spans three unrelated trades (catering, logistics, online product sales) under a catch-all MCC 7399 that fits none of them, and no menu, service or product is observable anywhere. No adverse reports were found; the profile is thin rather than fraudulent, but payouts should not scale until a human confirms the registry filing, the catering permits and a real operating presence, and the MCC is corrected to the dominant trade."
+}
