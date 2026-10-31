@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1U55Dy8meMc9ORmQ",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 8,
+      "status": "contradiction",
+      "statement": "No USDA/FSIS establishment registration exists under the name Cantinho Brasileiro: searches of the FSIS Meat, Poultry and Egg Product Inspection Directory for this name returned nothing, while the directory does list a different federally inspected Brazilian meat and poultry processor in the same city (Brazilian Taste, M45640+P45640, 235 Two Notch Rd., Lexington SC 29073, grant date 16 Jul 2021, last confirmed active 28 Apr 2025) at the loaded URL below. A business describing itself as a sausage/charcuterie manufacturer requires a federal or SC state meat inspection grant, and none was found for this merchant name. Separately, the South Carolina Secretary of State portal (businessfilings.sc.gov) could not be loaded by the tools available in this session, so the entity registration itself is UNVERIFIED rather than disproven, and no SC DHEC retail food permit record could be loaded either; both must be checked manually.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "A required meat-processing licence/establishment grant was not found for this merchant name, although the register demonstrably covers Lexington SC Brazilian meat processors; state entity registration could not be checked.",
+      "url": "https://www.fsis.usda.gov/inspection/fsis-inspected-establishments/brazilian-taste"
+    },
+    {
+      "dimension": "operating",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "No independent footprint of any kind places Cantinho Brasileiro in Lexington, South Carolina. Repeated searches for a Google/Yelp/Facebook/Instagram listing, address or phone in Lexington SC (ZIPs 29072/29073) and the wider Columbia/West Columbia/Cayce area returned only same-named businesses in Culver City CA, Philadelphia PA, Barcelona and Portugal, plus unrelated Brazilian businesses in SC. The only loaded record covering Brazilian meat businesses in Lexington SC is the FSIS establishment page below, which names a different establishment and contains no entry for this merchant. A sausage manufacturer plus a retail space selling Brazilian products requires licensed physical premises, so a complete absence of any listing is a contradiction.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "A business requiring licensed physical premises has no observable presence in the stated city under its declared name.",
+      "url": "https://www.fsis.usda.gov/inspection/fsis-inspected-establishments/brazilian-taste"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative's name could not be found on any permitted KYB source: no South Carolina state filing could be loaded, no licence record carries the name (the FSIS establishment listing for the one Lexington SC Brazilian meat processor shows no officer or owner name), the business has no own channels, review replies, social pages or local news coverage to check, and no scam or complaint reports naming the business or the representative were found. The statement descriptor (CANTINHO BRASILEIRO) is the business name, not a personal name, so there is nothing to compare against. Nothing found contradicts the representative's stated role. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No public KYB source confirms or contradicts the representative's connection to the business."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The merchant declared no website and no website for a Cantinho Brasileiro in Lexington SC could be found in any search, so there is no site to resolve, park or misattribute. The statement descriptor matches the declared business name exactly, which is coherent. The account email handle names a cleaning service in SC rather than a Brazilian food business; searches for a cleaning business of that name in Lexington SC found no registered or listed match, so no link between a cleaning business and this merchant could be established either way. An email handle naming a different trade is reported but not scored under this rubric, and the handle does not describe payment collection, so this is unverified rather than a contradiction.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No website exists to verify; the email handle names an unrelated trade that could not be tied to any registered cleaning business."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5422 (freezer and locker meat provisioners / meat markets) is internally coherent with the declared activity of a Brazilian sausage/charcuterie manufacturer operating a space selling Brazilian products, and nothing about the name or description suggests payment collection or digital goods. However, no page showing what this business observably sells or produces could be found or loaded, so the coherence is asserted rather than evidenced and the MCC cannot be confirmed against real activity.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "MCC and product description are mutually coherent on their face but unsupported by any observable product or storefront."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence was found: no reviews, directory listings, news articles, filings or social posts referencing a Cantinho Brasileiro in Lexington or anywhere in South Carolina at any date. No scam, fraud, chargeback or complaint reports naming the business or its representative were found either. The account connected on 2026-08-16 and has no traceable history predating that.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No evidence of operating history of any length, and no adverse reports."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manually search businessfilings.sc.gov (SC Secretary of State) for 'Cantinho Brasileiro' and similar names; capture entity status, formation date, registered agent and officers - this portal could not be loaded in this session.",
+    "Manually run the FSIS MPI Directory live search and the SC Meat-Poultry Inspection Department state list for any grant held by this merchant, and check SC DHEC retail food permits for a Lexington SC premises under this name.",
+    "Determine whether the merchant is operating under or inside the existing FSIS-inspected establishment 'Brazilian Taste' (M45640+P45640, 235 Two Notch Rd., Lexington SC 29073) - same city, same trade - and if so obtain the DBA documentation. Nothing in the public record currently connects the two; do not assume a link.",
+    "Ask the merchant for the physical premises address, the meat-processing licence/grant number, the Lexington County business licence, and a website or Google/Facebook/Instagram page.",
+    "Ask the merchant to explain the mismatch between the account email handle (which names a cleaning service) and the declared Brazilian charcuterie business, and whether a cleaning business shares the account or bank relationship.",
+    "Confirm with Stripe that the verified legal entity name on file matches 'Cantinho Brasileiro' and that the bank account is in the company's name."
+  ],
+  "summary": "Cantinho Brasileiro has no discoverable public existence: no listing, review, social page, website or news item places a business of this name in Lexington SC, and no meat-processing licence or establishment grant was found under the name even though the FSIS directory demonstrably covers Lexington SC Brazilian meat processors and lists a different one. That absence matters because the declared activity - sausage manufacturing plus a retail space for Brazilian products - cannot lawfully be carried out without licensed premises, so a zero footprint is a real contradiction rather than a thin-file result. The SC Secretary of State portal could not be loaded in this session, so the company registration itself remains unchecked and is the most important manual follow-up, alongside confirming whether this merchant trades through an existing inspected establishment. Total risk 18 points (legal 8, operating 10) - recommend holding payouts pending documentary evidence of premises and licence."
+}
