@@ -76,20 +76,20 @@
   }
  },
  "published": {
-  "added": [
+  "added": [],
+  "updated": [
    "acct_1TxfDm5q3btV2CH8",
    "acct_1UW0Vs875fdmoZRt",
    "acct_1UW3hx7np7DQ3oqi",
    "acct_1UW4pO9tl93nU890",
    "acct_1UWBh56ugqY7knnI"
   ],
-  "updated": [],
   "skipped": [],
   "wrote": true
  },
  "liveStatusChanges": [],
  "coverage": {
-  "computedAt": "2026-10-31T06:05:39+00:00",
+  "computedAt": "2026-10-31T07:48:05+00:00",
   "source": "activated-payments/activation-data.js",
   "connectedAccounts": 1669,
   "enabledAccounts": 558,

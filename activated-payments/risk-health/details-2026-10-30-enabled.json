@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-30 Europe/London",
   "cohortDate": "2026-10-30",
-  "reviewedAt": "2026-10-31T06:05:39+00:00",
+  "reviewedAt": "2026-10-31T07:48:05+00:00",
   "count": 5,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-31T06:05:39+00:00",
+ "reviewedAt": "2026-10-31T07:48:05+00:00",
  "merchants": [
   {
    "id": "acct_1TxfDm5q3btV2CH8",
@@ -28,34 +28,73 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "The PA Department of State business entity search (file.dos.pa.gov) blocked automated access (HTTP 403), so the state corporate register could not be checked and was not retried. The City of Philadelphia L&I business licence register does carry a matching entity: 'Fruty Ice Cream Two Brother Inc', legal entity type 'Company', 2139 S 8th St, Philadelphia PA 19148, holding an Active 'Food Preparing and Serving' licence no. 1011923 issued 2026-07-03 and expiring 2027-07-02, together with Commercial Activity Licence no. 0998289. Both licences required for a Philadelphia water-ice/ice-cream vendor are present and current; only the state-level incorporation record is outstanding. [https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clegalname%2Clegalentitytype%2Caddress%2Czip%2Clicensenum%2Clicensetype%2Clicensestatus%2Cinitialissuedate%2Cexpirationdate%2Ccal_number%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27]",
+    "An independent government record places the business at fixed commercial premises in the stated city: the Philadelphia L&I licence register lists 'Fruty Ice Cream Two Brother Inc' at 2139 S 8th St, Philadelphia PA 19148-3134 (South Philadelphia) with an Active food-preparing-and-serving licence, i.e. a licensed physical location rather than a mobile or event-only vendor permit. No Google, Yelp, Facebook, Instagram or BBB listing was found in several searches, which is consistent with a shop that opened in mid-2026 but leaves the consumer-facing footprint unconfirmed. [https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Caddress%2Clicensetype%2Clicensestatus%2Cinitialissuedate%20FROM%20business_licenses%20WHERE%20address%3D%272139%20S%208TH%20ST%27]",
+    "The representative matches the recorded owner contact on the City of Philadelphia L&I food-establishment licence record for 'Fruty Ice Cream Two Brother Inc' (licence 1011923), where the owner contact is recorded under the same name in Philadelphia PA. The statement descriptor 'FRUTY ICE CREAM' is a trade name, not a personal name, and matches the licensed business name, so no descriptor/person mismatch arises. No people-search or data-broker sources were used and no personal identifiers beyond the name on the licence record were examined or recorded. [https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensenum%2Cownercontact1name%2Cownercontact1city%2Cownercontact1state%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27]",
+    "MCC 5499 (Misc Food Stores - Convenience Stores and Specialty Markets) is coherent with the observable activity. The Philadelphia licence register shows the entity trading as 'Fruty Ice Cream Two Brother Inc' from a fixed address under a 'Food Preparing and Serving' licence, matching the declared products 'water ice, ice cream, Fruit' and the descriptor. A water-ice/ice-cream/fruit counter sits on the boundary between 5499 and 5812/5814; given the city licence is for food preparing and serving, 5814 would arguably be the tighter fit, but 5499 is a commonly accepted and non-deceptive classification for a frozen-dessert and fruit retailer and conceals no higher-risk activity. [https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensetype%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "No website is declared and none was found; searches for the business name and the descriptor returned no site, no parked domain and no site-builder placeholder, so there is nothing to validate or contradict. The statement descriptor 'FRUTY ICE CREAM' coheres closely with the licensed trade name 'Fruty Ice Cream Two Brother Inc' and with the merchant-declared name 'Two Brothers Fruit and Ice cream' - the spelling 'Fruty' appears in the city licence record itself, so it is the business's own spelling, not a random string. The email is a personal free-mail handle that describes a person, not payment collection; typical for a small owner-operated shop but not independently verifiable.",
+    "The only dated independent evidence is the city food licence, first issued 2026-07-03, and the Commercial Activity Licence attached to it - roughly four months of recorded independent presence, short of the one-year threshold, and consistent with a genuinely new seasonal shop that opened just before the Stripe account was created on 2026-07-27. No dated reviews, directory listings, news coverage, complaints or scam/fraud reports were found for the business name, the trade name or the owner in any search; nothing negative surfaced, but nothing corroborates longevity either. [https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Cinitialissuedate%2Cexpirationdate%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manually run the PA Department of State business entity search at file.dos.pa.gov for 'Fruty Ice Cream Two Brother Inc' and 'Two Brothers Fruit and Ice Cream' - the registry returned HTTP 403 to automation, so state incorporation, status and officer/agent details are unconfirmed.",
+    "Confirm the Philadelphia Department of Public Health food inspection history for 2139 S 8th St, Philadelphia PA 19148 to corroborate that the premises is actually trading.",
+    "Check Google Maps / Street View and Yelp for a storefront at that address under the Fruty Ice Cream name; absence of any consumer listing four months after licensing is worth a quick visual confirmation.",
+    "Confirm with the merchant whether the business is year-round or seasonal, since a water-ice shop licensed in July may go dormant over winter - relevant to expected volume patterns and to any sudden off-season processing.",
+    "Review whether MCC 5499 or 5814 better matches actual ticket sizes and card-present mix once processing data accumulates.",
+    "Verify that the Stripe payout bank account is held in the name of the licensed entity rather than a personal account, given the free-mail personal contact address."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clegalname%2Clegalentitytype%2Caddress%2Czip%2Clicensenum%2Clicensetype%2Clicensestatus%2Cinitialissuedate%2Cexpirationdate%2Ccal_number%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "A licensed, currently active Philadelphia food business registered as a Company under a name matching the merchant and its statement descriptor, with the required city food and commercial activity licences.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Caddress%2Clicensetype%2Clicensestatus%2Cinitialissuedate%20FROM%20business_licenses%20WHERE%20address%3D%272139%20S%208TH%20ST%27",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "A licensed physical trading address in Philadelphia PA matching the declared country, state and city, though no independent consumer listing was located.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensenum%2Cownercontact1name%2Cownercontact1city%2Cownercontact1state%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "The Stripe representative is the publicly recorded owner contact on the city licence for the business, linking the account's control person to the licensed entity.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Clicensetype%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "The declared MCC, product description and statement descriptor all describe the same real, licensed frozen-dessert and fruit retail operation; the MCC choice is defensible with a minor 5499-vs-5814 note.",
+     "dimension": "businessModel"
+    },
+    {
+     "url": "https://phl.carto.com/api/v2/sql?q=SELECT%20business_name%2Cinitialissuedate%2Cexpirationdate%2Clicensestatus%20FROM%20business_licenses%20WHERE%20business_name%20ILIKE%20%27%25Fruty%25%27",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "Independent presence is confirmed only from July 2026 (under one year); no adverse history, complaints or scam reports were found.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "This merchant verifies cleanly against primary government records. The City of Philadelphia L&I licence register lists 'Fruty Ice Cream Two Brother Inc' at 2139 S 8th St, Philadelphia PA 19148 with an Active Food Preparing and Serving licence (no. 1011923, issued 2026-07-03, valid to 2027-07-02), a Commercial Activity Licence (0998289), legal entity type 'Company', and an owner contact matching the Stripe representative - so legal, operating, identity and businessModel all check out, and the descriptor 'FRUTY ICE CREAM' is the business's own licensed trade name rather than an unexplained string. The two open items are benign rather than adverse: the PA Department of State registry blocked automated access (HTTP 403), leaving state incorporation unconfirmed, and the business has only about four months of independent recorded presence, consistent with a new seasonal South Philadelphia water-ice shop licensed three weeks before the Stripe account was opened. No website, social page or consumer listing exists, and no complaints, scam reports or adverse media were found. Total risk 0; recommend normal new-merchant monitoring with a manual PA DOS check, noting a seasonal business may show a winter lull.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-31T06:05:39+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:48:05+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-30T09:38:16+00:00",
    "enabledWindowStart": "2026-10-30T00:13:07+00:00",
    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
@@ -100,7 +139,9 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "vantacollective.co resolves and is a genuine, themed Shopify storefront that clearly belongs to this business, not a parked domain or an unconfigured site-builder placeholder: it has custom branding ('BUILT FROM SILENCE / NOT BUILT FOR EVERYONE / MODERN LUXURY DISTINCTIVE DETAIL'), uploaded product and collection imagery, a working navigation tree and complete Shopify policy pages. The store's own contact page states 'Trade name: VANTA COLLECTIVE' and an info@vantacollective.co address. The statement descriptor VANTACOLLECTIVE.CO matches the domain and trade name exactly. Noted but not adverse: no phone number or business address is published on the site, and the Stripe account email is a personal iCloud handle rather than the info@ domain address. [https://vantacollective.co/policies/contact-information]",
+    "MCC 5691 (Men's and Women's Clothing Stores) is coherent with what the brand observably sells. The storefront's navigation and collections cover Women's Tees, Sweatsuits, Shorts, Jeans and One-Pieces; Men's Tees, Sweatsuits, Shorts and Jeans; a VANTA JR children's line; and Accessories (Shoes, Hats, Sunglasses). The name and descriptor describe an apparel label, not payment collection, and the goods are physical rather than digital. [https://vantacollective.co/pages/contact]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (icloud.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
@@ -108,26 +149,60 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual, so no Illinois corporate registration is expected and a missing one is not adverse. The Illinois Secretary of State business entity search blocked automation (HTTP 403 Access Denied from its edge layer) on a single attempt and was not retried, so no state filing could be checked. No Illinois retailer sales-tax (IBT) registration or City of Elgin business licence was discoverable in search; an Illinois assumed-name/DBA for a sole proprietor would in any case sit at Kane County level and is not searchable through the state site.",
+    "An observable product catalogue does exist: vantacollective.co is a live Shopify storefront titled 'VANTA COLLECTIVE | Coming Fall 2026', carrying named garments with photography (e.g. 'VANTA Built From Silence Pullover Set', 'VANTA Rose Denim One-Piece', 'Silence Fox Denim Short Set') and collections for Men, Women, VANTA JR and Accessories. This is therefore not the no-product-anywhere case. However every item is marked 'Coming Soon', priced $0.00 USD and 'Sold out', so nothing is actually purchasable, and no independent listing, social account, marketplace presence or review places the business in Elgin, Illinois. [https://vantacollective.co/]",
+    "The representative's name was not found as officer, member, manager or registered agent on any state filing (the Illinois registry blocked automation), not as a licence holder, and not on the business's own channels: the site has no about page, no owner byline, no named contact and no linked Instagram, TikTok, Facebook or other social account, and no review profile with owner replies exists. No scam, complaint or fraud report naming the business or the representative was found. The statement descriptor VANTACOLLECTIVE.CO is the business name, not a personal name, so there is no descriptor mismatch to assess. Nothing contradicts the representative's stated role. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://vantacollective.co/policies/contact-information]",
+    "No independent presence of any age was found: no dated reviews, no business listings, no local news, no directory entries (including the Elgin Area Chamber member directory) and no complaint, scam or fraud reports referencing Vanta Collective or vantacollective.co. Searches surfaced only unrelated entities. The Internet Archive was returning 'Temporarily Offline' and its availability API reported no snapshots, so domain age could not be confirmed there. On-site indicators point to a very new operation: the page title reads 'Coming Fall 2026', the footer reads 2026, and Shopify CDN asset version timestamps on the product images correspond to roughly September-October 2026. Independent presence of one year or more is not established. [https://archive.org/wayback/available?url=vantacollective.co]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Re-run the Illinois Secretary of State business entity search manually (apps.ilsos.gov blocked automation) for 'VANTA' / 'VANTA COLLECTIVE', and check the Kane County Clerk assumed-name (DBA) index for an Elgin sole-proprietor filing.",
+    "Check Illinois Department of Revenue MyTax for an active retailer's Certificate of Registration (IBT number) and whether the City of Elgin requires a home-occupation or general business licence for an online apparel seller.",
+    "Ask the merchant for the brand's Instagram/TikTok handle - no social account could be found anywhere, which is unusual for a streetwear label launching on a drop model.",
+    "Confirm when the store actually goes live and why every SKU is listed at $0.00 and 'Sold out'; a $0.00 catalogue cannot support legitimate card volume today.",
+    "Verify the merchant controls info@vantacollective.co (the site's published address) given the Stripe account uses an unrelated personal iCloud address.",
+    "Obtain fulfilment and supplier evidence (manufacturer, sample photos, inventory) before enabling material processing limits, and re-check the Internet Archive for vantacollective.co once archive.org is back online to establish true domain age.",
+    "Confirm domain registration date via a registrar WHOIS/RDAP lookup - RDAP endpoints returned no usable data from this environment."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://vantacollective.co/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "A real pre-launch apparel storefront with a product catalogue exists, but no sellable inventory and no independent footprint tying the business to the stated city.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://vantacollective.co/policies/contact-information",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "No public source links or contradicts the representative to this business; reliance falls entirely on Stripe's own identity verification.",
+     "dimension": "identity"
+    },
+    {
+     "url": "https://vantacollective.co/pages/contact",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "Stated MCC and descriptor match the observable apparel merchandise.",
+     "dimension": "businessModel"
+    },
+    {
+     "url": "https://archive.org/wayback/available?url=vantacollective.co",
+     "sourceType": "search",
+     "checkedAt": "2026-10-31",
+     "establishes": "No independent or dated third-party history; all available signals indicate the brand is weeks old, well short of one year.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Vanta Collective is a genuine but brand-new, pre-launch online apparel label: vantacollective.co is a real, custom-themed Shopify store with men's, women's, children's and accessories collections, a published trade name and info@ email, and a statement descriptor that matches the domain exactly - so contact coherence and MCC 5691 fit are both clean. The material concern is maturity rather than any contradiction: every product is 'Coming Soon', priced $0.00 and marked sold out, the title reads 'Coming Fall 2026', and CDN asset timestamps place the store's creation around September-October 2026, roughly a month before the Stripe connection on 2026-10-29. There is zero independent footprint - no social accounts, listings, reviews, news or complaints - nothing places the business in Elgin, Illinois, and the representative could not be tied to the business through any permitted KYB source, leaving identity resting solely on Stripe's own verification. The Illinois SOS registry blocked automation, but entity type is Individual so no corporate registration is expected; the rubric yields 0 risk points and the residual risk is launch-stage risk - recommend conservative volume limits pending the manual checks above.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-31T06:05:39+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:48:05+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-30T09:38:16+00:00",
    "enabledWindowStart": "2026-10-30T00:13:07+00:00",
    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
@@ -159,13 +234,13 @@
    "accountId": "acct_1UW3hx7np7DQ3oqi",
    "merchantId": "5382375",
    "name": "windingriver. dist",
-   "score": 0,
+   "score": 22,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 15,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -178,28 +253,36 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Florida Sunbiz could not be searched: search.sunbiz.org returned a Cloudflare interstitial (HTTP 403) on both the entity-name search for 'winding river'/'windingriver' and the fictitious-name search, so the registry blocked automation and no filing or DBA could be confirmed or excluded. Web searches for a Sunbiz 'Winding River' fictitious name in Haines City returned only generic Florida fictitious-name guidance, no record. The entity type is Individual (sole proprietor), so the absence of a corporate registration is not itself a contradiction; a Florida fictitious-name registration would have corroborated the trading name but none was observed. A DR-11 sales tax certificate is not publicly searchable and selling fishing tackle requires no special state licence.",
+    "The statement descriptor 'PAUL RASCHKE' is a personal name that matches the representative name on the Stripe account, so the descriptor-mismatch contradiction does not apply - the descriptor and the representative appear to be the same person. Beyond that, the representative could not be located on any permitted KYB source: the Florida state filing could not be searched (Sunbiz blocked automation), no licence record applies, the business has no own channels, review replies, social page or marketplace profile, and searches of the name in connection with Haines City or with 'Winding River' in Florida returned nothing about this business and no scam, complaint or fraud reports. No people-search or data-broker sources were used. Nothing contradicts the representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website is declared and none appears to exist: windingriverdist.com, windingriverdistributing.com and windingriver.dist all return NXDOMAIN in DNS, and no site for this business surfaced in search. The email is a free webmail address whose handle echoes the trading name and describes a trade rather than payment collection, and the trading name likewise does not describe payment collection, so the 10-point case does not apply. The statement descriptor is a personal name rather than a random string, so the 10-point descriptor case does not apply either - but a personal-name descriptor on a merchant trading as 'windingriver. dist' is a cardholder-recognition risk and is flagged for manual follow-up.",
+    "No dated independent evidence of this business was found: no reviews, no business-directory or marketplace listings, no local news mentioning 'Winding River' as a business in Haines City or Polk County, and no complaint or scam reports against the trading name or the email address. Independent presence of one year or more could neither be confirmed nor excluded, and nothing adverse was found, so this scores 0 rather than the 8-point adverse-report case."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The merchant describes itself as a distributor ('dist') of jewelry, fishing tackle and clothing, i.e. a goods seller, but no observable sales channel or product exists anywhere. Targeted searches for an eBay, Etsy, Amazon, Facebook Marketplace or other seller profile under 'windingriver', 'winding river dist' or the email handle returned only unrelated sellers; searches for a Google/Facebook/Instagram page or any business listing placing 'Winding River' in Haines City FL returned only real-estate pages for Winding Lane and the Crosswinds subdivision; and a Polk County flea-market/vendor search surfaced only International Market World in Auburndale with no vendor of this name. With no declared website and no physical premises implied, this is an online/remote goods seller with no observable product anywhere, which is the 15-point case rather than the 0-point service-business case, because retail distribution of physical goods normally leaves a listing, storefront or marketplace trail. Established by exhaustive search; no page could be loaded that evidences the absence.",
+    "MCC 7299 is 'Other Services - Miscellaneous Personal Services', which is incoherent with the stated activity: 'sales of jewelry fishing tackle and clothing' plus a trading name ending in 'dist' (distribution) is retail/wholesale of physical goods, which maps to 5944 (jewelry), 5941 (sporting goods) or 5651 (clothing), not to a personal-services code. The descriptor itself is a personal name and carries no signal of the trade. No digital-goods or payment-collection pattern is present, so this is the 7-point incoherence case rather than the 10-point case. Assessed from the application data and the absence of any observable storefront."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Run the Florida Sunbiz entity-name and fictitious-name searches manually (browser, not automation) for 'winding river', 'windingriver' and 'winding river dist', plus an owner-name search, to confirm whether a DBA exists and who is named on it.",
+    "Obtain the Florida DR-11 resale certificate / sales tax registration and the Haines City or Polk County local business tax receipt for the sole proprietorship.",
+    "Require the merchant to evidence an actual sales channel: live marketplace seller profile, social or Marketplace storefront, flea-market or swap-shop booth agreement, or wholesale supplier invoices for jewelry, tackle and clothing.",
+    "Request supplier invoices and recent sales records to establish expected ticket size, volume and refund profile.",
+    "Reclassify the MCC to the appropriate retail code (5944 / 5941 / 5651) or require the merchant to justify 7299.",
+    "Change the statement descriptor from a personal name to the trading name (or a recognisable combination) to reduce cardholder-confusion chargebacks.",
+    "Confirm the payout bank account is held in the sole proprietor's or the DBA's name, and re-verify the business address in Haines City.",
+    "Consider a lower initial volume cap and a payout delay until an observable sales channel is evidenced."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "summary": "windingriver. dist is a Florida sole proprietorship whose stated business is distribution of jewelry, fishing tackle and clothing, but after a focused search no sales channel of any kind could be observed - no website (candidate domains do not resolve), no marketplace seller profile, no social or local listing placing the business in Haines City - which is the main risk driver (operating contradiction, 15). The MCC is also wrong for the stated activity: 7299 Miscellaneous Personal Services against goods retail that belongs in 5944/5941/5651 (businessModel contradiction, 7). The statement descriptor is a personal name but it matches the account representative, so the descriptor-mismatch identity contradiction does not apply; nothing adverse was found on the representative, and identity and bank ownership rest solely on Stripe's verified status. Florida Sunbiz blocked automated searching (Cloudflare 403), so the legal dimension is unverified and a manual registry check plus evidence of real inventory and a real sales channel should be obtained before processing scales. Total risk 22 points.",
+   "reviewCompleteness": 50,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-31T06:05:39+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:48:05+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-30T09:38:16+00:00",
    "enabledWindowStart": "2026-10-30T00:30:14+00:00",
    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
@@ -221,9 +304,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 22,
+   "trustScore": 78,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -231,10 +314,10 @@
    "accountId": "acct_1UW4pO9tl93nU890",
    "merchantId": "4699761",
    "name": "Guilty Creations",
-   "score": 0,
+   "score": 15,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 15,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -250,28 +333,49 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), so no Tennessee corporate registration is expected and its absence is not a contradiction. The Tennessee Secretary of State Business Services portal homepage loaded, but its business-record search is an interactive ASP.NET postback form that cannot be queried by automation, so no filing could be checked; attempted once and not retried. A TN sales-tax certificate is not publicly searchable, and no McNairy County / Selmer business licence record for 'Guilty Creations' was found in the county business directory. [https://tnbear.tn.gov/Default.aspx]",
+    "The statement descriptor is a personal name that MATCHES the Stripe representative's name, so the descriptor-mismatch contradiction does not apply - this was checked explicitly and there is no second, different person involved. Searches of the state filing portal, the McNairy County business directory, local news and complaint/scam sources found no public record tying the representative to this business or to any other business, and nothing contradicts the declared relationship. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website is declared and none was found under any 'guiltycreations' or 'Guilty Creations' spelling; the only 'Guilty' apparel sites located are unrelated brands in other states or countries. The declared email is a generic free-mail handle that does not describe payment collection, and the business name does not describe payment collection either, so neither the 10-point nor the 6-point contact contradiction applies. The statement descriptor is a personal name rather than the trading name, which is a cardholder-recognition concern but not a random string.",
+    "MCC 5691 (Men's and Women's Clothing Stores) is broadly coherent with the stated activity of selling custom clothing, with jewelry and drinkware as adjacent sidelines typical of a small custom-print/craft brand; a decorated-goods seller could alternatively sit under 5999 or 7336, but 5691 is not incoherent for a clothing-led mix. No observable storefront or product catalogue exists, so what the business actually sells could not be confirmed against the MCC. The business name and description describe making and selling goods, not collecting payments.",
+    "No dated independent presence of any length was found: no reviews, no directory listing, no filings, no local news coverage and no social posts referencing 'Guilty Creations'. Equally, no scam reports, BBB Scam Tracker entries, fraud complaints or non-delivery reports about the business or its representative were found, so no history contradiction applies. The Stripe account was connected on 2026-10-30, one day before this check."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No observable product or storefront exists anywhere for 'Guilty Creations': no Etsy shop, no Facebook or Instagram page, no TikTok Shop, no Square/Shopify store, no craft-fair or vendor listing, and no marketplace seller profile. The McNairy County business directory indexes 2,295 local businesses including 49 under Apparel & Jewelry and 43 under Arts, Crafts & Photography, and 'Guilty Creations' appears in none of them, nor does any similarly named apparel or craft business in Selmer. For an online-only custom-goods seller, a complete absence of any observable product is an operating contradiction. [https://mcnairybusinesshub.com/category/apparel-jewelry]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Ask the merchant for a live sales channel: Etsy/Facebook/Instagram/TikTok shop URL, Shopify or Square storefront, or photographs of recent custom orders with order numbers.",
+    "Obtain the McNairy County / City of Selmer business licence and the Tennessee sales-tax certificate, and confirm the registered business address.",
+    "Manually run the Tennessee Secretary of State business-name search at tnbear.tn.gov for 'Guilty Creations' and for any DBA filed by the representative, since the search form cannot be queried by automation.",
+    "Confirm the representative's ownership of the business through a bank statement or supplier invoice in the business name.",
+    "Because the statement descriptor is a personal name rather than 'Guilty Creations', require a descriptor cardholders will recognise to reduce unrecognised-charge chargebacks.",
+    "Request expected monthly volume, average ticket and fulfilment lead time, and consider a rolling reserve or delayed payouts until a first batch of orders is shown to be delivered."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://tnbear.tn.gov/Default.aspx",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "No registration is expected for an individual, and the TN registry search itself could not be executed by automation.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://mcnairybusinesshub.com/category/apparel-jewelry",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-31",
+     "establishes": "No independent evidence that the business operates or sells anything, in Selmer TN or online.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Guilty Creations has no observable footprint of any kind: no website, no social or marketplace storefront, no product listings, and no entry in a McNairy County directory that indexes 2,295 local businesses including 49 apparel/jewelry and 43 arts/crafts sellers. That makes it an online-only goods seller with nothing observable to sell, which is the single material risk here (operating contradiction, 15 points). Nothing adverse was found - no scam reports, no complaints, no conflicting business ties - and the statement descriptor matches the Stripe representative rather than naming a different person, so the identity mismatch contradiction explicitly does not apply. The account is one day old with Stripe identity verification passed; the remaining questions are commercial existence and cardholder recognition of a personal-name descriptor, both resolvable by asking the merchant for a live sales channel and a county business licence before lifting payout limits.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-31T06:05:39+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:48:05+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-30T09:38:16+00:00",
    "enabledWindowStart": "2026-10-30T01:41:58+00:00",
    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
@@ -293,9 +397,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 15,
+   "trustScore": 85,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -303,47 +407,80 @@
    "accountId": "acct_1UWBh56ugqY7knnI",
    "merchantId": "5383891",
    "name": "techindustry sagl",
-   "score": 0,
+   "score": 7,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "Swiss commercial register (Ticino, via the Moneyhouse mirror of the FOSC/SHAB publication) shows 'Tech Industry Sagl', CHE-424.355.542, register no. CH-501.4.031.291-1, Societa a garanzia limitata, registered seat Corso San Gottardo 54a, 6830 Chiasso TI, capital CHF 20'000, status 'attiva' (active), first entered 24.09.2026 and published in FOSC 260929/2026 on 29.09.2026 as a new incorporation; the UID matches the one printed in the website footer. Zefix REST returned HTTP 401 and onlineinfo.ch returned HTTP 403 (Cloudflare), so the Moneyhouse FOSC mirror was used; the entity is active and not in liquidation, but it is only about five weeks old. [https://www.moneyhouse.ch/it/company/tech-industry-sagl-10116339101]",
+    "The company's registered seat in the commercial register (Corso San Gottardo 54a, 6830 Chiasso) matches the shop address published on www.cityphonechiasso.ch, and the shop's published phone number appears in the independent search.ch/local.ch directory as the mobile line of the CityPhone24 retail business in Ticino, confirming a real Ticino phone-retail operation behind the brand. Caveat: no directory, map or review listing yet exists for the Chiasso branch itself - a local.ch query for 'cityphone chiasso' returned only three unrelated businesses - which is consistent with a shop opened weeks ago but means the Chiasso premises are not independently attested; Moneyhouse also notes three other entities registered at the same address. [https://tel.search.ch/bellinzona/viale-giuseppe-motta-2/cityphone24]",
+    "The representative matches the 'socio e gerente, con firma individuale' (member and managing officer with sole signature) of Tech Industry Sagl on the Ticino commercial register entry published in the FOSC and mirrored on Moneyhouse; a second person is recorded as co-member. The statement descriptor is the website domain, not a personal name, so no descriptor/person mismatch arises. No scam, complaint or fraud report naming the representative or the business was found. [https://www.moneyhouse.ch/it/company/tech-industry-sagl-10116339101]",
+    "www.cityphonechiasso.ch resolves (HTTP 200, real Next.js storefront) and is unambiguously this business: title 'Cityphone 2.0 - Tecnologia, riparazioni e usato a Chiasso', schema.org ElectronicsStore with legalName 'Tech Industry Sagl', address Corso San Gottardo 54A, 6830 Chiasso, and a footer reading '2026 Tech Industry Sagl - CHE-424.355.542' - the same UID and address as the commercial register. The descriptor CITYPHONECHIASSO.CH is the site's own domain and trading name, so it will be recognisable on cardholder statements. The site's contact email is a generic free-mail address matching the legal name rather than a domain mailbox, and the profile email differs from it - low significance for a small Swiss retailer, not a contradiction. [https://www.cityphonechiasso.ch/]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
-    "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "No independent presence of one year or more could be established for this merchant. Tech Industry Sagl was first entered in the commercial register on 24.09.2026 (FOSC publication 29.09.2026), roughly five weeks before the Stripe connection on 2026-10-30; the storefront brands itself 'Cityphone 2.0' and the website carries a 2026 copyright. local.ch returned no listing or review for a Cityphone in Chiasso, and the related CityPhone24 directory entries in Bellinzona and Lugano carry no customer feedback. No scam, complaint or fraud report about the business, the brand or the representative was found, so nothing negative is on record - there is simply no dated independent track record for the Chiasso operation. [https://www.local.ch/it/q/chiasso/cityphone]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MCC 5734 (Computer Software Stores) does not describe what the business observably sells. The website offers new, used and refurbished smartphones, computers/Mac, tablets and accessories, professional repairs (screen, battery) for phones, PCs and tablets, and trade-in valuations, with free shipping across Switzerland and Europe priced in CHF; its own structured data classifies it as 'ElectronicsStore', and the registered corporate purpose covers development, production, sale, installation, maintenance and repair of electronic and electrotechnical equipment, systems, components and software. No software retailing is observable anywhere on the site. The appropriate codes are 5732 (Electronics Stores) and/or 7622 (Electronics Repair). This is a miscoding within the same consumer-electronics family rather than a disguise for a restricted vertical, but it should be corrected; note also that the shop ships cross-border in Europe, so a material share of volume will be card-not-present rather than in-store. [https://www.cityphonechiasso.ch/]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Obtain the official Zefix / Ticino register extract (or a certified FOSC extract) for CHE-424.355.542 to confirm current status, signatories and quota holders first-hand, since Zefix blocked automated access and the data used came from the Moneyhouse FOSC mirror.",
+    "Reclassify the account from MCC 5734 to 5732 (Electronics Stores) or 7622 (Electronics Repair), and capture a written product description, since none was supplied.",
+    "Confirm the relationship between Tech Industry Sagl / 'Cityphone 2.0' Chiasso and the existing CityPhone24 shops in Lugano and Bellinzona, whose directory entry carries the same phone number - same group, franchise, or merely a reused number?",
+    "Verify physical occupancy of Corso San Gottardo 54a, 6830 Chiasso (lease or utility bill, shop photo/signage): three other entities are registered at the same address and no directory, map or review listing exists for the Chiasso branch.",
+    "Given free shipping across Europe, quantify the expected split between in-store card-present and cross-border e-commerce volume, and review refurbished/used-device and trade-in warranty and returns terms for chargeback exposure.",
+    "Confirm the business email and bank account are controlled by the Sagl rather than a personal free-mail account, and reconcile the two email addresses on file."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.moneyhouse.ch/it/company/tech-industry-sagl-10116339101",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "The Sagl exists, is active in the Swiss commercial register, and its registered name, UID and Chiasso address match the merchant profile and the website.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://tel.search.ch/bellinzona/viale-giuseppe-motta-2/cityphone24",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-31",
+     "establishes": "A real Ticino phone/electronics retail operation is tied to the merchant's published phone number and the registered Chiasso address, though the Chiasso storefront itself has no independent listing yet.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.cityphonechiasso.ch/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "The website is live, is operated by the registered Sagl, and the statement descriptor coheres with the trading name customers will recognise.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://www.local.ch/it/q/chiasso/cityphone",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-10-31",
+     "establishes": "The merchant is a newly incorporated entity with no verifiable operating history of its own, and equally no adverse reports.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "The legal entity checks out: Tech Industry Sagl, CHE-424.355.542, is active in the Ticino commercial register at Corso San Gottardo 54a, 6830 Chiasso, with the Stripe representative recorded as socio e gerente with sole signature, and the website footer publishes the same UID and address - so the legal-name versus trading-name gap ('Cityphone 2.0' / cityphonechiasso.ch) is properly corroborated. The website is a genuine, fully built storefront for a phone and computer shop with repairs and trade-ins, the descriptor matches the trading domain, and the brand's phone number also appears in the independent Swiss directory under CityPhone24 in Ticino. The main substantive issue is MCC 5734 (Computer Software Stores), which does not match an electronics retail and repair business - 5732 or 7622 is correct - and the business also ships across Europe, implying more card-not-present volume than the coding suggests. Residual risk is newness, not legitimacy: the company was incorporated on 24.09.2026, roughly five weeks before onboarding, with no reviews, no Chiasso directory listing, three other entities registered at the same address, and no adverse reports found anywhere.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-31T06:05:39+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:48:05+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-30T14:08:28+00:00",
    "enabledWindowStart": "2026-10-30T09:01:52+00:00",
    "enabledWindowEnd": "2026-10-30T14:08:28+00:00",
@@ -365,8 +502,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 7,
+   "trustScore": 93,
    "band": "Very low risk",
    "action": "Normal monitoring"
   }
