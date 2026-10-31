@@ -4,21 +4,21 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-10-26 Europe/London",
   "cohortDate": "2026-10-26",
-  "reviewedAt": "2026-10-27T00:03:07+00:00",
+  "reviewedAt": "2026-10-31T07:45:01+00:00",
   "count": 4,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-10-27T00:03:07+00:00",
+ "reviewedAt": "2026-10-31T07:45:01+00:00",
  "merchants": [
   {
    "id": "acct_1U55Dy8meMc9ORmQ",
    "accountId": "acct_1U55Dy8meMc9ORmQ",
    "merchantId": "5109532",
    "name": "Cantinho Brasileiro",
-   "score": 0,
+   "score": 18,
    "riskDimensions": {
-    "legal": 0,
-    "operating": 0,
+    "legal": 8,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -33,29 +33,42 @@
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The representative's name could not be found on any permitted KYB source: no South Carolina state filing could be loaded, no licence record carries the name (the FSIS establishment listing for the one Lexington SC Brazilian meat processor shows no officer or owner name), the business has no own channels, review replies, social pages or local news coverage to check, and no scam or complaint reports naming the business or the representative were found. The statement descriptor (CANTINHO BRASILEIRO) is the business name, not a personal name, so there is nothing to compare against. Nothing found contradicts the representative's stated role. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "The merchant declared no website and no website for a Cantinho Brasileiro in Lexington SC could be found in any search, so there is no site to resolve, park or misattribute. The statement descriptor matches the declared business name exactly, which is coherent. The account email handle names a cleaning service in SC rather than a Brazilian food business; searches for a cleaning business of that name in Lexington SC found no registered or listed match, so no link between a cleaning business and this merchant could be established either way. An email handle naming a different trade is reported but not scored under this rubric, and the handle does not describe payment collection, so this is unverified rather than a contradiction.",
+    "MCC 5422 (freezer and locker meat provisioners / meat markets) is internally coherent with the declared activity of a Brazilian sausage/charcuterie manufacturer operating a space selling Brazilian products, and nothing about the name or description suggests payment collection or digital goods. However, no page showing what this business observably sells or produces could be found or loaded, so the coherence is asserted rather than evidenced and the MCC cannot be confirmed against real activity.",
+    "No dated independent presence was found: no reviews, directory listings, news articles, filings or social posts referencing a Cantinho Brasileiro in Lexington or anywhere in South Carolina at any date. No scam, fraud, chargeback or complaint reports naming the business or its representative were found either. The account connected on 2026-08-16 and has no traceable history predating that."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No USDA/FSIS establishment registration exists under the name Cantinho Brasileiro: searches of the FSIS Meat, Poultry and Egg Product Inspection Directory for this name returned nothing, while the directory does list a different federally inspected Brazilian meat and poultry processor in the same city (Brazilian Taste, M45640+P45640, 235 Two Notch Rd., Lexington SC 29073, grant date 16 Jul 2021, last confirmed active 28 Apr 2025) at the loaded URL below. A business describing itself as a sausage/charcuterie manufacturer requires a federal or SC state meat inspection grant, and none was found for this merchant name. Separately, the South Carolina Secretary of State portal (businessfilings.sc.gov) could not be loaded by the tools available in this session, so the entity registration itself is UNVERIFIED rather than disproven, and no SC DHEC retail food permit record could be loaded either; both must be checked manually. [https://www.fsis.usda.gov/inspection/fsis-inspected-establishments/brazilian-taste]",
+    "No independent footprint of any kind places Cantinho Brasileiro in Lexington, South Carolina. Repeated searches for a Google/Yelp/Facebook/Instagram listing, address or phone in Lexington SC (ZIPs 29072/29073) and the wider Columbia/West Columbia/Cayce area returned only same-named businesses in Culver City CA, Philadelphia PA, Barcelona and Portugal, plus unrelated Brazilian businesses in SC. The only loaded record covering Brazilian meat businesses in Lexington SC is the FSIS establishment page below, which names a different establishment and contains no entry for this merchant. A sausage manufacturer plus a retail space selling Brazilian products requires licensed physical premises, so a complete absence of any listing is a contradiction. [https://www.fsis.usda.gov/inspection/fsis-inspected-establishments/brazilian-taste]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manually search businessfilings.sc.gov (SC Secretary of State) for 'Cantinho Brasileiro' and similar names; capture entity status, formation date, registered agent and officers - this portal could not be loaded in this session.",
+    "Manually run the FSIS MPI Directory live search and the SC Meat-Poultry Inspection Department state list for any grant held by this merchant, and check SC DHEC retail food permits for a Lexington SC premises under this name.",
+    "Determine whether the merchant is operating under or inside the existing FSIS-inspected establishment 'Brazilian Taste' (M45640+P45640, 235 Two Notch Rd., Lexington SC 29073) - same city, same trade - and if so obtain the DBA documentation. Nothing in the public record currently connects the two; do not assume a link.",
+    "Ask the merchant for the physical premises address, the meat-processing licence/grant number, the Lexington County business licence, and a website or Google/Facebook/Instagram page.",
+    "Ask the merchant to explain the mismatch between the account email handle (which names a cleaning service) and the declared Brazilian charcuterie business, and whether a cleaning business shares the account or bank relationship.",
+    "Confirm with Stripe that the verified legal entity name on file matches 'Cantinho Brasileiro' and that the bank account is in the company's name."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.fsis.usda.gov/inspection/fsis-inspected-establishments/brazilian-taste",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "A required meat-processing licence/establishment grant was not found for this merchant name, although the register demonstrably covers Lexington SC Brazilian meat processors; state entity registration could not be checked.",
+     "dimension": "legal"
+    }
+   ],
+   "summary": "Cantinho Brasileiro has no discoverable public existence: no listing, review, social page, website or news item places a business of this name in Lexington SC, and no meat-processing licence or establishment grant was found under the name even though the FSIS directory demonstrably covers Lexington SC Brazilian meat processors and lists a different one. That absence matters because the declared activity - sausage manufacturing plus a retail space for Brazilian products - cannot lawfully be carried out without licensed premises, so a zero footprint is a real contradiction rather than a thin-file result. The SC Secretary of State portal could not be loaded in this session, so the company registration itself remains unchecked and is the most important manual follow-up, alongside confirming whether this merchant trades through an existing inspected establishment. Total risk 18 points (legal 8, operating 10) - recommend holding payouts pending documentary evidence of premises and licence.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-27T00:03:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:45:01+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-26T14:16:01+00:00",
    "enabledWindowStart": "2026-10-26T00:09:47+00:00",
    "enabledWindowEnd": "2026-10-26T14:16:01+00:00",
@@ -69,7 +82,7 @@
    "location": "Lexington, SC, US",
    "email": "anapaulacleaningservicessc@gmail.com",
    "website": null,
-   "mcc": "5499",
+   "mcc": "5422",
    "statementDescriptor": "CANTINHO BRASILEIRO",
    "productDescription": "Somos uma Indústria de Embutidos e temos um espaço com os principais produtos brasileiros.",
    "entityType": "Company",
@@ -77,9 +90,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 18,
+   "trustScore": 82,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -87,13 +100,13 @@
    "accountId": "acct_1UUaD06quEC1gEap",
    "merchantId": "3242820",
    "name": "JK Candy",
-   "score": 0,
+   "score": 35,
    "riskDimensions": {
-    "legal": 0,
-    "operating": 0,
+    "legal": 8,
+    "operating": 10,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -105,29 +118,62 @@
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The representative's name was not found as officer, member, manager or registered agent on any state filing, not as a licence holder in the NYS retail food store or NYC DCWP registers, and not on any business-owned channel or review reply, because no such filing, licence or channel for JK Candy exists to check; nothing publicly contradicts the representative either, and the statement descriptor JKCANDY.COM is a domain rather than a personal name so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No dated reviews, business listings, licence filings, news items, BBB profile or scam/complaint reports were found for JK Candy of the Bronx or for the representative, so independent presence of one year or more could not be established; the archived jkcandy.com history from 2024-2025 belongs to a Polish-language sweet shop and cannot be attributed to this merchant, and the 3,812 lifetime POS receipts are Loyverse-internal rather than independent evidence. No adverse reports were found either. [http://web.archive.org/cdx/search/cdx?url=jkcandy.com&output=json&limit=20&collapse=timestamp:6]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "Entity type is Individual, so no NY corporate registration is expected and its absence is not held against the merchant; however a NY retail candy/grocery shop needs a NYS Dept of Agriculture & Markets retail food store licence and typically a NYC DCWP licence, and a direct query of the NYS retail food store register returned no 'JK CANDY' anywhere in the state (only an unrelated JK & SONS CORPORATION in the Bronx), while the NYC DCWP legally-operating-businesses dataset returned no JK CANDY citywide and no Bronx match. The NY DOS public inquiry API returned a server error and could not be used. [https://data.ny.gov/resource/9a8c-vfzj.json]",
+    "A candy/general-merchandise shop requires licensed physical premises, but repeated searches found no Google, Yelp, Facebook, Instagram, Nextdoor or BBB listing, no address and no phone placing 'JK Candy' in the Bronx or anywhere in New York; the only Bronx candy businesses returned were unrelated (Chocolate Place, Morris Candy Shop, Zig & Zag Candy, 181st Candy & Deli). [https://opengovny.com/food-store/708709]",
+    "jkcandy.com resolves (HTTP 200) but serves a Chinese-language gaming/gambling SEO page, with no reference to a Bronx candy business; the domain's current registration dates only from 2026-09-01 on Gname nameservers, roughly seven weeks before the 2026-10-25 Stripe connection, and the archived 2025-01-29 capture shows the domain previously hosted a Polish-language sweet shop with prices in zloty, while the 2024-03-24 capture was an unmodified WordPress sample page. The statement descriptor JKCANDY.COM therefore points cardholders at a site belonging to someone other than this merchant. [https://jkcandy.com]",
+    "MCC 5399 would be unremarkable for a bodega-style candy and general-merchandise shop, but no product, menu, catalogue, storefront photo or listing for JK Candy could be observed anywhere, and the only asset carrying the trading name - the jkcandy.com domain used as the statement descriptor - shows Chinese gambling/game content rather than merchandise; the historical content on that domain was a Polish-zloty sweets e-shop, incompatible with a US Bronx retailer. The MCC and descriptor are therefore not supported by anything observable. [https://jkcandy.com]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manually run the NY Department of State entity search at apps.dos.ny.gov/publicInquiry for 'JK CANDY' and for any assumed-name/DBA filing - the public API returned a server error during automated checks.",
+    "Ask the merchant for the physical Bronx store address, the NYS Certificate of Authority (sales tax) number and the NYS Dept of Agriculture & Markets retail food store licence number, then confirm the licence holder name matches the Stripe representative.",
+    "Ask the merchant to explain jkcandy.com: why the statement descriptor points to a domain registered 2026-09-01 that serves Chinese-language gambling content, and whether they control the domain at all; require a corrected descriptor before releasing payouts if they do not.",
+    "Pull the Loyverse POS account detail: store address on the POS profile, device/IP geography, item catalogue and average ticket, and reconcile against the claimed Bronx candy shop; explain the eight-month gap between the last POS sale (2026-03-01) and the Stripe connection (2026-10-25).",
+    "Request photographic evidence of the storefront and a utility bill or lease in the business name at the Bronx address."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://data.ny.gov/resource/9a8c-vfzj.json",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "No applicable NY food-retail or NYC consumer-affairs licence exists under the merchant name after a real search of both registers.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://opengovny.com/food-store/708709",
+     "sourceType": "search",
+     "checkedAt": "2026-10-31",
+     "establishes": "No independent footprint of any kind places this business at a Bronx location.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://jkcandy.com",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "The website in the statement descriptor does not belong to this business and currently hosts unrelated foreign gambling content.",
+     "dimension": "contact"
+    },
+    {
+     "url": "http://web.archive.org/cdx/search/cdx?url=jkcandy.com&output=json&limit=20&collapse=timestamp:6",
+     "sourceType": "search",
+     "checkedAt": "2026-10-31",
+     "establishes": "No independent dated evidence of trading history, and no negative reports.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "JK Candy presents as a Bronx candy/general-merchandise retailer with a real Loyverse POS history (3,812 receipts), but it has no verifiable external existence: no NYS retail food store licence, no NYC DCWP licence, and no Google, Yelp, Facebook, Instagram or BBB listing placing it in the Bronx or anywhere in New York. The most serious issue is the statement descriptor: jkcandy.com was re-registered on 2026-09-01, weeks before the 2026-10-25 Stripe connection, and currently serves a Chinese-language gambling page, while its archived 2025 content was a Polish-zloty sweet shop, so the domain demonstrably belongs to someone other than this US merchant. Stripe has verified the individual's identity documents and bank ownership and nothing adverse was found about the representative, so the risk reads as an unverifiable business with a descriptor pointing cardholders at unrelated foreign content rather than identity fraud on its face. Recommend holding payouts pending the licence number, physical address evidence and a corrected descriptor.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-27T00:03:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:45:01+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-26T14:16:01+00:00",
    "enabledWindowStart": "2026-10-25T22:48:11+00:00",
    "enabledWindowEnd": "2026-10-26T14:16:01+00:00",
@@ -149,23 +195,23 @@
    "successfulTransactions": 3812,
    "hasTransacted": true,
    "lastTransactedAt": "2026-03-01",
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
-   "action": "Normal monitoring"
+   "riskScore": 35,
+   "trustScore": 65,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
   },
   {
    "id": "acct_1UUnuA8hP9onlrs2",
    "accountId": "acct_1UUnuA8hP9onlrs2",
    "merchantId": "5370435",
    "name": "Bradjay LLC",
-   "score": 0,
+   "score": 23,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 6,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -179,28 +225,49 @@
     "Ownership and age of bradjaypr.com have not been checked against a registrar.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Puerto Rico Departamento de Estado Registro de Corporaciones could not be searched programmatically: prcorpfiling.f1hst.com redirects to rcp.estado.pr.gov, which serves a JavaScript-only single-page portal with no reachable search endpoint (API probes returned Azure 404s), so the registry blocked automation and no conclusion can be drawn about whether Bradjay LLC is registered or active. Web searches against PR registry aggregators returned no matching entity, but that is not a substitute for a real registry search. The PR Departamento de Salud food permit and the Sabana Grande municipal patente required for catering were likewise not searchable through any reachable public index. [https://rcp.estado.pr.gov/en]",
+    "The representative's name was not found on any permitted KYB source: the PR corporate registry filing could not be retrieved, no licence record was reachable, the business has no website, social page, review profile or owner replies to inspect, and no local news or complaint report mentions the business. Nothing contradicts the representative either - no link to a different business, city or adverse report surfaced. The statement descriptor is BRADJAY LLC, the business name rather than a personal name, so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No dated evidence of independent presence was found: no reviews on Google, Trustpilot, WeddingWire or any catering directory, no business listings, no news coverage and no filings mention Bradjay LLC. Equally, no scam report, BBB Scam Tracker entry, fraud allegation or complaint about the business or its owner was found. The only dated signal is the expired Squarespace account on the email domain, which indicates a lapsed subscription but carries no verifiable start date."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No independent footprint of any kind places Bradjay LLC in Sabana Grande, Puerto Rico. Searches for the business name combined with Sabana Grande, with Puerto Rico catering, and with Facebook/Instagram returned zero results referencing the business; no Google Business listing, social page, directory entry, address or phone number was found. Catering is a food-handling trade requiring permitted physical premises in Puerto Rico, and no such premises or operating presence is observable anywhere. Established by exhaustive search; no page could be loaded that evidences the absence.",
+    "bradjaypr.com, the domain of the declared support email, resolves to Squarespace but does not serve a business website: requests redirect to https://www.bradjaypr.com/ and return HTTP 404 with the Squarespace system page titled 'Squarespace - Website Expired' and the text 'This account has expired.' The domain's MX record points to Google mail, so the mailbox is likely live, and the statement descriptor BRADJAY LLC matches the legal name, but the only declared web asset is an expired site-builder placeholder with no content identifying this business. [https://www.bradjaypr.com/]",
+    "MCC 7399 (Business Services, Not Elsewhere Classified) is a catch-all that does not describe the activities declared. The product description spans three unrelated trades - catering, logistics services and online product sales - which map to distinct MCCs (caterers 5811, freight/logistics 4214, online retail 5999); routing all three through 7399 obscures the food-service and card-not-present retail risk. No page anywhere shows a menu, a catering offer, a logistics service or a product catalogue, so there is no observable activity against which the MCC or descriptor can be reconciled."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual search of the PR Departamento de Estado Registro de Corporaciones at rcp.estado.pr.gov in a real browser for 'Bradjay' and variants, to confirm registration number, status, incorporation date, resident agent and the members/managers named on the filing, and whether the representative appears there.",
+    "If registered, pull the Puerto Rico Departamento de Salud food-handling permit and the Sabana Grande municipal patente for the catering activity, plus any PR transport authority if freight logistics is genuinely performed.",
+    "Ask the merchant for a working website or online store, a sample catering menu with pricing, and at least two recent customer invoices or event contracts; bradjaypr.com currently serves an expired Squarespace placeholder.",
+    "Obtain the business's physical operating address and confirm a permitted commercial kitchen exists there.",
+    "Require the merchant to restate the business model: decide which of catering, logistics or online retail is dominant and re-assign the MCC accordingly (5811, 4214 or 5999 rather than 7399), and set limits and a reserve appropriate to card-not-present deposits for future-dated events.",
+    "Confirm with Stripe which documents supported legal_entity_verification_status = verified, and whether the bank account owner name matches the registered entity."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://rcp.estado.pr.gov/en",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "Legal existence and good standing of the registered entity, and the catering permits it would need, are unconfirmed because the official PR registry is not machine-accessible.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://www.bradjaypr.com/",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "The merchant's only web presence is an expired Squarespace account, so nothing on the web confirms the contact details belong to an operating business.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Bradjay LLC (Sabana Grande, PR) has essentially no verifiable public existence: the PR corporate registry is JavaScript-only and blocked automated search, so registration could not be confirmed either way, and no listing, social page, review, directory entry or news item places the business in Sabana Grande or anywhere else. Its only declared web asset, the email domain bradjaypr.com, resolves to an expired Squarespace account returning HTTP 404, though the domain's Google mail records suggest the mailbox is live. The declared activity spans three unrelated trades (catering, logistics, online product sales) under a catch-all MCC 7399 that fits none of them, and no menu, service or product is observable anywhere. No adverse reports were found; the profile is thin rather than fraudulent, but payouts should not scale until a human confirms the registry filing, the catering permits and a real operating presence, and the MCC is corrected to the dominant trade.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-27T00:03:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:45:01+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-26T20:15:49+00:00",
    "enabledWindowStart": "2026-10-26T13:25:38+00:00",
    "enabledWindowEnd": "2026-10-26T20:15:49+00:00",
@@ -222,9 +289,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 23,
+   "trustScore": 77,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -232,13 +299,13 @@
    "accountId": "acct_1UUsR7GHImdFq9Sk",
    "merchantId": "5371298",
    "name": "MINY NIGHTS LLC\nMATTHEW L CLARK MBR\n% MATTHEW L CLARK MBR",
-   "score": 0,
+   "score": 31,
    "riskDimensions": {
-    "legal": 0,
-    "operating": 0,
+    "legal": 8,
+    "operating": 10,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 6,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -250,29 +317,56 @@
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The representative could not be confirmed or contradicted through permitted KYB sources. The NY DOS record for the LLC names no member, manager or officer (New York LLC filings do not disclose members) and lists only a commercial registered-agent service, so the filing neither names the representative nor names any other person as sole member. No NYSLA active or pending licence exists for this business, so there is no licence holder to compare against. The business's own ticketing pages carry no named organiser, officer or staff and no review replies exist because no review or listing presence was found. A search of the representative's name in connection with this business or Utica event programming returned only unrelated coverage involving a same-named person tied to a different organisation, which is a name match rather than a link to this merchant and is not treated as evidence. Separately, the account name field itself names a different individual as member (MBR) than the Stripe representative - a mismatch internal to the account record rather than a registry contradiction. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://data.ny.gov/resource/n9v6-gdp6.json?dos_id=8054239]",
+    "No independent history of any length was found, and no adverse history either. The only dated artefacts are the NY DOS filing of 2026-10-23 and a single ticketed event dated 2026-10-31 - the day of this check - on a Ticket Tailor organiser page that lists no past events. No dated reviews, business listings, directory entries, news coverage or prior event records exist for 'MINY NIGHTS' or 'Mural Institute of New York'. Searches for scam, complaint, refund or fraud reports against either name returned nothing, so there is no negative history to report; the entity is simply 8 days old with no observable track record. [https://www.tickettailor.com/events/muralinstituteofnewyork]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MINY NIGHTS LLC is a real registered entity: the NY Department of State corporations dataset returns DOS ID 8054239, MINY NIGHTS LLC, domestic limited liability company, Oneida County (the county containing Utica), initial DOS filing date 2026-10-23, registered agent ZenBusiness Inc., 41 State Street Suite 112, Albany NY 12207 - so name, entity type and state all match the account, though the filing is only 8 days old and predates the Stripe connection (2026-10-26) by 3 days. The required alcohol licence is absent: the NY State Liquor Authority Current Active Licenses dataset and the Current Pending Licenses dataset return no record for MINY NIGHTS, for any licensee or DBA containing 'MURAL', or for any premises on Cottage Place in Utica, while the same active dataset holds 181 licences for the city of Utica, confirming coverage. The declared event advertises a cash bar serving cocktails, beer and wine on 2026-10-31. [https://data.ny.gov/resource/n9v6-gdp6.json?dos_id=8054239]",
+    "The only evidence placing this business in Utica is the merchant's own Ticket Tailor page, which gives the venue as 'The Mural Institute of New York, 600 Cottage Pl., Utica NY 13502' in the 'Utica Arts District'. No independent footprint exists: searches for 'Mural Institute of New York', 'MINY Nights' and '600 Cottage Place' Utica returned no listing, social page, venue directory, arts-council entry or local news item for this organisation, returning instead the unrelated Munson-Williams-Proctor Arts Institute and Oneida Square Arts District. Instagram served a login wall rather than profile metadata. This is a business type requiring licensed physical premises (a 21+ venue with a bar and live music running to 2:00 AM) with no observable independent presence at the stated address. [https://www.tickettailor.com/events/muralinstituteofnewyork/2478292]",
+    "The declared URL resolves (HTTP 200) and plainly belongs to this merchant: the Ticket Tailor organiser 'Mural Institute of New York' lists a single event, 'MINY NIGHTS | Halloween Party', Sat 31 Oct 2026, 7:00 PM-2:00 AM, at 600 Cottage Pl., Utica NY 13502, matching the account name and city. The statement descriptor is the weakness: 'TICKETTAILOR.COM' is a third-party ticketing platform's domain, not a random string, but it names neither the merchant, the brand the customer bought under, nor the event, and the same descriptor would appear for any unrelated Ticket Tailor seller, so it does not identify this merchant to a cardholder. Scored at the lower end of the two contradiction rules because the website itself is genuine and correctly attributed, with the risk confined to descriptor non-recognition; this is aggravated by a single-date, advance-sale-only, no-door-sales event model, which concentrates dispute exposure. [https://www.tickettailor.com/events/muralinstituteofnewyork/2478292]",
+    "MCC 5812 (Eating Places, Restaurants) does not match what the merchant observably sells. The event page shows the card-funded product is admission only: '$25 tickets, RSVP early for a discount, advance tickets only, no sales at the door, 21+'. Food and drink are explicitly not sold by this merchant through this channel: the bar is described as a 'Cash Bar: Cocktails, Beer, Wine + NA Options' and hot food is sold separately onsite by a named third-party vendor. The product description supplied to Stripe is consistent with a ticketed event producer, not a restaurant. An admission-ticket MCC such as 7922 or 7929 would be coherent; 5812 is not, and it understates the deferred-delivery and event-cancellation risk that ticketing carries. [https://www.tickettailor.com/events/muralinstituteofnewyork/2478292]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Obtain the LLC's Articles of Organization and operating agreement to establish who the members are, and reconcile the member named in the account name field against the Stripe representative - the account record names two different individuals and NY DOS does not disclose members.",
+    "Require a current NYSLA on-premises licence or a temporary beer/wine/liquor permit covering 600 Cottage Place, Utica NY 13502 for 2026-10-31, or written confirmation that a separately licensed caterer holds the permit and that no alcohol revenue flows through this account.",
+    "Confirm the merchant's legal right to occupy 600 Cottage Place (lease, venue hire agreement or certificate of occupancy) and whether it is a licensed assembly venue - no independent source places any organisation at that address.",
+    "Reclassify the MCC from 5812 to an admission/ticketing code and change the statement descriptor from TICKETTAILOR.COM to one naming MINY NIGHTS or the Mural Institute of New York; Ticket Tailor descriptors are seller-configurable.",
+    "Apply deferred-delivery controls appropriate to a first-time single-event ticket seller: a payout reserve or delay until after the event date, a volume cap sized to the venue's lawful capacity, and monitoring for refund and chargeback spikes in the 10 days after 2026-10-31.",
+    "Ask the merchant for its public channels and for prior event history under any predecessor name, then re-check - Instagram served a login wall and could not be read in this pass."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://data.ny.gov/resource/n9v6-gdp6.json?dos_id=8054239",
+     "sourceType": "state-register",
+     "checkedAt": "2026-10-31",
+     "establishes": "The LLC is genuinely registered in the correct state and county but was formed days before onboarding, and no liquor licence or pending application exists for the alcohol service the business openly advertises.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://www.tickettailor.com/events/muralinstituteofnewyork/2478292",
+     "sourceType": "website",
+     "checkedAt": "2026-10-31",
+     "establishes": "A venue-based alcohol-serving operation has zero third-party corroboration of existing at the address it sells admission to, leaving the merchant's own sales page as the sole evidence of the venue.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.tickettailor.com/events/muralinstituteofnewyork",
+     "sourceType": "search",
+     "checkedAt": "2026-10-31",
+     "establishes": "The business has no trading history at all rather than a bad one: every verifiable datapoint is 8 days old or less, so prior-performance risk cannot be assessed.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "MINY NIGHTS LLC is genuinely registered in New York (DOS ID 8054239, Oneida County) and its declared Ticket Tailor page is authentic and matches the account's name, city and product description, so this is not an obvious fabrication. The risk is concentrated newness plus missing controls: the LLC was formed 2026-10-23, three days before the Stripe connection, the organisation has no independent footprint anywhere despite running a licensed-premises-style 21+ event with a bar, and no NYSLA active or pending liquor licence exists for the business, the name or the Cottage Place premises even though the same dataset holds 181 Utica licences. Coding and presentation are both wrong for the actual activity: MCC 5812 is applied to what the page shows is pure advance admission sales with a cash bar and a separate third-party food vendor, and the descriptor TICKETTAILOR.COM identifies the platform rather than the merchant, a combination that maximises non-recognition chargeback risk on a single-night, advance-only event. The representative could not be tied to the entity through any permitted KYB source and the account name field names a different individual as member, so ownership rests solely on Stripe's verification and should be documented before payouts are released.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-10-27T00:03:07+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-10-31T07:45:01+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-10-26T23:28:13+00:00",
    "enabledWindowStart": "2026-10-26T23:01:44+00:00",
    "enabledWindowEnd": "2026-10-26T23:28:13+00:00",
@@ -294,10 +388,10 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
-   "action": "Normal monitoring"
+   "riskScore": 31,
+   "trustScore": 69,
+   "band": "Moderate risk",
+   "action": "Monitor closely"
   }
  ]
 }

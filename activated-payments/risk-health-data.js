@@ -3,6 +3,6 @@
 // Detailed review records are loaded lazily from the detailFile referenced by each merchant.
 window.LV_RISK_CONFIG = {
   schemaVersion: 2,
-  generatedAt: "2026-10-31T07:42:04+00:00",
+  generatedAt: "2026-10-31T07:45:01+00:00",
   indexUrl: "risk-health/index.json"
 };
