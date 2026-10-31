@@ -1,0 +1,76 @@
+{
+  "accountId": "acct_1UW0Vs875fdmoZRt",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual, so no Illinois corporate registration is expected and a missing one is not adverse. The Illinois Secretary of State business entity search blocked automation (HTTP 403 Access Denied from its edge layer) on a single attempt and was not retried, so no state filing could be checked. No Illinois retailer sales-tax (IBT) registration or City of Elgin business licence was discoverable in search; an Illinois assumed-name/DBA for a sole proprietor would in any case sit at Kane County level and is not searchable through the state site.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No state or local registration evidence either way; registry blocked automation and sole-proprietor status means none is required."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "An observable product catalogue does exist: vantacollective.co is a live Shopify storefront titled 'VANTA COLLECTIVE | Coming Fall 2026', carrying named garments with photography (e.g. 'VANTA Built From Silence Pullover Set', 'VANTA Rose Denim One-Piece', 'Silence Fox Denim Short Set') and collections for Men, Women, VANTA JR and Accessories. This is therefore not the no-product-anywhere case. However every item is marked 'Coming Soon', priced $0.00 USD and 'Sold out', so nothing is actually purchasable, and no independent listing, social account, marketplace presence or review places the business in Elgin, Illinois.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "A real pre-launch apparel storefront with a product catalogue exists, but no sellable inventory and no independent footprint tying the business to the stated city.",
+      "url": "https://vantacollective.co/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative's name was not found as officer, member, manager or registered agent on any state filing (the Illinois registry blocked automation), not as a licence holder, and not on the business's own channels: the site has no about page, no owner byline, no named contact and no linked Instagram, TikTok, Facebook or other social account, and no review profile with owner replies exists. No scam, complaint or fraud report naming the business or the representative was found. The statement descriptor VANTACOLLECTIVE.CO is the business name, not a personal name, so there is no descriptor mismatch to assess. Nothing contradicts the representative's stated role. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "No public source links or contradicts the representative to this business; reliance falls entirely on Stripe's own identity verification.",
+      "url": "https://vantacollective.co/policies/contact-information"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "vantacollective.co resolves and is a genuine, themed Shopify storefront that clearly belongs to this business, not a parked domain or an unconfigured site-builder placeholder: it has custom branding ('BUILT FROM SILENCE / NOT BUILT FOR EVERYONE / MODERN LUXURY DISTINCTIVE DETAIL'), uploaded product and collection imagery, a working navigation tree and complete Shopify policy pages. The store's own contact page states 'Trade name: VANTA COLLECTIVE' and an info@vantacollective.co address. The statement descriptor VANTACOLLECTIVE.CO matches the domain and trade name exactly. Noted but not adverse: no phone number or business address is published on the site, and the Stripe account email is a personal iCloud handle rather than the info@ domain address.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The website, trade name and statement descriptor cohere and belong to this merchant.",
+      "url": "https://vantacollective.co/policies/contact-information"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5691 (Men's and Women's Clothing Stores) is coherent with what the brand observably sells. The storefront's navigation and collections cover Women's Tees, Sweatsuits, Shorts, Jeans and One-Pieces; Men's Tees, Sweatsuits, Shorts and Jeans; a VANTA JR children's line; and Accessories (Shoes, Hats, Sunglasses). The name and descriptor describe an apparel label, not payment collection, and the goods are physical rather than digital.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "Stated MCC and descriptor match the observable apparel merchandise.",
+      "url": "https://vantacollective.co/pages/contact"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of any age was found: no dated reviews, no business listings, no local news, no directory entries (including the Elgin Area Chamber member directory) and no complaint, scam or fraud reports referencing Vanta Collective or vantacollective.co. Searches surfaced only unrelated entities. The Internet Archive was returning 'Temporarily Offline' and its availability API reported no snapshots, so domain age could not be confirmed there. On-site indicators point to a very new operation: the page title reads 'Coming Fall 2026', the footer reads 2026, and Shopify CDN asset version timestamps on the product images correspond to roughly September-October 2026. Independent presence of one year or more is not established.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent or dated third-party history; all available signals indicate the brand is weeks old, well short of one year.",
+      "url": "https://archive.org/wayback/available?url=vantacollective.co"
+    }
+  ],
+  "evidenceNeeded": [
+    "Re-run the Illinois Secretary of State business entity search manually (apps.ilsos.gov blocked automation) for 'VANTA' / 'VANTA COLLECTIVE', and check the Kane County Clerk assumed-name (DBA) index for an Elgin sole-proprietor filing.",
+    "Check Illinois Department of Revenue MyTax for an active retailer's Certificate of Registration (IBT number) and whether the City of Elgin requires a home-occupation or general business licence for an online apparel seller.",
+    "Ask the merchant for the brand's Instagram/TikTok handle - no social account could be found anywhere, which is unusual for a streetwear label launching on a drop model.",
+    "Confirm when the store actually goes live and why every SKU is listed at $0.00 and 'Sold out'; a $0.00 catalogue cannot support legitimate card volume today.",
+    "Verify the merchant controls info@vantacollective.co (the site's published address) given the Stripe account uses an unrelated personal iCloud address.",
+    "Obtain fulfilment and supplier evidence (manufacturer, sample photos, inventory) before enabling material processing limits, and re-check the Internet Archive for vantacollective.co once archive.org is back online to establish true domain age.",
+    "Confirm domain registration date via a registrar WHOIS/RDAP lookup - RDAP endpoints returned no usable data from this environment."
+  ],
+  "summary": "Vanta Collective is a genuine but brand-new, pre-launch online apparel label: vantacollective.co is a real, custom-themed Shopify store with men's, women's, children's and accessories collections, a published trade name and info@ email, and a statement descriptor that matches the domain exactly - so contact coherence and MCC 5691 fit are both clean. The material concern is maturity rather than any contradiction: every product is 'Coming Soon', priced $0.00 and marked sold out, the title reads 'Coming Fall 2026', and CDN asset timestamps place the store's creation around September-October 2026, roughly a month before the Stripe connection on 2026-10-29. There is zero independent footprint - no social accounts, listings, reviews, news or complaints - nothing places the business in Elgin, Illinois, and the representative could not be tied to the business through any permitted KYB source, leaving identity resting solely on Stripe's own verification. The Illinois SOS registry blocked automation, but entity type is Individual so no corporate registration is expected; the rubric yields 0 risk points and the residual risk is launch-stage risk - recommend conservative volume limits pending the manual checks above."
+}
