@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UW4pO9tl93nU890",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), so no Tennessee corporate registration is expected and its absence is not a contradiction. The Tennessee Secretary of State Business Services portal homepage loaded, but its business-record search is an interactive ASP.NET postback form that cannot be queried by automation, so no filing could be checked; attempted once and not retried. A TN sales-tax certificate is not publicly searchable, and no McNairy County / Selmer business licence record for 'Guilty Creations' was found in the county business directory.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No registration is expected for an individual, and the TN registry search itself could not be executed by automation.",
+      "url": "https://tnbear.tn.gov/Default.aspx"
+    },
+    {
+      "dimension": "operating",
+      "points": 15,
+      "status": "contradiction",
+      "statement": "No observable product or storefront exists anywhere for 'Guilty Creations': no Etsy shop, no Facebook or Instagram page, no TikTok Shop, no Square/Shopify store, no craft-fair or vendor listing, and no marketplace seller profile. The McNairy County business directory indexes 2,295 local businesses including 49 under Apparel & Jewelry and 43 under Arts, Crafts & Photography, and 'Guilty Creations' appears in none of them, nor does any similarly named apparel or craft business in Selmer. For an online-only custom-goods seller, a complete absence of any observable product is an operating contradiction.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent evidence that the business operates or sells anything, in Selmer TN or online.",
+      "url": "https://mcnairybusinesshub.com/category/apparel-jewelry"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The statement descriptor is a personal name that MATCHES the Stripe representative's name, so the descriptor-mismatch contradiction does not apply - this was checked explicitly and there is no second, different person involved. Searches of the state filing portal, the McNairy County business directory, local news and complaint/scam sources found no public record tying the representative to this business or to any other business, and nothing contradicts the declared relationship. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No public source links or contradicts the representative's connection to the business; descriptor and representative names agree."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found under any 'guiltycreations' or 'Guilty Creations' spelling; the only 'Guilty' apparel sites located are unrelated brands in other states or countries. The declared email is a generic free-mail handle that does not describe payment collection, and the business name does not describe payment collection either, so neither the 10-point nor the 6-point contact contradiction applies. The statement descriptor is a personal name rather than the trading name, which is a cardholder-recognition concern but not a random string.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No web presence exists to verify or contradict; contact details are plausible but unconfirmed."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5691 (Men's and Women's Clothing Stores) is broadly coherent with the stated activity of selling custom clothing, with jewelry and drinkware as adjacent sidelines typical of a small custom-print/craft brand; a decorated-goods seller could alternatively sit under 5999 or 7336, but 5691 is not incoherent for a clothing-led mix. No observable storefront or product catalogue exists, so what the business actually sells could not be confirmed against the MCC. The business name and description describe making and selling goods, not collecting payments.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "Declared MCC is plausible for the stated product mix but cannot be confirmed against any observable product."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any length was found: no reviews, no directory listing, no filings, no local news coverage and no social posts referencing 'Guilty Creations'. Equally, no scam reports, BBB Scam Tracker entries, fraud complaints or non-delivery reports about the business or its representative were found, so no history contradiction applies. The Stripe account was connected on 2026-10-30, one day before this check.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent trading history of one year or more, and no adverse reports either."
+    }
+  ],
+  "evidenceNeeded": [
+    "Ask the merchant for a live sales channel: Etsy/Facebook/Instagram/TikTok shop URL, Shopify or Square storefront, or photographs of recent custom orders with order numbers.",
+    "Obtain the McNairy County / City of Selmer business licence and the Tennessee sales-tax certificate, and confirm the registered business address.",
+    "Manually run the Tennessee Secretary of State business-name search at tnbear.tn.gov for 'Guilty Creations' and for any DBA filed by the representative, since the search form cannot be queried by automation.",
+    "Confirm the representative's ownership of the business through a bank statement or supplier invoice in the business name.",
+    "Because the statement descriptor is a personal name rather than 'Guilty Creations', require a descriptor cardholders will recognise to reduce unrecognised-charge chargebacks.",
+    "Request expected monthly volume, average ticket and fulfilment lead time, and consider a rolling reserve or delayed payouts until a first batch of orders is shown to be delivered."
+  ],
+  "summary": "Guilty Creations has no observable footprint of any kind: no website, no social or marketplace storefront, no product listings, and no entry in a McNairy County directory that indexes 2,295 local businesses including 49 apparel/jewelry and 43 arts/crafts sellers. That makes it an online-only goods seller with nothing observable to sell, which is the single material risk here (operating contradiction, 15 points). Nothing adverse was found - no scam reports, no complaints, no conflicting business ties - and the statement descriptor matches the Stripe representative rather than naming a different person, so the identity mismatch contradiction explicitly does not apply. The account is one day old with Stripe identity verification passed; the remaining questions are commercial existence and cardholder recognition of a personal-name descriptor, both resolvable by asking the merchant for a live sales channel and a county business licence before lifting payout limits."
+}
