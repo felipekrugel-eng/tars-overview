@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UW3hx7np7DQ3oqi",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Florida Sunbiz could not be searched: search.sunbiz.org returned a Cloudflare interstitial (HTTP 403) on both the entity-name search for 'winding river'/'windingriver' and the fictitious-name search, so the registry blocked automation and no filing or DBA could be confirmed or excluded. Web searches for a Sunbiz 'Winding River' fictitious name in Haines City returned only generic Florida fictitious-name guidance, no record. The entity type is Individual (sole proprietor), so the absence of a corporate registration is not itself a contradiction; a Florida fictitious-name registration would have corroborated the trading name but none was observed. A DR-11 sales tax certificate is not publicly searchable and selling fishing tackle requires no special state licence.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No state-register corroboration of the trading name either way; Sunbiz must be checked manually."
+    },
+    {
+      "dimension": "operating",
+      "points": 15,
+      "status": "contradiction",
+      "statement": "The merchant describes itself as a distributor ('dist') of jewelry, fishing tackle and clothing, i.e. a goods seller, but no observable sales channel or product exists anywhere. Targeted searches for an eBay, Etsy, Amazon, Facebook Marketplace or other seller profile under 'windingriver', 'winding river dist' or the email handle returned only unrelated sellers; searches for a Google/Facebook/Instagram page or any business listing placing 'Winding River' in Haines City FL returned only real-estate pages for Winding Lane and the Crosswinds subdivision; and a Polk County flea-market/vendor search surfaced only International Market World in Auburndale with no vendor of this name. With no declared website and no physical premises implied, this is an online/remote goods seller with no observable product anywhere, which is the 15-point case rather than the 0-point service-business case, because retail distribution of physical goods normally leaves a listing, storefront or marketplace trail. Established by exhaustive search; no page could be loaded that evidences the absence.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No verifiable channel through which the stated goods are actually sold."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The statement descriptor 'PAUL RASCHKE' is a personal name that matches the representative name on the Stripe account, so the descriptor-mismatch contradiction does not apply - the descriptor and the representative appear to be the same person. Beyond that, the representative could not be located on any permitted KYB source: the Florida state filing could not be searched (Sunbiz blocked automation), no licence record applies, the business has no own channels, review replies, social page or marketplace profile, and searches of the name in connection with Haines City or with 'Winding River' in Florida returned nothing about this business and no scam, complaint or fraud reports. No people-search or data-broker sources were used. Nothing contradicts the representative. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "Descriptor and representative are consistent; no independent public tie between the representative and this business, and nothing adverse."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none appears to exist: windingriverdist.com, windingriverdistributing.com and windingriver.dist all return NXDOMAIN in DNS, and no site for this business surfaced in search. The email is a free webmail address whose handle echoes the trading name and describes a trade rather than payment collection, and the trading name likewise does not describe payment collection, so the 10-point case does not apply. The statement descriptor is a personal name rather than a random string, so the 10-point descriptor case does not apply either - but a personal-name descriptor on a merchant trading as 'windingriver. dist' is a cardholder-recognition risk and is flagged for manual follow-up.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No reachable web presence or business-controlled contact channel; only a free webmail address."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 7299 is 'Other Services - Miscellaneous Personal Services', which is incoherent with the stated activity: 'sales of jewelry fishing tackle and clothing' plus a trading name ending in 'dist' (distribution) is retail/wholesale of physical goods, which maps to 5944 (jewelry), 5941 (sporting goods) or 5651 (clothing), not to a personal-services code. The descriptor itself is a personal name and carries no signal of the trade. No digital-goods or payment-collection pattern is present, so this is the 7-point incoherence case rather than the 10-point case. Assessed from the application data and the absence of any observable storefront.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "MCC does not match the stated goods-retail business model, affecting risk pricing and interchange."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent evidence of this business was found: no reviews, no business-directory or marketplace listings, no local news mentioning 'Winding River' as a business in Haines City or Polk County, and no complaint or scam reports against the trading name or the email address. Independent presence of one year or more could neither be confirmed nor excluded, and nothing adverse was found, so this scores 0 rather than the 8-point adverse-report case.",
+      "sourceType": "search",
+      "checkedAt": "2026-10-31",
+      "establishes": "No track record, positive or negative, for the business."
+    }
+  ],
+  "evidenceNeeded": [
+    "Run the Florida Sunbiz entity-name and fictitious-name searches manually (browser, not automation) for 'winding river', 'windingriver' and 'winding river dist', plus an owner-name search, to confirm whether a DBA exists and who is named on it.",
+    "Obtain the Florida DR-11 resale certificate / sales tax registration and the Haines City or Polk County local business tax receipt for the sole proprietorship.",
+    "Require the merchant to evidence an actual sales channel: live marketplace seller profile, social or Marketplace storefront, flea-market or swap-shop booth agreement, or wholesale supplier invoices for jewelry, tackle and clothing.",
+    "Request supplier invoices and recent sales records to establish expected ticket size, volume and refund profile.",
+    "Reclassify the MCC to the appropriate retail code (5944 / 5941 / 5651) or require the merchant to justify 7299.",
+    "Change the statement descriptor from a personal name to the trading name (or a recognisable combination) to reduce cardholder-confusion chargebacks.",
+    "Confirm the payout bank account is held in the sole proprietor's or the DBA's name, and re-verify the business address in Haines City.",
+    "Consider a lower initial volume cap and a payout delay until an observable sales channel is evidenced."
+  ],
+  "summary": "windingriver. dist is a Florida sole proprietorship whose stated business is distribution of jewelry, fishing tackle and clothing, but after a focused search no sales channel of any kind could be observed - no website (candidate domains do not resolve), no marketplace seller profile, no social or local listing placing the business in Haines City - which is the main risk driver (operating contradiction, 15). The MCC is also wrong for the stated activity: 7299 Miscellaneous Personal Services against goods retail that belongs in 5944/5941/5651 (businessModel contradiction, 7). The statement descriptor is a personal name but it matches the account representative, so the descriptor-mismatch identity contradiction does not apply; nothing adverse was found on the representative, and identity and bank ownership rest solely on Stripe's verified status. Florida Sunbiz blocked automated searching (Cloudflare 403), so the legal dimension is unverified and a manual registry check plus evidence of real inventory and a real sales channel should be obtained before processing scales. Total risk 22 points."
+}
