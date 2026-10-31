@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UULpf7oMmz4cXIQ",
+  "reviewedAt": "2026-10-31",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Swiss commercial register could not be checked: the Zefix public REST search endpoint returned HTTP 401 (blocks automation) and the onlineinfo.ch mirror returned HTTP 403 behind a Cloudflare challenge, both on a single attempt. Independently of that, the merchant presents as an Individual / sole proprietorship (the business's own team page describes a one-person operation started in May 2017), and a Swiss sole proprietorship below the registration turnover threshold is not required to appear in the commercial register, so absence of an entry is not adverse. Postcode 5524 Niederwil places the business in canton Aargau (Bremgarten district), not Niederwil SO.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-10-31",
+      "establishes": "No registry contradiction; registration is not expected for this entity type and both register sources were machine-blocked."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing or social page placing the business in Niederwil was found: the Swiss telephone/business directory API (tel.search.ch) returns 0 results for 'zitaschen', local.ch and Instagram would not render for automated retrieval, and web searches for the brand returned nothing. The business is a home-atelier maker selling online and at seasonal markets rather than a licensed retail premises, and its product range is fully observable on its own site, so the no-footprint contradiction rules do not apply. Its own event page lists upcoming market stands at Zulauf AG Schinznach-Dorf, Schoenenwerd and Einkaufscenter Zugerland, and those third-party venues' pages do not name individual exhibitors.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-10-31",
+      "establishes": "No independent geographic corroboration, but also no footprint contradiction for this business type.",
+      "url": "https://tel.search.ch/api/?was=zitaschen"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "verified",
+      "statement": "The representative matches the named owner/sole proprietor on the business's own Impressum and contact pages, which identify the proprietor behind zitaschen.ch by exactly that name and give a Niederwil 5524 business address; the team page explains the brand name derives from the proprietor's first name and describes a single-person business ('Einfraubetrieb'). The statement descriptor ZITASCHEN.CH is the business name, not a differing personal name, so no descriptor conflict arises. No link to any other business, city or complaint report was found.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "The Stripe representative is the publicly named owner of the business.",
+      "url": "https://www.zitaschen.ch/about/"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "www.zitaschen.ch resolves (Cloudflare-fronted Jimdo paid site, HTTP 200) and is a substantive, actively maintained Swiss online shop in German with CHF pricing, a deep product catalogue, shipping/withdrawal/AGB pages and a 'last updated 29.10.2026' stamp - not parked and not a builder placeholder. The Impressum email is on the same zitaschen.ch domain as the Stripe account email, and the statement descriptor ZITASCHEN.CH equals the domain and trading name.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "Website, email domain and statement descriptor all cohere and belong to this merchant.",
+      "url": "https://www.zitaschen.ch/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The site sells handmade physical fashion goods - shoppers, shoulder bags, beach/big bags, a men's range ('MaennerWELT'), cosmetic and pencil cases, wire-frame necessaires, wetbags and upcycled tarpaulin bags - with per-item CHF pricing and a working cart/checkout. MCC 5691 (Men's and Women's Clothing Stores) is an adjacent rather than exact fit (bags and accessories map more precisely to leather goods or apparel-accessory MCCs), but it is the same soft-goods retail risk profile and is coherent with the observable catalogue; there is no digital-goods or payment-collection pattern.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "Observable product range is coherent with the declared MCC and descriptor; apparel-accessory MCC is a close but imperfect match.",
+      "url": "https://www.zitaschen.ch/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent dated record of the business could be obtained: the Internet Archive CDX service returned HTTP 503 ('temporarily offline') and no reviews, directory entries or news mentions exist in search results. The only dated evidence is self-published - the team page states the business began in May 2017, the sales-point blog carries posts dated 13 March, 22 April and 16 May 2026, and the events page lists markets in October-December 2026 - which is consistent with a multi-year operating history but is not independent. No scam, complaint or fraud report about the business or its owner was found anywhere.",
+      "sourceType": "website",
+      "checkedAt": "2026-10-31",
+      "establishes": "Self-published continuity back to 2017 with no adverse reports, but no independent corroboration of age.",
+      "url": "https://www.zitaschen.ch/blog-1/verkaufsstellen/"
+    }
+  ],
+  "evidenceNeeded": [
+    "Manually check Zefix (zefix.ch) and the Aargau cantonal commercial register for any sole-proprietorship entry under the proprietor's name or 'zitaschen' - both register sources blocked automation (HTTP 401 / Cloudflare 403).",
+    "Manually open local.ch, Google Business Profile, Facebook and Instagram for 'zitaschen' to confirm an independent listing tied to Niederwil AG, and check whether the named market organisers publish exhibitor lists.",
+    "Re-run an Internet Archive check on zitaschen.ch once archive.org is back online to confirm independent domain history back toward 2017.",
+    "Confirm whether a retail-accessories MCC (e.g. 5948 or 5699) is a better fit than 5691.",
+    "Verify that the Stripe payout bank account is in the sole proprietor's own name, since no register entry exists to corroborate ownership."
+  ],
+  "summary": "zitaschen.ch is a Swiss one-person home atelier in Niederwil AG (5524) selling handmade fabric bags, necessaires, wetbags and upcycled accessories through a paid Jimdo webshop in CHF and at seasonal markets; the site is substantive, actively maintained (updated 29.10.2026) and fully coherent with the account's domain, email and ZITASCHEN.CH descriptor. The Stripe representative is named on the merchant's own Impressum as the sole proprietor, so identity is corroborated on the business's own channel. Neither register source could be read (Zefix REST 401, onlineinfo.ch Cloudflare 403) and no independent listing, review or archive record was obtainable (tel.search.ch returns zero hits, archive.org offline), so legal, operating and history remain unverified rather than adverse - expected for an unregistered Swiss sole proprietorship trading since 2017. Total risk 0 points: no contradictions and no scam or complaint signals; residual work is confirming a register entry, an independent local listing and that the payout account matches the proprietor."
+}
