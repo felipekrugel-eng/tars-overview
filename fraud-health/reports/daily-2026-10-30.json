@@ -1,0 +1,132 @@
+{
+ "cohort": {
+  "cohortDate": "2026-10-30",
+  "timezone": "Europe/London",
+  "windowStart": "2026-10-30T00:00:00+00:00",
+  "windowEnd": "2026-10-31T00:00:00+00:00",
+  "count": 5,
+  "confirmed": 5,
+  "boundaryAmbiguous": 0,
+  "members": [
+   {
+    "accountId": "acct_1TxfDm5q3btV2CH8",
+    "enabledAt": "2026-10-30T09:38:16+00:00",
+    "enabledWindowStart": "2026-10-30T00:13:07+00:00",
+    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
+    "enabledWindowHours": 9.42,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-07-27",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UW0Vs875fdmoZRt",
+    "enabledAt": "2026-10-30T09:38:16+00:00",
+    "enabledWindowStart": "2026-10-30T00:13:07+00:00",
+    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
+    "enabledWindowHours": 9.42,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-29",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UW3hx7np7DQ3oqi",
+    "enabledAt": "2026-10-30T09:38:16+00:00",
+    "enabledWindowStart": "2026-10-30T00:30:14+00:00",
+    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
+    "enabledWindowHours": 9.13,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-30",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UW4pO9tl93nU890",
+    "enabledAt": "2026-10-30T09:38:16+00:00",
+    "enabledWindowStart": "2026-10-30T01:41:58+00:00",
+    "enabledWindowEnd": "2026-10-30T09:38:16+00:00",
+    "enabledWindowHours": 7.94,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-30",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UWBh56ugqY7knnI",
+    "enabledAt": "2026-10-30T14:08:28+00:00",
+    "enabledWindowStart": "2026-10-30T09:01:52+00:00",
+    "enabledWindowEnd": "2026-10-30T14:08:28+00:00",
+    "enabledWindowHours": 5.11,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-10-30",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 547,
+   "never_observed_enabled": 1069
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1TxfDm5q3btV2CH8",
+   "acct_1UW0Vs875fdmoZRt",
+   "acct_1UW3hx7np7DQ3oqi",
+   "acct_1UW4pO9tl93nU890",
+   "acct_1UWBh56ugqY7knnI"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-10-31T06:05:39+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1669,
+  "enabledAccounts": 558,
+  "reviewedAccounts": 596,
+  "reviewedEnabledAccounts": 548,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1TvKXT6xaKj8hHOI",
+   "acct_1TwtFi55iFJx8eAH",
+   "acct_1TyEuM7Na6QfXyIh",
+   "acct_1UW9dT9Uqyjawhh9",
+   "acct_1UWIYn9hb7VgCNr9",
+   "acct_1UWNOa5IHDG7gjCr",
+   "acct_1UWNnw59ZZQz3S3p",
+   "acct_1UWNth4NNu9UGLI4",
+   "acct_1UWOup4VvMsiyhIQ"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 98.2,
+  "ledgerAccounts": 1670,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1TvKXT6xaKj8hHOI",
+  "acct_1TwtFi55iFJx8eAH",
+  "acct_1TyEuM7Na6QfXyIh",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp",
+  "acct_1UW9dT9Uqyjawhh9",
+  "acct_1UWIYn9hb7VgCNr9",
+  "acct_1UWNOa5IHDG7gjCr",
+  "acct_1UWNnw59ZZQz3S3p",
+  "acct_1UWNth4NNu9UGLI4",
+  "acct_1UWOup4VvMsiyhIQ"
+ ]
+}
