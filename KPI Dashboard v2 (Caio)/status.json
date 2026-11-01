@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-01T09:29:54.032801+00:00",
+ "checked_at": "2026-11-01T10:19:59.792235+00:00",
  "worst": "error",
- "digest": "0ad4f87f9b1c154eb46454f8194786c1d51a190d6acf882c8af2b2067d80e223",
+ "digest": "40ca7803a1b943399d6f7902f6f5dea4d153f91a150554d2954ec019ddab2d43",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-01T09:28:47+00:00",
-   "data_at": "2026-11-01T09:28:00+00:00",
+   "committed_at": "2026-11-01T10:18:39+00:00",
+   "data_at": "2026-11-01T10:18:00+00:00",
    "age_h": 0.03,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
@@ -24,53 +24,53 @@
    "ref": "master",
    "max_age_h": 4,
    "notes": [
-    "stale: 130.4h old, limit 4h",
+    "stale: 131.2h old, limit 4h",
     "status = degraded",
     "gap: telegram_delivery_unconfirmed"
    ],
    "state": "error",
    "reason": "stale",
-   "committed_at": "2026-11-01T09:18:25+00:00",
+   "committed_at": "2026-11-01T10:11:22+00:00",
    "data_at": "2026-10-26T23:05:17+00:00",
-   "age_h": 130.41,
+   "age_h": 131.25,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": null,
-    "consecutive_non_success": 28,
+    "consecutive_non_success": 29,
     "recent": [
+     {
+      "at": "2026-11-01T09:51:24Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:37:46Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-01T09:30:07Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:19:27Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-01T09:08:30Z",
+      "outcome": "failure"
+     },
      {
       "at": "2026-11-01T09:00:08Z",
       "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-01T09:49:18Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:38:50Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:30:05Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-01T09:20:23Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:10:09Z",
-      "outcome": "failure"
      }
     ],
-    "runs_since_artefact": 4,
-    "verdict": "running but not publishing \u2014 4 run(s) since the artefact was last written, none succeeded",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41290450120",
+    "runs_since_artefact": 0,
+    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41294916322",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 4 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 28 consecutive non-success runs"
+   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Evaluate and durably checkpoint \u00b7 29 consecutive non-success runs"
   },
   {
    "name": "Payments pull",
@@ -80,9 +80,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-01T07:18:21+00:00",
-   "data_at": "2026-11-01T07:18:19.860394+00:00",
-   "age_h": 2.19
+   "committed_at": "2026-11-01T10:10:36+00:00",
+   "data_at": "2026-11-01T10:10:28.408797+00:00",
+   "age_h": 0.16
   },
   {
    "name": "Activated payments",
@@ -90,53 +90,53 @@
    "ref": "master",
    "max_age_h": 9,
    "notes": [
-    "ageing: 8.1h old, limit 9h"
+    "ageing: 8.9h old, limit 9h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-11-01T01:29:09+00:00",
    "data_at": "2026-11-01T01:23:22.919000+00:00",
-   "age_h": 8.11,
+   "age_h": 8.94,
    "inputs_changed_at": "2026-10-15T10:01:48+00:00",
    "diagnosis": {
     "workflow": "activated-payments-pull.yml",
     "last_success": null,
-    "consecutive_non_success": 29,
+    "consecutive_non_success": 30,
     "recent": [
+     {
+      "at": "2026-11-01T10:00:21Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:51:24Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:37:46Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:30:07Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-01T09:19:27Z",
+      "outcome": "failure"
+     },
      {
       "at": "2026-11-01T09:08:30Z",
       "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:00:08Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:49:18Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:38:50Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:30:05Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-01T09:20:23Z",
-      "outcome": "failure"
      }
     ],
-    "runs_since_artefact": 29,
-    "verdict": "running but not publishing \u2014 29 run(s) since the artefact was last written, none succeeded",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41291796040",
+    "runs_since_artefact": 30,
+    "verdict": "running but not publishing \u2014 30 run(s) since the artefact was last written, none succeeded",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41295526187",
     "step": "Reconcile Margins against Payment Profile",
     "detail": "Process completed with exit code 1.",
     "skipped_publish": true,
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 29 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Reconcile Margins against Payment Profile \u00b7 its publish step was SKIPPED, so the work was discarded \u00b7 29 consecutive non-success runs"
+   "diagnosis_line": "running but not publishing \u2014 30 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Reconcile Margins against Payment Profile \u00b7 its publish step was SKIPPED, so the work was discarded \u00b7 30 consecutive non-success runs"
   },
   {
    "name": "Ads + attribution",
@@ -144,13 +144,13 @@
    "ref": "master",
    "max_age_h": 9,
    "notes": [
-    "ageing: 8.0h old, limit 9h"
+    "ageing: 8.8h old, limit 9h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-11-01T01:29:09+00:00",
    "data_at": null,
-   "age_h": 8.01,
+   "age_h": 8.85,
    "diagnosis": {
     "workflow": "ads-pull.yml",
     "last_success": "2026-11-01T06:50:28Z",
@@ -196,7 +196,7 @@
    "reason": null,
    "committed_at": "2026-10-31T10:43:15+00:00",
    "data_at": "2026-10-31T10:38:38.365104+00:00",
-   "age_h": 22.85,
+   "age_h": 23.69,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -209,7 +209,7 @@
    "reason": null,
    "committed_at": "2026-11-01T07:28:57+00:00",
    "data_at": null,
-   "age_h": 2.02,
+   "age_h": 2.85,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -222,7 +222,7 @@
    "reason": null,
    "committed_at": "2026-11-01T07:28:57+00:00",
    "data_at": null,
-   "age_h": 2.02,
+   "age_h": 2.85,
    "inputs_changed_at": "2026-10-16T13:14:19+00:00"
   },
   {
@@ -235,7 +235,7 @@
    "reason": null,
    "committed_at": "2026-10-31T07:48:12+00:00",
    "data_at": null,
-   "age_h": 25.7,
+   "age_h": 26.53,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -248,7 +248,7 @@
    "reason": null,
    "committed_at": "2026-10-31T13:55:54+00:00",
    "data_at": null,
-   "age_h": 19.57,
+   "age_h": 20.4,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
