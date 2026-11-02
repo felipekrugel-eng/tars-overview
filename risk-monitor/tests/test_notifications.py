@@ -476,14 +476,51 @@ class ReceiptReconciliation(unittest.TestCase):
         self.assertNotIn('telegram_delivery_unconfirmed', m.s['gaps'])
         self.assertEqual(health(m.s, NOW)['pending_alert_count'], 0)
 
-    def test_an_unconfirmed_receipt_stays_a_gap_and_never_resends(self):
+    def test_an_unconfirmed_receipt_never_resends_and_does_not_degrade_if_email_landed(self):
+        """Telegram is the SECOND channel, so its silence alone is not an outage.
+
+        This used to assert the opposite — any unconfirmed receipt became a gap, and a gap
+        means status: degraded. In practice one stuck receipt held the monitor at degraded
+        from 2026-10-26 to 2026-11-02: last_completed_at froze for 158 hours, 28 runs went
+        red, and the board read "Not updating" about a monitor that was evaluating every few
+        minutes. Every alert also goes by email to Felipe and Caio, so a finding whose email
+        was sent HAS reached a human.
+
+        What must not change is the other half: it still never resends, because relay.py
+        cannot tell "sent" from "crashed just after sending".
+        """
         m, transport = self.monitor_with_enqueued_digest(receipt_status='enqueued')
         gmail = object.__new__(Gmail); m.gmail = gmail
         with patch('monitor.verified_transport', return_value=(None, transport, None, None)), \
              patch.object(gmail, 'send_internal') as send:
             m.deliver()
         send.assert_not_called()
+        # The fixture's alerts all have email status 'sent'.
+        self.assertNotIn('telegram_delivery_unconfirmed', m.s['gaps'])
+        self.assertTrue(m.s.get('telegram_unconfirmed'),
+                        'the unconfirmed copy must stay visible, not vanish')
+
+    def test_an_unconfirmed_receipt_still_degrades_when_the_email_did_not_land(self):
+        """The case that must keep alarming: the finding reached NOBODY.
+
+        Downgrading an unconfirmed Telegram is only safe because email carried the same
+        alert. When email has no confirmed send either, this is no longer a missing
+        duplicate — it is a risk finding nobody received, which is the one thing this
+        monitor exists to notice.
+
+        This drives reconcile_telegram rather than deliver(), deliberately: deliver() sends
+        the email on the way past, and a mocked send marks the alert 'sent', which would
+        quietly defeat the premise and leave the test asserting nothing. reconcile_telegram
+        is the function that actually evaluates the receipt.
+        """
+        m, transport = self.monitor_with_enqueued_digest(receipt_status='enqueued')
+        alert = next(iter(m.s['alerts'].values()))
+        alert['email'] = {'status': 'send_intent'}
+        with patch('monitor.verified_transport', return_value=(None, transport, None, None)):
+            self.assertFalse(m.reconcile_telegram(alert))
         self.assertIn('telegram_delivery_unconfirmed', m.s['gaps'])
+        self.assertFalse(m.s.get('telegram_unconfirmed'),
+                         'an undelivered finding must not be filed as merely unconfirmed')
 
     def test_a_digest_member_resolves_by_the_digest_key_not_its_own_id(self):
         m, transport = self.monitor_with_enqueued_digest()
