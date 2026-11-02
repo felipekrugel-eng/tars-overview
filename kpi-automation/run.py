@@ -13,7 +13,8 @@ Required env: SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PRIVATE_KEY (PEM),
   SNOWFLAKE_PRIVATE_KEY_PASSPHRASE (optional), SNOWFLAKE_WAREHOUSE, SNOWFLAKE_ROLE,
   SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA
 """
-import os, sys, subprocess, datetime, pathlib, re
+import os
+import time, sys, subprocess, datetime, pathlib, re
 import pandas as pd
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
@@ -162,6 +163,19 @@ def run_sql(conn, sql_file, timeout=DEFAULT_TIMEOUT):
     return df
 
 
+# The job's own wall-clock budget, so a retry can tell whether it has room to run.
+# Mirrors timeout-minutes in kpi-pull.yml; overridden there so the two cannot drift.
+RUN_STARTED = time.time()
+JOB_BUDGET_MINUTES = float(os.environ.get("JOB_BUDGET_MINUTES", "330"))
+# Below this much remaining, a retry is not worth starting: it would be killed mid-flight and
+# the run would end with NOTHING committed, which is strictly worse than degrading one series.
+RETRY_SAFETY_MARGIN_MINUTES = 12.0
+
+
+def minutes_left():
+    return JOB_BUDGET_MINUTES - (time.time() - RUN_STARTED) / 60.0
+
+
 class Session:
     """One Snowflake connection that replaces itself when the token expires.
 
@@ -170,21 +184,41 @@ class Session:
     retrying those just burns warehouse time to reach the same answer. Only a dead SESSION is
     retried, and only once, because the second attempt starts from a brand-new token: if it
     fails again the problem is real.
+
+    THE RETRY IS ALSO BOUNDED BY THE CLOCK, which the first version of this class was not,
+    and that omission cost a whole run. Retrying re-runs the query FROM THE START: when the
+    receipts grid dies at minute 100 of a two-hour scan, the retry asks for another two
+    hours. A normal kpi-pull already takes 202-263 minutes against a 330-minute job cap, so
+    one retry can put it over — 2026-10-29 was cancelled at exactly 330 minutes, and
+    2026-11-02 ran 234 minutes and was heading the same way. A run killed at the cap commits
+    NOTHING; a run that degrades one series commits everything else. Degrading is what the
+    DEGRADABLE list is for, so when there is no room, use it.
     """
 
     def __init__(self):
         self.conn = connect()
 
     def run(self, sql_file, timeout=DEFAULT_TIMEOUT):
+        started = time.time()
         try:
             return run_sql(self.conn, sql_file, timeout)
         except Exception as e:
             if not _is_session_dead(e):
                 raise
+            # The failed attempt is the best estimate of what the retry will cost: the query
+            # is the same and the warehouse is in the same state.
+            est = (time.time() - started) / 60.0
+            left = minutes_left()
+            if est + RETRY_SAFETY_MARGIN_MINUTES > left:
+                print(f"[session] token expired during {sql_file} after {est:.0f} min, but only "
+                      f"{left:.0f} min of job budget remain. NOT retrying — a retry would be "
+                      f"killed at the cap and the run would commit nothing at all. Letting this "
+                      f"query degrade so everything else still publishes.", flush=True)
+                raise
             print(f"[session] token expired during {sql_file} ({type(e).__name__}: {e}). "
                   f"Reconnecting and retrying once — this is a stale connection, not a data "
                   f"problem, and degrading the series over it would blank the dashboard for "
-                  f"no reason.", flush=True)
+                  f"no reason. ~{est:.0f} min to redo, {left:.0f} min of budget left.", flush=True)
             try:
                 self.conn.close()
             except Exception:

@@ -31,7 +31,12 @@ jobs:
     # warehouse queue wait pushed past the old 150m GitHub cap (exit 143 = SIGTERM).
     # The GitHub runner only IDLE-WAITS on Snowflake, so extra headroom costs no
     # warehouse credits. 330m sits safely under GitHub's 360m hosted-runner ceiling.
-    timeout-minutes: 330
+    # 355, not 330. GitHub's hosted-runner ceiling is 360, and a normal kpi-pull already
+    # takes 202-263 minutes — so 330 left roughly a 25% margin on a job whose slowest step is
+    # a multi-hour scan. It was not enough: 2026-10-29 was cancelled at exactly 330 with
+    # nothing committed, and 2026-11-02 reached 234 heading the same way. Raising it buys
+    # headroom; the retry budget check in run.py is what stops a retry spending it.
+    timeout-minutes: 355
     permissions:
       contents: write
       actions: write      # to re-dispatch itself after a degraded run (see the retry step)
@@ -97,6 +102,9 @@ jobs:
         id: pull
         if: steps.guard.outputs.skip != 'true'
         env:
+          # Same number as timeout-minutes above, so run.py knows how much wall clock it
+          # has left and can decline a retry it cannot finish.
+          JOB_BUDGET_MINUTES: "355"
           # Only the private key is a secret (reused from the CASE pull). The rest are plain config.
           SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
           SNOWFLAKE_ACCOUNT:   "ORXEAZX-TC97659"
