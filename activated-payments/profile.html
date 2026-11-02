@@ -415,13 +415,18 @@
           + 'measured per segment — every segment rate here is part measured, part apportioned.'
         : ' <b>Stripe’s platform fees could not be loaded, so cost below is interchange and '
           + 'scheme fees only and understates the true cost of acceptance.</b>')
-      + (PLATFORM && PLATFORM.subTotal
-          ? '<br><br><b>Not included above:</b> ' + fmtUsd(PLATFORM.subTotal) + ' of fixed Stripe '
-          + 'subscriptions (Premium Support, Sigma) over the same period. They are not a cost of '
-          + 'processing a transaction, so including them would corrupt every rate on this page — '
-          + 'but they are real cash cost, and larger than this book’s revenue, so they are stated '
-          + 'here rather than left out of the picture entirely.'
-          : '');
+      ;
+    // THE FIXED STRIPE SUBSCRIPTIONS ARE NO LONGER SHOWN HERE. Felipe, 2026-11-02:
+    // "keep them out. and no need to disclose. this will generate more confusion then help."
+    //
+    // They were never inside any figure on this page — they are a fixed vendor cost, not a
+    // cost of processing a transaction, and folding them in would corrupt every basis-point
+    // rate here. The note explaining their absence was doing more harm than good on a page
+    // that is entirely about per-unit economics.
+    //
+    // The number is still PUBLISHED in profile-data.js as PLATFORM.subscriptions / subTotal
+    // and still printed in the pull log, so nothing is lost and this can come back as a
+    // single line if it is ever wanted. It is unrendered, not discarded.
   }
 
   function renderTicket() {

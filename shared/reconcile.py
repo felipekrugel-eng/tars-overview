@@ -32,6 +32,11 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MARGINS = os.path.join(ROOT, "activated-payments", "margins-data.js")
 PROFILE = os.path.join(ROOT, "activated-payments", "profile-data.js")
+# THE THIRD PAGE. Added 2026-11-02 after Felipe found the Report saying 0.40% for
+# October while the Summary of Margins said 0.224%. This gate existed, ran on every
+# build, and said nothing — because it only ever compared two of the three pages. A
+# two-way check on a three-page problem is a gap with a green light on it.
+REPORT = os.path.join(ROOT, "activated-payments", "report-data.js")
 
 # Absolute dollars, and a relative floor so the check stays meaningful as the book grows.
 ABS_TOL = 5.00
@@ -174,6 +179,38 @@ def main():
         print(f"  {name:12}{av:>16}{bv:>16}{gv:>12}{flag}")
         if not close(a, b):
             problems.append(f"{name}: margins {av} vs profile {bv} (gap {gv})")
+
+    # ---- the Report, on both margins ----
+    # The Report is built by a different pipeline from the margins workbook, so it is the
+    # likeliest of the three to drift. Both margins are checked, not just the headline: it was
+    # precisely the SECOND one (after Stripe's platform fees) that this page did not have.
+    if os.path.exists(REPORT):
+        try:
+            rows = _js_array(REPORT, "__PAY_MONTHLY")
+        except SystemExit:
+            rows = None
+        if rows:
+            r_m1 = sum(r.get("margin1") or 0 for r in rows)
+            r_m2 = sum(r.get("margin2") or 0 for r in rows)
+            r_tpv = sum(r.get("tpv") or 0 for r in rows)
+            m_m1 = (mj.get("kpis") or {}).get("margin1")
+            m_m2 = (mj.get("kpis") or {}).get("margin2")
+            if m_m1 is None or m_m2 is None:
+                print("::warning title=Report check skipped::margins-data.js has no margin1/"
+                      "margin2 yet (pre-change build); the Report was not compared.")
+            else:
+                print()
+                print(f"{'':14}{'margins':>16}{'report':>16}{'gap':>12}")
+                for name, a, b in (("volume", m_vol, r_tpv),
+                                   ("margin 1", m_m1, r_m1),
+                                   ("margin 2", m_m2, r_m2)):
+                    gap = a - b
+                    ok = close(a, b)
+                    print(f"  {name:12}{a:>16,.2f}{b:>16,.2f}{gap:>12,.2f}"
+                          f"{'' if ok else '   <-- DRIFT'}")
+                    if not ok:
+                        problems.append(f"Report {name}: margins {a:,.2f} vs report {b:,.2f} "
+                                        f"(gap {gap:,.2f})")
 
     if problems:
         print("\nRECONCILIATION FAILED — the two payments pages disagree:", file=sys.stderr)

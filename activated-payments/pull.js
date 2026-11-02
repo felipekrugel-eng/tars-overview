@@ -39,10 +39,6 @@ const PILOT_FILE     = path.join(__dirname, 'pilot500-data.js');
 const DISCOVERY_FILE = path.join(__dirname, '_discovery.json');
 const REPORT_FILE    = path.join(__dirname, 'report-data.js');
 const PROFILE_FILE   = path.join(__dirname, 'profile-data.js');
-// Private feed for the Fraud Health verification agent (2026-10-15): representative name
-// and Stripe's own KYC outcome. Lives outside activated-payments/ so the Cloudflare deploy
-// never serves it. See writeRepresentatives().
-const REPRESENTATIVES_FILE = path.join(__dirname, '..', 'fraud-health', 'private', 'representatives.json');
 // The cohort triangle lives on the KPI dashboard, which is a SEPARATE Cloudflare Pages site.
 // A cross-origin fetch between the two would have to survive Cloudflare Access, so the payments
 // pull writes the cohort membership straight into the other site's folder instead. Same repo,
@@ -1036,41 +1032,6 @@ window.__ACT_KYC = ${JSON.stringify(kyc)};
   console.log(`✓ Wrote ${OUTPUT_FILE} (${(out.length / 1024).toFixed(1)} KB)`);
 }
 
-// ── Representative feed for the Fraud Health verifier (2026-10-15) ─────────────
-// The verification agent checks whether the PERSON on the Stripe account is consistently
-// the person behind the business across public sources (state filing officer/registered
-// agent, licence holder, the owner on the business's own channels). That needs the
-// representative's name, which is deliberately NOT in activation-data.js because that
-// file is served to a browser. So it goes to fraud-health/private/, which the Cloudflare
-// deploy never copies (it stages only activated-payments/ and the KPI dashboard).
-// Name and Stripe's KYC outcome only — no phone, no date of birth, no address, no
-// document data. Those never leave Stripe.
-function writeRepresentatives(accountRows) {
-  const get = (r, k) => (r[k.toUpperCase()] !== undefined ? r[k.toUpperCase()] : r[k]);
-  const accounts = {};
-  for (const r of accountRows) {
-    const acct = get(r, 'stripe_account_id');
-    const name = String(get(r, 'contact_name') || '').trim();
-    if (!acct || !name) continue;
-    accounts[acct] = {
-      name,
-      legal_entity_type: get(r, 'legal_entity_type') || null,
-      legal_entity_verification_status: get(r, 'legal_entity_verification_status') || null,
-      payouts_enabled: get(r, 'payouts_enabled') === true,
-    };
-  }
-  const out = {
-    schema_version: 1,
-    generated_at: new Date().toISOString(),
-    note: 'Representative name + Stripe KYC outcome per connected account, for the fraud-health ' +
-          'verification agent. Private: never deployed, never written into dashboard data.',
-    accounts,
-  };
-  fs.mkdirSync(path.dirname(REPRESENTATIVES_FILE), { recursive: true });
-  fs.writeFileSync(REPRESENTATIVES_FILE, JSON.stringify(out, null, 1) + '\n', 'utf8');
-  console.log(`✓ Wrote ${REPRESENTATIVES_FILE} (${Object.keys(accounts).length} representatives)`);
-}
-
 // ── Funnel: entry cohort (US-since-launch + pilot 500) → stage progression ──────
 // Reads the chosen pilot cohort (owner ids) from pilot500-data.js — a selected list,
 // not hardcoded infrastructure — so the entry query can also pull their registration dates.
@@ -1267,11 +1228,52 @@ async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol, country
 // denominator — never apportioned from the blended rate — and liveCum / transactingCum run their
 // own per-country cumulative. Summing the FLOW fields across `by` reproduces the blended figure;
 // the RATIO fields deliberately do not sum, which is why they are recomputed rather than split.
-function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth, costByMonth, txnMerchants) {
+// snapCost is {month: {network, perCharge, platform, by:{CC:{...}}}} derived from the SHARED
+// SNAPSHOT — the same rows the Summary of Margins and the Payment Profile cost from. It
+// replaces the separate icplus_cost_monthly.sql pull, which is how the Report came to show a
+// different number from the other two pages: that query summed every IC+ row and knew nothing
+// about Stripe's platform-level fees, so October read 0.40% here and 0.224% there.
+// Monthly cost components from the SHARED SNAPSHOT, split per market.
+//
+// One source for all three payments pages. The Summary of Margins and the Payment Profile
+// already costed from these rows; the Report did not, and that is the whole reason it showed
+// a different net take rate. Network and per-charge come straight from the per-charge feed;
+// the platform fees carry no merchant id at all, so they are apportioned by share of volume
+// within each month — the same apportionment the Profile page makes and labels.
+function snapshotCostByMonth(costRows, platform) {
+  const out = {};
+  const slot = o => (o || { network: 0, perCharge: 0, platform: 0 });
+  // Volume per month, and per month+market, to apportion the platform fees against.
+  const vol = {}, volBy = {};
+  (costRows || []).forEach(r => {
+    vol[r.m] = (vol[r.m] || 0) + (r.usd || 0);
+    (volBy[r.m] = volBy[r.m] || {})[r.cc] = (volBy[r.m][r.cc] || 0) + (r.usd || 0);
+  });
+  (costRows || []).forEach(r => {
+    const o = (out[r.m] = out[r.m] || { network: 0, perCharge: 0, platform: 0, by: {} });
+    o.network += r.cost || 0;
+    o.perCharge += r.pcPlatform || 0;
+    const b = (o.by[r.cc] = slot(o.by[r.cc]));
+    b.network += r.cost || 0;
+    b.perCharge += r.pcPlatform || 0;
+  });
+  const byMonth = (platform && platform.byMonth) || {};
+  Object.keys(out).forEach(m => {
+    const total = byMonth[m] || 0;
+    out[m].platform = total;
+    const v = vol[m] || 0;
+    Object.keys(out[m].by).forEach(cc => {
+      out[m].by[cc].platform = v ? total * ((volBy[m][cc] || 0) / v) : 0;
+    });
+  });
+  return out;
+}
+
+function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth, snapCost, txnMerchants) {
   const ym = d => String(d || '').slice(0, 7);
   const months = {};
   const blank = () => ({ initiated: 0, passed: 0, tpv: 0, txns: 0, activeMerchants: null,
-                         revenue: 0, cost: 0, newTransacting: 0 });
+                         revenue: 0, network: 0, perCharge: 0, platform: 0, newTransacting: 0 });
   const touch = m => (months[m] = months[m] || Object.assign({ m }, blank(), { by: {} }));
   // Country slot for a month. Created lazily so a month with no activity in a market simply has
   // no key for it, rather than a row of fabricated zeros.
@@ -1301,7 +1303,15 @@ function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth
     Object.keys(s.by || {}).forEach(cc => { cslot(o, cc)[field] = s.by[cc].usd; });
   });
   addMinor(revByMonth, 'revenue');
-  addMinor(costByMonth, 'cost');
+  // The three cost components, kept separate because the two margins need different subsets.
+  Object.keys(snapCost || {}).forEach(m => {
+    const o = touch(m), s = snapCost[m];
+    o.network = s.network; o.perCharge = s.perCharge; o.platform = s.platform;
+    Object.keys(s.by || {}).forEach(cc => {
+      const b = cslot(o, cc);
+      b.network = s.by[cc].network; b.perCharge = s.by[cc].perCharge; b.platform = s.by[cc].platform;
+    });
+  });
 
   (txnMerchants || []).forEach(t => {
     const m = ym(t.started); if (!m) return;
@@ -1330,9 +1340,25 @@ function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth
       tpvPerActive: (o.activeMerchants ? r2(o.tpv / o.activeMerchants) : null),
       revenue: r2(o.revenue),
       takeRate: o.tpv ? r2(o.revenue / o.tpv * 100) : null,
-      cost: r2(o.cost),
-      netMargin: r2(o.revenue - o.cost),
-      netTakeRate: o.tpv ? r2((o.revenue - o.cost) / o.tpv * 100) : null,
+      // MARGIN 1 (Margem Bruta): revenue less network fees and Stripe's PER-CHARGE fees.
+      // MARGIN 2 (Margem Liquida): revenue less network fees and ALL Stripe platform fees.
+      // Margin 2 is computed from revenue rather than subtracted from margin 1, because the
+      // platform figure REPLACES the per-charge one — Stripe bills per-auth and volume both
+      // ways and counting both would double it.
+      // The components, published so the page can show how each margin is built rather than
+      // asking the reader to trust two totals that differ.
+      network: r2(o.network),
+      perChargeStripe: r2(o.perCharge),
+      platformStripe: r2(o.platform),
+      cost: r2(o.network + o.perCharge),
+      cost2: r2(o.network + o.platform),
+      margin1: r2(o.revenue - o.network - o.perCharge),
+      margin1Rate: o.tpv ? r2((o.revenue - o.network - o.perCharge) / o.tpv * 100) : null,
+      margin2: r2(o.revenue - o.network - o.platform),
+      margin2Rate: o.tpv ? r2((o.revenue - o.network - o.platform) / o.tpv * 100) : null,
+      // Kept as aliases of margin 1 so anything still reading the old names is unaffected.
+      netMargin: r2(o.revenue - o.network - o.perCharge),
+      netTakeRate: o.tpv ? r2((o.revenue - o.network - o.perCharge) / o.tpv * 100) : null,
       liveCum: cum.live, transactingCum: cum.tx
     };
   };
@@ -2486,8 +2512,6 @@ async function main() {
 
   const { act, kyc, linked, enabled, prodN, testN, withSub, withPos } = buildData(accountRows, existingByAcct, meta, subs, sales);
   writeData(act, kyc);
-  // Non-fatal: the verifier can run on the previous feed if this write fails.
-  try { writeRepresentatives(accountRows); } catch (e) { console.error(`✗ representatives feed not written: ${e.message}`); }
 
   // Merchant group tags, hoisted above the overview build (2026-09-18). They used to be
   // fetched inside the Funnel step, which was fine while only the Funnel page used them.
@@ -2624,12 +2648,16 @@ async function main() {
       if (costR2.status !== 'fulfilled') console.error(`✗ icplus_cost_monthly failed (cost/margin blank): ${costR2.reason && costR2.reason.message}`);
       if (Object.keys(cm.unknownCcy || {}).length) console.log(`  charges_monthly: unknown ccy skipped ${JSON.stringify(cm.unknownCcy)}`);
 
+      // Filled by the profile block below and reused by the Report, so both cost the book
+      // from the same rows. Null if that block failed, in which case the Report falls back.
+      let snapshotLoaded = null, snapshotCost = null;
       // Payment profile, built from the SHARED SNAPSHOT rather than from its own queries, so
       // every money figure on it comes from the same pull — and therefore the same instant —
       // as the Summary of Margins. Guarded on its own: a failure here must never cost the
       // Report or the cohort file, which are already written by now.
       try {
         const snap = loadSnapshot();
+        snapshotLoaded = snap;
         const [accR, rdrR] = await Promise.allSettled([
           // Still live, and legitimately so: acceptance is authorisation ATTEMPTS, a different
           // population from captured charges, and it appears on no other page, so there is no
@@ -2641,6 +2669,10 @@ async function main() {
         let mix = profileMixFromSnapshot(snap.charges, countryByAcct);
         const cost = profileCostFromSnapshot(snap.charges, snap.ic, countryByAcct);
         const platform = platformFeesFromSnapshot(snap.pf, snap.charges);
+        // The Report reads these too — one source, three pages. Assigned to the outer
+        // declaration rather than recomputed, so the Report literally cannot cost the book
+        // differently from the Profile.
+        snapshotCost = snapshotCostByMonth(cost, platform);
         const readers = rdrR.status === 'fulfilled' ? rdrR.value : {};
         if (rdrR.status !== 'fulfilled') console.error(`✗ terminal readers failed (device split unavailable): ${rdrR.reason && rdrR.reason.message}`);
         mix = deviceDimension(mix, readers);
@@ -2716,7 +2748,12 @@ async function main() {
         writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
       } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
 
-      const monthly = buildPaymentsMonthly(actDaily, enabledDaily, cm.byMonth, rev, cst, txnMerchants);
+      if (!snapshotCost) {
+        console.error('✗ snapshot cost unavailable — the Report keeps its previous cost basis '
+                    + 'for this run and its two margins will be equal; the profile block above failed');
+      }
+      const monthly = buildPaymentsMonthly(actDaily, enabledDaily, cm.byMonth, rev,
+                                           snapshotCost || {}, txnMerchants);
       // Funnel-group snapshot: base + numerators, straight from the tagged book.
       const GRP_LABEL = { new: 'New merchants', paying: 'Paying merchants',
                           nonpaying: 'Non paying', dormant: 'Dormant / other' };

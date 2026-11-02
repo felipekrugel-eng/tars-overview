@@ -185,7 +185,8 @@ function pctCell(cur, prev, higherIsBetter){
 // Cumulative column: flows sum, point-in-time takes the last value, ratios are recomputed from
 // the summed components — never averaged, which would weight small months equally.
 function cumulative(){
-  const s = {initiated:0,passed:0,newTransacting:0,tpv:0,txns:0,revenue:0,cost:0};
+  const s = {initiated:0,passed:0,newTransacting:0,tpv:0,txns:0,revenue:0,cost:0,
+             network:0,perChargeStripe:0,platformStripe:0};
   M.forEach(r => Object.keys(s).forEach(k => { s[k] += (r[k]||0); }));
   const last = M.length ? M[M.length-1] : {};
   const r2 = v => Math.round(v*100)/100;
@@ -194,8 +195,14 @@ function cumulative(){
     activationRate: s.passed ? r2(s.newTransacting/s.passed*100) : null,
     avgTicket:      s.txns ? r2(s.tpv/s.txns) : null,
     takeRate:       s.tpv ? r2(s.revenue/s.tpv*100) : null,
-    netMargin:      r2(s.revenue - s.cost),
-    netTakeRate:    s.tpv ? r2((s.revenue-s.cost)/s.tpv*100) : null,
+    netMargin:      r2(s.revenue - s.network - s.perChargeStripe),
+    netTakeRate:    s.tpv ? r2((s.revenue - s.network - s.perChargeStripe)/s.tpv*100) : null,
+    // Both margins over the SUMMED components — never an average of monthly rates, which
+    // would weight a $4k month the same as a $650k one.
+    margin1:        r2(s.revenue - s.network - s.perChargeStripe),
+    margin1Rate:    s.tpv ? r2((s.revenue - s.network - s.perChargeStripe)/s.tpv*100) : null,
+    margin2:        r2(s.revenue - s.network - s.platformStripe),
+    margin2Rate:    s.tpv ? r2((s.revenue - s.network - s.platformStripe)/s.tpv*100) : null,
     activeMerchants: null,       // distinct merchants can't be summed across months
     tpvPerActive:    null,
     liveCum:        last.liveCum!=null?last.liveCum:null,
@@ -218,12 +225,30 @@ const BLOCKS = [
     {k:'activeMerchants', label:'Merchants transacting in period', fmt:fmtN},
     {k:'tpvPerActive',    label:'TPV per transacting merchant', fmt:fmtM}
   ]},
+  // TWO MARGINS, BOTH SHOWN, ON BOTH PAGES.
+  //
+  // This page used to show one net margin and the Summary of Margins another: October read
+  // 0.40% here and 0.224% there, on identical TPV and revenue, because this page costed from
+  // the per-charge IC+ feed alone and knew nothing about Stripe's platform-level fees. Both
+  // pages now publish both figures from the same snapshot, so the question of which one is
+  // right no longer arises — the difference between them IS the answer.
+  //
+  //   Margin 1 (Margem Bruta)   after network fees and Stripe's per-charge fees
+  //   Margin 2 (Margem Liquida) after everything Stripe charges, including the platform fees
+  //                             that carry no merchant id and are apportioned by volume
+  //
+  // The components are listed above each margin so the build-up is visible rather than
+  // something a reader has to reconstruct from two totals that disagree.
   {sec:'Economics', rows:[
-    {k:'revenue',     label:'Revenue (captured application fees)', fmt:fmtM},
-    {k:'takeRate',    label:'Take rate (revenue ÷ TPV)',      fmt:fmtP},
-    {k:'cost',        label:'Cost (Stripe IC+ fees)',              fmt:fmtM, better:false},
-    {k:'netMargin',   label:'Net margin (revenue − cost)',    fmt:fmtM},
-    {k:'netTakeRate', label:'Net take rate',                       fmt:fmtP}
+    {k:'revenue',          label:'Revenue (captured application fees)',          fmt:fmtM},
+    {k:'takeRate',         label:'Take rate (revenue ÷ TPV)',                    fmt:fmtP},
+    {k:'network',          label:'Network fees (interchange, scheme, discount)', fmt:fmtM, better:false},
+    {k:'perChargeStripe',  label:'Stripe fees billed per charge',                fmt:fmtM, better:false},
+    {k:'margin1',          label:'Margin 1 — gross (Margem Bruta)',              fmt:fmtM},
+    {k:'margin1Rate',      label:'Margin 1 rate (% of TPV)',                     fmt:fmtP},
+    {k:'platformStripe',   label:'Stripe platform fees (apportioned by volume)', fmt:fmtM, better:false},
+    {k:'margin2',          label:'Margin 2 — net (Margem Líquida)',              fmt:fmtM},
+    {k:'margin2Rate',      label:'Margin 2 rate (% of TPV)',                     fmt:fmtP}
   ]},
   {sec:'Base at period end', rows:[
     {k:'liveCum',        label:'Merchants live (passed KYC, cumulative)', fmt:fmtN},
