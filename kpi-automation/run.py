@@ -72,6 +72,9 @@ FEED_HEALTH_SQL = "receipts_feed_health.sql"
 # Set when the feed-health guard fires. Collected rather than raised on the spot so the rest
 # of the run still completes and publishes — the alarm is raised at the very end.
 FEED_DOWN: list = []
+# Set when build_subs_data.py exits 4: the two active-merchant queries have drifted.
+# Collected rather than raised so the rest of the run still completes and publishes.
+ACTIVE_DIVERGED: list = []
 
 # ---------------------------------------------------------------------------
 # FAILURE ISOLATION (added 2026-08-29 after the 28 Aug outage)
@@ -481,6 +484,16 @@ def main():
             FEED_DOWN.append(True)
             print("[subs] subs-data.js regenerated WITH the incomplete months withheld, "
                   "but THE RECEIPTS FEED IS DOWN", flush=True)
+        elif rc == 4:
+            # Exit 4: the active-merchant cross-check diverged. Like exit 3, the FILE WAS
+            # WRITTEN correctly — this is an alarm about the data, not a build failure, so
+            # it must not be swallowed by the warning handler below (which would leave the
+            # run green) nor raised as an exception (which would discard nothing but would
+            # read as the build breaking). It goes to a workflow output and turns the run
+            # red, the same way feed_down does.
+            ACTIVE_DIVERGED.append(True)
+            print("[subs] subs-data.js regenerated and FLAGGED — qualified-active and the "
+                  "published active series disagree; see the divergence above", flush=True)
         elif rc != 0:
             raise RuntimeError(f"build_subs_data.py exited {rc}")
         else:
@@ -578,6 +591,7 @@ def main():
         with open(gh_out, "a") as fh:
             fh.write(f"degraded={','.join(degraded)}\n")
             fh.write(f"feed_down={'true' if FEED_DOWN else ''}\n")
+            fh.write(f"active_diverged={'true' if ACTIVE_DIVERGED else ''}\n")
 
 
 if __name__ == "__main__":

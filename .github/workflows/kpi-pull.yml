@@ -212,6 +212,25 @@ jobs:
           echo "ingestion job. Check kpi-automation/sql/receipts_feed_health.sql output in the log."
           exit 1
 
+      # The cross-check between the two active-merchant queries. Separate from the feed
+      # alarm above and from the degraded check below, because the remedy is different again:
+      # the feed is fine, the pull succeeded, and subs-data.js was written — two queries that
+      # are supposed to count the same merchants have simply drifted apart. Re-dispatching
+      # will not help; somebody has to reconcile the two SQL files.
+      #
+      # It is an alarm, not a gate. Until 2026-11-02 this condition aborted build_subs_data.py
+      # outright, which froze MRR, churn and the feature split — none of them receipts-derived
+      # — for 26 hours while the run stayed green.
+      - name: Fail the run if the active-merchant cross-check diverged
+        if: always() && steps.guard.outputs.skip != 'true' && steps.pull.outputs.active_diverged == 'true'
+        run: |
+          echo "::error::ACTIVE-MERCHANT CROSS-CHECK DIVERGED — qualified-active and the published active series disagree"
+          echo "country_month_activity.sql and receipts_tpv_daily_asof.sql are meant to count the"
+          echo "same merchants. subs-data.js WAS committed and carries an activeDivergence flag,"
+          echo "so the dashboard shows the drift rather than hiding it. The fix is to reconcile"
+          echo "the two queries — see the [subs] DIVERGED line in the log for the month and size."
+          exit 1
+
       # ── AUTO-RETRY A DEGRADED RUN ─────────────────────────────────────────────
       # On 2026-10-16 the 04:07 run degraded (expired Snowflake session), published blank
       # active-merchant and receipts series, and then waited for the next scheduled slot.

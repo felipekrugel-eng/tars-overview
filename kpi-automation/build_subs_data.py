@@ -194,6 +194,8 @@ def main() -> None:
     last_complete_day, feed_health = feed_completeness(FEED_HEALTH_CSV)
     receipts_cap = cap
     feed_stale_fatal = False
+    # Set when the 1+ cross-check breaches; published and alarmed, never aborting.
+    active_divergence = None
     if last_complete_day:
         receipts_cap = last_whole_month(last_complete_day)
         stale = feed_health.get("staleDays")
@@ -327,10 +329,33 @@ def main() -> None:
             print(f"[subs] active 1+ vs published activeMonthly over {checked} months — worst {worst:.3f}% ({worst_m})")
             # Far beyond the drift from receipts landing between two builds, far below
             # anything visible on the chart.
+            #
+            # BREACHING THIS NO LONGER ABORTS THE BUILD, and the reason is worth keeping.
+            # Until 2026-11-02 it called sys.exit() here. On 31 Oct the divergence reached
+            # 0.346% and this one line took down the ENTIRE subscriptions file: MRR, churn,
+            # the feature split, the flow charts, feedHealth — none of which come from
+            # receipts at all, none of which were wrong. subs-data.js sat frozen for 26 hours
+            # while kpi-data.js, daily-history.js and flow-data.js refreshed beside it every
+            # hour, and the run stayed green because the caller treats a non-zero exit from
+            # this script as a warning.
+            #
+            # A cross-check on one pair of series has no business withholding every other
+            # series in the file. So the breach is recorded, published, and raised as an
+            # alarm AFTER the file is written — the same shape the feed-stale check below
+            # already uses, and the same lesson kpi-pull learned on 28 Aug.
+            #
+            # The threshold is deliberately NOT relaxed. Widening it to 0.5% would silence
+            # today's breach and hide the next real one; the number is published instead so
+            # the drift is visible on the page and in the log while it is investigated.
             if worst > 0.25:
-                sys.exit(f"[subs] FAILED — the 1+ column is {worst:.2f}% off the published active "
-                         f"series at {worst_m}. They must count the same merchants; "
-                         f"country_month_activity.sql and receipts_tpv_daily_asof.sql have diverged.")
+                active_divergence = {"pct": round(worst, 3), "month": worst_m}
+                print(f"[subs] DIVERGED — the 1+ column is {worst:.2f}% off the published active "
+                      f"series at {worst_m}. They must count the same merchants, so "
+                      f"country_month_activity.sql and receipts_tpv_daily_asof.sql have drifted. "
+                      f"Qualified-active and the country table are published anyway and flagged: "
+                      f"at this size the difference is invisible on the chart, and withholding "
+                      f"them would blank more of the dashboard than the drift justifies.",
+                      file=sys.stderr)
         else:
             print("[subs] WARNING — could not read activeMonthly, qualified active unchecked", flush=True)
         active_qualified = [{"m": r.M, "a5": int(r.a5), "a10": int(r.a10)} for r in g.itertuples()]
@@ -339,7 +364,11 @@ def main() -> None:
         # table shows a ranking, and shipping 70 months x 200 countries to render 40 rows
         # would be most of a megabyte for nothing.
         months = sorted(cm["M"].unique().tolist())
-        snap = months[-2] if len(months) > 1 else (months[0] if months else None)
+        # months[-1], not months[-2]. `cm` is ALREADY capped to the last complete
+        # receipts month a few lines above, so stepping back again subtracted the
+        # partial month twice and showed the country table a month behind everything
+        # beside it — August 'Active base' against September MRR.
+        snap = months[-1] if months else None
         if snap:
             latest = cm[cm["M"] == snap]
             country_month = {str(r.COUNTRY): {"a1": int(r.ACTIVE_1), "a5": int(r.ACTIVE_5),
@@ -427,6 +456,10 @@ def main() -> None:
         # decline. A dashboard that cannot explain its own last data point is how a feed
         # outage becomes a business panic.
         "feedHealth": {**feed_health, "stale": feed_stale_fatal},
+        # Set when qualified-active and the published active line disagree by more than
+        # the tolerance. Published so the page can say so rather than quietly drawing two
+        # numbers that are meant to be one.
+        "activeDivergence": active_divergence,
         # QUERIES THAT DID NOT LAND THIS BUILD, so the page can distinguish "this series is
         # empty because nothing happened" from "this series is empty because we failed to
         # fetch it". feedHealth answers a DIFFERENT question — is the upstream lake feed
@@ -485,6 +518,16 @@ def main() -> None:
     # The file is written and correct; now make the outage impossible to ignore. Everything
     # above still shipped, so the dashboard is honest either way — this exists purely so the
     # run goes red and somebody looks, instead of three more days passing.
+    if active_divergence and not feed_stale_fatal:
+        print(f"\n[subs] FAILED — ACTIVE-MERCHANT CROSS-CHECK DIVERGED.\n"
+              f"        qualified-active (country_month_activity.sql) is "
+              f"{active_divergence['pct']}% off the published active series "
+              f"(receipts_tpv_daily_asof.sql) at {active_divergence['month']}.\n"
+              f"        They are supposed to count the same merchants, so one of the two\n"
+              f"        queries has drifted. subs-data.js WAS written and flagged; this\n"
+              f"        non-zero exit is the alarm, not a build failure.", file=sys.stderr)
+        sys.exit(4)
+
     if feed_stale_fatal:
         print(f"\n[subs] FAILED — RECEIPTS FEED IS DOWN.\n"
               f"        No complete day since {last_complete_day} "
