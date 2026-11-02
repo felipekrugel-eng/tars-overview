@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-02T15:18:33.072824+00:00",
+ "checked_at": "2026-11-02T16:56:15.591696+00:00",
  "worst": "warn",
- "digest": "10981ed18993cb105116e6226753fd6a93e4790b124934265a20c440e807ad6c",
+ "digest": "c6a5090a60ac5f2e65e9f33bd95e6a944caa63aeea7bd3bad45f687c7609a90a",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T15:16:55+00:00",
-   "data_at": "2026-11-02T15:16:00+00:00",
+   "committed_at": "2026-11-02T16:54:28+00:00",
+   "data_at": "2026-11-02T16:54:00+00:00",
    "age_h": 0.04,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T14:16:21+00:00",
-   "data_at": "2026-11-02T14:00:38+00:00",
-   "age_h": 1.3
+   "committed_at": "2026-11-02T16:53:14+00:00",
+   "data_at": "2026-11-02T16:34:47+00:00",
+   "age_h": 0.36
   },
   {
    "name": "Payments pull",
@@ -38,22 +38,58 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T12:35:48+00:00",
-   "data_at": "2026-11-02T12:35:47.973122+00:00",
-   "age_h": 2.71
+   "committed_at": "2026-11-02T16:48:16+00:00",
+   "data_at": "2026-11-02T16:48:15.389241+00:00",
+   "age_h": 0.13
   },
   {
    "name": "Activated payments",
    "path": "activated-payments/registration-daily.json",
    "ref": "master",
    "max_age_h": 9,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
-   "committed_at": "2026-11-02T13:45:47+00:00",
-   "data_at": "2026-11-02T13:40:15.163000+00:00",
-   "age_h": 1.64,
-   "inputs_changed_at": "2026-10-15T10:01:48+00:00"
+   "notes": [
+    "built before its inputs changed: activated-payments/pull.js is 0.2h newer"
+   ],
+   "state": "warn",
+   "reason": "rebuild",
+   "committed_at": "2026-11-02T16:36:38+00:00",
+   "data_at": "2026-11-02T16:30:43.414000+00:00",
+   "age_h": 0.43,
+   "inputs_changed_at": "2026-11-02T16:46:18+00:00",
+   "diagnosis": {
+    "workflow": "activated-payments-pull.yml",
+    "last_success": "2026-11-02T16:04:50Z",
+    "consecutive_non_success": 3,
+    "recent": [
+     {
+      "at": "2026-11-02T16:42:02Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-02T16:30:39Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-02T16:27:17Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-02T16:04:50Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-02T16:03:19Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-02T15:59:47Z",
+      "outcome": "cancelled"
+     }
+    ],
+    "runs_since_artefact": 1,
+    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded"
+   },
+   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 3 consecutive non-success runs \u00b7 last success 2026-11-02 16:04"
   },
   {
    "name": "Ads + attribution",
@@ -63,9 +99,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T13:45:47+00:00",
+   "committed_at": "2026-11-02T16:36:38+00:00",
    "data_at": null,
-   "age_h": 1.55
+   "age_h": 0.33
   },
   {
    "name": "Merchant base",
@@ -77,7 +113,7 @@
    "reason": null,
    "committed_at": "2026-11-02T13:03:12+00:00",
    "data_at": "2026-11-02T12:55:42.507366+00:00",
-   "age_h": 2.38,
+   "age_h": 4.01,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -90,7 +126,7 @@
    "reason": null,
    "committed_at": "2026-11-02T14:47:10+00:00",
    "data_at": null,
-   "age_h": 0.52,
+   "age_h": 2.15,
    "inputs_changed_at": "2026-11-02T13:45:22+00:00"
   },
   {
@@ -105,7 +141,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-01T07:28:57+00:00",
    "data_at": null,
-   "age_h": 31.83,
+   "age_h": 33.46,
    "inputs_changed_at": "2026-11-02T09:48:29+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -152,7 +188,7 @@
    "reason": null,
    "committed_at": "2026-11-02T09:46:10+00:00",
    "data_at": null,
-   "age_h": 5.54,
+   "age_h": 7.17,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -163,9 +199,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T11:56:40+00:00",
+   "committed_at": "2026-11-02T16:29:18+00:00",
    "data_at": null,
-   "age_h": 3.36,
+   "age_h": 0.45,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
