@@ -1,8 +1,44 @@
 {
  "schema_version": 1,
- "generated_at": "2026-11-01T01:06:08.248Z",
+ "generated_at": "2026-11-02T10:00:36.821Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
+  "acct_1UX8H74ZPKJJ17sb": {
+   "name": "Jere Kibler",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UX4nV8RUnix6Bfk": {
+   "name": "Jalissa May",
+   "legal_entity_type": "company",
+   "legal_entity_verification_status": "unverified",
+   "payouts_enabled": false
+  },
+  "acct_1UX0NL9l7cqEO4ag": {
+   "name": "Patrick Dunaway",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
+  "acct_1UX0LR8Au9WjHEZb": {
+   "name": "Kimberly Phillips",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UWyjF4oCfU0CUmD": {
+   "name": "Stefanie Perez",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": false
+  },
+  "acct_1UWrPp4hjVLmUQWY": {
+   "name": "Corrin Cubillas",
+   "legal_entity_type": "individual",
+   "legal_entity_verification_status": "verified",
+   "payouts_enabled": true
+  },
   "acct_1UWfuB6KikOipfHs": {
    "name": "Renee Boulette",
    "legal_entity_type": "non_profit",
