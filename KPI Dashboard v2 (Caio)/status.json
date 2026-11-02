@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-02T09:22:09.739835+00:00",
+ "checked_at": "2026-11-02T10:25:43.582452+00:00",
  "worst": "error",
- "digest": "910618811370fa27530c5fe2e0e6866eecceabcbf2eb08a20f8e64d4ec32ca94",
+ "digest": "c073ccb555ec338728b16c13412d227830977d7d84f97d1341ad393d10f62255",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T09:20:59+00:00",
-   "data_at": "2026-11-02T09:20:00+00:00",
-   "age_h": 0.04,
+   "committed_at": "2026-11-02T10:24:26+00:00",
+   "data_at": "2026-11-02T10:23:00+00:00",
+   "age_h": 0.05,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
   {
@@ -24,48 +24,48 @@
    "ref": "master",
    "max_age_h": 4,
    "notes": [
-    "stale: 154.3h old, limit 4h",
+    "stale: 155.3h old, limit 4h",
     "status = degraded",
     "gap: telegram_delivery_unconfirmed"
    ],
    "state": "error",
    "reason": "stale",
-   "committed_at": "2026-11-02T09:21:22+00:00",
+   "committed_at": "2026-11-02T10:17:48+00:00",
    "data_at": "2026-10-26T23:05:17+00:00",
-   "age_h": 154.28,
+   "age_h": 155.34,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": null,
     "consecutive_non_success": 29,
     "recent": [
      {
-      "at": "2026-11-02T09:03:07Z",
+      "at": "2026-11-02T10:01:25Z",
       "outcome": "cancelled"
      },
      {
-      "at": "2026-11-02T08:56:39Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-02T08:49:37Z",
+      "at": "2026-11-02T09:59:48Z",
       "outcome": "cancelled"
      },
      {
-      "at": "2026-11-02T08:34:12Z",
+      "at": "2026-11-02T09:58:31Z",
       "outcome": "failure"
      },
      {
-      "at": "2026-11-02T08:26:45Z",
+      "at": "2026-11-02T09:53:46Z",
+      "outcome": "skipped"
+     },
+     {
+      "at": "2026-11-02T09:30:35Z",
       "outcome": "failure"
      },
      {
-      "at": "2026-11-02T08:24:12Z",
+      "at": "2026-11-02T09:22:16Z",
       "outcome": "cancelled"
      }
     ],
     "runs_since_artefact": 0,
     "verdict": "has not run since the artefact was last written \u2014 it is not firing",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41416734630",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41424988721",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
@@ -80,111 +80,34 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-02T06:52:08+00:00",
-   "data_at": "2026-11-02T06:52:00.829570+00:00",
-   "age_h": 2.5
+   "committed_at": "2026-11-02T09:33:46+00:00",
+   "data_at": "2026-11-02T09:33:38.988489+00:00",
+   "age_h": 0.87
   },
   {
    "name": "Activated payments",
    "path": "activated-payments/registration-daily.json",
    "ref": "master",
    "max_age_h": 9,
-   "notes": [
-    "stale: 32.0h old, limit 9h"
-   ],
-   "state": "error",
-   "reason": "stale",
-   "committed_at": "2026-11-01T01:29:09+00:00",
-   "data_at": "2026-11-01T01:23:22.919000+00:00",
-   "age_h": 31.98,
-   "inputs_changed_at": "2026-10-15T10:01:48+00:00",
-   "diagnosis": {
-    "workflow": "activated-payments-pull.yml",
-    "last_success": null,
-    "consecutive_non_success": 29,
-    "recent": [
-     {
-      "at": "2026-11-02T09:03:07Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-02T08:56:39Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-02T08:49:37Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-02T08:34:12Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-02T08:26:45Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-02T08:24:12Z",
-      "outcome": "cancelled"
-     }
-    ],
-    "runs_since_artefact": 29,
-    "verdict": "running but not publishing \u2014 29 run(s) since the artefact was last written, none succeeded",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/41417541340",
-    "step": "Reconcile Margins against Payment Profile",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": true,
-    "runner_lost": false
-   },
-   "diagnosis_line": "running but not publishing \u2014 29 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Reconcile Margins against Payment Profile \u00b7 its publish step was SKIPPED, so the work was discarded \u00b7 29 consecutive non-success runs"
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-02T10:14:24+00:00",
+   "data_at": "2026-11-02T10:08:10.363000+00:00",
+   "age_h": 0.29,
+   "inputs_changed_at": "2026-10-15T10:01:48+00:00"
   },
   {
    "name": "Ads + attribution",
    "path": "activated-payments/attach-data.js",
    "ref": "master",
    "max_age_h": 9,
-   "notes": [
-    "stale: 31.9h old, limit 9h"
-   ],
-   "state": "error",
-   "reason": "stale",
-   "committed_at": "2026-11-01T01:29:09+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-02T10:14:24+00:00",
    "data_at": null,
-   "age_h": 31.88,
-   "diagnosis": {
-    "workflow": "ads-pull.yml",
-    "last_success": "2026-11-02T06:48:03Z",
-    "consecutive_non_success": 0,
-    "recent": [
-     {
-      "at": "2026-11-02T06:48:03Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-01T22:24:55Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-01T16:22:06Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-01T06:50:28Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-01T00:25:32Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-10-31T19:32:05Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 4,
-    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere"
-   },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 last success 2026-11-02 06:48"
+   "age_h": 0.19
   },
   {
    "name": "Merchant base",
@@ -196,7 +119,7 @@
    "reason": null,
    "committed_at": "2026-11-01T11:39:49+00:00",
    "data_at": "2026-11-01T11:35:26.636788+00:00",
-   "age_h": 21.78,
+   "age_h": 22.84,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -204,26 +127,98 @@
    "path": "KPI Dashboard v2 (Caio)/daily-history.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
+   "notes": [
+    "built before its inputs changed: kpi-automation/run.py is 1.3h newer"
+   ],
+   "state": "warn",
+   "reason": "rebuild",
    "committed_at": "2026-11-02T08:31:24+00:00",
    "data_at": null,
-   "age_h": 0.85,
-   "inputs_changed_at": "2026-10-16T13:14:19+00:00"
+   "age_h": 1.91,
+   "inputs_changed_at": "2026-11-02T09:48:29+00:00",
+   "diagnosis": {
+    "workflow": "kpi-pull.yml",
+    "last_success": "2026-11-02T04:08:02Z",
+    "consecutive_non_success": 0,
+    "recent": [
+     {
+      "at": "2026-11-02T04:08:02Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-01T15:52:00Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-01T04:07:06Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-31T15:09:23Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-31T04:06:40Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-30T15:39:40Z",
+      "outcome": "success"
+     }
+    ],
+    "runs_since_artefact": 0,
+    "verdict": "has not run since the artefact was last written \u2014 it is not firing"
+   },
+   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 last success 2026-11-02 04:08"
   },
   {
    "name": "KPI subscriptions",
    "path": "KPI Dashboard v2 (Caio)/subs-data.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
+   "notes": [
+    "built before its inputs changed: kpi-automation/build_subs_data.py is 26.3h newer"
+   ],
+   "state": "warn",
+   "reason": "rebuild",
    "committed_at": "2026-11-01T07:28:57+00:00",
    "data_at": null,
-   "age_h": 25.89,
-   "inputs_changed_at": "2026-10-16T13:14:19+00:00"
+   "age_h": 26.95,
+   "inputs_changed_at": "2026-11-02T09:48:29+00:00",
+   "diagnosis": {
+    "workflow": "kpi-pull.yml",
+    "last_success": "2026-11-02T04:08:02Z",
+    "consecutive_non_success": 0,
+    "recent": [
+     {
+      "at": "2026-11-02T04:08:02Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-01T15:52:00Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-01T04:07:06Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-31T15:09:23Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-31T04:06:40Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-10-30T15:39:40Z",
+      "outcome": "success"
+     }
+    ],
+    "runs_since_artefact": 2,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere"
+   },
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 last success 2026-11-02 04:08"
   },
   {
    "name": "Fraud health",
@@ -233,9 +228,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-01T14:17:16+00:00",
+   "committed_at": "2026-11-02T09:46:10+00:00",
    "data_at": null,
-   "age_h": 19.08,
+   "age_h": 0.66,
    "inputs_changed_at": "2026-10-09T15:53:26+00:00"
   },
   {
@@ -248,7 +243,7 @@
    "reason": null,
    "committed_at": "2026-11-01T14:24:38+00:00",
    "data_at": null,
-   "age_h": 18.96,
+   "age_h": 20.02,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -685,7 +680,7 @@
    "2026-10-30": "ok",
    "2026-10-31": "ok",
    "2026-11-01": "ok",
-   "2026-11-02": "ok"
+   "2026-11-02": "warn"
   },
   "KPI subscriptions": {
    "2026-10-14": "ok",
@@ -747,7 +742,7 @@
    "2026-10-30": "ok",
    "2026-10-31": "ok",
    "2026-11-01": "ok",
-   "2026-11-02": "ok"
+   "2026-11-02": "warn"
   },
   "Fraud health": {
    "2026-10-14": "ok",
