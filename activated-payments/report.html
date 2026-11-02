@@ -186,7 +186,7 @@ function pctCell(cur, prev, higherIsBetter){
 // the summed components — never averaged, which would weight small months equally.
 function cumulative(){
   const s = {initiated:0,passed:0,newTransacting:0,tpv:0,txns:0,revenue:0,cost:0,
-             network:0,perChargeStripe:0,platformStripe:0};
+             network:0,perChargeStripe:0,platformStripe:0,platformOther:0};
   M.forEach(r => Object.keys(s).forEach(k => { s[k] += (r[k]||0); }));
   const last = M.length ? M[M.length-1] : {};
   const r2 = v => Math.round(v*100)/100;
@@ -197,12 +197,16 @@ function cumulative(){
     takeRate:       s.tpv ? r2(s.revenue/s.tpv*100) : null,
     netMargin:      r2(s.revenue - s.network - s.perChargeStripe),
     netTakeRate:    s.tpv ? r2((s.revenue - s.network - s.perChargeStripe)/s.tpv*100) : null,
-    // Both margins over the SUMMED components — never an average of monthly rates, which
-    // would weight a $4k month the same as a $650k one.
-    margin1:        r2(s.revenue - s.network - s.perChargeStripe),
-    margin1Rate:    s.tpv ? r2((s.revenue - s.network - s.perChargeStripe)/s.tpv*100) : null,
-    margin2:        r2(s.revenue - s.network - s.platformStripe),
-    margin2Rate:    s.tpv ? r2((s.revenue - s.network - s.platformStripe)/s.tpv*100) : null,
+    // All three margins over the SUMMED components — never an average of monthly rates, which
+    // would weight a $4k month the same as a $650k one. Margin 3 subtracts the FULL platform
+    // total rather than the residual, which is the same arithmetic by a shorter route and
+    // keeps the cumulative figure independent of how the rows above split it.
+    margin1:        r2(s.revenue - s.network),
+    margin1Rate:    s.tpv ? r2((s.revenue - s.network)/s.tpv*100) : null,
+    margin2:        r2(s.revenue - s.network - s.perChargeStripe),
+    margin2Rate:    s.tpv ? r2((s.revenue - s.network - s.perChargeStripe)/s.tpv*100) : null,
+    margin3:        r2(s.revenue - s.network - s.platformStripe),
+    margin3Rate:    s.tpv ? r2((s.revenue - s.network - s.platformStripe)/s.tpv*100) : null,
     activeMerchants: null,       // distinct merchants can't be summed across months
     tpvPerActive:    null,
     liveCum:        last.liveCum!=null?last.liveCum:null,
@@ -225,30 +229,33 @@ const BLOCKS = [
     {k:'activeMerchants', label:'Merchants transacting in period', fmt:fmtN},
     {k:'tpvPerActive',    label:'TPV per transacting merchant', fmt:fmtM}
   ]},
-  // TWO MARGINS, BOTH SHOWN, ON BOTH PAGES.
+  // THE MARGIN CASCADE. Read top to bottom: each cost line is taken off the net revenue above
+  // it, and the line below is what is left. Nothing here has to be reconstructed by the reader
+  // and no figure appears twice.
   //
-  // This page used to show one net margin and the Summary of Margins another: October read
-  // 0.40% here and 0.224% there, on identical TPV and revenue, because this page costed from
-  // the per-charge IC+ feed alone and knew nothing about Stripe's platform-level fees. Both
-  // pages now publish both figures from the same snapshot, so the question of which one is
-  // right no longer arises — the difference between them IS the answer.
+  //   Revenue
+  //     less network fees (interchange, scheme, discount)        -> Net revenue (Margin 1)
+  //     less Stripe fees billed per charge (per-auth, volume)    -> Net revenue (Margin 2)
+  //     less Stripe's remaining platform fees                    -> Net revenue (Margin 3)
   //
-  //   Margin 1 (Margem Bruta)   after network fees and Stripe's per-charge fees
-  //   Margin 2 (Margem Liquida) after everything Stripe charges, including the platform fees
-  //                             that carry no merchant id and are apportioned by volume
-  //
-  // The components are listed above each margin so the build-up is visible rather than
-  // something a reader has to reconstruct from two totals that disagree.
+  // WHY THE LAST COST LINE SAYS "not billed per charge". Stripe's platform fee total already
+  // contains per-auth and volume — the same fees the line above has taken off — alongside
+  // account-volume, terminal-use, tap-to-pay, dispute, payout and Radar. Showing the full
+  // platform total here would charge per-auth and volume to the book a second time and turn a
+  // positive book negative. This line is therefore the remainder, and Margin 3 lands exactly
+  // on the net figure the Summary of Margins reaches by its own route.
   {sec:'Economics', rows:[
-    {k:'revenue',          label:'Revenue (captured application fees)',          fmt:fmtM},
-    {k:'takeRate',         label:'Take rate (revenue ÷ TPV)',                    fmt:fmtP},
-    {k:'network',          label:'Network fees (interchange, scheme, discount)', fmt:fmtM, better:false},
-    {k:'perChargeStripe',  label:'Stripe fees billed per charge',                fmt:fmtM, better:false},
-    {k:'margin1',          label:'Margin 1 — gross (Margem Bruta)',              fmt:fmtM},
-    {k:'margin1Rate',      label:'Margin 1 rate (% of TPV)',                     fmt:fmtP},
-    {k:'platformStripe',   label:'Stripe platform fees (apportioned by volume)', fmt:fmtM, better:false},
-    {k:'margin2',          label:'Margin 2 — net (Margem Líquida)',              fmt:fmtM},
-    {k:'margin2Rate',      label:'Margin 2 rate (% of TPV)',                     fmt:fmtP}
+    {k:'revenue',          label:'Revenue (captured application fees)',             fmt:fmtM},
+    {k:'takeRate',         label:'Take rate (revenue ÷ TPV)',                       fmt:fmtP},
+    {k:'network',          label:'Network fees (interchange, scheme, discount)',    fmt:fmtM, better:false},
+    {k:'margin1',          label:'Net revenue (Margin 1)',                          fmt:fmtM},
+    {k:'margin1Rate',      label:'Margin 1 take rate (% of TPV)',                   fmt:fmtP},
+    {k:'perChargeStripe',  label:'Stripe fees billed per charge',                   fmt:fmtM, better:false},
+    {k:'margin2',          label:'Net revenue (Margin 2)',                          fmt:fmtM},
+    {k:'margin2Rate',      label:'Margin 2 take rate (% of TPV)',                   fmt:fmtP},
+    {k:'platformOther',    label:'Stripe platform fees (not billed per charge)',    fmt:fmtM, better:false},
+    {k:'margin3',          label:'Net revenue (Margin 3)',                          fmt:fmtM},
+    {k:'margin3Rate',      label:'Margin 3 take rate (% of TPV)',                   fmt:fmtP}
   ]},
   {sec:'Base at period end', rows:[
     {k:'liveCum',        label:'Merchants live (passed KYC, cumulative)', fmt:fmtN},

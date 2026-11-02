@@ -198,18 +198,24 @@ def main():
         if rows:
             r_m1 = sum(r.get("margin1") or 0 for r in rows)
             r_m2 = sum(r.get("margin2") or 0 for r in rows)
+            r_m3 = sum(r.get("margin3") or 0 for r in rows)
             r_tpv = sum(r.get("tpv") or 0 for r in rows)
-            m_m1 = (mj.get("kpis") or {}).get("margin1")
-            m_m2 = (mj.get("kpis") or {}).get("margin2")
-            if m_m1 is None or m_m2 is None:
+            mk = mj.get("kpis") or {}
+            m_m1, m_m2, m_m3 = mk.get("margin1"), mk.get("margin2"), mk.get("margin3")
+            if m_m1 is None or m_m2 is None or m_m3 is None:
                 print("::warning title=Report check skipped::margins-data.js has no margin1/"
-                      "margin2 yet (pre-change build); the Report was not compared.")
+                      "margin2/margin3 yet (pre-change build); the Report was not compared.")
             else:
                 print()
                 print(f"{'':14}{'margins':>16}{'report':>16}{'gap':>12}")
+                # ALL THREE STEPS OF THE CASCADE, not just the ends. Checking only the first
+                # and last would pass even if the two pages split the middle differently —
+                # and the middle is where the per-charge/platform overlap lives, which is the
+                # one place these numbers have actually gone wrong before.
                 for name, a, b in (("volume", m_vol, r_tpv),
                                    ("margin 1", m_m1, r_m1),
-                                   ("margin 2", m_m2, r_m2)):
+                                   ("margin 2", m_m2, r_m2),
+                                   ("margin 3", m_m3, r_m3)):
                     gap = a - b
                     ok = close(a, b)
                     print(f"  {name:12}{a:>16,.2f}{b:>16,.2f}{gap:>12,.2f}"

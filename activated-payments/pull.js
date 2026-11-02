@@ -1366,23 +1366,44 @@ function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth
       tpvPerActive: (o.activeMerchants ? r2(o.tpv / o.activeMerchants) : null),
       revenue: r2(o.revenue),
       takeRate: o.tpv ? r2(o.revenue / o.tpv * 100) : null,
-      // MARGIN 1 (Margem Bruta): revenue less network fees and Stripe's PER-CHARGE fees.
-      // MARGIN 2 (Margem Liquida): revenue less network fees and ALL Stripe platform fees.
-      // Margin 2 is computed from revenue rather than subtracted from margin 1, because the
-      // platform figure REPLACES the per-charge one — Stripe bills per-auth and volume both
-      // ways and counting both would double it.
-      // The components, published so the page can show how each margin is built rather than
-      // asking the reader to trust two totals that differ.
+      // THREE MARGINS, AS ONE CASCADE. Each is the one above it less the next cost, so the
+      // page reads top to bottom and every line is the previous line minus the line before it:
+      //
+      //   revenue
+      //     - network fees (interchange, scheme, discount)     = MARGIN 1
+      //     - Stripe fees billed per charge (per-auth, volume) = MARGIN 2
+      //     - the REST of Stripe's platform fees               = MARGIN 3
+      //
+      // THE SUBTLETY THAT MAKES THE THIRD STEP A RESIDUAL. Stripe bills per-auth and volume
+      // twice over in the data: once per charge on the IC+ feed, and again inside the platform
+      // fee total, which also carries account-volume, terminal-use, tap-to-pay, dispute, payout
+      // and Radar. Over the book so far that overlap is $5,798 of a $7,702 platform total.
+      // Subtracting the per-charge fees and then the FULL platform total would charge those
+      // fees to the book twice and push a +$1,576 book to -$4,014. So the third step takes
+      // only what the second has not already taken, and margin 3 lands on exactly the figure
+      // the Summary of Margins reaches independently.
+      //
+      // The residual is computed as platform MINUS per-charge rather than by re-bucketing the
+      // platform feed, because the per-charge feed has a genuine month and country grain while
+      // the platform feed is a period total apportioned by volume. In the three smallest early
+      // months (Apr-Jun, together under $92k of volume) that apportionment puts slightly less
+      // platform fee in the month than the per-charge feed actually billed, so the residual is
+      // a few dollars negative. That is the apportionment showing through, not a cost error,
+      // and it is immaterial against the month's volume.
       network: r2(o.network),
       perChargeStripe: r2(o.perCharge),
       platformStripe: r2(o.platform),
+      platformOther: r2(o.platform - o.perCharge),
       cost: r2(o.network + o.perCharge),
       cost2: r2(o.network + o.platform),
-      margin1: r2(o.revenue - o.network - o.perCharge),
-      margin1Rate: o.tpv ? r2((o.revenue - o.network - o.perCharge) / o.tpv * 100) : null,
-      margin2: r2(o.revenue - o.network - o.platform),
-      margin2Rate: o.tpv ? r2((o.revenue - o.network - o.platform) / o.tpv * 100) : null,
-      // Kept as aliases of margin 1 so anything still reading the old names is unaffected.
+      margin1: r2(o.revenue - o.network),
+      margin1Rate: o.tpv ? r2((o.revenue - o.network) / o.tpv * 100) : null,
+      margin2: r2(o.revenue - o.network - o.perCharge),
+      margin2Rate: o.tpv ? r2((o.revenue - o.network - o.perCharge) / o.tpv * 100) : null,
+      margin3: r2(o.revenue - o.network - o.platform),
+      margin3Rate: o.tpv ? r2((o.revenue - o.network - o.platform) / o.tpv * 100) : null,
+      // Kept as aliases of margin 2 — the margin these two names have always meant — so that
+      // anything still reading them keeps getting the same number after the renumbering.
       netMargin: r2(o.revenue - o.network - o.perCharge),
       netTakeRate: o.tpv ? r2((o.revenue - o.network - o.perCharge) / o.tpv * 100) : null,
       liveCum: cum.live, transactingCum: cum.tx

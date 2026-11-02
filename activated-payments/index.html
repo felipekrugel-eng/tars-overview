@@ -3704,30 +3704,34 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     if(M.subtitle) setTxt('mgSub', M.subtitle);
 
     // Headline KPIs
-    // BOTH MARGINS, the same pair the Report shows.
+    // THE SAME THREE MARGINS THE REPORT SHOWS, in the same order and on the same definitions.
     //
     // Until 2026-11-02 this page led with one contribution figure and the Report led with a
     // different one — 0.224% here against 0.40% there for October, on identical TPV and
     // revenue. Neither was wrong; they stopped at different points in the cost stack, and
-    // nothing on either page said so. Showing both, in both places, is what makes the
-    // difference legible instead of alarming.
+    // nothing on either page said so. The fix is not to pick one but to show the whole
+    // cascade, in both places, so the difference between them is legible rather than alarming:
     //
-    //   Margin 1 (Margem Bruta)   after network fees and Stripe's per-charge fees
-    //   Margin 2 (Margem Liquida) after every Stripe fee, platform charges included
+    //   MARGIN 1  after network fees
+    //   MARGIN 2  also after Stripe's per-charge fees
+    //   MARGIN 3  also after the rest of Stripe's platform fees
     //
     // Falls back to the old single tile when margin1 is absent, so a data file written by
     // the previous pipeline still renders rather than showing a blank.
-    var hasBoth = k.margin1 != null && k.margin2 != null;
+    var hasAll = k.margin1 != null && k.margin2 != null && k.margin3 != null;
     set('mgKpis',
       kpi(fmtUsd0(k.tpv),'Total Volume Processed', fmtInt(k.txns)+' succeeded txns','accent')+
       kpi(fmtUsd0(k.revenue),'Gross Revenue', fmtPct(k.takeRate)+' effective take rate','accent')+
-      (hasBoth
-        ? kpi(fmtUsd0(k.margin1),'Margin 1 — gross',
-              fmtPct(k.margin1Rate,3)+' of TPV · after network + per-charge Stripe',
+      (hasAll
+        ? kpi(fmtUsd0(k.margin1),'Net revenue (Margin 1)',
+              fmtPct(k.margin1Rate,3)+' of TPV · after network fees',
               (num(k.margin1)>=0?'green':''))
-        + kpi(fmtUsd0(k.margin2),'Margin 2 — net',
-              fmtPct(k.margin2Rate,3)+' of TPV · after all Stripe fees',
+        + kpi(fmtUsd0(k.margin2),'Net revenue (Margin 2)',
+              fmtPct(k.margin2Rate,3)+' of TPV · also after per-charge Stripe fees',
               (num(k.margin2)>=0?'green':''))
+        + kpi(fmtUsd0(k.margin3),'Net revenue (Margin 3)',
+              fmtPct(k.margin3Rate,3)+' of TPV · also after all other Stripe fees',
+              (num(k.margin3)>=0?'green':''))
         : kpi(fmtUsd0(k.totalFees),'True Cost', 'All network + platform fees')
         + kpi(fmtUsd0(k.netMargin),'Contribution', fmtPct(k.netTakeRate,3)+' contribution take rate',
               (num(k.netMargin)>=0?'green':'')))

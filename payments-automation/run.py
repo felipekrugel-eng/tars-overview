@@ -203,12 +203,16 @@ def margins_by_country(tx_path, ic_path, stripe_fees_total):
                 "totalFees": round(total_fees, 4),
                 "netMargin": round(net, 4),
                 "netTakeRate": (net / o["tpv"]) if o["tpv"] else None,
-                # Both margins per country too, on the same definition as the monthly rows,
-                # so the country filter cannot quietly show a third number.
-                "margin1": round(o["revenue"] - network - o["perCharge"], 4),
-                "margin1Rate": ((o["revenue"] - network - o["perCharge"]) / o["tpv"]) if o["tpv"] else None,
-                "margin2": round(net, 4),
-                "margin2Rate": (net / o["tpv"]) if o["tpv"] else None,
+                # All three margins per country too, on the same definitions as the monthly
+                # rows, so the country filter cannot quietly show a fourth number.
+                #   1: after network fees   2: also after Stripe's per-charge fees
+                #   3: also after the rest of Stripe's platform fees
+                "margin1": round(o["revenue"] - network, 4),
+                "margin1Rate": ((o["revenue"] - network) / o["tpv"]) if o["tpv"] else None,
+                "margin2": round(o["revenue"] - network - o["perCharge"], 4),
+                "margin2Rate": ((o["revenue"] - network - o["perCharge"]) / o["tpv"]) if o["tpv"] else None,
+                "margin3": round(net, 4),
+                "margin3Rate": (net / o["tpv"]) if o["tpv"] else None,
                 "pctProfitable": (o["profitableTxns"] / o["txns"]) if o["txns"] else None,
                 "profitableTxns": o["profitableTxns"],
                 "unprofitableTxns": o["txns"] - o["profitableTxns"],
@@ -315,28 +319,34 @@ def margins_by_month(tx_path, ic_path, stripe_fees_total):
         net_revenue = o["revenue"] - network
         contribution = net_revenue - stripe
 
-        # ── MARGIN 1 AND MARGIN 2 ───────────────────────────────────────────────────────
+        # ── THE MARGIN CASCADE: 1, 2, 3 ─────────────────────────────────────────────────
         # Felipe, 2026-11-02, after finding the Report saying 0.40% for October while this
         # page said 0.224%: "we need to show both things, in both places. we can't show one
-        # thing in one and one thing in another." Both pages now publish both, under one
-        # definition, so the question of which page is right stops being a question.
+        # thing in one and one thing in another." Then, on the ordering: the page should walk
+        # down from revenue, taking one cost off at a time, so each margin is the one above
+        # it less the next cost.
         #
-        #   MARGIN 1 (Margem Bruta)  revenue - network - Stripe's PER-CHARGE fees
-        #   MARGIN 2 (Margem Liquida) revenue - network - ALL Stripe platform fees
+        #   MARGIN 1  revenue - network fees
+        #   MARGIN 2  margin 1 - Stripe's PER-CHARGE fees (per-auth, volume)
+        #   MARGIN 3  margin 2 - the REST of Stripe's platform fees
         #
-        # The two differ because Stripe bills per-auth and volume fees twice over: itemised
-        # per charge (Q and R, counted in margin 1) and in aggregate on the platform balance
-        # feed (inside `stripe`, counted in margin 2, along with Radar, Tap to Pay, payout,
-        # terminal use, account volume and disputes). Margin 2 is NOT margin 1 minus a
-        # separate number — the platform figure REPLACES the per-charge one, which is why it
-        # is computed from revenue rather than subtracted from margin 1.
+        # WHY MARGIN 3 IS STILL COMPUTED FROM REVENUE and not by subtracting a third number.
+        # Stripe bills per-auth and volume twice over in the data: itemised per charge (Q and
+        # R, taken off at margin 2) and again inside the platform balance feed (`stripe`,
+        # which also carries Radar, Tap to Pay, payout, terminal use, account volume and
+        # disputes). Subtracting `stripe` whole on top of Q and R would charge those fees to
+        # the book a second time. Margin 3 is therefore revenue less network less the FULL
+        # platform figure — arithmetically identical to taking the residual off margin 2, but
+        # it cannot drift if the split above it ever changes. The page shows the residual,
+        # `platformOther`, so the three lines still read as a cascade.
         #
         # October 2026 is the worked example: revenue 19,160.05, network 14,183.30,
-        # per-charge 1,744.22, platform 3,143.35 -> margin 1 = 3,232.53 (0.40% of TPV),
-        # margin 2 = 1,833.40 (0.224%). The 1,399.13 between them is what Stripe charges
-        # beyond what it itemises per charge.
-        margin1 = o["revenue"] - network - o["perCharge"]
-        margin2 = contribution
+        # per-charge 1,744.22, platform 3,143.35 -> margin 1 = 4,976.75, margin 2 = 3,232.53
+        # (0.40% of TPV), margin 3 = 1,833.40 (0.224%). The 1,399.13 between margins 2 and 3
+        # is what Stripe charges beyond what it itemises per charge.
+        margin1 = o["revenue"] - network
+        margin2 = o["revenue"] - network - o["perCharge"]
+        margin3 = contribution
         return {
             "txns": o["txns"],
             "tpv": round(o["tpv"], 2),
@@ -353,13 +363,17 @@ def margins_by_month(tx_path, ic_path, stripe_fees_total):
             "totalFees": round(network + stripe, 4),
             "netMargin": round(contribution, 4),
             "netTakeRate": (contribution / o["tpv"]) if o["tpv"] else None,
-            # Both margins, published side by side. netMargin/netTakeRate are kept as
-            # aliases of margin 2 so nothing reading the old names breaks.
+            # All three margins, published side by side, plus the residual platform figure the
+            # cascade subtracts between margins 2 and 3. netMargin/netTakeRate stay aliases of
+            # margin 3 — the fully-loaded margin they have always meant.
             "perChargeStripe": round(o["perCharge"], 4),
+            "platformOther": round(stripe - o["perCharge"], 4),
             "margin1": round(margin1, 4),
             "margin1Rate": (margin1 / o["tpv"]) if o["tpv"] else None,
             "margin2": round(margin2, 4),
             "margin2Rate": (margin2 / o["tpv"]) if o["tpv"] else None,
+            "margin3": round(margin3, 4),
+            "margin3Rate": (margin3 / o["tpv"]) if o["tpv"] else None,
             # UNDEFINED, NOT A BIG NUMBER, when net revenue is zero or negative. September
             # 2026 has gross 10,479 against network fees of 11,478 — we charged merchants
             # less than the networks charged us — so net revenue is -999 and contribution
@@ -560,26 +574,32 @@ def emit_margins(xlsx_path, out_path, tx_path=None, ic_path=None, fees_path=None
                         flag = "OK" if drift < 0.01 else "DRIFT"
                         print(f"   month-sum {label}: {got:,.2f} vs Summary {want:,.2f} "
                               f"({drift:.4f}%) {flag}", flush=True)
-                # BOTH MARGINS AT THE HEADLINE, summed from the monthly components rather
-                # than read from the workbook. The Summary sheet has no Margin 1 row and
-                # adding one would mean editing the template; the components are already in
-                # the monthly rows, and summing them is exactly how the page's own cumulative
+                # ALL THREE MARGINS AT THE HEADLINE, summed from the monthly components rather
+                # than read from the workbook. The Summary sheet has no margin rows and adding
+                # them would mean editing the template; the components are already in the
+                # monthly rows, and summing them is exactly how the page's own cumulative
                 # column works. Rates are over summed TPV — never an average of monthly
                 # rates, which would weight a $4k month like a $650k one.
                 tot_net = sum(v["network"] for v in st.values())
                 tot_pc = sum(v.get("perChargeStripe") or 0 for v in st.values())
                 tot_plat = sum(v["stripe"] for v in st.values())
-                m1 = tot_rev - tot_net - tot_pc
-                m2 = tot_rev - tot_net - tot_plat
+                m1 = tot_rev - tot_net
+                m2 = tot_rev - tot_net - tot_pc
+                m3 = tot_rev - tot_net - tot_plat
                 data["kpis"]["margin1"] = round(m1, 2)
                 data["kpis"]["margin1Rate"] = (m1 / tot_tpv) if tot_tpv else None
                 data["kpis"]["margin2"] = round(m2, 2)
                 data["kpis"]["margin2Rate"] = (m2 / tot_tpv) if tot_tpv else None
+                data["kpis"]["margin3"] = round(m3, 2)
+                data["kpis"]["margin3Rate"] = (m3 / tot_tpv) if tot_tpv else None
                 data["kpis"]["networkTotal"] = round(tot_net, 2)
                 data["kpis"]["perChargeStripe"] = round(tot_pc, 2)
                 data["kpis"]["platformStripe"] = round(tot_plat, 2)
-                print(f"   margin 1 {m1:,.2f} ({(m1/tot_tpv*100) if tot_tpv else 0:.3f}% of TPV) · "
-                      f"margin 2 {m2:,.2f} ({(m2/tot_tpv*100) if tot_tpv else 0:.3f}%)", flush=True)
+                data["kpis"]["platformOther"] = round(tot_plat - tot_pc, 2)
+                pc = lambda v: (v / tot_tpv * 100) if tot_tpv else 0
+                print(f"   margin 1 {m1:,.2f} ({pc(m1):.3f}% of TPV) · "
+                      f"margin 2 {m2:,.2f} ({pc(m2):.3f}%) · "
+                      f"margin 3 {m3:,.2f} ({pc(m3):.3f}%)", flush=True)
             except Exception as e:
                 print(f"   WARNING — monthly margin series skipped: {e}", flush=True)
             # The 15 free transacting days. Guarded like the two above — additive, and the
