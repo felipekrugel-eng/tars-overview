@@ -1,13 +1,13 @@
 {
  "schema_version": 1,
- "generated_at": "2026-11-02T13:17:47.623Z",
+ "generated_at": "2026-11-02T15:20:14.729Z",
  "note": "Representative name + Stripe KYC outcome per connected account, for the fraud-health verification agent. Private: never deployed, never written into dashboard data.",
  "accounts": {
   "acct_1UXHVf7k55YXBFEQ": {
    "name": "Seever Khan",
    "legal_entity_type": "individual",
    "legal_entity_verification_status": "verified",
-   "payouts_enabled": true
+   "payouts_enabled": false
   },
   "acct_1UX8H74ZPKJJ17sb": {
    "name": "Jere Kibler",
