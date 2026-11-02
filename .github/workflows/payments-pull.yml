@@ -257,12 +257,35 @@ jobs:
           # ONCE A DAY: the raw fee export and the finished workbook, which exist for
           # analysis and download rather than for the pages. A day old is fine for that, and
           # anything fresher can be pulled straight from Snowflake.
+          # THE RAW EXPORT IS COMMITTED GZIPPED, and that is not an optimisation — it is the
+          # only way this push lands at all.
+          #
+          # On 2026-11-01 icplus_costs.csv crossed 100 MB (102.59 MB). GitHub BLOCKS any file
+          # over 100 MB at the pre-receive hook, so every push carrying it was rejected
+          # outright. And because that same commit carries margins-data.js, the Summary of
+          # Margins froze at 2026-10-31 22:05 — then the Payment Profile froze too, because
+          # the reconcile gate saw two different vintages and failed the activation job
+          # before its own commit could run. One oversized CSV took both payments pages down
+          # for 32 hours, and the retry loop re-ran it every seven minutes.
+          #
+          # gzip takes it from ~103 MB to ~9 MB (the 80 MB version compressed to 7.3 MB), so
+          # it is back under the limit with a decade of headroom, and the repository grows an
+          # order of magnitude more slowly. The file stays downloadable: `gunzip -c` it.
+          #
+          # Nothing in the pipeline reads the raw CSV from a checkout — run.py, the workbook
+          # build and cohort_payments.py all read it from disk in the same job that pulls it,
+          # and the Payment Profile reads icplus_by_charge.csv. Verified before changing this.
+          gzip -9 -c payments-automation/data/icplus_costs.csv \
+            > payments-automation/data/icplus_costs.csv.gz 2>/dev/null \
+            && echo "gzipped raw export -> $(du -h payments-automation/data/icplus_costs.csv.gz | cut -f1)" \
+            || echo "::warning::could not gzip the raw export; it will not be committed this run"
+
           SMALL="payments-automation/data/transactions.csv
                  payments-automation/data/icplus_by_charge.csv
                  payments-automation/data/platform_fees.csv
                  payments-automation/data/pull_status.json
                  activated-payments/margins-data.js"
-          BIG="payments-automation/data/icplus_costs.csv
+          BIG="payments-automation/data/icplus_costs.csv.gz
                payments-automation/output/loyverse_payments_analysis_ful_V2.xlsx
                payments-automation/data/.last_full_export"
 

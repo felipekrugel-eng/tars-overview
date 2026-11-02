@@ -165,19 +165,6 @@ jobs:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: node activated-payments/pull.js
 
-      # ── DO THE TWO PAYMENTS PAGES AGREE? ──────────────────────────────────────
-      # Both are now built from one snapshot taken at one instant, so they should agree to
-      # rounding. This asserts it on every run rather than trusting it, because every previous
-      # cause of disagreement — face-value FX, two rates for one currency, a discarded fee
-      # bucket, two separate pulls — was invisible until somebody put the pages side by side.
-      #
-      # Runs BEFORE the commit, so a build that would publish contradictory numbers fails
-      # instead of shipping them. It does not block the rest of the data: if margins-data.js is
-      # absent the check skips, and it only ever compares what both pages actually state.
-      - name: Reconcile Margins against Payment Profile
-        if: steps.gate.outputs.run == 'yes'
-        run: python3 shared/reconcile.py
-
       - name: Verify report registration source
         if: steps.gate.outputs.run == 'yes'
         run: |
@@ -250,6 +237,29 @@ jobs:
             done
             echo "push still failing after 5 attempts"; exit 1
           fi
+
+      # ── DO THE TWO PAYMENTS PAGES AGREE? ──────────────────────────────────────
+      # Both are built from one snapshot taken at one instant, so they should agree to
+      # rounding. This asserts it on every run rather than trusting it, because every previous
+      # cause of disagreement — face-value FX, two rates for one currency, a discarded fee
+      # bucket, two separate pulls — was invisible until somebody put the pages side by side.
+      #
+      # IT RUNS AFTER THE COMMIT, and that ordering was bought the hard way. It used to run
+      # BEFORE, so that a build which would publish contradictory numbers failed instead of
+      # shipping them. On 2026-11-01 that reasoning inverted: margins froze because its own
+      # commit was rejected (an oversized CSV), this gate correctly saw two vintages, failed
+      # the job — and took the FRESH, CORRECT profile data down with it. One stale page became
+      # two stale pages, and because the data never went fresh the heartbeat re-triggered the
+      # whole thing every seven minutes for 32 hours.
+      #
+      # Publishing fresh-but-mismatched data is not the disaster the original ordering
+      # assumed, because both pages now PRINT their snapshot instant: a reader can see one is
+      # older. A frozen dashboard shows nothing and explains nothing. So this follows the rule
+      # the rest of this repo already learned the hard way — commit what landed, alarm
+      # afterwards. The run still goes red; it just no longer withholds the good data.
+      - name: Reconcile Margins against Payment Profile
+        if: always() && steps.gate.outputs.run == 'yes'
+        run: python3 shared/reconcile.py
 
       - name: Clean up key
         if: always()
