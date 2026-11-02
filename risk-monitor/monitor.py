@@ -122,6 +122,10 @@ def health(state, now, completed=False):
                      or x.get('telegram', {}).get('status') != 'sent')
                 for x in state.get('alerts', {}).values()),
             'alerts_held_by_budget': state.get('alerts_held', 0),
+            # Alerts whose Telegram copy has no receipt but which DID go out by email. Shown
+            # so the unconfirmed duplicate stays visible; deliberately not a gap, so it does
+            # not mark the monitor degraded. See Checks.telegram_gap.
+            'telegram_unconfirmed': sorted(set(state.get('telegram_unconfirmed', []))),
             'emails_sent_today': (state.get('send_counters') or {}).get('emails', 0),
             'full_processor_completed_at': state.get('full_completed'),
             'global_sweep_completed_at': state.get('global', {}).get('completed_at'),
@@ -148,6 +152,33 @@ class Monitor:
     def gap(self, code):
         if code not in self.s['gaps']:
             self.s['gaps'].append(code)
+
+    def telegram_gap(self, alert):
+        """An unconfirmed Telegram receipt, recorded without claiming the monitor is broken.
+
+        Felipe, 2026-11-02: "it's fine if telegram not sent. it does not mean the dashboard
+        is broken." He is right, and the reason is that TELEGRAM IS THE SECOND CHANNEL. Every
+        alert also goes by email to Felipe and Caio — the relay's own test message says so —
+        and `alert['email']` is tracked independently. A finding that reached a human by email
+        has reached a human; holding the whole monitor at `degraded` because the duplicate
+        copy has no receipt made `last_completed_at` freeze for six and a half days, turned 28
+        runs red, and said "Not updating" about a monitor that was evaluating every few
+        minutes.
+
+        So an unconfirmed Telegram is downgraded to a COUNT, visible in health.json and in the
+        log, that does not set `status: degraded`.
+
+        WHAT IS DELIBERATELY NOT RELAXED: if the email channel ALSO has no confirmed send for
+        the same alert, the gap still stands. That is no longer "a duplicate did not arrive",
+        it is "this finding reached nobody", which is the one thing this monitor exists to
+        notice. Suppressing that too would leave it green while a merchant risk alert sat
+        undelivered, which is worse than the noise it replaces.
+        """
+        if (alert or {}).get('email', {}).get('status') == 'sent':
+            self.s['telegram_unconfirmed'] = sorted(set(
+                self.s.get('telegram_unconfirmed', []) + [alert.get('alert_id', '?')]))
+            return
+        self.gap('telegram_delivery_unconfirmed')
     def budget(self):
         if time.monotonic() > self.deadline:
             raise SafeError('run_budget_checkpointed')
@@ -843,7 +874,7 @@ class Monitor:
             return False
         receipt = transport.get('receipts', {}).get(self.receipt_key(alert))
         if not receipt or receipt.get('status') != 'sent':
-            self.gap('telegram_delivery_unconfirmed')
+            self.telegram_gap(alert)
             return False
         alert['telegram'] = dict(receipt, receipt_key=self.receipt_key(alert))
         self.checkpoint({'type': 'telegram_receipt', 'alert_id': alert['alert_id'],
@@ -855,14 +886,14 @@ class Monitor:
         digest=self.receipt_key(alert)
         receipt=transport.get('receipts',{}).get(digest)
         if receipt:
-            if receipt.get('status')!='sent':self.gap('telegram_delivery_unconfirmed')
+            if receipt.get('status')!='sent':self.telegram_gap(alert)
             alert['telegram']=dict(receipt, receipt_key=digest)
             self.checkpoint({'type':'telegram_receipt','alert_id':alert['alert_id'],'status':receipt['status']})
             return
         path='risk-telegram/outbox/'+digest+'.json'
         existing,_=self.store.file(path)
         if existing:
-            self.gap('telegram_delivery_unconfirmed')
+            self.telegram_gap(alert)
             alert['telegram']={'status':'enqueued','receipt_key':digest}
             return
         if alert.get('telegram',{}).get('status') in ('send_intent','uncertain'):
@@ -876,7 +907,7 @@ class Monitor:
         # Ciphertext only on master, existing path checked above, no side-effect retry.
         self.store.api('contents/'+path,'PUT',{'message':'chore(risk): enqueue encrypted alert','branch':'master',
                                              'content':base64.b64encode(canonical(envelope)).decode()})
-        self.gap('telegram_delivery_unconfirmed')
+        self.telegram_gap(alert)
         alert['telegram']={'status':'enqueued','receipt_key':digest,'at':self.now}
         self.checkpoint({'type':'telegram_enqueued','alert_id':alert['alert_id']})
 
@@ -1000,7 +1031,9 @@ def main():
         # well inside the watchdog's 90-minute threshold.
         print('Risk monitor skipped this wake-up: '+skip+'.')
         return 0
-    state.update(run_started=int(time.time()),gaps=[],mode=settings['mode'])
+    # telegram_unconfirmed is reset alongside gaps: it describes THIS run, not a running
+    # tally. Left to accumulate it would grow without bound and stop meaning anything.
+    state.update(run_started=int(time.time()),gaps=[],telegram_unconfirmed=[],mode=settings['mode'])
     monitor=Monitor(state,store,settings)
     monitor.checkpoint({'type':'run_started','code_sha':store.code_sha,'mode':settings['mode']})
     try:
