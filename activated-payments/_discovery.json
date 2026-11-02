@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-02T11:16:03.613Z",
+  "ranAt": "2026-11-02T11:46:34.456Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1101,23 +1101,23 @@
     "tables": [
       {
         "name": "CHARGEBEE-EU-CREDIT_NOTE",
-        "rows": 141791
+        "rows": 141854
       },
       {
         "name": "CHARGEBEE-EU-CUSTOMER",
-        "rows": 59961
+        "rows": 59984
       },
       {
         "name": "CHARGEBEE-EU-INVOICE",
-        "rows": 1139478
+        "rows": 1140216
       },
       {
         "name": "CHARGEBEE-EU-SUBSCRIPTION",
-        "rows": 103272
+        "rows": 103294
       },
       {
         "name": "CHARGEBEE-EU-TRANSACTION",
-        "rows": 1819518
+        "rows": 1820689
       },
       {
         "name": "CHARGEBEE-UK-CREDIT_NOTE",
