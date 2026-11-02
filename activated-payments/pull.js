@@ -1240,9 +1240,22 @@ async function fetchMinorMonthly(conn, acctIds, sqlFile, amtCol, cntCol, country
 // a different net take rate. Network and per-charge come straight from the per-charge feed;
 // the platform fees carry no merchant id at all, so they are apportioned by share of volume
 // within each month — the same apportionment the Profile page makes and labels.
+// WHY VOLUME AND REVENUE COME OUT OF HERE TOO, and not just cost.
+// Until 2026-11-02 the Report took its COST from the snapshot but its VOLUME and REVENUE from
+// two live Snowflake queries issued ~40 minutes later. Every closed month agreed, so it looked
+// fine — but the CURRENT month's margin was being computed from revenue at one instant minus
+// cost at another, which is not a margin of anything. It showed up as a permanent $16.94 gap
+// against the Summary of Margins on November, and it would have reappeared, slightly different,
+// on the first day of every month thereafter.
+//
+// The snapshot's charge rows already carry usd, n and rev, so there was never a reason to ask
+// Snowflake again. Taking all four figures from the same rows is what makes the margin on this
+// page a subtraction of two numbers from one moment. activeMerchants is deliberately NOT moved:
+// it is a count of accounts, it is not a money figure, no other page states it, and the snapshot
+// rows are aggregated past the account grain so it cannot be derived from them.
 function snapshotCostByMonth(costRows, platform) {
   const out = {};
-  const slot = o => (o || { network: 0, perCharge: 0, platform: 0 });
+  const slot = o => (o || { network: 0, perCharge: 0, platform: 0, tpv: 0, txns: 0, revenue: 0 });
   // Volume per month, and per month+market, to apportion the platform fees against.
   const vol = {}, volBy = {};
   (costRows || []).forEach(r => {
@@ -1250,12 +1263,19 @@ function snapshotCostByMonth(costRows, platform) {
     (volBy[r.m] = volBy[r.m] || {})[r.cc] = (volBy[r.m][r.cc] || 0) + (r.usd || 0);
   });
   (costRows || []).forEach(r => {
-    const o = (out[r.m] = out[r.m] || { network: 0, perCharge: 0, platform: 0, by: {} });
+    const o = (out[r.m] = out[r.m] || { network: 0, perCharge: 0, platform: 0,
+                                        tpv: 0, txns: 0, revenue: 0, by: {} });
     o.network += r.cost || 0;
     o.perCharge += r.pcPlatform || 0;
+    o.tpv += r.usd || 0;
+    o.txns += r.n || 0;
+    o.revenue += r.rev || 0;
     const b = (o.by[r.cc] = slot(o.by[r.cc]));
     b.network += r.cost || 0;
     b.perCharge += r.pcPlatform || 0;
+    b.tpv += r.usd || 0;
+    b.txns += r.n || 0;
+    b.revenue += r.rev || 0;
   });
   const byMonth = (platform && platform.byMonth) || {};
   Object.keys(out).forEach(m => {
@@ -1303,13 +1323,19 @@ function buildPaymentsMonthly(actDaily, enabledDaily, chargesByMonth, revByMonth
     Object.keys(s.by || {}).forEach(cc => { cslot(o, cc)[field] = s.by[cc].usd; });
   });
   addMinor(revByMonth, 'revenue');
-  // The three cost components, kept separate because the two margins need different subsets.
+  // The three cost components, kept separate because the two margins need different subsets —
+  // AND volume/transactions/revenue, which overwrite the live values set above. This runs last
+  // on purpose: whatever the live queries returned, the snapshot wins, so every money figure in
+  // the row comes from one read at one instant. A month the snapshot does not cover is simply
+  // not visited here and keeps its live values rather than being zeroed.
   Object.keys(snapCost || {}).forEach(m => {
     const o = touch(m), s = snapCost[m];
     o.network = s.network; o.perCharge = s.perCharge; o.platform = s.platform;
+    o.tpv = s.tpv; o.txns = s.txns; o.revenue = s.revenue;
     Object.keys(s.by || {}).forEach(cc => {
       const b = cslot(o, cc);
       b.network = s.by[cc].network; b.perCharge = s.by[cc].perCharge; b.platform = s.by[cc].platform;
+      b.tpv = s.by[cc].tpv; b.txns = s.by[cc].txns; b.revenue = s.by[cc].revenue;
     });
   });
 

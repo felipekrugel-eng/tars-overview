@@ -107,11 +107,17 @@ def close(a, b):
 def main():
     # Optional explicit paths, so a candidate pair can be checked without disturbing the
     # committed one — which is how this check itself was verified before it was trusted.
-    global MARGINS, PROFILE
+    # All THREE are overridable. The Report was omitted when it was added, so passing a
+    # candidate pair silently compared it against whatever report-data.js happened to be on
+    # disk — which reported a drift that did not exist. A check that can lie under test is
+    # not a check.
+    global MARGINS, PROFILE, REPORT
     if len(sys.argv) > 1:
         MARGINS = sys.argv[1]
     if len(sys.argv) > 2:
         PROFILE = sys.argv[2]
+    if len(sys.argv) > 3:
+        REPORT = sys.argv[3]
     for p in (MARGINS, PROFILE):
         if not os.path.exists(p):
             print(f"SKIP: {os.path.basename(p)} not present — nothing to reconcile.")
