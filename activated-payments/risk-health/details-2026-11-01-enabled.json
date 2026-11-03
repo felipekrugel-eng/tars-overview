@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-01 Europe/London",
   "cohortDate": "2026-11-01",
-  "reviewedAt": "2026-11-02T17:04:48+00:00",
+  "reviewedAt": "2026-11-03T07:20:39+00:00",
   "count": 2,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-02T17:04:48+00:00",
+ "reviewedAt": "2026-11-03T07:20:39+00:00",
  "merchants": [
   {
    "id": "acct_1UWcADG2GBXjhYlz",
@@ -36,26 +36,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Michigan LARA Corporations Division (COFS/MiBusiness) could not be queried: the registry blocks automated access and the search endpoint would not load on this run, so no authoritative registration record for 'Myers Venture Group LLC' in Michigan was obtained, and the registry was not retried. Open-web searches across general, Michigan-specific and Wexford County/Cadillac queries returned no matching entity record, only unrelated Myers-named businesses in other states. No secondhand-dealer or resale licence record was located either, and no evidence was found that such a licence is clearly required for the declared model. Registration status therefore remains unverified rather than contradicted.",
+    "No independent listing placing this business in Cadillac, Michigan was found. Searches across Google/web, Yelp, BBB, Facebook, Nextdoor and local Cadillac-area liquidation and estate-sale directories returned no business profile, address or presence for 'Myers Venture Group LLC'. The declared model is local liquidation resale with in-person customer pickup rather than a licensed-premises retail operation, so the absence of a storefront footprint is not scored as a contradiction, but there is no observable operating footprint of any kind.",
+    "No permitted public source could tie the representative to this business: the state filing could not be loaded, no licence record was found, the business has no own channels (no website, Facebook, Instagram, Yelp or Google page with owner replies), and no local news or complaint/scam reports mention it. On permitted sources the representative neither matches nor fails to match any officer, member, manager or registered agent role, because no such record was retrievable. The statement descriptor 'MYERS VENTURE GROUP' and the merchant email handle are internally consistent with the legal name, but these are merchant-supplied and are not independent corroboration. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website is declared on the account and none could be found. The business name and the email handle describe a trade and ownership identity rather than payment collection, so the payment-collection contradiction does not apply, and the statement descriptor is a plain rendering of the legal name rather than a random string or an unrelated personal name. However, no alternative web presence was findable either: no Facebook page or Marketplace storefront, no auction or liquidation listing page, and no directory entry. Contactability therefore rests entirely on the Stripe-held email address.",
+    "MCC 5399 (miscellaneous general merchandise) is on its face coherent with the declared activity of reselling liquidation, overstock and storage-unit merchandise (household goods, small appliances, electronics, tools, furniture), and the business name does not describe payment collection itself, nor is this a digital-goods MCC. However, no page could be loaded showing what this business actually sells, so coherence could not be confirmed against observable activity and the finding cannot be marked verified under the citation rule.",
+    "No dated evidence of independent presence was found: no reviews, no directory or social listings, no retrievable filing dates, no local news coverage, and no complaints. Searches for scam, complaint or fraud reports against the business name returned only unrelated entities in other states and sectors, none of which is connected to this merchant. Trading history of one year or more can be neither established nor excluded."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual check of the Michigan LARA Corporations Division (COFS/MiBusiness) entity search for 'Myers Venture Group LLC': confirm the entity exists, is in good standing, its formation date, the registered office address in or near Cadillac MI, and the named member/manager/resident agent.",
+    "Michigan Annual Report or certificate of good standing, or the formation document, to establish filing date and age of the entity.",
+    "Ask the merchant for proof of trade: photographs of inventory or storage/retail space, the Facebook Marketplace or auction profile used for sales, and two or three recent sales receipts or invoices.",
+    "Confirm whether Cadillac or Wexford County requires a secondhand/resale dealer registration for this activity and, if so, obtain the licence number.",
+    "Verify the representative's role against the state filing once accessible (member/manager/resident agent) and confirm the merchant email domain/handle is controlled by the business."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Myers Venture Group LLC has effectively no public footprint: no Michigan entity record could be retrieved because LARA blocks automation, and no listing, social page, website, review, news item or complaint for this business could be found in Cadillac, Michigan or elsewhere. Nothing contradicts the declared profile either - the legal name, statement descriptor and email handle are mutually consistent, MCC 5399 is plausible for liquidation and overstock resale, and no adverse or scam reports attach to the business or the representative - so every dimension scores 0 risk points under the rubric. The clean score reflects an absence of negative evidence, not positive verification: this file is thin rather than clean, and a newly connected low-footprint cash-and-carry resale account with no website warrants a documentary check rather than a pass. Stripe's own legal_entity_verification_status is 'verified' with payouts enabled, which covers identity documents and bank ownership but not the existence or nature of the trade; obtain the LARA filing and proof-of-trade evidence before raising limits.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-02T17:04:48+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-03T07:20:39+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-01T14:17:10+00:00",
    "enabledWindowStart": "2026-10-31T13:17:42+00:00",
    "enabledWindowEnd": "2026-11-01T14:17:10+00:00",
@@ -87,9 +92,9 @@
    "accountId": "acct_1UWfuB6KikOipfHs",
    "merchantId": "5387980",
    "name": "CHARITY UNITE",
-   "score": 0,
+   "score": 8,
    "riskDimensions": {
-    "legal": 0,
+    "legal": 8,
     "operating": 0,
     "identity": 0,
     "contact": 0,
@@ -101,34 +106,50 @@
    "verified": [
     "Account email uses a business domain (charityunite.org).",
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Non-profit."
+    "Stripe legal entity type is recorded as Non-profit.",
+    "The email-domain spelling resolves and clearly belongs to this organisation: charityunite.org loads a substantive multi-page site titled 'Charity Unite', branded with its own logo, listing Charity Unite, Temple, Texas, United States, with seven content pages (Events, Clear Your Clutter, Initiative, Recycling with Impact, Second Chance Donations, Reflections). It is built on a website-builder platform but carries genuine populated content, not a parked page or a builder placeholder. The declared account URL www.charityutnite.org and the statement descriptor CHARITYUTNITE.ORG both carry a transposed 'ut' and have no search footprint anywhere, and that spelling could not be shown to resolve. The pattern is consistent with a single keystroke transposition carried from the URL field into the descriptor rather than a pointer to a different business, since the correct spelling matches the email domain, the legal name and the live site. It remains a live operational defect: cardholders would see a descriptor domain that does not appear to exist, raising dispute risk, and it should be corrected. [https://charityunite.org/]",
+    "MCC 5399 (miscellaneous general merchandise) is defensibly coherent with observable activity, though not an exact fit. The loaded site documents genuine merchandise handling and resale: gently used household goods, furniture and home decor are collected, refurbished and resold to help fund the launch of a community thrift store, live resale shows are run on a third-party marketplace, and a Thrift & Flip Art Studio plus a permanent physical thrift location are stated goals. There is also a priced service line of decluttering and organising sessions. The name 'Charity Unite' describes a charitable mission, not payment collection itself, and there is an observable product. Caveat for the analyst: a material share of inflow is charitable donation rather than retail, for which 8398 (charitable and social service organisations) would be the more accurate code, and 5931 (used merchandise) would better fit the thrift resale; 5399 understates the donation component. [https://charityunite.org/]"
    ],
    "unverified": [
     "Ownership and age of charityunite.org have not been checked against a registrar.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The organisation's own website places Charity Unite in Temple, Texas with a local area-code contact line and describes concrete local activity: donation drop-offs, decluttering sessions, aluminium-can collection boxes and a planned Thrift & Flip Art Studio, alongside two named local partner businesses. No independent listing, directory entry, social page or local news item confirming the organisation in Temple could be loaded: searches of Charity Navigator, GuideStar, BBB and general directories returned nothing under this name, and a search on the named partner surfaced only that partner's own Chamber of Commerce, Yelp and Facebook listings with no mention of Charity Unite. This is a community and charitable service operation rather than a licensed-premises or digital-goods business, so no footprint penalty applies. [https://charityunite.org/]",
+    "The representative does not match any named officer, director, registered agent or leader on any public source located, because no such source names an individual at all. The organisation's own website names no people: the homepage, 'Our Story' section and contact block carry only the organisation name, city and a phone line, with no leadership page, no signed journal entries and no owner attribution. No Texas SOS or Comptroller filing naming an officer or registered agent was retrievable, no Form 990 principal-officer record exists because no 990 filer of this name was found on ProPublica, and no local news or complaint source mentions the representative in connection with this organisation. Nothing contradicts the representative either: no tie to a different business, city or state, and no scam, complaint or fraud report. People-search and data-broker sources were not used. Identity documents and bank ownership are verified only by Stripe (status: verified). [https://charityunite.org/]",
+    "No independent presence of one year or more could be established. The only dated marker found is the site's own 'Copyright 2026 Charity Unite' footer, which does not evidence duration. No dated reviews, directory listings, Charity Navigator or GuideStar profiles, Form 990 filings, Chamber of Commerce entry or local news coverage were found under this name, and the site's 'Reflections' journal entries carry no visible dates in the loaded content. No scam, complaint or fraud reports about the organisation were found either: targeted searches returned only generic charity-fraud material with no mention of this organisation. The YouTube channel and third-party marketplace seller presence referenced on the site would be the best dated evidence but could not be loaded on this run. [https://charityunite.org/]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No recognised exempt status or Texas registration could be located for 'Charity Unite'. A ProPublica Nonprofit Explorer search returned no organisation of this name, only unrelated 'Unite' entities elsewhere in Texas, and name searches against Texas SOS and Comptroller records returned no matching taxable entity; SOSDirect and the Taxable Entity Search are form-driven and could not be queried by automation, and IRS TEOS was not attempted because it blocks automation. Meanwhile the organisation's own loaded site solicits goods and money from the public and states that it provides a tax-deductible donation receipt, a claim that no public exempt-status record supports. Scored as a required registration not found after a real search, not as a confirmed absence. [https://charityunite.org/]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Correct the statement descriptor and declared URL from the misspelled CHARITYUTNITE.ORG / www.charityutnite.org to CHARITYUNITE.ORG; confirm with the merchant whether charityutnite.org resolves at all or was purely a typo.",
+    "Obtain the IRS 501(c)(3) determination letter and EIN from the merchant, then confirm on IRS Tax Exempt Organization Search (blocks automation, manual check required) and ProPublica Nonprofit Explorer by EIN.",
+    "Run a manual Texas SOS SOSDirect entity search and Texas Comptroller Taxable Entity Search for 'Charity Unite' to establish formation date, entity status and the named officer, director or registered agent; both tools are form-driven and could not be queried by automation.",
+    "Given the site offers tax-deductible donation receipts with no locatable exempt status, confirm exempt status before allowing donation-style collection, or require the claim to be removed.",
+    "Confirm the representative's role against the Texas SOS filing, or have the merchant publish leadership on the site about page; the site currently names no individuals.",
+    "Manually open the organisation's YouTube channel and its third-party marketplace seller page for dated upload and sale history to establish operating history.",
+    "Verify the named local partnerships directly with those businesses, since neither mentions Charity Unite in its own public listings.",
+    "Review MCC assignment: 8398 (charitable and social service) or 5931 (used merchandise) likely fit the donation and thrift-resale mix better than 5399."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://charityunite.org/",
+     "sourceType": "website",
+     "checkedAt": "2026-11-03",
+     "establishes": "No 501(c)(3) recognition or Texas charitable/entity registration found for a non-profit that publicly offers tax-deductible donation receipts.",
+     "dimension": "legal"
+    }
+   ],
+   "summary": "The declared URL and statement descriptor (charityutnite.org / CHARITYUTNITE.ORG) have no footprint anywhere and appear to be a letter transposition of the real domain; charityunite.org does resolve and is a genuine, substantive site for a Temple, Texas community organisation that unites local non-profits, collects and resells donated household goods, and runs recycling and decluttering programmes, consistent enough with MCC 5399 to pass although 8398 would fit better. The material risk is legal: despite publicly offering tax-deductible donation receipts, no 501(c)(3) recognition appears in ProPublica Nonprofit Explorer and no Texas SOS or Comptroller registration could be located for this name, so the licence-equivalent for a fund-soliciting non-profit is unevidenced. Everything else is thin rather than adverse: no independent listing, review, filing or news item confirms the organisation in Temple, no public source names the representative in any role, and no scam or complaint reports exist. Recommend conditional approval subject to the determination letter or Texas registration, a corrected statement descriptor, and an MCC review.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-02T17:04:48+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-03T07:20:39+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-01T14:17:10+00:00",
    "enabledWindowStart": "2026-10-31T17:17:24+00:00",
    "enabledWindowEnd": "2026-11-01T14:17:10+00:00",
@@ -150,8 +171,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 8,
+   "trustScore": 92,
    "band": "Very low risk",
    "action": "Normal monitoring"
   }
