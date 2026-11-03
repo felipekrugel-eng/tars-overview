@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UWcADG2GBXjhYlz",
+  "reviewedAt": "2026-11-03",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Michigan LARA Corporations Division (COFS/MiBusiness) could not be queried: the registry blocks automated access and the search endpoint would not load on this run, so no authoritative registration record for 'Myers Venture Group LLC' in Michigan was obtained, and the registry was not retried. Open-web searches across general, Michigan-specific and Wexford County/Cadillac queries returned no matching entity record, only unrelated Myers-named businesses in other states. No secondhand-dealer or resale licence record was located either, and no evidence was found that such a licence is clearly required for the declared model. Registration status therefore remains unverified rather than contradicted.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-03",
+      "establishes": "No authoritative confirmation or refutation of Michigan LLC registration; state registry inaccessible to automation."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing placing this business in Cadillac, Michigan was found. Searches across Google/web, Yelp, BBB, Facebook, Nextdoor and local Cadillac-area liquidation and estate-sale directories returned no business profile, address or presence for 'Myers Venture Group LLC'. The declared model is local liquidation resale with in-person customer pickup rather than a licensed-premises retail operation, so the absence of a storefront footprint is not scored as a contradiction, but there is no observable operating footprint of any kind.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-03",
+      "establishes": "No independent corroboration of physical or online operations in the stated city."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No permitted public source could tie the representative to this business: the state filing could not be loaded, no licence record was found, the business has no own channels (no website, Facebook, Instagram, Yelp or Google page with owner replies), and no local news or complaint/scam reports mention it. On permitted sources the representative neither matches nor fails to match any officer, member, manager or registered agent role, because no such record was retrievable. The statement descriptor 'MYERS VENTURE GROUP' and the merchant email handle are internally consistent with the legal name, but these are merchant-supplied and are not independent corroboration. No people-search or data-broker sources were used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-11-03",
+      "establishes": "No public corroboration of the representative's link to the business, and nothing contradicting it."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared on the account and none could be found. The business name and the email handle describe a trade and ownership identity rather than payment collection, so the payment-collection contradiction does not apply, and the statement descriptor is a plain rendering of the legal name rather than a random string or an unrelated personal name. However, no alternative web presence was findable either: no Facebook page or Marketplace storefront, no auction or liquidation listing page, and no directory entry. Contactability therefore rests entirely on the Stripe-held email address.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-03",
+      "establishes": "No website and no discoverable alternative web presence, but no fictitious or payment-collection contact signal."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5399 (miscellaneous general merchandise) is on its face coherent with the declared activity of reselling liquidation, overstock and storage-unit merchandise (household goods, small appliances, electronics, tools, furniture), and the business name does not describe payment collection itself, nor is this a digital-goods MCC. However, no page could be loaded showing what this business actually sells, so coherence could not be confirmed against observable activity and the finding cannot be marked verified under the citation rule.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-03",
+      "establishes": "MCC is plausible for the declared trade but unconfirmed against any observable inventory or sales channel."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated evidence of independent presence was found: no reviews, no directory or social listings, no retrievable filing dates, no local news coverage, and no complaints. Searches for scam, complaint or fraud reports against the business name returned only unrelated entities in other states and sectors, none of which is connected to this merchant. Trading history of one year or more can be neither established nor excluded.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-03",
+      "establishes": "No dated independent footprint of any age; no adverse reports attributable to this business."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual check of the Michigan LARA Corporations Division (COFS/MiBusiness) entity search for 'Myers Venture Group LLC': confirm the entity exists, is in good standing, its formation date, the registered office address in or near Cadillac MI, and the named member/manager/resident agent.",
+    "Michigan Annual Report or certificate of good standing, or the formation document, to establish filing date and age of the entity.",
+    "Ask the merchant for proof of trade: photographs of inventory or storage/retail space, the Facebook Marketplace or auction profile used for sales, and two or three recent sales receipts or invoices.",
+    "Confirm whether Cadillac or Wexford County requires a secondhand/resale dealer registration for this activity and, if so, obtain the licence number.",
+    "Verify the representative's role against the state filing once accessible (member/manager/resident agent) and confirm the merchant email domain/handle is controlled by the business."
+  ],
+  "summary": "Myers Venture Group LLC has effectively no public footprint: no Michigan entity record could be retrieved because LARA blocks automation, and no listing, social page, website, review, news item or complaint for this business could be found in Cadillac, Michigan or elsewhere. Nothing contradicts the declared profile either - the legal name, statement descriptor and email handle are mutually consistent, MCC 5399 is plausible for liquidation and overstock resale, and no adverse or scam reports attach to the business or the representative - so every dimension scores 0 risk points under the rubric. The clean score reflects an absence of negative evidence, not positive verification: this file is thin rather than clean, and a newly connected low-footprint cash-and-carry resale account with no website warrants a documentary check rather than a pass. Stripe's own legal_entity_verification_status is 'verified' with payouts enabled, which covers identity documents and bank ownership but not the existence or nature of the trade; obtain the LARA filing and proof-of-trade evidence before raising limits."
+}
