@@ -559,8 +559,36 @@
         <div class="ov-range" id="fnMode">
           <button data-m="all" class="on">All time</button>
           <button data-m="month">Monthly</button>
+          <button data-m="range">Date range</button>
         </div>
         <select id="fnMonth" class="ov-mselect" style="display:none"></select>
+        <!-- DATE RANGE (added 2026-11-03). Felipe: "i need the data ranges for me to be able
+             to see if certain marketing campaigns are working or not" — a campaign does not
+             respect month boundaries, so a month picker cannot measure one.
+             The anchor toggle is not decoration. A range has to select merchants by SOME
+             date, and the two useful ones answer different questions: Registered is the
+             campaign's own intake (it bought you a signup), Initiated KYC is payments
+             interest. Picking one silently would have made the tiles mean something other
+             than the reader assumes. -->
+        <span id="fnRangeBox" style="display:none;align-items:center;gap:8px;flex-wrap:wrap">
+          <input type="date" id="fnFrom" class="ov-mselect" aria-label="Range start">
+          <span style="color:var(--darkgray);font-size:12px">to</span>
+          <input type="date" id="fnTo" class="ov-mselect" aria-label="Range end">
+          <span class="ov-range" id="fnAnchor" style="margin-left:4px">
+            <button data-a="registered" class="on">by Registered</button>
+            <button data-a="initiated">by Initiated KYC</button>
+          </span>
+          <span class="ov-range" id="fnQuick">
+            <button data-q="30">30d</button>
+            <button data-q="90">90d</button>
+            <button data-q="ytd">YTD</button>
+          </span>
+        </span>
+        <!-- The country picker already lives in the payments sub-nav and this page has always
+             honoured it, but up there it is easy to miss while you are looking at the funnel.
+             Mounted here as well; LVCC keeps every mounted select in sync, so this is a second
+             view of one filter, not a second filter. -->
+        <span id="fnCcMount" style="display:inline-flex;align-items:center"></span>
       </div>
       <div class="ov-updated" id="fnModeNote">&nbsp;</div>
     </div>
@@ -3007,6 +3035,36 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   var MONTHS=[];
   function monthly(){ return MODE==='month' && MONTH; }
 
+  // ---- Date-range state ------------------------------------------------------
+  // RANGE is a second way to choose the cohort, alongside Monthly, for measuring something
+  // that does not line up with a calendar month — a campaign that ran 12 Sep to 3 Oct.
+  //
+  // ANCHOR. Monthly has only one sensible anchor (initiated KYC, which is what a payments
+  // funnel cohort means) but a range asked for campaign measurement has two, and they answer
+  // different questions:
+  //   registered  the merchants that SIGNED UP in the window — the campaign's own intake,
+  //               and how far it has since got. This is the campaign reading.
+  //   initiated   the merchants that opened a payments account in the window. Same meaning
+  //               as Monthly, just over an arbitrary span.
+  // Defaulting to `registered` because that is what the feature was asked for; the toggle
+  // exists because the other reading is a legitimate question about the same window and
+  // guessing between them would quietly change what every tile below means.
+  //
+  // Bounds are INCLUSIVE at both ends and compared as plain YYYY-MM-DD strings, which is
+  // exactly how the dates arrive in funnel-data.js. No Date parsing: `new Date('2026-09-12')`
+  // is UTC midnight and would shift a merchant into the previous day for any reader west of
+  // Greenwich, silently moving merchants across the boundary the filter exists to draw.
+  var RFROM='', RTO='', RANCHOR='registered';
+  function ranged(){ return MODE==='range' && RFROM && RTO && RFROM<=RTO; }
+  // Is ANY date selection active? Everything that used to ask monthly() to mean "the page is
+  // date-scoped" asks this instead, so a new mode cannot be half-applied — which is the bug
+  // the original month filter's own comment warns about.
+  function scoped(){ return monthly() || ranged(); }
+  function anchorDate(r){ return RANCHOR==='registered' ? r.m.registered_at : r.m.connected_at; }
+  function inRange(d){ return !!d && String(d).slice(0,10)>=RFROM && String(d).slice(0,10)<=RTO; }
+  function rangeLabel(){ return RFROM+' to '+RTO; }
+  function anchorLabel(){ return RANCHOR==='registered' ? 'registered' : 'initiated KYC'; }
+
   // Stage membership under the current selection.
   //
   //   All time — "has ever reached this stage".
@@ -3036,7 +3094,13 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // enabled_at but have since dropped out of the passed set, so a date-only test overcounted.
   // Under the cohort reading the undated residual disappears — a merchant with a null enabled_at
   // is still attributable to its initiation month — so no residual footnote is needed.
-  function inCohort(r){ return !monthly() || ym(r.m.connected_at)===MONTH; }
+  // Under a range the cohort is "merchants whose anchor date falls in the window", and the
+  // Passed/Transacting tiles then report how far THAT fixed set has got — the same cohort
+  // discipline Monthly uses, so every percentage stays a real conversion rate bounded by 100%.
+  function inCohort(r){
+    if(ranged()) return inRange(anchorDate(r));
+    return !monthly() || ym(r.m.connected_at)===MONTH;
+  }
   function selInit(r){ return inCohort(r); }
   function selPassed(r){ return inCohort(r) && r.passed; }
   function selTxn(r){ return inCohort(r) && r.txn; }
@@ -3058,7 +3122,31 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // Which base row applies, and is it the one belonging to the selected month? A month with no
   // banked row (anything before us_bases_monthly.sql started running) falls back to the
   // all-time row so the page still renders — but says so instead of implying it is as-of.
+  // Is the selected range EXACTLY one calendar month that has a banked base? If it is, the
+  // range is describing the same population as Monthly mode, and it must divide by the same
+  // denominator. Without this, picking 1-31 August by range and picking August from the month
+  // menu agreed on all three stage counts but disagreed on every "% of base" and therefore on
+  // which group the leaderboard crowned — one page saying two things about one window, which
+  // is the contradiction this dashboard keeps being asked to stop producing.
+  function rangeBankedMonth(){
+    if(!ranged()) return null;
+    var m=ym(RFROM);
+    if(ym(RTO)!==m) return null;
+    var y=+m.slice(0,4), mo=+m.slice(5,7);
+    var last=new Date(Date.UTC(y, mo, 0)).getUTCDate();
+    if(RFROM!==m+'-01' || RTO!==m+'-'+(last<10?'0':'')+last) return null;
+    return basesByMonth[m] ? m : null;
+  }
   function baseRow(){
+    if(ranged()){
+      // An arbitrary window has no month end to be as-of: us_bases_monthly.sql banks a row
+      // per month end. Today's bases are used and the footnote says so — the same honest
+      // fallback a month with no banked row already takes, rather than inventing an
+      // interpolated denominator nobody could check.
+      var bm=rangeBankedMonth();
+      if(bm) return {row:basesByMonth[bm], exact:true, monthly:true, bankedMonth:bm};
+      return {row:BASES, exact:false, monthly:false};
+    }
     if(!monthly()) return {row:BASES, exact:true, monthly:false};
     var b=basesByMonth[MONTH];
     if(b) return {row:b, exact:true, monthly:true};
@@ -3111,8 +3199,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // are a monthly flow.
   // Monthly is a cohort, so these read "of the month's initiators" rather than "of initiated in
   // the month" — the denominator is one fixed set of merchants, not that month's flow.
-  function ofInit(){ return monthly()? 'of '+monthShort(MONTH)+' initiators' : 'of initiated'; }
-  function ofPassed(){ return monthly()? 'of those that passed' : 'of passed'; }
+  function ofInit(){
+    if(ranged()) return 'of the '+anchorLabel()+' cohort';
+    return monthly()? 'of '+monthShort(MONTH)+' initiators' : 'of initiated';
+  }
+  function ofPassed(){ return scoped()? 'of those that passed' : 'of passed'; }
   // The population a base counts. "All countries" still divides by the US base — see the
   // note rendered by renderCcNote() — so it must keep saying US rather than imply otherwise.
   function popLabel(){
@@ -3121,6 +3212,14 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   }
   function baseLabel(){
     var br=baseRow();
+    if(ranged()){
+      if(br.bankedMonth){
+        var b2=br.row;
+        return 'base &middot; '+popLabel()+' '
+          +(b2&&b2.partial? ('as of '+esc(b2.asof||'')) : ('at '+monthShort(br.bankedMonth)+' end'));
+      }
+      return 'base &middot; '+popLabel()+' today';
+    }
     if(!monthly()) return 'base &middot; '+popLabel();
     if(!br.monthly) return 'base &middot; '+popLabel()+' today';
     var b=br.row;
@@ -3266,7 +3365,20 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     if(TESTS_EXCLUDED){
       txt+=TESTS_EXCLUDED+' internal test account'+(TESTS_EXCLUDED===1?' is':'s are')+' excluded from every figure on this page \u2014 Loyverse staff addresses, disposable QA mailboxes, and accounts whose business name is literally test or demo. None has ever passed KYC or taken a payment, so they only inflated the initiated count. This is separate from, and additional to, the registration-fraud filter counted above. ';
     }
-    if(monthly()){
+    if(ranged()){
+      txt+='Showing the '+rangeLabel()+' cohort: the merchants that '
+        +(RANCHOR==='registered'
+            ? 'REGISTERED in that window — the intake a campaign running over those dates would have produced — '
+            : 'INITIATED KYC in that window — ')
+        +'and how far that same set has progressed since, so every percentage is a real conversion rate for one fixed group. '
+        +'A merchant outside the window belongs to its own cohort, not this one, so these stage counts are lower than the raw '
+        +'number of things that happened during the window — for that operational reading, use the deep dive below, which '
+        +'keeps the milestone-in-the-window view. '
+        +(br && br.bankedMonth
+            ? 'This range is exactly '+monthLabel(br.bankedMonth)+', so it divides by that month’s banked bases — the same denominators the Monthly view uses, and the two therefore agree figure for figure. '
+            : 'No month-end base exists for an arbitrary range, so the "% of base" figures use today’s bases'
+              +(BASES&&BASES.asof? ' (as of '+BASES.asof+')':'')+' and are not as-of the window. ');
+    } else if(monthly()){
       txt+='Showing the '+monthLabel(MONTH)+' cohort: the merchants that INITIATED KYC in '+monthLabel(MONTH)+', and how far that same set has progressed since. Every percentage is therefore a real conversion rate for one fixed group of merchants. A merchant that initiated in an earlier month and cleared KYC in '+monthLabel(MONTH)+' belongs to its own initiation cohort, not to this one, so these stage counts are lower than the raw number of things that happened during the month \u2014 for that operational reading, use the deep dive below, which keeps the milestone-in-the-month view. ';
       if(br && br.monthly && br.row){
         txt+='Bases are as of '+(br.row.partial? (br.row.asof||MONTH)+' (month still in progress)' : monthLabel(MONTH)+' month end')+'. ';
@@ -3282,6 +3394,15 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   // ---- Mode note beside the picker ------------------------------------------
   function renderModeNote(g){
     var el=$('fnModeNote'); if(!el) return;
+    if(MODE==='range' && !ranged()){
+      el.textContent='Pick a start and an end date \u00b7 the end must not be before the start';
+      return;
+    }
+    if(ranged()){
+      el.textContent=rangeLabel()+' \u00b7 merchants that '+anchorLabel()+' in the window, '
+        +'and how far that same set has got since';
+      return;
+    }
     if(!monthly()){ el.textContent='All time \u00b7 every stage a merchant has ever reached'; return; }
     var br=g.src;
     el.textContent=monthLabel(MONTH)+' cohort'+(br&&br.row&&br.row.partial?' \u00b7 month still in progress':'')
@@ -3315,7 +3436,10 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // Stripe publishes no delivery timestamp, only a status, so "received in this month" cannot
     // be dated. It is approximated by the order date: a terminal ordered in the month and now
     // delivered. Said plainly in the note rather than left for someone to discover.
-    function inM(d){ return !monthly() || ym(d)===MONTH; }
+    function inM(d){
+      if(ranged()) return inRange(d);
+      return !monthly() || ym(d)===MONTH;
+    }
     function isOrdered(r){ return !!r.m.terminal_at && inM(r.m.terminal_at); }
     function isReceived(r){ return isDelivered(r.m.terminal_status) && !!r.m.terminal_at && inM(r.m.terminal_at); }
     function didTxn(r){ return !!r.txn && inM(r.m.first_txn_at); }
@@ -3323,7 +3447,11 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     // The month's population: anyone who reached ANY of these milestones in it. Scoping the list
     // to that month's KYC-passers alone would hide a merchant who passed in July and first
     // transacted in August — exactly the merchant an August view should surface.
-    function inMonthRow(r){ return monthly() ? (didPass(r)||isOrdered(r)||isReceived(r)||didTxn(r)) : r.passed; }
+    // Milestone-in-window, for a range exactly as for a month: the deep dive keeps its
+    // operational reading (see the block comment above) under every mode, so a merchant that
+    // passed KYC before the window but first transacted inside it still shows up here. That
+    // is a different question from the cohort tiles at the top and both notes say so.
+    function inMonthRow(r){ return scoped() ? (didPass(r)||isOrdered(r)||isReceived(r)||didTxn(r)) : r.passed; }
     var hasStatus=book.some(function(r){ return r.m.terminal_status!=null; });
     var cur='compare', q='';
     function rowsFor(b){
@@ -3505,6 +3633,13 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       if(MONTH) mSel.value=MONTH;
       mSel.style.display=(MODE==='month' && MONTHS.length)?'':'none';
     }
+    var rb=$('fnRangeBox');
+    if(rb) rb.style.display=(MODE==='range')?'inline-flex':'none';
+    var fa=$('fnAnchor');
+    if(fa){
+      var abs=fa.querySelectorAll('button');
+      for(var ai=0;ai<abs.length;ai++) abs[ai].classList.toggle('on', abs[ai].getAttribute('data-a')===RANCHOR);
+    }
     var fm=$('fnMode');
     if(fm){
       var btns=fm.querySelectorAll('button');
@@ -3530,13 +3665,99 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       // just launched) — keep All time selected rather than switching to an empty picker.
       if(btn.getAttribute('data-m')==='month' && !MONTHS.length) return;
       MODE=btn.getAttribute('data-m');
+      // First visit to Range: seed the last 30 complete days, so the mode shows real
+      // numbers immediately instead of an empty page waiting for two clicks.
+      if(MODE==='range' && !(RFROM&&RTO)) setQuick(30);
       syncMonthControls();
       renderAll();
     });
   })(mBtns[mi]); }
 
+  // ---- Date-range controls ---------------------------------------------------
+  // Bounds come from the DATA, not from today: a picker that lets you choose 2019 invites a
+  // range that reads zero for a reason the page cannot explain.
+  // Computed from EVERY merchant, not from the country-filtered book, and cached: the span you
+  // can pick must not move when you change market. Scoping it to the filtered book made the
+  // pickable window shrink to whatever the selected country happened to contain, which is a
+  // different and much worse thing than showing that country's zeroes inside your window.
+  var _bounds=null;
+  function dataBounds(){
+    if(_bounds) return _bounds;
+    var lo='', hi='';
+    ALL_M.forEach(function(m){
+      [m.registered_at, m.connected_at, m.enabled_at, m.first_txn_at].forEach(function(d){
+        if(!d) return; d=String(d).slice(0,10);
+        if(!lo||d<lo) lo=d;
+        if(!hi||d>hi) hi=d;
+      });
+    });
+    return (_bounds={lo:lo, hi:hi});
+  }
+  function iso(d){ return d.toISOString().slice(0,10); }
+  function setQuick(n){
+    var b=dataBounds(); if(!b.hi) return;
+    // Anchored on the newest date in the data rather than on the browser's clock, so the
+    // window never runs past the end of what the pull actually contains.
+    var end=new Date(b.hi+'T00:00:00Z');
+    if(n==='ytd'){
+      RFROM=b.hi.slice(0,4)+'-01-01';
+    } else {
+      var s=new Date(end.getTime()-(n-1)*86400000);
+      RFROM=iso(s);
+    }
+    if(b.lo && RFROM<b.lo) RFROM=b.lo;
+    RTO=b.hi;
+    syncRangeInputs();
+  }
+  function syncRangeInputs(){
+    var b=dataBounds(), f=$('fnFrom'), t=$('fnTo');
+    if(f){ if(b.lo){f.min=b.lo;} if(b.hi){f.max=b.hi;} f.value=RFROM||''; }
+    if(t){ if(b.lo){t.min=b.lo;} if(b.hi){t.max=b.hi;} t.value=RTO||''; }
+  }
+  (function(){
+    var f=$('fnFrom'), t=$('fnTo');
+    if(f) f.addEventListener('change', function(){ RFROM=f.value; renderAll(); renderModeNoteSafe(); });
+    if(t) t.addEventListener('change', function(){ RTO=t.value; renderAll(); renderModeNoteSafe(); });
+    var fa=$('fnAnchor');
+    if(fa){
+      var abs=fa.querySelectorAll('button');
+      for(var i=0;i<abs.length;i++){ (function(b){
+        b.addEventListener('click', function(){ RANCHOR=b.getAttribute('data-a'); syncMonthControls(); renderAll(); });
+      })(abs[i]); }
+    }
+    var fq=$('fnQuick');
+    if(fq){
+      var qbs=fq.querySelectorAll('button');
+      for(var j=0;j<qbs.length;j++){ (function(b){
+        b.addEventListener('click', function(){
+          var q=b.getAttribute('data-q');
+          setQuick(q==='ytd'?'ytd':+q);
+          renderAll();
+        });
+      })(qbs[j]); }
+    }
+  })();
+  // An incomplete range must still update the note (so it says what is missing) even though
+  // renderAll() returns early on it.
+  function renderModeNoteSafe(){ try{ renderModeNote(bases()); }catch(e){} }
+
   var upd=$('funnelUpdated'); if(upd&&window.__FUNNEL_UPDATED) upd.textContent='Updated '+window.__FUNNEL_UPDATED;
-  function redraw(){ loadData(); var ls=$('funnelLaunch'); if(ls) ls.textContent=LAUNCH; renderAll(); }
+  // A second view of the SAME country filter, beside the date control where the reader is
+  // already looking. LVCC keeps every mounted select in sync and this page has always
+  // subscribed to it, so this adds discoverability, not a second source of truth.
+  if(window.LVCC && $('fnCcMount')) window.LVCC.mount($('fnCcMount'));
+  function redraw(){
+    loadData();
+    var ls=$('funnelLaunch'); if(ls) ls.textContent=LAUNCH;
+    // The chosen window is carried across a country change UNTOUCHED. Comparing the same dates
+    // between markets is the whole point of having both filters, and a market with nothing in
+    // the window should read zero — that is the answer, not a reason to move the window.
+    // An earlier version clamped the range to the selected market's own span; it silently
+    // narrowed the dates you had picked, and on a market whose data ended before your start
+    // it produced an end date EARLIER than the start, which is not a range at all.
+    syncRangeInputs();
+    renderAll();
+  }
   // LVCC.on fires on subscribe, so this is also the initial draw.
   if(window.LVCC) window.LVCC.on(redraw); else redraw();
   var inited=false;
