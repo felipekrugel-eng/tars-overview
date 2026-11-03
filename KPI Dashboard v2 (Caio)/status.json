@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-03T12:50:50.282061+00:00",
+ "checked_at": "2026-11-03T13:45:48.975390+00:00",
  "worst": "ok",
- "digest": "af31c9984066ab007b28b07e5296bb64b52784e50498bb7ec8f802f2853b4d40",
+ "digest": "59ae78ad0060f2e7e33116a877a88b3b03292a37aa290483671910feecaa91a9",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-03T12:48:34+00:00",
-   "data_at": "2026-11-03T12:48:00+00:00",
+   "committed_at": "2026-11-03T13:44:13+00:00",
+   "data_at": "2026-11-03T13:43:00+00:00",
    "age_h": 0.05,
    "inputs_changed_at": "2026-10-13T10:11:52+00:00"
   },
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-03T12:40:43+00:00",
-   "data_at": "2026-11-03T12:04:17+00:00",
-   "age_h": 0.78
+   "committed_at": "2026-11-03T13:45:36+00:00",
+   "data_at": "2026-11-03T13:27:30+00:00",
+   "age_h": 0.31
   },
   {
    "name": "Payments pull",
@@ -40,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-03T12:13:13+00:00",
    "data_at": "2026-11-03T12:13:12.763897+00:00",
-   "age_h": 0.63
+   "age_h": 1.54
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-03T12:35:39+00:00",
-   "data_at": "2026-11-03T12:31:05.907000+00:00",
-   "age_h": 0.33,
+   "committed_at": "2026-11-03T13:43:14+00:00",
+   "data_at": "2026-11-03T13:37:38.213000+00:00",
+   "age_h": 0.14,
    "inputs_changed_at": "2026-11-02T18:29:25+00:00"
   },
   {
@@ -63,23 +63,21 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-03T12:35:39+00:00",
+   "committed_at": "2026-11-03T13:43:14+00:00",
    "data_at": null,
-   "age_h": 0.25
+   "age_h": 0.04
   },
   {
    "name": "Merchant base",
    "path": "merchant-base-automation/data/pull_status.json",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "could not read artefact: HTTP Error 504: Gateway Timeout"
-   ],
+   "notes": [],
    "state": "ok",
    "reason": null,
    "committed_at": "2026-11-03T12:31:02+00:00",
-   "data_at": null,
-   "age_h": 0.33,
+   "data_at": "2026-11-03T12:23:38.669511+00:00",
+   "age_h": 1.37,
    "inputs_changed_at": "2026-10-13T09:34:46+00:00"
   },
   {
@@ -92,7 +90,7 @@
    "reason": null,
    "committed_at": "2026-11-03T08:35:27+00:00",
    "data_at": null,
-   "age_h": 4.26,
+   "age_h": 5.17,
    "inputs_changed_at": "2026-11-02T13:45:22+00:00"
   },
   {
@@ -105,7 +103,7 @@
    "reason": null,
    "committed_at": "2026-11-03T08:35:27+00:00",
    "data_at": null,
-   "age_h": 4.26,
+   "age_h": 5.17,
    "inputs_changed_at": "2026-11-02T09:48:29+00:00"
   },
   {
@@ -118,7 +116,7 @@
    "reason": null,
    "committed_at": "2026-11-03T11:56:47+00:00",
    "data_at": null,
-   "age_h": 0.9,
+   "age_h": 1.82,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -131,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-02T16:29:18+00:00",
    "data_at": null,
-   "age_h": 20.36,
+   "age_h": 21.28,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
