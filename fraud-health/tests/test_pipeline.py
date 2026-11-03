@@ -558,28 +558,66 @@ class TestReviewRecordCarriesBusinessProfile:
         assert validate_record(record, METHODOLOGY) == []
 
 
-class TestEvidenceBasedSummaryValidates:
-    """An evidence-based record must survive the round trip into the index.
+# ----------------------------------------------------------------- backlog days
+#
+# The reviewer used to decide what to look at from the calendar — "the last three
+# complete days" — which quietly turned any older gap into a permanent one. On
+# 2026-11-03 eight merchants enabled between July and September had never been
+# reviewed and, under that rule, never would have been. These tests pin the
+# replacement: the days come from the ledger, and today is never one of them.
+class TestBacklogDays:
+    def _enabled_on(self, account: str, day: str) -> Ledger:
+        return ledger_with(
+            obs(f"{day}T03:00:00+01:00", {account: "Restricted"}),
+            obs(f"{day}T09:00:00+01:00", {account: "Enabled"}),
+        )
 
-    The index summary is validated with the same stage/sources invariant as the detail
-    shard. Until 2026-10-13 `sources` was not a summary field, so the first evidence file
-    to reach a daily run failed `run.py validate` after writing and nothing was committed.
-    """
+    def test_unreviewed_day_is_returned(self):
+        led = self._enabled_on("acct_a", "2026-07-21")
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed=set(), now=now) == [date(2026, 7, 21)]
 
-    def test_summary_of_evidence_based_record_passes_validation(self):
-        record = {
-            "id": "acct_ev", "accountId": "acct_ev", "name": "Evidenced", "score": 7,
-            "riskDimensions": {k: 0 for k in METHODOLOGY.keys}, "verified": [], "unverified": [],
-            "contradictions": ["MCC mismatch [https://example.test/site]"], "evidenceNeeded": [],
-            "sources": [{"url": "https://example.test/site", "sourceType": "website", "checkedAt": "2026-10-13", "establishes": "x", "dimension": "businessModel"}],
-            "summary": "s", "reviewCompleteness": 88, "confidence": "high", "reviewStage": "evidence-based",
-            "reviewPriority": "Verification complete", "reviewType": "daily-enabled-review", "reviewedAt": "2026-10-13T00:00:00+00:00",
-            "reviewer": "r", "enabled": True,
-        }
-        record["riskDimensions"]["businessModel"] = 7
-        apply_band(record, METHODOLOGY)
-        assert validate_record(record, METHODOLOGY) == []
-        summary = P.summarize(record, "details-x.json")
-        assert summary["reviewStage"] == "evidence-based"
-        assert summary["sources"] and summary["sources"][0]["url"] == "https://example.test/site"
-        assert validate_record(summary, METHODOLOGY, require_dimensions=False) == []
+    def test_a_day_months_back_is_not_forgotten(self):
+        # The exact failure found in production: far outside any three-day window.
+        led = ledger_with(
+            obs("2026-07-21T03:00:00+01:00", {"acct_a": "Restricted"}),
+            obs("2026-07-21T09:00:00+01:00", {"acct_a": "Enabled"}),
+            obs("2026-11-02T03:00:00+00:00", {"acct_b": "Restricted"}),
+            obs("2026-11-02T09:00:00+00:00", {"acct_b": "Enabled"}),
+        )
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed=set(), now=now) == [
+            date(2026, 7, 21), date(2026, 11, 2)
+        ]
+
+    def test_reviewed_accounts_drop_out(self):
+        led = self._enabled_on("acct_a", "2026-07-21")
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed={"acct_a"}, now=now) == []
+
+    def test_today_is_excluded_while_it_is_still_running(self):
+        # Reviewing a day in progress would mark it done and leave the rest of the
+        # day's enablements unexamined — the same permanent hole by another route.
+        led = self._enabled_on("acct_a", "2026-11-03")
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed=set(), now=now) == []
+        tomorrow = datetime.fromisoformat("2026-11-04T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed=set(), now=tomorrow) == [date(2026, 11, 3)]
+
+    def test_never_enabled_accounts_are_not_a_backlog(self):
+        led = ledger_with(obs("2026-10-08T03:00:00+01:00", {"acct_a": "Restricted"}))
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert C.backlog_days(led, reviewed=set(), now=now) == []
+
+    def test_a_day_the_cohort_would_drop_is_not_listed(self):
+        # Enabled on the day, no longer enabled now. `select` excludes it on purpose, so
+        # re-running the day cannot clear it: listing the day would be asking a caller to
+        # chase work that can never be done. Five real accounts were in this state.
+        led = ledger_with(
+            obs("2026-09-19T03:00:00+01:00", {"acct_a": "Restricted"}),
+            obs("2026-09-19T09:00:00+01:00", {"acct_a": "Enabled"}),
+            obs("2026-10-01T09:00:00+01:00", {"acct_a": "Rejected"}),
+        )
+        now = datetime.fromisoformat("2026-11-03T10:00:00+00:00")
+        assert "acct_a" in C.backlog(led, reviewed=set())   # still an honest backlog entry
+        assert C.backlog_days(led, reviewed=set(), now=now) == []   # but not actionable

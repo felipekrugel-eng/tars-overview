@@ -4,6 +4,7 @@
     python3 fraud-health/run.py ledger       refresh the enablement ledger
     python3 fraud-health/run.py backfill     rebuild the ledger from full git history
     python3 fraud-health/run.py cohort       print a day's cohort (no writes)
+    python3 fraud-health/run.py pending-days list the days still owing a review (no writes)
     python3 fraud-health/run.py daily        the scheduled job: ledger + cohort + publish
     python3 fraud-health/run.py remediate    one-off dataset repair (see remediate.py)
     python3 fraud-health/run.py validate     integrity gate
@@ -101,6 +102,45 @@ def _resolve_day(args) -> date:
     return cohort_mod.previous_complete_london_day()
 
 
+def cmd_pending_days(args) -> int:
+    """Print, oldest first, every complete London day the reviewer still owes work on.
+
+    This replaces the workflow's old hard-coded "last three complete days" list, which had
+    two failure modes that between them left real merchants unreviewed:
+
+      * a day missed by more than three days became a PERMANENT hole. On 2026-11-03 eight
+        merchants enabled between July and September had never been reviewed and never
+        would have been.
+      * a manual dispatch for one specific day suppressed the catch-up entirely AND reset
+        the workflow's 20-hour gate, so the next automatic run was locked out. That is how
+        2026-11-02's three newly-enabled merchants went missing from the dashboard.
+
+    The list is the union of:
+      * every complete day still holding an unreviewed enablement (the real backlog), and
+      * the last three complete days with no report yet (unchanged self-heal, which also
+        covers a day whose cohort was empty when it ran and gained a merchant afterwards).
+
+    Oldest first, because the caller reviews them in order and the last one it processes is
+    what `latestDailyReview` ends up reporting.
+    """
+    ledger = Ledger.load(LEDGER_PATH)
+    if not ledger.accounts:
+        print("FATAL: no enablement ledger — run `backfill` first", file=sys.stderr)
+        return 2
+    reviewed = {m["id"] for m in _load_index()["merchants"]}
+    reviewed |= {m.get("accountId") for m in _load_index()["merchants"] if m.get("accountId")}
+
+    days = set(cohort_mod.backlog_days(ledger, reviewed))
+    newest = cohort_mod.previous_complete_london_day()
+    for back in range(3):
+        day = date.fromordinal(newest.toordinal() - back)
+        if not os.path.exists(os.path.join(REPORT_DIR, f"daily-{day.isoformat()}.json")):
+            days.add(day)
+    for day in sorted(days):
+        print(day.isoformat())
+    return 0
+
+
 def cmd_cohort(args) -> int:
     ledger = Ledger.load(LEDGER_PATH)
     day = _resolve_day(args)
@@ -179,6 +219,19 @@ def cmd_daily(args) -> int:
         ),
         "exclusions": selection.exclusions,
         "unreviewedEnablementBacklog": len(pending),
+        # The count above is every eligible account never reviewed, which is honest but
+        # not actionable: part of it is accounts that were enabled and then went
+        # Restricted or Rejected before any review ran, which the cohort rule drops on
+        # purpose and re-running the day will never pick up. That is why the number sat
+        # at 17 for weeks with nothing anyone could do about it. These two fields split
+        # it, so "outstanding" means work that re-running will actually complete.
+        "outstandingDays": [
+            d.isoformat() for d in cohort_mod.backlog_days(ledger, reviewed_ids)
+        ],
+        "unreviewedNoLongerEnabled": sorted(
+            a for a in pending
+            if (ledger.accounts.get(a) and ledger.accounts[a].lastObservedStatus != "Enabled")
+        ),
     }
 
     if change["wrote"] or status_changes:
@@ -262,6 +315,7 @@ def main() -> int:
 
     p = sub.add_parser("backfill"); p.add_argument("--ref", default="HEAD"); p.set_defaults(fn=cmd_backfill)
     p = sub.add_parser("ledger"); p.set_defaults(fn=cmd_ledger)
+    p = sub.add_parser("pending-days"); p.set_defaults(fn=cmd_pending_days)
     p = sub.add_parser("cohort"); p.add_argument("--day"); p.set_defaults(fn=cmd_cohort)
     p = sub.add_parser("daily"); p.add_argument("--day"); p.set_defaults(fn=cmd_daily)
     p = sub.add_parser("remediate"); p.add_argument("--dry-run", action="store_true"); p.set_defaults(fn=cmd_remediate)

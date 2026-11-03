@@ -229,3 +229,42 @@ def backlog(ledger: Ledger, reviewed: set[str], since: date | None = None) -> li
                 continue
         out.append(account_id)
     return out
+
+
+def backlog_days(ledger: Ledger, reviewed: set[str], now: datetime | None = None) -> list[date]:
+    """The COMPLETE London days that re-running the reviewer would actually fill in.
+
+    `backlog` says which merchants were never reviewed; this says which days to re-run to
+    stop missing them. Without it the job's only notion of what to review was "the last
+    three complete days", which silently turned any older gap into a permanent one: on
+    2026-11-03 three merchants enabled in July had never been reviewed and, under that
+    rule, never would be. The backlog counter had been reporting them the whole time and
+    nothing consumed it.
+
+    A DAY IS LISTED ONLY IF `select` WOULD ACTUALLY PRODUCE AN UNREVIEWED MEMBER FOR IT,
+    and that is settled by calling `select` rather than by re-deriving its rule here. The
+    two are not the same question: `backlog` counts any eligible account never reviewed,
+    while the cohort deliberately drops an account that is no longer enabled — five of
+    those eight July-to-September accounts had since gone Restricted or Rejected. A day
+    listed on the looser rule could never be satisfied by reviewing it, so a caller that
+    treats a non-empty list as work outstanding would stay red forever. Re-deriving the
+    rule instead of calling it would also let the two definitions drift apart, which is
+    the same class of mistake as the one being fixed.
+
+    Today is excluded. A day still in progress has merchants yet to be enabled on it, and
+    reviewing it early would mark it done and leave the rest of the day unexamined — the
+    same permanent hole by a different route.
+    """
+    today = (now or datetime.now(tz=LONDON)).astimezone(LONDON).date()
+    candidates: set[date] = set()
+    for account_id in backlog(ledger, reviewed):
+        entry = ledger.accounts.get(account_id)
+        if not entry or not entry.enabledWindowEnd:
+            continue
+        day = _parse(entry.enabledWindowEnd).astimezone(LONDON).date()
+        if day < today:
+            candidates.add(day)
+    return sorted(
+        day for day in candidates
+        if any(m.accountId not in reviewed for m in select(ledger, day).members)
+    )

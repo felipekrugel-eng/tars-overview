@@ -77,9 +77,24 @@ jobs:
           age=$(( $(date -u +%s) - last ))
           if [ "$last" -eq 0 ] || [ "$age" -ge 72000 ]; then
             echo "last review ${age}s ago - running"
+            echo "run=yes" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # THE 20-HOUR RULE IS NOT ALLOWED TO HOLD A BACKLOG. Age alone was the whole
+          # gate until 2026-11-03, and it let a run that reviewed nothing useful - a
+          # manual dispatch for one named day - reset the clock and lock out the catch-up
+          # for the rest of the day. Three merchants enabled on 11-02 sat unreviewed
+          # because of it. So a gate that is closed on age reopens the moment the ledger
+          # says a COMPLETE day still owes a review.
+          #
+          # Reads the committed ledger, which may lag the working tree by a cycle. That
+          # only ever makes this gate slower to open, never wrong to stay shut: the age
+          # rule below is still there as the backstop.
+          pending=$(python3 fraud-health/run.py pending-days 2>/dev/null) || pending=""
+          if [ -n "$pending" ]; then
+            echo "reviewed $(( age / 3600 ))h ago, but these days still owe a review:" $pending
             echo "run=yes" >> "$GITHUB_OUTPUT"
           else
-            echo "reviewed $(( age / 3600 ))h ago - skipping (daily job, 20h gate)"
+            echo "reviewed $(( age / 3600 ))h ago, backlog empty - skipping (daily job, 20h gate)"
             echo "run=no" >> "$GITHUB_OUTPUT"
           fi
 
@@ -115,27 +130,53 @@ jobs:
           # read out of it, or a merchant enabled since the last run is invisible.
           python3 fraud-health/run.py ledger
 
-          days=""
+          # WHICH DAYS. Asked of the ledger, not of the calendar. The old rule was a
+          # hard-coded "last three complete days", which made any older gap permanent:
+          # on 2026-11-03 eight merchants enabled between July and September had never
+          # been reviewed and never would have been. `pending-days` returns the real
+          # backlog — every complete London day still holding an unreviewed enablement —
+          # unioned with the last three complete days that have no report yet.
+          days=$(python3 fraud-health/run.py pending-days)
+
+          # An explicit day is reviewed IN ADDITION to the backlog, never instead of it.
+          # A dispatch for one day used to suppress the catch-up entirely and still reset
+          # the 20-hour gate below, locking out the next automatic run — which is exactly
+          # how 2026-11-02's three newly-enabled merchants went missing.
           if [ -n "${INPUT_DAY:-}" ]; then
-            days="$INPUT_DAY"
-          else
-            # Last three COMPLETE London days, oldest first, so a missed run self-heals.
-            days=$(TZ=Europe/London date -d 'today - 3 days' +%F)
-            days="$days $(TZ=Europe/London date -d 'today - 2 days' +%F)"
-            days="$days $(TZ=Europe/London date -d 'yesterday' +%F)"
+            days=$(printf '%s\n%s\n' "$INPUT_DAY" "$days" | sort -u)
           fi
 
+          if [ -z "$days" ]; then
+            echo "::notice::nothing outstanding — every complete day is reviewed"
+            echo "reviewed=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "outstanding days:" $days
           reviewed=0
           for day in $days; do
+            # No report-exists shortcut here: pending-days has already decided, and a day
+            # CAN need re-running after its report exists — a cohort that was empty when
+            # it ran gains a merchant once the ledger observes the enablement late.
             if [ -f "fraud-health/reports/daily-$day.json" ] && [ "${FORCE:-false}" != "true" ]; then
-              echo "::notice::$day already reviewed — skipping"
-              continue
+              echo "--- re-reviewing $day (report exists, but it still owes merchants) ---"
+            else
+              echo "--- reviewing $day ---"
             fi
-            echo "--- reviewing $day ---"
             python3 fraud-health/run.py daily --day "$day"
             reviewed=$((reviewed + 1))
           done
           echo "reviewed=$reviewed" >> "$GITHUB_OUTPUT"
+
+          # The backlog must be EMPTY of complete days once this step has run. If it is
+          # not, a day was reviewed and still left merchants unreviewed, which means the
+          # cohort rule and the backlog rule disagree — a silent hole of the exact kind
+          # this job exists to prevent. Fail loudly rather than publish and move on.
+          left=$(python3 fraud-health/run.py pending-days)
+          if [ -n "$left" ]; then
+            echo "::error title=Fraud Health backlog not drained::still outstanding after review: $left"
+            exit 1
+          fi
 
       # Belt and braces: the dataset is validated again AFTER writing, so a bad review can
       # never be committed even if it passed record-level validation on the way in.
