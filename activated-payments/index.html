@@ -3166,6 +3166,33 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
       out.newB=newAll.length; out.payingB=fin(B.paying_us);
       out.activeB=fin(B.active_us); out.dormantB=fin(B.dormant_us);
     }
+    // A REGISTERED-ANCHORED RANGE RE-BASES "NEW MERCHANTS" ON THE WINDOW.
+    //
+    // Felipe, seeing 268 initiators divided by the 8,573 standing since-launch base: "the new
+    // merchants tile must also reflect this filter". He is right — 3.1% of everyone who ever
+    // registered is not a number about a 30-day campaign. The question a campaign window asks
+    // is "of the merchants this window brought in, how many got to KYC", so the denominator
+    // has to be the window's own intake.
+    //
+    // ONLY THIS GROUP, AND ONLY ON THIS ANCHOR, because only here is the base knowable.
+    // "New merchants" means registered on or after launch, and every row carries
+    // registered_at, so counting the window's registrations is the same derivation the
+    // all-time fallback already uses, just bounded. The other three groups are defined by
+    // subscription and POS activity, and that tagging exists ONLY for merchants that
+    // initiated KYC — 0 of the 9,760 rows that never initiated carry a group tag. There is
+    // therefore no honest way to ask "how many PAYING merchants registered in this window",
+    // so those bases are dropped rather than left showing a standing figure that has nothing
+    // to do with the window beside a numerator that does.
+    //
+    // On the Initiated-KYC anchor the standing bases are kept: that cohort is "merchants that
+    // opened a payments account in the window", which they could do having registered at any
+    // time, so the population able to do it is the standing base — the same reading Monthly
+    // has always had.
+    if(ranged() && RANCHOR==='registered'){
+      out.newB=M.filter(function(m){ return m.registered_at && inRange(m.registered_at); }).length;
+      out.payingB=null; out.activeB=null; out.dormantB=null;
+      out.windowBase=true;
+    }
     return out;
   }
 
@@ -3180,7 +3207,10 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
        // The bot exclusion is a US-specific registration-fraud filter, so its count is only
        // meaningful for the US and for the blended view. Claiming "0 excluded" for another
        // market would read as a finding rather than as "this filter does not apply here".
-       desc:'Registered since '+esc(LAUNCH)+(BOTS!=null? (' &middot; '+num(BOTS)+' bot/fraud registrations excluded') : ''),
+       desc:(ranged() && RANCHOR==='registered'
+              ? 'Registered '+esc(RFROM)+' to '+esc(RTO)
+              : 'Registered since '+esc(LAUNCH))
+            +(BOTS!=null? (' &middot; '+num(BOTS)+' bot/fraud registrations excluded') : ''),
        a:agg(book.filter(function(r){return r.isNew;}))},
       {id:'paying', name:'Paying merchants', accent:'var(--blue-deep)', base:b.payingB,
        desc:'Existing customers (pre-'+esc(LAUNCH)+') with an active paid subscription',
@@ -3213,6 +3243,7 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
   function baseLabel(){
     var br=baseRow();
     if(ranged()){
+      if(RANCHOR==='registered') return 'base &middot; registered in this window';
       if(br.bankedMonth){
         var b2=br.row;
         return 'base &middot; '+popLabel()+' '
@@ -3271,9 +3302,15 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
     }).join('');
   }
   function card(g, big, maxInit){
+    // Two different reasons a base can be missing, and they must not read the same. One is a
+    // data file that has not caught up; the other is a base that cannot exist for this group
+    // under a registered-anchored window, which is a property of the data model, not a delay.
+    var noBase = (ranged() && RANCHOR==='registered' && g.id!=='new')
+      ? 'No window base &middot; this group is defined by subscription and POS activity, which is known only for merchants that reached KYC'
+      : 'Base count pending the next morning data pull';
     var base = g.base!=null
       ? '<div class="base"><span class="n">'+num(g.base)+'</span><span class="l">'+baseLabel()+'</span></div>'
-      : '<div class="base"><span class="l">Base count pending the next morning data pull</span></div>';
+      : '<div class="base"><span class="l">'+noBase+'</span></div>';
     return '<div class="fn-card'+(big?' big':'')+'" style="border-top-color:'+g.accent+'">'
       +'<h3>'+g.name+'</h3><div class="d">'+g.desc+'</div>'+base+stageRows(g,big,maxInit)+'</div>';
   }
@@ -3374,10 +3411,31 @@ if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
         +'A merchant outside the window belongs to its own cohort, not this one, so these stage counts are lower than the raw '
         +'number of things that happened during the window — for that operational reading, use the deep dive below, which '
         +'keeps the milestone-in-the-window view. '
-        +(br && br.bankedMonth
-            ? 'This range is exactly '+monthLabel(br.bankedMonth)+', so it divides by that month’s banked bases — the same denominators the Monthly view uses, and the two therefore agree figure for figure. '
-            : 'No month-end base exists for an arbitrary range, so the "% of base" figures use today’s bases'
-              +(BASES&&BASES.asof? ' (as of '+BASES.asof+')':'')+' and are not as-of the window. ');
+        +(RANCHOR==='registered'
+            ? (function(){
+                // The windowed base is counted from the merchant list rather than from
+                // us_bases.sql, which banks only standing totals. Over the SAME span the two
+                // can be compared, so the drift is measured and stated here rather than left
+                // for someone to discover — this number is a close count, not the banked one.
+                var t='The "New merchants" base is the merchants that REGISTERED inside this window, so "% of base" is the '
+                     +'conversion from the window’s own intake rather than from everyone who has ever registered. ';
+                if(BASES && isFinite(BASES.new_us) && newAll.length){
+                  var d=(newAll.length-BASES.new_us)/BASES.new_us*100;
+                  if(Math.abs(d)>=0.5){
+                    t+='Counted from the merchant list, which over the whole since-launch span runs '
+                      +Math.abs(d).toFixed(1)+'% '+(d<0?'under':'over')+' the banked base ('+num(newAll.length)
+                      +' against '+num(BASES.new_us)+'), so read it as a close count rather than the banked figure. ';
+                  }
+                }
+                t+='The other three groups show no base here: they are defined by subscription and POS activity, which the data '
+                  +'carries only for merchants that reached KYC, so "how many paying merchants registered in this window" cannot '
+                  +'be answered honestly and is left blank rather than filled with a standing total. ';
+                return t;
+              })()
+            : (br && br.bankedMonth
+                ? 'This range is exactly '+monthLabel(br.bankedMonth)+', so it divides by that month’s banked bases — the same denominators the Monthly view uses, and the two therefore agree figure for figure. '
+                : 'No month-end base exists for an arbitrary range, so the "% of base" figures use today’s bases'
+                  +(BASES&&BASES.asof? ' (as of '+BASES.asof+')':'')+' and are not as-of the window. '));
     } else if(monthly()){
       txt+='Showing the '+monthLabel(MONTH)+' cohort: the merchants that INITIATED KYC in '+monthLabel(MONTH)+', and how far that same set has progressed since. Every percentage is therefore a real conversion rate for one fixed group of merchants. A merchant that initiated in an earlier month and cleared KYC in '+monthLabel(MONTH)+' belongs to its own initiation cohort, not to this one, so these stage counts are lower than the raw number of things that happened during the month \u2014 for that operational reading, use the deep dive below, which keeps the milestone-in-the-month view. ';
       if(br && br.monthly && br.row){
