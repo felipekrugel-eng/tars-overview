@@ -1,0 +1,78 @@
+{
+  "accountId": "acct_1UWfuB6KikOipfHs",
+  "reviewedAt": "2026-11-03",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 8,
+      "status": "contradiction",
+      "statement": "No recognised exempt status or Texas registration could be located for 'Charity Unite'. A ProPublica Nonprofit Explorer search returned no organisation of this name, only unrelated 'Unite' entities elsewhere in Texas, and name searches against Texas SOS and Comptroller records returned no matching taxable entity; SOSDirect and the Taxable Entity Search are form-driven and could not be queried by automation, and IRS TEOS was not attempted because it blocks automation. Meanwhile the organisation's own loaded site solicits goods and money from the public and states that it provides a tax-deductible donation receipt, a claim that no public exempt-status record supports. Scored as a required registration not found after a real search, not as a confirmed absence.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "No 501(c)(3) recognition or Texas charitable/entity registration found for a non-profit that publicly offers tax-deductible donation receipts.",
+      "url": "https://charityunite.org/"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The organisation's own website places Charity Unite in Temple, Texas with a local area-code contact line and describes concrete local activity: donation drop-offs, decluttering sessions, aluminium-can collection boxes and a planned Thrift & Flip Art Studio, alongside two named local partner businesses. No independent listing, directory entry, social page or local news item confirming the organisation in Temple could be loaded: searches of Charity Navigator, GuideStar, BBB and general directories returned nothing under this name, and a search on the named partner surfaced only that partner's own Chamber of Commerce, Yelp and Facebook listings with no mention of Charity Unite. This is a community and charitable service operation rather than a licensed-premises or digital-goods business, so no footprint penalty applies.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "Self-declared Temple TX presence with plausible local detail, but no independent third-party confirmation of the organisation in the stated city.",
+      "url": "https://charityunite.org/"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative does not match any named officer, director, registered agent or leader on any public source located, because no such source names an individual at all. The organisation's own website names no people: the homepage, 'Our Story' section and contact block carry only the organisation name, city and a phone line, with no leadership page, no signed journal entries and no owner attribution. No Texas SOS or Comptroller filing naming an officer or registered agent was retrievable, no Form 990 principal-officer record exists because no 990 filer of this name was found on ProPublica, and no local news or complaint source mentions the representative in connection with this organisation. Nothing contradicts the representative either: no tie to a different business, city or state, and no scam, complaint or fraud report. People-search and data-broker sources were not used. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "Representative neither corroborated nor contradicted by any permitted public source; the organisation publishes no leadership information.",
+      "url": "https://charityunite.org/"
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The email-domain spelling resolves and clearly belongs to this organisation: charityunite.org loads a substantive multi-page site titled 'Charity Unite', branded with its own logo, listing Charity Unite, Temple, Texas, United States, with seven content pages (Events, Clear Your Clutter, Initiative, Recycling with Impact, Second Chance Donations, Reflections). It is built on a website-builder platform but carries genuine populated content, not a parked page or a builder placeholder. The declared account URL www.charityutnite.org and the statement descriptor CHARITYUTNITE.ORG both carry a transposed 'ut' and have no search footprint anywhere, and that spelling could not be shown to resolve. The pattern is consistent with a single keystroke transposition carried from the URL field into the descriptor rather than a pointer to a different business, since the correct spelling matches the email domain, the legal name and the live site. It remains a live operational defect: cardholders would see a descriptor domain that does not appear to exist, raising dispute risk, and it should be corrected.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "Genuine organisation website exists at the email-domain spelling; the declared URL and statement descriptor carry an unresolvable misspelling that needs correction.",
+      "url": "https://charityunite.org/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5399 (miscellaneous general merchandise) is defensibly coherent with observable activity, though not an exact fit. The loaded site documents genuine merchandise handling and resale: gently used household goods, furniture and home decor are collected, refurbished and resold to help fund the launch of a community thrift store, live resale shows are run on a third-party marketplace, and a Thrift & Flip Art Studio plus a permanent physical thrift location are stated goals. There is also a priced service line of decluttering and organising sessions. The name 'Charity Unite' describes a charitable mission, not payment collection itself, and there is an observable product. Caveat for the analyst: a material share of inflow is charitable donation rather than retail, for which 8398 (charitable and social service organisations) would be the more accurate code, and 5931 (used merchandise) would better fit the thrift resale; 5399 understates the donation component.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "Observable physical-goods resale activity makes a general-merchandise MCC coherent, with a recommended review toward 8398 or 5931.",
+      "url": "https://charityunite.org/"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent presence of one year or more could be established. The only dated marker found is the site's own 'Copyright 2026 Charity Unite' footer, which does not evidence duration. No dated reviews, directory listings, Charity Navigator or GuideStar profiles, Form 990 filings, Chamber of Commerce entry or local news coverage were found under this name, and the site's 'Reflections' journal entries carry no visible dates in the loaded content. No scam, complaint or fraud reports about the organisation were found either: targeted searches returned only generic charity-fraud material with no mention of this organisation. The YouTube channel and third-party marketplace seller presence referenced on the site would be the best dated evidence but could not be loaded on this run.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-03",
+      "establishes": "No evidence of independent presence of one year or more; equally no adverse history found.",
+      "url": "https://charityunite.org/"
+    }
+  ],
+  "evidenceNeeded": [
+    "Correct the statement descriptor and declared URL from the misspelled CHARITYUTNITE.ORG / www.charityutnite.org to CHARITYUNITE.ORG; confirm with the merchant whether charityutnite.org resolves at all or was purely a typo.",
+    "Obtain the IRS 501(c)(3) determination letter and EIN from the merchant, then confirm on IRS Tax Exempt Organization Search (blocks automation, manual check required) and ProPublica Nonprofit Explorer by EIN.",
+    "Run a manual Texas SOS SOSDirect entity search and Texas Comptroller Taxable Entity Search for 'Charity Unite' to establish formation date, entity status and the named officer, director or registered agent; both tools are form-driven and could not be queried by automation.",
+    "Given the site offers tax-deductible donation receipts with no locatable exempt status, confirm exempt status before allowing donation-style collection, or require the claim to be removed.",
+    "Confirm the representative's role against the Texas SOS filing, or have the merchant publish leadership on the site about page; the site currently names no individuals.",
+    "Manually open the organisation's YouTube channel and its third-party marketplace seller page for dated upload and sale history to establish operating history.",
+    "Verify the named local partnerships directly with those businesses, since neither mentions Charity Unite in its own public listings.",
+    "Review MCC assignment: 8398 (charitable and social service) or 5931 (used merchandise) likely fit the donation and thrift-resale mix better than 5399."
+  ],
+  "summary": "The declared URL and statement descriptor (charityutnite.org / CHARITYUTNITE.ORG) have no footprint anywhere and appear to be a letter transposition of the real domain; charityunite.org does resolve and is a genuine, substantive site for a Temple, Texas community organisation that unites local non-profits, collects and resells donated household goods, and runs recycling and decluttering programmes, consistent enough with MCC 5399 to pass although 8398 would fit better. The material risk is legal: despite publicly offering tax-deductible donation receipts, no 501(c)(3) recognition appears in ProPublica Nonprofit Explorer and no Texas SOS or Comptroller registration could be located for this name, so the licence-equivalent for a fund-soliciting non-profit is unevidenced. Everything else is thin rather than adverse: no independent listing, review, filing or news item confirms the organisation in Temple, no public source names the representative in any role, and no scam or complaint reports exist. Recommend conditional approval subject to the determination letter or Texas registration, a corrected statement descriptor, and an MCC review."
+}
