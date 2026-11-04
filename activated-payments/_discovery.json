@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-04T17:20:33.277Z",
+  "ranAt": "2026-11-04T18:19:14.775Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -934,6 +934,15 @@
         "name": "REFUNDS_METADATA"
       },
       {
+        "name": "REVENUE_RECOGNITION_SSP_COMPONENTS"
+      },
+      {
+        "name": "REVENUE_RECOGNITION_SSP_COMPONENT_TREATMENTS"
+      },
+      {
+        "name": "REVENUE_RECOGNITION_SSP_RULES"
+      },
+      {
         "name": "RULE_DECISIONS"
       },
       {
@@ -1158,7 +1167,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10088769806
+        "rows": 10089028879
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
