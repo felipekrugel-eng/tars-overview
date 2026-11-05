@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UXhq59JgOdwel27",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No corporate registration could be confirmed or ruled out: the Puerto Rico Departamento de Estado Registry of Corporations is a JavaScript search portal that returned no retrievable content to the fetcher, and the alternate public portal was unreachable, so the register was NOT actually searched. Open-web searches for the business name and variants returned no registration record either. Separately, locksmithing is an unregulated trade in Puerto Rico - a 2018 Senate bill proposed creating a locksmith licence and police-run registry precisely because the trade is unregulated - and no public locksmith licence register was found, so no missing-licence contradiction is asserted.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "Corporate registration status for an entity declared as a Company is undetermined because the PR registry could not be queried; no licence register exists to check for this trade."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, map entry, directory page or social page placing this business in Bayamon, PR was found across English and Spanish searches (\"Laureano Prado cerrajero Bayamon\", \"Key Lock Bayamon\", \"Prado Key Lock\", and Facebook, Google Maps and Yelp oriented queries). A locksmith of this kind is typically a mobile or small owner-operated service rather than a business requiring licensed physical premises, so the complete absence of footprint is scored as unverified rather than a contradiction.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No corroboration of a real operating presence in the stated city, and no affirmative evidence of absence for a trade that is commonly mobile."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The only declared \"website\" is a Facebook share permalink, which the fetcher refused to load (blocked URL; Facebook share links also commonly require login), and name-based searches found no Facebook business page for this merchant. There is therefore no resolvable website belonging to the business, but equally no evidence of a parked page, a site-builder placeholder or a site belonging to a different business. The statement descriptor is a plain 22-character truncation of the declared business name, not a random string, so it is not itself a red flag; the weakness is that the sole contact artefact is an unverifiable social permalink.",
+      "sourceType": "social",
+      "checkedAt": "2026-11-05",
+      "establishes": "No independently resolvable web presence confirming the business’s contact details; the descriptor itself is coherent with the declared name."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 7311 (advertising services) is facially inconsistent with a name meaning key and lock work, but no page was loaded that establishes what the business actually sells, and no product description was declared. Per the rubric this is scored unverified rather than as an incoherence contradiction; the MCC question is flagged for follow-up.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared MCC cannot be reconciled with observable activity because no observable activity was found at all."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any age was found - no reviews, directory listings, filings or news. Targeted searches for complaint, fraud or \"estafa\" reports naming this business returned only unrelated locksmith-scam reporting from Spain and Argentina and unrelated Puerto Rico fraud stories; nothing adverse attaches to this merchant.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Neither operating longevity nor any adverse history is established; the merchant has no discoverable public track record."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual browser search of the PR Departamento de Estado Registry of Corporations (rcp.estado.pr.gov) for this business name and for \"Key Lock\" in Bayamon, to confirm or refute an active registered entity - the registry was NOT searchable by automation on this run, and the account is declared as a Company.",
+    "Merchant-supplied PR Certificate of Good Standing and Hacienda merchant registration certificate.",
+    "A working, viewable link to the Facebook business page (the share permalink could not be loaded); confirm it names the business, shows Bayamon, and has posts predating the 2026-11-03 connection date.",
+    "Clarify the MCC: 7311 (advertising services) appears wrong for a key and lock business - confirm actual activity and re-map before enabling processing.",
+    "A product/service description, business address and phone number for Bayamon, plus photos of premises or van signage.",
+    "If the business is in practice a sole proprietorship rather than a Company, correct the entity type, since no corporate record may exist by design."
+  ],
+  "summary": "Nothing about this merchant could be independently corroborated: across English and Spanish searching there is no listing, map entry, review, directory record or findable Facebook page for this name anywhere in Bayamon or Puerto Rico, and the declared website is a Facebook share permalink that would not load. Critically, the Puerto Rico corporate registry could not be queried by automation, so the absence of a registration record is unproven rather than established - a human must search rcp.estado.pr.gov before any legal-dimension contradiction is scored, and that is the highest-value next step given the account is declared as a Company. No adverse signals were found either: no complaints or scam reports attach to the name, the descriptor is a straightforward truncation of the business name, and locksmithing is unregulated in PR so no missing-licence finding is asserted. The score of 0 reflects an evidence vacuum rather than a clean verification; the one concrete anomaly is MCC 7311 (advertising services) on what the name says is a locksmith."
+}
