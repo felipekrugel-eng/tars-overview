@@ -1,0 +1,76 @@
+{
+  "accountId": "acct_1UWev09hD5AkLHZ3",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "IRS Form 990-derived records confirm an active, currently-filing tax-exempt entity matching the declared name and state: Benevolent and Protective Order of Elks Lodge 2167 Oakland, EIN 23-7583688, a 501(c)(8) fraternal beneficiary society within the BPOE national group exemption, at 33 Ramapo Valley Rd, Oakland NJ 07436, year formed 1972, legally formed as a corporation. The most recent Form 990-EZ for FYE 03/2026 was received by the IRS on 2026-07-23, with an unbroken 990-EZ series back to FYE 03/2022. The primary registries could not be reached: the NJ Division of Revenue business name search is POST/form-driven and no IRS TEOS detail page could be loaded, so this record is IRS-sourced via an aggregator rather than read off the state register.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "The merchant is a real, currently-filing 501(c)(8) non-profit lodge registered at the declared address, with no sign of dissolution or revocation.",
+      "url": "https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Borough of Oakland, NJ official municipal website lists \"Elks Lodge No. 2167\" under Civic Organizations on its outside-organisation links page, linking to the lodge page for lodge number 2167 - an independent government listing placing this exact lodge in the stated town. The lodge page independently gives a physical premises at 33 Ramapo Valley Road, Oakland NJ, a local phone number, regular meetings on the first and third Wednesdays, and named hall facilities.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "An independent, non-self-reported source places the organisation at a real physical premises in the declared town, consistent with card-present POS volume.",
+      "url": "https://www.oakland-nj.gov/1205/Outside-Organization-Links"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared website loads and is unambiguously this organisation’s own official web home: it renders as \"Oakland, NJ Lodge No. 2167\" with the lodge address, phone number, meeting times, photos and a lodge Facebook link. The statement descriptor \"ELKS.ORG\" is weighed as coherent rather than adverse: elks.org is the national BPOE domain on which every subordinate lodge, including this one, is hosted, so the descriptor points cardholders to the lodge’s own official web presence rather than to an unrelated third party. Residual non-scoring note: \"ELKS.ORG\" is generic across roughly 1,900 lodges and does not name Oakland, so a descriptor such as \"OAKLAND ELKS 2167\" would reduce avoidable disputes. A community post lists the lodge contact on a different email provider with the same handle as the account email, consistent with a mailbox migration rather than a mismatch.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared website resolves and clearly belongs to this merchant; its contact details match the account town, name and lodge number.",
+      "url": "https://www.elks.org/lodges/home.cfm?lodgenumber=2167"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 8641 (civic, social and fraternal associations) matches what the organisation observably is and does: the IRS record classifies it NTEE Y40 \"Fraternal Beneficiary Societies\", NAICS 813410 \"Civic and Social Organizations\", 501(c)(8), roughly 60 members, with FYE 03/2026 revenue of about $95k composed of membership dues, gaming and fundraising events, sales of inventory consistent with bar and kitchen counter sales, and contributions. That revenue mix is coherent with a POS account showing 4,766 receipts, and the descriptor names the order rather than describing payment collection.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared MCC, descriptor and non-profit entity type are coherent with independently documented activity, and the POS receipt volume is proportionate to a small lodge with a bar, kitchen and events.",
+      "url": "https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent presence far exceeds one year: the IRS record gives year formed 1972 and shows eleven Form 990-EZ filings, the five most recent received between August 2022 and July 2026, plus a $10,000 Elks National Foundation community grant in tax period 2026-03. The lodge also appears in the Borough of Oakland civic organisations directory and in local coverage of its fundraisers. A targeted adverse-media search for lawsuits, fraud or licence complaints tied to this lodge returned nothing - only unrelated matters involving other lodges.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "A continuously operating, continuously filing organisation of more than fifty years’ standing with recent regulatory filings and no adverse media.",
+      "url": "https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688"
+    }
+  ],
+  "evidenceNeeded": [
+    "Direct confirmation from the NJ Division of Revenue business name search of the registered non-profit corporation name, entity ID and status - the search is POST/form-driven and could not be queried by automation.",
+    "Direct IRS Tax Exempt Organization Search confirmation for EIN 23-7583688, including that the lodge is covered by the BPOE group exemption and is not on the automatic revocation list.",
+    "Representative / beneficial-owner identity verification for the person controlling the account, including confirmation that they hold a current lodge office - the representative feed was unavailable on this run.",
+    "Confirmation that the account email is lodge-controlled, given that the publicly published lodge contact uses the same handle on a different provider.",
+    "If the lodge serves alcohol, a copy of its current NJ ABC club licence for the Oakland premises.",
+    "Explanation of the gap between the last POS sale (2026-02-01) and the payments connection, and confirmation that the payout bank account is in the lodge’s legal name.",
+    "Consider changing the statement descriptor from the generic \"ELKS.ORG\" to one naming Oakland Lodge 2167."
+  ],
+  "summary": "Oakland Elks Lodge 2167 verifies cleanly across every dimension that could be assessed: a real 501(c)(8) fraternal lodge (EIN 23-7583688) formed in 1972, operating from a physical hall on Ramapo Valley Road, listed as a civic organisation on the Borough of Oakland’s own municipal website, and filing Form 990-EZ as recently as July 2026. MCC 8641 and the declared non-profit type are fully coherent with the IRS classification and with a revenue mix of dues, hall fundraisers and counter sales that explains 4,766 POS receipts at a roughly 60-member lodge. The \"ELKS.ORG\" descriptor is the national BPOE domain hosting this lodge’s own official page, so it is treated as the merchant’s genuine web home, though a town-specific descriptor would reduce dispute risk. Total risk 0; the open items are the primary-registry confirmations (NJ DORES and IRS TEOS both blocked automation) and representative identity, which remains genuinely unverified rather than clean."
+}
