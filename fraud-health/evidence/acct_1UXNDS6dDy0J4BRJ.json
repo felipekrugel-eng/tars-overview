@@ -1,0 +1,68 @@
+{
+  "accountId": "acct_1UXNDS6dDy0J4BRJ",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor) in Louisiana, where no state entity registration is expected; LA trade names for sole proprietors are filed at the parish Clerk of Court. The LA Secretary of State commercial search returned empty content and its name search requires an interactive POST form, so no registry lookup could be executed in this run.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registered-entity record is required for an individual sole proprietor in LA; the registry search could not be executed."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, map entry, social page or directory record places this business in Shreveport, LA. The merchant declares a not-yet-open mobile food stand (\"I am opening a stack stand\"), so absence of footprint is expected at this stage and nothing found contradicts the stated city or activity.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No observable operating footprint yet, consistent with a declared pre-opening food stand."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found. The statement descriptor is the apparent sole proprietor’s personal name, which is normal for an individual, and the Gmail handle matches that same personal name rather than describing payment collection. No fictitious or mismatched contact details were observed.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No web contact surface to verify; descriptor and email are coherent personal-name identifiers for a sole proprietor."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5499 (misc food stores) is coherent with a declared food stand, but there is nothing observable anywhere - no menu, product, listing or social post - because the business has not opened. The name and description describe selling food, not payment collection, and there is no digital-goods element.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Declared model is internally coherent but unobservable pre-opening."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, listings, filings, news or complaint/scam reports were found for this business in Shreveport, LA; no independent presence of any age could be established, and no adverse history was found either.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No prior trading history and no negative reports."
+    }
+  ],
+  "evidenceNeeded": [
+    "Caddo Parish Health Unit retail/mobile food permit or City of Shreveport food vendor licence (or proof of pending application) for the stand.",
+    "Caddo Parish Clerk of Court trade name / DBA filing, if one exists.",
+    "Representative name and identity verification - not available to the verifier on this run.",
+    "Expected opening date, intended trading locations or event schedule, and photos of the stand and menu once operating."
+  ],
+  "summary": "A declared pre-opening sole-proprietor food stand in Shreveport, LA with no website and no observable public footprint of any kind. The Louisiana SOS commercial search could not be executed, but as an Individual no state entity registration is expected, so this is not itself a negative signal. Nothing contradicts the profile: MCC 5499 fits a food stand, the descriptor is the apparent owner’s personal name as is normal for a sole proprietor, and no adverse or fraud reports exist. Total risk 0 across all six dimensions, with the caveat that everything is unverified rather than positively confirmed - approval should rest on representative ID verification and the parish/city food vendor permit."
+}
