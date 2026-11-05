@@ -71,36 +71,38 @@
   ],
   "exclusions": {
    "enabled_before_ledger_started": 49,
-   "enabled_on_another_day": 566,
-   "never_observed_enabled": 1103
+   "enabled_on_another_day": 568,
+   "never_observed_enabled": 1106
   }
  },
  "published": {
-  "added": [
+  "added": [],
+  "updated": [
    "acct_1UWev09hD5AkLHZ3",
    "acct_1UXhq59JgOdwel27",
    "acct_1UXjWd5dRKZm28Ux",
    "acct_1UXmOz6zak0hvT0e",
    "acct_1UXvzb5Gu4Vcij3y"
   ],
-  "updated": [],
   "skipped": [],
   "wrote": true
  },
  "liveStatusChanges": [],
  "coverage": {
-  "computedAt": "2026-11-05T00:15:15+00:00",
+  "computedAt": "2026-11-05T07:40:31+00:00",
   "source": "activated-payments/activation-data.js",
-  "connectedAccounts": 1722,
-  "enabledAccounts": 577,
+  "connectedAccounts": 1727,
+  "enabledAccounts": 579,
   "reviewedAccounts": 624,
   "reviewedEnabledAccounts": 576,
   "enabledNotYetReviewed": [
-   "acct_1TWh3c9MtEGnBEj3"
+   "acct_1TWh3c9MtEGnBEj3",
+   "acct_1UYCMqGDPbp2bA9I",
+   "acct_1UYDAL9hWo0QksON"
   ],
   "reviewedNoLongerInPopulation": [],
-  "enabledCoveragePct": 99.8,
-  "ledgerAccounts": 1723,
+  "enabledCoveragePct": 99.5,
+  "ledgerAccounts": 1728,
   "scoringModel": "risk-v2",
   "scoreDirection": "0 = no observed risk, 100 = extreme risk"
  },
@@ -109,6 +111,8 @@
   "acct_1UHAWpGA2GAm1e8y",
   "acct_1UHo7I9NQm5IvnZK",
   "acct_1UIuS96pTOgI75sZ",
-  "acct_1UIwBc5vsHotDcPp"
+  "acct_1UIwBc5vsHotDcPp",
+  "acct_1UYCMqGDPbp2bA9I",
+  "acct_1UYDAL9hWo0QksON"
  ]
 }

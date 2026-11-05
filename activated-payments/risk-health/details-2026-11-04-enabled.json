@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-04 Europe/London",
   "cohortDate": "2026-11-04",
-  "reviewedAt": "2026-11-05T00:15:15+00:00",
+  "reviewedAt": "2026-11-05T07:40:31+00:00",
   "count": 5,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-05T00:15:15+00:00",
+ "reviewedAt": "2026-11-05T07:40:31+00:00",
  "merchants": [
   {
    "id": "acct_1UWev09hD5AkLHZ3",
@@ -29,33 +29,59 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Non-profit.",
-    "Loyverse POS activity is present: 4766 receipt(s), last sale 2026-02-01."
+    "Loyverse POS activity is present: 4766 receipt(s), last sale 2026-02-01.",
+    "IRS Form 990-derived records confirm an active, currently-filing tax-exempt entity matching the declared name and state: Benevolent and Protective Order of Elks Lodge 2167 Oakland, EIN 23-7583688, a 501(c)(8) fraternal beneficiary society within the BPOE national group exemption, at 33 Ramapo Valley Rd, Oakland NJ 07436, year formed 1972, legally formed as a corporation. The most recent Form 990-EZ for FYE 03/2026 was received by the IRS on 2026-07-23, with an unbroken 990-EZ series back to FYE 03/2022. The primary registries could not be reached: the NJ Division of Revenue business name search is POST/form-driven and no IRS TEOS detail page could be loaded, so this record is IRS-sourced via an aggregator rather than read off the state register. [https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688]",
+    "The Borough of Oakland, NJ official municipal website lists \"Elks Lodge No. 2167\" under Civic Organizations on its outside-organisation links page, linking to the lodge page for lodge number 2167 - an independent government listing placing this exact lodge in the stated town. The lodge page independently gives a physical premises at 33 Ramapo Valley Road, Oakland NJ, a local phone number, regular meetings on the first and third Wednesdays, and named hall facilities. [https://www.oakland-nj.gov/1205/Outside-Organization-Links]",
+    "The declared website loads and is unambiguously this organisation’s own official web home: it renders as \"Oakland, NJ Lodge No. 2167\" with the lodge address, phone number, meeting times, photos and a lodge Facebook link. The statement descriptor \"ELKS.ORG\" is weighed as coherent rather than adverse: elks.org is the national BPOE domain on which every subordinate lodge, including this one, is hosted, so the descriptor points cardholders to the lodge’s own official web presence rather than to an unrelated third party. Residual non-scoring note: \"ELKS.ORG\" is generic across roughly 1,900 lodges and does not name Oakland, so a descriptor such as \"OAKLAND ELKS 2167\" would reduce avoidable disputes. A community post lists the lodge contact on a different email provider with the same handle as the account email, consistent with a mailbox migration rather than a mismatch. [https://www.elks.org/lodges/home.cfm?lodgenumber=2167]",
+    "MCC 8641 (civic, social and fraternal associations) matches what the organisation observably is and does: the IRS record classifies it NTEE Y40 \"Fraternal Beneficiary Societies\", NAICS 813410 \"Civic and Social Organizations\", 501(c)(8), roughly 60 members, with FYE 03/2026 revenue of about $95k composed of membership dues, gaming and fundraising events, sales of inventory consistent with bar and kitchen counter sales, and contributions. That revenue mix is coherent with a POS account showing 4,766 receipts, and the descriptor names the order rather than describing payment collection. [https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688]",
+    "Independent presence far exceeds one year: the IRS record gives year formed 1972 and shows eleven Form 990-EZ filings, the five most recent received between August 2022 and July 2026, plus a $10,000 Elks National Foundation community grant in tax period 2026-03. The lodge also appears in the Borough of Oakland civic organisations directory and in local coverage of its fundraisers. A targeted adverse-media search for lawsuits, fraud or licence complaints tied to this lodge returned nothing - only unrelated matters involving other lodges. [https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Representative name not available to the verifier on this run."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Direct confirmation from the NJ Division of Revenue business name search of the registered non-profit corporation name, entity ID and status - the search is POST/form-driven and could not be queried by automation.",
+    "Direct IRS Tax Exempt Organization Search confirmation for EIN 23-7583688, including that the lodge is covered by the BPOE group exemption and is not on the automatic revocation list.",
+    "Representative / beneficial-owner identity verification for the person controlling the account, including confirmation that they hold a current lodge office - the representative feed was unavailable on this run.",
+    "Confirmation that the account email is lodge-controlled, given that the publicly published lodge contact uses the same handle on a different provider.",
+    "If the lodge serves alcohol, a copy of its current NJ ABC club licence for the Oakland premises.",
+    "Explanation of the gap between the last POS sale (2026-02-01) and the payments connection, and confirmation that the payout bank account is in the lodge’s legal name.",
+    "Consider changing the statement descriptor from the generic \"ELKS.ORG\" to one naming Oakland Lodge 2167."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://causeiq.com/organizations/benevolent-and-protective-order-of-elks-2167-oakland,237583688",
+     "sourceType": "state-register",
+     "checkedAt": "2026-11-05",
+     "establishes": "The merchant is a real, currently-filing 501(c)(8) non-profit lodge registered at the declared address, with no sign of dissolution or revocation.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://www.oakland-nj.gov/1205/Outside-Organization-Links",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "An independent, non-self-reported source places the organisation at a real physical premises in the declared town, consistent with card-present POS volume.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.elks.org/lodges/home.cfm?lodgenumber=2167",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "The declared website resolves and clearly belongs to this merchant; its contact details match the account town, name and lodge number.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Oakland Elks Lodge 2167 verifies cleanly across every dimension that could be assessed: a real 501(c)(8) fraternal lodge (EIN 23-7583688) formed in 1972, operating from a physical hall on Ramapo Valley Road, listed as a civic organisation on the Borough of Oakland’s own municipal website, and filing Form 990-EZ as recently as July 2026. MCC 8641 and the declared non-profit type are fully coherent with the IRS classification and with a revenue mix of dues, hall fundraisers and counter sales that explains 4,766 POS receipts at a roughly 60-member lodge. The \"ELKS.ORG\" descriptor is the national BPOE domain hosting this lodge’s own official page, so it is treated as the merchant’s genuine web home, though a town-specific descriptor would reduce dispute risk. Total risk 0; the open items are the primary-registry confirmations (NJ DORES and IRS TEOS both blocked automation) and representative identity, which remains genuinely unverified rather than clean.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-05T00:15:15+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:40:31+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-04T15:26:35+00:00",
    "enabledWindowStart": "2026-11-04T00:08:12+00:00",
    "enabledWindowEnd": "2026-11-04T15:26:35+00:00",
@@ -108,26 +134,32 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "No corporate registration could be confirmed or ruled out: the Puerto Rico Departamento de Estado Registry of Corporations is a JavaScript search portal that returned no retrievable content to the fetcher, and the alternate public portal was unreachable, so the register was NOT actually searched. Open-web searches for the business name and variants returned no registration record either. Separately, locksmithing is an unregulated trade in Puerto Rico - a 2018 Senate bill proposed creating a locksmith licence and police-run registry precisely because the trade is unregulated - and no public locksmith licence register was found, so no missing-licence contradiction is asserted.",
+    "No independent listing, map entry, directory page or social page placing this business in Bayamon, PR was found across English and Spanish searches (\"Laureano Prado cerrajero Bayamon\", \"Key Lock Bayamon\", \"Prado Key Lock\", and Facebook, Google Maps and Yelp oriented queries). A locksmith of this kind is typically a mobile or small owner-operated service rather than a business requiring licensed physical premises, so the complete absence of footprint is scored as unverified rather than a contradiction.",
+    "Representative name not available to the verifier on this run.",
+    "The only declared \"website\" is a Facebook share permalink, which the fetcher refused to load (blocked URL; Facebook share links also commonly require login), and name-based searches found no Facebook business page for this merchant. There is therefore no resolvable website belonging to the business, but equally no evidence of a parked page, a site-builder placeholder or a site belonging to a different business. The statement descriptor is a plain 22-character truncation of the declared business name, not a random string, so it is not itself a red flag; the weakness is that the sole contact artefact is an unverifiable social permalink.",
+    "MCC 7311 (advertising services) is facially inconsistent with a name meaning key and lock work, but no page was loaded that establishes what the business actually sells, and no product description was declared. Per the rubric this is scored unverified rather than as an incoherence contradiction; the MCC question is flagged for follow-up.",
+    "No dated independent presence of any age was found - no reviews, directory listings, filings or news. Targeted searches for complaint, fraud or \"estafa\" reports naming this business returned only unrelated locksmith-scam reporting from Spain and Argentina and unrelated Puerto Rico fraud stories; nothing adverse attaches to this merchant."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual browser search of the PR Departamento de Estado Registry of Corporations (rcp.estado.pr.gov) for this business name and for \"Key Lock\" in Bayamon, to confirm or refute an active registered entity - the registry was NOT searchable by automation on this run, and the account is declared as a Company.",
+    "Merchant-supplied PR Certificate of Good Standing and Hacienda merchant registration certificate.",
+    "A working, viewable link to the Facebook business page (the share permalink could not be loaded); confirm it names the business, shows Bayamon, and has posts predating the 2026-11-03 connection date.",
+    "Clarify the MCC: 7311 (advertising services) appears wrong for a key and lock business - confirm actual activity and re-map before enabling processing.",
+    "A product/service description, business address and phone number for Bayamon, plus photos of premises or van signage.",
+    "If the business is in practice a sole proprietorship rather than a Company, correct the entity type, since no corporate record may exist by design."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Nothing about this merchant could be independently corroborated: across English and Spanish searching there is no listing, map entry, review, directory record or findable Facebook page for this name anywhere in Bayamon or Puerto Rico, and the declared website is a Facebook share permalink that would not load. Critically, the Puerto Rico corporate registry could not be queried by automation, so the absence of a registration record is unproven rather than established - a human must search rcp.estado.pr.gov before any legal-dimension contradiction is scored, and that is the highest-value next step given the account is declared as a Company. No adverse signals were found either: no complaints or scam reports attach to the name, the descriptor is a straightforward truncation of the business name, and locksmithing is unregulated in PR so no missing-licence finding is asserted. The score of 0 reflects an evidence vacuum rather than a clean verification; the one concrete anomaly is MCC 7311 (advertising services) on what the name says is a locksmith.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-05T00:15:15+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:40:31+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-04T00:08:12+00:00",
    "enabledWindowStart": "2026-11-03T13:33:26+00:00",
    "enabledWindowEnd": "2026-11-04T00:08:12+00:00",
@@ -159,10 +191,10 @@
    "accountId": "acct_1UXjWd5dRKZm28Ux",
    "merchantId": "5396647",
    "name": "MR HAMS COMICS & COLLECTIBLES",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -178,28 +210,34 @@
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Ohio Secretary of State business search could NOT be searched on this run: the site first returned a website-maintenance page and then HTTP 403 Cloudflare interstitials on every endpoint tried, so no name search for \"MR HAMS COMICS & COLLECTIBLES\" was executed. Because the register was not searchable, the absence of a registration is NOT scored as a contradiction; registration status for this declared Company remains genuinely unknown.",
+    "Representative name not available to the verifier on this run.",
+    "No website is declared and none was found. The contact details are not adverse on their face: the Gmail handle describes a trade (comics and collectibles retail), not payment collection, and the statement descriptor is simply the business’s own name truncated at the 22-character limit, which is normal rather than a random string. With no site to load, contact channels could not be independently confirmed.",
+    "MCC 5942 (book stores) with the declared descriptor and product description \"Comic books & collectibles\" is internally coherent and not indicative of payment-collection or digital-goods abuse, but nothing observable could be found online - no storefront, catalogue, listing or inventory - so the stated model could not be corroborated against any real activity. Nothing clearly incoherent was identified, so no risk points are assigned.",
+    "No dated independent presence of any age was found: no reviews, directory listing, filings, local-news coverage or social posts under this name. Equally, no scam, complaint or fraud reports were found against the name. Trading history is simply unknown."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "A comic and collectibles shop is a retail business normally operating from premises, yet repeated searches found no independent footprint of any kind placing this business in Alliance, OH (Stark County) or anywhere else: no Google, Facebook or Instagram page, no comic-shop directory entry, no local-news mention, no marketplace storefront. The only Alliance, OH comic business surfaced was an unrelated \"Alliance Comics LLC\" on E Mill St, and the closest name matches found were loaded and ruled out - neither names this business, Alliance or Ohio. This finding rests on the absence of results across an exhaustive search rather than on any single page, so no supporting url is cited; the searches run are itemised in evidenceNeeded."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Re-run the Ohio Secretary of State business search manually (the site was in maintenance and then Cloudflare-blocked on 2026-11-05) for \"MR HAMS COMICS\" and \"MR HAM\" to confirm the Company exists, is active, and matches the declared name and state.",
+    "Street address of the shop premises in Alliance, OH, a photo of the storefront or signage, and a Stark County / City of Alliance vendor licence.",
+    "Any live customer-facing surface: Google Business Profile, Facebook or Instagram page, eBay/Whatnot/TCGplayer storefront, or convention vendor listing - nothing is discoverable under this business name.",
+    "Clarify whether this is a brick-and-mortar shop, a convention or market-stall dealer, or an online-only reseller: the operating-footprint risk changes materially depending on which.",
+    "Searches run that returned nothing, for audit: \"Mr Hams Comics\" Alliance Ohio; \"Mr Ham’s Comics & Collectibles\"; \"Mr Hams\" comics collectibles Alliance OH facebook; Alliance OH 44601 comic book store collectibles; the email handle and \"mrhamscomics\"; Alliance Review / Canton Repository new comic shop 2025-2026; Instagram, eBay and Whatnot seller sweep.",
+    "MCC review: 5942 (book stores) is acceptable but 5945 (hobby, toy and game shops) is the closer fit."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "summary": "MR HAMS COMICS & COLLECTIBLES has no discoverable public footprint whatsoever: nothing on Google, Facebook, Instagram, comic-shop directories, marketplace storefronts or Stark County local news ties this name to Alliance, OH or to any other location. Two near-name marketplace sellers were loaded and positively ruled out, and the only Alliance comic business found is an unrelated \"Alliance Comics LLC\". For a retail shop that would normally need premises and a local presence, that total absence is the principal risk driver (operating, 10 points). The declared entity is a Company, but the Ohio Secretary of State register was genuinely unsearchable this run - a maintenance page then Cloudflare 403s - so the missing registration is recorded as unknown rather than as a contradiction, which means legal risk here is understated: the Ohio register and a physical address should be checked manually before this account is cleared.",
+   "reviewCompleteness": 38,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-05T00:15:15+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:40:31+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-04T00:08:12+00:00",
    "enabledWindowStart": "2026-11-03T15:21:27+00:00",
    "enabledWindowEnd": "2026-11-04T00:08:12+00:00",
@@ -221,8 +259,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -252,26 +290,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), so no California Secretary of State registration is expected; a California DBA would be filed at San Diego County level and was not locatable. The required California Bureau of Automotive Repair (BAR) Automotive Repair Dealer registration could not be checked: the DCA licence lookup loads as a JavaScript form with no submittable query endpoint reachable by automation, so no real register search could be completed. Treated as registry blocked, not as a missing licence.",
+    "No independent listing or social page for \"ManiTech\" mobile automotive repair was found in Escondido or North San Diego County. Searches across general web, Google, Yelp, Facebook, Instagram and Thumbtack indexed results and local mobile-mechanic directories returned only unrelated Escondido shops and aggregator pages. Mobile auto repair is a service business that need not have a fixed-premises footprint, so absence of a listing is not scored as a contradiction.",
+    "Representative name not available to the verifier on this run.",
+    "No website was declared and none was found. The email handle describes the trade (auto/tech) rather than payment collection and matches the business name root, so the payment-collection branch does not apply. No fictitious or mismatched contact details were observed. Separately, the statement descriptor is a personal name that appears neither in the business name nor in the email handle, which is flagged for reconciliation against the representative on file.",
+    "MCC 7538 (automotive service shops) is coherent with the stated product \"mobile automotive diagnostic and repair\" and with the business name, and nothing contradicts that model. However, no public page, listing, review or advertisement was found showing the business performing mobile auto repair, so coherence could not be confirmed against observable activity.",
+    "No dated reviews, directory listings, filings, news items or complaint records of any kind were found for \"ManiTech\" or \"Mani Tech\" in Escondido or San Diego County, and no scam or fraud reports were found either. There is no evidence of an independent presence of one year or more, and equally no adverse history."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Representative name on the account, to reconcile against the statement descriptor - a personal name appearing in neither the business name nor the email handle.",
+    "California BAR Automotive Repair Dealer (ARD) registration number for the business or its owner, since the DCA online lookup could not be searched by automation. If no ARD exists, mobile auto repair in California is being performed without the required registration.",
+    "San Diego County fictitious business name (DBA) filing for the trading name, or an explanation of why the trading name differs from the descriptor.",
+    "Any customer-facing presence: Google Business Profile, Yelp, Facebook, Instagram, Nextdoor or Thumbtack listing, a website, or dated invoices showing mobile repair jobs in the Escondido area.",
+    "Proof of trading history (bank statements, prior processing history or dated job records) given zero public footprint and a connection date of 2026-11-03."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "ManiTech mobile automotive repair has no observable public footprint at all: no website, no Google, Yelp, Facebook, Instagram or Thumbtack listing, no directory entry, no reviews and no news or complaint records anywhere in Escondido or North San Diego County. Nothing adverse was found either, and because mobile auto repair legitimately operates without fixed premises and the entity is an Individual for which no Secretary of State registration is expected, every dimension scores 0 - a clean but entirely unevidenced file rather than a positively verified one. The one open discrepancy is that the statement descriptor is a personal name appearing in neither the business name nor the email handle, so it must be reconciled against the representative on file; the representative feed was unavailable this run. The California BAR Automotive Repair Dealer register, which mobile auto repair in California does require, could not be searched because the DCA lookup blocks automation, so a licensed-status check remains the first manual follow-up.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-05T00:15:15+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:40:31+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-04T00:08:12+00:00",
    "enabledWindowStart": "2026-11-03T18:25:45+00:00",
    "enabledWindowEnd": "2026-11-04T00:08:12+00:00",
@@ -303,12 +346,12 @@
    "accountId": "acct_1UXvzb5Gu4Vcij3y",
    "merchantId": "4056015",
    "name": "R&K Cocina",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
+    "contact": 10,
     "businessModel": 0,
     "history": 0,
     "behavior": 0,
@@ -317,33 +360,48 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Individual.",
-    "Loyverse POS activity is present: 18 receipt(s), last sale 2025-10-01."
+    "Loyverse POS activity is present: 18 receipt(s), last sale 2025-10-01.",
+    "An independent public listing places R&K Cocina at 2075 Alum Rock Ave, San Jose, CA 95116, with 10 reviews describing it as a Nicaraguan eatery/food truck serving nacatamal, vigoron, carne asada, enchiladas and bunuelos. CITY MISMATCH: the account profile declares Milpitas, CA, while every independent source and the declared DoorDash listing place the business in San Jose - adjacent cities in Santa Clara County, consistent with a mobile operation but unreconciled. No Milpitas presence was found under either spelling. DoorDash and Yelp could not be fetched directly, and no Grubhub, Uber Eats, Facebook or Instagram page was found. [https://startpage.mapquest.com/us/california/rk-cocina-777813382]",
+    "The observable business - a Nicaraguan food truck and casual eatery selling prepared dishes, per the dated reviews on the loaded listing - is coherent with a food-sector MCC and with the low-volume in-person POS history of 18 receipts. MCC 5499 (misc food stores) is within the food family but is not the best fit for a prepared-food vendor; 5812 (eating places) is the correct code. This is a routine misclassification rather than material incoherence, so no risk points are taken here; the descriptor problem is scored under contact and not double-counted. [https://startpage.mapquest.com/us/california/rk-cocina-777813382]",
+    "Independent dated presence exceeding one year: the loaded listing carries reviews dated 2025-03-21, 2025-07-26, 2025-08-17 and 2025-08-29 (5.0 average over 10 reviews), i.e. continuous third-party evidence of the business operating from March 2025, about 20 months before today. No scam, fraud, non-delivery or complaint reports were found on BBB Scam Tracker, Trustpilot or in general search. [https://startpage.mapquest.com/us/california/rk-cocina-777813382]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Entity type is Individual (sole proprietor) in California, where no Secretary of State registration is expected; a DBA would be filed at Santa Clara County level and is not published in any register that could be loaded. A food business also needs a Santa Clara County Environmental Health permit (including a mobile food facility permit if it operates as a truck), but no working searchable public register for it was reached in this run - the county inspection search tool was only described in secondary articles, never loaded - so no missing-permit conclusion can be drawn.",
+    "Representative name not available to the verifier on this run."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared \"website\" is a third-party DoorDash store page, not a site owned or controlled by the merchant, and no independent website for R&K Cocina surfaced anywhere - the only public listing found shows an address and phone but no business website. The statement descriptor is \"DOORDASH.COM\", a third-party marketplace domain rather than the merchant’s name: a cardholder paying in person at the merchant’s own Loyverse POS would see DOORDASH.COM on their statement, which does not identify R&K Cocina and is a direct dispute and chargeback driver. [https://startpage.mapquest.com/us/california/rk-cocina-777813382]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Resolve the city mismatch: confirm whether the business operates from San Jose (2075 Alum Rock Ave, 95116) or Milpitas, and correct the profile address.",
+    "Change the statement descriptor from \"DOORDASH.COM\" to a recognisable merchant descriptor such as \"RK COCINA SAN JOSE\" before enabling card acceptance - the single highest-risk item on this file.",
+    "Collect the representative name and identity documents; the private representative feed did not cover this account on this run.",
+    "Manually open the declared DoorDash store page and the Yelp business page in a browser (both block automated fetching) to confirm the listing is live and matches the account.",
+    "Search the Santa Clara County Environmental Health food-facility inspection records by facility name and by the Alum Rock Ave address to confirm a valid health permit, and whether it is fixed-premises or mobile.",
+    "Santa Clara County fictitious business name (DBA) filing for \"R&K Cocina\".",
+    "MCC correction from 5499 to 5812.",
+    "Explain why the last POS sale was 2025-10-01, 13 months before the payments connection, and confirm the business is still trading and its expected volume."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://startpage.mapquest.com/us/california/rk-cocina-777813382",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "A real, independently listed food business exists with licensed-premises-type activity, but it sits in San Jose rather than the declared Milpitas.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "R&K Cocina is a genuine, independently verifiable Nicaraguan food truck/eatery with a public listing at 2075 Alum Rock Ave, San Jose, CA and dated five-star reviews running from March 2025, so the business exists, has over a year of operating history and shows no adverse or fraud reports. The material problem is contact and descriptor integrity: the merchant has no website of its own (the declared URL is a third-party DoorDash store page) and the statement descriptor is \"DOORDASH.COM\", meaning cardholders charged at the merchant’s own Loyverse POS would see an unrelated marketplace domain - a clear chargeback and consumer-confusion risk that must be fixed before go-live. Secondary issues: the profile declares Milpitas while every source places the business in San Jose, and MCC 5499 should be 5812. Identity is wholly unassessed because the representative name was unavailable, and the county health-permit register could not be searched.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-05T00:15:15+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:40:31+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-04T15:26:35+00:00",
    "enabledWindowStart": "2026-11-04T04:40:11+00:00",
    "enabledWindowEnd": "2026-11-04T15:26:35+00:00",
@@ -365,8 +423,8 @@
    "successfulTransactions": 18,
    "hasTransacted": true,
    "lastTransactedAt": "2025-10-01",
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   }
