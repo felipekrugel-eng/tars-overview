@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UXHVf7k55YXBFEQ",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), for which Maryland requires no SDAT entity registration. The Maryland Business Express / SDAT entity search returned a JavaScript-only page with no searchable content to automation, so the registry could not be queried; no trade-name or entity record for \"SKO AUTO\" was found. Maryland licenses vehicle inspection stations and inspection mechanics but does not impose a general repair-facility licence on ordinary non-inspection repair work, so no required licence was identified as missing.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration is expected for a Maryland sole proprietor; the state registry blocked automation and no required repair licence applies to non-inspection mobile work."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing or social page for \"SKO AUTO\" in or around Randallstown, MD was found. Searches across Google-indexed results, Yelp, Facebook, Instagram and BBB for the business name with Randallstown, ZIP 21133 and Baltimore County returned only unrelated shops and templated mobile-mechanic lead-generation pages. Mobile auto repair can legitimately operate without licensed premises or a web footprint, so this is not scored as a contradiction.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "No independent operating footprint places the business in the stated city; inconclusive rather than contradictory for a mobile-only trade."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative was not found on any public source tied to this business: no retrievable state filing, no licence record, no business-owned channel, no owner replies on review sites, no local news and no scam or complaint reports. Nothing publicly ties the representative to a different business in another city or state. The statement descriptor being the representative’s own name is normal for a sole proprietor and is not treated as a mismatch. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No public source confirms or contradicts the representative; the only identity assurance is Stripe’s own verification."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found. The email handle is a free Gmail address built from the representative’s own name and the statement descriptor is that same personal name, which is coherent for a sole proprietor trading under an unregistered brand. Neither the handle, the business name nor the descriptor describes payment collection, and the descriptor is not a random string. There is no website to assess as parked or belonging to a different business.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "Contact details are thin but internally coherent for an individual sole proprietor, with no website to corroborate or contradict."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 7538 (automotive service shops) is coherent on its face with the declared activity of mobile and on-site automotive diagnostics, maintenance, transmission, engine, brake and electrical repair, and nothing observed conflicts with it. However, no public page showing what this business actually does was located, so coherence rests entirely on the merchant’s own declaration. No digital-goods or payment-collection pattern is present.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared MCC and descriptor are coherent with the stated trade but no independent source demonstrates the business performing it."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence of any kind was found: no reviews, directory listings, filings, news coverage or complaint/scam reports referencing this business or its representative. There is no evidence of a trading history of one year or more, and equally no adverse history. The account was connected on 2026-11-02.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No datable public history exists for the business, in either a positive or a negative direction."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual Maryland SDAT / Business Express entity and trade-name search for \"SKO AUTO\" and the representative - the search page does not render for automation.",
+    "Business phone number, service-area address and any Google Business Profile, Facebook or Instagram page for SKO AUTO.",
+    "Baltimore County or Maryland local trader’s licence, or confirmation that none is required for this operation.",
+    "Dated proof of trading: three to six recent repair orders showing customer, vehicle, work performed and amount.",
+    "Confirmation whether the merchant performs Maryland state safety or emissions inspections and, if so, the MVA/MSP inspection licence number."
+  ],
+  "summary": "Three-day-old Stripe connection for an individual sole proprietor offering mobile auto repair in Randallstown, MD. The file is thin rather than contradictory: all six dimensions came back unverified at 0 risk points. Nothing adverse was found - no scam reports, no complaints, no conflicting business or person, and MCC 7538 fits the declared trade - but nothing independent corroborates the business, the representative or any trading history, and the Maryland SDAT search could not be queried because the page renders only via JavaScript. Note that payouts_enabled is still false while Stripe reports the legal entity as verified; obtain dated proof of trading and a manual registry check before enabling payouts."
+}
