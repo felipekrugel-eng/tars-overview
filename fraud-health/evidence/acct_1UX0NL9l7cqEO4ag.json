@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UX0NL9l7cqEO4ag",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), for which Mississippi requires no Secretary of State entity registration, so absence of a filing is not adverse. The MS SOS business search at corp.sos.ms.gov returned HTTP 403 to automated requests, so no filing could be confirmed or excluded. The MS Board of Contractors licence verification page returned HTTP 404 with an expired TLS certificate, and MS contractor licensure generally applies only above dollar thresholds a small install service may not reach, so no required-licence contradiction is asserted.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration is expected for a sole proprietor; both the state registry and the contractor licence registry blocked automation, so legal existence is neither confirmed nor contradicted."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Four separate searches for the business name in Liberty / Amite County, MS (including name variants, BBB, Facebook, Yelp, Angi, Thumbtack) returned no listing, page, address or phone. Only unrelated regional providers appeared. This is a mobile installation service rather than a business requiring licensed physical premises, so an absent footprint is scored unverified rather than contradictory.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No independent listing places the business in the stated city; no premises-based contradiction applies to this business type."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The representative could not be tied to this business in any public source: searches combining the name with the business name, with Mississippi/Amite County, with internet and home-entertainment installation, and with scam/complaint terms produced no state filing, licence record, business channel, review reply, social page or news item. Nothing publicly ties the representative to a different business elsewhere and no complaint or fraud report was found. The statement descriptor is a trade name rather than a personal name, so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No public source corroborates or contradicts the representative; reliance falls entirely on Stripe verification."
+    },
+    {
+      "dimension": "contact",
+      "points": 6,
+      "status": "contradiction",
+      "statement": "The declared website \"D&Ssrvices.com\" is not a usable hostname and DNS lookups for the plausible literal renderings (dssrvices.com, dandssrvices.com, dsservices.com) all returned NXDOMAIN with no HTTP response. The only resolving similar domain, dandsservices.com, loads a site for a cleaning company in LaBelle, Florida, i.e. a different business in a different state, and no search result linked the merchant to it. A declared website that does not resolve is scored as parked/placeholder. The descriptor \"D&S SERVICES\" is at least consistent with the declared business name.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "The merchant’s declared web presence is unreachable; the nearest live namesake domain belongs to an unrelated Florida business.",
+      "url": "https://www.dandsservices.com/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5732 (electronics stores) is a plausible if imprecise mapping for a business installing internet service and home entertainment equipment, and the descriptor matches the declared business name; neither points at payment collection or digital goods, so no contradiction is asserted. However, no observable trading activity, service listing, price list or customer-facing page was found, so coherence could not be confirmed against anything the business demonstrably does.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared MCC and descriptor are not inherently incoherent, but there is no observable activity against which to verify them."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, directory listings, filings, news items, BBB profile or complaint/scam reports referencing this business or its representative were found; a complaint-oriented search surfaced only unrelated entities with similar names. There is no evidence of operating history of any length, and equally no adverse history.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No independent record of trading tenure exists for an account connected 2026-11-01."
+    }
+  ],
+  "evidenceNeeded": [
+    "Correct, resolving website URL from the merchant, or the Facebook/Google Business profile used to reach customers.",
+    "Manual re-run of the Mississippi SOS business search at corp.sos.ms.gov (HTTP 403 to automation) for the business and representative names, plus any Amite County assumed-name filing.",
+    "Manual check of the MS Board of Contractors licence verification (msboc.us returned 404 with an expired certificate) and whether job sizes cross MS licensure thresholds.",
+    "Documentary proof of trading: recent customer invoices or an ISP/satellite dealer or subcontractor agreement."
+  ],
+  "summary": "Thin-file, newly connected sole proprietor with essentially no verifiable public footprint: no listing, social page, review, directory entry or news mention places it in Liberty, MS. The one hard negative is the declared website - \"D&Ssrvices.com\" is not a valid hostname, no literal rendering resolves, and the only live namesake domain belongs to an unrelated cleaning company in Florida. Mitigating: no registration is expected for an Individual, a mobile install service legitimately has no premises, the MCC and descriptor are coherent with the stated trade, and no scam or complaint report was found. Residual exposure is that identity rests entirely on Stripe, and both the MS SOS registry and the contractor board blocked automated checks."
+}
