@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-05T19:34:53.215Z",
+  "ranAt": "2026-11-05T19:57:17.929Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1166,6 +1166,10 @@
         "rows": 1768
       },
       {
+        "name": "LOYVERSE_EXPERIMENT_ASSIGNMENTS_RAW",
+        "rows": 0
+      },
+      {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
         "rows": 10098805209
       },
@@ -1183,6 +1187,9 @@
       },
       {
         "name": "CHARGEBEE_SUBSCRIPTIONS_V"
+      },
+      {
+        "name": "LOYVERSE_EXPERIMENT_ASSIGNMENTS"
       },
       {
         "name": "LOYVERSE_MERCHANTS"
