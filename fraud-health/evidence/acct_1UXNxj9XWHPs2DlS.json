@@ -1,0 +1,71 @@
+{
+  "accountId": "acct_1UXNxj9XWHPs2DlS",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Wyoming SOS registration could not be confirmed for either spelling: wyobiz.wyo.gov served an anti-automation CAPTCHA challenge instead of entity data, so neither \"Ambroia Wellness LLC\" nor \"Ambrosia Wellness LLC\" could be searched in the live register. A WY SOS Q1-2026 trade-name bulletin was loaded as a cross-check and contains no matching entry, but it covers trade names only, not LLC formations, so it is not evidence of absence. The Wyoming Dept. of Agriculture retail-food licence search was also unreachable, so the food-service permit check is outstanding rather than failed.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "Legal existence, good standing and registered spelling of the LLC remain unconfirmed because the state register blocked automated access; no adverse finding."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent local news outlet Wyoming Daily published a dated story on 2026-03-26 reporting that Ambrosia Wellness opened a physical storefront in Worland in premises formerly occupied by another retailer, after a months-long build-out. This is a third-party source placing a real, premises-based retail business in the stated city under the \"Ambrosia\" spelling used in the account email and statement descriptor.",
+      "sourceType": "news",
+      "checkedAt": "2026-11-05",
+      "establishes": "The business physically exists and trades in the stated city, satisfying the physical-premises branch of the operating test.",
+      "url": "https://www.wyodaily.com/story/2026/03/26/news/good-things-are-here-ambrosia-wellness-opens-in-worland/17690.html"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found in search. The email handle is a plain contraction of the business name plus the state abbreviation, describing a trade name rather than payment collection, and the statement descriptor is the business’s own name as it appears on the storefront in independent coverage, not a random string. A free Gmail address is normal for a small-town single-location shop.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No online contact surface exists to verify or contradict, and nothing in the contact details suggests fabrication or a payment-collection front."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The statement descriptor matches the trading name reported for the Worland storefront in the loaded Wyoming Daily opening story, and MCC 5499 (misc food stores) is coherent with a wellness/health-food retail shop. The merchant’s own product description points instead to MCC 5812 (eating places); the accessible article text confirms the opening but does not describe the menu, so the cafe service could not be confirmed independently. The 5499/5812 gap is a routine small-merchant miscategorisation, not an incoherence between descriptor and observable business.",
+      "sourceType": "news",
+      "checkedAt": "2026-11-05",
+      "establishes": "The descriptor, MCC and stated trade are mutually coherent with the observable business; MCC should be corrected to 5812 if food service is the primary activity.",
+      "url": "https://www.wyodaily.com/story/2026/03/26/news/good-things-are-here-ambrosia-wellness-opens-in-worland/17690.html"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The earliest independent evidence of the business is the Wyoming Daily opening story dated 2026-03-26, roughly seven months before today, short of the one-year threshold for a verified history; no older listing, review or filing was found. No scam reports, fraud allegations, chargeback complaints or negative news were found under either spelling.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Under one year of observable trading history, with no adverse history found."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual Wyoming Secretary of State search at wyobiz.wyo.gov for both \"Ambroia Wellness LLC\" and \"Ambrosia Wellness LLC\" to confirm the entity, its status and the registered spelling, then align the Stripe legal name to it - the spelling discrepancy is currently unresolved.",
+    "Wyoming Dept. of Agriculture retail food establishment licence and inspection record for the Worland premises - the search blocked automated access on this run.",
+    "MCC correction from 5499 to 5812 if prepared food and beverage service is the primary activity.",
+    "A website, social page or chamber listing showing the street address, hours and menu.",
+    "Representative name and confirmation that the representative is a member or officer of the registered LLC."
+  ],
+  "summary": "Ambrosia Wellness is a real, physically present small business: independent local news reports it opened a storefront in Worland, WY in March 2026, matching the account city, statement descriptor and email handle. No adverse history, complaints or fraud reports were found under either spelling, and nothing in the contact details or descriptor suggests a payment-collection front. The two open items are evidentiary rather than adverse: the Wyoming SOS register served a CAPTCHA, so the LLC’s existence, status and correct spelling (\"Ambroia\" on the account vs \"Ambrosia\" everywhere else) are unconfirmed, and the state food-licence search was likewise unreachable. Total risk 0; clear to process subject to a manual SOS lookup, a food-permit check and an MCC correction."
+}
