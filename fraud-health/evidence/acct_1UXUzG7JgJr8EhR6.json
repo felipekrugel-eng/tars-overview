@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UXUzG7JgJr8EhR6",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Florida Sunbiz could not be queried in this run: every request to search.sunbiz.org returned HTTP 403 with a Cloudflare JavaScript interstitial, so the LLC’s registration, status, filing date and principal address are unconfirmed. The Florida Dept. of Agriculture food-permit search also failed to load, so no food-service licence check was possible. No independent source loaded in this run names \"Kafe Simple To Go LLC\" as a registered Florida entity.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "Registry blocked automation; legal existence of the LLC is neither confirmed nor contradicted."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent Facebook business page titled \"Kafe Simple | Poinciana FL\" loads and places the business in Poinciana, Florida, matching the stated city; a matching Instagram account with 522 followers and 203 posts also exists. This is a real independent footprint for a cafe requiring licensed physical premises.",
+      "sourceType": "social",
+      "checkedAt": "2026-11-05",
+      "establishes": "Independent social presence places the cafe in the stated city of Poinciana, FL.",
+      "url": "https://www.facebook.com/share/14fJzQh7nSN/?mibextid=wwXIfr"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The declared website resolves and its content does belong to this merchant (title \"KAFE SIMPLE | Food & Convenience\"; embedded page data names Kafe Simple To Go LLC, Poinciana/Kissimmee FL and a local phone number). However it is not the merchant’s own domain: jim.com is CloudWalk Inc.’s Jim payment platform, which auto-generates a seller microsite and a pay.jim.com payment link. The statement descriptor is \"JIM.COM\", a third-party payment-platform domain rather than the business name, so cardholders would see no trace of Kafe Simple. The page also carries a 555 placeholder phone number alongside the real one.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "The descriptor is a third-party domain rather than the merchant name, and the declared website is a hosted payment microsite rather than an independent business site.",
+      "url": "https://jim.com/a/jim_kafe-simple"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The merchant’s page describes a coffee roaster and grab-and-go cafe in Poinciana, FL selling espresso coffee, daily prepared food, cold drinks and travel essentials, open Monday to Saturday - coherent with MCC 5812 (eating places). Note the Jim platform itself classifies the account as MCC 5499 and the page sets a flat payment-link amount, a minor mismatch with the declared 5812 but still within food retail.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "MCC 5812 is consistent with the observable cafe and coffee-roaster activity.",
+      "url": "https://jim.com/a/jim_kafe-simple"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "An affiliated entity, Kafe Simple Nonprofit Corporation (also known as Kafe Simple), is recorded in Poinciana, FL with a 501(c)(3) unconditional exemption ruling dated August 2025 - more than a year before today. This matches the merchant page’s own description of the operation, and the Instagram account carries 203 posts consistent with sustained prior activity. No scam, fraud or complaint reports were found for this name.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "A dated independent record of the Kafe Simple operation in Poinciana, FL predating the Stripe connection by over a year.",
+      "url": "https://www.gudsy.org/nonprofits/kafe-simple-nonprofit-corporation-aka-kafe-simple-poinciana-fl"
+    }
+  ],
+  "evidenceNeeded": [
+    "Florida Sunbiz record for KAFE SIMPLE TO GO LLC (document number, status, filing date, principal address, registered agent) - search.sunbiz.org was Cloudflare-blocked on every attempt and must be retried from a browser.",
+    "Florida DBPR / FDACS food-service permit for the Poinciana premises.",
+    "Representative name, then a Sunbiz officer cross-check.",
+    "Clarification of the relationship between Kafe Simple To Go LLC (for-profit) and Kafe Simple Nonprofit Corporation (501(c)(3)), including which entity banks the card proceeds.",
+    "Remediation of the \"JIM.COM\" statement descriptor.",
+    "Confirmation of whether a second payment processor (Jim/CloudWalk) is already processing for this merchant, and resolution of the declared MCC 5812 vs the platform-recorded 5499."
+  ],
+  "summary": "Kafe Simple appears to be a real, independently visible coffee roaster and grab-and-go cafe in Poinciana, FL, with a matching Facebook page, an active Instagram account and an affiliated Poinciana 501(c)(3) with an IRS ruling dated August 2025, so operating, business model and history all check out clean against MCC 5812. The main open risk is legal: Florida Sunbiz blocked automation on every attempt, so the existence and status of the LLC and any food-service permit remain unconfirmed. The scored contradiction is on contact: the declared website is not the merchant’s own domain but an auto-generated Jim (CloudWalk) seller microsite with a pay.jim.com payment link, and the statement descriptor reads \"JIM.COM\" - unrecognisable to a cardholder and a chargeback driver; the page also mixes a real phone number with a 555 placeholder. Note the merchant appears already live on a competing payment platform, worth confirming alongside the descriptor fix."
+}
