@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UXP1k8iE0AF2Mld",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "HEALING BLOOMS, LLC is an active Texas LLC: the Texas Comptroller franchise-tax account status record shows SOS registration ACTIVE and right to transact business in Texas ACTIVE, state of formation TX, SOS file number 0806258931, effective SOS registration date 2025-10-13, with a mailing address in Belton, TX 76513 - matching the declared business name, entity type, city and state.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "A registered, currently active legal entity exists in the declared name and state, with a registry address matching the declared city.",
+      "url": "https://comptroller.texas.gov/data-search/franchise-tax/32102546473"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent source places this business in Belton, TX: searches against listings, review sites and local directories returned no matching Yelp, Google, BBB or market-vendor listing. The only location evidence is the merchant’s own Linktree bio (\"Bell County, TX pickup & delivery\"), which is self-declared, and the three linked social profiles are login-gated so no product catalog or storefront could be observed. Absence of an independent footprint could not be established as absence of trading, so this is recorded as unverified.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No independent corroboration of an operating presence in the declared city; products described but none observable to the verifier."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The merchant has no website of its own: the declared site is a Linktree profile on a third-party domain whose only outbound links are three social profiles plus Linktree’s own marketing and policy links - no business domain, no shop, no contact page, no address or phone. The statement descriptor is \"LINKTR.EE\", a third-party domain that does not name the business, so cardholders would see a descriptor identifying neither the merchant nor any product they bought.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "No business-controlled web presence and a non-identifying third-party descriptor - a materially elevated dispute and chargeback risk.",
+      "url": "https://linktr.ee/healingbloomsllc"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "The Linktree describes the business as selling herbal teas, homemade food and herbs with weekly menus, pre-orders and Bell County pickup and delivery - a local prepared-food and herbal-products operation. MCC 5399 (misc general merchandise) is a loose fit for mixed goods; the statement descriptor \"LINKTR.EE\" is incoherent with it, naming a link-hosting service rather than a food or herbal seller. The \"Healing Blooms\" branding applied to herbal teas also carries implied health-benefit framing that would need review.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "Descriptor does not match the observable business activity, and the MCC understates a food and ingestible-products risk profile.",
+      "url": "https://linktr.ee/healingbloomsllc"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "The Texas Comptroller record shows an effective SOS registration date of 2025-10-13, giving the entity a documented independent existence of approximately one year and three weeks as of 2026-11-05. No scam, fraud or complaint reports were found against the name. The history is thin and only just clears a year; the Stripe account was connected 2026-11-02.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "A dated public filing establishes just over one year of continuous registered existence, with no adverse reports found.",
+      "url": "https://comptroller.texas.gov/data-search/franchise-tax/32102546473"
+    }
+  ],
+  "evidenceNeeded": [
+    "A product menu, price list or order form - the \"weekly menus + pre-orders\" referenced on the Linktree - showing what is sold and at what prices.",
+    "Unauthenticated views of the Instagram/TikTok/Facebook accounts confirming active posting, product photos and order volume.",
+    "Texas cottage-food-law eligibility or a Bell County health department food permit, since the business advertises homemade food for pickup and delivery.",
+    "Statement descriptor change from \"LINKTR.EE\" to one naming Healing Blooms, plus a business-controlled contact page with refund and delivery policy.",
+    "Review of the herbal-tea marketing copy for unapproved health or therapeutic claims.",
+    "Representative name, then a cross-check against the LLC’s governing person of record."
+  ],
+  "summary": "The legal entity checks out cleanly: HEALING BLOOMS, LLC is an active Texas LLC registered 2025-10-13 with an ACTIVE right to transact business and a Belton, TX registry address matching the declared profile, and no adverse reports were found. The commercial picture is much weaker - the merchant has no website at all, only a Linktree linking to three login-gated social profiles with no shop, catalog or order link, and no independent listing places the business in Belton, so no product could be observed. The descriptor is the main actionable defect: cardholders would see \"LINKTR.EE\", which identifies neither the business nor what was bought. MCC 5399 also understates the real profile - homemade food and ingestible herbal products sold by pre-order, with \"healing\" branding that may shade into unapproved health claims. Recommend holding for documentary evidence of the product line and food-permit status, a descriptor rename and an MCC review."
+}
