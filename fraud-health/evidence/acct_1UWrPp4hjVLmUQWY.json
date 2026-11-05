@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UWrPp4hjVLmUQWY",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual in California, where sole proprietors are not registered with the Secretary of State, so no entity filing is expected. A cosmetology/barbering licence would normally be required for the declared trade (hair, nails, make-up), but the California DCA licence lookup is a JavaScript form that cannot be queried by automation, so no licence record could be checked. This remains an open manual check rather than a negative finding.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration is expected for a CA sole proprietor; the required cosmetology licence could not be checked because the state licence registry blocks automated querying."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing (Google, Yelp, Facebook, Instagram, Nextdoor, BBB, Thumbtack, Fresha, Booksy) was found for \"Mr fixxee upper\" or any \"Fixxee\" variant in Sacramento, CA. The declared activity is a personal hair/nails/make-up service, which does not necessarily require licensed physical premises, so the absence of a footprint is treated as no evidence rather than a contradiction.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The business has no discoverable public operating footprint in the stated city, but its service type does not require one, so no risk points are assigned."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The statement descriptor matches the representative recorded on the Stripe account, so there is no descriptor/representative mismatch. Searches of web, social, review and directory sources returned no occurrence of that name in connection with this business, with Sacramento, or with any hair/nails/make-up trade, and nothing public contradicts the representative either. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative is consistent with the statement descriptor but is neither corroborated nor contradicted by any public source."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "No website is declared and none could be found. The email handle \"paymee95815v@gmail.com\" reads as payment-collection language (\"pay me\") combined with the merchant’s own Sacramento ZIP code rather than describing a trade, and no trade-describing public footprint exists to offset it: the Sacramento beauty-provider directory loaded for this check contains no entry matching this business or descriptor name. The business name also does not cohere with the declared trade.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The merchant has no verifiable web presence and its only contact identifier describes collecting payment rather than a trade.",
+      "url": "https://www.fresha.com/lp/en/bt/beauty-salons/in/us-sacramento"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "MCC 7230 (beauty/barber shops) and the product description \"I do hair, nails and make up\" do not cohere with the business name \"Mr fixxee upper\", which is home-repair/handyman language; the only similarly named Sacramento businesses found are handyman and renovation firms. Nothing observable confirms that this merchant sells beauty services: the Sacramento beauty-provider directory loaded for this check contains no matching provider.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared MCC and trade are inconsistent with the business name and unsupported by any observable service offering.",
+      "url": "https://www.fresha.com/lp/en/bt/beauty-salons/in/us-sacramento"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, listings, filings, news items, complaints or scam/fraud reports were found for this business or the descriptor name, so no trading history of any length could be established, and equally no negative history exists in public sources.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "There is no evidence of independent presence over time, and no adverse history either."
+    }
+  ],
+  "evidenceNeeded": [
+    "California DCA / Board of Barbering and Cosmetology licence lookup (search.dca.ca.gov) for the representative and for any establishment licence at the Sacramento address - the registry could not be queried by automation.",
+    "Sacramento County fictitious business name (DBA) index check for \"Mr fixxee upper\".",
+    "Merchant explanation for the mismatch between a handyman-sounding business name and the declared MCC 7230 beauty trade, plus a booking page or social handle.",
+    "Evidence of the trade: price list, portfolio, appointment system, or service area."
+  ],
+  "summary": "Five-day-old Individual account in Sacramento, CA with no declared website and no discoverable public footprint of any kind. Two material inconsistencies stand out: the business name is handyman/home-repair language while the MCC and product description describe hair, nails and make-up, and the only contact identifier is a Gmail handle reading as payment-collection language plus the merchant’s own ZIP. The statement descriptor does match the Stripe representative and nothing adverse was found, so this is unsubstantiated-business risk rather than confirmed misuse. Recommend holding payouts pending a cosmetology licence check, a county DBA check and merchant-supplied proof of the beauty trade."
+}
