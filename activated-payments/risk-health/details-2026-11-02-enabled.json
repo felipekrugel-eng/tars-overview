@@ -4,24 +4,24 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-02 Europe/London",
   "cohortDate": "2026-11-02",
-  "reviewedAt": "2026-11-03T11:56:46+00:00",
+  "reviewedAt": "2026-11-05T07:38:41+00:00",
   "count": 3,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-03T11:56:46+00:00",
+ "reviewedAt": "2026-11-05T07:38:41+00:00",
  "merchants": [
   {
    "id": "acct_1UWrPp4hjVLmUQWY",
    "accountId": "acct_1UWrPp4hjVLmUQWY",
    "merchantId": "5389648",
    "name": "Mr fixxee upper",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -36,26 +36,39 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual in California, where sole proprietors are not registered with the Secretary of State, so no entity filing is expected. A cosmetology/barbering licence would normally be required for the declared trade (hair, nails, make-up), but the California DCA licence lookup is a JavaScript form that cannot be queried by automation, so no licence record could be checked. This remains an open manual check rather than a negative finding.",
+    "No independent listing (Google, Yelp, Facebook, Instagram, Nextdoor, BBB, Thumbtack, Fresha, Booksy) was found for \"Mr fixxee upper\" or any \"Fixxee\" variant in Sacramento, CA. The declared activity is a personal hair/nails/make-up service, which does not necessarily require licensed physical premises, so the absence of a footprint is treated as no evidence rather than a contradiction.",
+    "The statement descriptor matches the representative recorded on the Stripe account, so there is no descriptor/representative mismatch. Searches of web, social, review and directory sources returned no occurrence of that name in connection with this business, with Sacramento, or with any hair/nails/make-up trade, and nothing public contradicts the representative either. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No dated reviews, listings, filings, news items, complaints or scam/fraud reports were found for this business or the descriptor name, so no trading history of any length could be established, and equally no negative history exists in public sources."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No website is declared and none could be found. The email handle \"paymee95815v@gmail.com\" reads as payment-collection language (\"pay me\") combined with the merchant’s own Sacramento ZIP code rather than describing a trade, and no trade-describing public footprint exists to offset it: the Sacramento beauty-provider directory loaded for this check contains no entry matching this business or descriptor name. The business name also does not cohere with the declared trade. [https://www.fresha.com/lp/en/bt/beauty-salons/in/us-sacramento]",
+    "MCC 7230 (beauty/barber shops) and the product description \"I do hair, nails and make up\" do not cohere with the business name \"Mr fixxee upper\", which is home-repair/handyman language; the only similarly named Sacramento businesses found are handyman and renovation firms. Nothing observable confirms that this merchant sells beauty services: the Sacramento beauty-provider directory loaded for this check contains no matching provider. [https://www.fresha.com/lp/en/bt/beauty-salons/in/us-sacramento]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "California DCA / Board of Barbering and Cosmetology licence lookup (search.dca.ca.gov) for the representative and for any establishment licence at the Sacramento address - the registry could not be queried by automation.",
+    "Sacramento County fictitious business name (DBA) index check for \"Mr fixxee upper\".",
+    "Merchant explanation for the mismatch between a handyman-sounding business name and the declared MCC 7230 beauty trade, plus a booking page or social handle.",
+    "Evidence of the trade: price list, portfolio, appointment system, or service area."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.fresha.com/lp/en/bt/beauty-salons/in/us-sacramento",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "The merchant has no verifiable web presence and its only contact identifier describes collecting payment rather than a trade.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Five-day-old Individual account in Sacramento, CA with no declared website and no discoverable public footprint of any kind. Two material inconsistencies stand out: the business name is handyman/home-repair language while the MCC and product description describe hair, nails and make-up, and the only contact identifier is a Gmail handle reading as payment-collection language plus the merchant’s own ZIP. The statement descriptor does match the Stripe representative and nothing adverse was found, so this is unsubstantiated-business risk rather than confirmed misuse. Recommend holding payouts pending a cosmetology licence check, a county DBA check and merchant-supplied proof of the beauty trade.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-03T11:56:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:38:41+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-02T17:04:48+00:00",
    "enabledWindowStart": "2026-11-01T05:34:49+00:00",
    "enabledWindowEnd": "2026-11-02T17:04:48+00:00",
@@ -77,9 +90,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -87,12 +100,12 @@
    "accountId": "acct_1UX0NL9l7cqEO4ag",
    "merchantId": "5390865",
    "name": "D&S",
-   "score": 0,
+   "score": 6,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
+    "contact": 6,
     "businessModel": 0,
     "history": 0,
     "behavior": 0,
@@ -108,26 +121,39 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), for which Mississippi requires no Secretary of State entity registration, so absence of a filing is not adverse. The MS SOS business search at corp.sos.ms.gov returned HTTP 403 to automated requests, so no filing could be confirmed or excluded. The MS Board of Contractors licence verification page returned HTTP 404 with an expired TLS certificate, and MS contractor licensure generally applies only above dollar thresholds a small install service may not reach, so no required-licence contradiction is asserted.",
+    "Four separate searches for the business name in Liberty / Amite County, MS (including name variants, BBB, Facebook, Yelp, Angi, Thumbtack) returned no listing, page, address or phone. Only unrelated regional providers appeared. This is a mobile installation service rather than a business requiring licensed physical premises, so an absent footprint is scored unverified rather than contradictory.",
+    "The representative could not be tied to this business in any public source: searches combining the name with the business name, with Mississippi/Amite County, with internet and home-entertainment installation, and with scam/complaint terms produced no state filing, licence record, business channel, review reply, social page or news item. Nothing publicly ties the representative to a different business elsewhere and no complaint or fraud report was found. The statement descriptor is a trade name rather than a personal name, so no descriptor mismatch arises. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "MCC 5732 (electronics stores) is a plausible if imprecise mapping for a business installing internet service and home entertainment equipment, and the descriptor matches the declared business name; neither points at payment collection or digital goods, so no contradiction is asserted. However, no observable trading activity, service listing, price list or customer-facing page was found, so coherence could not be confirmed against anything the business demonstrably does.",
+    "No dated reviews, directory listings, filings, news items, BBB profile or complaint/scam reports referencing this business or its representative were found; a complaint-oriented search surfaced only unrelated entities with similar names. There is no evidence of operating history of any length, and equally no adverse history."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared website \"D&Ssrvices.com\" is not a usable hostname and DNS lookups for the plausible literal renderings (dssrvices.com, dandssrvices.com, dsservices.com) all returned NXDOMAIN with no HTTP response. The only resolving similar domain, dandsservices.com, loads a site for a cleaning company in LaBelle, Florida, i.e. a different business in a different state, and no search result linked the merchant to it. A declared website that does not resolve is scored as parked/placeholder. The descriptor \"D&S SERVICES\" is at least consistent with the declared business name. [https://www.dandsservices.com/]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Correct, resolving website URL from the merchant, or the Facebook/Google Business profile used to reach customers.",
+    "Manual re-run of the Mississippi SOS business search at corp.sos.ms.gov (HTTP 403 to automation) for the business and representative names, plus any Amite County assumed-name filing.",
+    "Manual check of the MS Board of Contractors licence verification (msboc.us returned 404 with an expired certificate) and whether job sizes cross MS licensure thresholds.",
+    "Documentary proof of trading: recent customer invoices or an ISP/satellite dealer or subcontractor agreement."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "sources": [
+    {
+     "url": "https://www.dandsservices.com/",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "The merchant’s declared web presence is unreachable; the nearest live namesake domain belongs to an unrelated Florida business.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "Thin-file, newly connected sole proprietor with essentially no verifiable public footprint: no listing, social page, review, directory entry or news mention places it in Liberty, MS. The one hard negative is the declared website - \"D&Ssrvices.com\" is not a valid hostname, no literal rendering resolves, and the only live namesake domain belongs to an unrelated cleaning company in Florida. Mitigating: no registration is expected for an Individual, a mobile install service legitimately has no premises, the MCC and descriptor are coherent with the stated trade, and no scam or complaint report was found. Residual exposure is that identity rests entirely on Stripe, and both the MS SOS registry and the contractor board blocked automated checks.",
+   "reviewCompleteness": 38,
    "confidence": "low",
-   "reviewStage": "automated-signals-only",
+   "reviewStage": "evidence-based",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-03T11:56:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:38:41+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-02T17:04:48+00:00",
    "enabledWindowStart": "2026-11-01T15:08:51+00:00",
    "enabledWindowEnd": "2026-11-02T17:04:48+00:00",
@@ -149,8 +175,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 6,
+   "trustScore": 94,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -180,26 +206,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), for which Maryland requires no SDAT entity registration. The Maryland Business Express / SDAT entity search returned a JavaScript-only page with no searchable content to automation, so the registry could not be queried; no trade-name or entity record for \"SKO AUTO\" was found. Maryland licenses vehicle inspection stations and inspection mechanics but does not impose a general repair-facility licence on ordinary non-inspection repair work, so no required licence was identified as missing.",
+    "No independent listing or social page for \"SKO AUTO\" in or around Randallstown, MD was found. Searches across Google-indexed results, Yelp, Facebook, Instagram and BBB for the business name with Randallstown, ZIP 21133 and Baltimore County returned only unrelated shops and templated mobile-mechanic lead-generation pages. Mobile auto repair can legitimately operate without licensed premises or a web footprint, so this is not scored as a contradiction.",
+    "The representative was not found on any public source tied to this business: no retrievable state filing, no licence record, no business-owned channel, no owner replies on review sites, no local news and no scam or complaint reports. Nothing publicly ties the representative to a different business in another city or state. The statement descriptor being the representative’s own name is normal for a sole proprietor and is not treated as a mismatch. Identity documents and bank ownership are verified only by Stripe (status: verified).",
+    "No website was declared and none was found. The email handle is a free Gmail address built from the representative’s own name and the statement descriptor is that same personal name, which is coherent for a sole proprietor trading under an unregistered brand. Neither the handle, the business name nor the descriptor describes payment collection, and the descriptor is not a random string. There is no website to assess as parked or belonging to a different business.",
+    "MCC 7538 (automotive service shops) is coherent on its face with the declared activity of mobile and on-site automotive diagnostics, maintenance, transmission, engine, brake and electrical repair, and nothing observed conflicts with it. However, no public page showing what this business actually does was located, so coherence rests entirely on the merchant’s own declaration. No digital-goods or payment-collection pattern is present.",
+    "No dated independent presence of any kind was found: no reviews, directory listings, filings, news coverage or complaint/scam reports referencing this business or its representative. There is no evidence of a trading history of one year or more, and equally no adverse history. The account was connected on 2026-11-02."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual Maryland SDAT / Business Express entity and trade-name search for \"SKO AUTO\" and the representative - the search page does not render for automation.",
+    "Business phone number, service-area address and any Google Business Profile, Facebook or Instagram page for SKO AUTO.",
+    "Baltimore County or Maryland local trader’s licence, or confirmation that none is required for this operation.",
+    "Dated proof of trading: three to six recent repair orders showing customer, vehicle, work performed and amount.",
+    "Confirmation whether the merchant performs Maryland state safety or emissions inspections and, if so, the MVA/MSP inspection licence number."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Three-day-old Stripe connection for an individual sole proprietor offering mobile auto repair in Randallstown, MD. The file is thin rather than contradictory: all six dimensions came back unverified at 0 risk points. Nothing adverse was found - no scam reports, no complaints, no conflicting business or person, and MCC 7538 fits the declared trade - but nothing independent corroborates the business, the representative or any trading history, and the Maryland SDAT search could not be queried because the page renders only via JavaScript. Note that payouts_enabled is still false while Stripe reports the legal entity as verified; obtain dated proof of trading and a manual registry check before enabling payouts.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-03T11:56:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:38:41+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-02T17:04:48+00:00",
    "enabledWindowStart": "2026-11-02T09:26:36+00:00",
    "enabledWindowEnd": "2026-11-02T17:04:48+00:00",
