@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UXmOz6zak0hvT0e",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), so no California Secretary of State registration is expected; a California DBA would be filed at San Diego County level and was not locatable. The required California Bureau of Automotive Repair (BAR) Automotive Repair Dealer registration could not be checked: the DCA licence lookup loads as a JavaScript form with no submittable query endpoint reachable by automation, so no real register search could be completed. Treated as registry blocked, not as a missing licence.",
+      "sourceType": "licence-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No entity registration is expected for a sole proprietor; the BAR auto repair dealer register could not be searched because the DCA lookup blocks automation."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing or social page for \"ManiTech\" mobile automotive repair was found in Escondido or North San Diego County. Searches across general web, Google, Yelp, Facebook, Instagram and Thumbtack indexed results and local mobile-mechanic directories returned only unrelated Escondido shops and aggregator pages. Mobile auto repair is a service business that need not have a fixed-premises footprint, so absence of a listing is not scored as a contradiction.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No observable independent presence placing the business in Escondido; not adverse for this business type."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared and none was found. The email handle describes the trade (auto/tech) rather than payment collection and matches the business name root, so the payment-collection branch does not apply. No fictitious or mismatched contact details were observed. Separately, the statement descriptor is a personal name that appears neither in the business name nor in the email handle, which is flagged for reconciliation against the representative on file.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No website to verify; contact details are not observably false, but the descriptor does not tie to any public contact artefact."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 7538 (automotive service shops) is coherent with the stated product \"mobile automotive diagnostic and repair\" and with the business name, and nothing contradicts that model. However, no public page, listing, review or advertisement was found showing the business performing mobile auto repair, so coherence could not be confirmed against observable activity.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "MCC and description are internally consistent but unconfirmed by any observable commercial activity."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, directory listings, filings, news items or complaint records of any kind were found for \"ManiTech\" or \"Mani Tech\" in Escondido or San Diego County, and no scam or fraud reports were found either. There is no evidence of an independent presence of one year or more, and equally no adverse history.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No trading history, positive or negative, is publicly observable."
+    }
+  ],
+  "evidenceNeeded": [
+    "Representative name on the account, to reconcile against the statement descriptor - a personal name appearing in neither the business name nor the email handle.",
+    "California BAR Automotive Repair Dealer (ARD) registration number for the business or its owner, since the DCA online lookup could not be searched by automation. If no ARD exists, mobile auto repair in California is being performed without the required registration.",
+    "San Diego County fictitious business name (DBA) filing for the trading name, or an explanation of why the trading name differs from the descriptor.",
+    "Any customer-facing presence: Google Business Profile, Yelp, Facebook, Instagram, Nextdoor or Thumbtack listing, a website, or dated invoices showing mobile repair jobs in the Escondido area.",
+    "Proof of trading history (bank statements, prior processing history or dated job records) given zero public footprint and a connection date of 2026-11-03."
+  ],
+  "summary": "ManiTech mobile automotive repair has no observable public footprint at all: no website, no Google, Yelp, Facebook, Instagram or Thumbtack listing, no directory entry, no reviews and no news or complaint records anywhere in Escondido or North San Diego County. Nothing adverse was found either, and because mobile auto repair legitimately operates without fixed premises and the entity is an Individual for which no Secretary of State registration is expected, every dimension scores 0 - a clean but entirely unevidenced file rather than a positively verified one. The one open discrepancy is that the statement descriptor is a personal name appearing in neither the business name nor the email handle, so it must be reconciled against the representative on file; the representative feed was unavailable this run. The California BAR Automotive Repair Dealer register, which mobile auto repair in California does require, could not be searched because the DCA lookup blocks automation, so a licensed-status check remains the first manual follow-up."
+}
