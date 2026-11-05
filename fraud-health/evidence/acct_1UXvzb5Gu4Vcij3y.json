@@ -1,0 +1,76 @@
+{
+  "accountId": "acct_1UXvzb5Gu4Vcij3y",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor) in California, where no Secretary of State registration is expected; a DBA would be filed at Santa Clara County level and is not published in any register that could be loaded. A food business also needs a Santa Clara County Environmental Health permit (including a mobile food facility permit if it operates as a truck), but no working searchable public register for it was reached in this run - the county inspection search tool was only described in secondary articles, never loaded - so no missing-permit conclusion can be drawn.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration shortfall can be asserted: none is required of a CA sole proprietor, and the county food-permit register could not be searched."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent public listing places R&K Cocina at 2075 Alum Rock Ave, San Jose, CA 95116, with 10 reviews describing it as a Nicaraguan eatery/food truck serving nacatamal, vigoron, carne asada, enchiladas and bunuelos. CITY MISMATCH: the account profile declares Milpitas, CA, while every independent source and the declared DoorDash listing place the business in San Jose - adjacent cities in Santa Clara County, consistent with a mobile operation but unreconciled. No Milpitas presence was found under either spelling. DoorDash and Yelp could not be fetched directly, and no Grubhub, Uber Eats, Facebook or Instagram page was found.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "A real, independently listed food business exists with licensed-premises-type activity, but it sits in San Jose rather than the declared Milpitas.",
+      "url": "https://startpage.mapquest.com/us/california/rk-cocina-777813382"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The declared \"website\" is a third-party DoorDash store page, not a site owned or controlled by the merchant, and no independent website for R&K Cocina surfaced anywhere - the only public listing found shows an address and phone but no business website. The statement descriptor is \"DOORDASH.COM\", a third-party marketplace domain rather than the merchant’s name: a cardholder paying in person at the merchant’s own Loyverse POS would see DOORDASH.COM on their statement, which does not identify R&K Cocina and is a direct dispute and chargeback driver.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "No merchant-controlled contact surface, and a statement descriptor pointing at an unrelated third-party domain instead of the business name.",
+      "url": "https://startpage.mapquest.com/us/california/rk-cocina-777813382"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "The observable business - a Nicaraguan food truck and casual eatery selling prepared dishes, per the dated reviews on the loaded listing - is coherent with a food-sector MCC and with the low-volume in-person POS history of 18 receipts. MCC 5499 (misc food stores) is within the food family but is not the best fit for a prepared-food vendor; 5812 (eating places) is the correct code. This is a routine misclassification rather than material incoherence, so no risk points are taken here; the descriptor problem is scored under contact and not double-counted.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "An observable, real food product matching a food MCC; coding refinement needed but not a red flag.",
+      "url": "https://startpage.mapquest.com/us/california/rk-cocina-777813382"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent dated presence exceeding one year: the loaded listing carries reviews dated 2025-03-21, 2025-07-26, 2025-08-17 and 2025-08-29 (5.0 average over 10 reviews), i.e. continuous third-party evidence of the business operating from March 2025, about 20 months before today. No scam, fraud, non-delivery or complaint reports were found on BBB Scam Tracker, Trustpilot or in general search.",
+      "sourceType": "review-site",
+      "checkedAt": "2026-11-05",
+      "establishes": "Genuine operating history of more than a year with positive, dated third-party reviews and no adverse reports.",
+      "url": "https://startpage.mapquest.com/us/california/rk-cocina-777813382"
+    }
+  ],
+  "evidenceNeeded": [
+    "Resolve the city mismatch: confirm whether the business operates from San Jose (2075 Alum Rock Ave, 95116) or Milpitas, and correct the profile address.",
+    "Change the statement descriptor from \"DOORDASH.COM\" to a recognisable merchant descriptor such as \"RK COCINA SAN JOSE\" before enabling card acceptance - the single highest-risk item on this file.",
+    "Collect the representative name and identity documents; the private representative feed did not cover this account on this run.",
+    "Manually open the declared DoorDash store page and the Yelp business page in a browser (both block automated fetching) to confirm the listing is live and matches the account.",
+    "Search the Santa Clara County Environmental Health food-facility inspection records by facility name and by the Alum Rock Ave address to confirm a valid health permit, and whether it is fixed-premises or mobile.",
+    "Santa Clara County fictitious business name (DBA) filing for \"R&K Cocina\".",
+    "MCC correction from 5499 to 5812.",
+    "Explain why the last POS sale was 2025-10-01, 13 months before the payments connection, and confirm the business is still trading and its expected volume."
+  ],
+  "summary": "R&K Cocina is a genuine, independently verifiable Nicaraguan food truck/eatery with a public listing at 2075 Alum Rock Ave, San Jose, CA and dated five-star reviews running from March 2025, so the business exists, has over a year of operating history and shows no adverse or fraud reports. The material problem is contact and descriptor integrity: the merchant has no website of its own (the declared URL is a third-party DoorDash store page) and the statement descriptor is \"DOORDASH.COM\", meaning cardholders charged at the merchant’s own Loyverse POS would see an unrelated marketplace domain - a clear chargeback and consumer-confusion risk that must be fixed before go-live. Secondary issues: the profile declares Milpitas while every source places the business in San Jose, and MCC 5499 should be 5812. Identity is wholly unassessed because the representative name was unavailable, and the county health-permit register could not be searched."
+}
