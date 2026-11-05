@@ -4,23 +4,23 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-03 Europe/London",
   "cohortDate": "2026-11-03",
-  "reviewedAt": "2026-11-04T00:08:13+00:00",
+  "reviewedAt": "2026-11-05T07:43:43+00:00",
   "count": 9,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-04T00:08:13+00:00",
+ "reviewedAt": "2026-11-05T07:43:43+00:00",
  "merchants": [
   {
    "id": "acct_1UXLPW5WX04gE7Ap",
    "accountId": "acct_1UXLPW5WX04gE7Ap",
    "merchantId": "5393798",
    "name": "TX mobile auto body",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
+    "contact": 10,
     "businessModel": 0,
     "history": 0,
     "behavior": 0,
@@ -28,34 +28,47 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "An independent business directory listing places \"TX Mobile Auto Body\" in San Antonio, TX as a mobile auto body repair service, with a street address on W Sunset Rd, a local phone number and a 5.0 rating from 8 reviews, last updated April 2026. A Yelp business page at the same slug also exists for this merchant but returned an empty body to automated fetch, so it is not cited. [https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book]",
+    "MCC 7699 (repair services, not elsewhere classified) is coherent with the observable business: the loaded listing describes a mobile auto body repair service travelling to customers for collision repairs, dent removal and general body work, advertising free estimates and on-site service across San Antonio. MCC 7538 would be a closer fit but 7699 is not incoherent or misleading. [https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), for which Texas requires no state-level entity registration - a DBA would be filed at Bexar County level. The Texas Comptroller taxable-entity search was opened but its name lookup is a JavaScript form that cannot be submitted by automated fetch, so no registry record was retrieved. No registration is expected for this entity type, so this is not scored as a gap.",
+    "Representative name not available to the verifier on this run.",
+    "No scam, fraud or complaint reports were found; searches for BBB complaints and negative coverage returned only unrelated San Antonio body shops. Independent presence of at least one year could not be confirmed from any page actually loaded - the only dated evidence is a directory listing last updated April 2026, roughly six months. Search snippets indicate a Yelp page with 28 reviews updated September 2026 and rating snapshots from 2025, but Yelp returned an empty body to automated fetch and cannot be cited."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The merchant has no own domain: the declared \"website\" is a third-party Yelp directory listing URL and the statement descriptor is \"M.YELP.COM\", a third-party domain rather than the business name. A cardholder seeing \"M.YELP.COM\" on a statement would have no way to connect the charge to TX Mobile Auto Body. The independent listing loaded for this check carries only a phone number and street address and shows no merchant-owned website. [https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manually open the Yelp business page (Yelp returns an empty body to automated fetch) and record the first-review date, review count and rating to confirm independent presence of one year or more.",
+    "Change the statement descriptor from \"M.YELP.COM\" to a string containing the business name before enabling payments - the current descriptor is a chargeback and dispute risk.",
+    "Obtain the representative name and run the identity check, which was not possible on this run.",
+    "Bexar County Clerk assumed-name (DBA) index search for \"TX Mobile Auto Body\".",
+    "Confirm by phone that the listed San Antonio number and address are controlled by the applicant."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "A third-party listing independently places the business in the stated city with a street address and phone number.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "A plausible small mobile auto body repair operation in San Antonio: an independent directory listing places it at a W Sunset Rd address with a local phone and describes exactly the collision and body work MCC 7699 covers, and no scam, fraud or complaint reports surfaced. The one material problem is contact and descriptor integrity: the merchant has no website of its own, the declared \"website\" is a Yelp directory listing, and the statement descriptor is \"M.YELP.COM\" - a third-party domain that tells a cardholder nothing about who charged them. Legal is clean because a Texas sole proprietor needs no state registration; identity is unscored because the representative name was unavailable. Recommend approving conditionally on the descriptor being changed to the business name.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T13:36:30+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -77,8 +90,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -108,26 +121,30 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor) in Louisiana, where no state entity registration is expected; LA trade names for sole proprietors are filed at the parish Clerk of Court. The LA Secretary of State commercial search returned empty content and its name search requires an interactive POST form, so no registry lookup could be executed in this run.",
+    "No independent listing, map entry, social page or directory record places this business in Shreveport, LA. The merchant declares a not-yet-open mobile food stand (\"I am opening a stack stand\"), so absence of footprint is expected at this stage and nothing found contradicts the stated city or activity.",
+    "Representative name not available to the verifier on this run.",
+    "No website is declared and none was found. The statement descriptor is the apparent sole proprietor’s personal name, which is normal for an individual, and the Gmail handle matches that same personal name rather than describing payment collection. No fictitious or mismatched contact details were observed.",
+    "MCC 5499 (misc food stores) is coherent with a declared food stand, but there is nothing observable anywhere - no menu, product, listing or social post - because the business has not opened. The name and description describe selling food, not payment collection, and there is no digital-goods element.",
+    "No dated reviews, listings, filings, news or complaint/scam reports were found for this business in Shreveport, LA; no independent presence of any age could be established, and no adverse history was found either."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Caddo Parish Health Unit retail/mobile food permit or City of Shreveport food vendor licence (or proof of pending application) for the stand.",
+    "Caddo Parish Clerk of Court trade name / DBA filing, if one exists.",
+    "Representative name and identity verification - not available to the verifier on this run.",
+    "Expected opening date, intended trading locations or event schedule, and photos of the stand and menu once operating."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "A declared pre-opening sole-proprietor food stand in Shreveport, LA with no website and no observable public footprint of any kind. The Louisiana SOS commercial search could not be executed, but as an Individual no state entity registration is expected, so this is not itself a negative signal. Nothing contradicts the profile: MCC 5499 fits a food stand, the descriptor is the apparent owner’s personal name as is normal for a sole proprietor, and no adverse or fraud reports exist. Total risk 0 across all six dimensions, with the caveat that everything is unverified rather than positively confirmed - approval should rest on representative ID verification and the parish/city food vendor permit.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T15:32:11+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -180,26 +197,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Entity type is Individual (sole proprietor), for which no Idaho business registration is expected. The Idaho SOS business search at sosbiz.idaho.gov could not be loaded by the fetch tool in this run, and no public searchable roster of permitted Ada County mobile food establishments was found against which a Meridian food permit could be checked.",
+    "No independent listing, map entry, review page or social profile for this business in Meridian or the wider Treasure Valley was found across English and Spanish searches (business name, \"comida llanera Boise/Meridian\", Facebook and Instagram restricted searches); the only llanero-named food pages found are in Colombia, New York/New Jersey and Florida. The declared activity is a home or mobile Colombian food operation with no claim of a storefront, so this is treated as a service business with no footprint.",
+    "Representative name not available to the verifier on this run.",
+    "No website is declared and none was found. The statement descriptor is a personal name rather than a random string, and neither the business name nor the email handle describes payment collection. The handle name and the descriptor name are, however, two different personal names, which is a documentation gap flagged for manual follow-up rather than a scored contradiction under this rubric.",
+    "MCC 5499 (misc food stores) is facially consistent with a small Colombian llanera food operation, but no menu, price list, order page, post or photo of any product was found in English or Spanish searches, so there is nothing observable against which to test coherence.",
+    "No dated reviews, listings, filings, news items or social posts of any age were found for this business, and no scam, chargeback or fraud complaints were found either."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Reconcile the name mismatch: the statement descriptor is a different personal name from the account email handle. Confirm against government ID and the bank account holder name before volume grows - a descriptor naming someone other than the account holder is a common pattern in account-renting cases.",
+    "Central District Health (Ada County) mobile food establishment permit or a cottage-food exemption statement for the Meridian operation.",
+    "Proof of trading: menu or price list, photos of the prep setup, market or event bookings.",
+    "Any customer-facing presence (Facebook/Instagram page, WhatsApp business number, delivery-app listing) so the MCC and descriptor can be matched to an observable product.",
+    "Manual Idaho SOS or assumed-business-name search, since the register could not be queried in this run."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Newly connected individual/sole-proprietor account for a small Colombian \"llanera\" food operation in Meridian, ID, with no declared website. Across ten English- and Spanish-language searches the business has zero independent footprint: no listing, review, social page, news mention or complaint of any kind, so operating presence, business model and trading history are all unverified rather than contradicted. The Idaho SOS register could not be loaded and the county publishes no searchable food-permit roster, so neither registration (not expected for an individual) nor a food permit could be checked; the representative name was unavailable this run. The one substantive flag for manual review is that the statement descriptor is a different personal name from the account email handle, which should be reconciled against ID and bank documents.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T15:44:20+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -244,34 +266,46 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "Independent local news outlet Wyoming Daily published a dated story on 2026-03-26 reporting that Ambrosia Wellness opened a physical storefront in Worland in premises formerly occupied by another retailer, after a months-long build-out. This is a third-party source placing a real, premises-based retail business in the stated city under the \"Ambrosia\" spelling used in the account email and statement descriptor. [https://www.wyodaily.com/story/2026/03/26/news/good-things-are-here-ambrosia-wellness-opens-in-worland/17690.html]",
+    "The statement descriptor matches the trading name reported for the Worland storefront in the loaded Wyoming Daily opening story, and MCC 5499 (misc food stores) is coherent with a wellness/health-food retail shop. The merchant’s own product description points instead to MCC 5812 (eating places); the accessible article text confirms the opening but does not describe the menu, so the cafe service could not be confirmed independently. The 5499/5812 gap is a routine small-merchant miscategorisation, not an incoherence between descriptor and observable business. [https://www.wyodaily.com/story/2026/03/26/news/good-things-are-here-ambrosia-wellness-opens-in-worland/17690.html]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Wyoming SOS registration could not be confirmed for either spelling: wyobiz.wyo.gov served an anti-automation CAPTCHA challenge instead of entity data, so neither \"Ambroia Wellness LLC\" nor \"Ambrosia Wellness LLC\" could be searched in the live register. A WY SOS Q1-2026 trade-name bulletin was loaded as a cross-check and contains no matching entry, but it covers trade names only, not LLC formations, so it is not evidence of absence. The Wyoming Dept. of Agriculture retail-food licence search was also unreachable, so the food-service permit check is outstanding rather than failed.",
+    "Representative name not available to the verifier on this run.",
+    "No website was declared and none was found in search. The email handle is a plain contraction of the business name plus the state abbreviation, describing a trade name rather than payment collection, and the statement descriptor is the business’s own name as it appears on the storefront in independent coverage, not a random string. A free Gmail address is normal for a small-town single-location shop.",
+    "The earliest independent evidence of the business is the Wyoming Daily opening story dated 2026-03-26, roughly seven months before today, short of the one-year threshold for a verified history; no older listing, review or filing was found. No scam reports, fraud allegations, chargeback complaints or negative news were found under either spelling."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual Wyoming Secretary of State search at wyobiz.wyo.gov for both \"Ambroia Wellness LLC\" and \"Ambrosia Wellness LLC\" to confirm the entity, its status and the registered spelling, then align the Stripe legal name to it - the spelling discrepancy is currently unresolved.",
+    "Wyoming Dept. of Agriculture retail food establishment licence and inspection record for the Worland premises - the search blocked automated access on this run.",
+    "MCC correction from 5499 to 5812 if prepared food and beverage service is the primary activity.",
+    "A website, social page or chamber listing showing the street address, hours and menu.",
+    "Representative name and confirmation that the representative is a member or officer of the registered LLC."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.wyodaily.com/story/2026/03/26/news/good-things-are-here-ambrosia-wellness-opens-in-worland/17690.html",
+     "sourceType": "news",
+     "checkedAt": "2026-11-05",
+     "establishes": "The business physically exists and trades in the stated city, satisfying the physical-premises branch of the operating test.",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Ambrosia Wellness is a real, physically present small business: independent local news reports it opened a storefront in Worland, WY in March 2026, matching the account city, statement descriptor and email handle. No adverse history, complaints or fraud reports were found under either spelling, and nothing in the contact details or descriptor suggests a payment-collection front. The two open items are evidentiary rather than adverse: the Wyoming SOS register served a CAPTCHA, so the LLC’s existence, status and correct spelling (\"Ambroia\" on the account vs \"Ambrosia\" everywhere else) are unconfirmed, and the state food-licence search was likewise unreachable. Total risk 0; clear to process subject to a manual SOS lookup, a food-permit check and an MCC correction.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T16:20:00+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -303,47 +337,67 @@
    "accountId": "acct_1UXP1k8iE0AF2Mld",
    "merchantId": "5394489",
    "name": "Healing Blooms LLC",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "HEALING BLOOMS, LLC is an active Texas LLC: the Texas Comptroller franchise-tax account status record shows SOS registration ACTIVE and right to transact business in Texas ACTIVE, state of formation TX, SOS file number 0806258931, effective SOS registration date 2025-10-13, with a mailing address in Belton, TX 76513 - matching the declared business name, entity type, city and state. [https://comptroller.texas.gov/data-search/franchise-tax/32102546473]",
+    "The Texas Comptroller record shows an effective SOS registration date of 2025-10-13, giving the entity a documented independent existence of approximately one year and three weeks as of 2026-11-05. No scam, fraud or complaint reports were found against the name. The history is thin and only just clears a year; the Stripe account was connected 2026-11-02. [https://comptroller.texas.gov/data-search/franchise-tax/32102546473]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "No independent source places this business in Belton, TX: searches against listings, review sites and local directories returned no matching Yelp, Google, BBB or market-vendor listing. The only location evidence is the merchant’s own Linktree bio (\"Bell County, TX pickup & delivery\"), which is self-declared, and the three linked social profiles are login-gated so no product catalog or storefront could be observed. Absence of an independent footprint could not be established as absence of trading, so this is recorded as unverified.",
+    "Representative name not available to the verifier on this run."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The merchant has no website of its own: the declared site is a Linktree profile on a third-party domain whose only outbound links are three social profiles plus Linktree’s own marketing and policy links - no business domain, no shop, no contact page, no address or phone. The statement descriptor is \"LINKTR.EE\", a third-party domain that does not name the business, so cardholders would see a descriptor identifying neither the merchant nor any product they bought. [https://linktr.ee/healingbloomsllc]",
+    "The Linktree describes the business as selling herbal teas, homemade food and herbs with weekly menus, pre-orders and Bell County pickup and delivery - a local prepared-food and herbal-products operation. MCC 5399 (misc general merchandise) is a loose fit for mixed goods; the statement descriptor \"LINKTR.EE\" is incoherent with it, naming a link-hosting service rather than a food or herbal seller. The \"Healing Blooms\" branding applied to herbal teas also carries implied health-benefit framing that would need review. [https://linktr.ee/healingbloomsllc]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "A product menu, price list or order form - the \"weekly menus + pre-orders\" referenced on the Linktree - showing what is sold and at what prices.",
+    "Unauthenticated views of the Instagram/TikTok/Facebook accounts confirming active posting, product photos and order volume.",
+    "Texas cottage-food-law eligibility or a Bell County health department food permit, since the business advertises homemade food for pickup and delivery.",
+    "Statement descriptor change from \"LINKTR.EE\" to one naming Healing Blooms, plus a business-controlled contact page with refund and delivery policy.",
+    "Review of the herbal-tea marketing copy for unapproved health or therapeutic claims.",
+    "Representative name, then a cross-check against the LLC’s governing person of record."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://comptroller.texas.gov/data-search/franchise-tax/32102546473",
+     "sourceType": "state-register",
+     "checkedAt": "2026-11-05",
+     "establishes": "A registered, currently active legal entity exists in the declared name and state, with a registry address matching the declared city.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://linktr.ee/healingbloomsllc",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "No business-controlled web presence and a non-identifying third-party descriptor - a materially elevated dispute and chargeback risk.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "The legal entity checks out cleanly: HEALING BLOOMS, LLC is an active Texas LLC registered 2025-10-13 with an ACTIVE right to transact business and a Belton, TX registry address matching the declared profile, and no adverse reports were found. The commercial picture is much weaker - the merchant has no website at all, only a Linktree linking to three login-gated social profiles with no shop, catalog or order link, and no independent listing places the business in Belton, so no product could be observed. The descriptor is the main actionable defect: cardholders would see \"LINKTR.EE\", which identifies neither the business nor what was bought. MCC 5399 also understates the real profile - homemade food and ingestible herbal products sold by pre-order, with \"healing\" branding that may shade into unapproved health claims. Recommend holding for documentary evidence of the product line and food-permit status, a descriptor rename and an MCC review.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T17:28:13+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -365,9 +419,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -375,12 +429,12 @@
    "accountId": "acct_1UXUzG7JgJr8EhR6",
    "merchantId": "4878528",
    "name": "Kafe Simple To Go LLC",
-   "score": 0,
+   "score": 10,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
+    "contact": 10,
     "businessModel": 0,
     "history": 0,
     "behavior": 0,
@@ -388,34 +442,61 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "An independent Facebook business page titled \"Kafe Simple | Poinciana FL\" loads and places the business in Poinciana, Florida, matching the stated city; a matching Instagram account with 522 followers and 203 posts also exists. This is a real independent footprint for a cafe requiring licensed physical premises. [https://www.facebook.com/share/14fJzQh7nSN/?mibextid=wwXIfr]",
+    "The merchant’s page describes a coffee roaster and grab-and-go cafe in Poinciana, FL selling espresso coffee, daily prepared food, cold drinks and travel essentials, open Monday to Saturday - coherent with MCC 5812 (eating places). Note the Jim platform itself classifies the account as MCC 5499 and the page sets a flat payment-link amount, a minor mismatch with the declared 5812 but still within food retail. [https://jim.com/a/jim_kafe-simple]",
+    "An affiliated entity, Kafe Simple Nonprofit Corporation (also known as Kafe Simple), is recorded in Poinciana, FL with a 501(c)(3) unconditional exemption ruling dated August 2025 - more than a year before today. This matches the merchant page’s own description of the operation, and the Instagram account carries 203 posts consistent with sustained prior activity. No scam, fraud or complaint reports were found for this name. [https://www.gudsy.org/nonprofits/kafe-simple-nonprofit-corporation-aka-kafe-simple-poinciana-fl]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Florida Sunbiz could not be queried in this run: every request to search.sunbiz.org returned HTTP 403 with a Cloudflare JavaScript interstitial, so the LLC’s registration, status, filing date and principal address are unconfirmed. The Florida Dept. of Agriculture food-permit search also failed to load, so no food-service licence check was possible. No independent source loaded in this run names \"Kafe Simple To Go LLC\" as a registered Florida entity.",
+    "Representative name not available to the verifier on this run."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared website resolves and its content does belong to this merchant (title \"KAFE SIMPLE | Food & Convenience\"; embedded page data names Kafe Simple To Go LLC, Poinciana/Kissimmee FL and a local phone number). However it is not the merchant’s own domain: jim.com is CloudWalk Inc.’s Jim payment platform, which auto-generates a seller microsite and a pay.jim.com payment link. The statement descriptor is \"JIM.COM\", a third-party payment-platform domain rather than the business name, so cardholders would see no trace of Kafe Simple. The page also carries a 555 placeholder phone number alongside the real one. [https://jim.com/a/jim_kafe-simple]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Florida Sunbiz record for KAFE SIMPLE TO GO LLC (document number, status, filing date, principal address, registered agent) - search.sunbiz.org was Cloudflare-blocked on every attempt and must be retried from a browser.",
+    "Florida DBPR / FDACS food-service permit for the Poinciana premises.",
+    "Representative name, then a Sunbiz officer cross-check.",
+    "Clarification of the relationship between Kafe Simple To Go LLC (for-profit) and Kafe Simple Nonprofit Corporation (501(c)(3)), including which entity banks the card proceeds.",
+    "Remediation of the \"JIM.COM\" statement descriptor.",
+    "Confirmation of whether a second payment processor (Jim/CloudWalk) is already processing for this merchant, and resolution of the declared MCC 5812 vs the platform-recorded 5499."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.facebook.com/share/14fJzQh7nSN/?mibextid=wwXIfr",
+     "sourceType": "social",
+     "checkedAt": "2026-11-05",
+     "establishes": "Independent social presence places the cafe in the stated city of Poinciana, FL.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://jim.com/a/jim_kafe-simple",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "The descriptor is a third-party domain rather than the merchant name, and the declared website is a hosted payment microsite rather than an independent business site.",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://www.gudsy.org/nonprofits/kafe-simple-nonprofit-corporation-aka-kafe-simple-poinciana-fl",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "A dated independent record of the Kafe Simple operation in Poinciana, FL predating the Stripe connection by over a year.",
+     "dimension": "history"
+    }
+   ],
+   "summary": "Kafe Simple appears to be a real, independently visible coffee roaster and grab-and-go cafe in Poinciana, FL, with a matching Facebook page, an active Instagram account and an affiliated Poinciana 501(c)(3) with an IRS ruling dated August 2025, so operating, business model and history all check out clean against MCC 5812. The main open risk is legal: Florida Sunbiz blocked automation on every attempt, so the existence and status of the LLC and any food-service permit remain unconfirmed. The scored contradiction is on contact: the declared website is not the merchant’s own domain but an auto-generated Jim (CloudWalk) seller microsite with a pay.jim.com payment link, and the statement descriptor reads \"JIM.COM\" - unrecognisable to a cardholder and a chargeback driver; the page also mixes a real phone number with a 555 placeholder. Note the merchant appears already live on a competing payment platform, worth confirming alongside the descriptor fix.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T07:20:39+00:00",
    "enabledWindowStart": "2026-11-02T23:50:03+00:00",
    "enabledWindowEnd": "2026-11-03T07:20:39+00:00",
@@ -437,8 +518,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 10,
+   "trustScore": 90,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -461,33 +542,52 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Individual.",
-    "Loyverse POS activity is present: 53 receipt(s), last sale 2025-05-01."
+    "Loyverse POS activity is present: 53 receipt(s), last sale 2025-05-01.",
+    "An independent Uber Eats merchant listing for \"Puro Amor inc\" places the business in the stated city of Toa Baja, Puerto Rico, at a Calle Arturo Cadilla Matos address, categorised as Caribbean / Creole / Puerto Rican food, with published trading hours and menu sections. This is a third-party platform listing, not merchant-controlled copy, and it corroborates a real food-service operation in the declared municipality. [https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A]",
+    "The declared website https://puroamorpr.catalog.kyte.site/ resolves (live HTTP response), and its subdomain carries the business name. The Kyte catalog is a client-side-rendered single-page app so the raw fetch body was empty; the search-indexed rendering of that exact URL shows \"Puro Amor inc\" with priced product categories (Aves, Carnes, Mariscos y pescados, Complementos, Acompanantes) that match the Acompanantes / Complementos / Pescado menu sections on the independently loaded Uber Eats listing, which corroborates that the catalog belongs to this merchant rather than being a placeholder or a different business. The statement descriptor PUROAMORPR.CATALOG.KYT is a truncated third-party site-builder subdomain rather than a clean business name, but it leads with the business name plus territory, so it is judged a cosmetic weakness rather than a descriptor contradiction; shortening it to \"PURO AMOR PR\" would reduce dispute risk. [https://puroamorpr.catalog.kyte.site/]",
+    "MCC 5499 (miscellaneous food stores) and the descriptor are coherent with what the business observably does: the loaded Uber Eats listing shows prepared Puerto Rican / Creole food with menu sections for fish, sides and complements. This is a physical prepared-food business with real, observable products - no digital-goods or payment-collection pattern. The only caveat is classification precision: 5812 (eating places) would fit a takeout operation better than 5499, but both are food-sector codes and the mismatch is a near-miss, not an incoherence. [https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A]",
+    "Independent presence well beyond one year: the loaded Uber Eats listing carries dated customer reviews from 09/12/23 and 11/16/23, establishing that the business was trading in Toa Baja at least three years before 2026-11-05. No scam, fraud, chargeback or complaint reports surfaced in English or Spanish searches. [https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "The account declares entity type Individual, and a Puerto Rico sole proprietor is not required to register with the Registry of Corporations and Entities, so no corporate filing is expected. The PR Departamento de Estado registry search page returned only an empty client-side-rendered shell, so no automated name lookup could be executed. Note a naming discrepancy that is not itself a contradiction of the declared type: the independent Uber Eats listing trades as \"Puro Amor inc\", and PR law reserves \"Inc.\" for registered corporations, so the public trade style implies a corporate form while the account declares Individual.",
+    "Representative name not available to the verifier on this run."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Resolve the entity-type discrepancy: the public trade name is \"Puro Amor inc\" while the account declares Individual. Run a manual browser search on rcp.estado.pr.gov and capture the registration number, entity type and standing - or, if genuinely a sole proprietor, obtain the Hacienda Certificado de Registro de Comerciante.",
+    "Representative name and identity verification, plus sanctions and adverse-media screening - not available to the verifier on this run.",
+    "Toa Baja municipal patente and PR Departamento de Salud food permit for the listed address.",
+    "Explain the dormancy gap: the POS account shows 53 receipts with the last sale on 2025-05-01, yet payments were connected 2026-11-03. Confirm the business still trades at that address and the account has not changed hands.",
+    "Confirm the MCC: 5812 (eating places) likely fits better than 5499.",
+    "Shorten the statement descriptor to a clean business name."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-05",
+     "establishes": "Independent confirmation that a food business of this name operates in the declared city.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://puroamorpr.catalog.kyte.site/",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "The declared website resolves for this merchant and the descriptor contains the business name.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "A low-risk, substantiated merchant: zero risk points across all six dimensions. An independent Uber Eats listing places a Caribbean/Puerto Rican food business of this name in the declared city of Toa Baja, with dated customer reviews from September and November 2023 establishing more than three years of trading and no adverse reports. The declared Kyte catalog resolves for this merchant and its product categories match the Uber Eats menu, so MCC 5499 and the offering are coherent; the descriptor is an ugly truncated site-builder subdomain but leads with the business name, so it is scored cosmetic rather than a contradiction. Two items need manual follow-up: the representative name was unavailable so no identity or sanctions screening was possible, and the business trades publicly as \"Puro Amor inc\" while the account declares Individual.",
+   "reviewCompleteness": 75,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T11:56:46+00:00",
    "enabledWindowStart": "2026-11-03T04:13:51+00:00",
    "enabledWindowEnd": "2026-11-03T11:56:46+00:00",
@@ -519,47 +619,73 @@
    "accountId": "acct_1UXZlP7MtItDwSeB",
    "merchantId": "5396049",
    "name": "Savannah Jaguars Athletics Association",
-   "score": 0,
+   "score": 7,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Non-profit."
+    "Stripe legal entity type is recorded as Non-profit.",
+    "IRS Exempt Organizations Business Master File data, retrieved via the ProPublica Nonprofit Explorer API which republishes the IRS EO BMF, returns exactly one match for EIN 33-1371198: \"Savannah Jaguars Athletic Association\", Bloomingdale, GA, subsection code 3 (501(c)(3)), NTEE N60 (Amateur Sports Clubs and Leagues) - name, state and non-profit entity type all match the declared profile, with an unconditional exemption ruling in February 2025. The Georgia SOS eCorp corporations search and the IRS TEOS UI both returned HTTP 403 to automated retrieval, so the state corporate registration itself was not independently confirmed. [https://projects.propublica.org/nonprofits/api/v2/search.json?q=331371198]",
+    "Prep Sports Report, an independent Savannah-area high-school sports publication, covers the Savannah Jaguars as a member programme and published a feature on the team’s inaugural season dated 2025-11-04; a separate nonprofit directory listing places the association in Bloomingdale, GA, in the Savannah metropolitan area. This independent coverage places the organisation in the stated area. [https://prepsportsreport.com/p/savannah-jaguars-ready-to-start-inaugural-season]",
+    "The declared website loads (HTTP 200) and clearly belongs to this organisation: the home page states that the Savannah Jaguars Athletic Association is a 501(c)(3) non-profit dedicated to homeschool athletes, and gives a contact address identical to the account email on file. Navigation includes Booster Club, Our Facilities, Our Programs, Our Coaches, Our Board, Our Calendar, Our Partners and Contact Us. The statement descriptor matches the site domain. Minor note, not scored: the apex domain has no A record and only the www host resolves. [https://www.savannahjaguars.com]",
+    "Independent presence of at least one year: Prep Sports Report published an inaugural-season article dated 2025-11-04 describing games from 2025-10-31, and the same outlet carries later dated coverage including a 2026 baseball league-title run. The IRS exemption ruling date of February 2025 is consistent with formation roughly 21 months before this check. No scam, fraud or complaint reports were found. [https://prepsportsreport.com/p/savannah-jaguars-ready-to-start-inaugural-season]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
-    "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Representative name not available to the verifier on this run."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared MCC 7929 (bands, orchestras and miscellaneous entertainers) is incoherent with what the organisation observably does. Its own website describes a 501(c)(3) homeschool athletics association running competitive sports teams, with pages for facilities, programmes, coaches, a booster club and sponsorships, and independent sports media cover its basketball, baseball and volleyball teams; the IRS classifies it under NTEE N60, Amateur Sports Clubs and Leagues. There is no entertainment, performance or booking activity anywhere in the public footprint. [https://www.savannahjaguars.com]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Correct the MCC from 7929 (bands/orchestras/entertainers) to 7941 (commercial sports, athletic fields and sports promoters), or 8641 (civic, social and fraternal associations) if receipts are predominantly dues, booster and sponsorship income.",
+    "Georgia SOS eCorp record for the nonprofit corporation - control number, status and most recent annual registration; eCorp returned HTTP 403 to automation.",
+    "IRS Tax Exempt Organization Search confirmation for EIN 33-1371198 direct from apps.irs.gov (TEOS returned HTTP 403 to automation).",
+    "Representative name and role, plus confirmation that the person is an officer or board member listed on the organisation’s board page.",
+    "Confirmation that the settlement bank account is held in the name of the non-profit rather than an individual, given the free Gmail account email.",
+    "Expected annual volume and ticket mix (registration fees vs sponsorships vs concessions)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://projects.propublica.org/nonprofits/api/v2/search.json?q=331371198",
+     "sourceType": "state-register",
+     "checkedAt": "2026-11-05",
+     "establishes": "A federally recognised 501(c)(3) non-profit of exactly this name exists at the declared city and state, matching the declared entity type.",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://prepsportsreport.com/p/savannah-jaguars-ready-to-start-inaugural-season",
+     "sourceType": "news",
+     "checkedAt": "2026-11-05",
+     "establishes": "Independent third-party coverage places the organisation and its teams in the declared area.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.savannahjaguars.com",
+     "sourceType": "website",
+     "checkedAt": "2026-11-05",
+     "establishes": "The declared website resolves, is not parked, matches the statement descriptor, and its contact email is identical to the account email.",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "A genuine, independently corroborated organisation: IRS Business Master File data confirms a 501(c)(3) under EIN 33-1371198 at Bloomingdale, GA with NTEE code N60 (amateur sports clubs and leagues), the declared website loads as a real presence whose mission and contact email match the account exactly, and independent Savannah-area sports media have covered its teams since an inaugural-season article dated November 2025. No adverse, scam or complaint material was found, and the statement descriptor matches the domain. The one material defect is the merchant category code: 7929 (bands, orchestras, entertainers) does not describe a homeschool youth athletics non-profit and should be re-coded to 7941 or 8641. Two residual gaps are not the merchant’s fault: the Georgia SOS registry and the IRS TEOS UI both blocked automated retrieval, and the representative name was unavailable, so officer identity is entirely unverified.",
+   "reviewCompleteness": 88,
+   "confidence": "high",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification complete",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T11:56:46+00:00",
    "enabledWindowStart": "2026-11-03T04:56:03+00:00",
    "enabledWindowEnd": "2026-11-03T11:56:46+00:00",
@@ -581,8 +707,8 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
+   "riskScore": 7,
+   "trustScore": 93,
    "band": "Very low risk",
    "action": "Normal monitoring"
   },
@@ -612,26 +738,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Declared entity type is Individual (Swiss Einzelunternehmen); a sole proprietor with turnover under CHF 100,000 is not required to register in the commercial register, so absence from Zefix is expected and not a contradiction. Searches of Zefix-mirroring directories for this name in Murten / canton Fribourg returned no matching entry, and the official Zefix entity-search page returned no usable content to automated retrieval. No public searchable Swiss register of market/street-trading or food-hygiene permits was found - market-stall permits are issued case by case by the commune and food-business approvals by the cantonal authority, neither of which publishes a searchable list - so absence of a licence record cannot be asserted as a contradiction.",
+    "No independent listing, social page, market-vendor roster or directory entry placing this business in Murten was found via web search, local.ch and search.ch directory queries, Fribourg regional tourism and market pages, or Facebook and Instagram targeted searches. The declared activity is a mobile grill stand with no fixed premises, so the absence of a storefront footprint is consistent with the business model; no claimed storefront was asserted anywhere.",
+    "Representative name not available to the verifier on this run.",
+    "No website is declared and none was found. The email handle mirrors the trade name (Rostbratwurst = grilled sausage) and describes a trade rather than payment collection, so no contradiction arises. A free Gmail address with no domain is common for a Swiss one-person mobile stand. No statement descriptor is on file at all, which should be collected before go-live so cardholder statements show a recognisable name.",
+    "MCC 5499 (misc food stores) and the stated activity - a mobile grill stand at which goods are grilled and sold - are coherent with each other, though a catering code such as 5812 would be an equally defensible mapping. Nothing about the business is observable online: no menu, product photos, event or market appearance, or vendor listing. The name describes a food trade, not payment collection, and there is no digital-goods element, so no contradiction is raised.",
+    "No dated independent presence was found: no reviews, directory listing with a creation date, commercial-register filing, press mention or market-vendor roster entry. Targeted adverse-media and complaint searches on the business name and email handle returned no scam, fraud or complaint reports - only unrelated German and Austrian sausage products and restaurants."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "No statement descriptor is set on the account - obtain and set one reflecting the trade name before processing live card volume.",
+    "Full legal name of the sole proprietor and a government ID, to complete the identity dimension.",
+    "Murten / canton Fribourg market-stall or itinerant-trading permit (Marktbewilligung) and the cantonal food-hygiene notification for the mobile stand.",
+    "Photographs of the grill stand in operation showing the trade name, plus its regular pitches or market calendar.",
+    "Any social page, WhatsApp business profile or local press mention that would establish an independent footprint."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "A Swiss sole proprietor in Murten (canton Fribourg) running a mobile grill stand, connected 2026-11-03 with no website and, notably, no statement descriptor at all. Nothing in this verification contradicts the declared profile: Zefix registration is not legally required for an Einzelunternehmen under CHF 100,000 turnover, no public searchable register of Swiss market or food-hygiene permits exists to check against, and a mobile stand is not expected to leave a fixed-premises footprint. Equally, nothing corroborates it - no listing, social page, review, market-vendor entry or press mention was found anywhere, and the Zefix search application did not render to automated retrieval. Total risk 0 and no adverse media, but the file rests entirely on self-declared data: proceed on document-based KYC and set a statement descriptor before live processing.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-04T00:08:13+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-05T07:43:43+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-03T11:56:46+00:00",
    "enabledWindowStart": "2026-11-03T08:19:34+00:00",
    "enabledWindowEnd": "2026-11-03T11:56:46+00:00",
