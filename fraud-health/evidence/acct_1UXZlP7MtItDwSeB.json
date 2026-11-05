@@ -1,0 +1,75 @@
+{
+  "accountId": "acct_1UXZlP7MtItDwSeB",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "verified",
+      "statement": "IRS Exempt Organizations Business Master File data, retrieved via the ProPublica Nonprofit Explorer API which republishes the IRS EO BMF, returns exactly one match for EIN 33-1371198: \"Savannah Jaguars Athletic Association\", Bloomingdale, GA, subsection code 3 (501(c)(3)), NTEE N60 (Amateur Sports Clubs and Leagues) - name, state and non-profit entity type all match the declared profile, with an unconditional exemption ruling in February 2025. The Georgia SOS eCorp corporations search and the IRS TEOS UI both returned HTTP 403 to automated retrieval, so the state corporate registration itself was not independently confirmed.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "A federally recognised 501(c)(3) non-profit of exactly this name exists at the declared city and state, matching the declared entity type.",
+      "url": "https://projects.propublica.org/nonprofits/api/v2/search.json?q=331371198"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "Prep Sports Report, an independent Savannah-area high-school sports publication, covers the Savannah Jaguars as a member programme and published a feature on the team’s inaugural season dated 2025-11-04; a separate nonprofit directory listing places the association in Bloomingdale, GA, in the Savannah metropolitan area. This independent coverage places the organisation in the stated area.",
+      "sourceType": "news",
+      "checkedAt": "2026-11-05",
+      "establishes": "Independent third-party coverage places the organisation and its teams in the declared area.",
+      "url": "https://prepsportsreport.com/p/savannah-jaguars-ready-to-start-inaugural-season"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared website loads (HTTP 200) and clearly belongs to this organisation: the home page states that the Savannah Jaguars Athletic Association is a 501(c)(3) non-profit dedicated to homeschool athletes, and gives a contact address identical to the account email on file. Navigation includes Booster Club, Our Facilities, Our Programs, Our Coaches, Our Board, Our Calendar, Our Partners and Contact Us. The statement descriptor matches the site domain. Minor note, not scored: the apex domain has no A record and only the www host resolves.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared website resolves, is not parked, matches the statement descriptor, and its contact email is identical to the account email.",
+      "url": "https://www.savannahjaguars.com"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "The declared MCC 7929 (bands, orchestras and miscellaneous entertainers) is incoherent with what the organisation observably does. Its own website describes a 501(c)(3) homeschool athletics association running competitive sports teams, with pages for facilities, programmes, coaches, a booster club and sponsorships, and independent sports media cover its basketball, baseball and volleyball teams; the IRS classifies it under NTEE N60, Amateur Sports Clubs and Leagues. There is no entertainment, performance or booking activity anywhere in the public footprint.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "A real and coherent non-profit youth-sports business model, but under a materially wrong merchant category code.",
+      "url": "https://www.savannahjaguars.com"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent presence of at least one year: Prep Sports Report published an inaugural-season article dated 2025-11-04 describing games from 2025-10-31, and the same outlet carries later dated coverage including a 2026 baseball league-title run. The IRS exemption ruling date of February 2025 is consistent with formation roughly 21 months before this check. No scam, fraud or complaint reports were found.",
+      "sourceType": "news",
+      "checkedAt": "2026-11-05",
+      "establishes": "Dated independent coverage going back more than twelve months, with no adverse material found.",
+      "url": "https://prepsportsreport.com/p/savannah-jaguars-ready-to-start-inaugural-season"
+    }
+  ],
+  "evidenceNeeded": [
+    "Correct the MCC from 7929 (bands/orchestras/entertainers) to 7941 (commercial sports, athletic fields and sports promoters), or 8641 (civic, social and fraternal associations) if receipts are predominantly dues, booster and sponsorship income.",
+    "Georgia SOS eCorp record for the nonprofit corporation - control number, status and most recent annual registration; eCorp returned HTTP 403 to automation.",
+    "IRS Tax Exempt Organization Search confirmation for EIN 33-1371198 direct from apps.irs.gov (TEOS returned HTTP 403 to automation).",
+    "Representative name and role, plus confirmation that the person is an officer or board member listed on the organisation’s board page.",
+    "Confirmation that the settlement bank account is held in the name of the non-profit rather than an individual, given the free Gmail account email.",
+    "Expected annual volume and ticket mix (registration fees vs sponsorships vs concessions)."
+  ],
+  "summary": "A genuine, independently corroborated organisation: IRS Business Master File data confirms a 501(c)(3) under EIN 33-1371198 at Bloomingdale, GA with NTEE code N60 (amateur sports clubs and leagues), the declared website loads as a real presence whose mission and contact email match the account exactly, and independent Savannah-area sports media have covered its teams since an inaugural-season article dated November 2025. No adverse, scam or complaint material was found, and the statement descriptor matches the domain. The one material defect is the merchant category code: 7929 (bands, orchestras, entertainers) does not describe a homeschool youth athletics non-profit and should be re-coded to 7941 or 8641. Two residual gaps are not the merchant’s fault: the Georgia SOS registry and the IRS TEOS UI both blocked automated retrieval, and the representative name was unavailable, so officer identity is entirely unverified."
+}
