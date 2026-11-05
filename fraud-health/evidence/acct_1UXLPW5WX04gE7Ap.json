@@ -1,0 +1,72 @@
+{
+  "accountId": "acct_1UXLPW5WX04gE7Ap",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), for which Texas requires no state-level entity registration - a DBA would be filed at Bexar County level. The Texas Comptroller taxable-entity search was opened but its name lookup is a JavaScript form that cannot be submitted by automated fetch, so no registry record was retrieved. No registration is expected for this entity type, so this is not scored as a gap.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No state registration is expected for a Texas sole proprietor; the Comptroller search could not be submitted programmatically."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent business directory listing places \"TX Mobile Auto Body\" in San Antonio, TX as a mobile auto body repair service, with a street address on W Sunset Rd, a local phone number and a 5.0 rating from 8 reviews, last updated April 2026. A Yelp business page at the same slug also exists for this merchant but returned an empty body to automated fetch, so it is not cited.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "A third-party listing independently places the business in the stated city with a street address and phone number.",
+      "url": "https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The merchant has no own domain: the declared \"website\" is a third-party Yelp directory listing URL and the statement descriptor is \"M.YELP.COM\", a third-party domain rather than the business name. A cardholder seeing \"M.YELP.COM\" on a statement would have no way to connect the charge to TX Mobile Auto Body. The independent listing loaded for this check carries only a phone number and street address and shows no merchant-owned website.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "Neither the declared website nor the statement descriptor identifies the merchant to a cardholder; both resolve to third-party directory domains.",
+      "url": "https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 7699 (repair services, not elsewhere classified) is coherent with the observable business: the loaded listing describes a mobile auto body repair service travelling to customers for collision repairs, dent removal and general body work, advertising free estimates and on-site service across San Antonio. MCC 7538 would be a closer fit but 7699 is not incoherent or misleading.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The MCC matches the services the business is independently described as performing.",
+      "url": "https://lantern.llc/b/tx-mobile-auto-body-san-antonio/book"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No scam, fraud or complaint reports were found; searches for BBB complaints and negative coverage returned only unrelated San Antonio body shops. Independent presence of at least one year could not be confirmed from any page actually loaded - the only dated evidence is a directory listing last updated April 2026, roughly six months. Search snippets indicate a Yelp page with 28 reviews updated September 2026 and rating snapshots from 2025, but Yelp returned an empty body to automated fetch and cannot be cited.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No adverse history found; tenure of one year or more is plausible from search snippets but unconfirmed on any loaded page."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manually open the Yelp business page (Yelp returns an empty body to automated fetch) and record the first-review date, review count and rating to confirm independent presence of one year or more.",
+    "Change the statement descriptor from \"M.YELP.COM\" to a string containing the business name before enabling payments - the current descriptor is a chargeback and dispute risk.",
+    "Obtain the representative name and run the identity check, which was not possible on this run.",
+    "Bexar County Clerk assumed-name (DBA) index search for \"TX Mobile Auto Body\".",
+    "Confirm by phone that the listed San Antonio number and address are controlled by the applicant."
+  ],
+  "summary": "A plausible small mobile auto body repair operation in San Antonio: an independent directory listing places it at a W Sunset Rd address with a local phone and describes exactly the collision and body work MCC 7699 covers, and no scam, fraud or complaint reports surfaced. The one material problem is contact and descriptor integrity: the merchant has no website of its own, the declared \"website\" is a Yelp directory listing, and the statement descriptor is \"M.YELP.COM\" - a third-party domain that tells a cardholder nothing about who charged them. Legal is clean because a Texas sole proprietor needs no state registration; identity is unscored because the representative name was unavailable. Recommend approving conditionally on the descriptor being changed to the business name."
+}
