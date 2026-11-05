@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UXcwM4bUsIUnzXM",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Declared entity type is Individual (Swiss Einzelunternehmen); a sole proprietor with turnover under CHF 100,000 is not required to register in the commercial register, so absence from Zefix is expected and not a contradiction. Searches of Zefix-mirroring directories for this name in Murten / canton Fribourg returned no matching entry, and the official Zefix entity-search page returned no usable content to automated retrieval. No public searchable Swiss register of market/street-trading or food-hygiene permits was found - market-stall permits are issued case by case by the commune and food-business approvals by the cantonal authority, neither of which publishes a searchable list - so absence of a licence record cannot be asserted as a contradiction.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration or licence record is expected or publicly checkable for a Swiss sole-proprietor mobile grill stand; nothing contradicts the declared legal status."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, social page, market-vendor roster or directory entry placing this business in Murten was found via web search, local.ch and search.ch directory queries, Fribourg regional tourism and market pages, or Facebook and Instagram targeted searches. The declared activity is a mobile grill stand with no fixed premises, so the absence of a storefront footprint is consistent with the business model; no claimed storefront was asserted anywhere.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "No observable operating footprint in Murten, but none is expected for a mobile stand."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found. The email handle mirrors the trade name (Rostbratwurst = grilled sausage) and describes a trade rather than payment collection, so no contradiction arises. A free Gmail address with no domain is common for a Swiss one-person mobile stand. No statement descriptor is on file at all, which should be collected before go-live so cardholder statements show a recognisable name.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Contact details are thin but internally consistent with a micro sole-proprietor food stand; no fictitious or mismatched contact evidence found."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5499 (misc food stores) and the stated activity - a mobile grill stand at which goods are grilled and sold - are coherent with each other, though a catering code such as 5812 would be an equally defensible mapping. Nothing about the business is observable online: no menu, product photos, event or market appearance, or vendor listing. The name describes a food trade, not payment collection, and there is no digital-goods element, so no contradiction is raised.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Declared model and MCC are internally coherent but unconfirmed by any observable public activity."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated independent presence was found: no reviews, directory listing with a creation date, commercial-register filing, press mention or market-vendor roster entry. Targeted adverse-media and complaint searches on the business name and email handle returned no scam, fraud or complaint reports - only unrelated German and Austrian sausage products and restaurants.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No track record and no adverse history found; the business has no verifiable online age."
+    }
+  ],
+  "evidenceNeeded": [
+    "No statement descriptor is set on the account - obtain and set one reflecting the trade name before processing live card volume.",
+    "Full legal name of the sole proprietor and a government ID, to complete the identity dimension.",
+    "Murten / canton Fribourg market-stall or itinerant-trading permit (Marktbewilligung) and the cantonal food-hygiene notification for the mobile stand.",
+    "Photographs of the grill stand in operation showing the trade name, plus its regular pitches or market calendar.",
+    "Any social page, WhatsApp business profile or local press mention that would establish an independent footprint."
+  ],
+  "summary": "A Swiss sole proprietor in Murten (canton Fribourg) running a mobile grill stand, connected 2026-11-03 with no website and, notably, no statement descriptor at all. Nothing in this verification contradicts the declared profile: Zefix registration is not legally required for an Einzelunternehmen under CHF 100,000 turnover, no public searchable register of Swiss market or food-hygiene permits exists to check against, and a mobile stand is not expected to leave a fixed-premises footprint. Equally, nothing corroborates it - no listing, social page, review, market-vendor entry or press mention was found anywhere, and the Zefix search application did not render to automated retrieval. Total risk 0 and no adverse media, but the file rests entirely on self-declared data: proceed on document-based KYC and set a statement descriptor before live processing."
+}
