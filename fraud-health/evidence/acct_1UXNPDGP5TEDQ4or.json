@@ -1,0 +1,69 @@
+{
+  "accountId": "acct_1UXNPDGP5TEDQ4or",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Entity type is Individual (sole proprietor), for which no Idaho business registration is expected. The Idaho SOS business search at sosbiz.idaho.gov could not be loaded by the fetch tool in this run, and no public searchable roster of permitted Ada County mobile food establishments was found against which a Meridian food permit could be checked.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No registration is required for an individual sole proprietor; neither the Idaho entity register nor any public county food-permit list could be queried, so licence status is undetermined rather than negative."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No independent listing, map entry, review page or social profile for this business in Meridian or the wider Treasure Valley was found across English and Spanish searches (business name, \"comida llanera Boise/Meridian\", Facebook and Instagram restricted searches); the only llanero-named food pages found are in Colombia, New York/New Jersey and Florida. The declared activity is a home or mobile Colombian food operation with no claim of a storefront, so this is treated as a service business with no footprint.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The business has no observable public footprint placing it in Meridian, ID, but nothing indicates a licensed storefront is being claimed."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website is declared and none was found. The statement descriptor is a personal name rather than a random string, and neither the business name nor the email handle describes payment collection. The handle name and the descriptor name are, however, two different personal names, which is a documentation gap flagged for manual follow-up rather than a scored contradiction under this rubric.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No contact surface exists to verify; the descriptor is a plausible personal name but does not match the account email handle."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5499 (misc food stores) is facially consistent with a small Colombian llanera food operation, but no menu, price list, order page, post or photo of any product was found in English or Spanish searches, so there is nothing observable against which to test coherence.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "Nothing observable about what the business actually sells; MCC and descriptor coherence can be neither confirmed nor contradicted."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, listings, filings, news items or social posts of any age were found for this business, and no scam, chargeback or fraud complaints were found either.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "No trading history of any length can be evidenced, and no adverse reports exist."
+    }
+  ],
+  "evidenceNeeded": [
+    "Reconcile the name mismatch: the statement descriptor is a different personal name from the account email handle. Confirm against government ID and the bank account holder name before volume grows - a descriptor naming someone other than the account holder is a common pattern in account-renting cases.",
+    "Central District Health (Ada County) mobile food establishment permit or a cottage-food exemption statement for the Meridian operation.",
+    "Proof of trading: menu or price list, photos of the prep setup, market or event bookings.",
+    "Any customer-facing presence (Facebook/Instagram page, WhatsApp business number, delivery-app listing) so the MCC and descriptor can be matched to an observable product.",
+    "Manual Idaho SOS or assumed-business-name search, since the register could not be queried in this run."
+  ],
+  "summary": "Newly connected individual/sole-proprietor account for a small Colombian \"llanera\" food operation in Meridian, ID, with no declared website. Across ten English- and Spanish-language searches the business has zero independent footprint: no listing, review, social page, news mention or complaint of any kind, so operating presence, business model and trading history are all unverified rather than contradicted. The Idaho SOS register could not be loaded and the county publishes no searchable food-permit roster, so neither registration (not expected for an individual) nor a food permit could be checked; the representative name was unavailable this run. The one substantive flag for manual review is that the statement descriptor is a different personal name from the account email handle, which should be reconciled against ID and bank documents."
+}
