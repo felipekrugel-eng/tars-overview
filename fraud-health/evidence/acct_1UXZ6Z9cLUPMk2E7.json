@@ -1,0 +1,74 @@
+{
+  "accountId": "acct_1UXZ6Z9cLUPMk2E7",
+  "reviewedAt": "2026-11-05",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The account declares entity type Individual, and a Puerto Rico sole proprietor is not required to register with the Registry of Corporations and Entities, so no corporate filing is expected. The PR Departamento de Estado registry search page returned only an empty client-side-rendered shell, so no automated name lookup could be executed. Note a naming discrepancy that is not itself a contradiction of the declared type: the independent Uber Eats listing trades as \"Puro Amor inc\", and PR law reserves \"Inc.\" for registered corporations, so the public trade style implies a corporate form while the account declares Individual.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-05",
+      "establishes": "No corporate registration is expected for a declared Individual in PR; the registry could not be searched, and the public \"Inc\" trade style is an open question for manual follow-up."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent Uber Eats merchant listing for \"Puro Amor inc\" places the business in the stated city of Toa Baja, Puerto Rico, at a Calle Arturo Cadilla Matos address, categorised as Caribbean / Creole / Puerto Rican food, with published trading hours and menu sections. This is a third-party platform listing, not merchant-controlled copy, and it corroborates a real food-service operation in the declared municipality.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "Independent confirmation that a food business of this name operates in the declared city.",
+      "url": "https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-05",
+      "establishes": "The representative identity could not be assessed because the private representative feed did not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "verified",
+      "statement": "The declared website https://puroamorpr.catalog.kyte.site/ resolves (live HTTP response), and its subdomain carries the business name. The Kyte catalog is a client-side-rendered single-page app so the raw fetch body was empty; the search-indexed rendering of that exact URL shows \"Puro Amor inc\" with priced product categories (Aves, Carnes, Mariscos y pescados, Complementos, Acompanantes) that match the Acompanantes / Complementos / Pescado menu sections on the independently loaded Uber Eats listing, which corroborates that the catalog belongs to this merchant rather than being a placeholder or a different business. The statement descriptor PUROAMORPR.CATALOG.KYT is a truncated third-party site-builder subdomain rather than a clean business name, but it leads with the business name plus territory, so it is judged a cosmetic weakness rather than a descriptor contradiction; shortening it to \"PURO AMOR PR\" would reduce dispute risk.",
+      "sourceType": "website",
+      "checkedAt": "2026-11-05",
+      "establishes": "The declared website resolves for this merchant and the descriptor contains the business name.",
+      "url": "https://puroamorpr.catalog.kyte.site/"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "verified",
+      "statement": "MCC 5499 (miscellaneous food stores) and the descriptor are coherent with what the business observably does: the loaded Uber Eats listing shows prepared Puerto Rican / Creole food with menu sections for fish, sides and complements. This is a physical prepared-food business with real, observable products - no digital-goods or payment-collection pattern. The only caveat is classification precision: 5812 (eating places) would fit a takeout operation better than 5499, but both are food-sector codes and the mismatch is a near-miss, not an incoherence.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "The MCC, the descriptor and the observable product range all describe the same prepared-food business.",
+      "url": "https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "verified",
+      "statement": "Independent presence well beyond one year: the loaded Uber Eats listing carries dated customer reviews from 09/12/23 and 11/16/23, establishing that the business was trading in Toa Baja at least three years before 2026-11-05. No scam, fraud, chargeback or complaint reports surfaced in English or Spanish searches.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-05",
+      "establishes": "Verifiable third-party trading history since at least September 2023, with no adverse reports found.",
+      "url": "https://www.ubereats.com/store/puro-amor-inc/1pMkWnRJRLuBMbGTe4sF1A"
+    }
+  ],
+  "evidenceNeeded": [
+    "Resolve the entity-type discrepancy: the public trade name is \"Puro Amor inc\" while the account declares Individual. Run a manual browser search on rcp.estado.pr.gov and capture the registration number, entity type and standing - or, if genuinely a sole proprietor, obtain the Hacienda Certificado de Registro de Comerciante.",
+    "Representative name and identity verification, plus sanctions and adverse-media screening - not available to the verifier on this run.",
+    "Toa Baja municipal patente and PR Departamento de Salud food permit for the listed address.",
+    "Explain the dormancy gap: the POS account shows 53 receipts with the last sale on 2025-05-01, yet payments were connected 2026-11-03. Confirm the business still trades at that address and the account has not changed hands.",
+    "Confirm the MCC: 5812 (eating places) likely fits better than 5499.",
+    "Shorten the statement descriptor to a clean business name."
+  ],
+  "summary": "A low-risk, substantiated merchant: zero risk points across all six dimensions. An independent Uber Eats listing places a Caribbean/Puerto Rican food business of this name in the declared city of Toa Baja, with dated customer reviews from September and November 2023 establishing more than three years of trading and no adverse reports. The declared Kyte catalog resolves for this merchant and its product categories match the Uber Eats menu, so MCC 5499 and the offering are coherent; the descriptor is an ugly truncated site-builder subdomain but leads with the business name, so it is scored cosmetic rather than a contradiction. Two items need manual follow-up: the representative name was unavailable so no identity or sanctions screening was possible, and the business trades publicly as \"Puro Amor inc\" while the account declares Individual."
+}
