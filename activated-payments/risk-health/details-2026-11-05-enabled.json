@@ -4,24 +4,24 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-05 Europe/London",
   "cohortDate": "2026-11-05",
-  "reviewedAt": "2026-11-06T04:22:17+00:00",
+  "reviewedAt": "2026-11-06T07:17:32+00:00",
   "count": 3,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-06T04:22:17+00:00",
+ "reviewedAt": "2026-11-06T07:17:32+00:00",
  "merchants": [
   {
    "id": "acct_1UYCMqGDPbp2bA9I",
    "accountId": "acct_1UYCMqGDPbp2bA9I",
    "merchantId": "2159755",
    "name": "Ha carbon tacos",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
     "operating": 0,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -29,33 +29,53 @@
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
     "Stripe legal entity type is recorded as Individual.",
-    "Loyverse POS activity is present: 37820 receipt(s), last sale 2026-03-01."
+    "Loyverse POS activity is present: 37820 receipt(s), last sale 2026-03-01.",
+    "An independent listing places a taco truck trading as 'Ah Carbon Tacos' at 1930 W Clinton Ave, Fresno, CA 93705, with tent seating; a second aggregator shows the same address and a large Google review base. [https://www.atly.com/location/Ah-Carbon-Tacos]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The account is declared as an Individual, so no corporate registration is expected. A search for a Fresno County food facility or mobile food facility permit for this business returned nothing and the permit register itself was not loaded, so permit status is unknown.",
+    "Representative name not available to the verifier on this run.",
+    "Aggregator pages report a large Google review base (about 370 reviews) with reviews dated up to roughly nine months ago, but no source loaded dates the presence to at least one year. No scam, fraud or non-delivery reports were found. [https://www.poyst.com/business/ah-carbon-tacos]"
    ],
-   "contradictions": [],
+   "contradictions": [
+    "The declared page facebook.com/tacos.ah.carbon could not be loaded, and the independent listing for the Fresno taco truck links a different Facebook profile, so the declared website cannot be shown to belong to this business. The statement descriptor 'FACEBOOK.COM/TACOS.AH.' shows a third-party platform domain to cardholders instead of the trading name. [https://www.atly.com/location/Ah-Carbon-Tacos]",
+    "Loaded listings describe a taco truck selling tacos, burritos and birria, which would normally carry a food-service MCC such as 5812 or 5814. The declared MCC 7311 (Advertising Services) is incoherent with the observable trade. [https://www.poyst.com/business/ah-carbon-tacos]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Open facebook.com/tacos.ah.carbon manually, confirm it is the Fresno taco truck, and reconcile it with the different Facebook profile linked by the independent listings.",
+    "Search Fresno County Department of Public Health food facility and mobile food facility permits for the business at 1930 W Clinton Ave and confirm the permit holder.",
+    "Other unrelated businesses trade under similar 'Ah Carbon Tacos' names in southern California; confirm the applicant operates the Fresno truck.",
+    "Ask the merchant to correct the MCC to 5814/5812 and to set a statement descriptor carrying the trading name rather than a Facebook URL.",
+    "A third-party listing under a variant spelling shows the location as closed; confirm current operating status, noting Loyverse POS records no sale since 2026-03-01."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.atly.com/location/Ah-Carbon-Tacos",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-06",
+     "establishes": "A business operating under this name is independently listed in the stated city.",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.poyst.com/business/ah-carbon-tacos",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-06",
+     "establishes": "The MCC on the account does not match what the business observably sells.",
+     "dimension": "businessModel"
+    }
+   ],
+   "summary": "An independently listed taco truck at 1930 W Clinton Ave, Fresno, with a substantial Google review base, so the business itself looks real. Two defects carry risk points: the declared Facebook page could not be loaded or tied to the business and the statement descriptor shows a platform domain rather than the merchant name (contact 10), and MCC 7311 (Advertising Services) does not match a food business (businessModel 7). Identity could not be checked because the representative feed does not cover this account, and the Fresno County food permit could not be confirmed. Loyverse POS shows no sale since 2026-03-01, so current trading should be confirmed alongside the MCC and descriptor corrections.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-06T04:22:17+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-06T07:17:32+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-05T07:40:30+00:00",
    "enabledWindowStart": "2026-11-04T22:09:16+00:00",
    "enabledWindowEnd": "2026-11-05T07:40:30+00:00",
@@ -77,9 +97,9 @@
    "successfulTransactions": 37820,
    "hasTransacted": true,
    "lastTransactedAt": "2026-03-01",
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -108,26 +128,32 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Arizona Corporation Commission entity search at ecorp.azcc.gov could not be loaded by the verifier and is treated as blocked to automation. General web search returned no registry record for 'Tax Relief University LLC', but that is not a registry search, so registration is neither confirmed nor ruled out.",
+    "Searches for 'Tax Relief University' with Litchfield Park or Phoenix, AZ returned no business listing, review page or social profile. The merchant's own site could not be loaded, so the absence of an observable service is not established.",
+    "Representative name not available to the verifier on this run.",
+    "The declared website taxreliefuniversity.com could not be loaded by the verifier and did not surface in any search result, so it could not be classified as a live site, a parked domain or a placeholder. The declared domain ends .com while the statement descriptor reads 'TAXRELIEFUNIVERSITY.CO', and the contact address is a free webmail account.",
+    "Without being able to load the site, the verifier could not test whether MCC 7392 (management and consulting services) matches what the business sells. The name indicates either tax-resolution consulting or tax-relief training sold as a digital product, which are scored differently.",
+    "Searches on the exact name returned no dated reviews, listings or filings, and no scam, complaint, BBB or regulator reports attributable to this merchant. Results related to other, similarly named tax-relief firms and are not attributed here."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Open taxreliefuniversity.com and the .co variant named in the descriptor; establish which resolves, whether it is a real service site, a parked domain or a builder placeholder, and whether its contact details match Litchfield Park, AZ.",
+    "Query the Arizona Corporation Commission eCorp register for 'Tax Relief University LLC' and record status, formation date, statutory agent and members.",
+    "Check the domain registration date and registrant details via WHOIS; a domain registered days before onboarding would be material.",
+    "Search BBB, the Arizona Attorney General and FTC enforcement records by exact name and by domain, because tax-debt relief is a heavily regulated and heavily scammed vertical.",
+    "Confirm whether the service is advisory (MCC 7392 plausible) or a digital course (different MCC and different risk profile), and whether any IRS enrolled-agent, CPA or attorney credential is claimed.",
+    "Obtain representative details through onboarding KYC, since the representative feed does not cover this account."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Nothing about Tax Relief University LLC could be independently verified on this run: the declared website and the Arizona Corporation Commission register were both unreachable to the verifier, and web search produced no registration, listing, review or complaint under the exact name. All six dimensions therefore score 0 risk points, which reflects missing evidence rather than a clean result, and review completeness should be read as the operative signal here. The merchant sits in a high-risk vertical (tax-debt relief), presents a free webmail contact against a branded domain, carries a descriptor suffix (.CO) that differs from the declared domain (.com), and has no Loyverse POS history at all. A manual website, ACC register and complaint-database check is warranted before payouts run.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-06T04:22:17+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-06T07:17:32+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-05T07:40:30+00:00",
    "enabledWindowStart": "2026-11-04T23:00:26+00:00",
    "enabledWindowEnd": "2026-11-05T07:40:30+00:00",
@@ -180,26 +206,31 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "The Kentucky Secretary of State business organisation search could not be retrieved by the verifier and is treated as blocked to automation. Search-engine results surfaced only similarly named, unrelated Kentucky detailing companies, so no registration for 'HC Detailing LLC' was confirmed or ruled out.",
+    "No listing or social page was found placing HC Detailing in Cloverport, Hardinsburg or Breckinridge County, KY. The only same-name business found is a drop-off detailing shop in Kansas City, KS with nothing linking it to this merchant. Automotive detailing does not require licensed premises, so no contradiction is scored.",
+    "Representative name not available to the verifier on this run.",
+    "No website is declared, and the email handle describes the detailing trade rather than payment collection, so the baseline applies. The second token in the statement descriptor, 'HCDETAILING/3DDREAM', is unexplained: no business called '3D Dream' or '3DDREAM' could be found in Cloverport, KY or tied to this merchant, and no loaded page shows it to be a separate business.",
+    "No page was loaded showing what this merchant sells. The declared product description 'Automotive Detailing' would normally carry MCC 7542 or 7549 rather than the declared 4789 (Transportation Services), but that mismatch rests on the declaration alone and is not corroborated by an observed business page.",
+    "No dated reviews, listings or filings were found for HC Detailing in Kentucky, and no scam, complaint or fraud reports were found. The business appears to be new."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Query the Kentucky Secretary of State business database manually for 'HC Detailing LLC' and record status, formation date, registered agent and members.",
+    "Ask the merchant for a website or social page and proof of the Cloverport location, and establish whether the Kansas City, KS 'HC Detailing' is the same operator or a name collision.",
+    "Ask the merchant what '3DDREAM' in the statement descriptor refers to; a second, unrelated brand on the descriptor would indicate a shared or sublet account.",
+    "Confirm the MCC with the merchant: automotive detailing is normally 7542 or 7549, not 4789, and confirm whether the service is mobile or fixed-site.",
+    "Obtain representative details through onboarding KYC, since the representative feed does not cover this account."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "Nothing could be verified for HC Detailing LLC and no adverse evidence was found either. The Kentucky Secretary of State register was unreachable to automation, and searches found no registration, listing or social presence in Cloverport or Breckinridge County; the only same-name business is a Kansas City, KS detailing shop that cannot be tied to this merchant. All six dimensions score 0, which reflects insufficient evidence rather than a clean account, so review completeness is the operative signal. Two declaration-level anomalies should be put to the merchant before payouts run: the unexplained '3DDREAM' token in the statement descriptor, and MCC 4789 (Transportation Services) against a declared trade of automotive detailing.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-06T04:22:17+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-06T07:17:32+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-05T15:29:24+00:00",
    "enabledWindowStart": "2026-11-05T04:27:19+00:00",
    "enabledWindowEnd": "2026-11-05T15:29:24+00:00",
