@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UYDAL9hWo0QksON",
+  "reviewedAt": "2026-11-06",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The Arizona Corporation Commission entity search at ecorp.azcc.gov could not be loaded by the verifier and is treated as blocked to automation. General web search returned no registry record for 'Tax Relief University LLC', but that is not a registry search, so registration is neither confirmed nor ruled out.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-06",
+      "establishes": "Registration status for the declared Arizona company is unknown because the state register was unreachable."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches for 'Tax Relief University' with Litchfield Park or Phoenix, AZ returned no business listing, review page or social profile. The merchant's own site could not be loaded, so the absence of an observable service is not established.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "No independent footprint was found; whether the business operates in the stated city is unconfirmed."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "No identity check was possible because the representative feed does not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared website taxreliefuniversity.com could not be loaded by the verifier and did not surface in any search result, so it could not be classified as a live site, a parked domain or a placeholder. The declared domain ends .com while the statement descriptor reads 'TAXRELIEFUNIVERSITY.CO', and the contact address is a free webmail account.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "Website status is unknown; a descriptor/domain suffix discrepancy and a free-mail contact are recorded as open items rather than scored."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Without being able to load the site, the verifier could not test whether MCC 7392 (management and consulting services) matches what the business sells. The name indicates either tax-resolution consulting or tax-relief training sold as a digital product, which are scored differently.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "Coherence between the declared MCC and the actual trade could not be assessed."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches on the exact name returned no dated reviews, listings or filings, and no scam, complaint, BBB or regulator reports attributable to this merchant. Results related to other, similarly named tax-relief firms and are not attributed here.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "Neither an operating history nor any adverse report was found; this is absence of evidence, not clearance."
+    }
+  ],
+  "evidenceNeeded": [
+    "Open taxreliefuniversity.com and the .co variant named in the descriptor; establish which resolves, whether it is a real service site, a parked domain or a builder placeholder, and whether its contact details match Litchfield Park, AZ.",
+    "Query the Arizona Corporation Commission eCorp register for 'Tax Relief University LLC' and record status, formation date, statutory agent and members.",
+    "Check the domain registration date and registrant details via WHOIS; a domain registered days before onboarding would be material.",
+    "Search BBB, the Arizona Attorney General and FTC enforcement records by exact name and by domain, because tax-debt relief is a heavily regulated and heavily scammed vertical.",
+    "Confirm whether the service is advisory (MCC 7392 plausible) or a digital course (different MCC and different risk profile), and whether any IRS enrolled-agent, CPA or attorney credential is claimed.",
+    "Obtain representative details through onboarding KYC, since the representative feed does not cover this account."
+  ],
+  "summary": "Nothing about Tax Relief University LLC could be independently verified on this run: the declared website and the Arizona Corporation Commission register were both unreachable to the verifier, and web search produced no registration, listing, review or complaint under the exact name. All six dimensions therefore score 0 risk points, which reflects missing evidence rather than a clean result, and review completeness should be read as the operative signal here. The merchant sits in a high-risk vertical (tax-debt relief), presents a free webmail contact against a branded domain, carries a descriptor suffix (.CO) that differs from the declared domain (.com), and has no Loyverse POS history at all. A manual website, ACC register and complaint-database check is warranted before payouts run."
+}
