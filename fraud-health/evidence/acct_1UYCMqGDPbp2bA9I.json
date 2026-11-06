@@ -1,0 +1,73 @@
+{
+  "accountId": "acct_1UYCMqGDPbp2bA9I",
+  "reviewedAt": "2026-11-06",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The account is declared as an Individual, so no corporate registration is expected. A search for a Fresno County food facility or mobile food facility permit for this business returned nothing and the permit register itself was not loaded, so permit status is unknown.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "Neither an entity record nor a food permit could be confirmed or ruled out; nothing shows a required permit is affirmatively absent."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "verified",
+      "statement": "An independent listing places a taco truck trading as 'Ah Carbon Tacos' at 1930 W Clinton Ave, Fresno, CA 93705, with tent seating; a second aggregator shows the same address and a large Google review base.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-06",
+      "establishes": "A business operating under this name is independently listed in the stated city.",
+      "url": "https://www.atly.com/location/Ah-Carbon-Tacos"
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-06",
+      "establishes": "No identity check was possible because the representative feed does not cover this account."
+    },
+    {
+      "dimension": "contact",
+      "points": 10,
+      "status": "contradiction",
+      "statement": "The declared page facebook.com/tacos.ah.carbon could not be loaded, and the independent listing for the Fresno taco truck links a different Facebook profile, so the declared website cannot be shown to belong to this business. The statement descriptor 'FACEBOOK.COM/TACOS.AH.' shows a third-party platform domain to cardholders instead of the trading name.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-06",
+      "establishes": "The declared website is not corroborated by any independent listing and the descriptor does not identify the merchant.",
+      "url": "https://www.atly.com/location/Ah-Carbon-Tacos"
+    },
+    {
+      "dimension": "businessModel",
+      "points": 7,
+      "status": "contradiction",
+      "statement": "Loaded listings describe a taco truck selling tacos, burritos and birria, which would normally carry a food-service MCC such as 5812 or 5814. The declared MCC 7311 (Advertising Services) is incoherent with the observable trade.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-06",
+      "establishes": "The MCC on the account does not match what the business observably sells.",
+      "url": "https://www.poyst.com/business/ah-carbon-tacos"
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Aggregator pages report a large Google review base (about 370 reviews) with reviews dated up to roughly nine months ago, but no source loaded dates the presence to at least one year. No scam, fraud or non-delivery reports were found.",
+      "sourceType": "review-site",
+      "checkedAt": "2026-11-06",
+      "establishes": "A review footprint exists but a one-year track record is not independently dated; no adverse reports surfaced.",
+      "url": "https://www.poyst.com/business/ah-carbon-tacos"
+    }
+  ],
+  "evidenceNeeded": [
+    "Open facebook.com/tacos.ah.carbon manually, confirm it is the Fresno taco truck, and reconcile it with the different Facebook profile linked by the independent listings.",
+    "Search Fresno County Department of Public Health food facility and mobile food facility permits for the business at 1930 W Clinton Ave and confirm the permit holder.",
+    "Other unrelated businesses trade under similar 'Ah Carbon Tacos' names in southern California; confirm the applicant operates the Fresno truck.",
+    "Ask the merchant to correct the MCC to 5814/5812 and to set a statement descriptor carrying the trading name rather than a Facebook URL.",
+    "A third-party listing under a variant spelling shows the location as closed; confirm current operating status, noting Loyverse POS records no sale since 2026-03-01."
+  ],
+  "summary": "An independently listed taco truck at 1930 W Clinton Ave, Fresno, with a substantial Google review base, so the business itself looks real. Two defects carry risk points: the declared Facebook page could not be loaded or tied to the business and the statement descriptor shows a platform domain rather than the merchant name (contact 10), and MCC 7311 (Advertising Services) does not match a food business (businessModel 7). Identity could not be checked because the representative feed does not cover this account, and the Fresno County food permit could not be confirmed. Loyverse POS shows no sale since 2026-03-01, so current trading should be confirmed alongside the MCC and descriptor corrections."
+}
