@@ -593,11 +593,23 @@ const FEAT_COLOR = { INVENTORY:'#0F4C81', EMPLOYEE:'#1578C4', EMPSTORE:'#4FA3DC'
 let mrrMode = 'total';                // 'total' | 'feature'
 let mrrTerm = '';                     // '' = every term
 function featList(){ return (SUBS && SUBS.features) ? SUBS.features : []; }
-// The month still running. Per-feature mode stops before it: MRR is amortised from
-// invoices paid so far, so September reads $666K against August's $1,024K, and a stack
-// that collapses to two thirds height at the right-hand edge is a graph about the calendar
-// rather than the product. Total mode keeps its partial bar — that behaviour predates this
-// and is marked by the lighter shade the chart has always used.
+// The month still running. Per-feature mode stops before it, and the reason CHANGED on
+// 2026-11-06 — the behaviour is the same but it is now justified by something else, so do
+// not read the old reason out of this code.
+//
+// It used to be that MRR counted only invoices already PAID, so a month in progress held
+// a fraction of its invoices and the stack collapsed to two thirds height at the right-hand
+// edge — a graph about the calendar rather than the product. MRR is now committed rather
+// than collected, and the current month is topped up with the contracted amount of every
+// active subscription not yet invoiced, so the TOTAL no longer collapses: November reads
+// $1,038,806 against October's $1,069,752 where it used to read $366,352.
+//
+// What is still not safe to draw per feature is the MIX. A topped-up subscription carries
+// its whole MRR under its primary plan's feature, because the subscription-level figure is
+// not itemised; a merchant on Inventory with an Employee addon shows both under Inventory
+// until the real invoice arrives. The total is right, the split is an estimate, so the
+// stack still stops at the last complete month. Total mode keeps its partial bar, marked
+// by the lighter shade the chart has always used.
 const MRR_PARTIAL = (SUBS && SUBS.generatedAt) ? SUBS.generatedAt.slice(0,7)
                                               : new Date().toISOString().slice(0,7);
 function mrrByFeature(){
