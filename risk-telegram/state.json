@@ -2019,9 +2019,11 @@
       "sent_epoch": 1794083399
     },
     "ca5108ac8fa34da66642547abb241d8115874f4183005a3433d3a3aec6127e15": {
-      "status": "send_intent",
-      "prepared_epoch": 1794097697
+      "status": "sent",
+      "prepared_epoch": 1794097697,
+      "message_id": 341,
+      "sent_epoch": 1794097698
     }
   },
-  "updated_at_utc": "2026-11-08T00:28:17Z"
+  "updated_at_utc": "2026-11-08T00:28:18Z"
 }
