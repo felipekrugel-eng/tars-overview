@@ -14,7 +14,7 @@ Required env: SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PRIVATE_KEY (PEM),
   SNOWFLAKE_DATABASE, SNOWFLAKE_SCHEMA
 """
 import os
-import time, sys, subprocess, datetime, pathlib, re
+import time, sys, subprocess, datetime, pathlib, re, json
 import pandas as pd
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
@@ -236,6 +236,59 @@ def latest(df):
     s = df["SNAPSHOT_DATE"].astype(str).str[:10]
     return df[s == s.max()].copy()
 
+def apply_paying_snapshot(snap, today, count):
+    """Fold today's paying-customer reading into the snapshot record.
+
+    Pure: takes the record and a reading, returns (new record, log lines). It is separated
+    from the I/O around it so the two rules that actually matter can be tested rather than
+    reasoned about, because both fail silently and permanently if they are wrong.
+
+    RULE 1 — ONE READING PER DAY, the FIRST one. The pipeline can run more than once in a
+    day (retries, manual dispatches), and a later reading would quietly move a figure that
+    may already have become a month close.
+
+    RULE 2 — A MONTH CLOSE IS WRITTEN ONCE AND NEVER REWRITTEN. Not by a later run, not by
+    a rerun of an earlier day, not by this function under any input. A closed month that
+    moves under a reader destroys trust in every month beside it.
+
+    Closing happens on days 1-3 using the EARLIEST reading in that window. Days 1-3 rather
+    than the 1st alone because one missed run would otherwise leave a permanent hole — the
+    view has no as-of, so a month that is not captured near its boundary cannot be
+    recovered later. The cost is that a close may be taken up to two days late; the count
+    moves by tens of merchants a day against ~60,000, far inside the precision this figure
+    is read to.
+    """
+    snap = dict(snap or {})
+    close = dict(snap.get("monthClose") or {})
+    daily = dict(snap.get("daily") or {})
+    log = []
+
+    if today in daily:
+        log.append(f"{today} already snapshotted ({daily[today]['value']:,}) — "
+                   f"today's reading of {count:,} not stored")
+    else:
+        daily[today] = {"value": int(count), "source": "snapshot"}
+        log.append(f"snapshot {today}: {int(count):,} paying customers")
+
+    d = datetime.date.fromisoformat(today)
+    if d.day <= 3:
+        prev = (d.replace(day=1) - datetime.timedelta(days=1)).strftime("%Y-%m")
+        if prev in close:
+            log.append(f"{prev} already closed at {close[prev]['value']:,} — left alone")
+        else:
+            window = sorted(k for k in daily
+                            if k[:7] == d.strftime("%Y-%m") and int(k[8:10]) <= 3)
+            if window:
+                first = window[0]
+                close[prev] = {"value": daily[first]["value"], "source": "snapshot",
+                               "takenOn": first}
+                log.append(f"closed {prev} at {close[prev]['value']:,} (from {first})")
+
+    snap["monthClose"] = dict(sorted(close.items()))
+    snap["daily"] = dict(sorted(daily.items()))
+    return snap, log
+
+
 def write(path, df):
     path.write_text(df.to_csv(index=False)); print(f"   -> {path.name} ({len(df)} rows)", flush=True)
 
@@ -394,6 +447,43 @@ def main():
         write(DAILY / f"Rolling 30 Days by Country_{TS}.csv", _rc)
     except Exception as _e:
         print(f"[rollingc] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
+
+    # ---- paying-customer snapshot (paying-snapshots.json) ----
+    # Must run BEFORE build_kpi_data.py, which reads this file for the headline count.
+    #
+    # WHY A SNAPSHOT FILE AND NOT A QUERY. CHARGEBEE_SUBSCRIPTIONS_V carries CURRENT status
+    # only — ask it in December what March looked like and it answers about December. The
+    # count therefore has to be CAPTURED as time passes. Everything before 2026-11 was
+    # reconstructed once (paying_customers_backfill.sql) and frozen; from here the number
+    # accumulates one reading at a time.
+    #
+    # A MONTH CLOSE IS WRITTEN ONCE AND NEVER REWRITTEN. That is the whole contract of this
+    # file. A closed month that moves under a reader is worse than one that is slightly off,
+    # because nothing they wrote down last week can be trusted again.
+    #
+    # GUARDED. This is a new, additive number on a pipeline whose critical deliverables are
+    # daily-history.js and kpi-data.js. It must not be able to take them down, so every
+    # failure here degrades to "no snapshot today" and the build carries on with the
+    # previously committed file.
+    try:
+        _snap_path = V2 / "paying-snapshots.json"
+        _snap = json.loads(_snap_path.read_text(encoding="utf-8")) if _snap_path.exists() else {}
+
+        _pc_conn = connect()
+        try:
+            _cur = _pc_conn.cursor()
+            _cur.execute((SQLDIR / "paying_customers_active_subs.sql").read_text().rstrip().rstrip(";"))
+            _row = _cur.fetchone()
+            _cur.close()
+        finally:
+            _pc_conn.close()
+
+        _snap, _log = apply_paying_snapshot(_snap, str(_row[0])[:10], int(_row[1]))
+        for _line in _log:
+            print(f"[paying] {_line}", flush=True)
+        _snap_path.write_text(json.dumps(_snap, indent=1) + "\n", encoding="utf-8")
+    except Exception as _e:
+        print(f"[paying] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
     # ---- regenerate both data files ----
     # daily-history.js ALWAYS rebuilds. It carries the registrations / paying / MRR daily

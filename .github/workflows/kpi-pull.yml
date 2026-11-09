@@ -143,6 +143,11 @@ jobs:
                "KPI Dashboard v2 (Caio)/pilot-data.js"
                "KPI Dashboard v2 (Caio)/pilot-status.md"
                "KPI Dashboard v2 (Caio)/subs-data.js"
+               # The paying-customer record. Unlike every other file here it ACCUMULATES
+               # rather than being regenerated — each run appends a day and, at a month
+               # boundary, freezes a close. Losing a commit of it loses that reading
+               # permanently, because the view it comes from has no as-of.
+               "KPI Dashboard v2 (Caio)/paying-snapshots.json"
                "KPI Dashboard v2 (Caio)/cohort-country")
 
           # ---------------------------------------------------------------------------

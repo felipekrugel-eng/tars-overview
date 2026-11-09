@@ -1,0 +1,249 @@
+{
+ "_doc": {
+  "what": "Paying customers = distinct LOYVERSE_MERCHANT_ID with at least one subscription in status 'active' or 'non_renewing' in CHARGEBEE_SUBSCRIPTIONS_V. This is the figure Alex reports and is the headline number on the dashboard.",
+  "monthClose": "One frozen value per month end. Written once and NEVER overwritten - a month close that moves is not a close. Sources: 'Alex' = taken from his own reporting; 'rebuilt' = reconstructed by paying_customers_backfill.sql; 'snapshot' = captured live by the daily step in run.py.",
+  "daily": "A live reading per day from paying_customers_active_subs.sql. On days 1-3 of a month the earliest of these becomes the previous month's close if it has none.",
+  "rebuiltAdjustment": "The backfill runs -50 against its raw result. That offset was measured, not guessed: with it, all four months you had already rebuilt (2025-12 to 2026-03) and 2026-10 reproduce EXACTLY, and Alex's own six months (2026-04 to 2026-09) land within -3 to +7, mean +0.2. Checked 2026-11-09.",
+  "whyRebuiltIsApproximate": "Before 2026-11 nobody was snapshotting this daily, so history is reconstructed from subscription lifecycle dates crossed with invoice coverage. It cannot be exact and is not claimed to be."
+ },
+ "monthClose": {
+  "2022-01": {
+   "value": 8569,
+   "source": "rebuilt"
+  },
+  "2022-02": {
+   "value": 9043,
+   "source": "rebuilt"
+  },
+  "2022-03": {
+   "value": 9522,
+   "source": "rebuilt"
+  },
+  "2022-04": {
+   "value": 10009,
+   "source": "rebuilt"
+  },
+  "2022-05": {
+   "value": 10558,
+   "source": "rebuilt"
+  },
+  "2022-06": {
+   "value": 11162,
+   "source": "rebuilt"
+  },
+  "2022-07": {
+   "value": 11714,
+   "source": "rebuilt"
+  },
+  "2022-08": {
+   "value": 12340,
+   "source": "rebuilt"
+  },
+  "2022-09": {
+   "value": 12897,
+   "source": "rebuilt"
+  },
+  "2022-10": {
+   "value": 13462,
+   "source": "rebuilt"
+  },
+  "2022-11": {
+   "value": 14069,
+   "source": "rebuilt"
+  },
+  "2022-12": {
+   "value": 14598,
+   "source": "rebuilt"
+  },
+  "2023-01": {
+   "value": 14980,
+   "source": "rebuilt"
+  },
+  "2023-02": {
+   "value": 15387,
+   "source": "rebuilt"
+  },
+  "2023-03": {
+   "value": 15897,
+   "source": "rebuilt"
+  },
+  "2023-04": {
+   "value": 16402,
+   "source": "rebuilt"
+  },
+  "2023-05": {
+   "value": 16788,
+   "source": "rebuilt"
+  },
+  "2023-06": {
+   "value": 17233,
+   "source": "rebuilt"
+  },
+  "2023-07": {
+   "value": 17634,
+   "source": "rebuilt"
+  },
+  "2023-08": {
+   "value": 18082,
+   "source": "rebuilt"
+  },
+  "2023-09": {
+   "value": 18508,
+   "source": "rebuilt"
+  },
+  "2023-10": {
+   "value": 19051,
+   "source": "rebuilt"
+  },
+  "2023-11": {
+   "value": 19355,
+   "source": "rebuilt"
+  },
+  "2023-12": {
+   "value": 19874,
+   "source": "rebuilt"
+  },
+  "2024-01": {
+   "value": 20405,
+   "source": "rebuilt"
+  },
+  "2024-02": {
+   "value": 20907,
+   "source": "rebuilt"
+  },
+  "2024-03": {
+   "value": 21426,
+   "source": "rebuilt"
+  },
+  "2024-04": {
+   "value": 21903,
+   "source": "rebuilt"
+  },
+  "2024-05": {
+   "value": 22409,
+   "source": "rebuilt"
+  },
+  "2024-06": {
+   "value": 22907,
+   "source": "rebuilt"
+  },
+  "2024-07": {
+   "value": 23384,
+   "source": "rebuilt"
+  },
+  "2024-08": {
+   "value": 23912,
+   "source": "rebuilt"
+  },
+  "2024-09": {
+   "value": 24450,
+   "source": "rebuilt"
+  },
+  "2024-10": {
+   "value": 25206,
+   "source": "rebuilt"
+  },
+  "2024-11": {
+   "value": 25698,
+   "source": "rebuilt"
+  },
+  "2024-12": {
+   "value": 26157,
+   "source": "rebuilt"
+  },
+  "2025-01": {
+   "value": 26850,
+   "source": "rebuilt"
+  },
+  "2025-02": {
+   "value": 28369,
+   "source": "rebuilt"
+  },
+  "2025-03": {
+   "value": 31527,
+   "source": "rebuilt"
+  },
+  "2025-04": {
+   "value": 35035,
+   "source": "rebuilt"
+  },
+  "2025-05": {
+   "value": 37561,
+   "source": "rebuilt"
+  },
+  "2025-06": {
+   "value": 40652,
+   "source": "rebuilt"
+  },
+  "2025-07": {
+   "value": 43463,
+   "source": "rebuilt"
+  },
+  "2025-08": {
+   "value": 45167,
+   "source": "rebuilt"
+  },
+  "2025-09": {
+   "value": 46559,
+   "source": "rebuilt"
+  },
+  "2025-10": {
+   "value": 48085,
+   "source": "rebuilt"
+  },
+  "2025-11": {
+   "value": 49194,
+   "source": "rebuilt"
+  },
+  "2025-12": {
+   "value": 50475,
+   "source": "rebuilt"
+  },
+  "2026-01": {
+   "value": 52163,
+   "source": "rebuilt"
+  },
+  "2026-02": {
+   "value": 53091,
+   "source": "rebuilt"
+  },
+  "2026-03": {
+   "value": 54262,
+   "source": "rebuilt"
+  },
+  "2026-04": {
+   "value": 55496,
+   "source": "Alex"
+  },
+  "2026-05": {
+   "value": 56611,
+   "source": "Alex"
+  },
+  "2026-06": {
+   "value": 57629,
+   "source": "Alex"
+  },
+  "2026-07": {
+   "value": 58672,
+   "source": "Alex"
+  },
+  "2026-08": {
+   "value": 59528,
+   "source": "Alex"
+  },
+  "2026-09": {
+   "value": 60263,
+   "source": "Alex"
+  },
+  "2026-10": {
+   "value": 61144,
+   "source": "rebuilt"
+  }
+ },
+ "daily": {
+  "2026-11-09": {
+   "value": 61293,
+   "source": "snapshot"
+  }
+ }
+}

@@ -127,17 +127,68 @@ if bu_m is not None:
 def _bu_mrr(m): return float(bu_m.loc[m,"mrr"]) if (bu_m is not None and m in bu_m.index) else (float(mo.loc[m,"mrr"]) if m in mo.index else 0.0)
 def _bu_pay(m): return int(bu_m.loc[m,"pay"]) if (bu_m is not None and m in bu_m.index) else (int(mo.loc[m,"paying"]) if m in mo.index else 0)
 
+# ---- PAYING CUSTOMERS: subscription-based, the figure Alex reports ----
+# A paying customer is a merchant with at least one live Chargebee subscription (active or
+# non_renewing) at month end. That is NOT what the invoice-derived count above measures —
+# that one counts merchants an invoice was raised for in the month, which is a different
+# population and runs lower.
+#
+# It cannot be computed here. CHARGEBEE_SUBSCRIPTIONS_V holds CURRENT status only, so the
+# count has to be captured as time passes; paying-snapshots.json is that record, written by
+# run.py and frozen once a month closes. See that file's _doc block for provenance.
+#
+# BOTH NUMBERS ARE PUBLISHED. `paying` is the headline, `payingInvoice` is the old count,
+# and `payingSource` says which bucket the headline came from, so a reader can always see
+# whether a month was measured, reported by Alex, or reconstructed.
+#
+# ARPC KEEPS DIVIDING BY payingInvoice. MRR here is invoice-based, so its denominator must
+# be the invoice-based population: mixing the two would divide one month's revenue by
+# another definition's merchants and quietly misstate ARPC by the gap between them.
+# Beside kpi-data.js, wherever that is being written — one path to keep in step, not two.
+_PAY_SNAP = pathlib.Path(os.environ.get("PAYING_SNAPSHOTS", OUT.parent / "paying-snapshots.json"))
+_close, _daily = {}, {}
+try:
+    _snap = json.loads(_PAY_SNAP.read_text(encoding="utf-8"))
+    _close = {k: v for k, v in (_snap.get("monthClose") or {}).items()}
+    _daily = {k: v for k, v in (_snap.get("daily") or {}).items()}
+    print(f"   [paying] snapshots: {len(_close)} month closes, {len(_daily)} daily readings")
+except Exception as _e:
+    print("   [paying][warn] paying-snapshots.json unavailable, "
+          "falling back to the invoice count for every month:", _e)
+
+_latest_daily = max(_daily) if _daily else None
+_cur_month = _latest_daily[:7] if _latest_daily else None
+
+def _paying(m):
+    """(count, source) for month m. Falls back to the invoice count, loudly."""
+    if m in _close:
+        return int(_close[m]["value"]), str(_close[m].get("source") or "monthClose")
+    if _cur_month and m == _cur_month:
+        return int(_daily[_latest_daily]["value"]), "snapshot-" + _latest_daily
+    return None, None
+
 months = sorted(set(mo.index) | set(reg_by_month.index))
 monthly_out = []
+_fellback = []
 for m in months:
-    _mrr = _bu_mrr(m); _pay = _bu_pay(m)
+    _mrr = _bu_mrr(m); _inv = _bu_pay(m)
+    _pay, _src = _paying(m)
+    if _pay is None:
+        _pay, _src = _inv, "invoice-fallback"
+        _fellback.append(m)
     monthly_out.append({"month": m,
         "registrations": int(reg_by_month.get(m, 0)),
         "paying": _pay,
+        "payingInvoice": _inv,
+        "payingSource": _src,
         "mrr": round(_mrr, 2),
         "newPayers": int(mo.loc[m,"new_payers"]) if m in mo.index else 0,
         "cumEverPaid": int(mo.loc[m,"cum"]) if m in mo.index else 0,
-        "arpc": round(_mrr/_pay, 2) if _pay else 0})
+        "arpc": round(_mrr/_inv, 2) if _inv else 0})
+if _fellback:
+    print(f"   [paying][warn] no snapshot for {len(_fellback)} month(s) — using the invoice "
+          f"count there, which is a DIFFERENT definition and reads lower: "
+          f"{_fellback[0]}..{_fellback[-1]}")
 
 # ---- receipts/active by cohort x country x month (latest snapshot) ----
 rcpt["COH"] = rcpt["COHORT_MONTH"].map(ym); rcpt["CAL"] = rcpt["CALENDAR_MONTH"].map(ym)
