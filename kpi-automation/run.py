@@ -236,8 +236,14 @@ def latest(df):
     s = df["SNAPSHOT_DATE"].astype(str).str[:10]
     return df[s == s.max()].copy()
 
-def apply_paying_snapshot(snap, today, count):
+def apply_paying_snapshot(snap, today, count, mrr_unpaid=None):
     """Fold today's paying-customer reading into the snapshot record.
+
+    `mrr_unpaid` rides along on the same daily entry because it has the same problem and
+    the same answer: Chargebee stamps a paid date on written-off invoices, so the MRR
+    sitting on invoices still being collected cannot be reconstructed for any past month.
+    It only becomes a series if it is captured as it happens, under the same
+    first-reading-of-the-day rule as the count beside it.
 
     Pure: takes the record and a reading, returns (new record, log lines). It is separated
     from the I/O around it so the two rules that actually matter can be tested rather than
@@ -267,8 +273,13 @@ def apply_paying_snapshot(snap, today, count):
         log.append(f"{today} already snapshotted ({daily[today]['value']:,}) — "
                    f"today's reading of {count:,} not stored")
     else:
-        daily[today] = {"value": int(count), "source": "snapshot"}
-        log.append(f"snapshot {today}: {int(count):,} paying customers")
+        entry = {"value": int(count), "source": "snapshot"}
+        if mrr_unpaid is not None:
+            entry["mrrUnpaid"] = round(float(mrr_unpaid), 2)
+        daily[today] = entry
+        log.append(f"snapshot {today}: {int(count):,} paying customers"
+                   + (f", ${float(mrr_unpaid):,.0f} MRR on unpaid invoices"
+                      if mrr_unpaid is not None else ""))
 
     d = datetime.date.fromisoformat(today)
     if d.day <= 3:
@@ -448,6 +459,29 @@ def main():
     except Exception as _e:
         print(f"[rollingc] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
+    # ---- live MRR (mrr_live.csv) ----
+    # The headline MRR from 2026-11-09: the monthly value of subscriptions LIVE at each
+    # month end, same merchant base as the paying count, so ARPC divides two figures that
+    # describe one population. GUARDED — build_kpi_data.py falls back to the bottom-up
+    # number and says so if this file is missing, rather than the run failing.
+    _mrr_live = None
+    try:
+        _ml_conn = connect()
+        try:
+            _ml_cur = _ml_conn.cursor()
+            _ml_cur.execute((SQLDIR / "mrr_live_monthly.sql").read_text().rstrip().rstrip(";"))
+            _ml_df = _ml_cur.fetch_pandas_all() if hasattr(_ml_cur, "fetch_pandas_all") else \
+                     pd.DataFrame(_ml_cur.fetchall(), columns=[c[0] for c in _ml_cur.description])
+            _ml_cur.close()
+        finally:
+            _ml_conn.close()
+        write(WORK / "mrr_live.csv", _ml_df)
+        _mrr_live = _ml_df
+        print(f"[mrrlive] {len(_ml_df)} months, latest "
+              f"{_ml_df['MONTH'].iloc[-1]} ${float(_ml_df['MRR'].iloc[-1]):,.0f}", flush=True)
+    except Exception as _e:
+        print(f"[mrrlive] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
+
     # ---- paying-customer snapshot (paying-snapshots.json) ----
     # Must run BEFORE build_kpi_data.py, which reads this file for the headline count.
     #
@@ -455,7 +489,8 @@ def main():
     # only — ask it in December what March looked like and it answers about December. The
     # count therefore has to be CAPTURED as time passes. Everything before 2026-11 was
     # reconstructed once (paying_customers_backfill.sql) and frozen; from here the number
-    # accumulates one reading at a time.
+    # accumulates one reading at a time. The at-risk MRR captured alongside it has exactly
+    # the same problem — see apply_paying_snapshot.
     #
     # A MONTH CLOSE IS WRITTEN ONCE AND NEVER REWRITTEN. That is the whole contract of this
     # file. A closed month that moves under a reader is worse than one that is slightly off,
@@ -478,7 +513,17 @@ def main():
         finally:
             _pc_conn.close()
 
-        _snap, _log = apply_paying_snapshot(_snap, str(_row[0])[:10], int(_row[1]))
+        # The in-progress row of mrr_live is the LAST one — yesterday, labelled with the
+        # current month. Captured here rather than left in the CSV because the CSV is
+        # rewritten whole every run and would carry no history of it.
+        _unpaid = None
+        if _mrr_live is not None and len(_mrr_live):
+            try:
+                _unpaid = float(_mrr_live["MRR_ON_UNPAID_INVOICES"].iloc[-1])
+            except Exception:
+                _unpaid = None
+
+        _snap, _log = apply_paying_snapshot(_snap, str(_row[0])[:10], int(_row[1]), _unpaid)
         for _line in _log:
             print(f"[paying] {_line}", flush=True)
         _snap_path.write_text(json.dumps(_snap, indent=1) + "\n", encoding="utf-8")

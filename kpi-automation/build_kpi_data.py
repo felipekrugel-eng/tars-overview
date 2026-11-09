@@ -167,28 +167,66 @@ def _paying(m):
         return int(_daily[_latest_daily]["value"]), "snapshot-" + _latest_daily
     return None, None
 
+# ---- MRR: the value of subscriptions LIVE at month end ----
+# The headline from 2026-11-09, from mrr_live_monthly.sql. Same merchant base as the paying
+# count above, which is the point: ARPC can finally divide MRR by paying customers without
+# the two halves describing different populations.
+#
+# The bottom-up amortised figure is still built and is published as `mrrInvoice`. It is NOT
+# the same number and is not meant to be — it spreads each invoice across the months it
+# covers, so an annual plan billed in March still contributes next February whether or not
+# the merchant is still there. October 2026 reads ~$1,015k live against ~$1,070k bottom-up.
+#
+# FALLS BACK LOUDLY. If the CSV is missing, every month reverts to the bottom-up number and
+# says so, rather than the page silently showing a different definition under the new label.
+_live_mrr, _live_unpaid = {}, {}
+try:
+    _ml = pd.read_csv(WORK / "mrr_live.csv")
+    _ml["M"] = _ml["MONTH"].astype(str).str[:7]
+    for _c in ("MRR", "MRR_ON_UNPAID_INVOICES"):
+        _ml[_c] = pd.to_numeric(_ml[_c], errors="coerce").fillna(0.0)
+    # One row per month already; last-wins guards against a duplicate in-progress row.
+    for _m, _v, _u in zip(_ml["M"], _ml["MRR"], _ml["MRR_ON_UNPAID_INVOICES"]):
+        _live_mrr[_m] = float(_v); _live_unpaid[_m] = float(_u)
+    print(f"   [mrr] live source: {len(_live_mrr)} months")
+except Exception as _e:
+    print("   [mrr][warn] mrr_live.csv unavailable — EVERY month falls back to the bottom-up "
+          "amortised MRR, which is a DIFFERENT definition and runs ~5% higher:", _e)
+
 months = sorted(set(mo.index) | set(reg_by_month.index))
 monthly_out = []
 _fellback = []
+_mrr_fellback = []
 for m in months:
-    _mrr = _bu_mrr(m); _inv = _bu_pay(m)
+    _inv_mrr = _bu_mrr(m); _inv = _bu_pay(m)
     _pay, _src = _paying(m)
     if _pay is None:
         _pay, _src = _inv, "invoice-fallback"
         _fellback.append(m)
+    if m in _live_mrr:
+        _mrr = _live_mrr[m]
+    else:
+        _mrr = _inv_mrr
+        _mrr_fellback.append(m)
     monthly_out.append({"month": m,
         "registrations": int(reg_by_month.get(m, 0)),
         "paying": _pay,
         "payingInvoice": _inv,
         "payingSource": _src,
         "mrr": round(_mrr, 2),
+        "mrrUnpaid": round(_live_unpaid.get(m, 0.0), 2),
+        "mrrInvoice": round(_inv_mrr, 2),
         "newPayers": int(mo.loc[m,"new_payers"]) if m in mo.index else 0,
         "cumEverPaid": int(mo.loc[m,"cum"]) if m in mo.index else 0,
-        "arpc": round(_mrr/_inv, 2) if _inv else 0})
+        # Both halves from the live-subscription definition now.
+        "arpc": round(_mrr/_pay, 2) if _pay else 0})
 if _fellback:
     print(f"   [paying][warn] no snapshot for {len(_fellback)} month(s) — using the invoice "
           f"count there, which is a DIFFERENT definition and reads lower: "
           f"{_fellback[0]}..{_fellback[-1]}")
+if _mrr_fellback:
+    print(f"   [mrr][warn] no live MRR for {len(_mrr_fellback)} month(s) — using the bottom-up "
+          f"figure there: {_mrr_fellback[0]}..{_mrr_fellback[-1]}")
 
 # ---- receipts/active by cohort x country x month (latest snapshot) ----
 rcpt["COH"] = rcpt["COHORT_MONTH"].map(ym); rcpt["CAL"] = rcpt["CALENDAR_MONTH"].map(ym)
@@ -344,7 +382,8 @@ data = {
              "currency": "USD", "latestMonth": latest_cal, "snapshotMonth": latest_complete,
              "activeFrom": ACTIVE_FROM,
              "dataStatus": "ACTUAL — generated server-side from Snowflake (no Excel workbook).",
-             "notes": ["MRR = paid plan/addon invoice line items, spread across billing period, GBP x1.34 / EUR x1.16.",
+             "notes": ["MRR = monthly value of live Chargebee subscriptions at month end (active or non-renewing, unpaid invoices included), net of plan-change credits. GBP x1.34 / EUR x1.16. ARPC = MRR / paying customers.",
+                       "MRR by country, ARPC by country and the cohort MRR series still use the older bottom-up method (paid invoices amortised across their billing period), so they do NOT sum to the headline MRR. The per-month mrrInvoice field carries that older figure for comparison.",
                        "Merchants deduped by email. Active = >=1 valid receipt in month (device-clock-filtered in SQL).",
                        "Latest month is partial; the snapshot month is the latest complete month."]},
     "activeMonthly": active_monthly, "monthly": monthly_out, "cohorts": cohorts_out,
