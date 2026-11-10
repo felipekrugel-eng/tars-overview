@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-10T19:46:11.869265+00:00",
+ "checked_at": "2026-11-10T20:36:14.853589+00:00",
  "worst": "warn",
- "digest": "41c860c2bf86d2b09bd542fbb6db1307aec6aff29051685a6dc0ea5450e3c210",
+ "digest": "0a044c47b8900d00da61e7aa135790c63ec6fd36ffb0215fadaeb6c0bbf78727",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-10T19:43:50+00:00",
-   "data_at": "2026-11-10T19:41:00+00:00",
-   "age_h": 0.09,
+   "committed_at": "2026-11-10T20:33:56+00:00",
+   "data_at": "2026-11-10T20:32:00+00:00",
+   "age_h": 0.07,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-10T19:42:08+00:00",
-   "data_at": "2026-11-10T19:21:45+00:00",
-   "age_h": 0.41
+   "committed_at": "2026-11-10T20:22:42+00:00",
+   "data_at": "2026-11-10T20:01:46+00:00",
+   "age_h": 0.57
   },
   {
    "name": "Payments pull",
@@ -38,58 +38,22 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-10T17:27:11+00:00",
-   "data_at": "2026-11-10T17:27:10.834574+00:00",
-   "age_h": 2.32
+   "committed_at": "2026-11-10T20:25:06+00:00",
+   "data_at": "2026-11-10T20:24:59.460478+00:00",
+   "age_h": 0.19
   },
   {
    "name": "Activated payments",
    "path": "activated-payments/registration-daily.json",
    "ref": "master",
    "max_age_h": 9,
-   "notes": [
-    "built before its inputs changed: activated-payments/sql is 0.1h newer"
-   ],
-   "state": "warn",
-   "reason": "rebuild",
-   "committed_at": "2026-11-10T18:40:55+00:00",
-   "data_at": "2026-11-10T18:31:43.844000+00:00",
-   "age_h": 1.24,
-   "inputs_changed_at": "2026-11-10T18:47:44+00:00",
-   "diagnosis": {
-    "workflow": "activated-payments-pull.yml",
-    "last_success": "2026-11-10T17:45:46Z",
-    "consecutive_non_success": 10,
-    "recent": [
-     {
-      "at": "2026-11-10T19:33:26Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-10T19:25:17Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-10T19:10:15Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-10T18:56:49Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-10T18:47:52Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-10T18:38:48Z",
-      "outcome": "cancelled"
-     }
-    ],
-    "runs_since_artefact": 5,
-    "verdict": "running but not publishing \u2014 5 run(s) since the artefact was last written, none succeeded"
-   },
-   "diagnosis_line": "running but not publishing \u2014 5 run(s) since the artefact was last written, none succeeded \u00b7 10 consecutive non-success runs \u00b7 last success 2026-11-10 17:45"
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-10T20:25:33+00:00",
+   "data_at": "2026-11-10T20:16:26.395000+00:00",
+   "age_h": 0.33,
+   "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
    "name": "Ads + attribution",
@@ -99,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-10T18:40:55+00:00",
+   "committed_at": "2026-11-10T20:25:33+00:00",
    "data_at": null,
-   "age_h": 1.09
+   "age_h": 0.18
   },
   {
    "name": "Merchant base",
@@ -113,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-10T19:10:16+00:00",
    "data_at": "2026-11-10T19:05:36.168384+00:00",
-   "age_h": 0.68,
+   "age_h": 1.51,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -128,7 +92,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-10T08:54:50+00:00",
    "data_at": null,
-   "age_h": 10.86,
+   "age_h": 11.69,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -184,7 +148,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-10T08:54:50+00:00",
    "data_at": null,
-   "age_h": 10.86,
+   "age_h": 11.69,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -238,7 +202,7 @@
    "reason": null,
    "committed_at": "2026-11-10T00:14:49+00:00",
    "data_at": null,
-   "age_h": 19.52,
+   "age_h": 20.36,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -251,7 +215,7 @@
    "reason": null,
    "committed_at": "2026-11-10T16:25:25+00:00",
    "data_at": null,
-   "age_h": 3.35,
+   "age_h": 4.18,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
