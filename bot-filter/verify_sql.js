@@ -30,6 +30,7 @@ const q=(c,sqlText)=>new Promise((res,rej)=>c.execute({sqlText,complete:(e,s,r)=
 const FILES=['activated-payments/sql/us_bases.sql','activated-payments/sql/us_bases_monthly.sql',
 'activated-payments/sql/us_group_tags.sql','activated-payments/sql/us_registrations.sql',
 'kpi-automation/sql/cohort_country_snapshot.sql','kpi-automation/sql/cohort_unit_economics_daily_asof.sql',
+'kpi-automation/sql/country_month_activity.sql',
 'kpi-automation/sql/country_month_registrations_daily_asof.sql','kpi-automation/sql/country_registrations_daily_asof.sql',
 'kpi-automation/sql/cusum_hourly_registrations.sql','kpi-automation/sql/cusum_today_reconstruct.sql',
 'kpi-automation/sql/receipts_tpv_daily_asof.sql','kpi-automation/sql/rolling_30d_active_paying_49days.sql',
