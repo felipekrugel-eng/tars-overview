@@ -1443,8 +1443,16 @@ const TYPES = [{"name": "Other", "count": 6633}, {"name": "Cafe / Coffee", "coun
 const BLUE="#1D8FE1", RED="#CC3333";
 
 const map = L.map('map',{preferCanvas:true, worldCopyJump:true}).setView([42,-40],3);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-  attribution:'&copy; OpenStreetMap &copy; CARTO', maxZoom:19, subdomains:'abcd'
+// BASEMAP TILES — moved off CARTO 2026-11-10.
+// CARTO began requiring an API key for basemaps.cartocdn.com and now answers every tile
+// request with HTTP 200 and a 2KB "API KEY REQUIRED" watermark PNG. Nothing errored, no
+// request failed and the console stayed clean, which is why the map simply went blank-grey
+// with no clue as to why. Esri's light-grey canvas is the closest keyless match to the look
+// this page was designed around, so the coloured pins stay readable.
+// maxNativeZoom:16 because Esri's grey canvas stops there and serves a placeholder above it;
+// Leaflet upscales 17-19 instead, so street-level zoom still works, just softer.
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+  attribution:'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ', maxZoom:19, maxNativeZoom:16
 }).addTo(map);
 
 // approximate country bounds for zoom buttons
