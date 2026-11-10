@@ -18,8 +18,10 @@ on:
       - '**/sql/**'
       - 'merchant-base-automation/queries/**'
 
+# Keyed by ref, not by workflow. A single group meant a dispatch against master cancelled
+# the PR's own run mid-checkout — which is exactly what happened on the first attempt.
 concurrency:
-  group: bot-shield-v4-verify
+  group: bot-shield-v4-verify-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,6 +32,25 @@ jobs:
     steps:
       - name: Checkout the branch under test
         uses: actions/checkout@v4
+
+      - name: Refuse to "verify" a ref that does not carry the fix
+        # The first run of this workflow was dispatched against master by accident and
+        # reported success without testing anything. Fail loudly instead.
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=0
+          for f in bot-filter/v4_sweep.js bot-filter/cte_block.sql; do
+            [ -f "$f" ] || { echo "::error::$f is not on ${{ github.ref_name }}"; missing=1; }
+          done
+          if ! grep -q 'protected_accounts' bot-filter/cte_block.sql 2>/dev/null; then
+            echo "::error::cte_block.sql here is not the v4 block"; missing=1
+          fi
+          if [ "$missing" = 1 ]; then
+            echo "::error::Dispatch this against fix/bot-shield-v4-behavioural, not master."
+            exit 1
+          fi
+          echo "ref ${{ github.ref_name }} carries the v4 fix — proceeding"
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -65,4 +86,9 @@ jobs:
           SNOWFLAKE_ROLE:      "DATA_VIEWER"
           SNOWFLAKE_DATABASE:  "LOYVERSE_DATA_LAKE"
           SNOWFLAKE_SCHEMA:    "PUBLIC"
-        run: node bot-filter/v4_sweep.js | tee "$GITHUB_STEP_SUMMARY"
+        # `node ... | tee` without pipefail takes tee's exit status, so a crashing sweep
+        # reported success. That is how the first run passed while producing nothing.
+        shell: bash
+        run: |
+          set -euo pipefail
+          node bot-filter/v4_sweep.js | tee -a "$GITHUB_STEP_SUMMARY"
