@@ -232,10 +232,31 @@ stripe_stage AS (
 
 -- ── Beside the funnel: paid us a subscription ───────────────────────────────────────
 -- Not a funnel step. A merchant can subscribe without ever touching Payments, and most do.
+-- EVER subscribed and STILL subscribed are different questions, and the page needs both.
+-- FIRST_SUB_DATE answers the first: it has no status filter, so a merchant who subscribed
+-- in September and cancelled in October still carries a date. SUB_ACTIVE answers the
+-- second. On 2026-11-10 that distinction was 13 merchants against 12 — small, but the
+-- whole point of the filter is "who is paying us", and one of the thirteen is not.
+--
+-- SUB_MRR_USD is the live monthly value, so the filtered list can be read as revenue
+-- rather than just a headcount. Minor units, except for zero-decimal currencies where the
+-- minor unit IS the major one - the same trap that is live elsewhere in the stack.
 first_sub AS (
     SELECT LOYVERSE_MERCHANT_ID AS MERCHANT_ID,
-           MIN(TO_DATE(ACTIVATED_AT)) AS FIRST_SUB_DATE
-    FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V
+           MIN(TO_DATE(ACTIVATED_AT)) AS FIRST_SUB_DATE,
+           MAX(IFF(LOWER(STATUS) IN ('active','non_renewing'), 1, 0)) AS SUB_ACTIVE,
+           ROUND(SUM(IFF(LOWER(STATUS) IN ('active','non_renewing'),
+                         MRR / IFF(CURRENCY_CODE IN ('JPY','KRW','VND','CLP','ISK','PYG',
+                                                     'UGX','RWF','XAF','XOF','KMF','DJF',
+                                                     'GNF','VUV'), 1, 100)
+                             / NULLIF(fx.RATE, 0), 0)), 2)           AS SUB_MRR_USD,
+           LISTAGG(DISTINCT IFF(LOWER(STATUS) IN ('active','non_renewing'),
+                                SPLIT_PART(PLAN_ID, '_', 2), NULL), ' + ') AS SUB_MODULES
+    FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V s
+    LEFT JOIN (SELECT CURRENCY_NAME, RATE
+               FROM LOYVERSE_DATA_LAKE.PUBLIC.CURRENCY_RATES
+               WHERE DATE = (SELECT MAX(DATE) FROM LOYVERSE_DATA_LAKE.PUBLIC.CURRENCY_RATES)
+              ) fx ON fx.CURRENCY_NAME = s.CURRENCY_CODE
     WHERE ACTIVATED_AT IS NOT NULL AND LOYVERSE_MERCHANT_ID IS NOT NULL
     GROUP BY 1
 )
@@ -300,7 +321,10 @@ SELECT t.MERCHANT_ID,
 
        -- Beside the funnel
        b.FIRST_SUB_DATE,
-       IFF(b.FIRST_SUB_DATE IS NOT NULL, 1, 0)                   AS SUBSCRIBED
+       IFF(b.FIRST_SUB_DATE IS NOT NULL, 1, 0)                   AS SUBSCRIBED,
+       COALESCE(b.SUB_ACTIVE, 0)                                 AS SUB_ACTIVE,
+       COALESCE(b.SUB_MRR_USD, 0)                                AS SUB_MRR_USD,
+       b.SUB_MODULES
 
 FROM attributed t
 LEFT JOIN first_receipt f ON f.MERCHANT_ID = t.MERCHANT_ID

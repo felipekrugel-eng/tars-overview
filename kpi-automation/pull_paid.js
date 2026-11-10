@@ -147,6 +147,9 @@ async function main() {
     charges: int(get(r, 'CHARGES')),
     // beside the funnel
     subD: day(get(r, 'FIRST_SUB_DATE')),
+    subNow: int(get(r, 'SUB_ACTIVE')),          // still active/non_renewing today
+    subMrr: num(get(r, 'SUB_MRR_USD')) || 0,    // USD/month across live subs
+    subMods: get(r, 'SUB_MODULES') || null,     // which modules, live subs only
   }));
 
   // ── campaign roster, so the page can list campaigns with no merchants at all ──
@@ -188,7 +191,8 @@ async function main() {
               `  kyc3 ${merchants.filter(m => m.kyc3).length}` +
               `  onboarded ${merchants.filter(m => m.onb).length}` +
               `  used ${merchants.filter(m => m.chargeD).length}` +
-              `  subscribed ${merchants.filter(m => m.subD).length}`);
+              `  subscribed ${merchants.filter(m => m.subD).length}` +
+              `  paying now ${merchants.filter(m => m.subNow).length}`);
   if (noMerchants.length) {
     console.log(`  NOTE ${noMerchants.length} campaign(s) have spend but no attributable merchant: ` +
                 noMerchants.map(c => `${c.c} ($${c.spend})`).join(', '));

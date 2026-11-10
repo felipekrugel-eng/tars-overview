@@ -434,6 +434,10 @@
     // Payments-stage ranks kept for the merchant table only. Empty = no filter. Not consumed by
     // selection(), on purpose — see the comment above #merch-filter.
     stages: new Set(),
+    // Subscription filter for the merchant table only. '' = no filter, 'now' = paying today,
+    // 'ever' = subscribed at some point, 'never' = never subscribed. Orthogonal to the stages
+    // above: a merchant can pay for modules without ever touching Payments, and most do.
+    sub: '',
   };
 
   // Campaigns the Type and Platform pills allow. The campaign multi-select is INTERSECTED
@@ -617,20 +621,25 @@
   // the buttons themselves would need re-binding each time. Only the table is redrawn: nothing
   // above it reads state.stages.
   $('merch-filter').addEventListener('click', e => {
-    const btn = e.target.closest('button[data-stage]');
+    const btn = e.target.closest('button[data-stage],button[data-sub]');
     if (!btn) return;
-    const v = btn.dataset.stage;
-    if (v === '') {
-      state.stages.clear();
+    if (btn.dataset.sub !== undefined) {
+      // Single-choice, and clicking the active one turns it off.
+      state.sub = (state.sub === btn.dataset.sub) ? '' : btn.dataset.sub;
     } else {
-      const r = +v;
-      if (state.stages.has(r)) state.stages.delete(r); else state.stages.add(r);
+      const v = btn.dataset.stage;
+      if (v === '') {
+        state.stages.clear();
+      } else {
+        const r = +v;
+        if (state.stages.has(r)) state.stages.delete(r); else state.stages.add(r);
+      }
     }
     renderMerchants(selection());
   });
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
-    state.type = ''; state.pf = ''; state.ccs = new Set(); state.stages.clear();
+    state.type = ''; state.pf = ''; state.ccs = new Set(); state.stages.clear(); state.sub = '';
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
     $('f-from').value = DMIN; $('f-to').value = DMAX;
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
@@ -1032,6 +1041,14 @@
     { r: 3, l: 'KYC started' },    { r: 2, l: 'Opened Payments' },
     { r: 1, l: 'Issued a receipt' }, { r: 0, l: 'Signed up' },
   ];
+  // What the merchant pays for modules. Live subscriptions only — a cancelled one shows as
+  // "Cancelled" rather than carrying a price nobody is being charged.
+  function subCell(m) {
+    if (!m.subD) return '<span style="color:var(--faint)">—</span>';
+    if (!m.subNow) return '<span class="stat other" title="Subscribed ' + esc(m.subD) + ', since cancelled">Cancelled</span>';
+    return '<span class="stat enabled" title="' + esc(m.subMods || '') + ' — since ' + esc(m.subD) + '">' +
+      money2(m.subMrr || 0) + '/mo</span>';
+  }
   function renderMerchants(sel) {
     // Sorted by POS life first, then by how far down the payments ladder they got: the most
     // valuable merchants on this page are the ones actually trading.
@@ -1044,18 +1061,41 @@
     const counts = {};
     all.forEach(m => { const r = furthest(m)[1]; counts[r] = (counts[r] || 0) + 1; });
     const none = state.stages.size === 0;   // empty set = no filter = everything
+    // Subscription counts, also from `all`, same reason. subNow is the live state (active or
+    // non_renewing today); subD only says they subscribed once, so the two differ by whoever
+    // has since cancelled.
+    const nNow   = all.filter(m => m.subNow).length;
+    const nEver  = all.filter(m => m.subD).length;
+    const nNever = all.length - nEver;
+    const mrrNow = all.reduce((a, m) => a + (m.subNow ? (m.subMrr || 0) : 0), 0);
     $('merch-filter').innerHTML =
       '<span class="flab">Payments stage</span>' +
       '<span class="divpill" id="f-stage">' +
       '<button data-stage="" class="' + (none ? 'on' : '') + '">All <span style="opacity:.6">' + n0(all.length) + '</span></button>' +
       STAGES.map(s => '<button data-stage="' + s.r + '"' + (state.stages.has(s.r) ? ' class="on"' : '') + '>' +
         esc(s.l) + ' <span style="opacity:.6">' + n0(counts[s.r] || 0) + '</span></button>').join('') +
+      '</span>' +
+      '<span class="flab" style="margin-left:14px">Subscription</span>' +
+      '<span class="divpill" id="f-sub">' +
+      '<button data-sub="now"' + (state.sub === 'now' ? ' class="on"' : '') +
+        ' title="Has at least one active or non-renewing Chargebee subscription right now">' +
+        'Paying now <span style="opacity:.6">' + n0(nNow) + '</span></button>' +
+      '<button data-sub="ever"' + (state.sub === 'ever' ? ' class="on"' : '') +
+        ' title="Subscribed at some point, whether or not they still pay">' +
+        'Ever subscribed <span style="opacity:.6">' + n0(nEver) + '</span></button>' +
+      '<button data-sub="never"' + (state.sub === 'never' ? ' class="on"' : '') + '>' +
+        'Never subscribed <span style="opacity:.6">' + n0(nNever) + '</span></button>' +
       '</span>';
 
-    const list = none ? all : all.filter(m => state.stages.has(furthest(m)[1]));
+    const subOK = m => state.sub === ''      ? true
+                     : state.sub === 'now'   ? !!m.subNow
+                     : state.sub === 'ever'  ? !!m.subD
+                     :                         !m.subD;
+    const list = (none ? all : all.filter(m => state.stages.has(furthest(m)[1]))).filter(subOK);
     $('tbl-merch').tHead.innerHTML =
       '<tr><th>Merchant</th><th>Campaign</th><th>Country</th><th>Click</th><th>Signed up</th>' +
-      '<th>Receipts</th><th>Last 30d</th><th>Days sold</th><th>POS status</th><th>Payments stage</th></tr>';
+      '<th>Receipts</th><th>Last 30d</th><th>Days sold</th><th>POS status</th><th>Payments stage</th>' +
+      '<th>Subscription</th></tr>';
     $('tbl-merch').tBodies[0].innerHTML = list.length ? list.map(m => `<tr>
       <td class="cc">${esc(m.name || '(no name)')}</td>
       <td style="font-size:11.5px;color:var(--muted)">${esc(m.c || '')}</td>
@@ -1067,15 +1107,22 @@
       <td class="num">${n0(m.sdays)}</td>
       <td>${posStatus(m)}</td>
       <td style="font-size:11.5px">${esc(furthest(m)[0])}</td>
-    </tr>`).join('') : '<tr><td colspan="10" class="empty">' +
-      (none ? 'No merchants in this period.' : 'No merchants at the selected stage' + (state.stages.size > 1 ? 's' : '') + ' in this period.') +
+      <td style="font-size:11.5px">${subCell(m)}</td>
+    </tr>`).join('') : '<tr><td colspan="11" class="empty">' +
+      (none && !state.sub ? 'No merchants in this period.' : 'No merchants match the selected filters in this period.') +
       '</td></tr>';
     // Says out loud that the list no longer matches the funnel above it. Without this, a filtered
     // screenshot of this table reads as the full attributed population.
-    $('merch-note').innerHTML = none
-      ? ''
-      : 'Showing <b>' + n0(list.length) + '</b> of ' + n0(all.length) + ' attributed merchants — ' +
-        STAGES.filter(s => state.stages.has(s.r)).map(s => esc(s.l)).join(', ') +
+    const why = [];
+    if (!none) why.push(STAGES.filter(s => state.stages.has(s.r)).map(s => esc(s.l)).join(', '));
+    if (state.sub === 'now')   why.push('paying for a subscription today');
+    if (state.sub === 'ever')  why.push('subscribed at some point');
+    if (state.sub === 'never') why.push('never subscribed');
+    $('merch-note').innerHTML = (none && !state.sub)
+      ? 'Of these ' + n0(all.length) + ' attributed merchants, <b>' + n0(nNow) + '</b> pay for a subscription today, ' +
+        'worth ' + money2(mrrNow) + '/month. Subscription is beside the payments ladder, not a rung on it — ' +
+        'a merchant can buy modules without ever opening Payments.'
+      : 'Showing <b>' + n0(list.length) + '</b> of ' + n0(all.length) + ' attributed merchants — ' + why.join('; ') +
         '. The tiles, funnel and tables above are unaffected and still count all ' + n0(all.length) + '.';
   }
 
