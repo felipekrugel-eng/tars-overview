@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-10T20:18:27.397Z",
+  "ranAt": "2026-11-10T20:59:35.400Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1167,11 +1167,11 @@
       },
       {
         "name": "LOYVERSE_EXPERIMENT_ASSIGNMENTS_RAW",
-        "rows": 1336
+        "rows": 1338
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10146644354
+        "rows": 10146849135
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
@@ -2091,30 +2091,30 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-11-10 12:00:00.000",
-        "ID": "thor_1UaCOX7e4AMQfKY3aUgTWSJZ",
+        "BATCH_TIMESTAMP": "2026-11-10 18:00:00.000",
+        "ID": "thor_1UYSZk7e4AMQfKY3s3b72kIX",
         "LIVEMODE": true,
-        "CREATED": "2026-11-10 10:35:17.000",
-        "UPDATED": "2026-11-10 11:05:19.000",
-        "AMOUNT": 40057,
+        "CREATED": "2026-11-05 15:27:40.000",
+        "UPDATED": "2026-11-10 16:11:37.000",
+        "AMOUNT": 27313,
         "CURRENCY": "usd",
         "PAYMENT_TYPE": "monthly_invoice",
-        "STATUS": "ready_to_ship",
+        "STATUS": "delivered",
         "PO_NUMBER": null,
-        "TAX": 2188,
-        "SHIPPING_AMOUNT": 4200,
+        "TAX": 0,
+        "SHIPPING_AMOUNT": 1300,
         "SHIPPING_CURRENCY": "usd",
-        "SHIPPING_COMPANY": "El Toledo by the Lake",
-        "SHIPPING_EMAIL": "diazmichelle77@icloud.com",
-        "SHIPPING_NAME": "Michelle Diaz",
-        "SHIPPING_PHONE": "17873083543",
-        "SHIPPING_ADDRESS_LINE1": "2809 Ahern Drive",
-        "SHIPPING_ADDRESS_LINE2": null,
-        "SHIPPING_ADDRESS_CITY": "Orlando",
-        "SHIPPING_ADDRESS_STATE": "FL",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "32817",
+        "SHIPPING_COMPANY": "La Margariteña",
+        "SHIPPING_EMAIL": "lamargaritena.bistro@gmail.com",
+        "SHIPPING_NAME": "Luis G Mercado Rivera",
+        "SHIPPING_PHONE": "17879486578",
+        "SHIPPING_ADDRESS_LINE1": "EXT FOREST HILLS I-260",
+        "SHIPPING_ADDRESS_LINE2": "CALLE CARACAS",
+        "SHIPPING_ADDRESS_CITY": "Bayamon",
+        "SHIPPING_ADDRESS_STATE": "PR",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "00959",
         "SHIPPING_ADDRESS_COUNTRY": "US",
-        "SHIPPING_METHOD_NAME": "express"
+        "SHIPPING_METHOD_NAME": "standard"
       },
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
@@ -2309,6 +2309,20 @@
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-11-10 18:00:00.000",
+        "TERMINAL_HARDWARE_ORDER_ID": "thor_1UYSZk7e4AMQfKY3s3b72kIX",
+        "QUANTITY": 1,
+        "AMOUNT": 26013,
+        "CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
+        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
+        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
+        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
+        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "BATCH_TIMESTAMP": "2026-11-10 12:00:00.000",
         "TERMINAL_HARDWARE_ORDER_ID": "thor_1UaCOX7e4AMQfKY3aUgTWSJZ",
         "QUANTITY": 1,
@@ -2404,20 +2418,6 @@
         "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
         "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_Nd6ClPRnoqxoTO",
         "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s700_hub"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
-        "TERMINAL_HARDWARE_ORDER_ID": "thor_1TMNtB7e4AMQfKY3eDo8xSmH",
-        "QUANTITY": 2,
-        "AMOUNT": 52026,
-        "CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_ID": "thsku_TXjki0rL9AjNQP",
-        "TERMINAL_HARDWARE_SKU_AMOUNT": 26013,
-        "TERMINAL_HARDWARE_SKU_CURRENCY": "usd",
-        "TERMINAL_HARDWARE_SKU_COUNTRY": "US",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_ID": "thpr_R8HE7850talNLE",
-        "TERMINAL_HARDWARE_SKU_PRODUCT_TYPE": "stripe_s710"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_METADATA": [],
