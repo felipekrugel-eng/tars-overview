@@ -304,16 +304,40 @@ WITH -- ----------------------------------------------------------------
         -- Window function over the aggregate, not a correlated subquery -- those time out
         -- on LOYVERSE_MERCHANTS (>2 min). RANGE is value-based on the day number, so days
         -- with no activity are handled without needing a dense calendar.
+        --
+        -- v4 (2026-11-10) -- THE BASELINE NO LONGER POISONS ITSELF.
+        -- v3 asked whether the shape had <= 10 accounts in the 180 days ending a week
+        -- before the burst, reading LOYVERSE_MERCHANTS raw. That counted the accounts
+        -- THIS RULE HAD ALREADY FLAGGED. So the 819-account wave of 8-12 Oct made shape
+        -- '99999999' an established US shape, and every later burst of the identical
+        -- shape walked through untouched: 25 Oct 89, 29 Oct 156, 4 Nov 197, 7 Nov 297 --
+        -- 1,008 accounts, caught by nothing. Canada shows the same decay inside 72
+        -- hours: 324/361 excluded on 21 Oct, 66/76 on the 22nd, 0/23 on the 23rd.
+        -- Catching a wave bought the operator 180 days of blindness to the shape he had
+        -- just finished using.
+        --
+        -- Two changes. First, a day that was ITSELF burst-shaped contributes nothing to
+        -- the baseline (N_BASE). That is self-contained: it re-applies the burst test to
+        -- history rather than referencing this CTE's own output, which SQL cannot do.
+        -- Second, the absolute "<= 10 ever" floor becomes a RATIO against the non-burst
+        -- daily mean, so a low-volume drip cannot manufacture a baseline either --
+        -- holding three accounts a day for six months would have re-armed the v3 floor.
+        -- Genuinely common shapes stay protected: 'Aaaaaaaa' running 40/day would need a
+        -- 400-account day to trip this, which is not a shape a real country produces.
         SELECT C, SHAPE, D, N
         FROM (
             SELECT C, SHAPE, D, DN, N, N_DF,
-                   COALESCE(SUM(N) OVER (PARTITION BY C, SHAPE ORDER BY DN
+                   COALESCE(SUM(N_BASE) OVER (PARTITION BY C, SHAPE ORDER BY DN
                        RANGE BETWEEN 187 PRECEDING AND 7 PRECEDING), 0) AS BASE_180
-            FROM shape_daily
+            FROM (
+                SELECT C, SHAPE, D, DN, N, N_DF,
+                       IFF(N >= 20 AND N_DF >= 0.90 * N, 0, N) AS N_BASE
+                FROM shape_daily
+            )
         )
         WHERE N >= 20
           AND D >= '2026-03-01'
-          AND BASE_180 <= 10
+          AND (BASE_180 <= 10 OR N >= 10 * BASE_180 / 180.0)
           AND N_DF >= 0.90 * N
           AND REGEXP_LIKE(SHAPE, '[9aA]+')
     ),
@@ -326,15 +350,211 @@ WITH -- ----------------------------------------------------------------
                  TRIM(m.BUSINESS_NAME), '[0-9]', '9'), '[a-z]', 'a'), '[A-Z]', 'A') = b.SHAPE
          AND DATE(m.CREATED_AT) = b.D
     ),
+    -- ----------------------------------------------------------------
+    -- BEHAVIOURAL FILTER (B1, B2) -- added 2026-11-10
+    --
+    -- Every rule above this line reads five columns of one table: BUSINESS_NAME, EMAIL,
+    -- COUNTRY, CREATED_AT, LOYVERSE_ID. Not one of them can see a receipt. That is why
+    -- account '92200603' -- registered 29 Oct, 1,863 receipts inside eleven days, one
+    -- every nine minutes around the clock, median ticket exactly $35.00 -- was judged
+    -- once, on the characters of its name, and never looked at again. The evidence that
+    -- it was not a shop sat in LOYVERSE_RECEIPTS, and the shield had never opened that
+    -- table.
+    --
+    -- The scope floor is a FIXED date, not a rolling window, on purpose: a flag once
+    -- earned must be permanent, or published history silently un-flags itself as a wave
+    -- ages out. Move the floor back only behind a historical sweep.
+    behaviour_scope AS (
+        SELECT LOYVERSE_ID,
+               UPPER(TRIM(COUNTRY)) AS C,
+               DATE(CREATED_AT)     AS SIGNUP_DAY
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+        WHERE LOYVERSE_ID IS NOT NULL
+          AND COUNTRY IS NOT NULL
+          AND CREATED_AT >= '2026-10-01'
+    ),
+    dotless_freemail AS (
+        -- The mandatory second factor for both behavioural rules, and the same test N1
+        -- already uses. Mailbox shape NEVER selects on its own -- 47% false-positive
+        -- rate, July 2026 -- it only confirms a set already suspicious for other reasons.
+        SELECT LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+        WHERE EMAIL IS NOT NULL
+          AND NOT CONTAINS(SPLIT_PART(LOWER(TRIM(EMAIL)), '@', 1), '.')
+          AND SPLIT_PART(LOWER(TRIM(EMAIL)), '@', 2) IN
+              ('gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'mail.com',
+               'icloud.com', 'aol.com', 'proton.me', 'protonmail.com', 'gmx.com',
+               'yandex.com')
+    ),
+    behaviour_receipts AS (
+        -- Bounded scan. LOYVERSE_RECEIPTS is ~8.76bn rows, so this joins to the scope
+        -- first and prunes on RECEIPT_DATE, which is the partition key and a VARCHAR --
+        -- compared as text exactly the way the GTV queries already do it. Cleaning rules
+        -- are the canonical ones: no refunds, no cancellations, no zero rows.
+        SELECT r.MERCHANT_ID                                   AS LOYVERSE_ID,
+               COUNT(*)                                        AS N_RECEIPTS,
+               ROUND(APPROX_PERCENTILE(r.TOTAL_MONEY, 0.5), 2) AS MED_TICKET
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS r
+        JOIN behaviour_scope s
+          ON s.LOYVERSE_ID = r.MERCHANT_ID
+        WHERE r.RECEIPT_DATE >= '2026-10-01'
+          AND r.TOTAL_MONEY > 0
+          AND r.CANCELLED_AT IS NULL
+          AND r.REFUND_FOR IS NULL
+        GROUP BY 1
+    ),
+    behaviour_facts AS (
+        SELECT s.LOYVERSE_ID,
+               s.C,
+               s.SIGNUP_DAY,
+               COALESCE(b.N_RECEIPTS, 0) AS N_RECEIPTS,
+               b.MED_TICKET,
+               GREATEST(DATEDIFF(day, s.SIGNUP_DAY, CURRENT_DATE()), 1) AS TENURE_DAYS,
+               COALESCE(b.N_RECEIPTS, 0)
+                   / GREATEST(DATEDIFF(day, s.SIGNUP_DAY, CURRENT_DATE()), 1)
+                                         AS RECEIPTS_PER_DAY
+        FROM behaviour_scope s
+        LEFT JOIN behaviour_receipts b
+          ON b.LOYVERSE_ID = s.LOYVERSE_ID
+    ),
+    day_counts AS (
+        SELECT UPPER(TRIM(COUNTRY)) AS C,
+               DATE(CREATED_AT)     AS D,
+               DATEDIFF(day, DATE '2020-01-01', DATE(CREATED_AT)) AS DN,
+               COUNT(*)             AS N
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_MERCHANTS
+        WHERE COUNTRY IS NOT NULL
+          AND CREATED_AT >= '2026-06-01'
+        GROUP BY 1, 2, 3
+    ),
+    anomalous_days AS (
+        -- A country-day whose registration count is at least double the trailing median,
+        -- on a window that stops seven days short so a running wave cannot lift its own
+        -- baseline. Same shape of test the daily bot screen uses; it lives in here so B1
+        -- can require that an account ARRIVED INSIDE A BURST. Without that condition a
+        -- single genuine high-frequency merchant trips B1 on its own.
+        --
+        -- Written as a self-join, not a window: Snowflake rejects a sliding frame on
+        -- MEDIAN outright ("Sliding window frame unsupported for function MEDIAN"), which
+        -- is what failed the first compile. day_counts is one row per country-day since
+        -- June, so joining it to itself is cheap. A mean would have compiled, but a prior
+        -- burst drags a mean upward and this test exists precisely to survive prior bursts.
+        SELECT d.C, d.D
+        FROM day_counts d
+        JOIN day_counts b
+          ON b.C = d.C
+         AND b.DN BETWEEN d.DN - 35 AND d.DN - 7
+        WHERE d.D >= '2026-10-01'
+          AND d.N >= 20
+        GROUP BY d.C, d.D, d.N
+        HAVING d.N >= 2.0 * MEDIAN(b.N)
+    ),
+    velocity_bot_accounts AS (
+        -- B1: a new account trading at a rate no new merchant reaches, inside a day that
+        -- is itself a burst, on a machine-shaped mailbox. Forty receipts a day sustained
+        -- from a standing start is one every 36 minutes without a break; the observed
+        -- wave runs at 140-170 and peaks at 170 (account 44650299, 2,037 receipts in
+        -- twelve days). Three independent conditions deliberately: velocity alone
+        -- flagged eight accounts in the local sweep that look like real high-frequency
+        -- merchants, and requiring the burst day cut that to two.
+        SELECT f.LOYVERSE_ID
+        FROM behaviour_facts f
+        JOIN anomalous_days a
+          ON a.C = f.C AND a.D = f.SIGNUP_DAY
+        WHERE f.TENURE_DAYS <= 45
+          AND f.N_RECEIPTS >= 200
+          AND f.RECEIPTS_PER_DAY >= 40
+          AND f.LOYVERSE_ID IN (SELECT LOYVERSE_ID FROM dotless_freemail)
+    ),
+    ticket_day AS (
+        SELECT C, SIGNUP_DAY, COUNT(*) AS N_ACTIVE
+        FROM behaviour_facts
+        WHERE N_RECEIPTS >= 5
+          AND MED_TICKET IS NOT NULL
+        GROUP BY 1, 2
+    ),
+    ticket_mode AS (
+        SELECT C, SIGNUP_DAY, MED_TICKET, COUNT(*) AS N_AT_TICKET
+        FROM behaviour_facts
+        WHERE N_RECEIPTS >= 5
+          AND MED_TICKET IS NOT NULL
+          AND MED_TICKET = ROUND(MED_TICKET, 0)
+        GROUP BY 1, 2, 3
+    ),
+    ticket_bot_accounts AS (
+        -- B2: cohort ticket degeneracy. A generator draws one price and every account it
+        -- creates uses it. Of the 123 US accounts from 29 Oct that transacted, 54 had a
+        -- median ticket of exactly $30.00 and 34 exactly $35.00 -- 72% of the cohort on
+        -- two values. Organic merchants of the same tenure land on a whole dollar 64% of
+        -- the time and spread over hundreds of values.
+        --
+        -- This is the rule that matters most. It needs no name at all, and it is the
+        -- hardest of the three signals for the operator to vary: randomising the ticket
+        -- per account means giving up the uniform, plausible price band that gets the
+        -- fake volume past the GTV quality checks in the first place. 611 of the 639
+        -- active wave accounts are flagged 'Clean' by those checks today.
+        --
+        -- Local sweep over the US base, 1 Oct - 10 Nov, at these thresholds: 212
+        -- signature accounts flagged, ZERO non-signature accounts flagged.
+        SELECT f.LOYVERSE_ID
+        FROM behaviour_facts f
+        JOIN ticket_mode m
+          ON m.C = f.C AND m.SIGNUP_DAY = f.SIGNUP_DAY AND m.MED_TICKET = f.MED_TICKET
+        JOIN ticket_day d
+          ON d.C = f.C AND d.SIGNUP_DAY = f.SIGNUP_DAY
+        WHERE d.N_ACTIVE >= 20
+          AND m.N_AT_TICKET >= 10
+          AND m.N_AT_TICKET >= 0.20 * d.N_ACTIVE
+          AND f.LOYVERSE_ID IN (SELECT LOYVERSE_ID FROM dotless_freemail)
+    ),
+    -- ----------------------------------------------------------------
+    -- REAL-MERCHANT GUARD (P0) -- added 2026-11-10
+    --
+    -- Nothing below is ever excluded, whatever any rule above concludes. This exists
+    -- because the 13 Oct deployment removed both accounts of 'La New Poblanita Car
+    -- Service' -- one an active Chargebee subscriber with $188,713 of trailing
+    -- twelve-month GTV and receipts as recent as the day it was removed -- as collateral
+    -- of S7's "three accounts sharing a name" cluster test. That merchant has been
+    -- missing from every dashboard since. Any rule can misfire; this is the floor that
+    -- bounds what a misfire costs.
+    --
+    -- Both tests are chosen so the Oct/Nov wave cannot hide behind them: those accounts
+    -- are days old, have never held a subscription, and compress their volume into one
+    -- short burst, so neither test reaches them.
+    protected_accounts AS (
+        -- Anyone who has ever held a Chargebee subscription row.
+        SELECT LOYVERSE_MERCHANT_ID AS LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.CHARGEBEE_SUBSCRIPTIONS_V
+        WHERE LOYVERSE_MERCHANT_ID IS NOT NULL
+        UNION
+        -- Anyone with a sustained trading history: receipts in three or more distinct
+        -- calendar months. Read off the monthly aggregate, not the 8.76bn-row table.
+        SELECT LOYVERSE_MERCHANT_ID AS LOYVERSE_ID
+        FROM LOYVERSE_DATA_LAKE.PUBLIC.SALES_PER_ACCOUNT_MONTHLY
+        WHERE LOYVERSE_MERCHANT_ID IS NOT NULL
+          AND COALESCE(TOTAL_SALES_COUNT, 0) > 0
+        GROUP BY 1
+        HAVING COUNT(DISTINCT MONTH) >= 3
+    ),
     bot_accounts AS (
-        -- Single exclusion set consumed by the query below: the US-scoped signatures, the
-        -- country-agnostic ones, and the name-shape bursts. Every reference site uses this,
-        -- not any one part.
-        SELECT LOYVERSE_ID FROM us_bot_accounts
-        UNION
-        SELECT LOYVERSE_ID FROM global_bot_accounts
-        UNION
-        SELECT LOYVERSE_ID FROM shape_bot_accounts
+        -- Single exclusion set consumed by the query below: the US-scoped signatures,
+        -- the country-agnostic ones, the name-shape bursts and the two behavioural
+        -- rules, MINUS anything the real-merchant guard protects. Every reference site
+        -- uses this, never one part of it. The EXCEPT comes last on purpose -- the guard
+        -- overrides every rule above it, including rules added after this comment.
+        SELECT LOYVERSE_ID FROM (
+            SELECT LOYVERSE_ID FROM us_bot_accounts
+            UNION
+            SELECT LOYVERSE_ID FROM global_bot_accounts
+            UNION
+            SELECT LOYVERSE_ID FROM shape_bot_accounts
+            UNION
+            SELECT LOYVERSE_ID FROM velocity_bot_accounts
+            UNION
+            SELECT LOYVERSE_ID FROM ticket_bot_accounts
+        )
+        EXCEPT
+        SELECT LOYVERSE_ID FROM protected_accounts
     ),
 -- ----------------------------------------------------------------
 params AS (SELECT /*LAUNCH*/DATE '2026-07-01' AS LAUNCH),

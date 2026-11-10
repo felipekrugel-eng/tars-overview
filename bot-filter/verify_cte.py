@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Assert the bot-filter CTE block is byte-identical across all 14 reference SQL files."""
+"""Assert the bot-filter CTE block is byte-identical across all 15 reference SQL files.
+
+kpi-automation/sql/country_month_activity.sql was missing from this list until
+2026-11-10. Because it was never checked, it silently stayed on the pre-PR-#18 block
+(no N1, no G4) and kept publishing the October wave for a month. Anything that carries
+the block belongs in FILES; a reference site that is not verified will drift."""
 import hashlib, pathlib, sys
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -7,6 +12,7 @@ FILES = [
  'activated-payments/sql/us_bases.sql','activated-payments/sql/us_bases_monthly.sql',
  'activated-payments/sql/us_group_tags.sql','activated-payments/sql/us_registrations.sql',
  'kpi-automation/sql/cohort_country_snapshot.sql','kpi-automation/sql/cohort_unit_economics_daily_asof.sql',
+ 'kpi-automation/sql/country_month_activity.sql',
  'kpi-automation/sql/country_month_registrations_daily_asof.sql','kpi-automation/sql/country_registrations_daily_asof.sql',
  'kpi-automation/sql/cusum_hourly_registrations.sql','kpi-automation/sql/cusum_today_reconstruct.sql',
  'kpi-automation/sql/receipts_tpv_daily_asof.sql','kpi-automation/sql/rolling_30d_active_paying_49days.sql',
@@ -15,7 +21,7 @@ FILES = [
 def block(s):
     i = s.find('us_bot_accounts AS (')
     if i < 0: return None
-    g = s.find('SELECT LOYVERSE_ID FROM shape_bot_accounts')
+    g = s.find('SELECT LOYVERSE_ID FROM protected_accounts')
     if g < 0: return None
     return s[i:s.find(')', g) + 1]
 
