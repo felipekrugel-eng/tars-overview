@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-11T18:32:10.325555+00:00",
- "worst": "warn",
- "digest": "aa3c772b7d50a74731f116efbbcdd55cf8545c943d2df575f99c4256c379ce73",
+ "checked_at": "2026-11-11T19:27:08.970597+00:00",
+ "worst": "ok",
+ "digest": "cd3ebe85d7d61af243db65ae3e72e07874b55199628552cd0923f8031abfa72a",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-11T18:15:05+00:00",
-   "data_at": "2026-11-11T18:14:00+00:00",
-   "age_h": 0.3,
+   "committed_at": "2026-11-11T19:24:58+00:00",
+   "data_at": "2026-11-11T19:24:00+00:00",
+   "age_h": 0.05,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -23,48 +23,12 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [
-    "ageing: 3.3h old, limit 4h"
-   ],
-   "state": "warn",
-   "reason": "ageing",
-   "committed_at": "2026-11-11T18:30:51+00:00",
-   "data_at": "2026-11-11T15:15:12+00:00",
-   "age_h": 3.28,
-   "diagnosis": {
-    "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-11-11T18:05:50Z",
-    "consecutive_non_success": 1,
-    "recent": [
-     {
-      "at": "2026-11-11T18:08:16Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-11T18:05:50Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-11T18:03:04Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-11T17:59:42Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-11T17:44:02Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-11T17:29:22Z",
-      "outcome": "skipped"
-     }
-    ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing"
-   },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-11 18:05"
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-11T19:26:25+00:00",
+   "data_at": "2026-11-11T19:09:06+00:00",
+   "age_h": 0.3
   },
   {
    "name": "Payments pull",
@@ -76,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-11T16:55:34+00:00",
    "data_at": "2026-11-11T16:55:26.315201+00:00",
-   "age_h": 1.61
+   "age_h": 2.53
   },
   {
    "name": "Activated payments",
@@ -86,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-11T18:28:28+00:00",
-   "data_at": "2026-11-11T18:22:46.290000+00:00",
-   "age_h": 0.16,
+   "committed_at": "2026-11-11T19:19:31+00:00",
+   "data_at": "2026-11-11T19:14:42.988000+00:00",
+   "age_h": 0.21,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -99,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-11T18:28:28+00:00",
+   "committed_at": "2026-11-11T19:19:31+00:00",
    "data_at": null,
-   "age_h": 0.06
+   "age_h": 0.13
   },
   {
    "name": "Merchant base",
@@ -113,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-11T12:15:57+00:00",
    "data_at": "2026-11-11T12:11:24.934084+00:00",
-   "age_h": 6.35,
+   "age_h": 7.26,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -126,7 +90,7 @@
    "reason": null,
    "committed_at": "2026-11-11T08:36:54+00:00",
    "data_at": null,
-   "age_h": 9.92,
+   "age_h": 10.84,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -139,7 +103,7 @@
    "reason": null,
    "committed_at": "2026-11-11T08:36:54+00:00",
    "data_at": null,
-   "age_h": 9.92,
+   "age_h": 10.84,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -152,7 +116,7 @@
    "reason": null,
    "committed_at": "2026-11-11T00:08:06+00:00",
    "data_at": null,
-   "age_h": 18.4,
+   "age_h": 19.32,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -165,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-11T15:21:56+00:00",
    "data_at": null,
-   "age_h": 3.17,
+   "age_h": 4.09,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
