@@ -1,18 +1,18 @@
 {
-  "completed_at_utc": "2026-11-11T02:14:52.053314Z",
-  "latest_charge_created_at_utc": "2026-11-10T21:35:53Z",
+  "completed_at_utc": "2026-11-11T05:06:41.675884Z",
+  "latest_charge_created_at_utc": "2026-11-11T03:05:04Z",
   "pull_succeeded": true,
   "rows": {
     "icplus_costs": 764114,
     "platform_fees": 10,
-    "transactions": 83748
+    "transactions": 83932
   },
   "schema_version": 2,
   "sha256": {
-    "icplus_costs.csv": "cf79c9702e486f309fa2e13b76003e7782801f2c6189b6d4e5192aedfdae1edd",
+    "icplus_costs.csv": "719e5237c1719b8c9be11d2d6283db74cde25630526a410987c2061bb3a7e07d",
     "platform_fees.csv": "f8ca760a717886c63bb3e65faa016b6609c7f0c9d2d7ed0af34f39719db3b6e9",
-    "transactions.csv": "715e5b2a2d8d2bd2e7c33ec1da3f8bc26a7ec73fdc046823029c7d0f41ff4e27"
+    "transactions.csv": "f46fc58cee88209b7ca5ad34be7f79c9fc0692cd6ce1053c82e9c6d30af85f53"
   },
-  "snapshot_as_of_utc": "2026-11-11 01:59:34",
+  "snapshot_as_of_utc": "2026-11-11 04:51:25",
   "source": "snowflake_stripe_share"
 }
