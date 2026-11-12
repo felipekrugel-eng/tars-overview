@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-12T16:11:45.340906+00:00",
+ "checked_at": "2026-11-12T17:15:02.003298+00:00",
  "worst": "warn",
- "digest": "d8153ecd76ff586dad809d7c75d62b45a41446a9868901ac665e42938b90a47f",
+ "digest": "33e8ee46baa9682072bdca59db33f5c321c1f1328a0908ff1d9b6bb7ddf9d844",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T15:26:53+00:00",
-   "data_at": "2026-11-12T15:26:00+00:00",
-   "age_h": 0.76,
+   "committed_at": "2026-11-12T16:56:46+00:00",
+   "data_at": "2026-11-12T16:52:00+00:00",
+   "age_h": 0.38,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T15:58:30+00:00",
-   "data_at": "2026-11-12T15:41:24+00:00",
-   "age_h": 0.51
+   "committed_at": "2026-11-12T17:08:13+00:00",
+   "data_at": "2026-11-12T16:26:09+00:00",
+   "age_h": 0.81
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T13:41:18+00:00",
-   "data_at": "2026-11-12T13:41:01.891487+00:00",
-   "age_h": 2.51
+   "committed_at": "2026-11-12T16:36:43+00:00",
+   "data_at": "2026-11-12T16:36:42.407718+00:00",
+   "age_h": 0.64
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T16:09:23+00:00",
-   "data_at": "2026-11-12T16:00:00.247000+00:00",
-   "age_h": 0.2,
+   "committed_at": "2026-11-12T17:11:56+00:00",
+   "data_at": "2026-11-12T17:02:39.498000+00:00",
+   "age_h": 0.21,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T16:09:23+00:00",
+   "committed_at": "2026-11-12T17:11:56+00:00",
    "data_at": null,
-   "age_h": 0.04
+   "age_h": 0.05
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-12T13:28:05+00:00",
    "data_at": "2026-11-12T13:20:21.923738+00:00",
-   "age_h": 2.86,
+   "age_h": 3.91,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -85,56 +85,13 @@
    "path": "KPI Dashboard v2 (Caio)/daily-history.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "built before its inputs changed: kpi-automation/sql is 3.3h newer"
-   ],
-   "state": "warn",
-   "reason": "rebuild",
-   "committed_at": "2026-11-12T07:49:57+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-12T17:05:00+00:00",
    "data_at": null,
-   "age_h": 8.36,
-   "inputs_changed_at": "2026-11-12T11:09:20+00:00",
-   "diagnosis": {
-    "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-11T16:56:28Z",
-    "consecutive_non_success": 1,
-    "recent": [
-     {
-      "at": "2026-11-12T04:07:44Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-11T16:56:28Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-11T04:07:14Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-10T16:50:48Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-10T04:07:21Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-09T19:35:10Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43152733123",
-    "step": "Fail the run if the receipts feed is down",
-    "signature": "push rejected",
-    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": false,
-    "runner_lost": false
-   },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-11 16:56"
+   "age_h": 0.17,
+   "inputs_changed_at": "2026-11-12T11:09:20+00:00"
   },
   {
    "name": "KPI subscriptions",
@@ -148,13 +105,17 @@
    "reason": "rebuild",
    "committed_at": "2026-11-12T07:49:57+00:00",
    "data_at": null,
-   "age_h": 8.36,
+   "age_h": 9.42,
    "inputs_changed_at": "2026-11-12T11:09:20+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
     "last_success": "2026-11-11T16:56:28Z",
-    "consecutive_non_success": 1,
+    "consecutive_non_success": 2,
     "recent": [
+     {
+      "at": "2026-11-12T11:09:32Z",
+      "outcome": "cancelled"
+     },
      {
       "at": "2026-11-12T04:07:44Z",
       "outcome": "failure"
@@ -174,14 +135,10 @@
      {
       "at": "2026-11-10T04:07:21Z",
       "outcome": "failure"
-     },
-     {
-      "at": "2026-11-09T19:35:10Z",
-      "outcome": "success"
      }
     ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
+    "runs_since_artefact": 1,
+    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43152733123",
     "step": "Fail the run if the receipts feed is down",
     "signature": "push rejected",
@@ -190,7 +147,7 @@
     "skipped_publish": false,
     "runner_lost": false
    },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-11 16:56"
+   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-11 16:56"
   },
   {
    "name": "Fraud health",
@@ -202,7 +159,7 @@
    "reason": null,
    "committed_at": "2026-11-12T00:00:52+00:00",
    "data_at": null,
-   "age_h": 16.18,
+   "age_h": 17.24,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -215,7 +172,7 @@
    "reason": null,
    "committed_at": "2026-11-11T15:21:56+00:00",
    "data_at": null,
-   "age_h": 24.83,
+   "age_h": 25.89,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
