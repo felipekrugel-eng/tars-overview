@@ -122,6 +122,10 @@ def main():
     grid_cohorts = sorted({ym(r["COHORT_MONTH"]) for r in cc if r.get("MONTH_START")})
     all_cohorts = grid_cohorts
     shown = [c for c in all_cohorts if c <= snapshot_month][-N_SHOWN:]
+    # EVERY cohort, for the Triangle. `shown` is the chart's and the table's window and stays 24;
+    # the Triangle spans the market's whole life, because that is what it does with no country
+    # selected. Both are cut from the same grid, so a cell cannot differ between the two views.
+    tri_cohorts = [c for c in all_cohorts if c <= current_month]
 
     out_dir = OUT_DIR / "cohort-country"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -173,6 +177,38 @@ def main():
                 "pctEverPaid": round(100.0 * ever / regs, 2) if regs else 0.0,
                 "pctPayingNow": round(100.0 * paying / regs, 2) if regs else 0.0})
 
+        # ── the Triangle's own grid: every cohort, every age ──────────────────────────────
+        # Same numbers as `compare` in the 24 cohorts the two share — both read `ages` and
+        # `act` — but unwindowed. Kept as a SEPARATE key rather than by widening `compare`
+        # because the comparison chart's heading promises "last 24 cohorts by age" and the
+        # summary table promises a 24-row snapshot; widening in place would quietly break
+        # both. index.html reads cohortTriangle for the Triangle and cohortCompare for the
+        # other two, exactly as it already does for the all-countries view.
+        #
+        # A cohort with no paying row at some age gets None, not 0: the query emits a row for
+        # every cohort-age cell, so a genuine zero arrives as 0 and only a missing cell is
+        # None. `active` is None wherever the receipts feed has no row for that cell, which
+        # is not the same as nobody trading.
+        triangle = {}
+        for coh in tri_cohorts:
+            ages = cohs.get(coh) or {}
+            act = active.get((ctry, coh), {})
+            if not ages and not act:
+                continue
+            age_at_cap = (int(current_month[:4]) - int(coh[:4])) * 12 + \
+                         (int(current_month[5:7]) - int(coh[5:7]))
+            n = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_cap + 1)
+            if n <= 0:
+                continue
+            mrr_t, pay_t, act_t = [], [], []
+            for i in range(n):
+                r = ages.get(i)
+                mrr_t.append(round(_f(r, "MRR_USD"), 2) if r else None)
+                pay_t.append(int(_f(r, "PAYING_CUSTOMERS")) if r else None)
+                a = act.get(i)
+                act_t.append(a if a is not None else None)
+            triangle[coh] = {"mrr": mrr_t, "paying": pay_t, "active": act_t}
+
         if not rows_out:
             continue
         # Registrations for EVERY cohort this market has, not just the 24 the table lists.
@@ -187,7 +223,7 @@ def main():
         payload = {"country": ctry, "name": COUNTRY_NAMES.get(ctry, ctry),
                    "snapshotMonth": snapshot_month, "cohorts": rows_out,
                    "sizes": sizes,
-                   "cohortCompare": compare}
+                   "cohortCompare": compare, "cohortTriangle": triangle}
         with open(out_dir / f"{ctry}.json", "w", encoding="utf-8") as f:
             json.dump(payload, f, separators=(",", ":"))
         written += 1
@@ -202,7 +238,8 @@ def main():
                   f, separators=(",", ":"))
 
     kb = sum(p.stat().st_size for p in out_dir.glob("*.json")) / 1024
-    print(f"cohort-country: {written} countries, cohorts {shown[0]}..{shown[-1]}, "
+    print(f"cohort-country: {written} countries, table/chart cohorts {shown[0]}..{shown[-1]}, "
+          f"triangle cohorts {tri_cohorts[0]}..{tri_cohorts[-1]} ({len(tri_cohorts)}), "
           f"snapshot {snapshot_month}, {kb:.0f} KB total")
 
 

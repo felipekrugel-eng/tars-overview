@@ -1192,11 +1192,19 @@ renderCohTable();
   //
   // Two things keep this honest. `active` only appeared in cohortTriangle from the pull that
   // added it, so a dashboard on older data falls back to the 24-cohort series rather than
-  // rendering a column of blanks. And a country filter still uses the per-country files, which
-  // carry 24 cohorts each — widening those means regenerating 233 files, which is its own job.
+  // rendering a column of blanks. And a country filter reads the SAME shape out of that
+  // market's own file: as of the 2026-11-12 pull each cohort-country JSON carries its own
+  // cohortTriangle spanning every cohort, so picking a market no longer cuts the view to the
+  // last 24. A file written before that pull has no cohortTriangle key, and the fallback below
+  // puts such a market back on the 24-cohort series with the note saying so — the page must
+  // not promise full history while the data behind it is still a window.
   const TRI = D.cohortTriangle || {};
-  const triHas = m => ALL_ROWS.some(c => TRI[c] && Array.isArray(TRI[c][m]) && TRI[c][m].length);
-  const wideSeries = m => !ccFilter() && triHas(m);
+  // window._cohTri is set by the country picker: one market's triangle, or the pooled sum of
+  // several. Null with no filter, and null for a market whose file predates the widening.
+  const triSrc = () => (ccFilter() ? (window._cohTri || null) : TRI);
+  const triHasIn = (o, m) => !!o && Object.keys(o).some(c => o[c] && Array.isArray(o[c][m]) && o[c][m].length);
+  const triHas = m => triHasIn(TRI, m);
+  const wideSeries = m => triHasIn(triSrc(), m);
   const triFmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(v);
   // triPct is a MODE, not a flag: false = absolute, true = share of cohort registrations,
   // 'base' = share of the cohort's payments merchants. Kept truthy-compatible so every existing
@@ -1379,27 +1387,40 @@ renderCohTable();
     const MONEY = !!triMoney;
     if (MONEY) { metric = 'mrr'; pct = false; }
     const wide = MONEY ? true : (series ? wideSeries(metric) : true);
+    // The source for the wide path: all countries, or the selected market's own triangle.
+    const WSRC = triSrc();
+    // The row axis has to follow the source. With a market selected, ALL_ROWS is the WORLD's
+    // cohort list and would print a row for every month Loyverse has existed, blank wherever
+    // that market had not yet registered anyone. Its own cohorts are the union of the ones it
+    // has a series for and the ones it has registrations for — the same union ALL_ROWS is,
+    // just scoped to the market.
+    const wideRows = () => {
+      if (!ccFilter()) return ALL_ROWS.slice();
+      const s = new Set(Object.keys(WSRC || {}));
+      Object.keys(window._cohSizes || {}).forEach(c => s.add(c));
+      return [...s].filter(c => LATEST_M && c <= LATEST_M).sort();
+    };
     // EVERY cohort, always. The previous cut dropped rows with no payments revenue, which
     // punched 86 gaps into a 131-row grid and stopped it being a triangle at all. The span of
     // a row is the cohort's own life, nothing else.
-    const triCohorts = MONEY ? ALL_ROWS.slice() : (wide ? ALL_ROWS.slice() : triCohortsNow());
+    const triCohorts = MONEY ? ALL_ROWS.slice() : (wide ? wideRows() : triCohortsNow());
     const cohSize = cohSizeNow();
-    // Under a country filter the per-country files carry only the last 24 cohorts, so an older
-    // cohort has no per-country denominator. Absolute counts are still exact; the percentage is
-    // left blank rather than divided by a zero that would read as 0.0%.
     // Size is always that cohort's registrations for whatever population is selected. With a
     // market chosen it comes from that market's own file — the 24-row summary first, then the
     // full-range sizes map for older cohorts. Only if the file predates that map is it unknown,
-    // and then the cell says so rather than borrowing the all-countries figure.
+    // and then the cell says so rather than borrowing the all-countries figure: an absolute
+    // count is still exact, and the percentage is left blank rather than divided by a zero that
+    // would read as 0.0%.
     const ccSizes = window._cohSizes || null;
     const sizeOf = c => {
       if (cohSize[c] != null) return cohSize[c];
       if (ccFilter()) return (ccSizes && ccSizes[c] != null) ? ccSizes[c] : null;
       return ALL_SIZE[c] != null ? ALL_SIZE[c] : null;
     };
-    // Where the numbers come from in series mode: the all-cohort triangle when it has this
-    // metric and no country is selected, the trimmed per-country series otherwise.
-    const src = wide ? TRI : CC;
+    // Where the numbers come from in series mode: the all-cohort triangle — the world's, or
+    // the selected market's — when it carries this metric, the trimmed 24-cohort series when
+    // it does not.
+    const src = wide ? WSRC : CC;
     let mx = 0, nAges = 1;
     if (MONEY) triCohorts.forEach(c => { const a = (TRI[c] && TRI[c].mrr) || []; nAges = Math.max(nAges, a.length); });
     else if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
@@ -1542,8 +1563,9 @@ renderCohTable();
     let s = NOTE_TRI;
     if (useSeries() && !wideSeries(triSel[0])){
       s += ccFilter()
-        ? ' Showing the last 24 cohorts: the per-country cohort files carry 24 each, so a market '
-          + 'selection cannot reach further back. Clear the country filter for the full range.'
+        ? ' Showing the last 24 cohorts: this market’s cohort file predates the widening and '
+          + 'still carries 24, so the selection cannot reach further back. The next KPI pull '
+          + 'rewrites it with every cohort. Clear the country filter for the full range now.'
         : ' Showing the last 24 cohorts for this metric until the next KPI pull, which is the '
           + 'first to carry it for every cohort.';
     }
@@ -1928,6 +1950,29 @@ renderCohTable();
     ps.forEach(p => Object.entries(p.sizes || {}).forEach(([c, n]) => { out[c] = (out[c] || 0) + (+n || 0); }));
     return out;
   }
+  // Pooling triangles is an element-wise sum over the union of cohorts, aligned by age index.
+  // A null stays null only while NO market has a number for that cell: one market's missing
+  // receipts row must not erase another's real count, and a cell nobody has data for must not
+  // become a 0 that reads as "nobody was trading". addSeries already has these semantics for
+  // the comparison chart, so the Triangle reuses it rather than growing a second rule.
+  function poolTriangles(ps){
+    const out = {};
+    let any = false;
+    ps.forEach(p => {
+      const t = p.cohortTriangle;
+      if (!t) return;                      // a file written before the widening
+      any = true;
+      Object.entries(t).forEach(([c, m]) => {
+        const o = out[c] || (out[c] = { mrr: [], paying: [], active: [] });
+        addSeries(o.mrr, m.mrr); addSeries(o.paying, m.paying); addSeries(o.active, m.active);
+      });
+    });
+    // All-or-nothing on purpose. If even one selected market's file is old, the pooled grid
+    // would be short by that market's merchants in every cohort it alone reaches — a number
+    // that looks complete and is not. Falling back to the 24-cohort series is visibly
+    // narrower, and the note says why.
+    return any && ps.every(p => p.cohortTriangle) ? out : null;
+  }
   function poolPayloads(ps){
     // cohortCompare: sum mrr / paying / active; activePct is a ratio and is rebuilt at the end.
     const size = {}, rows = {}, cmp = {};
@@ -1966,18 +2011,23 @@ renderCohTable();
     if (!sel.length){
       CC = GLOBAL.CC; ccKeys = GLOBAL.keys; cohRows = GLOBAL.rows; cohCountry = null;
       window._cohSizes = null;
+      window._cohTri = null;              // no filter: the Triangle reads the embedded one
       note.textContent = NOTE_DEFAULT;
     } else if (sel.length === 1){
       const p = cache[sel[0]];
       CC = p.cohortCompare || {}; ccKeys = Object.keys(CC).sort();
       cohRows = (p.cohorts || []).slice(); cohCountry = p.country;
       window._cohSizes = p.sizes || null;
+      // Null when the file predates the widening, which is exactly what drawTri's fallback
+      // and the note under the table test for.
+      window._cohTri = p.cohortTriangle || null;
       note.textContent = NOTE_DEFAULT;
     } else {
       const p = poolPayloads(sel.map(c => cache[c]));
       CC = p.cohortCompare; ccKeys = Object.keys(CC).sort();
       cohRows = p.cohorts; cohCountry = sel.join('+');
       window._cohSizes = poolSizes(sel.map(c => cache[c]));
+      window._cohTri = poolTriangles(sel.map(c => cache[c]));
       note.textContent = NOTE_POOLED;
     }
     renderBtn(); renderChips(); repaint();
