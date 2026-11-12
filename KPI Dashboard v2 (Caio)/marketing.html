@@ -258,9 +258,9 @@
            market, so "merchant country" and "campaign target" are different questions with
            different answers — see state.ccScope. -->
       <span class="divpill" id="f-ccscope" style="margin-left:8px">
-        <button data-sc="m" class="on" title="Merchants from the selected countries, whichever campaign brought them. Spend is not narrowed, so cost-per is suppressed.">Merchant</button>
-        <button data-sc="c" title="Campaigns aimed at the selected countries, and everything they produced. Spend IS narrowed, so cost-per is real.">Campaign</button>
-        <button data-sc="b" title="Merchants from the selected countries who came from campaigns aimed at those countries.">Both</button>
+        <button data-sc="c" class="on" title="Where the campaign ran. Narrows campaigns and their spend; merchants are everyone those campaigns produced, wherever they are. Cost-per is real.">Campaign country</button>
+        <button data-sc="m" title="Where the merchant is, whichever campaign brought them. Spend is not narrowed, so cost-per is suppressed.">Merchant country</button>
+        <button data-sc="b" title="Merchants in the selected countries who came from campaigns running in those countries.">Both</button>
       </span>
       <span class="flab" style="margin-left:14px">Campaigns</span>
       <span class="msel" id="f-camp-wrap">
@@ -484,9 +484,13 @@
     // to "who did we get from Mexico", "what did we spend on Mexico" and "what did spending
     // on Mexico get us in Mexico".
     //
-    // Default is 'm', which is exactly what this picker did before the scope existed. A new
-    // control must not silently restate numbers people have already read.
-    ccScope: 'm',
+    // DEFAULT IS 'c'. The question this page is open to answer is "is this campaign working
+    // in this market" — where the money ran, not where the people who answered it happen to
+    // live. 'm' was the default for one commit on 2026-11-12 because it was the pre-existing
+    // behaviour and changing a default silently restates numbers people have read; that
+    // caution was misplaced here, since the old behaviour could not narrow spend at all and
+    // so could not answer the question. 'm' remains one click away.
+    ccScope: 'c',
   };
 
   // Campaigns the Type and Platform pills allow. The campaign multi-select is INTERSECTED
@@ -712,9 +716,9 @@
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
     state.type = ''; state.pf = ''; state.ccs = new Set(); state.stages.clear(); state.sub = '';
-    state.ccScope = 'm';
+    state.ccScope = 'c';
     [...$('f-ccscope').children].forEach(b => b.classList.remove('on'));
-    $('f-ccscope').firstElementChild.classList.add('on');
+    $('f-ccscope').firstElementChild.classList.add('on');   // Campaign country is first
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
     $('f-from').value = DMIN; $('f-to').value = DMAX;
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
