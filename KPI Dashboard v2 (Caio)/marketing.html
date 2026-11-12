@@ -254,6 +254,14 @@
         <button class="msel-btn" id="f-cc-btn">All countries</button>
         <div class="msel-pop" id="f-cc-pop"></div>
       </span>
+      <!-- What the country selection narrows. Spend is billed against a campaign, never a
+           market, so "merchant country" and "campaign target" are different questions with
+           different answers — see state.ccScope. -->
+      <span class="divpill" id="f-ccscope" style="margin-left:8px">
+        <button data-sc="m" class="on" title="Merchants from the selected countries, whichever campaign brought them. Spend is not narrowed, so cost-per is suppressed.">Merchant</button>
+        <button data-sc="c" title="Campaigns aimed at the selected countries, and everything they produced. Spend IS narrowed, so cost-per is real.">Campaign</button>
+        <button data-sc="b" title="Merchants from the selected countries who came from campaigns aimed at those countries.">Both</button>
+      </span>
       <span class="flab" style="margin-left:14px">Campaigns</span>
       <span class="msel" id="f-camp-wrap">
         <button class="msel-btn" id="f-camp-btn">All campaigns</button>
@@ -261,6 +269,9 @@
       </span>
       <span class="hint" id="f-camp-live" style="margin-left:6px"></span>
     </div>
+    <!-- Says what the country selection is currently doing to the numbers below. Empty
+         while no country is selected. -->
+    <div class="frow" id="f-cc-note" style="display:none"><span class="hint"></span></div>
   </div>
 
   <!-- ============ headline ============ -->
@@ -386,10 +397,22 @@
   // Cost per X is UNDEFINED at zero, not zero and not infinity. A tile that prints "$0" for
   // a stage nobody reached reads as free acquisition, which is the opposite of the truth.
   const per = (spend, n) => (n > 0 ? spend / n : null);
-  // True while the country multi-select narrows the base. Cost-per is then UNDEFINED, not
-  // merely smaller, because the numerator still covers every country the campaign ran in.
   const ccNarrowed = () => state.ccs.size > 0 && state.ccs.size < ALL_CC.length;
-  const perCC = (spend, n) => (ccNarrowed() ? null : per(spend, n));
+  // WHEN COST-PER IS DEFINED, and when it is a fiction.
+  //
+  // Under scope 'm' the numerator still covers every country the campaign ran in while the
+  // denominator covers one, so the quotient is a cost we never incurred — suppressed, as it
+  // always was.
+  //
+  // Under 'c' both sides move together: the campaigns are the ones aimed at the selected
+  // markets, the spend is theirs, and the merchants are everyone those campaigns produced.
+  // That is a real cost per acquisition for that market's advertising, so it is shown.
+  //
+  // Under 'b' the campaigns are narrowed but the merchants are narrowed AGAIN, to the ones
+  // who happen to live in the target market. The denominator is a subset of what the spend
+  // bought, so the quotient overstates the cost. Suppressed.
+  const ccDivisible = () => !ccNarrowed() || state.ccScope === 'c';
+  const perCC = (spend, n) => (ccDivisible() ? per(spend, n) : null);
 
   // ── campaigns are grouped by NAME, not id ──────────────────────────────────
   // Two Google campaign ids share the name "c2-gads-app-ios-usa" (one was rebuilt). Felipe
@@ -397,7 +420,11 @@
   // name and keeps the ids underneath for the merchant join.
   const campByName = new Map();
   for (const c of D.campaigns) {
-    if (!campByName.has(c.c)) campByName.set(c.c, { name: c.c, pf: c.pf, ch: c.ch, st: c.st, ids: [] });
+    // tcc = the market the campaign was AIMED at, resolved from its name in pull_paid.js.
+    // Undefined on a paid-data.js written before that change, and null when the name carries
+    // no recognisable market — both mean "unplaceable", and both behave identically here.
+    if (!campByName.has(c.c)) campByName.set(c.c, { name: c.c, pf: c.pf, ch: c.ch, st: c.st,
+                                                   tcc: c.tcc == null ? null : c.tcc, ids: [] });
     campByName.get(c.c).ids.push(c.cid);
     if (c.st === 'ENABLED') campByName.get(c.c).st = 'ENABLED';
   }
@@ -421,7 +448,14 @@
   const isLive = st => ['ENABLED', 'ACTIVE'].includes(String(st || '').toUpperCase());
 
   for (const c of ALL_CAMPS) { c.type = typeOf(c.name); c.live = isLive(c.st); }
-  const ALL_CC = [...new Set((D.merchants || []).map(m => (m.cc || '??').toUpperCase()))].sort();
+  // Merchant countries UNION campaign target markets. Built from merchants alone, the picker
+  // could not offer a market we are advertising into that has not produced a merchant yet —
+  // which is exactly the market someone opens this page to check. Such an entry shows a count
+  // of 0 and is only meaningful under Campaign scope, which is the honest state of affairs.
+  const ALL_CC = [...new Set([
+    ...(D.merchants || []).map(m => (m.cc || '??').toUpperCase()),
+    ...(D.campaigns || []).map(c => c.tcc).filter(Boolean),
+  ])].sort();
 
   const state = {
     from: DMIN, to: DMAX,
@@ -438,13 +472,37 @@
     // 'ever' = subscribed at some point, 'never' = never subscribed. Orthogonal to the stages
     // above: a merchant can pay for modules without ever touching Payments, and most do.
     sub: '',
+    // WHAT THE COUNTRY PICKER NARROWS. 'm' = merchant country, the only dimension outcomes
+    // have. 'c' = campaign target market, the only dimension MONEY has — spend is billed
+    // against a campaign, so this is the one that makes cost-per meaningful again. 'b' =
+    // both, intersected.
+    //
+    // They are genuinely different questions and they give different answers. Mexico has 37
+    // attributed merchants and zero campaigns aimed at it: under 'm' you see the 37, under
+    // 'c' you correctly see nothing, and under 'b' you see nothing because no Mexican
+    // merchant came from a Mexican campaign. None of those three is wrong; they are answers
+    // to "who did we get from Mexico", "what did we spend on Mexico" and "what did spending
+    // on Mexico get us in Mexico".
+    //
+    // Default is 'm', which is exactly what this picker did before the scope existed. A new
+    // control must not silently restate numbers people have already read.
+    ccScope: 'm',
   };
 
   // Campaigns the Type and Platform pills allow. The campaign multi-select is INTERSECTED
   // with this rather than replaced by it, so narrowing Type does not silently re-tick
   // campaigns the reader had deselected.
   const campAllowed = c => (!state.type || c.type === state.type) && (!state.pf || c.pf === state.pf);
-  const activeCampNames = () => new Set(ALL_CAMPS.filter(c => campAllowed(c) && state.camps.has(c.name)).map(c => c.name));
+  // The country picker narrows campaigns too, when the scope says so. A campaign whose name
+  // carries no recognisable market (tcc null) passes EVERY country rather than none: its
+  // spend is real and must never drop out of a total silently. The note under the filter bar
+  // names those campaigns so the gap is visible rather than merely safe.
+  const campCCok = c => {
+    if (state.ccScope === 'm' || !ccNarrowed()) return true;
+    return c.tcc == null || state.ccs.has(c.tcc);
+  };
+  const activeCampNames = () =>
+    new Set(ALL_CAMPS.filter(c => campAllowed(c) && campCCok(c) && state.camps.has(c.name)).map(c => c.name));
 
   // ── selection ──────────────────────────────────────────────────────────────
   const inPeriod = d => d && d >= state.from && d <= state.to;
@@ -452,14 +510,16 @@
 
   function selection() {
     const names = activeCampNames();
+    // Spend follows the campaign set, and under scope 'c' or 'b' that set is already
+    // country-narrowed by campCCok — which is the whole point: money is billed against a
+    // campaign, so narrowing campaigns is the only honest way to narrow spend.
     const spend = D.spend.filter(s => names.has(s.c) && inPeriod(s.d));
-    // COUNTRY NARROWS MERCHANTS ONLY. Spend carries no country — the platforms bill a
-    // campaign, not a market — so a country selection narrows who we counted without
-    // narrowing what we paid. Cost-per figures are therefore suppressed while a country
-    // subset is active (see ccNarrowed): dividing whole-campaign spend by one country's
-    // merchants would state a cost we never incurred.
+    // Merchant country still narrows merchants under 'm' and 'b'. Under 'c' it must NOT:
+    // the question there is what a market's campaigns returned, wherever the people who
+    // answered them happened to be, and 127 of the US campaigns' merchants are not in the US.
+    const mccOn = state.ccs.size && state.ccScope !== 'c';
     const merchants = D.merchants.filter(m => names.has(m.c) && inPeriod(mDate(m)) &&
-      (!state.ccs.size || state.ccs.has((m.cc || '??').toUpperCase())));
+      (!mccOn || state.ccs.has((m.cc || '??').toUpperCase())));
     const totals = spend.reduce((a, s) => {
       a.spend += s.s; a.clicks += s.k; a.impr += s.i; a.pconv += s.pc; return a;
     }, { spend: 0, clicks: 0, impr: 0, pconv: 0 });
@@ -525,7 +585,10 @@
 
   function buildCampMsel() {
     const pop = $('f-camp-pop');
-    const list = ALL_CAMPS.filter(campAllowed).sort((a, b) => a.name.localeCompare(b.name));
+    // campCCok as well as campAllowed: under Campaign or Both scope the picker must offer
+    // the campaigns the country selection actually leaves, not a list half of which the
+    // selection then silently discards.
+    const list = ALL_CAMPS.filter(c => campAllowed(c) && campCCok(c)).sort((a, b) => a.name.localeCompare(b.name));
     pop.innerHTML =
       '<div class="msel-acts"><button data-act="all">All</button><button data-act="none">None</button>' +
       '<button data-act="live">Live only</button></div>' +
@@ -576,6 +639,15 @@
       state[key] = b.dataset[attr] || '';
       buildCampMsel(); render();
     });
+  });
+
+  // Country scope. Rebuilds the campaign list like Type and Platform do, because switching to
+  // Campaign or Both changes which campaigns are on offer at all.
+  [...$('f-ccscope').children].forEach(b => b.onclick = () => {
+    [...$('f-ccscope').children].forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    state.ccScope = b.dataset.sc;
+    buildCampMsel(); syncCountryBtn(); render();
   });
 
   wireMsel('f-cc-btn', 'f-cc-pop');
@@ -640,6 +712,9 @@
   $('f-clear').onclick = () => {
     state.from = DMIN; state.to = DMAX; state.basis = 'click';
     state.type = ''; state.pf = ''; state.ccs = new Set(); state.stages.clear(); state.sub = '';
+    state.ccScope = 'm';
+    [...$('f-ccscope').children].forEach(b => b.classList.remove('on'));
+    $('f-ccscope').firstElementChild.classList.add('on');
     state.camps = new Set(ALL_CAMPS.map(c => c.name));
     $('f-from').value = DMIN; $('f-to').value = DMAX;
     clearPreset(); $('f-preset').lastElementChild.classList.add('on');
@@ -1135,8 +1210,50 @@
     $('basis-hint').textContent = state.basis === 'click'
       ? 'A merchant lands in the period we paid for their click — the honest basis for cost per register.'
       : 'A merchant lands in the period they registered. Spend and merchants can then belong to different weeks.';
+    renderCcNote(sel);
     renderTiles(sel); renderFunnel(sel); renderCharts(sel);
     renderCampaigns(sel); renderGeo(sel); renderFacebook(sel); renderMerchants(sel);
+  }
+
+  // A country selection does three different things depending on the scope, and two of them
+  // change what the money means. Saying which one is active is not decoration: under
+  // Campaign, spend and cost-per are narrowed and real; under Merchant and Both they are
+  // not, and a reader who assumes otherwise reads a cost per acquisition we never paid.
+  function renderCcNote(sel) {
+    const box = $('f-cc-note'), hint = box.firstElementChild;
+    if (!ccNarrowed()) { box.style.display = 'none'; return; }
+    box.style.display = '';
+    const cc = [...state.ccs].sort().join(', ');
+    const unplaceable = ALL_CAMPS.filter(c => c.tcc == null);
+    const spend = money(sel.totals.spend);
+    let s;
+    if (state.ccScope === 'm') {
+      s = '<b>Merchant scope.</b> Counting merchants in ' + esc(cc) + ' from every campaign. '
+        + 'Spend still covers all those campaigns in full (' + spend + '), so cost-per figures are '
+        + 'suppressed rather than divided by a part of what they bought. Switch to Campaign for '
+        + 'cost-per that means something.';
+    } else if (state.ccScope === 'c') {
+      s = '<b>Campaign scope.</b> Spend, clicks and merchants are those of the campaigns <i>aimed at</i> '
+        + esc(cc) + ' (' + spend + '). Merchants are everyone those campaigns produced, including the '
+        + 'ones outside ' + esc(cc) + ' — a US campaign brings merchants from 40-odd countries. '
+        + 'Cost-per is real here, because both sides moved together.';
+    } else {
+      s = '<b>Both.</b> Merchants in ' + esc(cc) + ' who came from campaigns aimed at ' + esc(cc) + '. '
+        + 'The strictest reading, and the one where a market with no campaign of its own correctly '
+        + 'shows nothing. Cost-per is suppressed: the spend bought merchants everywhere, not only the '
+        + 'ones counted here.';
+    }
+    if (state.ccScope !== 'm' && unplaceable.length) {
+      s += ' <b>' + n0(unplaceable.length) + ' campaign' + (unplaceable.length > 1 ? 's carry' : ' carries')
+         + ' no recognisable market in the name</b> (' + unplaceable.map(c => esc(c.name)).join(', ')
+         + '), so ' + (unplaceable.length > 1 ? 'they are' : 'it is') + ' shown under every country '
+         + 'rather than dropped — the spend is real and must not vanish from a total.';
+    }
+    if (!sel.spend.length) {
+      s += ' <b>No campaign targets ' + esc(cc) + '</b>, so this reads empty. That is the answer, not a fault: '
+         + 'switch to Merchant to see who we got there anyway.';
+    }
+    hint.innerHTML = s;
   }
 
   $('foot-text').innerHTML = `

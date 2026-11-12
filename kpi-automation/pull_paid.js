@@ -152,14 +152,53 @@ async function main() {
     subMods: get(r, 'SUB_MODULES') || null,     // which modules, live subs only
   }));
 
+  // ── which market a campaign was AIMED at ──────────────────────────────────
+  //
+  // This is NOT where its merchants came from, and the difference is the whole reason the
+  // page needs both. c3-gads-search-usa-pos is aimed at the US and brought 561 merchants, of
+  // which 127 are outside it — Mexico 37, the Philippines 9, Venezuela 7. Spend is billed
+  // against the campaign, so target market is the only country dimension money HAS; merchant
+  // country is the only one outcomes have.
+  //
+  // The market is read out of the campaign name, which is the only place it is recorded —
+  // neither Google Ads nor Meta exposes a usable country on the campaign row. The convention
+  // is c<N>-<platform>-<kind>-<market>-<product>, but the market token does not sit in a
+  // fixed position (c6-gads-youtube-usa ends with it, c11-gads-youtube-usa-remarketing does
+  // not), so every token is tested against an explicit allowlist instead of being taken by
+  // index. The allowlist is deliberately short: a token is a market only if it is listed
+  // here. Guessing from two-letter tokens would read 'ios' and 'in' as countries.
+  const MARKET = {
+    usa:'US', us:'US', can:'CA', ca:'CA', mex:'MX', mx:'MX', bra:'BR', br:'BR',
+    uk:'GB', gb:'GB', ie:'IE', ch:'CH', de:'DE', fr:'FR', es:'ES', it:'IT', nl:'NL',
+    pt:'PT', pl:'PL', se:'SE', no:'NO', dk:'DK', fi:'FI',
+    au:'AU', nz:'NZ', ph:'PH', sg:'SG', my:'MY', id:'ID', th:'TH', vn:'VN', jp:'JP',
+    kr:'KR', ind:'IN', ae:'AE', sa:'SA', za:'ZA', ng:'NG', ke:'KE', gh:'GH',
+    cl:'CL', co:'CO', pe:'PE', ar:'AR', uy:'UY', cr:'CR', pa:'PA', do:'DO', jm:'JM',
+  };
+  // Two market tokens in one name is ambiguous, and taking the first would resolve
+  // "c12-gads-do-more-usa" to the Dominican Republic. Ambiguity returns null and is flagged
+  // with the unparsed ones, which is the honest answer: a wrong market moves real spend into
+  // a country that never saw it, and nothing on the page would reveal that it had happened.
+  const marketOf = name => {
+    const hits = new Set();
+    for (const tok of String(name || '').toLowerCase().split(/[-_]/)) {
+      if (Object.prototype.hasOwnProperty.call(MARKET, tok)) hits.add(MARKET[tok]);
+    }
+    return hits.size === 1 ? [...hits][0] : null;
+  };
+
   // ── campaign roster, so the page can list campaigns with no merchants at all ──
   const camps = new Map();
   for (const s of spend) {
-    if (!camps.has(s.cid)) camps.set(s.cid, { cid: s.cid, c: s.c, pf: s.pf, ch: s.ch, st: s.st, spend: 0, clicks: 0 });
+    if (!camps.has(s.cid)) camps.set(s.cid, { cid: s.cid, c: s.c, pf: s.pf, ch: s.ch, st: s.st,
+                                              tcc: marketOf(s.c), spend: 0, clicks: 0 });
     const e = camps.get(s.cid); e.spend += s.s; e.clicks += s.k;
     if (s.st) e.st = s.st;
   }
   for (const e of camps.values()) e.spend = r2(e.spend);
+  // Stamped on the daily rows too: the page filters spend by day AND by country, and
+  // re-deriving the market per row on the client would be the same rule written twice.
+  for (const s of spend) s.tcc = marketOf(s.c);
 
   // ── integrity checks, printed loudly ──────────────────────────────────────
   const attributable = new Set(merchants.filter(m => m.cid).map(m => m.cid));
@@ -196,6 +235,19 @@ async function main() {
   if (noMerchants.length) {
     console.log(`  NOTE ${noMerchants.length} campaign(s) have spend but no attributable merchant: ` +
                 noMerchants.map(c => `${c.c} ($${c.spend})`).join(', '));
+  }
+  // Named loudly, because the fix is a rename at the ad-platform end and nobody will make it
+  // unless this is visible. An unresolved campaign is NOT dropped — it shows under every
+  // country, flagged, so its spend can never silently leave the totals.
+  const byMarket = {};
+  for (const c of camps.values()) { const k = c.tcc || '??'; byMarket[k] = r2((byMarket[k] || 0) + c.spend); }
+  console.log(`  campaign target markets: ` +
+              Object.entries(byMarket).sort((a, b) => b[1] - a[1])
+                .map(([k, v]) => `${k} $${v}`).join(', '));
+  const noMarket = [...camps.values()].filter(c => !c.tcc);
+  if (noMarket.length) {
+    console.log(`  WARNING ${noMarket.length} campaign(s) carry no recognisable market token, so a ` +
+                `country filter cannot place them: ` + noMarket.map(c => `${c.c} ($${c.spend})`).join(', '));
   }
 
   const days = spend.map(s => s.d).filter(Boolean).sort();
