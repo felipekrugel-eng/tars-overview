@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-12T15:18:14.627611+00:00",
+ "checked_at": "2026-11-12T16:11:45.340906+00:00",
  "worst": "warn",
- "digest": "e3c8aac5f066a4ae7537a32c6a3423c4add35fbb71c6d552456a86f205a09734",
+ "digest": "d8153ecd76ff586dad809d7c75d62b45a41446a9868901ac665e42938b90a47f",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T15:17:26+00:00",
-   "data_at": "2026-11-12T15:12:00+00:00",
-   "age_h": 0.1,
+   "committed_at": "2026-11-12T15:26:53+00:00",
+   "data_at": "2026-11-12T15:26:00+00:00",
+   "age_h": 0.76,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -23,53 +23,12 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [
-    "status = degraded",
-    "gap: runtime_failure"
-   ],
-   "state": "warn",
-   "reason": "source",
-   "committed_at": "2026-11-12T15:09:18+00:00",
-   "data_at": "2026-11-12T14:38:13+00:00",
-   "age_h": 0.67,
-   "diagnosis": {
-    "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-11-12T14:35:50Z",
-    "consecutive_non_success": 4,
-    "recent": [
-     {
-      "at": "2026-11-12T15:16:08Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-11-12T15:05:32Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-12T14:48:54Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-11-12T14:43:23Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-12T14:35:50Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-12T14:22:15Z",
-      "outcome": "skipped"
-     }
-    ],
-    "runs_since_artefact": 1,
-    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43244032075",
-    "step": "Evaluate and durably checkpoint",
-    "detail": "Process completed with exit code 2.",
-    "runner_lost": false
-   },
-   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 4 consecutive non-success runs \u00b7 last success 2026-11-12 14:35"
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-12T15:58:30+00:00",
+   "data_at": "2026-11-12T15:41:24+00:00",
+   "age_h": 0.51
   },
   {
    "name": "Payments pull",
@@ -81,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-12T13:41:18+00:00",
    "data_at": "2026-11-12T13:41:01.891487+00:00",
-   "age_h": 1.62
+   "age_h": 2.51
   },
   {
    "name": "Activated payments",
@@ -91,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T14:06:30+00:00",
-   "data_at": "2026-11-12T13:57:21.155000+00:00",
-   "age_h": 1.35,
+   "committed_at": "2026-11-12T16:09:23+00:00",
+   "data_at": "2026-11-12T16:00:00.247000+00:00",
+   "age_h": 0.2,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -104,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T14:06:30+00:00",
+   "committed_at": "2026-11-12T16:09:23+00:00",
    "data_at": null,
-   "age_h": 1.2
+   "age_h": 0.04
   },
   {
    "name": "Merchant base",
@@ -118,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-12T13:28:05+00:00",
    "data_at": "2026-11-12T13:20:21.923738+00:00",
-   "age_h": 1.96,
+   "age_h": 2.86,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -133,7 +92,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-12T07:49:57+00:00",
    "data_at": null,
-   "age_h": 7.47,
+   "age_h": 8.36,
    "inputs_changed_at": "2026-11-12T11:09:20+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -189,7 +148,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-12T07:49:57+00:00",
    "data_at": null,
-   "age_h": 7.47,
+   "age_h": 8.36,
    "inputs_changed_at": "2026-11-12T11:09:20+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -243,7 +202,7 @@
    "reason": null,
    "committed_at": "2026-11-12T00:00:52+00:00",
    "data_at": null,
-   "age_h": 15.29,
+   "age_h": 16.18,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -256,7 +215,7 @@
    "reason": null,
    "committed_at": "2026-11-11T15:21:56+00:00",
    "data_at": null,
-   "age_h": 23.94,
+   "age_h": 24.83,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
