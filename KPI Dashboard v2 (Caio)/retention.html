@@ -152,8 +152,19 @@
 
   <div class="panel">
     <h3>Paying / subscription retention — paying customers retained</h3>
+    <!-- Two toggles, because "retention" is two questions. t0 decides which cohort a
+         merchant belongs to; the measure decides what is being retained. -->
+    <div class="toggle" id="ret-basis" style="margin-bottom:8px">
+      <button data-basis="sub" class="on">t0 = first payment</button>
+      <button data-basis="reg">t0 = sign-up</button>
+    </div>
+    <div class="toggle" id="ret-measure" style="margin-bottom:14px">
+      <button data-measure="merchants" class="on">Merchants</button>
+      <button data-measure="revenue">Revenue</button>
+    </div>
     <div class="keystrip" id="key-paying"></div>
     <div class="chart-box"><canvas id="c-ret-paying"></canvas></div>
+    <div class="note" id="ret-basis-note"></div>
   </div>
 
   <div class="panel">
@@ -193,7 +204,12 @@ const loyFull = FULL_AGES.map(a => (_rp[a] != null && _rp[0]) ? Math.round(_rp[a
 // Five constructed/peer reference curves (static, M0..M60) from the benchmark workbook.
 const MODELS = [
   { key:'loyverse',    label:'Loyverse active (actual)',     t0:'first transaction', color:'#1D8FE1', width:3.5, dash:null,  measured:true, data:loyFull },
-  { key:'loypaying',   label:'Loyverse paying (net)',        t0:'first payment',     color:'#0E4D92', width:3.5, dash:null,  measured:true, data:[100,99.2,98.4,97.6,96.8,96,95.2,94.5,93.8,93.1,92.4,91.7,91,90.3,89.6,88.9,88.3,87.7,87.1,86.5,85.9,85.3,84.7,84.1,83.5,82.9,82.3,81.7,81.1,80.6,80.1,79.6,79.1,78.6,78.1,77.6,77.1,76.6,76.1,75.6,75.1,74.6,74.1,73.6,73.1,72.6,72.1,71.6,71.1,70.7,70.3,69.9,69.5,69.1,68.7,68.3,67.9,67.5,67.1,66.7,66.3] },
+  // MEASURED, from retention_cohorts_monthly.sql, filled in below. Until 2026-11-13 this
+  // line carried a hardcoded 61-number array flagged measured:true whose month-over-month
+  // drop only ever took five distinct values (0.8, 0.7, 0.6, 0.5, 0.4) — a drawn curve, not
+  // a measurement. It read 91% at M12. The real figure is 63.5% of merchants and 76.2% of
+  // revenue, and the headline that quoted it has been rewritten accordingly.
+  { key:'loypaying',   label:'Loyverse paying (net)',        t0:'first payment',     color:'#0E4D92', width:3.5, dash:null,  measured:true, data:[] },
   { key:'loyclass',    label:'Loyverse-class (constructed)', t0:'first transaction', color:'#888888', width:1.8, dash:[6,4], data:[100,50,31,22.6,19.8,17.4,15.2,14.3,13.5,12.8,12.0,11.3,10.7,10.2,9.8,9.3,8.9,8.5,8.1,7.8,7.4,7.1,6.8,6.5,6.2,6.0,5.8,5.6,5.4,5.2,5.0,4.9,4.7,4.5,4.4,4.2,4.1,4.0,3.9,3.8,3.7,3.6,3.5,3.4,3.3,3.2,3.2,3.1,3.0,2.9,2.9,2.8,2.8,2.7,2.7,2.6,2.6,2.5,2.5,2.5,2.4] },
   { key:'smbsaas',     label:'SMB SaaS (subscription)',      t0:'paid signup',       color:'#1F9D6B', width:1.8, dash:[2,3], data:[100,94,88.3,83,78.0,73.4,69,65.8,62.8,59.9,57.1,54.5,52,49.9,48.0,46.1,44.2,42.5,40.8,39.2,37.6,36.1,34.7,33.3,32,30.9,29.8,28.8,27.8,26.9,25.9,25.0,24.2,23.3,22.5,21.8,21,20.3,19.6,19.0,18.4,17.7,17.1,16.6,16.0,15.5,15.0,14.5,14,13.6,13.2,12.9,12.5,12.2,11.8,11.5,11.2,10.9,10.6,10.3,10] },
   { key:'ecom',        label:'E-commerce merchant',          t0:'first sale',        color:'#7E57C2', width:1.8, dash:null,  data:[100,47,32,24,21.0,18.3,16,15.0,14.1,13.3,12.5,11.7,11,10.6,10.2,9.8,9.5,9.1,8.8,8.4,8.1,7.8,7.5,7.3,7,6.8,6.6,6.4,6.3,6.1,5.9,5.8,5.6,5.4,5.3,5.1,5,4.9,4.8,4.7,4.6,4.6,4.5,4.4,4.3,4.2,4.2,4.1,4,3.9,3.9,3.8,3.8,3.7,3.6,3.6,3.5,3.5,3.4,3.4,3.3] },
@@ -215,12 +231,36 @@ const ACTIVE_KEYS = ['loyverse','loyclass','ecom','marketplace','freemium'];  //
 const PAYING_KEYS = ['loypaying','smbsaas'];                                   // paying / subscription basis
 let chartActive, chartPaying;
 
+// ---- measured cohort retention -------------------------------------------------
+// RC.sub: t0 = the merchant's first paying month. RC.reg: t0 = its sign-up month.
+// Both carry merchantsPct and revenuePct by age, aggregated sum-over-sum so a large cohort
+// counts for more than a small one, plus the number of cohorts that reached each age.
+const RC = D.retentionCohorts || null;
+let retBasis = 'sub', retMeasure = 'merchants';
+// Pads a curve onto the chart's fixed M0..M60 axis. A cohort set that has not reached an age
+// yields null, which Chart.js leaves as a gap rather than drawing to zero.
+function rcSeries(basis, measure) {
+  if (!RC || !RC[basis]) return [];
+  const s = RC[basis], key = measure === 'revenue' ? 'revenuePct' : 'merchantsPct';
+  return FULL_AGES.map(a => { const i = s.age.indexOf(a); return i < 0 ? null : s[key][i]; });
+}
+// How many cohorts stand behind each point — the tail of any cohort curve is computed from
+// progressively fewer of them, and saying so is the difference between a measurement and a
+// shape. Also used to grey out the thin end.
+function rcCohortCount(basis, a) {
+  if (!RC || !RC[basis]) return 0;
+  const i = RC[basis].age.indexOf(a); return i < 0 ? 0 : RC[basis].cohorts[i];
+}
+
 function keyStrip(elId, keys) {
   document.getElementById(elId).innerHTML = keys.map(k => { const m = byKey[k];
     return '<span class="keychip' + (m.measured ? ' loy' : '') + '">' +
       '<span class="kc" style="background:' + m.color + '"></span>' + m.label + ' <em>t0: ' + m.t0 + '</em></span>'; }).join('');
 }
-function buildChart(canvasId, keys, existing) {
+function buildChart(canvasId, keys, existing, yMax, unit) {
+  // unit defaults to '%'; the sign-up basis measured in revenue is dollars per 100 sign-ups,
+  // and printing a '%' on it would state something the number does not mean.
+  const U = unit == null ? '%' : unit;
   const ms = keys.map(k => byKey[k]).sort((a, b) => (a.measured ? 1 : 0) - (b.measured ? 1 : 0)); // measured drawn on top
   const ds = ms.map(m => ({ label: m.label, data: m.data, borderColor: m.color, backgroundColor: m.color,
     borderWidth: m.width, borderDash: m.dash || [], pointRadius: 0, pointHoverRadius: 4, spanGaps: false, tension: 0.25, fill: false }));
@@ -229,13 +269,79 @@ function buildChart(canvasId, keys, existing) {
     type: 'line', data: { labels: FULL_LABELS, datasets: ds },
     options: {
       responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => it.dataset.label + ': ' + (it.parsed.y == null ? '—' : it.parsed.y + '%') } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: it => it.dataset.label + ': ' + (it.parsed.y == null ? '—' : it.parsed.y + U) } } },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 11 }, color: GRAY, maxTicksLimit: 16, autoSkip: true } },
-        y: { min: 0, max: 100, grid: { color: '#EFEFEF' }, ticks: { callback: v => v + '%', font: { size: 12 }, color: GRAY } },
+        y: { min: 0, max: (yMax == null ? 100 : yMax), grid: { color: '#EFEFEF' },
+             ticks: { callback: v => v + U, font: { size: 12 }, color: GRAY } },
       },
     },
   });
+}
+
+// The paying chart is redrawn on its own whenever a toggle moves, so switching basis does
+// not rebuild the active chart beside it.
+function renderPaying() {
+  const basis = retBasis, measure = retMeasure;
+  byKey['loypaying'].data = rcSeries(basis, measure);
+  byKey['loypaying'].t0 = basis === 'sub' ? 'first payment' : 'sign-up';
+  byKey['loypaying'].label = basis === 'sub'
+    ? (measure === 'revenue' ? 'Loyverse revenue retained (net)' : 'Loyverse paying merchants retained')
+    : (measure === 'revenue' ? 'Loyverse MRR per 100 sign-ups' : 'Loyverse % of sign-ups paying');
+
+  // The SMB SaaS benchmark is a subscription-cohort curve. Against a sign-up cohort it would
+  // be comparing a line that starts at its first payment with one that starts months earlier,
+  // which is not a comparison at all — so it is dropped rather than drawn misleadingly.
+  const keys = basis === 'sub' ? PAYING_KEYS : ['loypaying'];
+  keyStrip('key-paying', keys);
+
+  // The registration basis is not a percentage of a surviving population, so it must not be
+  // forced onto a 0-100 axis.
+  const vals = (byKey['loypaying'].data || []).filter(v => v != null);
+  const cap = basis === 'sub' ? 100
+            : Math.max(1, Math.ceil(Math.max.apply(null, vals.length ? vals : [1]) * 1.15));
+  const unit = (basis === 'reg' && measure === 'revenue') ? '' : '%';
+  chartPaying = buildChart('c-ret-paying', keys, chartPaying, cap, unit);
+
+  const s = RC && RC[basis];
+  const at = a => { if (!s) return null; const i = s.age.indexOf(a); return i < 0 ? null : s[measure === 'revenue' ? 'revenuePct' : 'merchantsPct'][i]; };
+  const f = v => v == null ? '—' : v + '%';
+  const note = document.getElementById('ret-basis-note');
+  if (!RC) {
+    note.innerHTML = '<b>Measured curve unavailable in this build.</b> Only the benchmark reconstructions are shown. ' +
+      'The hardcoded curve this chart used to carry has been removed rather than left in place.';
+    return;
+  }
+  const common =
+    ' Aggregated across cohorts by summing numerators and denominators, not by averaging each ' +
+    'cohort’s percentage — otherwise a 40-merchant cohort would weigh as much as a 4,000-merchant one. ' +
+    'Every cohort only contributes to an age it has actually reached, so the right-hand end of the ' +
+    'line rests on far fewer cohorts than the left: ' + rcCohortCount(basis, 0) + ' at M0 against ' +
+    rcCohortCount(basis, 48) + ' at M48.';
+  if (basis === 'sub') {
+    note.innerHTML = '<b>t0 = the month the merchant first paid</b> — a subscription cohort. ' +
+      'Every cohort starts at 100% and the line is what survives: <b>' + f(at(12)) + ' at M12</b>, ' +
+      f(at(24)) + ' at M24, ' + f(at(36)) + ' at M36. ' +
+      (measure === 'revenue'
+        ? 'Revenue sits above merchants because the survivors expand — at M60 about a fifth of the ' +
+          'merchants remain and over half the revenue, so the ones who stay are worth progressively more each.'
+        : 'Switch to Revenue to see the same cohorts valued rather than counted; it runs higher, because ' +
+          'expansion among the survivors offsets part of the churn.') +
+      common +
+      '<br><b>This line was not measured until 2026-11-13.</b> It was a hardcoded array reading 91% at M12. ' +
+      'The measured figure is ' + f(at(12)) + '.';
+  } else {
+    note.innerHTML = '<b>t0 = the month the merchant signed up</b> — a registration cohort, so the line ' +
+      'starts near zero, climbs as the cohort converts to paid, and then decays. It answers what a month ' +
+      'of sign-ups is worth over time, which the subscription view cannot: a cohort that never converts ' +
+      'is invisible to a curve that only begins at first payment. ' +
+      (measure === 'revenue'
+        ? 'The value shown is the cohort’s MRR as a percentage of its registrations — cents of MRR per ' +
+          'sign-up × 100, not a share of anything retained, because the cohort billed nothing at t0.'
+        : 'The value shown is the share of that month’s registrations paying at each age.') +
+      ' The benchmark line is hidden here: it is a subscription-cohort curve and cannot be compared with ' +
+      'a sign-up cohort.' + common;
+  }
 }
 
 function render() {
@@ -243,13 +349,21 @@ function render() {
   const v12 = loyFull[12];
   const peers12 = ['loyclass','ecom','marketplace','freemium'].map(k => byKey[k].data[12]);
   const topPeer = Math.max.apply(null, peers12);
-  const pay12 = byKey['loypaying'].data[12];
+  // The paying half of this headline used to read "paying customers barely churn: 91% net
+  // retained at M12" off the hardcoded array. Measured, it is 63.5% of merchants and 76.2%
+  // of revenue — so the claim is gone, and what replaces it is the pair of real figures.
+  const _sub = RC && RC.sub, _i12 = _sub ? _sub.age.indexOf(12) : -1;
+  const payM12 = _i12 >= 0 ? _sub.merchantsPct[_i12] : null;
+  const payR12 = _i12 >= 0 ? _sub.revenuePct[_i12] : null;
   const hl = document.getElementById('headline');
   if (v12 != null) {
     hl.style.display = 'block';
     hl.style.background = v12 >= topPeer ? GREEN : BLUE;
     hl.innerHTML = '<b>' + v12 + '% still transacting at M12</b><span>— the strongest transactional model (next best ' + topPeer + '%). ' +
-      'And paying customers barely churn: ' + pay12 + '% net retained at M12.</span>';
+      (payM12 != null
+        ? 'Of merchants who start paying, ' + payM12 + '% are still paying a year later, carrying ' +
+          payR12 + '% of the revenue they started with.'
+        : 'The measured paying curve is not in this build.') + '</span>';
   } else { hl.style.display = 'none'; }
 
   // Callout
@@ -258,9 +372,8 @@ function render() {
 
   // Two charts, each with its own key
   keyStrip('key-active', ACTIVE_KEYS);
-  keyStrip('key-paying', PAYING_KEYS);
   chartActive = buildChart('c-ret-active', ACTIVE_KEYS, chartActive);
-  chartPaying = buildChart('c-ret-paying', PAYING_KEYS, chartPaying);
+  renderPaying();
 
   // Combined comparison table (usage models, then paying models)
   const cols = [1, 6, 12, 24, 36, 60];
@@ -319,6 +432,18 @@ document.getElementById('foot-notes').innerHTML =
   '&rarr; The five non-Loyverse lines are anchored reconstructions (see Sources), not measured data.';
 document.getElementById('foot-source').textContent = (D.meta && D.meta.source) || 'canonical workbook';
 document.getElementById('foot-gen').textContent = (D.meta && D.meta.generatedAt) || '';
+
+// Toggles. Each redraws only the paying chart — the active chart beside it is a different
+// measurement on a different basis and never moves.
+[['ret-basis', 'basis', v => retBasis = v], ['ret-measure', 'measure', v => retMeasure = v]]
+  .forEach(([id, attr, set]) => {
+    const box = document.getElementById(id);
+    if (!box) return;
+    [...box.children].forEach(b => b.onclick = () => {
+      [...box.children].forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); set(b.dataset[attr]); renderPaying();
+    });
+  });
 
 render();
 

@@ -514,6 +514,28 @@ def main():
     except Exception as _e:
         print(f"[mrrbridge] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
+    # ---- cohort retention (retention_cohorts.csv) ----
+    # Replaces the hardcoded 61-number "paying (net)" curve that retention.html carried as
+    # measured data. Two bases in one result set, 'sub' (t0 = first payment) and 'reg'
+    # (t0 = sign-up). GUARDED: without the file the page keeps the benchmark lines and says
+    # the measured curve is unavailable, rather than falling back to the invented one.
+    try:
+        _rc_conn = connect()
+        try:
+            _rc_cur = _rc_conn.cursor()
+            _rc_cur.execute("ALTER SESSION SET STATEMENT_TIMEOUT_IN_SECONDS = 900")
+            _rc_cur.execute((SQLDIR / "retention_cohorts_monthly.sql").read_text().rstrip().rstrip(";"))
+            _rc_df = _rc_cur.fetch_pandas_all() if hasattr(_rc_cur, "fetch_pandas_all") else \
+                     pd.DataFrame(_rc_cur.fetchall(), columns=[c[0] for c in _rc_cur.description])
+            _rc_cur.close()
+        finally:
+            _rc_conn.close()
+        write(WORK / "retention_cohorts.csv", _rc_df)
+        _nsub = int((_rc_df["BASIS"] == "sub").sum()); _nreg = int((_rc_df["BASIS"] == "reg").sum())
+        print(f"[retcoh] {len(_rc_df)} rows — sub {_nsub}, reg {_nreg}", flush=True)
+    except Exception as _e:
+        print(f"[retcoh] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
+
     # ---- paying-customer snapshot (paying-snapshots.json) ----
     # Must run BEFORE build_kpi_data.py, which reads this file for the headline count.
     #

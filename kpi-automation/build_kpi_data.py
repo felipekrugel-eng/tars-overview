@@ -377,6 +377,86 @@ except Exception as _e:
     print("   [bridge][warn] mrr_bridge.csv unavailable — the Churn tab will hide the revenue "
           "bridge rather than draw a stale one:", _e)
 
+# ---- cohort retention curves, measured, on two definitions of t0 ----
+# Replaces a hardcoded array. Aggregated SUM over SUM, never as the mean of per-cohort
+# percentages: a mean of ratios lets a 40-merchant cohort weigh the same as a 4,000-merchant
+# one, which is how a curve ends up describing the small cohorts rather than the business.
+#
+# 'sub' — t0 is the merchant's first paying month. Every cohort starts at 100% of its
+#         merchants and 100% of its MRR, so the curve is pure survival. Revenue sits ABOVE
+#         merchants because the survivors expand: at M60 roughly a fifth of the merchants
+#         are left and over half the revenue.
+# 'reg' — t0 is the sign-up month. The denominator is that month's REGISTRATIONS, taken from
+#         the series already published above so the page divides by the number it shows
+#         elsewhere. The curve starts near zero, climbs as the cohort converts, then decays.
+#
+# A cohort only contributes to an age it has actually reached, so the tail is computed from
+# progressively fewer cohorts. That count is emitted per age — a curve thinning to a handful
+# of old cohorts is not the same measurement as its head and the page marks where it changes.
+retention_cohorts = {}
+try:
+    _rc = pd.read_csv(WORK / "retention_cohorts.csv")
+    for _c in ("AGE", "MERCHANTS", "MRR", "COHORT_MERCHANTS", "COHORT_BASE_MRR"):
+        _rc[_c] = pd.to_numeric(_rc[_c], errors="coerce")
+    _rc["COHORT"] = _rc["COHORT"].astype(str).str[:7]
+    _regs = {r["month"]: float(r.get("registrations") or 0) for r in monthly_out}
+
+    def _curve(_df, _den_m, _den_r):
+        """_den_m/_den_r: cohort -> denominator. Returns curves keyed by age."""
+        _acc = {}
+        for _, _r in _df.iterrows():
+            _a = int(_r["AGE"])
+            if _a < 0:
+                continue
+            _dm, _dr = _den_m.get(_r["COHORT"]), _den_r.get(_r["COHORT"])
+            if not _dm:
+                continue
+            _s = _acc.setdefault(_a, {"m": 0.0, "dm": 0.0, "r": 0.0, "dr": 0.0, "n": 0})
+            _s["m"] += float(_r["MERCHANTS"] or 0); _s["dm"] += _dm
+            if _dr:
+                _s["r"] += float(_r["MRR"] or 0); _s["dr"] += _dr
+            _s["n"] += 1
+        _ages = sorted(_acc)
+        return {
+            "age": _ages,
+            "merchantsPct": [round(_acc[a]["m"] / _acc[a]["dm"] * 100, 2) if _acc[a]["dm"] else None for a in _ages],
+            "revenuePct":   [round(_acc[a]["r"] / _acc[a]["dr"] * 100, 2) if _acc[a]["dr"] else None for a in _ages],
+            "cohorts":      [_acc[a]["n"] for a in _ages],
+            "merchants":    [int(round(_acc[a]["m"])) for a in _ages],
+            "mrr":          [round(_acc[a]["r"], 2) for a in _ages],
+        }
+
+    _sub = _rc[_rc["BASIS"] == "sub"]
+    _subm = _sub.groupby("COHORT")["COHORT_MERCHANTS"].max().fillna(0).to_dict()
+    _subr = _sub.groupby("COHORT")["COHORT_BASE_MRR"].max().fillna(0).to_dict()
+    _reg = _rc[_rc["BASIS"] == "reg"]
+    _regden = {c: _regs.get(c, 0.0) for c in _reg["COHORT"].unique()}
+
+    retention_cohorts = {
+        "sub": _curve(_sub, {k: float(v) for k, v in _subm.items()},
+                            {k: float(v) for k, v in _subr.items()}),
+        # Revenue on the registration basis has no t0 to index against — the cohort billed
+        # nothing in its sign-up month — so revenuePct here is MRR as a percentage of the
+        # cohort's registrations, i.e. cents of MRR per registered merchant x 100. The page
+        # relabels the axis rather than pretending it is a retention percentage.
+        "reg": _curve(_reg, _regden, _regden),
+        "meta": {
+            "subCohorts": int(_sub["COHORT"].nunique()),
+            "regCohorts": int(_reg["COHORT"].nunique()),
+            "subBasis": "t0 = first paying month; denominators are the cohort's merchants and MRR in that month",
+            "regBasis": "t0 = sign-up month; denominator is that month's registrations",
+        },
+    }
+    _s12 = retention_cohorts["sub"]
+    _i12 = _s12["age"].index(12) if 12 in _s12["age"] else None
+    print(f"   [retcoh] sub {retention_cohorts['meta']['subCohorts']} cohorts, "
+          f"reg {retention_cohorts['meta']['regCohorts']} cohorts"
+          + (f", M12 merchants {_s12['merchantsPct'][_i12]}% revenue {_s12['revenuePct'][_i12]}%"
+             if _i12 is not None else ""))
+except Exception as _e:
+    print("   [retcoh][warn] retention_cohorts.csv unavailable — the Churn tab will show the "
+          "benchmark lines only and say the measured curve is missing:", _e)
+
 # cohortTriangle carries EVERY cohort, not the last 24 that cohortCompare is trimmed to, and it
 # is what the dashboard's Triangle view reads so a merchant from a 2017 cohort can be seen at all.
 # ACTIVE was computed for every cohort above but only ever exported inside the 24-cohort
@@ -450,7 +530,7 @@ data = {
     "arpcByCountryByMonth": {c: arpc_country.get(c, {}) for c in top100},
     "semesterCohortSplit": semester_split,
     "countryFunnel": country_funnel, "countryNames": COUNTRY_NAMES, "retention": retention,
-    "mrrBridge": mrr_bridge,
+    "mrrBridge": mrr_bridge, "retentionCohorts": retention_cohorts,
 }
 OUT.parent.mkdir(parents=True, exist_ok=True)
 with open(OUT, "w") as f:
