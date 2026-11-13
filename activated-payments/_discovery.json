@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-13T17:31:46.539Z",
+  "ranAt": "2026-11-13T17:58:20.677Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -17,6 +17,12 @@
       },
       {
         "name": "ACCOUNT_FINANCIAL_SUMMARY_HOURLY"
+      },
+      {
+        "name": "ACCOUNT_FUTURE_REQUIREMENTS_ERRORS"
+      },
+      {
+        "name": "ACCOUNT_REQUIREMENTS_ERRORS"
       },
       {
         "name": "ACTIVITY_REPORT_ITEMIZED"
@@ -1177,7 +1183,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10173136456
+        "rows": 10173432336
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
