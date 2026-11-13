@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-13T11:46:59.066321+00:00",
+ "checked_at": "2026-11-13T14:47:07.141825+00:00",
  "worst": "warn",
- "digest": "ad7afedb2b0776170efc8759578a4c79b8c4062e778ccfbbbdd67b59efbc3f9a",
+ "digest": "7439427964e93da83609a0e53a76a4fdd60d459c6e5760beb10549f0f8937b52",
  "history_method": 2,
  "pipelines": [
   {
@@ -10,13 +10,56 @@
    "path": "docs/cusum-data.js",
    "ref": "gh-pages",
    "max_age_h": 2,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
-   "committed_at": "2026-11-13T11:30:48+00:00",
-   "data_at": "2026-11-13T11:28:00+00:00",
-   "age_h": 0.32,
-   "inputs_changed_at": "2026-11-10T18:47:44+00:00"
+   "notes": [
+    "ageing: 1.7h old, limit 2h"
+   ],
+   "state": "warn",
+   "reason": "ageing",
+   "committed_at": "2026-11-13T13:06:56+00:00",
+   "data_at": "2026-11-13T13:04:00+00:00",
+   "age_h": 1.72,
+   "inputs_changed_at": "2026-11-10T18:47:44+00:00",
+   "diagnosis": {
+    "workflow": "cusum-pull.yml",
+    "last_success": "2026-11-13T12:58:25Z",
+    "consecutive_non_success": 2,
+    "recent": [
+     {
+      "at": "2026-11-13T14:38:04Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-13T13:38:46Z",
+      "outcome": "failure"
+     },
+     {
+      "at": "2026-11-13T12:58:25Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-13T12:42:56Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-13T12:32:17Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-13T12:22:37Z",
+      "outcome": "failure"
+     }
+    ],
+    "runs_since_artefact": 2,
+    "verdict": "running but not publishing \u2014 2 run(s) since the artefact was last written, none succeeded",
+    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43435454975",
+    "step": "Pull registrations CUSUM from Snowflake -> regenerate cusum-data.js into gh-pages/docs",
+    "signature": "unhandled exception",
+    "meaning": "A code fault. The last line of the traceback is below.",
+    "detail": "Process completed with exit code 1.",
+    "skipped_publish": true,
+    "runner_lost": false
+   },
+   "diagnosis_line": "running but not publishing \u2014 2 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Pull registrations CUSUM from Snowflake -> regenerate cusum-data.js into gh-pages/docs \u00b7 unhandled exception \u00b7 its publish step was SKIPPED, so the work was discarded \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-13 12:58"
   },
   {
    "name": "Risk monitor",
@@ -26,9 +69,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T11:44:51+00:00",
-   "data_at": "2026-11-13T11:31:48+00:00",
-   "age_h": 0.25
+   "committed_at": "2026-11-13T13:53:22+00:00",
+   "data_at": "2026-11-13T13:39:18+00:00",
+   "age_h": 1.13
   },
   {
    "name": "Payments pull",
@@ -38,9 +81,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T10:16:13+00:00",
-   "data_at": "2026-11-13T10:16:06.291816+00:00",
-   "age_h": 1.51
+   "committed_at": "2026-11-13T13:09:33+00:00",
+   "data_at": "2026-11-13T13:09:32.420084+00:00",
+   "age_h": 1.63
   },
   {
    "name": "Activated payments",
@@ -50,9 +93,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T11:40:48+00:00",
-   "data_at": "2026-11-13T11:29:42.565000+00:00",
-   "age_h": 0.29,
+   "committed_at": "2026-11-13T14:09:56+00:00",
+   "data_at": "2026-11-13T13:56:09.469000+00:00",
+   "age_h": 0.85,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -63,9 +106,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T11:40:48+00:00",
+   "committed_at": "2026-11-13T14:09:56+00:00",
    "data_at": null,
-   "age_h": 0.1
+   "age_h": 0.62
   },
   {
    "name": "Merchant base",
@@ -75,9 +118,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T13:28:05+00:00",
-   "data_at": "2026-11-12T13:20:21.923738+00:00",
-   "age_h": 22.44,
+   "committed_at": "2026-11-13T12:47:39+00:00",
+   "data_at": "2026-11-13T12:41:09.017985+00:00",
+   "age_h": 2.1,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -92,7 +135,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-13T08:49:06+00:00",
    "data_at": null,
-   "age_h": 2.96,
+   "age_h": 5.97,
    "inputs_changed_at": "2026-11-13T11:36:27+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -148,7 +191,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-13T08:49:06+00:00",
    "data_at": null,
-   "age_h": 2.96,
+   "age_h": 5.97,
    "inputs_changed_at": "2026-11-13T11:36:27+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -202,7 +245,7 @@
    "reason": null,
    "committed_at": "2026-11-13T00:55:28+00:00",
    "data_at": null,
-   "age_h": 10.86,
+   "age_h": 13.86,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -215,7 +258,7 @@
    "reason": null,
    "committed_at": "2026-11-12T17:55:16+00:00",
    "data_at": null,
-   "age_h": 17.86,
+   "age_h": 20.86,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -280,7 +323,7 @@
    "2026-11-10": "warn",
    "2026-11-11": "ok",
    "2026-11-12": "ok",
-   "2026-11-13": "ok"
+   "2026-11-13": "warn"
   },
   "Risk monitor": {
    "2026-10-14": "warn",
