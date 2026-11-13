@@ -1,6 +1,6 @@
 {
  "schemaVersion": 2,
- "generatedAt": "2026-11-12T00:00:38+00:00",
+ "generatedAt": "2026-11-13T00:55:14+00:00",
  "methodology": {
   "version": "2.0",
   "scoreDirection": "higher_is_riskier",
@@ -122,7 +122,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U20HL994R9cJpff",
@@ -155,7 +155,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzCoe8t65WSaBkm",
@@ -179,7 +179,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvgVy6saaIjhYUI",
@@ -205,7 +205,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwGtu8kuFsbws8t",
@@ -229,7 +229,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxmheGGdPH88tBR",
@@ -253,7 +253,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tyyze55UrYDy3Kg",
@@ -279,7 +279,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzdIi79zYqXKNCB",
@@ -303,7 +303,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3ffU5YU7DST2YX",
@@ -338,7 +338,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEICq6O5Pyu0BaB",
@@ -371,7 +371,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Twbg9GGqPiDxZG0",
@@ -395,7 +395,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyIyL752BS0nqgt",
@@ -421,7 +421,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TycF94xTuzhCteQ",
@@ -445,7 +445,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1fr25m1ZlBLgpJ",
@@ -478,7 +478,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDTkX8U0jCSzUQh",
@@ -513,7 +513,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TusiV5ykrufJkCt",
@@ -537,7 +537,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9WUs4oKhHRYb9R",
@@ -570,7 +570,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBjys5dFe8AWU10",
@@ -605,7 +605,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEUFK5dZ6e5RJIN",
@@ -640,7 +640,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UB19ZGBn27q535l",
@@ -673,7 +673,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFFj39RLMRuyKh4",
@@ -708,7 +708,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHy7BQFxo15y3TQ",
@@ -734,7 +734,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBjvW5oHlXBWXp2",
@@ -769,7 +769,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCAgp5TR2pVISx6",
@@ -802,7 +802,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEwp17hTPFEAi5l",
@@ -837,7 +837,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tww9V8OvcUDepWg",
@@ -861,7 +861,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U054E9gbWe8blQS",
@@ -885,7 +885,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1InM8qnmS4CBOj",
@@ -918,7 +918,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U85Qm9n0Q2nguMH",
@@ -951,7 +951,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwujM9vaL6o2yQM",
@@ -975,7 +975,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4DGqGGAqhYSTcQ",
@@ -1008,7 +1008,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBkmE8gaTli7e09",
@@ -1041,7 +1041,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UB0yT807XUMEAXq",
@@ -1074,7 +1074,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMdcQ7k2AfD2jbs",
@@ -1098,7 +1098,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuIpz7pWAXgiTXW",
@@ -1122,7 +1122,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxDZH4U03unDtGv",
@@ -1146,7 +1146,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0ngs9h04DnbNpo",
@@ -1170,7 +1170,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U12f97Loe0VQiDC",
@@ -1194,7 +1194,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1Ljz8L6JQZME0w",
@@ -1227,7 +1227,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1ZjE8l4boWrOTe",
@@ -1260,7 +1260,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2Cvs9f3d1uJ9sr",
@@ -1293,7 +1293,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3PiV5kcgmTk43d",
@@ -1326,7 +1326,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4vAl8RYKZL54E1",
@@ -1359,7 +1359,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEEK89KpwPvOkyl",
@@ -1392,7 +1392,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TpRfGGDU5VTbxvE",
@@ -1416,7 +1416,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tty3q5XZgMuE7ip",
@@ -1440,7 +1440,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwT8Y8NB8uL4gKb",
@@ -1464,7 +1464,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0Y9v4SYFiGfcvS",
@@ -1488,7 +1488,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2hpc82uyhHpbr1",
@@ -1521,7 +1521,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3n7S87F3jHZBwf",
@@ -1554,7 +1554,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9QN35GOFfLEY9C",
@@ -1587,7 +1587,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHmrI7nBkUEEgsf",
@@ -1620,7 +1620,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJong6csafsOEGT",
@@ -1653,7 +1653,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJymx6q1mLKFO8Y",
@@ -1686,7 +1686,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKQB36Coz9tLuW2",
@@ -1719,7 +1719,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKigzGE0NIGhPlL",
@@ -1752,7 +1752,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULWoo7Fg1q53ZR8",
@@ -1785,7 +1785,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMZMh5YEG5HEfJK",
@@ -1818,7 +1818,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEmzO9fKc8XfnKn",
@@ -1851,7 +1851,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxTDZ7Nb4umvEVs",
@@ -1875,7 +1875,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2YgV6HmOFkpPBM",
@@ -1908,7 +1908,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2xMtG9OG7rUHlM",
@@ -1941,7 +1941,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4oL6QGJSzcChme",
@@ -1974,7 +1974,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7NJ38ivrGvyP9d",
@@ -2007,7 +2007,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9BZ854wWZX0Iiw",
@@ -2040,7 +2040,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9Kr98982U6C4kE",
@@ -2073,7 +2073,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UK7v97UYK3kelnL",
@@ -2106,7 +2106,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKkGc4ezjooyOlA",
@@ -2139,7 +2139,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCio68rCAFu94mU",
@@ -2172,7 +2172,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TybOU85jKoMHw62",
@@ -2196,7 +2196,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzyVs6RidaEcius",
@@ -2220,7 +2220,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U08s16YGKHV19sm",
@@ -2244,7 +2244,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U15hV9x0c22Iffs",
@@ -2268,7 +2268,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2ee38JBbiZ82TP",
@@ -2301,7 +2301,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U359x55Kl2jL8Qa",
@@ -2334,7 +2334,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3iNY8Rnvd03efN",
@@ -2367,7 +2367,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4Gss7KpIJjFGpA",
@@ -2400,7 +2400,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4RWX5lXEDoOdZr",
@@ -2433,7 +2433,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U63rv74Jx9npPUq",
@@ -2466,7 +2466,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqi3v8jynLd53fa",
@@ -2490,7 +2490,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqv3L84BAbKYNcp",
@@ -2514,7 +2514,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBHxo69d5AVYQ18",
@@ -2547,7 +2547,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHQin79Tya3nQY2",
@@ -2573,7 +2573,7 @@
    "riskOverrideReason": "known-network-risk",
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvY548wCZoEbjHD",
@@ -2597,7 +2597,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzhyY4cY4gQrsKv",
@@ -2621,7 +2621,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0DEj7nwbOhG8VV",
@@ -2645,7 +2645,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0muw7lafJOaDSt",
@@ -2669,7 +2669,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0pPU7nttw0Iulp",
@@ -2693,7 +2693,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1AVt6hj9YluYcK",
@@ -2726,7 +2726,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1emTQI5YLX7ypQ",
@@ -2759,7 +2759,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3gGh7zHLMjvFWz",
@@ -2792,7 +2792,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4ET75wWWlqfV3z",
@@ -2825,7 +2825,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4JcS97lQ6c3Ttw",
@@ -2858,7 +2858,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5tXl8bArA51Ci0",
@@ -2891,7 +2891,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7ZHQ9jHgbRRXZt",
@@ -2924,7 +2924,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7ltw6yXqbhf0ty",
@@ -2957,7 +2957,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7nVN8WY4XMmadv",
@@ -2990,7 +2990,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9bAK84wKG8giCp",
@@ -3023,7 +3023,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC49I6N0UTQl06c",
@@ -3056,7 +3056,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCliBGLxEE0Mcbv",
@@ -3089,7 +3089,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCsLj5MJyDAdd4b",
@@ -3122,7 +3122,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCzIW5OUqZvn5hp",
@@ -3155,7 +3155,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMoMD7wpyzNHpuc",
@@ -3179,7 +3179,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0QjJ5BI1WKDyVm",
@@ -3203,7 +3203,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U21lk4iTsIkpBRu",
@@ -3236,7 +3236,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3X1c5QnOKBkrQ1",
@@ -3269,7 +3269,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5ArB8LHBvrmvmB",
@@ -3302,7 +3302,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5DSe7M2ZnNFgUk",
@@ -3335,7 +3335,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U6ey35OXLQpNJWb",
@@ -3368,7 +3368,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UACNf5Xib8XFleT",
@@ -3401,7 +3401,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBAFO9pIHxjiB7p",
@@ -3434,7 +3434,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFZF97GtorCHtrm",
@@ -3467,7 +3467,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TpdDV4m00Ds6Gx3",
@@ -3491,7 +3491,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tq0p08WVKLTXAtv",
@@ -3515,7 +3515,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrlHv8TznnkI6g3",
@@ -3539,7 +3539,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TsBKM5fEHwyOixc",
@@ -3563,7 +3563,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TsNEw6s1OKt5XDL",
@@ -3587,7 +3587,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBNdj9CcGVCSKsJ",
@@ -3620,7 +3620,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGO0E8bfPYKCwKs",
@@ -3653,7 +3653,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGR4v8wK7k1UZMa",
@@ -3686,7 +3686,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGSBw9J8p5qfmGZ",
@@ -3719,7 +3719,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGvUM9f3yqawg8l",
@@ -3752,7 +3752,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UH8Wq8DovFa3ZGl",
@@ -3785,7 +3785,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHFoo4h3ijG1S7n",
@@ -3818,7 +3818,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHRAI4ZqyEi3YB8",
@@ -3851,7 +3851,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHxjV9YKdD77L6o",
@@ -3884,7 +3884,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHyYc9V3kJQVs9C",
@@ -3917,7 +3917,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIHS877ITuKVF2w",
@@ -3950,7 +3950,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UItuF70FqShHvHi",
@@ -3983,7 +3983,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIvXJ9PkZm6WWvm",
@@ -4016,7 +4016,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIy0D7gbI4gLE0j",
@@ -4049,7 +4049,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJ3Nu5xrznbuME0",
@@ -4082,7 +4082,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJ8zC6i91iB0xKR",
@@ -4115,7 +4115,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJDhy5ilAZ0xzr2",
@@ -4148,7 +4148,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJj6P9HHh6mGSTv",
@@ -4181,7 +4181,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJqih8GjOqtdxPx",
@@ -4214,7 +4214,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UK0a19bMtMrqh94",
@@ -4247,7 +4247,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UK37A74foUZJDMW",
@@ -4280,7 +4280,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UK7mt8ELwERxbYr",
@@ -4313,7 +4313,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULB8X8yPmNmM4yq",
@@ -4346,7 +4346,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULEOe7nOFg84NPi",
@@ -4379,7 +4379,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULV5W5SiRYG2xa5",
@@ -4412,7 +4412,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULn8T9CREE4Tbwl",
@@ -4445,7 +4445,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULoWw5y6XrUuS6m",
@@ -4478,7 +4478,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UM0467BE0FcKMPV",
@@ -4511,7 +4511,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UM7rG9POTquKgvL",
@@ -4544,7 +4544,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMXDEGEJgmysin3",
@@ -4577,7 +4577,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMamG9TluawZ5p9",
@@ -4610,7 +4610,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMbrfGHNYcwQJg6",
@@ -4643,7 +4643,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMgsu5VWjylZHk7",
@@ -4676,7 +4676,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMhE78x0RRQtZQM",
@@ -4709,7 +4709,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMhN19lc3wfTkra",
@@ -4742,7 +4742,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMnjz5gwJGtYf7s",
@@ -4775,7 +4775,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMuEfGAvQ5t1nSQ",
@@ -4799,7 +4799,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMvE3G4dl5BO1J5",
@@ -4823,7 +4823,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxDDy5T8BKvxVTy",
@@ -4847,7 +4847,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxJHq93ssVGFPcv",
@@ -4871,7 +4871,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TydSy9GuhIQXnSC",
@@ -4895,7 +4895,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0ELk6ntk5TgMDp",
@@ -4919,7 +4919,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0GfR8UJXG4CAjW",
@@ -4943,7 +4943,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0iUD9upzMPBODj",
@@ -4967,7 +4967,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3Oaj825ex8bJCr",
@@ -5000,7 +5000,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5LQM69jDYzuHqV",
@@ -5033,7 +5033,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7iAC5UxfckyQyt",
@@ -5066,7 +5066,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U830H9hYdDFCHmu",
@@ -5099,7 +5099,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8gqX56W1m7wVav",
@@ -5132,7 +5132,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8wiW9GKpGPVbSn",
@@ -5165,7 +5165,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuZfU8mEkN0Z2qf",
@@ -5189,7 +5189,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TubpS5dkAry8TOa",
@@ -5213,7 +5213,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvIXX8Zw4bTnrA8",
@@ -5237,7 +5237,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvsSMGLIgU4gA5w",
@@ -5261,7 +5261,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tw1mQ4fR04h3t5S",
@@ -5285,7 +5285,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3cww6uLDVkuXUr",
@@ -5318,7 +5318,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U42So4lFjROboIJ",
@@ -5351,7 +5351,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4RCt6YLpJZuaH2",
@@ -5384,7 +5384,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4WVA907xXK0HvO",
@@ -5417,7 +5417,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5LK87gS9FtwPtm",
@@ -5450,7 +5450,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8JrC5jzMqxJBpe",
@@ -5483,7 +5483,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8sauG1xpszgIvt",
@@ -5516,7 +5516,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9X205A6bQYBtrF",
@@ -5549,7 +5549,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJGM34w4tiblfAl",
@@ -5582,7 +5582,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TpBK68n6hKE542k",
@@ -5606,7 +5606,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqx0j6KVeviFSZv",
@@ -5630,7 +5630,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tr1ZA6GGzxYiJJF",
@@ -5654,7 +5654,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrkLK8W1Kg639hT",
@@ -5678,7 +5678,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tt2Re4UA6sdHN6h",
@@ -5702,7 +5702,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGYP18jgnL3tyab",
@@ -5735,7 +5735,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHQFN7DT06jctNT",
@@ -5768,7 +5768,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHS8P9GvnhwozsS",
@@ -5801,7 +5801,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHZ099ZSnaF1bgm",
@@ -5834,7 +5834,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHtPu4SnyDzLgWU",
@@ -5867,7 +5867,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UI0fV9yJuww7qRI",
@@ -5900,7 +5900,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UICNZ5hjsENkvb6",
@@ -5933,7 +5933,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UITtx6D48H6nL7t",
@@ -5966,7 +5966,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIiZv7o5K88j9dh",
@@ -5999,7 +5999,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJ41d5gOSQQmLAJ",
@@ -6032,7 +6032,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJFG384YnK7U6Lb",
@@ -6065,7 +6065,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJIPG8TNTb3g8cJ",
@@ -6098,7 +6098,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJVQG763j9WcDoL",
@@ -6131,7 +6131,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKRM97J1ivGX2Ez",
@@ -6164,7 +6164,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKTXz4q8TZPuXbg",
@@ -6197,7 +6197,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKX9W8YXF3lxxns",
@@ -6230,7 +6230,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKpxw7vCUoxRe4P",
@@ -6263,7 +6263,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UL1Ur6vo5bNtQio",
@@ -6296,7 +6296,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UL2tO7TYWTAAtO5",
@@ -6329,7 +6329,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULVG49rx59g6LKa",
@@ -6362,7 +6362,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULg8b9Ao7XMLd1e",
@@ -6395,7 +6395,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULlT45NgWFvjg1f",
@@ -6428,7 +6428,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULulj9cdxEvOCSB",
@@ -6461,7 +6461,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9zxDG827M4pjqe",
@@ -6494,7 +6494,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAeeC7wZFqQjBeS",
@@ -6527,7 +6527,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFxrP5Ychk62ztO",
@@ -6560,7 +6560,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJDHDQIvjQTArH0",
@@ -6593,7 +6593,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJJ9691GE0innMb",
@@ -6626,7 +6626,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tuh269U9xMmyLsp",
@@ -6650,7 +6650,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tybf74Pz4sppOi9",
@@ -6674,7 +6674,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tz1Y08o2OgrUsVA",
@@ -6698,7 +6698,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U03UH9v6veLVado",
@@ -6722,7 +6722,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0AVe9rNbrfXs53",
@@ -6746,7 +6746,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1fgi8DQnI4pvnK",
@@ -6779,7 +6779,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U3KqH9v5WEB4pYE",
@@ -6812,7 +6812,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7fno6kU9zEn1II",
@@ -6845,7 +6845,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7g1M9ZYSNscMWb",
@@ -6878,7 +6878,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8kgT634oAAQNZi",
@@ -6911,7 +6911,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UH5Ym8uMTUAgP93",
@@ -6944,7 +6944,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Toqua9Iyn3F9xbN",
@@ -6968,7 +6968,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrUQrGCFKZFtYnx",
@@ -6992,7 +6992,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtuIG9KE9SKFfJE",
@@ -7016,7 +7016,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tu2e15BuxKqmTzi",
@@ -7040,7 +7040,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuBJa9v8AFkcRnO",
@@ -7064,7 +7064,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBHdE5C2aEqUCRg",
@@ -7097,7 +7097,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIvww6kwe44hxTX",
@@ -7121,7 +7121,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULDXeQIOCf95OZf",
@@ -7154,7 +7154,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ty1n47BxqbHYv0U",
@@ -7178,7 +7178,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1FlQG6JZwDAYEL",
@@ -7211,7 +7211,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1G5M8xeP7xdCcu",
@@ -7244,7 +7244,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1eHu7IFvwOlKU9",
@@ -7277,7 +7277,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U43wl5hKlq0g8xX",
@@ -7310,7 +7310,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5Nod8qdFtuTHQf",
@@ -7343,7 +7343,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8teX4z2najFfUB",
@@ -7376,7 +7376,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9eQK5bIKcjdqld",
@@ -7409,7 +7409,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9t6J4rcGLbRpkZ",
@@ -7442,7 +7442,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAgze6EcbWbvHYH",
@@ -7475,7 +7475,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UB06F62HWVm57t1",
@@ -7508,7 +7508,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBRvw9JFkO2OqeO",
@@ -7541,7 +7541,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC3Kg9L7WLQOb2n",
@@ -7574,7 +7574,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC7U074uN8zlfP5",
@@ -7607,7 +7607,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCMJN9G5Gh3rxuB",
@@ -7640,7 +7640,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCpGW4WgeXA6hrn",
@@ -7673,7 +7673,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDFpO96irvmr6Or",
@@ -7706,7 +7706,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDdkP5G0gTzee9D",
@@ -7739,7 +7739,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEN6q5RYy1gUtlk",
@@ -7772,7 +7772,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEhOx86rutlnfoW",
@@ -7805,7 +7805,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEwwm59Esu9Qvrz",
@@ -7838,7 +7838,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFRNL4pIhiUQHpe",
@@ -7871,7 +7871,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFeKD9TFGv0hhSM",
@@ -7904,7 +7904,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFfdaGE5JWaugWb",
@@ -7937,7 +7937,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFii96CWjdb58CF",
@@ -7970,7 +7970,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UG0Mf8JNFuRgdz2",
@@ -8003,7 +8003,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UGCEh7xDh13YY6C",
@@ -8036,7 +8036,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIzp96NM5q5ypEN",
@@ -8069,7 +8069,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJ7PS4yZP4YK3FI",
@@ -8102,7 +8102,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKtIs5J43YO5m5b",
@@ -8135,7 +8135,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMJaq4M4li8L7EX",
@@ -8168,7 +8168,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJKgF81TBKVjCNh",
@@ -8201,7 +8201,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJuYy4RPh00blGm",
@@ -8234,7 +8234,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJv5o6KLVxRjwZi",
@@ -8267,7 +8267,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UN6XD6u1J4hHAiP",
@@ -8301,7 +8301,7 @@
    "fullyEnabled": false,
    "detailsSubmitted": true,
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9gbF9UK51Tp9HB",
@@ -8334,7 +8334,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9ptO68g4GM022E",
@@ -8367,7 +8367,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAF5e5NWLJgp0Y6",
@@ -8400,7 +8400,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAgjjG9P9k3Dxp0",
@@ -8433,7 +8433,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAubK7vWjskiFvF",
@@ -8466,7 +8466,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC2b0G0omqophil",
@@ -8499,7 +8499,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCArx9ZnWqour6y",
@@ -8532,7 +8532,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCagn65IG2uVdnd",
@@ -8565,7 +8565,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCjBp5eUS7XLxlX",
@@ -8598,7 +8598,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDACx9Ri1utbDUy",
@@ -8631,7 +8631,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDAvO4hpNEPFPRG",
@@ -8664,7 +8664,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEaFM56GgF0tFIA",
@@ -8697,7 +8697,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UG4Ke9VIznJHdQO",
@@ -8730,7 +8730,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvlMb7umGxRHj7H",
@@ -8754,7 +8754,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxAQjG6iUrq4DFX",
@@ -8778,7 +8778,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzlYJ7u54VCD6OZ",
@@ -8802,7 +8802,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1qRj5yXpHljl6g",
@@ -8835,7 +8835,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U2j3ZGG9H7vamtE",
@@ -8868,7 +8868,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U31um9GDfs9kpnO",
@@ -8901,7 +8901,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4XKn6JpCRoR3bx",
@@ -8934,7 +8934,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4rB7GI9W0Bcxhb",
@@ -8967,7 +8967,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U6Sar7UdqeMiNfC",
@@ -9000,7 +9000,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U760k79cXxIYVva",
@@ -9033,7 +9033,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7dB48Lf9gMb3sm",
@@ -9066,7 +9066,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJO2V4kIN4yB5Qf",
@@ -9099,7 +9099,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKVgk6u1Cat7J2N",
@@ -9132,7 +9132,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMbAm4jUlNkL4aO",
@@ -9165,7 +9165,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9zXLG0GIjD5nPj",
@@ -9198,7 +9198,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAjlc8rwqUnLGjY",
@@ -9231,7 +9231,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Restricted",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAtkH96cD1HhFBC",
@@ -9264,7 +9264,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBpbJ7xG4I6AdfZ",
@@ -9297,7 +9297,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC4H57ksU44tsCk",
@@ -9330,7 +9330,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDJLd9aCIk2rD3v",
@@ -9363,7 +9363,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEs4V4YcAmTRfVs",
@@ -9396,7 +9396,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFa6g7TKWtNLuam",
@@ -9429,7 +9429,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UG6jd8E1BPBb8VE",
@@ -9462,7 +9462,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UKkpC7Tdf07VgF3",
@@ -9495,7 +9495,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UL4XH7eFAQeomaV",
@@ -9528,7 +9528,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TstkX5tWgDkBfDc",
@@ -9552,7 +9552,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtsTo7sg7EIYCuY",
@@ -9576,7 +9576,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtvXJ6BNUehnzYY",
@@ -9600,7 +9600,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TudszG62KcrI8Vv",
@@ -9624,7 +9624,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvflK87Zt33mtIt",
@@ -9648,7 +9648,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxYvo9VbQVUlIKr",
@@ -9672,7 +9672,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U57rQ5qU6KoL7k7",
@@ -9705,7 +9705,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDX3951IYmx3Xfa",
@@ -9738,7 +9738,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHl1TG9trOZRH83",
@@ -9771,7 +9771,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJHyt9ovufv15Ag",
@@ -9804,7 +9804,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULRuR75LfvlLSCX",
@@ -9837,7 +9837,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqbkx62LiuzGJEh",
@@ -9861,7 +9861,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrNw86sAuyRJTS8",
@@ -9885,7 +9885,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrP607d9Rj8zgUk",
@@ -9909,7 +9909,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TshTW8WL2KYZwld",
@@ -9933,7 +9933,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ttv1K5Mannx2wup",
@@ -9957,7 +9957,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ttwml7Uqora9JAi",
@@ -9981,7 +9981,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMB4O9VgiJZNPpz",
@@ -10014,7 +10014,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHYmPGMNcICYBGq",
@@ -10047,7 +10047,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UL7K2671YGQTYMm",
@@ -10080,7 +10080,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMKBh55Bqlf495F",
@@ -10113,7 +10113,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TVeZjG1JfOXkKoN",
@@ -10137,7 +10137,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TpxjZ9762FzcO1s",
@@ -10161,7 +10161,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TthlFQIef4mv3J2",
@@ -10185,7 +10185,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuCFY6voXsMUDGG",
@@ -10209,7 +10209,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tufay9Oz3DYiARW",
@@ -10233,7 +10233,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwLW294MdCtvyFa",
@@ -10257,7 +10257,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxGpC7l8BZiXh4L",
@@ -10281,7 +10281,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U56KE6Ra7soJRZh",
@@ -10314,7 +10314,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5W6I7dzWyoeYnh",
@@ -10347,7 +10347,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9iRj4g1VRVAmLr",
@@ -10380,7 +10380,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9yVN8OhNXAjdpo",
@@ -10413,7 +10413,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAhKzG0zZHDt4dl",
@@ -10446,7 +10446,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAlEN8l3uiGDgWV",
@@ -10479,7 +10479,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBIhw8ReD49kGyY",
@@ -10512,7 +10512,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBQqi7KQ8a5AN9s",
@@ -10545,7 +10545,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBSIP6YltI2w0x3",
@@ -10578,7 +10578,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UC6Pu4gvRvxTRto",
@@ -10611,7 +10611,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCjCO973tfkSJKI",
@@ -10644,7 +10644,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCpZp7wiLN99Svu",
@@ -10677,7 +10677,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UCq9Z81AFCUMwZb",
@@ -10710,7 +10710,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEEoB7DCJmh71d9",
@@ -10743,7 +10743,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEMwp4OSZLsJjsv",
@@ -10776,7 +10776,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UF2fR4dWlnOznED",
@@ -10809,7 +10809,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UG0iv4QLzSWU04O",
@@ -10842,7 +10842,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMvdVQGfFe8jFDj",
@@ -10866,7 +10866,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UISqk683mbsQWYE",
@@ -10899,7 +10899,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJCc08rHsCMxwtc",
@@ -10932,7 +10932,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1ULORbGCXt7waDeR",
@@ -10965,7 +10965,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWNth4NNu9UGLI4",
@@ -11012,7 +11012,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzUMr8bnS2oJIcF",
@@ -11036,7 +11036,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U03ua7YlQ6ps6cm",
@@ -11060,7 +11060,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U49B55oE0hif8XD",
@@ -11093,7 +11093,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJE8o8m76Cdi9l6",
@@ -11126,7 +11126,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UHlVr4qF0yAT5zO",
@@ -11159,7 +11159,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwW8Z7XcmDxB0e1",
@@ -11183,7 +11183,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tybpe4U2T5Lpg0B",
@@ -11207,7 +11207,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U23vs7EAcBAH8Vl",
@@ -11240,7 +11240,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7yRWG7cv0Jdz8D",
@@ -11273,7 +11273,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBiWv7kKUvlOCf8",
@@ -11306,7 +11306,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPg728iPXA3z7jW",
@@ -11337,7 +11337,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UUaD06quEC1gEap",
@@ -11400,7 +11400,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-26-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UJeJk5SnmekN9nG",
@@ -11433,7 +11433,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TKEC06CHbtYBHTl",
@@ -11457,7 +11457,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TqKel5B6Ajq2hj4",
@@ -11481,7 +11481,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TttgD4bYumanndj",
@@ -11505,7 +11505,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ttxao7GWD4xNmcf",
@@ -11529,7 +11529,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TLnCc7HEHpEovei",
@@ -11553,7 +11553,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TqDjv5QsF0Xrbqv",
@@ -11577,7 +11577,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TrOSZ7xRW9ys2WB",
@@ -11601,7 +11601,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Trhwr6wCPbGbkI3",
@@ -11625,7 +11625,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TsX7S4P6Fp7rXpk",
@@ -11649,7 +11649,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtUxJ5PegT02ycs",
@@ -11673,7 +11673,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuEVPGCV7GJ4feE",
@@ -11697,7 +11697,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFzEX9mOWQS5YXx",
@@ -11730,7 +11730,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UUsR7GHImdFq9Sk",
@@ -11784,7 +11784,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-26-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tv0lz6YI3Em8Nfx",
@@ -11808,7 +11808,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxYA06vp2xBQm7Z",
@@ -11832,7 +11832,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyyLY4P02Q3CMCv",
@@ -11856,7 +11856,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tz0Yo8NLeGh9v2U",
@@ -11880,7 +11880,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U16yz8I76WMrLAj",
@@ -11904,7 +11904,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4qei7AbNbznZFY",
@@ -11937,7 +11937,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5C2Z6BAZn3VOUt",
@@ -11970,7 +11970,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U62nY5IGDZkHWDP",
@@ -12003,7 +12003,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UALtH4ZoKpo8x0M",
@@ -12036,7 +12036,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UN9GaQCBrpln0bN",
@@ -12070,7 +12070,7 @@
    "fullyEnabled": true,
    "detailsSubmitted": true,
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVviT86CcvShTNh",
@@ -12118,7 +12118,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9Eox4q13a9rSfj",
@@ -12151,7 +12151,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7SgXGHrped7Puj",
@@ -12184,7 +12184,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAvVz4tXeLoMSnp",
@@ -12217,7 +12217,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAvKF7Boiscs21f",
@@ -12250,7 +12250,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMo8t5fLc5Qa9M5",
@@ -12274,7 +12274,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tw2gF4yu1rGqQyt",
@@ -12298,7 +12298,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyRJk4vgXQjNNeL",
@@ -12322,7 +12322,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U01MK4gJYQo08a6",
@@ -12346,7 +12346,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U41s951aPtqlwev",
@@ -12379,7 +12379,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U72Jd9ciXuma5zr",
@@ -12412,7 +12412,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U7laZ4ZJ5o13WDg",
@@ -12445,7 +12445,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UUnuA8hP9onlrs2",
@@ -12491,7 +12491,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-26-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UW3hx7np7DQ3oqi",
@@ -12522,7 +12522,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-30-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFRKZ5Kh0P7Rji6",
@@ -12555,7 +12555,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tu2hJ7AFzbzGA0t",
@@ -12579,7 +12579,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U6FQTQHCddZfFdM",
@@ -12612,7 +12612,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U97G3QBkwI6khCu",
@@ -12645,7 +12645,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UML3E5wM0K7AyZf",
@@ -12669,7 +12669,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UW9dT9Uqyjawhh9",
@@ -12716,7 +12716,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxlrQ8YMzgujAbT",
@@ -12740,7 +12740,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyjvM6QW4bIVlYw",
@@ -12764,7 +12764,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U55Dy8meMc9ORmQ",
@@ -12803,7 +12803,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-26-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9TAR4qfJZZfKex",
@@ -12836,7 +12836,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UD2nQ7W6DgNeh5X",
@@ -12869,7 +12869,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPbUQ5C6l92ofNO",
@@ -12923,7 +12923,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVLnT5p9kmRZKfQ",
@@ -12963,7 +12963,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWIYn9hb7VgCNr9",
@@ -13002,7 +13002,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWNnw59ZZQz3S3p",
@@ -13055,7 +13055,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWrPp4hjVLmUQWY",
@@ -13094,7 +13094,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-02-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXP1k8iE0AF2Mld",
@@ -13141,7 +13141,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYCMqGDPbp2bA9I",
@@ -13190,7 +13190,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-05-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U8VYp5kJHdqPeRT",
@@ -13223,7 +13223,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuBgu5jY1ho048c",
@@ -13247,7 +13247,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBCup7mfyOSMfxk",
@@ -13280,7 +13280,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UDgt99XxeB8Ab2e",
@@ -13313,7 +13313,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVJpY68GeGVdXiI",
@@ -13344,7 +13344,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UW4pO9tl93nU890",
@@ -13390,7 +13390,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-30-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TWOQY8lEmH1iqQS",
@@ -13414,7 +13414,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TWfXB9YsTPeMVh3",
@@ -13438,7 +13438,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtqzU6uCQE8Zczc",
@@ -13462,7 +13462,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tu24OG61FLqIJJO",
@@ -13486,7 +13486,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAy447JNOnhaC0p",
@@ -13519,7 +13519,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFhdO5ys2OCQLuh",
@@ -13552,7 +13552,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqz2w66Uhk3bIY9",
@@ -13576,7 +13576,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TskyM73MB9QwwL3",
@@ -13600,7 +13600,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ttucf545J4S3zma",
@@ -13624,7 +13624,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtwgqG9cKTLUhQ7",
@@ -13648,7 +13648,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1Cjo4cmPECFMlR",
@@ -13681,7 +13681,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1rct4UgNsCfLfV",
@@ -13714,7 +13714,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U5IDe8WSd5zgBEb",
@@ -13747,7 +13747,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBn0H5jwblXdhq6",
@@ -13788,7 +13788,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UFex197HgisNKBW",
@@ -13821,7 +13821,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UUBj46DsleJx5S0",
@@ -13860,7 +13860,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-27-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVMkD4tD53fx3mB",
@@ -13907,7 +13907,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVn7d8Fmdezj6oL",
@@ -13954,7 +13954,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVxCB4uxDNwhkh9",
@@ -14001,7 +14001,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXLPW5WX04gE7Ap",
@@ -14041,7 +14041,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXUzG7JgJr8EhR6",
@@ -14095,7 +14095,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXjWd5dRKZm28Ux",
@@ -14126,7 +14126,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-04-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXvzb5Gu4Vcij3y",
@@ -14168,7 +14168,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-04-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtuAL7C646Nqh7e",
@@ -14192,7 +14192,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuEuL7itMnCQdbe",
@@ -14216,7 +14216,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TuHGJ6kYqKNQLle",
@@ -14240,7 +14240,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TycgB4bfb4je3mF",
@@ -14264,7 +14264,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4NBD6xrVvfynTx",
@@ -14297,7 +14297,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UEvNg4vFfk6H62N",
@@ -14330,7 +14330,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvNtc70hsRCruUB",
@@ -14354,7 +14354,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNFni79DVNco3m2",
@@ -14388,7 +14388,7 @@
    "fullyEnabled": true,
    "detailsSubmitted": true,
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWfuB6KikOipfHs",
@@ -14428,7 +14428,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-01-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Twuk46ZhZcDQqGv",
@@ -14459,7 +14459,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Txmhe85O4mEmN6i",
@@ -14483,7 +14483,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TziUt9IXRsRKinK",
@@ -14507,7 +14507,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U6jjX9mCMh4nlcx",
@@ -14540,7 +14540,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UBaemQJkK2GSCpz",
@@ -14573,7 +14573,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPPOo8XBqmSsCcs",
@@ -14641,7 +14641,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVPFF8aA4pVI76f",
@@ -14681,7 +14681,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWBh56ugqY7knnI",
@@ -14742,7 +14742,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-30-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXZlP7MtItDwSeB",
@@ -14796,7 +14796,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TMaEu9uALOIzRNR",
@@ -14820,7 +14820,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TOKmPQJfvlGDJJG",
@@ -14844,7 +14844,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TWOGf7egDgFG55L",
@@ -14868,7 +14868,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tqy7pGNFnsrSDXh",
@@ -14892,7 +14892,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TtGdM6YyaltU7SI",
@@ -14916,7 +14916,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ttv6H9ChMSf42Ey",
@@ -14940,7 +14940,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U4P4l86xZMRaC2Z",
@@ -14973,7 +14973,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UAD4K4z2hCWeC2s",
@@ -15006,7 +15006,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UX0NL9l7cqEO4ag",
@@ -15046,7 +15046,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-02-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyuLu7mmET46XC9",
@@ -15070,7 +15070,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyyMY98r5944q2W",
@@ -15094,7 +15094,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U1Amp5T8AHVnUys",
@@ -15127,7 +15127,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNF0w9IRKwEoowo",
@@ -15161,7 +15161,7 @@
    "fullyEnabled": true,
    "detailsSubmitted": true,
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tvhmq5jhvJ6HIFN",
@@ -15185,7 +15185,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tw1xR8jpGeQspj7",
@@ -15209,7 +15209,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U0mpz8AlaB5Qt6V",
@@ -15233,7 +15233,7 @@
    "detailsSubmitted": true,
    "scoreBasis": "legacy-trust-inverted",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UORUp6nTeJMOQCT",
@@ -15261,7 +15261,7 @@
    "email": "marcoaborges277@hotmail.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URb5Z9UCcDu25HT",
@@ -15294,7 +15294,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-17-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USIjO7Zv5Sqwrhy",
@@ -15326,7 +15326,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-19-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tu0c56JDT9EKC5h",
@@ -15359,7 +15359,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tud3f8vgzvi6zf7",
@@ -15392,7 +15392,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvK416G6hq2Du7E",
@@ -15426,7 +15426,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvKXT6xaKj8hHOI",
@@ -15459,7 +15459,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvKs27RQyylwjul",
@@ -15490,7 +15490,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvLWR60keEz7lj8",
@@ -15522,7 +15522,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvM4N60PqcSrq7L",
@@ -15554,7 +15554,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvTRbQJcFMN7Q5w",
@@ -15585,7 +15585,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TvYU0GEjMuIzXRw",
@@ -15617,7 +15617,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwnVK61XfR7SCZd",
@@ -15648,7 +15648,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TwtFi55iFJx8eAH",
@@ -15679,7 +15679,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Twtrw7RNZ2x2tqz",
@@ -15713,7 +15713,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Twyfq83O5DUZDys",
@@ -15747,7 +15747,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tx6me7pI89fIZqN",
@@ -15778,7 +15778,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Tx7aA5Ajt0ZqMnN",
@@ -15809,7 +15809,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TxfDm5q3btV2CH8",
@@ -15876,7 +15876,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-30-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ty3Dv9HFhwonJMu",
@@ -15907,7 +15907,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyAEE7Jnz4DHkuz",
@@ -15939,7 +15939,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TyEuM7Na6QfXyIh",
@@ -15973,7 +15973,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-07-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1TzR1d5IJfM6EIfy",
@@ -16005,7 +16005,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-20-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1U9ucp9Qvqm2368S",
@@ -16033,7 +16033,7 @@
    "email": "previltheodore03@gmail.com",
    "detailFile": "risk-health/details-2026-10-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UIw4K9af5QxIV2d",
@@ -16064,7 +16064,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UMYDS8dfjouE1jC",
@@ -16092,7 +16092,7 @@
    "email": "brackentownblessings@gmail.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNGNf6kxN5JThjv",
@@ -16120,7 +16120,7 @@
    "email": "runtgordon@gmail.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNGRL9g68ZzK0gI",
@@ -16148,7 +16148,7 @@
    "email": "Turbopartshub@gmail.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNIvE9UktMnnn0N",
@@ -16178,7 +16178,7 @@
    "email": "shamussandwich@aol.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNJUm8jgX11uEuc",
@@ -16206,7 +16206,7 @@
    "email": "cochineroestilosin@gmail.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNPxd5MptZKerfd",
@@ -16234,7 +16234,7 @@
    "email": "mbgraphicz.co@bluemailx.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNYIF9NpejKe1Vc",
@@ -16262,7 +16262,7 @@
    "email": "giftsbyjennielee@gmail.com",
    "detailFile": "risk-health/details-2026-10-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNc7p7BjmUWdF6v",
@@ -16292,7 +16292,7 @@
    "email": "alexisrolando02@gmail.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNfVW7p982hKusL",
@@ -16320,7 +16320,7 @@
    "email": "freshbambookitchen@gmail.com",
    "detailFile": "risk-health/details-2026-10-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UNvYu8Q6X3wrHj3",
@@ -16348,7 +16348,7 @@
    "email": "downie.chase@gmail.com",
    "detailFile": "risk-health/details-2026-10-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UO4ji5OLDLh53ov",
@@ -16376,7 +16376,7 @@
    "email": "info.cravecreations@gmail.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UO57A8qOL0dCu4d",
@@ -16404,7 +16404,7 @@
    "email": "mfglove1@gmail.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UO7rY7THJ7HMwk2",
@@ -16432,7 +16432,7 @@
    "email": "info@killer-chicken.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UO97Z86Li4belSm",
@@ -16462,7 +16462,7 @@
    "email": "mrshahbaz@yahoo.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UODV47MCo2p0QUL",
@@ -16490,7 +16490,7 @@
    "email": "gao1231238@icloud.com",
    "detailFile": "risk-health/details-2026-10-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UONdu8t7nnbQfnb",
@@ -16518,7 +16518,7 @@
    "email": "sbcf2026@gmail.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOQZT54DdOjervB",
@@ -16546,7 +16546,7 @@
    "email": "kayla.milo@extremehardscapes.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOQay4N8jJplCjB",
@@ -16576,7 +16576,7 @@
    "email": "creativemefilms@gmail.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOUQ85sGt4qQDAy",
@@ -16604,7 +16604,7 @@
    "email": "samelliotrocks@gmail.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOeIg7rIAxdGIDc",
@@ -16632,7 +16632,7 @@
    "email": "rorta83@aol.com",
    "detailFile": "risk-health/details-2026-10-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOoL76IQ5twzGLK",
@@ -16660,7 +16660,7 @@
    "email": "Heatherzellers3@gmail.com",
    "detailFile": "risk-health/details-2026-10-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOroM9lKIPk3Eoh",
@@ -16690,7 +16690,7 @@
    "email": "joshua.quillin1@gmail.com",
    "detailFile": "risk-health/details-2026-10-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOsgJG261yU4RKx",
@@ -16718,7 +16718,7 @@
    "email": "jk.beyoutiful@gmail.com",
    "detailFile": "risk-health/details-2026-10-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UOxeD5xqwu8VyZ3",
@@ -16746,7 +16746,7 @@
    "email": "ratrellthomas4@gmail.com",
    "detailFile": "risk-health/details-2026-10-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UP3pw7NvoDkIB9b",
@@ -16774,7 +16774,7 @@
    "email": "oyinglobal7@gmail.com",
    "detailFile": "risk-health/details-2026-10-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UP9rP9kLGo4j9rO",
@@ -16802,7 +16802,7 @@
    "email": "lanankat@gmail.com",
    "detailFile": "risk-health/details-2026-10-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPAZb8WPoC2Un5o",
@@ -16834,7 +16834,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-23-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPDhl7rFOPI8Ber",
@@ -16862,7 +16862,7 @@
    "email": "Kaseybillie7@gmail.com",
    "detailFile": "risk-health/details-2026-10-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPEIB8WWgZgaZWM",
@@ -16890,7 +16890,7 @@
    "email": "fiorellocafe111@gmail.com",
    "detailFile": "risk-health/details-2026-10-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPPXg9bzeEEngTS",
@@ -16921,7 +16921,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPW6Q773JOCg6JE",
@@ -16967,7 +16967,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPZa95lW3kYIOUW",
@@ -17014,7 +17014,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPfKz9pd3Hgu2lm",
@@ -17053,7 +17053,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-12-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPsnB5Tb9kt2WkT",
@@ -17085,7 +17085,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UPt2L4T2Z7Dvxm0",
@@ -17116,7 +17116,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQ5ia7WzxxLu8XF",
@@ -17147,7 +17147,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQ8fwG5b3KbMaFU",
@@ -17179,7 +17179,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQ9fW8o80pV23OV",
@@ -17211,7 +17211,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-13-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQA4q8anJWKNr8c",
@@ -17243,7 +17243,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-14-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQALA7dyvqziJOg",
@@ -17274,7 +17274,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-14-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQBocQAAt839MXH",
@@ -17306,7 +17306,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-14-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQGrbGPnUvhFgnk",
@@ -17338,7 +17338,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-14-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQT4s9vvSGjsy0z",
@@ -17370,7 +17370,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-14-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQWyj8hHaoKxLb2",
@@ -17401,7 +17401,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-15-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQfp35ZG6RshrRf",
@@ -17433,7 +17433,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-15-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQh706jzbdYdnRU",
@@ -17464,7 +17464,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-15-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQjonG9PyAEiptB",
@@ -17496,7 +17496,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-15-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQyr08gjilQUUMD",
@@ -17528,7 +17528,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UQztt58dPTKQ7yV",
@@ -17560,7 +17560,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UR2XV8uIqwO1DTq",
@@ -17591,7 +17591,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UR2na6fmms9Ii5n",
@@ -17623,7 +17623,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UR31B6LalLH4TcX",
@@ -17654,7 +17654,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UR4WI5rr6vZe3BJ",
@@ -17688,7 +17688,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UREpF8sk0PtDu4z",
@@ -17719,7 +17719,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-16-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URJ5p8Tfjjm3yvr",
@@ -17750,7 +17750,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-17-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URNQU9ZxT3kDn1q",
@@ -17782,7 +17782,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-18-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URVzu72w2u2v4Ke",
@@ -17816,7 +17816,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URby38Uvbjy1cO6",
@@ -17848,7 +17848,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-18-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URfc68z07g4fYM2",
@@ -17879,7 +17879,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-18-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URkCh5ebl7T3FbV",
@@ -17910,7 +17910,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-19-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1URl477RqLveHETp",
@@ -17942,7 +17942,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-18-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USCxA4muEDtl63J",
@@ -17974,7 +17974,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-19-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USGyt7eukyTQOUz",
@@ -18005,7 +18005,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-19-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USHVY5knLs8VT7C",
@@ -18037,7 +18037,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-19-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USPJYG1sdqYIiIz",
@@ -18069,7 +18069,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-20-enabled.json",
    "liveStatus": "Rejected",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USdxxQJ6ec0RsW5",
@@ -18101,7 +18101,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-20-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USfyc4yopaGzKuF",
@@ -18135,7 +18135,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-20-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USuPy5ZrqUy9JLz",
@@ -18167,7 +18167,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1USx6t5TQR9BjRhG",
@@ -18198,7 +18198,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-21-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UT6dC5xFkngtixW",
@@ -18230,7 +18230,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UT7iJ7qP8r45JGC",
@@ -18261,7 +18261,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTAMo4pk75hcsAa",
@@ -18292,7 +18292,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTDU59ZlifOtZ8y",
@@ -18323,7 +18323,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTDli9J9wYNJLJ1",
@@ -18355,7 +18355,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTKN77k64k0WRUo",
@@ -18387,7 +18387,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-22-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTR4C9r4n3kXgvW",
@@ -18419,7 +18419,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-23-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTVn19G2w9oC9Gn",
@@ -18451,7 +18451,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-23-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTfYd6fIstd6X6s",
@@ -18482,7 +18482,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-23-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTj5f8m6m0Dzh2j",
@@ -18513,7 +18513,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-23-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTp6i8xhRdNyuKS",
@@ -18544,7 +18544,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTqPr7qOJ46qd4b",
@@ -18576,7 +18576,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTsoTGOVJ4bxhLJ",
@@ -18610,7 +18610,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTvR98vFuTLD1rw",
@@ -18641,7 +18641,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTxVP6EXKM02Jm4",
@@ -18672,7 +18672,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UTy4E6rjHSwXeQv",
@@ -18704,7 +18704,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UU4lO7rskFBVLMK",
@@ -18735,7 +18735,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UU96G8h27Izfy5P",
@@ -18767,7 +18767,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-24-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UULpf7oMmz4cXIQ",
@@ -18828,7 +18828,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-25-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UV0Fz8DNWe3iweJ",
@@ -18891,7 +18891,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-27-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UV23D6raSAz5QJM",
@@ -18932,7 +18932,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-27-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVGX34aUQfdjWJy",
@@ -18993,7 +18993,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-27-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVHAr6KQocTpznR",
@@ -19024,7 +19024,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-27-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVJvn82259fMR1w",
@@ -19064,7 +19064,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVLiz8rKlooX4xz",
@@ -19110,7 +19110,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVXQz6p5mkICTOT",
@@ -19150,7 +19150,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVcc75kfvmID7dX",
@@ -19196,7 +19196,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-28-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVi6Z4abGVAnPPv",
@@ -19250,7 +19250,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVt3B9EbGUmHhVU",
@@ -19313,7 +19313,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVu1l6V5wsssdWu",
@@ -19376,7 +19376,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVu66G5d1YVGIzf",
@@ -19408,7 +19408,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UVxBL51LxcI96Mk",
@@ -19455,7 +19455,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-29-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UW0Vs875fdmoZRt",
@@ -19516,7 +19516,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-30-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWNOa5IHDG7gjCr",
@@ -19548,7 +19548,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWOup4VvMsiyhIQ",
@@ -19587,7 +19587,7 @@
    ],
    "detailFile": "risk-health/details-2026-10-31-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWcADG2GBXjhYlz",
@@ -19618,7 +19618,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-01-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWev09hD5AkLHZ3",
@@ -19674,7 +19674,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-04-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UWnUn5XPWJvFXn2",
@@ -19707,7 +19707,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXHVf7k55YXBFEQ",
@@ -19738,7 +19738,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-02-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXNDS6dDy0J4BRJ",
@@ -19769,7 +19769,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXNPDGP5TEDQ4or",
@@ -19800,7 +19800,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXNxj9XWHPs2DlS",
@@ -19839,7 +19839,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXZ6Z9cLUPMk2E7",
@@ -19888,7 +19888,7 @@
    ],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXcwM4bUsIUnzXM",
@@ -19918,7 +19918,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-03-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXhq59JgOdwel27",
@@ -19950,7 +19950,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-04-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UXmOz6zak0hvT0e",
@@ -19981,7 +19981,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-04-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYDAL9hWo0QksON",
@@ -20013,7 +20013,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-05-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYIGh9lDo4o1m3R",
@@ -20044,7 +20044,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-05-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYRTf4fxvCHK1rS",
@@ -20076,7 +20076,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYUJg5d0DYg2WwQ",
@@ -20107,7 +20107,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYYhX67ld09yPRU",
@@ -20139,7 +20139,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYZ005MTc8M3N5U",
@@ -20170,7 +20170,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYZ698qZYCDaEzp",
@@ -20201,7 +20201,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYZlB8j6Kvdvhhs",
@@ -20233,7 +20233,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYbhn7Ypj0lPiHN",
@@ -20264,7 +20264,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYdSc8fDkLpi5Y9",
@@ -20295,7 +20295,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-06-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYmbR7Z4BjTu27X",
@@ -20326,7 +20326,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYttX72bIBqJFwT",
@@ -20357,7 +20357,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UYuFB8QY3l8EJl2",
@@ -20388,7 +20388,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZ0CTQFkkwFO1cK",
@@ -20420,7 +20420,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZ4kB5lG8WIEpX6",
@@ -20452,7 +20452,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZBGq54n2rIbTJU",
@@ -20484,7 +20484,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZBts9aG9R3cvSX",
@@ -20516,7 +20516,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZCsH8D8tJEWfhZ",
@@ -20548,7 +20548,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-07-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZHMD7ggaLti9yR",
@@ -20580,7 +20580,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZJse4xJZb54nhZ",
@@ -20611,7 +20611,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZMGk7cgkhTQj05",
@@ -20643,7 +20643,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZZpp7nhVHwutcW",
@@ -20674,7 +20674,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-08-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZqDA8gb9VZelwa",
@@ -20706,7 +20706,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZqsx5CDObOWaUC",
@@ -20737,7 +20737,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZqzj9i4q1cZa13",
@@ -20769,7 +20769,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZtSS97aJkn8SFX",
@@ -20801,7 +20801,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-09-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZuqf4PdEPJZyVe",
@@ -20833,7 +20833,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UZy3Q6VF3FnEzO9",
@@ -20865,7 +20865,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ua0qE5aYDOCfO0s",
@@ -20896,7 +20896,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ua2jZ5VQ0U3Cvxp",
@@ -20927,7 +20927,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Ua5c84xnNsmsc4R",
@@ -20958,7 +20958,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaAMT4qQXEEbfMe",
@@ -20989,7 +20989,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaApP4mEfsZd0QV",
@@ -21021,7 +21021,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaBBQ5FChsrSwXE",
@@ -21052,7 +21052,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaIzj9WwPkya2iI",
@@ -21084,7 +21084,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-10-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaO2q5mt2nKFAe8",
@@ -21115,7 +21115,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaZ44G8xzz7b9hC",
@@ -21146,7 +21146,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1UaaOO6vCv50EFeM",
@@ -21178,7 +21178,7 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   },
   {
    "id": "acct_1Uaafw9E5Juq3ZGs",
@@ -21209,39 +21209,292 @@
    "sources": [],
    "detailFile": "risk-health/details-2026-11-11-enabled.json",
    "liveStatus": "Enabled",
-   "liveStatusAt": "2026-11-12T00:00:38+00:00"
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1UadFe7UIdxTYxTf",
+   "accountId": "acct_1UadFe7UIdxTYxTf",
+   "merchantId": "5426729",
+   "name": "Inner-G",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T15:15:55Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "confirmed",
+   "enabledEvidenceLevel": "observed_transition",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Bronx, NY, US",
+   "mcc": "5631",
+   "email": "ismelrogers@gmail.com",
+   "statementDescriptor": "ISMEL ROGERS",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1Uahd998LsCwiTUb",
+   "accountId": "acct_1Uahd998LsCwiTUb",
+   "merchantId": "5427405",
+   "name": "D’Hollander Judith - Le Bougeoir",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T19:56:28Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "boundary_ambiguous",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Wanfercée-Baulet, BE",
+   "website": "https://www.facebook.com/share/14xAFdgmtAC/?mibextid=wwXIfr",
+   "mcc": "5399",
+   "email": "lebougeoirdeluciole@gmail.com",
+   "statementDescriptor": "FACEBOOK.COM/SHARE",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1Uahrj6Q5mSKzJJK",
+   "accountId": "acct_1Uahrj6Q5mSKzJJK",
+   "merchantId": "5285183",
+   "name": "Tank’d Dive Bar & Fish Camp",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T20:11:32Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "boundary_ambiguous",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Canton, GA, US",
+   "website": "https://www.facebook.com/TankdSaba",
+   "mcc": "5812",
+   "email": "Rrbrokerstuff@gmail.com",
+   "statementDescriptor": "TANKD DIVE BAR & FISH",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1UajIx6PU41aYBaK",
+   "accountId": "acct_1UajIx6PU41aYBaK",
+   "merchantId": "5397798",
+   "name": "NAAR's ice cream",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T21:43:44Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "boundary_ambiguous",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Adelanto, CA, US",
+   "website": "https://www.facebook.com/NAARSICECREAM?mibextid=ZbWKwL",
+   "mcc": "5499",
+   "email": "ronniezink96@gmail.com",
+   "statementDescriptor": "FACEBOOK.COM/NAARSICEC",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1Uajvi96ZbAmYWXO",
+   "accountId": "acct_1Uajvi96ZbAmYWXO",
+   "merchantId": "5425930",
+   "name": "Guajillo: Comida Oaxaqueña",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T22:23:47Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "boundary_ambiguous",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Glendale, CA, US",
+   "mcc": "5999",
+   "email": "guajillooaxacancuisine@gmail.com",
+   "statementDescriptor": "CECILIA CRUZ CASTELLAN",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1UalQf4lLOYdj5ro",
+   "accountId": "acct_1UalQf4lLOYdj5ro",
+   "merchantId": "5427943",
+   "name": "Lovely’s dangerous risk",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-11T23:59:50Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "boundary_ambiguous",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Compton, CA, US",
+   "website": "https://lovelysdangerousrisks.square.site/",
+   "mcc": "5691",
+   "email": "stacybee0392@gmail.com",
+   "statementDescriptor": "LOVELYSDANGEROUSRISKS.",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1UapAx949OFJsxal",
+   "accountId": "acct_1UapAx949OFJsxal",
+   "merchantId": "5428480",
+   "name": "Tort Orthopaedic Institute, PSC",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-12T03:59:52Z",
+   "enabledAt": "2026-11-12T16:00:16+00:00",
+   "enabledCertainty": "confirmed",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "Guaynabo, PR, US",
+   "website": "www.toitortmd.com",
+   "mcc": "8011",
+   "email": "ptort@tortorthopr.com",
+   "statementDescriptor": "TOITORTMD.COM",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
+  },
+  {
+   "id": "acct_1Ub5Ko91N9oXMBKY",
+   "accountId": "acct_1Ub5Ko91N9oXMBKY",
+   "merchantId": "5431272",
+   "name": "Hangry hotdogs and more",
+   "score": 0,
+   "riskScore": 0,
+   "trustScore": 100,
+   "band": "Very low risk",
+   "action": "Normal monitoring",
+   "createdAt": "2026-11-12T21:15:07Z",
+   "enabledAt": "2026-11-12T23:49:56+00:00",
+   "enabledCertainty": "confirmed",
+   "enabledEvidenceLevel": "observed_arrival_enabled",
+   "reviewedAt": "2026-11-13T00:55:14+00:00",
+   "reviewType": "daily-enabled-review",
+   "reviewStage": "automated-signals-only",
+   "reviewPriority": "Verification outstanding",
+   "confidence": "low",
+   "reviewCompleteness": 25,
+   "enabled": true,
+   "hasTransacted": false,
+   "location": "New Britain, CT, US",
+   "mcc": "5499",
+   "email": "gbone1017@gmail.com",
+   "statementDescriptor": "JOHN PADILLA",
+   "sources": [],
+   "detailFile": "risk-health/details-2026-11-12-enabled.json",
+   "liveStatus": "Enabled",
+   "liveStatusAt": "2026-11-13T00:55:14+00:00"
   }
  ],
  "coverage": {
-  "computedAt": "2026-11-12T00:00:38+00:00",
+  "computedAt": "2026-11-13T00:55:14+00:00",
   "source": "activated-payments/activation-data.js",
-  "connectedAccounts": 1831,
-  "enabledAccounts": 619,
-  "reviewedAccounts": 666,
-  "reviewedEnabledAccounts": 618,
+  "connectedAccounts": 1845,
+  "enabledAccounts": 627,
+  "reviewedAccounts": 674,
+  "reviewedEnabledAccounts": 626,
   "enabledNotYetReviewed": [
    "acct_1TWh3c9MtEGnBEj3"
   ],
   "reviewedNoLongerInPopulation": [],
   "enabledCoveragePct": 99.8,
-  "ledgerAccounts": 1832,
+  "ledgerAccounts": 1846,
   "scoringModel": "risk-v2",
   "scoreDirection": "0 = no observed risk, 100 = extreme risk"
  },
  "latestDailyReview": {
-  "cohortDate": "2026-11-11",
+  "cohortDate": "2026-11-12",
   "cohortType": "newly-enabled",
   "timezone": "Europe/London",
-  "reviewedAt": "2026-11-12T00:00:38+00:00",
-  "count": 5,
+  "reviewedAt": "2026-11-13T00:55:14+00:00",
+  "count": 8,
   "confirmed": 3,
-  "boundaryAmbiguous": 2,
+  "boundaryAmbiguous": 5,
   "evidenceBased": 0,
   "averageRiskScore": 0.0,
   "exclusions": {
    "enabled_before_ledger_started": 49,
-   "enabled_on_another_day": 608,
-   "never_observed_enabled": 1170
+   "enabled_on_another_day": 613,
+   "never_observed_enabled": 1176
   },
   "unreviewedEnablementBacklog": 5,
   "outstandingDays": [],
