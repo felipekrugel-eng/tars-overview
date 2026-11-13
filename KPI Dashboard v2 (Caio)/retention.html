@@ -114,7 +114,6 @@
   <a href="index.html">Study &amp; Trend</a>
   <a href="retention.html" class="on">Churn</a>
   <a href="report.html">Report</a>
-  <a href="status.html">Pipeline Health</a>
 </div>
 
 <div class="hero">
@@ -129,6 +128,21 @@
 
   <div class="headline" id="headline"></div>
   <div id="callout"></div>
+
+  <!-- ============ revenue bridge ============
+       Hidden entirely when D.mrrBridge is absent — a build without the CSV must show
+       nothing here rather than an empty chart frame that reads as "no churn". -->
+  <div class="panel" id="p-bridge" style="display:none">
+    <h3>Revenue churn — what left, what arrived, month by month</h3>
+    <div class="keystrip" id="key-bridge"></div>
+    <div class="toggle" id="bridge-mode" style="margin-bottom:14px">
+      <button data-mode="full" class="on">Split five ways</button>
+      <button data-mode="simple">Gained vs lost</button>
+    </div>
+    <div class="chart-box"><canvas id="c-bridge"></canvas></div>
+    <div class="note" id="bridge-note"></div>
+    <div style="overflow-x:auto;margin-top:14px"><table class="cmp" id="bridge-table"></table></div>
+  </div>
 
   <div class="panel">
     <h3>Active / usage retention — merchants still transacting</h3>
@@ -307,6 +321,173 @@ document.getElementById('foot-source').textContent = (D.meta && D.meta.source) |
 document.getElementById('foot-gen').textContent = (D.meta && D.meta.generatedAt) || '';
 
 render();
+
+// ---- Revenue bridge: how last month's MRR became this month's --------------------
+//
+// WHY IT SITS ON THE CHURN TAB AND NOT BESIDE THE MRR LINE. Everything else here counts
+// merchants, and a merchant count cannot answer the question this chart exists for. A month
+// where 300 merchants arrive and 280 leave looks like growth; if the 280 were paying $40
+// each and the 300 pay $12, revenue fell. The two readings disagree precisely when it
+// matters most, so they belong on the same page.
+//
+// CONTRACTION IS THE ONE WITH NO COUNT EQUIVALENT AT ALL. A merchant on three modules
+// dropping one stays a paying merchant — invisible to every other chart on this page, and
+// $231k over the last twelve months.
+(function(){
+  const B = (D.mrrBridge || []).slice();
+  if (!B.length) return;                       // no data in this build: panel stays hidden
+  document.getElementById('p-bridge').style.display = '';
+
+  const C_NEW = '#1F9D6B', C_REACT = '#7FC9A8', C_EXP = '#1D8FE1',
+        C_CONTR = '#E8A33D', C_CHURN = '#CC3333', C_NET = '#1A1A1A';
+  const usd = v => (v < 0 ? '-' : '') + '$' + Math.round(Math.abs(v)).toLocaleString('en-US');
+  const netOf = r => r.new + r.reactivation + r.expansion - r.contraction - r.churn;
+  // The newest row is the month in progress — the same partial reading the MRR series
+  // carries. Drawn, but faded and marked, because dropping it would hide the most recent
+  // churn and showing it unmarked would invite someone to read a half-month as a trend.
+  const LATEST = (D.meta && D.meta.latestMonth) || null;
+  const isPartial = r => LATEST && r.month === LATEST;
+
+  // 24 months is what fits legibly; the table underneath carries everything.
+  const SHOW = 24;
+  const rows = B.slice(-SHOW);
+  const labels = rows.map(r => r.month);
+  let mode = 'full';
+
+  const ds = () => {
+    const fade = rows.map(r => isPartial(r) ? 0.45 : 1);
+    const bar = (label, color, pick) => ({
+      label, backgroundColor: rows.map((r, i) =>
+        fade[i] === 1 ? color : color + '73'),
+      borderWidth: 0, stack: 'mrr', order: 2,
+      data: rows.map(pick),
+    });
+    const line = {
+      label: 'Net change', type: 'line', borderColor: C_NET, backgroundColor: C_NET,
+      borderWidth: 2, pointRadius: 2.5, pointHoverRadius: 5, tension: .25,
+      stack: undefined, order: 1, yAxisID: 'y',
+      data: rows.map(netOf),
+      // A dashed segment over the partial month, so the line visibly stops being a
+      // measurement at the same point the bars fade.
+      segment: { borderDash: ctx => isPartial(rows[ctx.p1DataIndex]) ? [5, 4] : undefined },
+    };
+    if (mode === 'simple') {
+      return [
+        bar('Revenue gained', C_NEW, r => r.new + r.reactivation + r.expansion),
+        bar('Revenue lost', C_CHURN, r => -(r.contraction + r.churn)),
+        line,
+      ];
+    }
+    return [
+      bar('New', C_NEW, r => r.new),
+      bar('Reactivation', C_REACT, r => r.reactivation),
+      bar('Expansion', C_EXP, r => r.expansion),
+      bar('Contraction', C_CONTR, r => -r.contraction),
+      bar('Churn', C_CHURN, r => -r.churn),
+      line,
+    ];
+  };
+
+  let chart = null;
+  function draw() {
+    if (chart) chart.destroy();
+    chart = new Chart(document.getElementById('c-bridge'), {
+      type: 'bar',
+      data: { labels, datasets: ds() },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { stacked: true, grid: { display: false },
+               ticks: { font: { size: 10.5 }, maxRotation: 90, minRotation: 90 } },
+          y: { stacked: true, grid: { color: '#EEF2F6' },
+               ticks: { font: { size: 11 }, callback: v => usd(v) },
+               title: { display: true, text: 'MRR change (USD)', font: { size: 11 } } },
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11.5 }, usePointStyle: false } },
+          tooltip: {
+            callbacks: {
+              title: items => items[0].label + (isPartial(rows[items[0].dataIndex]) ? '  (month in progress)' : ''),
+              label: c => c.dataset.label + ': ' + usd(c.parsed.y),
+              // The bridge only means anything if the reader can see it close, so the
+              // opening and closing MRR it moves between are in every tooltip.
+              afterBody: items => {
+                const r = rows[items[0].dataIndex];
+                return ['', 'Opening MRR  ' + usd(r.opening),
+                        'Closing MRR  ' + usd(r.closing),
+                        'Net          ' + usd(netOf(r))];
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  function keystrip() {
+    const last = rows[rows.length - 1];
+    const complete = rows.filter(r => !isPartial(r));
+    const l12 = complete.slice(-12);
+    const sum = k => l12.reduce((a, r) => a + r[k], 0);
+    const m = complete[complete.length - 1];
+    const nrr = m.opening ? (m.opening + m.expansion - m.contraction - m.churn) / m.opening * 100 : null;
+    const gross = m.opening ? m.churn / m.opening * 100 : null;
+    const item = (label, val, color) =>
+      '<span style="display:flex;align-items:center;gap:6px;font-size:11.5px">' +
+      '<span style="width:10px;height:10px;border-radius:2px;background:' + color + '"></span>' +
+      '<b>' + val + '</b> <span style="color:var(--mid-gray)">' + label + '</span></span>';
+    document.getElementById('key-bridge').innerHTML =
+      item('net new MRR, ' + m.month, usd(netOf(m)), C_NET) +
+      item('churned, ' + m.month, usd(m.churn), C_CHURN) +
+      item('contraction, ' + m.month, usd(m.contraction), C_CONTR) +
+      item('gross revenue churn', gross == null ? '—' : gross.toFixed(2) + '%', C_CHURN) +
+      item('net revenue retention', nrr == null ? '—' : nrr.toFixed(1) + '%', C_EXP) +
+      item('churned, last 12 months', usd(sum('churn')), C_CHURN);
+    document.getElementById('bridge-note').innerHTML =
+      'Each merchant’s MRR is compared with its own previous month: <b>new</b> is first-ever revenue, ' +
+      '<b>reactivation</b> is a merchant won back after a gap, <b>expansion</b> and <b>contraction</b> are a ' +
+      'merchant paying more or less while still paying, and <b>churn</b> is a merchant that stopped. ' +
+      'Opening + new + reactivation + expansion − contraction − churn = closing, exactly, in every month. ' +
+      'Measured at MERCHANT grain, so a merchant swapping one feature for a pricier one is expansion rather ' +
+      'than a churn plus a new sale — which is how a bridge is usually made to look more dramatic than the ' +
+      'business.<br>' +
+      'Net revenue retention below 100% means the existing base shrinks on its own, so every month of growth ' +
+      'has to be bought with new sales. Contraction is the figure no merchant count can show: a merchant ' +
+      'dropping one module of three is still a paying merchant everywhere else on this page.' +
+      (LATEST ? '<br>' + LATEST + ' is the month in progress — faded bars and a dashed net line. Renewals later ' +
+                'in the month have not happened yet, so both its churn and its new revenue read low.' : '');
+  }
+
+  function table() {
+    const head = '<thead><tr><th>Month</th><th>Opening</th><th>New</th><th>Reactivation</th>' +
+                 '<th>Expansion</th><th>Contraction</th><th>Churn</th><th>Net</th><th>Closing</th>' +
+                 '<th>Churn %</th></tr></thead>';
+    const body = B.slice().reverse().map(r => {
+      const p = isPartial(r);
+      const ch = r.opening ? (r.churn / r.opening * 100).toFixed(2) + '%' : '—';
+      return '<tr' + (p ? ' style="color:var(--mid-gray);font-style:italic"' : '') + '>' +
+        '<td>' + r.month + (p ? ' *' : '') + '</td>' +
+        '<td>' + usd(r.opening) + '</td>' +
+        '<td style="color:' + C_NEW + '">' + usd(r.new) + '</td>' +
+        '<td style="color:' + C_REACT + '">' + usd(r.reactivation) + '</td>' +
+        '<td style="color:' + C_EXP + '">' + usd(r.expansion) + '</td>' +
+        '<td style="color:' + C_CONTR + '">' + usd(-r.contraction) + '</td>' +
+        '<td style="color:' + C_CHURN + '">' + usd(-r.churn) + '</td>' +
+        '<td><b>' + usd(netOf(r)) + '</b></td>' +
+        '<td>' + usd(r.closing) + '</td>' +
+        '<td>' + ch + '</td></tr>';
+    }).join('');
+    document.getElementById('bridge-table').innerHTML = head + '<tbody>' + body + '</tbody>';
+  }
+
+  [...document.getElementById('bridge-mode').children].forEach(b => b.onclick = () => {
+    [...document.getElementById('bridge-mode').children].forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); mode = b.dataset.mode; draw();
+  });
+
+  draw(); keystrip(); table();
+})();
 </script>
 <script src="facachat-widget.js"></script>
 </body>

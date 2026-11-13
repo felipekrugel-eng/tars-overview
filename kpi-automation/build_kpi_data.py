@@ -324,6 +324,59 @@ for _, r in last.sort_values("COHORT").iterrows():
         "active": int(active_snap(r["COHORT"])),
         "pctEverPaid": round(100.0*r["CUM_PAYING_EVER"]/regs,2) if regs else 0,
         "pctPayingNow": round(100.0*r["PAYING_CUSTOMERS"]/regs,2) if regs else 0})
+# ---- MRR bridge: how last month's MRR became this month's ----
+# One row per month from mrr_bridge_monthly.sql, which decomposes the change in the SAME live
+# MRR published above. Emitted as a plain list because the chart reads it in order.
+#
+# OPTIONAL BY DESIGN. An empty list means the Churn tab hides the chart and says the data is
+# not in this build, which is the honest state. The alternative — carrying the last good
+# bridge — would redraw a stale decomposition under a fresh MRR line and nothing on the page
+# would reveal it.
+#
+# The closing-equals-published check is here rather than in run.py because only this file has
+# both numbers: run.py verified the bridge closes on itself, this verifies it closes on the
+# MRR series the page actually draws. A bridge that balances internally but disagrees with the
+# headline is the more dangerous failure, because every row still adds up.
+mrr_bridge = []
+try:
+    _mb = pd.read_csv(WORK / "mrr_bridge.csv")
+    _cols = ["NEW_MRR", "REACTIVATION_MRR", "EXPANSION_MRR", "CONTRACTION_MRR", "CHURN_MRR",
+             "OPENING_MRR", "CLOSING_MRR"]
+    for _c in _cols:
+        _mb[_c] = pd.to_numeric(_mb[_c], errors="coerce").fillna(0.0)
+    _mb["M"] = _mb["MONTH"].astype(str).str[:7]
+    _drift = []
+    for _, _r in _mb.iterrows():
+        _m = _r["M"]
+        mrr_bridge.append({
+            "month": _m,
+            "opening": round(float(_r["OPENING_MRR"]), 2),
+            "new": round(float(_r["NEW_MRR"]), 2),
+            "reactivation": round(float(_r["REACTIVATION_MRR"]), 2),
+            "expansion": round(float(_r["EXPANSION_MRR"]), 2),
+            "contraction": round(float(_r["CONTRACTION_MRR"]), 2),
+            "churn": round(float(_r["CHURN_MRR"]), 2),
+            "closing": round(float(_r["CLOSING_MRR"]), 2),
+            "paying": int(_r.get("PAYING_MERCHANTS", 0) or 0),
+            "newMerchants": int(_r.get("NEW_MERCHANTS", 0) or 0),
+            "reactivatedMerchants": int(_r.get("REACTIVATED_MERCHANTS", 0) or 0),
+            "churnedMerchants": int(_r.get("CHURNED_MERCHANTS", 0) or 0),
+        })
+        _pub = _live_mrr.get(_m)
+        if _pub is not None and abs(float(_r["CLOSING_MRR"]) - _pub) > max(1.0, abs(_pub) * 0.002):
+            _drift.append((_m, float(_r["CLOSING_MRR"]), _pub))
+    if _drift:
+        # Not fatal: the newest month legitimately moves between the two queries, which run
+        # minutes apart against a live book. Named in full so a real divergence is visible
+        # rather than averaged into a reassuring summary line.
+        print(f"   [bridge][warn] closing MRR differs from the published series in "
+              f"{len(_drift)} month(s): " +
+              ", ".join(f"{m} bridge {b:,.0f} vs {p:,.0f}" for m, b, p in _drift[:6]))
+    print(f"   [bridge] {len(mrr_bridge)} months")
+except Exception as _e:
+    print("   [bridge][warn] mrr_bridge.csv unavailable — the Churn tab will hide the revenue "
+          "bridge rather than draw a stale one:", _e)
+
 # cohortTriangle carries EVERY cohort, not the last 24 that cohortCompare is trimmed to, and it
 # is what the dashboard's Triangle view reads so a merchant from a 2017 cohort can be seen at all.
 # ACTIVE was computed for every cohort above but only ever exported inside the 24-cohort
@@ -397,6 +450,7 @@ data = {
     "arpcByCountryByMonth": {c: arpc_country.get(c, {}) for c in top100},
     "semesterCohortSplit": semester_split,
     "countryFunnel": country_funnel, "countryNames": COUNTRY_NAMES, "retention": retention,
+    "mrrBridge": mrr_bridge,
 }
 OUT.parent.mkdir(parents=True, exist_ok=True)
 with open(OUT, "w") as f:

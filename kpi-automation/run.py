@@ -482,6 +482,38 @@ def main():
     except Exception as _e:
         print(f"[mrrlive] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
 
+    # ---- MRR bridge (mrr_bridge.csv) ----
+    # Decomposes the month-over-month change in the SAME live MRR above into new,
+    # reactivation, expansion, contraction and churn. GUARDED like its sibling: without the
+    # file the Churn tab hides the chart rather than drawing a bridge from a stale CSV.
+    #
+    # The identity is checked HERE, not only on the page, because a bridge that does not
+    # close is not a presentation problem — it means the classification dropped or
+    # double-counted revenue, and the number it would publish is wrong.
+    try:
+        _mb_conn = connect()
+        try:
+            _mb_cur = _mb_conn.cursor()
+            _mb_cur.execute((SQLDIR / "mrr_bridge_monthly.sql").read_text().rstrip().rstrip(";"))
+            _mb_df = _mb_cur.fetch_pandas_all() if hasattr(_mb_cur, "fetch_pandas_all") else \
+                     pd.DataFrame(_mb_cur.fetchall(), columns=[c[0] for c in _mb_cur.description])
+            _mb_cur.close()
+        finally:
+            _mb_conn.close()
+        _net = (_mb_df["NEW_MRR"] + _mb_df["REACTIVATION_MRR"] + _mb_df["EXPANSION_MRR"]
+                - _mb_df["CONTRACTION_MRR"] - _mb_df["CHURN_MRR"])
+        _gap = (_mb_df["OPENING_MRR"] + _net - _mb_df["CLOSING_MRR"]).abs()
+        _broken = int((_gap > 0.05).sum())
+        if _broken:
+            raise RuntimeError(f"bridge does not close in {_broken} month(s), worst ${_gap.max():,.2f} "
+                               "— not published")
+        write(WORK / "mrr_bridge.csv", _mb_df)
+        print(f"[mrrbridge] {len(_mb_df)} months, identity holds everywhere "
+              f"(worst ${_gap.max():,.2f}), latest {_mb_df['MONTH'].iloc[-1]} "
+              f"net ${float(_net.iloc[-1]):,.0f}", flush=True)
+    except Exception as _e:
+        print(f"[mrrbridge] SKIPPED — {type(_e).__name__}: {_e}", flush=True)
+
     # ---- paying-customer snapshot (paying-snapshots.json) ----
     # Must run BEFORE build_kpi_data.py, which reads this file for the headline count.
     #
