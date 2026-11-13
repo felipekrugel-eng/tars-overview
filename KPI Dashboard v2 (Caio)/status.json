@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-13T00:09:47.748478+00:00",
- "worst": "warn",
- "digest": "d38ae93389970c38a17b1c130fecb4463e2d180af0cf879254291c6433a8eb4b",
+ "checked_at": "2026-11-13T08:54:51.095214+00:00",
+ "worst": "ok",
+ "digest": "00621048b4bca5c72753798b60572662fb75ec8791b29bf0447c4fe17c743703",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T23:53:17+00:00",
-   "data_at": "2026-11-12T23:52:00+00:00",
-   "age_h": 0.3,
+   "committed_at": "2026-11-13T08:53:18+00:00",
+   "data_at": "2026-11-13T08:52:00+00:00",
+   "age_h": 0.05,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T23:38:44+00:00",
-   "data_at": "2026-11-12T23:25:44+00:00",
-   "age_h": 0.73
+   "committed_at": "2026-11-13T08:50:37+00:00",
+   "data_at": "2026-11-13T08:29:07+00:00",
+   "age_h": 0.43
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T22:34:09+00:00",
-   "data_at": "2026-11-12T22:34:00.632083+00:00",
-   "age_h": 1.6
+   "committed_at": "2026-11-13T07:19:54+00:00",
+   "data_at": "2026-11-13T07:19:45.025442+00:00",
+   "age_h": 1.59
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T23:48:25+00:00",
-   "data_at": "2026-11-12T23:35:37.992000+00:00",
-   "age_h": 0.57,
+   "committed_at": "2026-11-13T08:45:53+00:00",
+   "data_at": "2026-11-13T08:38:24.462000+00:00",
+   "age_h": 0.27,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T23:48:25+00:00",
+   "committed_at": "2026-11-13T08:45:53+00:00",
    "data_at": null,
-   "age_h": 0.36
+   "age_h": 0.15
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-12T13:28:05+00:00",
    "data_at": "2026-11-12T13:20:21.923738+00:00",
-   "age_h": 10.82,
+   "age_h": 19.57,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -88,9 +88,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T17:05:00+00:00",
+   "committed_at": "2026-11-13T08:49:06+00:00",
    "data_at": null,
-   "age_h": 7.08,
+   "age_h": 0.1,
    "inputs_changed_at": "2026-11-12T11:09:20+00:00"
   },
   {
@@ -98,56 +98,13 @@
    "path": "KPI Dashboard v2 (Caio)/subs-data.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "built before its inputs changed: kpi-automation/sql is 3.3h newer"
-   ],
-   "state": "warn",
-   "reason": "rebuild",
-   "committed_at": "2026-11-12T07:49:57+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-13T08:49:06+00:00",
    "data_at": null,
-   "age_h": 16.33,
-   "inputs_changed_at": "2026-11-12T11:09:20+00:00",
-   "diagnosis": {
-    "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-12T17:24:52Z",
-    "consecutive_non_success": 0,
-    "recent": [
-     {
-      "at": "2026-11-12T17:24:52Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-12T11:09:32Z",
-      "outcome": "cancelled"
-     },
-     {
-      "at": "2026-11-12T04:07:44Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-11T16:56:28Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-11T04:07:14Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-10T16:50:48Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 2,
-    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43152733123",
-    "step": "Fail the run if the receipts feed is down",
-    "signature": "push rejected",
-    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": false,
-    "runner_lost": false
-   },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 last success 2026-11-12 17:24"
+   "age_h": 0.1,
+   "inputs_changed_at": "2026-11-12T11:09:20+00:00"
   },
   {
    "name": "Fraud health",
@@ -157,9 +114,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T00:00:52+00:00",
+   "committed_at": "2026-11-13T00:55:28+00:00",
    "data_at": null,
-   "age_h": 24.15,
+   "age_h": 7.99,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -172,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-12T17:55:16+00:00",
    "data_at": null,
-   "age_h": 6.24,
+   "age_h": 14.99,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
