@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-13T16:45:42.852812+00:00",
+ "checked_at": "2026-11-13T17:37:40.281133+00:00",
  "worst": "warn",
- "digest": "0e217ff7f83b3745f6985e7f31180ef18c42f1a0603257092cfcc1a5fed24530",
+ "digest": "5d1d316dcaae3e2669b2aaafa01edd6028dc11b579a4f6a3ac6a178077c23477",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T16:12:10+00:00",
-   "data_at": "2026-11-13T16:11:00+00:00",
-   "age_h": 0.58,
+   "committed_at": "2026-11-13T17:35:34+00:00",
+   "data_at": "2026-11-13T17:34:00+00:00",
+   "age_h": 0.06,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T16:44:37+00:00",
-   "data_at": "2026-11-13T16:27:22+00:00",
-   "age_h": 0.31
+   "committed_at": "2026-11-13T17:35:17+00:00",
+   "data_at": "2026-11-13T17:15:43+00:00",
+   "age_h": 0.37
   },
   {
    "name": "Payments pull",
@@ -40,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-13T16:16:49+00:00",
    "data_at": "2026-11-13T16:16:41.518484+00:00",
-   "age_h": 0.48
+   "age_h": 1.35
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T16:03:56+00:00",
-   "data_at": "2026-11-13T15:54:21.525000+00:00",
-   "age_h": 0.86,
+   "committed_at": "2026-11-13T17:36:11+00:00",
+   "data_at": "2026-11-13T17:30:15.942000+00:00",
+   "age_h": 0.12,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-13T16:03:56+00:00",
+   "committed_at": "2026-11-13T17:36:11+00:00",
    "data_at": null,
-   "age_h": 0.7
+   "age_h": 0.02
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-13T12:47:39+00:00",
    "data_at": "2026-11-13T12:41:09.017985+00:00",
-   "age_h": 4.08,
+   "age_h": 4.94,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -90,7 +90,7 @@
    "reason": null,
    "committed_at": "2026-11-13T16:34:27+00:00",
    "data_at": null,
-   "age_h": 0.19,
+   "age_h": 1.05,
    "inputs_changed_at": "2026-11-13T11:36:27+00:00"
   },
   {
@@ -105,13 +105,17 @@
    "reason": "rebuild",
    "committed_at": "2026-11-13T08:49:06+00:00",
    "data_at": null,
-   "age_h": 7.94,
+   "age_h": 8.81,
    "inputs_changed_at": "2026-11-13T11:36:27+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-13T04:08:15Z",
-    "consecutive_non_success": 1,
+    "last_success": "2026-11-13T16:59:21Z",
+    "consecutive_non_success": 0,
     "recent": [
+     {
+      "at": "2026-11-13T16:59:21Z",
+      "outcome": "success"
+     },
      {
       "at": "2026-11-13T10:38:59Z",
       "outcome": "cancelled"
@@ -131,14 +135,10 @@
      {
       "at": "2026-11-12T04:07:44Z",
       "outcome": "failure"
-     },
-     {
-      "at": "2026-11-11T16:56:28Z",
-      "outcome": "success"
      }
     ],
-    "runs_since_artefact": 1,
-    "verdict": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded",
+    "runs_since_artefact": 2,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/43152733123",
     "step": "Fail the run if the receipts feed is down",
     "signature": "push rejected",
@@ -147,7 +147,7 @@
     "skipped_publish": false,
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 1 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-13 04:08"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 last success 2026-11-13 16:59"
   },
   {
    "name": "Fraud health",
@@ -159,7 +159,7 @@
    "reason": null,
    "committed_at": "2026-11-13T00:55:28+00:00",
    "data_at": null,
-   "age_h": 15.84,
+   "age_h": 16.7,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -170,9 +170,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-12T17:55:16+00:00",
+   "committed_at": "2026-11-13T16:52:02+00:00",
    "data_at": null,
-   "age_h": 22.84,
+   "age_h": 0.76,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
