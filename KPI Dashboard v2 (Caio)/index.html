@@ -1248,20 +1248,40 @@ renderCohTable();
   // keeps every row solid from M0 to the cohort's current age. A hole in a cohort grid reads
   // as broken data, and "no payments revenue that month" is a real zero, not an absence.
   const payArr = c => (PAYC && PAYC.byCohort && PAYC.byCohort[c] && PAYC.byCohort[c].contribution) || null;
+  // SUBSCRIPTION MRR FOLLOWS THE COUNTRY FILTER. Until 2026-11-13 these two accessors read
+  // the global TRI unconditionally, so selecting a market left every figure in the money
+  // view exactly as it was — the filter appeared to do nothing, because for this metric it
+  // did nothing. The country files carry their own cohortTriangle.mrr, so the fix is to read
+  // whichever source the rest of the Triangle is reading.
+  const subAt = (c, i) => {
+    const o = triSrc();
+    const a = o && o[c] && o[c].mrr;
+    return (a && i < a.length) ? (a[i] || 0) : null;
+  };
+  // PAYMENTS CONTRIBUTION HAS NO COUNTRY SPLIT. cohort-payments.json is keyed by cohort and
+  // nothing else, so under a market selection there is no honest per-country figure to show.
+  // Rather than silently adding a worldwide payments number to one market's subscriptions —
+  // which would overstate that market, badly, and look like a working filter — the money view
+  // falls back to subscriptions alone while a country is selected and says so in the note.
+  const payCountryOk = () => !ccFilter();
+  const payAt = (c, i) => {
+    if (!payCountryOk()) return 0;
+    const pa = payArr(c);
+    return (pa && i < pa.length) ? (pa[i] || 0) : 0;
+  };
   // Same accessor, but for a named component — used by the tooltip to break a Total cell
   // into its two parts without flipping the toggle.
   const moneyAt2 = (c, i, part) => {
-    const sub = (TRI[c] && TRI[c].mrr && i < TRI[c].mrr.length) ? (TRI[c].mrr[i] || 0) : 0;
-    const pa = payArr(c);
-    const pay = (pa && i < pa.length) ? (pa[i] || 0) : 0;
+    const sub = subAt(c, i) || 0;
+    const pay = payAt(c, i);
     return part === 'subs' ? sub : part === 'pay' ? pay : sub + pay;
   };
   const moneyAt = (c, i) => {
-    const sub = (TRI[c] && TRI[c].mrr && i < TRI[c].mrr.length) ? (TRI[c].mrr[i] || 0) : null;
+    const sub = subAt(c, i);
     if (sub == null) return undefined;                 // beyond this cohort's life: the triangle edge
-    const pa = payArr(c);
-    const pay = (pa && i < pa.length) ? (pa[i] || 0) : 0;
-    return moneyPart === 'subs' ? sub : moneyPart === 'pay' ? pay : sub + pay;
+    const pay = payAt(c, i);
+    const part = payCountryOk() ? moneyPart : 'subs';
+    return part === 'subs' ? sub : part === 'pay' ? pay : sub + pay;
   };
   // Money is signed — payments contribution is negative for plenty of cohorts — so it cannot
   // use triFmt, which assumes a count. Negatives are shown with a minus and coloured by the
@@ -1403,7 +1423,10 @@ renderCohTable();
     // EVERY cohort, always. The previous cut dropped rows with no payments revenue, which
     // punched 86 gaps into a 131-row grid and stopped it being a triangle at all. The span of
     // a row is the cohort's own life, nothing else.
-    const triCohorts = MONEY ? ALL_ROWS.slice() : (wide ? wideRows() : triCohortsNow());
+    // wideRows() in the money view too: ALL_ROWS is the WORLD's cohort list, so under a
+    // market selection it printed a row for every month Loyverse has existed and read the
+    // global triangle into it. That is the same bug as the values themselves had.
+    const triCohorts = wide ? wideRows() : triCohortsNow();
     const cohSize = cohSizeNow();
     // Size is always that cohort's registrations for whatever population is selected. With a
     // market chosen it comes from that market's own file — the 24-row summary first, then the
@@ -1422,7 +1445,7 @@ renderCohTable();
     // it does not.
     const src = wide ? WSRC : CC;
     let mx = 0, nAges = 1;
-    if (MONEY) triCohorts.forEach(c => { const a = (TRI[c] && TRI[c].mrr) || []; nAges = Math.max(nAges, a.length); });
+    if (MONEY) triCohorts.forEach(c => { const o = triSrc(); const a = (o && o[c] && o[c].mrr) || []; nAges = Math.max(nAges, a.length); });
     else if (series) triCohorts.forEach(c => { const a = (src[c] && src[c][metric]) || []; nAges = Math.max(nAges, a.length); });
     else triCohorts.forEach(c => { nAges = Math.max(nAges, (LATEST_M ? mAge(c, LATEST_M) : 0) + 1); });
     // Cells that predate Loyverse Payments are left BLANK, not zero, whenever a payments
@@ -1561,6 +1584,17 @@ renderCohTable();
   function setNote(){
     if (triWrap.style.display === 'none') return;
     let s = NOTE_TRI;
+    // The money view under a market selection: subscriptions are that market's, payments
+    // contribution is not available per market at all. Saying so is the whole point — before
+    // 2026-11-13 this view ignored the country filter outright and showed worldwide figures
+    // under a market's name, which looked exactly like a working filter.
+    if (triMoney && ccFilter()){
+      s += ' <b>Subscriptions only for a market.</b> The MRR shown is this market’s own, from its '
+         + 'cohort file. Payments contribution has no country split in cohort-payments.json, so it is '
+         + 'excluded here rather than adding a worldwide figure to one market’s subscriptions — which '
+         + 'would overstate the market and still look like a filter that worked. Clear the country '
+         + 'filter to see subscriptions and payments together.';
+    }
     if (useSeries() && !wideSeries(triSel[0])){
       s += ccFilter()
         ? ' Showing the last 24 cohorts: this market’s cohort file predates the widening and '
