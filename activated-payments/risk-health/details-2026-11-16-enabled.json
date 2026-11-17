@@ -4,24 +4,24 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-16 Europe/London",
   "cohortDate": "2026-11-16",
-  "reviewedAt": "2026-11-17T00:12:37+00:00",
+  "reviewedAt": "2026-11-17T07:27:54+00:00",
   "count": 4,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-17T00:12:37+00:00",
+ "reviewedAt": "2026-11-17T07:27:54+00:00",
  "merchants": [
   {
    "id": "acct_1UcF8V9PfsH5sQmO",
    "accountId": "acct_1UcF8V9PfsH5sQmO",
    "merchantId": "5442367",
    "name": "H & H gold Refining",
-   "score": 0,
+   "score": 17,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
     "contact": 0,
-    "businessModel": 0,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -34,28 +34,47 @@
     "Contact email is a consumer mailbox (outlook.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual / sole proprietor; no entity registration expected. The OCCC Crafted Precious Metal Dealer page defines the regime as excluding coins and bars, so selling refined gold and silver bars does not clearly require that registration and none is scored. County assumed-name records (Potter/Randall) and the Texas Comptroller entity search could not be checked; SOSDirect is paid. [https://occc.texas.gov/industry/cpmd/]",
+    "Representative name not available to the verifier on this run.",
+    "No website declared; the consumer Outlook contact email has no web footprint. Neither email nor business name describes payment collection. The descriptor is a personal name rather than the trading name.",
+    "No presence of any age found; no scam, complaint or fraud reports under the business name or email."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "No independent footprint for 'H & H Gold Refining' / 'H&H Refining' in Amarillo or anywhere in Texas across general, Facebook, Yelp and BBB searches. The BBB directory of precious-metal dealers near Amarillo lists 12 dealers, none under this name. A business selling physical bullion bars on a POS would be expected to have a dealer shop or listing. [https://www.bbb.org/us/tx/amarillo/category/precious-metal-dealers]",
+    "Established from the account's own declared description: the merchant sells refined gold and silver bars (bullion) but is boarded under MCC 8734 (testing laboratories, non-medical). Coherent codes would be 5944 or 5094. The miscode hides a high-risk category (card-funded bullion is a known cash-out vector)."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Correct MCC to 5944/5094 and route to high-risk bullion review: sales channel (in-person vs card-not-present), typical ticket size, sourcing (refinery/assay invoices).",
+    "Potter/Randall County assumed-name certificate, Texas sales-tax permit and physical premises address with photos.",
+    "Representative identity and Stripe KYC status; confirm it matches the personal-name statement descriptor.",
+    "Monitor early transactions for cash-out patterns (high-value, foreign/prepaid BINs, split tickets, quick refunds)."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://occc.texas.gov/industry/cpmd/",
+     "sourceType": "licence-register",
+     "checkedAt": "2026-11-17",
+     "establishes": "no entity registration expected; TX CPMD regime excludes bars",
+     "dimension": "legal"
+    },
+    {
+     "url": "https://www.bbb.org/us/tx/amarillo/category/precious-metal-dealers",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "no independent footprint for a physical-goods dealer in Amarillo",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "No footprint exists for 'H & H gold Refining' in Amarillo (absent from the BBB local precious-metal dealer directory and from search), the account self-declares bullion-bar sales under MCC 8734 testing labs, and it bills under a personal-name descriptor with no website. The miscode conceals a high-risk category that is a known card cash-out vector. Total 17 risk points (operating 10, businessModel 7). Correct the MCC, hold payouts pending proof of premises and sourcing, and route to high-risk review.",
+   "reviewCompleteness": 50,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-17T00:12:37+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:27:54+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-16T17:02:48+00:00",
    "enabledWindowStart": "2026-11-16T01:55:12+00:00",
    "enabledWindowEnd": "2026-11-16T17:02:48+00:00",
@@ -77,9 +96,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 17,
+   "trustScore": 83,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -108,26 +127,30 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "A search-result snippet lists HOG WALLER LAWNCARE LLC on Florida Sunbiz as an Active LLC (document number L26000415104, prefix suggesting a 2026 filing), but the Sunbiz record itself could not be loaded by the verifier, so status, filing date and principal address are unconfirmed from the source. FL DBPR contractor licence search was not reachable; no missing licence is scored because no building-construction activity was observed.",
+    "No listing, Facebook page or Google presence for 'Hog Waller Lawncare' in Glen St. Mary, Macclenny or Baker County; lawn-care directories returned only other providers. Service business without licensed premises: no points.",
+    "Representative name not available to the verifier on this run.",
+    "Declared website lawncare.com could not be loaded by the verifier and no page from it surfaced in search, so ownership was not observed. It is a generic category domain very unlikely to belong to a newly formed Baker County LLC. Contact is a personal gmail.",
+    "Business name says lawn care while the MCC is 1520 (residential building contractor) and the descriptor is 'LAWNCARE AND CONSTRUC'. No page shows the actual activity, so MCC coherence could not be observed; if lawn care only, this would be a 7-point contradiction.",
+    "No dated reviews, listings, news or complaint reports found; the Sunbiz document number suggests a 2026 formation (inferred, not confirmed)."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Open the Sunbiz detail page for L26000415104 manually: confirm Active status, filing date, Baker County principal address.",
+    "Load lawncare.com manually; if it is not the merchant's site, re-score contact as a 10-point contradiction and ask for the correct website.",
+    "FL DBPR contractor-licence search; ask whether any building/construction work is done; if lawn care only, correct MCC from 1520 to 0780.",
+    "Representative identity and Stripe KYC status."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "summary": "A search snippet shows HOG WALLER LAWNCARE LLC as an Active Florida LLC, probably formed in 2026, but Sunbiz could not be loaded to confirm it. There is no online footprint, the declared website lawncare.com is a generic category domain that could not be checked and is unlikely to be the merchant's, and the MCC (1520 residential building) conflicts with a lawn-care name. 0 risk points under the strict rubric, but three manual checks (Sunbiz, lawncare.com, DBPR/MCC) could each move it to a contradiction.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-17T00:12:37+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:27:54+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-16T20:28:29+00:00",
    "enabledWindowStart": "2026-11-16T12:49:04+00:00",
    "enabledWindowEnd": "2026-11-16T20:28:29+00:00",
@@ -172,34 +195,51 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Individual.",
+    "Independent listing aggregators place 'Café-bar la Fiesta' at Rue Principale 6, 1932 Bovernier, matching the trading name FIESTA and the stated locality, with 82 Google reviews (4.5) and 3 Tripadvisor reviews. Caveat: the listing marks the venue 'Temporarily Closed'; current trading status and operator are not confirmed. [https://wanderlog.com/place/details/3446223]",
+    "MCC 5812 and the description (restaurant and café-bar selling drinks and food) match the observed venue: reviews describe a bar serving pizzas and fondue, with beer, wine and a terrace. [https://wanderlog.com/place/details/3446223]",
+    "The venue has accumulated 82 Google and 3 Tripadvisor reviews aggregated on a 2025-dated page, indicating more than a year of public presence; no scam or complaint reports found. The 'Temporarily Closed' flag suggests a break in trading, so the account may be a reopening, possibly under a new operator. [https://wanderlog.com/place/details/3446223]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Sole proprietorship (raison individuelle); commercial-register entry is not required below CHF 100k turnover. Zefix and its REST API could not be queried by the verifier, and no public lookup exists for Valais cantonal operating licences (LHR autorisation d'exploiter), so neither is scored.",
+    "Representative name not available to the verifier on this run.",
+    "No website declared; business name and description describe a café-bar-restaurant, not payment collection. Listings reference a Facebook page for the venue that the verifier could not load. Personal gmail contact, common for a sole trader. [https://www.swipein.restaurant/en/restaurant/cafe-bar-la-fiesta-bovernier-wallis]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Confirm the account holder is the current operator of Café-bar la Fiesta, Rue Principale 6, Bovernier (lease or recent premises photo).",
+    "Valais cantonal operating licence (LHR autorisation d'exploiter) for the premises.",
+    "Confirm the venue has reopened (listing shows 'Temporarily Closed').",
+    "Manual Zefix / Valais commercial-register search; representative identity and Stripe KYC status."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://wanderlog.com/place/details/3446223",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "physical café-bar named La Fiesta in Bovernier",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://www.swipein.restaurant/en/restaurant/cafe-bar-la-fiesta-bovernier-wallis",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "no website; Facebook page referenced but not loaded",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "The trading name FIESTA matches an established café-bar at Rue Principale 6, Bovernier (Valais) with 82 Google and 3 Tripadvisor reviews describing a pizza and fondue bar, coherent with MCC 5812 and the declared description. Zefix was blocked and no public Valais licence lookup exists; a small sole proprietorship need not register. 0 risk points; the main open point is that listings mark the venue 'Temporarily Closed', so confirm reopening and that this account holder is the current operator.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-17T00:12:37+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:27:54+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-16T20:28:29+00:00",
    "enabledWindowStart": "2026-11-16T15:23:42+00:00",
    "enabledWindowEnd": "2026-11-16T20:28:29+00:00",
@@ -252,26 +292,38 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual in New York, NY; no state entity registration expected for a sole proprietor. No NY assumed-name search was run.",
+    "The declared Instagram profile (arome.fragancias1) could not be loaded by the verifier, and searches for the handle and for 'Arome fragancias' perfume sellers in New York found no social page, listing or product for this merchant; similarly named fragrance businesses in Brazil, Colombia and Peru are not linked to it. Because the declared page could not be checked, absence of footprint is not established; if manual review confirms no observable product this becomes a 15-point contradiction.",
+    "Representative name not available to the verifier on this run.",
+    "Neither the declared website (instagram.com/arome.fragancias1) nor the descriptor target (INSTAGRAM.COM/AROME.FR) could be loaded. The descriptor names a different handle from the declared website, which is a mismatch; a snippet links the arome.fr domain to an unrelated communication agency 'Arôme' in Avignon, France, whose existence the loaded article confirms, but ownership of the @arome.fr handle is unverified. Personal gmail contact. [https://www.echodumardi.com/economie/arome-un-parfum-de-succes-depuis-17-ans/?print=pdf]",
+    "No products observed. The handle 'arome.fragancias1' (Spanish for fragrances) points to a perfume reseller, which would fit MCC 5977/5999 rather than the declared 5691 clothing; if perfume is confirmed this is a 7-point contradiction.",
+    "No scam, fake, replica or 'estafa' reports naming this merchant; no independent presence found, so operating history cannot be established."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Open instagram.com/arome.fragancias1 manually: existence, products (perfume/decants vs clothing), account age, New York link.",
+    "Open instagram.com/arome.fr manually; if unrelated to this merchant, the descriptor points to another business (contact 10-point contradiction) and must be corrected.",
+    "Ask for a product description; correct MCC to 5977/5999 if fragrances; ask for supplier invoices / authenticity proof for perfume.",
+    "Representative identity and Stripe KYC status."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "sources": [
+    {
+     "url": "https://www.echodumardi.com/economie/arome-un-parfum-de-succes-depuis-17-ans/?print=pdf",
+     "sourceType": "news",
+     "checkedAt": "2026-11-17",
+     "establishes": "descriptor/website handle mismatch; descriptor owner unverified",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "No web footprint could be established for this individual NY merchant: both Instagram URLs (declared arome.fragancias1 and descriptor arome.fr) were blocked for the verifier and searches found nothing tied to either handle. Two structural red flags remain: the descriptor names a different handle from the declared website, and the handle suggests a fragrance reseller under a clothing MCC. 0 risk points under the strict rubric, but manual review of both profiles could add up to 32 points (operating 15, contact 10, businessModel 7); reconcile descriptor and MCC before payouts scale.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-17T00:12:37+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:27:54+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-16T21:10:03+00:00",
    "enabledWindowStart": "2026-11-16T16:50:59+00:00",
    "enabledWindowEnd": "2026-11-16T21:10:03+00:00",
