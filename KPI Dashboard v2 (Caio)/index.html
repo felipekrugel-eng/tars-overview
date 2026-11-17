@@ -1810,7 +1810,9 @@ renderCohTable();
     saveCsv(out.name, out.text);
   };
 
-  window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') drawTri(triMetric, triPct); };
+  // Called by the country picker: a market's file may or may not carry everPaid, so the
+  // chip is re-evaluated on every change of selection, not just on load.
+  window._cohRedrawTri = () => { if (triWrap.style.display !== 'none') { syncEverPaidChip(); drawTri(triMetric, triPct); } };
   document.querySelectorAll('#cohsum-view button').forEach(b => b.onclick = () => {
     document.querySelectorAll('#cohsum-view button').forEach(x => x.classList.remove('on')); b.classList.add('on');
     const tri = b.dataset.view === 'triangle';
@@ -1822,12 +1824,30 @@ renderCohTable();
     // The stage group only exists once the membership file has loaded, so it follows byCohort.
     document.getElementById('tri-stage').style.display = (tri && byCohort) ? 'inline-block' : 'none';
     document.querySelectorAll('#tri-metric button.tri-any').forEach(b => { b.style.display = (tri && byCohort) ? '' : 'none'; });
+    if (tri) syncEverPaidChip();   // availability depends on the data, not on having clicked
     document.getElementById('tri-mode').style.display = tri ? 'inline-block' : 'none';
     noteEl.textContent = tri
       ? NOTE_TRI
       : 'Ever Paid % keeps maturing for ~24 months after registration (cohort penetration curve). Young cohorts are structurally lower.';
     if (tri) drawTri(triMetric, triPct);
   });
+  // EVER PAID IS HIDDEN WHERE IT CANNOT BE ANSWERED. It arrives with the pull that adds it,
+  // so a dashboard on older data — or a market whose cohort file predates it — has no everPaid
+  // array to read, and drawing it there produces an empty grid that says "nobody in this
+  // market ever paid" rather than "this build cannot say".
+  //
+  // THIS MUST RUN BEFORE THE FIRST CLICK, not only inside paintButtons(). It lived there until
+  // 2026-11-17 and paintButtons is only reached from a click, so the chip rendered from the
+  // static markup, looked available, and then vanished the instant it was pressed — the worst
+  // of both, because the reader has already decided they want it.
+  function syncEverPaidChip(){
+    const btn = document.querySelector('#tri-metric button[data-metric=everPaid]');
+    const ok = triHasIn(triSrc(), 'everPaid');
+    if (btn) btn.style.display = ok ? '' : 'none';
+    if (!ok && triSel.indexOf('everPaid') >= 0) triSel = ['paying'];
+    return ok;
+  }
+
   // Each group holds at most one condition. Clicking the one already on switches it off, unless
   // it is the only condition left — a triangle of nothing is not a view of anything.
   function pickIn(group, k){
@@ -1849,14 +1869,7 @@ renderCohTable();
     paintButtons();
   }
   function paintButtons(){
-    // EVER PAID IS HIDDEN WHERE IT CANNOT BE ANSWERED. It arrives with the pull that added
-    // it, so a dashboard on older data — or a market whose cohort file predates it — has no
-    // everPaid array at all. Without this guard, selecting it there drew an empty grid, which
-    // reads as "nobody ever paid in this market" rather than "this build cannot say".
-    const everBtn = document.querySelector('#tri-metric button[data-metric=everPaid]');
-    const everOk = triHasIn(triSrc(), 'everPaid');
-    if (everBtn) everBtn.style.display = everOk ? '' : 'none';
-    if (!everOk && triSel.indexOf('everPaid') >= 0) triSel = ['paying'];
+    syncEverPaidChip();
     document.querySelectorAll('#tri-metric button, #tri-stage button').forEach(x =>
       x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
     // "Any status" is the state of having no POS condition, so it lights up by absence.
