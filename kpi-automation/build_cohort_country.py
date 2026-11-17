@@ -200,14 +200,18 @@ def main():
             n = min(max([*ages.keys(), *act.keys(), 0]) + 1, age_at_cap + 1)
             if n <= 0:
                 continue
-            mrr_t, pay_t, act_t = [], [], []
+            mrr_t, pay_t, act_t, ever_t = [], [], [], []
             for i in range(n):
                 r = ages.get(i)
                 mrr_t.append(round(_f(r, "MRR_USD"), 2) if r else None)
                 pay_t.append(int(_f(r, "PAYING_CUSTOMERS")) if r else None)
+                # Cumulative ever-paid, same column the global triangle carries. A missing
+                # row is None, not 0: for a cumulative series a zero would read as "nobody
+                # had ever paid by then", which is a claim, where None is an absence.
+                ever_t.append(int(_f(r, "CUM_PAYING_EVER")) if r else None)
                 a = act.get(i)
                 act_t.append(a if a is not None else None)
-            triangle[coh] = {"mrr": mrr_t, "paying": pay_t, "active": act_t}
+            triangle[coh] = {"mrr": mrr_t, "paying": pay_t, "everPaid": ever_t, "active": act_t}
 
         if not rows_out:
             continue

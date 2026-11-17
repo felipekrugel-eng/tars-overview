@@ -469,8 +469,13 @@ for coh, g in grid.groupby("COHORT"):
     n = len(g)
     act_src = cohort_active_age.get(coh, [])
     act = [int(act_src[i]) if i < len(act_src) and act_src[i] is not None else None for i in range(n)]
+    # everPaid is CUMULATIVE: merchants of this cohort who have paid at least once BY this
+    # age. It never falls, which is the point — read beside paying it separates "stopped
+    # paying" from "never started", and the gap between the two lines is the churned-payer
+    # pool that no in-month count can show.
     tri[coh] = {"mrr": [round(float(x),0) for x in g["MRR_USD"]],
                 "paying": [int(x) for x in g["PAYING_CUSTOMERS"]],
+                "everPaid": [int(x) for x in g["CUM_PAYING_EVER"]],
                 "active": act}
 compare_cohorts = [c["cohort"] for c in cohorts_out][-24:]
 # Carry the compare series through the CURRENT (partial) calendar month, not just the last

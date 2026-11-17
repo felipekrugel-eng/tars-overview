@@ -369,7 +369,7 @@
       <button data-rev="all" class="on">Total</button><button data-rev="subs">Subscriptions</button><button data-rev="pay" id="tri-rev-pay" title="Loyverse Payments contribution only, by the month the merchant registered on POS">Payments</button>
     </div>
     <div class="toggle" id="tri-metric" style="display:none">
-      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="none" class="tri-any" style="display:none" title="No POS condition — count the payments stage on its own, whether or not the merchant was paying or active that month">Any status</button>
+      <button data-metric="paying" class="on">Paying</button><button data-metric="active">Active</button><button data-metric="everPaid" title="Merchants of this cohort who had paid at least once BY that month. Cumulative, so it never falls — the cohort as it would look with no churn at all. The gap against Paying is the churned-payer pool.">Ever paid</button><button data-metric="none" class="tri-any" style="display:none" title="No POS condition — count the payments stage on its own, whether or not the merchant was paying or active that month">Any status</button>
     </div>
     <div class="toggle" id="tri-stage" style="display:none;margin-left:8px">
       <button data-metric="kyc0">Initiated KYC</button><button data-metric="kyc1">Finalized KYC</button><button data-metric="txn">Transacting</button>
@@ -1225,9 +1225,14 @@ renderCohTable();
   let lastExport = null;
 
   // ── payments membership ────────────────────────────────────────────────────
-  const LABEL = { paying:'Paying', active:'Active', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
+  const LABEL = { paying:'Paying', active:'Active', everPaid:'Ever paid', kyc0:'Initiated KYC', kyc1:'Finalized KYC', txn:'Transacting' };
   const PAY_KEYS = ['kyc0','kyc1','txn'];
-  const POS_KEYS = ['paying','active'];
+  // everPaid joins the POS group so it swaps with Paying and Active rather than stacking on
+  // top of them: a cell cannot be both an in-month state and a cumulative one.
+  const POS_KEYS = ['paying','active','everPaid'];
+  // The three POS conditions that exist as a pre-summed SERIES. Everything else is counted
+  // from the per-merchant membership file, which carries no ever-paid flag at all.
+  const SERIES_KEYS = ['paying','active','everPaid'];
   // A POS condition is on by default, because Paying alone is what this view has always shown.
   // That default silently intersected every payments stage a first-time user picked: clicking
   // Transacting gave "Paying AND transacting", which for the July cohort reads 0 and 1 rather
@@ -1241,7 +1246,7 @@ renderCohTable();
   // reference. Not "equal to" the old behaviour, the SAME data path.
   // A money view is always a plain per-cohort series, so it takes the series path whatever
   // the status chips happen to be set to.
-  const useSeries = () => !!triMoney || (triSel.length === 1 && (triSel[0] === 'paying' || triSel[0] === 'active'));
+  const useSeries = () => !!triMoney || (triSel.length === 1 && SERIES_KEYS.indexOf(triSel[0]) >= 0);
   // THE TRIANGLE MUST STAY A TRIANGLE. Payments contribution exists only from April 2026, so
   // its array is short and ragged; subscriptions run from the cohort's first month. Reading
   // them through one accessor that treats a missing payments cell as ZERO — not as blank —
@@ -1595,6 +1600,17 @@ renderCohTable();
          + 'would overstate the market and still look like a filter that worked. Clear the country '
          + 'filter to see subscriptions and payments together.';
     }
+    // What "ever paid" means, said where it is being read. It is the only status on this
+    // view that is cumulative, and a reader who takes it for an in-month count will read the
+    // churn as zero — which is exactly the shape it has.
+    if (triSel.length === 1 && triSel[0] === 'everPaid'){
+      s += ' <b>Ever paid is cumulative.</b> Each cell counts the merchants of that cohort who had '
+         + 'paid at least once BY that month, so the row never falls — this is the cohort as it '
+         + 'would look if nobody had ever churned. Read against Paying, the gap between the two is '
+         + 'the churned-payer pool: Paying says who is paying now, Ever paid says who ever did, and '
+         + 'the difference is who stopped. Payments stages are switched off while this is selected, '
+         + 'because they are counted per merchant per month and carry no ever-paid flag.';
+    }
     if (useSeries() && !wideSeries(triSel[0])){
       s += ccFilter()
         ? ' Showing the last 24 cohorts: this market’s cohort file predates the widening and '
@@ -1819,11 +1835,28 @@ renderCohTable();
     triSel = triSel.filter(x => group.indexOf(x) < 0);
     if (!wasOn) triSel.push(k);
     if (!triSel.length) triSel = [k];
+    // EVER PAID CANNOT BE INTERSECTED WITH A PAYMENTS STAGE, so the two clear each other.
+    // Every payments condition is counted from the per-merchant membership file, which
+    // records the months a merchant held a state; it has no ever-paid flag, and inventing
+    // one from the paying flag would answer a different question ("paid at some point AND
+    // started KYC by then") while looking like this one. Rather than offer a combination
+    // that cannot be computed, picking either side drops the other.
+    if (k === 'everPaid') triSel = triSel.filter(x => PAY_KEYS.indexOf(x) < 0);
+    else if (PAY_KEYS.indexOf(k) >= 0) triSel = triSel.filter(x => x !== 'everPaid');
+    if (!triSel.length) triSel = [k];
     // POS first, so the label and the single-series test read in a stable order.
     triSel.sort((a, b) => (POS_KEYS.indexOf(a) >= 0 ? 0 : 1) - (POS_KEYS.indexOf(b) >= 0 ? 0 : 1));
     paintButtons();
   }
   function paintButtons(){
+    // EVER PAID IS HIDDEN WHERE IT CANNOT BE ANSWERED. It arrives with the pull that added
+    // it, so a dashboard on older data — or a market whose cohort file predates it — has no
+    // everPaid array at all. Without this guard, selecting it there drew an empty grid, which
+    // reads as "nobody ever paid in this market" rather than "this build cannot say".
+    const everBtn = document.querySelector('#tri-metric button[data-metric=everPaid]');
+    const everOk = triHasIn(triSrc(), 'everPaid');
+    if (everBtn) everBtn.style.display = everOk ? '' : 'none';
+    if (!everOk && triSel.indexOf('everPaid') >= 0) triSel = ['paying'];
     document.querySelectorAll('#tri-metric button, #tri-stage button').forEach(x =>
       x.classList.toggle('on', triSel.indexOf(x.dataset.metric) >= 0));
     // "Any status" is the state of having no POS condition, so it lights up by absence.
