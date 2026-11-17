@@ -4,11 +4,11 @@
  "batch": {
   "label": "Daily newly-enabled review — 2026-11-14 Europe/London",
   "cohortDate": "2026-11-14",
-  "reviewedAt": "2026-11-15T00:07:46+00:00",
+  "reviewedAt": "2026-11-17T07:24:53+00:00",
   "count": 5,
   "cohortDefinition": "Accounts observed crossing into charges_enabled = true on the stated Europe/London calendar day, per the fraud-health enablement ledger replayed from the committed history of activation-data.js. Stripe account creation date is never used to select a cohort."
  },
- "reviewedAt": "2026-11-15T00:07:46+00:00",
+ "reviewedAt": "2026-11-17T07:24:53+00:00",
  "merchants": [
   {
    "id": "acct_1URdN24dGb6nXyhY",
@@ -28,34 +28,58 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Company."
+    "Stripe legal entity type is recorded as Company.",
+    "Independent listings place a sit-down breakfast/lunch restaurant, Mountain Center Cafe, at 29470 Highway 243, Mountain Center, CA 92561, with 126 Yelp reviews aggregated including December 2025 reviews describing new owners trading as Mountain Center Cafe & Grill. [https://www.mapquest.com/us/california/mountain-center-cafe-369355995]",
+    "MCC 5812 and descriptor MOUNTAINCENTERCAFE.COM are coherent with the observed business: a breakfast/lunch cafe with table service, patio and takeout. [https://maps.roadtrippers.com/us/mountain-center-ca/food-drink/mountain-center-cafe]",
+    "The Idyllwild Town Crier reported Mountain Center Cafe's soft opening in May 2013 at the Hwy 243/74 junction; the premises have been reviewed continuously since. The current operator appears to have taken over around late 2025 (earlier Fork & Spoon listing at the same address marked closed). No scam/complaint reports found. [https://idyllwildtowncrier.com/2013/05/21/mountain-center-cafe-now-open/]"
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "CA Secretary of State bizfileonline could not be queried (the verifier's fetch tool refused the search URL); web searches surfaced no filing for 'Mountain Center Cafe & Grill'. Riverside County Environmental Health food-facility permit not confirmed. Entity registration and health permit unverified, not contradicted.",
+    "Representative name not available to the verifier on this run.",
+    "mountaincentercafe.com could not be loaded by the verifier. The Roadtrippers listing carries business-supplied text pointing to www.mountaincentercafe.com, linking the domain and the MOUNTAINCENTERCAFE.COM descriptor to this cafe; however MapQuest's 'generated from the website' description mentions an animal-feed/farm-supply business, so current domain content/control is unconfirmed. [https://maps.roadtrippers.com/us/mountain-center-ca/food-drink/mountain-center-cafe]"
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual CA SOS bizfile search for 'Mountain Center Cafe & Grill' to confirm an active entity under the new owners (late 2025).",
+    "Riverside County Environmental Health: confirm a current food-facility permit at 29470 Highway 243 under the new operator.",
+    "Load mountaincentercafe.com manually and confirm it shows this cafe (not animal-feed content or a lapsed/reused domain).",
+    "Representative identity and Stripe KYC status once the representative feed covers this account."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.mapquest.com/us/california/mountain-center-cafe-369355995",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "physical restaurant in the stated city",
+     "dimension": "operating"
+    },
+    {
+     "url": "https://maps.roadtrippers.com/us/mountain-center-ca/food-drink/mountain-center-cafe",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "domain tied to the cafe in its listing; current content unknown",
+     "dimension": "contact"
+    },
+    {
+     "url": "https://idyllwildtowncrier.com/2013/05/21/mountain-center-cafe-now-open/",
+     "sourceType": "news",
+     "checkedAt": "2026-11-17",
+     "establishes": "premises active since 2013; operator changed ~Dec 2025",
+     "dimension": "history"
+    }
+   ],
+   "summary": "A real breakfast/lunch restaurant operates at 29470 Highway 243, Mountain Center, CA; the premises date to 2013 and December 2025 reviews describe new owners trading as Mountain Center Cafe & Grill, so MCC 5812 and the descriptor are coherent. The account is plausibly the new operator of an established restaurant. CA SOS, the county health permit, representative identity and current website content could not be checked automatically, and a listing hints the domain may now show unrelated content. 0 risk points; residual checks are routine.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-15T00:07:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:24:53+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-14T20:04:13+00:00",
    "enabledWindowStart": "2026-11-14T14:09:36+00:00",
    "enabledWindowEnd": "2026-11-14T20:04:13+00:00",
@@ -87,10 +111,10 @@
    "accountId": "acct_1UbUCJGOo8jdePgr",
    "merchantId": "5435062",
    "name": "Promomax LLC",
-   "score": 0,
+   "score": 15,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 15,
     "identity": 0,
     "contact": 0,
     "businessModel": 0,
@@ -100,34 +124,38 @@
    },
    "verified": [
     "Stripe reports charges_enabled = true for this account (warehouse share).",
-    "Stripe legal entity type is recorded as Individual."
+    "Stripe legal entity type is recorded as Company."
    ],
    "unverified": [
     "Contact email is a consumer mailbox (gmail.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "NY Department of State Public Inquiry and the data.ny.gov Active Corporations API could not be loaded by the verifier (fetch tool refused the URLs). Web searches found no 'PROMOMAX LLC' entity in New York, only similarly named companies and a PROMOMAX federal trademark cancelled in 2016 with no stated link. Not scored as a contradiction because the official registry was never queried.",
+    "Representative name not available to the verifier on this run.",
+    "No website declared or found; contact is a personal gmail. Name and descriptor 'PROMOMAX LLC' are not random strings and do not describe payment collection.",
+    "MCC 5999 and descriptor are coherent on paper with selling apparel and jewelry, but with no shop found the actual activity cannot be observed. The name 'Promomax' suggests promotions/marketing rather than ethnic apparel.",
+    "No dated listings, reviews, filings or scam/complaint reports found for Promomax in Brooklyn/NY."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "Declared online seller of Pakistani/Indian dresses and jewelry, but no observable shop or product exists under the name anywhere: no website declared, and searches for Promomax with Brooklyn, Pakistani/Indian dresses, Instagram, Facebook, Etsy, eBay, Amazon and Walmart returned only unrelated sellers. Established by exhaustive search; no single page to cite."
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual NY DOS Public Inquiry search for 'PROMOMAX' (active status, formation date, Brooklyn address).",
+    "Ask the merchant for its sales-channel URLs (Instagram/Facebook/Etsy/own site) and product photos or supplier invoices.",
+    "Representative identity and Stripe KYC status; confirm the representative is linked to the LLC.",
+    "Explanation of the 'Promomax' name versus the apparel business."
    ],
    "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
+   "summary": "Promomax LLC (Brooklyn, NY; MCC 5999) says it sells Pakistani/Indian dresses and jewelry online but declares no website, uses a personal gmail, and has no observable storefront, social page or marketplace listing anywhere, which is a 15-point operating contradiction for an online-only seller. The NY registry could not be queried automatically and no matching entity surfaced in search. Total 15 risk points. Hold payouts pending proof of product (sales channel, product photos, supplier invoices) and a manual NY DOS check.",
+   "reviewCompleteness": 38,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-15T00:07:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:24:53+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-14T14:09:36+00:00",
    "enabledWindowStart": "2026-11-13T23:47:59+00:00",
    "enabledWindowEnd": "2026-11-14T14:09:36+00:00",
@@ -141,17 +169,17 @@
    "location": "Brooklyn, NY, US",
    "email": "sadianabeel1988@gmail.com",
    "website": null,
-   "mcc": "5691",
-   "statementDescriptor": "SADIA KANWAL",
+   "mcc": "5999",
+   "statementDescriptor": "PROMOMAX LLC",
    "productDescription": "I m selling pakistani and india style dresses jewelry online",
-   "entityType": "Individual",
+   "entityType": "Company",
    "representative": null,
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 15,
+   "trustScore": 85,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -180,26 +208,37 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual / sole proprietor; no entity registration expected. WA Business Lookup and ccfs.sos.wa.gov could not be queried by the verifier's fetch tool; searches surfaced no WA trade-name record for 'Youngblood Handmade'.",
+    "No independent footprint (Etsy, Instagram, Facebook, market or craft-fair listing) found for 'Youngblood Handmade' in Goldendale. A BBB handbag category page lists an unnamed handbag business in Goldendale WA 98620 that cannot be tied to this merchant. Maker business, not licensed premises, so no points. [https://prod.bbb.org/us/or/wasco/category/handbags]",
+    "Representative name not available to the verifier on this run.",
+    "No website declared or found; personal gmail. The personal-name statement descriptor is normal for a sole proprietor and not a random string; no public business channel was found linking that person to the business.",
+    "MCC 5999 is coherent with declared 'handmade quilted goods and bags', but no shop or product page was found to observe what is sold. Physical goods, so the digital-goods rule does not apply.",
+    "No dated reviews, listings or filings found; no scam, complaint or fraud reports."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual WA Business Lookup / ccfs.sos.wa.gov search for a 'Youngblood Handmade' trade name.",
+    "Ask the merchant for a selling-channel link (Etsy, Instagram, Facebook, market-vendor listing) or product photos.",
+    "Representative identity and Stripe KYC status; confirm it matches the personal-name statement descriptor."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "sources": [
+    {
+     "url": "https://prod.bbb.org/us/or/wasco/category/handbags",
+     "sourceType": "business-listing",
+     "checkedAt": "2026-11-17",
+     "establishes": "no observable presence in Goldendale found",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Low-footprint sole-proprietor maker in Goldendale, WA selling handmade quilted goods and bags under MCC 5999 with a personal-name descriptor. No public presence (Etsy, social, market listings, trade-name record) was found, and no adverse signals either; the profile is internally coherent for a small craft seller likely selling in person. All six dimensions unverified, 0 risk points. Main remaining checks: selling-channel link and representative KYC.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-15T00:07:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:24:53+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-14T14:09:36+00:00",
    "enabledWindowStart": "2026-11-14T02:13:54+00:00",
    "enabledWindowEnd": "2026-11-14T14:09:36+00:00",
@@ -231,13 +270,13 @@
    "accountId": "acct_1UbjJ07ZlohWifOp",
    "merchantId": "5437842",
    "name": "Hellofresh",
-   "score": 0,
+   "score": 27,
    "riskDimensions": {
     "legal": 0,
-    "operating": 0,
+    "operating": 10,
     "identity": 0,
-    "contact": 0,
-    "businessModel": 0,
+    "contact": 10,
+    "businessModel": 7,
     "history": 0,
     "behavior": 0,
     "network": 0
@@ -250,28 +289,40 @@
     "Contact email is a consumer mailbox (aol.com), so the email domain does not corroborate the business. Common for micro-merchants; not scored.",
     "No Loyverse POS receipt history is linked to this account, so trading activity could not be corroborated from our own data.",
     "Legal registration and company standing have not been checked against a government register.",
-    "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual / sole proprietor; no state registration required. FL Sunbiz search could not be loaded by the verifier's fetch tool, so no local fictitious-name record called Hellofresh could be checked. The real US HelloFresh operator is a Delaware corporation (see contact), not this merchant.",
+    "Representative name not available to the verifier on this run.",
+    "No dated listings, reviews or filings for a Hellofresh business in Olympia Heights FL. Search results show generic HelloFresh impersonation scams (phishing, fake partnership offers) but none tied to this merchant."
    ],
-   "contradictions": [],
+   "contradictions": [
+    "MCC 5499 (misc food stores) implies food-retail premises, but searches found no Yelp, Facebook, Google or BBB listing for any 'Hellofresh' store in Olympia Heights / Westchester (Miami); the only Miami results concern the national HelloFresh brand. No independent local footprint for this merchant.",
+    "Declared website hellofresh.com loads and belongs to a different business: its Terms of Use state that Grocery Delivery E-Services USA, Inc. d/b/a HelloFresh, a Delaware corporation with offices in New York, operates HelloFresh.com. The merchant is a Florida sole proprietor with a personal aol.com contact email, not a hellofresh.com domain. [https://www.hellofresh.com/about/termsandconditions]",
+    "MCC 5499 and descriptor HELLOFRESH.COM match HelloFresh the meal-kit company, not anything this merchant observably does (no product description, no footprint). Cardholder statements would show HELLOFRESH.COM for charges HelloFresh did not make, indicating descriptor misuse / brand impersonation. [https://www.hellofresh.com/about/termsandconditions]"
+   ],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Manual Sunbiz Fictitious Name / Corporation search for HELLOFRESH / HELLO FRESH in Miami-Dade.",
+    "Ask the merchant for proof of authorisation to use the HelloFresh name, domain and descriptor (franchise/reseller agreement), or require a descriptor and website change.",
+    "Ask what is actually sold and where (premises address, photos, food-establishment permit).",
+    "Representative identity and Stripe KYC status; confirm no link to Grocery Delivery E-Services USA, Inc."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
-   "reviewCompleteness": 25,
-   "confidence": "low",
-   "reviewStage": "automated-signals-only",
-   "reviewPriority": "Verification outstanding",
+   "sources": [
+    {
+     "url": "https://www.hellofresh.com/about/termsandconditions",
+     "sourceType": "website",
+     "checkedAt": "2026-11-17",
+     "establishes": "declared website and descriptor belong to a third-party corporation",
+     "dimension": "contact"
+    }
+   ],
+   "summary": "A Florida sole proprietor in Olympia Heights declares hellofresh.com as its website and HELLOFRESH.COM as its descriptor; the site's Terms of Use show it is operated by Grocery Delivery E-Services USA, Inc., an unrelated Delaware corporation. There is no local food store called Hellofresh and the contact is a personal aol.com email, so this looks like brand impersonation / descriptor misuse with high chargeback and confusion risk. Total 27 risk points (operating 10, contact 10, businessModel 7). Hold payouts pending proof of authorisation and of the actual business; require descriptor/website correction.",
+   "reviewCompleteness": 62,
+   "confidence": "medium",
+   "reviewStage": "evidence-based",
+   "reviewPriority": "Verification partial",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-15T00:07:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:24:53+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-14T20:28:59+00:00",
    "enabledWindowStart": "2026-11-14T15:55:54+00:00",
    "enabledWindowEnd": "2026-11-14T20:28:59+00:00",
@@ -293,9 +344,9 @@
    "successfulTransactions": null,
    "hasTransacted": false,
    "lastTransactedAt": null,
-   "riskScore": 0,
-   "trustScore": 100,
-   "band": "Very low risk",
+   "riskScore": 27,
+   "trustScore": 73,
+   "band": "Low risk",
    "action": "Normal monitoring"
   },
   {
@@ -324,26 +375,37 @@
     "Legal registration and company standing have not been checked against a government register.",
     "Operating premises, licensing and permits have not been verified.",
     "Representative identity and bank-account ownership have not been independently confirmed.",
-    "Independent operating history and reputation have not been researched."
+    "Independent operating history and reputation have not been researched.",
+    "Individual / sole proprietor in Michigan; assumed names are filed with the county clerk (Marquette County), no state registration expected. No online county assumed-name search was available to check.",
+    "No listing or social page places 'Craftylicious' in Gwinn / Marquette County. The only Etsy shop with this name (CraftyliciousStore) gives Surprise, Arizona as its location and is not currently selling, so it is not linked to this merchant. Small maker with no footprint: no points. [https://www.etsy.com/shop/CraftyliciousStore]",
+    "Representative name not available to the verifier on this run.",
+    "No website declared; personal gmail. Business name and personal-name statement descriptor are normal for a sole-proprietor craft seller and do not describe payment collection; no public channel links them.",
+    "MCC 5970 (artist's supply & craft shops) is coherent with declared 'candy craft creations and plaster paint kits' (physical craft goods), but no product page by this merchant was found.",
+    "No dated listings, reviews, filings or posts for a Gwinn/Marquette 'Craftylicious'; no scam, complaint or fraud reports. Same-name hits belong to unrelated entities."
    ],
    "contradictions": [],
    "evidenceNeeded": [
-    "Government or state business-registration extract for the exact legal entity.",
-    "Evidence of a real operating location: licence, permit or premises confirmation.",
-    "Representative identity and payout bank-account ownership linkage.",
-    "Independent operating history: reviews, listings, supplier or customer evidence.",
-    "Confirmation that MCC, descriptor and the actual goods sold cohere.",
-    "Confirmation that phone, website and email resolve to the same business."
+    "Marquette County Clerk assumed-name (DBA) check for 'Craftylicious', or ask the merchant for its DBA certificate.",
+    "Ask the merchant for a Facebook/marketplace/craft-fair link or product photos.",
+    "Representative identity and Stripe KYC status; confirm it matches the personal-name statement descriptor."
    ],
-   "sources": [],
-   "summary": "Automated signal pass only: 25% of the risk dimensions are backed by data we hold. No affirmative anomaly was observed in warehouse data. This is not a clean bill of health — the legal, operating, identity and history dimensions have not been independently checked.",
+   "sources": [
+    {
+     "url": "https://www.etsy.com/shop/CraftyliciousStore",
+     "sourceType": "search",
+     "checkedAt": "2026-11-17",
+     "establishes": "no independent footprint found in stated city",
+     "dimension": "operating"
+    }
+   ],
+   "summary": "Craftylicious is a declared sole proprietor in Gwinn, MI selling candy-themed craft creations and plaster paint kits under MCC 5970, which is coherent with the declared product. No public footprint ties a 'Craftylicious' to Gwinn (the only same-name Etsy shop is inactive and based in Arizona), and no adverse reports were found. All dimensions unverified, 0 risk points. Open items: county DBA, merchant-supplied proof of trading, representative KYC.",
    "reviewCompleteness": 25,
    "confidence": "low",
    "reviewStage": "automated-signals-only",
    "reviewPriority": "Verification outstanding",
    "reviewType": "daily-enabled-review",
-   "reviewedAt": "2026-11-15T00:07:46+00:00",
-   "reviewer": "fraud-health-pipeline",
+   "reviewedAt": "2026-11-17T07:24:53+00:00",
+   "reviewer": "cowork-verification-agent (claude)",
    "enabledAt": "2026-11-14T23:43:24+00:00",
    "enabledWindowStart": "2026-11-14T18:53:50+00:00",
    "enabledWindowEnd": "2026-11-14T23:43:24+00:00",
