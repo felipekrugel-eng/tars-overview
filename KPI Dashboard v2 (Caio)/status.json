@@ -1,6 +1,6 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-17T15:34:59.513936+00:00",
+ "checked_at": "2026-11-17T15:37:07.245243+00:00",
  "worst": "warn",
  "digest": "434b8a9b981b2754cb4e1a6faa49386548f063b3c80d7ba5622a9861187eab22",
  "history_method": 2,
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-11-17T14:51:43+00:00",
    "data_at": "2026-11-17T14:50:00+00:00",
-   "age_h": 0.75,
+   "age_h": 0.79,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -31,7 +31,7 @@
    "reason": "source",
    "committed_at": "2026-11-17T15:19:12+00:00",
    "data_at": "2026-11-17T14:54:07+00:00",
-   "age_h": 0.68,
+   "age_h": 0.72,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": "2026-11-17T14:45:00Z",
@@ -81,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-11-17T14:56:33+00:00",
    "data_at": "2026-11-17T14:56:22.471485+00:00",
-   "age_h": 0.64
+   "age_h": 0.68
   },
   {
    "name": "Activated payments",
@@ -93,7 +93,7 @@
    "reason": null,
    "committed_at": "2026-11-17T15:06:09+00:00",
    "data_at": "2026-11-17T14:56:08.545000+00:00",
-   "age_h": 0.65,
+   "age_h": 0.68,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -106,7 +106,7 @@
    "reason": null,
    "committed_at": "2026-11-17T15:06:09+00:00",
    "data_at": null,
-   "age_h": 0.48
+   "age_h": 0.52
   },
   {
    "name": "Merchant base",
@@ -118,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-11-17T14:01:37+00:00",
    "data_at": "2026-11-17T13:56:38.688712+00:00",
-   "age_h": 1.64,
+   "age_h": 1.67,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -133,7 +133,7 @@
    "reason": "rebuild",
    "committed_at": "2026-11-16T07:54:35+00:00",
    "data_at": null,
-   "age_h": 31.67,
+   "age_h": 31.71,
    "inputs_changed_at": "2026-11-17T10:41:23+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -189,7 +189,7 @@
    "reason": "ageing",
    "committed_at": "2026-11-16T07:54:35+00:00",
    "data_at": null,
-   "age_h": 31.67,
+   "age_h": 31.71,
    "inputs_changed_at": "2026-11-13T11:36:27+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -243,7 +243,7 @@
    "reason": null,
    "committed_at": "2026-11-17T07:39:24+00:00",
    "data_at": null,
-   "age_h": 7.93,
+   "age_h": 7.96,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -256,7 +256,7 @@
    "reason": null,
    "committed_at": "2026-11-16T16:44:12+00:00",
    "data_at": null,
-   "age_h": 22.85,
+   "age_h": 22.88,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
