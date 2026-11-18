@@ -1,0 +1,70 @@
+{
+  "accountId": "acct_1UcZFa89yhWOANIU",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No DC entity registration or catering licence could be checked. The DLCP page timed out, and DLCP CorpOnline needs a login so automation cannot query it. Web searches for \"Peggy's Gourmet\" found no registry record or DC Health food-establishment / Basic Business License record. A search with no results is not a registry check, so no contradiction is scored.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-18",
+      "establishes": "Nothing. Entity existence, standing and the food/catering licence are unconfirmed because the registry could not be reached by automation."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Search results show directory listings for a caterer called Peggy's Gourmet in Washington DC: a Yelp listing in the Caterers category and MapQuest and MenuPix listings at 700 12th St NW, Ste 700. None of the pages could be loaded (Yelp and MapQuest block automated fetching; MenuPix returned an error), so this is unverified. The listed address is a downtown NW office suite, not the declared Southeast DC location.",
+      "sourceType": "business-listing",
+      "checkedAt": "2026-11-18",
+      "establishes": "Search snippets suggest a DC catering business of this name. The pages were not loaded, and the address does not match the declared location."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Representative identity not assessed."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Could not confirm that cateringatisbest.com resolves or belongs to Peggy's Gourmet: the page could not be loaded, and searches found no indexed pages on or about the domain. The descriptor CATERINGATISBEST.COM matches the declared website, and the Gmail handle matches the business name, but the domain does not contain the business name and nothing found links the two.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Descriptor and declared website match each other. Ownership and content of the website are unknown."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 5811 (Caterers) and the CATERINGATISBEST.COM descriptor fit the catering category shown in directory search snippets, but neither the merchant's website nor a listing page could be loaded to confirm it. No product description was provided.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "The MCC looks plausible, but no loaded page confirms it."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Nine searches covering the name, email handle, domain and address found no scam, fraud or complaint reports. The only dated signal is a Yelp result titled \"Updated December 2025\", from a page that could not be loaded. That does not establish a year or more of independent presence. No news coverage was found.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "No adverse history found. An operating history of a year or more is not established."
+    }
+  ],
+  "evidenceNeeded": [
+    "Manual DLCP CorpOnline search for 'Peggy's Gourmet' and variants, to confirm an active DC entity matching the Company entity type.",
+    "DC Health food-establishment licence or DLCP Basic Business License with a caterer endorsement, or a commissary-kitchen agreement.",
+    "Manual browser check of cateringatisbest.com: does it resolve, does it name Peggy's Gourmet, and what do WHOIS records show?",
+    "Explanation of the address gap: listings show 700 12th St NW Ste 700, but the declared location is Southeast DC. Obtain the kitchen/operating address.",
+    "Manual review of the Yelp listing, which blocks automation: review dates and any non-delivery complaints.",
+    "Representative name and Stripe KYC status (this account was missing from the private representative feed)."
+  ],
+  "summary": "Directory search snippets (Yelp, MapQuest, MenuPix) suggest a caterer named Peggy's Gourmet operates in Washington DC, which fits MCC 5811. Every listing page blocked automated loading, so nothing is verified. The listed address is a downtown NW office suite rather than the declared Southeast DC location. The declared website and descriptor domain cateringatisbest.com have no indexed footprint and do not contain the business name. The DC registry, licence and representative checks could not be completed, so the 0 risk points mean unverified, not clean."
+}
