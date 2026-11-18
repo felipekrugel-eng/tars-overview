@@ -1,0 +1,71 @@
+{
+  "accountId": "acct_1Ucil36BXlcsw72Y",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The California Secretary of State register (bizfileOnline) returned a bot-protection page to automated search, so the LLC's registration and status are unconfirmed. Web searches for \"OPM Property Management LLC\" with California, Yuba City and Sutter County found no registry record. Only similarly named, unrelated firms came up. If the company manages properties it does not own, a CA DRE broker licence would be required; none was found under this name. Yuba City short-term-rental registration could not be checked online.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-18",
+      "establishes": "Nothing. The state register blocked automation, and no licence was confirmed."
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches found no Google, Yelp, Facebook, Instagram, Nextdoor, BBB or Airbnb host listing placing OPM Property Management in Yuba City. This is a service business with no observable footprint.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "No independent evidence that the business operates in Yuba City."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Representative identity not assessed."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared. The email is on the free usa.com consumer domain, but the 'opmprop' handle matches the business name, and the descriptor 'OPM PROP MAN LLC' is a readable abbreviation of the legal name. Neither describes payment collection.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Email handle and descriptor match the legal name. There is no website to verify."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "MCC 6513 (real estate agents and managers - rentals) fits the main stated activity, short-term rental of the merchant's own Airbnb property. The other declared lines fall outside 6513: STR consulting fees and selling set-up 'documents', which are closer to consulting or digital goods. No listing, offering or product page was found to confirm any of these activities. The merchant also says it takes bookings off the Airbnb platform, which is a known vacation-rental fraud and chargeback pattern.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "The MCC nominally fits the rental activity. The consulting and document sales are not observable."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches for OPM Property Management with scam, reviews or complaint found no reviews, news, complaints or scam reports about this business. Results concerned unrelated firms with similar names. No dated independent presence was found.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "No history found, positive or negative."
+    }
+  ],
+  "evidenceNeeded": [
+    "CA Secretary of State bizfileOnline record for 'OPM Property Management LLC' (entity number, status, formation date). Check manually, because the site blocks automation.",
+    "Whether the merchant manages or collects rent for properties it does not own. If so, a CA DRE broker licence number.",
+    "Yuba City Transient Occupancy Registration Certificate and city business licence for the rental property.",
+    "Airbnb host profile or listing link, plus proof of ownership or a lease for the rental property.",
+    "Description and samples of the consulting and 'documents' sold: prices, delivery method and refund policy.",
+    "How off-platform bookings are taken: channel, deposits, cancellation and refund terms, expected volume and ticket size.",
+    "Representative name and Stripe KYC status (this account was missing from the private representative feed)."
+  ],
+  "summary": "No independent footprint was found for Opm Property Management LLC: no registry hit, listing, social profile, Airbnb host page or review. The CA Secretary of State register blocked automated search. The descriptor and email handle fit the name, but the contact is a free usa.com mailbox with no website, and the account is one day old. MCC 6513 fits the own-property rental activity, but the model also includes off-Airbnb direct bookings (a known fraud and chargeback pattern) and sales of consulting and 'documents'. The risk points total 0 only because every dimension is unverified; manual SOS confirmation, Airbnb listing and ownership evidence, and representative KYC are needed."
+}
