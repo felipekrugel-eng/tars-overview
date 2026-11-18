@@ -1,0 +1,71 @@
+{
+  "accountId": "acct_1Ucl0Q8bfSXQgbjW",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "cowork-verification-agent (claude)",
+  "findings": [
+    {
+      "dimension": "legal",
+      "points": 0,
+      "status": "unverified",
+      "statement": "This is an individual / sole proprietor, so no state entity registration is expected. 'Pc World' does not contain the owner's surname, and per LA County guidance a sole proprietor trading under such a name must file a Fictitious Business Name Statement. The county's online FBN search could not be reached by automation, so the filing is unchecked. Nothing contradicts it.",
+      "sourceType": "state-register",
+      "checkedAt": "2026-11-18",
+      "establishes": "A sole proprietor with a DBA filing that is likely required but unchecked.",
+      "url": "https://laalmanac.com/_main/records_fbn_statements.php"
+    },
+    {
+      "dimension": "operating",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Searches found no Google, Yelp, Facebook, Instagram, Nextdoor, OfferUp or BBB listing for a PC-building business called 'Pc World' in La Puente or the San Gabriel Valley. 'PC World' results all referred to the unrelated UK retailer or the magazine. This is a service business with no observable footprint.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "No independent online footprint found."
+    },
+    {
+      "dimension": "identity",
+      "points": 0,
+      "status": "unverified",
+      "statement": "Representative name not available to the verifier on this run.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Representative identity not assessed; the personal-name descriptor could not be compared with the representative."
+    },
+    {
+      "dimension": "contact",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No website was declared. The live.com email handle and the descriptor 'ERIC OCHOA' are consistent with each other, and a sole proprietor using their own name as the descriptor is common and is not a random string. Nothing refers to payment collection.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "Email and descriptor fit an individual sole proprietor. There is no website to confirm the business."
+    },
+    {
+      "dimension": "businessModel",
+      "points": 0,
+      "status": "unverified",
+      "statement": "The declared activity is custom PC assembly. MCC 7299 (miscellaneous personal services) is a catch-all that can fit a labour-only build service. 7379 (computer maintenance and repair) would fit better, and 5734 or 5732 would apply if complete PCs or parts are sold. No merchant page was found to confirm the activity.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "The activity is plausible under the catch-all MCC, though a closer MCC exists."
+    },
+    {
+      "dimension": "history",
+      "points": 0,
+      "status": "unverified",
+      "statement": "No dated reviews, listings, complaints or scam reports were found for 'Pc World' in La Puente or for the descriptor name as a PC builder.",
+      "sourceType": "search",
+      "checkedAt": "2026-11-18",
+      "establishes": "No history and no negative reports found."
+    }
+  ],
+  "evidenceNeeded": [
+    "Representative name and Stripe KYC result, to compare against the personal-name descriptor (this account was missing from the private representative feed).",
+    "LA County Fictitious Business Name filing for 'Pc World', or confirmation that the merchant trades under their own name.",
+    "A social or marketplace profile showing completed PC builds.",
+    "A City of La Puente business licence, or the LA County equivalent if the address is unincorporated.",
+    "Whether complete PCs or parts are sold, to decide on re-coding to MCC 7379 or 5734/5732.",
+    "Expected ticket size and volume, plus an example invoice."
+  ],
+  "summary": "Pc World is a one-day-old individual / sole-proprietor account in La Puente, CA, offering custom PC building. It has no website, uses a free live.com email consistent with the owner's name, and uses a personal-name descriptor. Searches found no independent footprint, history, reviews or complaints, and the LA County DBA search was not reachable by automation. All six dimensions are unverified with 0 risk points. MCC 7299 is acceptable but 7379 fits better; the main open items are representative identity and KYC, and proof of real build activity."
+}
