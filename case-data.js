@@ -1,9 +1,9 @@
 // ─── CASE DATA BLOCK ───────────────────────────────────────────────────────────────
 // Updated by CASE × Snowflake pull. Single source of truth for all dashboard numbers.
 // dataStatus: ACTUAL = live Snowflake data. PROJECTED = manual estimates.
-// Last pull: 2026-11-17
+// Last pull: 2026-11-18
 const CASE_DATA = {
-  "lastUpdated": "2026-11-17",
+  "lastUpdated": "2026-11-18",
   "period": "Q4 2026 · Snowflake Live Data",
   "dataStatus": "ACTUAL",
   "targets2026": {
@@ -175,7 +175,7 @@ const CASE_DATA = {
         5004.1,
         130958.5,
         7450.1,
-        10111.9,
+        10381.3,
         null,
         null
       ]
@@ -183,7 +183,7 @@ const CASE_DATA = {
   },
   "funnel": {
     "registered": {
-      "value": 5267436,
+      "value": 5270962,
       "label": "Registered merchants"
     },
     "active": {
@@ -237,7 +237,7 @@ const CASE_DATA = {
     "cohortVintages": [
       {
         "month": "2026-11",
-        "merchants": 59344,
+        "merchants": 62870,
         "activeNow": 0,
         "activePct": 0,
         "payingNow": 19,
@@ -246,8 +246,8 @@ const CASE_DATA = {
         "mrr": 176,
         "arr": 2117,
         "arpc": 9.28,
-        "gtv30d": 176115,
-        "gtvAlltime": 176.12,
+        "gtv30d": 184352.5,
+        "gtvAlltime": 184.35,
         "revenueAlltime": 2.1,
         "npv": 0.03,
         "ltv": 109.17,
@@ -267,13 +267,13 @@ const CASE_DATA = {
         "mrr": 9389,
         "arr": 112664,
         "arpc": 14.23,
-        "gtv30d": 1252303.9,
-        "gtvAlltime": 1313.08,
+        "gtv30d": 1251999.1,
+        "gtvAlltime": 1313.18,
         "revenueAlltime": 25.2,
         "npv": 0.23,
         "ltv": 38.24,
-        "cancelled30d": 69,
-        "churnRate30d": 9.5,
+        "cancelled30d": 68,
+        "churnRate30d": 9.3,
         "cohortAgeMonths": 1,
         "paymentPct": 0.6
       },
@@ -288,13 +288,13 @@ const CASE_DATA = {
         "mrr": 13113,
         "arr": 157359,
         "arpc": 13.29,
-        "gtv30d": 385206.9,
-        "gtvAlltime": 6092.27,
+        "gtv30d": 320605.3,
+        "gtvAlltime": 6092.38,
         "revenueAlltime": 41.5,
         "npv": 0.36,
         "ltv": 42,
-        "cancelled30d": 99,
-        "churnRate30d": 9.1,
+        "cancelled30d": 96,
+        "churnRate30d": 8.9,
         "cohortAgeMonths": 2,
         "paymentPct": 0.87
       },
@@ -309,8 +309,8 @@ const CASE_DATA = {
         "mrr": 16148,
         "arr": 193772,
         "arpc": 12.66,
-        "gtv30d": 606068.6,
-        "gtvAlltime": 105352.83,
+        "gtv30d": 63590.7,
+        "gtvAlltime": 105352.92,
         "revenueAlltime": 75,
         "npv": 0.66,
         "ltv": 58.82,
@@ -330,13 +330,13 @@ const CASE_DATA = {
         "mrr": 18090,
         "arr": 217080,
         "arpc": 13.12,
-        "gtv30d": 6693.2,
-        "gtvAlltime": 2667.35,
+        "gtv30d": 263766,
+        "gtvAlltime": 2924.57,
         "revenueAlltime": 97,
         "npv": 0.74,
         "ltv": 70.36,
-        "cancelled30d": 112,
-        "churnRate30d": 7.5,
+        "cancelled30d": 111,
+        "churnRate30d": 7.4,
         "cohortAgeMonths": 4,
         "paymentPct": 1.06
       },
@@ -351,12 +351,12 @@ const CASE_DATA = {
         "mrr": 17390,
         "arr": 208679,
         "arpc": 12.41,
-        "gtv30d": 47280.3,
-        "gtvAlltime": 12663.98,
+        "gtv30d": 47372.3,
+        "gtvAlltime": 12664.36,
         "revenueAlltime": 111.8,
         "npv": 1.05,
         "ltv": 79.83,
-        "cancelled30d": 124,
+        "cancelled30d": 123,
         "churnRate30d": 8.1,
         "cohortAgeMonths": 5,
         "paymentPct": 1.31
@@ -372,13 +372,13 @@ const CASE_DATA = {
         "mrr": 17990,
         "arr": 215880,
         "arpc": 12.52,
-        "gtv30d": 7493.3,
-        "gtvAlltime": 1240.61,
+        "gtv30d": 7483.6,
+        "gtvAlltime": 1240.66,
         "revenueAlltime": 134.3,
         "npv": 1.21,
         "ltv": 93.44,
-        "cancelled30d": 143,
-        "churnRate30d": 9.1,
+        "cancelled30d": 140,
+        "churnRate30d": 8.9,
         "cohortAgeMonths": 6,
         "paymentPct": 1.3
       },
@@ -393,13 +393,13 @@ const CASE_DATA = {
         "mrr": 16844,
         "arr": 202134,
         "arpc": 12.26,
-        "gtv30d": 2824.8,
-        "gtvAlltime": 1945.22,
+        "gtv30d": 3122,
+        "gtvAlltime": 1945.61,
         "revenueAlltime": 143.5,
         "npv": 1.43,
         "ltv": 104.43,
-        "cancelled30d": 142,
-        "churnRate30d": 9.4,
+        "cancelled30d": 134,
+        "churnRate30d": 8.9,
         "cohortAgeMonths": 7,
         "paymentPct": 1.37
       },
@@ -414,13 +414,13 @@ const CASE_DATA = {
         "mrr": 17438,
         "arr": 209256,
         "arpc": 12.62,
-        "gtv30d": 126709.2,
-        "gtvAlltime": 44646.48,
+        "gtv30d": 46181.2,
+        "gtvAlltime": 44646.59,
         "revenueAlltime": 165.9,
         "npv": 1.69,
         "ltv": 120.05,
-        "cancelled30d": 136,
-        "churnRate30d": 9,
+        "cancelled30d": 130,
+        "churnRate30d": 8.6,
         "cohortAgeMonths": 8,
         "paymentPct": 1.41
       },
@@ -435,13 +435,13 @@ const CASE_DATA = {
         "mrr": 16690,
         "arr": 200277,
         "arpc": 12.75,
-        "gtv30d": 26555.7,
-        "gtvAlltime": 1810.22,
+        "gtv30d": 26474,
+        "gtvAlltime": 1810.29,
         "revenueAlltime": 170.9,
         "npv": 1.95,
         "ltv": 130.57,
-        "cancelled30d": 134,
-        "churnRate30d": 9.3,
+        "cancelled30d": 129,
+        "churnRate30d": 9,
         "cohortAgeMonths": 9,
         "paymentPct": 1.49
       },
@@ -456,8 +456,8 @@ const CASE_DATA = {
         "mrr": 18183,
         "arr": 218198,
         "arpc": 12.4,
-        "gtv30d": 47649.5,
-        "gtvAlltime": 1291.7,
+        "gtv30d": 47652.4,
+        "gtvAlltime": 1291.84,
         "revenueAlltime": 210.6,
         "npv": 2.26,
         "ltv": 143.67,
@@ -477,13 +477,13 @@ const CASE_DATA = {
         "mrr": 13943,
         "arr": 167318,
         "arpc": 12.32,
-        "gtv30d": 197790.3,
-        "gtvAlltime": 4986.31,
+        "gtv30d": 197830,
+        "gtvAlltime": 4986.39,
         "revenueAlltime": 178.7,
         "npv": 2.38,
         "ltv": 157.84,
-        "cancelled30d": 77,
-        "churnRate30d": 6.4,
+        "cancelled30d": 73,
+        "churnRate30d": 6.1,
         "cohortAgeMonths": 11,
         "paymentPct": 1.51
       },
@@ -498,13 +498,13 @@ const CASE_DATA = {
         "mrr": 14108,
         "arr": 169298,
         "arpc": 11.82,
-        "gtv30d": 4881.7,
-        "gtvAlltime": 673.23,
+        "gtv30d": 4866.2,
+        "gtvAlltime": 673.29,
         "revenueAlltime": 193,
         "npv": 2.5,
         "ltv": 161.61,
-        "cancelled30d": 87,
-        "churnRate30d": 6.8,
+        "cancelled30d": 85,
+        "churnRate30d": 6.6,
         "cohortAgeMonths": 12,
         "paymentPct": 1.55
       },
@@ -519,13 +519,13 @@ const CASE_DATA = {
         "mrr": 14324,
         "arr": 171886,
         "arpc": 11.51,
-        "gtv30d": 7410.8,
-        "gtvAlltime": 9316.73,
+        "gtv30d": 7377.6,
+        "gtvAlltime": 9316.83,
         "revenueAlltime": 217.9,
         "npv": 2.78,
         "ltv": 175.06,
-        "cancelled30d": 109,
-        "churnRate30d": 8.1,
+        "cancelled30d": 105,
+        "churnRate30d": 7.8,
         "cohortAgeMonths": 13,
         "paymentPct": 1.59
       },
@@ -540,13 +540,13 @@ const CASE_DATA = {
         "mrr": 15358,
         "arr": 184301,
         "arpc": 12.2,
-        "gtv30d": 2228.9,
-        "gtvAlltime": 732.5,
+        "gtv30d": 2230.8,
+        "gtvAlltime": 732.58,
         "revenueAlltime": 268.4,
         "npv": 3.48,
         "ltv": 213.17,
-        "cancelled30d": 98,
-        "churnRate30d": 7.2,
+        "cancelled30d": 96,
+        "churnRate30d": 7.1,
         "cohortAgeMonths": 14,
         "paymentPct": 1.63
       },
@@ -561,8 +561,8 @@ const CASE_DATA = {
         "mrr": 16705,
         "arr": 200463,
         "arpc": 13.53,
-        "gtv30d": 231448.8,
-        "gtvAlltime": 7174.99,
+        "gtv30d": 231450.3,
+        "gtvAlltime": 7175.04,
         "revenueAlltime": 306.7,
         "npv": 3.84,
         "ltv": 248.33,
@@ -582,13 +582,13 @@ const CASE_DATA = {
         "mrr": 17139,
         "arr": 205671,
         "arpc": 12.87,
-        "gtv30d": 2089,
-        "gtvAlltime": 21688.55,
+        "gtv30d": 1971.8,
+        "gtvAlltime": 21688.6,
         "revenueAlltime": 341,
         "npv": 4.16,
         "ltv": 256.02,
-        "cancelled30d": 133,
-        "churnRate30d": 9.1,
+        "cancelled30d": 131,
+        "churnRate30d": 9,
         "cohortAgeMonths": 16,
         "paymentPct": 1.62
       },
@@ -603,13 +603,13 @@ const CASE_DATA = {
         "mrr": 15756,
         "arr": 189070,
         "arpc": 13.06,
-        "gtv30d": 2230.4,
-        "gtvAlltime": 803693.19,
+        "gtv30d": 2217.6,
+        "gtvAlltime": 803693.25,
         "revenueAlltime": 330.4,
         "npv": 4.46,
         "ltv": 273.99,
-        "cancelled30d": 103,
-        "churnRate30d": 7.9,
+        "cancelled30d": 98,
+        "churnRate30d": 7.5,
         "cohortAgeMonths": 17,
         "paymentPct": 1.63
       },
@@ -624,13 +624,13 @@ const CASE_DATA = {
         "mrr": 15857,
         "arr": 190288,
         "arpc": 13.13,
-        "gtv30d": 1803.4,
-        "gtvAlltime": 1120.37,
+        "gtv30d": 1784.9,
+        "gtvAlltime": 1120.41,
         "revenueAlltime": 350,
         "npv": 4.65,
         "ltv": 289.73,
-        "cancelled30d": 79,
-        "churnRate30d": 6.1,
+        "cancelled30d": 76,
+        "churnRate30d": 5.9,
         "cohortAgeMonths": 18,
         "paymentPct": 1.61
       },
@@ -645,13 +645,13 @@ const CASE_DATA = {
         "mrr": 14079,
         "arr": 168948,
         "arpc": 13.23,
-        "gtv30d": 2167.3,
-        "gtvAlltime": 76279.96,
+        "gtv30d": 2183.5,
+        "gtvAlltime": 76280.03,
         "revenueAlltime": 324.6,
         "npv": 4.87,
         "ltv": 305.07,
-        "cancelled30d": 68,
-        "churnRate30d": 6,
+        "cancelled30d": 67,
+        "churnRate30d": 5.9,
         "cohortAgeMonths": 19,
         "paymentPct": 1.6
       },
@@ -666,13 +666,13 @@ const CASE_DATA = {
         "mrr": 12722,
         "arr": 152658,
         "arpc": 12.42,
-        "gtv30d": 1335.5,
-        "gtvAlltime": 76534.55,
+        "gtv30d": 1318.4,
+        "gtvAlltime": 76534.59,
         "revenueAlltime": 313.9,
         "npv": 4.38,
         "ltv": 306.57,
-        "cancelled30d": 63,
-        "churnRate30d": 5.8,
+        "cancelled30d": 60,
+        "churnRate30d": 5.5,
         "cohortAgeMonths": 20,
         "paymentPct": 1.43
       },
@@ -687,13 +687,13 @@ const CASE_DATA = {
         "mrr": 14568,
         "arr": 174820,
         "arpc": 14.38,
-        "gtv30d": 950.8,
-        "gtvAlltime": 895.44,
+        "gtv30d": 949.3,
+        "gtvAlltime": 895.47,
         "revenueAlltime": 350,
         "npv": 5.82,
         "ltv": 345.51,
-        "cancelled30d": 63,
-        "churnRate30d": 5.9,
+        "cancelled30d": 61,
+        "churnRate30d": 5.7,
         "cohortAgeMonths": 21,
         "paymentPct": 1.68
       },
@@ -708,13 +708,13 @@ const CASE_DATA = {
         "mrr": 13401,
         "arr": 160806,
         "arpc": 13.62,
-        "gtv30d": 1214.4,
-        "gtvAlltime": 3744.7,
+        "gtv30d": 1215.9,
+        "gtvAlltime": 3744.74,
         "revenueAlltime": 344.6,
         "npv": 5.18,
         "ltv": 350.21,
-        "cancelled30d": 72,
-        "churnRate30d": 6.8,
+        "cancelled30d": 70,
+        "churnRate30d": 6.6,
         "cohortAgeMonths": 22,
         "paymentPct": 1.48
       },
@@ -729,13 +729,13 @@ const CASE_DATA = {
         "mrr": 10467,
         "arr": 125600,
         "arpc": 12.45,
-        "gtv30d": 2418.9,
-        "gtvAlltime": 4052.57,
+        "gtv30d": 2405.6,
+        "gtvAlltime": 4052.6,
         "revenueAlltime": 292.8,
         "npv": 5.5,
         "ltv": 348.15,
-        "cancelled30d": 51,
-        "churnRate30d": 5.7,
+        "cancelled30d": 50,
+        "churnRate30d": 5.6,
         "cohortAgeMonths": 23,
         "paymentPct": 1.58
       },
@@ -750,13 +750,13 @@ const CASE_DATA = {
         "mrr": 11437,
         "arr": 137242,
         "arpc": 13.01,
-        "gtv30d": 1604.2,
-        "gtvAlltime": 30658.66,
+        "gtv30d": 1595.7,
+        "gtvAlltime": 30658.7,
         "revenueAlltime": 333.8,
         "npv": 5.69,
         "ltv": 379.73,
-        "cancelled30d": 69,
-        "churnRate30d": 7.3,
+        "cancelled30d": 66,
+        "churnRate30d": 7,
         "cohortAgeMonths": 24,
         "paymentPct": 1.5
       },
@@ -771,13 +771,13 @@ const CASE_DATA = {
         "mrr": 13157,
         "arr": 157882,
         "arpc": 13.88,
-        "gtv30d": 1254.4,
-        "gtvAlltime": 3555.29,
+        "gtv30d": 1222.1,
+        "gtvAlltime": 3555.33,
         "revenueAlltime": 382,
         "npv": 6,
         "ltv": 402.98,
-        "cancelled30d": 61,
-        "churnRate30d": 6,
+        "cancelled30d": 58,
+        "churnRate30d": 5.8,
         "cohortAgeMonths": 25,
         "paymentPct": 1.49
       },
@@ -792,13 +792,13 @@ const CASE_DATA = {
         "mrr": 11871,
         "arr": 142451,
         "arpc": 13.13,
-        "gtv30d": 1838.2,
-        "gtvAlltime": 19133.78,
+        "gtv30d": 1836,
+        "gtvAlltime": 19133.82,
         "revenueAlltime": 403.1,
         "npv": 7.16,
         "ltv": 445.9,
-        "cancelled30d": 63,
-        "churnRate30d": 6.5,
+        "cancelled30d": 60,
+        "churnRate30d": 6.2,
         "cohortAgeMonths": 26,
         "paymentPct": 1.61
       },
@@ -813,13 +813,13 @@ const CASE_DATA = {
         "mrr": 13408,
         "arr": 160896,
         "arpc": 15.12,
-        "gtv30d": 1313.3,
-        "gtvAlltime": 33658.82,
+        "gtv30d": 1303.5,
+        "gtvAlltime": 33658.85,
         "revenueAlltime": 413.5,
         "npv": 7.25,
         "ltv": 466.19,
-        "cancelled30d": 51,
-        "churnRate30d": 5.4,
+        "cancelled30d": 47,
+        "churnRate30d": 5,
         "cohortAgeMonths": 27,
         "paymentPct": 1.56
       },
@@ -834,13 +834,13 @@ const CASE_DATA = {
         "mrr": 12229,
         "arr": 146752,
         "arpc": 14.2,
-        "gtv30d": 2367.4,
-        "gtvAlltime": 3075.79,
+        "gtv30d": 2389.1,
+        "gtvAlltime": 3075.85,
         "revenueAlltime": 389.8,
         "npv": 6.79,
         "ltv": 452.77,
-        "cancelled30d": 62,
-        "churnRate30d": 6.7,
+        "cancelled30d": 61,
+        "churnRate30d": 6.6,
         "cohortAgeMonths": 28,
         "paymentPct": 1.5
       },
@@ -855,13 +855,13 @@ const CASE_DATA = {
         "mrr": 9596,
         "arr": 115151,
         "arpc": 12.09,
-        "gtv30d": 1938.5,
-        "gtvAlltime": 313348.87,
+        "gtv30d": 1923.6,
+        "gtvAlltime": 313348.9,
         "revenueAlltime": 355.7,
         "npv": 7.01,
         "ltv": 447.93,
-        "cancelled30d": 54,
-        "churnRate30d": 6.4,
+        "cancelled30d": 52,
+        "churnRate30d": 6.1,
         "cohortAgeMonths": 29,
         "paymentPct": 1.56
       },
@@ -876,8 +876,8 @@ const CASE_DATA = {
         "mrr": 11686,
         "arr": 140226,
         "arpc": 13.28,
-        "gtv30d": 2035.4,
-        "gtvAlltime": 45199.38,
+        "gtv30d": 2053.6,
+        "gtvAlltime": 45199.44,
         "revenueAlltime": 397.7,
         "npv": 7.48,
         "ltv": 451.91,
@@ -897,13 +897,13 @@ const CASE_DATA = {
         "mrr": 11044,
         "arr": 132530,
         "arpc": 13.5,
-        "gtv30d": 1817.3,
-        "gtvAlltime": 1474.84,
+        "gtv30d": 1805,
+        "gtvAlltime": 1474.89,
         "revenueAlltime": 383.1,
         "npv": 7.34,
         "ltv": 468.35,
-        "cancelled30d": 41,
-        "churnRate30d": 4.8,
+        "cancelled30d": 40,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 31,
         "paymentPct": 1.57
       },
@@ -918,13 +918,13 @@ const CASE_DATA = {
         "mrr": 13836,
         "arr": 166038,
         "arpc": 16.26,
-        "gtv30d": 1088.7,
-        "gtvAlltime": 1437.59,
+        "gtv30d": 13441.2,
+        "gtvAlltime": 1449.98,
         "revenueAlltime": 497.4,
         "npv": 9.34,
         "ltv": 584.45,
-        "cancelled30d": 45,
-        "churnRate30d": 5,
+        "cancelled30d": 42,
+        "churnRate30d": 4.7,
         "cohortAgeMonths": 32,
         "paymentPct": 1.6
       },
@@ -939,13 +939,13 @@ const CASE_DATA = {
         "mrr": 11245,
         "arr": 134934,
         "arpc": 13.92,
-        "gtv30d": 2197.6,
-        "gtvAlltime": 256089.96,
+        "gtv30d": 2201,
+        "gtvAlltime": 256090.03,
         "revenueAlltime": 415.2,
         "npv": 7.15,
         "ltv": 513.84,
-        "cancelled30d": 40,
-        "churnRate30d": 4.7,
+        "cancelled30d": 38,
+        "churnRate30d": 4.5,
         "cohortAgeMonths": 33,
         "paymentPct": 1.39
       },
@@ -960,8 +960,8 @@ const CASE_DATA = {
         "mrr": 11343,
         "arr": 136118,
         "arpc": 13.22,
-        "gtv30d": 6543.6,
-        "gtvAlltime": 1258.04,
+        "gtv30d": 6535.2,
+        "gtvAlltime": 1258.07,
         "revenueAlltime": 443.9,
         "npv": 8.37,
         "ltv": 517.31,
@@ -981,13 +981,13 @@ const CASE_DATA = {
         "mrr": 10252,
         "arr": 123029,
         "arpc": 16.75,
-        "gtv30d": 9198.7,
-        "gtvAlltime": 1757.82,
+        "gtv30d": 9239.6,
+        "gtvAlltime": 1757.9,
         "revenueAlltime": 430.7,
         "npv": 10.18,
         "ltv": 703.68,
-        "cancelled30d": 33,
-        "churnRate30d": 5.1,
+        "cancelled30d": 29,
+        "churnRate30d": 4.5,
         "cohortAgeMonths": 35,
         "paymentPct": 1.45
       },
@@ -1002,13 +1002,13 @@ const CASE_DATA = {
         "mrr": 10015,
         "arr": 120176,
         "arpc": 13.32,
-        "gtv30d": 234323.2,
-        "gtvAlltime": 1395,
+        "gtv30d": 234308.7,
+        "gtvAlltime": 1395.03,
         "revenueAlltime": 450.7,
         "npv": 10.09,
         "ltv": 599.38,
-        "cancelled30d": 34,
-        "churnRate30d": 4.3,
+        "cancelled30d": 30,
+        "churnRate30d": 3.8,
         "cohortAgeMonths": 36,
         "paymentPct": 1.68
       },
@@ -1023,13 +1023,13 @@ const CASE_DATA = {
         "mrr": 10351,
         "arr": 124215,
         "arpc": 13.43,
-        "gtv30d": 1525.5,
-        "gtvAlltime": 707.13,
+        "gtv30d": 1507.7,
+        "gtvAlltime": 707.17,
         "revenueAlltime": 417.9,
         "npv": 8.93,
         "ltv": 541.96,
-        "cancelled30d": 45,
-        "churnRate30d": 5.5,
+        "cancelled30d": 44,
+        "churnRate30d": 5.4,
         "cohortAgeMonths": 37,
         "paymentPct": 1.65
       },
@@ -1044,13 +1044,13 @@ const CASE_DATA = {
         "mrr": 9723,
         "arr": 116680,
         "arpc": 14.28,
-        "gtv30d": 2527.2,
-        "gtvAlltime": 2986.7,
+        "gtv30d": 2519.4,
+        "gtvAlltime": 2986.73,
         "revenueAlltime": 447.2,
         "npv": 9.76,
         "ltv": 656.74,
-        "cancelled30d": 32,
-        "churnRate30d": 4.5,
+        "cancelled30d": 31,
+        "churnRate30d": 4.4,
         "cohortAgeMonths": 38,
         "paymentPct": 1.49
       },
@@ -1065,8 +1065,8 @@ const CASE_DATA = {
         "mrr": 9189,
         "arr": 110263,
         "arpc": 12.94,
-        "gtv30d": 868.3,
-        "gtvAlltime": 5673.46,
+        "gtv30d": 864.2,
+        "gtvAlltime": 5673.48,
         "revenueAlltime": 395.9,
         "npv": 7.84,
         "ltv": 557.67,
@@ -1086,13 +1086,13 @@ const CASE_DATA = {
         "mrr": 9352,
         "arr": 112228,
         "arpc": 14.04,
-        "gtv30d": 957.5,
-        "gtvAlltime": 101188.7,
+        "gtv30d": 968.3,
+        "gtvAlltime": 101188.74,
         "revenueAlltime": 417.7,
         "npv": 8.79,
         "ltv": 627.1,
-        "cancelled30d": 46,
-        "churnRate30d": 6.5,
+        "cancelled30d": 44,
+        "churnRate30d": 6.2,
         "cohortAgeMonths": 40,
         "paymentPct": 1.4
       },
@@ -1107,8 +1107,8 @@ const CASE_DATA = {
         "mrr": 9177,
         "arr": 110127,
         "arpc": 14.92,
-        "gtv30d": 1877866,
-        "gtvAlltime": 2432.61,
+        "gtv30d": 1877862.1,
+        "gtvAlltime": 2432.63,
         "revenueAlltime": 424.3,
         "npv": 9.65,
         "ltv": 689.88,
@@ -1128,8 +1128,8 @@ const CASE_DATA = {
         "mrr": 8796,
         "arr": 105548,
         "arpc": 14.28,
-        "gtv30d": 685,
-        "gtvAlltime": 629.17,
+        "gtv30d": 683.1,
+        "gtvAlltime": 629.19,
         "revenueAlltime": 451.2,
         "npv": 9.78,
         "ltv": 732.51,
@@ -1149,8 +1149,8 @@ const CASE_DATA = {
         "mrr": 9223,
         "arr": 110682,
         "arpc": 15.9,
-        "gtv30d": 753.6,
-        "gtvAlltime": 915.29,
+        "gtv30d": 742.2,
+        "gtvAlltime": 915.31,
         "revenueAlltime": 427.3,
         "npv": 11.16,
         "ltv": 736.67,
@@ -1170,13 +1170,13 @@ const CASE_DATA = {
         "mrr": 11567,
         "arr": 138801,
         "arpc": 16.6,
-        "gtv30d": 2549.6,
-        "gtvAlltime": 6141.42,
+        "gtv30d": 2556.3,
+        "gtvAlltime": 6141.53,
         "revenueAlltime": 614.8,
         "npv": 12.91,
         "ltv": 882.09,
-        "cancelled30d": 37,
-        "churnRate30d": 5,
+        "cancelled30d": 36,
+        "churnRate30d": 4.9,
         "cohortAgeMonths": 44,
         "paymentPct": 1.46
       },
@@ -1191,13 +1191,13 @@ const CASE_DATA = {
         "mrr": 9057,
         "arr": 108687,
         "arpc": 15.35,
-        "gtv30d": 735.5,
-        "gtvAlltime": 4881.61,
+        "gtv30d": 735.9,
+        "gtvAlltime": 4881.63,
         "revenueAlltime": 455.1,
         "npv": 10.65,
         "ltv": 771.39,
-        "cancelled30d": 25,
-        "churnRate30d": 4.1,
+        "cancelled30d": 24,
+        "churnRate30d": 3.9,
         "cohortAgeMonths": 45,
         "paymentPct": 1.38
       },
@@ -1212,8 +1212,8 @@ const CASE_DATA = {
         "mrr": 9067,
         "arr": 108802,
         "arpc": 14.48,
-        "gtv30d": 644,
-        "gtvAlltime": 530.76,
+        "gtv30d": 641.3,
+        "gtvAlltime": 530.78,
         "revenueAlltime": 485.6,
         "npv": 11.22,
         "ltv": 775.74,
@@ -1233,13 +1233,13 @@ const CASE_DATA = {
         "mrr": 6472,
         "arr": 77663,
         "arpc": 12.26,
-        "gtv30d": 835.9,
-        "gtvAlltime": 1185.07,
+        "gtv30d": 814.1,
+        "gtvAlltime": 1185.09,
         "revenueAlltime": 385,
         "npv": 10.42,
         "ltv": 729.09,
-        "cancelled30d": 33,
-        "churnRate30d": 5.9,
+        "cancelled30d": 31,
+        "churnRate30d": 5.5,
         "cohortAgeMonths": 47,
         "paymentPct": 1.43
       },
@@ -1254,8 +1254,8 @@ const CASE_DATA = {
         "mrr": 7984,
         "arr": 95812,
         "arpc": 15.06,
-        "gtv30d": 976.1,
-        "gtvAlltime": 22053.16,
+        "gtv30d": 1002.2,
+        "gtvAlltime": 22053.21,
         "revenueAlltime": 482.9,
         "npv": 11.98,
         "ltv": 911.1,
@@ -1275,13 +1275,13 @@ const CASE_DATA = {
         "mrr": 8171,
         "arr": 98048,
         "arpc": 14.72,
-        "gtv30d": 615.1,
-        "gtvAlltime": 676.21,
+        "gtv30d": 615.2,
+        "gtvAlltime": 676.23,
         "revenueAlltime": 475.6,
         "npv": 11.51,
         "ltv": 856.96,
-        "cancelled30d": 26,
-        "churnRate30d": 4.5,
+        "cancelled30d": 25,
+        "churnRate30d": 4.3,
         "cohortAgeMonths": 49,
         "paymentPct": 1.34
       },
@@ -1296,13 +1296,13 @@ const CASE_DATA = {
         "mrr": 8570,
         "arr": 102836,
         "arpc": 15.7,
-        "gtv30d": 1443.6,
-        "gtvAlltime": 2362.47,
+        "gtv30d": 1485.4,
+        "gtvAlltime": 2362.53,
         "revenueAlltime": 443.2,
         "npv": 10.93,
         "ltv": 811.77,
-        "cancelled30d": 25,
-        "churnRate30d": 4.4,
+        "cancelled30d": 24,
+        "churnRate30d": 4.2,
         "cohortAgeMonths": 50,
         "paymentPct": 1.35
       },
@@ -1317,13 +1317,13 @@ const CASE_DATA = {
         "mrr": 6661,
         "arr": 79930,
         "arpc": 13.14,
-        "gtv30d": 538.3,
-        "gtvAlltime": 46425.32,
+        "gtv30d": 530.7,
+        "gtvAlltime": 46425.34,
         "revenueAlltime": 432,
         "npv": 10.56,
         "ltv": 852.13,
-        "cancelled30d": 33,
-        "churnRate30d": 6.1,
+        "cancelled30d": 32,
+        "churnRate30d": 5.9,
         "cohortAgeMonths": 51,
         "paymentPct": 1.24
       },
@@ -1338,8 +1338,8 @@ const CASE_DATA = {
         "mrr": 9015,
         "arr": 108184,
         "arpc": 17.89,
-        "gtv30d": 493.2,
-        "gtvAlltime": 8715.13,
+        "gtv30d": 485.3,
+        "gtvAlltime": 8715.14,
         "revenueAlltime": 576.8,
         "npv": 14.13,
         "ltv": 1144.45,
@@ -1359,8 +1359,8 @@ const CASE_DATA = {
         "mrr": 6986,
         "arr": 83827,
         "arpc": 14.08,
-        "gtv30d": 1905.8,
-        "gtvAlltime": 3079.55,
+        "gtv30d": 1815.4,
+        "gtvAlltime": 3079.57,
         "revenueAlltime": 412.2,
         "npv": 9.88,
         "ltv": 831.04,
@@ -1380,8 +1380,8 @@ const CASE_DATA = {
         "mrr": 7548,
         "arr": 90570,
         "arpc": 15.86,
-        "gtv30d": 2470.4,
-        "gtvAlltime": 632.77,
+        "gtv30d": 2410.4,
+        "gtvAlltime": 632.79,
         "revenueAlltime": 436.1,
         "npv": 11.07,
         "ltv": 916.2,
@@ -1401,13 +1401,13 @@ const CASE_DATA = {
         "mrr": 5790,
         "arr": 69479,
         "arpc": 15.28,
-        "gtv30d": 729.6,
-        "gtvAlltime": 17081.6,
+        "gtv30d": 731.1,
+        "gtvAlltime": 17081.62,
         "revenueAlltime": 445.4,
         "npv": 11.4,
         "ltv": 1175.08,
-        "cancelled30d": 18,
-        "churnRate30d": 4.5,
+        "cancelled30d": 17,
+        "churnRate30d": 4.3,
         "cohortAgeMonths": 55,
         "paymentPct": 0.97
       },
@@ -1422,8 +1422,8 @@ const CASE_DATA = {
         "mrr": 6556,
         "arr": 78673,
         "arpc": 12.32,
-        "gtv30d": 821.2,
-        "gtvAlltime": 2728.54,
+        "gtv30d": 823.7,
+        "gtvAlltime": 2728.56,
         "revenueAlltime": 449,
         "npv": 10.98,
         "ltv": 843.98,
@@ -1443,13 +1443,13 @@ const CASE_DATA = {
         "mrr": 7039,
         "arr": 84469,
         "arpc": 17.6,
-        "gtv30d": 535.9,
-        "gtvAlltime": 599910.15,
+        "gtv30d": 530.4,
+        "gtvAlltime": 599910.17,
         "revenueAlltime": 445.9,
         "npv": 11.53,
         "ltv": 1114.87,
-        "cancelled30d": 24,
-        "churnRate30d": 5.7,
+        "cancelled30d": 23,
+        "churnRate30d": 5.4,
         "cohortAgeMonths": 57,
         "paymentPct": 1.03
       },
@@ -1464,13 +1464,13 @@ const CASE_DATA = {
         "mrr": 7459,
         "arr": 89510,
         "arpc": 16.39,
-        "gtv30d": 647.5,
-        "gtvAlltime": 1211.62,
+        "gtv30d": 643.6,
+        "gtvAlltime": 1211.64,
         "revenueAlltime": 450.6,
         "npv": 11.25,
         "ltv": 990.3,
-        "cancelled30d": 19,
-        "churnRate30d": 4,
+        "cancelled30d": 17,
+        "churnRate30d": 3.6,
         "cohortAgeMonths": 58,
         "paymentPct": 1.14
       },
@@ -1485,8 +1485,8 @@ const CASE_DATA = {
         "mrr": 5584,
         "arr": 67008,
         "arpc": 15.73,
-        "gtv30d": 1251.7,
-        "gtvAlltime": 314401.51,
+        "gtv30d": 1266.5,
+        "gtvAlltime": 314401.57,
         "revenueAlltime": 425.9,
         "npv": 10.91,
         "ltv": 1199.63,
@@ -1506,13 +1506,13 @@ const CASE_DATA = {
         "mrr": 5188,
         "arr": 62262,
         "arpc": 11.77,
-        "gtv30d": 489.5,
-        "gtvAlltime": 8612.62,
+        "gtv30d": 486,
+        "gtvAlltime": 8612.64,
         "revenueAlltime": 360.1,
         "npv": 8.57,
         "ltv": 816.51,
-        "cancelled30d": 25,
-        "churnRate30d": 5.4,
+        "cancelled30d": 23,
+        "churnRate30d": 5,
         "cohortAgeMonths": 60,
         "paymentPct": 1.05
       },
@@ -1527,13 +1527,13 @@ const CASE_DATA = {
         "mrr": 5502,
         "arr": 66023,
         "arpc": 15.59,
-        "gtv30d": 1092.3,
-        "gtvAlltime": 77173.4,
+        "gtv30d": 1086.6,
+        "gtvAlltime": 77173.41,
         "revenueAlltime": 412.6,
         "npv": 10.43,
         "ltv": 1168.86,
-        "cancelled30d": 19,
-        "churnRate30d": 5.1,
+        "cancelled30d": 18,
+        "churnRate30d": 4.9,
         "cohortAgeMonths": 61,
         "paymentPct": 0.89
       },
@@ -1548,8 +1548,8 @@ const CASE_DATA = {
         "mrr": 6446,
         "arr": 77355,
         "arpc": 17.71,
-        "gtv30d": 595.8,
-        "gtvAlltime": 305.35,
+        "gtv30d": 584.5,
+        "gtvAlltime": 305.37,
         "revenueAlltime": 396.4,
         "npv": 10.53,
         "ltv": 1088.93,
@@ -1570,12 +1570,12 @@ const CASE_DATA = {
         "arr": 53956,
         "arpc": 13.88,
         "gtv30d": 535.3,
-        "gtvAlltime": 679.74,
+        "gtvAlltime": 679.75,
         "revenueAlltime": 317.8,
         "npv": 8.68,
         "ltv": 980.91,
-        "cancelled30d": 15,
-        "churnRate30d": 4.4,
+        "cancelled30d": 14,
+        "churnRate30d": 4.1,
         "cohortAgeMonths": 63,
         "paymentPct": 0.88
       },
@@ -1590,13 +1590,13 @@ const CASE_DATA = {
         "mrr": 5815,
         "arr": 69780,
         "arpc": 17.57,
-        "gtv30d": 582,
-        "gtvAlltime": 2549.56,
+        "gtv30d": 583.5,
+        "gtvAlltime": 2549.57,
         "revenueAlltime": 404.5,
         "npv": 9.66,
         "ltv": 1221.94,
-        "cancelled30d": 13,
-        "churnRate30d": 3.8,
+        "cancelled30d": 12,
+        "churnRate30d": 3.5,
         "cohortAgeMonths": 64,
         "paymentPct": 0.79
       },
@@ -1611,8 +1611,8 @@ const CASE_DATA = {
         "mrr": 4570,
         "arr": 54841,
         "arpc": 13.13,
-        "gtv30d": 560.1,
-        "gtvAlltime": 225.91,
+        "gtv30d": 559.3,
+        "gtvAlltime": 225.93,
         "revenueAlltime": 333.5,
         "npv": 10,
         "ltv": 958.37,
@@ -1632,8 +1632,8 @@ const CASE_DATA = {
         "mrr": 5531,
         "arr": 66368,
         "arpc": 17.78,
-        "gtv30d": 347.6,
-        "gtvAlltime": 3841.86,
+        "gtv30d": 348.5,
+        "gtvAlltime": 3841.87,
         "revenueAlltime": 362.9,
         "npv": 11.37,
         "ltv": 1166.85,
@@ -1653,13 +1653,13 @@ const CASE_DATA = {
         "mrr": 4482,
         "arr": 53786,
         "arpc": 14.7,
-        "gtv30d": 616.7,
-        "gtvAlltime": 159.25,
+        "gtv30d": 602.4,
+        "gtvAlltime": 159.26,
         "revenueAlltime": 307.9,
         "npv": 9.15,
         "ltv": 1009.46,
-        "cancelled30d": 17,
-        "churnRate30d": 5.3,
+        "cancelled30d": 16,
+        "churnRate30d": 5,
         "cohortAgeMonths": 67,
         "paymentPct": 0.91
       },
@@ -1674,8 +1674,8 @@ const CASE_DATA = {
         "mrr": 4864,
         "arr": 58366,
         "arpc": 14.52,
-        "gtv30d": 1290.8,
-        "gtvAlltime": 662.03,
+        "gtv30d": 1327.1,
+        "gtvAlltime": 662.11,
         "revenueAlltime": 356.1,
         "npv": 9.13,
         "ltv": 1063.02,
@@ -1695,8 +1695,8 @@ const CASE_DATA = {
         "mrr": 4227,
         "arr": 50720,
         "arpc": 15.48,
-        "gtv30d": 437.5,
-        "gtvAlltime": 153.5,
+        "gtv30d": 421.4,
+        "gtvAlltime": 153.51,
         "revenueAlltime": 303.7,
         "npv": 9.33,
         "ltv": 1112.54,
@@ -1716,8 +1716,8 @@ const CASE_DATA = {
         "mrr": 5843,
         "arr": 70113,
         "arpc": 23.09,
-        "gtv30d": 932,
-        "gtvAlltime": 248.67,
+        "gtv30d": 979.4,
+        "gtvAlltime": 248.74,
         "revenueAlltime": 367.6,
         "npv": 10.46,
         "ltv": 1452.79,
@@ -1737,13 +1737,13 @@ const CASE_DATA = {
         "mrr": 3867,
         "arr": 46409,
         "arpc": 16.6,
-        "gtv30d": 518.1,
-        "gtvAlltime": 729.77,
+        "gtv30d": 527.4,
+        "gtvAlltime": 729.8,
         "revenueAlltime": 274.2,
         "npv": 8.59,
         "ltv": 1176.62,
-        "cancelled30d": 4,
-        "churnRate30d": 1.7,
+        "cancelled30d": 3,
+        "churnRate30d": 1.3,
         "cohortAgeMonths": 71,
         "paymentPct": 0.73
       },
@@ -1758,8 +1758,8 @@ const CASE_DATA = {
         "mrr": 3389,
         "arr": 40662,
         "arpc": 16.21,
-        "gtv30d": 282.9,
-        "gtvAlltime": 29.81,
+        "gtv30d": 283.7,
+        "gtvAlltime": 29.82,
         "revenueAlltime": 250.6,
         "npv": 7.83,
         "ltv": 1199.15,
@@ -1779,8 +1779,8 @@ const CASE_DATA = {
         "mrr": 3285,
         "arr": 39425,
         "arpc": 14.47,
-        "gtv30d": 309.3,
-        "gtvAlltime": 608.18,
+        "gtv30d": 309.8,
+        "gtvAlltime": 608.19,
         "revenueAlltime": 229.3,
         "npv": 7.33,
         "ltv": 1009.99,
@@ -1801,7 +1801,7 @@ const CASE_DATA = {
         "arr": 52715,
         "arpc": 21.64,
         "gtv30d": 290.7,
-        "gtvAlltime": 33.67,
+        "gtvAlltime": 33.68,
         "revenueAlltime": 267.1,
         "npv": 8.22,
         "ltv": 1315.91,
@@ -1821,8 +1821,8 @@ const CASE_DATA = {
         "mrr": 3339,
         "arr": 40063,
         "arpc": 18.76,
-        "gtv30d": 500.2,
-        "gtvAlltime": 42.58,
+        "gtv30d": 499,
+        "gtvAlltime": 42.59,
         "revenueAlltime": 254.4,
         "npv": 7.5,
         "ltv": 1429.28,
@@ -1842,13 +1842,13 @@ const CASE_DATA = {
         "mrr": 3301,
         "arr": 39615,
         "arpc": 15.43,
-        "gtv30d": 614.3,
-        "gtvAlltime": 10059.92,
+        "gtv30d": 575.5,
+        "gtvAlltime": 10059.94,
         "revenueAlltime": 230.5,
         "npv": 6.37,
         "ltv": 1076.91,
-        "cancelled30d": 8,
-        "churnRate30d": 3.6,
+        "cancelled30d": 7,
+        "churnRate30d": 3.2,
         "cohortAgeMonths": 76,
         "paymentPct": 0.59
       },
@@ -1863,8 +1863,8 @@ const CASE_DATA = {
         "mrr": 5069,
         "arr": 60833,
         "arpc": 22.53,
-        "gtv30d": 411.2,
-        "gtvAlltime": 62.69,
+        "gtv30d": 417.2,
+        "gtvAlltime": 62.71,
         "revenueAlltime": 302.7,
         "npv": 8.6,
         "ltv": 1345.46,
@@ -1884,7 +1884,7 @@ const CASE_DATA = {
         "mrr": 2998,
         "arr": 35975,
         "arpc": 18.39,
-        "gtv30d": 141.8,
+        "gtv30d": 142.1,
         "gtvAlltime": 102.3,
         "revenueAlltime": 211,
         "npv": 7.44,
@@ -1905,7 +1905,7 @@ const CASE_DATA = {
         "mrr": 1847,
         "arr": 22159,
         "arpc": 19.24,
-        "gtv30d": 157.5,
+        "gtv30d": 155.6,
         "gtvAlltime": 20.21,
         "revenueAlltime": 127.7,
         "npv": 6.23,
@@ -1926,8 +1926,8 @@ const CASE_DATA = {
         "mrr": 1758,
         "arr": 21092,
         "arpc": 15.28,
-        "gtv30d": 128.1,
-        "gtvAlltime": 282.01,
+        "gtv30d": 128.3,
+        "gtvAlltime": 282.02,
         "revenueAlltime": 127.9,
         "npv": 5.16,
         "ltv": 1112.5,
@@ -1947,8 +1947,8 @@ const CASE_DATA = {
         "mrr": 2511,
         "arr": 30131,
         "arpc": 15.4,
-        "gtv30d": 240.1,
-        "gtvAlltime": 264.69,
+        "gtv30d": 240.3,
+        "gtvAlltime": 264.7,
         "revenueAlltime": 231.7,
         "npv": 7.92,
         "ltv": 1421.68,
@@ -1968,8 +1968,8 @@ const CASE_DATA = {
         "mrr": 3260,
         "arr": 39116,
         "arpc": 17.07,
-        "gtv30d": 788.3,
-        "gtvAlltime": 97.86,
+        "gtv30d": 813.7,
+        "gtvAlltime": 97.9,
         "revenueAlltime": 206.3,
         "npv": 7.27,
         "ltv": 1080.31,
@@ -1989,7 +1989,7 @@ const CASE_DATA = {
         "mrr": 2565,
         "arr": 30780,
         "arpc": 16.23,
-        "gtv30d": 132.9,
+        "gtv30d": 133.1,
         "gtvAlltime": 28255.17,
         "revenueAlltime": 184.6,
         "npv": 7.68,
@@ -2010,8 +2010,8 @@ const CASE_DATA = {
         "mrr": 2655,
         "arr": 31865,
         "arpc": 17.36,
-        "gtv30d": 157.5,
-        "gtvAlltime": 26.81,
+        "gtv30d": 171.5,
+        "gtvAlltime": 26.83,
         "revenueAlltime": 177.2,
         "npv": 6.56,
         "ltv": 1158.29,
@@ -2031,13 +2031,13 @@ const CASE_DATA = {
         "mrr": 2923,
         "arr": 35079,
         "arpc": 16.7,
-        "gtv30d": 207.1,
+        "gtv30d": 204.8,
         "gtvAlltime": 137.7,
         "revenueAlltime": 243.1,
         "npv": 8.44,
         "ltv": 1389.22,
-        "cancelled30d": 9,
-        "churnRate30d": 4.9,
+        "cancelled30d": 8,
+        "churnRate30d": 4.4,
         "cohortAgeMonths": 85,
         "paymentPct": 0.61
       },
@@ -2052,8 +2052,8 @@ const CASE_DATA = {
         "mrr": 2753,
         "arr": 33038,
         "arpc": 18.73,
-        "gtv30d": 397,
-        "gtvAlltime": 313.78,
+        "gtv30d": 392.9,
+        "gtvAlltime": 313.8,
         "revenueAlltime": 207.1,
         "npv": 7.43,
         "ltv": 1408.82,
@@ -2073,8 +2073,8 @@ const CASE_DATA = {
         "mrr": 3169,
         "arr": 38033,
         "arpc": 20.32,
-        "gtv30d": 136,
-        "gtvAlltime": 1895.61,
+        "gtv30d": 135.7,
+        "gtvAlltime": 1895.62,
         "revenueAlltime": 161,
         "npv": 5.67,
         "ltv": 1031.78,
@@ -2094,13 +2094,13 @@ const CASE_DATA = {
         "mrr": 2474,
         "arr": 29690,
         "arpc": 18.06,
-        "gtv30d": 247.5,
+        "gtv30d": 244.6,
         "gtvAlltime": 564.92,
         "revenueAlltime": 161.1,
         "npv": 5.52,
         "ltv": 1175.75,
-        "cancelled30d": 5,
-        "churnRate30d": 3.5,
+        "cancelled30d": 4,
+        "churnRate30d": 2.8,
         "cohortAgeMonths": 88,
         "paymentPct": 0.47
       },
@@ -2115,8 +2115,8 @@ const CASE_DATA = {
         "mrr": 1964,
         "arr": 23571,
         "arpc": 13.64,
-        "gtv30d": 232.4,
-        "gtvAlltime": 130.39,
+        "gtv30d": 235.5,
+        "gtvAlltime": 130.4,
         "revenueAlltime": 157.5,
         "npv": 6.39,
         "ltv": 1093.56,
@@ -2136,8 +2136,8 @@ const CASE_DATA = {
         "mrr": 2604,
         "arr": 31253,
         "arpc": 18.21,
-        "gtv30d": 550.4,
-        "gtvAlltime": 213.41,
+        "gtv30d": 526.7,
+        "gtvAlltime": 213.42,
         "revenueAlltime": 184,
         "npv": 7.23,
         "ltv": 1286.66,
@@ -2157,13 +2157,13 @@ const CASE_DATA = {
         "mrr": 1865,
         "arr": 22380,
         "arpc": 15.54,
-        "gtv30d": 177.7,
-        "gtvAlltime": 216.04,
+        "gtv30d": 180.3,
+        "gtvAlltime": 216.05,
         "revenueAlltime": 135.6,
         "npv": 5.45,
         "ltv": 1129.72,
-        "cancelled30d": 8,
-        "churnRate30d": 6.3,
+        "cancelled30d": 7,
+        "churnRate30d": 5.5,
         "cohortAgeMonths": 91,
         "paymentPct": 0.48
       },
@@ -2178,8 +2178,8 @@ const CASE_DATA = {
         "mrr": 1507,
         "arr": 18088,
         "arpc": 11.68,
-        "gtv30d": 438.3,
-        "gtvAlltime": 26.79,
+        "gtv30d": 433.7,
+        "gtvAlltime": 26.8,
         "revenueAlltime": 149.5,
         "npv": 5.58,
         "ltv": 1158.99,
@@ -2199,13 +2199,13 @@ const CASE_DATA = {
         "mrr": 1840,
         "arr": 22076,
         "arpc": 16.43,
-        "gtv30d": 236.3,
+        "gtv30d": 233.6,
         "gtvAlltime": 79.97,
         "revenueAlltime": 130,
         "npv": 5.22,
         "ltv": 1160.9,
-        "cancelled30d": 5,
-        "churnRate30d": 4.3,
+        "cancelled30d": 4,
+        "churnRate30d": 3.4,
         "cohortAgeMonths": 93,
         "paymentPct": 0.45
       },
@@ -2220,7 +2220,7 @@ const CASE_DATA = {
         "mrr": 2148,
         "arr": 25778,
         "arpc": 15.45,
-        "gtv30d": 165.4,
+        "gtv30d": 163.5,
         "gtvAlltime": 17.44,
         "revenueAlltime": 132.8,
         "npv": 4.89,
@@ -2262,7 +2262,7 @@ const CASE_DATA = {
         "mrr": 2079,
         "arr": 24953,
         "arpc": 19.62,
-        "gtv30d": 192.8,
+        "gtv30d": 187.5,
         "gtvAlltime": 11.18,
         "revenueAlltime": 112.7,
         "npv": 4.58,
@@ -2283,7 +2283,7 @@ const CASE_DATA = {
         "mrr": 2075,
         "arr": 24906,
         "arpc": 20.55,
-        "gtv30d": 145,
+        "gtv30d": 144.8,
         "gtvAlltime": 36.13,
         "revenueAlltime": 183.7,
         "npv": 6.99,
@@ -2304,8 +2304,8 @@ const CASE_DATA = {
         "mrr": 2030,
         "arr": 24361,
         "arpc": 19.33,
-        "gtv30d": 657,
-        "gtvAlltime": 44.26,
+        "gtv30d": 661.3,
+        "gtvAlltime": 44.28,
         "revenueAlltime": 122.7,
         "npv": 5.11,
         "ltv": 1168.67,
@@ -2325,7 +2325,7 @@ const CASE_DATA = {
         "mrr": 1306,
         "arr": 15669,
         "arpc": 15.54,
-        "gtv30d": 917.7,
+        "gtv30d": 917.9,
         "gtvAlltime": 38.68,
         "revenueAlltime": 88,
         "npv": 3.49,
@@ -2346,7 +2346,7 @@ const CASE_DATA = {
         "mrr": 1491,
         "arr": 17893,
         "arpc": 17.96,
-        "gtv30d": 105.6,
+        "gtv30d": 103.3,
         "gtvAlltime": 9.61,
         "revenueAlltime": 117.6,
         "npv": 4.93,
@@ -2388,7 +2388,7 @@ const CASE_DATA = {
         "mrr": 1868,
         "arr": 22418,
         "arpc": 20.76,
-        "gtv30d": 121,
+        "gtv30d": 120.2,
         "gtvAlltime": 17.22,
         "revenueAlltime": 126.9,
         "npv": 5.47,
@@ -2409,7 +2409,7 @@ const CASE_DATA = {
         "mrr": 1577,
         "arr": 18918,
         "arpc": 18.12,
-        "gtv30d": 78,
+        "gtv30d": 78.7,
         "gtvAlltime": 5.7,
         "revenueAlltime": 98.5,
         "npv": 4.44,
@@ -2430,7 +2430,7 @@ const CASE_DATA = {
         "mrr": 1074,
         "arr": 12888,
         "arpc": 14.71,
-        "gtv30d": 80.8,
+        "gtv30d": 78.4,
         "gtvAlltime": 9.92,
         "revenueAlltime": 64.6,
         "npv": 2.92,
@@ -2451,7 +2451,7 @@ const CASE_DATA = {
         "mrr": 1090,
         "arr": 13077,
         "arpc": 18.47,
-        "gtv30d": 54.8,
+        "gtv30d": 54.1,
         "gtvAlltime": 8.56,
         "revenueAlltime": 75.6,
         "npv": 4.02,
@@ -2472,8 +2472,8 @@ const CASE_DATA = {
         "mrr": 1021,
         "arr": 12252,
         "arpc": 16.74,
-        "gtv30d": 110.2,
-        "gtvAlltime": 12.79,
+        "gtv30d": 108.2,
+        "gtvAlltime": 12.8,
         "revenueAlltime": 94.3,
         "npv": 4.53,
         "ltv": 1545.72,
@@ -2493,8 +2493,8 @@ const CASE_DATA = {
         "mrr": 1123,
         "arr": 13479,
         "arpc": 22.47,
-        "gtv30d": 173.4,
-        "gtvAlltime": 19.53,
+        "gtv30d": 181.8,
+        "gtvAlltime": 19.54,
         "revenueAlltime": 70.9,
         "npv": 4.01,
         "ltv": 1417.23,
@@ -2514,7 +2514,7 @@ const CASE_DATA = {
         "mrr": 874,
         "arr": 10483,
         "arpc": 13.87,
-        "gtv30d": 65.8,
+        "gtv30d": 65,
         "gtvAlltime": 7.5,
         "revenueAlltime": 64.6,
         "npv": 3.46,
@@ -2556,7 +2556,7 @@ const CASE_DATA = {
         "mrr": 995,
         "arr": 11940,
         "arpc": 21.63,
-        "gtv30d": 70.1,
+        "gtv30d": 66.7,
         "gtvAlltime": 13.46,
         "revenueAlltime": 97.4,
         "npv": 5.87,
@@ -2577,7 +2577,7 @@ const CASE_DATA = {
         "mrr": 684,
         "arr": 8208,
         "arpc": 15.2,
-        "gtv30d": 44.5,
+        "gtv30d": 45.5,
         "gtvAlltime": 1810.17,
         "revenueAlltime": 42.2,
         "npv": 2.61,
@@ -2598,7 +2598,7 @@ const CASE_DATA = {
         "mrr": 959,
         "arr": 11513,
         "arpc": 16.83,
-        "gtv30d": 105.8,
+        "gtv30d": 103.9,
         "gtvAlltime": 6.98,
         "revenueAlltime": 61.4,
         "npv": 4.24,
@@ -2640,7 +2640,7 @@ const CASE_DATA = {
         "mrr": 1189,
         "arr": 14263,
         "arpc": 21.22,
-        "gtv30d": 109,
+        "gtv30d": 107.5,
         "gtvAlltime": 17.24,
         "revenueAlltime": 62.9,
         "npv": 7.42,
@@ -2661,7 +2661,7 @@ const CASE_DATA = {
         "mrr": 593,
         "arr": 7119,
         "arpc": 15.21,
-        "gtv30d": 29.9,
+        "gtv30d": 30,
         "gtvAlltime": 5.5,
         "revenueAlltime": 45.2,
         "npv": 6.32,
@@ -2682,8 +2682,8 @@ const CASE_DATA = {
         "mrr": 605,
         "arr": 7262,
         "arpc": 15.13,
-        "gtv30d": 27.7,
-        "gtvAlltime": 1.27,
+        "gtv30d": 27.6,
+        "gtvAlltime": 1.28,
         "revenueAlltime": 40.8,
         "npv": 6.33,
         "ltv": 1018.98,
@@ -2703,7 +2703,7 @@ const CASE_DATA = {
         "mrr": 555,
         "arr": 6665,
         "arpc": 19.15,
-        "gtv30d": 9.2,
+        "gtv30d": 9,
         "gtvAlltime": 180.36,
         "revenueAlltime": 48.1,
         "npv": 9.82,
@@ -2745,7 +2745,7 @@ const CASE_DATA = {
         "mrr": 228,
         "arr": 2731,
         "arpc": 16.26,
-        "gtv30d": 3.3,
+        "gtv30d": 3.2,
         "gtvAlltime": 0.28,
         "revenueAlltime": 36.6,
         "npv": 8.33,
@@ -2787,7 +2787,7 @@ const CASE_DATA = {
         "mrr": 157,
         "arr": 1879,
         "arpc": 17.4,
-        "gtv30d": 4.7,
+        "gtv30d": 4.8,
         "gtvAlltime": 0.31,
         "revenueAlltime": 19.2,
         "npv": 4.32,
@@ -2808,7 +2808,7 @@ const CASE_DATA = {
         "mrr": 691,
         "arr": 8292,
         "arpc": 30.04,
-        "gtv30d": 17.4,
+        "gtv30d": 17.5,
         "gtvAlltime": 230.76,
         "revenueAlltime": 39.2,
         "npv": 10.61,
@@ -2850,7 +2850,7 @@ const CASE_DATA = {
         "mrr": 44,
         "arr": 524,
         "arpc": 8.74,
-        "gtv30d": 10.7,
+        "gtv30d": 11,
         "gtvAlltime": 0.91,
         "revenueAlltime": 3.4,
         "npv": 1.49,
@@ -2871,7 +2871,7 @@ const CASE_DATA = {
         "mrr": 9,
         "arr": 103,
         "arpc": 4.28,
-        "gtv30d": 2.7,
+        "gtv30d": 2.6,
         "gtvAlltime": 0.17,
         "revenueAlltime": 0.4,
         "npv": 0.28,
@@ -3038,9 +3038,9 @@ const CASE_DATA = {
     "label": "YoY"
   },
   "totalGTV": {
-    "value": 5338.2,
+    "value": 5612.8,
     "unit": "€B/yr",
-    "delta": "+22713%",
+    "delta": "+23886%",
     "deltaClass": "up",
     "label": "YoY"
   },
@@ -3219,11 +3219,11 @@ const CASE_DATA = {
   ],
   "churn": {
     "monthly": {
-      "value": "5.5%",
+      "value": "5.3%",
       "note": "Paying merchants · below 3% benchmark"
     },
     "annual": {
-      "value": "49%",
+      "value": "48%",
       "note": "Implied from monthly rate · target <15% by 2028"
     },
     "nrr": {
@@ -3235,18 +3235,18 @@ const CASE_DATA = {
     {
       "cohortMonth": "2026-11",
       "ageMonths": 0,
-      "registrations": 59464,
+      "registrations": 63025,
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 2074,
       "cumulativeRevenue": 2074,
       "revenuePerActive": 0,
-      "gtvKEur": 176115.7
+      "gtvKEur": 184353.3
     },
     {
       "cohortMonth": "2026-11",
       "ageMonths": 1,
-      "registrations": 59464,
+      "registrations": 63025,
       "activeMerchants": 0,
       "retentionPct": 0,
       "revenueEur": 0,
@@ -3263,7 +3263,7 @@ const CASE_DATA = {
       "revenueEur": 10251,
       "cumulativeRevenue": 10251,
       "revenuePerActive": 0,
-      "gtvKEur": 1310678.3
+      "gtvKEur": 1310678.4
     },
     {
       "cohortMonth": "2026-10",
@@ -3274,7 +3274,7 @@ const CASE_DATA = {
       "revenueEur": 14985,
       "cumulativeRevenue": 25236,
       "revenuePerActive": 0,
-      "gtvKEur": 2391.8
+      "gtvKEur": 2486.9
     },
     {
       "cohortMonth": "2026-10",
@@ -3351,7 +3351,7 @@ const CASE_DATA = {
       "revenueEur": 9032,
       "cumulativeRevenue": 41455,
       "revenuePerActive": 0,
-      "gtvKEur": 302342
+      "gtvKEur": 302440.6
     },
     {
       "cohortMonth": "2026-09",
@@ -3384,7 +3384,7 @@ const CASE_DATA = {
       "revenueEur": 13779,
       "cumulativeRevenue": 13779,
       "revenuePerActive": 0,
-      "gtvKEur": 99283301.4
+      "gtvKEur": 99283301.5
     },
     {
       "cohortMonth": "2026-08",
@@ -3417,7 +3417,7 @@ const CASE_DATA = {
       "revenueEur": 9588,
       "cumulativeRevenue": 74996,
       "revenuePerActive": 0,
-      "gtvKEur": 6048.3
+      "gtvKEur": 6129.5
     },
     {
       "cohortMonth": "2026-08",
@@ -3483,7 +3483,7 @@ const CASE_DATA = {
       "revenueEur": 26291,
       "cumulativeRevenue": 67091,
       "revenuePerActive": 0,
-      "gtvKEur": 8630.1
+      "gtvKEur": 8630.2
     },
     {
       "cohortMonth": "2026-07",
@@ -3494,7 +3494,7 @@ const CASE_DATA = {
       "revenueEur": 20520,
       "cumulativeRevenue": 87612,
       "revenuePerActive": 0,
-      "gtvKEur": 10600.5
+      "gtvKEur": 267657.5
     },
     {
       "cohortMonth": "2026-07",
@@ -3505,7 +3505,7 @@ const CASE_DATA = {
       "revenueEur": 9416,
       "cumulativeRevenue": 97028,
       "revenuePerActive": 0,
-      "gtvKEur": 1992.6
+      "gtvKEur": 2157.7
     },
     {
       "cohortMonth": "2026-07",
@@ -3615,7 +3615,7 @@ const CASE_DATA = {
       "revenueEur": 18369,
       "cumulativeRevenue": 86523,
       "revenuePerActive": 0,
-      "gtvKEur": 10209.8
+      "gtvKEur": 10209.9
     },
     {
       "cohortMonth": "2026-06",
@@ -3626,7 +3626,7 @@ const CASE_DATA = {
       "revenueEur": 16821,
       "cumulativeRevenue": 103344,
       "revenuePerActive": 0,
-      "gtvKEur": 6906.4
+      "gtvKEur": 6906.5
     },
     {
       "cohortMonth": "2026-06",
@@ -3637,7 +3637,7 @@ const CASE_DATA = {
       "revenueEur": 8493,
       "cumulativeRevenue": 111836,
       "revenuePerActive": 0,
-      "gtvKEur": 43840.2
+      "gtvKEur": 44216.3
     },
     {
       "cohortMonth": "2026-06",
@@ -3758,7 +3758,7 @@ const CASE_DATA = {
       "revenueEur": 23468,
       "cumulativeRevenue": 66098,
       "revenuePerActive": 0,
-      "gtvKEur": 2872.5
+      "gtvKEur": 2872.6
     },
     {
       "cohortMonth": "2026-05",
@@ -3769,7 +3769,7 @@ const CASE_DATA = {
       "revenueEur": 21550,
       "cumulativeRevenue": 87648,
       "revenuePerActive": 0,
-      "gtvKEur": 3352.4
+      "gtvKEur": 3352.7
     },
     {
       "cohortMonth": "2026-05",
@@ -3802,7 +3802,7 @@ const CASE_DATA = {
       "revenueEur": 9951,
       "cumulativeRevenue": 134275,
       "revenuePerActive": 0,
-      "gtvKEur": 3847.9
+      "gtvKEur": 3898.6
     },
     {
       "cohortMonth": "2026-05",
@@ -3978,7 +3978,7 @@ const CASE_DATA = {
       "revenueEur": 16142,
       "cumulativeRevenue": 135022,
       "revenuePerActive": 0,
-      "gtvKEur": 3061.9
+      "gtvKEur": 3062
     },
     {
       "cohortMonth": "2026-04",
@@ -3989,7 +3989,7 @@ const CASE_DATA = {
       "revenueEur": 8465,
       "cumulativeRevenue": 143487,
       "revenuePerActive": 0,
-      "gtvKEur": 1439.7
+      "gtvKEur": 1827.4
     },
     {
       "cohortMonth": "2026-04",
@@ -4154,7 +4154,7 @@ const CASE_DATA = {
       "revenueEur": 7414,
       "cumulativeRevenue": 165914,
       "revenuePerActive": 0,
-      "gtvKEur": 3259.4
+      "gtvKEur": 3363.6
     },
     {
       "cohortMonth": "2026-03",
@@ -4253,7 +4253,7 @@ const CASE_DATA = {
       "revenueEur": 19324,
       "cumulativeRevenue": 78790,
       "revenuePerActive": 0,
-      "gtvKEur": 667765.6
+      "gtvKEur": 667765.7
     },
     {
       "cohortMonth": "2026-02",
@@ -4264,7 +4264,7 @@ const CASE_DATA = {
       "revenueEur": 16895,
       "cumulativeRevenue": 95684,
       "revenuePerActive": 0,
-      "gtvKEur": 193127.3
+      "gtvKEur": 193127.4
     },
     {
       "cohortMonth": "2026-02",
@@ -4275,7 +4275,7 @@ const CASE_DATA = {
       "revenueEur": 17849,
       "cumulativeRevenue": 113533,
       "revenuePerActive": 0,
-      "gtvKEur": 4256.7
+      "gtvKEur": 4256.8
     },
     {
       "cohortMonth": "2026-02",
@@ -4286,7 +4286,7 @@ const CASE_DATA = {
       "revenueEur": 17605,
       "cumulativeRevenue": 131139,
       "revenuePerActive": 0,
-      "gtvKEur": 57289.4
+      "gtvKEur": 57291.9
     },
     {
       "cohortMonth": "2026-02",
@@ -4297,7 +4297,7 @@ const CASE_DATA = {
       "revenueEur": 16288,
       "cumulativeRevenue": 147427,
       "revenuePerActive": 0,
-      "gtvKEur": 4918.3
+      "gtvKEur": 4919.4
     },
     {
       "cohortMonth": "2026-02",
@@ -4308,7 +4308,7 @@ const CASE_DATA = {
       "revenueEur": 15861,
       "cumulativeRevenue": 163287,
       "revenuePerActive": 0,
-      "gtvKEur": 6136.1
+      "gtvKEur": 6136.2
     },
     {
       "cohortMonth": "2026-02",
@@ -4319,7 +4319,7 @@ const CASE_DATA = {
       "revenueEur": 7623,
       "cumulativeRevenue": 170910,
       "revenuePerActive": 0,
-      "gtvKEur": 24150.9
+      "gtvKEur": 24219.8
     },
     {
       "cohortMonth": "2026-02",
@@ -4451,7 +4451,7 @@ const CASE_DATA = {
       "revenueEur": 19264,
       "cumulativeRevenue": 115033,
       "revenuePerActive": 0,
-      "gtvKEur": 8644.3
+      "gtvKEur": 8644.4
     },
     {
       "cohortMonth": "2026-01",
@@ -4506,7 +4506,7 @@ const CASE_DATA = {
       "revenueEur": 15864,
       "cumulativeRevenue": 202756,
       "revenuePerActive": 0,
-      "gtvKEur": 5048.4
+      "gtvKEur": 5054.6
     },
     {
       "cohortMonth": "2026-01",
@@ -4517,7 +4517,7 @@ const CASE_DATA = {
       "revenueEur": 7861,
       "cumulativeRevenue": 210617,
       "revenuePerActive": 0,
-      "gtvKEur": 45539.2
+      "gtvKEur": 45671.2
     },
     {
       "cohortMonth": "2026-01",
@@ -4792,7 +4792,7 @@ const CASE_DATA = {
       "revenueEur": 13742,
       "cumulativeRevenue": 173002,
       "revenuePerActive": 0,
-      "gtvKEur": 119238.7
+      "gtvKEur": 119238.8
     },
     {
       "cohortMonth": "2025-12",
@@ -4803,7 +4803,7 @@ const CASE_DATA = {
       "revenueEur": 5676,
       "cumulativeRevenue": 178678,
       "revenuePerActive": 0,
-      "gtvKEur": 196561.1
+      "gtvKEur": 196636.9
     },
     {
       "cohortMonth": "2025-12",
@@ -5023,7 +5023,7 @@ const CASE_DATA = {
       "revenueEur": 12252,
       "cumulativeRevenue": 186128,
       "revenuePerActive": 0,
-      "gtvKEur": 10159.8
+      "gtvKEur": 10159.9
     },
     {
       "cohortMonth": "2025-11",
@@ -5034,7 +5034,7 @@ const CASE_DATA = {
       "revenueEur": 6834,
       "cumulativeRevenue": 192962,
       "revenuePerActive": 0,
-      "gtvKEur": 1078.3
+      "gtvKEur": 1145.7
     },
     {
       "cohortMonth": "2025-11",
@@ -5254,7 +5254,7 @@ const CASE_DATA = {
       "revenueEur": 13309,
       "cumulativeRevenue": 160249,
       "revenuePerActive": 0,
-      "gtvKEur": 3683.3
+      "gtvKEur": 3684.1
     },
     {
       "cohortMonth": "2025-10",
@@ -5265,7 +5265,7 @@ const CASE_DATA = {
       "revenueEur": 13416,
       "cumulativeRevenue": 173665,
       "revenuePerActive": 0,
-      "gtvKEur": 2536654.3
+      "gtvKEur": 2536654.4
     },
     {
       "cohortMonth": "2025-10",
@@ -5298,7 +5298,7 @@ const CASE_DATA = {
       "revenueEur": 13415,
       "cumulativeRevenue": 217945,
       "revenuePerActive": 0,
-      "gtvKEur": 4515.4
+      "gtvKEur": 4615.9
     },
     {
       "cohortMonth": "2025-10",
@@ -5540,7 +5540,7 @@ const CASE_DATA = {
       "revenueEur": 17591,
       "cumulativeRevenue": 229241,
       "revenuePerActive": 0,
-      "gtvKEur": 2496.7
+      "gtvKEur": 2496.8
     },
     {
       "cohortMonth": "2025-09",
@@ -5551,7 +5551,7 @@ const CASE_DATA = {
       "revenueEur": 29236,
       "cumulativeRevenue": 258477,
       "revenuePerActive": 0,
-      "gtvKEur": 12112.1
+      "gtvKEur": 12112.2
     },
     {
       "cohortMonth": "2025-09",
@@ -5562,7 +5562,7 @@ const CASE_DATA = {
       "revenueEur": 9907,
       "cumulativeRevenue": 268383,
       "revenuePerActive": 0,
-      "gtvKEur": 1305.9
+      "gtvKEur": 1378.8
     },
     {
       "cohortMonth": "2025-09",
@@ -5804,7 +5804,7 @@ const CASE_DATA = {
       "revenueEur": 17434,
       "cumulativeRevenue": 172089,
       "revenuePerActive": 0,
-      "gtvKEur": 1664.7
+      "gtvKEur": 1664.8
     },
     {
       "cohortMonth": "2025-08",
@@ -5837,7 +5837,7 @@ const CASE_DATA = {
       "revenueEur": 16200,
       "cumulativeRevenue": 222454,
       "revenuePerActive": 0,
-      "gtvKEur": 1660.8
+      "gtvKEur": 1660.9
     },
     {
       "cohortMonth": "2025-08",
@@ -5859,7 +5859,7 @@ const CASE_DATA = {
       "revenueEur": 32521,
       "cumulativeRevenue": 277005,
       "revenuePerActive": 0,
-      "gtvKEur": 1710.5
+      "gtvKEur": 1712.4
     },
     {
       "cohortMonth": "2025-08",
@@ -5881,7 +5881,7 @@ const CASE_DATA = {
       "revenueEur": 9744,
       "cumulativeRevenue": 306686,
       "revenuePerActive": 0,
-      "gtvKEur": 802.2
+      "gtvKEur": 851.7
     },
     {
       "cohortMonth": "2025-08",
@@ -6057,7 +6057,7 @@ const CASE_DATA = {
       "revenueEur": 19181,
       "cumulativeRevenue": 147080,
       "revenuePerActive": 1.79,
-      "gtvKEur": 2830.3
+      "gtvKEur": 2830.4
     },
     {
       "cohortMonth": "2025-07",
@@ -6123,7 +6123,7 @@ const CASE_DATA = {
       "revenueEur": 22405,
       "cumulativeRevenue": 257088,
       "revenuePerActive": 0,
-      "gtvKEur": 2537.8
+      "gtvKEur": 2538
     },
     {
       "cohortMonth": "2025-07",
@@ -6134,7 +6134,7 @@ const CASE_DATA = {
       "revenueEur": 32888,
       "cumulativeRevenue": 289976,
       "revenuePerActive": 0,
-      "gtvKEur": 6272.1
+      "gtvKEur": 6272.2
     },
     {
       "cohortMonth": "2025-07",
@@ -6156,7 +6156,7 @@ const CASE_DATA = {
       "revenueEur": 18962,
       "cumulativeRevenue": 332611,
       "revenuePerActive": 0,
-      "gtvKEur": 2380.8
+      "gtvKEur": 2380.9
     },
     {
       "cohortMonth": "2025-07",
@@ -6167,7 +6167,7 @@ const CASE_DATA = {
       "revenueEur": 8405,
       "cumulativeRevenue": 341016,
       "revenuePerActive": 0,
-      "gtvKEur": 1020.8
+      "gtvKEur": 1065.2
     },
     {
       "cohortMonth": "2025-07",
@@ -6387,7 +6387,7 @@ const CASE_DATA = {
       "revenueEur": 16617,
       "cumulativeRevenue": 163567,
       "revenuePerActive": 1.86,
-      "gtvKEur": 2683.6
+      "gtvKEur": 2683.7
     },
     {
       "cohortMonth": "2025-06",
@@ -6398,7 +6398,7 @@ const CASE_DATA = {
       "revenueEur": 15433,
       "cumulativeRevenue": 178999,
       "revenuePerActive": 2.43,
-      "gtvKEur": 2187.4
+      "gtvKEur": 2187.6
     },
     {
       "cohortMonth": "2025-06",
@@ -6486,7 +6486,7 @@ const CASE_DATA = {
       "revenueEur": 7981,
       "cumulativeRevenue": 330428,
       "revenuePerActive": 0,
-      "gtvKEur": 1248.7
+      "gtvKEur": 1307.7
     },
     {
       "cohortMonth": "2025-06",
@@ -6794,7 +6794,7 @@ const CASE_DATA = {
       "revenueEur": 14932,
       "cumulativeRevenue": 342709,
       "revenuePerActive": 0,
-      "gtvKEur": 1906.8
+      "gtvKEur": 1906.9
     },
     {
       "cohortMonth": "2025-05",
@@ -6805,7 +6805,7 @@ const CASE_DATA = {
       "revenueEur": 7285,
       "cumulativeRevenue": 349994,
       "revenuePerActive": 0,
-      "gtvKEur": 1006.2
+      "gtvKEur": 1051.3
     },
     {
       "cohortMonth": "2025-05",
@@ -7113,7 +7113,7 @@ const CASE_DATA = {
       "revenueEur": 14174,
       "cumulativeRevenue": 292332,
       "revenuePerActive": 0,
-      "gtvKEur": 3094.4
+      "gtvKEur": 3094.5
     },
     {
       "cohortMonth": "2025-04",
@@ -7124,7 +7124,7 @@ const CASE_DATA = {
       "revenueEur": 14173,
       "cumulativeRevenue": 306505,
       "revenuePerActive": 0,
-      "gtvKEur": 1969.6
+      "gtvKEur": 1969.7
     },
     {
       "cohortMonth": "2025-04",
@@ -7135,7 +7135,7 @@ const CASE_DATA = {
       "revenueEur": 12394,
       "cumulativeRevenue": 318899,
       "revenuePerActive": 0,
-      "gtvKEur": 28761.7
+      "gtvKEur": 28761.8
     },
     {
       "cohortMonth": "2025-04",
@@ -7146,7 +7146,7 @@ const CASE_DATA = {
       "revenueEur": 5700,
       "cumulativeRevenue": 324599,
       "revenuePerActive": 0,
-      "gtvKEur": 1006.7
+      "gtvKEur": 1075.7
     },
     {
       "cohortMonth": "2025-04",
@@ -7245,7 +7245,7 @@ const CASE_DATA = {
       "revenueEur": 7695,
       "cumulativeRevenue": 7695,
       "revenuePerActive": 0.2,
-      "gtvKEur": 63610157.6
+      "gtvKEur": 63610157.8
     },
     {
       "cohortMonth": "2025-03",
@@ -7443,7 +7443,7 @@ const CASE_DATA = {
       "revenueEur": 11867,
       "cumulativeRevenue": 296377,
       "revenuePerActive": 0,
-      "gtvKEur": 1551.8
+      "gtvKEur": 1551.9
     },
     {
       "cohortMonth": "2025-03",
@@ -7454,7 +7454,7 @@ const CASE_DATA = {
       "revenueEur": 11748,
       "cumulativeRevenue": 308125,
       "revenuePerActive": 0,
-      "gtvKEur": 1369.6
+      "gtvKEur": 1369.8
     },
     {
       "cohortMonth": "2025-03",
@@ -7465,7 +7465,7 @@ const CASE_DATA = {
       "revenueEur": 5805,
       "cumulativeRevenue": 313930,
       "revenuePerActive": 0,
-      "gtvKEur": 719.5
+      "gtvKEur": 754.8
     },
     {
       "cohortMonth": "2025-03",
@@ -7751,7 +7751,7 @@ const CASE_DATA = {
       "revenueEur": 13727,
       "cumulativeRevenue": 343083,
       "revenuePerActive": 0,
-      "gtvKEur": 1011.3
+      "gtvKEur": 1011.6
     },
     {
       "cohortMonth": "2025-02",
@@ -7762,7 +7762,7 @@ const CASE_DATA = {
       "revenueEur": 6920,
       "cumulativeRevenue": 350004,
       "revenuePerActive": 0,
-      "gtvKEur": 529.4
+      "gtvKEur": 562.1
     },
     {
       "cohortMonth": "2025-02",
@@ -8092,7 +8092,7 @@ const CASE_DATA = {
       "revenueEur": 12681,
       "cumulativeRevenue": 338281,
       "revenuePerActive": 0,
-      "gtvKEur": 1299
+      "gtvKEur": 1299.2
     },
     {
       "cohortMonth": "2025-01",
@@ -8103,7 +8103,7 @@ const CASE_DATA = {
       "revenueEur": 6328,
       "cumulativeRevenue": 344609,
       "revenuePerActive": 0,
-      "gtvKEur": 644.2
+      "gtvKEur": 685.1
     },
     {
       "cohortMonth": "2025-01",
@@ -8521,7 +8521,7 @@ const CASE_DATA = {
       "revenueEur": 5489,
       "cumulativeRevenue": 292793,
       "revenuePerActive": 0,
-      "gtvKEur": 1782.5
+      "gtvKEur": 1819.2
     },
     {
       "cohortMonth": "2024-12",
@@ -8752,7 +8752,7 @@ const CASE_DATA = {
       "revenueEur": 16181,
       "cumulativeRevenue": 174260,
       "revenuePerActive": 2.5,
-      "gtvKEur": 2029.5
+      "gtvKEur": 2029.6
     },
     {
       "cohortMonth": "2024-11",
@@ -8763,7 +8763,7 @@ const CASE_DATA = {
       "revenueEur": 20003,
       "cumulativeRevenue": 194264,
       "revenuePerActive": 3.21,
-      "gtvKEur": 2890.5
+      "gtvKEur": 2890.6
     },
     {
       "cohortMonth": "2024-11",
@@ -8884,7 +8884,7 @@ const CASE_DATA = {
       "revenueEur": 6216,
       "cumulativeRevenue": 333786,
       "revenuePerActive": 0,
-      "gtvKEur": 953.7
+      "gtvKEur": 998.9
     },
     {
       "cohortMonth": "2024-11",
@@ -9236,7 +9236,7 @@ const CASE_DATA = {
       "revenueEur": 12157,
       "cumulativeRevenue": 342897,
       "revenuePerActive": 0,
-      "gtvKEur": 1333.4
+      "gtvKEur": 1333.5
     },
     {
       "cohortMonth": "2024-10",
@@ -9247,7 +9247,7 @@ const CASE_DATA = {
       "revenueEur": 12255,
       "cumulativeRevenue": 355151,
       "revenuePerActive": 0,
-      "gtvKEur": 1228.3
+      "gtvKEur": 1234.3
     },
     {
       "cohortMonth": "2024-10",
@@ -9258,7 +9258,7 @@ const CASE_DATA = {
       "revenueEur": 15050,
       "cumulativeRevenue": 370201,
       "revenuePerActive": 0,
-      "gtvKEur": 1305.6
+      "gtvKEur": 1305.7
     },
     {
       "cohortMonth": "2024-10",
@@ -9269,7 +9269,7 @@ const CASE_DATA = {
       "revenueEur": 11823,
       "cumulativeRevenue": 382024,
       "revenuePerActive": 0,
-      "gtvKEur": 656.5
+      "gtvKEur": 692.1
     },
     {
       "cohortMonth": "2024-10",
@@ -9676,7 +9676,7 @@ const CASE_DATA = {
       "revenueEur": 19685,
       "cumulativeRevenue": 395659,
       "revenuePerActive": 0,
-      "gtvKEur": 2258.3
+      "gtvKEur": 2258.4
     },
     {
       "cohortMonth": "2024-09",
@@ -9687,7 +9687,7 @@ const CASE_DATA = {
       "revenueEur": 7438,
       "cumulativeRevenue": 403097,
       "revenuePerActive": 0,
-      "gtvKEur": 685
+      "gtvKEur": 724
     },
     {
       "cohortMonth": "2024-09",
@@ -10116,7 +10116,7 @@ const CASE_DATA = {
       "revenueEur": 7054,
       "cumulativeRevenue": 413515,
       "revenuePerActive": 0,
-      "gtvKEur": 655
+      "gtvKEur": 687.4
     },
     {
       "cohortMonth": "2024-08",
@@ -10523,7 +10523,7 @@ const CASE_DATA = {
       "revenueEur": 17478,
       "cumulativeRevenue": 355941,
       "revenuePerActive": 0,
-      "gtvKEur": 2313.5
+      "gtvKEur": 2313.6
     },
     {
       "cohortMonth": "2024-07",
@@ -10534,7 +10534,7 @@ const CASE_DATA = {
       "revenueEur": 13908,
       "cumulativeRevenue": 369850,
       "revenuePerActive": 0,
-      "gtvKEur": 2437.3
+      "gtvKEur": 2437.5
     },
     {
       "cohortMonth": "2024-07",
@@ -10545,7 +10545,7 @@ const CASE_DATA = {
       "revenueEur": 12909,
       "cumulativeRevenue": 382758,
       "revenuePerActive": 0,
-      "gtvKEur": 2446.3
+      "gtvKEur": 2447.3
     },
     {
       "cohortMonth": "2024-07",
@@ -10556,7 +10556,7 @@ const CASE_DATA = {
       "revenueEur": 7080,
       "cumulativeRevenue": 389838,
       "revenuePerActive": 0,
-      "gtvKEur": 1319.4
+      "gtvKEur": 1387
     },
     {
       "cohortMonth": "2024-07",
@@ -10952,7 +10952,7 @@ const CASE_DATA = {
       "revenueEur": 5221,
       "cumulativeRevenue": 355659,
       "revenuePerActive": 0,
-      "gtvKEur": 1060.7
+      "gtvKEur": 1094.3
     },
     {
       "cohortMonth": "2024-06",
@@ -11425,7 +11425,7 @@ const CASE_DATA = {
       "revenueEur": 11392,
       "cumulativeRevenue": 380088,
       "revenuePerActive": 0,
-      "gtvKEur": 1755.5
+      "gtvKEur": 1755.7
     },
     {
       "cohortMonth": "2024-05",
@@ -11436,7 +11436,7 @@ const CASE_DATA = {
       "revenueEur": 12626,
       "cumulativeRevenue": 392714,
       "revenuePerActive": 0,
-      "gtvKEur": 2017.3
+      "gtvKEur": 2017.4
     },
     {
       "cohortMonth": "2024-05",
@@ -11447,7 +11447,7 @@ const CASE_DATA = {
       "revenueEur": 4970,
       "cumulativeRevenue": 397684,
       "revenuePerActive": 0,
-      "gtvKEur": 1077.8
+      "gtvKEur": 1133.4
     },
     {
       "cohortMonth": "2024-05",
@@ -11887,7 +11887,7 @@ const CASE_DATA = {
       "revenueEur": 9809,
       "cumulativeRevenue": 377462,
       "revenuePerActive": 0,
-      "gtvKEur": 24776
+      "gtvKEur": 24776.1
     },
     {
       "cohortMonth": "2024-04",
@@ -11898,7 +11898,7 @@ const CASE_DATA = {
       "revenueEur": 5645,
       "cumulativeRevenue": 383106,
       "revenuePerActive": 0,
-      "gtvKEur": 976.4
+      "gtvKEur": 1023.6
     },
     {
       "cohortMonth": "2024-04",
@@ -12393,7 +12393,7 @@ const CASE_DATA = {
       "revenueEur": 13921,
       "cumulativeRevenue": 466238,
       "revenuePerActive": 0,
-      "gtvKEur": 1099
+      "gtvKEur": 1099.3
     },
     {
       "cohortMonth": "2024-03",
@@ -12404,7 +12404,7 @@ const CASE_DATA = {
       "revenueEur": 12677,
       "cumulativeRevenue": 478915,
       "revenuePerActive": 0,
-      "gtvKEur": 1061.4
+      "gtvKEur": 1061.5
     },
     {
       "cohortMonth": "2024-03",
@@ -12415,7 +12415,7 @@ const CASE_DATA = {
       "revenueEur": 11877,
       "cumulativeRevenue": 490791,
       "revenuePerActive": 0,
-      "gtvKEur": 1183.5
+      "gtvKEur": 13523.8
     },
     {
       "cohortMonth": "2024-03",
@@ -12426,7 +12426,7 @@ const CASE_DATA = {
       "revenueEur": 6572,
       "cumulativeRevenue": 497364,
       "revenuePerActive": 0,
-      "gtvKEur": 567.1
+      "gtvKEur": 616.2
     },
     {
       "cohortMonth": "2024-03",
@@ -12899,7 +12899,7 @@ const CASE_DATA = {
       "revenueEur": 11587,
       "cumulativeRevenue": 410134,
       "revenuePerActive": 0,
-      "gtvKEur": 2203.4
+      "gtvKEur": 2203.5
     },
     {
       "cohortMonth": "2024-02",
@@ -12910,7 +12910,7 @@ const CASE_DATA = {
       "revenueEur": 5049,
       "cumulativeRevenue": 415183,
       "revenuePerActive": 0,
-      "gtvKEur": 1154.9
+      "gtvKEur": 1217.2
     },
     {
       "cohortMonth": "2024-02",
@@ -13405,7 +13405,7 @@ const CASE_DATA = {
       "revenueEur": 10692,
       "cumulativeRevenue": 437529,
       "revenuePerActive": 0,
-      "gtvKEur": 1194.5
+      "gtvKEur": 1194.6
     },
     {
       "cohortMonth": "2024-01",
@@ -13416,7 +13416,7 @@ const CASE_DATA = {
       "revenueEur": 6324,
       "cumulativeRevenue": 443853,
       "revenuePerActive": 0,
-      "gtvKEur": 6006.7
+      "gtvKEur": 6036.1
     },
     {
       "cohortMonth": "2024-01",
@@ -13900,7 +13900,7 @@ const CASE_DATA = {
       "revenueEur": 5595,
       "cumulativeRevenue": 430653,
       "revenuePerActive": 0,
-      "gtvKEur": 2047.4
+      "gtvKEur": 2130.8
     },
     {
       "cohortMonth": "2023-12",
@@ -14560,7 +14560,7 @@ const CASE_DATA = {
       "revenueEur": 9233,
       "cumulativeRevenue": 426710,
       "revenuePerActive": 0,
-      "gtvKEur": 117725.7
+      "gtvKEur": 117725.8
     },
     {
       "cohortMonth": "2023-11",
@@ -14593,7 +14593,7 @@ const CASE_DATA = {
       "revenueEur": 5582,
       "cumulativeRevenue": 450735,
       "revenuePerActive": 0,
-      "gtvKEur": 610.1
+      "gtvKEur": 639.4
     },
     {
       "cohortMonth": "2023-11",
@@ -15121,7 +15121,7 @@ const CASE_DATA = {
       "revenueEur": 12661,
       "cumulativeRevenue": 398371,
       "revenuePerActive": 0,
-      "gtvKEur": 1321.5
+      "gtvKEur": 1321.6
     },
     {
       "cohortMonth": "2023-10",
@@ -15143,7 +15143,7 @@ const CASE_DATA = {
       "revenueEur": 8809,
       "cumulativeRevenue": 417852,
       "revenuePerActive": 0,
-      "gtvKEur": 840.3
+      "gtvKEur": 878.2
     },
     {
       "cohortMonth": "2023-10",
@@ -15726,7 +15726,7 @@ const CASE_DATA = {
       "revenueEur": 13909,
       "cumulativeRevenue": 441610,
       "revenuePerActive": 0,
-      "gtvKEur": 1089.6
+      "gtvKEur": 1089.7
     },
     {
       "cohortMonth": "2023-09",
@@ -15737,7 +15737,7 @@ const CASE_DATA = {
       "revenueEur": 5630,
       "cumulativeRevenue": 447240,
       "revenuePerActive": 0,
-      "gtvKEur": 2038.1
+      "gtvKEur": 2068.4
     },
     {
       "cohortMonth": "2023-09",
@@ -16287,7 +16287,7 @@ const CASE_DATA = {
       "revenueEur": 4744,
       "cumulativeRevenue": 395945,
       "revenuePerActive": 0,
-      "gtvKEur": 478.8
+      "gtvKEur": 503.3
     },
     {
       "cohortMonth": "2023-08",
@@ -16870,7 +16870,7 @@ const CASE_DATA = {
       "revenueEur": 4381,
       "cumulativeRevenue": 417651,
       "revenuePerActive": 0,
-      "gtvKEur": 504.4
+      "gtvKEur": 544.7
     },
     {
       "cohortMonth": "2023-07",
@@ -17431,7 +17431,7 @@ const CASE_DATA = {
       "revenueEur": 5133,
       "cumulativeRevenue": 424273,
       "revenuePerActive": 0,
-      "gtvKEur": 417.1
+      "gtvKEur": 439.5
     },
     {
       "cohortMonth": "2023-06",
@@ -17970,7 +17970,7 @@ const CASE_DATA = {
       "revenueEur": 13073,
       "cumulativeRevenue": 422143,
       "revenuePerActive": 0,
-      "gtvKEur": 800.3
+      "gtvKEur": 800.4
     },
     {
       "cohortMonth": "2023-05",
@@ -17981,7 +17981,7 @@ const CASE_DATA = {
       "revenueEur": 9038,
       "cumulativeRevenue": 431180,
       "revenuePerActive": 0,
-      "gtvKEur": 786.1
+      "gtvKEur": 786.2
     },
     {
       "cohortMonth": "2023-05",
@@ -18003,7 +18003,7 @@ const CASE_DATA = {
       "revenueEur": 8642,
       "cumulativeRevenue": 447663,
       "revenuePerActive": 0,
-      "gtvKEur": 2099.8
+      "gtvKEur": 2099.9
     },
     {
       "cohortMonth": "2023-05",
@@ -18014,7 +18014,7 @@ const CASE_DATA = {
       "revenueEur": 3561,
       "cumulativeRevenue": 451224,
       "revenuePerActive": 0,
-      "gtvKEur": 400.2
+      "gtvKEur": 420.6
     },
     {
       "cohortMonth": "2023-05",
@@ -18531,7 +18531,7 @@ const CASE_DATA = {
       "revenueEur": 4765,
       "cumulativeRevenue": 427271,
       "revenuePerActive": 0,
-      "gtvKEur": 466.4
+      "gtvKEur": 480.4
     },
     {
       "cohortMonth": "2023-04",
@@ -19092,7 +19092,7 @@ const CASE_DATA = {
       "revenueEur": 7342,
       "cumulativeRevenue": 614815,
       "revenuePerActive": 0,
-      "gtvKEur": 1231
+      "gtvKEur": 1346.3
     },
     {
       "cohortMonth": "2023-03",
@@ -19708,7 +19708,7 @@ const CASE_DATA = {
       "revenueEur": 8336,
       "cumulativeRevenue": 450797,
       "revenuePerActive": 0,
-      "gtvKEur": 707.7
+      "gtvKEur": 707.8
     },
     {
       "cohortMonth": "2023-02",
@@ -19719,7 +19719,7 @@ const CASE_DATA = {
       "revenueEur": 4320,
       "cumulativeRevenue": 455117,
       "revenuePerActive": 0,
-      "gtvKEur": 363.1
+      "gtvKEur": 381.1
     },
     {
       "cohortMonth": "2023-02",
@@ -20137,7 +20137,7 @@ const CASE_DATA = {
       "revenueEur": 10655,
       "cumulativeRevenue": 311555,
       "revenuePerActive": 3.01,
-      "gtvKEur": 711.4
+      "gtvKEur": 711.5
     },
     {
       "cohortMonth": "2023-01",
@@ -20324,7 +20324,7 @@ const CASE_DATA = {
       "revenueEur": 4325,
       "cumulativeRevenue": 485610,
       "revenuePerActive": 0,
-      "gtvKEur": 331.3
+      "gtvKEur": 353.6
     },
     {
       "cohortMonth": "2023-01",
@@ -20929,7 +20929,7 @@ const CASE_DATA = {
       "revenueEur": 3913,
       "cumulativeRevenue": 384962,
       "revenuePerActive": 0,
-      "gtvKEur": 449.4
+      "gtvKEur": 469.2
     },
     {
       "cohortMonth": "2022-12",
@@ -21545,7 +21545,7 @@ const CASE_DATA = {
       "revenueEur": 3531,
       "cumulativeRevenue": 482882,
       "revenuePerActive": 0,
-      "gtvKEur": 529.9
+      "gtvKEur": 575.6
     },
     {
       "cohortMonth": "2022-11",
@@ -21633,7 +21633,7 @@ const CASE_DATA = {
       "revenueEur": 0,
       "cumulativeRevenue": 482882,
       "revenuePerActive": 0,
-      "gtvKEur": 0
+      "gtvKEur": 0.1
     },
     {
       "cohortMonth": "2022-11",
@@ -22260,7 +22260,7 @@ const CASE_DATA = {
       "revenueEur": 9026,
       "cumulativeRevenue": 469109,
       "revenuePerActive": 0,
-      "gtvKEur": 689.4
+      "gtvKEur": 689.5
     },
     {
       "cohortMonth": "2022-10",
@@ -22271,7 +22271,7 @@ const CASE_DATA = {
       "revenueEur": 6503,
       "cumulativeRevenue": 475612,
       "revenuePerActive": 0,
-      "gtvKEur": 353.4
+      "gtvKEur": 372.1
     },
     {
       "cohortMonth": "2022-10",
@@ -22799,7 +22799,7 @@ const CASE_DATA = {
       "revenueEur": 8500,
       "cumulativeRevenue": 390572,
       "revenuePerActive": 0,
-      "gtvKEur": 1049.3
+      "gtvKEur": 1049.4
     },
     {
       "cohortMonth": "2022-09",
@@ -22810,7 +22810,7 @@ const CASE_DATA = {
       "revenueEur": 8380,
       "cumulativeRevenue": 398952,
       "revenuePerActive": 0,
-      "gtvKEur": 1033
+      "gtvKEur": 1033.3
     },
     {
       "cohortMonth": "2022-09",
@@ -22865,7 +22865,7 @@ const CASE_DATA = {
       "revenueEur": 4775,
       "cumulativeRevenue": 443225,
       "revenuePerActive": 0,
-      "gtvKEur": 845.9
+      "gtvKEur": 907.2
     },
     {
       "cohortMonth": "2022-09",
@@ -23525,7 +23525,7 @@ const CASE_DATA = {
       "revenueEur": 3971,
       "cumulativeRevenue": 432030,
       "revenuePerActive": 0,
-      "gtvKEur": 294.1
+      "gtvKEur": 308.4
     },
     {
       "cohortMonth": "2022-08",
@@ -24196,7 +24196,7 @@ const CASE_DATA = {
       "revenueEur": 5772,
       "cumulativeRevenue": 576804,
       "revenuePerActive": 0,
-      "gtvKEur": 265.8
+      "gtvKEur": 278.9
     },
     {
       "cohortMonth": "2022-07",
@@ -24856,7 +24856,7 @@ const CASE_DATA = {
       "revenueEur": 7224,
       "cumulativeRevenue": 402380,
       "revenuePerActive": 0,
-      "gtvKEur": 1855.9
+      "gtvKEur": 1856
     },
     {
       "cohortMonth": "2022-06",
@@ -24878,7 +24878,7 @@ const CASE_DATA = {
       "revenueEur": 3099,
       "cumulativeRevenue": 412197,
       "revenuePerActive": 0,
-      "gtvKEur": 1085.1
+      "gtvKEur": 1108.3
     },
     {
       "cohortMonth": "2022-06",
@@ -25549,7 +25549,7 @@ const CASE_DATA = {
       "revenueEur": 3017,
       "cumulativeRevenue": 436109,
       "revenuePerActive": 0,
-      "gtvKEur": 955.4
+      "gtvKEur": 975.3
     },
     {
       "cohortMonth": "2022-05",
@@ -26220,7 +26220,7 @@ const CASE_DATA = {
       "revenueEur": 5200,
       "cumulativeRevenue": 441978,
       "revenuePerActive": 0,
-      "gtvKEur": 756.3
+      "gtvKEur": 756.4
     },
     {
       "cohortMonth": "2022-04",
@@ -26231,7 +26231,7 @@ const CASE_DATA = {
       "revenueEur": 3375,
       "cumulativeRevenue": 445354,
       "revenuePerActive": 0,
-      "gtvKEur": 405.8
+      "gtvKEur": 425.1
     },
     {
       "cohortMonth": "2022-04",
@@ -27067,7 +27067,7 @@ const CASE_DATA = {
       "revenueEur": 8103,
       "cumulativeRevenue": 445791,
       "revenuePerActive": 0,
-      "gtvKEur": 701.6
+      "gtvKEur": 701.7
     },
     {
       "cohortMonth": "2022-03",
@@ -27078,7 +27078,7 @@ const CASE_DATA = {
       "revenueEur": 3207,
       "cumulativeRevenue": 448997,
       "revenuePerActive": 0,
-      "gtvKEur": 387.6
+      "gtvKEur": 404.1
     },
     {
       "cohortMonth": "2022-03",
@@ -27804,7 +27804,7 @@ const CASE_DATA = {
       "revenueEur": 3935,
       "cumulativeRevenue": 445946,
       "revenuePerActive": 0,
-      "gtvKEur": 290.9
+      "gtvKEur": 304
     },
     {
       "cohortMonth": "2022-02",
@@ -28398,7 +28398,7 @@ const CASE_DATA = {
       "revenueEur": 8359,
       "cumulativeRevenue": 357245,
       "revenuePerActive": 3.59,
-      "gtvKEur": 709.7
+      "gtvKEur": 709.9
     },
     {
       "cohortMonth": "2022-01",
@@ -28530,7 +28530,7 @@ const CASE_DATA = {
       "revenueEur": 2608,
       "cumulativeRevenue": 450585,
       "revenuePerActive": 0,
-      "gtvKEur": 355.6
+      "gtvKEur": 371.8
     },
     {
       "cohortMonth": "2022-01",
@@ -29146,7 +29146,7 @@ const CASE_DATA = {
       "revenueEur": 5829,
       "cumulativeRevenue": 386850,
       "revenuePerActive": 0,
-      "gtvKEur": 1112.8
+      "gtvKEur": 1113.6
     },
     {
       "cohortMonth": "2021-12",
@@ -29157,7 +29157,7 @@ const CASE_DATA = {
       "revenueEur": 6392,
       "cumulativeRevenue": 393242,
       "revenuePerActive": 0,
-      "gtvKEur": 2178.7
+      "gtvKEur": 2179.7
     },
     {
       "cohortMonth": "2021-12",
@@ -29168,7 +29168,7 @@ const CASE_DATA = {
       "revenueEur": 6240,
       "cumulativeRevenue": 399482,
       "revenuePerActive": 0,
-      "gtvKEur": 7030.1
+      "gtvKEur": 7031.2
     },
     {
       "cohortMonth": "2021-12",
@@ -29179,7 +29179,7 @@ const CASE_DATA = {
       "revenueEur": 6659,
       "cumulativeRevenue": 406141,
       "revenuePerActive": 0,
-      "gtvKEur": 7095.5
+      "gtvKEur": 7096.3
     },
     {
       "cohortMonth": "2021-12",
@@ -29212,7 +29212,7 @@ const CASE_DATA = {
       "revenueEur": 6375,
       "cumulativeRevenue": 423564,
       "revenuePerActive": 0,
-      "gtvKEur": 1735
+      "gtvKEur": 1735.6
     },
     {
       "cohortMonth": "2021-12",
@@ -29223,7 +29223,7 @@ const CASE_DATA = {
       "revenueEur": 2305,
       "cumulativeRevenue": 425869,
       "revenuePerActive": 0,
-      "gtvKEur": 707
+      "gtvKEur": 766.9
     },
     {
       "cohortMonth": "2021-12",
@@ -30125,7 +30125,7 @@ const CASE_DATA = {
       "revenueEur": 8015,
       "cumulativeRevenue": 357662,
       "revenuePerActive": 0,
-      "gtvKEur": 522
+      "gtvKEur": 522.1
     },
     {
       "cohortMonth": "2021-11",
@@ -30136,7 +30136,7 @@ const CASE_DATA = {
       "revenueEur": 2417,
       "cumulativeRevenue": 360079,
       "revenuePerActive": 0,
-      "gtvKEur": 265.3
+      "gtvKEur": 277.7
     },
     {
       "cohortMonth": "2021-11",
@@ -31016,7 +31016,7 @@ const CASE_DATA = {
       "revenueEur": 4359,
       "cumulativeRevenue": 412608,
       "revenuePerActive": 0,
-      "gtvKEur": 911.5
+      "gtvKEur": 921.3
     },
     {
       "cohortMonth": "2021-10",
@@ -31742,7 +31742,7 @@ const CASE_DATA = {
       "revenueEur": 3608,
       "cumulativeRevenue": 396370,
       "revenuePerActive": 0,
-      "gtvKEur": 303.7
+      "gtvKEur": 317.4
     },
     {
       "cohortMonth": "2021-09",
@@ -32523,7 +32523,7 @@ const CASE_DATA = {
       "revenueEur": 2826,
       "cumulativeRevenue": 317814,
       "revenuePerActive": 0,
-      "gtvKEur": 297.4
+      "gtvKEur": 309.1
     },
     {
       "cohortMonth": "2021-08",
@@ -33293,7 +33293,7 @@ const CASE_DATA = {
       "revenueEur": 2705,
       "cumulativeRevenue": 404463,
       "revenuePerActive": 0,
-      "gtvKEur": 313.1
+      "gtvKEur": 328.3
     },
     {
       "cohortMonth": "2021-07",
@@ -34052,7 +34052,7 @@ const CASE_DATA = {
       "revenueEur": 1994,
       "cumulativeRevenue": 333512,
       "revenuePerActive": 0,
-      "gtvKEur": 286.6
+      "gtvKEur": 300.6
     },
     {
       "cohortMonth": "2021-06",
@@ -34855,7 +34855,7 @@ const CASE_DATA = {
       "revenueEur": 3128,
       "cumulativeRevenue": 362890,
       "revenuePerActive": 0,
-      "gtvKEur": 193
+      "gtvKEur": 204.5
     },
     {
       "cohortMonth": "2021-05",
@@ -35691,7 +35691,7 @@ const CASE_DATA = {
       "revenueEur": 2232,
       "cumulativeRevenue": 307886,
       "revenuePerActive": 0,
-      "gtvKEur": 277.3
+      "gtvKEur": 286.2
     },
     {
       "cohortMonth": "2021-04",
@@ -36494,7 +36494,7 @@ const CASE_DATA = {
       "revenueEur": 2288,
       "cumulativeRevenue": 356112,
       "revenuePerActive": 0,
-      "gtvKEur": 700.4
+      "gtvKEur": 779
     },
     {
       "cohortMonth": "2021-03",
@@ -37319,7 +37319,7 @@ const CASE_DATA = {
       "revenueEur": 2189,
       "cumulativeRevenue": 303722,
       "revenuePerActive": 0,
-      "gtvKEur": 188.5
+      "gtvKEur": 197.2
     },
     {
       "cohortMonth": "2021-02",
@@ -38122,7 +38122,7 @@ const CASE_DATA = {
       "revenueEur": 1990,
       "cumulativeRevenue": 367557,
       "revenuePerActive": 0,
-      "gtvKEur": 492.7
+      "gtvKEur": 555.7
     },
     {
       "cohortMonth": "2021-01",
@@ -38980,7 +38980,7 @@ const CASE_DATA = {
       "revenueEur": 1948,
       "cumulativeRevenue": 274151,
       "revenuePerActive": 0,
-      "gtvKEur": 277.3
+      "gtvKEur": 299.6
     },
     {
       "cohortMonth": "2020-12",
@@ -39816,7 +39816,7 @@ const CASE_DATA = {
       "revenueEur": 1461,
       "cumulativeRevenue": 250622,
       "revenuePerActive": 0,
-      "gtvKEur": 159.5
+      "gtvKEur": 168.4
     },
     {
       "cohortMonth": "2020-11",
@@ -40652,7 +40652,7 @@ const CASE_DATA = {
       "revenueEur": 2205,
       "cumulativeRevenue": 229267,
       "revenuePerActive": 0,
-      "gtvKEur": 176.7
+      "gtvKEur": 186.2
     },
     {
       "cohortMonth": "2020-10",
@@ -41488,7 +41488,7 @@ const CASE_DATA = {
       "revenueEur": 2333,
       "cumulativeRevenue": 267129,
       "revenuePerActive": 0,
-      "gtvKEur": 159.8
+      "gtvKEur": 168.8
     },
     {
       "cohortMonth": "2020-09",
@@ -42390,7 +42390,7 @@ const CASE_DATA = {
       "revenueEur": 1415,
       "cumulativeRevenue": 254411,
       "revenuePerActive": 0,
-      "gtvKEur": 271.3
+      "gtvKEur": 282.9
     },
     {
       "cohortMonth": "2020-08",
@@ -43039,7 +43039,7 @@ const CASE_DATA = {
       "revenueEur": 3225,
       "cumulativeRevenue": 155373,
       "revenuePerActive": 3.37,
-      "gtvKEur": 496.6
+      "gtvKEur": 496.7
     },
     {
       "cohortMonth": "2020-07",
@@ -43270,7 +43270,7 @@ const CASE_DATA = {
       "revenueEur": 1751,
       "cumulativeRevenue": 230459,
       "revenuePerActive": 0,
-      "gtvKEur": 257.5
+      "gtvKEur": 281.6
     },
     {
       "cohortMonth": "2020-07",
@@ -44172,7 +44172,7 @@ const CASE_DATA = {
       "revenueEur": 6867,
       "cumulativeRevenue": 300146,
       "revenuePerActive": 0,
-      "gtvKEur": 437.3
+      "gtvKEur": 441.6
     },
     {
       "cohortMonth": "2020-06",
@@ -44183,7 +44183,7 @@ const CASE_DATA = {
       "revenueEur": 2583,
       "cumulativeRevenue": 302730,
       "revenuePerActive": 0,
-      "gtvKEur": 219.4
+      "gtvKEur": 234
     },
     {
       "cohortMonth": "2020-06",
@@ -45074,7 +45074,7 @@ const CASE_DATA = {
       "revenueEur": 2074,
       "cumulativeRevenue": 211004,
       "revenuePerActive": 0,
-      "gtvKEur": 72.9
+      "gtvKEur": 76.7
     },
     {
       "cohortMonth": "2020-05",
@@ -45965,7 +45965,7 @@ const CASE_DATA = {
       "revenueEur": 848,
       "cumulativeRevenue": 127661,
       "revenuePerActive": 0,
-      "gtvKEur": 86.2
+      "gtvKEur": 90.2
     },
     {
       "cohortMonth": "2020-04",
@@ -46878,7 +46878,7 @@ const CASE_DATA = {
       "revenueEur": 792,
       "cumulativeRevenue": 127938,
       "revenuePerActive": 0,
-      "gtvKEur": 71.7
+      "gtvKEur": 75.9
     },
     {
       "cohortMonth": "2020-03",
@@ -47802,7 +47802,7 @@ const CASE_DATA = {
       "revenueEur": 975,
       "cumulativeRevenue": 231733,
       "revenuePerActive": 0,
-      "gtvKEur": 125.9
+      "gtvKEur": 132.5
     },
     {
       "cohortMonth": "2020-02",
@@ -48715,7 +48715,7 @@ const CASE_DATA = {
       "revenueEur": 2489,
       "cumulativeRevenue": 204715,
       "revenuePerActive": 0,
-      "gtvKEur": 821.9
+      "gtvKEur": 822.1
     },
     {
       "cohortMonth": "2020-01",
@@ -48726,7 +48726,7 @@ const CASE_DATA = {
       "revenueEur": 1624,
       "cumulativeRevenue": 206339,
       "revenuePerActive": 0,
-      "gtvKEur": 445.6
+      "gtvKEur": 483.9
     },
     {
       "cohortMonth": "2020-01",
@@ -49661,7 +49661,7 @@ const CASE_DATA = {
       "revenueEur": 1022,
       "cumulativeRevenue": 184643,
       "revenuePerActive": 0,
-      "gtvKEur": 68.1
+      "gtvKEur": 71.4
     },
     {
       "cohortMonth": "2019-12",
@@ -50574,7 +50574,7 @@ const CASE_DATA = {
       "revenueEur": 2460,
       "cumulativeRevenue": 166620,
       "revenuePerActive": 0,
-      "gtvKEur": 219.9
+      "gtvKEur": 220.6
     },
     {
       "cohortMonth": "2019-11",
@@ -50618,7 +50618,7 @@ const CASE_DATA = {
       "revenueEur": 1144,
       "cumulativeRevenue": 177219,
       "revenuePerActive": 0,
-      "gtvKEur": 90.6
+      "gtvKEur": 108.1
     },
     {
       "cohortMonth": "2019-11",
@@ -51597,7 +51597,7 @@ const CASE_DATA = {
       "revenueEur": 2083,
       "cumulativeRevenue": 243113,
       "revenuePerActive": 0,
-      "gtvKEur": 114
+      "gtvKEur": 118.6
     },
     {
       "cohortMonth": "2019-10",
@@ -52565,7 +52565,7 @@ const CASE_DATA = {
       "revenueEur": 1769,
       "cumulativeRevenue": 207097,
       "revenuePerActive": 0,
-      "gtvKEur": 232
+      "gtvKEur": 242.6
     },
     {
       "cohortMonth": "2019-08",
@@ -53533,7 +53533,7 @@ const CASE_DATA = {
       "revenueEur": 1335,
       "cumulativeRevenue": 160958,
       "revenuePerActive": 0,
-      "gtvKEur": 73.6
+      "gtvKEur": 77.4
     },
     {
       "cohortMonth": "2019-07",
@@ -54512,7 +54512,7 @@ const CASE_DATA = {
       "revenueEur": 1601,
       "cumulativeRevenue": 161078,
       "revenuePerActive": 0,
-      "gtvKEur": 159
+      "gtvKEur": 164.1
     },
     {
       "cohortMonth": "2019-06",
@@ -55502,7 +55502,7 @@ const CASE_DATA = {
       "revenueEur": 1037,
       "cumulativeRevenue": 157472,
       "revenuePerActive": 0,
-      "gtvKEur": 121
+      "gtvKEur": 129.6
     },
     {
       "cohortMonth": "2019-06",
@@ -56514,7 +56514,7 @@ const CASE_DATA = {
       "revenueEur": 1272,
       "cumulativeRevenue": 183992,
       "revenuePerActive": 0,
-      "gtvKEur": 325.8
+      "gtvKEur": 334
     },
     {
       "cohortMonth": "2019-05",
@@ -57548,7 +57548,7 @@ const CASE_DATA = {
       "revenueEur": 649,
       "cumulativeRevenue": 135567,
       "revenuePerActive": 0,
-      "gtvKEur": 106.2
+      "gtvKEur": 113.4
     },
     {
       "cohortMonth": "2019-04",
@@ -58582,7 +58582,7 @@ const CASE_DATA = {
       "revenueEur": 756,
       "cumulativeRevenue": 149510,
       "revenuePerActive": 0,
-      "gtvKEur": 231.5
+      "gtvKEur": 241.2
     },
     {
       "cohortMonth": "2019-03",
@@ -59638,7 +59638,7 @@ const CASE_DATA = {
       "revenueEur": 948,
       "cumulativeRevenue": 130021,
       "revenuePerActive": 0,
-      "gtvKEur": 159.6
+      "gtvKEur": 163.7
     },
     {
       "cohortMonth": "2019-02",
@@ -60694,7 +60694,7 @@ const CASE_DATA = {
       "revenueEur": 1141,
       "cumulativeRevenue": 132784,
       "revenuePerActive": 0,
-      "gtvKEur": 60.5
+      "gtvKEur": 63.2
     },
     {
       "cohortMonth": "2018-12",
@@ -61750,7 +61750,7 @@ const CASE_DATA = {
       "revenueEur": 642,
       "cumulativeRevenue": 144240,
       "revenuePerActive": 0,
-      "gtvKEur": 122.5
+      "gtvKEur": 126.4
     },
     {
       "cohortMonth": "2018-11",
@@ -62817,7 +62817,7 @@ const CASE_DATA = {
       "revenueEur": 638,
       "cumulativeRevenue": 112650,
       "revenuePerActive": 0,
-      "gtvKEur": 108
+      "gtvKEur": 111.6
     },
     {
       "cohortMonth": "2018-10",
@@ -63895,7 +63895,7 @@ const CASE_DATA = {
       "revenueEur": 1184,
       "cumulativeRevenue": 183724,
       "revenuePerActive": 0,
-      "gtvKEur": 69.6
+      "gtvKEur": 72.6
     },
     {
       "cohortMonth": "2018-09",
@@ -64984,7 +64984,7 @@ const CASE_DATA = {
       "revenueEur": 918,
       "cumulativeRevenue": 122710,
       "revenuePerActive": 0,
-      "gtvKEur": 343.9
+      "gtvKEur": 363.4
     },
     {
       "cohortMonth": "2018-08",
@@ -66084,7 +66084,7 @@ const CASE_DATA = {
       "revenueEur": 637,
       "cumulativeRevenue": 87989,
       "revenuePerActive": 0,
-      "gtvKEur": 420.3
+      "gtvKEur": 422.7
     },
     {
       "cohortMonth": "2018-07",
@@ -67195,7 +67195,7 @@ const CASE_DATA = {
       "revenueEur": 458,
       "cumulativeRevenue": 117609,
       "revenuePerActive": 0,
-      "gtvKEur": 59.6
+      "gtvKEur": 62
     },
     {
       "cohortMonth": "2018-06",
@@ -68317,7 +68317,7 @@ const CASE_DATA = {
       "revenueEur": 947,
       "cumulativeRevenue": 84508,
       "revenuePerActive": 0,
-      "gtvKEur": 22.6
+      "gtvKEur": 23.7
     },
     {
       "cohortMonth": "2018-06",
@@ -69472,7 +69472,7 @@ const CASE_DATA = {
       "revenueEur": 895,
       "cumulativeRevenue": 126943,
       "revenuePerActive": 0,
-      "gtvKEur": 67.6
+      "gtvKEur": 69.8
     },
     {
       "cohortMonth": "2018-05",
@@ -70627,7 +70627,7 @@ const CASE_DATA = {
       "revenueEur": 868,
       "cumulativeRevenue": 98486,
       "revenuePerActive": 0,
-      "gtvKEur": 41.2
+      "gtvKEur": 43.8
     },
     {
       "cohortMonth": "2018-03",
@@ -71782,7 +71782,7 @@ const CASE_DATA = {
       "revenueEur": 518,
       "cumulativeRevenue": 64581,
       "revenuePerActive": 0,
-      "gtvKEur": 44.4
+      "gtvKEur": 45.5
     },
     {
       "cohortMonth": "2018-02",
@@ -72948,7 +72948,7 @@ const CASE_DATA = {
       "revenueEur": 437,
       "cumulativeRevenue": 75550,
       "revenuePerActive": 0,
-      "gtvKEur": 29.8
+      "gtvKEur": 31
     },
     {
       "cohortMonth": "2018-01",
@@ -74125,7 +74125,7 @@ const CASE_DATA = {
       "revenueEur": 808,
       "cumulativeRevenue": 94289,
       "revenuePerActive": 0,
-      "gtvKEur": 60.9
+      "gtvKEur": 63.7
     },
     {
       "cohortMonth": "2018-01",
@@ -75324,7 +75324,7 @@ const CASE_DATA = {
       "revenueEur": 276,
       "cumulativeRevenue": 70861,
       "revenuePerActive": 0,
-      "gtvKEur": 48.4
+      "gtvKEur": 58.3
     },
     {
       "cohortMonth": "2017-11",
@@ -76523,7 +76523,7 @@ const CASE_DATA = {
       "revenueEur": 447,
       "cumulativeRevenue": 64617,
       "revenuePerActive": 0,
-      "gtvKEur": 35.1
+      "gtvKEur": 36.8
     },
     {
       "cohortMonth": "2017-10",
@@ -77733,7 +77733,7 @@ const CASE_DATA = {
       "revenueEur": 228,
       "cumulativeRevenue": 59142,
       "revenuePerActive": 0,
-      "gtvKEur": 17.2
+      "gtvKEur": 18.1
     },
     {
       "cohortMonth": "2017-09",
@@ -78954,7 +78954,7 @@ const CASE_DATA = {
       "revenueEur": 429,
       "cumulativeRevenue": 97363,
       "revenuePerActive": 0,
-      "gtvKEur": 39.5
+      "gtvKEur": 40.5
     },
     {
       "cohortMonth": "2017-09",
@@ -80197,7 +80197,7 @@ const CASE_DATA = {
       "revenueEur": 406,
       "cumulativeRevenue": 42210,
       "revenuePerActive": 0,
-      "gtvKEur": 25.8
+      "gtvKEur": 27.3
     },
     {
       "cohortMonth": "2017-07",
@@ -81440,7 +81440,7 @@ const CASE_DATA = {
       "revenueEur": 651,
       "cumulativeRevenue": 61395,
       "revenuePerActive": 0,
-      "gtvKEur": 54.3
+      "gtvKEur": 55.8
     },
     {
       "cohortMonth": "2017-06",
@@ -82694,7 +82694,7 @@ const CASE_DATA = {
       "revenueEur": 419,
       "cumulativeRevenue": 82781,
       "revenuePerActive": 0,
-      "gtvKEur": 13.7
+      "gtvKEur": 14.4
     },
     {
       "cohortMonth": "2017-05",
@@ -83959,7 +83959,7 @@ const CASE_DATA = {
       "revenueEur": 486,
       "cumulativeRevenue": 62928,
       "revenuePerActive": 0,
-      "gtvKEur": 59.6
+      "gtvKEur": 62.8
     },
     {
       "cohortMonth": "2017-04",
@@ -85235,7 +85235,7 @@ const CASE_DATA = {
       "revenueEur": 321,
       "cumulativeRevenue": 45230,
       "revenuePerActive": 0,
-      "gtvKEur": 12.9
+      "gtvKEur": 13.4
     },
     {
       "cohortMonth": "2017-03",
@@ -86522,7 +86522,7 @@ const CASE_DATA = {
       "revenueEur": 190,
       "cumulativeRevenue": 40759,
       "revenuePerActive": 0,
-      "gtvKEur": 16.4
+      "gtvKEur": 17.4
     },
     {
       "cohortMonth": "2017-02",
@@ -87820,7 +87820,7 @@ const CASE_DATA = {
       "revenueEur": 214,
       "cumulativeRevenue": 48073,
       "revenuePerActive": 0,
-      "gtvKEur": 4.8
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2017-01",
@@ -89129,7 +89129,7 @@ const CASE_DATA = {
       "revenueEur": 639,
       "cumulativeRevenue": 33824,
       "revenuePerActive": 0,
-      "gtvKEur": 4.8
+      "gtvKEur": 5
     },
     {
       "cohortMonth": "2016-12",
@@ -90449,7 +90449,7 @@ const CASE_DATA = {
       "revenueEur": 36,
       "cumulativeRevenue": 36629,
       "revenuePerActive": 0,
-      "gtvKEur": 1.8
+      "gtvKEur": 1.9
     },
     {
       "cohortMonth": "2016-11",
@@ -91780,7 +91780,7 @@ const CASE_DATA = {
       "revenueEur": 119,
       "cumulativeRevenue": 20001,
       "revenuePerActive": 0,
-      "gtvKEur": 1.7
+      "gtvKEur": 1.8
     },
     {
       "cohortMonth": "2016-10",
@@ -104038,7 +104038,7 @@ const CASE_DATA = {
     }
   ],
   "diagnostics": {
-    "runDate": "2026-11-17T18:16:01.563Z",
+    "runDate": "2026-11-18T17:00:59.167Z",
     "monthlyRowCounts": [
       {
         "source": "active_users",
@@ -104079,884 +104079,884 @@ const CASE_DATA = {
       {
         "source": "gtv_currency",
         "month": "IDR",
-        "rows": 12871949,
-        "uniqueMerchants": 7234515385281
+        "rows": 12733816,
+        "uniqueMerchants": 7223393776297
       },
       {
         "source": "gtv_currency",
         "month": "CLP",
-        "rows": 3960696,
-        "uniqueMerchants": 2047684755814
+        "rows": 3916846,
+        "uniqueMerchants": 2047061880288
       },
       {
         "source": "gtv_currency",
         "month": "LKR",
-        "rows": 647035,
-        "uniqueMerchants": 2003021912880
+        "rows": 649139,
+        "uniqueMerchants": 2003024328034
       },
       {
         "source": "gtv_currency",
         "month": "MMK",
-        "rows": 5294422,
-        "uniqueMerchants": 724764655165
+        "rows": 5277268,
+        "uniqueMerchants": 717837914715
       },
       {
         "source": "gtv_currency",
         "month": "LAK",
-        "rows": 1364880,
-        "uniqueMerchants": 532071880669
+        "rows": 1363951,
+        "uniqueMerchants": 532297017841
       },
       {
         "source": "gtv_currency",
         "month": "VND",
-        "rows": 1613588,
-        "uniqueMerchants": 309302347111
+        "rows": 1607310,
+        "uniqueMerchants": 307799624787
       },
       {
         "source": "gtv_currency",
         "month": "COP",
-        "rows": 3528687,
-        "uniqueMerchants": 214428516344
+        "rows": 3495656,
+        "uniqueMerchants": 213333408875
       },
       {
         "source": "gtv_currency",
         "month": "MYR",
-        "rows": 37493382,
-        "uniqueMerchants": 161130110533
+        "rows": 37279778,
+        "uniqueMerchants": 161328315755
       },
       {
         "source": "gtv_currency",
         "month": "EUR",
-        "rows": 7773303,
-        "uniqueMerchants": 158184556387
+        "rows": 7613903,
+        "uniqueMerchants": 159412561879
       },
       {
         "source": "gtv_currency",
         "month": "UZS",
-        "rows": 114931,
-        "uniqueMerchants": 109174006365
+        "rows": 114042,
+        "uniqueMerchants": 108416895438
       },
       {
         "source": "gtv_currency",
         "month": "JPY",
-        "rows": 560718,
-        "uniqueMerchants": 102437489866
+        "rows": 544406,
+        "uniqueMerchants": 102385292681
       },
       {
         "source": "gtv_currency",
         "month": "AED",
-        "rows": 2046877,
-        "uniqueMerchants": 100151342890
+        "rows": 2034526,
+        "uniqueMerchants": 100148216387
       },
       {
         "source": "gtv_currency",
         "month": "LBP",
-        "rows": 179454,
-        "uniqueMerchants": 97027670328
+        "rows": 178560,
+        "uniqueMerchants": 96119252857
       },
       {
         "source": "gtv_currency",
         "month": "THB",
-        "rows": 43464686,
-        "uniqueMerchants": 66565729186
-      },
-      {
-        "source": "gtv_currency",
-        "month": "PHP",
-        "rows": 59355123,
-        "uniqueMerchants": 39703322962
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GBP",
-        "rows": 5821406,
-        "uniqueMerchants": 34461071731
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ARS",
-        "rows": 1298892,
-        "uniqueMerchants": 34107511590
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MGA",
-        "rows": 281785,
-        "uniqueMerchants": 32268726254
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KHR",
-        "rows": 530475,
-        "uniqueMerchants": 28383919578
-      },
-      {
-        "source": "gtv_currency",
-        "month": "NGN",
-        "rows": 1132902,
-        "uniqueMerchants": 24323111009
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MXN",
-        "rows": 31612511,
-        "uniqueMerchants": 23432175922
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XOF",
-        "rows": 1649497,
-        "uniqueMerchants": 20546463142
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TZS",
-        "rows": 268787,
-        "uniqueMerchants": 19608688718
+        "rows": 43330705,
+        "uniqueMerchants": 65397563040
       },
       {
         "source": "gtv_currency",
         "month": "USD",
-        "rows": 10364667,
-        "uniqueMerchants": 15171788421
+        "rows": 10256118,
+        "uniqueMerchants": 45159010543
+      },
+      {
+        "source": "gtv_currency",
+        "month": "PHP",
+        "rows": 59148689,
+        "uniqueMerchants": 39541752133
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GBP",
+        "rows": 5625872,
+        "uniqueMerchants": 34462033734
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ARS",
+        "rows": 1278152,
+        "uniqueMerchants": 33574087088
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MGA",
+        "rows": 280738,
+        "uniqueMerchants": 32183489128
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KHR",
+        "rows": 529609,
+        "uniqueMerchants": 28395130028
+      },
+      {
+        "source": "gtv_currency",
+        "month": "NGN",
+        "rows": 1125573,
+        "uniqueMerchants": 24068292648
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MXN",
+        "rows": 31407400,
+        "uniqueMerchants": 23410889835
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XOF",
+        "rows": 1638979,
+        "uniqueMerchants": 20329424302
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TZS",
+        "rows": 266380,
+        "uniqueMerchants": 19452606004
       },
       {
         "source": "gtv_currency",
         "month": "PLN",
-        "rows": 617882,
-        "uniqueMerchants": 15107726656
+        "rows": 605381,
+        "uniqueMerchants": 15107084417
       },
       {
         "source": "gtv_currency",
         "month": "CRC",
-        "rows": 1752787,
-        "uniqueMerchants": 14767752514
+        "rows": 1731106,
+        "uniqueMerchants": 14634452622
       },
       {
         "source": "gtv_currency",
         "month": "PYG",
-        "rows": 161058,
-        "uniqueMerchants": 12509880758
+        "rows": 157311,
+        "uniqueMerchants": 12204998123
       },
       {
         "source": "gtv_currency",
         "month": "BRL",
-        "rows": 857861,
-        "uniqueMerchants": 10378026832
+        "rows": 847100,
+        "uniqueMerchants": 10376248769
       },
       {
         "source": "gtv_currency",
         "month": "PKR",
-        "rows": 1914815,
-        "uniqueMerchants": 10290571712
+        "rows": 1903596,
+        "uniqueMerchants": 10264970790
       },
       {
         "source": "gtv_currency",
         "month": "BDT",
-        "rows": 1195289,
-        "uniqueMerchants": 9543736065
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GNF",
-        "rows": 88098,
-        "uniqueMerchants": 8463705733
-      },
-      {
-        "source": "gtv_currency",
-        "month": "IQD",
-        "rows": 412210,
-        "uniqueMerchants": 8204797245
-      },
-      {
-        "source": "gtv_currency",
-        "month": "UGX",
-        "rows": 166016,
-        "uniqueMerchants": 7636527494
-      },
-      {
-        "source": "gtv_currency",
-        "month": "EGP",
-        "rows": 521514,
-        "uniqueMerchants": 7165538486
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KRW",
-        "rows": 159278,
-        "uniqueMerchants": 6160156777
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AOA",
-        "rows": 84300,
-        "uniqueMerchants": 5012064280
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SAR",
-        "rows": 9392118,
-        "uniqueMerchants": 4566910886
-      },
-      {
-        "source": "gtv_currency",
-        "month": "DZD",
-        "rows": 354965,
-        "uniqueMerchants": 3978364309
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CDF",
-        "rows": 110778,
-        "uniqueMerchants": 3970628373
-      },
-      {
-        "source": "gtv_currency",
-        "month": "HKD",
-        "rows": 470794,
-        "uniqueMerchants": 2958594811
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MWK",
-        "rows": 39057,
-        "uniqueMerchants": 2857656891
-      },
-      {
-        "source": "gtv_currency",
-        "month": "JMD",
-        "rows": 1278452,
-        "uniqueMerchants": 2666132029
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SOS",
-        "rows": 6569,
-        "uniqueMerchants": 2331603764
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XAF",
-        "rows": 108721,
-        "uniqueMerchants": 2182159673
-      },
-      {
-        "source": "gtv_currency",
-        "month": "VEF",
-        "rows": 379409,
-        "uniqueMerchants": 1940545194
-      },
-      {
-        "source": "gtv_currency",
-        "month": "HTG",
-        "rows": 827568,
-        "uniqueMerchants": 1926387247
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MNT",
-        "rows": 13766,
-        "uniqueMerchants": 1736801462
-      },
-      {
-        "source": "gtv_currency",
-        "month": "INR",
-        "rows": 2557592,
-        "uniqueMerchants": 1690710084
-      },
-      {
-        "source": "gtv_currency",
-        "month": "DOP",
-        "rows": 1410858,
-        "uniqueMerchants": 1620008649
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BIF",
-        "rows": 2901,
-        "uniqueMerchants": 1602767650
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MOP",
-        "rows": 42375,
-        "uniqueMerchants": 1366160468
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ZAR",
-        "rows": 2404790,
-        "uniqueMerchants": 1197460675
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GYD",
-        "rows": 137515,
-        "uniqueMerchants": 934061754
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KES",
-        "rows": 451907,
-        "uniqueMerchants": 900211674
-      },
-      {
-        "source": "gtv_currency",
-        "month": "RWF",
-        "rows": 34973,
-        "uniqueMerchants": 859709321
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CUP",
-        "rows": 47715,
-        "uniqueMerchants": 818088833
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SLE",
-        "rows": 28893,
-        "uniqueMerchants": 616481885
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KZT",
-        "rows": 88263,
-        "uniqueMerchants": 611561709
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TWD",
-        "rows": 876656,
-        "uniqueMerchants": 451292842
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MUR",
-        "rows": 683618,
-        "uniqueMerchants": 439003481
-      },
-      {
-        "source": "gtv_currency",
-        "month": "HUF",
-        "rows": 56847,
-        "uniqueMerchants": 353100865
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SRD",
-        "rows": 356585,
-        "uniqueMerchants": 338123308
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ILS",
-        "rows": 58249,
-        "uniqueMerchants": 334909496
-      },
-      {
-        "source": "gtv_currency",
-        "month": "NIO",
-        "rows": 619333,
-        "uniqueMerchants": 331651568
-      },
-      {
-        "source": "gtv_currency",
-        "month": "YER",
-        "rows": 74243,
-        "uniqueMerchants": 289717206
-      },
-      {
-        "source": "gtv_currency",
-        "month": "VES",
-        "rows": 49081,
-        "uniqueMerchants": 287119426
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AMD",
-        "rows": 4145,
-        "uniqueMerchants": 262554408
-      },
-      {
-        "source": "gtv_currency",
-        "month": "RSD",
-        "rows": 79427,
-        "uniqueMerchants": 213492553
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XPF",
-        "rows": 62260,
-        "uniqueMerchants": 210447602
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TTD",
-        "rows": 2878986,
-        "uniqueMerchants": 209435201
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ETB",
-        "rows": 148976,
-        "uniqueMerchants": 174373237
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SGD",
-        "rows": 4349665,
-        "uniqueMerchants": 172200973
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CZK",
-        "rows": 233150,
-        "uniqueMerchants": 169414791
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TND",
-        "rows": 151114,
-        "uniqueMerchants": 164900455
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CNY",
-        "rows": 43963,
-        "uniqueMerchants": 145786629
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KMF",
-        "rows": 2911,
-        "uniqueMerchants": 138188427
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GTQ",
-        "rows": 1104580,
-        "uniqueMerchants": 130547188
-      },
-      {
-        "source": "gtv_currency",
-        "month": "HNL",
-        "rows": 352772,
-        "uniqueMerchants": 128415660
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MAD",
-        "rows": 1414432,
-        "uniqueMerchants": 126598441
-      },
-      {
-        "source": "gtv_currency",
-        "month": "NPR",
-        "rows": 132941,
-        "uniqueMerchants": 122511137
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ISK",
-        "rows": 33799,
-        "uniqueMerchants": 114085542
-      },
-      {
-        "source": "gtv_currency",
-        "month": "JOD",
-        "rows": 353966,
-        "uniqueMerchants": 111522398
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AFN",
-        "rows": 15377,
-        "uniqueMerchants": 106641264
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GMD",
-        "rows": 70036,
-        "uniqueMerchants": 102879863
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TRY",
-        "rows": 141778,
-        "uniqueMerchants": 100331198
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MZN",
-        "rows": 93093,
-        "uniqueMerchants": 86491467
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AUD",
-        "rows": 2182750,
-        "uniqueMerchants": 86461521
-      },
-      {
-        "source": "gtv_currency",
-        "month": "PEN",
-        "rows": 2044924,
-        "uniqueMerchants": 81169960
-      },
-      {
-        "source": "gtv_currency",
-        "month": "UYU",
-        "rows": 98872,
-        "uniqueMerchants": 78049466
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GHS",
-        "rows": 271626,
-        "uniqueMerchants": 74105678
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BOB",
-        "rows": 938594,
-        "uniqueMerchants": 73415153
-      },
-      {
-        "source": "gtv_currency",
-        "month": "PGK",
-        "rows": 501467,
-        "uniqueMerchants": 71636760
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KGS",
-        "rows": 73330,
-        "uniqueMerchants": 70064052
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MVR",
-        "rows": 339427,
-        "uniqueMerchants": 59283271
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ALL",
-        "rows": 17020,
-        "uniqueMerchants": 53377328
-      },
-      {
-        "source": "gtv_currency",
-        "month": "VUV",
-        "rows": 48257,
-        "uniqueMerchants": 52044776
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ZMW",
-        "rows": 199905,
-        "uniqueMerchants": 44487390
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CAD",
-        "rows": 804277,
-        "uniqueMerchants": 38818921
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CHF",
-        "rows": 466238,
-        "uniqueMerchants": 38134788
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BBD",
-        "rows": 975273,
-        "uniqueMerchants": 34692046
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SCR",
-        "rows": 79543,
-        "uniqueMerchants": 33422311
-      },
-      {
-        "source": "gtv_currency",
-        "month": "CVE",
-        "rows": 13531,
-        "uniqueMerchants": 30598623
-      },
-      {
-        "source": "gtv_currency",
-        "month": "RON",
-        "rows": 22386,
-        "uniqueMerchants": 27486986
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MRU",
-        "rows": 62700,
-        "uniqueMerchants": 23395049
-      },
-      {
-        "source": "gtv_currency",
-        "month": "NZD",
-        "rows": 760421,
-        "uniqueMerchants": 20978522
-      },
-      {
-        "source": "gtv_currency",
-        "month": "GEL",
-        "rows": 378634,
-        "uniqueMerchants": 19004979
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XCD",
-        "rows": 492837,
-        "uniqueMerchants": 18703915
-      },
-      {
-        "source": "gtv_currency",
-        "month": "OMR",
-        "rows": 1219463,
-        "uniqueMerchants": 17930348
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MKD",
-        "rows": 3334,
-        "uniqueMerchants": 17614642
-      },
-      {
-        "source": "gtv_currency",
-        "month": "DJF",
-        "rows": 10450,
-        "uniqueMerchants": 17223795
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BTN",
-        "rows": 25898,
-        "uniqueMerchants": 17101598
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BSD",
-        "rows": 751473,
-        "uniqueMerchants": 16700756
-      },
-      {
-        "source": "gtv_currency",
-        "month": "QAR",
-        "rows": 293218,
-        "uniqueMerchants": 15181831
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BWP",
-        "rows": 87413,
-        "uniqueMerchants": 11264300
-      },
-      {
-        "source": "gtv_currency",
-        "month": "LSL",
-        "rows": 125507,
-        "uniqueMerchants": 11203417
-      },
-      {
-        "source": "gtv_currency",
-        "month": "LYD",
-        "rows": 230007,
-        "uniqueMerchants": 10626781
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ZWL",
-        "rows": 767271,
-        "uniqueMerchants": 10156787
-      },
-      {
-        "source": "gtv_currency",
-        "month": "PAB",
-        "rows": 419502,
-        "uniqueMerchants": 9492088
-      },
-      {
-        "source": "gtv_currency",
-        "month": "DKK",
-        "rows": 49127,
-        "uniqueMerchants": 9155912
-      },
-      {
-        "source": "gtv_currency",
-        "month": "NAD",
-        "rows": 65108,
-        "uniqueMerchants": 9079562
-      },
-      {
-        "source": "gtv_currency",
-        "month": "MDL",
-        "rows": 100472,
-        "uniqueMerchants": 8376288
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SEK",
-        "rows": 13037,
-        "uniqueMerchants": 6685192
-      },
-      {
-        "source": "gtv_currency",
-        "month": "LRD",
-        "rows": 8518,
-        "uniqueMerchants": 6268555
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BZD",
-        "rows": 148951,
-        "uniqueMerchants": 5939271
-      },
-      {
-        "source": "gtv_currency",
-        "month": "STN",
-        "rows": 4144,
-        "uniqueMerchants": 5358909
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KWD",
-        "rows": 315195,
-        "uniqueMerchants": 5041032
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BND",
-        "rows": 431592,
-        "uniqueMerchants": 4552770
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TJS",
-        "rows": 44246,
-        "uniqueMerchants": 4466605
-      },
-      {
-        "source": "gtv_currency",
-        "month": "BGN",
-        "rows": 1953,
-        "uniqueMerchants": 4278957
-      },
-      {
-        "source": "gtv_currency",
-        "month": "AWG",
-        "rows": 95128,
-        "uniqueMerchants": 3326093
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SZL",
-        "rows": 12886,
-        "uniqueMerchants": 2136095
-      },
-      {
-        "source": "gtv_currency",
-        "month": "ANG",
-        "rows": 63321,
-        "uniqueMerchants": 2121855
-      },
-      {
-        "source": "gtv_currency",
-        "month": "KYD",
-        "rows": 70319,
-        "uniqueMerchants": 2061271
-      },
-      {
-        "source": "gtv_currency",
-        "month": "TMT",
-        "rows": 1664,
-        "uniqueMerchants": 2022294
-      },
-      {
-        "source": "gtv_currency",
-        "month": "XCG",
-        "rows": 54260,
-        "uniqueMerchants": 1911606
-      },
-      {
-        "source": "gtv_currency",
-        "month": "SBD",
-        "rows": 57101,
-        "uniqueMerchants": 1898141
+        "rows": 1191607,
+        "uniqueMerchants": 9541552203
       },
       {
         "source": "gtv_currency",
         "month": "NOK",
-        "rows": 8930,
-        "uniqueMerchants": 1884646
+        "rows": 8750,
+        "uniqueMerchants": 9001858056
       },
       {
         "source": "gtv_currency",
-        "month": "BAM",
-        "rows": 5714,
-        "uniqueMerchants": 1482265
+        "month": "GNF",
+        "rows": 87726,
+        "uniqueMerchants": 8364215754
+      },
+      {
+        "source": "gtv_currency",
+        "month": "IQD",
+        "rows": 409782,
+        "uniqueMerchants": 8203967368
+      },
+      {
+        "source": "gtv_currency",
+        "month": "UGX",
+        "rows": 164869,
+        "uniqueMerchants": 7502910122
+      },
+      {
+        "source": "gtv_currency",
+        "month": "EGP",
+        "rows": 520335,
+        "uniqueMerchants": 7164331646
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KRW",
+        "rows": 156954,
+        "uniqueMerchants": 5457173093
+      },
+      {
+        "source": "gtv_currency",
+        "month": "AOA",
+        "rows": 84227,
+        "uniqueMerchants": 5026867389
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SAR",
+        "rows": 9395577,
+        "uniqueMerchants": 4557958714
+      },
+      {
+        "source": "gtv_currency",
+        "month": "DZD",
+        "rows": 351868,
+        "uniqueMerchants": 3916333839
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CDF",
+        "rows": 109196,
+        "uniqueMerchants": 3859998723
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MWK",
+        "rows": 39055,
+        "uniqueMerchants": 2905469840
+      },
+      {
+        "source": "gtv_currency",
+        "month": "JMD",
+        "rows": 1271150,
+        "uniqueMerchants": 2626756696
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SOS",
+        "rows": 6531,
+        "uniqueMerchants": 2299119282
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XAF",
+        "rows": 107192,
+        "uniqueMerchants": 2090428106
+      },
+      {
+        "source": "gtv_currency",
+        "month": "VEF",
+        "rows": 375172,
+        "uniqueMerchants": 1916710297
+      },
+      {
+        "source": "gtv_currency",
+        "month": "HTG",
+        "rows": 819209,
+        "uniqueMerchants": 1908076210
+      },
+      {
+        "source": "gtv_currency",
+        "month": "INR",
+        "rows": 2540585,
+        "uniqueMerchants": 1777736862
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BIF",
+        "rows": 2928,
+        "uniqueMerchants": 1705254450
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MNT",
+        "rows": 13288,
+        "uniqueMerchants": 1641981899
+      },
+      {
+        "source": "gtv_currency",
+        "month": "HKD",
+        "rows": 467272,
+        "uniqueMerchants": 1631284346
+      },
+      {
+        "source": "gtv_currency",
+        "month": "DOP",
+        "rows": 1394418,
+        "uniqueMerchants": 1610843797
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MOP",
+        "rows": 41564,
+        "uniqueMerchants": 1365917045
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ZAR",
+        "rows": 2391440,
+        "uniqueMerchants": 1194539902
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KES",
+        "rows": 448403,
+        "uniqueMerchants": 896294187
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GYD",
+        "rows": 137483,
+        "uniqueMerchants": 878685885
+      },
+      {
+        "source": "gtv_currency",
+        "month": "RWF",
+        "rows": 34876,
+        "uniqueMerchants": 857369279
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CUP",
+        "rows": 47079,
+        "uniqueMerchants": 813625232
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KZT",
+        "rows": 87772,
+        "uniqueMerchants": 607458388
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SLE",
+        "rows": 28348,
+        "uniqueMerchants": 602615788
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TWD",
+        "rows": 855436,
+        "uniqueMerchants": 442620555
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MUR",
+        "rows": 680407,
+        "uniqueMerchants": 437144857
+      },
+      {
+        "source": "gtv_currency",
+        "month": "HUF",
+        "rows": 55411,
+        "uniqueMerchants": 346177226
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ILS",
+        "rows": 58529,
+        "uniqueMerchants": 340982543
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SRD",
+        "rows": 355741,
+        "uniqueMerchants": 337882773
+      },
+      {
+        "source": "gtv_currency",
+        "month": "NIO",
+        "rows": 615620,
+        "uniqueMerchants": 329645827
+      },
+      {
+        "source": "gtv_currency",
+        "month": "YER",
+        "rows": 73502,
+        "uniqueMerchants": 288999508
+      },
+      {
+        "source": "gtv_currency",
+        "month": "VES",
+        "rows": 48620,
+        "uniqueMerchants": 281055767
+      },
+      {
+        "source": "gtv_currency",
+        "month": "AMD",
+        "rows": 4093,
+        "uniqueMerchants": 261911414
+      },
+      {
+        "source": "gtv_currency",
+        "month": "RSD",
+        "rows": 78540,
+        "uniqueMerchants": 210814856
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XPF",
+        "rows": 62539,
+        "uniqueMerchants": 208151557
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TTD",
+        "rows": 2831870,
+        "uniqueMerchants": 207441115
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ETB",
+        "rows": 147699,
+        "uniqueMerchants": 173092404
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SGD",
+        "rows": 4350173,
+        "uniqueMerchants": 169639361
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CZK",
+        "rows": 229007,
+        "uniqueMerchants": 168144881
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TND",
+        "rows": 151943,
+        "uniqueMerchants": 162037169
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CNY",
+        "rows": 43224,
+        "uniqueMerchants": 150784166
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KMF",
+        "rows": 2863,
+        "uniqueMerchants": 139278027
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GTQ",
+        "rows": 1097081,
+        "uniqueMerchants": 129813953
+      },
+      {
+        "source": "gtv_currency",
+        "month": "HNL",
+        "rows": 350952,
+        "uniqueMerchants": 127480171
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MAD",
+        "rows": 1405867,
+        "uniqueMerchants": 125658081
+      },
+      {
+        "source": "gtv_currency",
+        "month": "NPR",
+        "rows": 132152,
+        "uniqueMerchants": 121385317
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ISK",
+        "rows": 33236,
+        "uniqueMerchants": 112049566
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GMD",
+        "rows": 69806,
+        "uniqueMerchants": 102924329
+      },
+      {
+        "source": "gtv_currency",
+        "month": "AFN",
+        "rows": 15187,
+        "uniqueMerchants": 100948416
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TRY",
+        "rows": 141299,
+        "uniqueMerchants": 99899830
+      },
+      {
+        "source": "gtv_currency",
+        "month": "AUD",
+        "rows": 2166857,
+        "uniqueMerchants": 86659367
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MZN",
+        "rows": 92334,
+        "uniqueMerchants": 84793618
+      },
+      {
+        "source": "gtv_currency",
+        "month": "PEN",
+        "rows": 2033056,
+        "uniqueMerchants": 80777553
+      },
+      {
+        "source": "gtv_currency",
+        "month": "UYU",
+        "rows": 97953,
+        "uniqueMerchants": 76758116
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BOB",
+        "rows": 931687,
+        "uniqueMerchants": 73197371
+      },
+      {
+        "source": "gtv_currency",
+        "month": "PGK",
+        "rows": 502752,
+        "uniqueMerchants": 71808512
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KGS",
+        "rows": 72665,
+        "uniqueMerchants": 69955106
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GHS",
+        "rows": 269508,
+        "uniqueMerchants": 69191733
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MVR",
+        "rows": 338218,
+        "uniqueMerchants": 58877515
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ALL",
+        "rows": 17068,
+        "uniqueMerchants": 53103695
+      },
+      {
+        "source": "gtv_currency",
+        "month": "VUV",
+        "rows": 48218,
+        "uniqueMerchants": 51508917
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ZMW",
+        "rows": 199618,
+        "uniqueMerchants": 43999144
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CAD",
+        "rows": 789843,
+        "uniqueMerchants": 38006456
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CHF",
+        "rows": 455437,
+        "uniqueMerchants": 37678967
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BBD",
+        "rows": 966252,
+        "uniqueMerchants": 34211869
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SCR",
+        "rows": 79450,
+        "uniqueMerchants": 33418685
+      },
+      {
+        "source": "gtv_currency",
+        "month": "CVE",
+        "rows": 13467,
+        "uniqueMerchants": 31115464
+      },
+      {
+        "source": "gtv_currency",
+        "month": "RON",
+        "rows": 21735,
+        "uniqueMerchants": 26565500
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MRU",
+        "rows": 62622,
+        "uniqueMerchants": 23011205
+      },
+      {
+        "source": "gtv_currency",
+        "month": "NZD",
+        "rows": 751589,
+        "uniqueMerchants": 20684432
+      },
+      {
+        "source": "gtv_currency",
+        "month": "GEL",
+        "rows": 375309,
+        "uniqueMerchants": 18889035
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XCD",
+        "rows": 486021,
+        "uniqueMerchants": 18663668
+      },
+      {
+        "source": "gtv_currency",
+        "month": "OMR",
+        "rows": 1215235,
+        "uniqueMerchants": 18373964
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MKD",
+        "rows": 3350,
+        "uniqueMerchants": 17620629
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BTN",
+        "rows": 25498,
+        "uniqueMerchants": 16969658
+      },
+      {
+        "source": "gtv_currency",
+        "month": "DJF",
+        "rows": 10265,
+        "uniqueMerchants": 16926045
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BSD",
+        "rows": 743294,
+        "uniqueMerchants": 16445711
+      },
+      {
+        "source": "gtv_currency",
+        "month": "QAR",
+        "rows": 295552,
+        "uniqueMerchants": 15155836
+      },
+      {
+        "source": "gtv_currency",
+        "month": "LSL",
+        "rows": 123679,
+        "uniqueMerchants": 11053253
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BWP",
+        "rows": 85838,
+        "uniqueMerchants": 10978791
+      },
+      {
+        "source": "gtv_currency",
+        "month": "LYD",
+        "rows": 229392,
+        "uniqueMerchants": 10616302
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ZWL",
+        "rows": 761169,
+        "uniqueMerchants": 10107933
+      },
+      {
+        "source": "gtv_currency",
+        "month": "PAB",
+        "rows": 415898,
+        "uniqueMerchants": 9455138
+      },
+      {
+        "source": "gtv_currency",
+        "month": "NAD",
+        "rows": 65728,
+        "uniqueMerchants": 9130651
+      },
+      {
+        "source": "gtv_currency",
+        "month": "DKK",
+        "rows": 46972,
+        "uniqueMerchants": 8822512
+      },
+      {
+        "source": "gtv_currency",
+        "month": "JOD",
+        "rows": 353519,
+        "uniqueMerchants": 8444499
+      },
+      {
+        "source": "gtv_currency",
+        "month": "MDL",
+        "rows": 100544,
+        "uniqueMerchants": 8300525
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SEK",
+        "rows": 13057,
+        "uniqueMerchants": 6668481
+      },
+      {
+        "source": "gtv_currency",
+        "month": "LRD",
+        "rows": 8349,
+        "uniqueMerchants": 6204679
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BZD",
+        "rows": 149442,
+        "uniqueMerchants": 5996288
+      },
+      {
+        "source": "gtv_currency",
+        "month": "STN",
+        "rows": 4224,
+        "uniqueMerchants": 5397973
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KWD",
+        "rows": 314307,
+        "uniqueMerchants": 5046742
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BND",
+        "rows": 430028,
+        "uniqueMerchants": 4511533
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TJS",
+        "rows": 44552,
+        "uniqueMerchants": 4393173
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BGN",
+        "rows": 1888,
+        "uniqueMerchants": 4237783
+      },
+      {
+        "source": "gtv_currency",
+        "month": "AWG",
+        "rows": 93180,
+        "uniqueMerchants": 3245685
+      },
+      {
+        "source": "gtv_currency",
+        "month": "ANG",
+        "rows": 62430,
+        "uniqueMerchants": 2086153
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SZL",
+        "rows": 12812,
+        "uniqueMerchants": 2071335
+      },
+      {
+        "source": "gtv_currency",
+        "month": "KYD",
+        "rows": 69502,
+        "uniqueMerchants": 2036027
+      },
+      {
+        "source": "gtv_currency",
+        "month": "TMT",
+        "rows": 1623,
+        "uniqueMerchants": 2017904
+      },
+      {
+        "source": "gtv_currency",
+        "month": "XCG",
+        "rows": 53616,
+        "uniqueMerchants": 1913168
+      },
+      {
+        "source": "gtv_currency",
+        "month": "SBD",
+        "rows": 56076,
+        "uniqueMerchants": 1863692
       },
       {
         "source": "gtv_currency",
         "month": "HRK",
-        "rows": 3087,
-        "uniqueMerchants": 1480689
+        "rows": 3034,
+        "uniqueMerchants": 1479108
+      },
+      {
+        "source": "gtv_currency",
+        "month": "BAM",
+        "rows": 5647,
+        "uniqueMerchants": 1478581
       },
       {
         "source": "gtv_currency",
         "month": "BHD",
-        "rows": 112670,
-        "uniqueMerchants": 1299285
+        "rows": 112659,
+        "uniqueMerchants": 1291279
       },
       {
         "source": "gtv_currency",
         "month": "AZN",
-        "rows": 30628,
-        "uniqueMerchants": 1217866
+        "rows": 30442,
+        "uniqueMerchants": 1227021
       },
       {
         "source": "gtv_currency",
         "month": "TOP",
-        "rows": 30318,
-        "uniqueMerchants": 1196072
+        "rows": 30392,
+        "uniqueMerchants": 1165199
       },
       {
         "source": "gtv_currency",
         "month": "WST",
-        "rows": 24740,
-        "uniqueMerchants": 1124054
+        "rows": 25114,
+        "uniqueMerchants": 1149361
       },
       {
         "source": "gtv_currency",
         "month": "SVC",
         "rows": 127,
-        "uniqueMerchants": 969769
+        "uniqueMerchants": 974969
       },
       {
         "source": "gtv_currency",
         "month": "FJD",
-        "rows": 34157,
-        "uniqueMerchants": 637209
+        "rows": 33891,
+        "uniqueMerchants": 627672
       },
       {
         "source": "gtv_currency",
         "month": "BMD",
-        "rows": 8737,
-        "uniqueMerchants": 407600
+        "rows": 8772,
+        "uniqueMerchants": 402972
       },
       {
         "source": "gtv_currency",
         "month": "GIP",
-        "rows": 6334,
-        "uniqueMerchants": 248246
+        "rows": 6193,
+        "uniqueMerchants": 239398
       },
       {
         "source": "gtv_currency",
@@ -104967,7 +104967,7 @@ const CASE_DATA = {
       {
         "source": "gtv_null_pct",
         "month": "null_vs_total",
-        "uniqueMerchants": 292301739
+        "uniqueMerchants": 290386316
       }
     ],
     "revenueDiag": {
@@ -105527,8 +105527,8 @@ const CASE_DATA = {
     "id": 7.52,
     "my": 7.12,
     "us": 3.08,
-    "br": 2.98,
     "vn": 2.98,
+    "br": 2.98,
     "mm": 2.37,
     "sa": 2.31,
     "es": 1.99,
