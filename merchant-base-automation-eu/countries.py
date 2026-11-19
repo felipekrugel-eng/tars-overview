@@ -8,6 +8,11 @@ COUNTRIES = {
     "CH": dict(name="Switzerland", currency="CHF", min_rows=11_000),   # 14,367
     "BE": dict(name="Belgium",     currency="EUR", min_rows=16_000),   # 20,528
     "NL": dict(name="Netherlands", currency="EUR", min_rows=13_000),   # 16,899
+    # Mexico, added 2026-11-19. Measured that day: 491,347 raw merchants and 489,405 rows
+    # out of q1 - 3.6x the US base and 4.7x Spain, by a wide margin the largest market this
+    # pipeline runs. 100.0% of MX tills bill in MXN (the next currency is USD at 176
+    # merchants), so the local-currency receipts filter loses nothing here.
+    "MX": dict(name="Mexico",      currency="MXN", min_rows=390_000),  # 489,405 q1 rows
 }
 
 def render_sql(cc, template_path, out_path):

@@ -26,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       country:
-        description: "Market to rebuild (ES, CH, BE, NL) or ALL"
+        description: "Market to rebuild (ES, CH, BE, NL, MX) or ALL"
         default: "ALL"
         required: false
   push:
@@ -52,7 +52,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        country: [ES, CH, BE, NL]
+        country: [ES, CH, BE, NL, MX]
 
     steps:
       # workflow_dispatch with a single market: the other three matrix legs do nothing.
