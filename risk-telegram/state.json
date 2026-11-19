@@ -2359,7 +2359,11 @@
       "prepared_epoch": 1795072375,
       "message_id": 397,
       "sent_epoch": 1795072376
+    },
+    "058ffba032abc6dec84372d68245c582a55b3bb36112b84f7e97bd5b51be1247": {
+      "status": "send_intent",
+      "prepared_epoch": 1795076781
     }
   },
-  "updated_at_utc": "2026-11-19T08:26:19Z"
+  "updated_at_utc": "2026-11-19T08:26:21Z"
 }
