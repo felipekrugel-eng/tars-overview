@@ -1,0 +1,56 @@
+{
+ "_doc": "Payments GTV adoption, US. One entry per calendar month from the July 2026 launch. Numerator: POS GTV of credible merchants whose first succeeded+paid+captured Loyverse Payments charge fell on or before the month end. Denominator: POS GTV of every credible merchant that month. Credible = GTV_CONFIDENCE in ('1 - Confirmed by card data', '2 - Plausible'), recomputed on each month's OWN volume and median ticket, which is why these are measured rather than today's judgement carried backwards. A completed month is written once and never rewritten; the open month refreshes each run.",
+ "updated": "2026-11-20 17:57 UTC",
+ "months": {
+  "2026-07": {
+   "month": "2026-07",
+   "complete": true,
+   "merchants": 3595,
+   "adoptedMerchants": 26,
+   "gtv": 52191228.01,
+   "adoptedGtv": 679363.52,
+   "receipts": 2108371,
+   "source": "measured"
+  },
+  "2026-08": {
+   "month": "2026-08",
+   "complete": true,
+   "merchants": 3627,
+   "adoptedMerchants": 55,
+   "gtv": 49293472.8,
+   "adoptedGtv": 1036820.24,
+   "receipts": 2060699,
+   "source": "measured"
+  },
+  "2026-09": {
+   "month": "2026-09",
+   "complete": true,
+   "merchants": 3734,
+   "adoptedMerchants": 97,
+   "gtv": 48499998.03,
+   "adoptedGtv": 1557873.55,
+   "receipts": 2009279,
+   "source": "measured"
+  },
+  "2026-10": {
+   "month": "2026-10",
+   "complete": true,
+   "merchants": 4094,
+   "adoptedMerchants": 120,
+   "gtv": 58234016.82,
+   "adoptedGtv": 1771659.26,
+   "receipts": 2196755,
+   "source": "measured"
+  },
+  "2026-11": {
+   "month": "2026-11",
+   "complete": false,
+   "merchants": 4614,
+   "adoptedMerchants": 118,
+   "gtv": 35642337.47,
+   "adoptedGtv": 1024057.32,
+   "receipts": 1260887,
+   "source": "measured"
+  }
+ }
+}

@@ -686,6 +686,48 @@
     <p class="lp-note" id="ttPendNote" style="margin-top:10px"></p>
 
     <p class="lp-note" id="fnFootnote" style="margin-top:12px"></p>
+
+    <!-- ══ PAYMENTS GTV ADOPTION (added 2026-11-20) ═══════════════════════════════════
+         Of all POS volume credible US merchants rang up in a month, what share belongs to
+         merchants that had already taken a successful Loyverse Payments transaction by the
+         end of it?
+
+         THIS IS ADOPTION WEIGHTED BY TILL VOLUME, NOT PAYMENTS PENETRATION. The numerator is
+         an adopter's WHOLE POS figure, including everything they took in cash. A merchant who
+         takes one card payment and rings the rest through cash counts in full. Read as
+         penetration it would overstate the business by a wide margin, so the section says so
+         in its own subtitle rather than relying on the reader knowing.
+
+         Hidden entirely when __GTV_ADOPTION is absent: a build without the data shows nothing
+         here rather than an empty frame that reads as zero adoption. -->
+    <div id="gaSection" style="display:none;margin-top:30px">
+      <div class="ov-head" style="margin-bottom:6px">
+        <h2 class="ov-h1" style="font-size:22px">Payments GTV Adoption<span class="dot">.</span></h2>
+        <div class="ov-updated" id="gaUpdated">&nbsp;</div>
+      </div>
+      <p class="ov-sub" style="margin-bottom:18px">Share of credible US POS sales volume belonging to merchants that have taken at least one successful Loyverse Payments transaction. <b>Adoption weighted by till volume, not payments penetration</b> &mdash; an adopting merchant's entire POS figure counts, including the part they still take in cash. Credible means <code>GTV_CONFIDENCE</code> of Confirmed or Plausible, recomputed on each month's own volume and median ticket. From the July 2026 US launch.</p>
+
+      <div class="ov-kpis" id="gaKpis"></div>
+
+      <div class="ov-grid">
+        <div class="ov-card full">
+          <h3 class="ov-ch">GTV adoption by month</h3>
+          <p class="ov-csub" id="gaChartSub"></p>
+          <div style="position:relative;height:300px"><canvas id="gaChart"></canvas></div>
+        </div>
+        <div class="ov-card full">
+          <h3 class="ov-ch">Growth comparison &mdash; July 2026 = 100</h3>
+          <p class="ov-csub">Whether the adopting merchants' volume is outpacing the US base as a whole. Both series indexed to their own July value, so the gap between them is the adoption effect rather than seasonality.</p>
+          <div style="position:relative;height:280px"><canvas id="gaIndexChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="ov-card full" style="margin-bottom:18px">
+        <h3 class="ov-ch">Monthly breakdown</h3>
+        <div class="lp-table-scroll"><table id="gaTable" class="lp-table"></table></div>
+        <p class="lp-note" id="gaNote" style="margin-top:10px"></p>
+      </div>
+    </div>
   </div>
 </div>
 <style>
@@ -5538,5 +5580,182 @@ window.__ACT=window.__ACT||[];
 })();
 </script>
 <script src="facachat-widget.js"></script>
+<script>
+/* ── PAYMENTS GTV ADOPTION ────────────────────────────────────────────────────
+   Renders from window.__GTV_ADOPTION, one entry per calendar month since the July
+   2026 US launch. Everything here is measured: the credibility tier is recomputed
+   on each month's own volume and median ticket rather than today's judgement
+   carried backwards, which is the difference between an observation and an
+   estimate. The data file still carries a per-month `source`, and anything not
+   marked "measured" is drawn hollow and labelled, so a future estimated month
+   cannot pass as observed.
+
+   The open month is a MONTH-TO-DATE reading. It is drawn dashed, excluded from the
+   month-over-month step, and never described as a monthly figure. A part-month
+   share is not a monthly share — adopters and the base accumulate at different
+   rates within a month, so the ratio is not stable until the month closes. */
+(function(){
+  var S = (window.__GTV_ADOPTION || []).slice();
+  if (!S.length) return;                                  // no data: section stays hidden
+  var sec = document.getElementById('gaSection');
+  if (!sec) return;
+  sec.style.display = '';
+  var upd = document.getElementById('gaUpdated');
+  if (upd) upd.textContent = window.__GTV_ADOPTION_UPDATED ? ('Refreshed ' + window.__GTV_ADOPTION_UPDATED) : '';
+
+  var BLUE = '#1D8FE1', DEEP = '#0E4D92', GREEN = '#1F9D6B', GREY = '#9AA5B1';
+  function pct(n){ return (n == null) ? '—' : n.toFixed(2) + '%'; }
+  function usd(v){
+    if (v == null) return '—';
+    if (Math.abs(v) >= 1e6) return '$' + (v/1e6).toFixed(2) + 'm';
+    if (Math.abs(v) >= 1e3) return '$' + (v/1e3).toFixed(0) + 'k';
+    return '$' + Math.round(v);
+  }
+  function label(m){
+    var d = new Date(m + '-01T00:00:00Z');
+    return d.toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+  }
+  S.forEach(function(x){
+    x.adoption = x.gtv ? (x.adoptedGtv / x.gtv * 100) : null;   // guard: no divide by zero
+    x.measured = (x.source || 'measured') === 'measured';
+  });
+  var closed = S.filter(function(x){ return x.complete; });
+  var open   = S.filter(function(x){ return !x.complete; })[0] || null;
+  var last   = closed[closed.length - 1] || null;
+  var prev   = closed[closed.length - 2] || null;
+  // Month over month is computed between CLOSED months only. Stepping from a closed
+  // month to a part-month would report a fall every time the month is young.
+  var mom = (last && prev && last.adoption != null && prev.adoption != null)
+    ? (last.adoption - prev.adoption) : null;
+
+  /* ── KPI cards ── */
+  function card(num, lbl, sub, cls){
+    return '<div class="ov-kpi' + (cls ? ' ' + cls : '') + '"><div class="k-num">' + num +
+           '</div><div class="k-lbl">' + lbl + '</div><div class="k-sub">' + (sub || '') + '</div></div>';
+  }
+  var k = document.getElementById('gaKpis');
+  if (k && last) {
+    k.innerHTML =
+      card(pct(last.adoption), 'GTV adoption', label(last.month) + ', last closed month', 'accent') +
+      card(usd(last.adoptedGtv), 'Adopters’ POS GTV', last.adoptedMerchants.toLocaleString() + ' merchants transacting', 'green') +
+      card(usd(last.gtv), 'Total credible US POS GTV', last.merchants.toLocaleString() + ' credible merchants') +
+      card((mom == null ? '—' : (mom >= 0 ? '+' : '') + mom.toFixed(2) + 'pp'),
+           'Month over month', prev ? ('vs ' + label(prev.month) + ', closed months only') : 'no prior closed month');
+  }
+
+  var sub = document.getElementById('gaChartSub');
+  if (sub) {
+    sub.innerHTML = 'Numerator: POS GTV of merchants whose first successful Payments transaction fell on or before the month end. ' +
+      'Denominator: POS GTV of every credible US merchant that month.' +
+      (open ? ' <b>' + label(open.month) + ' is month-to-date</b> and drawn dashed — a part-month share is not a monthly share.' : '');
+  }
+
+  /* ── adoption line ── */
+  var ctx = document.getElementById('gaChart');
+  if (ctx && window.Chart) {
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: S.map(function(x){ return label(x.month); }),
+        datasets: [{
+          label: 'GTV adoption',
+          data: S.map(function(x){ return x.adoption; }),
+          borderColor: DEEP, backgroundColor: 'rgba(14,77,146,.08)',
+          borderWidth: 2.5, tension: .25, fill: true,
+          // Open month hollow + dashed; a month flagged as anything but measured is hollow too.
+          pointRadius: S.map(function(x){ return x.complete ? 4 : 5; }),
+          pointBackgroundColor: S.map(function(x){ return (x.complete && x.measured) ? DEEP : '#fff'; }),
+          pointBorderColor: DEEP, pointBorderWidth: 2,
+          segment: { borderDash: function(c){ return S[c.p1DataIndex] && !S[c.p1DataIndex].complete ? [6,4] : undefined; } },
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, ticks: { callback: function(v){ return v + '%'; } } },
+                  x: { grid: { display: false } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: {
+            title: function(i){ var x = S[i[0].dataIndex];
+              return label(x.month) + (x.complete ? '' : '  — month to date'); },
+            label: function(c){ return 'Adoption ' + pct(c.parsed.y); },
+            afterBody: function(i){ var x = S[i[0].dataIndex];
+              return ['', 'Adopters  ' + usd(x.adoptedGtv) + '  (' + x.adoptedMerchants.toLocaleString() + ' merchants)',
+                      'All credible  ' + usd(x.gtv) + '  (' + x.merchants.toLocaleString() + ' merchants)',
+                      '', 'Source: ' + (x.measured ? 'measured from receipts' : (x.source || 'estimated')),
+                      x.complete ? 'Closed month' : 'MONTH TO DATE — not a monthly figure']; }
+          } }
+        }
+      }
+    });
+  }
+
+  /* ── indexed growth comparison, July = 100 ── */
+  var ictx = document.getElementById('gaIndexChart');
+  if (ictx && window.Chart && S.length) {
+    var b0 = S[0];
+    var idx = function(v, base){ return (base ? v / base * 100 : null); };
+    new Chart(ictx, {
+      type: 'line',
+      data: {
+        labels: S.map(function(x){ return label(x.month); }),
+        datasets: [
+          { label: 'Adopters’ POS GTV', data: S.map(function(x){ return idx(x.adoptedGtv, b0.adoptedGtv); }),
+            borderColor: GREEN, backgroundColor: GREEN, borderWidth: 2.5, tension: .25, pointRadius: 3,
+            segment: { borderDash: function(c){ return S[c.p1DataIndex] && !S[c.p1DataIndex].complete ? [6,4] : undefined; } } },
+          { label: 'All credible US POS GTV', data: S.map(function(x){ return idx(x.gtv, b0.gtv); }),
+            borderColor: GREY, backgroundColor: GREY, borderWidth: 2, tension: .25, pointRadius: 3,
+            segment: { borderDash: function(c){ return S[c.p1DataIndex] && !S[c.p1DataIndex].complete ? [6,4] : undefined; } } }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { ticks: { callback: function(v){ return v; } } }, x: { grid: { display: false } } },
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11.5 } } },
+          tooltip: { callbacks: {
+            title: function(i){ var x = S[i[0].dataIndex]; return label(x.month) + (x.complete ? '' : '  — month to date'); },
+            label: function(c){ return c.dataset.label + ': ' + (c.parsed.y == null ? '—' : c.parsed.y.toFixed(0)); } } } }
+      }
+    });
+  }
+
+  /* ── monthly table ── */
+  var t = document.getElementById('gaTable');
+  if (t) {
+    var head = '<thead><tr><th>Month</th><th class="num">Payments merchants</th>' +
+      '<th class="num">Payments merchants POS GTV</th><th class="num">Total US POS GTV</th>' +
+      '<th class="num">GTV adoption</th><th class="num">MoM change</th><th>Basis</th></tr></thead>';
+    var rows = '', prevA = null;
+    S.forEach(function(x){
+      // MoM only between closed months, for the same reason the KPI card is.
+      var d = (x.complete && prevA != null && x.adoption != null) ? (x.adoption - prevA) : null;
+      if (x.complete) prevA = x.adoption;
+      rows += '<tr' + (x.complete ? '' : ' style="color:var(--midgray);font-style:italic"') + '>' +
+        '<td>' + label(x.month) + (x.complete ? '' : ' *') + '</td>' +
+        '<td class="num">' + x.adoptedMerchants.toLocaleString() + '</td>' +
+        '<td class="num">' + usd(x.adoptedGtv) + '</td>' +
+        '<td class="num">' + usd(x.gtv) + '</td>' +
+        '<td class="num"><b>' + pct(x.adoption) + '</b></td>' +
+        '<td class="num">' + (d == null ? '—' : (d >= 0 ? '+' : '') + d.toFixed(2) + 'pp') + '</td>' +
+        '<td>' + (x.complete ? (x.measured ? 'Observed' : 'Estimated') : 'Month to date') + '</td></tr>';
+    });
+    t.innerHTML = head + '<tbody>' + rows + '</tbody>';
+  }
+
+  var note = document.getElementById('gaNote');
+  if (note) {
+    note.innerHTML =
+      '<b>What this counts.</b> A merchant joins the numerator in the month of its first succeeded, paid and captured ' +
+      'Loyverse Payments charge, and stays in it. Registrations and KYC-passed accounts that never transacted do not qualify. ' +
+      'Each merchant counts once per month; a multi-store owner is one LOYVERSE_ID, the same grain the US Merchant Base counts.<br>' +
+      '<b>POS GTV</b> follows the merchant-base definition exactly: USD receipts, cancellations and refunds excluded, each receipt ' +
+      'capped at $10k. Credible means GTV_CONFIDENCE of “Confirmed by card data” or “Plausible” — recomputed on each ' +
+      'month’s own volume and median ticket, so July is judged on July rather than on today.<br>' +
+      '<b>Not penetration.</b> The numerator is the adopters’ whole till volume, not the part processed through Loyverse Payments. ' +
+      (open ? '<br><b>* ' + label(open.month) + ' is month-to-date</b> and is excluded from the month-over-month column.' : '');
+  }
+})();
+</script>
+
 </body>
 </html>

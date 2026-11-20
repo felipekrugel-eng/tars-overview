@@ -2410,6 +2410,67 @@ window.__PAY_COHORT_MERCHANTS = ${JSON.stringify(recs)};
   fs.appendFileSync(FUNNEL_FILE, '\n' + out, 'utf8');
   console.log(`✓ funnel-data.js += cohort block: ${recs.length} connected accounts (${withEcon} with monthly economics)`);
 }
+// ── Payments GTV adoption ────────────────────────────────────────────────────
+// Of all POS volume credible US merchants rang up in a month, what share belongs to
+// merchants that had already taken a successful Loyverse Payments transaction by the end
+// of it? Adoption weighted by till volume — NOT payments penetration: an adopter's whole
+// POS figure counts, including everything they took in cash.
+//
+// COMPLETED MONTHS ARE WRITTEN ONCE AND NEVER REWRITTEN. The credibility tier is recomputed
+// from each month's own receipts, so a closed month is a finished observation; letting a
+// later run restate it would silently move published history. The open month refreshes every
+// run and is labelled month-to-date, because a part-month share is not a monthly share.
+// Delete a month's entry by hand to force a recalculation when corrected data arrives.
+const GTV_ADOPTION_FILE = path.join(__dirname, 'gtv-adoption.json');
+function mergeAdoption(rows, prev) {
+  const out = JSON.parse(JSON.stringify(prev && prev.months ? prev.months : {}));
+  let frozen = 0, written = 0;
+  for (const r of rows) {
+    const m = String(r.MONTH).slice(0, 7);
+    const complete = r.IS_COMPLETE === true || String(r.IS_COMPLETE).toLowerCase() === 'true';
+    if (out[m] && out[m].complete) { frozen++; continue; }   // closed: leave it alone
+    out[m] = {
+      month: m, complete,
+      merchants: Number(r.CREDIBLE_MERCHANTS || 0),
+      adoptedMerchants: Number(r.ADOPTED_MERCHANTS || 0),
+      gtv: Math.round(Number(r.TOTAL_POS_GTV_USD || 0) * 100) / 100,
+      adoptedGtv: Math.round(Number(r.ADOPTED_POS_GTV_USD || 0) * 100) / 100,
+      receipts: Number(r.RECEIPTS || 0),
+      source: 'measured',
+    };
+    written++;
+  }
+  return { out, frozen, written };
+}
+async function pullAdoption(connection) {
+  const rows = await executeQuery(connection, loadSql('gtv_adoption_monthly.sql').replace(/;\s*$/, ''));
+  let prev = null;
+  try { prev = JSON.parse(fs.readFileSync(GTV_ADOPTION_FILE, 'utf8')); } catch (e) { prev = null; }
+  const { out, frozen, written } = mergeAdoption(rows, prev);
+  const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+  const doc = { _doc: (prev && prev._doc) || 'Payments GTV adoption, US, one entry per calendar month.',
+                updated: stamp, months: out };
+  fs.writeFileSync(GTV_ADOPTION_FILE, JSON.stringify(doc, null, 1), 'utf8');
+  const series = Object.keys(out).sort().map(k => out[k]);
+  fs.appendFileSync(FUNNEL_FILE, '\n' + [
+    '// Payments GTV adoption — share of credible US POS GTV held by merchants that have',
+    '// transacted on Loyverse Payments. Completed months are frozen; the last entry may be',
+    '// month-to-date (complete:false) and must not be read as a monthly figure.',
+    'window.__GTV_ADOPTION_UPDATED = ' + JSON.stringify(stamp) + ';',
+    'window.__GTV_ADOPTION = ' + JSON.stringify(series) + ';',
+    '',
+  ].join('\n'), 'utf8');
+  const open = series.filter(x => !x.complete).length;
+  console.log(`\u2713 gtv-adoption: ${series.length} month(s) (${frozen} frozen, ${written} written, ${open} open)`);
+  for (const x of series) {
+    console.log(`    ${x.month} ${x.complete ? 'closed' : 'open  '} `
+      + `${(x.gtv ? x.adoptedGtv / x.gtv * 100 : 0).toFixed(2)}%  `
+      + `$${(x.adoptedGtv / 1e6).toFixed(2)}m of $${(x.gtv / 1e6).toFixed(2)}m  `
+      + `${x.adoptedMerchants}/${x.merchants} merchants`);
+  }
+  return series;
+}
+
 function writeFunnel(funnel, terminalReady, bases, basesMonthly, basesByCc, basesMonthlyByCc) {
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   const out =
@@ -2793,6 +2854,10 @@ async function main() {
           });
         } catch (e) { console.error(`✗ cohort block not appended to funnel-data.js (Cohorts tab shows its not-generated notice): ${e.message}`); }
         writePayCohort(buildPayCohort(funnel, flags, cm.acctMonths || {}, meta, accountRows));
+        // Guarded on its own: if the adoption query fails the section keeps the last good
+        // gtv-adoption.json and says when it was refreshed, rather than the page losing it.
+        try { await pullAdoption(connection); }
+        catch (e) { console.error(`\u2717 gtv-adoption not refreshed (section keeps its previous months): ${e.message}`); }
       } catch (e) { console.error(`✗ payments-cohort.js not written (the KPI triangle keeps its previous file): ${e.message}`); }
 
       if (!snapshotCost) {
