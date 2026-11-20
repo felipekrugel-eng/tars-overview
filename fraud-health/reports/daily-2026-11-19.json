@@ -1,0 +1,114 @@
+{
+ "cohort": {
+  "cohortDate": "2026-11-19",
+  "timezone": "Europe/London",
+  "windowStart": "2026-11-19T00:00:00+00:00",
+  "windowEnd": "2026-11-20T00:00:00+00:00",
+  "count": 5,
+  "confirmed": 3,
+  "boundaryAmbiguous": 2,
+  "members": [
+   {
+    "accountId": "acct_1UZKCaGJa6GuvjhG",
+    "enabledAt": "2026-11-19T00:25:55+00:00",
+    "enabledWindowStart": "2026-11-18T16:29:04+00:00",
+    "enabledWindowEnd": "2026-11-19T00:25:55+00:00",
+    "enabledWindowHours": 7.95,
+    "enabledCertainty": "boundary_ambiguous",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-08",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1Ud9ke7LODeMwQKn",
+    "enabledAt": "2026-11-19T00:25:55+00:00",
+    "enabledWindowStart": "2026-11-18T14:22:21+00:00",
+    "enabledWindowEnd": "2026-11-19T00:25:55+00:00",
+    "enabledWindowHours": 10.06,
+    "enabledCertainty": "boundary_ambiguous",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-18",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UdLE45I38xOfyTZ",
+    "enabledAt": "2026-11-19T16:34:54+00:00",
+    "enabledWindowStart": "2026-11-19T02:37:28+00:00",
+    "enabledWindowEnd": "2026-11-19T16:34:54+00:00",
+    "enabledWindowHours": 13.96,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UdaiG5gZV3ZoUzM",
+    "enabledAt": "2026-11-19T23:33:03+00:00",
+    "enabledWindowStart": "2026-11-19T19:09:41+00:00",
+    "enabledWindowEnd": "2026-11-19T23:33:03+00:00",
+    "enabledWindowHours": 4.39,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-19",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UdbPd5BGlzavvdB",
+    "enabledAt": "2026-11-19T23:33:03+00:00",
+    "enabledWindowStart": "2026-11-19T19:54:29+00:00",
+    "enabledWindowEnd": "2026-11-19T23:33:03+00:00",
+    "enabledWindowHours": 3.64,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-19",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 646,
+   "never_observed_enabled": 1251
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1UZKCaGJa6GuvjhG",
+   "acct_1Ud9ke7LODeMwQKn",
+   "acct_1UdLE45I38xOfyTZ",
+   "acct_1UdaiG5gZV3ZoUzM",
+   "acct_1UdbPd5BGlzavvdB"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-11-20T00:28:36+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 1950,
+  "enabledAccounts": 657,
+  "reviewedAccounts": 704,
+  "reviewedEnabledAccounts": 656,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.8,
+  "ledgerAccounts": 1951,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
