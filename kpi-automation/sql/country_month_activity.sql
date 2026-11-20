@@ -745,6 +745,38 @@ merchant_master AS (
       AND COUNTRY IS NOT NULL AND COUNTRY <> ''
       AND LOYVERSE_ID NOT IN (SELECT LOYVERSE_ID FROM bot_accounts)   -- [bot-filter]
 ),
+-- PER-CURRENCY OUTLIER BOUND (added 2026-11-20). Replaces the flat $10k per-receipt cap as
+-- the operative bound on GTV. The $10k cap came from q1_base.sql, where it bounds a US-only
+-- USD population; across 160 currencies it let a long tail through and GTV reconciled about
+-- 1.74x above the agreed case-model baseline ($53.8bn TTM against ~$31bn), worst where
+-- tickets are large (US 4.6x: $232 average ticket against a $7.48 median; PHP shows a 146
+-- median against a 9,999,998,900 maximum).
+--
+-- The bound comes from each currency's OWN receipt distribution: the smaller of its 99.9th
+-- percentile and 100x its median ticket, in local money, from a 1% block sample of the last
+-- 12 months. Two limits because either alone can fail: a currency whose junk is more than
+-- 0.1% of receipts has a junk p99.9, and 100x median alone would clip a genuinely wide
+-- distribution. The $10k USD cap stays as an outer bound. Currencies with fewer than 500
+-- sampled receipts get no local bound (the $10k cap still applies) rather than a noisy one.
+-- The sample is ~1% of 2.7TB and adds a few minutes; the result is ~160 rows, broadcast into
+-- the scan below exactly like fx_rates.
+currency_caps AS (
+    SELECT UPPER(TRIM(CURRENCY))                          AS currency,
+           APPROX_PERCENTILE(TOTAL_MONEY, 0.999)          AS p999_local,
+           APPROX_PERCENTILE(TOTAL_MONEY, 0.5)            AS p50_local,
+           LEAST(APPROX_PERCENTILE(TOTAL_MONEY, 0.999),
+                 100 * APPROX_PERCENTILE(TOTAL_MONEY, 0.5)) AS cap_local,
+           COUNT(*)                                       AS n_sample
+    FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS_UNIQUE SAMPLE SYSTEM (1) SEED (20261120)
+    WHERE TOTAL_MONEY IS NOT NULL AND TOTAL_MONEY > 0
+      AND CANCELLED_AT IS NULL
+      AND REFUND_FOR IS NULL
+      AND UPPER(COALESCE(RECEIPT_TYPE, 'SALE')) <> 'REFUND'
+      AND RECEIPT_DATE >= TO_VARCHAR(DATEADD('month', -12, CURRENT_DATE()), 'YYYY-MM-DD')
+      AND RECEIPT_DATE <  TO_VARCHAR(DATEADD('day', 1, CURRENT_DATE()), 'YYYY-MM-DD')
+    GROUP BY 1
+    HAVING COUNT(*) >= 500
+),
 -- The only pass over the big table.
 --
 -- AGGREGATE FIRST, JOIN THE BIG TABLE AFTER. Joining merchant_master inside this scan makes
@@ -763,11 +795,16 @@ receipts_per_merchant_month AS (
     SELECT r.MERCHANT_ID,
            LEFT(r.RECEIPT_DATE, 7)                            AS CALENDAR_MONTH,
            COUNT(*)                                           AS N_RECEIPTS,
-           SUM(LEAST(r.TOTAL_MONEY * fx.usd_per_unit, 10000)) AS GTV_USD,
+           -- Operative GTV: per-currency bound first (local money), then the $10k USD outer cap.
+           SUM(LEAST(LEAST(r.TOTAL_MONEY, COALESCE(cc.cap_local, r.TOTAL_MONEY)) * fx.usd_per_unit,
+                     10000))                                  AS GTV_USD,
+           -- Previous rule, kept so the build can log old vs new side by side.
+           SUM(LEAST(r.TOTAL_MONEY * fx.usd_per_unit, 10000)) AS GTV_USD_CAP10K,
            SUM(r.TOTAL_MONEY * fx.usd_per_unit)               AS GTV_USD_UNCAPPED,
            COUNT_IF(fx.usd_per_unit IS NULL)                  AS RECEIPTS_NO_RATE
     FROM LOYVERSE_DATA_LAKE.PUBLIC.LOYVERSE_RECEIPTS_UNIQUE r
     LEFT JOIN fx_rates fx ON fx.currency = UPPER(TRIM(r.CURRENCY))
+    LEFT JOIN currency_caps cc ON cc.currency = UPPER(TRIM(r.CURRENCY))
     WHERE r.TOTAL_MONEY IS NOT NULL AND r.TOTAL_MONEY > 0
       AND r.CANCELLED_AT IS NULL
       AND r.REFUND_FOR IS NULL
@@ -788,6 +825,7 @@ SELECT m.COUNTRY                                        AS COUNTRY,
        ROUND(SUM(COALESCE(mm.GTV_USD, 0)), 2)           AS GTV_USD,
        ROUND(SUM(COALESCE(mm.GTV_USD_UNCAPPED, 0)), 2)  AS GTV_USD_UNCAPPED,
        SUM(mm.N_RECEIPTS)                               AS RECEIPTS,
+       ROUND(SUM(COALESCE(mm.GTV_USD_CAP10K, 0)), 2)    AS GTV_USD_CAP10K,
        SUM(mm.RECEIPTS_NO_RATE)                         AS RECEIPTS_NO_RATE
 FROM receipts_per_merchant_month mm
 JOIN merchant_master m ON m.LOYVERSE_ID = mm.MERCHANT_ID
