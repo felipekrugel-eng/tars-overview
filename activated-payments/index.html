@@ -464,14 +464,9 @@
 .pl-pill.coh-active{background:#1D8FE1;color:#fff;}
 .pl-pill.coh-churning{background:#CC3333;color:#fff;}
 </style>
-<div class="paysub" id="paysub">
-  <a class="on" href="#payments" id="paysub-overview">Overview</a>
-  <a href="#margins" id="paysub-margins">Summary of Margins</a>
-  <a href="#funnel" id="paysub-funnel">Funnel</a>
-  <a href="#cohorts" id="paysub-cohorts">Cohorts</a>
-  <a href="profile.html" id="paysub-profile">Payment Profile</a>
-  <a href="report.html" id="paysub-report">Report</a>
-</div>
+<!-- Filled in by paysub.js, which is the single definition of this bar for all four
+     Payments pages. Do not hand-write links here. -->
+<div class="paysub" id="paysub" data-paysub="overview" data-paysub-mode="inline"></div>
 <div id="page-pilot" style="display:none">
   <div class="ov-wrap">
     <div class="ov-head">
@@ -1470,6 +1465,9 @@ buildAnchorTable();compute();
 <!-- Country filter. Loaded AFTER the data files because it discovers the live markets
      from them, and BEFORE the page scripts because they subscribe to it on load. -->
 <script src="country-filter.js"></script>
+<!-- Payments sub-navigation. AFTER country-filter.js, because it mounts the country
+     picker into the bar it renders. -->
+<script src="paysub.js"></script>
 <!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
@@ -1732,11 +1730,9 @@ function applyMasterHash(){
 window.addEventListener('hashchange', applyMasterHash);
 applyMasterHash();
 
-// Mount the country picker at the right-hand end of the Payments sub-tab bar. It is a
-// page-wide control: Overview, Summary of Margins and Funnel all honour it, and it is
-// carried over to the Report page. Pilot is deliberately unaffected — the pilot is a
-// fixed cohort of 500 named US merchants, so filtering it by country is meaningless.
-if (window.LVCC) window.LVCC.mount(document.getElementById('paysub'));
+// The country picker sits at the right-hand end of the Payments sub-tab bar; paysub.js
+// mounts it there once it has rendered the bar. It is a page-wide control: Overview,
+// Summary of Margins and Funnel all honour it, and it is carried over to the Report page.
 
 // ===== Overview page (FACADASH-style daily report) ==========================
 (function(){

@@ -9,6 +9,8 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="risk-health-data.js"></script>
+<!-- Payments sub-navigation, shared verbatim with index.html, profile.html and report.html. -->
+<script src="paysub.js"></script>
 <style>
 :root{
   --blue:#1D8FE1;--blue-deep:#1578C4;--ink:#13233A;--near-black:#1A1A1A;--bg:#EEF2F6;
@@ -99,15 +101,8 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background
   <a class="lvmn-tab on" href="index.html#payments">Payments</a>
   <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
 </nav>
-<div class="paysub">
-  <a href="index.html#payments">Overview</a>
-  <a href="index.html#margins">Summary of Margins</a>
-  <a href="index.html#pilot">Pilot</a>
-  <a href="index.html#funnel">Funnel</a>
-  <a href="profile.html">Payment Profile</a>
-  <a href="risk-health.html" class="on">Fraud Health</a>
-  <a href="report.html">Report</a>
-</div>
+<!-- Filled in by paysub.js — the single definition of this bar. Do not hand-write links. -->
+<div class="paysub" data-paysub="risk-health"></div>
 
 <div class="wrap">
   <div class="hero">

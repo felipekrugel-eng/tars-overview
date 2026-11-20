@@ -12,6 +12,9 @@
 <!-- Country filter, shared verbatim with index.html and report.html. Loaded AFTER the data file
      because it discovers the live markets from it. -->
 <script src="country-filter.js"></script>
+<!-- Payments sub-navigation. AFTER country-filter.js, because it mounts the country
+     picker into the bar it renders. -->
+<script src="paysub.js"></script>
 <style>
   :root{ --blue:#1D8FE1; --blue-deep:#1578C4; --ink:#13233A; --near-black:#1A1A1A;
     --bg:#EEF2F6; --surface:#FFFFFF; --border:#E3E9F0; --muted:#7E8A9A; --faint:#B8C4D2;
@@ -84,13 +87,8 @@
   <a class="lvmn-tab on" href="index.html#payments">Payments</a>
   <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
 </nav>
-<div class="paysub">
-  <a href="index.html#payments">Overview</a>
-  <a href="index.html#margins">Summary of Margins</a>
-  <a href="index.html#funnel">Funnel</a>
-  <a href="profile.html" class="on">Payment Profile</a>
-  <a href="report.html">Report</a>
-</div>
+<!-- Filled in by paysub.js — the single definition of this bar. Do not hand-write links. -->
+<div class="paysub" data-paysub="profile"></div>
 
 <div class="wrap">
   <h1 class="h1">Payment Profile<span class="dot">.</span></h1>
@@ -561,7 +559,7 @@
   });
 
   if (window.LVCC) {
-    LVCC.mount(document.querySelector('.paysub'));
+    // paysub.js mounts the picker into the sub-tab bar once it has rendered it.
     LVCC.on(function () { renderAll(); });   // fires immediately, so this is the only render path
   } else {
     renderAll();

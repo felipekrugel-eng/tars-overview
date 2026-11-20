@@ -12,6 +12,9 @@
 <!-- Country filter, shared verbatim with index.html. Loaded AFTER the data file because it
      discovers the live markets from it. -->
 <script src="country-filter.js"></script>
+<!-- Payments sub-navigation. AFTER country-filter.js, because it mounts the country
+     picker into the bar it renders. -->
+<script src="paysub.js"></script>
 <!-- FACACHAT — ask-a-question box (see FACACHAT_DEPLOY_GUIDE.md at the repo root) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>window.FACACHAT_WORKER_URL = window.FACACHAT_WORKER_URL || "https://facachat-worker.loyverse-felipe.workers.dev";</script>
@@ -97,13 +100,8 @@
   <a class="lvmn-tab on" href="index.html#payments">Payments</a>
   <a class="lvmn-tab" href="index.html#map">Merchant Map</a>
 </nav>
-<div class="paysub no-print">
-  <a href="index.html#payments">Overview</a>
-  <a href="index.html#margins">Summary of Margins</a>
-  <a href="index.html#funnel">Funnel</a>
-  <a href="profile.html">Payment Profile</a>
-  <a href="report.html" class="on">Report</a>
-</div>
+<!-- Filled in by paysub.js — the single definition of this bar. Do not hand-write links. -->
+<div class="paysub no-print" data-paysub="report"></div>
 
 <div class="controls no-print">
   <select id="picker"></select>
@@ -373,10 +371,9 @@ function redraw(){
   render(def);
 }
 
-// Mount the same picker, in the same place, as index.html — then subscribe. LVCC.on fires on
-// subscribe, so this is also the initial draw.
+// paysub.js mounts the same picker, in the same place, as index.html. Subscribe here;
+// LVCC.on fires on subscribe, so this is also the initial draw.
 if(window.LVCC){
-  window.LVCC.mount(document.querySelector('.paysub'));
   window.LVCC.on(redraw);
 } else {
   redraw();
