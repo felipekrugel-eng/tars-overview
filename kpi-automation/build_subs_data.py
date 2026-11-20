@@ -37,6 +37,19 @@ SUB_FLOW_CSV    = Path(os.environ.get("SUB_FLOW_CSV",    HERE / "work" / "subscr
 MERCHANT_FLOW_CSV = Path(os.environ.get("MERCHANT_FLOW_CSV", HERE / "work" / "merchant_subscription_flow.csv"))
 MRR_TOTAL_CSV   = Path(os.environ.get("MRR_TOTAL_CSV",   HERE / "work" / "mrr_bottomup.csv"))
 COUNTRY_MONTH_CSV = Path(os.environ.get("COUNTRY_MONTH_CSV", HERE / "work" / "country_month_activity.csv"))
+# Agreed case-model GTV baseline, USD per year: EUR 26.9bn (5YP v3.1, 2025) at the EUR x1.16
+# used across the page = ~$31.2bn. Override with CASE_GTV_BASELINE_USD when the plan is rebased.
+CASE_GTV_BASELINE_USD = float(os.environ.get("CASE_GTV_BASELINE_USD", 26.9e9 * 1.16))
+# THE BASELINE DESCRIBES A YEAR, so it is compared against that year. EUR 26.9bn is the 2025
+# plan figure; the last complete month it covers is 2025-10. Holding today's trailing twelve
+# months against it measures the bound AND a year of growth at once, and reads high for the
+# second reason. Measured 2026-11-20 under the per-currency bound: the 12 months to 2025-10
+# read $29.61bn, 0.95x the baseline, while the 12 months to 2026-10 read $36.85bn, 1.18x —
+# over the same period active merchants grew 26.1% and GTV 24.5%, and GTV per active merchant
+# was FLAT at about $8.4k a month. A residual outlier problem does not look like that.
+# So the asterisk gates on the matched year, not on the trailing window, and the footnote
+# states both. Move this when the plan is rebased.
+CASE_GTV_BASELINE_END = os.environ.get("CASE_GTV_BASELINE_END", "2025-10")
 FEED_HEALTH_CSV = Path(os.environ.get("FEED_HEALTH_CSV", HERE / "work" / "receipts_feed_health.csv"))
 KPI_DATA_JS     = Path(os.environ.get("KPI_DATA_JS",     HERE.parent / "KPI Dashboard v2 (Caio)" / "kpi-data.js"))
 OUT_DIR         = Path(os.environ.get("SUBS_OUT_DIR",    HERE.parent / "KPI Dashboard v2 (Caio)"))
@@ -281,7 +294,7 @@ def main() -> None:
     # series the page already draws: both count the same thing from the same table with the
     # same filters, so a disagreement means a definition moved and the chart would be
     # contradicting itself in public. Only 5+/10+ and the per-country figures ship.
-    active_qualified, country_month = [], {}
+    active_qualified, country_month, gtv_recon = [], {}, None
     if COUNTRY_MONTH_CSV.exists():
         cm = _load(COUNTRY_MONTH_CSV, "country x month activity")
         cm["M"] = cm["MONTH"].astype(str).str.slice(0, 7)
@@ -384,6 +397,41 @@ def main() -> None:
             unc = float(latest["GTV_USD_UNCAPPED"].sum())
             print(f"[subs] GTV capped ${gtv_total:,.0f} vs uncapped ${unc:,.0f} "
                   f"({(unc/gtv_total if gtv_total else 0):,.0f}x) — the $10k per-receipt cap carries weight")
+            # RECONCILIATION AGAINST THE CASE MODEL (added 2026-11-20). GTV_USD now applies a
+            # per-currency outlier bound (see currency_caps in country_month_activity.sql);
+            # GTV_USD_CAP10K is the previous flat-$10k rule, kept for comparison. The trailing
+            # twelve complete months are held against the agreed case-model baseline, and the
+            # ratio is PUBLISHED so the page states it from data rather than a hard-coded 1.74x.
+            ttm_months = months[-12:]
+            ttm = cm[cm["M"].isin(ttm_months)]
+            ttm_new = float(ttm["GTV_USD"].sum())
+            ttm_old = float(ttm["GTV_USD_CAP10K"].sum()) if "GTV_USD_CAP10K" in ttm.columns else None
+            ratio = ttm_new / CASE_GTV_BASELINE_USD if CASE_GTV_BASELINE_USD else None
+            # The baseline's own twelve months, so the comparison is like for like.
+            mw = [m for m in months if m <= CASE_GTV_BASELINE_END][-12:]
+            m_new = float(cm[cm["M"].isin(mw)]["GTV_USD"].sum()) if mw else None
+            m_ratio = (m_new / CASE_GTV_BASELINE_USD) if (m_new and CASE_GTV_BASELINE_USD) else None
+            gtv_recon = {"ttm": round(ttm_new), "ttmCap10k": round(ttm_old) if ttm_old is not None else None,
+                         "baseline": CASE_GTV_BASELINE_USD, "ratio": round(ratio, 3) if ratio else None,
+                         "months": len(ttm_months), "from": ttm_months[0], "to": ttm_months[-1],
+                         "method": "per-currency" if ttm_old is not None else "cap10k",
+                         # The matched window is what the asterisk gates on.
+                         "matched": round(m_new) if m_new else None,
+                         "matchedRatio": round(m_ratio, 3) if m_ratio else None,
+                         "matchedFrom": mw[0] if mw else None, "matchedTo": mw[-1] if mw else None}
+            if m_ratio:
+                print(f"[subs] GTV matched window {mw[0]}..{mw[-1]} (the baseline's own year): "
+                      f"${m_new:,.0f} -> {m_ratio:.2f}x", flush=True)
+            print(f"[subs] GTV TTM {ttm_months[0]}..{ttm_months[-1]}: ${ttm_new:,.0f} "
+                  f"(per-currency bound) vs case-model ${CASE_GTV_BASELINE_USD:,.0f} -> {ratio:.2f}x"
+                  + (f"; flat-$10k rule would read ${ttm_old:,.0f} ({ttm_old/CASE_GTV_BASELINE_USD:.2f}x)"
+                     if ttm_old else ""), flush=True)
+            if "GTV_USD_CAP10K" in latest.columns:
+                old_by = latest.set_index("COUNTRY")["GTV_USD_CAP10K"]
+                for cc in ["US", "TH", "PH", "MX", "MY", "SA", "MM", "GB", "ES", "SG", "HT", "JP", "KR"]:
+                    if cc in country_month:
+                        o = float(old_by.get(cc, 0) or 0); n = country_month[cc]["gtv"]
+                        print(f"[subs]   {cc}: ${n:,.0f} (was ${o:,.0f}, {n/o if o else 0:.2f}x)")
             per = gtv_total / act_total if act_total else 0
             print(f"[subs] country table month {snap}: {len(country_month)} countries, "
                   f"GTV ${gtv_total:,.0f}, active {act_total:,}, ${per:,.0f} per active merchant")
@@ -471,6 +519,9 @@ def main() -> None:
         "receiptsThrough": receipts_cap,
         "activeQualified": active_qualified,
         "countryMonth": country_month,
+        # {ttm, ttmCap10k, baseline, ratio, months, from, to, method} — trailing-twelve-month
+        # GTV held against the case-model baseline; the page's GTV footnote reads from this.
+        "gtvRecon": gtv_recon,
     }
 
     banner = (

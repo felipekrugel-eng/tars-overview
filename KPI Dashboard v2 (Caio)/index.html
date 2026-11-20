@@ -417,12 +417,11 @@
       <div class="chart-box"><canvas id="c-paying-country"></canvas></div>
     </div>
     <div class="panel wide">
-      <h3>Top 40 countries by MRR<span class="info" data-tip="Our forty largest markets BY MRR. Clicking a column reorders those same forty — the membership is fixed, so nothing appears or disappears under you when you sort. A country large by GTV but outside the top forty by MRR is therefore not listed. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV* IS PROVISIONAL AND READS HIGH: against the agreed case-model baseline it comes out about 1.74x, and the overstatement concentrates in high-ticket markets (the US reads 4.6x, on a $232 average ticket against a $7.48 median). The outlier bound is being recalibrated from each currency's own receipt distribution rather than the flat $10k per-receipt cap in use now. Rank on it if you like, but do not quote it. Conversion is per currency to USD on a dated rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month converts at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
+      <h3>Top 40 countries by MRR<span class="info" data-tip="Our forty largest markets BY MRR. Clicking a column reorders those same forty — the membership is fixed, so nothing appears or disappears under you when you sort. A country large by GTV but outside the top forty by MRR is therefore not listed. MRR and paying merchants come from paid Chargebee invoice line items; active merchants and GTV from the receipts series joined to merchant country; all for the latest complete month. GTV caps each receipt at a bound taken from its own currency's distribution (the smaller of the 99.9th percentile and 100x the median ticket, with a $10k outer cap), replacing the flat $10k cap that read about 1.74x above the case model. The note under the table states, from this build's data, how the trailing twelve months reconcile against the agreed case-model baseline; while it is outside ±15% the column keeps its asterisk and should be used for ranking, not quoting. Conversion is per currency to USD on a dated rate snapshot, so it is comparable across countries but is not a historical-FX restatement — an older month converts at today's rate. The arrow shows active-merchant momentum (last 6 months vs the prior 6): green up = growing, amber sideways = stable, red down = declining, and the angle steepens with the rate. Acquiring and Issuing are STRIPE's product availability in that country, not our own launch status: whether we could put payments there, taken from Stripe's own capability list and issuing documentation.">i</span></h3>
       <div style="overflow-x:auto; max-height: 420px; overflow-y:auto"><table id="t-countries"></table></div>
-      <div style="font-size:11px;color:var(--mid-gray);margin-top:8px">
+      <div id="gtv-note" style="font-size:11px;color:var(--mid-gray);margin-top:8px">
         <b>*</b> GTV is provisional &mdash; it reconciles about 1.74&times; above the agreed case-model
-        baseline, worst in high-ticket markets. Useful for ranking, not for quoting; the outlier
-        bound is being recalibrated per currency.
+        baseline, worst in high-ticket markets. Useful for ranking, not for quoting.
       </div>
     </div>
   </div>
@@ -2321,6 +2320,38 @@ const ctRows = D.countries.map(c => {
 // What this costs: a country in the top 40 by GTV but outside the top 40 by MRR is not
 // listed. Worth knowing, and cheap to check — sort by GTV ascending and the smallest
 // members of the MRR-selected set are the ones near the cut.
+// GTV RECONCILIATION (2026-11-20). build_subs_data.py publishes gtvRecon: trailing-twelve-
+// month GTV under the per-currency outlier bound, held against the agreed case-model
+// baseline. The footnote is written from that, not hard-coded; the asterisk stays on the
+// column until the ratio is within ±15%, so a regression re-flags itself.
+const GTV_RECON = (typeof SUBS_DATA !== 'undefined' && SUBS_DATA && SUBS_DATA.gtvRecon) ? SUBS_DATA.gtvRecon : null;
+// Gate on the MATCHED window — the twelve months the baseline itself describes — not on
+// the trailing one. The baseline is a 2025 plan figure, so holding today's TTM against it
+// measures the outlier bound and a year of growth together: on 2026-11-20 the matched year
+// read 0.95x and the trailing year 1.18x, while GTV per active merchant stayed flat at
+// ~$8.4k a month and the merchant base grew 26%. Gating on TTM would keep the column
+// flagged for growing. Falls back to the trailing ratio if the matched window is absent.
+const GTV_R = (GTV_RECON && (GTV_RECON.matchedRatio || GTV_RECON.ratio)) || null;
+const GTV_OK = !!(GTV_R && Math.abs(GTV_R - 1) <= 0.15);
+const GTV_LABEL = GTV_OK ? 'GTV' : 'GTV*';
+(function(){
+  const el = document.getElementById('gtv-note');
+  if (!el || !GTV_RECON || !GTV_RECON.ratio) return;
+  const bn = v => '$' + (v / 1e9).toFixed(1) + 'bn';
+  const r = GTV_RECON.ratio;
+  const was = GTV_RECON.ttmCap10k ? ' (the old flat $10k cap read ' + bn(GTV_RECON.ttmCap10k) + ', ' + (GTV_RECON.ttmCap10k / GTV_RECON.baseline).toFixed(2) + '&times;)' : '';
+  // Two windows, because the baseline describes a year and the business has grown since.
+  const m = (GTV_RECON.matchedRatio && GTV_RECON.matched)
+    ? ' Against the twelve months the baseline itself covers (' + GTV_RECON.matchedFrom + ' to ' +
+      GTV_RECON.matchedTo + ') it reads ' + bn(GTV_RECON.matched) + ' = ' +
+      GTV_RECON.matchedRatio.toFixed(2) + '&times;, which is what the mark below is judged on; the' +
+      ' trailing window runs higher because the merchant base has grown since the plan was set.'
+    : '';
+  el.innerHTML = (GTV_OK ? '' : '<b>*</b> ') + 'GTV, trailing twelve months ' + GTV_RECON.from + ' to ' + GTV_RECON.to + ': ' +
+    bn(GTV_RECON.ttm) + ' against the case-model baseline of ' + bn(GTV_RECON.baseline) + ' = ' + r.toFixed(2) + '&times;' + was + '.' + m + ' ' +
+    (GTV_OK ? 'Within ±15% of the case model.' : 'Outside ±15% of the case model: use for ranking, not for quoting.') +
+    ' Each receipt is capped at its own currency\'s outlier bound.';
+})();
 let ctSort = 'mrr', ctDir = -1;
 const CT_ROWS = ctRows.slice().sort((a, b) => (b.mrr || 0) - (a.mrr || 0)).slice(0, 40);
 const CT_COLS = [
@@ -2335,7 +2366,7 @@ const CT_COLS = [
   // 146 median against a 9,999,998,900 maximum, so the bound wants to come from each
   // currency's own distribution rather than a round number. Until that lands the column
   // carries a mark rather than looking settled.
-  {k:'gtv',    label:'GTV*',    num:true, fmt:v=>v==null?'\u2014':'$'+fmtN(v)},
+  {k:'gtv',    label:GTV_LABEL, num:true, fmt:v=>v==null?'\u2014':'$'+fmtN(v)},
   {k:'active', label:'Active base', num:true, fmt:fmtN},
   {k:'paying', label:'Paying base', num:true, fmt:fmtN}
 ];
