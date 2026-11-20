@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-20T15:02:58.716202+00:00",
+ "checked_at": "2026-11-20T17:45:27.185466+00:00",
  "worst": "warn",
- "digest": "bc9ceec92c20b27448b33a7b88d6cd6fd290727c2babb57f5155cebb4abd879c",
+ "digest": "2a91639673941fd003ad9be7847a7afe93e6fae883e49efb78806f9ac260e44d",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T14:44:49+00:00",
-   "data_at": "2026-11-20T14:43:00+00:00",
-   "age_h": 0.33,
+   "committed_at": "2026-11-20T17:42:34+00:00",
+   "data_at": "2026-11-20T17:42:00+00:00",
+   "age_h": 0.06,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T14:51:35+00:00",
-   "data_at": "2026-11-20T14:32:09+00:00",
-   "age_h": 0.51
+   "committed_at": "2026-11-20T17:36:05+00:00",
+   "data_at": "2026-11-20T17:12:45+00:00",
+   "age_h": 0.55
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T12:42:03+00:00",
-   "data_at": "2026-11-20T12:41:56.072023+00:00",
-   "age_h": 2.35
+   "committed_at": "2026-11-20T16:18:25+00:00",
+   "data_at": "2026-11-20T16:18:24.454510+00:00",
+   "age_h": 1.45
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T14:34:04+00:00",
-   "data_at": "2026-11-20T14:27:29.965000+00:00",
-   "age_h": 0.59,
+   "committed_at": "2026-11-20T17:40:44+00:00",
+   "data_at": "2026-11-20T17:36:08.016000+00:00",
+   "age_h": 0.16,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T14:34:04+00:00",
+   "committed_at": "2026-11-20T17:40:44+00:00",
    "data_at": null,
-   "age_h": 0.48
+   "age_h": 0.08
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-20T13:49:19+00:00",
    "data_at": "2026-11-20T13:41:43.889720+00:00",
-   "age_h": 1.35,
+   "age_h": 4.06,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -92,13 +92,17 @@
    "reason": "rebuild",
    "committed_at": "2026-11-20T07:26:19+00:00",
    "data_at": null,
-   "age_h": 7.61,
+   "age_h": 10.32,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-19T18:01:09Z",
-    "consecutive_non_success": 1,
+    "last_success": "2026-11-20T17:37:19Z",
+    "consecutive_non_success": 0,
     "recent": [
+     {
+      "at": "2026-11-20T17:37:19Z",
+      "outcome": "success"
+     },
      {
       "at": "2026-11-20T04:06:38Z",
       "outcome": "failure"
@@ -118,14 +122,10 @@
      {
       "at": "2026-11-18T04:06:26Z",
       "outcome": "success"
-     },
-     {
-      "at": "2026-11-17T18:15:59Z",
-      "outcome": "success"
      }
     ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
+    "runs_since_artefact": 1,
+    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/44672186519",
     "step": "Fail the run if the receipts feed is down",
     "signature": "push rejected",
@@ -134,7 +134,7 @@
     "skipped_publish": false,
     "runner_lost": false
    },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-19 18:01"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 last success 2026-11-20 17:37"
   },
   {
    "name": "KPI subscriptions",
@@ -146,7 +146,7 @@
    "reason": null,
    "committed_at": "2026-11-20T12:31:38+00:00",
    "data_at": null,
-   "age_h": 2.52,
+   "age_h": 5.23,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
@@ -159,7 +159,7 @@
    "reason": null,
    "committed_at": "2026-11-20T00:28:43+00:00",
    "data_at": null,
-   "age_h": 14.57,
+   "age_h": 17.28,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -170,9 +170,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-19T17:20:21+00:00",
+   "committed_at": "2026-11-20T16:45:51+00:00",
    "data_at": null,
-   "age_h": 21.71,
+   "age_h": 0.99,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
