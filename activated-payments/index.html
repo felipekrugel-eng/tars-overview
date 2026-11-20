@@ -1463,6 +1463,9 @@ buildAnchorTable();compute();
 <script src="attach-data.js"></script>
 <script src="pilot500-data.js"></script>
 <script src="funnel-data.js"></script>
+<!-- Payments GTV adoption. Its own file on purpose: funnel-data.js is rewritten whole by
+     the pull, which once erased this block mid-run. Optional — the section hides itself. -->
+<script src="gtv-adoption.js"></script>
 <script src="margins-data.js"></script>
 <!-- Country filter. Loaded AFTER the data files because it discovers the live markets
      from them, and BEFORE the page scripts because they subscribe to it on load. -->

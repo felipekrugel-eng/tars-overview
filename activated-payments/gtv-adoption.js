@@ -1,0 +1,6 @@
+// Payments GTV adoption — share of credible US POS GTV held by merchants that have
+// transacted on Loyverse Payments. Written whole by activated-payments/pull.js.
+// Completed months are frozen; the last entry may be month-to-date (complete:false)
+// and must not be read as a monthly figure.
+window.__GTV_ADOPTION_UPDATED = "2026-11-20 17:57 UTC";
+window.__GTV_ADOPTION = [{"month": "2026-07", "complete": true, "merchants": 3595, "adoptedMerchants": 26, "gtv": 52191228.01, "adoptedGtv": 679363.52, "receipts": 2108371, "source": "measured"}, {"month": "2026-08", "complete": true, "merchants": 3627, "adoptedMerchants": 55, "gtv": 49293472.8, "adoptedGtv": 1036820.24, "receipts": 2060699, "source": "measured"}, {"month": "2026-09", "complete": true, "merchants": 3734, "adoptedMerchants": 97, "gtv": 48499998.03, "adoptedGtv": 1557873.55, "receipts": 2009279, "source": "measured"}, {"month": "2026-10", "complete": true, "merchants": 4094, "adoptedMerchants": 120, "gtv": 58234016.82, "adoptedGtv": 1771659.26, "receipts": 2196755, "source": "measured"}, {"month": "2026-11", "complete": false, "merchants": 4614, "adoptedMerchants": 118, "gtv": 35642337.47, "adoptedGtv": 1024057.32, "receipts": 1260887, "source": "measured"}];

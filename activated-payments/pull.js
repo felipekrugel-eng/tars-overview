@@ -2422,6 +2422,7 @@ window.__PAY_COHORT_MERCHANTS = ${JSON.stringify(recs)};
 // run and is labelled month-to-date, because a part-month share is not a monthly share.
 // Delete a month's entry by hand to force a recalculation when corrected data arrives.
 const GTV_ADOPTION_FILE = path.join(__dirname, 'gtv-adoption.json');
+const GTV_ADOPTION_JS   = path.join(__dirname, 'gtv-adoption.js');
 function mergeAdoption(rows, prev) {
   const out = JSON.parse(JSON.stringify(prev && prev.months ? prev.months : {}));
   let frozen = 0, written = 0;
@@ -2452,10 +2453,18 @@ async function pullAdoption(connection) {
                 updated: stamp, months: out };
   fs.writeFileSync(GTV_ADOPTION_FILE, JSON.stringify(doc, null, 1), 'utf8');
   const series = Object.keys(out).sort().map(k => out[k]);
-  fs.appendFileSync(FUNNEL_FILE, '\n' + [
+  // ITS OWN FILE, not appended to funnel-data.js. The cohort block gets away with
+  // appending because it is written in the same breath as writeFunnel(); this one is not.
+  // Proved on 2026-11-20: a pull already in flight rewrote funnel-data.js and the adoption
+  // block vanished from the page while gtv-adoption.json still held every month. Anything
+  // that can be erased by another step rewriting a shared file does not belong in it.
+  // A failed run now leaves the previous gtv-adoption.js in place instead of deleting the
+  // section.
+  fs.writeFileSync(GTV_ADOPTION_JS, [
     '// Payments GTV adoption — share of credible US POS GTV held by merchants that have',
-    '// transacted on Loyverse Payments. Completed months are frozen; the last entry may be',
-    '// month-to-date (complete:false) and must not be read as a monthly figure.',
+    '// transacted on Loyverse Payments. Written whole by activated-payments/pull.js.',
+    '// Completed months are frozen; the last entry may be month-to-date (complete:false)',
+    '// and must not be read as a monthly figure.',
     'window.__GTV_ADOPTION_UPDATED = ' + JSON.stringify(stamp) + ';',
     'window.__GTV_ADOPTION = ' + JSON.stringify(series) + ';',
     '',

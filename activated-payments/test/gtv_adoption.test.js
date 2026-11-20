@@ -10,8 +10,11 @@ function t(name, fn) {
   catch (e) { fail++; console.log('  FAIL ' + name + '\n       ' + e.message); }
 }
 // ── the published series ──
+// gtv-adoption.js, NOT funnel-data.js. The block lived in funnel-data.js until
+// 2026-11-20, when a pull already in flight rewrote that file and erased it; the series
+// now has its own file so nothing else can take it with them.
 global.window = {};
-require(path.join(DIR, 'funnel-data.js'));
+require(path.join(DIR, 'gtv-adoption.js'));
 const S = window.__GTV_ADOPTION || [];
 
 console.log('Payments GTV adoption');
