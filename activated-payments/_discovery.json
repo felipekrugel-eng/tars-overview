@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-21T08:57:14.520Z",
+  "ranAt": "2026-11-21T09:23:43.329Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1189,7 +1189,7 @@
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10245028559
+        "rows": 10245452437
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
