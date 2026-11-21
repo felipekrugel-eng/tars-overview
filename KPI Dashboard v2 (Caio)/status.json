@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-21T00:07:09.723042+00:00",
- "worst": "warn",
- "digest": "ff7079f0cf30d4dee9a4ea40003a56b7451a2de833363f8b64f88c23bac37400",
+ "checked_at": "2026-11-21T07:51:25.145755+00:00",
+ "worst": "ok",
+ "digest": "82215661ecf1d60ec92e31e3f1efec99795730ee10564daa5bfa40b39ab37114",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-21T00:03:49+00:00",
-   "data_at": "2026-11-21T00:03:00+00:00",
-   "age_h": 0.07,
+   "committed_at": "2026-11-21T07:49:26+00:00",
+   "data_at": "2026-11-21T07:48:00+00:00",
+   "age_h": 0.06,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T23:58:04+00:00",
-   "data_at": "2026-11-20T23:33:48+00:00",
-   "age_h": 0.56
+   "committed_at": "2026-11-21T07:47:15+00:00",
+   "data_at": "2026-11-21T07:28:26+00:00",
+   "age_h": 0.38
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T22:01:00+00:00",
-   "data_at": "2026-11-20T22:00:59.474842+00:00",
-   "age_h": 2.1
+   "committed_at": "2026-11-21T06:47:40+00:00",
+   "data_at": "2026-11-21T06:47:39.552236+00:00",
+   "age_h": 1.06
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T23:47:47+00:00",
-   "data_at": "2026-11-20T23:43:19.903000+00:00",
-   "age_h": 0.4,
+   "committed_at": "2026-11-21T07:44:26+00:00",
+   "data_at": "2026-11-21T07:36:54.983000+00:00",
+   "age_h": 0.24,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T23:47:47+00:00",
+   "committed_at": "2026-11-21T07:44:26+00:00",
    "data_at": null,
-   "age_h": 0.32
+   "age_h": 0.12
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-20T13:49:19+00:00",
    "data_at": "2026-11-20T13:41:43.889720+00:00",
-   "age_h": 10.42,
+   "age_h": 18.16,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -85,56 +85,13 @@
    "path": "KPI Dashboard v2 (Caio)/daily-history.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "built before its inputs changed: kpi-automation/sql is 5.1h newer"
-   ],
-   "state": "warn",
-   "reason": "rebuild",
-   "committed_at": "2026-11-20T07:26:19+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-21T07:47:40+00:00",
    "data_at": null,
-   "age_h": 16.68,
-   "inputs_changed_at": "2026-11-20T12:31:38+00:00",
-   "diagnosis": {
-    "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-20T17:37:19Z",
-    "consecutive_non_success": 0,
-    "recent": [
-     {
-      "at": "2026-11-20T17:37:19Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-20T04:06:38Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-19T18:01:09Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-19T04:06:29Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-18T17:51:37Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-18T04:06:26Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 1,
-    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/44672186519",
-    "step": "Fail the run if the receipts feed is down",
-    "signature": "push rejected",
-    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": false,
-    "runner_lost": false
-   },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Fail the run if the receipts feed is down \u00b7 push rejected \u00b7 last success 2026-11-20 17:37"
+   "age_h": 0.06,
+   "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
    "name": "KPI subscriptions",
@@ -144,9 +101,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T12:31:38+00:00",
+   "committed_at": "2026-11-21T07:47:40+00:00",
    "data_at": null,
-   "age_h": 11.59,
+   "age_h": 0.06,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
@@ -157,9 +114,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-20T00:28:43+00:00",
+   "committed_at": "2026-11-21T00:18:56+00:00",
    "data_at": null,
-   "age_h": 23.64,
+   "age_h": 7.54,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -172,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-20T16:45:51+00:00",
    "data_at": null,
-   "age_h": 7.36,
+   "age_h": 15.09,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
