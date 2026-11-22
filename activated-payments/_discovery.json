@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-22T01:31:14.034Z",
+  "ranAt": "2026-11-22T02:00:35.023Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1185,7 +1185,7 @@
       },
       {
         "name": "LOYVERSE_EXPERIMENT_ASSIGNMENTS_RAW",
-        "rows": 4731
+        "rows": 4732
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
@@ -2109,33 +2109,6 @@
     "TERMINAL_HARDWARE_ORDERS": [
       {
         "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
-        "BATCH_TIMESTAMP": "2026-11-21 21:00:00.000",
-        "ID": "thor_1Uce1E7e4AMQfKY3rJS5J3lr",
-        "LIVEMODE": true,
-        "CREATED": "2026-11-17 04:29:20.000",
-        "UPDATED": "2026-11-21 18:09:37.000",
-        "AMOUNT": 7200,
-        "CURRENCY": "usd",
-        "PAYMENT_TYPE": "monthly_invoice",
-        "STATUS": "delivered",
-        "PO_NUMBER": null,
-        "TAX": 0,
-        "SHIPPING_AMOUNT": 1300,
-        "SHIPPING_CURRENCY": "usd",
-        "SHIPPING_COMPANY": null,
-        "SHIPPING_EMAIL": "ptort@tortorthopr.com",
-        "SHIPPING_NAME": "PEDRO J TORT SAADE",
-        "SHIPPING_PHONE": "17873499333",
-        "SHIPPING_ADDRESS_LINE1": "16 Calle Corazón",
-        "SHIPPING_ADDRESS_LINE2": null,
-        "SHIPPING_ADDRESS_CITY": "San Juan",
-        "SHIPPING_ADDRESS_STATE": "PR",
-        "SHIPPING_ADDRESS_POSTAL_CODE": "00926",
-        "SHIPPING_ADDRESS_COUNTRY": "US",
-        "SHIPPING_METHOD_NAME": "standard"
-      },
-      {
-        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
         "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
         "ID": "thor_1Sx7K17e4AMQfKY3yau6je2Q",
         "LIVEMODE": true,
@@ -2322,6 +2295,33 @@
         "SHIPPING_ADDRESS_POSTAL_CODE": "81416",
         "SHIPPING_ADDRESS_COUNTRY": "US",
         "SHIPPING_METHOD_NAME": "standard"
+      },
+      {
+        "MERCHANT_ID": "acct_1SSKsA7e4AMQfKY3",
+        "BATCH_TIMESTAMP": "2026-09-09 15:00:00.000",
+        "ID": "thor_1Tix2w7e4AMQfKY3kXQPvUxe",
+        "LIVEMODE": true,
+        "CREATED": "2026-06-16 13:28:54.000",
+        "UPDATED": "2026-09-09 12:16:17.000",
+        "AMOUNT": 33934,
+        "CURRENCY": "usd",
+        "PAYMENT_TYPE": "monthly_invoice",
+        "STATUS": "delivered",
+        "PO_NUMBER": null,
+        "TAX": 1921,
+        "SHIPPING_AMOUNT": 6000,
+        "SHIPPING_CURRENCY": "usd",
+        "SHIPPING_COMPANY": "Polarbear icecream",
+        "SHIPPING_EMAIL": "simon.perry@loyverse.com",
+        "SHIPPING_NAME": "Sean hunter",
+        "SHIPPING_PHONE": "18458498613",
+        "SHIPPING_ADDRESS_LINE1": "1004 Pennsylvania Ave",
+        "SHIPPING_ADDRESS_LINE2": null,
+        "SHIPPING_ADDRESS_CITY": "Matamoras",
+        "SHIPPING_ADDRESS_STATE": "PA",
+        "SHIPPING_ADDRESS_POSTAL_CODE": "18336",
+        "SHIPPING_ADDRESS_COUNTRY": "US",
+        "SHIPPING_METHOD_NAME": "priority"
       }
     ],
     "TERMINAL_HARDWARE_ORDER_ITEMS": [
