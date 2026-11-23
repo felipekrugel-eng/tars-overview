@@ -295,6 +295,7 @@ def main() -> None:
     # same filters, so a disagreement means a definition moved and the chart would be
     # contradicting itself in public. Only 5+/10+ and the per-country figures ship.
     active_qualified, country_month, gtv_recon = [], {}, None
+    gtv_monthly, gtv_monthly_cc = [], []
     if COUNTRY_MONTH_CSV.exists():
         cm = _load(COUNTRY_MONTH_CSV, "country x month activity")
         cm["M"] = cm["MONTH"].astype(str).str.slice(0, 7)
@@ -382,6 +383,33 @@ def main() -> None:
         # partial month twice and showed the country table a month behind everything
         # beside it — August 'Active base' against September MRR.
         snap = months[-1] if months else None
+
+        # EVERY month, summed across countries. Until now the only GTV figures that
+        # survived the build were countryMonth (one month) and gtvRecon (one twelve-month
+        # total), so a question as ordinary as "what was GTV in March?" meant re-running
+        # the query by hand. This publishes the whole series. It is the SAME GTV_USD the
+        # country table and the reconciliation already use — aggregated, never recomputed.
+        #   gtv          per-currency outlier bound; the figure FACADASH reports
+        #   gtvCap10k    the previous flat $10k-per-receipt rule, kept for comparison
+        #   gtvUncapped  no bound at all. Orders of magnitude larger, diagnostic only
+        if months:
+            agg = {"GTV_USD": "sum", "RECEIPTS": "sum", "RECEIPTS_NO_RATE": "sum"}
+            for c in ("GTV_USD_CAP10K", "GTV_USD_UNCAPPED"):
+                if c in cm.columns:
+                    agg[c] = "sum"
+            g = cm.groupby("M", as_index=False).agg(agg).sort_values("M")
+            has10k = "GTV_USD_CAP10K" in g.columns
+            hasunc = "GTV_USD_UNCAPPED" in g.columns
+            gtv_monthly = [{"m": str(r.M),
+                            "gtv": round(float(r.GTV_USD), 2),
+                            "gtvCap10k": round(float(r.GTV_USD_CAP10K), 2) if has10k else None,
+                            "gtvUncapped": round(float(r.GTV_USD_UNCAPPED), 2) if hasunc else None,
+                            "receipts": int(r.RECEIPTS),
+                            "receiptsNoRate": int(r.RECEIPTS_NO_RATE)}
+                           for r in g.itertuples()]
+            print(f"[subs] gtvMonthly: {len(gtv_monthly)} months, {gtv_monthly[0]['m']}..{gtv_monthly[-1]['m']}",
+                  flush=True)
+
         if snap:
             latest = cm[cm["M"] == snap]
             country_month = {str(r.COUNTRY): {"a1": int(r.ACTIVE_1), "a5": int(r.ACTIVE_5),
@@ -426,6 +454,31 @@ def main() -> None:
                   f"(per-currency bound) vs case-model ${CASE_GTV_BASELINE_USD:,.0f} -> {ratio:.2f}x"
                   + (f"; flat-$10k rule would read ${ttm_old:,.0f} ({ttm_old/CASE_GTV_BASELINE_USD:.2f}x)"
                      if ttm_old else ""), flush=True)
+            # TWO RECONCILIATIONS, ENFORCED RATHER THAN HOPED FOR. The same months read out
+            # of gtvMonthly must give gtvRecon.ttm, and the snapshot month must give the
+            # country table's total. A series that drifts from the two figures the page
+            # already displays is worse than no series at all, so this exits rather than warns.
+            by_m = {r["m"]: r["gtv"] for r in gtv_monthly}
+            ttm_from_monthly = sum(by_m.get(m, 0.0) for m in ttm_months)
+            if abs(ttm_from_monthly - ttm_new) > max(1.0, abs(ttm_new) * 1e-9):
+                sys.exit(f"[subs] FAILED — gtvMonthly over {ttm_months[0]}..{ttm_months[-1]} sums to "
+                         f"${ttm_from_monthly:,.2f} but gtvRecon.ttm is ${ttm_new:,.2f}")
+            if abs(by_m.get(snap, 0.0) - gtv_total) > max(1.0, abs(gtv_total) * 1e-9):
+                sys.exit(f"[subs] FAILED — gtvMonthly[{snap}] is ${by_m.get(snap, 0.0):,.2f} but "
+                         f"countryMonth sums to ${gtv_total:,.2f}")
+            print(f"[subs] gtvMonthly reconciles — TTM ${ttm_from_monthly:,.0f} = gtvRecon.ttm, "
+                  f"{snap} ${by_m.get(snap, 0.0):,.0f} = countryMonth", flush=True)
+
+            # The same monthly series for the twenty largest countries in the snapshot
+            # month. Twenty rather than all ~200: this is for reading a trend, and the tail
+            # is noise measured in hundreds of dollars a month.
+            top20 = [c for c, _ in sorted(country_month.items(), key=lambda kv: -kv[1]["gtv"])[:20]]
+            gcc = (cm[cm["COUNTRY"].isin(top20)]
+                   .groupby(["COUNTRY", "M"], as_index=False)["GTV_USD"].sum()
+                   .sort_values(["COUNTRY", "M"]))
+            gtv_monthly_cc = [{"cc": str(r.COUNTRY), "m": str(r.M), "gtv": round(float(r.GTV_USD), 2)}
+                              for r in gcc.itertuples()]
+
             if "GTV_USD_CAP10K" in latest.columns:
                 old_by = latest.set_index("COUNTRY")["GTV_USD_CAP10K"]
                 for cc in ["US", "TH", "PH", "MX", "MY", "SA", "MM", "GB", "ES", "SG", "HT", "JP", "KR"]:
@@ -522,6 +575,13 @@ def main() -> None:
         # {ttm, ttmCap10k, baseline, ratio, months, from, to, method} — trailing-twelve-month
         # GTV held against the case-model baseline; the page's GTV footnote reads from this.
         "gtvRecon": gtv_recon,
+        # [{m, gtv, gtvCap10k, gtvUncapped, receipts, receiptsNoRate}] — every month the
+        # receipts query covers, summed across countries. Reconciled above against both
+        # gtvRecon.ttm and the countryMonth total before it is written.
+        "gtvMonthly": gtv_monthly,
+        # [{cc, m, gtv}] — the same series for the twenty largest countries in the snapshot
+        # month. A convenience, not a source: gtvMonthly is the total.
+        "gtvMonthlyByCountry": gtv_monthly_cc,
     }
 
     banner = (
@@ -549,6 +609,16 @@ def main() -> None:
         "//                table. GTV is USD, converted per currency with ISO minor units — the\n"
         "//                as-of query divides by a per-merchant decimal-places column instead and\n"
         "//                reads $63m per merchant per month in Korea, so do not cross the two.\n"
+        "//   gtvMonthly[] : {m, gtv, gtvCap10k, gtvUncapped, receipts, receiptsNoRate} — one row per\n"
+        "//                month over the whole receipts history, summed across every country. `gtv`\n"
+        "//                is the per-currency outlier bound FACADASH reports; `gtvCap10k` is the\n"
+        "//                older flat $10k-per-receipt rule and `gtvUncapped` has no bound at all and\n"
+        "//                is diagnostic only. The build FAILS unless these months sum to gtvRecon.ttm\n"
+        "//                and the latest one equals the countryMonth total, so one GTV number cannot\n"
+        "//                quietly become two. Every month is converted at one set of exchange rates,\n"
+        "//                not each month's own, so year-on-year comparisons carry no FX movement.\n"
+        "//   gtvMonthlyByCountry[] : {cc, m, gtv} — the same series for the twenty largest countries\n"
+        "//                in the latest month. A convenience; gtvMonthly is the total.\n"
         "//   activeQualified[] : {m, a5, a10} — merchants with 5+ and 10+ receipts that month. The\n"
         "//                query also returns a 1+ column; it is deliberately NOT published, only\n"
         "//                reconciled against kpi-data.js activeMonthly, so the line on screen stays\n"
