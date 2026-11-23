@@ -294,6 +294,11 @@
    "value": 61379,
    "source": "snapshot",
    "mrrUnpaid": 47166.5
+  },
+  "2026-11-22": {
+   "value": 61381,
+   "source": "snapshot",
+   "mrrUnpaid": 48764.04
   }
  }
 }
