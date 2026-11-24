@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-24T16:24:23.827428+00:00",
+ "checked_at": "2026-11-24T16:27:10.353785+00:00",
  "worst": "warn",
- "digest": "1ff95b5342594167b75a50f091c56696f076c9a88200b8f6cc5a92fe12ab64a6",
+ "digest": "4259fd0fe6016da1d564fe047e5c629f3311b0e023580b21dfc4e7dc77ce19bb",
  "history_method": 2,
  "pipelines": [
   {
@@ -15,7 +15,7 @@
    "reason": null,
    "committed_at": "2026-11-24T16:09:13+00:00",
    "data_at": "2026-11-24T16:08:00+00:00",
-   "age_h": 0.27,
+   "age_h": 0.32,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -31,12 +31,16 @@
    "reason": "source",
    "committed_at": "2026-11-24T16:10:12+00:00",
    "data_at": "2026-11-24T15:36:57+00:00",
-   "age_h": 0.79,
+   "age_h": 0.84,
    "diagnosis": {
     "workflow": "loyverse-risk-monitor.yml",
     "last_success": "2026-11-24T15:34:17Z",
-    "consecutive_non_success": 4,
+    "consecutive_non_success": 5,
     "recent": [
+     {
+      "at": "2026-11-24T16:24:47Z",
+      "outcome": "skipped"
+     },
      {
       "at": "2026-11-24T16:22:21Z",
       "outcome": "skipped"
@@ -56,20 +60,16 @@
      {
       "at": "2026-11-24T15:34:17Z",
       "outcome": "success"
-     },
-     {
-      "at": "2026-11-24T15:24:42Z",
-      "outcome": "failure"
      }
     ],
-    "runs_since_artefact": 2,
-    "verdict": "running but not publishing \u2014 2 run(s) since the artefact was last written, none succeeded",
+    "runs_since_artefact": 3,
+    "verdict": "running but not publishing \u2014 3 run(s) since the artefact was last written, none succeeded",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/45434638950",
     "step": "Evaluate and durably checkpoint",
     "detail": "Process completed with exit code 2.",
     "runner_lost": false
    },
-   "diagnosis_line": "running but not publishing \u2014 2 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 4 consecutive non-success runs \u00b7 last success 2026-11-24 15:34"
+   "diagnosis_line": "running but not publishing \u2014 3 run(s) since the artefact was last written, none succeeded \u00b7 failing step: Evaluate and durably checkpoint \u00b7 5 consecutive non-success runs \u00b7 last success 2026-11-24 15:34"
   },
   {
    "name": "Payments pull",
@@ -81,7 +81,7 @@
    "reason": null,
    "committed_at": "2026-11-24T13:50:45+00:00",
    "data_at": "2026-11-24T13:50:35.752951+00:00",
-   "age_h": 2.56
+   "age_h": 2.61
   },
   {
    "name": "Activated payments",
@@ -93,7 +93,7 @@
    "reason": null,
    "committed_at": "2026-11-24T15:59:34+00:00",
    "data_at": "2026-11-24T15:51:47.044000+00:00",
-   "age_h": 0.54,
+   "age_h": 0.59,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -106,7 +106,7 @@
    "reason": null,
    "committed_at": "2026-11-24T15:59:34+00:00",
    "data_at": null,
-   "age_h": 0.41
+   "age_h": 0.46
   },
   {
    "name": "Merchant base",
@@ -118,7 +118,7 @@
    "reason": null,
    "committed_at": "2026-11-24T15:27:21+00:00",
    "data_at": "2026-11-24T15:19:50.008031+00:00",
-   "age_h": 1.08,
+   "age_h": 1.12,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -131,7 +131,7 @@
    "reason": null,
    "committed_at": "2026-11-24T08:40:45+00:00",
    "data_at": null,
-   "age_h": 7.73,
+   "age_h": 7.77,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
@@ -144,7 +144,7 @@
    "reason": null,
    "committed_at": "2026-11-24T08:40:45+00:00",
    "data_at": null,
-   "age_h": 7.73,
+   "age_h": 7.77,
    "inputs_changed_at": "2026-11-23T17:03:46+00:00"
   },
   {
@@ -157,7 +157,7 @@
    "reason": null,
    "committed_at": "2026-11-24T00:17:36+00:00",
    "data_at": null,
-   "age_h": 16.11,
+   "age_h": 16.16,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -170,7 +170,7 @@
    "reason": null,
    "committed_at": "2026-11-23T20:40:10+00:00",
    "data_at": null,
-   "age_h": 19.74,
+   "age_h": 19.78,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
