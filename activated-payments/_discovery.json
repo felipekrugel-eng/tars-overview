@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-11-24T18:56:32.582Z",
+  "ranAt": "2026-11-24T19:31:30.830Z",
   "stripeShare": {
     "tables": [],
     "views": [
@@ -1185,11 +1185,11 @@
       },
       {
         "name": "LOYVERSE_EXPERIMENT_ASSIGNMENTS_RAW",
-        "rows": 4920
+        "rows": 4924
       },
       {
         "name": "LOYVERSE_RECEIPTS_UNIQUE",
-        "rows": 10277527981
+        "rows": 10277751658
       },
       {
         "name": "SALES_PER_ACCOUNT_MONTHLY",
