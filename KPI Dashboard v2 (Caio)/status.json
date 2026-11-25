@@ -1,6 +1,6 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-25T01:54:33.333144+00:00",
+ "checked_at": "2026-11-25T01:58:27.480979+00:00",
  "worst": "ok",
  "digest": "17ee3f15a75685c959b918262601dae0b219c989730315dbe2c07210babdc13d",
  "history_method": 2,
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-25T01:41:00+00:00",
-   "data_at": "2026-11-25T01:40:00+00:00",
-   "age_h": 0.24,
+   "committed_at": "2026-11-25T01:54:33+00:00",
+   "data_at": "2026-11-25T01:53:00+00:00",
+   "age_h": 0.09,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -28,7 +28,7 @@
    "reason": null,
    "committed_at": "2026-11-25T01:45:13+00:00",
    "data_at": "2026-11-25T01:26:45+00:00",
-   "age_h": 0.46
+   "age_h": 0.53
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-24T23:01:32+00:00",
-   "data_at": "2026-11-24T23:01:30.546203+00:00",
-   "age_h": 2.88
+   "committed_at": "2026-11-25T01:57:51+00:00",
+   "data_at": "2026-11-25T01:57:43.423793+00:00",
+   "age_h": 0.01
   },
   {
    "name": "Activated payments",
@@ -52,7 +52,7 @@
    "reason": null,
    "committed_at": "2026-11-25T01:42:48+00:00",
    "data_at": "2026-11-25T01:29:03.583000+00:00",
-   "age_h": 0.42,
+   "age_h": 0.49,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -65,7 +65,7 @@
    "reason": null,
    "committed_at": "2026-11-25T01:42:48+00:00",
    "data_at": null,
-   "age_h": 0.2
+   "age_h": 0.26
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-24T15:27:21+00:00",
    "data_at": "2026-11-24T15:19:50.008031+00:00",
-   "age_h": 10.58,
+   "age_h": 10.64,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -90,7 +90,7 @@
    "reason": null,
    "committed_at": "2026-11-24T08:40:45+00:00",
    "data_at": null,
-   "age_h": 17.23,
+   "age_h": 17.3,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
@@ -103,7 +103,7 @@
    "reason": null,
    "committed_at": "2026-11-24T08:40:45+00:00",
    "data_at": null,
-   "age_h": 17.23,
+   "age_h": 17.3,
    "inputs_changed_at": "2026-11-23T17:03:46+00:00"
   },
   {
@@ -116,7 +116,7 @@
    "reason": null,
    "committed_at": "2026-11-25T00:06:05+00:00",
    "data_at": null,
-   "age_h": 1.81,
+   "age_h": 1.87,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -129,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-24T19:29:25+00:00",
    "data_at": null,
-   "age_h": 6.42,
+   "age_h": 6.48,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
