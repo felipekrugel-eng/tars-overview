@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-26T00:02:52.004699+00:00",
- "worst": "ok",
- "digest": "bb90c0ff70892d854d64314b56e577f486d1f470d14203f26aba7778ccd933e8",
+ "checked_at": "2026-11-26T01:04:36.251645+00:00",
+ "worst": "warn",
+ "digest": "da203de9b1529e7d9432fa50aac03831c814446e2c50c70fe6d78d26f1218fc2",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,8 +13,8 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-25T23:59:16+00:00",
-   "data_at": "2026-11-25T23:58:00+00:00",
+   "committed_at": "2026-11-26T01:01:01+00:00",
+   "data_at": "2026-11-26T01:00:00+00:00",
    "age_h": 0.08,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
@@ -23,12 +23,50 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [],
-   "state": "ok",
-   "reason": null,
-   "committed_at": "2026-11-26T00:00:48+00:00",
+   "notes": [
+    "ageing: 3.4h old, limit 4h",
+    "status = degraded",
+    "gap: global_sweep_in_progress"
+   ],
+   "state": "warn",
+   "reason": "ageing",
+   "committed_at": "2026-11-26T01:04:03+00:00",
    "data_at": "2026-11-25T21:40:54+00:00",
-   "age_h": 2.37
+   "age_h": 3.4,
+   "diagnosis": {
+    "workflow": "loyverse-risk-monitor.yml",
+    "last_success": "2026-11-26T00:14:58Z",
+    "consecutive_non_success": 3,
+    "recent": [
+     {
+      "at": "2026-11-26T00:36:23Z",
+      "outcome": "skipped"
+     },
+     {
+      "at": "2026-11-26T00:32:49Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-26T00:24:33Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-26T00:14:58Z",
+      "outcome": "success"
+     },
+     {
+      "at": "2026-11-26T00:02:09Z",
+      "outcome": "cancelled"
+     },
+     {
+      "at": "2026-11-25T23:51:32Z",
+      "outcome": "success"
+     }
+    ],
+    "runs_since_artefact": 0,
+    "verdict": "has not run since the artefact was last written \u2014 it is not firing"
+   },
+   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 3 consecutive non-success runs \u00b7 last success 2026-11-26 00:14"
   },
   {
    "name": "Payments pull",
@@ -40,7 +78,7 @@
    "reason": null,
    "committed_at": "2026-11-25T22:59:00+00:00",
    "data_at": "2026-11-25T22:58:51.656706+00:00",
-   "age_h": 1.07
+   "age_h": 2.1
   },
   {
    "name": "Activated payments",
@@ -50,9 +88,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-25T23:41:35+00:00",
-   "data_at": "2026-11-25T23:35:48.111000+00:00",
-   "age_h": 0.45,
+   "committed_at": "2026-11-26T00:35:45+00:00",
+   "data_at": "2026-11-26T00:29:45.153000+00:00",
+   "age_h": 0.58,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -63,9 +101,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-25T23:41:35+00:00",
+   "committed_at": "2026-11-26T00:35:45+00:00",
    "data_at": null,
-   "age_h": 0.35
+   "age_h": 0.48
   },
   {
    "name": "Merchant base",
@@ -77,7 +115,7 @@
    "reason": null,
    "committed_at": "2026-11-25T15:06:50+00:00",
    "data_at": "2026-11-25T15:02:30.358114+00:00",
-   "age_h": 9.01,
+   "age_h": 10.03,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -90,7 +128,7 @@
    "reason": null,
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 16.39,
+   "age_h": 17.42,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00"
   },
   {
@@ -103,7 +141,7 @@
    "reason": null,
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 16.39,
+   "age_h": 17.42,
    "inputs_changed_at": "2026-11-23T17:03:46+00:00"
   },
   {
@@ -114,9 +152,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-25T00:06:05+00:00",
+   "committed_at": "2026-11-26T00:10:42+00:00",
    "data_at": null,
-   "age_h": 23.95,
+   "age_h": 0.9,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -129,7 +167,7 @@
    "reason": null,
    "committed_at": "2026-11-25T18:41:20+00:00",
    "data_at": null,
-   "age_h": 5.36,
+   "age_h": 6.39,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
@@ -256,7 +294,7 @@
    "2026-11-23": "down",
    "2026-11-24": "warn",
    "2026-11-25": "warn",
-   "2026-11-26": "ok"
+   "2026-11-26": "warn"
   },
   "Payments pull": {
    "2026-10-14": "down",
