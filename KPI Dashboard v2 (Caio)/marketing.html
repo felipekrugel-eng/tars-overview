@@ -99,6 +99,23 @@
   .vtog { display:inline-flex; gap:2px; margin:0 0 10px; }
   .vtog button { font-family:Arial; font-size:11px; font-weight:bold; color:var(--muted); background:#EEF2F6; border:none; padding:5px 11px; border-radius:6px; cursor:pointer; }
   .vtog button.on { background:var(--blue); color:#fff; }
+  /* Cohort triangle — the SAME visual language as the Study & Trend triangle and the Payments
+     Cohorts triangle, copied from index.html rather than reinvented. A reader who has learned
+     to read one of these grids should not have to learn a second one on this page: sticky
+     cohort column, grey Size column, newest cohort on top, a blue heat ramp with white text
+     once a cell is dark, red for a negative, and a dashed amber outline on the month still in
+     progress. Only the variable names differ, because this page's palette names differ. */
+  .toggle { margin-bottom:10px; }
+  .toggle button { font-family:Arial; font-size:12px; padding:6px 14px; border:1px solid var(--border);
+    background:#fff; color:var(--muted); cursor:pointer; margin-right:-1px; }
+  .toggle button.on { background:var(--blue); color:#fff; border-color:var(--blue); font-weight:bold; }
+  table.tri { border-collapse:collapse; font-size:11px; }
+  table.tri th { font-size:10px; color:var(--muted); font-weight:600; padding:3px 5px; text-align:center; position:sticky; top:0; background:#fff; }
+  table.tri td { padding:3px 6px; text-align:center; border:1px solid #F0F2F5; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  table.tri td.k { text-align:left; font-weight:600; color:var(--near-black); background:#fff; position:sticky; left:0; }
+  table.tri td.sz { text-align:right; color:var(--muted); font-weight:600; background:#F7F9FB; }
+  table.tri th.sz { text-align:right; }
+  table.tri td.tri-e { background:#FAFBFC; }
   .rise { animation:rise .5s cubic-bezier(.22,1,.36,1) both; }
   @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
   @media (prefers-reduced-motion:reduce){ .rise{animation:none;} }
@@ -361,10 +378,10 @@
   <div class="panel rise">
     <div class="ph" style="margin-bottom:8px">Each cohort by age. <b>M0</b> is the sign-up month itself, so it is a
       part-month for everyone and reads low by construction. The newest column of each row is the month in progress.</div>
-    <div class="vtog" id="coh-metric">
+    <div class="toggle" id="coh-metric">
       <button data-m="act" class="on">Active</button><button data-m="act10">Active 10+</button><button data-m="rcpts">Receipts</button><button data-m="pos">POS revenue</button><button data-m="tpv">Payments TPV</button><button data-m="pay">Payments margin</button><button data-m="ret">Returned</button><button data-m="cum">Cumulative returned</button><button data-m="pct">% of CAC recovered</button>
     </div>
-    <div style="overflow:auto"><table class="league" id="tbl-tri"><thead></thead><tbody></tbody></table></div>
+    <div style="overflow:auto;max-height:520px" id="tri-wrap"></div>
     <div class="ph" id="tri-foot" style="margin-top:10px"></div>
   </div>
 
@@ -1281,6 +1298,11 @@
   //
   // mm[ym] = [receipts, sellingDays, subUsd, tpvUsd, charges, feesUsd, stripeCostUsd]
   const MM_RCPT = 0, MM_SUB = 2, MM_TPV = 3, MM_FEE = 5, MM_COST = 6;
+  // Negative money is written the way the Study & Trend money triangle writes it: a real minus
+  // sign in front of the currency symbol, not "$-2.13". Payments margin goes negative often
+  // enough here that a hyphen tucked after a dollar sign is easy to miss entirely.
+  const usd = v => v == null ? '—' : (v < 0 ? '−$' : '$') +
+    Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const ymNow = (() => { const d = new Date(); return d.toISOString().slice(0, 7); })();
   const ymAdd = (ym, n) => {
     const y = +ym.slice(0, 4), m = +ym.slice(5, 7) - 1 + n;
@@ -1352,8 +1374,8 @@
     $('coh-tiles').innerHTML =
       tile('Invested', money(T.inv), rows.length + ' sign-up month' + (rows.length === 1 ? '' : 's')) +
       tile('Merchants acquired', n0(T.n), 'attributed to the selected campaigns', true) +
-      tile('CAC', T.n ? money2(T.inv / T.n) : '—', T.n ? 'blended across the selection' : 'no merchants in selection', true) +
-      tile('Returned to date', money2(T.ret), money2(T.pos) + ' POS + ' + money2(T.pay) + ' payments', true) +
+      tile('CAC', T.n ? usd(T.inv / T.n) : '—', T.n ? 'blended across the selection' : 'no merchants in selection', true) +
+      tile('Returned to date', usd(T.ret), usd(T.pos) + ' POS + ' + usd(T.pay) + ' payments', true) +
       tile('Investment recovered', T.inv ? pct(T.ret / T.inv) : '—',
            T.ret < T.inv ? money(T.inv - T.ret) + ' still to earn back' : 'paid back', true);
 
@@ -1362,7 +1384,7 @@
     else if (T.ret < T.inv) {
       warn.style.display = '';
       warn.innerHTML = '<b>No cohort has paid itself back yet, and none is close.</b> ' + money(T.inv) +
-        ' invested has returned ' + money2(T.ret) + ' — ' + pct(T.ret / T.inv) + '. The oldest cohort here is ' +
+        ' invested has returned ' + usd(T.ret) + ' — ' + pct(T.ret / T.inv) + '. The oldest cohort here is ' +
         (rows.length ? Math.max(...rows.map(r => ymDiff(r.c, ymNow))) : 0) + ' months old, so this is a ' +
         'young-programme number and not yet a verdict on the channel; it is shown because the alternative is ' +
         'quoting a payback period that nothing in the data supports.';
@@ -1373,19 +1395,19 @@
     $('tbl-coh').querySelector('thead').innerHTML = '<tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr>';
     $('tbl-coh').querySelector('tbody').innerHTML = rows.map(r => {
       const last = r.cells.length ? r.cells[r.cells.length - 1] : null;
-      return '<tr><td class="k">' + r.c + '</td><td>' + n0(r.n) + '</td><td>' + money2(r.inv) + '</td><td>' +
-        (r.cac == null ? '—' : money2(r.cac)) + '</td><td>' + money2(r.pos) + '</td><td>' + money2(r.payM) +
-        '</td><td><b>' + money2(r.ret) + '</b></td><td>' + (r.rec == null ? '—' : pct(r.rec)) + '</td><td>' +
-        (r.n ? money2(r.ret / r.n) : '—') + '</td><td>' + (last ? n0(last.act) : '—') + '</td></tr>';
+      return '<tr><td class="k">' + r.c + '</td><td>' + n0(r.n) + '</td><td>' + usd(r.inv) + '</td><td>' +
+        (r.cac == null ? '—' : usd(r.cac)) + '</td><td>' + usd(r.pos) + '</td><td>' + usd(r.payM) +
+        '</td><td><b>' + usd(r.ret) + '</b></td><td>' + (r.rec == null ? '—' : pct(r.rec)) + '</td><td>' +
+        (r.n ? usd(r.ret / r.n) : '—') + '</td><td>' + (last ? n0(last.act) : '—') + '</td></tr>';
     }).join('') +
       '<tr style="font-weight:bold;border-top:2px solid var(--border)"><td class="k">All</td><td>' + n0(T.n) +
-      '</td><td>' + money2(T.inv) + '</td><td>' + (T.n ? money2(T.inv / T.n) : '—') + '</td><td>' + money2(T.pos) +
-      '</td><td>' + money2(T.pay) + '</td><td>' + money2(T.ret) + '</td><td>' + (T.inv ? pct(T.ret / T.inv) : '—') +
-      '</td><td>' + (T.n ? money2(T.ret / T.n) : '—') + '</td><td></td></tr>';
+      '</td><td>' + usd(T.inv) + '</td><td>' + (T.n ? usd(T.inv / T.n) : '—') + '</td><td>' + usd(T.pos) +
+      '</td><td>' + usd(T.pay) + '</td><td>' + usd(T.ret) + '</td><td>' + (T.inv ? pct(T.ret / T.inv) : '—') +
+      '</td><td>' + (T.n ? usd(T.ret / T.n) : '—') + '</td><td></td></tr>';
 
-    $('coh-foot').innerHTML = 'Payments TPV across these cohorts is ' + money2(T.tpv) + '; the margin column is what ' +
+    $('coh-foot').innerHTML = 'Payments TPV across these cohorts is ' + usd(T.tpv) + '; the margin column is what ' +
       'Loyverse kept of it, not the volume. ' +
-      (T.future > 0 ? 'A further ' + money2(T.future) + ' of subscription revenue is already contracted into months ' +
+      (T.future > 0 ? 'A further ' + usd(T.future) + ' of subscription revenue is already contracted into months ' +
         'that have not happened yet (annual plans, spread over the period they cover) and is deliberately NOT counted ' +
         'as returned. ' : '') +
       'Months with spend but no attributed merchant appear with a blank CAC rather than being dropped, so this table’s ' +
@@ -1399,30 +1421,55 @@
       v + '</div><div class="td">' + esc(d) + '</div></div>';
   }
 
+  // The grid is drawn the way the Study & Trend and Payments Cohorts triangles are drawn, and
+  // deliberately so: same table.tri markup, same Cohort/Size header, newest cohort on top,
+  // same blue ramp from 0.06 to 0.96 opacity with the text going white past 55%, same dashed
+  // amber outline on the month in progress, same per-cell tooltip naming the calendar month.
+  // Anyone who has learned to read one of those grids can read this one without being told.
   function renderTriangle(rows) {
     const maxAge = Math.max(0, ...rows.map(r => r.cells.length - 1));
-    const FMT = { act: n0, act10: n0, rcpts: n0, pos: money2, tpv: money2, pay: money2, ret: money2,
-                  cum: money2, pct: v => v == null ? '—' : pct(v) };
+    const FMT = { act: n0, act10: n0, rcpts: n0, pos: usd, tpv: usd, pay: usd, ret: usd,
+                  cum: usd, pct: v => v == null ? '—' : pct(v) };
+    const MONEY = ['pos', 'tpv', 'pay', 'ret', 'cum'].includes(cohMetric);
     const f = FMT[cohMetric];
-    const head = ['Cohort', 'Merchants', 'CAC'];
-    for (let a = 0; a <= maxAge; a++) head.push('M' + a);
-    $('tbl-tri').querySelector('thead').innerHTML = '<tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr>';
-    // One scale across the whole grid, so a cell's shade means the same thing in every row.
-    let peak = 0;
-    rows.forEach(r => r.cells.forEach(x => { const v = cellVal(r, x); if (v != null && isFinite(v)) peak = Math.max(peak, v); }));
-    $('tbl-tri').querySelector('tbody').innerHTML = rows.map(r => {
-      let s = '<tr><td class="k">' + r.c + '</td><td>' + n0(r.n) + '</td><td>' +
-              (r.cac == null ? '—' : money2(r.cac)) + '</td>';
+    // One scale across the whole grid, on MAGNITUDE. Payments margin goes negative when Stripe's
+    // interchange-plus cost outruns the fees captured, and scaling a single-hue ramp on the raw
+    // value would paint the worst cells the palest.
+    let mx = 0;
+    rows.forEach(r => r.cells.forEach(x => {
+      const v = cellVal(r, x); if (v != null && isFinite(v)) mx = Math.max(mx, Math.abs(v));
+    }));
+    let h = '<table class="tri"><thead><tr><th>Cohort</th><th class="sz">Size</th>';
+    for (let a = 0; a <= maxAge; a++) h += '<th>M' + a + '</th>';
+    h += '</tr></thead><tbody>';
+    let sawPartial = false;
+    // Newest cohort on top, as in every other triangle on the dashboard.
+    rows.slice().reverse().forEach(r => {
+      h += '<tr><td class="k">' + r.c + '</td><td class="sz">' + (r.n ? n0(r.n) : '—') + '</td>';
       for (let a = 0; a <= maxAge; a++) {
         const x = r.cells[a];
-        if (!x) { s += '<td style="color:var(--faint)"></td>'; continue; }
+        if (!x) { h += '<td class="tri-e"></td>'; continue; }
         const v = cellVal(r, x);
-        const sh = peak > 0 && v > 0 ? Math.min(0.42, v / peak * 0.42) : 0;
-        const partial = x.ym === ymNow ? '<span title="month in progress" style="color:var(--muted)">*</span>' : '';
-        s += '<td style="background:rgba(29,143,225,' + sh.toFixed(3) + ')">' + f(v) + partial + '</td>';
+        if (v == null) { h += '<td class="tri-e"></td>'; continue; }
+        const isPartial = x.ym === ymNow;
+        if (isPartial) sawPartial = true;
+        const t = mx ? Math.abs(v) / mx : 0;
+        // Negative money gets the red ramp the money triangle uses, so a loss cannot be read
+        // as a small gain.
+        const style = (MONEY && v < 0
+            ? 'background:rgba(210,73,91,' + (0.06 + 0.9 * t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A')
+            : 'background:rgba(29,143,225,' + (0.06 + 0.9 * t).toFixed(3) + ');color:' + (t > 0.55 ? '#fff' : '#13233A'))
+          + (isPartial ? ';outline:2px dashed rgba(224,162,27,.95);outline-offset:-2px' : '');
+        const tip = r.c + ' · M' + a + ' (' + x.ym + ') · ' + TRI_LABEL[cohMetric] + ': ' + f(v)
+          + (r.cac != null ? ' — cohort of ' + n0(r.n) + ' bought at ' + usd(r.cac) + ' each' : '')
+          + (isPartial ? ' — ' + x.ym + ' still in progress, so this cell accumulates and reads low' : '');
+        h += '<td style="' + style + '" title="' + esc(tip) + '">'
+           + f(v) + (isPartial ? '<span style="opacity:.75">*</span>' : '') + '</td>';
       }
-      return s + '</tr>';
-    }).join('');
+      h += '</tr>';
+    });
+    $('tri-wrap').innerHTML = h + '</tbody></table>';
+    window.__triPartial = sawPartial;
     const L = { act: 'merchants of the cohort issuing at least one receipt that month',
       act10: 'merchants issuing 10 or more receipts that month — a trading month, not a trial',
       rcpts: 'receipts issued by the cohort that month',
@@ -1433,8 +1480,15 @@
       cum: 'everything the cohort has returned up to and including that month',
       pct: 'cumulative return divided by what the cohort cost to acquire — 100% is payback' };
     $('tri-foot').innerHTML = 'Showing <b>' + esc(L[cohMetric]) + '</b>. M0 is the sign-up month itself and is a ' +
-      'part-month for every merchant in the cohort, so it understates by construction. <b>*</b> marks the month in progress.';
+      'part-month for every merchant in the cohort, so it understates by construction.' +
+      (sawPartial ? ' <b>*</b> and the dashed outline mark ' + ymNow + ', still in progress: those cells accumulate ' +
+        'through the month and will read low until it closes, so read them as month-to-date rather than as a decline.' : '') +
+      (MONEY ? ' Red cells are negative — the cohort cost more in Stripe fees that month than it earned.' : '');
   }
+  // Short names, for the per-cell tooltip. The long sentences above are for the footnote.
+  const TRI_LABEL = { act: 'Active', act10: 'Active 10+', rcpts: 'Receipts', pos: 'POS revenue',
+                      tpv: 'Payments TPV', pay: 'Payments margin', ret: 'Returned',
+                      cum: 'Cumulative returned', pct: '% of CAC recovered' };
   function cellVal(r, x) {
     if (cohMetric === 'pct') return r.cac && r.n ? x.cum / (r.cac * r.n) : null;
     return x[cohMetric];

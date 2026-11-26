@@ -31,7 +31,13 @@ const STUB = `(function(){var P=new Proxy(function(){return P;},{get:function(t,
 
 const fails = [];
 const check = (cond, msg) => { if (!cond) fails.push(msg); };
-const num = s => Number(String(s).replace(/[$,%]/g, ''));
+// The page writes a negative as "\u2212$2.13" with a real minus sign, matching the money triangle
+// on Study & Trend, so the sign has to be read before the symbols are stripped.
+const num = s => {
+  const t = String(s).trim();
+  const neg = t.startsWith('\u2212') || t.startsWith('-');
+  return (neg ? -1 : 1) * Number(t.replace(/[\u2212$,%-]/g, ''));
+};
 const ymNow = new Date().toISOString().slice(0, 7);
 
 // What the page should be showing, computed from the data file without going near the page.
@@ -123,8 +129,14 @@ setTimeout(() => {
   check(metrics.length >= 9, `expected 9 cohort metrics, found ${metrics.length}`);
   for (const b of metrics) {
     b.dispatchEvent(new w.Event('click', { bubbles: true }));
-    const tri = d.querySelector('#tbl-tri tbody');
+    const tri = d.querySelector('#tri-wrap table.tri tbody');
     check(tri && tri.rows.length > 0, `metric ${b.dataset.m} rendered an empty triangle`);
+    // The grid must keep the house style: sticky cohort label, grey Size column, newest first.
+    if (tri && tri.rows.length) {
+      const r0 = tri.rows[0];
+      check(r0.cells[0].className === 'k', `metric ${b.dataset.m}: first cell is not the cohort label`);
+      check(r0.cells[1].className === 'sz', `metric ${b.dataset.m}: second column is not Size`);
+    }
   }
 
   report();
