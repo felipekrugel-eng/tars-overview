@@ -74,6 +74,7 @@ on:
       - 'kpi-automation/pull_paid.js'
       - 'kpi-automation/sql/paid_merchants.sql'
       - 'kpi-automation/sql/paid_campaign_daily.sql'
+      - 'kpi-automation/sql/paid_cohort_monthly.sql'
 
 concurrency:
   group: ads-pull
@@ -85,7 +86,10 @@ jobs:
     # Was 10 when this only read three small sheets. The attribution pull joins against
     # LOYVERSE_RECEIPTS (~9.6B rows) and takes a couple of minutes, so the job needs more
     # headroom than its own step timeout or the job would kill the step before the step could.
-    timeout-minutes: 25
+    # 50, not 25: the paid pull alone is now allowed 30 (cohort economics scan the receipts
+    # table a second time), and the job ceiling has to sit above the sum of its steps, not
+    # above the largest one.
+    timeout-minutes: 50
     permissions:
       contents: write
     steps:
@@ -154,7 +158,10 @@ jobs:
       - name: Pull paid acquisition -> paid-data.js
         # The merchant query scans LOYVERSE_RECEIPTS. A string floor on RECEIPT_DATE prunes
         # it to ~60s, but the table has no clustering key, so allow for a cold run.
-        timeout-minutes: 15
+        # 30, not 15: paid_cohort_monthly.sql was added on 2026-11-26 and scans the same table
+        # a second time at merchant x month grain. Measured end to end at ~16 minutes, which
+        # the old 15 would have killed outright every single run.
+        timeout-minutes: 30
         run: node kpi-automation/pull_paid.js
 
       - name: Remove the key

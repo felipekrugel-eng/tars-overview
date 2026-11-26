@@ -250,6 +250,68 @@ async function main() {
                 `country filter cannot place them: ` + noMarket.map(c => `${c.c} ($${c.spend})`).join(', '));
   }
 
+  // ── cohort economics: what each attributed merchant did, month by month ─────
+  // The funnel above answers "where is this merchant now". This answers "what has the
+  // cohort returned since the month we bought it", which is the only way to read spend
+  // against revenue — the spend lands in one month and the return arrives over later ones.
+  t0 = Date.now();
+  const cmRows = await q(sqlFile('paid_cohort_monthly.sql'));
+  console.log(`✓ paid_cohort_monthly: ${cmRows.length} merchant-months, ${((Date.now()-t0)/1000).toFixed(0)}s`);
+
+  // PAYMENTS ECONOMICS ARE READ, NOT RECOMPUTED. activated-payments/funnel-data.js already
+  // publishes per-merchant monthly TPV, application fees and interchange-plus cost in USD,
+  // converted with the canonical FX map, and the Payments Cohorts page renders exactly those
+  // numbers. Recomputing them here with a second FX map is how two pages come to report
+  // different margins for the same merchant. Both files live in this repo, so this is a read
+  // of a committed artefact, not a cross-service call. If the file is missing the cohort view
+  // still ships with its POS columns and says the payments columns are unavailable.
+  const payByOwner = (() => {
+    const f = path.join(__dirname, '..', 'activated-payments', 'funnel-data.js');
+    try {
+      const txt = fs.readFileSync(f, 'utf8');
+      const m = txt.match(/window\.__PAY_COHORT_MERCHANTS\s*=\s*(\[[\s\S]*?\]);/);
+      if (!m) { console.log('  WARNING funnel-data.js carries no __PAY_COHORT_MERCHANTS block'); return null; }
+      const by = {};
+      for (const r of JSON.parse(m[1])) if (r && r.o) by[String(r.o)] = r;
+      return by;
+    } catch (e) { console.log(`  WARNING could not read payments cohort economics: ${e.message}`); return null; }
+  })();
+
+  // mm[YYYY-MM] = [receipts, sellingDays, subUsd, tpvUsd, charges, feesUsd, stripeCostUsd].
+  // Hung off the merchant record rather than pre-aggregated by cohort, so the page can filter
+  // by campaign and by country and still re-cohort correctly — a pre-summed cohort table
+  // cannot be filtered after the fact without double-counting merchants into two campaigns.
+  const mmByMerchant = new Map();
+  for (const r of cmRows) {
+    const id = int(get(r, 'MERCHANT_ID'));
+    const mo = get(r, 'M');
+    if (!id || !mo) continue;
+    if (!mmByMerchant.has(id)) mmByMerchant.set(id, {});
+    mmByMerchant.get(id)[mo] = [int(get(r, 'RECEIPTS')), int(get(r, 'SELLING_DAYS')),
+                                r2(get(r, 'SUB_USD')) || 0, 0, 0, 0, 0];
+  }
+  let payMatched = 0, payWithEcon = 0;
+  for (const mch of merchants) {
+    const pr = payByOwner && payByOwner[String(mch.id)];
+    if (pr) {
+      payMatched++;
+      const pm = pr.m || {};
+      if (Object.keys(pm).length) payWithEcon++;
+      for (const [mo, v] of Object.entries(pm)) {
+        if (!mmByMerchant.has(mch.id)) mmByMerchant.set(mch.id, {});
+        const slot = mmByMerchant.get(mch.id)[mo] || (mmByMerchant.get(mch.id)[mo] = [0, 0, 0, 0, 0, 0, 0]);
+        slot[3] = r2(v[0]) || 0;   // TPV USD
+        slot[4] = int(v[1]);       // charges
+        slot[5] = r2(v[2]) || 0;   // application fees USD
+        slot[6] = r2(v[3]) || 0;   // interchange-plus cost USD
+      }
+    }
+    mch.mm = mmByMerchant.get(mch.id) || {};
+  }
+  const nMonths = merchants.reduce((a, m) => a + Object.keys(m.mm).length, 0);
+  console.log(`✓ cohort economics on ${merchants.filter(m => Object.keys(m.mm).length).length} merchants ` +
+              `(${nMonths} merchant-months); ${payMatched} matched a payments account, ${payWithEcon} with economics`);
+
   const days = spend.map(s => s.d).filter(Boolean).sort();
   const out = {
     generatedAt: new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC',
@@ -294,6 +356,21 @@ async function main() {
 //                 \`open\` is "a Stripe account exists"; \`kyc1\` is "typed the first field".
 //                 chargeD       payments used.
 //                 subD          subscribed — BESIDE the funnel, not a step in it.
+//                 mm            COHORT ECONOMICS, month by month:
+//                               { 'YYYY-MM': [receipts, sellingDays, subUsd, tpvUsd,
+//                                             charges, feesUsd, stripeCostUsd] }
+//                               A month with nothing in it carries no key; absence is zero.
+//                               subUsd is AMORTISED PAID INVOICE VALUE, not live MRR — an
+//                               annual plan paid in September is spread over the twelve
+//                               months it covers, so a cohort's months sum to money actually
+//                               collected. That also means months in the FUTURE can carry a
+//                               figure; those are contracted, not earned, and the page must
+//                               not count them as recovered.
+//                               tpv/charges/fees/stripeCost are READ from
+//                               activated-payments/funnel-data.js on the Loyverse owner id,
+//                               not recomputed, so this page and the Payments Cohorts page
+//                               cannot report different margins for the same merchant.
+//                               Payments net margin = feesUsd − stripeCostUsd.
 //
 //   THE FUNNEL BRANCHES. "Issued a receipt" and "KYC started" are parallel paths off
 //   "Signed up", not consecutive steps. There is no conversion rate between them.

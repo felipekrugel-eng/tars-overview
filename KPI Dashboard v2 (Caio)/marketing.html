@@ -336,6 +336,38 @@
     <table class="league" id="tbl-camp"><thead></thead><tbody></tbody></table>
   </div>
 
+  <!-- ============ cohorts by sign-up month ============ -->
+  <!-- M0 IS THE SIGN-UP MONTH, matching every other cohort view on this dashboard (Study &
+       Trend's triangle, the Payments Cohorts page). The date-range filter is deliberately NOT
+       applied here: a cohort is defined by when it signed up, and narrowing the range would
+       silently truncate cohorts and make a payback curve stop early for no stated reason. The
+       campaign and country filters DO apply, to both sides of the ratio. -->
+  <div class="sec">Cohorts by sign-up month
+    <span class="sec-sub">What each month's intake cost, and what it has returned since. Honours the campaign
+      and country filters above; ignores the date range, because a cohort is defined by its sign-up month.</span>
+  </div>
+  <div class="note-warn" id="coh-warn" style="display:none"></div>
+  <div class="tiles" id="coh-tiles" style="margin-bottom:16px"></div>
+  <div class="panel rise" style="margin-bottom:18px">
+    <div class="ph" style="margin-bottom:10px">One row per sign-up month. <b>Investment</b> is everything the
+      selected campaigns spent in that calendar month, whoever it ended up buying. <b>CAC</b> divides it by the
+      merchants attributed to those campaigns who registered that month. <b>Returned</b> is money actually earned
+      since: subscription invoices paid, spread across the months they cover, plus Loyverse Payments net margin
+      (application fees minus the interchange-plus cost Stripe bills us) — the same figure the Payments Cohorts
+      page shows for the same merchants.</div>
+    <table class="league" id="tbl-coh"><thead></thead><tbody></tbody></table>
+    <div class="ph" id="coh-foot" style="margin-top:10px"></div>
+  </div>
+  <div class="panel rise">
+    <div class="ph" style="margin-bottom:8px">Each cohort by age. <b>M0</b> is the sign-up month itself, so it is a
+      part-month for everyone and reads low by construction. The newest column of each row is the month in progress.</div>
+    <div class="vtog" id="coh-metric">
+      <button data-m="act" class="on">Active</button><button data-m="act10">Active 10+</button><button data-m="rcpts">Receipts</button><button data-m="pos">POS revenue</button><button data-m="tpv">Payments TPV</button><button data-m="pay">Payments margin</button><button data-m="ret">Returned</button><button data-m="cum">Cumulative returned</button><button data-m="pct">% of CAC recovered</button>
+    </div>
+    <div style="overflow:auto"><table class="league" id="tbl-tri"><thead></thead><tbody></tbody></table></div>
+    <div class="ph" id="tri-foot" style="margin-top:10px"></div>
+  </div>
+
   <!-- ============ where they actually are ============ -->
   <div class="sec">Where the merchants actually are
     <span class="sec-sub">Every campaign in the account is named &ldquo;usa&rdquo; and targeted at the US. This is where the
@@ -1236,8 +1268,183 @@
       : 'A merchant lands in the period they registered. Spend and merchants can then belong to different weeks.';
     renderCcNote(sel);
     renderTiles(sel); renderFunnel(sel); renderCharts(sel);
-    renderCampaigns(sel); renderGeo(sel); renderFacebook(sel); renderMerchants(sel);
+    renderCampaigns(sel); renderCohorts(); renderGeo(sel); renderFacebook(sel); renderMerchants(sel);
   }
+
+  // ── cohorts by sign-up month ───────────────────────────────────────────────
+  // THE DATE RANGE IS DELIBERATELY NOT APPLIED. A cohort is defined by the month it signed up
+  // in; clipping it to a range would cut a cohort's later months off its own payback curve and
+  // the curve would simply stop, with nothing on screen saying why. Campaign and country DO
+  // apply, and they apply to BOTH sides: narrowing to one campaign narrows the merchants and
+  // the money that bought them, so the CAC stays a real ratio instead of one campaign's
+  // merchants over every campaign's spend.
+  //
+  // mm[ym] = [receipts, sellingDays, subUsd, tpvUsd, charges, feesUsd, stripeCostUsd]
+  const MM_RCPT = 0, MM_SUB = 2, MM_TPV = 3, MM_FEE = 5, MM_COST = 6;
+  const ymNow = (() => { const d = new Date(); return d.toISOString().slice(0, 7); })();
+  const ymAdd = (ym, n) => {
+    const y = +ym.slice(0, 4), m = +ym.slice(5, 7) - 1 + n;
+    return String(Math.floor(y + m / 12)).padStart(4, '0') + '-' + String((m % 12 + 12) % 12 + 1).padStart(2, '0');
+  };
+  const ymDiff = (a, b) => (+b.slice(0, 4) - +a.slice(0, 4)) * 12 + (+b.slice(5, 7) - +a.slice(5, 7));
+
+  function cohortData() {
+    const names = activeCampNames();
+    const mccOn = state.ccs.size && state.ccScope !== 'c';
+    const merchants = D.merchants.filter(m => m.signD && names.has(m.c) &&
+      (!mccOn || state.ccs.has((m.cc || '??').toUpperCase())));
+    // Spend by calendar month for the same campaigns. Every dollar the selected campaigns
+    // spent in the month counts, including what it spent on merchants we could not attribute
+    // — that money was still spent, and hiding it would flatter every CAC on the page.
+    const spendByM = {};
+    for (const s of D.spend) if (names.has(s.c) && s.d) spendByM[s.d.slice(0, 7)] = (spendByM[s.d.slice(0, 7)] || 0) + s.s;
+
+    const byCoh = new Map();
+    for (const m of merchants) {
+      const c = m.signD.slice(0, 7);
+      if (!byCoh.has(c)) byCoh.set(c, []);
+      byCoh.get(c).push(m);
+    }
+    const rows = [...byCoh.keys()].sort().map(c => {
+      const ms = byCoh.get(c), inv = spendByM[c] || 0, age = Math.max(0, ymDiff(c, ymNow));
+      const cells = [];
+      for (let a = 0; a <= age; a++) {
+        const ym = ymAdd(c, a);
+        let act = 0, act10 = 0, rcpts = 0, posR = 0, tpv = 0, fee = 0, cost = 0;
+        for (const m of ms) {
+          const v = (m.mm || {})[ym]; if (!v) continue;
+          if (v[MM_RCPT] >= 1) act++;
+          if (v[MM_RCPT] >= 10) act10++;
+          rcpts += v[MM_RCPT]; posR += v[MM_SUB]; tpv += v[MM_TPV]; fee += v[MM_FEE]; cost += v[MM_COST];
+        }
+        cells.push({ ym, act, act10, rcpts, pos: posR, tpv, pay: fee - cost, ret: posR + (fee - cost) });
+      }
+      let run = 0; cells.forEach(x => { run += x.ret; x.cum = run; });
+      // Subscription revenue is amortised across the period an invoice covers, so an annual
+      // plan books into months that have not happened yet. Those are contracted, not earned:
+      // they are excluded from everything the page calls returned, and reported separately.
+      let future = 0;
+      for (const m of ms) for (const [ym, v] of Object.entries(m.mm || {})) if (ym > ymNow) future += v[MM_SUB];
+      const ret = cells.reduce((a, x) => a + x.ret, 0);
+      return { c, n: ms.length, inv, cac: ms.length ? inv / ms.length : null, cells,
+               pos: cells.reduce((a, x) => a + x.pos, 0), payM: cells.reduce((a, x) => a + x.pay, 0),
+               tpv: cells.reduce((a, x) => a + x.tpv, 0), ret, future,
+               rec: inv > 0 ? ret / inv : null };
+    });
+    // Months with spend but no attributed merchant still have to appear, or the investment
+    // total on the page would not match the one three sections above it.
+    for (const ym of Object.keys(spendByM)) if (!byCoh.has(ym)) {
+      rows.push({ c: ym, n: 0, inv: spendByM[ym], cac: null, cells: [], pos: 0, payM: 0, tpv: 0,
+                  ret: 0, future: 0, rec: 0 });
+    }
+    rows.sort((a, b) => a.c < b.c ? -1 : 1);
+    return rows;
+  }
+
+  let cohMetric = 'act';
+  function renderCohorts() {
+    const rows = cohortData();
+    const T = rows.reduce((a, r) => {
+      a.inv += r.inv; a.n += r.n; a.pos += r.pos; a.pay += r.payM; a.tpv += r.tpv;
+      a.ret += r.ret; a.future += r.future; return a;
+    }, { inv: 0, n: 0, pos: 0, pay: 0, tpv: 0, ret: 0, future: 0 });
+
+    $('coh-tiles').innerHTML =
+      tile('Invested', money(T.inv), rows.length + ' sign-up month' + (rows.length === 1 ? '' : 's')) +
+      tile('Merchants acquired', n0(T.n), 'attributed to the selected campaigns', true) +
+      tile('CAC', T.n ? money2(T.inv / T.n) : '—', T.n ? 'blended across the selection' : 'no merchants in selection', true) +
+      tile('Returned to date', money2(T.ret), money2(T.pos) + ' POS + ' + money2(T.pay) + ' payments', true) +
+      tile('Investment recovered', T.inv ? pct(T.ret / T.inv) : '—',
+           T.ret < T.inv ? money(T.inv - T.ret) + ' still to earn back' : 'paid back', true);
+
+    const warn = $('coh-warn');
+    if (!T.n) { warn.style.display = ''; warn.innerHTML = 'No attributed merchants in this selection, so there is no CAC to compute. Widen the campaign or country filter.'; }
+    else if (T.ret < T.inv) {
+      warn.style.display = '';
+      warn.innerHTML = '<b>No cohort has paid itself back yet, and none is close.</b> ' + money(T.inv) +
+        ' invested has returned ' + money2(T.ret) + ' — ' + pct(T.ret / T.inv) + '. The oldest cohort here is ' +
+        (rows.length ? Math.max(...rows.map(r => ymDiff(r.c, ymNow))) : 0) + ' months old, so this is a ' +
+        'young-programme number and not yet a verdict on the channel; it is shown because the alternative is ' +
+        'quoting a payback period that nothing in the data supports.';
+    } else warn.style.display = 'none';
+
+    const head = ['Cohort', 'Merchants', 'Invested', 'CAC', 'POS revenue', 'Payments margin', 'Returned',
+                  '% recovered', 'Return / merchant', 'Active now'];
+    $('tbl-coh').querySelector('thead').innerHTML = '<tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr>';
+    $('tbl-coh').querySelector('tbody').innerHTML = rows.map(r => {
+      const last = r.cells.length ? r.cells[r.cells.length - 1] : null;
+      return '<tr><td class="k">' + r.c + '</td><td>' + n0(r.n) + '</td><td>' + money2(r.inv) + '</td><td>' +
+        (r.cac == null ? '—' : money2(r.cac)) + '</td><td>' + money2(r.pos) + '</td><td>' + money2(r.payM) +
+        '</td><td><b>' + money2(r.ret) + '</b></td><td>' + (r.rec == null ? '—' : pct(r.rec)) + '</td><td>' +
+        (r.n ? money2(r.ret / r.n) : '—') + '</td><td>' + (last ? n0(last.act) : '—') + '</td></tr>';
+    }).join('') +
+      '<tr style="font-weight:bold;border-top:2px solid var(--border)"><td class="k">All</td><td>' + n0(T.n) +
+      '</td><td>' + money2(T.inv) + '</td><td>' + (T.n ? money2(T.inv / T.n) : '—') + '</td><td>' + money2(T.pos) +
+      '</td><td>' + money2(T.pay) + '</td><td>' + money2(T.ret) + '</td><td>' + (T.inv ? pct(T.ret / T.inv) : '—') +
+      '</td><td>' + (T.n ? money2(T.ret / T.n) : '—') + '</td><td></td></tr>';
+
+    $('coh-foot').innerHTML = 'Payments TPV across these cohorts is ' + money2(T.tpv) + '; the margin column is what ' +
+      'Loyverse kept of it, not the volume. ' +
+      (T.future > 0 ? 'A further ' + money2(T.future) + ' of subscription revenue is already contracted into months ' +
+        'that have not happened yet (annual plans, spread over the period they cover) and is deliberately NOT counted ' +
+        'as returned. ' : '') +
+      'Months with spend but no attributed merchant appear with a blank CAC rather than being dropped, so this table’s ' +
+      'Invested total matches the one at the top of the page.';
+
+    renderTriangle(rows);
+  }
+
+  function tile(l, v, d, ours) {
+    return '<div class="tile' + (ours ? ' ours' : '') + '"><div class="tl">' + esc(l) + '</div><div class="tv">' +
+      v + '</div><div class="td">' + esc(d) + '</div></div>';
+  }
+
+  function renderTriangle(rows) {
+    const maxAge = Math.max(0, ...rows.map(r => r.cells.length - 1));
+    const FMT = { act: n0, act10: n0, rcpts: n0, pos: money2, tpv: money2, pay: money2, ret: money2,
+                  cum: money2, pct: v => v == null ? '—' : pct(v) };
+    const f = FMT[cohMetric];
+    const head = ['Cohort', 'Merchants', 'CAC'];
+    for (let a = 0; a <= maxAge; a++) head.push('M' + a);
+    $('tbl-tri').querySelector('thead').innerHTML = '<tr>' + head.map(h => '<th>' + h + '</th>').join('') + '</tr>';
+    // One scale across the whole grid, so a cell's shade means the same thing in every row.
+    let peak = 0;
+    rows.forEach(r => r.cells.forEach(x => { const v = cellVal(r, x); if (v != null && isFinite(v)) peak = Math.max(peak, v); }));
+    $('tbl-tri').querySelector('tbody').innerHTML = rows.map(r => {
+      let s = '<tr><td class="k">' + r.c + '</td><td>' + n0(r.n) + '</td><td>' +
+              (r.cac == null ? '—' : money2(r.cac)) + '</td>';
+      for (let a = 0; a <= maxAge; a++) {
+        const x = r.cells[a];
+        if (!x) { s += '<td style="color:var(--faint)"></td>'; continue; }
+        const v = cellVal(r, x);
+        const sh = peak > 0 && v > 0 ? Math.min(0.42, v / peak * 0.42) : 0;
+        const partial = x.ym === ymNow ? '<span title="month in progress" style="color:var(--muted)">*</span>' : '';
+        s += '<td style="background:rgba(29,143,225,' + sh.toFixed(3) + ')">' + f(v) + partial + '</td>';
+      }
+      return s + '</tr>';
+    }).join('');
+    const L = { act: 'merchants of the cohort issuing at least one receipt that month',
+      act10: 'merchants issuing 10 or more receipts that month — a trading month, not a trial',
+      rcpts: 'receipts issued by the cohort that month',
+      pos: 'subscription invoices paid, spread across the months they cover',
+      tpv: 'Loyverse Payments volume processed by the cohort that month',
+      pay: 'Loyverse Payments net margin — application fees minus Stripe interchange-plus cost',
+      ret: 'POS revenue plus payments margin earned in that month',
+      cum: 'everything the cohort has returned up to and including that month',
+      pct: 'cumulative return divided by what the cohort cost to acquire — 100% is payback' };
+    $('tri-foot').innerHTML = 'Showing <b>' + esc(L[cohMetric]) + '</b>. M0 is the sign-up month itself and is a ' +
+      'part-month for every merchant in the cohort, so it understates by construction. <b>*</b> marks the month in progress.';
+  }
+  function cellVal(r, x) {
+    if (cohMetric === 'pct') return r.cac && r.n ? x.cum / (r.cac * r.n) : null;
+    return x[cohMetric];
+  }
+  $('coh-metric').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    cohMetric = b.dataset.m;
+    [...$('coh-metric').children].forEach(x => x.classList.toggle('on', x === b));
+    renderCohorts();
+  });
 
   // A country selection does three different things depending on the scope, and two of them
   // change what the money means. Saying which one is active is not decoration: under
