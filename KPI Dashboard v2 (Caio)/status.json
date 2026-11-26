@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-26T20:19:29.783023+00:00",
+ "checked_at": "2026-11-26T21:15:05.458668+00:00",
  "worst": "error",
- "digest": "35bf4a854efffa6263ead2eca3dc3c86ecc9f9d536082d44192f0362927466cd",
+ "digest": "6eb0cecc7c5f8a4fba663c2137ec28be66e495f367b076c920cc2deb9522d5a3",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T20:07:39+00:00",
-   "data_at": "2026-11-26T20:06:00+00:00",
-   "age_h": 0.22,
+   "committed_at": "2026-11-26T21:12:31+00:00",
+   "data_at": "2026-11-26T21:12:00+00:00",
+   "age_h": 0.05,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T20:02:11+00:00",
-   "data_at": "2026-11-26T19:45:35+00:00",
-   "age_h": 0.57
+   "committed_at": "2026-11-26T21:14:13+00:00",
+   "data_at": "2026-11-26T20:53:56+00:00",
+   "age_h": 0.35
   },
   {
    "name": "Payments pull",
@@ -40,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-26T19:59:07+00:00",
    "data_at": "2026-11-26T19:58:59.163265+00:00",
-   "age_h": 0.34
+   "age_h": 1.27
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T19:57:52+00:00",
-   "data_at": "2026-11-26T19:50:45.480000+00:00",
-   "age_h": 0.48,
+   "committed_at": "2026-11-26T21:09:50+00:00",
+   "data_at": "2026-11-26T20:56:04.327000+00:00",
+   "age_h": 0.32,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T19:57:52+00:00",
+   "committed_at": "2026-11-26T21:09:50+00:00",
    "data_at": null,
-   "age_h": 0.36
+   "age_h": 0.09
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-26T14:36:27+00:00",
    "data_at": "2026-11-26T14:30:00.216734+00:00",
-   "age_h": 5.82,
+   "age_h": 6.75,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -86,14 +86,14 @@
    "ref": "master",
    "max_age_h": 36,
    "notes": [
-    "stale: 36.7h old, limit 36h",
+    "stale: 37.6h old, limit 36h",
     "built before its inputs changed: kpi-automation/sql is 33.2h newer"
    ],
    "state": "error",
    "reason": "stale",
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 36.67,
+   "age_h": 37.59,
    "inputs_changed_at": "2026-11-26T16:53:28+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -129,13 +129,13 @@
     "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/45879268354",
     "step": "Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js",
-    "signature": "unhandled exception",
-    "meaning": "A code fault. The last line of the traceback is below.",
+    "signature": "push rejected",
+    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
     "detail": "Process completed with exit code 1.",
     "skipped_publish": false,
     "runner_lost": false
    },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 unhandled exception \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 push rejected \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
   },
   {
    "name": "KPI subscriptions",
@@ -143,14 +143,14 @@
    "ref": "master",
    "max_age_h": 36,
    "notes": [
-    "stale: 36.7h old, limit 36h",
+    "stale: 37.6h old, limit 36h",
     "built before its inputs changed: kpi-automation/sql is 33.2h newer"
    ],
    "state": "error",
    "reason": "stale",
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 36.67,
+   "age_h": 37.59,
    "inputs_changed_at": "2026-11-26T16:53:28+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -186,13 +186,13 @@
     "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
     "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/45879268354",
     "step": "Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js",
-    "signature": "unhandled exception",
-    "meaning": "A code fault. The last line of the traceback is below.",
+    "signature": "push rejected",
+    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
     "detail": "Process completed with exit code 1.",
     "skipped_publish": false,
     "runner_lost": false
    },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 unhandled exception \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
+   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 push rejected \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
   },
   {
    "name": "Fraud health",
@@ -204,7 +204,7 @@
    "reason": null,
    "committed_at": "2026-11-26T00:10:42+00:00",
    "data_at": null,
-   "age_h": 20.15,
+   "age_h": 21.07,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -217,7 +217,7 @@
    "reason": null,
    "committed_at": "2026-11-26T19:08:05+00:00",
    "data_at": null,
-   "age_h": 1.19,
+   "age_h": 2.12,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
