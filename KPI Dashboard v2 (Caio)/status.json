@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-26T12:06:51.790344+00:00",
+ "checked_at": "2026-11-26T12:57:25.039966+00:00",
  "worst": "warn",
- "digest": "644e89be1dabf45e5c33c9bfa3fc92a67af1d09b31c1a3b47e88af2b6d525a5a",
+ "digest": "c0d971b5c1de252e91d84a872ac011f7aff636c303f17c5787d115357fdded4a",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T12:02:51+00:00",
-   "data_at": "2026-11-26T12:02:00+00:00",
-   "age_h": 0.08,
+   "committed_at": "2026-11-26T12:54:13+00:00",
+   "data_at": "2026-11-26T12:53:00+00:00",
+   "age_h": 0.07,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T12:06:37+00:00",
-   "data_at": "2026-11-26T11:50:02+00:00",
-   "age_h": 0.28
+   "committed_at": "2026-11-26T12:48:43+00:00",
+   "data_at": "2026-11-26T12:28:16+00:00",
+   "age_h": 0.49
   },
   {
    "name": "Payments pull",
@@ -40,7 +40,7 @@
    "reason": null,
    "committed_at": "2026-11-26T11:03:25+00:00",
    "data_at": "2026-11-26T11:03:17.690436+00:00",
-   "age_h": 1.06
+   "age_h": 1.9
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T10:58:23+00:00",
-   "data_at": "2026-11-26T10:44:12.676000+00:00",
-   "age_h": 1.38,
+   "committed_at": "2026-11-26T12:37:02+00:00",
+   "data_at": "2026-11-26T12:31:05.505000+00:00",
+   "age_h": 0.44,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-26T10:58:23+00:00",
+   "committed_at": "2026-11-26T12:37:02+00:00",
    "data_at": null,
-   "age_h": 1.14
+   "age_h": 0.34
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-25T15:06:50+00:00",
    "data_at": "2026-11-25T15:02:30.358114+00:00",
-   "age_h": 21.07,
+   "age_h": 21.92,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -86,13 +86,13 @@
    "ref": "master",
    "max_age_h": 36,
    "notes": [
-    "ageing: 28.5h old, limit 36h"
+    "ageing: 29.3h old, limit 36h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 28.46,
+   "age_h": 29.3,
    "inputs_changed_at": "2026-11-20T12:31:38+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -142,13 +142,13 @@
    "ref": "master",
    "max_age_h": 36,
    "notes": [
-    "ageing: 28.5h old, limit 36h"
+    "ageing: 29.3h old, limit 36h"
    ],
    "state": "warn",
    "reason": "ageing",
    "committed_at": "2026-11-25T07:39:25+00:00",
    "data_at": null,
-   "age_h": 28.46,
+   "age_h": 29.3,
    "inputs_changed_at": "2026-11-23T17:03:46+00:00",
    "diagnosis": {
     "workflow": "kpi-pull.yml",
@@ -202,7 +202,7 @@
    "reason": null,
    "committed_at": "2026-11-26T00:10:42+00:00",
    "data_at": null,
-   "age_h": 11.94,
+   "age_h": 12.78,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -215,7 +215,7 @@
    "reason": null,
    "committed_at": "2026-11-25T18:41:20+00:00",
    "data_at": null,
-   "age_h": 17.43,
+   "age_h": 18.27,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
