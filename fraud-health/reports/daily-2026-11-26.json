@@ -1,0 +1,114 @@
+{
+ "cohort": {
+  "cohortDate": "2026-11-26",
+  "timezone": "Europe/London",
+  "windowStart": "2026-11-26T00:00:00+00:00",
+  "windowEnd": "2026-11-27T00:00:00+00:00",
+  "count": 5,
+  "confirmed": 4,
+  "boundaryAmbiguous": 1,
+  "members": [
+   {
+    "accountId": "acct_1UfQGY7mzLOM9eu2",
+    "enabledAt": "2026-11-26T17:44:58+00:00",
+    "enabledWindowStart": "2026-11-26T00:10:35+00:00",
+    "enabledWindowEnd": "2026-11-26T17:44:58+00:00",
+    "enabledWindowHours": 17.57,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_transition",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-24",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UfpoL8pwDCqR85p",
+    "enabledAt": "2026-11-26T17:44:58+00:00",
+    "enabledWindowStart": "2026-11-25T23:41:14+00:00",
+    "enabledWindowEnd": "2026-11-26T17:44:58+00:00",
+    "enabledWindowHours": 18.06,
+    "enabledCertainty": "boundary_ambiguous",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-25",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UfvLZ6uqKM6Gruh",
+    "enabledAt": "2026-11-26T17:44:58+00:00",
+    "enabledWindowStart": "2026-11-26T05:35:54+00:00",
+    "enabledWindowEnd": "2026-11-26T17:44:58+00:00",
+    "enabledWindowHours": 12.15,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-26",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UfvWa9ckD3g49Xg",
+    "enabledAt": "2026-11-26T17:44:58+00:00",
+    "enabledWindowStart": "2026-11-26T05:47:17+00:00",
+    "enabledWindowEnd": "2026-11-26T17:44:58+00:00",
+    "enabledWindowHours": 11.96,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-26",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1Ug4PC8jCmmGEbV4",
+    "enabledAt": "2026-11-26T21:12:50+00:00",
+    "enabledWindowStart": "2026-11-26T15:16:15+00:00",
+    "enabledWindowEnd": "2026-11-26T21:12:50+00:00",
+    "enabledWindowHours": 5.94,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-26",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 692,
+   "never_observed_enabled": 1320
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1UfQGY7mzLOM9eu2",
+   "acct_1UfpoL8pwDCqR85p",
+   "acct_1UfvLZ6uqKM6Gruh",
+   "acct_1UfvWa9ckD3g49Xg",
+   "acct_1Ug4PC8jCmmGEbV4"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-11-27T00:15:19+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 2065,
+  "enabledAccounts": 703,
+  "reviewedAccounts": 750,
+  "reviewedEnabledAccounts": 702,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.9,
+  "ledgerAccounts": 2066,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
