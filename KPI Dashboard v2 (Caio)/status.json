@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-27T07:02:23.257191+00:00",
- "worst": "error",
- "digest": "067c2e06206fe7e432ca0e118a2a4fa75e89f3ba5e81b9aae42fdcc05d45de0e",
+ "checked_at": "2026-11-27T08:03:07.330884+00:00",
+ "worst": "ok",
+ "digest": "12d6df02437e1576ca53afce2e3823b1d8affe9fde9994b4ad22c1faa0b70d25",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T06:57:18+00:00",
-   "data_at": "2026-11-27T06:54:00+00:00",
-   "age_h": 0.14,
+   "committed_at": "2026-11-27T07:59:44+00:00",
+   "data_at": "2026-11-27T07:59:00+00:00",
+   "age_h": 0.07,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -26,9 +26,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T06:49:36+00:00",
-   "data_at": "2026-11-27T06:28:44+00:00",
-   "age_h": 0.56
+   "committed_at": "2026-11-27T08:02:12+00:00",
+   "data_at": "2026-11-27T07:43:12+00:00",
+   "age_h": 0.33
   },
   {
    "name": "Payments pull",
@@ -38,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T05:04:26+00:00",
-   "data_at": "2026-11-27T05:04:25.853555+00:00",
-   "age_h": 1.97
+   "committed_at": "2026-11-27T08:03:02+00:00",
+   "data_at": "2026-11-27T08:02:54.430925+00:00",
+   "age_h": 0.0
   },
   {
    "name": "Activated payments",
@@ -50,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T06:45:52+00:00",
-   "data_at": "2026-11-27T06:38:36.656000+00:00",
-   "age_h": 0.4,
+   "committed_at": "2026-11-27T07:23:22+00:00",
+   "data_at": "2026-11-27T07:15:28.566000+00:00",
+   "age_h": 0.79,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -63,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T06:45:52+00:00",
+   "committed_at": "2026-11-27T07:23:22+00:00",
    "data_at": null,
-   "age_h": 0.28
+   "age_h": 0.66
   },
   {
    "name": "Merchant base",
@@ -77,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-26T14:36:27+00:00",
    "data_at": "2026-11-26T14:30:00.216734+00:00",
-   "age_h": 16.54,
+   "age_h": 17.55,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -85,114 +85,26 @@
    "path": "KPI Dashboard v2 (Caio)/daily-history.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "stale: 47.4h old, limit 36h",
-    "built before its inputs changed: kpi-automation/sql is 33.2h newer"
-   ],
-   "state": "error",
-   "reason": "stale",
-   "committed_at": "2026-11-25T07:39:25+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-27T07:43:40+00:00",
    "data_at": null,
-   "age_h": 47.38,
-   "inputs_changed_at": "2026-11-26T16:53:28+00:00",
-   "diagnosis": {
-    "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-25T18:59:54Z",
-    "consecutive_non_success": 2,
-    "recent": [
-     {
-      "at": "2026-11-26T18:51:55Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-26T04:06:33Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-25T18:59:54Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-25T04:06:40Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-24T19:59:50Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-24T04:06:18Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 3,
-    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/45879268354",
-    "step": "Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js",
-    "signature": "push rejected",
-    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": false,
-    "runner_lost": false
-   },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 push rejected \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
+   "age_h": 0.32,
+   "inputs_changed_at": "2026-11-26T16:53:28+00:00"
   },
   {
    "name": "KPI subscriptions",
    "path": "KPI Dashboard v2 (Caio)/subs-data.js",
    "ref": "master",
    "max_age_h": 36,
-   "notes": [
-    "stale: 47.4h old, limit 36h",
-    "built before its inputs changed: kpi-automation/sql is 33.2h newer"
-   ],
-   "state": "error",
-   "reason": "stale",
-   "committed_at": "2026-11-25T07:39:25+00:00",
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-27T07:43:40+00:00",
    "data_at": null,
-   "age_h": 47.38,
-   "inputs_changed_at": "2026-11-26T16:53:28+00:00",
-   "diagnosis": {
-    "workflow": "kpi-pull.yml",
-    "last_success": "2026-11-25T18:59:54Z",
-    "consecutive_non_success": 2,
-    "recent": [
-     {
-      "at": "2026-11-26T18:51:55Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-26T04:06:33Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-25T18:59:54Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-25T04:06:40Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-24T19:59:50Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-24T04:06:18Z",
-      "outcome": "success"
-     }
-    ],
-    "runs_since_artefact": 3,
-    "verdict": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/45879268354",
-    "step": "Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js",
-    "signature": "push rejected",
-    "meaning": "Lost a push race against master. The job's retry loop should cover this.",
-    "detail": "Process completed with exit code 1.",
-    "skipped_publish": false,
-    "runner_lost": false
-   },
-   "diagnosis_line": "ran and succeeded since the artefact was last written \u2014 it is publishing nothing, or writing elsewhere \u00b7 failing step: Pull from Snowflake \u2192 regenerate daily-history.js + kpi-data.js \u00b7 push rejected \u00b7 2 consecutive non-success runs \u00b7 last success 2026-11-25 18:59"
+   "age_h": 0.32,
+   "inputs_changed_at": "2026-11-26T16:53:28+00:00"
   },
   {
    "name": "Fraud health",
@@ -204,7 +116,7 @@
    "reason": null,
    "committed_at": "2026-11-27T00:15:26+00:00",
    "data_at": null,
-   "age_h": 6.78,
+   "age_h": 7.79,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -217,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-26T19:08:05+00:00",
    "data_at": null,
-   "age_h": 11.91,
+   "age_h": 12.92,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
