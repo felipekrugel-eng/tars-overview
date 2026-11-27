@@ -1,8 +1,8 @@
 {
  "schema_version": 2,
- "checked_at": "2026-11-27T17:20:33.898124+00:00",
- "worst": "warn",
- "digest": "e77c2cdc5fa3138e2c9060a080c6f103801c79a9cecd75457ef987dd329e4de8",
+ "checked_at": "2026-11-27T18:14:21.146059+00:00",
+ "worst": "ok",
+ "digest": "12d6df02437e1576ca53afce2e3823b1d8affe9fde9994b4ad22c1faa0b70d25",
  "history_method": 2,
  "pipelines": [
   {
@@ -13,9 +13,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T17:17:23+00:00",
-   "data_at": "2026-11-27T17:16:00+00:00",
-   "age_h": 0.08,
+   "committed_at": "2026-11-27T17:54:50+00:00",
+   "data_at": "2026-11-27T17:53:00+00:00",
+   "age_h": 0.36,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -23,53 +23,12 @@
    "path": "risk-monitor/health.json",
    "ref": "master",
    "max_age_h": 4,
-   "notes": [
-    "status = degraded",
-    "gap: runtime_failure"
-   ],
-   "state": "warn",
-   "reason": "source",
-   "committed_at": "2026-11-27T17:18:20+00:00",
-   "data_at": "2026-11-27T16:59:21+00:00",
-   "age_h": 0.35,
-   "diagnosis": {
-    "workflow": "loyverse-risk-monitor.yml",
-    "last_success": "2026-11-27T16:56:43Z",
-    "consecutive_non_success": 1,
-    "recent": [
-     {
-      "at": "2026-11-27T17:07:40Z",
-      "outcome": "failure"
-     },
-     {
-      "at": "2026-11-27T16:56:43Z",
-      "outcome": "success"
-     },
-     {
-      "at": "2026-11-27T16:52:55Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-11-27T16:40:28Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-11-27T16:25:23Z",
-      "outcome": "skipped"
-     },
-     {
-      "at": "2026-11-27T16:23:26Z",
-      "outcome": "cancelled"
-     }
-    ],
-    "runs_since_artefact": 0,
-    "verdict": "has not run since the artefact was last written \u2014 it is not firing",
-    "failing_run": "https://github.com/felipekrugel-eng/tars-overview/actions/runs/46039318335",
-    "step": "Evaluate and durably checkpoint",
-    "detail": "Process completed with exit code 2.",
-    "runner_lost": false
-   },
-   "diagnosis_line": "has not run since the artefact was last written \u2014 it is not firing \u00b7 failing step: Evaluate and durably checkpoint \u00b7 1 consecutive non-success runs \u00b7 last success 2026-11-27 16:56"
+   "notes": [],
+   "state": "ok",
+   "reason": null,
+   "committed_at": "2026-11-27T18:06:56+00:00",
+   "data_at": "2026-11-27T17:49:31+00:00",
+   "age_h": 0.41
   },
   {
    "name": "Payments pull",
@@ -79,9 +38,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T15:02:01+00:00",
-   "data_at": "2026-11-27T15:01:53.788080+00:00",
-   "age_h": 2.31
+   "committed_at": "2026-11-27T17:58:20+00:00",
+   "data_at": "2026-11-27T17:58:19.008752+00:00",
+   "age_h": 0.27
   },
   {
    "name": "Activated payments",
@@ -91,9 +50,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T16:09:54+00:00",
-   "data_at": "2026-11-27T15:58:48.198000+00:00",
-   "age_h": 1.36,
+   "committed_at": "2026-11-27T17:46:55+00:00",
+   "data_at": "2026-11-27T17:37:28.917000+00:00",
+   "age_h": 0.61,
    "inputs_changed_at": "2026-11-20T18:27:22+00:00"
   },
   {
@@ -104,9 +63,9 @@
    "notes": [],
    "state": "ok",
    "reason": null,
-   "committed_at": "2026-11-27T16:09:54+00:00",
+   "committed_at": "2026-11-27T17:46:55+00:00",
    "data_at": null,
-   "age_h": 1.18
+   "age_h": 0.46
   },
   {
    "name": "Merchant base",
@@ -118,7 +77,7 @@
    "reason": null,
    "committed_at": "2026-11-27T14:31:58+00:00",
    "data_at": "2026-11-27T14:25:24.752199+00:00",
-   "age_h": 2.92,
+   "age_h": 3.82,
    "inputs_changed_at": "2026-11-10T18:47:44+00:00"
   },
   {
@@ -131,7 +90,7 @@
    "reason": null,
    "committed_at": "2026-11-27T07:43:40+00:00",
    "data_at": null,
-   "age_h": 9.61,
+   "age_h": 10.51,
    "inputs_changed_at": "2026-11-26T16:53:28+00:00"
   },
   {
@@ -144,7 +103,7 @@
    "reason": null,
    "committed_at": "2026-11-27T07:43:40+00:00",
    "data_at": null,
-   "age_h": 9.61,
+   "age_h": 10.51,
    "inputs_changed_at": "2026-11-26T16:53:28+00:00"
   },
   {
@@ -157,7 +116,7 @@
    "reason": null,
    "committed_at": "2026-11-27T00:15:26+00:00",
    "data_at": null,
-   "age_h": 17.09,
+   "age_h": 17.98,
    "inputs_changed_at": "2026-11-03T11:54:30+00:00"
   },
   {
@@ -170,7 +129,7 @@
    "reason": null,
    "committed_at": "2026-11-26T19:08:05+00:00",
    "data_at": null,
-   "age_h": 22.21,
+   "age_h": 23.1,
    "inputs_changed_at": "2026-04-09T12:33:27+00:00"
   }
  ],
