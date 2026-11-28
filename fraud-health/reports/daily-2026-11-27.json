@@ -1,0 +1,114 @@
+{
+ "cohort": {
+  "cohortDate": "2026-11-27",
+  "timezone": "Europe/London",
+  "windowStart": "2026-11-27T00:00:00+00:00",
+  "windowEnd": "2026-11-28T00:00:00+00:00",
+  "count": 5,
+  "confirmed": 5,
+  "boundaryAmbiguous": 0,
+  "members": [
+   {
+    "accountId": "acct_1UgH0I6wod4fRR0X",
+    "enabledAt": "2026-11-27T17:30:22+00:00",
+    "enabledWindowStart": "2026-11-27T04:43:22+00:00",
+    "enabledWindowEnd": "2026-11-27T17:30:22+00:00",
+    "enabledWindowHours": 12.78,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-27",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UgMUZ98GMx6MOlC",
+    "enabledAt": "2026-11-27T17:30:22+00:00",
+    "enabledWindowStart": "2026-11-27T10:34:59+00:00",
+    "enabledWindowEnd": "2026-11-27T17:30:22+00:00",
+    "enabledWindowHours": 6.92,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-27",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UgRDpGLyRMgdDKQ",
+    "enabledAt": "2026-11-27T20:43:49+00:00",
+    "enabledWindowStart": "2026-11-27T15:38:02+00:00",
+    "enabledWindowEnd": "2026-11-27T20:43:49+00:00",
+    "enabledWindowHours": 5.1,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-27",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UgUkm88NxHXnSwP",
+    "enabledAt": "2026-11-27T23:52:06+00:00",
+    "enabledWindowStart": "2026-11-27T19:24:17+00:00",
+    "enabledWindowEnd": "2026-11-27T23:52:06+00:00",
+    "enabledWindowHours": 4.46,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-27",
+    "currentStatus": "Enabled"
+   },
+   {
+    "accountId": "acct_1UgVbO9NMbGc2thj",
+    "enabledAt": "2026-11-27T23:52:06+00:00",
+    "enabledWindowStart": "2026-11-27T20:18:39+00:00",
+    "enabledWindowEnd": "2026-11-27T23:52:06+00:00",
+    "enabledWindowHours": 3.56,
+    "enabledCertainty": "confirmed",
+    "enabledEvidenceLevel": "observed_arrival_enabled",
+    "enabledEvidence": "derived from the committed history of charges_enabled in activated-payments/activation-data.js (see fraud-health ledger)",
+    "connected": "2026-11-27",
+    "currentStatus": "Enabled"
+   }
+  ],
+  "exclusions": {
+   "enabled_before_ledger_started": 49,
+   "enabled_on_another_day": 697,
+   "never_observed_enabled": 1336
+  }
+ },
+ "published": {
+  "added": [
+   "acct_1UgH0I6wod4fRR0X",
+   "acct_1UgMUZ98GMx6MOlC",
+   "acct_1UgRDpGLyRMgdDKQ",
+   "acct_1UgUkm88NxHXnSwP",
+   "acct_1UgVbO9NMbGc2thj"
+  ],
+  "updated": [],
+  "skipped": [],
+  "wrote": true
+ },
+ "liveStatusChanges": [],
+ "coverage": {
+  "computedAt": "2026-11-28T00:28:29+00:00",
+  "source": "activated-payments/activation-data.js",
+  "connectedAccounts": 2086,
+  "enabledAccounts": 708,
+  "reviewedAccounts": 755,
+  "reviewedEnabledAccounts": 707,
+  "enabledNotYetReviewed": [
+   "acct_1TWh3c9MtEGnBEj3"
+  ],
+  "reviewedNoLongerInPopulation": [],
+  "enabledCoveragePct": 99.9,
+  "ledgerAccounts": 2087,
+  "scoringModel": "risk-v2",
+  "scoreDirection": "0 = no observed risk, 100 = extreme risk"
+ },
+ "backlog": [
+  "acct_1TtuoI7oXMe4RLzo",
+  "acct_1UHAWpGA2GAm1e8y",
+  "acct_1UHo7I9NQm5IvnZK",
+  "acct_1UIuS96pTOgI75sZ",
+  "acct_1UIwBc5vsHotDcPp"
+ ]
+}
